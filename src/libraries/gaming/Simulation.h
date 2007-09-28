@@ -54,6 +54,8 @@ public:
 
     void BeginCheckPoint();
     void EndCheckPoint();
+
+    bool IsReplayer() const;
     //@}
 
     //! @name Accessors

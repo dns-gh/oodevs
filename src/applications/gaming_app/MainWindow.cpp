@@ -302,7 +302,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
 
-    new AfterAction( this, controllers_, *factory, model.aar_, publisher );
+    AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, publisher );
 
     new Menu( this, controllers, *prefDialog, *profileDialog, *browser, *factory );
 
@@ -319,6 +319,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pMissionPanel_->hide();
     replayerToolbar->hide();
     folkToolbar->hide();
+    aar->hide();
 
     new XPSPlayer( this, controllers_ );
 

@@ -247,7 +247,7 @@ void SIMControlToolbar::SlotOnSpinBoxChange( int value )
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    replay_ = ( simulation.GetTickCount() != unsigned( -1 ) );
+    replay_ = simulation.IsReplayer();
 
     if( simulation.IsConnected() != connected_ )
     {

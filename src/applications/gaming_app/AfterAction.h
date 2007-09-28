@@ -10,6 +10,8 @@
 #ifndef __AfterAction_h_
 #define __AfterAction_h_
 
+#include "clients_kernel/ElementObserver_ABC.h"
+
 namespace kernel
 {
     class Controllers;
@@ -22,6 +24,7 @@ class AfterActionFunction;
 class AfterActionCanvas;
 class AfterActionModel;
 class Publisher_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  AfterAction
@@ -30,6 +33,8 @@ class Publisher_ABC;
 // Created: AGE 2007-09-17
 // =============================================================================
 class AfterAction : public QObject
+                  , public kernel::Observer_ABC
+                  , public kernel::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;
 
@@ -38,6 +43,11 @@ public:
     //@{
              AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model, Publisher_ABC& publisher );
     virtual ~AfterAction();
+    //@}
+
+    //! @name Operations
+    //@{
+    void hide();
     //@}
 
 private slots:
@@ -59,13 +69,17 @@ private:
     //@{
     void CreateEditionDock    ( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
+    virtual void NotifyUpdated( const Simulation& simu );
     //@}
 
 private:
     //! @name Member data
     //@{
+    QMainWindow* window_;
+    kernel::Controllers& controllers_;
     AfterActionModel& model_;
     QDockWindow* editionDock_;
+    QDockWindow* aarDock_;
     AfterActionCanvas* canvas_;
     QTabWidget* functionsTab_;
     //@}

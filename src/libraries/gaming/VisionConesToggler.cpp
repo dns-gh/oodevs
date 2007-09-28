@@ -73,7 +73,7 @@ void VisionConesToggler::NotifyUpdated( const Profile_ABC& )
 // -----------------------------------------------------------------------------
 void VisionConesToggler::NotifyUpdated( const Simulation& simulation)
 {
-    replay_ = ( simulation.GetTickCount() != unsigned( -1 ) );
+    replay_ = simulation.IsReplayer();
 }
 
 // -----------------------------------------------------------------------------

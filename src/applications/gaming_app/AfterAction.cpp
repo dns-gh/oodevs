@@ -14,19 +14,24 @@
 #include "AfterActionCanvas.h"
 #include "AfterActionFunctionList.h"
 #include "AfterActionRequestList.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_gui/resources.h"
 #include "gaming/AfterActionModel.h"
+#include "gaming/Simulation.h"
 
 // -----------------------------------------------------------------------------
 // Name: AfterAction constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
 AfterAction::AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model, Publisher_ABC& publisher )
-    : model_( model )
+    : window_      ( window )
+    , controllers_ ( controllers )
+    , model_       ( model )
     , functionsTab_( 0 )
 {
     CreateEditionDock    ( window, controllers, factory );
     CreateAfterActionDock( window, controllers, factory, publisher );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,6 +88,8 @@ void AfterAction::CreateEditionDock( QMainWindow* window, kernel::Controllers& c
     editionDock_->setResizeEnabled( true );
     editionDock_->setCloseMode( QDockWindow::Always );
     editionDock_->setCaption( tr( "After action function edition" ) );
+    editionDock_->hide();
+    window_->setAppropriate( editionDock_, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,8 +98,8 @@ void AfterAction::CreateEditionDock( QMainWindow* window, kernel::Controllers& c
 // -----------------------------------------------------------------------------
 void AfterAction::CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher )
 {
-    QDockWindow* aar = new QDockWindow( window );
-    QVBox* box = new QVBox( aar );
+    aarDock_ = new QDockWindow( window );
+    QVBox* box = new QVBox( aarDock_ );
     functionsTab_ = new QTabWidget( box );
 
     AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory );
@@ -104,10 +111,12 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, kernel::Controller
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, window, controllers, factory, publisher );
     functionsTab_->addTab( requests, tr( "Requests" ) );
 
-    aar->setResizeEnabled( true );
-    aar->setWidget( box );
-    aar->setCloseMode( QDockWindow::Always );
-    aar->setCaption( tr( "After action review" ) );
+    aarDock_->setResizeEnabled( true );
+    aarDock_->setWidget( box );
+    aarDock_->setCloseMode( QDockWindow::Always );
+    aarDock_->setCaption( tr( "After action review" ) );
+    aarDock_->hide();
+    window_->setAppropriate( aarDock_, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,4 +149,25 @@ void AfterAction::OnCreateRequest( const AfterActionFunction* function )
         model_.CreateRequest( *function );
         functionsTab_->showPage( functionsTab_->page( 1 ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterAction::NotifyUpdated
+// Created: AGE 2007-09-28
+// -----------------------------------------------------------------------------
+void AfterAction::NotifyUpdated( const Simulation& simu )
+{
+    window_->setAppropriate( editionDock_, simu.IsReplayer() );
+    window_->setAppropriate( aarDock_,     simu.IsReplayer() );
+    aarDock_->setShown( simu.IsReplayer() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterAction::hide
+// Created: AGE 2007-09-28
+// -----------------------------------------------------------------------------
+void AfterAction::hide()
+{
+    editionDock_->hide();
+    aarDock_->hide();
 }

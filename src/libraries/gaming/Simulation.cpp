@@ -327,3 +327,12 @@ unsigned long Simulation::GetLongPathfinds() const
 {
     return profiling_.GetLongPathfinds();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::IsReplayer
+// Created: AGE 2007-09-28
+// -----------------------------------------------------------------------------
+bool Simulation::IsReplayer() const
+{
+    return GetTickCount() != unsigned( -1 );
+}
