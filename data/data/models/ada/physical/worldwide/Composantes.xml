@@ -787,10 +787,10 @@
   </element>
   <element codeEMAT6="Leclerc" codeEMAT8="Leclerc" codeLFRIL="Leclerc" codeNNO="Leclerc" comment="" id="11" name="Main Battle Tank" protection="HeavyTank" size="Heavy" weight="54">
     <speeds max="70">
-      <speed terrain="inconnu" value="50"/>
-      <speed terrain="foret" value="40"/>
-      <speed terrain="plantation" value="30"/>
-      <speed terrain="marais" value="15"/>
+      <speed terrain="inconnu" value="20"/>
+      <speed terrain="foret" value="0"/>
+      <speed terrain="plantation" value="2"/>
+      <speed terrain="marais" value="2"/>
       <speed terrain="dune" value="30"/>
       <speed terrain="urbain" value="60"/>
       <speed terrain="etendue eau" value="0"/>
@@ -807,7 +807,7 @@
       <speed terrain="nationale" value="70"/>
       <speed terrain="departementale" value="70"/>
       <speed terrain="ruisseau" value="20"/>
-      <speed terrain="riviere" value="10"/>
+      <speed terrain="riviere" value="0"/>
       <speed terrain="riviere importante" value="0"/>
       <speed terrain="pont" value="70"/>
       <speed terrain="falaise" value="0"/>
@@ -1171,10 +1171,10 @@
   </element>
   <element codeEMAT6="AMX 10 RC" codeEMAT8="AMX 10 RC" codeLFRIL="AMX 10 RC" codeNNO="AMX 10 RC" comment="" id="14" name="Medium Tank" protection="MediumTank" size="Heavy" weight="17">
     <speeds max="90">
-      <speed terrain="inconnu" value="50"/>
-      <speed terrain="foret" value="60"/>
-      <speed terrain="plantation" value="30"/>
-      <speed terrain="marais" value="15"/>
+      <speed terrain="inconnu" value="10"/>
+      <speed terrain="foret" value="0"/>
+      <speed terrain="plantation" value="2"/>
+      <speed terrain="marais" value="4"/>
       <speed terrain="dune" value="30"/>
       <speed terrain="urbain" value="60"/>
       <speed terrain="etendue eau" value="0"/>
@@ -1191,7 +1191,7 @@
       <speed terrain="nationale" value="70"/>
       <speed terrain="departementale" value="70"/>
       <speed terrain="ruisseau" value="20"/>
-      <speed terrain="riviere" value="10"/>
+      <speed terrain="riviere" value="0"/>
       <speed terrain="riviere importante" value="0"/>
       <speed terrain="pont" value="70"/>
       <speed terrain="falaise" value="0"/>
