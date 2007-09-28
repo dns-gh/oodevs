@@ -12,12 +12,15 @@
 #include "moc_AfterActionFunctionList.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ValuedListItem.h"
-#include "clients_gui/resources.h"
 #include "gaming/AfterActionFunctions.h"
 #include "gaming/AfterActionFunction.h"
 #include "gaming/AfterActionParameter.h"
+#include "gaming/ActionParameterContainer_ABC.h"
+#include "ParamAgent.h"
+#include "icons.h"
 #include <qtoolbox.h>
 #include <qvgroupbox.h>
+#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -40,12 +43,12 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
         buttons->setFrameStyle( QFrame::ToolBarPanel | QFrame::Raised );
 
         QToolButton* newBtn = new QToolButton( buttons );
-        newBtn->setIconSet( MAKE_PIXMAP( new ) );
+        newBtn->setIconSet( MAKE_PIXMAP( aaa_function_new ) );
         QToolTip::add( newBtn, tr( "New function" ) );
         connect( newBtn, SIGNAL( clicked() ), SIGNAL( NewFunction() ) );
 
         QToolButton* editBtn = new QToolButton( buttons );
-        editBtn->setIconSet( MAKE_PIXMAP( new ) ); // $$$$ AGE 2007-09-24: edit
+        editBtn->setIconSet( MAKE_PIXMAP( aaa_function_edit ) );
         QToolTip::add( editBtn, tr( "Edit function" ) );
         connect( editBtn, SIGNAL( clicked() ), SLOT( EditFunction() ) );
     }
@@ -111,6 +114,8 @@ void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
 {
     delete request_; request_ = 0;
     delete parameters_;
+    std::for_each( paramList_.begin(), paramList_.end(), boost::bind( &Param_ABC::RemoveFromController, _1 ) );
+    paramList_.clear();
     parameters_ = new QVGroupBox( tr( "Parameters" ), this );
     if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
     {
@@ -119,7 +124,7 @@ void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
         while( it.HasMoreElements() )
         {
             const AfterActionParameter& parameter = it.NextElement();
-            new QLabel( parameter.GetName(), parameters_ );
+            CreateParameter( parameter );
         }
     }
     parameters_->show();
@@ -137,6 +142,23 @@ void AfterActionFunctionList::EditFunction()
         emit EditFunction( item->GetValue< const AfterActionFunction >() );
 }
 
+namespace
+{
+    struct Serializer : public ActionParameterContainer_ABC
+    {
+        Serializer( const AfterActionFunction& function )
+            : function_( const_cast< AfterActionFunction* >( &function ) ) {}
+        virtual void AddParameter( ActionParameter_ABC& parameter )
+        {
+            std::string result;
+            parameter.CommitTo( result );
+            function_->SetParameter( parameter.GetName(), result );
+            delete& parameter;
+        }
+        AfterActionFunction* function_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: AfterActionFunctionList::Request
 // Created: AGE 2007-09-25
@@ -144,5 +166,40 @@ void AfterActionFunctionList::EditFunction()
 void AfterActionFunctionList::Request()
 {
     if( ValuedListItem* item = static_cast< ValuedListItem* >( functions_->selectedItem() ) )
-        emit CreateRequest( item->GetValue< const AfterActionFunction >() );
+        if( const AfterActionFunction* function = item->GetValue< const AfterActionFunction >() )
+        {
+            Serializer serializer( *function );
+            std::for_each( paramList_.begin(), paramList_.end(), 
+                boost::bind( &Param_ABC::CommitTo, _1, boost::ref( serializer ) ) );
+            emit CreateRequest( function );
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::CreateParameter
+// Created: AGE 2007-09-28
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Param_ABC > AfterActionFunctionList::CreateParameter( const std::string& type, const QString& name )
+{
+    boost::shared_ptr< Param_ABC > result;
+    if( type == "unit" )
+        result.reset( new ParamAgent( this, kernel::OrderParameter( name, type.c_str(), false ) ) );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::CreateParameter
+// Created: AGE 2007-09-28
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::CreateParameter( const AfterActionParameter& parameter )
+{
+    boost::shared_ptr< Param_ABC > pParameter = CreateParameter( parameter.GetType(), parameter.GetName() );
+    if( pParameter )
+    {
+        paramList_.push_back( pParameter );
+        pParameter->BuildInterface( parameters_ );
+        pParameter->RegisterIn( controllers_.actions_ );
+    }
+    else
+        new QLabel( parameter.GetName(), parameters_ );
 }

@@ -12,6 +12,10 @@
 
 #include "ActionParameter.h"
 #include "xeumeuleu/xml.h"
+#pragma warning (push)
+#pragma warning (disable : 4127 4511 4512 )
+#include <boost/lexical_cast.hpp>
+#pragma warning (pop)
 
 // =============================================================================
 /** @class  ActionParameterEntity
@@ -33,7 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( ASN1T_OID& oid ) const;
+    virtual void CommitTo( std::string& content ) const;
+    virtual void CommitTo( ASN1T_OID& oid ) const;
     //@}
 
 private:
@@ -89,6 +94,16 @@ template< typename ConcreteEntity >
 void ActionParameterEntity< ConcreteEntity >::CommitTo( ASN1T_OID& oid ) const
 {
     oid = GetValue()->GetId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterEntity::CommitTo
+// Created: AGE 2007-09-28
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void ActionParameterEntity< ConcreteEntity >::CommitTo( std::string& content ) const
+{
+    content += boost::lexical_cast< std::string >( GetValue()->GetId() );
 }
 
 // -----------------------------------------------------------------------------

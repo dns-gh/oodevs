@@ -34,8 +34,10 @@ public:
 
     //! @name Operations
     //@{
+    std::string GetType() const;
     QString GetName() const;
     void Commit( xml::xostream& xos, const std::string& name ) const;
+    void Set( const std::string& value );
     //@}
 
 private:

@@ -12,10 +12,10 @@
 #include "moc_AfterActionRequestList.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ItemFactory_ABC.h"
-#include "clients_gui/resources.h"
 #include "clients_gui/ListItemToolTip.h"
 #include "gaming/AfterActionRequest.h"
 #include "AfterActionPlot.h"
+#include "icons.h"
 
 using namespace kernel;
 using namespace gui;
@@ -54,9 +54,9 @@ AfterActionRequestList::AfterActionRequestList( QWidget* parent, QMainWindow* ma
     , controllers_( controllers )
     , factory_( factory )
     , publisher_( publisher )
-    , pendingPixmap_( MAKE_PIXMAP( autolog ) ) // $$$$ AGE 2007-09-25:
-    , donePixmap_   ( MAKE_PIXMAP( check ) )
-    , failedPixmap_ ( MAKE_PIXMAP( conflict ) ) // $$$$ AGE 2007-09-25:
+    , pendingPixmap_( MAKE_PIXMAP( aaa_pending ) )
+    , donePixmap_   ( MAKE_PIXMAP( aaa_valid ) )
+    , failedPixmap_ ( MAKE_PIXMAP( aaa_broken ) )
 {
     requests_ = new MyList( this, factory );
     requests_->AddColumn( tr( "Request" ) );

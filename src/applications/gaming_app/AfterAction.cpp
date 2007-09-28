@@ -15,9 +15,9 @@
 #include "AfterActionFunctionList.h"
 #include "AfterActionRequestList.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/resources.h"
 #include "gaming/AfterActionModel.h"
 #include "gaming/Simulation.h"
+#include "icons.h"
 
 // -----------------------------------------------------------------------------
 // Name: AfterAction constructor
@@ -70,14 +70,14 @@ void AfterAction::CreateEditionDock( QMainWindow* window, kernel::Controllers& c
             QToolButton* btn = new QToolButton( buttons );
             btn->setToggleButton( true );
             btn->setOn( true );
-            btn->setIconSet( MAKE_PIXMAP( open ) ); // $$$$ AGE 2007-09-18: Select
+            btn->setIconSet( MAKE_PIXMAP( aaa_move ) );
             QToolTip::add( btn, tr( "Select" ) );
             connect( btn, SIGNAL( clicked() ), canvas_, SLOT( Select() ) );
         }
         {
             QToolButton* btn = new QToolButton( buttons );
             btn->setToggleButton( true );
-            btn->setIconSet( MAKE_PIXMAP( open ) ); // $$$$ AGE 2007-09-18: Connect
+            btn->setIconSet( MAKE_PIXMAP( aaa_link ) );
             QToolTip::add( btn, tr( "Connect" ) );
             connect( btn, SIGNAL( clicked() ), canvas_, SLOT( Connect() ) );
         }

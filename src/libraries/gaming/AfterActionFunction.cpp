@@ -146,3 +146,12 @@ void AfterActionFunction::Add( AfterActionItem_ABC* item )
 {
     // $$$$ AGE 2007-09-25: 
 }
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::SetParameter
+// Created: AGE 2007-09-28
+// -----------------------------------------------------------------------------
+void AfterActionFunction::SetParameter( const QString& name, const std::string& value )
+{
+    Resolver< AfterActionParameter, std::string >::Get( name.ascii() ).Set( value );
+}

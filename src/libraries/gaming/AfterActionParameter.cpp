@@ -49,3 +49,21 @@ void AfterActionParameter::Commit( xml::xostream& xos, const std::string& name )
 {
     xos << xml::attribute( name, value_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionParameter::GetType
+// Created: AGE 2007-09-28
+// -----------------------------------------------------------------------------
+std::string AfterActionParameter::GetType() const
+{
+    return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionParameter::Set
+// Created: AGE 2007-09-28
+// -----------------------------------------------------------------------------
+void AfterActionParameter::Set( const std::string& value )
+{
+    value_ = value;
+}

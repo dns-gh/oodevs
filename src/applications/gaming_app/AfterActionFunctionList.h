@@ -17,6 +17,9 @@ namespace kernel
 {
     class Controllers;
 }
+
+class Param_ABC;
+class AfterActionParameter;
 class AfterActionFunction;
 class AfterActionFunctions;
 class QToolBox;
@@ -72,6 +75,13 @@ private:
     //@{
     virtual void NotifyUpdated( const AfterActionFunctions& );
     void CreateRequestButton();
+    void CreateParameter( const AfterActionParameter& parameter );
+    boost::shared_ptr< Param_ABC > CreateParameter( const std::string& type, const QString& name );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< boost::shared_ptr< Param_ABC > > T_Parameters;
     //@}
 
 private:
@@ -81,6 +91,7 @@ private:
     gui::ListDisplayer< AfterActionFunctionList >* functions_;
     QGroupBox* parameters_;
     QPushButton* request_;
+    T_Parameters paramList_;
     //@}
 };
 

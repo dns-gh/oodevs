@@ -59,5 +59,13 @@ DECLARE_ICON( activated );
 DECLARE_ICON( not_activated );
 DECLARE_ICON( replayer );
 DECLARE_ICON( timer );
+DECLARE_ICON( aaa_function_copy );
+DECLARE_ICON( aaa_function_edit );
+DECLARE_ICON( aaa_function_new );
+DECLARE_ICON( aaa_broken );
+DECLARE_ICON( aaa_pending );
+DECLARE_ICON( aaa_valid );
+DECLARE_ICON( aaa_link );
+DECLARE_ICON( aaa_move );
 
 #endif // __statusicons_h_

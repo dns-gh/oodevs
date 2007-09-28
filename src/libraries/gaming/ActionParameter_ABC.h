@@ -59,6 +59,7 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
 
     virtual void AddParameter( ActionParameter_ABC& parameter );
+    virtual void CommitTo( std::string& content ) const;
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void CommitTo( ASN1T_OrderContext& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;

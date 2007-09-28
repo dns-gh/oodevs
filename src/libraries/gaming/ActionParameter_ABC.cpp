@@ -165,6 +165,16 @@ geometry::Point2f ActionParameter_ABC::GetPosition() const
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameter_ABC::CommitTo
+// Created: AGE 2007-09-28
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::CommitTo( std::string& content ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->CommitTo( content );  
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 void ActionParameter_ABC::CommitTo( ASN1T_MissionParameter& asn ) const
