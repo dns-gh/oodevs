@@ -61,6 +61,9 @@ bool SimulationDispatcher::IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg
         case T_MsgsSimToClient_msg_msg_population_knowledge_destruction:
         case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_destruction:
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction:
+        case T_MsgsSimToClient_msg_msg_stop_fire_effect:
+        case T_MsgsSimToClient_msg_msg_stop_unit_fire:
+        case T_MsgsSimToClient_msg_msg_stop_population_fire:
             return false;
         default:
             return true;
