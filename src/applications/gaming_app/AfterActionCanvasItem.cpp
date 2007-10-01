@@ -48,6 +48,7 @@ AfterActionCanvasItem::~AfterActionCanvasItem()
     T_Connections toDelete( connections_ );
     for( IT_Connections it = toDelete.begin(); it != toDelete.end(); ++it )
         delete *it;
+    canvas_.Remove( item_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,9 +91,9 @@ void AfterActionCanvasItem::Remove( AfterActionCanvasConnection* connection )
     if( it != connections_.end() )
     {
         if( connection->From() == this && connection->To() )
-            item_.Disconnect( &connection->To()->item_ );
+            canvas_.Disconnect( item_, connection->To()->item_ );
         else if( connection->To() == this && connection->From() )
-            item_.Disconnect( & connection->From()->item_, connection->ToIndex() );
+            canvas_.Disconnect( item_, connection->From()->item_, connection->ToIndex() );
         std::swap( *it, connections_.back() );
         connections_.pop_back();
     }

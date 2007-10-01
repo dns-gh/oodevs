@@ -155,6 +155,9 @@ namespace
             function_->SetParameter( parameter.GetName(), result );
             delete& parameter;
         }
+    private:
+        Serializer( const Serializer& );
+        Serializer& operator=( const Serializer& );
         AfterActionFunction* function_;
     };
 }

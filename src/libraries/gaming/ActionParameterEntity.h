@@ -93,7 +93,8 @@ ActionParameterEntity< ConcreteEntity >::~ActionParameterEntity()
 template< typename ConcreteEntity >
 void ActionParameterEntity< ConcreteEntity >::CommitTo( ASN1T_OID& oid ) const
 {
-    oid = GetValue()->GetId();
+    if( GetValue() )
+        oid = GetValue()->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +104,8 @@ void ActionParameterEntity< ConcreteEntity >::CommitTo( ASN1T_OID& oid ) const
 template< typename ConcreteEntity >
 void ActionParameterEntity< ConcreteEntity >::CommitTo( std::string& content ) const
 {
-    content += boost::lexical_cast< std::string >( GetValue()->GetId() );
+    if( GetValue() )
+        content += boost::lexical_cast< std::string >( GetValue()->GetId() );
 }
 
 // -----------------------------------------------------------------------------

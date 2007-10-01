@@ -72,7 +72,7 @@ void AfterActionFunction::CreateItem( const std::string& type, xml::xistream& xi
     const std::string functionName = xml::attribute( xis, "function", type );
     const std::string id           = xml::attribute( xis, "id", type );
     AfterActionFactory& function = factories.Get( functionName.c_str() );
-    ItemResolver::Register( id, *function.Create( *this ) );
+    function.Create( *this, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,19 +139,49 @@ kernel::Iterator< const AfterActionItem_ABC& > AfterActionFunction::CreateItemIt
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionFunction::Add
-// Created: AGE 2007-09-25
-// -----------------------------------------------------------------------------
-void AfterActionFunction::Add( AfterActionItem_ABC* item )
-{
-    // $$$$ AGE 2007-09-25: 
-}
-
-// -----------------------------------------------------------------------------
 // Name: AfterActionFunction::SetParameter
 // Created: AGE 2007-09-28
 // -----------------------------------------------------------------------------
 void AfterActionFunction::SetParameter( const QString& name, const std::string& value )
 {
     Resolver< AfterActionParameter, std::string >::Get( name.ascii() ).Set( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::Remove
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+void AfterActionFunction::Remove( AfterActionItem_ABC& item )
+{
+    for( ItemResolver::IT_Elements it = ItemResolver::elements_.begin(); it != ItemResolver::elements_.end(); ++it )
+        if( it->second == &item )
+        {
+            delete it->second;
+            ItemResolver::elements_.erase( it );
+            return;
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::Remove
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+void AfterActionFunction::Remove( AfterActionParameter& item )
+{
+    for( ParameterResolver::IT_Elements it = ParameterResolver::elements_.begin(); it != ParameterResolver::elements_.end(); ++it )
+        if( it->second == &item )
+        {
+            delete it->second;
+            ParameterResolver::elements_.erase( it );
+            return;
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::Add
+// Created: AGE 2007-09-25
+// -----------------------------------------------------------------------------
+void AfterActionFunction::Add( const std::string& id, AfterActionItem_ABC& item )
+{
+    ItemResolver::Register( id, item );
 }

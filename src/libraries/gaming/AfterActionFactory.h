@@ -38,7 +38,7 @@ public:
     //@{
     const QString& GetName() const;
     const QString& GetType() const;
-    AfterActionItem_ABC* Create( AfterActionFunction& function ) const;
+    AfterActionItem_ABC* Create( AfterActionFunction& function, std::string id = std::string() ) const;
     //@}
 
 private:

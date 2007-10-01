@@ -85,7 +85,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const AfterActionCanvas& canvas_;
+    AfterActionCanvas& canvas_;
     AfterActionItem_ABC& item_;
     T_Items subItems_;
     T_Items inputs_;

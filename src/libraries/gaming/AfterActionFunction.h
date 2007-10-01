@@ -46,8 +46,10 @@ public:
     kernel::Iterator< const AfterActionParameter& > CreateParameterIterator() const;
     kernel::Iterator< const AfterActionItem_ABC& >  CreateItemIterator() const;
 
-    void Add( AfterActionItem_ABC* item );
     void SetParameter( const QString& name, const std::string& value );
+    void Remove( AfterActionItem_ABC& item );
+    void Remove( AfterActionParameter& remove );
+    void Add( const std::string& id, AfterActionItem_ABC& item );
     //@}
 
 private:

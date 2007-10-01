@@ -256,6 +256,7 @@ void AfterActionCanvas::Select()
 // -----------------------------------------------------------------------------
 void AfterActionCanvas::Clear()
 {
+    function_ = 0;
     ClearSelection();
     for( IT_Items it = items_.begin(); it != items_.end(); ++it )
         delete *it;
@@ -300,3 +301,35 @@ AfterActionCanvasItem* AfterActionCanvas::Resolve( AfterActionItem_ABC* item ) c
     T_Items::const_iterator it = std::find_if( items_.begin(), items_.end(), boost::bind( &AfterActionCanvasItem::Holds, _1, item ) );
     return it != items_.end() ? *it : 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvas::Remove
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+void AfterActionCanvas::Remove( AfterActionItem_ABC& item )
+{
+    if( function_ )
+        function_->Remove( item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvas::Disconnect
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+void AfterActionCanvas::Disconnect( AfterActionItem_ABC& from, AfterActionItem_ABC& to )
+{
+    if( function_ )
+        from.Disconnect( &to );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvas::Disconnect
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+void AfterActionCanvas::Disconnect( AfterActionItem_ABC& from, AfterActionItem_ABC& to, int index )
+{
+    if( function_ )
+        from.Disconnect( &to, index );
+}
+
+

@@ -38,6 +38,9 @@ public:
     //@{
     void Edit( const AfterActionFunction* function );
     AfterActionCanvasItem* Resolve( AfterActionItem_ABC* item ) const;
+    void Remove( AfterActionItem_ABC& item );
+    void Disconnect( AfterActionItem_ABC& from, AfterActionItem_ABC& to );
+    void Disconnect( AfterActionItem_ABC& from, AfterActionItem_ABC& to, int index );
     //@}
 
 private slots:

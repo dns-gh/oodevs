@@ -11,6 +11,7 @@
 #include "AfterActionItem.h"
 #include "AfterActionBuilder_ABC.h"
 #include "AfterActionParameter.h"
+#include "AfterActionFunction.h"
 #include <xeumeuleu/xml.h>
 #pragma warning (disable : 4127 4511 4512 )
 #include <boost/algorithm/string.hpp>
@@ -47,7 +48,7 @@ AfterActionItem::AfterActionItem( const std::string& type, xml::xistream& xis )
 // Name: AfterActionItem constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionItem::AfterActionItem( const AfterActionItem& base, kernel::Resolver_ABC< AfterActionParameter, std::string >& parameters )
+AfterActionItem::AfterActionItem( const AfterActionItem& base, AfterActionFunction& parameters )
     : parameters_       ( &parameters )
     , type_             ( base.type_ )
     , name_             ( base.name_ )
@@ -73,6 +74,8 @@ AfterActionItem::~AfterActionItem()
             (*it)->Disconnect( this );
     for( IT_OutgoingConnections it = outputConnections_.begin(); it != outputConnections_.end(); ++it )
         it->first->Disconnect( this, it->second );
+    if( parameter_ && parameters_ )
+        parameters_->Remove( *parameter_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +114,7 @@ void AfterActionItem::Connect( xml::xistream& xis, Resolver_ABC< AfterActionItem
         }
     }
     if( ! parameterName_.empty() && parameters_ )
-        parameter_ = &parameters_->Get( xml::attribute< std::string >( xis, parameterName_ ) );
+        parameter_ = &parameters_->kernel::Resolver< AfterActionParameter, std::string >::Get( xml::attribute< std::string >( xis, parameterName_ ) );
 }
 
 // -----------------------------------------------------------------------------
