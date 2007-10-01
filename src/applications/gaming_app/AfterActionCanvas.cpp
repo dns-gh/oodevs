@@ -96,7 +96,7 @@ void AfterActionCanvas::ClearSelection()
     canvas()->update();
 }
 
-namespace 
+namespace
 {
     template< typename T, typename TO >
     void ChangeSelection( T* newSelection, T*& selection, TO*& other )
@@ -161,7 +161,7 @@ void AfterActionCanvas::contentsMouseMoveEvent( QMouseEvent* event )
         return;
     if( connect_ )
         Connect( event );
-    else 
+    else
         Move( event );
 }
 
@@ -282,6 +282,21 @@ void AfterActionCanvas::Edit( const AfterActionFunction* function )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AfterActionCanvas::Delete
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+bool AfterActionCanvas::Delete( const AfterActionFunction* function )
+{
+    if( function == function_ )
+    {
+        Clear();
+        return true;
+    }
+    return false;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: AfterActionCanvas::Add
 // Created: AGE 2007-09-27
 // -----------------------------------------------------------------------------
@@ -331,5 +346,3 @@ void AfterActionCanvas::Disconnect( AfterActionItem_ABC& from, AfterActionItem_A
     if( function_ )
         from.Disconnect( &to, index );
 }
-
-

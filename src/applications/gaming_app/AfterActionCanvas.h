@@ -36,6 +36,7 @@ public:
 
     //! @name Operations
     //@{
+    bool Delete( const AfterActionFunction* function );
     void Edit( const AfterActionFunction* function );
     AfterActionCanvasItem* Resolve( AfterActionItem_ABC* item ) const;
     void Remove( AfterActionItem_ABC& item );

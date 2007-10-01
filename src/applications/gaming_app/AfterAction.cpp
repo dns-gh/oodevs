@@ -103,7 +103,8 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, kernel::Controller
     functionsTab_ = new QTabWidget( box );
 
     AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory );
-    connect( list, SIGNAL( EditFunction( const AfterActionFunction* ) ), SLOT( OnEditFunction( const AfterActionFunction* ) ) );
+    connect( list, SIGNAL( EditFunction  ( const AfterActionFunction* ) ), SLOT( OnEditFunction( const AfterActionFunction* ) ) );
+    connect( list, SIGNAL( DeleteFunction( const AfterActionFunction* ) ), SLOT( OnDeleteFunction( const AfterActionFunction* ) ) );
     connect( list, SIGNAL( NewFunction() ), SLOT( OnNewFunction() ) );
     connect( list, SIGNAL( CreateRequest( const AfterActionFunction* ) ), SLOT( OnCreateRequest( const AfterActionFunction* ) ) );
     functionsTab_->addTab( list, tr( "Functions" ) );
@@ -127,6 +128,16 @@ void AfterAction::OnEditFunction( const AfterActionFunction* function )
 {
     editionDock_->show();
     canvas_->Edit( function );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterAction::OnDeleteFunction
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+void AfterAction::OnDeleteFunction( const AfterActionFunction* function )
+{
+    if( canvas_->Delete( function ) )
+        editionDock_->hide();
 }
 
 // -----------------------------------------------------------------------------

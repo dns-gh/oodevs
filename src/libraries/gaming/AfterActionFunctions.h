@@ -43,6 +43,8 @@ public:
     //@{
     void Load( const std::string& functions );
     AfterActionFunction* Create();
+    QString Rename( AfterActionFunction& function, const QString& name );
+    void Erase( const AfterActionFunction& function );
     //@}
 
 private:

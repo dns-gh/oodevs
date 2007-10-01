@@ -80,4 +80,28 @@ AfterActionFunction* AfterActionFunctions::Create()
     return function;
 }
 
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctions::Rename
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+QString AfterActionFunctions::Rename( AfterActionFunction& function, const QString& name )
+{
+    if( ! Find( name ) )
+    {
+        Remove( function.GetName() );
+        function.Rename( name );
+        Register( name, function );
+    }
+    return function.GetName();
+}
 
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctions::Erase
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+void AfterActionFunctions::Erase( const AfterActionFunction& function )
+{
+    Remove( function.GetName() );
+    delete &function;
+    controller_.Update( *this );
+}

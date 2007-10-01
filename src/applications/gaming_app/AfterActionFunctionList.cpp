@@ -32,11 +32,12 @@ using namespace gui;
 AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory )
     : QVBox( parent )
     , controllers_( controllers )
+    , model_( 0 )
     , parameters_( 0 )
     , request_( 0 )
 {
     {
-        QButtonGroup* buttons = new QButtonGroup( 2, Qt::Horizontal, this );
+        QButtonGroup* buttons = new QButtonGroup( 4, Qt::Horizontal, this );
         buttons->layout()->setAlignment( Qt::AlignCenter );
         buttons->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
         buttons->setBackgroundMode( Qt::PaletteButton );
@@ -51,12 +52,18 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
         editBtn->setIconSet( MAKE_PIXMAP( aaa_function_edit ) );
         QToolTip::add( editBtn, tr( "Edit function" ) );
         connect( editBtn, SIGNAL( clicked() ), SLOT( EditFunction() ) );
+
+        QToolButton* deleteBtn = new QToolButton( buttons );
+        deleteBtn->setIconSet( MAKE_PIXMAP( aaa_function_edit ) ); // $$$$ AGE 2007-10-01: 
+        QToolTip::add( deleteBtn, tr( "Delete function" ) );
+        connect( deleteBtn, SIGNAL( clicked() ), SLOT( DeleteFunction() ) );
     }
 
     functions_ = new ListDisplayer< AfterActionFunctionList >( this, *this, factory );
     functions_->AddColumn( tr( "Name" ) );
     parameters_ = new QVGroupBox( tr( "Parameters" ), this );
     connect( functions_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( functions_, SIGNAL( itemRenamed( QListViewItem* , int , const QString& ) ), SLOT( OnRename( QListViewItem* , int , const QString& ) ) );
 
     CreateRequestButton();
     request_->setEnabled( false );
@@ -92,6 +99,8 @@ void AfterActionFunctionList::CreateRequestButton()
 // -----------------------------------------------------------------------------
 void AfterActionFunctionList::NotifyUpdated( const AfterActionFunctions& model )
 {
+    // $$$$ AGE 2007-10-01: n'importe quoi partout...
+    model_ = const_cast< AfterActionFunctions* >( &model );
     functions_->DeleteTail(
         functions_->DisplayList( model.CreateIterator() )
         );
@@ -104,6 +113,7 @@ void AfterActionFunctionList::NotifyUpdated( const AfterActionFunctions& model )
 void AfterActionFunctionList::Display( const AfterActionFunction& function, Displayer_ABC& , ValuedListItem* item )
 {
     item->SetNamed( function );
+    item->setRenameEnabled( 0, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,6 +152,22 @@ void AfterActionFunctionList::EditFunction()
         emit EditFunction( item->GetValue< const AfterActionFunction >() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::DeleteFunction
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::DeleteFunction()
+{
+    if( ! model_ )
+        return;
+    if( ValuedListItem* item = static_cast< ValuedListItem* >( functions_->selectedItem() ) )
+        if( const AfterActionFunction* function = item->GetValue< const AfterActionFunction >() )
+        {
+            emit DeleteFunction( function );
+            model_->Erase( *function );
+        }
+}
+
 namespace
 {
     struct Serializer : public ActionParameterContainer_ABC
@@ -172,7 +198,7 @@ void AfterActionFunctionList::Request()
         if( const AfterActionFunction* function = item->GetValue< const AfterActionFunction >() )
         {
             Serializer serializer( *function );
-            std::for_each( paramList_.begin(), paramList_.end(), 
+            std::for_each( paramList_.begin(), paramList_.end(),
                 boost::bind( &Param_ABC::CommitTo, _1, boost::ref( serializer ) ) );
             emit CreateRequest( function );
         }
@@ -205,4 +231,20 @@ void AfterActionFunctionList::CreateParameter( const AfterActionParameter& param
     }
     else
         new QLabel( parameter.GetName(), parameters_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::OnRename
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::OnRename( QListViewItem* i, int , const QString& name )
+{
+    if( !model_ )
+        return;
+    if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
+        if( const AfterActionFunction* f = item->GetValue< const AfterActionFunction >() )
+        {
+            AfterActionFunction* function = const_cast< AfterActionFunction* >( f );
+            i->setText( 0, model_->Rename( *function, name ) );
+        }
 }

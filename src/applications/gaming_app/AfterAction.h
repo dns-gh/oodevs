@@ -53,9 +53,10 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnEditFunction( const AfterActionFunction* function );
     void OnNewFunction();
+    void OnEditFunction( const AfterActionFunction* function );
     void OnCreateRequest( const AfterActionFunction* function );
+    void OnDeleteFunction( const AfterActionFunction* function );
     //@}
 
 private:

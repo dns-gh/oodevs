@@ -54,6 +54,7 @@ signals:
     void NewFunction();
     void EditFunction( const AfterActionFunction* function );
     void CreateRequest( const AfterActionFunction* function );
+    void DeleteFunction( const AfterActionFunction* function );
     //@}
 
 private slots:
@@ -61,7 +62,9 @@ private slots:
     //@{
     void OnSelectionChange( QListViewItem* item );
     void EditFunction();
+    void DeleteFunction();
     void Request();
+    void OnRename( QListViewItem* , int , const QString& );
     //@}
 
 private:
@@ -89,6 +92,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::ListDisplayer< AfterActionFunctionList >* functions_;
+    AfterActionFunctions* model_;
     QGroupBox* parameters_;
     QPushButton* request_;
     T_Parameters paramList_;

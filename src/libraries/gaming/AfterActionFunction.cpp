@@ -185,3 +185,12 @@ void AfterActionFunction::Add( const std::string& id, AfterActionItem_ABC& item 
 {
     ItemResolver::Register( id, item );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::Rename
+// Created: AGE 2007-10-01
+// -----------------------------------------------------------------------------
+void AfterActionFunction::Rename( const QString& name )
+{
+    name_ = name.ascii();
+}
