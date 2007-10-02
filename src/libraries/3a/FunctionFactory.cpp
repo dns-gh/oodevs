@@ -360,6 +360,8 @@ namespace
         template< typename T > NullType  operator/ ( const T& ) const { return *this; }
         template< typename T > bool operator==( const T& ) const { return false; }
         template< typename T > bool operator!=( const T& ) const { return false; }
+        template< typename T > bool operator<( const T& ) const { return false; }
+        template< typename T > bool operator>( const T& ) const { return false; }
     };
     std::istream& operator>>( std::istream& stream, NullType& ) { return stream; }
 }
@@ -394,8 +396,10 @@ void FunctionFactory::Plot( xml::xistream& xis, Task& result )
     const std::string type = xml::attribute< std::string >( xis, "type" );
     if( type == "float" )
         Plot< float >( result );
-    else if( type == "unsigned" || type == "unsigned int" || type == "unit" )
+    else if( type == "unsigned" || type == "unsigned int" ) 
         Plot< unsigned >( result );
+    else if( type == "unit" )
+        Plot< unsigned long >( result );
     else
         TypeError( type );
 }

@@ -34,9 +34,9 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Derivate( Function1_ABC< K, T >& next )
-                : next_( next ), previous_() {}
+                : next_( next ), currentKey_() {}
              Derivate( xml::xistream& , Function1_ABC< K, T >& next )
-                : next_( next ), previous_() {}
+                : next_( next ), currentKey_() {}
     //@}
 
     //! @name Operations
@@ -47,12 +47,14 @@ public:
     }
     virtual void SetKey( const K& key )
     {
+        currentKey_ = key;
         next_.SetKey( key );
     }
     virtual void Apply( const T& arg )
     {
-        next_.Apply( T( arg - previous_ ) );
-        previous_ = arg;
+        T& previous = previous_[ currentKey_ ];
+        next_.Apply( T( arg - previous ) );
+        previous = arg;
     }
     virtual void EndTick()
     {
@@ -71,7 +73,8 @@ private:
     //! @name Member data
     //@{
     Function1_ABC< K, T >& next_;
-    T previous_;
+    std::map< K, T > previous_;
+    K currentKey_;
     //@}
 };
 

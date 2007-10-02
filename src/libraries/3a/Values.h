@@ -96,11 +96,15 @@ template< typename T >
 struct PulsedValue : public Value< T >
 {
     PulsedValue()
-        : value_(), set_( false ) {}
+        : value_(), flagForReset_( false ), set_( false ) {}
     void Prepare()
     {
-        // NOTHING
-    };
+        if( flagForReset_ )
+        {
+            set_ = false;
+            flagForReset_ = false;
+        }
+    }
     void Push( ValueHandler_ABC< Type >& handler )
     {
         if( set_ )
@@ -113,9 +117,10 @@ struct PulsedValue : public Value< T >
     }
     void Reset()
     {
-        set_ = false;
+        flagForReset_ = true;
     }
     Type value_;
+    bool flagForReset_;
     bool set_;
 };
 

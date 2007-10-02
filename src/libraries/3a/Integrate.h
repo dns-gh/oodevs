@@ -34,9 +34,9 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Integrate( Function1_ABC< K, T >& next )
-                : next_( next ), sum_() {}
+                : next_( next ), currentKey_() {}
              Integrate( xml::xistream& , Function1_ABC< K, T >& next )
-                : next_( next ), sum_() {}
+                : next_( next ), currentKey_() {}
     //@}
 
     //! @name Operations
@@ -47,12 +47,14 @@ public:
     }
     virtual void SetKey( const K& key )
     {
+        currentKey_ = key;
         next_.SetKey( key );
     }
     virtual void Apply( const T& arg )
     {
-        sum_ += arg;
-        next_.Apply( sum_ );
+        T& sum = sum_[ currentKey_ ];
+        sum += arg;
+        next_.Apply( sum );
     }
     virtual void EndTick()
     {
@@ -71,7 +73,8 @@ private:
     //! @name Member data
     //@{
     Function1_ABC< K, T >& next_;
-    T sum_;
+    std::map< K, T > sum_;
+    K currentKey_;
     //@}
 };
 

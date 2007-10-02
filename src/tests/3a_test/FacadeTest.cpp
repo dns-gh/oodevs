@@ -258,7 +258,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
     task->Receive( EndTick() );
 
     MockPublisher publisher;
-    double expectedResult[] = { 1., 2., 2., 1., 1. };
+    double expectedResult[] = { 1., 2., 2., 2., 1. };
     MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
     task->Commit( publisher );
     publisher.verify();
@@ -302,7 +302,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
     task->Receive( EndTick() );
 
     MockPublisher publisher;
-    double expectedResult[] = { 2., 3., 3., 2., 2. };
+    double expectedResult[] = { 2., 3., 3., 3., 2. };
     MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
     task->Commit( publisher );
     publisher.verify();
@@ -322,10 +322,17 @@ namespace
         return result;
     }
 
-    ASN1T_MsgsSimToClient StopFire( unsigned fire_id )
+    ASN1T_MsgsSimToClient StopFire( unsigned fire_id, unsigned long damage_count = 0 )
     {
         static ASN1T_MsgStopUnitFire fire;
+        static ASN1T_UnitFireDamages damages;
+        static ASN1T_UnitEquipmentFireDamage damage;
         fire.fire_oid  = fire_id;
+        fire.units_damages.n = 1;
+        fire.units_damages.elem = &damages;
+        damages.equipments.n = 1;
+        damages.equipments.elem = &damage;
+        damage.unavailable_nbr = damage_count;
 
         ASN1T_MsgsSimToClient result;
         result.msg.t = T_MsgsSimToClient_msg_msg_stop_unit_fire;
@@ -387,7 +394,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter )
     task->Receive( EndTick() );
 
     MockPublisher publisher;
-    double expectedResult[] = { 1., 0., 0., 1., 1. };
+    double expectedResult[] = { 1., 1., 0., 1., 1. };
     MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
     task->Commit( publisher );
     publisher.verify();
@@ -405,28 +412,54 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter )
 // Name: Facade_TestInflictedComponentDamagesFromDirectFire
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-//BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
-//{
-//    const std::string input =
-//    "<indicator>"
-//        "<extract function='fire-component-damage' id='damages'/>"
-//        "<extract function='direct-fire-unit' id='units'/>"
-//        "<transform function='is-one-of' type='unsigned long' select='12,42' input='units' id='selected-fires'/>"
-//        "<transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
-//        "<reduce type='float' function='sum' input='the-damages' id='sum'/>"
-//        "<plot input='sum' type='float'/>"
-//    "</indicator>";
-//    xml::xistringstream xis( input );
-//
-//    FunctionFactory facade;
-//    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
-//
-//    MockPublisher publisher;
-//    double expectedResult[] = { 5., 0., 0., 3., 0. };
-//    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
-//    task->Commit( publisher );
-//    publisher.verify();
-//}
+BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='fire-component-damage' id='damages'/>"
+        "<extract function='direct-fire-unit' id='units'/>"
+        "<transform function='is-one-of' type='unsigned long' select='12,42' input='units' id='selected-fires'/>"
+        "<transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
+        "<reduce type='float' function='sum' input='the-damages' id='sum'/>"
+        "<plot input='sum' type='float'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 12, 12 ) );
+    task->Receive( CreateDirectFire( 13, 13 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 12, 5 ) );
+    task->Receive( StopFire( 13 ) );
+    task->Receive( CreateDirectFire( 14, 14 ) );
+    task->Receive( CreateDirectFire( 15, 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 13 ) );
+    task->Receive( StopFire( 14 ) );
+    task->Receive( StopFire( 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 16, 15 ) );
+    task->Receive( CreateDirectFire( 17, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 16 ) );
+    task->Receive( CreateDirectFire( 18, 13 ) );
+    task->Receive( CreateDirectFire( 19, 14 ) );
+    task->Receive( StopFire( 17, 3. ) );
+    task->Receive( EndTick() );
+
+    MockPublisher publisher;
+    double expectedResult[] = { 0., 5., 0., 0., 3. };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit( publisher );
+    publisher.verify();
+}
 
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]
