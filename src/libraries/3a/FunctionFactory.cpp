@@ -283,7 +283,7 @@ void FunctionFactory::Reduce( xml::xistream& xis, Task& result )
         Reduce< ::Position >( name, xis, result );
     else if( type == "bool" )
         Reduce< bool >( name, xis, result );
-    else if( type == "unsigned long" )
+    else if( type == "unsigned long" || type == "unit" )
         Reduce< unsigned long >( name, xis, result );
     else
         TypeError( type );
@@ -375,7 +375,7 @@ void FunctionFactory::Transform( xml::xistream& xis, Task& result )
         >> xml::optional() >> xml::attribute( "type", type );
     if( type == "bool" )
         Transform< bool >( name, xis, result );
-    else if( type == "unsigned long" )
+    else if( type == "unsigned long" || type == "unit" )
         Transform< unsigned long >( name, xis, result );
     else if( type == "float" )
         Transform< float >( name, xis, result );
@@ -394,7 +394,7 @@ void FunctionFactory::Plot( xml::xistream& xis, Task& result )
     const std::string type = xml::attribute< std::string >( xis, "type" );
     if( type == "float" )
         Plot< float >( result );
-    else if( type == "unsigned" || type == "unsigned int" )
+    else if( type == "unsigned" || type == "unsigned int" || type == "unit" )
         Plot< unsigned >( result );
     else
         TypeError( type );
