@@ -54,7 +54,7 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
         connect( editBtn, SIGNAL( clicked() ), SLOT( EditFunction() ) );
 
         QToolButton* deleteBtn = new QToolButton( buttons );
-        deleteBtn->setIconSet( MAKE_PIXMAP( aaa_function_edit ) ); // $$$$ AGE 2007-10-01: 
+        deleteBtn->setIconSet( MAKE_PIXMAP( aaa_function_delete ) );
         QToolTip::add( deleteBtn, tr( "Delete function" ) );
         connect( deleteBtn, SIGNAL( clicked() ), SLOT( DeleteFunction() ) );
     }

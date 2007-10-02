@@ -61,6 +61,7 @@ DECLARE_ICON( replayer );
 DECLARE_ICON( timer );
 DECLARE_ICON( aaa_function_copy );
 DECLARE_ICON( aaa_function_edit );
+DECLARE_ICON( aaa_function_delete );
 DECLARE_ICON( aaa_function_new );
 DECLARE_ICON( aaa_broken );
 DECLARE_ICON( aaa_pending );

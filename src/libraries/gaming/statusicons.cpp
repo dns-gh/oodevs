@@ -59,6 +59,7 @@
 #include "res/timer.xpm"
 #include "res/aaa_function_copy.xpm"
 #include "res/aaa_function_edit.xpm"
+#include "res/aaa_function_delete.xpm"
 #include "res/aaa_function_new.xpm"
 #include "res/aaa_broken.xpm"
 #include "res/aaa_pending.xpm"
