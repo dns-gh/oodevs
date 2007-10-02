@@ -27,6 +27,9 @@ struct IdentifierValue : public InstantValue< unsigned long >
 #define SET_CONSIGN_OID( tag )                          \
     case( T_MsgsSimToClient_msg_##tag ):                \
         Set( message.msg.u.tag->oid_consigne ); break;
+#define SET_FIRE_OID( tag )                             \
+    case( T_MsgsSimToClient_msg_##tag ):                \
+        Set( message.msg.u.tag->fire_oid ); break;
 
     //! @name Operations
     //@{
@@ -58,6 +61,10 @@ struct IdentifierValue : public InstantValue< unsigned long >
             SET_CONSIGN_OID( msg_log_supply_handling_creation );
             SET_CONSIGN_OID( msg_log_supply_handling_update );
             SET_CONSIGN_OID( msg_log_supply_handling_destruction );
+            SET_FIRE_OID( msg_start_unit_fire );
+            SET_FIRE_OID( msg_stop_unit_fire );
+            SET_FIRE_OID( msg_start_population_fire );
+            SET_FIRE_OID( msg_stop_population_fire );
             // $$$$ AGE 2007-08-29: objets, ...
         };
     }

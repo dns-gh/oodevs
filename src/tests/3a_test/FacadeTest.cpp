@@ -58,7 +58,6 @@ namespace
         virtual void Send( const ASN1T_MsgsAarToClient& msg )
         {
             const ASN1T_MsgIndicatorResult& result = *msg.msg.u.msg_indicator_result;
-            std::vector< double > v;
             for( unsigned i = 0; i < result.values.n; ++i )
                 Send_mocker.forward( result.values.elem[i] );
         };
@@ -182,7 +181,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime )
 {
-    const std::string input =   
+    const std::string input =
     "<indicator>"
         "<extract function='position' id='position'/>"
         "<reduce type='position' function='sum' input='position' id='position2'/>" // summing positions
@@ -309,6 +308,162 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
     publisher.verify();
 }
 
+namespace
+{
+    ASN1T_MsgsSimToClient CreateDirectFire( unsigned fire_id, unsigned long firer )
+    {
+        static ASN1T_MsgStartUnitFire fire;
+        fire.fire_oid  = fire_id;
+        fire.firer_oid = firer;
+
+        ASN1T_MsgsSimToClient result;
+        result.msg.t = T_MsgsSimToClient_msg_msg_start_unit_fire;
+        result.msg.u.msg_start_unit_fire = &fire;
+        return result;
+    }
+
+    ASN1T_MsgsSimToClient StopFire( unsigned fire_id )
+    {
+        static ASN1T_MsgStopUnitFire fire;
+        fire.fire_oid  = fire_id;
+
+        ASN1T_MsgsSimToClient result;
+        result.msg.t = T_MsgsSimToClient_msg_msg_stop_unit_fire;
+        result.msg.u.msg_stop_unit_fire = &fire;
+        return result;
+    }
+}
+
+//CREATE PROCEDURE dbo.[AAAT_MELEE-APPUI_NOMBRE_DE_COUPS_DIRECTS_TIRES_PAR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2]
+//(
+//  @TDebut DATETIME,           -- Date de debut de l'intervalle
+//  @TFin DATETIME,         -- Date de fin de l'intervalle
+//  @Unites  unit_id_tablename,     -- Groupe d'unites
+//  @Resultat tablename OUTPUT      -- Table contenant le résultat
+//)
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestNumberOfDirectFiresWithUnitFilter
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='direct-fire-unit' id='fires'/>"
+        "<transform function='is-one-of' type='unsigned long' select='12,42' input='fires' id='selected-fires'/>"
+        "<transform function='filter' type='unsigned long' input='selected-fires,fires' id='the-fires'/>"
+        "<reduce type='unsigned long' function='count' input='the-fires' id='count'/>"
+        "<plot input='count' type='unsigned'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 12, 12 ) );
+    task->Receive( CreateDirectFire( 13, 13 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 12 ) );
+    task->Receive( StopFire( 13 ) );
+    task->Receive( CreateDirectFire( 14, 14 ) );
+    task->Receive( CreateDirectFire( 15, 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 13 ) );
+    task->Receive( StopFire( 14 ) );
+    task->Receive( StopFire( 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 16, 15 ) );
+    task->Receive( CreateDirectFire( 17, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 16 ) );
+    task->Receive( CreateDirectFire( 18, 13 ) );
+    task->Receive( CreateDirectFire( 19, 14 ) );
+    task->Receive( EndTick() );
+
+    MockPublisher publisher;
+    double expectedResult[] = { 1., 0., 0., 1., 1. };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit( publisher );
+    publisher.verify();
+}
+
+//CREATE PROCEDURE DBO.[AAAT_MELEE-APPUI_PERTES_EN_MATERIEL_INFLIGEES_PAR_UNE_UNITE_PAR_TIR_DIRECT_ENTRE_T1_ET_T2]
+//(
+//  @TDebut DATETIME,               -- Date debut
+//  @TFin DATETIME,                 -- Date Fin
+//  @Unites unit_id_tablename,      -- Groupe d unites
+//  @Resultat tablename OUT         -- Table de resultats
+//)
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestInflictedComponentDamagesFromDirectFire
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+//BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
+//{
+//    const std::string input =
+//    "<indicator>"
+//        "<extract function='fire-component-damage' id='damages'/>"
+//        "<extract function='direct-fire-unit' id='units'/>"
+//        "<transform function='is-one-of' type='unsigned long' select='12,42' input='units' id='selected-fires'/>"
+//        "<transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
+//        "<reduce type='float' function='sum' input='the-damages' id='sum'/>"
+//        "<plot input='sum' type='float'/>"
+//    "</indicator>";
+//    xml::xistringstream xis( input );
+//
+//    FunctionFactory facade;
+//    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
+//
+//    MockPublisher publisher;
+//    double expectedResult[] = { 5., 0., 0., 3., 0. };
+//    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+//    task->Commit( publisher );
+//    publisher.verify();
+//}
+
+// $$$$ AGE 2007-09-10: ressources consommées => variation <0
+//CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]
+//(
+//  @TDebut DATETIME,           -- Date Debut
+//  @TFin DATETIME,             -- Date Fin
+//  @Unites unit_id_tablename,      -- Unites concernees
+//  @Ressources ressource_id_tablename, -- Ressource … comptabiliser
+//  @Resultat tablename OUTPUT      -- Table de resultats
+//)
+
+//CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_DISPONIBLES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Pourcentages)]
+//(
+//  @TDebut DATETIME,           -- Date Debut
+//  @Unites unit_id_tablename,      -- Unites concernees
+//  @Ressources ressource_id_tablename, -- Ressource à comptabiliser
+//  @Resultat tablename OUTPUT      -- Table de resultats
+//)
+
+// $$$$ AGE 2007-09-10: UE-UF-JV => consommation normalisée
+//CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_STOCKS_DISPONIBLES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(UE-UF-JV)]
+//(
+//  @TDebut DATETIME,           -- Date Debut
+//  @Unites unit_id_tablename,      -- Unites concernees
+//  @Ressources ressource_id_tablename, -- Ressource à comptabiliser
+//  @Resultat tablename OUTPUT      -- Table de resultats
+//)
+
+// $$$$ AGE 2007-09-10: pourcentage efficacité => nombre de tirs avec degat / nombre de tirs
+//CREATE PROCEDURE dbo.[AAAT_MELEE-APPUI_POURCENTAGE_EFFICACITE_DES_TIRS_INDIRECTS_D_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2]
+//(
+//  @TDebut DATETIME,           -- DATE DEBUT
+//  @TFin DATETIME,         -- DATE FIN
+//  @Unites  unit_id_tablename,     -- UNITES CONCERNEES
+//  @Resultat tablename OUTPUT      -- TABLE DES RESULTATS
+//)
+
 //CREATE PROCEDURE DBO.[AAAT_LOGISTIQUE_MATERIELS_AU_NTI2_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Pourcentages)]
 //(
 //  @TDebut DATETIME,               -- Date
@@ -375,56 +530,4 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
 //  @Unites unit_id_tablename,              -- Unites concernees
 //  @Materiels equipment_id_tablename,          -- Materiels a prendre en compte
 //  @Resultat tablename OUT             -- Tableau de resultat
-//)
-
-// $$$$ AGE 2007-09-10: ressources consommées => variation <0
-//CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]
-//(
-//  @TDebut DATETIME,           -- Date Debut
-//  @TFin DATETIME,             -- Date Fin
-//  @Unites unit_id_tablename,      -- Unites concernees
-//  @Ressources ressource_id_tablename, -- Ressource … comptabiliser
-//  @Resultat tablename OUTPUT      -- Table de resultats
-//)
-
-//CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_DISPONIBLES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Pourcentages)]
-//(
-//  @TDebut DATETIME,           -- Date Debut
-//  @Unites unit_id_tablename,      -- Unites concernees
-//  @Ressources ressource_id_tablename, -- Ressource à comptabiliser
-//  @Resultat tablename OUTPUT      -- Table de resultats
-//)
-
-// $$$$ AGE 2007-09-10: UE-UF-JV => consommation normalisée
-//CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_STOCKS_DISPONIBLES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(UE-UF-JV)]
-//(
-//  @TDebut DATETIME,           -- Date Debut
-//  @Unites unit_id_tablename,      -- Unites concernees
-//  @Ressources ressource_id_tablename, -- Ressource à comptabiliser
-//  @Resultat tablename OUTPUT      -- Table de resultats
-//)
-
-//CREATE PROCEDURE dbo.[AAAT_MELEE-APPUI_NOMBRE_DE_COUPS_DIRECTS_TIRES_PAR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2]
-//(
-//  @TDebut DATETIME,           -- Date de debut de l'intervalle
-//  @TFin DATETIME,         -- Date de fin de l'intervalle
-//  @Unites  unit_id_tablename,     -- Groupe d'unites
-//  @Resultat tablename OUTPUT      -- Table contenant le résultat
-//)
-
-//CREATE PROCEDURE DBO.[AAAT_MELEE-APPUI_PERTES_EN_MATERIEL_INFLIGEES_PAR_UNE_UNITE_PAR_TIR_DIRECT_ENTRE_T1_ET_T2]
-//(
-//  @TDebut DATETIME,                   -- Date debut
-//  @TFin DATETIME,                 -- Date Fin
-//  @Unites unit_id_tablename,              -- Groupe d unites
-//  @Resultat tablename OUT             -- Table de resultats
-//)
-
-// $$$$ AGE 2007-09-10: pourcentage efficacité => nombre de tirs avec degat / nombre de tirs
-//CREATE PROCEDURE dbo.[AAAT_MELEE-APPUI_POURCENTAGE_EFFICACITE_DES_TIRS_INDIRECTS_D_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2]
-//(
-//  @TDebut DATETIME,           -- DATE DEBUT
-//  @TFin DATETIME,         -- DATE FIN
-//  @Unites  unit_id_tablename,     -- UNITES CONCERNEES
-//  @Resultat tablename OUTPUT      -- TABLE DES RESULTATS
 //)

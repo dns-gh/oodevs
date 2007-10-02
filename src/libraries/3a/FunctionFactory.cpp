@@ -26,6 +26,7 @@
 #include "Maximum.h"
 #include "Adder.h"
 #include "Meaner.h"
+#include "Events.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -52,10 +53,12 @@ namespace
     // $$$$ AGE 2007-09-17: crap
     const char* extractors[][3] =
     {
-        // name,                         type,       key type
-        { "operational-state",          "float",    "unit" },
-        { "position",                   "position", "unit" },
-        { "maintenance-handling-unit",  "unit",     "maintenance-handling" },
+        // name,                           type,       key type
+        { "operational-state",            "float",    "unit" },
+        { "position",                     "position", "unit" },
+        { "maintenance-handling-unit",    "unit",     "maintenance-handling" },
+        { "direct-fire-unit",             "unit",     "fire" },
+        { "fire-component-damage",        "float",    "fire" },
         { 0, 0, 0 }
     };
 
@@ -215,6 +218,10 @@ void FunctionFactory::Extract( xml::xistream& xis, Task& result )
         Extract< attributes::Position >( name, xis, result );
     else if( value == "maintenance-handling-unit" )
         Extract< existences::MaintenanceHandlingUnitId >( name, xis, result );
+    else if( value == "direct-fire-unit" )
+        Extract< existences::DirectFireUnitId >( name, xis, result );
+    else if( value == "fire-component-damage" )
+        Extract< events::FireComponentDamage >( name, xis, result );
     else
         ValueError( value );
 }
@@ -370,6 +377,8 @@ void FunctionFactory::Transform( xml::xistream& xis, Task& result )
         Transform< bool >( name, xis, result );
     else if( type == "unsigned long" )
         Transform< unsigned long >( name, xis, result );
+    else if( type == "float" )
+        Transform< float >( name, xis, result );
     else if( type.empty() )
         Transform< NullType >( name, xis, result );
     else

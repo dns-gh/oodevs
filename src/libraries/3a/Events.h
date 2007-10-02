@@ -7,37 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __Existences_h_
-#define __Existences_h_
+#ifndef __Events_h_
+#define __Events_h_
 
 #include "Values.h"
 #include "Extractors.h"
 
 // =============================================================================
 /** @namespace  Existences
-    @brief      Model values linked to unit/object/population/log existence
+    @brief      Model values linked to fire/reports/whatever events
 */
-// Created: AGE 2007-09-13
+// Created: AGE 2007-10-02
 // =============================================================================
-namespace existences
+namespace events
 {
     template< typename Extractor >
-    struct Existence : public PulsedValue< typename Extractor::Type >
+    struct Event : public InstantValue< typename Extractor::Type >
     {
-        explicit Existence( const Extractor& extractor = Extractor() )
+        explicit Event( const Extractor& extractor = Extractor() )
             : extractor_( extractor ) {}
         void Receive( const ASN1T_MsgsSimToClient& message )
         {
-            if( extractor_.IsCreation( message ) )
+            if( extractor_.HasValue( message ) )
                 Set( extractor_.Extract( message ) );
-            else if( extractor_.IsDestruction( message ) )
-                Reset();
         }
         Extractor extractor_;
     };
 
-    struct MaintenanceHandlingUnitId : public Existence< extractors::MaintenanceHandlingUnitId > {};
-    struct DirectFireUnitId          : public Existence< extractors::DirectFireUnitId > {};
+    struct FireComponentDamage : public Event< extractors::FireComponentDamage > {};
 }
 
-#endif // __Existences_h_
+#endif // __Events_h_
