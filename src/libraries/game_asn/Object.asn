@@ -60,7 +60,7 @@ EnumObjectType ::= ENUMERATED
     pont-flottant-discontinu    (37),
     installation                (38),
     fire                        (39),
-    emergency_shelter           (40)
+    emergency-shelter           (40)
 }
 
 EnumObjectErrorCode ::= ENUMERATED

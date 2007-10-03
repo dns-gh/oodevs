@@ -83,7 +83,7 @@ FreePercentage          ::= INTEGER
 Height                  ::= INTEGER
 Elevation               ::= INTEGER
 Speed                   ::= INTEGER
-Heading                 ::= INTEGER(0..<360)
+Heading                 ::= INTEGER(0..359)
 DateTime                ::= INTEGER 
 
 EnumDotationFamily ::= ENUMERATED
@@ -178,7 +178,7 @@ EnumChangeHierarchyErrorCode ::= ENUMERATED
     no-error                             (0),
     error-invalid-pion                   (1),
     error-invalid-automate               (2),
-    error_invalid_formation              (3),
+    error-invalid-formation              (3),
     error-invalid-automate-tc2           (4),
     error-invalid-automate-maintenance   (5),
     error-invalid-automate-sante         (6),
