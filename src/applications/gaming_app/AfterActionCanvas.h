@@ -44,6 +44,12 @@ public:
     void Disconnect( AfterActionItem_ABC& from, AfterActionItem_ABC& to, int index );
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void Closed();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -67,6 +73,7 @@ private:
     virtual void contentsMouseMoveEvent( QMouseEvent* event );
     virtual void keyPressEvent( QKeyEvent* event );
     virtual void resizeEvent( QResizeEvent* event );
+    virtual void hideEvent( QHideEvent* event );
     void ClearSelection();
     void Clear();
 

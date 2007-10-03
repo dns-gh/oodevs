@@ -20,6 +20,7 @@
 #include "Filter.h"
 #include "Count.h"
 #include "IsOneOf.h"
+#include "Domain.h"
 #include "Derivate.h"
 #include "Integrate.h"
 #include "Minimum.h"
@@ -70,6 +71,7 @@ namespace
         { "is-one-of", "any",         "",           "bool",       "list input 1", "select" },
         { "derivate",  "any",         "",           "input 1",    "",             "" },
         { "integrate", "any",         "",           "input 1",    "",             "" },
+        { "domain",    "any",         "",           "input 1",    "list key",     "select" },
         { 0, 0, 0, 0, 0, 0 }
     };
 
@@ -264,6 +266,8 @@ void FunctionFactory::Reduce( const std::string& name, xml::xistream& xis, Task&
         ReduceFunction< Adder< K, T > >( name, xis, result );
     else if( functionName == "mean" )
         ReduceFunction< Meaner< K, T > >( name, xis, result );
+    else if( functionName == "domain" )
+        ReduceFunction< Domain< K, T > >( name, xis, result );
     else
         ReductionError( functionName );
 }

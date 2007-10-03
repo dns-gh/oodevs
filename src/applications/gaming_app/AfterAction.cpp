@@ -107,6 +107,7 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, kernel::Controller
     connect( list, SIGNAL( DeleteFunction( const AfterActionFunction* ) ), SLOT( OnDeleteFunction( const AfterActionFunction* ) ) );
     connect( list, SIGNAL( NewFunction() ), SLOT( OnNewFunction() ) );
     connect( list, SIGNAL( CreateRequest( const AfterActionFunction* ) ), SLOT( OnCreateRequest( const AfterActionFunction* ) ) );
+    connect( canvas_, SIGNAL( Closed() ), list, SLOT( Update() ) );
     functionsTab_->addTab( list, tr( "Functions" ) );
 
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, window, controllers, factory, publisher );

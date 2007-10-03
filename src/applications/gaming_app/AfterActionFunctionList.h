@@ -60,6 +60,7 @@ signals:
 private slots:
     //! @name Slots
     //@{
+    void Update();
     void OnSelectionChange( QListViewItem* item );
     void EditFunction();
     void DeleteFunction();

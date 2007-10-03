@@ -346,3 +346,12 @@ void AfterActionCanvas::Disconnect( AfterActionItem_ABC& from, AfterActionItem_A
     if( function_ )
         from.Disconnect( &to, index );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionCanvas::hideEvent
+// Created: AGE 2007-10-03
+// -----------------------------------------------------------------------------
+void AfterActionCanvas::hideEvent( QHideEvent* )
+{
+    emit Closed();
+}

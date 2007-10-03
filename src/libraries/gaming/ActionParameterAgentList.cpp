@@ -68,6 +68,31 @@ void ActionParameterAgentList::ReadAgent( xml::xistream& xis, const Resolver_ABC
 
 namespace
 {
+    struct StringSerializer : public ActionParameterVisitor_ABC
+    {
+        explicit StringSerializer( std::string& content ) : content_( &content ) {}
+        virtual void Visit( const ActionParameterAgent& param )
+        {
+            if( !content_->empty() )
+                *content_ += ",";
+            param.CommitTo( *content_ );
+        }
+        std::string* content_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterAgentList::CommitTo
+// Created: AGE 2007-10-03
+// -----------------------------------------------------------------------------
+void ActionParameterAgentList::CommitTo( std::string& content ) const
+{
+    StringSerializer serializer( content );
+    Accept( serializer );
+}
+
+namespace
+{
     struct AsnSerializer : public ActionParameterVisitor_ABC
     {
         explicit AsnSerializer( ASN1T_UnitList& asn ) : asn_( &asn ), current_( 0 ) {}

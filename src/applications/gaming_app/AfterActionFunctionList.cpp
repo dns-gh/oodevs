@@ -17,6 +17,7 @@
 #include "gaming/AfterActionParameter.h"
 #include "gaming/ActionParameterContainer_ABC.h"
 #include "ParamAgent.h"
+#include "ParamAgentList.h"
 #include "icons.h"
 #include <qtoolbox.h>
 #include <qvgroupbox.h>
@@ -37,7 +38,7 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
     , request_( 0 )
 {
     {
-        QButtonGroup* buttons = new QButtonGroup( 4, Qt::Horizontal, this );
+        QHBox* buttons = new QHBox( this );
         buttons->layout()->setAlignment( Qt::AlignCenter );
         buttons->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
         buttons->setBackgroundMode( Qt::PaletteButton );
@@ -123,9 +124,9 @@ void AfterActionFunctionList::Display( const AfterActionFunction& function, Disp
 void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
 {
     delete request_; request_ = 0;
-    delete parameters_;
     std::for_each( paramList_.begin(), paramList_.end(), boost::bind( &Param_ABC::RemoveFromController, _1 ) );
     paramList_.clear();
+    delete parameters_;
     parameters_ = new QVGroupBox( tr( "Parameters" ), this );
     if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
     {
@@ -213,6 +214,8 @@ boost::shared_ptr< Param_ABC > AfterActionFunctionList::CreateParameter( const s
     boost::shared_ptr< Param_ABC > result;
     if( type == "unit" )
         result.reset( new ParamAgent( this, kernel::OrderParameter( name, type.c_str(), false ) ) );
+    else if( type == "unit list" )
+        result.reset( new ParamAgentList( this, kernel::OrderParameter( name, type.c_str(), false ), controllers_.actions_ ) );
     return result;
 }
 
@@ -247,4 +250,13 @@ void AfterActionFunctionList::OnRename( QListViewItem* i, int , const QString& n
             AfterActionFunction* function = const_cast< AfterActionFunction* >( f );
             i->setText( 0, model_->Rename( *function, name ) );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::Update
+// Created: AGE 2007-10-03
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::Update()
+{
+    OnSelectionChange( functions_->selectedItem() );
 }
