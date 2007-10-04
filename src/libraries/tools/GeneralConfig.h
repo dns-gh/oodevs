@@ -56,6 +56,8 @@ public:
 
     std::string BuildPopulationChildFile( const std::string& file ) const;
 
+    std::string BuildRecordsDirectory( const std::string& record ) const;
+
     std::string GetModelsDir() const;
 
     virtual void Parse( int argc, char** argv );

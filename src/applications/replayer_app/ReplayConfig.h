@@ -7,51 +7,44 @@
 //
 // *****************************************************************************
 
-#ifndef __App_h_
-#define __App_h_
+#ifndef __ReplayConfig_h_
+#define __ReplayConfig_h_
 
-#include <string>
-#include "ReplayConfig.h"
-
-namespace dispatcher
-{
-    class Replayer;
-}
+#include "dispatcher/Config.h"
 
 // =============================================================================
-/** @class  App
-    @brief  My first application
+/** @class  ReplayConfig
+    @brief  ReplayConfig
 */
-// Created: AGE 2007-04-10
+// Created: AGE 2007-10-04
 // =============================================================================
-class App
+class ReplayConfig : public dispatcher::Config
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             App( int argc, char** argv );
-    virtual ~App();
+             ReplayConfig();
+    virtual ~ReplayConfig();
     //@}
 
     //! @name Operations
     //@{
-    void Execute(); 
+    std::string GetRecord();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    App( const App& );            //!< Copy constructor
-    App& operator=( const App& ); //!< Assignement operator
+    ReplayConfig( const ReplayConfig& );            //!< Copy constructor
+    ReplayConfig& operator=( const ReplayConfig& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    ReplayConfig          config_;
-    dispatcher::Replayer* replayer_;
+    std::string record_;
     //@}
 };
 
-#endif // __App_h_
+#endif // __ReplayConfig_h_

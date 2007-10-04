@@ -21,15 +21,6 @@
 namespace bfs = boost::filesystem;
 using namespace dispatcher;
 
-namespace
-{
-    std::string BuildInputDirectory( const Config& config, const std::string& records )
-    {
-        const std::string directory = config.GetPluginConfig( "recorder" ).GetParameter( "directory" );
-        return config.BuildGameChildFile( ( bfs::path( directory, bfs::native ) / bfs::path( records, bfs::native ) ).native_file_string() );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MessageLoader constructor
 // Created: AGE 2007-07-09
@@ -41,7 +32,7 @@ MessageLoader::MessageLoader( const Config& config, const std::string& records, 
         disk_.reset( new tools::thread::ThreadPool( 1 ) );
         cpu_.reset ( new tools::thread::ThreadPool( 1 ) );
     }
-    const bfs::path dir( BuildInputDirectory( config, records ), bfs::native );
+    const bfs::path dir( config.BuildRecordsDirectory( records ), bfs::native );
 
     LoadIndex   ( ( dir / "index" ).string() );
     LoadKeyIndex( ( dir / "keyindex" ).string() );

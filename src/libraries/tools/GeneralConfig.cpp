@@ -253,3 +253,11 @@ std::string GeneralConfig::BuildPopulationChildFile( const std::string& file ) c
     return ( bfs::path( populationDir_, bfs::native ) / bfs::path( file, bfs::native ) ).string();
 }
 
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::BuildRecordsDirectory
+// Created: AGE 2007-10-04
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::BuildRecordsDirectory( const std::string& record ) const
+{
+    return BuildGameChildFile( ( bfs::path( "records", bfs::native ) / bfs::path( record, bfs::native ) ).string() );
+}

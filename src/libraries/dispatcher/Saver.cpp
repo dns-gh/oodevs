@@ -29,9 +29,8 @@ namespace
 {
     std::string GenerateOutputDirectory( const Config& config )
     {
-        const std::string directory = config.GetPluginConfig( "recorder" ).GetParameter( "directory" );
         const std::string datetime = bpt::to_iso_string( bpt::second_clock::local_time() );
-        return config.BuildGameChildFile( ( bfs::path( directory, bfs::native ) / bfs::path( datetime, bfs::native ) ).native_file_string() );
+        return config.BuildRecordsDirectory( datetime );
     }
 }
 

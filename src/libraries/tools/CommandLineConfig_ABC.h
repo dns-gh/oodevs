@@ -10,6 +10,8 @@
 #ifndef __CommandLineConfig_ABC_h_
 #define __CommandLineConfig_ABC_h_
 
+#include <string>
+
 namespace boost
 {
     namespace program_options
