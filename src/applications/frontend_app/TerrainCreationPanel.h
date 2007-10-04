@@ -7,25 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef __WidgetStack_h_
-#define __WidgetStack_h_
+#ifndef __TerrainCreationPanel_h_
+#define __TerrainCreationPanel_h_
 
 #include <qwidgetstack.h>
 
+class QAction;
+
 // =============================================================================
-/** @class  WidgetStack
-    @brief  WidgetStack
+/** @class  TerrainCreationPanel
+    @brief  TerrainCreationPanel
 */
 // Created: SBO 2007-10-04
 // =============================================================================
-class WidgetStack : public QWidgetStack
+class TerrainCreationPanel : public QHBox
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit WidgetStack( QWidget* parent );
-    virtual ~WidgetStack();
+             TerrainCreationPanel( QWidgetStack* widget, QAction& action );
+    virtual ~TerrainCreationPanel();
     //@}
 
     //! @name Operations
@@ -35,18 +37,20 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    WidgetStack( const WidgetStack& );            //!< Copy constructor
-    WidgetStack& operator=( const WidgetStack& ); //!< Assignment operator
+    TerrainCreationPanel( const TerrainCreationPanel& );            //!< Copy constructor
+    TerrainCreationPanel& operator=( const TerrainCreationPanel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
+    virtual void showEvent( QShowEvent* event );
     //@}
 
 private:
     //! @name Member data
     //@{
+    QWidgetStack* stack_;
     //@}
 };
 
-#endif // __WidgetStack_h_
+#endif // __TerrainCreationPanel_h_

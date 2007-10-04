@@ -11,10 +11,12 @@
 #include "MainWindow.h"
 #include "ActionList.h"
 #include "MainMenu.h"
+#include "TerrainCreationPanel.h"
 #include "resources.h"
 
 #include <qapplication.h>
 #include <qaction.h>
+#include <qwidgetstack.h>
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -32,19 +34,20 @@ MainWindow::MainWindow()
     list_ = new ActionList( box );
     box->setStretchFactor( list_, 1 );
 
-    QWidget* widget = new QWidget( box ); // $$$$ SBO 2007-10-04: dummy
-    box->setStretchFactor( widget, 3 );
+    pages_ = new QWidgetStack( box );
+    pages_->addWidget( new QWidget( this ) );
+    box->setStretchFactor( pages_, 3 );
 
-    AddAction( tr( "Prepare" ), *new QAction( tr( "Create terrain" ) , MAKE_PIXMAP( terrain_create ), "Create terrain" , 0, this, 0, true ) );
-    AddAction( tr( "Prepare" ), *new QAction( tr( "Create exercise" ), MAKE_PIXMAP( data_create )   , "Create exercise", 0, this, 0, true ) );
-    AddAction( tr( "Prepare" ), *new QAction( tr( "Edit exercise" )  , MAKE_PIXMAP( data_create )   , "Edit exercise"  , 0, this, 0, true ) );
+    AddAction< TerrainCreationPanel >( tr( "Prepare" ), *new QAction( tr( "Create terrain" ) , MAKE_PIXMAP( terrain_create ), "Create terrain" , 0, this, 0, true ) );
+    AddAction< TerrainCreationPanel >( tr( "Prepare" ), *new QAction( tr( "Create exercise" ), MAKE_PIXMAP( data_create )   , "Create exercise", 0, this, 0, true ) );
+    AddAction< TerrainCreationPanel >( tr( "Prepare" ), *new QAction( tr( "Edit exercise" )  , MAKE_PIXMAP( data_create )   , "Edit exercise"  , 0, this, 0, true ) );
 
-    AddAction( tr( "Play" ), *new QAction( tr( "Start game" )  , MAKE_PIXMAP( terrain_create ), "Start game"   , 0, this, 0, true ) );
-    AddAction( tr( "Play" ), *new QAction( tr( "Restart game" ), MAKE_PIXMAP( terrain_create ), "Restart game" , 0, this, 0, true ) );
-    AddAction( tr( "Play" ), *new QAction( tr( "Join game" )   , MAKE_PIXMAP( terrain_create ), "Join game"    , 0, this, 0, true ) );
+    AddAction< TerrainCreationPanel >( tr( "Play" ), *new QAction( tr( "Start game" )  , MAKE_PIXMAP( terrain_create ), "Start game"   , 0, this, 0, true ) );
+    AddAction< TerrainCreationPanel >( tr( "Play" ), *new QAction( tr( "Restart game" ), MAKE_PIXMAP( terrain_create ), "Restart game" , 0, this, 0, true ) );
+    AddAction< TerrainCreationPanel >( tr( "Play" ), *new QAction( tr( "Join game" )   , MAKE_PIXMAP( terrain_create ), "Join game"    , 0, this, 0, true ) );
 
-    AddAction( tr( "Analyse" ), *new QAction( tr( "Replay game" ) , MAKE_PIXMAP( terrain_create ), "Replay game"  , 0, this, 0, true ) );
-    AddAction( tr( "Analyse" ), *new QAction( tr( "Analyse game" ), MAKE_PIXMAP( terrain_create ), "Analyse game" , 0, this, 0, true ) );
+    AddAction< TerrainCreationPanel >( tr( "Analyse" ), *new QAction( tr( "Replay game" ) , MAKE_PIXMAP( terrain_create ), "Replay game"  , 0, this, 0, true ) );
+    AddAction< TerrainCreationPanel >( tr( "Analyse" ), *new QAction( tr( "Analyse game" ), MAKE_PIXMAP( terrain_create ), "Analyse game" , 0, this, 0, true ) );
 
     setCentralWidget( box );
     CenterWindow();
@@ -73,8 +76,10 @@ void MainWindow::CenterWindow()
 // Name: MainWindow::AddAction
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
+template< typename Page >
 void MainWindow::AddAction( const QString& category, QAction& action )
 {
     menu_->AddAction( category, action );
     list_->AddAction( category, action );
+    pages_->addWidget( new Page( pages_, action ) );
 }

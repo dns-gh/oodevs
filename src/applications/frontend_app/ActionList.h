@@ -23,7 +23,6 @@ class ActionCategory;
 // =============================================================================
 class ActionList : public QToolBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -34,6 +33,7 @@ public:
     //! @name Operations
     //@{
     void AddAction( const QString& category, QAction& action );
+    void SelectCategory( const ActionCategory& category );
     //@}
 
 private:
@@ -43,13 +43,10 @@ private:
     ActionList& operator=( const ActionList& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< QString, ActionCategory* > T_Categories;
+    typedef T_Categories::const_iterator       CIT_Categories;
     //@}
 
 private:

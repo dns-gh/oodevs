@@ -28,6 +28,7 @@ ActionItem::ActionItem( QWidget* parent, QAction& action )
     setAutoRaise( true );
     setPaletteBackgroundColor( Qt::white );
     connect( &action, SIGNAL( toggled( bool ) ), SLOT( setOn( bool ) ) );
+    connect( this, SIGNAL( toggled( bool ) ), &action, SIGNAL( toggled( bool ) ) );
 }
 
 // -----------------------------------------------------------------------------

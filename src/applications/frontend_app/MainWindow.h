@@ -13,6 +13,8 @@
 #include <qmainwindow.h>
 
 class QAction;
+class QWidgetStack;
+
 class MainMenu;
 class ActionList;
 
@@ -46,6 +48,7 @@ private:
     //! @name Helpers
     //@{
     void CenterWindow();
+    template< typename Page >
     void AddAction( const QString& category, QAction& action );
     //@}
 
@@ -61,6 +64,7 @@ private:
     T_Actions actions_;
     ActionList* list_;
     MainMenu*   menu_;
+    QWidgetStack* pages_;
     //@}
 };
 

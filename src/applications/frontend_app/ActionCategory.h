@@ -13,7 +13,7 @@
 #include <qvbuttongroup.h>
 
 class QAction;
-class QToolBox;
+class ActionList;
 
 // =============================================================================
 /** @class  ActionCategory
@@ -28,13 +28,14 @@ class ActionCategory : public QVButtonGroup
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionCategory( QToolBox* parent );
+    explicit ActionCategory( ActionList* parent );
     virtual ~ActionCategory();
     //@}
 
     //! @name Operations
     //@{
     void AddAction( QAction& action );
+    void ClearSelection();
     //@}
 
 private slots:
@@ -50,14 +51,10 @@ private:
     ActionCategory& operator=( const ActionCategory& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-    QToolBox* parent_;
+    ActionList* parent_;
     //@}
 };
 

@@ -44,3 +44,17 @@ void ActionList::AddAction( const QString& category, QAction& action )
     }
     widget->AddAction( action );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionList::SelectCategory
+// Created: SBO 2007-10-04
+// -----------------------------------------------------------------------------
+void ActionList::SelectCategory( const ActionCategory& category )
+{
+    for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
+        if( it->second != &category )
+            it->second->ClearSelection();
+
+    if( !category.isVisible() )
+        setCurrentItem( const_cast< ActionCategory* >( &category ) );
+}

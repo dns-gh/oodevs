@@ -11,13 +11,13 @@
 #include "ActionCategory.h"
 #include "moc_ActionCategory.cpp"
 #include "ActionItem.h"
-#include <qtoolbox.h>
+#include "ActionList.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionCategory constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-ActionCategory::ActionCategory( QToolBox* parent )
+ActionCategory::ActionCategory( ActionList* parent )
     : QVButtonGroup( parent )
     , parent_( parent )
 {
@@ -52,6 +52,16 @@ void ActionCategory::AddAction( QAction& action )
 // -----------------------------------------------------------------------------
 void ActionCategory::OnItemToggled( bool toggled )
 {
-    if( toggled && !isVisible() )
-        parent_->setCurrentItem( this );
+    if( toggled )
+        parent_->SelectCategory( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionCategory::ClearSelection
+// Created: SBO 2007-10-04
+// -----------------------------------------------------------------------------
+void ActionCategory::ClearSelection()
+{
+    if( selected() )
+        selected()->toggle();
 }

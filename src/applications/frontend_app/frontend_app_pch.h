@@ -21,5 +21,7 @@
 #include <qstring.h>
 #include <qpixmap.h>
 #include <qhbox.h>
+#include <qvbox.h>
+#include <qgroupbox.h>
 
 #endif // __frontend_app_pch_h_
