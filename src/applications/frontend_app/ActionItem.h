@@ -7,25 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef __MainWindow_h_
-#define __MainWindow_h_
+#ifndef __ActionItem_h_
+#define __ActionItem_h_
 
-#include <qmainwindow.h>
+#include <qtoolbutton.h>
+
+class QAction;
 
 // =============================================================================
-/** @class  MainWindow
-    @brief  MainWindow
+/** @class  ActionItem
+    @brief  ActionItem
 */
-// Created: SBO 2007-01-26
+// Created: SBO 2007-10-04
 // =============================================================================
-class MainWindow : public QMainWindow
+class ActionItem : public QToolButton
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MainWindow();
-    virtual ~MainWindow();
+             ActionItem( QWidget* parent, QAction& action );
+    virtual ~ActionItem();
     //@}
 
     //! @name Operations
@@ -35,19 +37,19 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    MainWindow( const MainWindow& );            //!< Copy constructor
-    MainWindow& operator=( const MainWindow& ); //!< Assignment operator
+    ActionItem( const ActionItem& );            //!< Copy constructor
+    ActionItem& operator=( const ActionItem& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void CenterWindow();
     //@}
 
 private:
     //! @name Member data
     //@{
+    QAction& action_;
     //@}
 };
 
-#endif // __MainWindow_h_
+#endif // __ActionItem_h_

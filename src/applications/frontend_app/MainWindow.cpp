@@ -9,38 +9,43 @@
 
 #include "frontend_app_pch.h"
 #include "MainWindow.h"
-#include "ExercisesTab.h"
-#include "TerrainsTab.h"
-#include "DatasetsTab.h"
-#include "LoginDialog.h"
-#include "frontend/Profile.h"
-#include "frontend/Networker.h"
-#include "clients_kernel/Controllers.h"
-#include <qtabwidget.h>
+#include "ActionList.h"
+#include "resources.h"
+
+#include <qapplication.h>
+#include <qaction.h>
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: SBO 2007-01-26
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( kernel::Controllers& controllers, frontend::Networker& networker, const frontend::Profile& profile )
+MainWindow::MainWindow()
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
-    , controllers_( controllers )
-    , networker_( networker )
-    , profile_( profile )
-    , loginDialog_( new LoginDialog( this, profile_, networker_ ) )
 {
     setCaption( APP_NAME );
     setFixedSize( 600, 400 );
-    const QRect& screen = QApplication::desktop()->screenGeometry();
-    move( screen.center() - QPoint( width() / 2, height() / 2 ) );
+    
+    QHBox* box = new QHBox( this );
+    {
+        ActionList* list = new ActionList( box );
+        box->setStretchFactor( list, 1 );
 
-    QTabWidget* tabs = new QTabWidget( this );
-    tabs->addTab( new ExercisesTab( tabs, controllers_ ), tr( "Exercises" ) );
-    tabs->addTab( new TerrainsTab ( tabs, controllers_ ), tr( "Terrains" ) );
-    tabs->addTab( new DatasetsTab ( tabs, controllers_ ), tr( "Datasets" ) );
-    setCentralWidget( tabs );
+        list->AddAction( tr( "Prepare" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Create terrain" , 0, list ) );
+        list->AddAction( tr( "Prepare" ), *new QAction( MAKE_PIXMAP( data_create )   , "Create exercise", 0, list ) );
+        list->AddAction( tr( "Prepare" ), *new QAction( MAKE_PIXMAP( data_create )   , "Edit exercise"  , 0, list ) );
 
-    controllers_.Register( *this );
+        list->AddAction( tr( "Play" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Start game"   , 0, list ) );
+        list->AddAction( tr( "Play" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Restart game" , 0, list ) );
+        list->AddAction( tr( "Play" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Join game"    , 0, list ) );
+
+        list->AddAction( tr( "Analyse" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Replay game"  , 0, list ) );
+        list->AddAction( tr( "Analyse" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Analyse game" , 0, list ) );
+    }
+    QWidget* widget = new QWidget( box ); // $$$$ SBO 2007-10-04: dummy
+    box->setStretchFactor( widget, 3 );
+
+    setCentralWidget( box );
+    CenterWindow();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,25 +54,15 @@ MainWindow::MainWindow( kernel::Controllers& controllers, frontend::Networker& n
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::NotifyUpdated
-// Created: SBO 2007-01-30
+// Name: MainWindow::CenterWindow
+// Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-void MainWindow::NotifyUpdated( const frontend::Networker& networker )
+void MainWindow::CenterWindow()
 {
-    if( networker.IsConnected() )
-        loginDialog_->show();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::NotifyUpdated
-// Created: SBO 2007-01-29
-// -----------------------------------------------------------------------------
-void MainWindow::NotifyUpdated( const frontend::Profile& profile )
-{
-    if( !profile.IsLoggedIn() )
-        loginDialog_->show();
+    const QRect& screen = QApplication::desktop()->screenGeometry();
+    move( screen.center() - QPoint( width() / 2, height() / 2 ) );
 }

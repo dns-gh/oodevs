@@ -7,19 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __frontend_app_pch_h_
-#define __frontend_app_pch_h_
+#include "frontend_app_pch.h"
+#include "resources.h"
 
-#define APP_NAME "CSword"
+// Hack to encapsulate the xpm resources in a resources.cpp 
+// instead of resources.h
+#define static 
 
-#include <exception>
-#include <memory>
-#include <map>
-#include <vector>
-
-#include <qmessagebox.h>
-#include <qstring.h>
-#include <qpixmap.h>
-#include <qhbox.h>
-
-#endif // __frontend_app_pch_h_
+#include "res/terrain_create.xpm"
+#include "res/data_create.xpm"

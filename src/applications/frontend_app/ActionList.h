@@ -7,47 +7,56 @@
 //
 // *****************************************************************************
 
-#ifndef __MainWindow_h_
-#define __MainWindow_h_
+#ifndef __ActionList_h_
+#define __ActionList_h_
 
-#include <qmainwindow.h>
+#include <qtoolbox.h>
+
+class QAction;
+class ActionCategory;
 
 // =============================================================================
-/** @class  MainWindow
-    @brief  MainWindow
+/** @class  ActionList
+    @brief  ActionList
 */
-// Created: SBO 2007-01-26
+// Created: SBO 2007-10-04
 // =============================================================================
-class MainWindow : public QMainWindow
+class ActionList : public QToolBox
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MainWindow();
-    virtual ~MainWindow();
+    explicit ActionList( QWidget* parent );
+    virtual ~ActionList();
     //@}
 
     //! @name Operations
     //@{
+    void AddAction( const QString& category, QAction& action );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    MainWindow( const MainWindow& );            //!< Copy constructor
-    MainWindow& operator=( const MainWindow& ); //!< Assignment operator
+    ActionList( const ActionList& );            //!< Copy constructor
+    ActionList& operator=( const ActionList& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void CenterWindow();
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< QString, ActionCategory* > T_Categories;
     //@}
 
 private:
     //! @name Member data
     //@{
+    T_Categories categories_;
     //@}
 };
 
-#endif // __MainWindow_h_
+#endif // __ActionList_h_

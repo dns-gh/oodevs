@@ -7,25 +7,25 @@
 //
 // *****************************************************************************
 
-#ifndef __MainWindow_h_
-#define __MainWindow_h_
+#ifndef __ActionCategory_h_
+#define __ActionCategory_h_
 
-#include <qmainwindow.h>
+#include <qvbuttongroup.h>
 
 // =============================================================================
-/** @class  MainWindow
-    @brief  MainWindow
+/** @class  ActionCategory
+    @brief  ActionCategory
 */
-// Created: SBO 2007-01-26
+// Created: SBO 2007-10-04
 // =============================================================================
-class MainWindow : public QMainWindow
+class ActionCategory : public QVButtonGroup
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MainWindow();
-    virtual ~MainWindow();
+    explicit ActionCategory( QWidget* parent );
+    virtual ~ActionCategory();
     //@}
 
     //! @name Operations
@@ -35,13 +35,12 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    MainWindow( const MainWindow& );            //!< Copy constructor
-    MainWindow& operator=( const MainWindow& ); //!< Assignment operator
+    ActionCategory( const ActionCategory& );            //!< Copy constructor
+    ActionCategory& operator=( const ActionCategory& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void CenterWindow();
     //@}
 
 private:
@@ -50,4 +49,4 @@ private:
     //@}
 };
 
-#endif // __MainWindow_h_
+#endif // __ActionCategory_h_

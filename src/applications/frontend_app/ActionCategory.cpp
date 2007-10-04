@@ -8,25 +8,26 @@
 // *****************************************************************************
 
 #include "frontend_app_pch.h"
-#include "Application.h"
-#include "MainWindow.h"
+#include "ActionCategory.h"
 
 // -----------------------------------------------------------------------------
-// Name: Application constructor
-// Created: SBO 2007-01-26
+// Name: ActionCategory constructor
+// Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv )
-    : QApplication ( argc, argv )
-    , mainWindow_  ( new MainWindow() )
+ActionCategory::ActionCategory( QWidget* parent )
+    : QVButtonGroup( parent )
 {
-    mainWindow_->show();
+    setExclusive( true );
+    setInsideMargin( 1 );
+    setInsideSpacing( 0 );
+    setPaletteBackgroundColor( Qt::white );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Application destructor
-// Created: SBO 2007-01-26
+// Name: ActionCategory destructor
+// Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-Application::~Application()
+ActionCategory::~ActionCategory()
 {
     // NOTHING
 }

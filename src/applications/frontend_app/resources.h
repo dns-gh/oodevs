@@ -7,19 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __frontend_app_pch_h_
-#define __frontend_app_pch_h_
+#ifndef __resources_h_
+#define __resources_h_
 
-#define APP_NAME "CSword"
+#include "clients_gui/resources.h"
 
-#include <exception>
-#include <memory>
-#include <map>
-#include <vector>
+DECLARE_ICON( terrain_create );
+DECLARE_ICON( data_create );
 
-#include <qmessagebox.h>
-#include <qstring.h>
-#include <qpixmap.h>
-#include <qhbox.h>
-
-#endif // __frontend_app_pch_h_
+#endif // __resources_h_

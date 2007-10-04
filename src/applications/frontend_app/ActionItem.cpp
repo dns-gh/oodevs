@@ -8,25 +8,33 @@
 // *****************************************************************************
 
 #include "frontend_app_pch.h"
-#include "Application.h"
-#include "MainWindow.h"
+#include "ActionItem.h"
+#include <qaction.h>
 
 // -----------------------------------------------------------------------------
-// Name: Application constructor
-// Created: SBO 2007-01-26
+// Name: ActionItem constructor
+// Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv )
-    : QApplication ( argc, argv )
-    , mainWindow_  ( new MainWindow() )
+ActionItem::ActionItem( QWidget* parent, QAction& action )
+    : QToolButton( parent )
+    , action_( action )
 {
-    mainWindow_->show();
+    setIconSet( action.iconSet().pixmap() );
+    setTextLabel( action.text(), action.toolTip() );
+    setTextPosition( QToolButton::BelowIcon );
+    setUsesBigPixmap( true );
+    setUsesTextLabel( true );
+    setToggleButton( true );
+    setAutoRaise( true );
+    setPaletteBackgroundColor( Qt::white );
+    connect( &action, SIGNAL( toggled( bool ) ), SLOT( setOn( bool ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Application destructor
-// Created: SBO 2007-01-26
+// Name: ActionItem destructor
+// Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-Application::~Application()
+ActionItem::~ActionItem()
 {
     // NOTHING
 }

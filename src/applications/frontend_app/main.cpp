@@ -9,13 +9,9 @@
 
 #include "frontend_app_pch.h"
 #include "Application.h"
-#include "MT/MT_Logger/MT_Logger_Lib.h"
 
 int main( int argc, char* argv[] )
 {
-    MT_ConsoleLogger        consoleLogger;
-    MT_LOG_REGISTER_LOGGER( consoleLogger );
-
     int result = EXIT_FAILURE;
     try
     {
@@ -27,6 +23,5 @@ int main( int argc, char* argv[] )
         QApplication no_app( argc, argv );
         QMessageBox::critical( 0, "frontend_app exception", e.what() );
     }
-    MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return result;
 }

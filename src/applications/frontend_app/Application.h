@@ -12,18 +12,6 @@
 
 #include <qapplication.h>
 
-namespace kernel
-{
-    class Controllers;
-}
-
-namespace frontend
-{
-    class Model;
-    class Networker;
-    class Profile;
-}
-
 class QMainWindow;
 
 // =============================================================================
@@ -34,19 +22,11 @@ class QMainWindow;
 // =============================================================================
 class Application : public QApplication
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
              Application( int argc, char** argv );
     virtual ~Application();
-    //@}
-
-private slots:
-    //! @name Operations
-    //@{
-    void UpdateData();
     //@}
 
 private:
@@ -63,12 +43,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< kernel::Controllers > controllers_;
-    std::auto_ptr< frontend::Model >     model_;
-    std::auto_ptr< frontend::Profile >   profile_;
-    std::auto_ptr< frontend::Networker > networker_;
-    QTimer*                              networkTimer_;
-    QMainWindow*                         mainWindow_;
+    QMainWindow* mainWindow_;
     //@}
 };
 
