@@ -265,7 +265,7 @@
         </build-app>
     </target>
 
-    <target name="application.frontend_app" description="build CSword Frontend executable" depends="clients_gui">
+    <target name="application.frontend_app" description="build CSword Frontend executable" depends="library.clients_gui">
         <build-app name="frontend_app" depends="mt,qt,boost"
                    libs="lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_clients_gui-${platform}-mt
