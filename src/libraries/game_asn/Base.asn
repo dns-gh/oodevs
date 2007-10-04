@@ -83,7 +83,7 @@ FreePercentage          ::= INTEGER
 Height                  ::= INTEGER
 Elevation               ::= INTEGER
 Speed                   ::= INTEGER
-Heading                 ::= INTEGER(0..359)
+Heading                 ::= INTEGER(0..360)
 DateTime                ::= INTEGER 
 
 EnumDotationFamily ::= ENUMERATED
