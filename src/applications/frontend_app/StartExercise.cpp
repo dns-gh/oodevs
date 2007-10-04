@@ -8,34 +8,25 @@
 // *****************************************************************************
 
 #include "frontend_app_pch.h"
-#include "CreateTerrain.h"
-#include "tools/GeneralConfig.h"
-
-#pragma warning( disable: 4127 4244 )
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
-
-namespace bfs = boost::filesystem;
+#include "StartExercise.h"
 
 // -----------------------------------------------------------------------------
-// Name: CreateTerrain constructor
+// Name: StartExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-CreateTerrain::CreateTerrain( QObject* parent, const tools::GeneralConfig& config, const std::string& name )
-    : SpawnCommand( parent, config, "generation_app.exe" )
+StartExercise::StartExercise( QObject* parent, const tools::GeneralConfig& config, const std::string& exercise )
+    : SpawnCommand( parent, config, "simulation_app.exe" )
 {
-    const std::string directory = config.GetTerrainDir( name );
-    bfs::create_directories( directory );
-
-    addArgument( directory.c_str() );
+    AddRootDirArgument();
+    AddExerciseArgument( exercise );
     start();
 }
 
 // -----------------------------------------------------------------------------
-// Name: CreateTerrain destructor
+// Name: StartExercise destructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-CreateTerrain::~CreateTerrain()
+StartExercise::~StartExercise()
 {
     // NOTHING
 }

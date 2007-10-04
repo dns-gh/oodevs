@@ -7,33 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __CreateTerrain_h_
-#define __CreateTerrain_h_
+#ifndef __StartExercise_h_
+#define __StartExercise_h_
 
 #include "SpawnCommand.h"
 
 // =============================================================================
-/** @class  CreateTerrain
-    @brief  CreateTerrain
+/** @class  StartExercise
+    @brief  StartExercise
 */
 // Created: AGE 2007-10-04
 // =============================================================================
-class CreateTerrain : public SpawnCommand
+class StartExercise : public SpawnCommand
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateTerrain( QObject* parent, const tools::GeneralConfig& config, const std::string& name );
-    virtual ~CreateTerrain();
+             StartExercise( QObject* parent, const tools::GeneralConfig& config, const std::string& exercise );
+    virtual ~StartExercise();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    CreateTerrain( const CreateTerrain& );            //!< Copy constructor
-    CreateTerrain& operator=( const CreateTerrain& ); //!< Assignment operator
+    StartExercise( const StartExercise& );            //!< Copy constructor
+    StartExercise& operator=( const StartExercise& ); //!< Assignment operator
     //@}
 };
 
-#endif // __CreateTerrain_h_
+#endif // __StartExercise_h_

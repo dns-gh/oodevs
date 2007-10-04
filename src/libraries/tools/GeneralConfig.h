@@ -35,8 +35,11 @@ public:
     static std::string BuildChildPath( const std::string& parent, const std::string& child );
     static std::string BuildWorkingDirectoryChildFile( const std::string& file );
 
+    std::string GetRootDir() const;
+
     std::string GetExercisesDir() const;
     std::string GetExerciseFile() const;
+    std::string GetExerciseDir( const std::string& exercice ) const;
     std::string GetExerciseFile( const std::string& exercise ) const;
     std::string BuildExerciseChildFile( const std::string& file ) const;
 

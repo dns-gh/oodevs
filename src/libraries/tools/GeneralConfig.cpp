@@ -97,6 +97,15 @@ std::string GeneralConfig::BuildChildPath( const std::string& parent, const std:
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetRootDir
+// Created: AGE 2007-10-04
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetRootDir() const
+{
+    return rootDir_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetExercisesDir
 // Created: NLD 2007-01-29
 // -----------------------------------------------------------------------------
@@ -106,12 +115,21 @@ std::string GeneralConfig::GetExercisesDir() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetExerciseDir
+// Created: AGE 2007-10-04
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetExerciseDir( const std::string& exercise ) const
+{
+    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exercise, bfs::native ) ).native_directory_string();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetExerciseFile
 // Created: NLD 2007-01-29
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetExerciseFile( const std::string& exercise ) const
 {
-    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exercise, bfs::native ) / exerciseConfigFile_ ).native_file_string();
+    return ( bfs::path( GetExerciseDir( exercise ), bfs::native ) / exerciseConfigFile_ ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------
