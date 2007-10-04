@@ -7,29 +7,25 @@
 //
 // *****************************************************************************
 
-#ifndef __MainWindow_h_
-#define __MainWindow_h_
+#ifndef __WidgetStack_h_
+#define __WidgetStack_h_
 
-#include <qmainwindow.h>
-
-class QAction;
-class MainMenu;
-class ActionList;
+#include <qwidgetstack.h>
 
 // =============================================================================
-/** @class  MainWindow
-    @brief  MainWindow
+/** @class  WidgetStack
+    @brief  WidgetStack
 */
-// Created: SBO 2007-01-26
+// Created: SBO 2007-10-04
 // =============================================================================
-class MainWindow : public QMainWindow
+class WidgetStack : public QWidgetStack
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MainWindow();
-    virtual ~MainWindow();
+    explicit WidgetStack( QWidget* parent );
+    virtual ~WidgetStack();
     //@}
 
     //! @name Operations
@@ -39,29 +35,18 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    MainWindow( const MainWindow& );            //!< Copy constructor
-    MainWindow& operator=( const MainWindow& ); //!< Assignment operator
+    WidgetStack( const WidgetStack& );            //!< Copy constructor
+    WidgetStack& operator=( const WidgetStack& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void CenterWindow();
-    void AddAction( const QString& category, QAction& action );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< std::pair< QString, QAction* > > T_Actions;
-    typedef T_Actions::const_iterator                   CIT_Actions;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Actions actions_;
-    ActionList* list_;
-    MainMenu*   menu_;
     //@}
 };
 
-#endif // __MainWindow_h_
+#endif // __WidgetStack_h_

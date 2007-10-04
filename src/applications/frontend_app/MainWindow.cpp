@@ -10,6 +10,7 @@
 #include "frontend_app_pch.h"
 #include "MainWindow.h"
 #include "ActionList.h"
+#include "MainMenu.h"
 #include "resources.h"
 
 #include <qapplication.h>
@@ -23,26 +24,27 @@ MainWindow::MainWindow()
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
 {
     setCaption( APP_NAME );
-    setFixedSize( 600, 400 );
-    
+    setMinimumSize( 600, 400 );
+
+    menu_ = new MainMenu( this );
+
     QHBox* box = new QHBox( this );
-    {
-        ActionList* list = new ActionList( box );
-        box->setStretchFactor( list, 1 );
+    list_ = new ActionList( box );
+    box->setStretchFactor( list_, 1 );
 
-        list->AddAction( tr( "Prepare" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Create terrain" , 0, list ) );
-        list->AddAction( tr( "Prepare" ), *new QAction( MAKE_PIXMAP( data_create )   , "Create exercise", 0, list ) );
-        list->AddAction( tr( "Prepare" ), *new QAction( MAKE_PIXMAP( data_create )   , "Edit exercise"  , 0, list ) );
-
-        list->AddAction( tr( "Play" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Start game"   , 0, list ) );
-        list->AddAction( tr( "Play" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Restart game" , 0, list ) );
-        list->AddAction( tr( "Play" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Join game"    , 0, list ) );
-
-        list->AddAction( tr( "Analyse" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Replay game"  , 0, list ) );
-        list->AddAction( tr( "Analyse" ), *new QAction( MAKE_PIXMAP( terrain_create ), "Analyse game" , 0, list ) );
-    }
     QWidget* widget = new QWidget( box ); // $$$$ SBO 2007-10-04: dummy
     box->setStretchFactor( widget, 3 );
+
+    AddAction( tr( "Prepare" ), *new QAction( tr( "Create terrain" ) , MAKE_PIXMAP( terrain_create ), "Create terrain" , 0, this, 0, true ) );
+    AddAction( tr( "Prepare" ), *new QAction( tr( "Create exercise" ), MAKE_PIXMAP( data_create )   , "Create exercise", 0, this, 0, true ) );
+    AddAction( tr( "Prepare" ), *new QAction( tr( "Edit exercise" )  , MAKE_PIXMAP( data_create )   , "Edit exercise"  , 0, this, 0, true ) );
+
+    AddAction( tr( "Play" ), *new QAction( tr( "Start game" )  , MAKE_PIXMAP( terrain_create ), "Start game"   , 0, this, 0, true ) );
+    AddAction( tr( "Play" ), *new QAction( tr( "Restart game" ), MAKE_PIXMAP( terrain_create ), "Restart game" , 0, this, 0, true ) );
+    AddAction( tr( "Play" ), *new QAction( tr( "Join game" )   , MAKE_PIXMAP( terrain_create ), "Join game"    , 0, this, 0, true ) );
+
+    AddAction( tr( "Analyse" ), *new QAction( tr( "Replay game" ) , MAKE_PIXMAP( terrain_create ), "Replay game"  , 0, this, 0, true ) );
+    AddAction( tr( "Analyse" ), *new QAction( tr( "Analyse game" ), MAKE_PIXMAP( terrain_create ), "Analyse game" , 0, this, 0, true ) );
 
     setCentralWidget( box );
     CenterWindow();
@@ -65,4 +67,14 @@ void MainWindow::CenterWindow()
 {
     const QRect& screen = QApplication::desktop()->screenGeometry();
     move( screen.center() - QPoint( width() / 2, height() / 2 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::AddAction
+// Created: SBO 2007-10-04
+// -----------------------------------------------------------------------------
+void MainWindow::AddAction( const QString& category, QAction& action )
+{
+    menu_->AddAction( category, action );
+    list_->AddAction( category, action );
 }

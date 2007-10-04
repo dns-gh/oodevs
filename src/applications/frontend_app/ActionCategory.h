@@ -12,6 +12,9 @@
 
 #include <qvbuttongroup.h>
 
+class QAction;
+class QToolBox;
+
 // =============================================================================
 /** @class  ActionCategory
     @brief  ActionCategory
@@ -20,16 +23,24 @@
 // =============================================================================
 class ActionCategory : public QVButtonGroup
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionCategory( QWidget* parent );
+    explicit ActionCategory( QToolBox* parent );
     virtual ~ActionCategory();
     //@}
 
     //! @name Operations
     //@{
+    void AddAction( QAction& action );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnItemToggled( bool toggled );
     //@}
 
 private:
@@ -46,6 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
+    QToolBox* parent_;
     //@}
 };
 

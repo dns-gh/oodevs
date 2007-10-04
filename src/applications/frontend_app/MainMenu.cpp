@@ -8,39 +8,43 @@
 // *****************************************************************************
 
 #include "frontend_app_pch.h"
-#include "ActionList.h"
-#include "ActionCategory.h"
+#include "MainMenu.h"
+#include <qmainwindow.h>
+#include <qmenubar.h>
+#include <qpopupmenu.h>
+#include <qaction.h>
 
 // -----------------------------------------------------------------------------
-// Name: ActionList constructor
+// Name: MainMenu constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-ActionList::ActionList( QWidget* parent )
-    : QToolBox( parent )
+MainMenu::MainMenu( QMainWindow* mainWindow )
+    : QObject( mainWindow )
+    , mainWindow_( mainWindow )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionList destructor
+// Name: MainMenu destructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-ActionList::~ActionList()
+MainMenu::~MainMenu()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionList::AddAction
+// Name: MainMenu::AddAction
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-void ActionList::AddAction( const QString& category, QAction& action )
+void MainMenu::AddAction( const QString& category, QAction& action )
 {
-    ActionCategory*& widget = categories_[ category ];
-    if( !widget )
+    QPopupMenu*& menu = menus_[ category ];
+    if( !menu )
     {
-        widget = new ActionCategory( this );
-        insertItem( count(), widget, category );
+        menu = new QPopupMenu( mainWindow_ );
+        mainWindow_->menuBar()->insertItem( category, menu );
     }
-    widget->AddAction( action );
+    action.addTo( menu );
 }

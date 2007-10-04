@@ -8,39 +8,23 @@
 // *****************************************************************************
 
 #include "frontend_app_pch.h"
-#include "ActionList.h"
-#include "ActionCategory.h"
+#include "WidgetStack.h"
 
 // -----------------------------------------------------------------------------
-// Name: ActionList constructor
+// Name: WidgetStack constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-ActionList::ActionList( QWidget* parent )
-    : QToolBox( parent )
+WidgetStack::WidgetStack( QWidget* parent )
+    : QWidgetStack( parent )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionList destructor
+// Name: WidgetStack destructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-ActionList::~ActionList()
+WidgetStack::~WidgetStack()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionList::AddAction
-// Created: SBO 2007-10-04
-// -----------------------------------------------------------------------------
-void ActionList::AddAction( const QString& category, QAction& action )
-{
-    ActionCategory*& widget = categories_[ category ];
-    if( !widget )
-    {
-        widget = new ActionCategory( this );
-        insertItem( count(), widget, category );
-    }
-    widget->AddAction( action );
 }

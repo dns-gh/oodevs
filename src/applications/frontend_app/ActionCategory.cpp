@@ -9,13 +9,17 @@
 
 #include "frontend_app_pch.h"
 #include "ActionCategory.h"
+#include "moc_ActionCategory.cpp"
+#include "ActionItem.h"
+#include <qtoolbox.h>
 
 // -----------------------------------------------------------------------------
 // Name: ActionCategory constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-ActionCategory::ActionCategory( QWidget* parent )
+ActionCategory::ActionCategory( QToolBox* parent )
     : QVButtonGroup( parent )
+    , parent_( parent )
 {
     setExclusive( true );
     setInsideMargin( 1 );
@@ -30,4 +34,24 @@ ActionCategory::ActionCategory( QWidget* parent )
 ActionCategory::~ActionCategory()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionCategory::AddAction
+// Created: SBO 2007-10-04
+// -----------------------------------------------------------------------------
+void ActionCategory::AddAction( QAction& action )
+{
+    ActionItem* item = new ActionItem( this, action );
+    connect( item, SIGNAL( toggled( bool ) ), SLOT( OnItemToggled( bool ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionCategory::OnItemToggled
+// Created: SBO 2007-10-04
+// -----------------------------------------------------------------------------
+void ActionCategory::OnItemToggled( bool toggled )
+{
+    if( toggled && !isVisible() )
+        parent_->setCurrentItem( this );
 }

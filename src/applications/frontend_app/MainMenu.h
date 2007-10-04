@@ -7,61 +7,54 @@
 //
 // *****************************************************************************
 
-#ifndef __MainWindow_h_
-#define __MainWindow_h_
+#ifndef __MainMenu_h_
+#define __MainMenu_h_
 
-#include <qmainwindow.h>
+#include <qobject.h>
 
+class QMainWindow;
 class QAction;
-class MainMenu;
-class ActionList;
+class QPopupMenu;
 
 // =============================================================================
-/** @class  MainWindow
-    @brief  MainWindow
+/** @class  MainMenu
+    @brief  MainMenu
 */
-// Created: SBO 2007-01-26
+// Created: SBO 2007-10-04
 // =============================================================================
-class MainWindow : public QMainWindow
+class MainMenu : public QObject
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MainWindow();
-    virtual ~MainWindow();
+    explicit MainMenu( QMainWindow* mainWindow );
+    virtual ~MainMenu();
     //@}
 
     //! @name Operations
     //@{
+    void AddAction( const QString& category, QAction& action );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    MainWindow( const MainWindow& );            //!< Copy constructor
-    MainWindow& operator=( const MainWindow& ); //!< Assignment operator
+    MainMenu( const MainMenu& );            //!< Copy constructor
+    MainMenu& operator=( const MainMenu& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void CenterWindow();
-    void AddAction( const QString& category, QAction& action );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< std::pair< QString, QAction* > > T_Actions;
-    typedef T_Actions::const_iterator                   CIT_Actions;
+    typedef std::map< QString, QPopupMenu* > T_Menus;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Actions actions_;
-    ActionList* list_;
-    MainMenu*   menu_;
+    QMainWindow* mainWindow_;
+    T_Menus menus_;
     //@}
 };
 
-#endif // __MainWindow_h_
+#endif // __MainMenu_h_
