@@ -190,12 +190,21 @@ std::string GeneralConfig::GetTerrainsDir() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetTerrainDir
+// Created: AGE 2007-10-04
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetTerrainDir( const std::string& terrain ) const
+{
+    return ( bfs::path( terrainsDir_, bfs::native ) / bfs::path( terrain, bfs::native ) ).native_directory_string();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetTerrainFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetTerrainFile( const std::string& terrain ) const
 {
-    return ( bfs::path( terrainsDir_, bfs::native ) / bfs::path( terrain, bfs::native ) / terrainConfigFile_ ).native_file_string();
+    return ( bfs::path( GetTerrainDir( terrain ), bfs::native ) / terrainConfigFile_ ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------

@@ -48,6 +48,7 @@ public:
     std::string BuildDecisionalChildFile( const std::string& dataset, const std::string& file ) const;
 
     std::string GetTerrainsDir() const;
+    std::string GetTerrainDir( const std::string& terrain ) const;
     std::string GetTerrainFile( const std::string& terrain ) const;
     std::string BuildTerrainChildFile( const std::string& terrain, const std::string& file ) const;
 
