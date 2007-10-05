@@ -12,6 +12,8 @@
 #include "moc_StartAnalysePanel.cpp"
 #include "commands.h"
 #include "StartReplay.h"
+#include "InfoBubble.h"
+#include "resources.h"
 #include <qaction.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
@@ -24,8 +26,10 @@ StartAnalysePanel::StartAnalysePanel( QWidgetStack* widget, QAction& action, con
     : Panel_ABC( widget, action )
     , config_( config )
 {
-    QHBox* box = new QHBox( this );
+    QVBox* box = new QVBox( this );
     box->setMargin( 10 );
+    box->setSpacing( 10 );
+
     QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, action.text(), box );
     {
         QVBox* exercises = new QVBox( group );
@@ -38,9 +42,18 @@ StartAnalysePanel::StartAnalysePanel( QWidgetStack* widget, QAction& action, con
         QVBox* replays = new QVBox( group );
         new QLabel( tr( "Choose the replay to analyse:" ), replays );
         replays_ = new QListBox( replays );
+        connect( replays_, SIGNAL( selectionChanged() ), SLOT( ReplaySelected() ) );
+    }
+    bubble_ = new InfoBubble( box );
+    {
+        QHBox* btnBox = new QHBox( box );
+        btnBox->layout()->setAlignment( Qt::AlignRight );
+        okay_ = new QPushButton( MAKE_PIXMAP( next ), tr( "Start replay" ), btnBox );
+        QFont font( "Arial", 10, QFont::Bold );
+        okay_->setFont( font );
     }
     exercises_->setSelected( 0, true );
-    okay_ = new QPushButton( tr( "Ok" ), this );
+
     connect( okay_, SIGNAL( pressed() ), SLOT( StartReplay() ) );
 }
 
@@ -65,7 +78,22 @@ void StartAnalysePanel::ExerciseSelected()
         QString exercise = exercises_->selectedItem()->text();
         replays_->insertStringList( commands::ListReplays( config_, exercise.ascii() ) );
         replays_->setSelected( 0, true );
+        ReplaySelected();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartAnalysePanel::ReplaySelected
+// Created: SBO 2007-10-05
+// -----------------------------------------------------------------------------
+void StartAnalysePanel::ReplaySelected()
+{
+    const bool selected = replays_->selectedItem();
+    okay_->setEnabled( selected );
+    if( selected )
+        bubble_->ShowInfo( tr( "Replay game: %1" ).arg( replays_->selectedItem()->text() ) ); // $$$$ SBO 2007-10-05: TODO
+    else
+        bubble_->ShowError( tr( "The selected exercise as no replay." ) ); // $$$$ SBO 2007-10-05: TODO
 }
 
 // -----------------------------------------------------------------------------

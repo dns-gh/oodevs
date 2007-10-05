@@ -19,3 +19,7 @@
 #include "res/banner_left.xpm"
 #include "res/banner_fill.xpm"
 #include "res/banner_right.xpm"
+#include "res/info.xpm"
+#include "res/warning.xpm"
+#include "res/error.xpm"
+#include "res/next.xpm"

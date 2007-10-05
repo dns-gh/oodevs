@@ -17,6 +17,7 @@ namespace tools
     class GeneralConfig;
 }
 class QListBox;
+class InfoBubble;
 
 // =============================================================================
 /** @class  StartExercisePanel
@@ -53,6 +54,7 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     QListBox* list_;
+    InfoBubble* bubble_;
     //@}
 };
 

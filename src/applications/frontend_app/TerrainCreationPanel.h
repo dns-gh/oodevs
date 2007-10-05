@@ -17,6 +17,7 @@ namespace tools
     class GeneralConfig;
 }
 class QLineEdit;
+class InfoBubble;
 
 // =============================================================================
 /** @class  TerrainCreationPanel
@@ -61,6 +62,7 @@ private:
     QStringList existingTerrains_;
     QLineEdit* name_;
     QPushButton* okay_;
+    InfoBubble* bubble_;
     //@}
 };
 

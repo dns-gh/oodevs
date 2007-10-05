@@ -31,7 +31,7 @@ MainWindow::MainWindow()
 {
     config_->Parse( qApp->argc(), qApp->argv() );
     setCaption( APP_NAME );
-    setMinimumSize( 640, 500 );
+    setMinimumSize( 800, 600 );
 
     menu_ = new MainMenu( this );
 

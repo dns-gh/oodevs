@@ -12,6 +12,8 @@
 #include "moc_StartExercisePanel.cpp"
 #include "commands.h"
 #include "StartExercise.h"
+#include "InfoBubble.h"
+#include "resources.h"
 #include <qaction.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
@@ -24,15 +26,22 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
     : Panel_ABC( widget, action )
     , config_( config )
 {
-    QHBox* box = new QHBox( this );
+    QVBox* box = new QVBox( this );
     box->setMargin( 10 );
+    box->setSpacing( 10 );
+
     QGroupBox* group = new QGroupBox( 2, Qt::Vertical, action.text(), box );
     new QLabel( tr( "Choose the exercise to start:" ), group );
     list_ = new QListBox( group );
     list_->insertStringList( commands::ListExercises( config ) );
     list_->setSelected( 0, true );
 
-    QPushButton* okay = new QPushButton( tr( "Ok" ), this );
+    bubble_ = new InfoBubble( box ); // $$$$ SBO 2007-10-05: TODO
+    QHBox* btnBox = new QHBox( box );
+    btnBox->layout()->setAlignment( Qt::AlignRight );
+    QPushButton* okay = new QPushButton( MAKE_PIXMAP( next ), tr( "Start exercise" ), btnBox );
+    QFont font( "Arial", 10, QFont::Bold );
+    okay->setFont( font );
     connect( okay, SIGNAL( pressed() ), SLOT( StartExercise() ) );
     connect( list_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( StartExercise() ) );
 }

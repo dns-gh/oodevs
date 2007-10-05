@@ -17,5 +17,9 @@ DECLARE_ICON( data_create );
 DECLARE_ICON( banner_left );
 DECLARE_ICON( banner_fill );
 DECLARE_ICON( banner_right );
+DECLARE_ICON( info );
+DECLARE_ICON( warning );
+DECLARE_ICON( error );
+DECLARE_ICON( next );
 
 #endif // __resources_h_

@@ -17,6 +17,7 @@ namespace tools
     class GeneralConfig;
 }
 class QListBox;
+class InfoBubble;
 
 // =============================================================================
 /** @class  StartAnalysePanel
@@ -40,6 +41,7 @@ private slots:
     //@{
     void ExerciseSelected();
     void StartReplay();
+    void ReplaySelected();
     //@}
 
 private:
@@ -56,6 +58,7 @@ private:
     QListBox* exercises_;
     QListBox* replays_;
     QPushButton* okay_;
+    InfoBubble* bubble_;
     //@}
 };
 

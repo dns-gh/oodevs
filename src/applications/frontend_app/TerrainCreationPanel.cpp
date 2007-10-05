@@ -12,6 +12,9 @@
 #include "moc_TerrainCreationPanel.cpp"
 #include "CreateTerrain.h"
 #include "commands.h"
+#include "InfoBubble.h"
+#include "tools/GeneralConfig.h"
+#include "resources.h"
 #include <qaction.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
@@ -25,14 +28,23 @@ TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& actio
     , config_          ( config )
     , existingTerrains_( commands::ListTerrains( config ) )
 {
-    QHBox* box = new QHBox( this );
+    QVBox* box = new QVBox( this );
     box->setMargin( 10 );
+    box->setSpacing( 10 );
+
     QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, action.text(), box );
     new QLabel( tr( "New terrain name:" ), group );
-
     name_ = new QLineEdit( tr( "Enter terrain name" ), group );
     connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( NameChanged( const QString& ) ) );
-    okay_ = new QPushButton( tr( "Ok" ), this );
+
+    bubble_ = new InfoBubble( box );
+    {
+        QHBox* btnBox = new QHBox( box );
+        btnBox->layout()->setAlignment( Qt::AlignRight );
+        okay_ = new QPushButton( MAKE_PIXMAP( next ), tr( "Create" ), btnBox );
+        QFont font( "Arial", 10, QFont::Bold );
+        okay_->setFont( font );
+    }
     connect( okay_, SIGNAL( pressed() ), SLOT( CreateTerrain() ) );
 }
 
@@ -73,5 +85,8 @@ void TerrainCreationPanel::NameChanged( const QString& name )
 {
     const bool exists = existingTerrains_.contains( name );
     okay_->setDisabled( exists );
-    // $$$$ AGE 2007-10-05: info bubulle
+    if( exists )
+        bubble_->ShowError( tr( "A terrain with this name already exists." ) );
+    else
+        bubble_->ShowInfo( tr( "The new terrain will be created in:\n%1" ).arg( config_.GetTerrainDir( name.ascii() ).c_str() ) );
 }
