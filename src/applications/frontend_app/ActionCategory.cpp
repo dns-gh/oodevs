@@ -22,7 +22,7 @@ ActionCategory::ActionCategory( ActionList* parent )
     , parent_( parent )
 {
     setExclusive( true );
-    setInsideMargin( 1 );
+    setInsideMargin( 2 );
     setInsideSpacing( 0 );
     setPaletteBackgroundColor( Qt::white );
 }
