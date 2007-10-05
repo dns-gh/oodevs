@@ -13,6 +13,7 @@
 #include "MainMenu.h"
 #include "TerrainCreationPanel.h"
 #include "StartExercisePanel.h"
+#include "StartAnalysePanel.h"
 #include "resources.h"
 #include "tools/GeneralConfig.h"
 
@@ -50,8 +51,8 @@ MainWindow::MainWindow()
     AddAction< TerrainCreationPanel >( tr( "Play" ), *new QAction( tr( "Restart game" ), MAKE_PIXMAP( terrain_create ), "Restart game" , 0, this, 0, true ) );
     AddAction< TerrainCreationPanel >( tr( "Play" ), *new QAction( tr( "Join game" )   , MAKE_PIXMAP( terrain_create ), "Join game"    , 0, this, 0, true ) );
 
-    AddAction< TerrainCreationPanel >( tr( "Analyse" ), *new QAction( tr( "Replay game" ) , MAKE_PIXMAP( terrain_create ), "Replay game"  , 0, this, 0, true ) );
-    AddAction< TerrainCreationPanel >( tr( "Analyse" ), *new QAction( tr( "Analyse game" ), MAKE_PIXMAP( terrain_create ), "Analyse game" , 0, this, 0, true ) );
+    AddAction< StartAnalysePanel >( tr( "Analyse" ), *new QAction( tr( "Start analyse" ) , MAKE_PIXMAP( terrain_create ), "Start analyse"  , 0, this, 0, true ) );
+    AddAction< TerrainCreationPanel >( tr( "Analyse" ), *new QAction( tr( "Join analyse" ), MAKE_PIXMAP( terrain_create ), "Join game" , 0, this, 0, true ) );
 
     statusBar();
 

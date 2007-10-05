@@ -14,7 +14,6 @@
 #include "StartExercise.h"
 #include <qaction.h>
 #include <qlistbox.h>
-#include <qlineedit.h>
 #include <qpushbutton.h>
 
 // -----------------------------------------------------------------------------
@@ -53,6 +52,7 @@ StartExercisePanel::~StartExercisePanel()
 // -----------------------------------------------------------------------------
 void StartExercisePanel::StartExercise()
 {
-    new ::StartExercise( this, config_, list_->selectedItem()->text() );
+    if( list_->selectedItem() )
+        new ::StartExercise( this, config_, list_->selectedItem()->text() );
 }
 
