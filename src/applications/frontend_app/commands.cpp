@@ -24,7 +24,7 @@ namespace commands
     {
         const std::string dir = config.GetExerciseDir( name );
         bfs::create_directories( dir );
-        
+
         xml::xofstream xos( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string() );
         xos << xml::start( "exercise" )
                 << xml::start( "profile" ) << xml::attribute( "file", "profiles.xml" ) << xml::end()
@@ -39,6 +39,24 @@ namespace commands
             << xml::end();
     }
 
+    template< typename Validator >
+    QStringList ListDirectories( const std::string& base, Validator v )
+    {
+        QStringList result;
+        const bfs::path root = bfs::path( base, bfs::native );
+        if( ! bfs::exists( root ) )
+            return result;
+
+        bfs::directory_iterator end;
+        for( bfs::directory_iterator it( root ); it != end; ++it )
+        {
+            const bfs::path child = *it;
+            if( v( child ) )
+                result.append( child.leaf().c_str() );
+        }
+        return result;
+    }
+
     bool IsValidTerrain( const bfs::path& dir )
     {
         return bfs::is_directory( dir )
@@ -48,19 +66,24 @@ namespace commands
 
     QStringList ListTerrains( const tools::GeneralConfig& config )
     {
-        QStringList result;
-        const bfs::path terrainsRoot = bfs::path( config.GetTerrainsDir(), bfs::native );
-        if( ! bfs::exists( terrainsRoot ) )
-            return result;
-
-        bfs::directory_iterator end;
-        for( bfs::directory_iterator it( terrainsRoot ); it != end; ++it )
-        {
-            const bfs::path child = *it;
-            if( IsValidTerrain( child ) )
-                result.append( child.leaf().c_str() );
-        }
-        return result;
-
+        return ListDirectories( config.GetTerrainsDir(), &IsValidTerrain );
     }
+
+    bool IsValidExercise( const bfs::path& dir )
+    {
+        return bfs::is_directory( dir )
+            && bfs::exists( dir / "exercise.xml" )
+            && bfs::exists( dir / "game.xml" );
+    }
+
+    QStringList ListExercises( const tools::GeneralConfig& config )
+    {
+        return ListDirectories( config.GetExercisesDir(), &IsValidExercise );
+    }
+
+    QStringList ListReplays( const tools::GeneralConfig& config, const std::string& exercise )
+    {
+        return ListDirectories( config.GetRecordsDir( exercise ), &IsValidExercise );
+    }
+
 }

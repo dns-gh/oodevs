@@ -281,6 +281,15 @@ std::string GeneralConfig::BuildPopulationChildFile( const std::string& file ) c
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetRecordsDir
+// Created: AGE 2007-10-05
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetRecordsDir( const std::string& exercise ) const
+{
+    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exercise, bfs::native ) / "records" ).string();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::BuildRecordsDirectory
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------

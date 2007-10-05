@@ -60,6 +60,7 @@ public:
 
     std::string BuildPopulationChildFile( const std::string& file ) const;
 
+    std::string GetRecordsDir( const std::string& exercise ) const;
     std::string BuildRecordsDirectory( const std::string& record ) const;
 
     std::string GetModelsDir() const;
