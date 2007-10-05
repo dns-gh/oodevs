@@ -13,7 +13,6 @@
 #include "CreateTerrain.h"
 #include "commands.h"
 #include <qaction.h>
-#include <qlistbox.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
 
