@@ -30,10 +30,11 @@ TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& actio
     box->setMargin( 10 );
     QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, action.text(), box );
     new QLabel( tr( "New terrain name:" ), group );
-    name_ = new QLineEdit( tr( "Enter terrain name" ), group );
 
-    QPushButton* okay = new QPushButton( tr( "Ok" ), this );
-    connect( okay, SIGNAL( pressed() ), SLOT( CreateTerrain() ) );
+    name_ = new QLineEdit( tr( "Enter terrain name" ), group );
+    connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( NameChanged( const QString& ) ) );
+    okay_ = new QPushButton( tr( "Ok" ), this );
+    connect( okay_, SIGNAL( pressed() ), SLOT( CreateTerrain() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,8 +63,16 @@ void TerrainCreationPanel::showEvent( QShowEvent* event )
 // -----------------------------------------------------------------------------
 void TerrainCreationPanel::CreateTerrain()
 {
-    if( existingTerrains_.contains( name_->text() ) )
-        return; // $$$$ AGE 2007-10-05: error
     new ::CreateTerrain( this, config_, name_->text() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: TerrainCreationPanel::NameChanged
+// Created: AGE 2007-10-05
+// -----------------------------------------------------------------------------
+void TerrainCreationPanel::NameChanged( const QString& name )
+{
+    const bool exists = existingTerrains_.contains( name );
+    okay_->setDisabled( exists );
+    // $$$$ AGE 2007-10-05: info bubulle
+}

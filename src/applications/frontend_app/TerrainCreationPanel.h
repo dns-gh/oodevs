@@ -39,6 +39,7 @@ private slots:
     //! @name Slots
     //@{
     void CreateTerrain();
+    void NameChanged( const QString& );
     //@}
 
 private:
@@ -59,6 +60,7 @@ private:
     const tools::GeneralConfig& config_;
     QStringList existingTerrains_;
     QLineEdit* name_;
+    QPushButton* okay_;
     //@}
 };
 
