@@ -14,5 +14,8 @@
 
 DECLARE_ICON( terrain_create );
 DECLARE_ICON( data_create );
+DECLARE_ICON( banner_left );
+DECLARE_ICON( banner_fill );
+DECLARE_ICON( banner_right );
 
 #endif // __resources_h_

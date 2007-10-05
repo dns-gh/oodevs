@@ -16,3 +16,6 @@
 
 #include "res/terrain_create.xpm"
 #include "res/data_create.xpm"
+#include "res/banner_left.xpm"
+#include "res/banner_fill.xpm"
+#include "res/banner_right.xpm"

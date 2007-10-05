@@ -26,7 +26,7 @@ MainWindow::MainWindow()
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
 {
     setCaption( APP_NAME );
-    setMinimumSize( 600, 400 );
+    setMinimumSize( 640, 500 );
 
     menu_ = new MainMenu( this );
 
@@ -48,6 +48,8 @@ MainWindow::MainWindow()
 
     AddAction< TerrainCreationPanel >( tr( "Analyse" ), *new QAction( tr( "Replay game" ) , MAKE_PIXMAP( terrain_create ), "Replay game"  , 0, this, 0, true ) );
     AddAction< TerrainCreationPanel >( tr( "Analyse" ), *new QAction( tr( "Analyse game" ), MAKE_PIXMAP( terrain_create ), "Analyse game" , 0, this, 0, true ) );
+
+    statusBar();
 
     setCentralWidget( box );
     CenterWindow();

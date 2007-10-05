@@ -23,5 +23,8 @@
 #include <qhbox.h>
 #include <qvbox.h>
 #include <qgroupbox.h>
+#include <qlabel.h>
+#include <qlayout.h>
+
 
 #endif // __frontend_app_pch_h_

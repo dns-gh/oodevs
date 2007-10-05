@@ -16,13 +16,12 @@
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
 TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& action )
-    : QHBox( widget )
-    , stack_( widget )
+    : Panel_ABC( widget, action )
 {
-    setMargin( 10 );
-    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, action.text(), this );
-
-    connect( &action, SIGNAL( toggled( bool ) ), SLOT( setShown( bool ) ) );
+    QHBox* box = new QHBox( this );
+    box->setMargin( 10 );
+    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, action.text(), box );
+    new QLabel( "--> Click here to add text <--", group );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,14 +31,4 @@ TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& actio
 TerrainCreationPanel::~TerrainCreationPanel()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainCreationPanel::showEvent
-// Created: SBO 2007-10-04
-// -----------------------------------------------------------------------------
-void TerrainCreationPanel::showEvent( QShowEvent* event )
-{
-    stack_->raiseWidget( this );
-    QHBox::showEvent( event );
 }

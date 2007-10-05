@@ -20,6 +20,7 @@ Application::Application( int argc, char** argv )
     , mainWindow_  ( new MainWindow() )
 {
     mainWindow_->show();
+    connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
 }
 
 // -----------------------------------------------------------------------------
