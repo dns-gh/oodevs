@@ -40,6 +40,7 @@ private:
     Panel_ABC& operator=( const Panel_ABC& ); //!< Assignment operator
     //@}
 
+protected:
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* event );

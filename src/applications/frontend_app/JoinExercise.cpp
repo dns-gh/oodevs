@@ -20,7 +20,7 @@ JoinExercise::JoinExercise( QObject* parent, const tools::GeneralConfig& config,
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     addArgument( "--host=localhost:10001" ); // $$$$ AGE 2007-10-05: 
-    start();
+    Start();
 }
 
 // -----------------------------------------------------------------------------

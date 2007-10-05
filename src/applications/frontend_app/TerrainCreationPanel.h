@@ -12,6 +12,12 @@
 
 #include "Panel_ABC.h"
 
+namespace tools
+{
+    class GeneralConfig;
+}
+class QLineEdit;
+
 // =============================================================================
 /** @class  TerrainCreationPanel
     @brief  TerrainCreationPanel
@@ -20,16 +26,19 @@
 // =============================================================================
 class TerrainCreationPanel : public Panel_ABC
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainCreationPanel( QWidgetStack* widget, QAction& action );
+             TerrainCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
     virtual ~TerrainCreationPanel();
     //@}
 
-    //! @name Operations
+private slots:
+    //! @name Slots
     //@{
+    void CreateTerrain();
     //@}
 
 private:
@@ -41,11 +50,15 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void showEvent( QShowEvent* event );
     //@}
 
 private:
     //! @name Member data
     //@{
+    const tools::GeneralConfig& config_;
+    QStringList existingTerrains_;
+    QLineEdit* name_;
     //@}
 };
 

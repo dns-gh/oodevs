@@ -19,7 +19,7 @@ StartExercise::StartExercise( QObject* parent, const tools::GeneralConfig& confi
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
-    start();
+    Start();
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ StartExercise::StartExercise( QObject* parent, const tools::GeneralConfig& confi
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     addArgument( "--checkpoint=\"" + checkpoint + "\"" );
-    start();
+    Start();
 }
 
 // -----------------------------------------------------------------------------

@@ -94,12 +94,12 @@ void Application::Initialize( int argc, char** argv )
     mainWindow_->show();
 
     // Make sure the application exits when the main window is closed.
-    connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) );
+    connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
 
     // The following 2 timers will roughly emulate two threads.
     // This one reads the network to refresh the local data and is called as often as possible.
     networkTimer_ = new QTimer( this );
-    connect( networkTimer_, SIGNAL( timeout()), this, SLOT( UpdateData() ) );
+    connect( networkTimer_, SIGNAL( timeout()), SLOT( UpdateData() ) );
     networkTimer_->start(0);
 
     config_->Connect( *network_ );

@@ -19,7 +19,7 @@ EditExercise::EditExercise( QObject* parent, const tools::GeneralConfig& config,
 {
     AddRootDirArgument();
     AddExerciseArgument( name );
-    start();
+    Start();
 }
 
 // -----------------------------------------------------------------------------

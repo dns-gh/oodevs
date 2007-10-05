@@ -36,6 +36,7 @@ public:
 protected:
     //! @name Operations
     //@{
+    void Start();
     void AddRootDirArgument();
     void AddExerciseArgument( const QString& exercise );
     //@}

@@ -9,19 +9,31 @@
 
 #include "frontend_app_pch.h"
 #include "TerrainCreationPanel.h"
+#include "moc_TerrainCreationPanel.cpp"
+#include "CreateTerrain.h"
+#include "commands.h"
 #include <qaction.h>
+#include <qlistbox.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
 
 // -----------------------------------------------------------------------------
 // Name: TerrainCreationPanel constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& action )
-    : Panel_ABC( widget, action )
+TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
+    : Panel_ABC        ( widget, action )
+    , config_          ( config )
+    , existingTerrains_( commands::ListTerrains( config ) )
 {
     QHBox* box = new QHBox( this );
     box->setMargin( 10 );
     QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, action.text(), box );
-    new QLabel( "--> Click here to add text <--", group );
+    new QLabel( tr( "New terrain name:" ), group );
+    name_ = new QLineEdit( tr( "Enter terrain name" ), group );
+
+    QPushButton* okay = new QPushButton( tr( "Ok" ), this );
+    connect( okay, SIGNAL( pressed() ), SLOT( CreateTerrain() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,3 +44,26 @@ TerrainCreationPanel::~TerrainCreationPanel()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: TerrainCreationPanel::showEvent
+// Created: AGE 2007-10-05
+// -----------------------------------------------------------------------------
+void TerrainCreationPanel::showEvent( QShowEvent* event )
+{
+    name_->selectAll();
+    name_->setFocus();
+    Panel_ABC::showEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainCreationPanel::CreateTerrain
+// Created: AGE 2007-10-05
+// -----------------------------------------------------------------------------
+void TerrainCreationPanel::CreateTerrain()
+{
+    if( existingTerrains_.contains( name_->text() ) )
+        return; // $$$$ AGE 2007-10-05: error
+    new ::CreateTerrain( this, config_, name_->text() );
+}
+

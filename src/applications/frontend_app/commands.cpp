@@ -11,7 +11,7 @@
 #include "commands.h"
 #include "tools/GeneralConfig.h"
 
-#pragma warning( disable: 4127 4244 )
+#pragma warning( disable: 4127 4244 4245 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.h>
@@ -37,5 +37,30 @@ namespace commands
                     << xml::attribute( "physical", physical )
                 << xml::end()
             << xml::end();
+    }
+
+    bool IsValidTerrain( const bfs::path& dir )
+    {
+        return bfs::is_directory( dir )
+            && bfs::exists( dir / "terrain.xml" )
+            && bfs::exists( dir / "world.xml" );
+    }
+
+    QStringList ListTerrains( const tools::GeneralConfig& config )
+    {
+        QStringList result;
+        const bfs::path terrainsRoot = bfs::path( config.GetTerrainsDir(), bfs::native );
+        if( ! bfs::exists( terrainsRoot ) )
+            return result;
+
+        bfs::directory_iterator end;
+        for( bfs::directory_iterator it( terrainsRoot ); it != end; ++it )
+        {
+            const bfs::path child = *it;
+            if( IsValidTerrain( child ) )
+                result.append( child.leaf().c_str() );
+        }
+        return result;
+
     }
 }

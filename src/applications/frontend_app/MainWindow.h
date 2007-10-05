@@ -18,6 +18,11 @@ class QWidgetStack;
 class MainMenu;
 class ActionList;
 
+namespace tools
+{
+    class GeneralConfig;
+}
+
 // =============================================================================
 /** @class  MainWindow
     @brief  MainWindow
@@ -65,6 +70,7 @@ private:
     ActionList* list_;
     MainMenu*   menu_;
     QWidgetStack* pages_;
+    std::auto_ptr< tools::GeneralConfig > config_;
     //@}
 };
 

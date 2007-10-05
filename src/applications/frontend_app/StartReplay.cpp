@@ -20,6 +20,7 @@ StartReplay::StartReplay( QObject* parent, const tools::GeneralConfig& config, c
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     addArgument( "--record=\"" + replay + "\"" );
+    Start();
 }
 
 // -----------------------------------------------------------------------------

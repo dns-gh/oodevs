@@ -13,6 +13,7 @@
 #include "MainMenu.h"
 #include "TerrainCreationPanel.h"
 #include "resources.h"
+#include "tools/GeneralConfig.h"
 
 #include <qapplication.h>
 #include <qaction.h>
@@ -24,7 +25,9 @@
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow()
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
+    , config_( new tools::GeneralConfig() )
 {
+    config_->Parse( qApp->argc(), qApp->argv() );
     setCaption( APP_NAME );
     setMinimumSize( 640, 500 );
 
@@ -83,5 +86,5 @@ void MainWindow::AddAction( const QString& category, QAction& action )
 {
     menu_->AddAction( category, action );
     list_->AddAction( category, action );
-    pages_->addWidget( new Page( pages_, action ) );
+    pages_->addWidget( new Page( pages_, action, *config_ ) );
 }

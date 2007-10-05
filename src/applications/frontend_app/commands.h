@@ -19,6 +19,8 @@ namespace commands
 {
     void CreateExercise( const tools::GeneralConfig& config, const std::string& name,
                          const std::string& terrain, const std::string& model, const std::string& physical = "" );
+
+    QStringList ListTerrains( const tools::GeneralConfig& config );
 }
 
 #endif // __commands_h_

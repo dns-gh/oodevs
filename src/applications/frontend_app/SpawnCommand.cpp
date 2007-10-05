@@ -19,6 +19,8 @@ SpawnCommand::SpawnCommand( QObject* parent, const tools::GeneralConfig& config,
     : QProcess( parent )
     , config_( config )
 {
+    connect( this, SIGNAL( processExited() ), parent, SLOT( OnExit() ) );
+    connect( this, SIGNAL( processExited() ), SLOT( deleteLater() ) );
     addArgument( exe );
 }
 
@@ -47,4 +49,14 @@ void SpawnCommand::AddRootDirArgument()
 void SpawnCommand::AddExerciseArgument( const QString& exercise )
 {
     addArgument( "--exercise=\"" + exercise + "\"" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::Start
+// Created: AGE 2007-10-05
+// -----------------------------------------------------------------------------
+void SpawnCommand::Start()
+{
+    if( ! start() )
+        throw std::runtime_error( "Could not start process" );
 }
