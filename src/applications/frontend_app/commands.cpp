@@ -81,9 +81,18 @@ namespace commands
         return ListDirectories( config.GetExercisesDir(), &IsValidExercise );
     }
 
+    bool IsValidReplay( const bfs::path& record )
+    {
+        return bfs::is_directory( record )
+            && bfs::exists( record / "index" )
+            && bfs::exists( record / "keyindex" )
+            && bfs::exists( record / "update" )
+            && bfs::exists( record / "key" );
+    }
+
     QStringList ListReplays( const tools::GeneralConfig& config, const std::string& exercise )
     {
-        return ListDirectories( config.GetRecordsDir( exercise ), &IsValidExercise );
+        return ListDirectories( config.GetRecordsDir( exercise ), &IsValidReplay );
     }
 
 }
