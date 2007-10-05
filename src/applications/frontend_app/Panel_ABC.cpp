@@ -34,15 +34,26 @@ Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action )
         label->setErasePixmap( MAKE_PIXMAP( banner_left ) );
     }
     {
-        QLabel* label = new QLabel( banner );
-        label->setAlignment( Qt::AlignTop | Qt::AlignLeft );
-        label->setFixedHeight( 150 );
-        label->setErasePixmap( MAKE_PIXMAP( banner_fill ) );
-        label->setText( "\n" + action.text() );
-        QFont font;
-        font.setBold( true );
-        font.setPointSize( 20 );
-        label->setFont( font );
+        QVBox* box = new QVBox( banner );
+        box->setFixedHeight( 150 );
+        box->setPaletteBackgroundPixmap( MAKE_PIXMAP( banner_fill ) );
+        {
+            QLabel* label = new QLabel( box );
+            label->setFixedHeight( 60 );
+            label->setAlignment( Qt::AlignBottom | Qt::AlignLeft );
+            label->setText( action.text() );
+            label->setIndent( 2 );
+            QFont font( "Arial", 24, QFont::Bold );
+            label->setFont( font );
+        }
+        {
+            QLabel* label = new QLabel( box );
+            label->setMargin( 5 );
+            label->setAlignment( Qt::AlignTop | Qt::AlignLeft );
+            label->setText( action.toolTip() );
+            QFont font( "Arial", 8, QFont::Normal, true );
+            label->setFont( font );
+        }
     }
     {
         QLabel* label = new QLabel( banner );

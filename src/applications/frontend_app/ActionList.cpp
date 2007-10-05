@@ -18,7 +18,7 @@
 ActionList::ActionList( QWidget* parent )
     : QToolBox( parent )
 {
-    // NOTHING
+    setFixedWidth( 150 );
 }
 
 // -----------------------------------------------------------------------------
