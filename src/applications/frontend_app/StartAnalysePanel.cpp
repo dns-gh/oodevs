@@ -65,7 +65,7 @@ StartAnalysePanel::~StartAnalysePanel()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: StartAnalysePanel::ExerciseSelected
 // Created: AGE 2007-10-05

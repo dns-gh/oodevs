@@ -39,6 +39,7 @@ Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action )
         box->setPaletteBackgroundPixmap( MAKE_PIXMAP( banner_fill ) );
         {
             QLabel* label = new QLabel( box );
+            label->setBackgroundOrigin( ParentOrigin );
             label->setFixedHeight( 60 );
             label->setAlignment( Qt::AlignBottom | Qt::AlignLeft );
             label->setText( action.text() );
@@ -48,6 +49,7 @@ Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action )
         }
         {
             QLabel* label = new QLabel( box );
+            label->setBackgroundOrigin( ParentOrigin );
             label->setMargin( 5 );
             label->setAlignment( Qt::AlignTop | Qt::AlignLeft );
             label->setText( action.toolTip() );
