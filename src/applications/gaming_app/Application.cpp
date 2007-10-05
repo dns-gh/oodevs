@@ -101,6 +101,8 @@ void Application::Initialize( int argc, char** argv )
     networkTimer_ = new QTimer( this );
     connect( networkTimer_, SIGNAL( timeout()), this, SLOT( UpdateData() ) );
     networkTimer_->start(0);
+
+    config_->Connect( *network_ );
 }
 
 // -----------------------------------------------------------------------------

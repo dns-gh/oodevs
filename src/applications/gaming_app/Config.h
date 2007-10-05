@@ -11,6 +11,7 @@
 #define __Config_h_
 
 #include "clients_kernel/ExerciseConfig.h"
+class Network;
 
 // =============================================================================
 /** @class  Config
@@ -26,6 +27,17 @@ public:
     //@{
              Config( int argc, char** argv );
     virtual ~Config();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Connect( Network& network ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string host_;
     //@}
 };
 

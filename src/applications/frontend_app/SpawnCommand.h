@@ -37,7 +37,7 @@ protected:
     //! @name Operations
     //@{
     void AddRootDirArgument();
-    void AddExerciseArgument( const std::string& exercise );
+    void AddExerciseArgument( const QString& exercise );
     //@}
 
 private:

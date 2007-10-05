@@ -44,7 +44,7 @@ void SpawnCommand::AddRootDirArgument()
 // Name: SpawnCommand::AddExerciseArgument
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-void SpawnCommand::AddExerciseArgument( const std::string& exercise )
+void SpawnCommand::AddExerciseArgument( const QString& exercise )
 {
-    addArgument( ( "--exercise=\"" + exercise + "\"" ).c_str() );
+    addArgument( "--exercise=\"" + exercise + "\"" );
 }

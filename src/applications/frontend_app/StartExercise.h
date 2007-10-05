@@ -24,7 +24,8 @@ class StartExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             StartExercise( QObject* parent, const tools::GeneralConfig& config, const std::string& exercise );
+             StartExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise );
+             StartExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& checkpoint );
     virtual ~StartExercise();
     //@}
 

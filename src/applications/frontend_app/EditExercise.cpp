@@ -14,7 +14,7 @@
 // Name: EditExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-EditExercise::EditExercise( QObject* parent, const tools::GeneralConfig& config, const std::string& name )
+EditExercise::EditExercise( QObject* parent, const tools::GeneralConfig& config, const QString& name )
     : SpawnCommand( parent, config, "preparation_app.exe" )
 {
     AddRootDirArgument();
