@@ -50,6 +50,30 @@ namespace
     }
     void CreateWeather( const std::string& file )
     {
+        xml::xofstream xos( file );
+        xos << xml::start( "weather" )
+                << xml::start( "ephemerides" )
+                    << xml::attribute( "moon", "NuitPleineLune" )
+                    << xml::attribute( "sunrise", "7h0m0s" )
+                    << xml::attribute( "sunset", "21h0m0s" )
+                << xml::end()
+                << xml::start( "theater" )
+                    << xml::start( "wind" )
+                        << xml::attribute( "direction", 0 )
+                        << xml::attribute( "speed", 0 )
+                    << xml::end()
+                    << xml::start( "cloud-cover" )
+                        << xml::attribute( "ceiling", 10000 )
+                        << xml::attribute( "density", 0 )
+                        << xml::attribute( "floor", 500 )
+                    << xml::end()
+                    << xml::start( "precipitation" )
+                        << xml::attribute( "value", "PasDePrecipitation" )
+                    << xml::end()
+                << xml::end()
+                << xml::start( "local-weather" )
+                << xml::end()
+            << xml::end();
     }
 }
 

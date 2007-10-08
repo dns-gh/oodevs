@@ -53,8 +53,7 @@ namespace commands
     bool IsValidExercise( const bfs::path& dir )
     {
         return bfs::is_directory( dir )
-            && bfs::exists( dir / "exercise.xml" )
-            && bfs::exists( dir / "game.xml" );
+            && bfs::exists( dir / "exercise.xml" );
     }
 
     QStringList ListExercises( const tools::GeneralConfig& config )
@@ -76,4 +75,27 @@ namespace commands
         return ListDirectories( config.GetRecordsDir( exercise ), &IsValidReplay );
     }
 
+    bool IsValidModel( const bfs::path& record )
+    {
+        return bfs::is_directory( record )
+            && bfs::exists( record / "decisional" ) && bfs::is_directory( record / "decisional" )
+            && bfs::exists( record / "decisional" / "decisional.xml" )
+            && bfs::exists( record / "physical" );
+    }
+
+    QStringList ListModels( const tools::GeneralConfig& config )
+    {
+        return ListDirectories( config.GetModelsDir(), &IsValidModel );
+    }
+
+    bool IsValidPhysicalModel( const bfs::path& record )
+    {
+        return bfs::is_directory( record )
+            && bfs::exists( record / "physical.xml" );
+    }
+
+    QStringList ListPhysicalModels( const tools::GeneralConfig& config, const std::string& model )
+    {
+        return ListDirectories( config.GetPhysicalsDir( model ), &IsValidPhysicalModel );
+    }
 }

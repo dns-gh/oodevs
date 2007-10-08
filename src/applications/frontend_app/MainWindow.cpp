@@ -14,6 +14,7 @@
 #include "TerrainCreationPanel.h"
 #include "StartExercisePanel.h"
 #include "StartAnalysePanel.h"
+#include "ExerciseCreationPanel.h"
 #include "resources.h"
 #include "tools/GeneralConfig.h"
 
@@ -44,7 +45,7 @@ MainWindow::MainWindow()
     box->setStretchFactor( pages_, 3 );
 
     AddAction< TerrainCreationPanel >( tr( "Prepare" ), *new QAction( tr( "Create terrain" ) , MAKE_PIXMAP( terrain_create ), "Create terrain" , 0, this, 0, true ) );
-    AddAction< TerrainCreationPanel >( tr( "Prepare" ), *new QAction( tr( "Create exercise" ), MAKE_PIXMAP( data_create )   , "Create exercise", 0, this, 0, true ) );
+    AddAction< ExerciseCreationPanel >( tr( "Prepare" ), *new QAction( tr( "Create exercise" ), MAKE_PIXMAP( data_create )   , "Create exercise", 0, this, 0, true ) );
     AddAction< TerrainCreationPanel >( tr( "Prepare" ), *new QAction( tr( "Edit exercise" )  , MAKE_PIXMAP( data_create )   , "Edit exercise"  , 0, this, 0, true ) );
 
     AddAction< StartExercisePanel >( tr( "Play" ), *new QAction( tr( "Start game" )  , MAKE_PIXMAP( terrain_create ), "Start game"   , 0, this, 0, true ) );
