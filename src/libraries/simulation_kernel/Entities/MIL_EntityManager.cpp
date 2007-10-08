@@ -573,7 +573,7 @@ void MIL_EntityManager::CreatePopulation( xml::xistream& xis, MIL_Army& army )
     if( pPopulation )
         xis.error( "Population using this id already exists" );
 
-    pPopulation = &pType->InstanciatePopulation( MIL_IDManager::populations_.ConvertSimIDToMosID( id ), army, xis );
+    pPopulation = &pType->InstanciatePopulation( id, army, xis );
 }
 
 // =============================================================================
