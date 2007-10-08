@@ -107,3 +107,13 @@ bool Position::operator!=( const Position& rhs ) const
 {
     return mgrs_ != rhs.mgrs_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Position::operator double
+// Created: AGE 2007-10-08
+// -----------------------------------------------------------------------------
+Position::operator double() const
+{
+    return ToPoint( mgrs_ ).Distance( geometry::Point2f() );
+}
+

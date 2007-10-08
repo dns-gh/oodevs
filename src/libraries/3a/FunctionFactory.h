@@ -80,14 +80,22 @@ private:
     template< typename T >
     void Compose( const std::string& name, xml::xistream& xis, Task& result );
 
+    void MakeConstant( xml::xistream& xis, Task& result );
+    template< typename T >
+    void MakeConstant( const std::string& name, xml::xistream& xis, Task& result );
+
     void Plot( xml::xistream& xis, Task& result );
     template< typename T >
-    void Plot( Task& result );
+    void Plot( const std::string& name, xml::xistream& xis, Task& result );
 
-    void TypeError( const std::string& name );
     void ValueError( const std::string& name );
     void ReductionError( const std::string& name );
     void TransformationError( const std::string& name );
+
+    struct ReduceDispatcher;
+    struct TransformDispatcher;
+    struct PlotDispatcher;
+    struct MakeConstantDispatcher;
     //@}
 
 private:

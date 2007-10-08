@@ -34,8 +34,8 @@ struct Value
 template< typename T >
 struct ContinuousValue : public Value< T >
 {
-    ContinuousValue()
-        : value_(), set_( false ) {}
+    explicit ContinuousValue( const T& value = T() )
+        : value_( value ), set_( false ) {}
     void Prepare()
     {
         // NOTHING
@@ -64,7 +64,7 @@ template< typename T >
 struct ConstantValue : public ContinuousValue< T >
 {
     explicit ConstantValue( const T& value )
-        : ContinuousValue( value ) {}
+        : ContinuousValue< T >( value ) {}
     void Receive( const ASN1T_MsgsSimToClient& )
     {
         // NOTHING

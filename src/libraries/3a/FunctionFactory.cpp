@@ -30,6 +30,7 @@
 #include "Events.h"
 #include "Composer.h"
 #include "Constant.h"
+#include "TypeDispatcher.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -191,6 +192,46 @@ void FunctionFactory::CreateFunction( const std::string& type, xml::xistream& xi
         throw std::runtime_error( "Unknown function type '" + type + "'" );
 }
 
+#define TYPE_DISPATCH_HELPER( name )                                            \
+struct FunctionFactory::name##Dispatcher                                        \
+{                                                                               \
+    name##Dispatcher( FunctionFactory* that ): that_( that ) {}                 \
+    template< typename T >                                                      \
+    void operator()( const std::string& n, xml::xistream& xis, Task& result )   \
+    {                                                                           \
+        that_->name< T >( n, xis, result );                                     \
+    }                                                                           \
+    FunctionFactory* that_;                                                     \
+};
+
+TYPE_DISPATCH_HELPER( MakeConstant )
+
+// -----------------------------------------------------------------------------
+// Name: FunctionFactory::MakeConstant
+// Created: AGE 2007-10-08
+// -----------------------------------------------------------------------------
+template< typename T >
+void FunctionFactory::MakeConstant( const std::string& name, xml::xistream& xis, Task& result )
+{
+    typedef FunctionConnector< IdentifierValue::Type, T > Connector;
+    boost::shared_ptr< Connector > connector( new Connector() );
+    boost::shared_ptr< ModelFunction_ABC > function( new ::Constant< T >( xis, connector->handlers_.Parameter() ) );
+
+    result.AddExtractor( function );
+    result.AddConnector( name, connector );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FunctionFactory::MakeConstant
+// Created: AGE 2007-10-08
+// -----------------------------------------------------------------------------
+void FunctionFactory::MakeConstant( xml::xistream& xis, Task& result )
+{
+    MakeConstantDispatcher functor( this );
+    TypeDispatcher dispatcher( xis, result );
+    dispatcher.Dispatch( functor );
+}
+
 // -----------------------------------------------------------------------------
 // Name: FunctionFactory::Extract
 // Created: AGE 2007-09-11
@@ -227,6 +268,8 @@ void FunctionFactory::Extract( xml::xistream& xis, Task& result )
         Extract< existences::DirectFireUnitId >( name, xis, result );
     else if( value == "fire-component-damage" )
         Extract< events::FireComponentDamage >( name, xis, result );
+    else if( value == "constant" )
+        MakeConstant( xis, result );
     else
         ValueError( value );
 }
@@ -273,25 +316,18 @@ void FunctionFactory::Reduce( const std::string& name, xml::xistream& xis, Task&
         ReductionError( functionName );
 }
 
+
+TYPE_DISPATCH_HELPER( Reduce )
+
 // -----------------------------------------------------------------------------
 // Name: FunctionFactory::Reduce
 // Created: AGE 2007-09-11
 // -----------------------------------------------------------------------------
 void FunctionFactory::Reduce( xml::xistream& xis, Task& result )
 {
-    std::string name, type;
-    xis >> xml::attribute( "id", name )
-        >> xml::attribute( "type", type );
-    if( type == "float" )
-        Reduce< float >( name, xis, result );
-    else if( type == "position" )
-        Reduce< ::Position >( name, xis, result );
-    else if( type == "bool" )
-        Reduce< bool >( name, xis, result );
-    else if( type == "unsigned long" || type == "unit" )
-        Reduce< unsigned long >( name, xis, result );
-    else
-        TypeError( type );
+    ReduceDispatcher functor( this );
+    TypeDispatcher dispatcher( xis, result );
+    dispatcher.Dispatch( functor );
 }
 
 // -----------------------------------------------------------------------------
@@ -370,25 +406,7 @@ void FunctionFactory::Transform( const std::string& name, xml::xistream& xis, Ta
         TransformationError( function );
 }
 
-namespace
-{
-    struct NullType
-    {
-        NullType() {}
-        template< typename T > explicit NullType( const T& ) {}
-        template< typename T > NullType& operator+=( const T& )       { return *this; }
-        template< typename T > NullType  operator+ ( const T& ) const { return *this; }
-        template< typename T > NullType& operator-=( const T& )       { return *this; }
-        template< typename T > NullType  operator- ( const T& ) const { return *this; }
-        template< typename T > NullType& operator/=( const T& )       { return *this; }
-        template< typename T > NullType  operator/ ( const T& ) const { return *this; }
-        template< typename T > bool operator==( const T& ) const { return false; }
-        template< typename T > bool operator!=( const T& ) const { return false; }
-        template< typename T > bool operator<( const T& ) const { return false; }
-        template< typename T > bool operator>( const T& ) const { return false; }
-    };
-    std::istream& operator>>( std::istream& stream, NullType& ) { return stream; }
-}
+TYPE_DISPATCH_HELPER( Transform )
 
 // -----------------------------------------------------------------------------
 // Name: FunctionFactory::Transform
@@ -396,22 +414,12 @@ namespace
 // -----------------------------------------------------------------------------
 void FunctionFactory::Transform( xml::xistream& xis, Task& result )
 {
-    std::string name, type;
-    xis >> xml::attribute( "id", name )
-        >> xml::optional() >> xml::attribute( "type", type );
-    if( type == "bool" )
-        Transform< bool >( name, xis, result );
-    else if( type == "unsigned long" || type == "unit" )
-        Transform< unsigned long >( name, xis, result );
-    else if( type == "float" )
-        Transform< float >( name, xis, result );
-    else if( type == "position" )
-        Transform< ::Position >( name, xis, result );
-    else if( type.empty() )
-        Transform< NullType >( name, xis, result );
-    else
-        TypeError( type );
+    TransformDispatcher functor( this );
+    TypeDispatcher dispatcher( xis, result, true );
+    dispatcher.Dispatch( functor );
 }
+
+TYPE_DISPATCH_HELPER( Plot )
 
 // -----------------------------------------------------------------------------
 // Name: FunctionFactory::Plot
@@ -419,15 +427,9 @@ void FunctionFactory::Transform( xml::xistream& xis, Task& result )
 // -----------------------------------------------------------------------------
 void FunctionFactory::Plot( xml::xistream& xis, Task& result )
 {
-    const std::string type = xml::attribute< std::string >( xis, "type" );
-    if( type == "float" )
-        Plot< float >( result );
-    else if( type == "unsigned" || type == "unsigned int" ) 
-        Plot< unsigned >( result );
-    else if( type == "unit" )
-        Plot< unsigned long >( result );
-    else
-        TypeError( type );
+    PlotDispatcher functor( this );
+    TypeDispatcher dispatcher( "", xis, result, true );
+    dispatcher.Dispatch( functor );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,19 +437,10 @@ void FunctionFactory::Plot( xml::xistream& xis, Task& result )
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
 template< typename T >
-void FunctionFactory::Plot( Task& result )
+void FunctionFactory::Plot( const std::string& , xml::xistream& , Task& result )
 {
     boost::shared_ptr< Plotter< unsigned long, T > > plotter( new Plotter< unsigned long, T >( currentContext_ ) );
     result.SetResult( plotter );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FunctionFactory::TypeError
-// Created: AGE 2007-09-13
-// -----------------------------------------------------------------------------
-void FunctionFactory::TypeError( const std::string& name )
-{
-    throw std::runtime_error( "Unknown type '" + name + "'" );
 }
 
 // -----------------------------------------------------------------------------

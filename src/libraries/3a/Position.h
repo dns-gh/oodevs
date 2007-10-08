@@ -37,6 +37,8 @@ public:
     bool operator>( const Position& rhs ) const;
     bool operator==( const Position& rhs ) const;
     bool operator!=( const Position& rhs ) const;
+
+    operator double() const;
     //@}
 
     //! @name Compilation compatibility

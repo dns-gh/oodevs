@@ -13,6 +13,7 @@
 #include "ModelFunction.h"
 #include "Values.h"
 #include <xeumeuleu/xml.h>
+#include <boost/lexical_cast.hpp>
 
 // =============================================================================
 /** @class  Constant
@@ -28,8 +29,18 @@ public:
     //! @name Constructors/Destructor
     //@{
     Constant( xml::xistream& xis, ValueHandler_ABC< Return_Type >& handler )
-        : ModelFunction< ConstantValue< T > >( handler, ConstantValue< T >( xml::attribute< T >( xis, "value" ) ) )
+        : ModelFunction< ConstantValue< T > >( handler, ConstantValue< T >( ReadValue< T >( xis ) ) )
         {}
+    //@}
+
+    //! @name Helpers
+    //@{
+    template< typename T >
+    inline
+    static T ReadValue( xml::xistream& xis )
+    {
+        return boost::lexical_cast< T >( xml::attribute< std::string >( xis, "value" )  );
+    }
     //@}
 
 private:

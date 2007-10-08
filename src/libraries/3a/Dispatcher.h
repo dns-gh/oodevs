@@ -12,6 +12,7 @@
 
 #include "ModelFunction_ABC.h"
 #include "ValueHandler_ABC.h"
+#pragma warning (disable : 4702)
 #include <map>
 #include <algorithm>
 
