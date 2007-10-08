@@ -41,13 +41,22 @@ public:
 
     //! @name Compilation compatibility
     //@{
+    explicit Position( unsigned int ) {};
+
     template< typename T >
     Position& operator+=( const T& ) { return *this; }
     template< typename T >
-    Position operator+( const T& ) { return *this; }
-    explicit Position( unsigned int ) {};
+    Position operator+( const T& ) const { return *this; }
     template< typename T >
-    Position operator/( const T& ) { return *this; }
+    Position operator-( const T& ) const { return *this; }
+    template< typename T >
+    Position operator/( const T& ) const { return *this; }
+    //@}
+
+    //! @name Operators
+    //@{
+    friend std::ostream& operator<<( std::ostream& os, const Position& position );
+    friend std::istream& operator>>( std::istream& is, Position& position );
     //@}
 
 private:
@@ -56,5 +65,17 @@ private:
     std::string mgrs_;
     //@}
 };
+
+inline
+std::ostream& operator<<( std::ostream& os, const Position& position )
+{
+    return os << position.mgrs_;
+}
+    
+inline
+std::istream& operator>>( std::istream& is, Position& position )
+{
+    return is >> position.mgrs_;
+}
 
 #endif // __Position_h_

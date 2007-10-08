@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __KeyMarshaller_h_
-#define __KeyMarshaller_h_
+#ifndef __Composer_h_
+#define __Composer_h_
 
 #include "Reductor_ABC.h"
 
@@ -16,54 +16,61 @@
 #pragma warning (disable : 4355)
 
 // =============================================================================
-/** @class  KeyMarshaller
-    @brief  KeyMarshaller
+/** @class  Composer
+    @brief  Composer
+    // $$$$ AGE 2007-10-08: ^c^v KeyMarshaller
 */
-// Created: AGE 2007-08-30
+// Created: AGE 2007-10-08
 // =============================================================================
 template< typename K, typename A1, typename A2 >
-class KeyMarshaller : public Slot_ABC
+class Composer : public Slot_ABC
 {
+public:
+    //! @name Types
+    //@{
+    typedef K Key_Type;
+    typedef A2 Result_Type;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit KeyMarshaller( Function2_ABC< K, A1, A2 >& function )
-        : function_( function )
+    explicit Composer( Function1_ABC< K, A2 >& next )
+        : function_( next )
         , first_( this )
         , second_( this ) {}
     //@}
 
     //! @name Operations
     //@{
-    Function1_ABC< K, A1 >& FirstParameter()  { return first_; }
-    Function1_ABC< K, A2 >& SecondParameter() { return second_; }
+    Function1_ABC< A1, A2 >& F() { return second_; }
+    Function1_ABC< K,  A1 >& G() { return first_; }
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    KeyMarshaller( const KeyMarshaller& );            //!< Copy constructor
-    KeyMarshaller& operator=( const KeyMarshaller& ); //!< Assignment operator
+    Composer( const Composer& );            //!< Copy constructor
+    Composer& operator=( const Composer& ); //!< Assignment operator
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string GetName() const { return function_.GetName(); }
+    virtual std::string GetName() const { return "Composer"; }
     virtual Slot_ABC* GetSubSlot( unsigned slot )
     { 
-        return slot == 0 ? &first_ :
-               slot == 1 ? &second_ :
+        return slot == 0 ? &second_:
+               slot == 1 ? &first_ :
                (Slot_ABC*)0;
     }
     //@}
 
     //! @name Helpers
     //@{
-    template< typename T >
+    template< typename K, typename T >
     struct Function : public Reductor_ABC< K, T >
     {
-        Function( KeyMarshaller* that )
+        Function( Composer* that )
             : that_( that ), done_( false ), hasKey_( false ), current_() {}
         virtual void OnBeginTick() {}
         virtual void SetKey( const K& key )
@@ -86,12 +93,13 @@ private:
             current_ = K();
             values_.clear();
         }
-        KeyMarshaller* that_;
+        Composer* that_;
         bool done_;
         bool hasKey_;
         K current_;
         std::map< K, T > values_;
     };
+
     void Commit()
     {
         if( first_.done_ && second_.done_ )
@@ -104,7 +112,7 @@ private:
             else if( second_.hasKey_ )
                 ForwardSecond();
             else
-                function_.Apply( first_.values_[ K() ], second_.values_[ K() ] );
+                function_.Apply( second_.values_[ K() ] );
             first_.Reset(); second_.Reset();
             function_.EndTick();
         }
@@ -112,18 +120,16 @@ private:
     void MergeKeys()
     {
         std::map< K, A1 >::const_iterator firstIt  = first_.values_.begin();
-        std::map< K, A2 >::const_iterator secondIt = second_.values_.begin();
-        while( firstIt != first_.values_.end() && secondIt != second_.values_.end() )
-            if( firstIt->first < secondIt->first )
-                ++firstIt;
-            else if( secondIt->first < firstIt->first )
-                ++secondIt;
-            else
+        std::map< K, A1 >::const_iterator endIt = first_.values_.end();
+        for( ; firstIt != endIt; ++firstIt )
+        {
+            std::map< A1, A2 >::const_iterator secondIt = second_.values_.find( firstIt->second );
+            if( secondIt != second_.values_.end() )
             {
                 function_.SetKey( firstIt->first );
-                function_.Apply ( firstIt->second, secondIt->second );
-                ++firstIt; ++secondIt;
+                function_.Apply ( secondIt->second );
             }
+        }
     }
     void ForwardFirst()
     {
@@ -131,29 +137,25 @@ private:
         for( std::map< K, A1 >::const_iterator it = first_.values_.begin(); it != first_.values_.end(); ++it )
         {
             function_.SetKey( it->first );
-            function_.Apply( it->second, second );
+            function_.Apply( second );
         }
     }
     void ForwardSecond()
     {
         const A1& first = first_.values_[ K() ];
-        for( std::map< K, A2 >::const_iterator it = second_.values_.begin(); it != second_.values_.end(); ++it )
-        {
-            function_.SetKey( it->first );
-            function_.Apply( first, it->second );
-        }
+        std::map< A1, A2 >::const_iterator secondIt = second_.values_.find( first );
+        if( secondIt != second_.values_.end() )
+            function_.Apply ( secondIt->second );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    Function2_ABC< K, A1, A2 >& function_;
-    Function< A1 > first_;
-    Function< A2 > second_;
+    Function1_ABC< K, A2 >& function_;
+    Function< K,  A1 > first_;
+    Function< A1, A2 > second_;
     //@}
 };
 
-#pragma warning (pop)
-
-#endif // __KeyMarshaller_h_
+#endif // __Composer_h_

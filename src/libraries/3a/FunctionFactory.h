@@ -77,6 +77,9 @@ private:
     template< typename T >
     void Transform2( const std::string& name, xml::xistream& xis, Task& result );
 
+    template< typename T >
+    void Compose( const std::string& name, xml::xistream& xis, Task& result );
+
     void Plot( xml::xistream& xis, Task& result );
     template< typename T >
     void Plot( Task& result );

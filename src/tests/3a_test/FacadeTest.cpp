@@ -461,6 +461,66 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
     publisher.verify();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilter
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilter )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='fire-component-damage' id='damages'/>"
+        "<extract function='direct-fire-unit' id='units'/>"
+        "<extract function='position' id='positions'/>"
+        "<transform function='compose' type='position' input='positions,units' id='fire-positions'/>"
+        "<transform function='is-one-of' type='position' select='31TBN7728449218,31TBN7728449220' input='fire-positions' id='selected-fires'/>"
+        "<transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
+        "<reduce type='float' function='sum' input='the-damages' id='sum'/>"
+        "<plot input='sum' type='float'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TBN7728449218", 12 ) );
+    task->Receive( MakePosition( "31TBN7728449242", 13 ) );
+    task->Receive( MakePosition( "31TBN7728449212", 14 ) );
+    task->Receive( MakePosition( "31TBN7728449242", 15 ) );
+    task->Receive( MakePosition( "31TBN7728449220", 42 ) );
+    task->Receive( CreateDirectFire( 12, 12 ) );
+    task->Receive( CreateDirectFire( 13, 13 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 12, 5 ) );
+    task->Receive( StopFire( 13 ) );
+    task->Receive( CreateDirectFire( 14, 14 ) );
+    task->Receive( CreateDirectFire( 15, 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 13 ) );
+    task->Receive( StopFire( 14 ) );
+    task->Receive( StopFire( 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 16, 15 ) );
+    task->Receive( CreateDirectFire( 17, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 16 ) );
+    task->Receive( CreateDirectFire( 18, 13 ) );
+    task->Receive( CreateDirectFire( 19, 14 ) );
+    task->Receive( StopFire( 17, 3. ) );
+    task->Receive( EndTick() );
+
+    MockPublisher publisher;
+    double expectedResult[] = { 0., 5., 0., 0., 3. };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit( publisher );
+    publisher.verify();
+}
+
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]
 //(

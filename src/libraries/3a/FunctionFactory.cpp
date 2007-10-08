@@ -28,6 +28,7 @@
 #include "Adder.h"
 #include "Meaner.h"
 #include "Events.h"
+#include "Composer.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -72,6 +73,7 @@ namespace
         { "derivate",  "any",         "",           "input 1",    "",             "" },
         { "integrate", "any",         "",           "input 1",    "",             "" },
         { "domain",    "any",         "",           "input 1",    "list key",     "select" },
+        { "compose",   "any",         "any",        "input 2",    "",             "" },
         { 0, 0, 0, 0, 0, 0 }
     };
 
@@ -266,8 +268,6 @@ void FunctionFactory::Reduce( const std::string& name, xml::xistream& xis, Task&
         ReduceFunction< Adder< K, T > >( name, xis, result );
     else if( functionName == "mean" )
         ReduceFunction< Meaner< K, T > >( name, xis, result );
-    else if( functionName == "domain" )
-        ReduceFunction< Domain< K, T > >( name, xis, result );
     else
         ReductionError( functionName );
 }
@@ -329,6 +329,21 @@ void FunctionFactory::Transform1( const std::string& name, xml::xistream& xis, T
 }
 
 // -----------------------------------------------------------------------------
+// Name: FunctionFactory::Compose
+// Created: AGE 2007-10-08
+// -----------------------------------------------------------------------------
+template< typename T >
+void FunctionFactory::Compose( const std::string& name, xml::xistream& xis, Task& result )
+{
+    typedef Composer< unsigned long, unsigned long, T > C;
+    typedef FunctionConnector< typename C::Key_Type, typename C::Result_Type > Connector;
+    boost::shared_ptr< Connector > connector( new Connector() );
+    boost::shared_ptr< C > function( new C( *connector ) );
+    result.AddConnector( name, connector );
+    result.AddFunction ( name, function );
+}
+
+// -----------------------------------------------------------------------------
 // Name: FunctionFactory::Transform
 // Created: AGE 2007-09-14
 // -----------------------------------------------------------------------------
@@ -346,6 +361,10 @@ void FunctionFactory::Transform( const std::string& name, xml::xistream& xis, Ta
         Transform1< Derivate< unsigned long, T > >( name, xis, result );
     else if( function == "integrate" )
         Transform1< Integrate< unsigned long, T > >( name, xis, result );
+    else if( function == "domain" )
+        Transform1< Domain< unsigned long, T > >( name, xis, result );
+    else if( function == "compose" )
+        Compose< T >( name, xis, result );
     else
         TransformationError( function );
 }
@@ -385,6 +404,8 @@ void FunctionFactory::Transform( xml::xistream& xis, Task& result )
         Transform< unsigned long >( name, xis, result );
     else if( type == "float" )
         Transform< float >( name, xis, result );
+    else if( type == "position" )
+        Transform< ::Position >( name, xis, result );
     else if( type.empty() )
         Transform< NullType >( name, xis, result );
     else

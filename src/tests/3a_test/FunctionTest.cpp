@@ -11,6 +11,7 @@
 #include "MockFunctions.h"
 #include "3a/Functions.h"
 #include "3a/KeyMarshaller.h"
+#include "3a/Composer.h"
 
 using namespace mockpp;
 
@@ -169,5 +170,95 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithTwoKeysOnlyForwardsWhenBothKey
 
         marshaller.SecondParameter().EndTick();
         function.verify();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model_TestComposerWithKeysComposes
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Model_TestComposerWithKeysComposes )
+{
+    MockFunction1< unsigned long, float > function;
+    Composer< unsigned long, unsigned, float > composer( function );
+    {
+        composer.G().BeginTick();
+        composer.G().SetKey( 1 );
+        composer.G().Apply( 12 );
+        composer.G().SetKey( 3 );
+        composer.G().Apply( 14 );
+        composer.G().EndTick();
+
+        composer.F().BeginTick();
+        composer.F().SetKey( 12 );
+        composer.F().Apply( 42.f );
+        composer.F().SetKey( 14  );
+        composer.F().Apply( 44.f );
+
+        function.BeginTick_mocker.expects( once() );
+        function.SetKey_mocker.expects( once() ).with( eq( 1ul ) );
+        function.Apply_mocker.expects( once() ).with( eq( 42.f ) );
+        function.SetKey_mocker.expects( once() ).with( eq( 3ul ) );
+        function.Apply_mocker.expects( once() ).with( eq( 44.f ) );
+        function.EndTick_mocker.expects( once() );
+
+        composer.F().EndTick();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model_TestComposerWithConstantFIsConstant
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Model_TestComposerWithConstantFIsConstant )
+{
+    MockFunction1< unsigned long, float > function;
+    Composer< unsigned long, unsigned, float > composer( function );
+    {
+        composer.G().BeginTick();
+        composer.G().SetKey( 1 );
+        composer.G().Apply( 12 );
+        composer.G().SetKey( 3 );
+        composer.G().Apply( 14 );
+        composer.G().EndTick();
+
+        composer.F().BeginTick();
+        composer.F().Apply( 42.f );
+
+        function.BeginTick_mocker.expects( once() );
+        function.SetKey_mocker.expects( once() ).with( eq( 1ul ) );
+        function.Apply_mocker.expects( once() ).with( eq( 42.f ) );
+        function.SetKey_mocker.expects( once() ).with( eq( 3ul ) );
+        function.Apply_mocker.expects( once() ).with( eq( 42.f ) );
+        function.EndTick_mocker.expects( once() );
+
+        composer.F().EndTick();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model_TestComposerWithConstantGIsConstant
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Model_TestComposerWithConstantGIsConstant )
+{
+    MockFunction1< unsigned long, float > function;
+    Composer< unsigned long, unsigned, float > composer( function );
+    {
+        composer.G().BeginTick();
+        composer.G().Apply( 14 );
+        composer.G().EndTick();
+
+        composer.F().BeginTick();
+        composer.F().SetKey( 12 );
+        composer.F().Apply( 42.f );
+        composer.F().SetKey( 14  );
+        composer.F().Apply( 44.f );
+
+        function.BeginTick_mocker.expects( once() );
+        function.Apply_mocker.expects( once() ).with( eq( 44.f ) );
+        function.EndTick_mocker.expects( once() );
+
+        composer.F().EndTick();
     }
 }
