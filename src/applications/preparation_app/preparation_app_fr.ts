@@ -444,10 +444,6 @@
 <context>
     <name>WeatherWidget</name>
     <message>
-        <source>Temperature/gradient:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Wind direction/speed:</source>
         <translation type="unfinished"></translation>
     </message>

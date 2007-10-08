@@ -46,37 +46,32 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
     : pNightBase_( 0 )
     , bIsNight_  ( false )
 {
-    xis >> start( "Ephemeride" );
+    std::string sunRise, sunSet, moon;
+    xis >> start( "ephemerides" )
+            >> attribute( "sunrise", sunRise )
+            >> attribute( "sunset", sunSet )
+            >> attribute( "moon", moon )
+        >> xml::end();
 
-    std::string strVal;
-
-    // HeureLeverSoleil
-    xis >> content( "HeureLeverSoleil", strVal );
-    char tmp = 0;
     {
-        std::istringstream strTmp( strVal );
+        char tmp = 0;
+        std::istringstream strTmp( sunRise );
         strTmp >> sunriseTime_.first >> tmp >> sunriseTime_.second;
+        if ( tmp != 'h' || sunriseTime_.first < 0 || sunriseTime_.first > 23 || sunriseTime_.second < 0 || sunriseTime_.second > 59 )
+            xis.error( "Bad time format (use 00h00)" );
     }
-    if ( tmp != 'h' || sunriseTime_.first < 0 || sunriseTime_.first > 23 || sunriseTime_.second < 0 || sunriseTime_.second > 59 )
-        xis.error( "Bad time format (use 00h00)" );
 
-    // HeureCoucherSoleil
-    xis >> content( "HeureCoucherSoleil", strVal );
-    tmp = 0;
     {
-        std::istringstream strTmp( strVal );
+        char tmp = 0;
+        std::istringstream strTmp( sunSet );
         strTmp >> sunsetTime_.first >> tmp >> sunsetTime_.second;
+        if ( tmp != 'h' || sunsetTime_.first < 0 || sunsetTime_.first > 23 || sunsetTime_.second < 0 || sunsetTime_.second > 59 )
+            xis.error( "Bad time format (use 00h00)" );
     }
-    if ( tmp != 'h' || sunsetTime_.first < 0 || sunsetTime_.first > 23 || sunsetTime_.second < 0 || sunsetTime_.second > 59 )
-        xis.error( "Bad time format (use 00h00)" );
-
-    // Lune
-    xis >> content( "Lune", strVal );
-    pNightBase_ = PHY_Lighting::FindLighting( strVal );
+    
+    pNightBase_ = PHY_Lighting::FindLighting( moon );
     if( !pNightBase_ )
-        xis.error( "Unknown lighting '" + strVal + "'" );
-
-    xis >> end();
+        xis.error( "Unknown lighting '" + moon + "'" );
 
     if( sunriseTime_ >= sunsetTime_  )
         xis.error( "Sunrise time should be before sunset time" );

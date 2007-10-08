@@ -22,13 +22,8 @@ using namespace kernel;
 WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
     : QGroupBox( 2, Qt::Horizontal, title, parent )
 {
-    new QLabel( tr( "Temperature/gradient:" ), this );
-    QHBox* box = new QHBox( this );
-    temperature_ = new QSpinBox( -100, 100, 1, box );
-    temperature_->setSuffix( "°C" );
-    gradient_    = new QSpinBox( -10, 10, 1, box );
     new QLabel( tr( "Wind direction/speed:" ), this );
-    box = new QHBox( this );
+    QHBox* box = new QHBox( this );
     windDirection_ = new QSpinBox( 0, 359, 1, box );
     windDirection_->setSuffix( Units::degrees );
     windSpeed_     = new QSpinBox( 0, 300, 5, box );
@@ -61,8 +56,6 @@ WeatherWidget::~WeatherWidget()
 // -----------------------------------------------------------------------------
 void WeatherWidget::Update( const Weather& weather )
 {
-    temperature_->setValue( weather.temperature_ );
-    gradient_->setValue( weather.temperatureGradient_ );
     windDirection_->setValue( weather.windDirection_ );
     windSpeed_->setValue( weather.windSpeed_ );
     cloudFloor_->setValue( weather.cloudFloor_ );
@@ -77,8 +70,6 @@ void WeatherWidget::Update( const Weather& weather )
 // -----------------------------------------------------------------------------
 void WeatherWidget::CommitTo( Weather& weather ) const
 {
-    weather.temperature_ = temperature_->value();
-    weather.temperatureGradient_ = gradient_->value();
     weather.windDirection_ = windDirection_->value();
     weather.windSpeed_ = windSpeed_->value();
     weather.cloudFloor_ = cloudFloor_->value();

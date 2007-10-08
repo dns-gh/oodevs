@@ -33,35 +33,30 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
     , pPrecipitation_( &PHY_Precipitation::none_ )
     , nRefCount_     ( 0 )
 {
-    // Plancher de couverture nuageuse
-    xis >> content( "PlancherCouvertureNuageuse", nPlancherCouvertureNuageuse_ );
-
-    // Plafond de couverture nuageuse
-
-    xis >> content( "PlafondCouvertureNuageuse", nPlafondCouvertureNuageuse_ );
-
-    // Densite moyenne de couverture nuageuse
     uint nVal;
-    xis >> content( "DensiteMoyenneCouvertureNuageuse", nVal );
+    xis >> start( "cloud-cover" )
+            >> attribute( "floor", nPlancherCouvertureNuageuse_ )
+            >> attribute( "ceiling", nPlafondCouvertureNuageuse_ )
+            >> attribute( "density", nVal )
+        >> end();
     rDensiteCouvertureNuageuse_ = std::min( nVal, (uint)100 ) / 100.;
 
-    // Vitesse du vent
-    xis >> content( "VitesseVent", wind_.rWindSpeed_ );
+    uint nAngle;
+    xis >> start( "wind" )
+            >> attribute( "speed", wind_.rWindSpeed_ )
+            >> attribute( "speed", nAngle )
+        >> end();
     if( wind_.rWindSpeed_ < 0 )
         xis.error( "meteo: VitesseVent < 0" );
     wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( wind_.rWindSpeed_ );
-    
-    // Direction du vent
-    uint nAngle;
-    xis >> content( "DirectionVent", nAngle );
     if( nAngle < 0 || nAngle > 360 )
         xis.error( "meteo: DirectionVent not in [0..360]" );
     NET_ASN_Tools::ReadDirection( nAngle, wind_.vWindDirection_ );
 
-    // Précipitation
     std::string strVal;
-    xis >> content( "Precipitation", strVal );
-
+    xis >> start( "precipitation" )
+            >> attribute( "value", strVal )
+        >> end();
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( strVal );
     if( !pPrecipitation_ )
         xis.error( "Unknown Precipitation type '" + strVal + "'" );

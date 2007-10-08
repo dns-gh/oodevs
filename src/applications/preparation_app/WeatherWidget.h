@@ -47,8 +47,6 @@ private:
 private:
     //! @name Member data
     //@{
-    QSpinBox* temperature_;
-    QSpinBox* gradient_;
     QSpinBox* windDirection_;
     QSpinBox* windSpeed_;
     QSpinBox* cloudFloor_;

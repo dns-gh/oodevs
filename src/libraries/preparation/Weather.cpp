@@ -32,9 +32,7 @@ namespace
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 Weather::Weather()
-    : temperature_( 20 )
-    , temperatureGradient_( 1 )
-    , windSpeed_( 0 )
+    : windSpeed_( 0 )
     , windDirection_( 0 )
     , cloudFloor_( 1000 )
     , cloudCeiling_( 10000 )
@@ -51,14 +49,18 @@ Weather::Weather()
 Weather::Weather( xml::xistream& xis )
 {
     std::string precipitation;
-    xis >> content( "Temperature", temperature_ )
-        >> content( "GradianTemperature", temperatureGradient_ )
-        >> content( "VitesseVent", windSpeed_ )
-        >> content( "DirectionVent", windDirection_ )
-        >> content( "PlancherCouvertureNuageuse", cloudFloor_ )
-        >> content( "PlafondCouvertureNuageuse", cloudCeiling_ )
-        >> content( "DensiteMoyenneCouvertureNuageuse", cloudDensity_ )
-        >> content( "Precipitation", precipitation );
+    xis >> start( "wind" )
+            >> attribute( "speed", windSpeed_ )
+            >> attribute( "direction", windDirection_ )
+        >> end()
+        >> start( "cloud-cover" )
+            >> attribute( "floor", cloudFloor_ )
+            >> attribute( "ceiling", cloudCeiling_ )
+            >> attribute( "density", cloudDensity_ )
+        >> end()
+        >> start( "precipitation" )
+            >> attribute( "value", precipitation )
+        >> end();
     type_ = ConvertToWeatherType( precipitation.c_str() );
 }
 
@@ -77,12 +79,16 @@ Weather::~Weather()
 // -----------------------------------------------------------------------------
 void Weather::Serialize( xml::xostream& xos ) const
 {
-    xos << content( "Temperature", temperature_ )
-        << content( "GradianTemperature", temperatureGradient_ )
-        << content( "VitesseVent", windSpeed_ )
-        << content( "DirectionVent", windDirection_ )
-        << content( "PlancherCouvertureNuageuse", cloudFloor_ )
-        << content( "PlafondCouvertureNuageuse", cloudCeiling_ )
-        << content( "DensiteMoyenneCouvertureNuageuse", cloudDensity_ )
-        << content( "Precipitation", tools::GetXmlSection( type_ ) ); // $$$$ SBO 2006-12-20: 
+    xos << start( "wind" )
+            << attribute( "speed", windSpeed_ )
+            << attribute( "direction", windDirection_ )
+        << end()
+        << start( "cloud-cover" )
+            << attribute( "floor", cloudFloor_ )
+            << attribute( "ceiling", cloudCeiling_ )
+            << attribute( "density", cloudDensity_ )
+        << end()
+        << start( "precipitation" )
+            << attribute( "value", tools::GetXmlSection( type_ ) ) // $$$$ SBO 2006-12-20: 
+        << end();
 }

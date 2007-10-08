@@ -7,19 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef __commands_h_
-#define __commands_h_
+#ifndef __CreateExercise_h_
+#define __CreateExercise_h_
 
 namespace tools
 {
     class GeneralConfig;
 }
 
-namespace commands
-{
-    QStringList ListTerrains ( const tools::GeneralConfig& config );
-    QStringList ListExercises( const tools::GeneralConfig& config );
-    QStringList ListReplays  ( const tools::GeneralConfig& config, const std::string& exercise );
-}
+void CreateExercise( const tools::GeneralConfig& config, const std::string& name,
+                     const std::string& terrain, const std::string& model, const std::string& physical = "" );
 
-#endif // __commands_h_
+#endif // __CreateExercise_h_

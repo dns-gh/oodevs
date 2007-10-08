@@ -39,7 +39,7 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     xml::xifstream xisWeather( fileName );
     config.AddFileToCRC( fileName );
 
-    xisWeather >> start( "Meteo" );
+    xisWeather >> start( "weather" );
     pEphemeride_  = new PHY_Ephemeride( xisWeather );
     InitializeGlobalMeteo( xisWeather );
     pRawData_     = new PHY_RawVisionData( *pGlobalMeteo_, config );
@@ -68,7 +68,7 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
-    xis >> start( "MeteoGlobale" );
+    xis >> start( "theater" );
     pGlobalMeteo_ = new PHY_Meteo( xis, *pEphemeride_ );
     pGlobalMeteo_->IncRef();
     RegisterMeteo( *pGlobalMeteo_ );
@@ -81,8 +81,8 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 //-----------------------------------------------------------------------------
 void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 {
-    xis >> optional() >> start( "PatchsLocaux" )
-                          >> list( "PatchLocal", *this, &PHY_MeteoDataManager::ReadPatchLocal )
+    xis >> optional() >> start( "local-weather" )
+                          >> list( "local", *this, &PHY_MeteoDataManager::ReadPatchLocal )
                       >> end();
 }
 
@@ -96,10 +96,10 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
     MT_Vector2D vUpLeft;
     MT_Vector2D vDownRight;
 
-    xis >> attribute( "hautGauche", strPos );
+    xis >> attribute( "top-left", strPos );
     MIL_Tools::ConvertCoordMosToSim( strPos, vUpLeft );
 
-    xis >> attribute( "basDroit", strPos );
+    xis >> attribute( "bottom-right", strPos );
     MIL_Tools::ConvertCoordMosToSim( strPos, vDownRight );
 
     PHY_Meteo* pMeteo = new PHY_Meteo( xis, *pEphemeride_ );

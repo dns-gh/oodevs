@@ -49,8 +49,6 @@ private:
 public:
     //! @name Member data
     //@{
-    int temperature_;
-    int temperatureGradient_;
     int windSpeed_;
     int windDirection_;
     int cloudFloor_;

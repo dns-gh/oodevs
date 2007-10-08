@@ -17,6 +17,7 @@
 StartExercise::StartExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise )
     : SpawnCommand( parent, config, "simulation_app.exe" )
 {
+    // $$$$ AGE 2007-10-08: create game.xml ?
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     Start();
@@ -31,7 +32,7 @@ StartExercise::StartExercise( QObject* parent, const tools::GeneralConfig& confi
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
-    addArgument( "--checkpoint=\"" + checkpoint + "\"" );
+    addArgument( "--checkpoint=" + checkpoint );
     Start();
 }
 

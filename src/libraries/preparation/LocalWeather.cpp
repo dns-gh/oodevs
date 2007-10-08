@@ -43,8 +43,8 @@ LocalWeather::LocalWeather( xml::xistream& xis, const kernel::CoordinateConverte
     , name_( tools::translate( "LocalWeather", "Local weather %1" ).arg( id_ ) )
 {
     std::string topLeft, bottomRight;
-    xis >> attribute( "hautGauche", topLeft )
-        >> attribute( "basDroit", bottomRight );
+    xis >> attribute( "top-left", topLeft )
+        >> attribute( "bottom-right", bottomRight );
     topLeft_ = converter_.ConvertToXY( topLeft );
     bottomRight_ = converter_.ConvertToXY( bottomRight );
 }
@@ -82,8 +82,8 @@ QString LocalWeather::GetName() const
 // -----------------------------------------------------------------------------
 void LocalWeather::Serialize( xml::xostream& xos ) const
 {
-    xos << attribute( "hautGauche", converter_.ConvertToMgrs( topLeft_ ) )
-        << attribute( "basDroit"  , converter_.ConvertToMgrs( bottomRight_ ) );
+    xos << attribute( "top-keft", converter_.ConvertToMgrs( topLeft_ ) )
+        << attribute( "bottom-right"  , converter_.ConvertToMgrs( bottomRight_ ) );
     Weather::Serialize( xos );
 }
 

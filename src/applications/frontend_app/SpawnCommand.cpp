@@ -19,6 +19,7 @@ SpawnCommand::SpawnCommand( QObject* parent, const tools::GeneralConfig& config,
     : QProcess( parent )
     , config_( config )
 {
+    setCommunication( Stderr );
     connect( this, SIGNAL( processExited() ), parent, SLOT( OnExit() ) );
     connect( this, SIGNAL( processExited() ), SLOT( deleteLater() ) );
     addArgument( exe );
@@ -39,7 +40,7 @@ SpawnCommand::~SpawnCommand()
 // -----------------------------------------------------------------------------
 void SpawnCommand::AddRootDirArgument()
 {
-    addArgument( ( "--root-dir=\"" + config_.GetRootDir() + "\"" ).c_str() );
+    addArgument( ( "--root-dir=" + config_.GetRootDir() ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +49,7 @@ void SpawnCommand::AddRootDirArgument()
 // -----------------------------------------------------------------------------
 void SpawnCommand::AddExerciseArgument( const QString& exercise )
 {
-    addArgument( "--exercise=\"" + exercise + "\"" );
+    addArgument( "--exercise=" + exercise );
 }
 
 // -----------------------------------------------------------------------------

@@ -62,15 +62,15 @@ void WeatherModel::Load( const std::string& filename )
 {
     Purge();
     xml::xifstream xis( filename );
-    xis >> start( "Meteo" )
-        >> start( "Ephemeride" );
+    xis >> start( "weather" )
+        >> start( "ephemerides" );
     ReadEphemerides( xis );
     xis >> end()
-        >> start( "MeteoGlobale" );
+        >> start( "theater" );
     ReadGlobalWeather( xis );
     xis >> end()
-        >> start( "PatchsLocaux" )
-            >> list( "PatchLocal", *this, &WeatherModel::ReadLocalWeather )
+        >> start( "local-weather" )
+            >> list( "local", *this, &WeatherModel::ReadLocalWeather )
         >> end();
     controller_.Update( *this );
 }
@@ -82,20 +82,20 @@ void WeatherModel::Load( const std::string& filename )
 void WeatherModel::Serialize( const std::string& filename ) const
 {
     xml::xofstream xos( filename, xml::encoding( "ISO-8859-1" ) );
-    xos << start( "Meteo" )
-            << start( "Ephemeride" )
-                << content( "HeureLeverSoleil", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).ascii() )
-                << content( "HeureCoucherSoleil", QString( "%1h%2m%3s" ).arg( sunset_.hour() ).arg( sunset_.minute() ).arg( sunset_.second() ).ascii() )
-                << content( "Lune", tools::GetXmlSection( lighting_ ) ) // $$$$ SBO 2006-12-20: !!
+    xos << start( "weather" )
+            << start( "ephemerides" )
+                << attribute( "sunrise", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).ascii() )
+                << attribute( "sunset", QString( "%1h%2m%3s" ).arg( sunset_.hour() ).arg( sunset_.minute() ).arg( sunset_.second() ).ascii() )
+                << attribute( "moon", tools::GetXmlSection( lighting_ ) ) // $$$$ SBO 2006-12-20: !!
             << end()
-            << start( "MeteoGlobale" );
+            << start( "theater" );
     globalWeather_->Serialize( xos );
     xos     << end()
-            << start( "PatchsLocaux" );
+            << start( "local-weather" );
     Iterator< const LocalWeather& > it( CreateIterator() );
     while( it.HasMoreElements() )
     {
-        xos << start( "PatchLocal" );
+        xos << start( "local" );
         it.NextElement().Serialize( xos );
         xos << end();
     }
@@ -130,9 +130,9 @@ namespace
 void WeatherModel::ReadEphemerides( xml::xistream& xis )
 {
     std::string sunrise, sunset, lighting;
-    xis >> content( "HeureLeverSoleil", sunrise )
-        >> content( "HeureCoucherSoleil", sunset )
-        >> content( "Lune", lighting );
+    xis >> attribute( "sunrise", sunrise )
+        >> attribute( "sunset", sunset )
+        >> attribute( "moon", lighting );
     sunrise_ = MakeTime( sunrise.c_str() );
     sunset_ = MakeTime( sunset.c_str() );
     lighting_ = ConvertToLighting( lighting.c_str() );
