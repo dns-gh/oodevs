@@ -29,6 +29,7 @@
 #include "Meaner.h"
 #include "Events.h"
 #include "Composer.h"
+#include "Constant.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------

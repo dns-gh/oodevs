@@ -108,6 +108,16 @@ void AfterActionFunctionList::NotifyUpdated( const AfterActionFunctions& model )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::NotifyDeleted
+// Created: AGE 2007-10-08
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::NotifyDeleted( const AfterActionFunctions& )
+{
+    model_ = 0;
+    functions_->clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: AfterActionFunctionList::Display
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------

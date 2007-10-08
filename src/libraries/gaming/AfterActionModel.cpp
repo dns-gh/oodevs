@@ -38,6 +38,18 @@ AfterActionModel::~AfterActionModel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AfterActionModel::Purge
+// Created: AGE 2007-10-08
+// -----------------------------------------------------------------------------
+void AfterActionModel::Purge()
+{
+    Resolver< AfterActionFactory, QString >::Clear();
+    functions_.reset();
+    requests_->Purge();
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AfterActionModel::Update
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------

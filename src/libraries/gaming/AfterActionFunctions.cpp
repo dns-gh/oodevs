@@ -33,7 +33,7 @@ AfterActionFunctions::AfterActionFunctions( kernel::Controller& controller, Reso
 // -----------------------------------------------------------------------------
 AfterActionFunctions::~AfterActionFunctions()
 {
-    // NOTHING
+    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------

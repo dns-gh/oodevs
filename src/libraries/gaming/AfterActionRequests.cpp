@@ -32,8 +32,19 @@ AfterActionRequests::AfterActionRequests( Controller& controller, Publisher_ABC&
 // -----------------------------------------------------------------------------
 AfterActionRequests::~AfterActionRequests()
 {
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequests::Purge
+// Created: AGE 2007-10-08
+// -----------------------------------------------------------------------------
+void AfterActionRequests::Purge()
+{
     for( T_Requests::iterator it = requests_.begin(); it != requests_.end(); ++it )
         delete *it;
+    requests_.resize( 0 );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 #include "ReplayConfig.h"
 
 #pragma warning( push )
-#pragma warning( disable: 4127 4244 )
+#pragma warning( disable: 4127 4244 4511 4512 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/program_options.hpp>

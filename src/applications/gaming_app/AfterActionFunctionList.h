@@ -78,6 +78,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const AfterActionFunctions& );
+    virtual void NotifyDeleted( const AfterActionFunctions& );
     void CreateRequestButton();
     void CreateParameter( const AfterActionParameter& parameter );
     boost::shared_ptr< Param_ABC > CreateParameter( const std::string& type, const QString& name );

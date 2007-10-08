@@ -46,6 +46,8 @@ public:
 
     //! @name Operations
     //@{
+    void Purge();
+
     void Update( const ASN1T_MsgAarInformation& asnMsg );
     void Update( const ASN1T_MsgIndicatorResult& asnMsg );
 
