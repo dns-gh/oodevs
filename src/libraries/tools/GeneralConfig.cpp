@@ -297,3 +297,12 @@ std::string GeneralConfig::BuildRecordsDirectory( const std::string& record ) co
 {
     return BuildGameChildFile( ( bfs::path( "records", bfs::native ) / bfs::path( record, bfs::native ) ).string() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetCheckpointsDir
+// Created: AGE 2007-10-08
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetCheckpointsDir( const std::string& exercise ) const
+{
+    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exercise, bfs::native ) / "checkpoints" ).string();
+}

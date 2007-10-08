@@ -75,6 +75,18 @@ namespace commands
         return ListDirectories( config.GetRecordsDir( exercise ), &IsValidReplay );
     }
 
+    bool IsValidCheckpoint( const bfs::path& record )
+    {
+        return bfs::is_directory( record )
+            && bfs::exists( record / "data" )
+            && bfs::exists( record / "MetaData.xml" );
+    }
+
+    QStringList ListCheckpoints( const tools::GeneralConfig& config, const std::string& exercise )
+    {
+        return ListDirectories( config.GetCheckpointsDir( exercise ), &IsValidCheckpoint );
+    }
+
     bool IsValidModel( const bfs::path& record )
     {
         return bfs::is_directory( record )

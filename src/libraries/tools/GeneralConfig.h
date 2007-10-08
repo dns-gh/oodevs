@@ -63,6 +63,8 @@ public:
     std::string GetRecordsDir( const std::string& exercise ) const;
     std::string BuildRecordsDirectory( const std::string& record ) const;
 
+    std::string GetCheckpointsDir( const std::string& exercise ) const;
+
     std::string GetModelsDir() const;
 
     virtual void Parse( int argc, char** argv );
