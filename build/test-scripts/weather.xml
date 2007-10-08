@@ -1,23 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Meteo>
-
-  <Ephemeride>
-    <HeureLeverSoleil>7h</HeureLeverSoleil>
-    <HeureCoucherSoleil>21h17</HeureCoucherSoleil>
-    <Lune>NuitTroisQuartDeLune</Lune>
-  </Ephemeride>
-
-  <MeteoGlobale>
-    <Temperature>20</Temperature>
-    <GradianTemperature>5</GradianTemperature>
-    <VitesseVent>0</VitesseVent>
-    <DirectionVent>0</DirectionVent>
-    <PlancherCouvertureNuageuse>500</PlancherCouvertureNuageuse>
-    <PlafondCouvertureNuageuse>10000</PlafondCouvertureNuageuse>
-    <DensiteMoyenneCouvertureNuageuse>0</DensiteMoyenneCouvertureNuageuse>
-    <Precipitation>PasDePrecipitation</Precipitation>
-  </MeteoGlobale>
-
-  <PatchsLocaux/>
-
-</Meteo>
+<weather>
+  <ephemerides moon="NuitTroisQuartDeLune" sunrise="10h0m0s" sunset="21h17m0s"/>
+  <theater>
+    <wind direction="0" speed="0"/>
+    <cloud-cover ceiling="10000" density="0" floor="500"/>
+    <precipitation value="PasDePrecipitation"/>
+  </theater>
+  <local-weather/>
+</weather>
