@@ -210,16 +210,6 @@ uint16 MIL_Config::GetNetworkPort() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::IsThreadedNetwork
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Config::IsThreadedNetwork() const
-{
-    return bNetworkThreaded_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::GetPathFinderThreads
 // Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------

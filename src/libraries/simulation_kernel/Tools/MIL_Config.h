@@ -136,7 +136,6 @@ private:
     bool                       bTestMode_;
     bool                       bEmbeddedDispatcher_;
     uint16                     networkPort_;
-    bool                       bNetworkThreaded_;
     uint                       timeStep_;
     uint                       timeFactor_;
     uint                       pathFinderThreads_;

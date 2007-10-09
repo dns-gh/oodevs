@@ -94,7 +94,6 @@ void ExerciseCreationPanel::showEvent( QShowEvent* event )
 // -----------------------------------------------------------------------------
 void ExerciseCreationPanel::CreateExercise()
 {
-    // $$$$ AGE 2007-10-08: GameConfig
     if( terrainList_->selectedItem() && modelList_->selectedItem()
         && ( physicalList_->selectedItem() || ! physicalList_->isVisible() ) )
         ::CreateExercise( config_, name_->text().ascii(),

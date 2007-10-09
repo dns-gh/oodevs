@@ -18,6 +18,7 @@ namespace tools
 }
 class QListBox;
 class InfoBubble;
+class GameConfigPanel;
 
 // =============================================================================
 /** @class  StartExercisePanel
@@ -39,6 +40,7 @@ public:
 private slots:
     //! @name Slots
     //@{
+    void ExerciseSelected();
     void StartExercise();
     //@}
 
@@ -54,6 +56,7 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     QListBox* list_;
+    GameConfigPanel* configPanel_;
     InfoBubble* bubble_;
     //@}
 };

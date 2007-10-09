@@ -13,10 +13,12 @@
 #include "commands.h"
 #include "StartExercise.h"
 #include "InfoBubble.h"
+#include "GameConfigPanel.h"
 #include "resources.h"
 #include <qaction.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
+#include <qtabwidget.h>
 
 // -----------------------------------------------------------------------------
 // Name: StartExercisePanel constructor
@@ -30,11 +32,16 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
     box->setMargin( 10 );
     box->setSpacing( 10 );
 
-    QGroupBox* group = new QGroupBox( 2, Qt::Vertical, action.text(), box );
-    new QLabel( tr( "Choose the exercise to start:" ), group );
-    list_ = new QListBox( group );
+    QGroupBox* group = new QGroupBox( 1, Qt::Vertical, action.text(), box );
+    QTabWidget* tabs = new QTabWidget( group );
+    tabs->setMargin( 5 );
+    
+    list_ = new QListBox( tabs );
     list_->insertStringList( commands::ListExercises( config ) );
-    list_->setSelected( 0, true );
+    tabs->addTab( list_, tr( "Exercise" ) );
+
+    configPanel_ = new GameConfigPanel( tabs, config );
+    tabs->addTab( configPanel_, tr( "Options" ) );
 
     bubble_ = new InfoBubble( box ); // $$$$ SBO 2007-10-05: TODO
     QHBox* btnBox = new QHBox( box );
@@ -44,6 +51,9 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
     okay->setFont( font );
     connect( okay, SIGNAL( pressed() ), SLOT( StartExercise() ) );
     connect( list_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( StartExercise() ) );
+    connect( list_, SIGNAL( selectionChanged() ), SLOT( ExerciseSelected() ) );
+
+    list_->setSelected( 0, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,6 +72,18 @@ StartExercisePanel::~StartExercisePanel()
 void StartExercisePanel::StartExercise()
 {
     if( list_->selectedItem() )
+    {
+        configPanel_->Commit( list_->selectedItem()->text().ascii() );
         new ::StartExercise( this, config_, list_->selectedItem()->text() );
+    }
 }
 
+// -----------------------------------------------------------------------------
+// Name: StartExercisePanel::ExerciseSelected
+// Created: AGE 2007-10-09
+// -----------------------------------------------------------------------------
+void StartExercisePanel::ExerciseSelected()
+{
+    if( list_->selectedItem() )
+        configPanel_->Show( list_->selectedItem()->text().ascii() );
+}
