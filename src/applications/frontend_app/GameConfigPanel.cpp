@@ -15,9 +15,10 @@
 #include <qcheckbox.h>
 #include <qdatetimeedit.h>
 
-#pragma warning( disable: 4127 4244 4245 )
+#pragma warning( disable: 4127 4244 4245 4511 4512 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
+#include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.h>
 #undef min
 
@@ -134,10 +135,28 @@ QWidget* GameConfigPanel::CreateSystemPanel( QWidget* parent )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GameConfigPanel::SimulationPort
+// Created: AGE 2007-10-09
+// -----------------------------------------------------------------------------
+unsigned GameConfigPanel::SimulationPort( unsigned exerciseNumber )
+{
+    return 10000 + ( exerciseNumber - 1 ) * 2;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GameConfigPanel::DispatcherPort
+// Created: AGE 2007-10-09
+// -----------------------------------------------------------------------------
+unsigned GameConfigPanel::DispatcherPort( unsigned exerciseNumber )
+{
+    return SimulationPort( exerciseNumber ) + 1;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GameConfigPanel::Commit
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
-void GameConfigPanel::Commit( const std::string& exercise )
+void GameConfigPanel::Commit( const std::string& exercise, unsigned exerciseNumber )
 {
     const std::string gameXml = GetGameXml( exercise );
 
@@ -164,7 +183,7 @@ void GameConfigPanel::Commit( const std::string& exercise )
                     << xml::attribute( "embedded", true ) // $$$$ AGE 2007-10-09: 
                 << xml::end()
                 << xml::start( "network" )
-                    << xml::attribute( "port", 10000 ) // $$$$ AGE 2007-10-09: 
+                    << xml::attribute( "port", SimulationPort( exerciseNumber ) )
                 << xml::end()
                 << xml::start( "orbat" )
                     << xml::attribute( "checkcomposition", checkOdb_->isChecked() )
@@ -187,8 +206,9 @@ void GameConfigPanel::Commit( const std::string& exercise )
             << xml::end()
             << xml::start( "dispatcher" )
                 << xml::start( "network" )
-                    << xml::attribute( "client", "localhost:10000" ) // $$$$ AGE 2007-10-09: 
-                    << xml::attribute( "server", "10001" )
+                    << xml::attribute( "client", "localhost:" + 
+                                boost::lexical_cast< std::string >( SimulationPort( exerciseNumber ) ) )
+                    << xml::attribute( "server", DispatcherPort( exerciseNumber ) )
                 << xml::end()
                 << xml::start( "plugins" )
                     << xml::start( "plugin" )

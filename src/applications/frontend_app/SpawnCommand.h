@@ -20,10 +20,11 @@ namespace tools
 // =============================================================================
 /** @class  SpawnCommand
     @brief  Spawn command base class
+            QProcess est buggué jusqu'à la moelle
 */
 // Created: AGE 2007-10-04
 // =============================================================================
-class SpawnCommand : public QProcess
+class SpawnCommand : public QObject
 {
 
 public:
@@ -39,6 +40,7 @@ protected:
     void Start();
     void AddRootDirArgument();
     void AddExerciseArgument( const QString& exercise );
+    void addArgument( QString arg );
     //@}
 
 private:
@@ -52,6 +54,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    QString commandLine_;
     //@}
 };
 

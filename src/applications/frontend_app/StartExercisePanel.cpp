@@ -19,6 +19,7 @@
 #include <qlistbox.h>
 #include <qpushbutton.h>
 #include <qtabwidget.h>
+#include <qspinbox.h>
 
 // -----------------------------------------------------------------------------
 // Name: StartExercisePanel constructor
@@ -32,7 +33,7 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
     box->setMargin( 10 );
     box->setSpacing( 10 );
 
-    QGroupBox* group = new QGroupBox( 1, Qt::Vertical, action.text(), box );
+    QGroupBox* group = new QGroupBox( 2, Qt::Vertical, action.text(), box );
     QTabWidget* tabs = new QTabWidget( group );
     tabs->setMargin( 5 );
     
@@ -52,6 +53,10 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
     connect( okay, SIGNAL( pressed() ), SLOT( StartExercise() ) );
     connect( list_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( StartExercise() ) );
     connect( list_, SIGNAL( selectionChanged() ), SLOT( ExerciseSelected() ) );
+
+    QHBox* exerciseNumberBox = new QHBox( group );
+    new QLabel( tr( "Exercise number:" ), exerciseNumberBox );
+    exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
 
     list_->setSelected( 0, true );
 }
@@ -73,7 +78,7 @@ void StartExercisePanel::StartExercise()
 {
     if( list_->selectedItem() )
     {
-        configPanel_->Commit( list_->selectedItem()->text().ascii() );
+        configPanel_->Commit( list_->selectedItem()->text().ascii(), exerciseNumber_->value() );
         new ::StartExercise( this, config_, list_->selectedItem()->text() );
     }
 }

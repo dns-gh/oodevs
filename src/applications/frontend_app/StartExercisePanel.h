@@ -19,6 +19,7 @@ namespace tools
 class QListBox;
 class InfoBubble;
 class GameConfigPanel;
+class QSpinBox;
 
 // =============================================================================
 /** @class  StartExercisePanel
@@ -58,6 +59,7 @@ private:
     QListBox* list_;
     GameConfigPanel* configPanel_;
     InfoBubble* bubble_;
+    QSpinBox* exerciseNumber_;
     //@}
 };
 
