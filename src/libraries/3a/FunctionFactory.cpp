@@ -30,6 +30,7 @@
 #include "Events.h"
 #include "Composer.h"
 #include "Constant.h"
+#include "Contains.h"
 #include "TypeDispatcher.h"
 #include <xeumeuleu/xml.h>
 
@@ -70,6 +71,7 @@ namespace
     {
         // name,        input type 1   input type 2  output type   parameter type  parameter name
         { "distance",  "position",    "position",   "float",      "",             "" },
+        { "contains",  "zone",        "position",   "bool",       "",             "" },
         { "filter",    "bool",        "any",        "input 2",    "",             "" },
         { "is-one-of", "any",         "",           "bool",       "list input 1", "select" },
         { "derivate",  "any",         "",           "input 1",    "",             "" },
@@ -390,6 +392,8 @@ void FunctionFactory::Transform( const std::string& name, xml::xistream& xis, Ta
     const std::string function = xml::attribute< std::string >( xis, "function" );
     if( function == "distance" )
         Transform2< Distance< unsigned long > >( name, xis, result );
+    else if( function == "contains" )
+        Transform2< ::Contains< unsigned long > >( name, xis, result );
     else if( function == "filter" )
         Transform2< Filter< unsigned long, T > >( name, xis, result );
     else if( function == "is-one-of" )

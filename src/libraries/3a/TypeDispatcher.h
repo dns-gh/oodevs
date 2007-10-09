@@ -12,6 +12,7 @@
 
 #include <xeumeuleu/xml.h>
 #include "Position.h"
+#include "Zone.h"
 class Task;
 
 // =============================================================================
@@ -61,6 +62,8 @@ public:
             functor.operator()< float >( name_, xis_, result_ );
         else if( type == "position" )
             functor.operator()< ::Position >( name_, xis_, result_ );
+        else if( type == "zone" )
+            functor.operator()< ::Zone >( name_, xis_, result_ );
         else if( type == "bool" )
             functor.operator()< bool >( name_, xis_, result_ );
         else if( type == "unsigned" || type == "unsigned int" ) 

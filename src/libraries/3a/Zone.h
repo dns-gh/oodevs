@@ -39,6 +39,16 @@ public:
     }
     //@}
 
+    //! @name Compilation compatibility
+    //@{
+    operator double() const;
+
+    Zone( unsigned int );
+    Zone& operator+=( const Zone& ) { return *this; }
+    Zone  operator/( const Zone& ) const { return *this; }
+    Zone  operator-( const Zone& ) const { return *this; }
+    //@}
+
 private:
     //! @name Operations
     //@{

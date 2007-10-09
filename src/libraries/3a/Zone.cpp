@@ -39,6 +39,17 @@ Zone::Zone()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Zone constructor
+// Created: AGE 2007-10-09
+// -----------------------------------------------------------------------------
+Zone::Zone( unsigned int )
+    : zone_( new NullZone() )
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: Zone destructor
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
@@ -87,4 +98,13 @@ std::istream& operator>>( std::istream& is, Zone& zone )
 {
     zone.Read( std::string( std::istreambuf_iterator< char >( is ), std::istreambuf_iterator< char >() ) );
     return is;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Zone::operator double
+// Created: AGE 2007-10-09
+// -----------------------------------------------------------------------------
+Zone::operator double() const
+{
+    return 0.f;
 }
