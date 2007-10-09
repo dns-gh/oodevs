@@ -905,6 +905,7 @@
         <mission name="To go through decontamination process"/>
         <mission name="To adopt transportation posture"/>
         <mission name="prepare to"/>
+        <mission name="Armor CP To Deploy"/>
       </missions>
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.hal" name="MBT platoon">

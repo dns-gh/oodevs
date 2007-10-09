@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <knowledge-groups>
   <knowledge-group name="Standard">
-    <unit-knowledge max-lifetime="600s" max-unit-to-knowledge-distance="60000"/>
+    <unit-knowledge max-lifetime="3h" max-unit-to-knowledge-distance="60000"/>
     <population-knowledge max-lifetime="1800s"/>
   </knowledge-group>
   <knowledge-group name="Rens">

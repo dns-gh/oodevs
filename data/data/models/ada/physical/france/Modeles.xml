@@ -888,6 +888,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
+        <mission name="ABC PC Se Deployer"/>
       </missions>
     </unit>
     <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.hal" name="PC ASS Tir">
