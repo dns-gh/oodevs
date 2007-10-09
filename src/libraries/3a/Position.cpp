@@ -11,13 +11,14 @@
 #include <geocoord/PlanarCartesian.h>
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
-#include <geometry/Types.h>
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Position constructor
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
 Position::Position()
+    : init_( true )
 {
     // NOTHING
 }
@@ -28,6 +29,7 @@ Position::Position()
 // -----------------------------------------------------------------------------
 Position::Position( const ASN1T_CoordUTM& coord )
     : mgrs_( (const char*)coord.data, 15 )
+    , init_( false )
 {
     // NOTHING
 }
@@ -69,7 +71,7 @@ namespace
 // -----------------------------------------------------------------------------
 float Position::Distance( const Position& rhs ) const
 {
-    return ToPoint( mgrs_ ).Distance( ToPoint( rhs.mgrs_ ) );
+    return Point().Distance( rhs.Point() );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,6 +116,40 @@ bool Position::operator!=( const Position& rhs ) const
 // -----------------------------------------------------------------------------
 Position::operator double() const
 {
-    return ToPoint( mgrs_ ).Distance( geometry::Point2f() );
+    return Point().Distance( geometry::Point2f() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Position::Point
+// Created: AGE 2007-10-09
+// -----------------------------------------------------------------------------
+const geometry::Point2f& Position::Point() const
+{
+    if( ! init_ )
+    {
+        point_ = ToPoint( mgrs_ );
+        init_ = true;
+    }
+    return point_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Position::ToPolygon
+// Created: AGE 2007-10-09
+// -----------------------------------------------------------------------------
+geometry::Polygon2f Position::ToPolygon( const std::vector< Position >& positions )
+{
+    std::vector< geometry::Point2f > points;
+    std::transform( positions.begin(), positions.end(), std::back_inserter( points ),
+                        boost::bind( &Position::Point, _1 ) );
+    return geometry::Polygon2f( points );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Position::IsInside
+// Created: AGE 2007-10-09
+// -----------------------------------------------------------------------------
+bool Position::IsInside( const geometry::Polygon2f& polygon ) const
+{
+    return polygon.IsInside( Point() );
+}

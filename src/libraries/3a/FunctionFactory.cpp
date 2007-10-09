@@ -186,6 +186,8 @@ void FunctionFactory::CreateFunction( const std::string& type, xml::xistream& xi
         Transform( xis, result );
     else if( type == "reduce" )
         Reduce( xis, result );
+    else if( type == "constant" )
+        MakeConstant( xis, result );
     else if( type == "plot" )
         Plot( xis, result );
     else
@@ -268,8 +270,6 @@ void FunctionFactory::Extract( xml::xistream& xis, Task& result )
         Extract< existences::DirectFireUnitId >( name, xis, result );
     else if( value == "fire-component-damage" )
         Extract< events::FireComponentDamage >( name, xis, result );
-    else if( value == "constant" )
-        MakeConstant( xis, result );
     else
         ValueError( value );
 }

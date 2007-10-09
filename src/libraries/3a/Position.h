@@ -12,6 +12,7 @@
 
 #include "game_asn/asn.h"
 #include <string>
+#include <geometry/Types.h>
 
 // =============================================================================
 /** @class  Position
@@ -27,7 +28,7 @@ public:
     //@{     
              Position();
     explicit Position( const ASN1T_CoordUTM& coord );
-    virtual ~Position();
+            ~Position();
     //@}
 
     //! @name Operations
@@ -39,6 +40,9 @@ public:
     bool operator!=( const Position& rhs ) const;
 
     operator double() const;
+
+    static geometry::Polygon2f ToPolygon( const std::vector< Position >& positions );
+    bool IsInside( const geometry::Polygon2f& polygon ) const;
     //@}
 
     //! @name Compilation compatibility
@@ -62,9 +66,17 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    const geometry::Point2f& Point() const;
+    //@}
+
+private:
     //! @name Member data
     //@{
     std::string mgrs_;
+    mutable bool init_;
+    mutable geometry::Point2f point_;
     //@}
 };
 
@@ -77,6 +89,7 @@ std::ostream& operator<<( std::ostream& os, const Position& position )
 inline
 std::istream& operator>>( std::istream& is, Position& position )
 {
+    position.init_ = false;
     return is >> position.mgrs_;
 }
 

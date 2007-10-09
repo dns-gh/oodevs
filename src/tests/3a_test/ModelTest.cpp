@@ -10,6 +10,7 @@
 #include "3a_test_pch.h"
 #include "3a/DispatchedFunctionHelper.h"
 #include "3a/Attributes.h"
+#include "3a/Zone.h"
 #include "3a/IdentifierValue.h"
 #include "MockValueHandler.h"
 
@@ -138,4 +139,28 @@ BOOST_AUTO_TEST_CASE( Model_TestDispatchedValueExtraction )
     }
     handler.verify();
     keyHandler.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model_TestZone
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Model_TestZone )
+{
+    {
+        const std::string circle = "circle(31TBN7728449220,31TBN7728449216)";
+        std::stringstream is( circle );
+        Zone zone;
+        is >> zone;
+        BOOST_CHECK(   zone.Contains( Position( "31TBN7728449222" ) ) );
+        BOOST_CHECK( ! zone.Contains( Position( "31TBN7728449225" ) ) );
+    }
+    {
+        const std::string polygon = "polygon(31TBN7728449220,31TBN7728449216,31TBN7728049216,31TBN7728049220)";
+        std::stringstream is( polygon );
+        Zone zone;
+        is >> zone;
+        BOOST_CHECK(   zone.Contains( Position( "31TBN7728249218" ) ) );
+        BOOST_CHECK( ! zone.Contains( Position( "31TBN7728249212" ) ) );
+    }
 }
