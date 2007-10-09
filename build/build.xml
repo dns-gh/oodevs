@@ -435,6 +435,7 @@
                 <include name="gradients.xml"/>
                 <include name="DrawingTemplates.xml"/>
                 <include name="gradients.xml"/>
+                <include name="functions.xml"/>
                 <include name="license.dat"/>
                 <include name="TAO.dll"/>
                 <include name="TAO_CosNaming.dll"/>
