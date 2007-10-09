@@ -462,18 +462,19 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilter
+// Name: Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilterOfHell
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilter )
+BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilterOfHell )
 {
     const std::string input =
     "<indicator>"
         "<extract function='fire-component-damage' id='damages'/>"
         "<extract function='direct-fire-unit' id='units'/>"
         "<extract function='position' id='positions'/>"
+        "<constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
         "<transform function='compose' type='position' input='positions,units' id='fire-positions'/>"
-        "<transform function='is-one-of' type='position' select='31TBN7728449218,31TBN7728449220' input='fire-positions' id='selected-fires'/>"
+        "<transform function='contains' input='circle,fire-positions' id='selected-fires'/>"
         "<transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
         "<reduce type='float' function='sum' input='the-damages' id='sum'/>"
         "<plot input='sum' type='float'/>"
