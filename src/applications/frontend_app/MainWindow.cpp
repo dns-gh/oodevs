@@ -18,7 +18,7 @@
 #include "EditExercisePanel.h"
 #include "RestartExercisePanel.h"
 #include "JoinExercisePanel.h"
-#include "resources.h"
+#include "Actions.h"
 #include "tools/GeneralConfig.h"
 
 #include <qapplication.h>
@@ -47,18 +47,20 @@ MainWindow::MainWindow()
     pages_->addWidget( new QWidget( this ) );
     box->setStretchFactor( pages_, 3 );
 
-    AddAction< TerrainCreationPanel >( tr( "Prepare" ), CreateAction( tr( "Create terrain" ), MAKE_PIXMAP( terrain_create ), "Create terrain" ) );
-    AddAction< ExerciseCreationPanel >( tr( "Prepare" ), CreateAction( tr( "Create exercise" ), MAKE_PIXMAP( data_create )   , "Create exercise" ) );
-    AddAction< EditExercisePanel >( tr( "Prepare" ), CreateAction( tr( "Edit exercise" )  , MAKE_PIXMAP( data_create )   , "Edit exercise" ) );
+    Actions actions( this );
 
-    AddAction< StartExercisePanel >( tr( "Play" ), CreateAction( tr( "Start game" )  , MAKE_PIXMAP( terrain_create ), "Start game" ) );
-    AddAction< RestartExercisePanel >( tr( "Play" ), CreateAction( tr( "Restart game" ), MAKE_PIXMAP( terrain_create ), "Restart game" ) );
-    AddAction< JoinExercisePanel >( tr( "Play" ), CreateAction( tr( "Join game" )   , MAKE_PIXMAP( terrain_create ), "Join game" ) );
+    AddAction< TerrainCreationPanel >( tr( "Prepare" ), actions.CreateTerrain() );
+    AddAction< ExerciseCreationPanel >( tr( "Prepare" ), actions.CreateExercise() );
+    AddAction< EditExercisePanel >( tr( "Prepare" ), actions.EditExercise() );
 
-    AddAction< StartAnalysePanel >( tr( "Analyse" ), CreateAction( tr( "Start analysis" ) , MAKE_PIXMAP( terrain_create ), "Start analysis" ) );
-    AddAction< JoinExercisePanel >( tr( "Analyse" ), CreateAction( tr( "Join analysis" ), MAKE_PIXMAP( terrain_create ), "Join analysis" ) );
+    AddAction< StartExercisePanel >( tr( "Play" ), actions.StartExercise() );
+    AddAction< RestartExercisePanel >( tr( "Play" ), actions.RestartExercise() );
+    AddAction< JoinExercisePanel >( tr( "Play" ), actions.JoinExercise() );
 
-    linker_.Chain( "Create exercise" )( "Edit exercise" )( "Start game" )( "Join game" );
+    AddAction< StartAnalysePanel >( tr( "Analyse" ), actions.StartAnalysis() );
+    AddAction< JoinExercisePanel >( tr( "Analyse" ), actions.JoinAnalysis() );
+
+    linker_.Chain( "Create exercise" )( "Edit exercise" )( "Start exercise" )( "Join exercise" );
     linker_.Chain( "Start analysis" )( "Join analysis" );
 
     statusBar();
@@ -84,18 +86,6 @@ void MainWindow::CenterWindow()
 {
     const QRect& screen = QApplication::desktop()->screenGeometry();
     move( screen.center() - QPoint( width() / 2, height() / 2 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::CreateAction
-// Created: AGE 2007-10-10
-// -----------------------------------------------------------------------------
-QAction& MainWindow::CreateAction( const QString& name, const QPixmap& pixmap, const char* cname )
-{
-    QAction* result = new QAction( pixmap, name, 0, this, cname );
-    result->setText( name );
-    result->setToggleAction( true );
-    return *result;
 }
 
 // -----------------------------------------------------------------------------

@@ -56,7 +56,6 @@ private:
     void CenterWindow();
     template< typename Page >
     void AddAction( const QString& category, QAction& action );
-    QAction& CreateAction( const QString& name, const QPixmap& pixmap, const char* cname );
     //@}
 
     //! @name Types
