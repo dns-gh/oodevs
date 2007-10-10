@@ -60,8 +60,8 @@ MainWindow::MainWindow()
     AddAction< StartAnalysePanel >( tr( "Analyse" ), actions.StartAnalysis() );
     AddAction< JoinExercisePanel >( tr( "Analyse" ), actions.JoinAnalysis() );
 
-    linker_.Chain( "Create exercise" )( "Edit exercise" )( "Start exercise" )( "Join exercise" );
-    linker_.Chain( "Start analysis" )( "Join analysis" );
+    linker_, "Create exercise", "Edit exercise", "Start exercise", "Join exercise";
+    linker_, "Start analysis", "Join analysis";
 
     statusBar();
 

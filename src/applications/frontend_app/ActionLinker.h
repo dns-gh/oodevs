@@ -20,7 +20,7 @@ class Panel_ABC;
 // =============================================================================
 class ActionLinker
 {
-
+    struct SubLinker;
 public:
     //! @name Constructors/Destructor
     //@{
@@ -32,8 +32,7 @@ public:
     //@{
     void Register( const QString& action, Panel_ABC& panel );
 
-    ActionLinker& Chain( const QString& action );
-    ActionLinker& operator()( const QString& action );
+    SubLinker& operator,( const QString& action );
     //@}
 
 private:
@@ -43,9 +42,25 @@ private:
     ActionLinker& operator=( const ActionLinker& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    struct SubLinker
+    {
+        SubLinker( ActionLinker* that ) : that_( that ) {}
+        SubLinker& operator,( const QString& action )
+        {
+            that_->Sublink( action );
+            return *this;
+        }
+        ActionLinker* that_;
+    };
+    void Sublink( const QString& action );
+    //@}
+
 private:
     //! @name Member data
     //@{
+    SubLinker sub_;
     std::map< QString, Panel_ABC* > panels_;
     QString current_;
     //@}

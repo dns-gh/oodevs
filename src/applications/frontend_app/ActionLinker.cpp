@@ -16,6 +16,7 @@
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
 ActionLinker::ActionLinker()
+    : sub_( this )
 {
     // NOTHING
 }
@@ -39,20 +40,20 @@ void ActionLinker::Register( const QString& action, Panel_ABC& panel )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionLinker::Chain
-// Created: AGE 2007-10-10
-// -----------------------------------------------------------------------------
-ActionLinker& ActionLinker::Chain( const QString& action )
-{
-    current_ = action;
-    return *this;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionLinker::operator()
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-ActionLinker& ActionLinker::operator()( const QString& action )
+ActionLinker::SubLinker& ActionLinker::operator,( const QString& action )
+{
+    current_ = action;
+    return sub_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionLinker::Sublink
+// Created: AGE 2007-10-10
+// -----------------------------------------------------------------------------
+void ActionLinker::Sublink( const QString& action )
 {
     Panel_ABC* from = panels_[ current_ ];
     Panel_ABC* to   = panels_[ action ];
@@ -61,5 +62,5 @@ ActionLinker& ActionLinker::operator()( const QString& action )
     else 
         throw std::runtime_error( ( "No action " + action ).ascii() );
     current_ = action;
-    return *this;
 }
+
