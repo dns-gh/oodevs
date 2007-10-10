@@ -36,8 +36,7 @@ public:
     //@{
     std::string GetType() const;
     QString GetName() const;
-    void Commit( xml::xostream& xos, const std::string& name ) const;
-    void Set( const std::string& value );
+    void Commit( std::string& content, const std::string& value ) const;
     //@}
 
 private:
@@ -47,16 +46,11 @@ private:
     AfterActionParameter& operator=( const AfterActionParameter& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-    std::string name_;
-    std::string type_;
-    std::string value_;
+    const std::string name_;
+    const std::string type_;
     //@}
 };
 

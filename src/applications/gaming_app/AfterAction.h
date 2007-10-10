@@ -21,8 +21,8 @@ namespace gui
     class ItemFactory_ABC;
 }
 class AfterActionFunction;
-class AfterActionCanvas;
 class AfterActionModel;
+class AfterActionRequest;
 class Publisher_ABC;
 class Simulation;
 
@@ -35,8 +35,8 @@ class Simulation;
 class AfterAction : public QObject
                   , public kernel::Observer_ABC
                   , public kernel::ElementObserver_ABC< Simulation >
+                  , public kernel::ElementObserver_ABC< AfterActionRequest >
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -50,15 +50,6 @@ public:
     void hide();
     //@}
 
-private slots:
-    //! @name Slots
-    //@{
-    void OnNewFunction();
-    void OnEditFunction( const AfterActionFunction* function );
-    void OnCreateRequest( const AfterActionFunction* function );
-    void OnDeleteFunction( const AfterActionFunction* function );
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -68,9 +59,9 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateEditionDock    ( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
     virtual void NotifyUpdated( const Simulation& simu );
+    virtual void NotifyCreated( const AfterActionRequest& );
     //@}
 
 private:
@@ -79,9 +70,7 @@ private:
     QMainWindow* window_;
     kernel::Controllers& controllers_;
     AfterActionModel& model_;
-    QDockWindow* editionDock_;
     QDockWindow* aarDock_;
-    AfterActionCanvas* canvas_;
     QTabWidget* functionsTab_;
     //@}
 };

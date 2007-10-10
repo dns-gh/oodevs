@@ -41,7 +41,7 @@ public:
     void Purge();
     void Update( const ASN1T_MsgIndicatorResult& asnMsg );
 
-    void CreateRequest( const AfterActionFunction& function );
+    AfterActionRequest& CreateRequest( const AfterActionFunction& function );
     kernel::Iterator< const AfterActionRequest& > CreateIterator();
     //@}
 

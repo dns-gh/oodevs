@@ -127,8 +127,4 @@ void Model::Purge()
     objects_.Purge();
     knowledgeGroups_.Purge();
     teams_.Purge();
-    aar_.Purge();
 }
-    
-
-    

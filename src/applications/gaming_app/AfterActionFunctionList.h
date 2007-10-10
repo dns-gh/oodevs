@@ -10,7 +10,6 @@
 #ifndef __AfterActionFunctionList_h_
 #define __AfterActionFunctionList_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 
 namespace kernel
@@ -21,7 +20,7 @@ namespace kernel
 class Param_ABC;
 class AfterActionParameter;
 class AfterActionFunction;
-class AfterActionFunctions;
+class AfterActionModel;
 class QToolBox;
 
 // =============================================================================
@@ -31,15 +30,13 @@ class QToolBox;
 // Created: AGE 2007-09-21
 // =============================================================================
 class AfterActionFunctionList : public QVBox
-                              , public kernel::Observer_ABC
-                              , public kernel::ElementObserver_ABC< AfterActionFunctions >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionFunctionList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             AfterActionFunctionList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model );
     virtual ~AfterActionFunctionList();
     //@}
 
@@ -48,24 +45,11 @@ public:
     void Display( const AfterActionFunction& function, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
-signals:
-    //! @name Signals
-    //@{
-    void NewFunction();
-    void EditFunction( const AfterActionFunction* function );
-    void CreateRequest( const AfterActionFunction* function );
-    void DeleteFunction( const AfterActionFunction* function );
-    //@}
-
 private slots:
     //! @name Slots
     //@{
-    void Update();
     void OnSelectionChange( QListViewItem* item );
-    void EditFunction();
-    void DeleteFunction();
     void Request();
-    void OnRename( QListViewItem* , int , const QString& );
     //@}
 
 private:
@@ -77,8 +61,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const AfterActionFunctions& );
-    virtual void NotifyDeleted( const AfterActionFunctions& );
     void CreateRequestButton();
     void CreateParameter( const AfterActionParameter& parameter );
     boost::shared_ptr< Param_ABC > CreateParameter( const std::string& type, const QString& name );
@@ -94,7 +76,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::ListDisplayer< AfterActionFunctionList >* functions_;
-    AfterActionFunctions* model_;
+    AfterActionModel& model_;
     QGroupBox* parameters_;
     QPushButton* request_;
     T_Parameters paramList_;

@@ -51,10 +51,11 @@ void AfterActionRequests::Purge()
 // Name: AfterActionRequests::CreateRequest
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequests::CreateRequest( const AfterActionFunction& function )
+AfterActionRequest& AfterActionRequests::CreateRequest( const AfterActionFunction& function )
 {
     requests_.push_back( new AfterActionRequest( controller_, function, publisher_ ) );
     controller_.Update( *this );
+    return *requests_.back();
 }
 
 // -----------------------------------------------------------------------------

@@ -43,6 +43,9 @@ public:
 
     //! @name Operations
     //@{
+    void SetParameter( const std::string& name, const std::string& value );
+    void Commit();
+
     QString GetName() const;
     void Update( const ASN1T_MsgIndicatorResult& asnMsg );
     bool IsPending() const;
@@ -60,11 +63,18 @@ private:
     AfterActionRequest& operator=( const AfterActionRequest& ); //!< Assignment operator
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::string > T_Parameters;
+    //@}
+
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
     const AfterActionFunction& function_;
+    Publisher_ABC& publisher_;
+    T_Parameters parameters_;
     bool done_;
     T_Data result_;
     std::string error_;

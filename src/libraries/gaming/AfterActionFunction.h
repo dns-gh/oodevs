@@ -26,31 +26,26 @@ namespace xml
 */
 // Created: AGE 2007-09-20
 // =============================================================================
-class AfterActionFunction : public kernel::Resolver< AfterActionItem_ABC, std::string >
-                          , public kernel::Resolver< AfterActionParameter, std::string >
+class AfterActionFunction : public kernel::Resolver< AfterActionParameter, std::string >
 {
+
+public:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::string > T_Parameters;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionFunction( kernel::Resolver_ABC< AfterActionFactory, QString >& factories, xml::xistream& xis );
-    explicit AfterActionFunction( const std::string& name );
+    explicit AfterActionFunction( xml::xistream& xis );
     virtual ~AfterActionFunction();
     //@}
 
     //! @name Operations
     //@{
     QString GetName() const;
-    std::string Commit() const;
-
-    kernel::Iterator< const AfterActionParameter& > CreateParameterIterator() const;
-    kernel::Iterator< const AfterActionItem_ABC& >  CreateItemIterator() const;
-
-    void SetParameter( const QString& name, const std::string& value );
-    void Remove( AfterActionItem_ABC& item );
-    void Remove( AfterActionParameter& remove );
-    void Add( const std::string& id, AfterActionItem_ABC& item );
-    void Rename( const QString& name );
+    std::string Commit( const T_Parameters& parameters ) const;
     //@}
 
 private:
@@ -63,20 +58,13 @@ private:
     //! @name Helpers
     //@{
     void ReadParameter( xml::xistream& xis );
-    void CreateItem( const std::string& type, xml::xistream& xis, kernel::Resolver_ABC< AfterActionFactory, QString >& factories );
-    void LoadItem  ( const std::string& type, xml::xistream& xis );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef kernel::Resolver< AfterActionItem_ABC,  std::string > ItemResolver;
-    typedef kernel::Resolver< AfterActionParameter, std::string > ParameterResolver;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string name_;
+    const QString name_;
+    const std::string base_;
     //@}
 };
 

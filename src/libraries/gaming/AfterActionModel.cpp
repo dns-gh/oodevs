@@ -9,8 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AfterActionModel.h"
-#include "AfterActionFactory.h"
-#include "AfterActionFunctions.h"
+#include "AfterActionFunction.h"
 #include "AfterActionRequests.h"
 #include "clients_kernel/Controller.h"
 #include <xeumeuleu/xml.h>
@@ -25,7 +24,7 @@ AfterActionModel::AfterActionModel( kernel::Controller& controller, Publisher_AB
     : controller_( controller )
     , requests_( new AfterActionRequests( controller, publisher ) )
 {
-    // NOTHING
+    Load( "functions.xml" ); // $$$$ AGE 2007-10-10: 
 }
 
 // -----------------------------------------------------------------------------
@@ -38,41 +37,13 @@ AfterActionModel::~AfterActionModel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel::Purge
-// Created: AGE 2007-10-08
-// -----------------------------------------------------------------------------
-void AfterActionModel::Purge()
-{
-    Resolver< AfterActionFactory, QString >::Clear();
-    functions_.reset();
-    requests_->Purge();
-    controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AfterActionModel::Update
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
 void AfterActionModel::Update( const ASN1T_MsgAarInformation& asnMsg )
 {
-    {
-        xml::xistringstream xis( asnMsg.information );
-        xis >> xml::start( "functions" )
-                >> xml::list( *this, &AfterActionModel::ReadFunction )
-            >> xml::end();
-        controller_.Update( *this );
-    }
-    functions_.reset( new AfterActionFunctions( controller_, *this ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterActionModel::ReadFunction
-// Created: AGE 2007-09-17
-// -------------------------------------------------*----------------------------
-void AfterActionModel::ReadFunction( const std::string& type, xml::xistream& xis )
-{
-    const std::string name = xml::attribute< std::string >( xis, "name" );
-    Register( name.c_str(), *new AfterActionFactory( type, xis ) );
+    // $$$$ AGE 2007-10-10: 
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,21 +56,33 @@ void AfterActionModel::Update( const ASN1T_MsgIndicatorResult& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionModel::CreateNewFunction
-// Created: AGE 2007-09-25
-// -----------------------------------------------------------------------------
-const AfterActionFunction* AfterActionModel::CreateNewFunction()
-{
-    if( functions_.get() )
-        return functions_->Create();
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: AfterActionModel::CreateRequest
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionModel::CreateRequest( const AfterActionFunction& function )
+AfterActionRequest& AfterActionModel::CreateRequest( const AfterActionFunction& function )
 {
-    requests_->CreateRequest( function );
+    return requests_->CreateRequest( function );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionModel::Load
+// Created: AGE 2007-09-20
+// -----------------------------------------------------------------------------
+void AfterActionModel::Load( const std::string& functions )
+{
+    xml::xifstream xis( functions );
+    xis >> xml::start( "functions" )
+            >> xml::list( "function", *this, &AfterActionModel::ReadFunction )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionModel::ReadFunction
+// Created: AGE 2007-09-20
+// -----------------------------------------------------------------------------
+void AfterActionModel::ReadFunction( xml::xistream& xis )
+{
+    std::auto_ptr< AfterActionFunction > function( new AfterActionFunction( xis ) );
+    const QString name = function->GetName();
+    Register( name, *function.release() );
 }

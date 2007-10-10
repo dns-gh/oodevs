@@ -20,13 +20,10 @@
 AfterActionRequest::AfterActionRequest( kernel::Controller& controller, const AfterActionFunction& function, Publisher_ABC& publisher )
     : controller_( controller )
     , function_( function )
+    , publisher_( publisher )
     , done_( false )
 {
-    ASN_MsgIndicatorRequest request;
-    const std::string xmlRequest = function.Commit();
-    request().identifier = reinterpret_cast< int >( this );
-    request().request = xmlRequest.c_str();
-    request.Send( publisher );
+    
     controller_.Create( *this );
 }
 
@@ -37,6 +34,28 @@ AfterActionRequest::AfterActionRequest( kernel::Controller& controller, const Af
 AfterActionRequest::~AfterActionRequest()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequest::SetParameter
+// Created: AGE 2007-10-10
+// -----------------------------------------------------------------------------
+void AfterActionRequest::SetParameter( const std::string& name, const std::string& value )
+{
+    parameters_[ name ] = value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequest::Commit
+// Created: AGE 2007-10-10
+// -----------------------------------------------------------------------------
+void AfterActionRequest::Commit()
+{
+    ASN_MsgIndicatorRequest request;
+    const std::string xmlRequest = function_.Commit( parameters_ );
+    request().identifier = reinterpret_cast< int >( this );
+    request().request = xmlRequest.c_str();
+    request.Send( publisher_ );
 }
 
 // -----------------------------------------------------------------------------

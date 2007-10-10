@@ -10,8 +10,8 @@
 #ifndef __AfterActionModel_h_
 #define __AfterActionModel_h_
 
-#include "clients_kernel/Resolver.h"
 #include "game_asn/asn.h"
+#include "clients_kernel/Resolver.h"
 
 namespace kernel
 {
@@ -22,9 +22,8 @@ namespace xml
     class xistream;
 }
 
-class AfterActionFactory;
 class AfterActionFunction;
-class AfterActionFunctions;
+class AfterActionRequest;
 class AfterActionRequests;
 class Publisher_ABC;
 
@@ -34,7 +33,7 @@ class Publisher_ABC;
 */
 // Created: AGE 2007-09-17
 // =============================================================================
-class AfterActionModel : public kernel::Resolver< AfterActionFactory, QString >
+class AfterActionModel : public kernel::Resolver< AfterActionFunction, QString >
 {
 
 public:
@@ -46,13 +45,10 @@ public:
 
     //! @name Operations
     //@{
-    void Purge();
-
     void Update( const ASN1T_MsgAarInformation& asnMsg );
     void Update( const ASN1T_MsgIndicatorResult& asnMsg );
 
-    const AfterActionFunction* CreateNewFunction();
-    void CreateRequest( const AfterActionFunction& function );
+    AfterActionRequest& CreateRequest( const AfterActionFunction& function );
     //@}
 
 private:
@@ -64,14 +60,14 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadFunction( const std::string& type, xml::xistream& xis );
+    void Load( const std::string& functions );
+    void ReadFunction( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    std::auto_ptr< AfterActionFunctions > functions_;
     std::auto_ptr< AfterActionRequests > requests_;
     //@}
 };

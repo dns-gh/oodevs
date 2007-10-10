@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "AfterActionParameter.h"
 #include <xeumeuleu/xml.h>
+#pragma warning( disable : 4512 )
+#include <boost/algorithm/string.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionParameter constructor
@@ -18,7 +20,6 @@
 AfterActionParameter::AfterActionParameter( xml::xistream& xis )
     : name_ ( xml::attribute< std::string >( xis, "name" ) )
     , type_ ( xml::attribute< std::string >( xis, "type" ) )
-    , value_( xml::attribute( xis, "value", std::string() ) )
 {
     // NOTHING
 }
@@ -43,11 +44,12 @@ QString AfterActionParameter::GetName() const
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionParameter::Commit
-// Created: AGE 2007-09-25
+// Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-void AfterActionParameter::Commit( xml::xostream& xos, const std::string& name ) const
+void AfterActionParameter::Commit( std::string& content, const std::string& value ) const
 {
-    xos << xml::attribute( name, value_ );
+    const std::string parameter = "${" + name_ + "}";
+    boost::algorithm::replace_all( content, parameter, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,13 +59,4 @@ void AfterActionParameter::Commit( xml::xostream& xos, const std::string& name )
 std::string AfterActionParameter::GetType() const
 {
     return type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterActionParameter::Set
-// Created: AGE 2007-09-28
-// -----------------------------------------------------------------------------
-void AfterActionParameter::Set( const std::string& value )
-{
-    value_ = value;
 }
