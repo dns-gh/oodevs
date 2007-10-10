@@ -24,7 +24,7 @@ class JoinExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise );
+             JoinExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, unsigned number );
     virtual ~JoinExercise();
     //@}
 

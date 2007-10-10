@@ -9,17 +9,23 @@
 
 #include "frontend_app_pch.h"
 #include "JoinExercise.h"
+#include "GameConfigPanel.h"
+#pragma warning( disable: 4127 4511 4512 )
+#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: JoinExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise )
+JoinExercise::JoinExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, unsigned number )
     : SpawnCommand( parent, config, "gaming_app.exe" )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
-    addArgument( "--host=localhost:10001" ); // $$$$ AGE 2007-10-05: 
+    const std::string host = "--host=localhost:" 
+                           + boost::lexical_cast< std::string >( 
+                                GameConfigPanel::DispatcherPort( number ) );
+    addArgument( host.c_str() );
     Start();
 }
 

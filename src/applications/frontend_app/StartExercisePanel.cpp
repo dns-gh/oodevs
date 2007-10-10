@@ -80,6 +80,7 @@ void StartExercisePanel::StartExercise()
     {
         configPanel_->Commit( list_->selectedItem()->text().ascii(), exerciseNumber_->value() );
         new ::StartExercise( this, config_, list_->selectedItem()->text() );
+        ShowNext();
     }
 }
 

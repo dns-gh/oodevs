@@ -75,6 +75,7 @@ void TerrainCreationPanel::showEvent( QShowEvent* event )
 void TerrainCreationPanel::CreateTerrain()
 {
     new ::CreateTerrain( this, config_, name_->text() );
+    ShowNext();
 }
 
 // -----------------------------------------------------------------------------

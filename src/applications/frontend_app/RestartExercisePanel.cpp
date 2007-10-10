@@ -68,6 +68,7 @@ void RestartExercisePanel::StartExercise()
 {
     if( list_->selectedItem() )
         new ::StartExercise( this, config_, list_->selectedItem()->text() );
+    ShowNext();
 }
 
 // -----------------------------------------------------------------------------

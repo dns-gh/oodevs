@@ -19,8 +19,10 @@
 // Created: SBO 2007-10-05
 // -----------------------------------------------------------------------------
 Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action )
-    : QVBox( widget )
-    , stack_( widget )
+    : QVBox  ( widget )
+    , stack_ ( widget )
+    , action_( action )
+    , next_  ( 0 )
 {
     setPaletteBackgroundColor( Qt::white );
     layout()->setAlignment( Qt::AlignTop );
@@ -83,4 +85,23 @@ void Panel_ABC::showEvent( QShowEvent* event )
 {
     stack_->raiseWidget( this );
     QVBox::showEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Panel_ABC::LinkTo
+// Created: AGE 2007-10-10
+// -----------------------------------------------------------------------------
+void Panel_ABC::LinkTo( Panel_ABC& next )
+{
+    next_ = & next.action_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Panel_ABC::ShowNext
+// Created: AGE 2007-10-10
+// -----------------------------------------------------------------------------
+void Panel_ABC::ShowNext()
+{
+    if( next_ )
+        next_->setOn( true );
 }

@@ -40,6 +40,9 @@ public:
     //@{
     void Commit( const std::string& exercise, unsigned exerciseNumber );
     void Show( const std::string& exercise );
+
+    static unsigned SimulationPort( unsigned exerciseNumber );
+    static unsigned DispatcherPort( unsigned exerciseNumber );
     //@}
 
 private:
@@ -55,9 +58,6 @@ private:
     QWidget* CreateDebugPanel( QWidget* parent );
     QWidget* CreateSystemPanel( QWidget* parent );
     std::string GetGameXml( const std::string& exercise );
-
-    static unsigned SimulationPort( unsigned exerciseNumber );
-    static unsigned DispatcherPort( unsigned exerciseNumber );
     //@}
 
 private:

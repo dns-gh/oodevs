@@ -104,4 +104,5 @@ void StartAnalysePanel::StartReplay()
 {
     if( exercises_->selectedItem() && replays_->selectedItem() )
         new ::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text() );
+    ShowNext();
 }

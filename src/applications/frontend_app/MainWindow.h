@@ -11,6 +11,7 @@
 #define __MainWindow_h_
 
 #include <qmainwindow.h>
+#include "ActionLinker.h"
 
 class QAction;
 class QWidgetStack;
@@ -55,6 +56,7 @@ private:
     void CenterWindow();
     template< typename Page >
     void AddAction( const QString& category, QAction& action );
+    QAction& CreateAction( const QString& name, const QPixmap& pixmap, const char* cname );
     //@}
 
     //! @name Types
@@ -66,6 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ActionLinker linker_;
     T_Actions actions_;
     ActionList* list_;
     MainMenu*   menu_;

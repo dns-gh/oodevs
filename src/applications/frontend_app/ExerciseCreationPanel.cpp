@@ -100,6 +100,7 @@ void ExerciseCreationPanel::CreateExercise()
                                  terrainList_->selectedItem()->text().ascii(),
                                  modelList_->selectedItem()->text().ascii(),
                                  physicalList_->selectedItem() ? physicalList_->selectedItem()->text().ascii() :"" );
+    ShowNext();
 }
 
 // -----------------------------------------------------------------------------

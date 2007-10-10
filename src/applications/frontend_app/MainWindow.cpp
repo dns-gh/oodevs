@@ -17,6 +17,7 @@
 #include "ExerciseCreationPanel.h"
 #include "EditExercisePanel.h"
 #include "RestartExercisePanel.h"
+#include "JoinExercisePanel.h"
 #include "resources.h"
 #include "tools/GeneralConfig.h"
 
@@ -46,16 +47,19 @@ MainWindow::MainWindow()
     pages_->addWidget( new QWidget( this ) );
     box->setStretchFactor( pages_, 3 );
 
-    AddAction< TerrainCreationPanel >( tr( "Prepare" ), *new QAction( tr( "Create terrain" ) , MAKE_PIXMAP( terrain_create ), "Create terrain" , 0, this, 0, true ) );
-    AddAction< ExerciseCreationPanel >( tr( "Prepare" ), *new QAction( tr( "Create exercise" ), MAKE_PIXMAP( data_create )   , "Create exercise", 0, this, 0, true ) );
-    AddAction< EditExercisePanel >( tr( "Prepare" ), *new QAction( tr( "Edit exercise" )  , MAKE_PIXMAP( data_create )   , "Edit exercise"  , 0, this, 0, true ) );
+    AddAction< TerrainCreationPanel >( tr( "Prepare" ), CreateAction( tr( "Create terrain" ), MAKE_PIXMAP( terrain_create ), "Create terrain" ) );
+    AddAction< ExerciseCreationPanel >( tr( "Prepare" ), CreateAction( tr( "Create exercise" ), MAKE_PIXMAP( data_create )   , "Create exercise" ) );
+    AddAction< EditExercisePanel >( tr( "Prepare" ), CreateAction( tr( "Edit exercise" )  , MAKE_PIXMAP( data_create )   , "Edit exercise" ) );
 
-    AddAction< StartExercisePanel >( tr( "Play" ), *new QAction( tr( "Start game" )  , MAKE_PIXMAP( terrain_create ), "Start game"   , 0, this, 0, true ) );
-    AddAction< RestartExercisePanel >( tr( "Play" ), *new QAction( tr( "Restart game" ), MAKE_PIXMAP( terrain_create ), "Restart game" , 0, this, 0, true ) );
-    AddAction< TerrainCreationPanel >( tr( "Play" ), *new QAction( tr( "Join game" )   , MAKE_PIXMAP( terrain_create ), "Join game"    , 0, this, 0, true ) );
+    AddAction< StartExercisePanel >( tr( "Play" ), CreateAction( tr( "Start game" )  , MAKE_PIXMAP( terrain_create ), "Start game" ) );
+    AddAction< RestartExercisePanel >( tr( "Play" ), CreateAction( tr( "Restart game" ), MAKE_PIXMAP( terrain_create ), "Restart game" ) );
+    AddAction< JoinExercisePanel >( tr( "Play" ), CreateAction( tr( "Join game" )   , MAKE_PIXMAP( terrain_create ), "Join game" ) );
 
-    AddAction< StartAnalysePanel >( tr( "Analyse" ), *new QAction( tr( "Start analyse" ) , MAKE_PIXMAP( terrain_create ), "Start analyse"  , 0, this, 0, true ) );
-    AddAction< TerrainCreationPanel >( tr( "Analyse" ), *new QAction( tr( "Join analyse" ), MAKE_PIXMAP( terrain_create ), "Join game" , 0, this, 0, true ) );
+    AddAction< StartAnalysePanel >( tr( "Analyse" ), CreateAction( tr( "Start analysis" ) , MAKE_PIXMAP( terrain_create ), "Start analysis" ) );
+    AddAction< JoinExercisePanel >( tr( "Analyse" ), CreateAction( tr( "Join analysis" ), MAKE_PIXMAP( terrain_create ), "Join analysis" ) );
+
+    linker_.Chain( "Create exercise" )( "Edit exercise" )( "Start game" )( "Join game" );
+    linker_.Chain( "Start analysis" )( "Join analysis" );
 
     statusBar();
 
@@ -83,6 +87,18 @@ void MainWindow::CenterWindow()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MainWindow::CreateAction
+// Created: AGE 2007-10-10
+// -----------------------------------------------------------------------------
+QAction& MainWindow::CreateAction( const QString& name, const QPixmap& pixmap, const char* cname )
+{
+    QAction* result = new QAction( pixmap, name, 0, this, cname );
+    result->setText( name );
+    result->setToggleAction( true );
+    return *result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MainWindow::AddAction
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
@@ -91,5 +107,7 @@ void MainWindow::AddAction( const QString& category, QAction& action )
 {
     menu_->AddAction( category, action );
     list_->AddAction( category, action );
-    pages_->addWidget( new Page( pages_, action, *config_ ) );
+    Page* page = new Page( pages_, action, *config_ );
+    linker_.Register( action.name(), *page );
+    pages_->addWidget( page );
 }

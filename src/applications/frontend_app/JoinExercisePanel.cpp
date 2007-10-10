@@ -8,21 +8,24 @@
 // *****************************************************************************
 
 #include "frontend_app_pch.h"
-#include "EditExercisePanel.h"
-#include "moc_EditExercisePanel.cpp"
+#include "JoinExercisePanel.h"
+#include "moc_JoinExercisePanel.cpp"
 #include "commands.h"
-#include "EditExercise.h"
+#include "StartExercise.h"
+#include "JoinExercise.h"
 #include "InfoBubble.h"
 #include "resources.h"
 #include <qaction.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
+#include <qtabwidget.h>
+#include <qspinbox.h>
 
 // -----------------------------------------------------------------------------
-// Name: EditExercisePanel constructor
+// Name: JoinExercisePanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-EditExercisePanel::EditExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
+JoinExercisePanel::JoinExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
     : Panel_ABC( widget, action )
     , config_( config )
 {
@@ -30,39 +33,43 @@ EditExercisePanel::EditExercisePanel( QWidgetStack* widget, QAction& action, con
     box->setMargin( 10 );
     box->setSpacing( 10 );
 
-    QGroupBox* group = new QGroupBox( 2, Qt::Vertical, action.text(), box );
-    new QLabel( tr( "Choose the exercise to edit:" ), group );
+    QGroupBox* group = new QGroupBox( 3, Qt::Vertical, action.text(), box );
+    new QLabel( tr( "Choose the exercise to join:" ), group );
     list_ = new QListBox( group );
     list_->insertStringList( commands::ListExercises( config ) );
-    list_->setSelected( 0, true );
 
     bubble_ = new InfoBubble( box ); // $$$$ SBO 2007-10-05: TODO
     QHBox* btnBox = new QHBox( box );
     btnBox->layout()->setAlignment( Qt::AlignRight );
-    QPushButton* okay = new QPushButton( MAKE_PIXMAP( next ), tr( "Edit exercise" ), btnBox );
+    QPushButton* okay = new QPushButton( MAKE_PIXMAP( next ), action.text(), btnBox );
     QFont font( "Arial", 10, QFont::Bold );
     okay->setFont( font );
-    connect( okay, SIGNAL( pressed() ), SLOT( EditExercise() ) );
-    connect( list_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( EditExercise() ) );
+    connect( okay, SIGNAL( pressed() ), SLOT( StartExercise() ) );
+    connect( list_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( StartExercise() ) );
+
+    QHBox* exerciseNumberBox = new QHBox( group );
+    new QLabel( tr( "Exercise number:" ), exerciseNumberBox );
+    exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
+
+    list_->setSelected( 0, true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EditExercisePanel destructor
+// Name: JoinExercisePanel destructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-EditExercisePanel::~EditExercisePanel()
+JoinExercisePanel::~JoinExercisePanel()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: EditExercisePanel::EditExercise
+// Name: JoinExercisePanel::StartExercise
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-void EditExercisePanel::EditExercise()
+void JoinExercisePanel::StartExercise()
 {
     if( list_->selectedItem() )
-        new ::EditExercise( this, config_, list_->selectedItem()->text() );
+        new ::JoinExercise( this, config_, list_->selectedItem()->text(), exerciseNumber_->value() );
     ShowNext();
 }
-

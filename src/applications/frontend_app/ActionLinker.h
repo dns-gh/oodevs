@@ -7,54 +7,48 @@
 //
 // *****************************************************************************
 
-#ifndef __Panel_ABC_h_
-#define __Panel_ABC_h_
+#ifndef __ActionLinker_h_
+#define __ActionLinker_h_
 
-class QAction;
-class QWidgetStack;
+class Panel_ABC;
 
 // =============================================================================
-/** @class  Panel_ABC
-    @brief  Panel_ABC
+/** @class  ActionLinker
+    @brief  ActionLinker
 */
-// Created: SBO 2007-10-05
+// Created: AGE 2007-10-10
 // =============================================================================
-class Panel_ABC : public QVBox
+class ActionLinker
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Panel_ABC( QWidgetStack* widget, QAction& action );
-    virtual ~Panel_ABC();
+             ActionLinker();
+    virtual ~ActionLinker();
     //@}
 
     //! @name Operations
     //@{
-    void LinkTo( Panel_ABC& next );
+    void Register( const QString& action, Panel_ABC& panel );
+
+    ActionLinker& Chain( const QString& action );
+    ActionLinker& operator()( const QString& action );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Panel_ABC( const Panel_ABC& );            //!< Copy constructor
-    Panel_ABC& operator=( const Panel_ABC& ); //!< Assignment operator
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    virtual void showEvent( QShowEvent* event );
-    void ShowNext();
+    ActionLinker( const ActionLinker& );            //!< Copy constructor
+    ActionLinker& operator=( const ActionLinker& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    QWidgetStack* stack_;
-    QAction& action_;
-    QAction* next_;
+    std::map< QString, Panel_ABC* > panels_;
+    QString current_;
     //@}
 };
 
-#endif // __Panel_ABC_h_
+#endif // __ActionLinker_h_
