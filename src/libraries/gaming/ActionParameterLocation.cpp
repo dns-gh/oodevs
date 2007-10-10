@@ -133,6 +133,15 @@ void ActionParameterLocation::CommitTo( ASN1T_MissionParameter& asn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionParameterLocation::CommitTo
+// Created: AGE 2007-10-10
+// -----------------------------------------------------------------------------
+void ActionParameterLocation::CommitTo( std::string& content ) const
+{
+    Location::CommitTo( content );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionParameterLocation::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------

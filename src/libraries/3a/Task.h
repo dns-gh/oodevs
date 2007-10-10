@@ -95,6 +95,7 @@ private:
     T_Slots slots_;
     T_Objects objects_;
     Result_ABC* result_;
+    bool frameEnded_;
     //@}
 };
 

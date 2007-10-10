@@ -16,17 +16,21 @@
 #include "gaming/Simulation.h"
 #include "icons.h"
 
+using namespace gui;
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AfterAction constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AfterAction::AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model, Publisher_ABC& publisher )
+AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, Publisher_ABC& publisher,
+                          ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : window_      ( window )
     , controllers_ ( controllers )
     , model_       ( model )
     , functionsTab_( 0 )
 {
-    CreateAfterActionDock( window, controllers, factory, publisher );
+    CreateAfterActionDock( window, controllers, factory, publisher, layer, converter );
     controllers_.Register( *this );
 }
 
@@ -43,13 +47,13 @@ AfterAction::~AfterAction()
 // Name: AfterAction::CreateAfterActionDock
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterAction::CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher )
+void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, Publisher_ABC& publisher, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
 {
     aarDock_ = new QDockWindow( window );
     QVBox* box = new QVBox( aarDock_ );
     functionsTab_ = new QTabWidget( box );
 
-    AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory, model_ );
+    AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory, model_, layer, converter );
     functionsTab_->addTab( list, tr( "Functions" ) );
 
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, window, controllers, factory, publisher );

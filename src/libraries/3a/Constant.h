@@ -33,6 +33,18 @@ public:
         {}
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void BeginTick()
+    {
+        ModelFunction< ConstantValue< T > >::BeginTick();
+    }
+    virtual void EndTick()
+    {
+        ModelFunction< ConstantValue< T > >::EndTick();
+    }
+    //@}
+
     //! @name Helpers
     //@{
     template< typename T >

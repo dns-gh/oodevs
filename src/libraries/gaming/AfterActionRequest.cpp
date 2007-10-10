@@ -56,6 +56,8 @@ void AfterActionRequest::Commit()
     request().identifier = reinterpret_cast< int >( this );
     request().request = xmlRequest.c_str();
     request.Send( publisher_ );
+
+    std::cout << xmlRequest << std::endl;
 }
 
 // -----------------------------------------------------------------------------

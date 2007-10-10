@@ -221,6 +221,26 @@ void Location::CommitTo( ASN1T_Location& asn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Location::CommitTo
+// Created: AGE 2007-10-10
+// -----------------------------------------------------------------------------
+void Location::CommitTo( std::string& content ) const
+{
+    if( type_ == EnumLocationType::circle )
+        content += "circle(";
+    else if( type_ == EnumLocationType::polygon )
+        content += "polygon(";
+    else 
+        return;  // $$$$ AGE 2007-10-10: 
+    for( unsigned i = 0; i < points_.size(); ++i )
+    {
+        if( i ) content += ',';
+        content += converter_.ConvertToMgrs( points_[i] );
+    }
+    content += ')';
+}
+
+// -----------------------------------------------------------------------------
 // Name: Location::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------

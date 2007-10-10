@@ -15,10 +15,12 @@
 namespace kernel
 {
     class Controllers;
+    class CoordinateConverter_ABC;
 }
 namespace gui
 {
     class ItemFactory_ABC;
+    class ParametersLayer;
 }
 class AfterActionFunction;
 class AfterActionModel;
@@ -41,7 +43,8 @@ class AfterAction : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model, Publisher_ABC& publisher );
+             AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model, Publisher_ABC& publisher,
+                          gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~AfterAction();
     //@}
 
@@ -59,7 +62,8 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
+    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher,
+                                gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual void NotifyUpdated( const Simulation& simu );
     virtual void NotifyCreated( const AfterActionRequest& );
     //@}

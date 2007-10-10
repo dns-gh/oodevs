@@ -19,6 +19,7 @@
 #include "gaming/ActionParameterContainer_ABC.h"
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
+#include "ParamLocation.h"
 #include "icons.h"
 #include <qtoolbox.h>
 #include <qvgroupbox.h>
@@ -31,10 +32,12 @@ using namespace gui;
 // Name: AfterActionFunctionList constructor
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model )
+AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QVBox( parent )
     , controllers_( controllers )
     , model_( model )
+    , layer_( layer )
+    , converter_( converter )
     , parameters_( 0 )
     , request_( 0 )
 {
@@ -150,11 +153,19 @@ void AfterActionFunctionList::Request()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Param_ABC > AfterActionFunctionList::CreateParameter( const std::string& type, const QString& name )
 {
+    const OrderParameter parameter( name, type.c_str(), false );
     boost::shared_ptr< Param_ABC > result;
+
     if( type == "unit" )
-        result.reset( new ParamAgent( this, kernel::OrderParameter( name, type.c_str(), false ) ) );
+        result.reset( new ParamAgent( this, parameter ) );
     else if( type == "unit list" )
-        result.reset( new ParamAgentList( this, kernel::OrderParameter( name, type.c_str(), false ), controllers_.actions_ ) );
+        result.reset( new ParamAgentList( this, parameter, controllers_.actions_ ) );
+    else if( type == "zone" )
+    {
+        std::auto_ptr< ParamLocation > location( new ParamLocation( parameter, layer_, converter_ ) );
+        location->SetShapeFilter( false, false, true, true );
+        result.reset( location.release() );
+    }
     return result;
 }
 

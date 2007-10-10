@@ -43,6 +43,7 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
+    virtual void CommitTo( std::string& content ) const;
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
     void CommitTo( ASN1T_Location& asn ) const;
