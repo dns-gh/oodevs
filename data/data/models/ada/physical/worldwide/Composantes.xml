@@ -789,8 +789,8 @@
     <speeds max="70">
       <speed terrain="inconnu" value="20"/>
       <speed terrain="foret" value="0"/>
-      <speed terrain="plantation" value="2"/>
-      <speed terrain="marais" value="2"/>
+      <speed terrain="plantation" value="0"/>
+      <speed terrain="marais" value="0"/>
       <speed terrain="dune" value="30"/>
       <speed terrain="urbain" value="60"/>
       <speed terrain="etendue eau" value="0"/>
@@ -1173,7 +1173,7 @@
     <speeds max="90">
       <speed terrain="inconnu" value="10"/>
       <speed terrain="foret" value="0"/>
-      <speed terrain="plantation" value="2"/>
+      <speed terrain="plantation" value="0"/>
       <speed terrain="marais" value="4"/>
       <speed terrain="dune" value="30"/>
       <speed terrain="urbain" value="60"/>

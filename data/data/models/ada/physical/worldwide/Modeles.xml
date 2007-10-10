@@ -1797,6 +1797,7 @@
         <mission name="To adopt transportation posture"/>
         <mission name="To replenish"/>
         <mission name="To Follow"/>
+        <mission name="To move"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieLog" file="Appui\Log\Automates\Model.hal" name="Logistic CP">
