@@ -86,6 +86,7 @@ ActionParameterFactory::~ActionParameterFactory()
 // -----------------------------------------------------------------------------
 ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_MissionParameter& asn, const Entity_ABC& entity ) const
 {
+    // $$$$ SBO 2007-10-11: we should create a parameter of the real type in order to be able (later) to edit parameters
     if( asn.null_value )
         return new ActionParameter< QString >( parameter, tools::translate( "ActionParameterFactory", "not set" ) );
     switch( asn.value.t )
@@ -192,74 +193,83 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
 ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const
 {
     std::string type;
-    xis >> attribute( "type", type );
+    bool isSet = true;
+    xis >> attribute( "type", type )
+        >> optional() >> attribute( "set", isSet );
     type = QString( type.c_str() ).lower().ascii();
     if( type != parameter.GetType().lower().ascii() )
         throw std::runtime_error( tools::translate( "ActionParameter", "Error loading mission parameters. Found type: '%1' expecting: '%2'." )
                                 .arg( type.c_str() ).arg( parameter.GetType() ).ascii() );
 
-    if( type == "bool" )
-        return new ActionParameterBool( parameter, xis );
-    else if( type == "numeric" )
-        return new ActionParameterNumeric( parameter, xis );
-    else if( type == "path" )
-        return new ActionParameterPath( parameter, converter_, xis );
-    else if( type == "point" )
-        return new ActionParameterPoint( parameter, converter_, xis );
-    else if( type == "polygon" )
-        return new ActionParameterPolygon( parameter, converter_, xis );
-    else if( type == "location" )
-        return new ActionParameterLocation( parameter, converter_, xis );
-    else if( type == "pathlist" )
-        return new ActionParameterPathList( parameter, converter_, xis );
-    else if( type == "pointlist" )
-        return new ActionParameterPointList( parameter, converter_, xis );
-    else if( type == "polygonlist" )
-        return new ActionParameterPolygonList( parameter, converter_, xis );
-    else if( type == "locationlist" )
-        return new ActionParameterLocationList( parameter, converter_, xis );
-    else if( type == "direction" || type == "dangerousdirection" )
-        return new ActionParameterDirection( parameter, xis );
-    else if( type == "limalist" )
-        return new ActionParameterLimaList( parameter, converter_, simulation_, xis );
-    else if( type == "limits" )
-        return new ActionParameterLimits( parameter, converter_, xis );
-    else if( type == "enumeration" )
-        return new ActionParameterEnumeration( parameter, xis );
-    else if( type == "agent" )
-        return new ActionParameterAgent( parameter, xis, model_.agents_ );
-    else if( type == "automate" )
-        return new ActionParameterAutomat( parameter, xis, model_.agents_ );
-    else if( type == "agentlist" )
-        return new ActionParameterAgentList( parameter, xis, model_.agents_ );
-    else if( type == "automatelist" )
-        return new ActionParameterAutomatList( parameter, xis, model_.agents_ );
-    else if( type == "dotationtype" )
-        return new ActionParameterDotationType( parameter, xis, staticModel_.objectTypes_ );
-    else if( type == "genobject" )
-        return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis );
-    else if( type == "genobjectlist" )
-        return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis );
-    else if( type == "agentknowledge" )
-        return new ActionParameterAgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity );
-    else if( type == "populationknowledge" )
-        return new ActionParameterPopulationKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity );
-    else if( type == "objectknowledge" )
-        return new ActionParameterObjectKnowledge( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity );
-    else if( type == "agentknowledgelist" )
-        return new ActionParameterAgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity );
-    else if( type == "objectknowledgelist" )
-        return new ActionParameterObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity );
-    else if( type == "atlasnature" )
-        return new ActionParameterAtlasNature( parameter, xis, staticModel_.atlasNatures_ );
-    else if( type == "objective" )
-        return new ActionParameterObjective( parameter, xis, converter_, simulation_ );
-    else if( type == "objectivelist" )
-        return new ActionParameterObjectiveList( parameter, xis, converter_, simulation_ );
-    else if( type == "medicalpriorities" )
-        return new ActionParameterMedicalPriorities( parameter, xis );
-    else if( type == "maintenancepriorities" )
-        return new ActionParameterMaintenancePriorities( parameter, staticModel_.objectTypes_, xis );
+    if( !isSet && !parameter.IsOptional() )
+        throw std::runtime_error( tools::translate( "ActionParameter", "Error loading mission parameters. Non-optional parameter '%1' is not set." )
+                                .arg( parameter.GetName() ).ascii() );
 
-    return new ActionParameter< QString >( parameter ); // $$$$ SBO 2007-05-16: default not yet implemented parameters...
+    std::auto_ptr< ActionParameter_ABC > param;
+    if( type == "bool" )
+        param.reset( new ActionParameterBool( parameter, xis ) );
+    else if( type == "numeric" )
+        param.reset( new ActionParameterNumeric( parameter, xis ) );
+    else if( type == "path" )
+        param.reset( new ActionParameterPath( parameter, converter_, xis ) );
+    else if( type == "point" )
+        param.reset( new ActionParameterPoint( parameter, converter_, xis ) );
+    else if( type == "polygon" )
+        param.reset( new ActionParameterPolygon( parameter, converter_, xis ) );
+    else if( type == "location" )
+        param.reset( new ActionParameterLocation( parameter, converter_, xis ) );
+    else if( type == "pathlist" )
+        param.reset( new ActionParameterPathList( parameter, converter_, xis ) );
+    else if( type == "pointlist" )
+        param.reset( new ActionParameterPointList( parameter, converter_, xis ) );
+    else if( type == "polygonlist" )
+        param.reset( new ActionParameterPolygonList( parameter, converter_, xis ) );
+    else if( type == "locationlist" )
+        param.reset( new ActionParameterLocationList( parameter, converter_, xis ) );
+    else if( type == "direction" || type == "dangerousdirection" )
+        param.reset( new ActionParameterDirection( parameter, xis ) );
+    else if( type == "limalist" )
+        param.reset( new ActionParameterLimaList( parameter, converter_, simulation_, xis ) );
+    else if( type == "limits" )
+        param.reset( new ActionParameterLimits( parameter, converter_, xis ) );
+    else if( type == "enumeration" )
+        param.reset( new ActionParameterEnumeration( parameter, xis ) );
+    else if( type == "agent" )
+        param.reset( new ActionParameterAgent( parameter, xis, model_.agents_ ) );
+    else if( type == "automate" )
+        param.reset( new ActionParameterAutomat( parameter, xis, model_.agents_ ) );
+    else if( type == "agentlist" )
+        param.reset( new ActionParameterAgentList( parameter, xis, model_.agents_ ) );
+    else if( type == "automatelist" )
+        param.reset( new ActionParameterAutomatList( parameter, xis, model_.agents_ ) );
+    else if( type == "dotationtype" )
+        param.reset( new ActionParameterDotationType( parameter, xis, staticModel_.objectTypes_ ) );
+    else if( type == "genobject" )
+        param.reset( new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis ) );
+    else if( type == "genobjectlist" )
+        param.reset( new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis ) );
+    else if( type == "agentknowledge" )
+        param.reset( new ActionParameterAgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
+    else if( type == "populationknowledge" )
+        param.reset( new ActionParameterPopulationKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
+    else if( type == "objectknowledge" )
+        param.reset( new ActionParameterObjectKnowledge( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity ) );
+    else if( type == "agentknowledgelist" )
+        param.reset( new ActionParameterAgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
+    else if( type == "objectknowledgelist" )
+        param.reset( new ActionParameterObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity ) );
+    else if( type == "atlasnature" )
+        param.reset( new ActionParameterAtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
+    else if( type == "objective" )
+        param.reset( new ActionParameterObjective( parameter, xis, converter_, simulation_ ) );
+    else if( type == "objectivelist" )
+        param.reset( new ActionParameterObjectiveList( parameter, xis, converter_, simulation_ ) );
+    else if( type == "medicalpriorities" )
+        param.reset( new ActionParameterMedicalPriorities( parameter, xis ) );
+    else if( type == "maintenancepriorities" )
+        param.reset( new ActionParameterMaintenancePriorities( parameter, staticModel_.objectTypes_, xis ) );
+    else
+        param.reset( new ActionParameter< QString >( parameter ) ); // $$$$ SBO 2007-05-16: default not yet implemented parameters...
+    param->Set( isSet ); // $$$$ SBO 2007-10-11: ...
+    return param.release();
 }

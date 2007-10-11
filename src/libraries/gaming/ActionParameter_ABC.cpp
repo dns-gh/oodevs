@@ -108,6 +108,8 @@ void ActionParameter_ABC::DrawToolTip( const Viewport_ABC& viewport, const GlToo
 void ActionParameter_ABC::Serialize( xml::xostream& xos ) const
 {
     xos << attribute( "name", name_ );
+    if( !isSet_ )
+        xos << attribute( "set", false );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << start( "parameter" );

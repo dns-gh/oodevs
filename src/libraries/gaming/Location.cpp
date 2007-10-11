@@ -52,7 +52,6 @@ Location::Location( const kernel::CoordinateConverter_ABC& converter, const kern
 // -----------------------------------------------------------------------------
 Location::Location( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
     : converter_( converter )
-    , valid_    ( true ) // $$$$ SBO 2007-10-11: should check according to type/number of points
 {
     std::string type;
     xis >> start( "location" )
@@ -60,6 +59,7 @@ Location::Location( const kernel::CoordinateConverter_ABC& converter, xml::xistr
             >> list( "point", *this, &Location::ReadPoint )
         >> end();
     type_ = ASN1T_EnumLocationType( tools::LocationFromString( type.c_str() ) );
+    valid_ = CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,8 +153,9 @@ void Location::Serialize( xml::xostream& xos ) const
 {
     xos << start( "location" )
         << attribute( "type", tools::ToString( type_ ) );
-    for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
-        xos << start( "point" ) << attribute( "coordinates", converter_.ConvertToMgrs( *it ) ) << end();
+    if( valid_ )
+        for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
+            xos << start( "point" ) << attribute( "coordinates", converter_.ConvertToMgrs( *it ) ) << end();
     xos << end();
 }
 
@@ -251,4 +252,23 @@ void Location::Clean( ASN1T_Location& asn ) const
 {
     if( asn.coordinates.n )
         delete[] asn.coordinates.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Location::CheckValidity
+// Created: SBO 2007-10-11
+// -----------------------------------------------------------------------------
+bool Location::CheckValidity() const
+{
+    switch( type_ )
+    {
+    case EnumLocationType::line:
+    case EnumLocationType::polygon:
+        return points_.size() > 1;
+    case EnumLocationType::circle:
+        return points_.size() == 2;
+    case EnumLocationType::point:
+        return points_.size() == 1;
+    }
+    return false;
 }

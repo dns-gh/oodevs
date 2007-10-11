@@ -56,6 +56,10 @@
         <source>Schedule</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error loading mission parameters. Non-optional parameter &apos;%1&apos; is not set.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>
