@@ -62,7 +62,7 @@ QAction& Actions::CreateTerrain()
 QAction& Actions::CreateExercise()
 {
     QAction& result = CreateAction( tr( "Create exercise" ), "Create exercise" );
-    result.setIconSet( MAKE_PIXMAP( data_create ) );
+    result.setIconSet( MAKE_PIXMAP( exercise_create ) );
     result.setToolTip( tr( "Create new exercise using an existing terrain and an existing physical/decisional data set" ) );
     return result;
 }
@@ -74,7 +74,7 @@ QAction& Actions::CreateExercise()
 QAction& Actions::EditExercise()
 {
     QAction& result = CreateAction( tr( "Edit exercise" ), "Edit exercise" );
-    result.setIconSet( MAKE_PIXMAP( data_create ) ); // $$$$ AGE 2007-10-10: 
+    result.setIconSet( MAKE_PIXMAP( exercise_edit ) );
     result.setToolTip( tr( "Change exercise Order of Battle, User Profiles and Weather settings" ) );
     return result;
 }
@@ -134,7 +134,7 @@ QAction& Actions::StartAnalysis()
 QAction& Actions::JoinAnalysis()
 {
     QAction& result = CreateAction( tr( "Join analysis" ), "Join analysis" );
-    result.setIconSet( MAKE_PIXMAP( data_create ) ); // $$$$ AGE 2007-10-10: 
+    result.setIconSet( MAKE_PIXMAP( data_edit ) ); // $$$$ AGE 2007-10-10: 
     result.setToolTip( tr( "Join an analysis session" ) );
     return result;
 }

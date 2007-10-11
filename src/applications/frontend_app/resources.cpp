@@ -14,8 +14,11 @@
 // instead of resources.h
 #define static 
 
+#include "res/exercise_create.xpm"
+#include "res/exercise_edit.xpm"
 #include "res/terrain_create.xpm"
 #include "res/data_create.xpm"
+#include "res/data_edit.xpm"
 #include "res/banner_left.xpm"
 #include "res/banner_fill.xpm"
 #include "res/banner_right.xpm"

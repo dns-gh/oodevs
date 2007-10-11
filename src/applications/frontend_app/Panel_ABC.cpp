@@ -27,42 +27,33 @@ Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action )
     setPaletteBackgroundColor( Qt::white );
     layout()->setAlignment( Qt::AlignTop );
     QHBox* banner = new QHBox( this );
+    banner->setMaximumHeight( 100 );
     {
         QLabel* label = new QLabel( banner );
         label->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
-        label->setFixedSize( 91, 150 );
-        label->setMargin( 20 );
+        label->setFixedWidth( 90 );
+        label->setMargin( 10 );
         label->setPixmap( action.iconSet().pixmap() );
-        label->setErasePixmap( MAKE_PIXMAP( banner_left ) );
     }
     {
         QVBox* box = new QVBox( banner );
-        box->setFixedHeight( 150 );
-        box->setPaletteBackgroundPixmap( MAKE_PIXMAP( banner_fill ) );
         {
             QLabel* label = new QLabel( box );
-            label->setBackgroundOrigin( ParentOrigin );
             label->setFixedHeight( 60 );
-            label->setAlignment( Qt::AlignBottom | Qt::AlignLeft );
+            label->setAlignment( Qt::AlignBottom | Qt::AlignRight );
             label->setText( action.text() );
-            label->setIndent( 2 );
+            label->setMargin( 5 );
             QFont font( "Arial", 24, QFont::Bold );
             label->setFont( font );
         }
         {
             QLabel* label = new QLabel( box );
-            label->setBackgroundOrigin( ParentOrigin );
             label->setMargin( 5 );
-            label->setAlignment( Qt::AlignTop | Qt::AlignLeft );
+            label->setAlignment( Qt::AlignTop | Qt::AlignRight );
             label->setText( action.toolTip() );
             QFont font( "Arial", 8, QFont::Normal, true );
             label->setFont( font );
         }
-    }
-    {
-        QLabel* label = new QLabel( banner );
-        label->setFixedSize( 383, 150 );
-        label->setPixmap( MAKE_PIXMAP( banner_right ) );
     }
     setSpacing( 10 );
     connect( &action, SIGNAL( toggled( bool ) ), SLOT( setShown( bool ) ) );

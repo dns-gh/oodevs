@@ -12,8 +12,11 @@
 
 #include "clients_gui/resources.h"
 
+DECLARE_ICON( exercise_create );
+DECLARE_ICON( exercise_edit );
 DECLARE_ICON( terrain_create );
 DECLARE_ICON( data_create );
+DECLARE_ICON( data_edit );
 DECLARE_ICON( banner_left );
 DECLARE_ICON( banner_fill );
 DECLARE_ICON( banner_right );

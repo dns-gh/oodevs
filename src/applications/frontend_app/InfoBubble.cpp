@@ -20,7 +20,7 @@ InfoBubble::InfoBubble( QWidget* parent )
 {
     setMargin( 5 );
     icon_ = new QLabel( this );
-    icon_->setFixedSize( 80, 64 );
+    icon_->setFixedSize( 60, 48 );
 
     message_ = new QLabel( this );
 //    hide();

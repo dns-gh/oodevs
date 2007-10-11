@@ -93,7 +93,7 @@ void StartAnalysePanel::ReplaySelected()
     if( selected )
         bubble_->ShowInfo( tr( "Replay game: %1" ).arg( replays_->selectedItem()->text() ) ); // $$$$ SBO 2007-10-05: TODO
     else
-        bubble_->ShowError( tr( "The selected exercise as no replay." ) ); // $$$$ SBO 2007-10-05: TODO
+        bubble_->ShowError( tr( "The selected exercise has no replay." ) ); // $$$$ SBO 2007-10-05: TODO
 }
 
 // -----------------------------------------------------------------------------
