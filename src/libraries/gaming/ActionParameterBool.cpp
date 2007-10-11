@@ -68,7 +68,7 @@ void ActionParameterBool::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ActionParameterBool::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value = 0;
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_aBool;
     asn.value.u.aBool = GetValue();
 }

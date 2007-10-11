@@ -90,8 +90,7 @@ void ActionParameterPathList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.value.t = T_MissionParameter_value_pathList;
     ASN1T_PathList*& list = asn.value.u.pathList = new ASN1T_PathList();
-    list->n = Count();
-    asn.null_value = list->n ? 0 : 1;
+    asn.null_value = ( list->n = Count() ) ? 0 : 1;
     if( asn.null_value )
         return;
     list->elem = new ASN1T_Path[list->n];

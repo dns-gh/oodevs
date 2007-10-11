@@ -16,7 +16,7 @@
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/Point.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterLocation.h"
 
@@ -35,7 +35,7 @@ ParamLocation::ParamLocation( const OrderParameter& parameter, ParametersLayer& 
     , creator_   ( 0 )
     , controller_( 0 )
     , pLabel_    ( 0 )
-    , location_  ( 0 )
+    , location_  ()
     , filter_    ( true, true, true, true )
 {
     // NOTHING
@@ -47,7 +47,7 @@ ParamLocation::ParamLocation( const OrderParameter& parameter, ParametersLayer& 
 // -----------------------------------------------------------------------------
 ParamLocation::~ParamLocation()
 {
-    delete location_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ void ParamLocation::RegisterIn( ActionController& controller )
 // -----------------------------------------------------------------------------
 bool ParamLocation::CheckValidity()
 {
-    if( !parameter_.IsOptional() && !location_ )
+    if( !parameter_.IsOptional() && ( !location_.get() || !location_->IsValid() ) )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -109,7 +109,19 @@ bool ParamLocation::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamLocation::CommitTo( ActionParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new ActionParameterLocation( parameter_, converter_, *location_ ) );
+    std::auto_ptr< ActionParameter_ABC > param;
+    if( location_.get() )
+    {
+        param.reset( new ActionParameterLocation( parameter_, converter_, *location_ ) );
+        param->Set( location_->IsValid() );
+    }
+    else
+    {
+        kernel::Point stub;
+        param.reset( new ActionParameterLocation( parameter_, converter_, stub ) );
+        param->Set( false );
+    }
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,9 +130,7 @@ void ParamLocation::CommitTo( ActionParameterContainer_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamLocation::Handle( Location_ABC& location )
 {
-    // $$$$ AGE 2007-07-11: auto_ptr
-    delete location_;
-    location_ = &location;
+    location_.reset( &location );
     if( location.IsValid() )
         pShapeLabel_->setText( location.GetName() );
     else
@@ -144,6 +154,6 @@ void ParamLocation::SetShapeFilter( bool point, bool line, bool polygon, bool ci
 // -----------------------------------------------------------------------------
 void ParamLocation::Draw( const geometry::Point2f& , const Viewport_ABC& , const GlTools_ABC& tools ) const
 {
-    if( location_ )
+    if( location_.get() )
         location_->Draw( tools );
 }

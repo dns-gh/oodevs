@@ -97,7 +97,7 @@ void ActionParameterObjective::ReadParameter( xml::xistream& xis, const Coordina
 // -----------------------------------------------------------------------------
 void ActionParameterObjective::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value = 0;
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_missionObjective;
     asn.value.u.missionObjective = new ASN1T_MissionObjective();
     CommitTo( *asn.value.u.missionObjective );

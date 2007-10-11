@@ -84,7 +84,7 @@ private:
     const kernel::Entity_ABC& entity_;
     gui::RichLabel*       pLabel_;
     QLabel*               pPosLabel_;
-    kernel::Location_ABC* location_;
+    std::auto_ptr< kernel::Location_ABC > location_;
     bool optional_;
     //@}
 };

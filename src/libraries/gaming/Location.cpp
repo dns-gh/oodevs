@@ -24,7 +24,8 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 Location::Location( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn )
     : converter_( converter )
-    , type_( asn.type )
+    , type_     ( asn.type )
+    , valid_    ( true )
 {
     if( asn.coordinates.n > 0 )
     {
@@ -40,6 +41,7 @@ Location::Location( const kernel::CoordinateConverter_ABC& converter, const ASN1
 // -----------------------------------------------------------------------------
 Location::Location( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : converter_( converter )
+    , valid_    ( location.IsValid() )
 {
     location.Accept( *this );
 }
@@ -50,6 +52,7 @@ Location::Location( const kernel::CoordinateConverter_ABC& converter, const kern
 // -----------------------------------------------------------------------------
 Location::Location( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
     : converter_( converter )
+    , valid_    ( true ) // $$$$ SBO 2007-10-11: should check according to type/number of points
 {
     std::string type;
     xis >> start( "location" )
@@ -212,8 +215,8 @@ void Location::Draw( const kernel::GlTools_ABC& tools ) const
 void Location::CommitTo( ASN1T_Location& asn ) const
 {
     asn.type = type_;
-    asn.coordinates.n = points_.size();
-    if( points_.empty() )
+    asn.coordinates.n = valid_ ? points_.size() : 0;
+    if( !asn.coordinates.n )
         return;
     asn.coordinates.elem = new ASN1T_CoordUTM[asn.coordinates.n];
     for( unsigned int i = 0; i < asn.coordinates.n; ++i )

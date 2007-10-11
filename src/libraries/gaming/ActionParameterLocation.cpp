@@ -126,8 +126,8 @@ void ActionParameterLocation::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ActionParameterLocation::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_location;
-    asn.null_value = 0; // $$$$ SBO 2007-05-22: 
     asn.value.u.location = new ASN1T_Location();
     Location::CommitTo( *asn.value.u.location );
 }

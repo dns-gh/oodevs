@@ -72,8 +72,7 @@ void ActionParameterLocationList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.value.t = T_MissionParameter_value_locationList;
     ASN1T_LocationList*& list = asn.value.u.locationList = new ASN1T_LocationList();
-    list->n = Count();
-    asn.null_value = list->n ? 0 : 1;
+    asn.null_value = ( list->n = Count() ) ? 0 : 1;
     if( asn.null_value )
         return;
     list->elem = new ASN1T_Location[list->n];

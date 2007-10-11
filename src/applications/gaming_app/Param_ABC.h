@@ -54,12 +54,6 @@ public:
     virtual QString GetName() const;
     //@}
 
-protected:
-    //! @name Helpers
-    //@{
-    void InterfaceNotInitialized() const;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

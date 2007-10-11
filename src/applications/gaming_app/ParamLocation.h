@@ -93,7 +93,7 @@ private:
     gui::LocationCreator* creator_;
     gui::RichLabel* pLabel_;
     QLabel* pShapeLabel_;
-    kernel::Location_ABC* location_;
+    std::auto_ptr< kernel::Location_ABC > location_;
     kernel::ActionController* controller_; // $$$$ AGE 2006-04-03: sucks
     ShapeFilter filter_;
     //@}

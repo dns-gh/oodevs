@@ -66,6 +66,7 @@ public:
     virtual void Clean( ASN1T_OrderContext& asn ) const;
 
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
+    void Set( bool isSet );
     //@}
 
 protected:
@@ -73,6 +74,7 @@ protected:
     //@{
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
     void DrawToolTip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual bool IsSet() const;
     //@}
 
 private:
@@ -88,6 +90,7 @@ private:
     QString name_;
     geometry::Point2f position_;
     std::auto_ptr< kernel::GlTooltip_ABC > toolTip_;
+    bool isSet_;
     //@}
 };
 

@@ -88,7 +88,7 @@ void Path::Accept( LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void Path::Draw( const GlTools_ABC& tools ) const
 {
-    if( ! points_.empty() )
+    if( IsValid() )
     {
         tools.DrawLine( position_.GetPosition(), points_.front() );
         tools.DrawLines( points_ );

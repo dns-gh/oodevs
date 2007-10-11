@@ -76,7 +76,7 @@ void ActionParameterDotationType::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ActionParameterDotationType::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value = 0;
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_dotationType;
     asn.value.u.dotationType = type_.GetId();
 }

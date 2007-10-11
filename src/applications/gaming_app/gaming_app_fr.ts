@@ -1859,13 +1859,6 @@
     </message>
 </context>
 <context>
-    <name>Param_ABC</name>
-    <message>
-        <source>&apos;%1&apos; parameter interface not initialized</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PopulationKnowledgePanel</name>
     <message>
         <source>Population knowledges</source>

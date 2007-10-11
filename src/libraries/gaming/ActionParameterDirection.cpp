@@ -85,7 +85,7 @@ void ActionParameterDirection::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ActionParameterDirection::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value = 0;
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_heading;
     asn.value.u.heading = GetValue();
 }

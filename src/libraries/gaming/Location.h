@@ -86,6 +86,7 @@ private:
     ASN1T_EnumLocationType type_;
     T_PointVector points_;
     geometry::Rectangle2f boundingBox_;
+    bool valid_;
     //@}
 };
 

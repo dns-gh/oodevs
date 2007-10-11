@@ -32,6 +32,7 @@ ParamPoint::ParamPoint( QObject* parent, const OrderParameter& parameter, const 
     , parameter_( parameter )
     , converter_( converter )
     , pLabel_   ( 0 )
+    , isSet_    ( false )
 {
     // NOTHING
 }
@@ -66,7 +67,7 @@ void ParamPoint::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool ParamPoint::CheckValidity()
 {
-    if( !parameter_.IsOptional() && pPosLabel_->text() == "---" )
+    if( !parameter_.IsOptional() && isSet_ )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -80,7 +81,7 @@ bool ParamPoint::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamPoint::Draw( const geometry::Point2f& /*point*/, const kernel::Viewport_ABC& extent, const GlTools_ABC& tools ) const
 {
-    if( pPosLabel_->text() != "---" && extent.IsVisible( paramPoint_ ) )
+    if( isSet_ && extent.IsVisible( paramPoint_ ) )
         tools.DrawCross( paramPoint_ );
 }
 
@@ -91,8 +92,11 @@ void ParamPoint::Draw( const geometry::Point2f& /*point*/, const kernel::Viewpor
 void ParamPoint::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     kernel::Point point;
-    point.AddPoint( paramPoint_ );
-    action.AddParameter( *new ActionParameterPoint( parameter_, converter_, point ) );
+    if( isSet_ )
+        point.AddPoint( paramPoint_ );
+    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterPoint( parameter_, converter_, point ) );
+    param->Set( isSet_ );
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,4 +117,5 @@ void ParamPoint::AcceptPopupMenuPoint()
 {
     paramPoint_ = popupPoint_;
     pPosLabel_->setText( converter_.ConvertToMgrs( paramPoint_ ).c_str() );
+    isSet_ = true;
 }

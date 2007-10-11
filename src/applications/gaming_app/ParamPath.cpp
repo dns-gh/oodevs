@@ -16,7 +16,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/Point.h"
 #include "clients_kernel/OrderParameter.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterPath.h"
@@ -36,8 +36,7 @@ ParamPath::ParamPath( QObject* parent, const OrderParameter& parameter, Paramete
     , layer_( layer )
     , entity_( entity )
     , pLabel_( 0 )
-    , location_( 0 )
-    , optional_( parameter.IsOptional() )
+    , location_()
 {
     // NOTHING
 }
@@ -48,7 +47,7 @@ ParamPath::ParamPath( QObject* parent, const OrderParameter& parameter, Paramete
 // -----------------------------------------------------------------------------
 ParamPath::~ParamPath()
 {
-    delete location_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +71,7 @@ void ParamPath::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamPath::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , const GlTools_ABC& tools ) const
 {
-    if( location_ )
+    if( location_.get() )
         location_->Draw( tools );
 }
 
@@ -82,7 +81,7 @@ void ParamPath::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , c
 // -----------------------------------------------------------------------------
 bool ParamPath::CheckValidity()
 {
-    if( ! optional_ && ( ! location_ || !location_->IsValid() ) )
+    if( !parameter_.IsOptional() && ( !location_.get() || !location_->IsValid() ) )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -96,7 +95,19 @@ bool ParamPath::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamPath::CommitTo( ActionParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new ActionParameterPath( parameter_, converter_, *location_ ) );
+    std::auto_ptr< ActionParameter_ABC > param;
+    if( location_.get() )
+    {
+        param.reset( new ActionParameterPath( parameter_, converter_, *location_ ) );
+        param->Set( location_->IsValid() );
+    }
+    else
+    {
+        kernel::Point stub;
+        param.reset( new ActionParameterPath( parameter_, converter_, stub ) );
+        param->Set( false );
+    }
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +136,7 @@ void ParamPath::Handle( Location_ABC& location )
 {
     if( location.IsValid() )
     {
-        delete location_;
-        location_ = &location;
+        location_.reset( &location );
         pPosLabel_->setText( location.GetName() );
     }
 }

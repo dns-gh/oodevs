@@ -58,7 +58,7 @@ ActionParameterPointList::~ActionParameterPointList()
 // -----------------------------------------------------------------------------
 void ActionParameterPointList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value = 0;
+    asn.null_value = Count() ? 0 : 1;
     asn.value.t = T_MissionParameter_value_pointList;
     asn.value.u.pointList = new ASN1T_PointList();
     ActionParameterLocationList::CommitTo( *(ASN1T_LocationList*)asn.value.u.pointList );

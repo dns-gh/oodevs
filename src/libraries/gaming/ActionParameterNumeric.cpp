@@ -69,7 +69,7 @@ void ActionParameterNumeric::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ActionParameterNumeric::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value = 0;
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_aReal;
     asn.value.u.aReal = GetValue();
 }

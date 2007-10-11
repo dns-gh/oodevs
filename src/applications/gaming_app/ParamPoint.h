@@ -73,6 +73,7 @@ private:
     QLabel*           pPosLabel_;
     geometry::Point2f popupPoint_;
     geometry::Point2f paramPoint_;
+    bool              isSet_;
     //@}
 };
 

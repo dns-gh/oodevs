@@ -58,7 +58,7 @@ ActionParameterPolygonList::~ActionParameterPolygonList()
 // -----------------------------------------------------------------------------
 void ActionParameterPolygonList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value = 0;
+    asn.null_value = Count() ? 0 : 1;
     asn.value.t = T_MissionParameter_value_polygonList;
     asn.value.u.polygonList = new ASN1T_PolygonList();
     ActionParameterLocationList::CommitTo( *(ASN1T_LocationList*)asn.value.u.polygonList );

@@ -80,12 +80,3 @@ QString Param_ABC::GetName() const
 {
     return name_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: Param_ABC::InterfaceNotInitialized
-// Created: SBO 2007-03-13
-// -----------------------------------------------------------------------------
-void Param_ABC::InterfaceNotInitialized() const
-{
-    throw std::runtime_error( tools::translate( "Param_ABC", "'%1' parameter interface not initialized" ).arg( name_ ).ascii() );
-}

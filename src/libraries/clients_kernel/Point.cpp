@@ -77,7 +77,7 @@ bool Point::IsDone() const
 // -----------------------------------------------------------------------------
 void Point::Accept( LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitPoint( point_ );   
+    visitor.VisitPoint( point_ );
 }
 
 // -----------------------------------------------------------------------------

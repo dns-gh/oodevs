@@ -25,6 +25,7 @@ using namespace kernel;
 ActionParameter_ABC::ActionParameter_ABC( const QString& name )
     : name_( name )
     , position_()
+    , isSet_( true )
 {
     // NOTHING
 }
@@ -221,4 +222,22 @@ void ActionParameter_ABC::Accept( ActionParameterVisitor_ABC& visitor ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::Set
+// Created: SBO 2007-10-11
+// -----------------------------------------------------------------------------
+void ActionParameter_ABC::Set( bool isSet )
+{
+    isSet_ = isSet;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameter_ABC::IsSet
+// Created: SBO 2007-10-11
+// -----------------------------------------------------------------------------
+bool ActionParameter_ABC::IsSet() const
+{
+    return isSet_;
 }
