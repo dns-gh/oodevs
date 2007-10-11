@@ -43,9 +43,11 @@
 
 #include "Network/NET_AsnException.h"
 
-// Time for MOS ...
-#define MIL_NBR_DAYS_BETWEEN_1901_AND_1970  (uint)25202
-#define MIL_NBR_SEC_BETWEEN_1901_AND_1970  ( MIL_NBR_DAYS_BETWEEN_1901_AND_1970 * 86400 )
+#pragma warning( push, 1 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
+
+namespace bpt = boost::posix_time;
 
 typedef std::vector< DEC_Gen_Object* >    T_GenObjectVector;
 typedef T_GenObjectVector::iterator       IT_GenObjectVector;
@@ -54,7 +56,6 @@ typedef T_GenObjectVector::const_iterator CIT_GenObjectVector;
 typedef std::vector< DEC_Objective* >     T_ObjectiveVector;
 typedef T_ObjectiveVector::iterator       IT_ObjectiveVector;
 typedef T_ObjectiveVector::const_iterator CIT_ObjectiveVector;
-
 
 //=============================================================================
 // PARAMETERS TOOLS
@@ -420,7 +421,8 @@ DEC_Knowledge_Population* NET_ASN_Tools::ReadPopulationKnowledge( const ASN1T_Po
 // -----------------------------------------------------------------------------
 uint NET_ASN_Tools::ReadGDH( const ASN1T_DateTime& asnGDH )
 {
-    return asnGDH - MIL_NBR_SEC_BETWEEN_1901_AND_1970;
+    bpt::ptime time = bpt::from_iso_string( std::string( (const char*)asnGDH.data, 15 ) );
+    return ( time - bpt::from_time_t( 0 ) ).total_seconds();
 }
 
 //=============================================================================
@@ -812,24 +814,6 @@ void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector
         ++i;
     }
 }
-  
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::WriteGDH
-// Created: NLD 2004-01-15
-// -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteGDH( uint nRealTimeSec, ASN1T_DateTime& asnGDH )
-{
-    asnGDH = nRealTimeSec + MIL_NBR_SEC_BETWEEN_1901_AND_1970;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::WriteGDH
-// Created: NLD 2004-01-15
-// -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteGDH( ASN1T_DateTime& asnGDH )
-{
-    asnGDH = MIL_Tools::GetRealTime() + MIL_NBR_SEC_BETWEEN_1901_AND_1970;
-}  
 
 //=============================================================================
 // MISC TOOLS
@@ -2212,7 +2196,7 @@ bool NET_ASN_Tools::CopyPathList( const DIA_Variable_ABC& diaFrom, DIA_Variable_
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::CopyGDH( const ASN1T_DateTime& asn, DIA_Variable_ABC& dia )
 {
-    dia.SetValue( MIL_Tools::ConvertRealTimeSimToDia( NET_ASN_Tools::ReadGDH( asn ) ) );
+    dia.SetValue( (float)ReadGDH( asn ) );
     return true;
 }
 
@@ -2225,9 +2209,28 @@ bool NET_ASN_Tools::CopyGDH( const DIA_Variable_ABC& dia, ASN1T_DateTime& asn )
     float rValue = dia.ToFloat();
     if( rValue == 0. )
         return false;
-    NET_ASN_Tools::WriteGDH( MIL_Tools::ConvertRealTimeDiaToSim( rValue ), asn );
+    WriteGDH( rValue, asn );
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::WriteGDH
+// Created: NLD 2004-01-15
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::WriteGDH( uint nRealTimeSec, ASN1T_DateTime& asnGDH )
+{
+    bpt::ptime time = bpt::from_time_t( 0 ) +  bpt::seconds( nRealTimeSec );
+    asnGDH = bpt::to_iso_string( time ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::WriteGDH
+// Created: NLD 2004-01-15
+// -----------------------------------------------------------------------------
+//void NET_ASN_Tools::WriteGDH( ASN1T_DateTime& asnGDH )
+//{
+//    asnGDH = MIL_Tools::GetRealTime() + MIL_NBR_SEC_BETWEEN_1901_AND_1970;
+//}  
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::CopyGDH

@@ -77,7 +77,7 @@ private:                                                                  \
 };
 
 GENERATE_ASN_MSG_SENDER         ( SimToClient, ControlInformation                            , control_information                               );
-GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, ControlBeginTick                              , control_begin_tick                                );
+GENERATE_ASN_MSG_SENDER         ( SimToClient, ControlBeginTick                              , control_begin_tick                                );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, ControlEndTick                                , control_end_tick                                  );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, ControlStopAck                                , control_stop_ack                                  );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, ControlPauseAck                               , control_pause_ack                                 );

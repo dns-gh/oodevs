@@ -1348,7 +1348,7 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
 
         case T_MsgsSimToClient_msg_msg_control_information:                     OnReceiveMsgControlInformation           ( *message.msg.u.msg_control_information                    ); break;
         case T_MsgsSimToClient_msg_msg_control_profiling_information:           OnReceiveMsgProfilingValues              ( *message.msg.u.msg_control_profiling_information          ); break;
-        case T_MsgsSimToClient_msg_msg_control_begin_tick:                      OnReceiveMsgControlBeginTick             (  message.msg.u.msg_control_begin_tick                     ); break;
+        case T_MsgsSimToClient_msg_msg_control_begin_tick:                      OnReceiveMsgControlBeginTick             ( *message.msg.u.msg_control_begin_tick                     ); break;
         case T_MsgsSimToClient_msg_msg_control_end_tick:                        OnReceiveMsgControlEndTick               ( *message.msg.u.msg_control_end_tick                       ); break;
         case T_MsgsSimToClient_msg_msg_control_stop_ack:                        break;
         case T_MsgsSimToClient_msg_msg_control_pause_ack:                       OnReceiveMsgControlPauseAck              ( message.msg.u.msg_control_pause_ack                       ); break;

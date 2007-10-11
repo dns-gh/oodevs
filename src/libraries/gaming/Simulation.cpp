@@ -131,8 +131,10 @@ void Simulation::Update( const ASN1T_MsgControlProfilingInformation& message )
 // Name: Simulation::BeginTick
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::BeginTick( int tick )
+void Simulation::BeginTick( const ASN1T_MsgControlBeginTick& message )
 {
+    int tick = message.current_tick;
+    date_ = std::string( (const char*)message.date_time.data, 15 );
     profiling_.Tick();
     time_ = tick * tickDuration_;
     controller_.Update( startTick_ );

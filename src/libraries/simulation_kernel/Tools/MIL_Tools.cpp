@@ -46,39 +46,6 @@ const PHY_Meteo::sWindData& MIL_Tools::GetWind( const MT_Vector2D& vPos )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Tools::GetRealTime
-// Created: NLD 2004-01-15
-// -----------------------------------------------------------------------------
-uint MIL_Tools::GetRealTime()
-{
-    MT_Time currentTime;
-    currentTime.SetToCurrentTime();
-
-    struct _timeb timeBuffer;
-    _ftime( &timeBuffer );
-
-    return timeBuffer.time + timeBuffer.timezone * (-60) + ( timeBuffer.dstflag * 3600 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Tools::ConvertRealTimeSimToDia
-// Created: NLD 2004-01-19
-// -----------------------------------------------------------------------------
-float MIL_Tools::ConvertRealTimeSimToDia( uint nSimRealTime )
-{
-    return (float)( nSimRealTime - MIL_AgentServer::GetWorkspace().GetSimStartTime() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Tools::ConvertRealTimeDiaToSim
-// Created: NLD 2004-01-19
-// -----------------------------------------------------------------------------
-uint MIL_Tools::ConvertRealTimeDiaToSim( float nDiaRealTime )
-{
-    return (uint)( nDiaRealTime + MIL_AgentServer::GetWorkspace().GetSimStartTime() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Tools::ComputeCRC
 // Created: JVT 2005-04-07
 // -----------------------------------------------------------------------------

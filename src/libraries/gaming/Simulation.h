@@ -49,7 +49,7 @@ public:
     void Update( const ASN1T_MsgControlInformation& asnMsg );
     void Update( const ASN1T_MsgControlReplayInformation& asnMsg );
     void Update( const ASN1T_MsgControlProfilingInformation& message );
-    void BeginTick( int tick );
+    void BeginTick( const ASN1T_MsgControlBeginTick& message );
     void EndTick( const ASN1T_MsgControlEndTick& asnMsg );
 
     void BeginCheckPoint();
@@ -94,6 +94,7 @@ private:
     unsigned int timeFactor_;
     unsigned int tickCount_;
     int time_;
+    std::string date_;
     bool paused_;
     bool connected_;
     sConnection connection_;

@@ -40,8 +40,7 @@ public:
     static void ListPoint_Clear      ( DIA_Call_ABC& );
 
     // Time management
-    static void GetSimTime         ( DIA_Call_ABC& ); // Retourne le temps SIM courant, en secondes
-    static void GetRealTime        ( DIA_Call_ABC& ); // Retourne le temps réel, en secondes
+    static void GetTime            ( DIA_Call_ABC& );
     static void GetTimeStepDuration( DIA_Call_ABC& ); 
     static void IsNight            ( DIA_Call_ABC& );
 

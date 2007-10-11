@@ -48,7 +48,12 @@ MsgControlChangeTimeFactorAck ::= SEQUENCE
     error-code  EnumControlErrorCode
 }
 
-MsgControlBeginTick ::= INTEGER  -- Current tick
+MsgControlBeginTick ::= SEQUENCE
+{
+    current-tick        INTEGER,
+    date-time           DateTime
+}
+
 MsgControlEndTick   ::= SEQUENCE
 {
     current-tick        INTEGER,
@@ -71,6 +76,7 @@ EnumSimulationState ::= ENUMERATED
 MsgControlInformation ::= SEQUENCE
 {
     current-tick            INTEGER,     
+    date-time               DateTime,
     tick-duration           INTEGER,  -- En secondes
     time-factor             INTEGER,
     checkpoint-frequency    INTEGER, -- En minutes
@@ -82,6 +88,7 @@ MsgControlInformation ::= SEQUENCE
 MsgControlReplayInformation ::= SEQUENCE
 {
     current-tick            INTEGER,     
+    date-time               DateTime,
     tick-duration           INTEGER,  -- En secondes
     time-factor             INTEGER,
     status                  EnumSimulationState,

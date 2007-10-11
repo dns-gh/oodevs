@@ -177,7 +177,6 @@ void PHY_MeteoDataManager::UnregisterWeatherEffect( const MT_Ellipse& surface, c
     pRawData_->UnregisterWeatherEffect( surface, ammoCategory );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::Update
 // Created: JVT 03-08-07

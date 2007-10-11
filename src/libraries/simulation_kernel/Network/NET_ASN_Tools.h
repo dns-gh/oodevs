@@ -259,6 +259,7 @@ public:
     static void WritePath       ( const T_PointList&      points      , ASN1T_Path&         asn );
     static void WritePath       ( const T_PointVector&    points      , ASN1T_Path&         asn );
     static void WriteGenObject  ( const DEC_Gen_Object&   object      , ASN1T_PlannedWork&  asn );
+    static void WriteGDH        ( uint nRealTimeSec, ASN1T_DateTime& asnGDH );
     //@}
 
 private:
@@ -308,9 +309,6 @@ private:
     static void WriteObjectKnowledge    ( const DEC_Knowledge_Object&         knowledge , ASN1T_ObjectKnowledge&     asnKnowledge );
     static void WriteAgentKnowledgeList ( const T_KnowledgeAgentDiaIDVector&  knowledges, ASN1T_UnitKnowledgeList&  asnListKnowledge, const DEC_KnowledgeResolver_ABC& resolver );
     static void WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ObjectKnowledgeList& asnListKnowledge, const DEC_KnowledgeResolver_ABC& resolver );
-
-    static void WriteGDH                ( ASN1T_DateTime& asnGDH );
-    static void WriteGDH                ( uint nRealTimeSec, ASN1T_DateTime& asnGDH );
     //@}
 };
 

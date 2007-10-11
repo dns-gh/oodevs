@@ -84,7 +84,8 @@ Height                  ::= INTEGER
 Elevation               ::= INTEGER
 Speed                   ::= INTEGER
 Heading                 ::= INTEGER(0..360)
-DateTime                ::= INTEGER 
+DateTime                ::= OCTET STRING (SIZE(15)) -- YYYYMMDDTHHMMSS
+
 
 EnumDotationFamily ::= ENUMERATED
 {

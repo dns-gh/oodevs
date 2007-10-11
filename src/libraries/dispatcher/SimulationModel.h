@@ -47,6 +47,7 @@ public:
 
 private:
    unsigned int      nCurrentTick_;
+   std::string       date_;
    unsigned int      nTickDuration_;
    unsigned int      nTimeFactor_;
    unsigned int      nCheckpointFrequency_;

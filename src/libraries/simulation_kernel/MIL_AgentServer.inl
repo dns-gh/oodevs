@@ -11,16 +11,6 @@
 //=============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetSimStartTime
-// Created: NLD 2004-01-19
-// -----------------------------------------------------------------------------
-inline
-uint MIL_AgentServer::GetSimStartTime() const
-{
-    return nSimStartTime_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetConfig
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
@@ -139,23 +129,13 @@ MIL_CheckPointManager& MIL_AgentServer::GetCheckPointManager() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetSimTime
+// Name: MIL_AgentServer::GetTime
 // Created: JVT 02-08-02
 //-----------------------------------------------------------------------------
 inline
-uint MIL_AgentServer::GetSimTime() const
+uint MIL_AgentServer::GetTime() const
 {
     return nSimTime_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetRealTime
-// Created: JVT 02-08-02
-//-----------------------------------------------------------------------------
-inline
-uint MIL_AgentServer::GetCurrentTimeStepRealTime() const
-{
-    return nCurrentTimeStepRealTime_;
 }
 
 // -----------------------------------------------------------------------------

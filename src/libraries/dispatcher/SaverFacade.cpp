@@ -121,7 +121,8 @@ namespace
         void SendStartTick()
         {
             AsnMsgSimToClientControlBeginTick tick;
-            tick() = 0;
+            tick().current_tick = 0;
+//            tick().date_time = 0; // $$$$ AGE 2007-10-11: 
             tick.Send( *this );
         }
         Model* model_;

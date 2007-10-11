@@ -18,6 +18,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
@@ -33,10 +34,23 @@
 #include "tools/thread/Thread.h"
 #include "tools/win32/ProcessMonitor.h"
 #include "xeumeuleu/xml.h"
+#pragma warning( push, 1 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
 
+namespace bpt = boost::posix_time;
 using namespace xml;
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
+
+namespace
+{
+    uint GetTime()
+    {
+        bpt::ptime time = bpt::second_clock::local_time();
+        return ( time - bpt::from_time_t( 0 ) ).total_seconds();
+    }
+}
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer constructor
@@ -50,9 +64,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , nTimeStepDuration_       ( 1 )
     , nTimeFactor_             ( 1 )
     , nCurrentTimeStep_        ( 1 )
-    , nSimTime_                ( 0 )
-    , nCurrentTimeStepRealTime_( 0 )
-    , nSimStartTime_           ( MIL_Tools::GetRealTime() )
+    , nSimTime_                ( GetTime() )
     , pEffectManager_          ( new MIL_EffectManager() )
     , pEntityManager_          ( 0 )
     , pWorkspaceDIA_           ( 0 )
@@ -238,13 +250,11 @@ void MIL_AgentServer::WaitForNextStep()
 //-----------------------------------------------------------------------------
 void MIL_AgentServer::OnTimer()
 {
-    nSimTime_                 = nCurrentTimeStep_ * nTimeStepDuration_;
-    nCurrentTimeStepRealTime_ = MIL_Tools::GetRealTime();
+    nSimTime_ += nTimeStepDuration_;
     lastStep_ = clock();
     MainSimLoop();
     ++ nCurrentTimeStep_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name:  MIL_AgentServer::mainSimLoop
@@ -262,6 +272,7 @@ void MIL_AgentServer::MainSimLoop()
 
     if( pProcessMonitor_->MonitorProcess() )
     {
+        
         MT_LOG_INFO_MSG( MT_FormatString( "**************** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done - RAM : %.3f MB / %.3f MB (VM)",
             nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), 
             pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(), 
@@ -297,7 +308,8 @@ void MIL_AgentServer::MainSimLoop()
 void MIL_AgentServer::SendMsgBeginTick() const
 {
     NET_ASN_MsgControlBeginTick msgBeginTick;
-    msgBeginTick() = GetCurrentTimeStep();
+    msgBeginTick().current_tick = GetCurrentTimeStep();
+    NET_ASN_Tools::WriteGDH( nSimTime_, msgBeginTick().date_time );
     msgBeginTick.Send();
 }
 
@@ -344,8 +356,6 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << nTimeFactor_
          << nCurrentTimeStep_
          << nSimTime_
-         << nCurrentTimeStepRealTime_
-         << nSimStartTime_
          << pEntityManager_
 //         << pWorkspaceDIA_        // uniquement données statiques
 //         << pMeteoDataManager_    // données statiques + météo locales gérées par MOS
@@ -371,8 +381,6 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nTimeFactor_
          >> nCurrentTimeStep_
          >> nSimTime_
-         >> nCurrentTimeStepRealTime_
-         >> nSimStartTime_
          >> pEntityManager_
 //         >> pWorkspaceDIA_
 //         >> pMeteoDataManager_
@@ -409,7 +417,9 @@ void MIL_AgentServer::WriteODB( xml::xostream& xos ) const
 void MIL_AgentServer::SendControlInformation() const
 {
     NET_ASN_MsgControlInformation message;
+
     message().current_tick         = GetCurrentTimeStep();
+    NET_ASN_Tools::WriteGDH( nSimTime_, message().date_time );
 	message().tick_duration        = GetTimeStepDuration();
     message().time_factor          = nTimeFactor_;
     message().status               = (ASN1T_EnumSimulationState)GetSimState();

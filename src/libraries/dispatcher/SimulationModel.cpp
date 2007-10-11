@@ -108,7 +108,8 @@ void SimulationModel::Update( const ASN1T_MsgControlChangeTimeFactorAck& msg )
 // -----------------------------------------------------------------------------
 void SimulationModel::Update( const ASN1T_MsgControlBeginTick& msg )
 {
-    nCurrentTick_ = msg;
+    nCurrentTick_ = msg.current_tick;
+    date_ = std::string( (const char*)msg.date_time.data, 15 );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,6 +144,7 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientControlInformation asn;
     asn().current_tick           = nCurrentTick_;
+    asn().date_time              = date_.c_str();
     asn().tick_duration          = nTickDuration_;
     asn().time_factor            = nTimeFactor_;
     asn().checkpoint_frequency   = nCheckpointFrequency_;

@@ -144,7 +144,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack:
             break; // NOTHING
         case T_MsgsSimToClient_msg_msg_control_information:                  pSimulationModel_->Update( *asnMsg.msg.u.msg_control_information ); break;
-        case T_MsgsSimToClient_msg_msg_control_begin_tick:                   pSimulationModel_->Update( asnMsg.msg.u.msg_control_begin_tick ); break;
+        case T_MsgsSimToClient_msg_msg_control_begin_tick:                   pSimulationModel_->Update( *asnMsg.msg.u.msg_control_begin_tick ); break;
         case T_MsgsSimToClient_msg_msg_control_end_tick:                     pSimulationModel_->Update( *asnMsg.msg.u.msg_control_end_tick ); break;
         case T_MsgsSimToClient_msg_msg_control_stop_ack:                     pSimulationModel_->Update_Stop( asnMsg.msg.u.msg_control_stop_ack ); break;
         case T_MsgsSimToClient_msg_msg_control_pause_ack:                    pSimulationModel_->Update_Pause( asnMsg.msg.u.msg_control_pause_ack ); break;

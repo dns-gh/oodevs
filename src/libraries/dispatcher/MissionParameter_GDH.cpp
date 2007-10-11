@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_GDH::MissionParameter_GDH( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , datation_           ( asn.value.u.dateTime )
+    , datation_           ( *asn.value.u.dateTime )
 {
     // NOTHING
 }
@@ -45,9 +45,8 @@ void MissionParameter_GDH::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value                  = bNullValue_;
     asn.value.t                     = T_MissionParameter_value_dateTime;
-    asn.value.u.dateTime            = datation_;
+    asn.value.u.dateTime            = const_cast< ASN1T_DateTime* >( &datation_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_GDH::AsnDelete

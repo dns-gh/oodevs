@@ -112,9 +112,7 @@ public:
 
     //! @name Time management
     //@{
-    uint GetSimStartTime           () const; // En secondes depuis 01/01/1970
-    uint GetCurrentTimeStepRealTime() const; // En secondes depuis 01/01/1970
-    uint GetSimTime                () const; // En secondes depuis le démarrage de la SIM
+    uint GetTime                   () const; // Temps simulé en secondes depuis 01/01/1970
 
     virtual unsigned int GetCurrentTick() const;
     virtual unsigned int GetTickDuration() const;
@@ -151,8 +149,6 @@ private:
     uint nTimeFactor_;
     uint nCurrentTimeStep_;
     uint nSimTime_;
-    uint nCurrentTimeStepRealTime_; // NB : The real time is stored once at the beginning of the tick
-    uint nSimStartTime_;            // The time (in seconds from the 01/01/1970) when the sim was started
 
     MIL_EffectManager*           pEffectManager_;
     MIL_EntityManager*           pEntityManager_;

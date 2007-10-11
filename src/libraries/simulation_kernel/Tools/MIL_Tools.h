@@ -71,15 +71,6 @@ public:
     static       std::string  GetLandTypeName         ( const TerrainData& data );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Tools */
-    //-------------------------------------------------------------------------
-    //@{
-    static uint  GetRealTime();
-    static float ConvertRealTimeSimToDia( uint nSimRealTime );
-    static uint  ConvertRealTimeDiaToSim( float nDiaRealTime );
-    //@}
-    
     //! @name CRC
     //@{
     static boost::crc_32_type::value_type ComputeCRC( const std::string& strFileName );

@@ -46,7 +46,7 @@ void MIL_ParameterType_GDH::Copy( const ASN1T_MissionParameter& from, DIA_Variab
     if( to.Type() != eFloat )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyGDH( from.value.u.dateTime, to ) )
+    if( !NET_ASN_Tools::CopyGDH( *from.value.u.dateTime, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
@@ -81,7 +81,7 @@ bool MIL_ParameterType_GDH::Copy( const DIA_Variable_ABC& from, ASN1T_MissionPar
     to.null_value  = false;
     to.value.t     = T_MissionParameter_value_dateTime;
 
-    if( !NET_ASN_Tools::CopyGDH( from, to.value.u.dateTime ) )
+    if( !NET_ASN_Tools::CopyGDH( from, *to.value.u.dateTime ) )
         return false;
 
     return true;
