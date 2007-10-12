@@ -34,23 +34,10 @@
 #include "tools/thread/Thread.h"
 #include "tools/win32/ProcessMonitor.h"
 #include "xeumeuleu/xml.h"
-#pragma warning( push, 1 )
-#include <boost/date_time/posix_time/posix_time.hpp>
-#pragma warning( pop )
 
-namespace bpt = boost::posix_time;
 using namespace xml;
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
-
-namespace
-{
-    uint GetTime()
-    {
-        bpt::ptime time = bpt::second_clock::local_time();
-        return ( time - bpt::from_time_t( 0 ) ).total_seconds();
-    }
-}
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer constructor
@@ -64,7 +51,8 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , nTimeStepDuration_       ( 1 )
     , nTimeFactor_             ( 1 )
     , nCurrentTimeStep_        ( 1 )
-    , nSimTime_                ( GetTime() )
+    , nSimTime_                ( 0 )
+    , nRealTime_               ( 0 )
     , pEffectManager_          ( new MIL_EffectManager() )
     , pEntityManager_          ( 0 )
     , pWorkspaceDIA_           ( 0 )
@@ -250,7 +238,8 @@ void MIL_AgentServer::WaitForNextStep()
 //-----------------------------------------------------------------------------
 void MIL_AgentServer::OnTimer()
 {
-    nSimTime_ += nTimeStepDuration_;
+    nSimTime_  += nTimeStepDuration_;
+    nRealTime_ += nTimeStepDuration_;
     lastStep_ = clock();
     MainSimLoop();
     ++ nCurrentTimeStep_;
@@ -268,7 +257,7 @@ void MIL_AgentServer::MainSimLoop()
     
     pEntityManager_   ->Update();
     pFolk_            ->Update( nCurrentTimeStep_ * nTimeStepDuration_, nTimeStepDuration_ );
-    pMeteoDataManager_->Update();
+    pMeteoDataManager_->Update( nRealTime_ );
 
     if( pProcessMonitor_->MonitorProcess() )
     {
@@ -309,7 +298,7 @@ void MIL_AgentServer::SendMsgBeginTick() const
 {
     NET_ASN_MsgControlBeginTick msgBeginTick;
     msgBeginTick().current_tick = GetCurrentTimeStep();
-    NET_ASN_Tools::WriteGDH( nSimTime_, msgBeginTick().date_time );
+    NET_ASN_Tools::WriteGDH( nRealTime_, msgBeginTick().date_time );
     msgBeginTick.Send();
 }
 
@@ -419,7 +408,7 @@ void MIL_AgentServer::SendControlInformation() const
     NET_ASN_MsgControlInformation message;
 
     message().current_tick         = GetCurrentTimeStep();
-    NET_ASN_Tools::WriteGDH( nSimTime_, message().date_time );
+    NET_ASN_Tools::WriteGDH( nRealTime_, message().date_time );
 	message().tick_duration        = GetTimeStepDuration();
     message().time_factor          = nTimeFactor_;
     message().status               = (ASN1T_EnumSimulationState)GetSimState();

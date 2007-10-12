@@ -78,5 +78,5 @@ ClockWidget::~ClockWidget()
 void ClockWidget::NotifyUpdated( const Simulation& simulation )
 {
     time_->setText( simulation.GetTimeAsString() );
-    day_ ->setText( tr( "Day %1" ).arg( simulation.GetDay() ) );
+    day_ ->setText( simulation.GetDateAsString() );
 }

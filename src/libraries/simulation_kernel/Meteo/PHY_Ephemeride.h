@@ -35,7 +35,7 @@ public:
 
     //! @name 
     //@{
-    bool                UpdateNight    ();
+    bool                UpdateNight    ( unsigned int date );
     const PHY_Lighting& GetLightingBase() const;
     bool                IsNight        () const;
     //@}

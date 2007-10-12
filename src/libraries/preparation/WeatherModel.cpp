@@ -27,8 +27,6 @@ using namespace kernel;
 WeatherModel::WeatherModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter )
     : controller_   ( controller )
     , converter_    ( converter )
-    , sunset_       ()
-    , sunrise_      ()
     , lighting_     ( (kernel::E_LightingType)-1 )
 {
     controller_.Create( *this );
@@ -63,6 +61,9 @@ void WeatherModel::Load( const std::string& filename )
     Purge();
     xml::xifstream xis( filename );
     xis >> start( "weather" )
+        >> start( "exercise-date" );
+    ReadExerciseDate( xis );
+    xis >> end()
         >> start( "ephemerides" );
     ReadEphemerides( xis );
     xis >> end()
@@ -83,6 +84,9 @@ void WeatherModel::Serialize( const std::string& filename ) const
 {
     xml::xofstream xos( filename, xml::encoding( "ISO-8859-1" ) );
     xos << start( "weather" )
+            << start( "exercise-date" )
+                << attribute( "value", time_.toString( "yyyyMMddThhmmss" ) )
+            << end()
             << start( "ephemerides" )
                 << attribute( "sunrise", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).ascii() )
                 << attribute( "sunset", QString( "%1h%2m%3s" ).arg( sunset_.hour() ).arg( sunset_.minute() ).arg( sunset_.second() ).ascii() )
@@ -121,6 +125,20 @@ namespace
                 return (E_LightingType)i;
         return (E_LightingType)-1;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherModel::ReadExerciseDate
+// Created: AGE 2007-10-12
+// -----------------------------------------------------------------------------
+void WeatherModel::ReadExerciseDate( xml::xistream& xis )
+{
+    // $$$$ AGE 2007-10-12: 
+    const std::string isoDate = attribute< std::string >( xis, "value" );
+    QString extended( isoDate.c_str() );
+    extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
+    extended.insert(  6, '-' ); extended.insert(  4, '-' );
+    time_ = QDateTime::fromString( extended, Qt::ISODate );
 }
 
 // -----------------------------------------------------------------------------

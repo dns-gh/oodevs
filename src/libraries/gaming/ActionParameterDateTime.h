@@ -55,8 +55,7 @@ private:
     //! @name Member data
     //@{
     const Simulation& simulation_;
-    unsigned int day_;
-    QTime time_;
+    unsigned int time_;
     //@}
 };
 

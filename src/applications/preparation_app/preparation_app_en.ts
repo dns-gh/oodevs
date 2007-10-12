@@ -510,6 +510,10 @@
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Exercise date:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel</name>

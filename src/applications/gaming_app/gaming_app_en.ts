@@ -502,10 +502,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Day %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Configure alarms</source>
         <translation type="unfinished"></translation>
     </message>

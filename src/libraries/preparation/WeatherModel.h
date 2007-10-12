@@ -60,6 +60,7 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadExerciseDate ( xml::xistream& xis );
     void ReadEphemerides  ( xml::xistream& xis );
     void ReadGlobalWeather( xml::xistream& xis );
     void ReadLocalWeather ( xml::xistream& xis );
@@ -74,6 +75,7 @@ private:
 
 public:
     //! @name Member data
+    QDateTime                time_;
     QTime                    sunset_;
     QTime                    sunrise_;
     kernel::E_LightingType   lighting_;

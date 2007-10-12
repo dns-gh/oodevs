@@ -125,8 +125,8 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
 
     // Time management
     // $$$$ AGE 2007-10-11: Un seul temps
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::GetTime            , "DEC_TempsSim"        );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::GetTime            , "DEC_TempsReel"       );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::GetSimTime         , "DEC_TempsSim"        );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::GetRealTime        , "DEC_TempsReel"       );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::GetTimeStepDuration, "DEC_DureePasDeTemps" );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::IsNight            , "DEC_Nuit"            );
 
@@ -539,7 +539,7 @@ void DEC_Workspace::ReadPopulation( xml::xistream& xis, bool bNeedScriptParsing,
 //-----------------------------------------------------------------------------
 float DEC_Workspace::GetTime() const
 {
-    return (float)MIL_AgentServer::GetWorkspace().GetTime();
+    return (float)MIL_AgentServer::GetWorkspace().GetSimTime();
 }
 
 //-----------------------------------------------------------------------------

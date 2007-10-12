@@ -12,8 +12,11 @@
 #include "Simulation.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
-#include <qregexp.h>
+#pragma warning( push, 1 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
 
+namespace bpt = boost::posix_time;
 using namespace xml;
 using namespace kernel;
 
@@ -27,14 +30,9 @@ ActionParameterDateTime::ActionParameterDateTime( const kernel::OrderParameter& 
 {
     std::string value;
     xis >> attribute( "value", value );
-    QRegExp regexp( tools::translate( "ActionParameter", "Day ([0-9]+) ([0-9:]+)" ) );
-    regexp.match( value.c_str() );
-    QStringList list = regexp.capturedTexts();
-    if( list.size() < 3 )
-        throw std::runtime_error( tools::translate( "ActionParameter", "Invalid date format" ).ascii() ); // $$$$ SBO 2007-06-25: 
-    day_ = list[1].toUInt();
-    time_ = QTime::fromString( list[2] );
-    SetValue( tools::translate( "ActionParameter", "Day %1 %2" ).arg( day_ ).arg( time_.toString() ) );
+    bpt::ptime time( bpt::from_iso_string( value ) );
+    time_ = ( time - bpt::from_time_t( 0 ) ).total_seconds();
+    SetValue( bpt::to_simple_string( time ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,10 +42,10 @@ ActionParameterDateTime::ActionParameterDateTime( const kernel::OrderParameter& 
 ActionParameterDateTime::ActionParameterDateTime( const OrderParameter& parameter, const Simulation& simulation, unsigned int ticks )
     : ActionParameter< QString >( parameter )
     , simulation_( simulation )
-    , day_( simulation.ComputeDay( ticks ) )
-    , time_( simulation.ComputeTime( ticks ) )
+    , time_( ticks )
 {
-    SetValue( tools::translate( "ActionParameter", "Day %1 %2" ).arg( day_ ).arg( time_.toString() ) );
+    bpt::ptime time( bpt::from_time_t( time_ ) );
+    SetValue( bpt::to_simple_string( time ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,5 +92,5 @@ void ActionParameterDateTime::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ActionParameterDateTime::CommitTo( ASN1INT& asn ) const
 {
-    asn = simulation_.ComputeTick( day_, time_ );
+    asn = time_;
 }

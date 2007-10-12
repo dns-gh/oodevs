@@ -40,18 +40,22 @@ public:
     virtual ~Simulation();
     //@}
 
+    //! @name Updates
+    //@{
+    void Update( const ASN1T_MsgControlInformation& asnMsg );
+    void Update( const ASN1T_MsgControlReplayInformation& asnMsg );
+    void Update( const ASN1T_MsgControlProfilingInformation& message );
+    void Update( const ASN1T_MsgControlBeginTick& message );
+    void Update( const ASN1T_MsgControlEndTick& asnMsg );
+    //@}
+
     //! @name Operations
     //@{
     void Connect( const std::string& host );
     void Disconnect();
     void Pause( bool );
     void ChangeSpeed( int timeFactor );
-    void Update( const ASN1T_MsgControlInformation& asnMsg );
-    void Update( const ASN1T_MsgControlReplayInformation& asnMsg );
-    void Update( const ASN1T_MsgControlProfilingInformation& message );
-    void BeginTick( const ASN1T_MsgControlBeginTick& message );
-    void EndTick( const ASN1T_MsgControlEndTick& asnMsg );
-
+    
     void BeginCheckPoint();
     void EndCheckPoint();
 
@@ -60,19 +64,22 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string& GetSimulationHost() const;
+    QDateTime GetDateTime() const;
+    QString GetTimeAsString() const; 
+    QString GetDateAsString() const; 
+
     int  GetTime() const;                    //!< seconds since simulation start
-    unsigned ComputeTick( unsigned int day, const QTime& time ) const;
-    unsigned ComputeDay ( unsigned int ticks ) const;
-    QTime    ComputeTime( unsigned int ticks ) const;
+    
     unsigned GetCurrentTick() const;         //!< tick since simulation start
     unsigned GetTickCount() const;           //!< total tick count (replayer)
-    int GetDay() const; 
-    QString GetTimeAsString() const; 
+
     bool IsPaused() const;
     bool IsConnected() const;
+    const std::string& GetSimulationHost() const;
+
     int  GetSpeed() const;
     float GetEffectiveSpeed() const;         //!< average speed on last ten updates
+
     unsigned long GetMemory() const;                //!< last memory usage
     unsigned long GetVirtualMemory() const;         //!< last virtual memory usage
     unsigned long GetShortPathfinds() const;        //!< last short pathfinds count

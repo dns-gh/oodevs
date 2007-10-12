@@ -32,6 +32,11 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     , currentModel_( 0 )
     , selectedLocal_( 0 )
 {
+    QHBox* timeBox = new QHBox( this );
+    new QLabel( tr( "Exercise date:" ), timeBox );
+    time_ = new QDateTimeEdit( timeBox );
+    time_->setDateTime( QDateTime::currentDateTime() );
+
     QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tr( "Ephemerides" ), this );
     new QLabel( tr( "Sunrise:" ), group );
     sunrise_ = new QTimeEdit( group );
@@ -78,6 +83,7 @@ WeatherPanel::~WeatherPanel()
 void WeatherPanel::NotifyUpdated( const WeatherModel& model )
 {
     currentModel_ = const_cast< WeatherModel* >( &model );
+    time_->setDateTime( currentModel_->time_ );
     sunrise_->setTime( currentModel_->sunrise_ );
     sunset_ ->setTime( currentModel_->sunset_  );
     lighting_->SetCurrentItem( currentModel_->lighting_ );
@@ -104,6 +110,7 @@ void WeatherPanel::Commit()
 {
     if( !currentModel_ )
         return;
+    currentModel_->time_     = time_->dateTime();
     currentModel_->sunrise_  = sunrise_->time();
     currentModel_->sunset_   = sunset_ ->time();
     currentModel_->lighting_ = lighting_->GetValue();

@@ -290,12 +290,21 @@ void DEC_DIAFunctions::IsNight( DIA_Call_ABC& call )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_DIAFunctions::GetTime
-// Created: NLD 2004-01-15
+// Name: DEC_DIAFunctions::GetSimTime
+// Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::GetTime( DIA_Call_ABC& call )
+void DEC_DIAFunctions::GetSimTime( DIA_Call_ABC& call )
 {
-    call.GetResult().SetValue( (float) MIL_AgentServer::GetWorkspace().GetTime() );
+    call.GetResult().SetValue( (float) MIL_AgentServer::GetWorkspace().GetSimTime() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_DIAFunctions::GetRealTime
+// Created: AGE 2007-10-12
+// -----------------------------------------------------------------------------
+void DEC_DIAFunctions::GetRealTime( DIA_Call_ABC& call )
+{
+    call.GetResult().SetValue( (float) MIL_AgentServer::GetWorkspace().GetRealTime() );
 }
 
 // -----------------------------------------------------------------------------

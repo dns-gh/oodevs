@@ -129,13 +129,33 @@ MIL_CheckPointManager& MIL_AgentServer::GetCheckPointManager() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetTime
+// Name: MIL_AgentServer::GetSimTime
 // Created: JVT 02-08-02
 //-----------------------------------------------------------------------------
 inline
-uint MIL_AgentServer::GetTime() const
+uint MIL_AgentServer::GetSimTime() const
 {
     return nSimTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::SetRealTime
+// Created: AGE 2007-10-12
+// -----------------------------------------------------------------------------
+inline
+void MIL_AgentServer::SetRealTime( unsigned int time )
+{
+    nRealTime_ = time;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetRealTime
+// Created: JVT 02-08-02
+//-----------------------------------------------------------------------------
+inline
+uint MIL_AgentServer::GetRealTime() const
+{
+    return nRealTime_;
 }
 
 // -----------------------------------------------------------------------------

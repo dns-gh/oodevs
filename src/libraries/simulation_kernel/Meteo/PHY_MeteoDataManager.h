@@ -39,7 +39,7 @@ public:
     //@{
     const PHY_RawVisionData& GetRawVisionData() const;
     const PHY_Ephemeride&    GetEphemeride   () const;
-          void               Update          ();
+          void               Update          ( unsigned int date );
     //@}
 
     //! @name Weather effects

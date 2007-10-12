@@ -79,6 +79,7 @@ private:
     kernel::Controllers& controllers_;
     WeatherModel* currentModel_;
     WeatherLayer& layer_;
+    QDateTimeEdit* time_;
     QTimeEdit* sunrise_;
     QTimeEdit* sunset_;
     gui::ValuedComboBox< kernel::E_LightingType >* lighting_;

@@ -303,7 +303,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfilingValues( const ASN1T_MsgControlProfi
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlBeginTick( const ASN1T_MsgControlBeginTick& message )
 {
-    simulation_.BeginTick( message );
+    simulation_.Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -312,7 +312,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlBeginTick( const ASN1T_MsgControlBegi
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlEndTick( const ASN1T_MsgControlEndTick& message )
 {
-    simulation_.EndTick( message );
+    simulation_.Update( message );
 }
 
 // -----------------------------------------------------------------------------

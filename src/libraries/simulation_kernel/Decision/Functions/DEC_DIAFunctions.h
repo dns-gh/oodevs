@@ -40,7 +40,8 @@ public:
     static void ListPoint_Clear      ( DIA_Call_ABC& );
 
     // Time management
-    static void GetTime            ( DIA_Call_ABC& );
+    static void GetSimTime         ( DIA_Call_ABC& );
+    static void GetRealTime        ( DIA_Call_ABC& );
     static void GetTimeStepDuration( DIA_Call_ABC& ); 
     static void IsNight            ( DIA_Call_ABC& );
 

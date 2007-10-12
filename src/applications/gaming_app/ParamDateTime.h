@@ -44,8 +44,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnDayChanged( int value );
-    void OnTimeChanged( const QTime& value );
+    void OnChanged( const QDateTime& );
     //@}
 
 private:
@@ -63,8 +62,7 @@ private:
     //! @name Member data
     //@{
     const Simulation& simulation_;
-    unsigned int day_;
-    QTime time_;
+    QDateTime date_;
     bool optional_;
     //@}
 };

@@ -181,11 +181,11 @@ void PHY_MeteoDataManager::UnregisterWeatherEffect( const MT_Ellipse& surface, c
 // Name: PHY_MeteoDataManager::Update
 // Created: JVT 03-08-07
 //-----------------------------------------------------------------------------
-void PHY_MeteoDataManager::Update()
+void PHY_MeteoDataManager::Update( unsigned int date )
 {
     // cycle jour / nuit
     assert( pEphemeride_ );
-    if( pEphemeride_->UpdateNight() )
+    if( pEphemeride_->UpdateNight( date ) )
     {
         MT_LOG_DEBUG_MSG( MT_FormatString( "Maintenant il fait %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
         for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )

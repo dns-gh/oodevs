@@ -29,8 +29,7 @@ AlarmsWidget::AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, c
     pLayout->setSpacing( 10 );
 
     list_ = new QListView( this );
-    list_->addColumn( tr( "Trigger day" ) );
-    list_->addColumn( tr( "Trigger time" ) );
+    list_->addColumn( tr( "Trigger date" ) );
     list_->addColumn( tr( "Message" ) );
     list_->setSelectionMode( QListView::Single );
     pLayout->addWidget( list_, 0, 0 );
@@ -70,12 +69,11 @@ AlarmsWidget::~AlarmsWidget()
 // -----------------------------------------------------------------------------
 void AlarmsWidget::NotifyUpdated( const Simulation& simulation )
 {
-    const int day    = simulation.GetDay();
-    const QTime time = QTime::fromString( simulation.GetTimeAsString() );
+    const QDateTime date = simulation.GetDateTime();
     QListViewItem* item = list_->firstChild();
     while( item )
     {
-        if( IsAfter( item, day, time ) )
+        if( IsAfter( item, date ) )
             item = Trigger( item );
         else
             item = item->nextSibling();
@@ -86,20 +84,14 @@ void AlarmsWidget::NotifyUpdated( const Simulation& simulation )
 // Name: AlarmsWidget::IsAfter
 // Created: AGE 2007-05-09
 // -----------------------------------------------------------------------------
-bool AlarmsWidget::IsAfter( QListViewItem* item, int simuDay, const QTime& simulationTime )
+bool AlarmsWidget::IsAfter( QListViewItem* item, const QDateTime& date )
 {
     if( !item
-     || item->text( 0 ).isEmpty() 
-     || item->text( 1 ).isEmpty() )
+     || item->text( 0 ).isEmpty() )
         return false;
 
-    int day = item->text( 0 ).mid( 4 ).toInt();
-    if( simuDay > day )
-        return true;
-    if( simuDay < day )
-        return false;
-    QTime time = QTime::fromString( item->text( 1 ) );
-    return time <= simulationTime;
+    QDateTime myTime = QDateTime::fromString( item->text( 0 ) );
+    return date >= myTime;
 }
 
 // -----------------------------------------------------------------------------
@@ -159,10 +151,8 @@ namespace
             pLayout->setMargin( 10 );
             pLayout->setSpacing( 10 );
 
-            day_ = new QSpinBox( 0, 10000, 1, this );
-            pLayout->addWidget( day_, 0, 0 );
-            time_ = new QTimeEdit( this );
-            pLayout->addWidget( time_, 0, 1 );
+            time_ = new QDateTimeEdit( this );
+            pLayout->addMultiCellWidget( time_, 0, 0, 0, 1 );
             text_ = new QLineEdit( this );
             pLayout->addWidget( text_, 0, 2 );
 
@@ -179,31 +169,30 @@ namespace
         void Show( QListViewItem* item )
         {
             item_ = item;
-            QString day  = item_ && ! item_->text( 0 ).isEmpty() ? item_->text( 0 ) : QString( "Day %1" ).arg( simulation_.GetDay() );
-            QString time = item_ && ! item_->text( 1 ).isEmpty() ? item_->text( 1 ) : simulation_.GetTimeAsString();
-            QString text = item_ && ! item_->text( 2 ).isEmpty() ? item_->text( 2 ) : "";
-            day_ ->setValue( day.mid( 4 ).toInt() );
-            time_->setTime( QTime::fromString( time ) );
-            text_->setText( text );
+            if( item_ && ! item_->text( 0 ).isEmpty() )
+                time_->setDateTime( QDateTime::fromString( item_->text( 0 ) ) );
+            else
+                time_->setDateTime( simulation_.GetDateTime() );
             if( item_ )
+            {
+                text_->setText( item_->text( 1 ) );
                 exec();
+            }
             else 
                 hide();
         }
 
         virtual void accept()
         {
-            item_->setText( 0, QString( "Day %1" ).arg( day_->value() ) );
-            item_->setText( 1, time_->time().toString() );
-            item_->setText( 2, text_->text() );
+            item_->setText( 0, time_->dateTime().toString() );
+            item_->setText( 1, text_->text() );
             QDialog::accept();
         }
     private:
         AlarmEditor& operator=( const AlarmEditor& );
         const Simulation& simulation_;
         QListViewItem* item_;
-        QSpinBox*      day_;
-        QTimeEdit*     time_;
+        QDateTimeEdit* time_;
         QLineEdit*     text_;
     };
 }

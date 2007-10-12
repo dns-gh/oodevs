@@ -11,31 +11,28 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Ephemeride.h"
+#include "MIL_AgentServer.h"
 #include "xeumeuleu/xml.h"
+#pragma warning( push, 1 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
 
+namespace bpt = boost::posix_time;
 using namespace xml;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Ephemeride::UpdateNight
 // Created: JVT 03-08-07
 //-----------------------------------------------------------------------------
-bool PHY_Ephemeride::UpdateNight()
+bool PHY_Ephemeride::UpdateNight( unsigned int date )
 {
-    time_t t;
-    time( &t );
-    struct tm * time;
-    time = localtime( &t );
-    std::pair<int,int> currentTime( time->tm_hour, time->tm_min );
+    bpt::ptime         pdate( bpt::from_time_t( date ) );
+    bpt::time_duration time = pdate.time_of_day();
+    std::pair<int,int> currentTime( time.hours(), time.minutes() );
 
-    bool bIsNight = currentTime < sunriseTime_ ? true  :
-                    currentTime < sunsetTime_  ? false : true;
-
-    if ( bIsNight != bIsNight_ )
-    {
-        bIsNight_ = bIsNight;
-        return true;
-    }
-    return false;
+    bool wasNight = bIsNight_;
+    bIsNight_ = currentTime < sunriseTime_ && !( currentTime < sunsetTime_ );
+    return bIsNight_ != wasNight;
 }
 
 // -----------------------------------------------------------------------------
@@ -46,13 +43,17 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
     : pNightBase_( 0 )
     , bIsNight_  ( false )
 {
-    std::string sunRise, sunSet, moon;
+    std::string sunRise, sunSet, moon, date;
     xis >> start( "ephemerides" )
             >> attribute( "sunrise", sunRise )
             >> attribute( "sunset", sunSet )
             >> attribute( "moon", moon )
+        >> xml::end()
+        >> xml::start( "exercise-date" )
+            >> xml::attribute( "value", date )
         >> xml::end();
-
+    unsigned int time = ( bpt::from_iso_string( date ) - bpt::from_time_t( 0 ) ).total_seconds();
+    MIL_AgentServer::GetWorkspace().SetRealTime( time );
     {
         char tmp = 0;
         std::istringstream strTmp( sunRise );
@@ -75,7 +76,7 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
 
     if( sunriseTime_ >= sunsetTime_  )
         xis.error( "Sunrise time should be before sunset time" );
-    UpdateNight();
+    UpdateNight( MIL_AgentServer::GetWorkspace().GetRealTime() );
 }
 
 // -----------------------------------------------------------------------------

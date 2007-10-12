@@ -24,8 +24,7 @@ ParamDateTime::ParamDateTime( QObject* parent, const QString& name, const Simula
     : QObject( parent )
     , Param_ABC( name )
     , simulation_( simulation )
-    , day_( 1 )
-    , time_()
+    , date_( simulation.GetDateTime() )
     , optional_( optional )
 {
     // NOTHING
@@ -47,14 +46,9 @@ ParamDateTime::~ParamDateTime()
 void ParamDateTime::BuildInterface( QWidget* parent )
 {
     new QLabel( GetName(), parent );
-    QHBox* box = new QHBox( parent );
-    QSpinBox* day = new QSpinBox( 1, 10000, 1, box );
-    day->setPrefix( tr( "Day " ) );
-    day->setValue( day_ );
-    QTimeEdit* timeEdit = new QTimeEdit( box );
-    timeEdit->setTime( time_ );
-    connect( day     , SIGNAL( valueChanged( int ) ), SLOT( OnDayChanged( int ) ) );
-    connect( timeEdit, SIGNAL( valueChanged( const QTime& ) ), SLOT( OnTimeChanged( const QTime& ) ) );
+    QDateTimeEdit* edit = new QDateTimeEdit( parent );
+    edit->setDateTime( date_ );
+    connect( edit, SIGNAL( valueChanged( const QDateTime& ) ), SLOT( OnChanged( const QDateTime& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,25 +66,16 @@ bool ParamDateTime::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamDateTime::CommitTo( ActionParameterContainer_ABC& parameter ) const
 {
-    parameter.AddParameter( *new ActionParameterDateTime( OrderParameter( GetName(), "datetime", false ), simulation_, simulation_.ComputeTick( day_, time_ ) ) );
+    parameter.AddParameter( *new ActionParameterDateTime( OrderParameter( GetName(), "datetime", false ), simulation_, date_.toTime_t() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamDateTime::OnDayChanged
-// Created: SBO 2007-05-14
+// Name: ParamDateTime::OnChanged
+// Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
-void ParamDateTime::OnDayChanged( int value )
+void ParamDateTime::OnChanged( const QDateTime& date )
 {
-    day_ = ( unsigned int )value;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamDateTime::OnTimeChanged
-// Created: SBO 2007-05-14
-// -----------------------------------------------------------------------------
-void ParamDateTime::OnTimeChanged( const QTime& value )
-{
-    time_ = value;
+    date_ = date;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +84,7 @@ void ParamDateTime::OnTimeChanged( const QTime& value )
 // -----------------------------------------------------------------------------
 void ParamDateTime::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
 {
-    if( !time_.isNull() || day_ > 1 )
-        tools.Print( tr( "Day %1 %2" ).arg( day_ ).arg( time_.toString( "hh:mm:ss" ) ).ascii(), point
+    if( !date_.isNull() )
+        tools.Print( date_.toString( "dd-MM-yy hh:mm:ss" ).ascii(), point
                    , QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
 }

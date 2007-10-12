@@ -101,6 +101,7 @@ void Simulation::Update( const ASN1T_MsgControlInformation& message )
     paused_       = message.status == EnumSimulationState::paused;
     timeFactor_   = message.time_factor;
     time_         = message.current_tick * tickDuration_;
+    date_         = std::string( (const char*)message.date_time.data, 15 );
     controller_.Update( *this );
 }
 
@@ -115,6 +116,7 @@ void Simulation::Update( const ASN1T_MsgControlReplayInformation& message )
     paused_       = message.status == EnumSimulationState::paused;
     timeFactor_   = message.time_factor;
     time_         = message.current_tick * tickDuration_;
+    date_         = std::string( (const char*)message.date_time.data, 15 );
     controller_.Update( *this );
 }
 
@@ -128,10 +130,10 @@ void Simulation::Update( const ASN1T_MsgControlProfilingInformation& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Simulation::BeginTick
+// Name: Simulation::Update
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::BeginTick( const ASN1T_MsgControlBeginTick& message )
+void Simulation::Update( const ASN1T_MsgControlBeginTick& message )
 {
     int tick = message.current_tick;
     date_ = std::string( (const char*)message.date_time.data, 15 );
@@ -142,10 +144,10 @@ void Simulation::BeginTick( const ASN1T_MsgControlBeginTick& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Simulation::EndTick
+// Name: Simulation::Update
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::EndTick( const ASN1T_MsgControlEndTick& message )
+void Simulation::Update( const ASN1T_MsgControlEndTick& message )
 {
     profiling_.Update( message );
     controller_.Update( endTick_ );
@@ -247,51 +249,34 @@ float Simulation::GetEffectiveSpeed() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Simulation::ComputeTick
-// Created: SBO 2007-05-04
-// -----------------------------------------------------------------------------
-unsigned Simulation::ComputeTick( unsigned int day, const QTime& time ) const
-{
-    const unsigned long secs = ( day - 1 ) * 3600 * 24 + QTime().secsTo( time );
-    return tickDuration_ ? secs / tickDuration_ : 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::ComputeDay
-// Created: SBO 2007-05-15
-// -----------------------------------------------------------------------------
-unsigned Simulation::ComputeDay( unsigned int ticks ) const
-{
-    return 1 + ( ticks * tickDuration_ ) / ( 3600 * 24 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::ComputeTime
-// Created: SBO 2007-05-15
-// -----------------------------------------------------------------------------
-QTime Simulation::ComputeTime( unsigned int ticks ) const
-{
-    return QTime().addSecs( ( ticks * tickDuration_ ) % ( 3600 * 24 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::GetDay
-// Created: AGE 2007-05-09
-// -----------------------------------------------------------------------------
-int Simulation::GetDay() const
-{
-    return 1 + time_ / ( 3600 * 24 );
-}
-    
-// -----------------------------------------------------------------------------
 // Name: Simulation::GetTimeAsString
-// Created: AGE 2007-05-09
+// Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
 QString Simulation::GetTimeAsString() const
 {
-    return QString( "%1:%2:%3" ).arg( QString::number( ( time_ / 3600 ) % 24 ).rightJustify( 2, '0' ) )
-                                .arg( QString::number( ( time_ / 60   ) % 60 ).rightJustify( 2, '0' ) )
-                                .arg( QString::number( ( time_ % 60   )      ).rightJustify( 2, '0' ) );
+    return GetDateTime().time().toString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetDateAsString
+// Created: AGE 2007-10-12
+// -----------------------------------------------------------------------------
+QString Simulation::GetDateAsString() const
+{
+    return GetDateTime().date().toString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetDateTime
+// Created: AGE 2007-10-12
+// -----------------------------------------------------------------------------
+QDateTime Simulation::GetDateTime() const
+{
+    // $$$$ AGE 2007-10-12: ...
+    QString extended( date_.c_str() );
+    extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
+    extended.insert(  6, '-' ); extended.insert(  4, '-' );
+    return QDateTime::fromString( extended, Qt::ISODate );
 }
 
 // -----------------------------------------------------------------------------

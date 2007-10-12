@@ -62,7 +62,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
-    bool IsAfter( QListViewItem* item, int day, const QTime& time );
+    bool IsAfter( QListViewItem* item, const QDateTime& date );
     QListViewItem* Trigger( QListViewItem* item );
     //@}
 
