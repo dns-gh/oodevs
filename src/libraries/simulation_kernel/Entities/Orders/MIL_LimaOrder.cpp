@@ -27,8 +27,9 @@ MIL_LimaOrder::MIL_LimaOrder( const ASN1T_LimaOrder& asn )
     , functions_    ()
     , bFlag_        ( false )
     , bScheduleFlag_( false )
-    , nSchedule_    ( asn.horaire )
 {
+    NET_ASN_Tools::ReadTick( asn.horaire, nSchedule_);
+
     if( !NET_ASN_Tools::ReadLine( asn.lima, points_ ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_lima );
 
@@ -110,9 +111,9 @@ bool MIL_LimaOrder::Intersect2D( const T_PointVector& polyline, T_PointSet& inte
 void MIL_LimaOrder::Serialize( ASN1T_LimaOrder& asn ) const
 {
     NET_ASN_Tools::WriteLine( points_, asn.lima );
+    NET_ASN_Tools::WriteTick( nSchedule_, asn.horaire );
 
     asn.fonctions.n = functions_.size();
-    asn.horaire = nSchedule_;
     if( !functions_.empty() )
     {
         asn.fonctions.elem = new ASN1T_EnumLimaType[ functions_.size() ];

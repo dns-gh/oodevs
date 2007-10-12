@@ -13,8 +13,6 @@
 #include "ActionParameter.h"
 #include "game_asn/Asn.h"
 
-class Simulation;
-
 // =============================================================================
 /** @class  ActionParameterDateTime
     @brief  ActionParameterDateTime
@@ -27,8 +25,9 @@ class ActionParameterDateTime : public ActionParameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterDateTime( const kernel::OrderParameter& parameter, xml::xistream& xis, const Simulation& simulation );
-             ActionParameterDateTime( const kernel::OrderParameter& parameter, const Simulation& simulation, unsigned int ticks );
+             ActionParameterDateTime( const kernel::OrderParameter& parameter, xml::xistream& xis );
+             ActionParameterDateTime( const kernel::OrderParameter& parameter, const ASN1T_DateTime& date );
+             ActionParameterDateTime( const kernel::OrderParameter& parameter, const QDateTime& date );
     virtual ~ActionParameterDateTime();
     //@}
 
@@ -36,7 +35,7 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
-    void CommitTo( ASN1INT& asn ) const;
+    void CommitTo( ASN1T_DateTime& asn ) const;
     //@}
 
 private:
@@ -54,8 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Simulation& simulation_;
-    unsigned int time_;
+    std::string time_;
     //@}
 };
 

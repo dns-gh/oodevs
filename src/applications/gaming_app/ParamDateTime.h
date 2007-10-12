@@ -61,7 +61,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const Simulation& simulation_;
     QDateTime date_;
     bool optional_;
     //@}

@@ -497,3 +497,21 @@ void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
     msg().time_factor = nTimeFactor_;
     msg.Send();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::RealTimeToTick
+// Created: AGE 2007-10-12
+// -----------------------------------------------------------------------------
+uint MIL_AgentServer::RealTimeToTick( uint rt ) const
+{
+    return ( rt - nRealTime_ + nSimTime_ ) / nTimeStepDuration_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::TickToRealTime
+// Created: AGE 2007-10-12
+// -----------------------------------------------------------------------------
+uint MIL_AgentServer::TickToRealTime( uint tick ) const
+{
+    return nTimeStepDuration_ * tick - nSimTime_ + nRealTime_;
+}

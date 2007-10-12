@@ -18,23 +18,11 @@
 // -----------------------------------------------------------------------------
 DEC_Objective::DEC_Objective( const ASN1T_MissionObjective& asn )
     : localisation_()
-    , nSchedule_   ( asn.horaire )
     , bFlag_       ( false )
 {
+    NET_ASN_Tools::ReadTick( asn.horaire, nSchedule_);
     if( !NET_ASN_Tools::ReadLocation( asn.localisation, localisation_ ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Objective constructor
-// Created: NLD 2007-05-14
-// -----------------------------------------------------------------------------
-DEC_Objective::DEC_Objective( const DEC_Objective& rhs )
-    : localisation_( rhs.localisation_ )
-    , nSchedule_   ( rhs.nSchedule_    )
-    , bFlag_       ( rhs.bFlag_        )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +54,7 @@ void DEC_Objective::operator=( const DEC_Objective& rhs )
 // -----------------------------------------------------------------------------
 void DEC_Objective::Serialize( ASN1T_MissionObjective& asn ) const
 {
-    asn.horaire = nSchedule_;
+    NET_ASN_Tools::WriteTick    ( nSchedule_, asn.horaire );
     NET_ASN_Tools::WriteLocation( localisation_, asn.localisation );
 }
 

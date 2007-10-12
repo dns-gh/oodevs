@@ -41,31 +41,31 @@ namespace
 // Name: ActionParameterObjective constructor
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-ActionParameterObjective::ActionParameterObjective( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Simulation& simulation )
+ActionParameterObjective::ActionParameterObjective( xml::xistream& xis, const CoordinateConverter_ABC& converter )
     : ActionParameter< QString >( OrderParameter( ReadName( xis ), "objective", false ) )
 {
-    xis >> list( "parameter", *this, &ActionParameterObjective::ReadParameter, converter, simulation );
+    xis >> list( "parameter", *this, &ActionParameterObjective::ReadParameter, converter );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObjective constructor
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-ActionParameterObjective::ActionParameterObjective( const OrderParameter& parameter, xml::xistream& xis, const CoordinateConverter_ABC& converter, const Simulation& simulation )
+ActionParameterObjective::ActionParameterObjective( const OrderParameter& parameter, xml::xistream& xis, const CoordinateConverter_ABC& converter )
     : ActionParameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &ActionParameterObjective::ReadParameter, converter, simulation );
+    xis >> list( "parameter", *this, &ActionParameterObjective::ReadParameter, converter );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObjective constructor
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-ActionParameterObjective::ActionParameterObjective( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Simulation& simulation, const ASN1T_MissionObjective& asn )
+ActionParameterObjective::ActionParameterObjective( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_MissionObjective& asn )
     : ActionParameter< QString >( parameter )
 {
     AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, asn.localisation ) );
-    AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), simulation, asn.horaire ) );
+    AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), asn.horaire ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,14 +81,14 @@ ActionParameterObjective::~ActionParameterObjective()
 // Name: ActionParameterObjective::ReadParameter
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void ActionParameterObjective::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Simulation& simulation )
+void ActionParameterObjective::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
     std::string type;
     xis >> attribute( "type", type );
     if( type == "location" )
         AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, xis ) );
     else if( type == "datetime" )
-        AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), xis, simulation ) );
+        AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), xis ) );
 }
 
 // -----------------------------------------------------------------------------

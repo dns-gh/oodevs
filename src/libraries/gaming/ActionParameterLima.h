@@ -19,7 +19,6 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
-class Simulation;
 class ActionParameterLocation;
 
 // =============================================================================
@@ -35,8 +34,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionParameterLima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             ActionParameterLima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, const ASN1T_LimaOrder& asn );
-             ActionParameterLima( const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, xml::xistream& xis );
+             ActionParameterLima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn );
+             ActionParameterLima( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterLima();
     //@}
 
@@ -61,7 +60,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
-    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation );
+    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     //@}
 };
 

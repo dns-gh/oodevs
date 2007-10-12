@@ -32,7 +32,7 @@ ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const
 // Name: ActionParameterLima constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Simulation& simulation, const ASN1T_LimaOrder& asn )
+ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn )
     : ActionParameter< QString >( parameter )
 {
     QStringList functions;
@@ -40,7 +40,7 @@ ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const
         functions.append( tools::ToString( (E_FuncLimaType)asn.fonctions.elem[i] ) );
     SetValue( functions.join( ", " ) );
     AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, asn.lima ) );
-    AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), simulation, asn.horaire ) );
+    AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), asn.horaire ) );
 }
 
 namespace
@@ -57,12 +57,12 @@ namespace
 // Name: ActionParameterLima constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterLima::ActionParameterLima( const CoordinateConverter_ABC& converter, const Simulation& simulation, xml::xistream& xis )
+ActionParameterLima::ActionParameterLima( const CoordinateConverter_ABC& converter, xml::xistream& xis )
     : ActionParameter< QString >( OrderParameter( ReadName( xis ), "lima", false ) )
 {
     std::string value;
     xis >> attribute( "value", value )
-        >> list( "parameter", *this, &ActionParameterLima::ReadParameter, converter, simulation );
+        >> list( "parameter", *this, &ActionParameterLima::ReadParameter, converter );
     SetValue( value.c_str() );
 }
 
@@ -110,14 +110,14 @@ void ActionParameterLima::Serialize( xml::xostream& xos ) const
 // Name: ActionParameterLima::ReadParameter
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void ActionParameterLima::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Simulation& simulation )
+void ActionParameterLima::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
     std::string type;
     xis >> attribute( "type", type );
     if( type == "location" )
         AddParameter( *new ActionParameterLocation( converter, xis ) );
     else if( type == "datetime" )
-        AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), xis, simulation ) );
+        AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), xis ) );
 }
 
 // -----------------------------------------------------------------------------

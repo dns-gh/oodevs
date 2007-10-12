@@ -2224,13 +2224,22 @@ void NET_ASN_Tools::WriteGDH( uint nRealTimeSec, ASN1T_DateTime& asnGDH )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::WriteGDH
-// Created: NLD 2004-01-15
+// Name: NET_ASN_Tools::ReadTick
+// Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
-//void NET_ASN_Tools::WriteGDH( ASN1T_DateTime& asnGDH )
-//{
-//    asnGDH = MIL_Tools::GetRealTime() + MIL_NBR_SEC_BETWEEN_1901_AND_1970;
-//}  
+void NET_ASN_Tools::ReadTick( const ASN1T_DateTime& asn, uint& simTick )
+{
+    simTick = MIL_AgentServer::GetWorkspace().RealTimeToTick( ReadGDH( asn ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::WriteTick
+// Created: AGE 2007-10-12
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::WriteTick( uint simTick, ASN1T_DateTime& asnGDH )
+{
+    WriteGDH( MIL_AgentServer::GetWorkspace().TickToRealTime( simTick ), asnGDH );
+}
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::CopyGDH

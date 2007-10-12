@@ -59,12 +59,11 @@ using namespace kernel;
 // Name: ActionParameterFactory constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameterFactory::ActionParameterFactory( const CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel, const Simulation& simulation
+ActionParameterFactory::ActionParameterFactory( const CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel
                                               , AgentKnowledgeConverter_ABC& agentKnowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter )
     : converter_( converter )
     , model_( model )
     , staticModel_( staticModel )
-    , simulation_( simulation )
     , agentKnowledgeConverter_( agentKnowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
 {
@@ -138,9 +137,9 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     case T_MissionParameter_value_atlasNature:
         return new ActionParameterAtlasNature( parameter, *asn.value.u.atlasNature, staticModel_.atlasNatures_ );
     case T_MissionParameter_value_missionObjective:
-        return new ActionParameterObjective( parameter, converter_, simulation_, *asn.value.u.missionObjective );
+        return new ActionParameterObjective( parameter, converter_, *asn.value.u.missionObjective );
     case T_MissionParameter_value_missionObjectiveList:
-        return new ActionParameterObjectiveList( parameter, converter_, simulation_, *asn.value.u.missionObjectiveList );
+        return new ActionParameterObjectiveList( parameter, converter_, *asn.value.u.missionObjectiveList );
     case T_MissionParameter_value_point:
         return new ActionParameterPoint( parameter, converter_, *asn.value.u.point );
     case T_MissionParameter_value_polygon:
@@ -174,7 +173,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
 // -----------------------------------------------------------------------------
 ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_LimasOrder& asn ) const
 {
-    return new ActionParameterLimaList( parameter, converter_, simulation_, asn );
+    return new ActionParameterLimaList( parameter, converter_, asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +228,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     else if( type == "direction" || type == "dangerousdirection" )
         param.reset( new ActionParameterDirection( parameter, xis ) );
     else if( type == "limalist" )
-        param.reset( new ActionParameterLimaList( parameter, converter_, simulation_, xis ) );
+        param.reset( new ActionParameterLimaList( parameter, converter_, xis ) );
     else if( type == "limits" )
         param.reset( new ActionParameterLimits( parameter, converter_, xis ) );
     else if( type == "enumeration" )
@@ -261,9 +260,9 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     else if( type == "atlasnature" )
         param.reset( new ActionParameterAtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
     else if( type == "objective" )
-        param.reset( new ActionParameterObjective( parameter, xis, converter_, simulation_ ) );
+        param.reset( new ActionParameterObjective( parameter, xis, converter_ ) );
     else if( type == "objectivelist" )
-        param.reset( new ActionParameterObjectiveList( parameter, xis, converter_, simulation_ ) );
+        param.reset( new ActionParameterObjectiveList( parameter, xis, converter_ ) );
     else if( type == "medicalpriorities" )
         param.reset( new ActionParameterMedicalPriorities( parameter, xis ) );
     else if( type == "maintenancepriorities" )

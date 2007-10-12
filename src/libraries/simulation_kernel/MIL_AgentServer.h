@@ -115,6 +115,8 @@ public:
     void SetRealTime( unsigned int time );
     uint GetSimTime () const; // Durée en secondes depuis le début de la SIM
     uint GetRealTime() const; // Temps simulé en secondes depuis 01/01/1970
+    uint RealTimeToTick( uint rt   ) const;
+    uint TickToRealTime( uint tick ) const;
 
     virtual unsigned int GetCurrentTick() const;
     virtual unsigned int GetTickDuration() const;

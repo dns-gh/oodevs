@@ -243,6 +243,7 @@ public:
     static bool ReadPointList ( const ASN1T_PointList&    asn, T_PointVector& pointVector );
     static bool ReadLocation  ( const ASN1T_Location&     asn, TER_Localisation& localisation );
     static void ReadDirection ( const ASN1T_Heading&      asn, MT_Vector2D& vDir );
+    static void ReadTick      ( const ASN1T_DateTime&     asn, uint& simTick );
     //@}
 
     //! @name Encoding tools
@@ -260,6 +261,7 @@ public:
     static void WritePath       ( const T_PointVector&    points      , ASN1T_Path&         asn );
     static void WriteGenObject  ( const DEC_Gen_Object&   object      , ASN1T_PlannedWork&  asn );
     static void WriteGDH        ( uint nRealTimeSec, ASN1T_DateTime& asnGDH );
+    static void WriteTick       ( uint simTick, ASN1T_DateTime& asnGDH );
     //@}
 
 private:

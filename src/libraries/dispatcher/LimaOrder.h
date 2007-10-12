@@ -55,7 +55,7 @@ private:
     //@{
     Localisation location_;
     T_Functions  functions_;
-    unsigned int nSchedule_;
+    std::string  schedule_;
     //@}
 };
 

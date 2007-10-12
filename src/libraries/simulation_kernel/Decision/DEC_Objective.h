@@ -25,9 +25,8 @@ class DEC_Objective
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Objective( const ASN1T_MissionObjective& asn );
-     DEC_Objective( const DEC_Objective& rhs );
-    ~DEC_Objective();
+    explicit DEC_Objective( const ASN1T_MissionObjective& asn );
+            ~DEC_Objective();
     //@}
 
     //! @name Accessors

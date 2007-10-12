@@ -18,7 +18,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Objective::Objective( const ASN1T_MissionObjective& asn )
     : location_( asn.localisation )
-    , schedule_( asn.horaire      )
+    , schedule_( (const char*)asn.horaire.data, 15 )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ Objective::~Objective()
 // -----------------------------------------------------------------------------
 void Objective::Send( ASN1T_MissionObjective& asn ) const
 {
-    asn.horaire = schedule_;
+    asn.horaire = schedule_.c_str();
     location_.Send( asn.localisation );
 }
 

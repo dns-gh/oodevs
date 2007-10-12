@@ -18,8 +18,6 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
-class Simulation;
-
 // =============================================================================
 /** @class  ActionParameterObjective
     @brief  ActionParameterObjective
@@ -32,9 +30,9 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterObjective( const kernel::OrderParameter& parameter );
-             ActionParameterObjective( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation );
-             ActionParameterObjective( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation );
-             ActionParameterObjective( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, const ASN1T_MissionObjective& asn );
+             ActionParameterObjective( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
+             ActionParameterObjective( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
+             ActionParameterObjective( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_MissionObjective& asn );
     virtual ~ActionParameterObjective();
     //@}
 
@@ -56,7 +54,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation );
+    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     //@}
 };
 

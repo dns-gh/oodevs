@@ -23,7 +23,6 @@ using namespace kernel;
 ParamDateTime::ParamDateTime( QObject* parent, const QString& name, const Simulation& simulation, bool optional )
     : QObject( parent )
     , Param_ABC( name )
-    , simulation_( simulation )
     , date_( simulation.GetDateTime() )
     , optional_( optional )
 {
@@ -66,7 +65,7 @@ bool ParamDateTime::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamDateTime::CommitTo( ActionParameterContainer_ABC& parameter ) const
 {
-    parameter.AddParameter( *new ActionParameterDateTime( OrderParameter( GetName(), "datetime", false ), simulation_, date_.toTime_t() ) );
+    parameter.AddParameter( *new ActionParameterDateTime( OrderParameter( GetName(), "datetime", false ), date_ ) );
 }
 
 // -----------------------------------------------------------------------------

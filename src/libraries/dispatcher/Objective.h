@@ -42,8 +42,8 @@ public:
 private:
     //! @name Member data
     //@{
-    Localisation  location_;
-    unsigned int  schedule_;
+    Localisation location_;
+    std::string  schedule_;
 };
 
 }

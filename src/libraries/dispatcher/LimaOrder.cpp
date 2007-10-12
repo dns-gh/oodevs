@@ -21,7 +21,7 @@ using namespace dispatcher;
 LimaOrder::LimaOrder( Model& /*model*/, const ASN1T_LimaOrder& asn )
     : location_ ( asn.lima )
     , functions_()
-    , nSchedule_( asn.horaire )
+    , schedule_ ( (const char*)asn.horaire.data, 15 )
 {
     for( unsigned i = 0; i < asn.fonctions.n; ++i )
         functions_.push_back( asn.fonctions.elem[i] );
@@ -47,7 +47,7 @@ LimaOrder::~LimaOrder()
 void LimaOrder::Send( ASN1T_LimaOrder& asn ) const
 {
     location_.Send( asn.lima );
-    asn.horaire = nSchedule_;
+    asn.horaire = schedule_.c_str();
     SendContainerValues< ASN1T__SeqOfEnumLimaType, ASN1T_EnumLimaType, T_Functions >( functions_, asn.fonctions );
 }
 

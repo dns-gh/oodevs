@@ -19,8 +19,6 @@ namespace kernel
     class OrderParameter;
 }
 
-class Simulation;
-
 // =============================================================================
 /** @class  ActionParameterObjectiveList
     @brief  ActionParameterObjectiveList
@@ -34,8 +32,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ActionParameterObjectiveList( const kernel::OrderParameter& parameter );
-             ActionParameterObjectiveList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation );
-             ActionParameterObjectiveList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, const ASN1T_MissionObjectiveList& asn );
+             ActionParameterObjectiveList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
+             ActionParameterObjectiveList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_MissionObjectiveList& asn );
     virtual ~ActionParameterObjectiveList();
     //@}
 
@@ -54,7 +52,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const Simulation& simulation );
+    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     //@}
 };
 

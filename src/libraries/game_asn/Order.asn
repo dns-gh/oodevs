@@ -47,7 +47,7 @@ OrderContext ::= SEQUENCE
 MissionObjective ::= SEQUENCE
 {
     localisation Location,
-    horaire      INTEGER DEFAULT 0
+    horaire      DateTime
 }
 MissionObjectiveList ::= SEQUENCE OF MissionObjective
 

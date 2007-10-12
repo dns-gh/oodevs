@@ -24,14 +24,11 @@ using namespace kernel;
 // Name: ActionParameterDateTime constructor
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-ActionParameterDateTime::ActionParameterDateTime( const kernel::OrderParameter& parameter, xml::xistream& xis, const Simulation& simulation )
+ActionParameterDateTime::ActionParameterDateTime( const kernel::OrderParameter& parameter, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
-    , simulation_( simulation )
 {
-    std::string value;
-    xis >> attribute( "value", value );
-    bpt::ptime time( bpt::from_iso_string( value ) );
-    time_ = ( time - bpt::from_time_t( 0 ) ).total_seconds();
+    xis >> attribute( "value", time_ );
+    bpt::ptime time( bpt::from_iso_string( time_ ) );
     SetValue( bpt::to_simple_string( time ).c_str() );
 }
 
@@ -39,12 +36,23 @@ ActionParameterDateTime::ActionParameterDateTime( const kernel::OrderParameter& 
 // Name: ActionParameterDateTime constructor
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
-ActionParameterDateTime::ActionParameterDateTime( const OrderParameter& parameter, const Simulation& simulation, unsigned int ticks )
+ActionParameterDateTime::ActionParameterDateTime( const OrderParameter& parameter, const ASN1T_DateTime& date )
     : ActionParameter< QString >( parameter )
-    , simulation_( simulation )
-    , time_( ticks )
+    , time_( (const char*)date.data, 15 )
 {
-    bpt::ptime time( bpt::from_time_t( time_ ) );
+    bpt::ptime time( bpt::from_iso_string( time_ ) );
+    SetValue( bpt::to_simple_string( time ).c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterDateTime constructor
+// Created: AGE 2007-10-12
+// -----------------------------------------------------------------------------
+ActionParameterDateTime::ActionParameterDateTime( const kernel::OrderParameter& parameter, const QDateTime& date )
+    : ActionParameter< QString >( parameter )
+{
+    bpt::ptime time( bpt::from_time_t( date.toTime_t() ) );
+    time_ = bpt::to_iso_string( time );
     SetValue( bpt::to_simple_string( time ).c_str() );
 }
 
@@ -83,14 +91,14 @@ void ActionParameterDateTime::DisplayInToolTip( kernel::Displayer_ABC& displayer
 void ActionParameterDateTime::Serialize( xml::xostream& xos ) const
 {
     ActionParameter< QString >::Serialize( xos );
-    xos << attribute( "value", GetValue() );
+    xos << attribute( "value", time_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterDateTime::CommitTo
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void ActionParameterDateTime::CommitTo( ASN1INT& asn ) const
+void ActionParameterDateTime::CommitTo( ASN1T_DateTime& asn ) const
 {
-    asn = time_;
+    asn = time_.c_str();
 }

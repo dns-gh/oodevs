@@ -30,21 +30,21 @@ ActionParameterObjectiveList::ActionParameterObjectiveList( const OrderParameter
 // Name: ActionParameterObjectiveList constructor
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-ActionParameterObjectiveList::ActionParameterObjectiveList( const OrderParameter& parameter, xml::xistream& xis, const CoordinateConverter_ABC& converter, const Simulation& simulation )
+ActionParameterObjectiveList::ActionParameterObjectiveList( const OrderParameter& parameter, xml::xistream& xis, const CoordinateConverter_ABC& converter )
     : ActionParameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &ActionParameterObjectiveList::ReadParameter, converter, simulation );
+    xis >> list( "parameter", *this, &ActionParameterObjectiveList::ReadParameter, converter );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObjectiveList constructor
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-ActionParameterObjectiveList::ActionParameterObjectiveList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Simulation& simulation, const ASN1T_MissionObjectiveList& asn )
+ActionParameterObjectiveList::ActionParameterObjectiveList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_MissionObjectiveList& asn )
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterObjective( OrderParameter( tools::translate( "ActionParameter", "Objective %1" ).arg( i + 1 ), "objective", false ), converter, simulation, asn.elem[i] ) );
+        AddParameter( *new ActionParameterObjective( OrderParameter( tools::translate( "ActionParameter", "Objective %1" ).arg( i + 1 ), "objective", false ), converter, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,12 +60,12 @@ ActionParameterObjectiveList::~ActionParameterObjectiveList()
 // Name: ActionParameterObjectiveList::ReadParameter
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void ActionParameterObjectiveList::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Simulation& simulation )
+void ActionParameterObjectiveList::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
     std::string type;
     xis >> attribute( "type", type );
     if( type == "objective" )
-        AddParameter( *new ActionParameterObjective( xis, converter, simulation ) );
+        AddParameter( *new ActionParameterObjective( xis, converter ) );
 }
 
 

@@ -19,7 +19,6 @@ namespace kernel
 
 class Model;
 class StaticModel;
-class Simulation;
 class AgentKnowledgeConverter_ABC;
 class ObjectKnowledgeConverter_ABC;
 
@@ -35,7 +34,7 @@ class ActionParameterFactory : public ActionParameterFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel, const Simulation& simulation
+             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel
                                    , AgentKnowledgeConverter_ABC& agentKnowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter );
     virtual ~ActionParameterFactory();
     //@}
@@ -66,7 +65,6 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     const Model& model_;
     const StaticModel& staticModel_;
-    const Simulation& simulation_;
     AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
     //@}
