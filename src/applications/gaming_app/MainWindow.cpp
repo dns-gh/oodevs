@@ -50,6 +50,7 @@
 #include "FolkLayer.h"
 #include "FolkToolbar.h"
 #include "AfterAction.h"
+#include "SimulationLighting.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -100,7 +101,6 @@
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/EntitySymbols.h"
-#include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/FormationLayer.h"
@@ -140,7 +140,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
-    lighting_ = new LightingProxy( this );
+    lighting_ = new SimulationLighting( controllers, this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_ );
     new Dialogs( this, controllers, model_, staticModel, publisher, profile );
     new VisionConesToggler( controllers, publisher, this );

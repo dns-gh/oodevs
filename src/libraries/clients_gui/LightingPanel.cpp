@@ -36,7 +36,6 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     QButtonGroup* lightingType = new QButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), this );
     lightingType->insert( new QRadioButton( tr( "Fixed" ), lightingType ) );
     lightingType->insert( new QRadioButton( tr( "Simulation time" ), lightingType ) );
-    lightingType->insert( new QRadioButton( tr( "Real time" ), lightingType ) );
     lightingType->setButton( 0 );
 
     connect( lightingType, SIGNAL( clicked( int ) ), this, SLOT( OnLightingType( int ) ) );
@@ -101,7 +100,7 @@ void LightingPanel::OnLightingType( int type )
     if( type == 0 )
         lighting_.SwitchToFixed();
     else if( type == 1 )
-        lighting_.SwitchToClockTime();
+        lighting_.SwitchToSimulationTime();
 }
 
 // -----------------------------------------------------------------------------

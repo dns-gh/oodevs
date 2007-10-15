@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "LightingProxy.h"
-#include "moc_LightingProxy.cpp"
 #include "graphics/FixedLighting.h"
 #include "graphics/TimeLighting.h"
 
@@ -18,7 +17,6 @@
 namespace bpt = boost::posix_time;
 
 using namespace gui;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: LightingProxy constructor
@@ -29,12 +27,7 @@ LightingProxy::LightingProxy( QObject* parent )
     , fixed_( new FixedLighting() )
     , time_ ( new TimeLighting() )
 {
-    time_->SetLatitude( latitude_ );
     current_ = fixed_.get();
-
-    QTimer* timer = new QTimer( this );
-    connect( timer, SIGNAL( timeout() ), this, SLOT( OnTimer() ) );
-    timer->start( 100 );
 }
  
 // -----------------------------------------------------------------------------
@@ -65,10 +58,10 @@ void LightingProxy::SwitchToFixed()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LightingProxy::SwitchToClockTime
+// Name: LightingProxy::SwitchToSimulationTime
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void LightingProxy::SwitchToClockTime()
+void LightingProxy::SwitchToSimulationTime()
 {
     current_ = time_.get();
 }
@@ -101,23 +94,20 @@ void LightingProxy::SetDiffuse( float r, float g, float b )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LightingProxy::NotifyUpdated
-// Created: AGE 2007-02-23
+// Name: LightingProxy::SetLatitude
+// Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void LightingProxy::NotifyUpdated( const ModelLoaded& model )
+void LightingProxy::SetLatitude( float latitude )
 {
-    WorldParameters::Load( model.config_ );
-    time_->SetLatitude( latitude_ );
+    time_->SetLatitude( latitude );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LightingProxy::OnTimer
-// Created: AGE 2007-02-23
+// Name: LightingProxy::SetTime
+// Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void LightingProxy::OnTimer()
+void LightingProxy::SetTime( const QDateTime& time )
 {
-    bpt::ptime t = bpt::second_clock::local_time();
-    tm pt_tm = bpt::to_tm( t );
-    time_->SetDayOfYear( pt_tm.tm_yday );
-    time_->SetTime     ( pt_tm.tm_hour + pt_tm.tm_min / 60.f + pt_tm.tm_sec / 3600.f );
+    time_->SetDayOfYear( time.date().dayOfYear() );
+    time_->SetTime     ( time.time().hour() + time.time().minute() / 60.f + time.time().second() / 3600.f );
 }

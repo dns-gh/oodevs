@@ -11,9 +11,6 @@
 #define __LightingProxy_h_
 
 #include "graphics/Lighting_ABC.h"
-#include "clients_kernel/WorldParameters.h"
-#include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/ModelLoaded.h"
 
 class FixedLighting;
 class TimeLighting;
@@ -28,12 +25,9 @@ namespace gui
 // Created: AGE 2007-02-23
 // =============================================================================
 class LightingProxy : public QObject
-                    , private kernel::WorldParameters, public Lighting_ABC
-                    , public kernel::Observer_ABC
-                    , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                    , public Lighting_ABC
                     
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -45,7 +39,7 @@ public:
     //! @name Operations
     //@{
     void SwitchToFixed();
-    void SwitchToClockTime();
+    void SwitchToSimulationTime();
     virtual void Set();
     //@}
 
@@ -56,16 +50,10 @@ public:
     void SetDiffuse       ( float r, float g, float b );
     //@}
 
-private slots:
-    //! @name Slots
+    //! @name Time lighting 
     //@{
-    void OnTimer();
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    void SetLatitude( float latitude );
+    void SetTime    ( const QDateTime& time );
     //@}
 
 private:
