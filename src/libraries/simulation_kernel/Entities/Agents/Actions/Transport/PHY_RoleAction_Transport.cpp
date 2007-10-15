@@ -216,11 +216,8 @@ MT_Float PHY_RoleAction_Transport::DoLoad( const MT_Float rWeightToLoad )
         if( it->second.rRemainingWeight_ <= 0. )
             continue;
 
-        if( it->second.rTransportedWeight_ <= 0. )
-        {
-            pion.GetRole< PHY_RoleInterface_Transported >().LoadForTransport( *pTransporter_, transportData.bTransportOnlyLoadable_ ); // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
-            bHasChanged_ = true;
-        }
+        if( it->second.rTransportedWeight_ <= 0. && !pion.GetRole< PHY_RoleInterface_Transported >().LoadForTransport( *pTransporter_, transportData.bTransportOnlyLoadable_ ) ) // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
+            continue; // LoadForTransport fails when the 'pion' is already transported by another unit
 
         const MT_Float rTmpWeight = std::min( rWeightToLoad - rWeightLoaded, it->second.rRemainingWeight_ );
         it->second.rTransportedWeight_ += rTmpWeight;
@@ -285,7 +282,8 @@ MT_Float PHY_RoleAction_Transport::DoUnload( const MT_Float rWeightToUnload )
         {
             bHasChanged_ = true;
             MIL_Agent_ABC& pion = *it->first;
-            pion.GetRole< PHY_RoleInterface_Transported >().UnloadFromTransport( it->second.bTransportOnlyLoadable_ );
+            bool bOut = pion.GetRole< PHY_RoleInterface_Transported >().UnloadFromTransport( *pTransporter_, it->second.bTransportOnlyLoadable_ );
+            assert( bOut );
             it = transportedPions_.erase( it );
         }
         else
@@ -396,6 +394,9 @@ bool PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
         || transportedPions_.find( &transported ) != transportedPions_.end() )
         return false;
 
+    if( !transported.GetRole< PHY_RoleInterface_Transported >().LoadForTransport( *pTransporter_, bTransportOnlyLoadable ) )
+        return false;
+
     MT_Float rTotalTransportedWeight              = 0.;
     MT_Float rHeaviestComposanteTransportedWeight = 0.;
     transported.GetRole< PHY_RoleInterface_Transported >().GetTransportWeight( bTransportOnlyLoadable, rTotalTransportedWeight, rHeaviestComposanteTransportedWeight );
@@ -404,10 +405,8 @@ bool PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
     data.rRemainingWeight_   = 0.;
     data.rTransportedWeight_ = data.rTotalWeight_;
     rWeightTransported_ += data.rTotalWeight_;
-
-    transported.GetRole< PHY_RoleInterface_Transported >().LoadForTransport( *pTransporter_, bTransportOnlyLoadable ); // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
+    
     bHasChanged_ = true;
-
     return true;
 }
 
@@ -421,7 +420,7 @@ bool PHY_RoleAction_Transport::MagicUnloadPion( MIL_Agent_ABC& transported )
     if( it == transportedPions_.end() )
         return false;
 
-    transported.GetRole< PHY_RoleInterface_Transported >().UnloadFromTransport( it->second.bTransportOnlyLoadable_ );
+    transported.GetRole< PHY_RoleInterface_Transported >().UnloadFromTransport( *pTransporter_, it->second.bTransportOnlyLoadable_ );
 
     assert( rWeightTransported_ >= it->second.rTransportedWeight_ );
     rWeightTransported_ -= it->second.rTransportedWeight_;
@@ -438,7 +437,7 @@ void PHY_RoleAction_Transport::Cancel()
 {
     for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end(); ++it)
     {
-        it->first->GetRole< PHY_RoleInterface_Transported >().CancelTransport();
+        it->first->GetRole< PHY_RoleInterface_Transported >().CancelTransport( *pTransporter_ );
         it->second.rTransportedWeight_ = 0;
     }
     transportedPions_.clear();

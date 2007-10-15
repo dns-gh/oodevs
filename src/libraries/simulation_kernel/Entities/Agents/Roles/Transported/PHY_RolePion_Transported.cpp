@@ -144,25 +144,26 @@ void PHY_RolePion_Transported::GetTransportWeight( bool bTransportOnlyLoadable, 
 // Name: PHY_RolePion_Transported::CancelTransport
 // Created: NLD 2004-11-24
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::CancelTransport()
+bool PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter )
 {
-    if( !pTransporter_ )
-        return;
+    if( pTransporter_ != &transporter )
+        return false;
 
     GetRole< PHY_RolePion_Location >().Show( vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;
     vLoadingPosition_.Reset();  
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::LoadForTransport
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+bool PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
-    if( pTransporter_ == &transporter )
-        return;
+    if( pTransporter_ )
+        return false;
 
     assert( !pTransporter_ );
     pTransporter_ = &transporter;
@@ -178,14 +179,18 @@ void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
     if( bTransportOnlyLoadable && vHumanTransporterPosition_.IsZero() )
         vHumanTransporterPosition_ = vLoadingPosition_;
     bHasChanged_ = true;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::UnloadFromTransport
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::UnloadFromTransport( bool bTransportOnlyLoadable )
+bool PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
+    if( pTransporter_ != &transporter )
+        return false;
+
     assert( pTransporter_ );
     GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
     GetRole< PHY_RolePion_Location  >().Show               ( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -194,6 +199,7 @@ void PHY_RolePion_Transported::UnloadFromTransport( bool bTransportOnlyLoadable 
     vLoadingPosition_.Reset();
     if( !bTransportOnlyLoadable )
         vHumanTransporterPosition_.Reset();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
