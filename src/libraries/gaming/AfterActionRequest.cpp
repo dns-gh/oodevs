@@ -23,7 +23,6 @@ AfterActionRequest::AfterActionRequest( kernel::Controller& controller, const Af
     , publisher_( publisher )
     , done_( false )
 {
-    
     controller_.Create( *this );
 }
 
@@ -56,8 +55,6 @@ void AfterActionRequest::Commit()
     request().identifier = reinterpret_cast< int >( this );
     request().request = xmlRequest.c_str();
     request.Send( publisher_ );
-
-    std::cout << xmlRequest << std::endl;
 }
 
 // -----------------------------------------------------------------------------

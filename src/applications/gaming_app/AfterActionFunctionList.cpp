@@ -12,6 +12,7 @@
 #include "moc_AfterActionFunctionList.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ValuedListItem.h"
+#include "clients_gui/ListItemToolTip.h"
 #include "gaming/AfterActionFunction.h"
 #include "gaming/AfterActionParameter.h"
 #include "gaming/AfterActionRequest.h"
@@ -43,6 +44,7 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
 {
     functions_ = new ListDisplayer< AfterActionFunctionList >( this, *this, factory );
     functions_->AddColumn( tr( "Name" ) );
+    new ListItemToolTip( functions_->viewport(), *functions_ );
     parameters_ = new QVGroupBox( tr( "Parameters" ), this );
     connect( functions_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChange( QListViewItem* ) ) );
 
