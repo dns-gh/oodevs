@@ -420,7 +420,8 @@
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/gaming_app"       includes="*.exe *.pdb *.qm"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/preparation_app"  includes="*.exe *.pdb"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/simulation_app"   includes="*.exe *.pdb"/>
-            <zipfileset prefix="applications" dir="${out.dir}/release/applications/replayer_app"     includes="*.exe"/>
+            <zipfileset prefix="applications" dir="${out.dir}/release/applications/replayer_app"     includes="*.exe"/>            
+            <zipfileset prefix="applications" dir="${out.dir}/release/applications/frontend_app"     includes="*.exe"/>           
             <zipfileset prefix="applications" dir="${libraries.dir}/clients_gui"                     includes="*.qm"/>
             <zipfileset prefix="applications" dir="${libraries.dir}/clients_kernel"                  includes="*.qm"/>
             <zipfileset prefix="applications" dir="${libraries.dir}/gaming"                          includes="*.qm"/>
