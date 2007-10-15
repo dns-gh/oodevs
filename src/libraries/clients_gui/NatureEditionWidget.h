@@ -31,7 +31,7 @@ class NatureEditionWidget : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             NatureEditionWidget( QWidget* parent, const std::string& symbolFile);
+             NatureEditionWidget( QWidget* parent, const std::string& symbolFile );
     virtual ~NatureEditionWidget();
     //@}
 

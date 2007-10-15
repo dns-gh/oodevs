@@ -40,9 +40,9 @@ private:
     //! @name Helpers
     //@{
     template< typename T >
-    static const char* MimeType( const T* element )
+    static const char* MimeType( const T* /*element*/ )
     {
-        return typeid( *element ).name();
+        return typeid( T ).name();
     }
     template< typename T >
     static const char* MimeType()

@@ -201,18 +201,18 @@ void GlWidget::RemoveMiniView( MiniView* view )
 // Name: GlWidget::CreateIcon
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void GlWidget::CreateIcon( const std::string& symbol, const QColor& color, IconHandler_ABC& handler )
+void GlWidget::CreateIcon( const std::string& symbol, const QColor& color, IconHandler_ABC& handler, const QSize& size /*= QSize( 32, 32 )*/ )
 {
-    tasks_.push_back( T_IconTask( symbol, color, handler ) );
+    tasks_.push_back( T_IconTask( symbol, color, size, handler ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::CreateIcon
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void GlWidget::CreateIcon( const std::string& symbol, const std::string& level, const QColor& color, IconHandler_ABC& handler )
+void GlWidget::CreateIcon( const std::string& symbol, const std::string& level, const QColor& color, IconHandler_ABC& handler, const QSize& size /*= QSize( 32, 32 )*/ )
 {
-    tasks_.push_back( T_IconTask( symbol, level, color, handler ) );
+    tasks_.push_back( T_IconTask( symbol, level, color, size, handler ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -274,9 +274,9 @@ void GlWidget::RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& 
     glReadPixels( 0, 0, iconSide_, iconSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
     glFlush();
 
-    QPixmap result( image.mirror().smoothScale( 32, 32 ) );
+    QPixmap result( image.mirror().smoothScale( task.size ) );
     result.setMask( result.createHeuristicMask( true ) );
-    task.handler->AddIcon( task.name, task.name2, task.color, result );
+    task.handler->AddIcon( task.name, task.name2, task.color, task.size, result );
 }
 
 // -----------------------------------------------------------------------------

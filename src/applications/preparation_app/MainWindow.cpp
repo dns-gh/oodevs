@@ -31,11 +31,13 @@
 #include "FileToolbar.h"
 #include "ProfileDialog.h"
 #include "TemplatesPanel.h"
+#include "IntelligencesLayer.h"
 
 #include "preparation/Exceptions.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
 #include "preparation/FormationModel.h"
+#include "preparation/IntelligencesModel.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -162,7 +164,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     // Creation panel
     QDockWindow* pCreationDockWnd = new QDockWindow( this );
     moveDockWindow( pCreationDockWnd, Qt::DockRight );
-    CreationPanels* pCreationPanel = new CreationPanels( pCreationDockWnd, controllers, staticModel_, *factory );
+    CreationPanels* pCreationPanel = new CreationPanels( pCreationDockWnd, controllers, staticModel_, *factory, *symbols );
     pCreationDockWnd->setWidget( pCreationPanel );
     pCreationDockWnd->setResizeEnabled( true );
     pCreationDockWnd->setCloseMode( QDockWindow::Always );
@@ -239,6 +241,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& elevation3d         = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& grid                = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics             = *new MetricsLayer( *glProxy_ );
+    Layer_ABC& intelligences       = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligences_ );
     Layer_ABC& limits              = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
     Layer_ABC& objectsLayer        = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populations         = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
@@ -261,6 +264,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( grid );
     glProxy_->Register( weather );
     glProxy_->Register( limits );
+    glProxy_->Register( intelligences );
     glProxy_->Register( objectsLayer );
     glProxy_->Register( populations );
     glProxy_->Register( agents );
@@ -277,6 +281,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     forward_->Register( automats );
     forward_->Register( populations );
     forward_->Register( objectsLayer );
+    forward_->Register( intelligences );
     forward_->Register( weather );
     forward_->Register( limits );
     forward_->Register( metrics );

@@ -56,7 +56,7 @@ private:
     //@{
     std::string name_;
     std::string value_;
-    SymbolRule* rule_;
+    std::auto_ptr< SymbolRule > rule_;
     //@}
 };
 

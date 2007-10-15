@@ -57,9 +57,9 @@ private:
     //! @name Member data
     //@{
     std::string symbolBase_;
-    SymbolRule* symbolRule_;
+    std::auto_ptr< SymbolRule > symbolRule_;
     std::string levelBase_;
-    SymbolRule* levelRule_;
+    std::auto_ptr< SymbolRule > levelRule_;
     std::string automatSymbol_;
     //@}
 };

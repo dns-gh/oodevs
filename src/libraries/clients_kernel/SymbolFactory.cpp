@@ -25,9 +25,9 @@ SymbolFactory::SymbolFactory()
     xml::xifstream xis( tools::GeneralConfig::BuildWorkingDirectoryChildFile( "symbols.xml" ) );
 
     xis >> start( "app6" );
-        symbolRule_    = ReadRule( xis, "symbols", symbolBase_ );
-        levelRule_     = ReadRule( xis, "levels", levelBase_ );
-                         ReadRule( xis, "automats", automatSymbol_ );
+        symbolRule_.reset( ReadRule( xis, "symbols", symbolBase_ ) );
+        levelRule_ .reset( ReadRule( xis, "levels", levelBase_ ) );
+                           ReadRule( xis, "automats", automatSymbol_ );
     xis >> end();
 }
 
@@ -37,8 +37,7 @@ SymbolFactory::SymbolFactory()
 // -----------------------------------------------------------------------------
 SymbolFactory::~SymbolFactory()
 {
-    delete symbolRule_;
-    delete levelRule_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -53,8 +53,8 @@ public:
     void AddMiniView   ( MiniView* view );
     void RemoveMiniView( MiniView* view );
 
-    void CreateIcon( const std::string& symbol, const QColor& color, IconHandler_ABC& handler );
-    void CreateIcon( const std::string& symbol, const std::string& level, const QColor& color, IconHandler_ABC& handler );
+    void CreateIcon( const std::string& symbol, const QColor& color, IconHandler_ABC& handler, const QSize& size = QSize( 32, 32 ) );
+    void CreateIcon( const std::string& symbol, const std::string& level, const QColor& color, IconHandler_ABC& handler, const QSize& size = QSize( 32, 32 ) );
     //@}
 
     //! @name Operations
@@ -98,13 +98,14 @@ private:
 
     struct T_IconTask
     {
-        T_IconTask( const std::string& name, const QColor& color, IconHandler_ABC& handler )
-            : name( name ), color( color ), handler( &handler ) {};
-        T_IconTask( const std::string& name, const std::string& name2, const QColor& color, IconHandler_ABC& handler )
-            : name( name ), name2( name2 ), color( color ), handler( &handler ) {};
+        T_IconTask( const std::string& name, const QColor& color, const QSize& size, IconHandler_ABC& handler )
+            : name( name ), color( color ), size( size ), handler( &handler ) {};
+        T_IconTask( const std::string& name, const std::string& name2, const QColor& color, const QSize& size, IconHandler_ABC& handler )
+            : name( name ), name2( name2 ), color( color ), size( size ), handler( &handler ) {};
         std::string name;
         std::string name2;
         QColor color;
+        QSize size;
         IconHandler_ABC* handler;
     };
     typedef std::vector< T_IconTask >                    T_IconTasks;

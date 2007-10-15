@@ -3,66 +3,57 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "clients_kernel_pch.h"
-#include "SymbolCase.h"
-#include "SymbolRule.h"
-#include "SymbolVisitor_ABC.h"
-#include "xeumeuleu/xml.h"
+#include "Intelligence_ABC.h"
+#include "ActionController.h"
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: SymbolCase constructor
-// Created: SBO 2006-03-20
+// Name: Intelligence_ABC constructor
+// Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-SymbolCase::SymbolCase( xml::xistream& xis )
-{
-    xis >> attribute( "symbol", value_ )
-        >> attribute( "name", name_ )
-        >> list( "choice", *this, &SymbolCase::ReadRule );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: SymbolCase destructor
-// Created: SBO 2006-03-20
-// -----------------------------------------------------------------------------
-SymbolCase::~SymbolCase()
+Intelligence_ABC::Intelligence_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolCase::ReadRule
-// Created: SBO 2006-03-20
+// Name: Intelligence_ABC destructor
+// Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-void SymbolCase::ReadRule( xml::xistream& xis )
+Intelligence_ABC::~Intelligence_ABC()
 {
-    if( rule_.get() )
-        throw std::runtime_error( __FUNCTION__ );
-    rule_.reset( new SymbolRule( xis ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolCase::Evaluate
-// Created: SBO 2006-03-20
+// Name: Intelligence_ABC::Select
+// Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-void SymbolCase::Evaluate( const std::string& request, std::string& result ) const
+void Intelligence_ABC::Select( ActionController& controller ) const
 {
-    result += value_;
-    if( rule_.get() )
-        rule_->Evaluate( request, result );
+    controller.Select( *this, *(const Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolCase::Accept
-// Created: AGE 2006-10-24
+// Name: Intelligence_ABC::ContextMenu
+// Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-void SymbolCase::Accept( SymbolVisitor_ABC& visitor ) const
+void Intelligence_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    visitor.AddChoice( rule_.get(), name_, value_ );
+    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Intelligence_ABC::Activate
+// Created: SBO 2007-10-12
+// -----------------------------------------------------------------------------
+void Intelligence_ABC::Activate( ActionController& controller ) const
+{
+    controller.Activate( *this, *(const Entity_ABC*)this );
 }

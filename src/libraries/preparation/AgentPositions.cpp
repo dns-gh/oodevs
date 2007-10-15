@@ -122,7 +122,7 @@ geometry::Rectangle2f AgentPositions::GetBoundingBox() const
 void AgentPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
-        tools.DrawCross( where, GL_CROSSSIZE );    
+        tools.DrawCross( where, GL_CROSSSIZE );
 }
 
 // -----------------------------------------------------------------------------

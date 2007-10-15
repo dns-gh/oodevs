@@ -23,6 +23,8 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
+#include "clients_kernel/Intelligence_ABC.h"
+#include "clients_kernel/Karma.h"
 
 using namespace kernel;
 using namespace gui;
@@ -203,6 +205,33 @@ void ColorStrategy::SelectColor( const kernel::TacticalLine_ABC& line )
     if( selectedEntity_ == &line )
         color = SelectedColor( color );
     tools_.Select( selectedEntity_ == &line, false );
+    ApplyColor( color );
+}
+
+namespace
+{
+    QColor GetKarmaColor( const Karma& karma )
+    {
+        if( karma == Karma::friend_ )
+            return QColor( 100, 125, 255 );
+        if( karma == Karma::enemy_ )
+            return QColor( 255, 50, 50 );
+        if( karma == Karma::neutral_ )
+            return QColor( 0, 170, 0 );
+        return QColor( 255, 220, 000 );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: SBO 2007-10-12
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const Intelligence_ABC& intelligence )
+{
+    QColor color = GetKarmaColor( intelligence.GetKarma() );
+    if( selectedEntity_ == &intelligence )
+        color = SelectedColor( color );
+    tools_.Select( selectedEntity_ == &intelligence, false );
     ApplyColor( color );
 }
 

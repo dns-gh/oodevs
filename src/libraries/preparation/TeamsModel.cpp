@@ -17,6 +17,7 @@
 #include "Diplomacies.h"
 #include "Exceptions.h"
 #include "Tools.h"
+#include "IntelligencesModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -207,6 +208,9 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
         >> end();
     xis >> start( "populations" )
             >> list( "population", model.agents_, &AgentsModel::CreatePopulation, *team )
+        >> end();
+    xis >> start( "intelligences" )
+            >> list( "intelligence", model.intelligences_, &IntelligencesModel::Create, *team )
         >> end();
 }
 

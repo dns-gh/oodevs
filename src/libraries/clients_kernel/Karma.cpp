@@ -84,3 +84,33 @@ bool Karma::operator==( const Karma& rhs ) const
 {
     return identifier_ == rhs.identifier_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Karma::ResolveId
+// Created: SBO 2007-10-15
+// -----------------------------------------------------------------------------
+const Karma& Karma::ResolveId( const std::string& id )
+{
+    if( id == friend_.GetId() )
+        return friend_;
+    if( id == enemy_.GetId() )
+        return enemy_;
+    if( id == neutral_.GetId() )
+        return neutral_;
+    return unknown_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Karma::ResolveName
+// Created: SBO 2007-10-15
+// -----------------------------------------------------------------------------
+const Karma& Karma::ResolveName( const QString& name )
+{
+    if( name == friend_.GetName() )
+        return friend_;
+    if( name == enemy_.GetName() )
+        return enemy_;
+    if( name == neutral_.GetName() )
+        return neutral_;
+    return unknown_;
+}

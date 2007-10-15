@@ -10,6 +10,8 @@
 #ifndef __App6Symbol_h_
 #define __App6Symbol_h_
 
+#include "Types.h"
+
 namespace kernel
 {
     class Karma;

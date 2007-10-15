@@ -37,6 +37,7 @@ class LimitsModel;
 class WeatherModel;
 class ProfilesModel;
 class ProfileFactory_ABC;
+class IntelligencesModel;
 
 // =============================================================================
 /** @class  Model
@@ -91,6 +92,7 @@ public:
     LimitsModel& limits_;
     WeatherModel& weather_;
     ProfilesModel& profiles_;
+    IntelligencesModel& intelligences_;
     //@}
 
 private:

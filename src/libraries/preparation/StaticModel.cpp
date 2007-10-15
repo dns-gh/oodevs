@@ -18,6 +18,7 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/ExerciseConfig.h"
+#include "clients_kernel/FormationLevels.h"
 
 using namespace kernel;
 
@@ -31,6 +32,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , detection_          ( *new DetectionMap() )
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
+    , levels_             ( *new FormationLevels() )
     , teamKarmas_         ( *new TeamKarmas() )
 {
     // NOTHING
@@ -43,6 +45,7 @@ StaticModel::StaticModel( Controllers& controllers )
 StaticModel::~StaticModel()
 {
     delete &teamKarmas_;
+    delete &levels_;
     delete &objectTypes_;
     delete &types_;
     delete &detection_;

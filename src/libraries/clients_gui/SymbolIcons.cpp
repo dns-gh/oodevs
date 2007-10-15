@@ -47,25 +47,25 @@ void SymbolIcons::OnWidget2dChanged( gui::GlWidget* widget )
 // Name: SymbolIcons::GetSymbol
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-QPixmap SymbolIcons::GetSymbol( const std::string& name, const QColor& color /*= Qt::white*/ )
+QPixmap SymbolIcons::GetSymbol( const std::string& name, const QColor& color /*= Qt::white*/, const QSize& size /*= QSize( 32, 32 )*/ )
 {
-    return GetSymbol( name, "", color );
+    return GetSymbol( name, "", color, size );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolIcons::GetSymbol
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level, const QColor& color /*= Qt::white*/ )
+QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level, const QColor& color /*= Qt::white*/, const QSize& size /*= QSize( 32, 32 )*/ )
 {
     std::string symbolName( s );
     std::replace( symbolName.begin(), symbolName.end(), '*', 'f' ); // $$$$ AGE 2006-11-22: 
 
-    const Key key( symbolName, level, color );
+    const Key key( symbolName, level, color, size );
     const QPixmap& result = icons_[ key ];
     if( result.isNull() )
         if( widget_ && pending_.insert( key ).second )
-            widget_->CreateIcon( key.symbol_, key.level_, key.color_, *this );
+            widget_->CreateIcon( key.symbol_, key.level_, key.color_, *this, key.size_ );
     return result;
 }
 
@@ -73,9 +73,9 @@ QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level, 
 // Name: SymbolIcons::AddIcon
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void SymbolIcons::AddIcon( const std::string& symbol, const std::string& level, const QColor& color, const QPixmap& icon )
+void SymbolIcons::AddIcon( const std::string& symbol, const std::string& level, const QColor& color, const QSize& size, const QPixmap& icon )
 {
-    const Key key( symbol, level, color );
+    const Key key( symbol, level, color, size );
     icons_[ key ] = icon;
     pending_.erase( key );
 }

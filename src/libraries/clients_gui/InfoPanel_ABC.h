@@ -39,6 +39,7 @@ public:
     //! @name Accessors
     //@{
     const QString& GetName() const { return name_; }
+    virtual QLayout* layout();
     //@}
 
 private:
@@ -51,7 +52,6 @@ private:
     //! @name Helpers
     //@{
     virtual void insertChild ( QObject* pObj );
-    virtual QLayout* layout();
     virtual QSize sizeHint() const;
     //@}
 

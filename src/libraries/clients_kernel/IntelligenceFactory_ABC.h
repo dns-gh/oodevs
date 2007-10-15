@@ -7,47 +7,37 @@
 //
 // *****************************************************************************
 
-#ifndef __Shape_ABC_h_
-#define __Shape_ABC_h_
+#ifndef __IntelligenceFactory_ABC_h_
+#define __IntelligenceFactory_ABC_h_
 
-namespace crossbow
+namespace kernel
 {
-    class Line;
-    class Point;
-
-    class ShapeVisitor_ABC
-    {
-    public:
-                 ShapeVisitor_ABC() {}
-        virtual ~ShapeVisitor_ABC() {}
-
-        virtual void Visit( const Line& ) {}
-        virtual void Visit( const Point& ) {}
-
-    };
+    class Intelligence_ABC;
+    class Karma;
+    class Team_ABC;
 
 // =============================================================================
-/** @class  Shape_ABC
-    @brief  Shape_ABC
+/** @class  IntelligenceFactory_ABC
+    @brief  IntelligenceFactory_ABC
 */
-// Created: SBO 2007-08-30
+// Created: SBO 2007-10-12
 // =============================================================================
-class Shape_ABC
+class IntelligenceFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Shape_ABC() {}
-    virtual ~Shape_ABC() {}
+             IntelligenceFactory_ABC() {}
+    virtual ~IntelligenceFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Accept( ShapeVisitor_ABC& visitor ) const = 0;
+    virtual Intelligence_ABC& Create( Team_ABC& team, const std::string& symbol, const std::string& level, const Karma& karma, const geometry::Point2f& position ) = 0;
     //@}
 };
 
 }
 
-#endif // __Shape_ABC_h_
+#endif // __IntelligenceFactory_ABC_h_

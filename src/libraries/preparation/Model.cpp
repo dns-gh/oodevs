@@ -22,6 +22,7 @@
 #include "WeatherModel.h"
 #include "ProfilesModel.h"
 #include "ProfileFactory.h"
+#include "IntelligencesModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ExerciseConfig.h"
@@ -56,6 +57,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
     , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
     , profiles_( *new ProfilesModel( profileFactory_ ) )
+    , intelligences_( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_ ) )
 {
     // NOTHING
 }
@@ -66,6 +68,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &intelligences_;
     delete &profiles_;
     delete &profileFactory_;
     delete &weather_;
@@ -87,6 +90,7 @@ Model::~Model()
 void Model::Purge()
 {
     UpdateName( "" );
+    intelligences_.Purge();
     profiles_.Purge();
     weather_.Purge();
     limits_.Purge();

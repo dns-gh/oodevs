@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void AddIcon( const std::string& level, const std::string& symbol, const QColor& color, const QPixmap& icon ) = 0;
+    virtual void AddIcon( const std::string& level, const std::string& symbol, const QColor& color, const QSize& size, const QPixmap& icon ) = 0;
     //@}
 };
 
