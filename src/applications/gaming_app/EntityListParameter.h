@@ -86,6 +86,7 @@ public:
 protected:
     //! @name Helpers
     //@{
+    void Add( const ConcreteEntity& entity );
     virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
     //@}
 

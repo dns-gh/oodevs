@@ -14,7 +14,10 @@
 
 namespace kernel
 {
+    class Entity_ABC;
     class Agent_ABC;
+    class Automat_ABC;
+    class Formation_ABC;
     class OrderParameter;
 }
 
@@ -25,7 +28,10 @@ namespace kernel
 // Created: AGE 2006-11-29
 // =============================================================================
 class ParamAgentList : public EntityListParameter< kernel::Agent_ABC >
+                     , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                     , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -37,6 +43,14 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void AddHierarchy();
     //@}
 
 private:
@@ -50,6 +64,7 @@ private:
     //@{
     virtual void AddToMenu( kernel::ContextMenu& menu );
     virtual EntityParameter< kernel::Agent_ABC >* CreateElement( const kernel::Agent_ABC& potential );
+    void AddHierarchy( const kernel::Entity_ABC& superior );
     //@}
 
 private:
@@ -57,6 +72,7 @@ private:
     //@{
     kernel::OrderParameter parameter_;
     unsigned int count_;
+    const kernel::Entity_ABC* superior_; // $$$$ AGE 2007-10-15: deletions !
     //@}
 };
 

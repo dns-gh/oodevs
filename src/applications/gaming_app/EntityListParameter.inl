@@ -30,6 +30,17 @@ EntityListParameter< ConcreteEntity >::~EntityListParameter()
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityListParameter::Add
+// Created: AGE 2007-10-15
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityListParameter< ConcreteEntity >::Add( const ConcreteEntity& entity )
+{
+    potential_ = &entity;
+    MenuItemValidated();
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityListParameter::MenuItemValidated
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
