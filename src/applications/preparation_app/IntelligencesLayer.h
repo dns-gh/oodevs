@@ -37,6 +37,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Delete( const kernel::Intelligence_ABC& element );
     virtual void Move( kernel::Positions& position, const geometry::Point2f& point );
     //@}
 };

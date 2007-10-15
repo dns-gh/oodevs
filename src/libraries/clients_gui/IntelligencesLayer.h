@@ -46,8 +46,10 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Delete( const kernel::Intelligence_ABC& element ) = 0;
     virtual void NotifySelected( const kernel::Intelligence_ABC* element );
 
+    virtual bool HandleKeyPress( QKeyEvent* key );
     virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
     bool IsEligibleForDrag( const geometry::Point2f& point ) const;

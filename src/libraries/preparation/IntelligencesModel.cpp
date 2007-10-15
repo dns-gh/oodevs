@@ -11,6 +11,7 @@
 #include "IntelligencesModel.h"
 #include "Intelligence.h"
 #include "IntelligencePositions.h"
+#include "IntelligenceHierarchies.h"
 #include "Intelligences.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Intelligence_ABC.h"
@@ -56,6 +57,7 @@ Intelligence_ABC& IntelligencesModel::Create( kernel::Team_ABC& team, const std:
 {
     std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, symbol, level, karma ) );
     intelligence->Attach< kernel::Positions >( *new IntelligencePositions( converter_, position ) );
+    intelligence->Attach< kernel::TacticalHierarchies >( *new IntelligenceHierarchies( *intelligence, &team ) );
 
     if( Intelligences* intelligences = team.Retrieve< Intelligences >() )
         intelligences->AddIntelligence( *intelligence );
@@ -72,9 +74,19 @@ void IntelligencesModel::Create( xml::xistream& xis, kernel::Team_ABC& team )
 {
     std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, xis ) );
     intelligence->Attach< kernel::Positions >( *new IntelligencePositions( converter_, xis ) );
+    intelligence->Attach< kernel::TacticalHierarchies >( *new IntelligenceHierarchies( *intelligence, &team ) );
 
     if( Intelligences* intelligences = team.Retrieve< Intelligences >() )
         intelligences->AddIntelligence( *intelligence );
     intelligence->Polish();
     Register( intelligence->GetId(), *intelligence.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencesModel::NotifyDeleted
+// Created: SBO 2007-10-15
+// -----------------------------------------------------------------------------
+void IntelligencesModel::NotifyDeleted( const kernel::Intelligence_ABC& element )
+{
+    Remove( element.GetId() );
 }

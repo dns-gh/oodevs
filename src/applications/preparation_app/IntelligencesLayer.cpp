@@ -29,7 +29,16 @@ IntelligencesLayer::~IntelligencesLayer()
 {
     // NOTHING
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencesLayer::Delete
+// Created: SBO 2007-10-15
+// -----------------------------------------------------------------------------
+void IntelligencesLayer::Delete( const kernel::Intelligence_ABC& element )
+{
+    delete &element;
+}
+
 // -----------------------------------------------------------------------------
 // Name: IntelligencesLayer::Move
 // Created: SBO 2007-10-15

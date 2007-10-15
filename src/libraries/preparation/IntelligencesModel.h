@@ -11,6 +11,7 @@
 #define __IntelligencesModel_h_
 
 #include "clients_kernel/Resolver.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/IntelligenceFactory_ABC.h"
 
 namespace xml
@@ -34,6 +35,7 @@ class IdManager;
 // =============================================================================
 class IntelligencesModel : public kernel::Resolver< kernel::Intelligence_ABC >
                          , public kernel::IntelligenceFactory_ABC
+                         , public kernel::ElementObserver_ABC< kernel::Intelligence_ABC >
 {
 
 public:
@@ -55,6 +57,11 @@ private:
     //@{
     IntelligencesModel( const IntelligencesModel& );            //!< Copy constructor
     IntelligencesModel& operator=( const IntelligencesModel& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void NotifyDeleted( const kernel::Intelligence_ABC& element );
     //@}
 
 private:

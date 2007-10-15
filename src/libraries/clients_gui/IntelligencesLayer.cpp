@@ -47,6 +47,24 @@ void IntelligencesLayer::NotifySelected( const kernel::Intelligence_ABC* element
 }
 
 // -----------------------------------------------------------------------------
+// Name: IntelligencesLayer::HandleKeyPress
+// Created: SBO 2007-10-15
+// -----------------------------------------------------------------------------
+bool IntelligencesLayer::HandleKeyPress( QKeyEvent* k )
+{
+    if( !selectedIntelligence_ )
+        return false;
+    const int key = k->key();
+    if( key == Qt::Key_BackSpace || key == Qt::Key_Delete )
+    {
+        Delete( *selectedIntelligence_ );
+        selectedIntelligence_ = 0;
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: IntelligencesLayer::HandleEnterDragEvent
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
