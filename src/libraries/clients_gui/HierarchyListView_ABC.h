@@ -107,7 +107,7 @@ private:
     virtual void dropEvent( QDropEvent* pEvent );
     virtual void dragEnterEvent( QDragEnterEvent* pEvent );
 
-    bool Drop( ValuedListItem& item, ValuedListItem& target );
+    bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     static void SetVisible( QListViewItem* item, bool visible );
     void DisplayIcon( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );

@@ -17,6 +17,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
 
@@ -108,11 +109,10 @@ void AgentsLayer::Select( const kernel::Team_ABC& element )
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
-    // $$$$ SBO 2006-09-29: Unify mime-types
-    return ( event->provides( "Agent" )                    && selectedAgent_     )
-        || ( event->provides( "csword/AgentType" )         && selectedAutomat_   )
-        || ( event->provides( "csword/AutomatType" )       && ( selectedFormation_ || selectedAutomat_ ) )
-        || ( event->provides( "csword/HierarchyTemplate" ) && IsValidTemplate( event ) );
+    return ( ValuedDragObject::Provides< const AgentPositions >   ( event ) && selectedAgent_ )
+        || ( ValuedDragObject::Provides< const AgentType >        ( event ) && selectedAutomat_ )
+        || ( ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ ) )
+        || ( ValuedDragObject::Provides< const HierarchyTemplate >( event ) && IsValidTemplate( event ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,8 +123,7 @@ bool AgentsLayer::IsValidTemplate( QDragEnterEvent* event ) const
 {
     if( !selectedFormation_ && !selectedTeam_ )
         return false;
-    QByteArray tmp = event->encodedData( "csword/HierarchyTemplate" );
-    const HierarchyTemplate* droppedItem = *reinterpret_cast< const HierarchyTemplate** >( tmp.data() );
+    const HierarchyTemplate* droppedItem = ValuedDragObject::GetValue< const HierarchyTemplate >( event );
     if( ! droppedItem )
         return false;
     return selectedTeam_ ? droppedItem->IsCompatible( *selectedTeam_ )
@@ -137,57 +136,39 @@ bool AgentsLayer::IsValidTemplate( QDragEnterEvent* event ) const
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( event->provides( "Agent" ) )
+    if( AgentPositions* position = ValuedDragObject::GetValue< AgentPositions >( event ) )
     {
         if( !selectedAgent_ )
             return false;
-        if( const AgentPositions* position = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() ) )
-        {
-            // if the events comes from the list or if far enough
-            if( event->source() || position->GetPosition().Distance( point ) > 100 )
-                const_cast< AgentPositions* >( position )->Set( point );
-            return true;
-        }
+        // if the events comes from the list or if far enough
+        if( event->source() || position->GetPosition().Distance( point ) > 100 )
+            position->Set( point );
+        return true;
     }
-    if( event->provides( "csword/AgentType" ) )
+    if( const AgentType* droppedItem = ValuedDragObject::GetValue< const AgentType >( event ) )
     {
         if( !selectedAutomat_ )
             return false;
-        QByteArray tmp = event->encodedData( "csword/AgentType" );
-        const AgentType* droppedItem = *reinterpret_cast< const AgentType** >( tmp.data() );
-        if( droppedItem )
-        {
-            model_.agents_.CreateAgent( *selectedAutomat_.ConstCast(), *droppedItem, point );
-            return true;
-        }
+        model_.agents_.CreateAgent( *selectedAutomat_.ConstCast(), *droppedItem, point );
+        return true;
     }
-    if( event->provides( "csword/AutomatType" ) )
+    if( const AutomatType* droppedItem = ValuedDragObject::GetValue< const AutomatType >( event ) )
     {
         Entity_ABC* selectedEntity = selectedFormation_.ConstCast();
         if( ! selectedEntity )
             selectedEntity = selectedAutomat_.ConstCast();
         if( ! selectedEntity )
             return false;
-        QByteArray tmp = event->encodedData( "csword/AutomatType" );
-        const AutomatType* droppedItem = *reinterpret_cast< const AutomatType** >( tmp.data() );
-        if( droppedItem )
-        {
-            model_.agents_.CreateAutomat( *selectedEntity, *droppedItem, point );
-            return true;
-        }
+        model_.agents_.CreateAutomat( *selectedEntity, *droppedItem, point );
+        return true;
     }
-    if( event->provides( "csword/HierarchyTemplate" ) )
+    if( const HierarchyTemplate* droppedItem= ValuedDragObject::GetValue< const HierarchyTemplate >( event ) )
     {
         if( !selectedFormation_ && !selectedTeam_ )
             return false;
-        QByteArray tmp = event->encodedData( "csword/HierarchyTemplate" );
-        const HierarchyTemplate* droppedItem = *reinterpret_cast< const HierarchyTemplate** >( tmp.data() );
-        if( droppedItem )
-        {
-            Entity_ABC* superior = selectedFormation_ ? selectedFormation_.ConstCast() : (Entity_ABC*)selectedTeam_.ConstCast();
-            droppedItem->Instanciate( *superior, point );
-            return true;
-        }
+        Entity_ABC* superior = selectedFormation_ ? selectedFormation_.ConstCast() : (Entity_ABC*)selectedTeam_.ConstCast();
+        droppedItem->Instanciate( *superior, point );
+        return true;
     }
     return false;
 }
@@ -201,7 +182,8 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     bool result = gui::AgentsLayer::HandleMousePress( event, point );
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
-        QDragObject* drag = new QStoredDrag( "Agent" );
+        const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() );
+        QDragObject* drag = new ValuedDragObject( pos );
         drag->drag();
     }
     return result;

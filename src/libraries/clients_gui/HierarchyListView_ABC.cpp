@@ -23,11 +23,10 @@
 #include "ItemFactory_ABC.h"
 #include "EntitySymbols.h"
 #include "ListItemToolTip.h"
+#include "ValuedDragObject.h"
 
 using namespace kernel;
 using namespace gui;
-
-const char* HierarchyListView_ABC::agentMimeType_ = "agent"; // $$$$ AGE 2006-09-20: pas vraiment agent. Plus ValuedListItem
 
 // -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC constructor
@@ -224,15 +223,11 @@ void HierarchyListView_ABC::NotifySelected( const Entity_ABC* element )
 // -----------------------------------------------------------------------------
 QDragObject* HierarchyListView_ABC::dragObject()
 {
-    QListViewItem* pItem = selectedItem();
+    ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
     if( !pItem )
         return 0;
 
-    QByteArray* pBytes = new QByteArray();
-    pBytes->setRawData( (const char*)&pItem, sizeof( QListViewItem* ) );
-    QStoredDrag* data = new QStoredDrag( agentMimeType_, this );
-    data->setEncodedData( *pBytes );
-    return data;
+    return new ValuedDragObject( pItem->GetValue< const Entity_ABC >(), this );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +236,7 @@ QDragObject* HierarchyListView_ABC::dragObject()
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::dragEnterEvent( QDragEnterEvent* pEvent )
 {
-    pEvent->accept( pEvent->provides( agentMimeType_ ) );
+    pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,29 +245,26 @@ void HierarchyListView_ABC::dragEnterEvent( QDragEnterEvent* pEvent )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::dropEvent( QDropEvent* pEvent )
 {
-    if( !pEvent->provides( agentMimeType_ ) )
-         return;
+    if( const Entity_ABC* entity = ValuedDragObject::GetValue< const Entity_ABC >( pEvent ) )
+    {
+        QPoint position = viewport()->mapFromParent( pEvent->pos() );
+        ValuedListItem* targetItem = (ValuedListItem*)itemAt( position );
 
-    QByteArray tmp = pEvent->encodedData( agentMimeType_ );
-    ValuedListItem* droppedItem = *reinterpret_cast< ValuedListItem** >( tmp.data() );
-    QPoint position = viewport()->mapFromParent( pEvent->pos() );
-    ValuedListItem* targetItem = (ValuedListItem*)itemAt( position );
-
-    if( !droppedItem || !targetItem || !Drop( *droppedItem, *targetItem ) )
-        pEvent->ignore();
-    else
-        pEvent->accept();
+        if( !entity || !targetItem || !Drop( *entity, *targetItem ) )
+            pEvent->ignore();
+        else
+            pEvent->accept();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool HierarchyListView_ABC::Drop( ValuedListItem& item, ValuedListItem& target )
+bool HierarchyListView_ABC::Drop( const Entity_ABC& entity, ValuedListItem& target )
 {
-    return item.IsA< const Entity_ABC >()
-        && target.IsA< const Entity_ABC >()
-        && Drop( *item.GetValue< const Entity_ABC >(), *target.GetValue< const Entity_ABC >() );
+    return target.IsA< const Entity_ABC >()
+        && Drop( entity, *target.GetValue< const Entity_ABC >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -299,7 +291,7 @@ void HierarchyListView_ABC::NotifyActivated( const Entity_ABC& element )
 // Name: HierarchyListView_ABC::NotifyUpdated
 // Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& profile )
+void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& )
 {
     Update();
 }

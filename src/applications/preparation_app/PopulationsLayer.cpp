@@ -15,6 +15,7 @@
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/PopulationPositions.h"
+#include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
 
@@ -56,7 +57,7 @@ bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geome
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( event->provides( "csword/PopulationType" ) && selectedEntity_ )
+    if( selectedEntity_ && ValuedDragObject::Provides< const PopulationType >( event ) )
     {
         const kernel::Hierarchies* hierarchies = selectedEntity_->Retrieve< kernel::TacticalHierarchies >();
         if( !hierarchies )
@@ -65,20 +66,18 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
         const kernel::Entity_ABC& top = hierarchies->GetTop();
         if( const kernel::Team_ABC* team = dynamic_cast< const kernel::Team_ABC* >( &top ) )
         {
-            QByteArray tmp = event->encodedData( "csword/PopulationType" );
-            const PopulationType* droppedItem = *reinterpret_cast< const PopulationType** >( tmp.data() );
-            if( droppedItem )
+            if( const PopulationType* droppedItem = ValuedDragObject::GetValue< const PopulationType >( event ) )
             {
                 model_.agents_.CreatePopulation( *const_cast< kernel::Team_ABC* >( team ), *droppedItem, point );
                 return true;
             }
         }
     }
-    else if( event->provides( "population" ) && selectedPopulation_ )
+    else if( selectedPopulation_ && ValuedDragObject::Provides< const PopulationPositions >( event ) )
     {
-        if( const PopulationPositions* positions = static_cast< const PopulationPositions* >( selectedPopulation_->Retrieve< Positions >() ) )
+        if( PopulationPositions* positions = ValuedDragObject::GetValue< PopulationPositions >( event ) )
         {
-            const_cast< PopulationPositions* >( positions )->Set( point );
+            positions->Set( point );
             return true;
         }
     }

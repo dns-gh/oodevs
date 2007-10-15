@@ -11,6 +11,7 @@
 #include "PopulationTypesListView.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PopulationType.h"
+#include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
 
@@ -79,12 +80,6 @@ QDragObject* PopulationTypesListView::dragObject()
     gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( !pItem )
         return 0;
-
-    QByteArray* pBytes = new QByteArray();
     const PopulationType* pType = pItem->GetValue< const PopulationType >();
-    pBytes->setRawData( (const char*)( &pType ), sizeof( PopulationType* ) );
-    QStoredDrag* data = new QStoredDrag( "csword/PopulationType", this );
-    data->setEncodedData( *pBytes );
-    return data;
-    
+    return new ValuedDragObject( pType, this );
 }

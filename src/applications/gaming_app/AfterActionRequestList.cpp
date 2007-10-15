@@ -13,6 +13,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ItemFactory_ABC.h"
 #include "clients_gui/ListItemToolTip.h"
+#include "clients_gui/ValuedDragObject.h"
 #include "gaming/AfterActionRequest.h"
 #include "AfterActionPlot.h"
 #include "icons.h"
@@ -34,12 +35,7 @@ namespace
             ValuedListItem* item = (ValuedListItem*)selectedItem();
             if( !item ) return 0;
             const AfterActionRequest* request = item->GetValue< const AfterActionRequest >();
-
-            QByteArray* pBytes = new QByteArray();
-            pBytes->setRawData( (const char*)&request, sizeof( const AfterActionRequest* ) );
-            QStoredDrag* data = new QStoredDrag( "AfterActionRequest", this );
-            data->setEncodedData( *pBytes );
-            return data;
+            return new ValuedDragObject( request, this );
         }
     };
 }

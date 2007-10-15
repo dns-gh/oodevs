@@ -14,6 +14,7 @@
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AutomatType.h"
+#include "ValuedDragObject.h"
 
 using namespace kernel;
 using namespace gui;
@@ -266,23 +267,9 @@ QDragObject* UnitListView::dragObject()
     if( !pItem )
         return 0;
 
-    QByteArray* pBytes = new QByteArray();
-    std::string mimeType;
     if( pItem->IsA< const AgentType >() )
-    {
-        const AgentType* pType = pItem->GetValue< const AgentType >();
-        pBytes->setRawData( (const char*)( &pType ), sizeof( AgentType* ) );
-        mimeType = "csword/AgentType";
-    }
+        return new ValuedDragObject( pItem->GetValue< const AgentType >(), this );
     else if( pItem->IsA< const AutomatType >() )
-    {
-        const AutomatType* pType = pItem->GetValue< const AutomatType >();
-        pBytes->setRawData( (const char*)( &pType ), sizeof( AutomatType* ) );
-        mimeType = "csword/AutomatType";
-    }
-    if( mimeType.empty() )
-        return 0;
-    QStoredDrag* data = new QStoredDrag( mimeType.c_str(), this );
-    data->setEncodedData( *pBytes );
-    return data;
+        return new ValuedDragObject( pItem->GetValue< const AutomatType >(), this );
+    return 0;
 }

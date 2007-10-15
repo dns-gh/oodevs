@@ -237,10 +237,6 @@ Please check access rights or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Real time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>

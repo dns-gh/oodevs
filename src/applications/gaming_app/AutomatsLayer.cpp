@@ -16,6 +16,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
 
@@ -77,7 +78,7 @@ void AutomatsLayer::NotifySelected( const Automat_ABC* automat )
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
-    return event->provides( "csword/AgentType" ) && selected_;
+    return selected_ && ValuedDragObject::Provides< const AgentType >( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,17 +87,12 @@ bool AutomatsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( event->provides( "csword/AgentType" ) )
+    if( !selected_ )
+        return false;
+    if( const AgentType* droppedItem = ValuedDragObject::GetValue< const AgentType >( event ) )
     {
-        if( !selected_ )
-            return false;
-        QByteArray tmp = event->encodedData( "csword/AgentType" );
-        const AgentType* droppedItem = *reinterpret_cast< const AgentType** >( tmp.data() );
-        if( droppedItem )
-        {
-            RequestCreation( point, *droppedItem );
-            return true;
-        }
+        RequestCreation( point, *droppedItem );
+        return true;
     }
     return false;
 }

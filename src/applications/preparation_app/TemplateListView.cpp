@@ -12,6 +12,7 @@
 #include "moc_TemplateListView.cpp"
 #include "preparation/HierarchyTemplate.h"
 #include "clients_gui/ValuedListItem.h"
+#include "clients_gui/ValuedDragObject.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include "xeumeuleu/xml.h"
@@ -66,11 +67,7 @@ QDragObject* TemplateListView::dragObject()
         return 0;
 
     const HierarchyTemplate* pTemplate = pItem->GetValue< HierarchyTemplate >();
-    QByteArray* pBytes = new QByteArray();
-    pBytes->setRawData( (const char*)( &pTemplate ), sizeof( const HierarchyTemplate* ) );
-    QStoredDrag* data = new QStoredDrag( "csword/HierarchyTemplate", this );
-    data->setEncodedData( *pBytes );
-    return data;
+    return new ValuedDragObject( pTemplate, this );
 }
 
 // -----------------------------------------------------------------------------

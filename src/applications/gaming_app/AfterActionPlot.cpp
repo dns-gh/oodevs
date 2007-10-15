@@ -13,6 +13,7 @@
 #include "gaming/ASN_Messages.h"
 #include "gaming/Simulation.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
 
@@ -135,7 +136,7 @@ void AfterActionPlot::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void AfterActionPlot::dragEnterEvent( QDragEnterEvent* e )
 {
-    e->accept( e->provides( "AfterActionRequest" ) );
+    e->accept( ValuedDragObject::Provides< const AfterActionRequest >( e ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,12 +145,7 @@ void AfterActionPlot::dragEnterEvent( QDragEnterEvent* e )
 // -----------------------------------------------------------------------------
 void AfterActionPlot::dropEvent( QDropEvent* e )
 {
-    if( !e->provides( "AfterActionRequest" ) )
-         return;
-
-    QByteArray tmp = e->encodedData( "AfterActionRequest" );
-    const AfterActionRequest* request = *reinterpret_cast< const AfterActionRequest** >( tmp.data() );
-    if( request )
+    if( const AfterActionRequest* request = ValuedDragObject::GetValue< const AfterActionRequest >( e ) )
         Add( *request );
 }
 
