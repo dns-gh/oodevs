@@ -105,8 +105,9 @@ namespace
                 FullUpdateVisitor visitor( *that );
                 model_->Accept( visitor );
             }
+            // $$$$ AGE 2007-10-15: revoir tous ces trucs !
             if( firstFrame_ )
-                that->SendStartTick();
+                model_->SendFirstTick( *that );
         }
         virtual void Send( const ASN1T_MsgsSimToClient& msg )
         {
@@ -118,13 +119,6 @@ namespace
         virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {}
         virtual void Send( const ASN1T_MsgsReplayToClient& ) {}
         virtual void Send( const ASN1T_MsgsAarToClient& ) {}
-        void SendStartTick()
-        {
-            AsnMsgSimToClientControlBeginTick tick;
-            tick().current_tick = 0;
-//            tick().date_time = 0; // $$$$ AGE 2007-10-11: 
-            tick.Send( *this );
-        }
         Model* model_;
         tools::OutputBinaryWrapper* output_;
         ASN1OCTET* buffer_;

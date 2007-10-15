@@ -42,7 +42,10 @@ public:
 	void Update		   ( const ASN1T_MsgControlChangeTimeFactorAck& msg );
 //    void Update        ( const ASN1T_MsgControlCheckPointSetFrequencyAck& msg );
     void Send          ( ClientPublisher_ABC& publisher ) const;
+    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status ) const;
     void Reset         ();
+
+    void SendFirstTick( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:

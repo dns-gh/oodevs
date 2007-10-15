@@ -82,6 +82,7 @@ void AfterActionFunctionList::CreateRequestButton()
 void AfterActionFunctionList::Display( const AfterActionFunction& function, Displayer_ABC& , ValuedListItem* item )
 {
     item->SetNamed( function );
+    item->SetToolTip( function.GetComments() );
 }
 
 // -----------------------------------------------------------------------------

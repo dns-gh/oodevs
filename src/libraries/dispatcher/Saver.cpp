@@ -115,6 +115,7 @@ void Saver::Flush()
     tools::OutputBinaryWrapper wrapper( index_ );
     wrapper << current_;
     current_.Reset();
+    index_.flush(); keyIndex_.flush(); key_.flush(); update_.flush();
 }
 
 // -----------------------------------------------------------------------------

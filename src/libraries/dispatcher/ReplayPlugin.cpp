@@ -75,15 +75,7 @@ void ReplayPlugin::Receive( const ASN1T_MsgsSimToClient& )
 void ReplayPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& )
 {
     model_.Send( client );
-
-    AsnMsgReplayToClientControlReplayInformation asn;
-    asn().current_tick  = loader_.GetCurrentTick();
-    asn().tick_duration = 10; // $$$$ AGE 2007-04-11: 
-    asn().time_factor = factor_;
-    asn().status = running_ ? EnumSimulationState::running : EnumSimulationState::paused;
-    asn().tick_count = loader_.GetTickNumber();
-
-    asn.Send( client );
+    model_.SendReplayInfo( client, loader_.GetTickNumber(), running_ ? EnumSimulationState::running : EnumSimulationState::paused );
 }
 
 // -----------------------------------------------------------------------------

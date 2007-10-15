@@ -34,7 +34,7 @@ SvglRenderer::SvglRenderer()
     , colorList_  ( 0 )
     , colorDirty_ ( true )
 {
-    // NOTHING
+    r_ = g_ = b_ = a_ = 1;
 }
 
 // -----------------------------------------------------------------------------

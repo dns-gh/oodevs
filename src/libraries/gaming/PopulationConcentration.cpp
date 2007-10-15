@@ -28,6 +28,7 @@ PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConce
     , nDeadHumans_( 0 )
     , radius_( 0 )
     , deadRadius_( 0 )
+    , attitude_( E_PopulationAttitude( 0 ) )
 {
     RegisterSelf( *this );
 }

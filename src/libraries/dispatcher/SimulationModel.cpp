@@ -153,3 +153,31 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
     asn().profiling_enabled      = bProfilingEnabled_;
     asn.Send( publisher );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SimulationModel::SendReplayInfo
+// Created: AGE 2007-10-15
+// -----------------------------------------------------------------------------
+void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status ) const
+{
+    AsnMsgReplayToClientControlReplayInformation asn;
+    asn().current_tick = nCurrentTick_;
+    asn().date_time  = date_.c_str();
+    asn().tick_duration = nTickDuration_;
+    asn().time_factor = nTimeFactor_;
+    asn().status = status;
+    asn().tick_count = totalTicks;
+    asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationModel::SendFirstTick
+// Created: AGE 2007-10-15
+// -----------------------------------------------------------------------------
+void SimulationModel::SendFirstTick( ClientPublisher_ABC& publisher ) const
+{
+    AsnMsgSimToClientControlBeginTick asn;
+    asn().current_tick = 0;
+    asn().date_time    = date_.c_str();
+    asn.Send( publisher );
+}

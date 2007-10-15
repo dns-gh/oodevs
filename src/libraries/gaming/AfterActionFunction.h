@@ -45,6 +45,7 @@ public:
     //! @name Operations
     //@{
     QString GetName() const;
+    QString GetComments() const;
     std::string Commit( const T_Parameters& parameters ) const;
     //@}
 
@@ -65,6 +66,7 @@ private:
     //@{
     const QString name_;
     const std::string base_;
+    QString comments_;
     //@}
 };
 

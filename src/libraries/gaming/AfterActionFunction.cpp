@@ -36,9 +36,12 @@ AfterActionFunction::AfterActionFunction( xml::xistream& xis )
     : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
     , base_( ReadBase( xis ) )
 {
-    xis >> xml::start( "parameters" )
+    std::string comments;
+    xis >> xml::content( "comments", comments )
+        >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &AfterActionFunction::ReadParameter )
         >> xml::end();
+    comments_ = comments.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -68,6 +71,16 @@ QString AfterActionFunction::GetName() const
 {
     return name_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::GetComments
+// Created: AGE 2007-10-15
+// -----------------------------------------------------------------------------
+QString AfterActionFunction::GetComments() const
+{
+    return comments_;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionFunction::Commit

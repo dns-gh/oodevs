@@ -68,8 +68,10 @@ public:
 
     virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
     void Update( const ASN1T_MsgsSimToClient& asnMsg );
+    void Send         ( ClientPublisher_ABC& publisher ) const;
 
-    void Send  ( ClientPublisher_ABC& publisher ) const;
+    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status ) const;
+    void SendFirstTick( ClientPublisher_ABC& publisher ) const;
     //@}
 
     //! @name Operations

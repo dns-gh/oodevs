@@ -294,6 +294,24 @@ void Model::Send( ClientPublisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::SendFirstTick
+// Created: AGE 2007-10-15
+// -----------------------------------------------------------------------------
+void Model::SendFirstTick( ClientPublisher_ABC& publisher ) const
+{
+    pSimulationModel_->SendFirstTick( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::SendReplayInfo
+// Created: AGE 2007-10-15
+// -----------------------------------------------------------------------------
+void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status ) const
+{
+    pSimulationModel_->SendReplayInfo( publisher, totalTicks, status );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::Accept
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
@@ -340,4 +358,3 @@ void Model::EndSynchronisation( ClientPublisher_ABC& publisher )
     // $$$$ AGE 2007-04-24: c'est crado. Séparer l'envoi au client (dans le CommitDestruction() )
     // $$$$ AGE 2007-04-24: et la destruction (depuis la liste, séparément).
 }
-
