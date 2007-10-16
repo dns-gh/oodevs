@@ -101,10 +101,10 @@ void IntelligencesPanel::NotifyUpdated( const ModelLoaded& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IntelligencesPanel::NotifySelected
-// Created: SBO 2007-10-15
+// Name: IntelligencesPanel::Select
+// Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
-void IntelligencesPanel::NotifySelected( const kernel::Team_ABC* element )
+void IntelligencesPanel::Select( const kernel::Team_ABC* element )
 {
     selectedTeam_ = element;
     teamLabel_->setText( selectedTeam_ ? selectedTeam_->GetName() : "---" );

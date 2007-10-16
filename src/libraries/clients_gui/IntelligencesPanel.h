@@ -13,7 +13,7 @@
 #include "InfoPanel_ABC.h"
 #include "ValuedComboBox.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "clients_kernel/TeamSelectionObserver.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -26,6 +26,7 @@ namespace kernel
     class SymbolFactory;
     class IntelligencePrototype;
     class Team_ABC;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -43,7 +44,7 @@ namespace gui
 class IntelligencesPanel : public InfoPanel_ABC
                          , public kernel::Observer_ABC
                          , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                         , public kernel::SelectionObserver< kernel::Team_ABC >
+                         , public kernel::TeamSelectionObserver
 {
     Q_OBJECT;
 
@@ -76,7 +77,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
-    virtual void NotifySelected( const kernel::Team_ABC* element );
+    virtual void Select( const kernel::Team_ABC* element );
     virtual void mouseMoveEvent( QMouseEvent* event );
     void DoDrag();
     //@}

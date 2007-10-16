@@ -11,7 +11,7 @@
 #define __ObjectKnowledgePanel_h_
 
 #include "clients_gui/InfoPanel_ABC.h"
-#include "gaming/TeamSelectionObserver.h"
+#include "clients_kernel/TeamSelectionObserver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -59,7 +59,7 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public kernel::ElementObserver_ABC< kernel::NBCAttributes_ABC >
                            , public kernel::ElementObserver_ABC< kernel::RotaAttributes_ABC >
                            , public kernel::ElementObserver_ABC< kernel::MineAttributes_ABC >
-                           , public TeamSelectionObserver
+                           , public kernel::TeamSelectionObserver
 {
     Q_OBJECT;
 public:

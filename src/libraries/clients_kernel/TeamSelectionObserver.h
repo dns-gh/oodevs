@@ -10,13 +10,12 @@
 #ifndef __TeamSelectionObserver_h_
 #define __TeamSelectionObserver_h_
 
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "SelectionObserver_ABC.h"
 
 namespace kernel
 {
     class Entity_ABC;
     class Team_ABC;
-}
 
 // =============================================================================
 /** @class  TeamSelectionObserver
@@ -24,8 +23,8 @@ namespace kernel
 */
 // Created: AGE 2006-02-24
 // =============================================================================
-class TeamSelectionObserver : public kernel::SelectionObserver_ABC
-                            , public kernel::SelectionObserver_Base< kernel::Entity_ABC >
+class TeamSelectionObserver : public SelectionObserver_ABC
+                            , public SelectionObserver_Base< Entity_ABC >
 {
 
 public:
@@ -47,15 +46,17 @@ protected:
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const kernel::Entity_ABC& element );
-    virtual void Select( const kernel::Team_ABC* ) = 0;
+    virtual void Select( const Entity_ABC& element );
+    virtual void Select( const Team_ABC* ) = 0;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::Team_ABC* selected_;
+    const Team_ABC* selected_;
     //@}
 };
+
+}
 
 #endif // __TeamSelectionObserver_h_
