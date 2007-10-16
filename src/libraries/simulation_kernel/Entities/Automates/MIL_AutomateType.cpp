@@ -349,6 +349,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeFuseauUnloadedEnemiesRatio     < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisDebarquesDansFuseau"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeFuseauLoadedEnemiesRatio       < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisEmbarquesDansFuseau"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortFuseauxAccordingToUnloadedEnemies < MIL_Automate >, "DEC_Connaissances_TrierFuseauxSelonPresenceEnnemisDebarques" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortFuseauxAccordingToLoadedEnemies   < MIL_Automate >, "DEC_Connaissances_TrierFuseauxSelonPresenceEnnemisEmbarques" );
 
     // RCS
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_Automate >, "DEC_RC"      );

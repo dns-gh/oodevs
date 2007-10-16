@@ -272,18 +272,21 @@ void DEC_KnowledgeFunctions::ComputeFuseauLoadedEnemiesRatio( DIA_Call_ABC& call
 namespace 
 {
     template< typename T >
-    struct CompareFuseauUnloadedEnemies
+    struct CompareFuseauEnemies
     {
-        CompareFuseauUnloadedEnemies( const T& caller ) : pCaller_( &caller ) {}
+        CompareFuseauEnemies( const T& caller, bool unloaded )
+            : pCaller_( &caller ), unloaded_( unloaded ) {}
         bool operator()( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
         {
             MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
             MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
 
-            return DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( *pCaller_, *pFuseau1, true ) < DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( *pCaller_, *pFuseau2, true );
+            return DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( *pCaller_, *pFuseau1, unloaded_ )
+                 < DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( *pCaller_, *pFuseau2, unloaded_ );
         }
 
         const T* pCaller_;
+        bool unloaded_;
     };    
 }
 
@@ -294,10 +297,25 @@ namespace
 template< typename T > 
 void DEC_KnowledgeFunctions::SortFuseauxAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller )
 {
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );   
+    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );
 
     call.GetResult() = call.GetParameter( 0 );
     
     T_ObjectVariableVector& fuseaux = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( fuseaux.begin(), fuseaux.end(), CompareFuseauUnloadedEnemies< MIL_Automate >( caller ) );
+    std::sort( fuseaux.begin(), fuseaux.end(), CompareFuseauEnemies< MIL_Automate >( caller, true ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::SortFuseauxAccordingToLoadedEnemies
+// Created: AGE 2007-10-16
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_KnowledgeFunctions::SortFuseauxAccordingToLoadedEnemies( DIA_Call_ABC& call, const T& caller )
+{
+    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );
+
+    call.GetResult() = call.GetParameter( 0 );
+    T_ObjectVariableVector& fuseaux = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
+    std::sort( fuseaux.begin(), fuseaux.end(), CompareFuseauEnemies< MIL_Automate >( caller, false ) );
+}
+

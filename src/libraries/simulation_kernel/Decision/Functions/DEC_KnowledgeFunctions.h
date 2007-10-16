@@ -45,6 +45,7 @@ public:
     template< typename T > static void ComputeFuseauUnloadedEnemiesRatio    ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void ComputeFuseauLoadedEnemiesRatio      ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void SortFuseauxAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void SortFuseauxAccordingToLoadedEnemies  ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetLivingEnemiesPerceivedByPion      ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetDangerousEnemiesInZoneOfPion      ( DIA_Call_ABC& call, const T& caller );
 

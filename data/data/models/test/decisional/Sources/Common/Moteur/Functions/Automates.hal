@@ -72,7 +72,8 @@ signatures
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesAmiesDansZone                      ( U /*T_Localisation*/ );            
     R                                A::DEC_Connaissances_PourcentageEnnemisDebarquesDansFuseau    ( U /*T_Fuseau*/ );
     R                                A::DEC_Connaissances_PourcentageEnnemisEmbarquesDansFuseau    ( U /*T_Fuseau*/ );
-    S /*T_ListeFuseaux*/             A::DEC_Connaissances_TrierFuseauxSelonPresenceEnnemisDebarques( S /*T_ListeFuseaux*/ ); // Retourne liste moins ouvert -> plus ouvert    
+    S /*T_ListeFuseaux*/             A::DEC_Connaissances_TrierFuseauxSelonPresenceEnnemisDebarques( S /*T_ListeFuseaux*/ ); // Retourne liste moins ouvert -> plus ouvert
+    S /*T_ListeFuseaux*/             A::DEC_Connaissances_TrierFuseauxSelonPresenceEnnemisEmbarques( S /*T_ListeFuseaux*/ ); // Retourne liste moins ouvert -> plus ouvert    
            
     I /*E_NiveauPerception*/         A::DEC_ConnaissanceAgent_NiveauPerceptionMax                ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne le niveau de perception MAX d'une connaissance (le plus haut niveau ayant été associé à cette connaissance depuis sa création)    
     R                                A::DEC_ConnaissanceAgent_EtatOps                            ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1
