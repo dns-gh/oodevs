@@ -17,6 +17,7 @@
 // -----------------------------------------------------------------------------
 Actions::Actions( QObject* parent )
     : QObject( parent )
+    , group_( new QActionGroup( this, "Action group", true ) )
 {
     // NOTHING
 }
@@ -40,6 +41,7 @@ QAction& Actions::CreateAction( const QString& name, const char* cname )
     result->setToggleAction( true );
     result->setMenuText( name );
     result->setText( name );
+    group_->add( result );
     return *result;
 }
 

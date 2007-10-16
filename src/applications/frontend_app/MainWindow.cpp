@@ -47,7 +47,7 @@ MainWindow::MainWindow()
     pages_->addWidget( new QWidget( this ) );
     box->setStretchFactor( pages_, 3 );
 
-    Actions actions( this );
+    Actions& actions = *new Actions( this );
 
     AddAction< TerrainCreationPanel >( tr( "Prepare" ), actions.CreateTerrain() );
     AddAction< ExerciseCreationPanel >( tr( "Prepare" ), actions.CreateExercise() );

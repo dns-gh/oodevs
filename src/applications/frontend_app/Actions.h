@@ -53,6 +53,12 @@ private:
     //@{
     QAction& CreateAction( const QString& name, const char* cname ); 
     //@}
+
+private:
+    //! @name Member data
+    //@{
+    QActionGroup* group_;
+    //@}
 };
 
 #endif // __Actions_h_
