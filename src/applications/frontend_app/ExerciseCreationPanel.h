@@ -55,6 +55,7 @@ private:
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* event );
+    virtual void Update();
     //@}
 
 private:

@@ -55,6 +55,11 @@ private:
     virtual void showEvent( QShowEvent* event );
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Update();
+    //@}
+
 private:
     //! @name Member data
     //@{

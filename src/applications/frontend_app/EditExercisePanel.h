@@ -49,6 +49,11 @@ private:
     EditExercisePanel& operator=( const EditExercisePanel& ); //!< Assignment operator
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Update();
+    //@}
+
 private:
     //! @name Member data
     //@{

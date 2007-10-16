@@ -36,7 +36,6 @@ JoinExercisePanel::JoinExercisePanel( QWidgetStack* widget, QAction& action, con
     QGroupBox* group = new QGroupBox( 3, Qt::Vertical, action.text(), box );
     new QLabel( tr( "Choose the exercise to join:" ), group );
     list_ = new QListBox( group );
-    list_->insertStringList( commands::ListExercises( config ) );
 
     bubble_ = new InfoBubble( box ); // $$$$ SBO 2007-10-05: TODO
     QHBox* btnBox = new QHBox( box );
@@ -51,7 +50,7 @@ JoinExercisePanel::JoinExercisePanel( QWidgetStack* widget, QAction& action, con
     new QLabel( tr( "Exercise number:" ), exerciseNumberBox );
     exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
 
-    list_->setSelected( 0, true );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,5 +70,17 @@ void JoinExercisePanel::StartExercise()
 {
     if( list_->selectedItem() )
         new ::JoinExercise( this, config_, list_->selectedItem()->text(), exerciseNumber_->value() );
+    Update();
     ShowNext();
+}
+
+// -----------------------------------------------------------------------------
+// Name: JoinExercisePanel::Update
+// Created: AGE 2007-10-16
+// -----------------------------------------------------------------------------
+void JoinExercisePanel::Update()
+{
+    list_->clear();
+    list_->insertStringList( commands::ListExercises( config_ ) );
+    list_->setSelected( 0, true );
 }

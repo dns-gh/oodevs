@@ -35,7 +35,6 @@ StartAnalysePanel::StartAnalysePanel( QWidgetStack* widget, QAction& action, con
         QVBox* exercises = new QVBox( group );
         new QLabel( tr( "Choose the exercise to analyse:" ), exercises );
         exercises_ = new QListBox( exercises );
-        exercises_->insertStringList( commands::ListExercises( config ) );
         connect( exercises_, SIGNAL( selectionChanged() ), SLOT( ExerciseSelected() ) );
     }
     {
@@ -52,9 +51,9 @@ StartAnalysePanel::StartAnalysePanel( QWidgetStack* widget, QAction& action, con
         QFont font( "Arial", 10, QFont::Bold );
         okay_->setFont( font );
     }
-    exercises_->setSelected( 0, true );
-
+    
     connect( okay_, SIGNAL( pressed() ), SLOT( StartReplay() ) );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -104,5 +103,17 @@ void StartAnalysePanel::StartReplay()
 {
     if( exercises_->selectedItem() && replays_->selectedItem() )
         new ::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text() );
+    Update();
     ShowNext();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartAnalysePanel::Update
+// Created: AGE 2007-10-16
+// -----------------------------------------------------------------------------
+void StartAnalysePanel::Update()
+{
+    exercises_->clear();
+    exercises_->insertStringList( commands::ListExercises( config_ ) );
+    exercises_->setSelected( 0, true );
 }

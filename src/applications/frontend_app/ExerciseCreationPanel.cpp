@@ -40,18 +40,15 @@ ExerciseCreationPanel::ExerciseCreationPanel( QWidgetStack* widget, QAction& act
     {
         new QLabel( tr( "Choose the model data set:" ), group );
         modelList_ = new QListBox( group );
-        modelList_->insertStringList( commands::ListModels( config ) );
         connect( modelList_, SIGNAL( selectionChanged() ), SLOT( ModelSelected() ) );
     }
     {
         physicalLabel_ = new QLabel( tr( "Choose the physical data set:" ), group );
         physicalList_ = new QListBox( group );
-        physicalList_->insertStringList( commands::ListModels( config ) );
     }
     {
         new QLabel( tr( "Choose the terrain:" ), group );
         terrainList_ = new QListBox( group );
-        terrainList_->insertStringList( commands::ListTerrains( config ) );
     }
 
     bubble_ = new InfoBubble( box );
@@ -63,9 +60,7 @@ ExerciseCreationPanel::ExerciseCreationPanel( QWidgetStack* widget, QAction& act
         okay_->setFont( font );
     }
     connect( okay_, SIGNAL( pressed() ), SLOT( CreateExercise() ) );
-
-    modelList_->setSelected( 0, true );
-    terrainList_->setSelected( 0, true );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -100,6 +95,7 @@ void ExerciseCreationPanel::CreateExercise()
                                  terrainList_->selectedItem()->text().ascii(),
                                  modelList_->selectedItem()->text().ascii(),
                                  physicalList_->selectedItem() ? physicalList_->selectedItem()->text().ascii() :"" );
+    Update();
     ShowNext();
 }
 
@@ -132,4 +128,18 @@ void ExerciseCreationPanel::NameChanged( const QString& name )
         bubble_->ShowError( tr( "An exercise with this name already exists." ) );
     else
         bubble_->ShowInfo( tr( "The new exercise will be created in:\n%1" ).arg( config_.GetExerciseDir( name.ascii() ).c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseCreationPanel::Update
+// Created: AGE 2007-10-16
+// -----------------------------------------------------------------------------
+void ExerciseCreationPanel::Update()
+{
+    modelList_->clear();
+    modelList_->insertStringList( commands::ListModels( config_ ) );
+    terrainList_->clear();
+    terrainList_->insertStringList( commands::ListTerrains( config_ ) );
+    modelList_->setSelected( 0, true );
+    terrainList_->setSelected( 0, true );
 }

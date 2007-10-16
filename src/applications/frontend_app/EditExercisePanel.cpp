@@ -33,8 +33,6 @@ EditExercisePanel::EditExercisePanel( QWidgetStack* widget, QAction& action, con
     QGroupBox* group = new QGroupBox( 2, Qt::Vertical, action.text(), box );
     new QLabel( tr( "Choose the exercise to edit:" ), group );
     list_ = new QListBox( group );
-    list_->insertStringList( commands::ListExercises( config ) );
-    list_->setSelected( 0, true );
 
     bubble_ = new InfoBubble( box ); // $$$$ SBO 2007-10-05: TODO
     QHBox* btnBox = new QHBox( box );
@@ -44,6 +42,8 @@ EditExercisePanel::EditExercisePanel( QWidgetStack* widget, QAction& action, con
     okay->setFont( font );
     connect( okay, SIGNAL( pressed() ), SLOT( EditExercise() ) );
     connect( list_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( EditExercise() ) );
+
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -63,6 +63,17 @@ void EditExercisePanel::EditExercise()
 {
     if( list_->selectedItem() )
         new ::EditExercise( this, config_, list_->selectedItem()->text() );
+    Update();
     ShowNext();
 }
 
+// -----------------------------------------------------------------------------
+// Name: EditExercisePanel::Update
+// Created: AGE 2007-10-16
+// -----------------------------------------------------------------------------
+void EditExercisePanel::Update()
+{
+    list_->clear();
+    list_->insertStringList( commands::ListExercises( config_) );
+    list_->setSelected( 0, true );
+}

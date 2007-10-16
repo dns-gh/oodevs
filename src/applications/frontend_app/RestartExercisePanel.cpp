@@ -33,7 +33,6 @@ RestartExercisePanel::RestartExercisePanel( QWidgetStack* widget, QAction& actio
     QGroupBox* group = new QGroupBox( 2, Qt::Vertical, action.text(), box );
     new QLabel( tr( "Choose the exercise to start:" ), group );
     list_ = new QListBox( group );
-    list_->insertStringList( commands::ListExercises( config ) );
 
     new QLabel( tr( "Choose the checkpoint to load:" ), group );
     checkpointList_ = new QListBox( group );
@@ -44,11 +43,13 @@ RestartExercisePanel::RestartExercisePanel( QWidgetStack* widget, QAction& actio
     okay_ = new QPushButton( MAKE_PIXMAP( next ), tr( "Start exercise" ), btnBox );
     QFont font( "Arial", 10, QFont::Bold );
     okay_->setFont( font );
+
     connect( okay_, SIGNAL( pressed() ), SLOT( StartExercise() ) );
     connect( checkpointList_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( StartExercise() ) );
     connect( list_, SIGNAL( selectionChanged() ), SLOT( ExerciseSelected() ) );
     connect( checkpointList_, SIGNAL( selectionChanged() ), SLOT( CheckpointSelected() ) );
-    list_->setSelected( 0, true );
+
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -68,6 +69,7 @@ void RestartExercisePanel::StartExercise()
 {
     if( list_->selectedItem() )
         new ::StartExercise( this, config_, list_->selectedItem()->text() );
+    Update();
     ShowNext();
 }
 
@@ -96,4 +98,15 @@ void RestartExercisePanel::CheckpointSelected()
         bubble_->ShowInfo( tr( "Restart game: %1" ).arg( checkpointList_->selectedItem()->text() ) ); // $$$$ SBO 2007-10-05: TODO
     else
         bubble_->ShowError( tr( "The selected exercise as no checkpoint to restart." ) ); // $$$$ SBO 2007-10-05: TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: RestartExercisePanel::Update
+// Created: AGE 2007-10-16
+// -----------------------------------------------------------------------------
+void RestartExercisePanel::Update()
+{
+    list_->clear();
+    list_->insertStringList( commands::ListExercises( config_ ) );
+    list_->setSelected( 0, true );
 }

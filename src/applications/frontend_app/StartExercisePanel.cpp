@@ -38,7 +38,6 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
     tabs->setMargin( 5 );
     
     list_ = new QListBox( tabs );
-    list_->insertStringList( commands::ListExercises( config ) );
     tabs->addTab( list_, tr( "Exercise" ) );
 
     configPanel_ = new GameConfigPanel( tabs, config );
@@ -58,7 +57,7 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
     new QLabel( tr( "Exercise number:" ), exerciseNumberBox );
     exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
 
-    list_->setSelected( 0, true );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +79,7 @@ void StartExercisePanel::StartExercise()
     {
         configPanel_->Commit( list_->selectedItem()->text().ascii(), exerciseNumber_->value() );
         new ::StartExercise( this, config_, list_->selectedItem()->text() );
+        Update();
         ShowNext();
     }
 }
@@ -92,4 +92,15 @@ void StartExercisePanel::ExerciseSelected()
 {
     if( list_->selectedItem() )
         configPanel_->Show( list_->selectedItem()->text().ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartExercisePanel::Update
+// Created: AGE 2007-10-16
+// -----------------------------------------------------------------------------
+void StartExercisePanel::Update()
+{
+    list_->clear();
+    list_->insertStringList( commands::ListExercises( config_ ) );
+    list_->setSelected( 0, true );
 }

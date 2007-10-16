@@ -26,7 +26,6 @@
 TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
     : Panel_ABC        ( widget, action )
     , config_          ( config )
-    , existingTerrains_( commands::ListTerrains( config ) )
 {
     QVBox* box = new QVBox( this );
     box->setMargin( 10 );
@@ -46,6 +45,7 @@ TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& actio
         okay_->setFont( font );
     }
     connect( okay_, SIGNAL( pressed() ), SLOT( CreateTerrain() ) );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,6 +75,7 @@ void TerrainCreationPanel::showEvent( QShowEvent* event )
 void TerrainCreationPanel::CreateTerrain()
 {
     new ::CreateTerrain( this, config_, name_->text() );
+    Update();
     ShowNext();
 }
 
@@ -90,4 +91,13 @@ void TerrainCreationPanel::NameChanged( const QString& name )
         bubble_->ShowError( tr( "A terrain with this name already exists." ) );
     else
         bubble_->ShowInfo( tr( "The new terrain will be created in:\n%1" ).arg( config_.GetTerrainDir( name.ascii() ).c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainCreationPanel::Update
+// Created: AGE 2007-10-16
+// -----------------------------------------------------------------------------
+void TerrainCreationPanel::Update()
+{
+    existingTerrains_ = commands::ListTerrains( config_ );
 }

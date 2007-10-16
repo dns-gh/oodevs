@@ -45,6 +45,7 @@ protected:
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* event );
+    virtual void Update();
     void ShowNext();
     //@}
 

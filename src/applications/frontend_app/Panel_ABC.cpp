@@ -75,6 +75,7 @@ Panel_ABC::~Panel_ABC()
 void Panel_ABC::showEvent( QShowEvent* event )
 {
     stack_->raiseWidget( this );
+    Update();
     QVBox::showEvent( event );
 }
 
@@ -95,4 +96,13 @@ void Panel_ABC::ShowNext()
 {
     if( next_ )
         next_->setOn( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Panel_ABC::Update
+// Created: AGE 2007-10-16
+// -----------------------------------------------------------------------------
+void Panel_ABC::Update()
+{
+    // NOTHING
 }
