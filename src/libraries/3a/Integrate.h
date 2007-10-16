@@ -69,6 +69,11 @@ private:
     Integrate& operator=( const Integrate& ); //!< Assignment operator
     //@}
 
+    //! @name Operations
+    //@{
+    virtual std::string GetName() const { return "Integrate"; }
+    //@}
+
 private:
     //! @name Member data
     //@{

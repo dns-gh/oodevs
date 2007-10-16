@@ -43,6 +43,28 @@ namespace extractors
         { return ::Position( attributes.position ); }
     };
 
+    struct Resources : public Extractor< int >
+    {
+        bool HasFlag( const ASN1T_MsgUnitAttributes& attributes ) const
+        { return attributes.m.dotation_eff_ressourcePresent; }
+        int Extract( const ASN1T_MsgUnitAttributes& attributes )
+        { 
+            unsigned size = attributes.dotation_eff_ressource.n;
+            while( size > 0 )
+            {
+                --size;
+                const int dotation = attributes.dotation_eff_ressource.elem[ size ].ressource_id;
+                const int quantity = attributes.dotation_eff_ressource.elem[ size ].quantite_disponible;
+                resources_[ dotation ] = quantity;
+            }
+            int result = 0;
+            for( std::map< int, int >::const_iterator it = resources_.begin(); it != resources_.end(); ++it )
+                result += it->second;
+            return result;
+        }
+        std::map< int, int > resources_;
+    };
+
     // Existences
     struct MaintenanceHandlingUnitId : public Extractor< unsigned long >
     {
@@ -86,6 +108,7 @@ namespace extractors
             return result;
         }
     };
+
 }
 
 #endif // __Extractors_h_

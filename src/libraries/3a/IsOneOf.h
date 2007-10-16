@@ -73,6 +73,11 @@ private:
     IsOneOf& operator=( const IsOneOf& ); //!< Assignment operator
     //@}
 
+    //! @name Operations
+    //@{
+    virtual std::string GetName() const { return "IsOneOf"; }
+    //@}
+
     //! @name Types
     //@{
     typedef std::vector< T > T_Values;

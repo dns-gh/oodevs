@@ -78,6 +78,11 @@ private:
     Domain& operator=( const Domain& ); //!< Assignment operator
     //@}
 
+    //! @name Operations
+    //@{
+    virtual std::string GetName() const { return "Domain"; }
+    //@}
+
     //! @name Types
     //@{
     typedef std::vector< K > T_Keys;

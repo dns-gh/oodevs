@@ -48,8 +48,10 @@ struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
     Extractor extractor_;
 };
 
-struct OperationalState : public UnitAttribute< extractors::OperationalState > {};
-struct Position         : public UnitAttribute< extractors::Position > {};
+struct OperationalState   : public UnitAttribute< extractors::OperationalState > {};
+struct Position           : public UnitAttribute< extractors::Position > {};
+struct Resources          : public UnitAttribute< extractors::Resources > {};
+
 
 } // namespace attributes
 

@@ -27,8 +27,7 @@ namespace
         attributes.m.etat_operationnel_brutPresent = 1;
         attributes.etat_operationnel_brut = opstate;
         attributes.oid = id;
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;
+        ASN1T_MsgsSimToClient result;result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;
         result.msg.u.msg_unit_attributes = &attributes;
         return result;
     }
@@ -522,6 +521,116 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComp
     publisher.verify();
 }
 
+namespace
+{
+    ASN1T_MsgsSimToClient MakeResourceVariation( int variation, unsigned long id )
+    {
+        static ASN1T_MsgUnitAttributes attributes;
+        static ASN1T_ResourceDotations resource;
+        attributes.m.dotation_eff_ressourcePresent = 1;
+        attributes.dotation_eff_ressource.n = 1;
+        attributes.dotation_eff_ressource.elem = &resource;
+        resource.ressource_id = 42;
+        resource.quantite_disponible = variation;
+        attributes.oid = id;
+        ASN1T_MsgsSimToClient result;
+        result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;
+        result.msg.u.msg_unit_attributes = &attributes;
+        return result;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestAllResources
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='resources' id='resources'/>"
+        "<reduce type='int' function='sum' input='resources' id='sum'/>"
+        "<plot input='sum' type='int'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 4212, 12 ) );
+    task->Receive( MakeResourceVariation( 1242, 13 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 4200, 12 ) );
+    task->Receive( MakeResourceVariation( 1200, 13 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 1000, 14 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 4100, 12 ) );
+    task->Receive( EndTick() );
+
+
+    MockPublisher publisher;
+    double expectedResult[] = { 5454, 5400, 5400, 6400, 6300 };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit( publisher );
+    publisher.verify();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestResourceConsumptions
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptions )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='resources' id='resources'/>"
+        "<transform type='int' function='derivate' input='resources' id='resources-var'/>"
+        "<constant type='int' value='0' id='zero'/>"
+        "<transform function='compare' type='int' operator='less' input='resources-var,zero' id='test'/>"
+        "<transform function='filter' type='int' input='test,resources-var' id='consumptions'/>"
+        "<reduce type='int' function='sum' input='consumptions' id='sum'/>"
+        "<plot input='sum' type='int'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 4212, 12 ) );
+    task->Receive( MakeResourceVariation( 1242, 13 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 4200, 12 ) );
+    task->Receive( MakeResourceVariation( 1200, 13 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 5200, 12 ) );
+    task->Receive( MakeResourceVariation( 2200, 13 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 1000, 14 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 5100, 12 ) );
+    task->Receive( EndTick() );
+
+
+    MockPublisher publisher;
+    double expectedResult[] = { 0, -54, 0, 0, -100 };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit( publisher );
+    publisher.verify();
+}
+
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]
 //(
@@ -531,6 +640,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComp
 //  @Ressources ressource_id_tablename, -- Ressource … comptabiliser
 //  @Resultat tablename OUTPUT      -- Table de resultats
 //)
+
 
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_DISPONIBLES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Pourcentages)]
 //(

@@ -69,6 +69,11 @@ private:
     Derivate& operator=( const Derivate& ); //!< Assignment operator
     //@}
 
+    //! @name Operations
+    //@{
+    virtual std::string GetName() const { return "Derivate"; }
+    //@}
+
 private:
     //! @name Member data
     //@{

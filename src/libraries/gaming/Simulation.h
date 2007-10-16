@@ -99,6 +99,7 @@ private:
     kernel::Controller& controller_;
     unsigned int tickDuration_;
     unsigned int timeFactor_;
+    unsigned int currentTick_;
     unsigned int tickCount_;
     int time_;
     std::string date_;

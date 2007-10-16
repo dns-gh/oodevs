@@ -28,6 +28,7 @@ public:
     //@{
     typedef T Result_Type;
     //@}
+
 public:
     //! @name Constructors/Destructor
     //@{

@@ -22,6 +22,7 @@ Simulation::Simulation( Controller& controller )
     : controller_( controller )
     , tickDuration_( 10 )
     , timeFactor_( 1 )
+    , currentTick_( 0 )
     , tickCount_( unsigned( -1 ) )
     , time_( 0 )
     , paused_( false )
@@ -138,6 +139,7 @@ void Simulation::Update( const ASN1T_MsgControlBeginTick& message )
     int tick = message.current_tick;
     date_ = std::string( (const char*)message.date_time.data, 15 );
     profiling_.Tick();
+    currentTick_ = tick;
     time_ = tick * tickDuration_;
     controller_.Update( startTick_ );
     controller_.Update( *this );
@@ -218,7 +220,7 @@ int Simulation::GetSpeed() const
 // -----------------------------------------------------------------------------
 unsigned Simulation::GetCurrentTick() const
 {
-    return tickDuration_ ? time_ / tickDuration_ : 0;
+    return currentTick_;
 }
 
 // -----------------------------------------------------------------------------

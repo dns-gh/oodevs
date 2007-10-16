@@ -63,8 +63,8 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( ! message.m.dotation_eff_ressourcePresent  )
         return;
 
-    std::vector< Dotation > differences;
     uint nSize = message.dotation_eff_ressource.n;
+    std::vector< Dotation > differences; differences.reserve( nSize );
     while ( nSize > 0 )
     {
         const ASN1T_ResourceDotations& value = message.dotation_eff_ressource.elem[ --nSize ];

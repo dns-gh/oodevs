@@ -11,6 +11,7 @@
 #include "DispatchedFunctionHelper.h"
 #include "Attributes.h"
 #include "Existences.h"
+#include "Events.h"
 #include "IdentifierValue.h"
 #include "Selector.h"
 #include "Connectors.h"
@@ -27,10 +28,10 @@
 #include "Maximum.h"
 #include "Adder.h"
 #include "Meaner.h"
-#include "Events.h"
 #include "Composer.h"
 #include "Constant.h"
 #include "Contains.h"
+#include "Compare.h"
 #include "TypeDispatcher.h"
 #include <xeumeuleu/xml.h>
 
@@ -61,6 +62,7 @@ namespace
         // name,                           type,       key type
         { "operational-state",            "float",    "unit" },
         { "position",                     "position", "unit" },
+        { "resources",                    "int",      "unit" },
         { "maintenance-handling-unit",    "unit",     "maintenance-handling" },
         { "direct-fire-unit",             "unit",     "fire" },
         { "fire-component-damage",        "float",    "fire" },
@@ -78,6 +80,7 @@ namespace
         { "integrate", "any",         "",           "input 1",    "",             "" },
         { "domain",    "any",         "",           "input 1",    "list key",     "select" },
         { "compose",   "any",         "any",        "input 2",    "",             "" },
+        { "compare",   "any",         "any",        "bool",       "operator",     "operator" },
         { 0, 0, 0, 0, 0, 0 }
     };
 
@@ -266,6 +269,8 @@ void FunctionFactory::Extract( xml::xistream& xis, Task& result )
         Extract< attributes::OperationalState >( name, xis, result );
     else if( value == "position" )
         Extract< attributes::Position >( name, xis, result );
+    else if( value == "resources" )
+        Extract< attributes::Resources >( name, xis, result );
     else if( value == "maintenance-handling-unit" )
         Extract< existences::MaintenanceHandlingUnitId >( name, xis, result );
     else if( value == "direct-fire-unit" )
@@ -404,6 +409,8 @@ void FunctionFactory::Transform( const std::string& name, xml::xistream& xis, Ta
         Transform1< Integrate< unsigned long, T > >( name, xis, result );
     else if( function == "domain" )
         Transform1< Domain< unsigned long, T > >( name, xis, result );
+    else if( function == "compare" )
+        Transform2< Compare< unsigned long, T > >( name, xis, result );
     else if( function == "compose" )
         Compose< T >( name, xis, result );
     else
