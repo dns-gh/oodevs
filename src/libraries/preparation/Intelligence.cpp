@@ -10,9 +10,11 @@
 #include "preparation_pch.h"
 #include "Intelligence.h"
 #include "IdManager.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -29,6 +31,7 @@ Intelligence::Intelligence( Controller& controller, IdManager& idManager, const 
     , karma_( karma )
 {
     RegisterSelf( *this );
+    CreateDictionary( controller );
 }
 
 namespace
@@ -54,6 +57,7 @@ Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,4 +102,19 @@ void Intelligence::SerializeAttributes( xml::xostream& xos ) const
         << attribute( "karma", karma_.GetId() )
         << attribute( "level", level_ )
         << attribute( "type" , symbol_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Intelligence::CreateDictionary
+// Created: SBO 2007-10-16
+// -----------------------------------------------------------------------------
+void Intelligence::CreateDictionary( kernel::Controller& controller )
+{
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
+    Attach( dictionary );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Identifier" ), (const unsigned long)id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Name" ) , name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Type" ) , symbol_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Level" ), level_ );
+    dictionary.Register( *(      Entity_ABC*)this, tools::translate( "Intelligence", "Info/Karma" ), karma_ );
 }

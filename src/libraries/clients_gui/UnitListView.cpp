@@ -33,7 +33,7 @@ UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const Age
     addColumn( tr( "Count" ) );
     setRootIsDecorated( true );
     header()->hide();
-    setSorting( -1 );
+    setSorting( 0 );
 
     controllers_.Register( *this );
 }

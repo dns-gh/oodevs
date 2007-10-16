@@ -56,6 +56,7 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::Controller& controller );
     virtual const kernel::Karma& GetKarma() const;
     virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
