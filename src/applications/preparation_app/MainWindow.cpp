@@ -164,7 +164,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     // Creation panel
     QDockWindow* pCreationDockWnd = new QDockWindow( this );
     moveDockWindow( pCreationDockWnd, Qt::DockRight );
-    CreationPanels* pCreationPanel = new CreationPanels( pCreationDockWnd, controllers, staticModel_, *factory, *symbols );
+    CreationPanels* pCreationPanel = new CreationPanels( pCreationDockWnd, controllers, staticModel_, *factory, *symbols, *strategy_ );
     pCreationDockWnd->setWidget( pCreationPanel );
     pCreationDockWnd->setResizeEnabled( true );
     pCreationDockWnd->setCloseMode( QDockWindow::Always );

@@ -280,7 +280,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QDockWindow* pCreationWnd = new QDockWindow( this );
     moveDockWindow( pCreationWnd, Qt::DockRight );
     pCreationWnd->hide();
-    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, publisher, *paramLayer, *glProxy_ );
+    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, publisher, *paramLayer, *glProxy_, *symbols, *strategy_ );
     pCreationWnd->setWidget( creationPanels );
     pCreationWnd->setResizeEnabled( true );
     pCreationWnd->setCloseMode( QDockWindow::Always );

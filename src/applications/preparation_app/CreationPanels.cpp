@@ -21,10 +21,10 @@ using namespace kernel;
 // Name: CreationPanels constructor
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons )
+CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy )
     : Panels( parent )
 {
-    AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory ) );
+    AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( new PopulationsPanel( this, *this, controllers, (Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
     AddPanel( new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
 }

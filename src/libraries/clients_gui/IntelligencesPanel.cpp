@@ -144,7 +144,11 @@ void IntelligencesPanel::UpdateSymbol()
             QTimer::singleShot( 100, this, SLOT( UpdateSymbol() ) );
     }
     else
-        icon_->setPixmap( QPixmap( 128, 128 ) );
+    {
+        QPixmap blank( 128, 128 );
+        blank.fill( Qt::white );
+        icon_->setPixmap( blank );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -21,10 +21,10 @@ using namespace gui;
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, ItemFactory_ABC& factory, Publisher_ABC& publisher, ParametersLayer& paramLayer, GlTools_ABC& tools )
+CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, ItemFactory_ABC& factory, Publisher_ABC& publisher, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy )
     : Panels( parent )
 {
-    AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory ) );
+    AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, publisher, staticModel, paramLayer, tools );
     AddPanel( objectCreationPanel_ );
 }

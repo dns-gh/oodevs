@@ -263,7 +263,7 @@ void UnitListView::Display( const AutomatType& type, ValuedListItem* item )
 // -----------------------------------------------------------------------------
 QDragObject* UnitListView::dragObject()
 {
-    ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
+    ValuedListItem* pItem = dynamic_cast< ValuedListItem* >( selectedItem() );
     if( !pItem )
         return 0;
 

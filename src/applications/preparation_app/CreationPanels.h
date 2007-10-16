@@ -21,6 +21,7 @@ namespace gui
 {
     class ItemFactory_ABC;
     class SymbolIcons;
+    class ColorStrategy_ABC;
 }
 
 class StaticModel;
@@ -36,7 +37,7 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons );
+             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy );
     virtual ~CreationPanels();
     //@}
 };

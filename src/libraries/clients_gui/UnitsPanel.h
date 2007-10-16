@@ -26,6 +26,9 @@ namespace gui
     class PanelStack_ABC;
     class ItemFactory_ABC;
     class UnitListView;
+    class UnitPreviewIcon;
+    class SymbolIcons;
+    class ColorStrategy_ABC;
 
 // =============================================================================
 /** @class  UnitsPanel
@@ -42,7 +45,7 @@ class UnitsPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitsPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& agentTypes, ItemFactory_ABC& factory );
+             UnitsPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& agentTypes, ItemFactory_ABC& factory, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy );
     virtual ~UnitsPanel();
     //@}
 
@@ -52,6 +55,8 @@ private slots:
     void Sort();
     void OpenList();
     void CloseList();
+    void SelectionChanged( QListViewItem* item );
+    void IconDragged();
     //@}
 
 private:
@@ -72,6 +77,7 @@ private:
     kernel::Controllers& controllers_;
     ValuedComboBox< std::string >* combo_;
     UnitListView* list_;
+    UnitPreviewIcon* icon_;
     //@}
 };
 

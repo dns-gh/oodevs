@@ -53,6 +53,7 @@ public:
     void SetSorting( const std::string& nature );
     void Display( const kernel::AutomatComposition& type, ValuedListItem* );
     void Display( const kernel::AutomatType& type, ValuedListItem* );
+    virtual QDragObject* dragObject();
     //@}
 
 private:
@@ -70,7 +71,6 @@ private:
     void DisplayBy( const std::string& (kernel::AgentNature::*function)() const );
     void DisplayByNature();
     QListViewItem* CreateNaturePath( const std::string& path );
-    virtual QDragObject* dragObject();
     void Sort( QListViewItem* item );
     //@}
 

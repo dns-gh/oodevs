@@ -162,6 +162,8 @@ void InfoStatusWidget::SetIcon()
     img = icons_.GetSymbol( *selected_, QSize( 64, 64 ) );
     if( !img.isNull() )
         icon_->setPixmap( img );
+    else
+        QTimer::singleShot( 200, this, SLOT( SetIcon() ) );
 }
 
 // -----------------------------------------------------------------------------

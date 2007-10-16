@@ -54,6 +54,7 @@ private slots:
     //! @name Slots
     //@{
     void GotoParent();
+    void SetIcon();
     //@}
 
 private:
@@ -69,7 +70,6 @@ private:
     virtual void NotifyUpdated( const kernel::Attributes_ABC& element );
 
     void SetDefault();
-    void SetIcon   ();
     void SetLifeBar( const Attributes& attributes );
     void SetName   ( const Attributes& attributes );
     //@}

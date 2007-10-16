@@ -13,6 +13,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/AgentTypes.h"
 #include "UnitListView.h"
+#include "UnitPreviewIcon.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -35,23 +36,30 @@ namespace
 // Name: UnitsPanel constructor
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const AgentTypes& types, ItemFactory_ABC& factory )
+UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const AgentTypes& types, ItemFactory_ABC& factory, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy )
     : InfoPanel_ABC( parent, panel, tr( "Units" ) )
     , controllers_( controllers )
 {
-    QHBox* box = new QHBox( this );
-    QPushButton* openAll  = new QPushButton( "+", box );
-    openAll->setMaximumSize( 20, 20 );;
-    QPushButton* closeAll = new QPushButton( "-", box );
-    closeAll->setMaximumSize( 20, 20 );;
+    {
+        QHBox* box = new QHBox( this );
+        QPushButton* openAll  = new QPushButton( "+", box );
+        openAll->setMaximumSize( 20, 20 );;
+        QPushButton* closeAll = new QPushButton( "-", box );
+        closeAll->setMaximumSize( 20, 20 );;
+        connect( openAll , SIGNAL( clicked() ), SLOT( OpenList() ) );
+        connect( closeAll, SIGNAL( clicked() ), SLOT( CloseList() ) );
 
-    new QLabel( tr( "Display type:" ), box );
-    combo_ = BuildNatureFieldsCombo( box );
-    list_ = new UnitListView( this, controllers_, types, factory );
-
-    connect( openAll , SIGNAL( clicked() ), SLOT( OpenList() ) );
-    connect( closeAll, SIGNAL( clicked() ), SLOT( CloseList() ) );
-    connect( combo_  , SIGNAL( activated( int ) ), SLOT( Sort() ) );
+        QLabel* label = new QLabel( tr( "Display type: " ), box );
+        label->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
+        combo_ = BuildNatureFieldsCombo( box );
+        list_ = new UnitListView( this, controllers_, types, factory );
+        connect( combo_, SIGNAL( activated( int ) ), SLOT( Sort() ) );
+        connect( list_ , SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( SelectionChanged( QListViewItem* ) ) );
+    }
+    {
+        icon_ = new UnitPreviewIcon( this, controllers_, icons, colorStrategy );
+        connect( icon_, SIGNAL( StartDrag() ), SLOT( IconDragged() ) );
+    }
     controllers_.Register( *this );
 }
 
@@ -98,4 +106,29 @@ void UnitsPanel::CloseList()
 void UnitsPanel::NotifyUpdated( const ModelLoaded& )
 {
     Show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitsPanel::SelectionChanged
+// Created: SBO 2007-10-16
+// -----------------------------------------------------------------------------
+void UnitsPanel::SelectionChanged( QListViewItem* item )
+{
+    if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( item ) )
+    {
+        if( value->IsA< const AgentType >() )
+            icon_->NotifySelected( *value->GetValue< const AgentType >() );
+        else if( value->IsA< const AutomatType >() )
+            icon_->NotifySelected( *value->GetValue< const AutomatType >() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitsPanel::IconDragged
+// Created: SBO 2007-10-16
+// -----------------------------------------------------------------------------
+void UnitsPanel::IconDragged()
+{
+    if( QDragObject* drag = list_->dragObject() )
+        drag->drag();
 }
