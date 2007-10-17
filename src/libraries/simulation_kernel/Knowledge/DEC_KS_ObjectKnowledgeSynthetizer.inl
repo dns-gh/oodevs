@@ -45,7 +45,8 @@ void DEC_KS_ObjectKnowledgeSynthetizer::AddEphemeralObjectKnowledge( MIL_RealObj
 inline
 void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( MIL_RealObject_ABC& objectKnown )
 {
-    objectsToForget_.push_back( &objectKnown );    
+    if( std::find( objectsToForget_.begin(), objectsToForget_.end(), &objectKnown ) == objectsToForget_.end() )
+        objectsToForget_.push_back( &objectKnown );    
 }
 
 // -----------------------------------------------------------------------------
@@ -55,5 +56,6 @@ void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( MIL_RealObje
 inline
 void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( DEC_Knowledge_Object& knowledge )
 {
-    knowledgesObjectToForget_.push_back( &knowledge );
+    if( std::find( knowledgesObjectToForget_.begin(), knowledgesObjectToForget_.end(), &knowledge ) == knowledgesObjectToForget_.end() )
+        knowledgesObjectToForget_.push_back( &knowledge );
 }
