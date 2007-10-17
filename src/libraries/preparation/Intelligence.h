@@ -58,6 +58,8 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     virtual const kernel::Karma& GetKarma() const;
+    virtual std::string GetSymbol() const;
+    virtual std::string GetLevel() const;
     virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 

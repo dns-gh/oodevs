@@ -12,6 +12,7 @@
 #include "SymbolIcons.h"
 #include "ColorStrategy_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -42,6 +43,25 @@ EntitySymbols::~EntitySymbols()
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
 QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ )
+{
+    QPixmap stub( 1, 1 );
+    stub.fill( Qt::white );
+    if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+    {
+        const std::string symbolName = hierarchies->GetSymbol();
+        const std::string levelName  = hierarchies->GetLevel();
+        if( symbolName.empty() && levelName.empty() )
+            return stub;
+        return icons_.GetSymbol( symbolName, levelName, strategy_.FindColor( entity ), size );
+    }
+    return stub;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntitySymbols::GetSymbol
+// Created: SBO 2007-10-17
+// -----------------------------------------------------------------------------
+QPixmap EntitySymbols::GetSymbol( const kernel::Intelligence_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ )
 {
     QPixmap stub( 1, 1 );
     stub.fill( Qt::white );

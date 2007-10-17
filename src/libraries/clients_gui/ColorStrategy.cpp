@@ -65,7 +65,7 @@ void ColorStrategy::BeforeSelection()
 // Name: ColorStrategy::Select
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void ColorStrategy::Select( const kernel::Entity_ABC& element )
+void ColorStrategy::Select( const Entity_ABC& element )
 {
     selectedEntity_ = &element;
 }
@@ -92,7 +92,7 @@ void ColorStrategy::SetAlpha( float alpha )
 // Name: ColorStrategy::ApplySelectionStatus
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-QColor ColorStrategy::ApplySelectionStatus( const kernel::Entity_ABC& entity, const QColor& base )
+QColor ColorStrategy::ApplySelectionStatus( const Entity_ABC& entity, const QColor& base )
 {
     bool selected         = selectedEntity_ == &entity;
     bool superiorSelected = selectedEntity_ && entity.Get< TacticalHierarchies >().IsSubordinateOf( *selectedEntity_ );
@@ -108,7 +108,7 @@ QColor ColorStrategy::ApplySelectionStatus( const kernel::Entity_ABC& entity, co
 // Name: ColorStrategy::Process
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void ColorStrategy::Process( const kernel::Entity_ABC& entity )
+void ColorStrategy::Process( const Entity_ABC& entity )
 {
     ApplyColor( ApplySelectionStatus( entity, FindColor( entity ) ) );
 }
@@ -126,7 +126,7 @@ void ColorStrategy::SelectColor( const Agent_ABC& agent )
 // Name: ColorStrategy::SelectColor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const kernel::Automat_ABC& automat )
+void ColorStrategy::SelectColor( const Automat_ABC& automat )
 {
     Process( automat );
 }
@@ -135,7 +135,7 @@ void ColorStrategy::SelectColor( const kernel::Automat_ABC& automat )
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const kernel::Formation_ABC& formation )
+void ColorStrategy::SelectColor( const Formation_ABC& formation )
 {
     Process( formation );
 }
@@ -153,13 +153,36 @@ QColor ColorStrategy::FindColor( const Entity_ABC& entity )
     return FindTeamColor( team );
 }
 
+namespace
+{
+    QColor GetKarmaColor( const Karma& karma )
+    {
+        if( karma == Karma::friend_ )
+            return QColor( 100, 125, 255 );
+        if( karma == Karma::enemy_ )
+            return QColor( 255, 50, 50 );
+        if( karma == Karma::neutral_ )
+            return QColor( 0, 170, 0 );
+        return QColor( 255, 220, 000 );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::FindColor
+// Created: SBO 2007-10-17
+// -----------------------------------------------------------------------------
+QColor ColorStrategy::FindColor( const Intelligence_ABC& intelligence )
+{
+    return GetKarmaColor( intelligence.GetKarma() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::FindColor
 // Created: SBO 2007-02-26
 // -----------------------------------------------------------------------------
-QColor ColorStrategy::FindColor( const kernel::Knowledge_ABC& knowledge )
+QColor ColorStrategy::FindColor( const Knowledge_ABC& knowledge )
 {
-    if( const kernel::Entity_ABC* realEntity = knowledge.GetRecognizedEntity() )
+    if( const Entity_ABC* realEntity = knowledge.GetRecognizedEntity() )
         return FindColor( *realEntity );
     return QColor( 255, 220, 000 );
 }
@@ -199,27 +222,13 @@ void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const kernel::TacticalLine_ABC& line )
+void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
 {
     QColor color = FindColor( line );
     if( selectedEntity_ == &line )
         color = SelectedColor( color );
     tools_.Select( selectedEntity_ == &line, false );
     ApplyColor( color );
-}
-
-namespace
-{
-    QColor GetKarmaColor( const Karma& karma )
-    {
-        if( karma == Karma::friend_ )
-            return QColor( 100, 125, 255 );
-        if( karma == Karma::enemy_ )
-            return QColor( 255, 50, 50 );
-        if( karma == Karma::neutral_ )
-            return QColor( 0, 170, 0 );
-        return QColor( 255, 220, 000 );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -331,14 +340,14 @@ void ColorStrategy::NotifyDeleted( const Team_ABC& team )
 // Name: ColorStrategy::FindTeamColor
 // Created: SBO 2007-02-22
 // -----------------------------------------------------------------------------
-QColor ColorStrategy::FindTeamColor( const kernel::Entity_ABC& entity )
+QColor ColorStrategy::FindTeamColor( const Entity_ABC& entity )
 {
     T_TeamColors::const_iterator it = teamColors_.find( &entity );
     if( it != teamColors_.end() )
         return it->second.first;
 
     T_Colors* available = 0;
-    const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( entity );
+    const Team_ABC& team = static_cast< const Team_ABC& >( entity );
     if( team.IsFriend() )
         available = &friendlyAvailable_;
     else if( team.IsEnemy() )

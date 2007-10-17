@@ -34,6 +34,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual std::string GetSymbol() const = 0;
+    virtual std::string GetLevel() const = 0;
     virtual const kernel::Karma& GetKarma() const = 0;
 
     virtual void Select( ActionController& controller ) const;

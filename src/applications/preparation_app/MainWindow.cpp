@@ -80,6 +80,7 @@
 #include "clients_gui/Elevation3dLayer.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/AutomatsLayer.h"
+#include "clients_gui/IntelligenceListView.h"
 #include "graphics/DragMovementLayer.h"
 
 #include "xeumeuleu/xml.h"
@@ -155,6 +156,10 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new EntitySearchBox< Population_ABC >( listsTabBox, controllers );
     new ::PopulationListView( listsTabBox, controllers, *factory, *modelBuilder_ );
     pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
+    listsTabBox = new QVBox( pListsTabWidget );
+    new EntitySearchBox< Intelligence_ABC >( listsTabBox, controllers );
+    new IntelligenceListView( listsTabBox, controllers, *factory, PreparationProfile::GetProfile(), *icons );
+    pListsTabWidget->addTab( listsTabBox, tr( "Intelligences" ) );
     pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );

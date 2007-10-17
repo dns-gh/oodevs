@@ -159,6 +159,10 @@
         <source>New ORBAT</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Intelligences</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

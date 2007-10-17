@@ -13,6 +13,11 @@
 #include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
+namespace kernel
+{
+    class Intelligence_ABC;
+}
+
 // =============================================================================
 /** @class  IntelligenceHierarchies
     @brief  IntelligenceHierarchies
@@ -25,7 +30,7 @@ class IntelligenceHierarchies : public kernel::SimpleHierarchies< kernel::Tactic
 public:
     //! @name Constructors/Destructor
     //@{
-             IntelligenceHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
+             IntelligenceHierarchies( kernel::Intelligence_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~IntelligenceHierarchies();
     //@}
 
@@ -36,9 +41,16 @@ private:
     IntelligenceHierarchies& operator=( const IntelligenceHierarchies& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual std::string GetSymbol() const;
+    virtual std::string GetLevel() const;
+    //@}
+
 private:
     //! @name Member data
     //@{
+    const kernel::Intelligence_ABC& concreteEntity_;
     kernel::Entity_ABC* superior_;
     //@}
 };

@@ -16,6 +16,7 @@
 
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Intelligence_ABC.h"
 
 namespace kernel
 {
@@ -260,6 +261,26 @@ public:
     }
 private:
     const kernel::Population_ABC* value_;
+};
+
+template< >
+class ValueContainer< const kernel::Intelligence_ABC > : public ValueContainer< const kernel::Entity_ABC >
+{
+public:
+    ValueContainer( kernel::Intelligence_ABC const* value )
+        : ValueContainer< const kernel::Entity_ABC >( value ), value_( value ) {};
+    virtual const type_info& typeinfo() const {
+        return typeid( const kernel::Intelligence_ABC );
+    }
+    kernel::Intelligence_ABC const* GetValue() const {
+        return value_;
+    };
+    void SetValue( kernel::Intelligence_ABC const* value ) {
+        value_ = value;
+        ValueContainer< const kernel::Entity_ABC >::SetValue( value );
+    }
+private:
+    const kernel::Intelligence_ABC* value_;
 };
 
 // -----------------------------------------------------------------------------
