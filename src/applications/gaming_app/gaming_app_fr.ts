@@ -658,6 +658,10 @@
         <source> (officer, warrant-off., private)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HumansListView</name>

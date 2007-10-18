@@ -65,6 +65,7 @@ void FireResultListView::Display( const PopulationFireResult* result, Displayer_
     }
     // $$$$ AGE 2006-03-10: Move in PopulationFireResult
     item->SetValue( result );
+    displayer.Display( tr( "Date" ), result->time_ );
     displayer.Display( tr( "Target" ), result->target_ );
     displayer.Item( tr( "Attrition" ) ).Start( tr( "Dead:" ) ).Add( result->deadPeople_ ).End();
 }
@@ -84,6 +85,7 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
     item->SetValue( result );
     Displayer_ABC& displayer = (*subDisplayer_)( item );
 
+    displayer.Display( tr( "Date" ), result->time_ );
     displayer.Display( tr( "Target" ), result->target_ );
     displayer.Display( tr( "Equipments" ), tr( " (avail, unavail, repairable):" ) );
     displayer.Display( tr( "Troops" ), tr( " (officer, warrant-off., private)" ) );

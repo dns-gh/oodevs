@@ -11,6 +11,7 @@
 #define __Formatter_h_
 
 #include <qstring.h>
+#include <qdatetime.h>
 #include "Displayer_ABC.h"
 #include "Types.h"
 
@@ -81,6 +82,12 @@ template< >
 struct Formatter< std::string >
 {
     void operator()( const std::string& value, Displayer_ABC& displayer ) const;
+};
+
+template< >
+struct Formatter< QDateTime >
+{
+    void operator()( const QDateTime& value, Displayer_ABC& displayer ) const;
 };
 
 // =============================================================================

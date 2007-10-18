@@ -39,6 +39,10 @@ void Formatter< std::string >::operator()( const std::string& value, Displayer_A
     displayer.AddToDisplay( QString( value.c_str() ) );
 }
 
+void Formatter< QDateTime >::operator()( const QDateTime& value, Displayer_ABC& displayer ) const {
+    displayer.AddToDisplay( value.toString() );
+}
+
 void Formatter< ValueNotSet >::operator()( const ValueNotSet& , Displayer_ABC& displayer ) const {
     static const QString notSet = tools::translate( "Formatter", " - " );
     displayer.AddToDisplay( notSet );
