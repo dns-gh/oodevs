@@ -37,7 +37,8 @@ public:
     //@{
              AgentFireResult( const ASN1T_UnitFireDamages& message, 
                               const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver,
-                              const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
+                              const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver,
+                              const QDateTime& time );
     virtual ~AgentFireResult();
     //@}
 
@@ -53,6 +54,7 @@ public:
     //@{
     const kernel::Agent_ABC& target_;
     Casualties casualties_[ eNbrHumanWound ];
+    QDateTime time_;
     //@}
 };
 

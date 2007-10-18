@@ -16,9 +16,10 @@ using namespace kernel;
 // Name: PopulationFireResult constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-PopulationFireResult::PopulationFireResult( const ASN1T_PopulationFireDamages& message , const Resolver_ABC< Population_ABC >& resolver )
+PopulationFireResult::PopulationFireResult( const ASN1T_PopulationFireDamages& message , const Resolver_ABC< Population_ABC >& resolver, const QDateTime& time )
     : target_( resolver.Get( message.target ) )
     , deadPeople_( message.dead_nbr )
+    , time_( time )
 {
     // NOTHING
 }

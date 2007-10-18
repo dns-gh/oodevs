@@ -30,7 +30,7 @@ class PopulationFireResult
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFireResult( const ASN1T_PopulationFireDamages& message, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver );
+             PopulationFireResult( const ASN1T_PopulationFireDamages& message, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver, const QDateTime& time );
     virtual ~PopulationFireResult();
     //@}
 
@@ -46,6 +46,7 @@ public:
     //@{
     const kernel::Population_ABC& target_;
     unsigned int deadPeople_;
+    QDateTime time_;
     //@}
 };
 

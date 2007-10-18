@@ -57,7 +57,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , logisticFactory_( *new LogisticConsignFactory( controllers, *this, staticModel ) )
     , fireFactory_( *new FireFactory( *this ) )
     , tacticalLineFactory_( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
-    , fireResultsFactory_( *new FireResultFactory( *this ) )
+    , fireResultsFactory_( *new FireResultFactory( *this, simulation ) )
     , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
     , actionParameterFactory_( *new ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_ ) )
     , actionFactory_( *new ActionFactory( controllers, actionParameterFactory_, *this, staticModel.types_, staticModel.types_, simulation ) )

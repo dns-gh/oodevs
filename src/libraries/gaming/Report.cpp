@@ -27,7 +27,7 @@ Report::Report( const Entity_ABC& entity, const Simulation& simulation, Report::
     : entity_ ( entity )
     , type_   ( type )
     , message_( message )
-    , time_   ( simulation.GetTime() )
+    , time_   ( simulation.GetDateTime() )
     , isNew_  ( true )
     , point_  ( entity.Get< Positions >().GetPosition() )
 {
@@ -78,7 +78,7 @@ void Report::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" )
              .Start( GetColor( type_ ) )
-                .Add( QTime().addSecs( time_ ) )
+                .Add( time_.toString() )
                 .Add( " " )
                 .Add( message_.section( " - ", 0 ) )
              .End();
@@ -106,6 +106,6 @@ void Report::Display( Displayer_ABC& displayer ) const
 {
     displayer.Display( 0, GetColor( type_ ) );
     displayer.Display( 0, isNew_ ? Styles::bold : Styles::weak );
-    displayer.Display( tools::translate( "Report", "Received" ), QTime().addSecs( time_ ) );
+    displayer.Display( tools::translate( "Report", "Received" ), time_.toString() );
     displayer.Display( tools::translate( "Report", "Report" ), message_ );
 }

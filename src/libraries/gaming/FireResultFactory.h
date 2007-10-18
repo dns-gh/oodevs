@@ -15,6 +15,7 @@
 class AgentFireResult;
 class PopulationFireResult;
 class Model;
+class Simulation;
 
 // =============================================================================
 /** @class  FireResultFactory
@@ -28,7 +29,7 @@ class FireResultFactory
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FireResultFactory( Model& model );
+             FireResultFactory( Model& model, const Simulation& simulation );
     virtual ~FireResultFactory();
     //@}
 
@@ -49,6 +50,7 @@ private:
     //! @name Member data
     //@{
     Model& model_;
+    const Simulation& simulation_;
     //@}
 };
 

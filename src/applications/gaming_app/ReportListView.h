@@ -24,6 +24,7 @@ namespace kernel
 class Report;
 class ReportFilterOptions;
 class Reports;
+class Simulation;
 
 // =============================================================================
 /** @class  ReportListView
@@ -36,6 +37,7 @@ class ReportListView : public gui::ListDisplayer< ReportListView >
                      , public AgentSelectionObserver
                      , public kernel::ElementObserver_ABC< Reports > 
                      , public kernel::ElementObserver_ABC< Report >
+                     , public kernel::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT
 public:
@@ -70,6 +72,7 @@ private:
 
     virtual void NotifyUpdated( const Reports& reports );
     virtual void NotifyCreated( const Report& report );
+    virtual void NotifyUpdated( const Simulation& simu );
 
     bool ShouldUpdate( const Reports& reports );
 
