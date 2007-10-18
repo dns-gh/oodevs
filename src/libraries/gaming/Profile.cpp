@@ -30,8 +30,9 @@ using namespace kernel;
 Profile::Profile( Controllers& controllers )
     : controllers_( controllers )
     , controller_( controllers.controller_ )
-    , loggedIn_( false )
+    , loggedIn_   ( false )
     , supervision_( false )
+    , replay_     ( false )
     , firstTicked_( false )
 {
     controllers_.Register( *this );
@@ -185,7 +186,7 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 {
-    return IsInHierarchy( entity, readWriteEntities_, true );
+    return !replay_ && IsInHierarchy( entity, readWriteEntities_, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +195,7 @@ bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool Profile::CanDoMagic( const kernel::Entity_ABC& entity ) const
 {
-    return supervision_ && CanBeOrdered( entity );
+    return supervision_ && !replay_ && CanBeOrdered( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -383,6 +384,7 @@ void Profile::NotifyUpdated( const Simulation::sEndTick& )
 // -----------------------------------------------------------------------------
 void Profile::NotifyUpdated( const Simulation& simulation )
 {
+    replay_ = simulation.IsReplayer();
     if( !simulation.IsConnected() )
         Clean();
 }

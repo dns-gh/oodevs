@@ -124,6 +124,7 @@ private:
     mutable std::string password_;
     bool loggedIn_;
     bool supervision_;
+    bool replay_;
     bool firstTicked_;
 
     T_Entities readEntities_;
