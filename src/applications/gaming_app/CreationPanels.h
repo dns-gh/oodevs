@@ -11,6 +11,7 @@
 #define __CreationPanels_h_
 
 #include "clients_gui/Panels.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -21,6 +22,7 @@ namespace kernel
 
 namespace gui
 {
+    class UnitsPanel;
     class ItemFactory_ABC;
     class ParametersLayer;
     class SymbolIcons;
@@ -30,6 +32,7 @@ namespace gui
 class StaticModel;
 class Publisher_ABC;
 class ObjectCreationPanel;
+class Simulation;
 
 // =============================================================================
 /** @class  CreationPanels
@@ -38,11 +41,13 @@ class ObjectCreationPanel;
 // Created: SBO 2006-08-28
 // =============================================================================
 class CreationPanels : public gui::Panels
+                     , public kernel::Observer_ABC
+                     , public kernel::ElementObserver_ABC< Simulation >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy );
+             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy );
     virtual ~CreationPanels();
     //@}
 
@@ -52,9 +57,18 @@ public:
     //@}
 
 private:
+    //! @name Operations
+    //@{
+    virtual void NotifyUpdated( const Simulation& simu );
+    //@}
+
+private:
     //! @name Member data
     //@{
-    ObjectCreationPanel* objectCreationPanel_;
+    kernel::Controllers& controllers_;
+    bool shown_;
+    gui::UnitsPanel* units_;
+    ObjectCreationPanel* objects_;
     //@}
 };
 

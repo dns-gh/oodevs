@@ -11,7 +11,9 @@
 #include "CreationPanels.h"
 #include "preparation/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_gui/UnitsPanel.h"
+#include "gaming/Simulation.h"
 #include "ObjectCreationPanel.h"
 
 using namespace kernel;
@@ -23,10 +25,12 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, ItemFactory_ABC& factory, Publisher_ABC& publisher, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy )
     : Panels( parent )
+    , controllers_( controllers )
+    , shown_( true )
 {
-    AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
-    objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, publisher, staticModel, paramLayer, tools );
-    AddPanel( objectCreationPanel_ );
+    AddPanel( units_   = new gui::UnitsPanel    ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
+    AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, publisher, staticModel, paramLayer, tools ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +39,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
 // -----------------------------------------------------------------------------
 CreationPanels::~CreationPanels()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,5 +48,22 @@ CreationPanels::~CreationPanels()
 // -----------------------------------------------------------------------------
 void CreationPanels::Draw( Viewport_ABC& viewport ) const
 {
-    objectCreationPanel_->Draw( viewport );
+    objects_->Draw( viewport );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreationPanels::NotifyUpdated
+// Created: AGE 2007-10-18
+// -----------------------------------------------------------------------------
+void CreationPanels::NotifyUpdated( const Simulation& simu )
+{
+    if( simu.IsReplayer() )
+    {
+        Remove( units_ );
+        Remove( objects_ );
+    } else 
+    {
+        Add( units_ );
+        Add( objects_ );
+    }
 }
