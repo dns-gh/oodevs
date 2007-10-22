@@ -25,6 +25,7 @@ class SurfaceFactory;
 class ReportFactory;
 class RcEntityResolver_ABC;
 class AtlasNatures;
+class Simulation;
 
 // =============================================================================
 /** @class  StaticModel
@@ -38,7 +39,7 @@ class StaticModel
 public:
     //! @name Constructors/Destructor
     //@{
-             StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver );
+             StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const Simulation& simu );
     virtual ~StaticModel();
     //@}
 

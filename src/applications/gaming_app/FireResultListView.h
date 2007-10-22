@@ -30,7 +30,6 @@ class PopulationFireResult;
 class AgentFireResult;
 class Equipment;
 class Casualties;
-class Simulation;
 
 // =============================================================================
 /** @class  FireResultListView
@@ -42,7 +41,6 @@ class FireResultListView : public gui::ListDisplayer< FireResultListView >
                          , public kernel::Observer_ABC
                          , public kernel::SelectionObserver< kernel::Entity_ABC >
                          , public kernel::ElementObserver_ABC< Explosions >
-                         , public kernel::ElementObserver_ABC< Simulation >
 {
 
 public:
@@ -71,7 +69,6 @@ private:
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyUpdated( const Explosions& results );
-    virtual void NotifyUpdated( const Simulation& simu );
     //@}
 
 private:

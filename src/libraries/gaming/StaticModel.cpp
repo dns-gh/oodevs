@@ -27,7 +27,7 @@ using namespace kernel;
 // Name: StaticModel constructor
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& rcResolver )
+StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const Simulation& simu )
     : controllers_        ( controllers )
     , coordinateConverter_( *new CoordinateConverter() )
     , detection_          ( *new DetectionMap() )
@@ -35,7 +35,7 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , objectTypes_        ( *new ObjectTypes() )
     , levels_             ( *new FormationLevels() )
     , surfaceFactory_     ( *new SurfaceFactory( coordinateConverter_, detection_, types_ ) )
-    , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_ ) )
+    , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_, simu ) )
     , atlasNatures_       ( *new AtlasNatures() )
 {
     // NOTHING

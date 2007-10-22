@@ -60,6 +60,7 @@ public:
     void Update        ( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& msg );
     void Update        ( const ASN1T_MsgAutomatChangeSuperiorAck&       msg );
     void Update        ( const ASN1T_MsgAutomatOrder&                   msg );
+
     virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
     virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;

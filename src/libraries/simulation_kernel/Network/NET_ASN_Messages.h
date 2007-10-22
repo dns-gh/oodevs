@@ -191,10 +191,11 @@ GENERATE_ASN_MSG_SENDER( SimToClient, SetAutomatModeAck        , set_automat_mod
 GENERATE_ASN_MSG_SENDER( SimToClient, PopulationMagicActionAck , population_magic_action_ack )
 
 // CR
-GENERATE_ASN_MSG_SENDER( SimToClient, Report,          report )
-GENERATE_ASN_MSG_SENDER( SimToClient, Trace,           trace )
-GENERATE_ASN_MSG_SENDER( SimToClient, DecisionalState, decisional_state )
-GENERATE_ASN_MSG_SENDER( SimToClient, DebugPoints,     debug_points )
+GENERATE_ASN_MSG_SENDER( SimToClient, Report,           report )
+GENERATE_ASN_MSG_SENDER( SimToClient, Trace,            trace )
+GENERATE_ASN_MSG_SENDER( SimToClient, DecisionalState,  decisional_state )
+GENERATE_ASN_MSG_SENDER( SimToClient, DebugPoints,      debug_points )
+GENERATE_ASN_MSG_SENDER( SimToClient, InvalidateReport, invalidate_report )
 
 // Objects
 GENERATE_ASN_MSG_SENDER      ( SimToClient, ObjectCreation       , object_creation         )

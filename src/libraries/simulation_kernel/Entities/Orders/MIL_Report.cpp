@@ -14,6 +14,8 @@
 #include "MIL_Report.h"
 #include "MIL_ParameterType_ABC.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Network/NET_ASN_Tools.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "xeumeuleu/xml.h"
 
@@ -26,6 +28,7 @@ using namespace xml;
 
 MIL_Report::T_ReportMap      MIL_Report::reports_;
 MIL_Report::T_DiaEventVector MIL_Report::diaEvents_( MIL_Report::eNbrReport, "" );
+MT_IdentifierManager         MIL_Report::ids_;
 
 struct MIL_Report::LoadingWrapper
 {
@@ -184,7 +187,9 @@ bool MIL_Report::Send( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver
  
     asn().oid          = nSenderID;
     asn().cr           = nID_;
+    asn().cr_oid       = ids_.GetFreeIdentifier();
     asn().type         = (ASN1T_EnumReportType)nType;
+    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), asn().time );
     asn().parametres.n = parameters_.size();
     if( !parameters_.empty() )
     {

@@ -242,13 +242,3 @@ void ReportListView::OnRequestCenter()
         item->Activate( controllers_.actions_ );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::NotifyUpdated
-// Created: AGE 2007-10-18
-// -----------------------------------------------------------------------------
-void ReportListView::NotifyUpdated( const Simulation& simu )
-{
-    // $$$$ AGE 2007-10-18: remove items after simu.GetDateTime();
-    // $$$$ AGE 2007-10-18: prevent display after GetDateTime();
-}

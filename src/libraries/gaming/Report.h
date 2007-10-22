@@ -16,8 +16,6 @@ namespace kernel
     class Displayer_ABC;
 }
 
-class Simulation;
-
 // =============================================================================
 /** @class  Report
     @brief  Report
@@ -41,7 +39,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Report( const kernel::Entity_ABC& entity, const Simulation& simulation, E_Type type, const QString& message );
+             Report( const kernel::Entity_ABC& entity, E_Type type, const QString& message, const QDateTime& time );
     virtual ~Report();
     //@}
 

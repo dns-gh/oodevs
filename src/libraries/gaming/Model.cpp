@@ -52,7 +52,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , agentKnowledgeConverter_( *new AgentKnowledgeConverter( controllers ) )
     , objectKnowledgeConverter_( *new ObjectKnowledgeConverter( controllers ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
-    , agentFactory_( *new AgentFactory( controllers, *this, staticModel, publisher, simulation, workers, rcResolver ) )
+    , agentFactory_( *new AgentFactory( controllers, *this, staticModel, publisher, workers, rcResolver ) )
     , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
     , logisticFactory_( *new LogisticConsignFactory( controllers, *this, staticModel ) )
     , fireFactory_( *new FireFactory( *this ) )

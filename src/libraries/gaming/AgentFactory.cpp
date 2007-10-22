@@ -86,12 +86,11 @@ using namespace kernel;
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const Simulation& simulation, Workers& workers, const RcEntityResolver_ABC& rcResolver )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, Workers& workers, const RcEntityResolver_ABC& rcResolver )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
     , publisher_( publisher )
-    , simulation_( simulation )
     , workers_( workers )
     , rcResolver_( rcResolver )
 {
@@ -132,7 +131,7 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomatCreation& asnMsg )
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
-    result->Attach( *new Reports( *result, controllers_.controller_, simulation_, static_.reportFactory_ ) );
+    result->Attach( *new Reports( *result, controllers_.controller_, static_.reportFactory_ ) );
     result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
@@ -218,7 +217,7 @@ void AgentFactory::AttachExtensions( Entity_ABC& agent )
     agent.Attach( *new DebugPoints( static_.coordinateConverter_ ) );
     agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
-    agent.Attach( *new Reports( agent, controllers_.controller_, simulation_, static_.reportFactory_ ) );
+    agent.Attach( *new Reports( agent, controllers_.controller_, static_.reportFactory_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
     agent.Attach( *new PopulationDetections( controllers_.controller_, static_.coordinateConverter_, model_.agents_, agent ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );

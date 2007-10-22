@@ -13,7 +13,6 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Styles.h"
-#include "Simulation.h"
 #include "Tools.h"
 #include <qdatetime.h>
 
@@ -23,11 +22,11 @@ using namespace kernel;
 // Name: Report constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-Report::Report( const Entity_ABC& entity, const Simulation& simulation, Report::E_Type type, const QString& message )
+Report::Report( const Entity_ABC& entity, Report::E_Type type, const QString& message, const QDateTime& time )
     : entity_ ( entity )
     , type_   ( type )
     , message_( message )
-    , time_   ( simulation.GetDateTime() )
+    , time_   ( time )
     , isNew_  ( true )
     , point_  ( entity.Get< Positions >().GetPosition() )
 {

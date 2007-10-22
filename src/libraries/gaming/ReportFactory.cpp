@@ -31,10 +31,12 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ReportFactory::ReportFactory( const RcEntityResolver_ABC& rcResolver
                             , const Resolver_ABC< DotationType >&  dotationResolver
-                            , const Resolver_ABC< EquipmentType >& equipmentResolver )
+                            , const Resolver_ABC< EquipmentType >& equipmentResolver
+                            , const Simulation& simulation )
     : rcResolver_       ( rcResolver )
     , dotationResolver_ ( dotationResolver )
     , equipmentResolver_( equipmentResolver )
+    , simulation_       ( simulation )
 {
     // NOTHING
 }
@@ -84,11 +86,24 @@ void ReportFactory::ReadReport( xml::xistream& xis )
     Register( report->GetId(), *report );
 }
 
+namespace
+{
+    // $$$$ AGE 2007-10-19: caca et ^c^v
+    QDateTime GetTime( const ASN1T_DateTime& d )
+    {
+        const std::string date( (const char*)d.data, d.numocts );
+        QString extended( date.c_str() );
+        extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
+        extended.insert(  6, '-' ); extended.insert(  4, '-' );
+        return QDateTime::fromString( extended, Qt::ISODate );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ReportFactory::CreateReport
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgReport& asn ) const
+Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const ASN1T_MsgReport& asn ) const
 {
     ReportTemplate* report = Find( asn.cr );
     if( !report )
@@ -100,16 +115,16 @@ Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Simu
         type = Report::eEvent;
     else if( asn.type == EnumReportType::warning )
         type = Report::eWarning;
-    return new Report( agent, simulation, type, report->RenderMessage( asn.parametres ) );
+    return new Report( agent, type, report->RenderMessage( asn.parametres ), GetTime( asn.time ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportFactory::CreateTrace
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgTrace& message ) const
+Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const ASN1T_MsgTrace& message ) const
 {
-    return new Trace( agent, simulation, message );
+    return new Trace( agent, simulation_, message );
 }
 
 // -----------------------------------------------------------------------------

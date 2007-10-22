@@ -45,7 +45,8 @@ public:
     //@{
              ReportFactory( const RcEntityResolver_ABC& rcResolver
                           , const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver
-                          , const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
+                          , const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver
+                          , const Simulation& simulation );
     virtual ~ReportFactory();
     //@}
 
@@ -54,8 +55,8 @@ public:
     void Load( const kernel::ExerciseConfig& config );
     void Purge();
 
-    Report* CreateReport( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgReport&  asnMsg ) const;
-    Report* CreateTrace ( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgTrace& asnMsg ) const;
+    Report* CreateReport( const kernel::Entity_ABC& agent, const ASN1T_MsgReport&  asnMsg ) const;
+    Report* CreateTrace ( const kernel::Entity_ABC& agent, const ASN1T_MsgTrace& asnMsg ) const;
     //@}
 
 private:
@@ -78,6 +79,7 @@ private:
     const RcEntityResolver_ABC&                          rcResolver_;
     const kernel::Resolver_ABC< kernel::DotationType >&  dotationResolver_;
     const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
+    const Simulation& simulation_;
     //@}
 };
 

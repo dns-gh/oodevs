@@ -21,6 +21,7 @@
 #include "ModelVisitor_ABC.h"
 #include "AutomatOrder.h"
 #include "AgentTypes.h"
+#include "Report.h"
 #include "tools/App6Symbol.h"
 
 using namespace dispatcher;

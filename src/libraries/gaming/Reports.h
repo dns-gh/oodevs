@@ -23,7 +23,6 @@ namespace kernel
 }
 
 class Report;
-class Simulation;
 class ReportFactory;
 
 // =============================================================================
@@ -41,8 +40,7 @@ class Reports : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller
-                    , const Simulation& simulation, const ReportFactory& reportFactory );
+             Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller, const ReportFactory& reportFactory );
     virtual ~Reports();
     //@}
 
@@ -80,7 +78,6 @@ private:
     //@{
     const kernel::Entity_ABC& agent_;
     kernel::Controller& controller_;
-    const Simulation& simulation_;
     const ReportFactory& reportFactory_;
 
 public:  // $$$$ AGE 2006-03-09: 

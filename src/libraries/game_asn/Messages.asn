@@ -128,6 +128,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-stop-fire-effect                                    MsgStopFireEffect,
 
         msg-report                                              MsgReport,
+        msg-invalidate-report                                   MsgInvalidateReport,
         msg-trace                                               MsgTrace,
         msg-decisional-state                                    MsgDecisionalState,
         msg-debug-points                                        MsgDebugPoints,

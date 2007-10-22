@@ -57,6 +57,7 @@ public:
     void Update        ( const ASN1T_MsgPopulationFlowDestruction&          msg );
     void Update        ( const ASN1T_MsgPopulationOrder&                    msg );
     void Update        ( const ASN1T_MsgDecisionalState&                    msg );
+
     void SendCreation  ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
 

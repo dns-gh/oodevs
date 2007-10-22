@@ -21,10 +21,9 @@ using namespace kernel;
 // Name: Reports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reports::Reports( const Entity_ABC& agent, Controller& controller, const Simulation& simulation, const ReportFactory& reportFactory )
+Reports::Reports( const Entity_ABC& agent, Controller& controller, const ReportFactory& reportFactory )
     : agent_( agent )
     , controller_( controller )
-    , simulation_( simulation )
     , reportFactory_( reportFactory )
 {
     // NOTHING
@@ -47,7 +46,7 @@ Reports::~Reports()
 void Reports::DoUpdate( const ASN1T_MsgReport& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
-    Report* report = reportFactory_.CreateReport( agent_, simulation_, message );
+    Report* report = reportFactory_.CreateReport( agent_, message );
     reports_.push_back( report );
     controller_.Create( *report );
 }
@@ -59,7 +58,7 @@ void Reports::DoUpdate( const ASN1T_MsgReport& message )
 void Reports::DoUpdate( const ASN1T_MsgTrace& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
-    Report* trace = reportFactory_.CreateTrace( agent_, simulation_, message );
+    Report* trace = reportFactory_.CreateTrace( agent_, message );
     reports_.push_back( trace );
     controller_.Create( *trace );
 }

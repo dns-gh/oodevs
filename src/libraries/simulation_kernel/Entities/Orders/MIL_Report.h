@@ -11,6 +11,7 @@
 #define __MIL_Report_h_
 
 #include "MIL.h"
+#include "MT/MT_Tools/MT_IdentifierManager.h"
 
 namespace xml
 {
@@ -162,6 +163,7 @@ private:
 private:
     static T_ReportMap      reports_;
     static T_DiaEventVector diaEvents_;
+    static MT_IdentifierManager ids_; 
 
 private:
     //! @name Helpers

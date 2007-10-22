@@ -9,13 +9,14 @@
 
 #include "gaming_pch.h"
 #include "Trace.h"
+#include "Simulation.h"
 
 //-----------------------------------------------------------------------------
 // Name: Trace constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
 Trace::Trace( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgTrace& input )
-    : Report( agent, simulation, Report::eTrace, input.message )
+    : Report( agent, Report::eTrace, input.message, simulation.GetDateTime() )
 {
     // NOTHING
 }

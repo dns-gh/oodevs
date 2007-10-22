@@ -63,7 +63,10 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgsSimToClient& message )
         case T_MsgsSimToClient_msg_msg_control_send_current_state_begin:
         case T_MsgsSimToClient_msg_msg_control_send_current_state_end:
         case T_MsgsSimToClient_msg_msg_unit_pathfind:    // $$$$ AGE 2007-04-13: 
-        case T_MsgsSimToClient_msg_msg_report:           // $$$$ AGE 2007-04-13: délicat : pas de delete cr !
+            return false;
+        case T_MsgsSimToClient_msg_msg_report:
+        case T_MsgsSimToClient_msg_msg_invalidate_report:
+            return true;
         case T_MsgsSimToClient_msg_msg_trace:            // $$$$ AGE 2007-04-13: délicat : pas de delete cr !
             return false;
         case T_MsgsSimToClient_msg_msg_decisional_state:

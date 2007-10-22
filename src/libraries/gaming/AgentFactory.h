@@ -21,14 +21,13 @@ namespace kernel
 }
 
 class Model;
-class Simulation;
 class Publisher_ABC;
 class StaticModel;
 class RcEntityResolver_ABC;
 
 // =============================================================================
 /** @class  AgentFactory
-    @brief  Agent_ABC factory
+    @brief  Agent factory
 */
 // Created: AGE 2006-02-13
 // =============================================================================
@@ -38,7 +37,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const Simulation& simulation, kernel::Workers& workers, const RcEntityResolver_ABC& rcResolver );
+             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, kernel::Workers& workers, const RcEntityResolver_ABC& rcResolver );
     virtual ~AgentFactory();
     //@}
 
@@ -68,7 +67,6 @@ private:
     Model& model_;
     const StaticModel& static_;
     Publisher_ABC& publisher_;
-    const Simulation& simulation_;
     kernel::Workers& workers_;
     const RcEntityResolver_ABC& rcResolver_;
     //@}

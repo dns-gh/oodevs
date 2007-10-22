@@ -64,6 +64,7 @@ bool SimulationDispatcher::IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg
         case T_MsgsSimToClient_msg_msg_stop_fire_effect:
         case T_MsgsSimToClient_msg_msg_stop_unit_fire:
         case T_MsgsSimToClient_msg_msg_stop_population_fire:
+        case T_MsgsSimToClient_msg_msg_invalidate_report:
             return false;
         default:
             return true;

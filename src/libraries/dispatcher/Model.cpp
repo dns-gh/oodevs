@@ -36,6 +36,7 @@
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "AgentTypes.h"
 #include "FolkModel.h"
+#include "Report.h"
 
 #include "SimulationModel.h"
 
@@ -183,7 +184,9 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_start_population_fire:                CreateUpdate( populationFires_, asnMsg.msg.u.msg_start_population_fire->fire_oid, *asnMsg.msg.u.msg_start_population_fire ); break;
         case T_MsgsSimToClient_msg_msg_stop_population_fire:                 populationFires_.Destroy( asnMsg.msg.u.msg_stop_population_fire->fire_oid ); break;
         case T_MsgsSimToClient_msg_msg_explosion:
-        case T_MsgsSimToClient_msg_msg_report:
+            break;
+        case T_MsgsSimToClient_msg_msg_report:                               CreateUpdate( reports_, asnMsg.msg.u.msg_report->cr_oid, *asnMsg.msg.u.msg_report ); break;
+        case T_MsgsSimToClient_msg_msg_invalidate_report:                    reports_.Destroy( asnMsg.msg.u.msg_invalidate_report->cr_oid ); break;
         case T_MsgsSimToClient_msg_msg_trace:
             break;  // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
         case T_MsgsSimToClient_msg_msg_decisional_state:                     UpdateAnyAgent( asnMsg.msg.u.msg_decisional_state->oid, *asnMsg.msg.u.msg_decisional_state ); break;
@@ -329,6 +332,7 @@ void Model::Accept( ModelVisitor_ABC& visitor ) const
     fires_                 .Apply( std::mem_fun_ref( &Fire                 ::Accept ), visitor );
     populationFires_       .Apply( std::mem_fun_ref( &PopulationFire       ::Accept ), visitor );
     fireEffects_           .Apply( std::mem_fun_ref( &FireEffect           ::Accept ), visitor );
+    reports_               .Apply( std::mem_fun_ref( &Report               ::Accept ), visitor );
 }
 
 // -----------------------------------------------------------------------------

@@ -132,6 +132,7 @@ void GlWidget::RenderMiniViews()
 {
     if( views_.empty() )
         return;
+    setAutoUpdate( false );
     const geometry::Rectangle2f viewport = viewport_;
     const int windowHeight = windowHeight_;
     const int windowWidth = windowWidth_;
@@ -147,6 +148,7 @@ void GlWidget::RenderMiniViews()
     windowHeight_ = windowHeight;
     windowWidth_ = windowWidth;
     MapWidget::resizeGL( windowWidth_, windowHeight_ );
+    setAutoUpdate( true );
 }
 
 // -----------------------------------------------------------------------------

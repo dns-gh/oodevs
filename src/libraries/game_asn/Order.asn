@@ -187,8 +187,15 @@ MsgReport ::= SEQUENCE
 {
     oid        OID, -- Automat, pion ou population    
     cr         OID,
+    cr-oid     OID,
     type       EnumReportType,
+    time       DateTime,
     parametres MissionParameters
+}
+
+MsgInvalidateReport ::= SEQUENCE
+{
+    cr-oid  OID
 }
 
 MsgTrace ::= SEQUENCE

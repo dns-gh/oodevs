@@ -154,14 +154,3 @@ void FireResultListView::NotifyUpdated( const Explosions& results )
         DeleteTail( item );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: FireResultListView::NotifyUpdated
-// Created: AGE 2007-10-18
-// -----------------------------------------------------------------------------
-void FireResultListView::NotifyUpdated( const Simulation& simu )
-{
-    // $$$$ AGE 2007-10-18: comme dans les reports, 
-    // $$$$ AGE 2007-10-18: filtrer tout ce qui est apres simu.GetDateTime si replay
-}
-

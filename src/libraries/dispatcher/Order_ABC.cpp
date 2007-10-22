@@ -102,4 +102,5 @@ void Order_ABC::AsnDelete( ASN1T_MissionParameters& asn ) const
     unsigned i = 0;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         (**it).AsnDelete( asn.elem[i++] );
+    delete[] asn.elem;
 }

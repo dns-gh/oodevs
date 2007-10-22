@@ -114,6 +114,7 @@ GENERATE_ASN_MSG_SENDER         ( SimToClient, Explosion                        
 GENERATE_ASN_MSG_SENDER         ( SimToClient, StartFireEffect                               , start_fire_effect                                 );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, StopFireEffect                                , stop_fire_effect                                  );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, Report                                        , report                                            );
+GENERATE_ASN_MSG_SENDER         ( SimToClient, InvalidateReport                              , invalidate_report                                 );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, DecisionalState                               , decisional_state                                  );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, UnitOrder                                     , unit_order                                        );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomatOrder                                  , automat_order                                     );
