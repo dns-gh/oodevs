@@ -67,7 +67,7 @@ void ParamPoint::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool ParamPoint::CheckValidity()
 {
-    if( !parameter_.IsOptional() && isSet_ )
+    if( !parameter_.IsOptional() && !isSet_ )
     {
         pLabel_->Warn( 3000 );
         return false;
