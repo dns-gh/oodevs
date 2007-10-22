@@ -61,11 +61,13 @@ QWidget* GameConfigPanel::CreateSimulationPanel( QWidget* parent )
             QHBox* stepBox = new QHBox( time );
             new QLabel( tr( "Time step:" ), stepBox );
             stepSpin_ = new QSpinBox( 1, 100, 1, stepBox );
+            stepSpin_->setValue( 10 );
         }
         {
             QHBox* factorBox = new QHBox( time );
             new QLabel( tr( "Time factor:" ), factorBox );
             factorSpin_ = new QSpinBox( 1, 100, 1, factorBox );
+            factorSpin_->setValue( 10 );
         }
     }
     {
@@ -74,6 +76,7 @@ QWidget* GameConfigPanel::CreateSimulationPanel( QWidget* parent )
             QHBox* frequencyBox = new QHBox( checkpoints );
             new QLabel( tr( "Frequency:" ), frequencyBox );
             checkFrequency_ = new QTimeEdit( frequencyBox );
+            checkFrequency_->setTime( QTime().addSecs( 3600 ) );
         }
         {
             QHBox* keepBox = new QHBox( checkpoints );
@@ -101,12 +104,14 @@ QWidget* GameConfigPanel::CreateDebugPanel( QWidget* parent )
         diaDebugBox_ = new QGroupBox( 1, Vertical, tr( "DIA Debugger" ), box );
         diaDebugBox_->setCheckable( true );
         diaDebugPort_ = new QSpinBox( 1024, 65535, 1, diaDebugBox_ );
+        diaDebugPort_->setValue( 15000 );
         connect( diaDebugBox_, SIGNAL( toggled( bool ) ), diaDebugPort_, SLOT( setEnabled( bool ) ) );
     }
     {
         netConBox_ = new QGroupBox( 1, Vertical, tr( "Network Console" ), box );
         netConBox_->setCheckable( true );
         netConPort_ = new QSpinBox( 1024, 65535, 1, netConBox_ );
+        netConPort_->setValue( 20000 );
         connect( netConBox_, SIGNAL( toggled( bool ) ), netConPort_, SLOT( setEnabled( bool ) ) );
     }
     return box;
