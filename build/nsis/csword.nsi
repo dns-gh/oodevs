@@ -92,6 +92,8 @@ Section "!Basic"
     File "${RUNDIR}\userDdm.dll"
     File "${RUNDIR}\xerces-c_2_7.dll"
     File "${RUNDIR}\zlib1.dll"
+    File "${RUNDIR}\population-vc71-mt.dll"
+    File "${RUNDIR}\shapelib.dll"
     
     SetOutPath "$INSTDIR\data"
     File /r /x ".svn" "${DATADIR}\data\terrains"
