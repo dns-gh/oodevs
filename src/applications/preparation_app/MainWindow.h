@@ -86,7 +86,6 @@ public slots:
     void Open();
     void Close();
     bool Save();
-    bool SaveAs();
     //@}
 
 private:

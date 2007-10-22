@@ -77,10 +77,6 @@
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>SaveAs</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LocalWeathersList</name>
@@ -180,10 +176,6 @@
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Save as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

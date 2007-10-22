@@ -27,7 +27,9 @@ using namespace kernel;
 WeatherModel::WeatherModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter )
     : controller_   ( controller )
     , converter_    ( converter )
+    , time_         ( QDateTime::currentDateTime() )
     , lighting_     ( (kernel::E_LightingType)-1 )
+    , globalWeather_( new Weather() )
 {
     controller_.Create( *this );
 }
@@ -49,7 +51,7 @@ WeatherModel::~WeatherModel()
 void WeatherModel::Purge()
 {
     DeleteAll();
-    globalWeather_.reset();
+    globalWeather_.reset( new Weather() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +87,7 @@ void WeatherModel::Serialize( const std::string& filename ) const
     xml::xofstream xos( filename, xml::encoding( "ISO-8859-1" ) );
     xos << start( "weather" )
             << start( "exercise-date" )
-                << attribute( "value", time_.toString( "yyyyMMddThhmmss" ) )
+                << attribute( "value", time_.toString( "yyyyMMddThhmmss" ).ascii() )
             << end()
             << start( "ephemerides" )
                 << attribute( "sunrise", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).ascii() )

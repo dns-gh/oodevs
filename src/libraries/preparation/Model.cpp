@@ -89,7 +89,7 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
-    UpdateName( "" );
+    UpdateName( "orbat" );
     intelligences_.Purge();
     profiles_.Purge();
     weather_.Purge();

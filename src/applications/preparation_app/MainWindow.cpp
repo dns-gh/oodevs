@@ -377,42 +377,16 @@ void MainWindow::Close()
 // -----------------------------------------------------------------------------
 bool MainWindow::Save()
 {
-    if( model_.GetName().isEmpty() )
-        return SaveAs();
-    else
+    try
     {
-        try
-        {
-            model_.Save( config_ );
-            SetWindowTitle( false );
-        }
-        catch( InvalidModelException& e )
-        {
-            QMessageBox::critical( this, APP_NAME, e.what() );
-            return false;
-        }
+        model_.Save( config_ );
+        SetWindowTitle( false );
     }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::SaveAs
-// Created: SBO 2006-11-21
-// -----------------------------------------------------------------------------
-bool MainWindow::SaveAs()
-{
-    // $$$$ NLD 2007-01-12: user probably shouldn't be able to save orbat to a different file
-    // $$$$ NLD 2007-01-12: at least until exercise.xml can be actually modified
-//    std::string current;
-//    const QString filename = QFileDialog::getSaveFileName( "../data/", "Ordre de bataille (*.xml)", 0, 0, "Sauvegarde ODB" );
-//    if( filename.isEmpty() )
-//        return false;
-//    current = filename;
-//    if( current.substr( 0, 2 ) == "//" )
-//        std::replace( current.begin(), current.end(), '/', '\\' );
-//
-//    model_.Save( current.c_str() );
-//    SetWindowTitle( false );
+    catch( InvalidModelException& e )
+    {
+        QMessageBox::critical( this, APP_NAME, e.what() );
+        return false;
+    }
     return true;
 }
 
