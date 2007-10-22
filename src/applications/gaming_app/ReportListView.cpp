@@ -122,7 +122,9 @@ void ReportListView::NotifyUpdated( const Reports& reports )
     if( ! ShouldUpdate( reports ) )
         return;
 
-    DeleteTail( DisplayList( reports.reports_.rbegin(), reports.reports_.rend() ) );
+    ValuedListItem* item = DisplayList( reports.CreateIterator() );
+                    item = DisplayList( reports.traces_.rbegin(), reports.traces_.rend(), this, item );
+    DeleteTail( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,10 +133,22 @@ void ReportListView::NotifyUpdated( const Reports& reports )
 // -----------------------------------------------------------------------------
 void ReportListView::Display( const Report* report, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    if( report && & report->GetOwner() == selected_ && filter_.ShouldDisplay( *report ) )
+    if( report )
+        Display( *report, displayer, item );
+    else
+        RemoveItem( item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::Display
+// Created: AGE 2007-10-22
+// -----------------------------------------------------------------------------
+void ReportListView::Display( const Report& report, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item )
+{
+    if( &report.GetOwner() == selected_ && filter_.ShouldDisplay( report ) )
     {
-        item->SetValue( report );
-        report->Display( displayer );
+        item->SetValue( &report );
+        report.Display( displayer );
     }
     else
         RemoveItem( item );

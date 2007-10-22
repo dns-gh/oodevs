@@ -14,6 +14,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include "clients_kernel/Resolver.h"
 
 namespace kernel
 {
@@ -28,11 +29,14 @@ class ReportFactory;
 // =============================================================================
 /** @class  Reports
     @brief  Reports
+    // $$$$ AGE 2007-10-22: utiliser un resolver. Uniformiser avec les traces
 */
 // Created: AGE 2006-02-13
 // =============================================================================
 class Reports : public kernel::Extension_ABC
+              , public kernel::Resolver< Report >
               , public kernel::Updatable_ABC< ASN1T_MsgReport >
+              , public kernel::Updatable_ABC< ASN1T_MsgInvalidateReport >
               , public kernel::Updatable_ABC< ASN1T_MsgTrace >
               , public kernel::Displayable_ABC
 {
@@ -70,6 +74,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgReport& message );
+    virtual void DoUpdate( const ASN1T_MsgInvalidateReport& msg );
     virtual void DoUpdate( const ASN1T_MsgTrace& msg );
     //@}
 
@@ -81,7 +86,7 @@ private:
     const ReportFactory& reportFactory_;
 
 public:  // $$$$ AGE 2006-03-09: 
-    T_Reports reports_;
+    T_Reports traces_;
     //@}
 };
 

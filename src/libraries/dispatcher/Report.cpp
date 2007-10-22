@@ -92,6 +92,7 @@ void Report::SendCreation( ClientPublisher_ABC& publisher ) const
 void Report::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientInvalidateReport asn;
+    asn().oid    = emitter_;
     asn().cr_oid = id_;
     asn.Send( publisher );
 }

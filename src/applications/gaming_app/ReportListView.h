@@ -49,6 +49,7 @@ public:
     //@{
     virtual void showEvent( QShowEvent* );
     void Display( const Report* report, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void Display( const Report& report, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
 public slots:

@@ -36,11 +36,13 @@ namespace
                 << xml::end()
         << xml::end();
     }
+    // $$$$ AGE 2007-10-22: ne conserver que exercise.xml
     void CreateOrbat( const std::string& file )
     {
         xml::xofstream xos( file );
         xos << xml::start( "orbat" )
                 << xml::start( "sides" ) << xml::end()
+                << xml::start( "diplomacies" ) << xml::end()
             << xml::end();
     }
     void CreateProfiles( const std::string& file )
@@ -52,6 +54,9 @@ namespace
     {
         xml::xofstream xos( file );
         xos << xml::start( "weather" )
+                << xml::start( "exercise-date" )
+                    << xml::attribute( "value", "20071012T111400" )
+                << xml::end()
                 << xml::start( "ephemerides" )
                     << xml::attribute( "moon", "NuitPleineLune" )
                     << xml::attribute( "sunrise", "7h0m0s" )

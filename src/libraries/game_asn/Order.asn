@@ -195,6 +195,7 @@ MsgReport ::= SEQUENCE
 
 MsgInvalidateReport ::= SEQUENCE
 {
+    oid     OID, -- Automat, pion ou population    
     cr-oid  OID
 }
 

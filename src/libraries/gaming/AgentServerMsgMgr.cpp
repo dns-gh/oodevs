@@ -815,6 +815,15 @@ void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgReport& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgInvalidateReport
+// Created: AGE 2007-10-22
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgInvalidateReport( const ASN1T_MsgInvalidateReport& message )
+{
+    GetModel().agents_.FindAllAgent( message.oid )->Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgTrace
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
@@ -1394,6 +1403,7 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
 
         case T_MsgsSimToClient_msg_msg_explosion:                            OnReceiveMsgExplosion                 ( *message.msg.u.msg_explosion                           ); break;
         case T_MsgsSimToClient_msg_msg_report:                               OnReceiveMsgCR                        ( *message.msg.u.msg_report                              ); break;
+        case T_MsgsSimToClient_msg_msg_invalidate_report:                    OnReceiveMsgInvalidateReport          ( *message.msg.u.msg_invalidate_report                   ); break;
         case T_MsgsSimToClient_msg_msg_debug_points:                         OnReceiveMsgDebugDrawPoints           ( *message.msg.u.msg_debug_points                        ); break;
         case T_MsgsSimToClient_msg_msg_trace:                                OnReceiveMsgTrace                     ( *message.msg.u.msg_trace                               ); break;
         case T_MsgsSimToClient_msg_msg_decisional_state:                     OnReceiveMsgDecisionalState           ( *message.msg.u.msg_decisional_state                    ); break;

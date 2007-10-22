@@ -135,6 +135,8 @@ QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) co
 template< typename T >
 QString RcEntityResolver::CreateLink( unsigned long id ) const
 {
-    const T& element = Resolver< T >::Get( id );
-    return InternalLinks::CreateLink( element, element.GetName() );
+    const T* element = Resolver< T >::Find( id );
+    if( element )
+        return InternalLinks::CreateLink( *element, element->GetName() );
+    return tr( "[Unknown]" ); // can now happen with the replayer
 }

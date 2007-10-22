@@ -187,7 +187,7 @@ bool MIL_Report::Send( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver
  
     asn().oid          = nSenderID;
     asn().cr           = nID_;
-    asn().cr_oid       = ids_.GetFreeIdentifier();
+    asn().cr_oid       = std::numeric_limits<uint>::max() - ids_.GetFreeIdentifier(); // descending order
     asn().type         = (ASN1T_EnumReportType)nType;
     NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), asn().time );
     asn().parametres.n = parameters_.size();

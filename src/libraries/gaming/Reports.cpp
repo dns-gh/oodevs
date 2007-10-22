@@ -14,6 +14,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "RcEntityResolver_ABC.h"
+#include <boost/bind.hpp>
 
 using namespace kernel;
 
@@ -35,8 +36,10 @@ Reports::Reports( const Entity_ABC& agent, Controller& controller, const ReportF
 // -----------------------------------------------------------------------------
 Reports::~Reports()
 {
-    for( CIT_Reports it = reports_.begin(); it != reports_.end(); ++it )
+    Resolver< Report >::Clear();
+    for( CIT_Reports it = traces_.begin(); it != traces_.end(); ++it )
         delete *it;
+    traces_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -47,8 +50,19 @@ void Reports::DoUpdate( const ASN1T_MsgReport& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
     Report* report = reportFactory_.CreateReport( agent_, message );
-    reports_.push_back( report );
+    Register( message.cr_oid, *report );
     controller_.Create( *report );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Reports::DoUpdate
+// Created: AGE 2007-10-22
+// -----------------------------------------------------------------------------
+void Reports::DoUpdate( const ASN1T_MsgInvalidateReport& message )
+{
+    delete Find( message.cr_oid );
+    Remove( message.cr_oid );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,9 +71,9 @@ void Reports::DoUpdate( const ASN1T_MsgReport& message )
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const ASN1T_MsgTrace& message )
 {
-    // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
+    // $$$$ AGE 2007-04-20: limiter le nombre de traces ?
     Report* trace = reportFactory_.CreateTrace( agent_, message );
-    reports_.push_back( trace );
+    traces_.push_back( trace );
     controller_.Create( *trace );
 }
 
@@ -69,13 +83,8 @@ void Reports::DoUpdate( const ASN1T_MsgTrace& message )
 // -----------------------------------------------------------------------------
 void Reports::Clear()
 {
-    for( CIT_Reports it = reports_.begin(); it != reports_.end(); ++it )
-        delete *it;
-    reports_.clear();
-    controller_.Update( *this ); 
-    // $$$$ AGE 2006-09-18: pas cohérent : 
-    // $$$$ AGE 2006-09-18: il faut observer le Create( Report )
-    // $$$$ AGE 2006-09-18: et le Update( Reports );
+    Resolver< Report >::Clear();
+    ClearTraces();
 }
 
 // -----------------------------------------------------------------------------
@@ -84,8 +93,8 @@ void Reports::Clear()
 // -----------------------------------------------------------------------------
 void Reports::MarkAsRead()
 {
-    for( CIT_Reports it = reports_.begin(); it != reports_.end(); ++it )
-        (*it)->Read();
+    Apply( boost::bind( &Report::Read, _1 ) );
+    std::for_each( traces_.begin(), traces_.end(), boost::bind( &Report::Read, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,17 +103,9 @@ void Reports::MarkAsRead()
 // -----------------------------------------------------------------------------
 void Reports::ClearTraces()
 {
-    T_Reports tokeep;
-    tokeep.reserve( reports_.size() );
-    for( CIT_Reports it = reports_.begin(); it != reports_.end(); ++it )
-    {
-        Report* report = *it;
-        if( !report || report->GetType() == Report::eTrace )
-            delete report;
-        else
-            tokeep.push_back( report );
-    }
-    std::swap( tokeep, reports_ );
+    for( CIT_Reports it = traces_.begin(); it != traces_.end(); ++it )
+        delete *it;
+    traces_.clear();
     controller_.Update( *this );
 }
 
@@ -115,7 +116,7 @@ void Reports::ClearTraces()
 void Reports::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     unsigned int displayed = 0;
-    for( T_Reports::const_reverse_iterator it = reports_.rbegin(); it != reports_.rend() && displayed++ < 5; ++it )
+    for( T_Reports::const_reverse_iterator it = traces_.rbegin(); it != traces_.rend() && displayed++ < 5; ++it )
     {
         const Report& report = **it;
         report.DisplayInTooltip( displayer );

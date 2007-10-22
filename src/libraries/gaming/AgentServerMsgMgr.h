@@ -199,9 +199,10 @@ private:
     void OnReceiveMsgAutomatChangeLogisticLinksAck  ( const ASN1T_MsgAutomatChangeLogisticLinksAck& asnMsg, unsigned long nCtx );
 
     // RC
-    void OnReceiveMsgCR             ( const ASN1T_MsgReport& asnMsg );
-    void OnReceiveMsgTrace          ( const ASN1T_MsgTrace& asnMsg );
-    void OnReceiveMsgDecisionalState( const ASN1T_MsgDecisionalState& asnMsg );
+    void OnReceiveMsgCR              ( const ASN1T_MsgReport& asnMsg );
+    void OnReceiveMsgInvalidateReport( const ASN1T_MsgInvalidateReport& asnMsg );
+    void OnReceiveMsgTrace           ( const ASN1T_MsgTrace& asnMsg );
+    void OnReceiveMsgDecisionalState ( const ASN1T_MsgDecisionalState& asnMsg );
 
     // Tirs
     void OnReceiveMsgStartUnitFire         ( const ASN1T_MsgStartUnitFire&       asnMsg );
