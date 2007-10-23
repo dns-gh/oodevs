@@ -24,6 +24,8 @@ namespace events
     template< typename Extractor >
     struct Event : public InstantValue< typename Extractor::Type >
     {
+        enum { has_parameter = Extractor::has_parameter };
+
         explicit Event( const Extractor& extractor = Extractor() )
             : extractor_( extractor ) {}
         void Receive( const ASN1T_MsgsSimToClient& message )
@@ -34,7 +36,7 @@ namespace events
         Extractor extractor_;
     };
 
-    struct FireComponentDamage : public Event< extractors::FireComponentDamage > {};
+typedef Event< extractors::FireComponentDamage > FireComponentDamage;
 }
 
 #endif // __Events_h_

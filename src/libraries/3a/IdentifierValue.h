@@ -21,6 +21,8 @@
 struct IdentifierValue : public InstantValue< unsigned long >
 {
 
+    enum { has_parameter = false };
+
 #define SET_OID( tag )                                  \
     case( T_MsgsSimToClient_msg_##tag ):                \
         Set( message.msg.u.tag->oid ); break;

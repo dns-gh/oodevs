@@ -40,7 +40,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ModelFunction( ValueHandler_ABC< Return_Type >& handler, Value value = Value() )
+    explicit ModelFunction( ValueHandler_ABC< Return_Type >& handler, const Value& value = Value() )
                 : handler_( handler ), value_( value ) {};
     virtual ~ModelFunction() {};
     //@}

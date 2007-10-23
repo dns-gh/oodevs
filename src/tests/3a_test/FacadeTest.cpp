@@ -523,14 +523,14 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComp
 
 namespace
 {
-    ASN1T_MsgsSimToClient MakeResourceVariation( int variation, unsigned long id )
+    ASN1T_MsgsSimToClient MakeResourceVariation( int variation, unsigned long id, unsigned long resourceId = 42 )
     {
         static ASN1T_MsgUnitAttributes attributes;
         static ASN1T_ResourceDotations resource;
         attributes.m.dotation_eff_ressourcePresent = 1;
         attributes.dotation_eff_ressource.n = 1;
         attributes.dotation_eff_ressource.elem = &resource;
-        resource.ressource_id = 42;
+        resource.ressource_id = resourceId;
         resource.quantite_disponible = variation;
         attributes.oid = id;
         ASN1T_MsgsSimToClient result;
@@ -582,16 +582,15 @@ BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
     publisher.verify();
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: Facade_TestResourceConsumptions
+// Name: Facade_TestResourceConsumptionsWithResourceFilter
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptions )
+BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
 {
     const std::string input =
     "<indicator>"
-        "<extract function='resources' id='resources'/>"
+        "<extract function='resources' id='resources' dotations='42'/>"
         "<transform type='int' function='derivate' input='resources' id='resources-var'/>"
         "<constant type='int' value='0' id='zero'/>"
         "<transform function='compare' type='int' operator='less' input='resources-var,zero' id='test'/>"
@@ -605,22 +604,24 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptions )
     boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
 
     task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4212, 12 ) );
-    task->Receive( MakeResourceVariation( 1242, 13 ) );
+    task->Receive( MakeResourceVariation( 4212, 12, 42 ) );
+    task->Receive( MakeResourceVariation( 1242, 13, 42 ) );
+    task->Receive( MakeResourceVariation( 1000, 15, 12 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4200, 12 ) );
-    task->Receive( MakeResourceVariation( 1200, 13 ) );
+    task->Receive( MakeResourceVariation( 4200, 12, 42 ) );
+    task->Receive( MakeResourceVariation( 1200, 13, 42 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 5200, 12 ) );
-    task->Receive( MakeResourceVariation( 2200, 13 ) );
+    task->Receive( MakeResourceVariation( 5200, 12, 42 ) );
+    task->Receive( MakeResourceVariation( 2200, 13, 42 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 1000, 14 ) );
+    task->Receive( MakeResourceVariation( 1000, 14, 15 ) );
+    task->Receive( MakeResourceVariation(  500, 15, 12 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 5100, 12 ) );
+    task->Receive( MakeResourceVariation( 5100, 12, 42 ) );
     task->Receive( EndTick() );
 
 
@@ -641,6 +642,14 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptions )
 //  @Resultat tablename OUTPUT      -- Table de resultats
 //)
 
+// $$$$ AGE 2007-09-10: pourcentage efficacité => nombre de tirs avec degat / nombre de tirs
+//CREATE PROCEDURE dbo.[AAAT_MELEE-APPUI_POURCENTAGE_EFFICACITE_DES_TIRS_INDIRECTS_D_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2]
+//(
+//  @TDebut DATETIME,           -- DATE DEBUT
+//  @TFin DATETIME,         -- DATE FIN
+//  @Unites  unit_id_tablename,     -- UNITES CONCERNEES
+//  @Resultat tablename OUTPUT      -- TABLE DES RESULTATS
+//)
 
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_DISPONIBLES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Pourcentages)]
 //(
@@ -657,15 +666,6 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptions )
 //  @Unites unit_id_tablename,      -- Unites concernees
 //  @Ressources ressource_id_tablename, -- Ressource à comptabiliser
 //  @Resultat tablename OUTPUT      -- Table de resultats
-//)
-
-// $$$$ AGE 2007-09-10: pourcentage efficacité => nombre de tirs avec degat / nombre de tirs
-//CREATE PROCEDURE dbo.[AAAT_MELEE-APPUI_POURCENTAGE_EFFICACITE_DES_TIRS_INDIRECTS_D_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2]
-//(
-//  @TDebut DATETIME,           -- DATE DEBUT
-//  @TFin DATETIME,         -- DATE FIN
-//  @Unites  unit_id_tablename,     -- UNITES CONCERNEES
-//  @Resultat tablename OUTPUT      -- TABLE DES RESULTATS
 //)
 
 //CREATE PROCEDURE DBO.[AAAT_LOGISTIQUE_MATERIELS_AU_NTI2_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Pourcentages)]

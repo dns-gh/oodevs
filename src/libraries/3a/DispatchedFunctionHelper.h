@@ -16,6 +16,12 @@
 #include <boost/bind.hpp>
 #include <boost/bind/protect.hpp>
 #include <boost/function.hpp>
+#include <boost/utility.hpp>
+
+namespace xml
+{
+    class xistream;
+}
 
 struct DispatchedFunctionFactory
 {
@@ -39,16 +45,24 @@ struct DispatcherFactoryHelper
 template< typename Value >
 struct ValueFunctionFactory
 {
+    explicit ValueFunctionFactory( const Value& value ) : value_( value ) {}
     typedef typename Value::Type Type;
     boost::shared_ptr< ModelFunction_ABC > operator()( ValueHandler_ABC< Type >& valueHandler ) const
     {
-        return boost::shared_ptr< ModelFunction_ABC >( new ModelFunction< Value >( valueHandler ) );
+        return boost::shared_ptr< ModelFunction_ABC >( new ModelFunction< Value >( valueHandler, value_ ) );
     }
+    Value value_;
 };
 
 template< typename KeyValue, typename Value >
 struct DispatcherFactory
 {
+    explicit DispatcherFactory( xml::xistream& xis )
+        : value_()
+    {
+        Initialize( value_, xis );
+    }
+    DispatcherFactory() : value_() {}
     typedef typename KeyValue::Type K;
     typedef typename Value   ::Type T;
 
@@ -59,9 +73,22 @@ struct DispatcherFactory
                        DispatchedFunctionFactory(), 
                        _1,
                        boost::ref( keyHandler ),
-                       boost::protect( boost::bind< boost::shared_ptr< ModelFunction_ABC > >( ValueFunctionFactory< Value >(), boost::ref( valueHandler ) ) )
+                       boost::protect( boost::bind< boost::shared_ptr< ModelFunction_ABC > >( ValueFunctionFactory< Value >( value_ ), boost::ref( valueHandler ) ) )
                    )
                );
+    }
+    Value value_;
+
+    template< typename T >
+    void Initialize( T& value, xml::xistream& xis, typename boost::enable_if_c< T::has_parameter >::type* = 0 )
+    {
+        T real( xis );
+        value = real;
+    }
+    template< typename T >
+    void Initialize( T& , xml::xistream& , typename boost::disable_if_c< T::has_parameter >::type* = 0 )
+    {
+        // NOTHING
     }
 };
 

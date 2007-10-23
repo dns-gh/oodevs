@@ -24,6 +24,8 @@ namespace existences
     template< typename Extractor >
     struct Existence : public PulsedValue< typename Extractor::Type >
     {
+        enum { has_parameter = Extractor::has_parameter };
+
         explicit Existence( const Extractor& extractor = Extractor() )
             : extractor_( extractor ) {}
         void Receive( const ASN1T_MsgsSimToClient& message )
@@ -36,8 +38,10 @@ namespace existences
         Extractor extractor_;
     };
 
-    struct MaintenanceHandlingUnitId : public Existence< extractors::MaintenanceHandlingUnitId > {};
-    struct DirectFireUnitId          : public Existence< extractors::DirectFireUnitId > {};
+typedef Existence< extractors::MaintenanceHandlingUnitId > MaintenanceHandlingUnitId;
+typedef Existence< extractors::DirectFireUnitId          > DirectFireUnitId;
+typedef Existence< extractors::IndirectFireUnitId        > IndirectFireUnitId;
+
 }
 
 #endif // __Existences_h_

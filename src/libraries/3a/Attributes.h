@@ -12,6 +12,7 @@
 
 #include "Values.h"
 #include "Extractors.h"
+#include "Resources.h"
 
 // =============================================================================
 /** @namespace  Attributes
@@ -32,6 +33,8 @@ namespace attributes
 template< typename Extractor >
 struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
 {
+    enum { has_parameter = Extractor::has_parameter };
+
     explicit UnitAttribute( const Extractor& extractor = Extractor() )
         : extractor_( extractor ) {}
 
@@ -48,10 +51,9 @@ struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
     Extractor extractor_;
 };
 
-struct OperationalState   : public UnitAttribute< extractors::OperationalState > {};
-struct Position           : public UnitAttribute< extractors::Position > {};
-struct Resources          : public UnitAttribute< extractors::Resources > {};
-
+typedef UnitAttribute< extractors::OperationalState > OperationalState;
+typedef UnitAttribute< extractors::Position >         Position;
+typedef UnitAttribute< extractors::Resources >        Resources;
 
 } // namespace attributes
 

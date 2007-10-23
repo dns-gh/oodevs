@@ -23,6 +23,7 @@ namespace extractors
     template< typename T >
     struct Extractor
     {
+        enum { has_parameter = false };
         typedef T Type;
     };
 
@@ -43,28 +44,6 @@ namespace extractors
         { return ::Position( attributes.position ); }
     };
 
-    struct Resources : public Extractor< int >
-    {
-        bool HasFlag( const ASN1T_MsgUnitAttributes& attributes ) const
-        { return attributes.m.dotation_eff_ressourcePresent; }
-        int Extract( const ASN1T_MsgUnitAttributes& attributes )
-        { 
-            unsigned size = attributes.dotation_eff_ressource.n;
-            while( size > 0 )
-            {
-                --size;
-                const int dotation = attributes.dotation_eff_ressource.elem[ size ].ressource_id;
-                const int quantity = attributes.dotation_eff_ressource.elem[ size ].quantite_disponible;
-                resources_[ dotation ] = quantity;
-            }
-            int result = 0;
-            for( std::map< int, int >::const_iterator it = resources_.begin(); it != resources_.end(); ++it )
-                result += it->second;
-            return result;
-        }
-        std::map< int, int > resources_;
-    };
-
     // Existences
     struct MaintenanceHandlingUnitId : public Extractor< unsigned long >
     {
@@ -81,6 +60,17 @@ namespace extractors
         bool IsCreation( const ASN1T_MsgsSimToClient& message ) const
         { return message.msg.t == T_MsgsSimToClient_msg_msg_start_unit_fire
               && message.msg.u.msg_start_unit_fire->type == MsgStartUnitFire_type::direct; }
+        unsigned long Extract( const ASN1T_MsgsSimToClient& message ) const
+        { return message.msg.u.msg_start_unit_fire->firer_oid; }
+        bool IsDestruction( const ASN1T_MsgsSimToClient& message ) const
+        { return message.msg.t == T_MsgsSimToClient_msg_msg_stop_unit_fire; }
+    };
+
+    struct IndirectFireUnitId : public Extractor< unsigned long >
+    {
+        bool IsCreation( const ASN1T_MsgsSimToClient& message ) const
+        { return message.msg.t == T_MsgsSimToClient_msg_msg_start_unit_fire
+              && message.msg.u.msg_start_unit_fire->type == MsgStartUnitFire_type::indirect; }
         unsigned long Extract( const ASN1T_MsgsSimToClient& message ) const
         { return message.msg.u.msg_start_unit_fire->firer_oid; }
         bool IsDestruction( const ASN1T_MsgsSimToClient& message ) const

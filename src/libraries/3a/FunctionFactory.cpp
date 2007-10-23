@@ -54,114 +54,15 @@ FunctionFactory::~FunctionFactory()
     // NOTHING
 }
 
-namespace
-{
-    // $$$$ AGE 2007-09-17: crap
-    const char* extractors[][3] =
-    {
-        // name,                           type,       key type
-        { "operational-state",            "float",    "unit" },
-        { "position",                     "position", "unit" },
-        { "resources",                    "int",      "unit" },
-        { "maintenance-handling-unit",    "unit",     "maintenance-handling" },
-        { "direct-fire-unit",             "unit",     "fire" },
-        { "fire-component-damage",        "float",    "fire" },
-        { 0, 0, 0 }
-    };
-
-    const char* transformations[][6] =
-    {
-        // name,        input type 1   input type 2  output type   parameter type  parameter name
-        { "distance",  "position",    "position",   "float",      "",             "" },
-        { "contains",  "zone",        "position",   "bool",       "",             "" },
-        { "filter",    "bool",        "any",        "input 2",    "",             "" },
-        { "is-one-of", "any",         "",           "bool",       "list input 1", "select" },
-        { "derivate",  "any",         "",           "input 1",    "",             "" },
-        { "integrate", "any",         "",           "input 1",    "",             "" },
-        { "domain",    "any",         "",           "input 1",    "list key",     "select" },
-        { "compose",   "any",         "any",        "input 2",    "",             "" },
-        { "compare",   "any",         "any",        "bool",       "operator",     "operator" },
-        { 0, 0, 0, 0, 0, 0 }
-    };
-
-    const char* reductions[][4] =
-    {
-        // name,     output,     parameter type  parameter name
-        { "select",  "input",    "key",          "key" },
-        { "count",   "unsigned", "",             ""    },
-        { "minimum", "input",    "",             ""    },
-        { "maximum", "input",    "",             ""    },
-        { "sum",     "input",    "",             ""    },
-        { "mean",    "input",    "",             ""    },
-        { 0, 0, 0, 0 }
-    };
-
-    void DescribeExtractors( xml::xostream& xos )
-    {
-        unsigned i = 0;
-        while( extractors[i][0] )
-        {
-            xos << xml::start( "extract" )
-                    << xml::attribute( "name",     extractors[i][0] )
-                    << xml::attribute( "output",   extractors[i][1] )
-                    << xml::attribute( "key-type", extractors[i][2] )
-                << xml::end();
-            ++i;
-        }
-    }
-    void DescribeTransformations( xml::xostream& xos )
-    {
-        unsigned i = 0;
-        while( transformations[i][0] )
-        {
-            xos << xml::start( "transform" )
-                    << xml::attribute( "name",   transformations[i][0] )
-                    << xml::attribute( "input1", transformations[i][1] );
-            if( transformations[i][2] )
-                xos << xml::attribute( "input2", transformations[i][2] );
-            xos << xml::attribute( "output", transformations[i][3] );
-            if( transformations[i][4] )
-                xos << xml::attribute( "parameter-type", transformations[i][4] );
-            if( transformations[i][5] )
-                xos << xml::attribute( "parameter-name", transformations[i][5] );
-            xos << xml::end();
-            ++i;
-        }
-    }
-    void DescribeReductions( xml::xostream& xos )
-    {
-        unsigned i = 0;
-        while( reductions[i][0] )
-        {
-            xos << xml::start( "reduce" )
-                    << xml::attribute( "name",   reductions[i][0] )
-                    << xml::attribute( "output", reductions[i][1] )
-                    << xml::attribute( "input1", "any" );
-            if( transformations[i][2] )
-                xos << xml::attribute( "parameter-type", reductions[i][2] );
-            if( transformations[i][3] )
-                xos << xml::attribute( "parameter-name", reductions[i][3] );
-            xos << xml::end();
-            ++i;
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: FunctionFactory::Describe
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
 void FunctionFactory::Describe( xml::xostream& xos )
 {
-    xos << xml::start( "functions" );
-    DescribeExtractors( xos );
-    DescribeTransformations( xos );
-    DescribeReductions( xos );
-    xos << xml::start( "plot" )
-            << xml::attribute( "name", "plot" )
-            << xml::attribute( "input1", "any" )
+    xos << xml::start( "functions" )
+            << "$$$$ Not implemented $$$$"
         << xml::end();
-    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -244,9 +145,9 @@ void FunctionFactory::MakeConstant( xml::xistream& xis, Task& result )
 // Created: AGE 2007-09-11
 // -----------------------------------------------------------------------------
 template< typename Value >
-void FunctionFactory::Extract( const std::string& name, xml::xistream& , Task& result )
+void FunctionFactory::Extract( const std::string& name, xml::xistream& xis, Task& result )
 {
-    DispatcherFactory< IdentifierValue, Value > factory;
+    DispatcherFactory< IdentifierValue, Value > factory( xis );
     typedef FunctionConnector< IdentifierValue::Type, typename Value::Type > Connector;
     boost::shared_ptr< Connector > connector( new Connector() );
     boost::shared_ptr< ModelFunction_ABC > function( factory(
