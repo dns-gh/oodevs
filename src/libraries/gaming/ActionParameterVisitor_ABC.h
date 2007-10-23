@@ -23,6 +23,7 @@ class ActionParameterAutomat;
 class ActionParameterAgentKnowledge;
 class ActionParameterObjectKnowledge;
 class ActionParameterPopulationKnowledge;
+class ActionParameterDotationType;
 
 // =============================================================================
 /** @class  ActionParameterVisitor_ABC
@@ -55,6 +56,7 @@ public:
     virtual void Visit( const ActionParameterAgentKnowledge&      ) {}
     virtual void Visit( const ActionParameterObjectKnowledge&     ) {}
     virtual void Visit( const ActionParameterPopulationKnowledge& ) {}
+    virtual void Visit( const ActionParameterDotationType& )        {}
     //@}
 };
 

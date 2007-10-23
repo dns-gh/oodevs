@@ -306,7 +306,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
 
-    AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, publisher, *paramLayer, staticModel_.coordinateConverter_ );
+    AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, publisher, *paramLayer, staticModel_ );
 
     new Menu( this, controllers, *prefDialog, *profileDialog, *browser, *factory );
 

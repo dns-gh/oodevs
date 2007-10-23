@@ -38,6 +38,8 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( std::string& content ) const;
+    virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:

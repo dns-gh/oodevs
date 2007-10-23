@@ -40,6 +40,7 @@
 #include "ParamLimaList.h"
 #include "ParamMissionObjective.h"
 #include "ParamMissionObjectiveList.h"
+#include "ParamDotationTypeList.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Tools.h"
 #include "gaming/AgentKnowledge_ABC.h"
@@ -107,6 +108,8 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( ActionController& controller, 
     builderFunctors_["limits"]                = &MissionInterfaceBuilder::BuildLimits;
     builderFunctors_["limalist"]              = &MissionInterfaceBuilder::BuildLimaList;
     builderFunctors_["dangerousdirection"]    = &MissionInterfaceBuilder::BuildDangerousDirection;
+
+    builderFunctors_["dotationlist"]          = &MissionInterfaceBuilder::BuildDotationTypeList;
 }
 
 // -----------------------------------------------------------------------------
@@ -453,4 +456,13 @@ Param_ABC* MissionInterfaceBuilder::BuildLimaList( const OrderParameter& paramet
 Param_ABC* MissionInterfaceBuilder::BuildDangerousDirection( const OrderParameter& parameter ) const
 {
     return new ParamDirection( missionInterface_, parameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildDotationTypeList
+// Created: AGE 2007-10-23
+// -----------------------------------------------------------------------------
+Param_ABC* MissionInterfaceBuilder::BuildDotationTypeList( const kernel::OrderParameter& parameter ) const
+{
+    return new ParamDotationTypeList( missionInterface_, parameter, staticModel_.objectTypes_ );
 }

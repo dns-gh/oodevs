@@ -11,6 +11,7 @@
 #include "AfterActionFunctionList.h"
 #include "moc_AfterActionFunctionList.cpp"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/ListItemToolTip.h"
 #include "gaming/AfterActionFunction.h"
@@ -18,9 +19,11 @@
 #include "gaming/AfterActionRequest.h"
 #include "gaming/AfterActionModel.h"
 #include "gaming/ActionParameterContainer_ABC.h"
+#include "gaming/StaticModel.h"
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
 #include "ParamLocation.h"
+#include "ParamDotationTypeList.h"
 #include "icons.h"
 #include <qtoolbox.h>
 #include <qvgroupbox.h>
@@ -33,12 +36,12 @@ using namespace gui;
 // Name: AfterActionFunctionList constructor
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const StaticModel& staticModel )
     : QVBox( parent )
     , controllers_( controllers )
     , model_( model )
     , layer_( layer )
-    , converter_( converter )
+    , staticModel_( staticModel )
     , parameters_( 0 )
     , request_( 0 )
 {
@@ -163,9 +166,11 @@ boost::shared_ptr< Param_ABC > AfterActionFunctionList::CreateParameter( const s
         result.reset( new ParamAgent( this, parameter ) );
     else if( type == "unit list" )
         result.reset( new ParamAgentList( this, parameter, controllers_.actions_ ) );
+    else if( type == "dotation list" )
+        result.reset( new ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
     else if( type == "zone" )
     {
-        std::auto_ptr< ParamLocation > location( new ParamLocation( parameter, layer_, converter_ ) );
+        std::auto_ptr< ParamLocation > location( new ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
         location->SetShapeFilter( false, false, true, true );
         result.reset( location.release() );
     }

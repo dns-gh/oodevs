@@ -7,11 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __ParamDotationDType_h_
-#define __ParamDotationDType_h_
+#ifndef __ParamDotationTypeList_h_
+#define __ParamDotationTypeList_h_
 
-#include "ParamComboBox.h"
 #include "clients_kernel/Resolver.h"
+#include "clients_kernel/OrderParameter.h"
+#include "Param_ABC.h"
 
 namespace kernel
 {
@@ -20,21 +21,20 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  ParamDotationDType
-    @brief  ParamDotationDType
-    // $$$$ SBO 2007-03-21: ParamComboBox< const DotationType* > ?
-    // $$$$ AGE 2007-10-23: pas utilisé
+/** @class  ParamDotationTypeList
+    @brief  ParamDotationTypeList
 */
 // Created: SBO 2006-08-09
 // =============================================================================
-class ParamDotationDType : public ParamComboBox< ASN1T_DotationType >
+class ParamDotationTypeList : public QObject, public Param_ABC
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationDType( const kernel::OrderParameter& parameter, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
-    virtual ~ParamDotationDType();
+             ParamDotationTypeList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
+    virtual ~ParamDotationTypeList();
     //@}
 
     //! @name Operations
@@ -43,19 +43,31 @@ public:
     virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void Clicked( QListViewItem* item );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
-    ParamDotationDType( const ParamDotationDType& );
-    ParamDotationDType& operator=( const ParamDotationDType& );
+    ParamDotationTypeList( const ParamDotationTypeList& );
+    ParamDotationTypeList& operator=( const ParamDotationTypeList& );
+    //@}
+
+    //! @name Helpers
+    //@{
+    void AddItem( const QString& parent, const QString& child, unsigned id );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::OrderParameter& parameter_;
+    kernel::OrderParameter parameter_;
     const kernel::Resolver_ABC< kernel::DotationType >& resolver_;
+    QListView* list_;
     //@}
 };
 
-#endif // __ParamDotationDType_h_
+#endif // __ParamDotationTypeList_h_

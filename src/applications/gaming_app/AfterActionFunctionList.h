@@ -15,7 +15,6 @@
 namespace kernel
 {
     class Controllers;
-    class CoordinateConverter_ABC;
 }
 namespace gui
 {
@@ -27,6 +26,7 @@ class AfterActionParameter;
 class AfterActionFunction;
 class AfterActionModel;
 class QToolBox;
+class StaticModel;
 
 // =============================================================================
 /** @class  AfterActionFunctionList
@@ -42,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AfterActionFunctionList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model,
-                                      gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+                                      gui::ParametersLayer& layer, const StaticModel& staticModel );
     virtual ~AfterActionFunctionList();
     //@}
 
@@ -83,7 +83,7 @@ private:
     kernel::Controllers& controllers_;
     AfterActionModel& model_;
     gui::ParametersLayer& layer_;
-    const kernel::CoordinateConverter_ABC& converter_;
+    const StaticModel& staticModel_;
 
     gui::ListDisplayer< AfterActionFunctionList >* functions_;
     QGroupBox* parameters_;
