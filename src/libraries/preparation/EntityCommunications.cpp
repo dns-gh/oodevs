@@ -9,8 +9,6 @@
 
 #include "preparation_pch.h"
 #include "EntityCommunications.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Controller.h"
 
 using namespace kernel;
 

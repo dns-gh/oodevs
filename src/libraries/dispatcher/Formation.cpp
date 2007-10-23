@@ -102,8 +102,8 @@ void Formation::SendFullUpdate( ClientPublisher_ABC& ) const
 void Formation::Accept( ModelVisitor_ABC& visitor )
 {
     visitor.Visit( *this );
-    subordinates_.Apply( std::mem_fun_ref( &Formation::Accept ), visitor );
-    automats_    .Apply( std::mem_fun_ref( &Automat  ::Accept ), visitor );
+    subordinates_ .Apply( std::mem_fun_ref( &Formation   ::Accept ), visitor );
+    automats_     .Apply( std::mem_fun_ref( &Automat     ::Accept ), visitor );
 }
 
 namespace

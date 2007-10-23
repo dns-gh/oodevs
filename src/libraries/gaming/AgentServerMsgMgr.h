@@ -230,6 +230,12 @@ private:
     void OnReceiveMsgFolkCreation               ( const ASN1T_MsgFolkCreation& asnMsg );
     void OnReceiveMsgFolkGraphUpdate            ( const ASN1T_MsgFolkGraphUpdate& asnMsg );
 
+    // Intelligence
+    void OnReceiveMsgIntelligenceCreation             ( const ASN1T_MsgIntelligenceCreation&              message );
+    void OnReceiveMsgIntelligenceDestruction          ( const ASN1T_MsgIntelligenceDestruction&           message );
+    void OnReceiveMsgIntelligenceCreationRequestAck   ( const ASN1T_MsgIntelligenceCreationRequestAck&    message );
+    void OnReceiveMsgIntelligenceDestructionRequestAck( const ASN1T_MsgIntelligenceDestructionRequestAck& message );
+
     // 3a
     void OnReceiveMsgAarInformation( const ASN1T_MsgAarInformation& asnMsg );
     void OnReceiveMsgAarResult     ( const ASN1T_MsgIndicatorResult& asnMsg );

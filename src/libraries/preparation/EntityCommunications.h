@@ -12,7 +12,6 @@
 
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/Updatable_ABC.h"
 
 namespace kernel
 {

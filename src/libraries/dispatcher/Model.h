@@ -46,6 +46,7 @@ class Fire;
 class PopulationFire;
 class FireEffect;
 class FolkModel;
+class Intelligence;
 class Report;
 
 // =============================================================================
@@ -151,6 +152,7 @@ private:
     ModelsContainer< Fire                   > fires_;
     ModelsContainer< PopulationFire         > populationFires_;
     ModelsContainer< FireEffect             > fireEffects_;
+    ModelsContainer< Intelligence           > intelligences_;
     ModelsContainer< Report                 > reports_;
 
     std::auto_ptr< kernel::AgentTypes >     agentTypes_;

@@ -85,12 +85,13 @@ public:
 
     //! @name Factory
     //@{
-    void CreateFormation ( xml::xistream& xis, MIL_Army& army, MIL_Formation* parent = 0 );
-    void CreateAutomat   ( xml::xistream& xis, MIL_Automate&  parent );
-    void CreateAutomat   ( xml::xistream& xis, MIL_Formation& formation );
-    void CreatePopulation( xml::xistream& xis, MIL_Army& army );
-    MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, uint nID, MIL_Automate&  automate , xml::xistream& xis );
-    MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
+    void CreateFormation   ( xml::xistream& xis, MIL_Army& army, MIL_Formation* parent = 0 );
+    void CreateAutomat     ( xml::xistream& xis, MIL_Automate&  parent );
+    void CreateAutomat     ( xml::xistream& xis, MIL_Formation& formation );
+    void CreatePopulation  ( xml::xistream& xis, MIL_Army& army );
+    void CreateIntelligence( xml::xistream& xis, MIL_Formation& formation );
+    MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, uint nID, MIL_Automate&  automate , xml::xistream& xis );
+    MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
 
     void                        CreateObject                       ( xml::xistream& xis, MIL_Army& army ); 
     MIL_RealObject_ABC*         CreateObject                       ( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
@@ -154,6 +155,9 @@ public:
     void OnReceiveMsgUnitChangeSuperior          ( const ASN1T_MsgUnitChangeSuperior&               msg, uint nCtx );
     void OnReceiveMsgLogSupplyChangeQuotas       ( const ASN1T_MsgLogSupplyChangeQuotas&            msg, uint nCtx );
     void OnReceiveMsgLogSupplyPushFlow           ( const ASN1T_MsgLogSupplyPushFlow&                msg, uint nCtx );
+
+    void OnReceiveMsgIntelligenceCreationRequest   ( const ASN1T_MsgIntelligenceCreationRequest&    message );
+    void OnReceiveMsgIntelligenceDestructionRequest( const ASN1T_MsgIntelligenceDestructionRequest& message );
     //@}
 
     //! @name Population channeling

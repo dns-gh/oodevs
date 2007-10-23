@@ -1,0 +1,75 @@
+--
+-- file name : Intelligence.asn
+--
+-- Intelligence related messages
+--
+
+Intelligence DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base
+        ArmyExports FROM Army;
+IntelligenceIncludes ::= SEQUENCE { BaseExports, ArmyExports }
+IntelligenceExports  ::= NULL
+-- END includes
+
+IntelligenceDiffusion ::= CHOICE
+{
+--   automat Automat,
+    formation Formation
+}
+
+Intelligence ::= SEQUENCE
+{
+    name        VisibleString,
+    nature      VisibleString,
+    level       EnumNatureLevel,
+    embarked    BOOLEAN,
+    location    CoordUTM,
+    diffusion   IntelligenceDiffusion,
+    diplomacy   EnumDiplomacy
+}
+
+MsgIntelligenceCreation ::= SEQUENCE
+{
+    oid          OID,
+    intelligence Intelligence
+}
+
+MsgIntelligenceDestruction ::= SEQUENCE
+{
+    oid         OID
+}
+
+MsgIntelligenceCreationRequest ::= SEQUENCE
+{
+    intelligence Intelligence
+}
+
+MsgIntelligenceDestructionRequest ::= SEQUENCE
+{
+    oid         OID,
+    diffusion   IntelligenceDiffusion
+}
+
+-- Error handling
+
+EnumIntelligenceErrorCode ::= ENUMERATED
+{
+   no-error                        (0),
+   error-invalid-oid               (1),
+   error-invalid-geometry          (2),
+   error-invalid-diffusion         (3)
+}
+
+MsgIntelligenceCreationRequestAck ::= SEQUENCE
+{
+    error-code EnumIntelligenceErrorCode
+}
+
+MsgIntelligenceDestructionRequestAck ::= SEQUENCE
+{
+    error-code EnumIntelligenceErrorCode
+}
+
+END -- Intelligence

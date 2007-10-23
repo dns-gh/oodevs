@@ -33,6 +33,7 @@
 #include "LogTools.h"
 #include "FolkModel.h"
 #include "AfterActionModel.h"
+#include "IntelligencesModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Object_ABC.h"
@@ -1293,6 +1294,42 @@ void AgentServerMsgMgr::OnReceiveMsgFolkGraphUpdate( const ASN1T_MsgFolkGraphUpd
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgIntelligenceCreation
+// Created: SBO 2007-10-18
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgIntelligenceCreation( const ASN1T_MsgIntelligenceCreation& message )
+{
+    GetModel().intelligences_.Create( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgIntelligenceDestruction
+// Created: SBO 2007-10-18
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgIntelligenceDestruction( const ASN1T_MsgIntelligenceDestruction& message )
+{
+    GetModel().intelligences_.Delete( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgIntelligenceCreationRequestAck
+// Created: SBO 2007-10-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgIntelligenceCreationRequestAck( const ASN1T_MsgIntelligenceCreationRequestAck& message )
+{
+    CheckAcknowledge( message, "IntelligenceCreationRequestAck" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgIntelligenceDestructionRequestAck
+// Created: SBO 2007-10-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgIntelligenceDestructionRequestAck( const ASN1T_MsgIntelligenceDestructionRequestAck& message )
+{
+    CheckAcknowledge( message, "IntelligenceDestructionRequestAck" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAarInformation
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
@@ -1467,6 +1504,11 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
 
         case T_MsgsSimToClient_msg_msg_folk_creation                                  : OnReceiveMsgFolkCreation   ( *message.msg.u.msg_folk_creation ); break;
         case T_MsgsSimToClient_msg_msg_folk_graph_update                              : OnReceiveMsgFolkGraphUpdate( *message.msg.u.msg_folk_graph_update ); break;
+
+        case T_MsgsSimToClient_msg_msg_intelligence_creation:                OnReceiveMsgIntelligenceCreation             ( *message.msg.u.msg_intelligence_creation                ); break;
+        case T_MsgsSimToClient_msg_msg_intelligence_destruction:             OnReceiveMsgIntelligenceDestruction          ( *message.msg.u.msg_intelligence_destruction             ); break;
+        case T_MsgsSimToClient_msg_msg_intelligence_creation_request_ack:    OnReceiveMsgIntelligenceCreationRequestAck   ( *message.msg.u.msg_intelligence_creation_request_ack    ); break;
+        case T_MsgsSimToClient_msg_msg_intelligence_destruction_request_ack: OnReceiveMsgIntelligenceDestructionRequestAck( *message.msg.u.msg_intelligence_destruction_request_ack ); break;
 
         default:
             UnhandledMessage( message.msg.t );

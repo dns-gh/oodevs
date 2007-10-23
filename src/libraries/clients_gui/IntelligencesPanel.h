@@ -13,7 +13,7 @@
 #include "InfoPanel_ABC.h"
 #include "ValuedComboBox.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/TeamSelectionObserver.h"
+#include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -25,8 +25,8 @@ namespace kernel
     class HierarchyLevel_ABC;
     class SymbolFactory;
     class IntelligencePrototype;
-    class Team_ABC;
     class Entity_ABC;
+    class Formation_ABC;
 }
 
 namespace gui
@@ -44,7 +44,8 @@ namespace gui
 class IntelligencesPanel : public InfoPanel_ABC
                          , public kernel::Observer_ABC
                          , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                         , public kernel::TeamSelectionObserver
+                         , public kernel::SelectionObserver_ABC
+                         , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
 {
     Q_OBJECT;
 
@@ -76,8 +77,11 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void BeforeSelection();
+    virtual void AfterSelection();
+    virtual void Select( const kernel::Formation_ABC& element );
+
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
-    virtual void Select( const kernel::Team_ABC* element );
     virtual void mouseMoveEvent( QMouseEvent* event );
     void DoDrag();
     //@}
@@ -91,10 +95,11 @@ private:
     ValuedComboBox< const kernel::HierarchyLevel_ABC* >* levelCombo_;
     QComboBox* karmaCombo_;
     QLabel* icon_;
-    QLabel* teamLabel_;
+    QLabel* superiorLabel_;
     QString nature_;
     std::string symbol_;
-    kernel::SafePointer< kernel::Team_ABC > selectedTeam_;
+    QCheckBox* embarked_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     std::auto_ptr< kernel::IntelligencePrototype > intelligence_;
     //@}
 };

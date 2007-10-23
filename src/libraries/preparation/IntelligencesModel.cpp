@@ -11,11 +11,11 @@
 #include "IntelligencesModel.h"
 #include "Intelligence.h"
 #include "IntelligencePositions.h"
-#include "IntelligenceHierarchies.h"
-#include "Intelligences.h"
+#include "EntityIntelligences.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Intelligence_ABC.h"
-#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/FormationLevels.h"
 
 using namespace kernel;
 
@@ -23,10 +23,11 @@ using namespace kernel;
 // Name: IntelligencesModel constructor
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-IntelligencesModel::IntelligencesModel( Controller& controller, const CoordinateConverter_ABC& converter, IdManager& idManager )
+IntelligencesModel::IntelligencesModel( Controller& controller, const CoordinateConverter_ABC& converter, IdManager& idManager, const FormationLevels& levels )
     : controller_( controller )
     , converter_ ( converter )
     , idManager_ ( idManager )
+    , levels_    ( levels )
 {
     // NOTHING
 }
@@ -53,33 +54,28 @@ void IntelligencesModel::Purge()
 // Name: IntelligencesModel::Create
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-Intelligence_ABC& IntelligencesModel::Create( kernel::Team_ABC& team, const std::string& symbol, const std::string& level, const Karma& karma, const geometry::Point2f& position )
+Intelligence_ABC* IntelligencesModel::Create( kernel::Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool embarked, const Karma& karma, const geometry::Point2f& position )
 {
-    std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, symbol, level, karma ) );
+    std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, symbol, level, embarked, karma ) );
     intelligence->Attach< kernel::Positions >( *new IntelligencePositions( converter_, position ) );
-    intelligence->Attach< kernel::TacticalHierarchies >( *new IntelligenceHierarchies( *intelligence, &team ) );
-
-    if( Intelligences* intelligences = team.Retrieve< Intelligences >() )
-        intelligences->AddIntelligence( *intelligence );
+    intelligence->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controller_, *intelligence, &superior ) );
     intelligence->Polish();
     Register( intelligence->GetId(), *intelligence );
-    return *intelligence.release();
+    return intelligence.release();
 }
 
 // -----------------------------------------------------------------------------
 // Name: IntelligencesModel::Create
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-void IntelligencesModel::Create( xml::xistream& xis, kernel::Team_ABC& team )
+void IntelligencesModel::Create( xml::xistream& xis, kernel::Entity_ABC& superior )
 {
-    std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, xis ) );
+    std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, xis, levels_ ) );
     intelligence->Attach< kernel::Positions >( *new IntelligencePositions( converter_, xis ) );
-    intelligence->Attach< kernel::TacticalHierarchies >( *new IntelligenceHierarchies( *intelligence, &team ) );
-
-    if( Intelligences* intelligences = team.Retrieve< Intelligences >() )
-        intelligences->AddIntelligence( *intelligence );
+    intelligence->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controller_, *intelligence, &superior ) );
     intelligence->Polish();
-    Register( intelligence->GetId(), *intelligence.release() );
+    Register( intelligence->GetId(), *intelligence );
+    intelligence.release();
 }
 
 // -----------------------------------------------------------------------------

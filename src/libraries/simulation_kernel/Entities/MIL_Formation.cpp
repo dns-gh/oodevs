@@ -17,6 +17,7 @@
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
+#include "MIL_Intelligence.h"
 #include "Network/NET_ASN_Messages.h"
 #include "xeumeuleu/xml.h"
 
@@ -78,6 +79,8 @@ MIL_Formation::~MIL_Formation()
         pParent_->UnregisterFormation( *this );
     else
         pArmy_->UnregisterFormation( *this );
+    for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -87,10 +90,11 @@ MIL_Formation::~MIL_Formation()
 void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, xml::xistream& xis )
 {
     assert( pArmy_ );
-    xis >> list( "formation", manager, &MIL_EntityManager::CreateFormation, *pArmy_, this )
-        >> list( "automat"  , *this,   &MIL_Formation::CreateAutomat, manager, *this )
-        >> list( "limit"    , *this,   &MIL_Formation::CreateLimit, tacticalLines )
-        >> list( "lima"     , *this,   &MIL_Formation::CreateLima,  tacticalLines );
+    xis >> list( "formation"   , manager, &MIL_EntityManager::CreateFormation, *pArmy_, this )
+        >> list( "automat"     , *this,   &MIL_Formation::CreateAutomat, manager, *this )
+        >> list( "limit"       , *this,   &MIL_Formation::CreateLimit, tacticalLines )
+        >> list( "lima"        , *this,   &MIL_Formation::CreateLima,  tacticalLines )
+        >> list( "intelligence", *this,   &MIL_Formation::CreateIntelligence );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,9 +124,55 @@ void MIL_Formation::CreateLima( xml::xistream& xis, MIL_TacticalLineManager& tac
     tacticalLines.CreateLima( xis, *this );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::CreateIntelligence
+// Created: SBO 2007-10-22
+// -----------------------------------------------------------------------------
+void MIL_Formation::CreateIntelligence( xml::xistream& xis )
+{
+    std::auto_ptr< MIL_Intelligence > intelligence( new MIL_Intelligence( xis, *this ) );
+    intelligences_[intelligence->GetId()] = intelligence.get();
+    intelligence.release();
+}
+
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
+namespace boost
+{
+    namespace serialization
+    {
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, std::map< unsigned int, MIL_Intelligence* >& map, const uint version )
+        {
+            split_free( file, map, version );
+        }
+        
+        template< typename Archive >
+        void save( Archive& file, const std::map< unsigned int, MIL_Intelligence* >& map, const uint )
+        {
+            unsigned int size = map.size();
+            file << size;
+            for( std::map< unsigned int, MIL_Intelligence* >::const_iterator it = map.begin(); it != map.end(); ++it )
+                file << it->first << it->second;
+        }
+        
+        template< typename Archive >
+        void load( Archive& file, std::map< unsigned int, MIL_Intelligence* >& map, const uint )
+        {
+            uint count;
+            file >> count;
+            while( count-- )
+            {
+                unsigned int element;
+                file >> element;
+                file >> map[ element ];
+            }
+        }
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation::load
@@ -141,7 +191,8 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const uint )
 
    file >> strName_
         >> formations_
-        >> automates_;
+        >> automates_
+        >> intelligences_;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +209,8 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const uint ) const
          << level
          << strName_
          << formations_
-         << automates_;
+         << automates_
+         << intelligences_;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,6 +231,9 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
 
     for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
         (**it).WriteODB( xos );
+
+    for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
+        it->second->WriteODB( xos );
 
     xos << end(); // formation
 }
@@ -226,6 +281,9 @@ void MIL_Formation::SendCreation() const
 
     for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendCreation();
+
+    for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
+        it->second->SendCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -239,4 +297,44 @@ void MIL_Formation::SendFullState() const
 
     for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendFullState();
+
+    for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
+        it->second->SendFullState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::Update
+// Created: SBO 2007-10-22
+// -----------------------------------------------------------------------------
+void MIL_Formation::Update( const ASN1T_MsgIntelligenceCreationRequest& message )
+{
+    std::auto_ptr< MIL_Intelligence > intelligence( new MIL_Intelligence( message, *this ) );
+    intelligences_[intelligence->GetId()] = intelligence.get();
+    intelligence->SendCreation();
+    intelligence.release();
+
+    // $$$$ SBO 2007-10-22: add more error handling...
+    NET_ASN_MsgIntelligenceCreationRequestAck ack;
+    ack().error_code = EnumIntelligenceErrorCode::no_error;
+    ack.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::Update
+// Created: SBO 2007-10-22
+// -----------------------------------------------------------------------------
+void MIL_Formation::Update( const ASN1T_MsgIntelligenceDestructionRequest& message )
+{
+    NET_ASN_MsgIntelligenceDestructionRequestAck ack;
+    T_Intelligences::iterator it = intelligences_.find( message.oid );
+    if( it != intelligences_.end() )
+    {
+        it->second->SendDestruction();
+        delete it->second;
+        intelligences_.erase( it );
+        ack().error_code = EnumIntelligenceErrorCode::no_error;
+    }
+    else
+        ack().error_code = EnumIntelligenceErrorCode::error_invalid_oid;
+    ack.Send();
 }

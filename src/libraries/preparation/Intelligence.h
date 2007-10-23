@@ -14,10 +14,16 @@
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 namespace xml
 {
     class xistream;
+}
+
+namespace kernel
+{
+    class HierarchyLevel_ABC;
 }
 
 class IdManager;
@@ -37,8 +43,8 @@ class Intelligence : public kernel::EntityImplementation< kernel::Intelligence_A
 public:
     //! @name Constructors/Destructor
     //@{
-             Intelligence( kernel::Controller& controller, IdManager& idManager, const std::string& symbol, const std::string& level, const kernel::Karma& karma );
-             Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis );
+             Intelligence( kernel::Controller& controller, IdManager& idManager, const std::string& symbol, const kernel::HierarchyLevel_ABC& level, bool embarked, const kernel::Karma& karma );
+             Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC, QString >& levels );
     virtual ~Intelligence();
     //@}
 
@@ -59,15 +65,19 @@ private:
     void CreateDictionary( kernel::Controller& controller );
     virtual const kernel::Karma& GetKarma() const;
     virtual std::string GetSymbol() const;
-    virtual std::string GetLevel() const;
-    virtual void SerializeAttributes( xml::xostream& ) const;
+    virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    virtual void SerializeIntelligences( xml::xostream& ) const;
+
+    virtual void Delete();
+    virtual void Rename( const QString& name );
     //@}
 
 private:
     //! @name Member data
     //@{
     const std::string symbol_;
-    const std::string level_;
+    const kernel::HierarchyLevel_ABC& level_;
+    bool embarked_;
     const kernel::Karma& karma_;
     //@}
 };

@@ -22,6 +22,7 @@ class MIL_Army;
 class PHY_NatureLevel;
 class MIL_EntityManager;
 class MIL_TacticalLineManager;
+class MIL_Intelligence;
 
 // =============================================================================
 /** @class  MIL_Formation
@@ -67,6 +68,8 @@ public:
     //@{
     void SendCreation () const;
     void SendFullState() const;
+    void Update( const ASN1T_MsgIntelligenceCreationRequest&    message );
+    void Update( const ASN1T_MsgIntelligenceDestructionRequest& message );
     //@}
 
 private:
@@ -82,6 +85,7 @@ private:
     void CreateAutomat         ( xml::xistream& xis, MIL_EntityManager& manager, MIL_Formation& formation );
     void CreateLimit           ( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
     void CreateLima            ( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
+    void CreateIntelligence    ( xml::xistream& xis );
     //@}
 
 private:
@@ -92,6 +96,9 @@ private:
 
     typedef std::set< MIL_Automate* >      T_AutomateSet;
     typedef T_AutomateSet::const_iterator  CIT_AutomateSet;
+
+    typedef std::map< unsigned int, MIL_Intelligence* > T_Intelligences;
+    typedef T_Intelligences::const_iterator           CIT_Intelligences;
     //@}
 
 private:
@@ -102,6 +109,7 @@ private:
           std::string       strName_;
           T_FormationSet    formations_;
           T_AutomateSet     automates_;
+          T_Intelligences   intelligences_;
 };
 
 #include "MIL_Formation.inl"

@@ -14,6 +14,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -240,6 +241,8 @@ const kernel::Hierarchies* Profile::FindHierarchies( const kernel::Entity_ABC& e
     const Hierarchies* result = entity.Retrieve< TacticalHierarchies >();
     if( ! result )
         result = entity.Retrieve< CommunicationHierarchies >();
+    if( ! result )
+        result = entity.Retrieve< IntelligenceHierarchies >();
     return result;
 }
 

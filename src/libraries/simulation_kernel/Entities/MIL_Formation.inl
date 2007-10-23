@@ -73,4 +73,3 @@ void MIL_Formation::UnregisterFormation( MIL_Formation& formation )
     assert( formations_.find( &formation ) != formations_.end() );
     formations_.erase( &formation );
 }
-

@@ -51,6 +51,7 @@
 #include "FolkToolbar.h"
 #include "AfterAction.h"
 #include "SimulationLighting.h"
+#include "IntelligencesLayer.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -69,6 +70,7 @@
 #include "gaming/ProfileFilter.h"
 #include "gaming/VisionConesToggler.h"
 #include "gaming/ActionsScheduler.h"
+#include "gaming/IntelligencesModel.h"
 
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/GlSelector.h"
@@ -104,6 +106,7 @@
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/FormationLayer.h"
+#include "clients_gui/IntelligenceList.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -181,10 +184,11 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     EntitySymbols* icons = new EntitySymbols( *symbols, *strategy_ );
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );
 
-    pListsTabWidget->addTab( new TacticalList  ( controllers, publisher, *factory, profile, *icons ), tr( "Tactical" ) );
-    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory, profile, *icons ), tr( "Communication" ) );
-    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory, profile ),                    tr( "Objects" ) );
-    pListsTabWidget->addTab( new PopulationList( controllers, *factory, profile ),                    tr( "Populations" ) );
+    pListsTabWidget->addTab( new TacticalList    ( controllers, publisher, *factory, profile, *icons ), tr( "Tactical" ) );
+    pListsTabWidget->addTab( new AgentList       ( controllers, publisher, *factory, profile, *icons ), tr( "Communication" ) );
+    pListsTabWidget->addTab( new ObjectList      ( controllers, *factory, profile ),                    tr( "Objects" ) );
+    pListsTabWidget->addTab( new PopulationList  ( controllers, *factory, profile ),                    tr( "Populations" ) );
+    pListsTabWidget->addTab( new IntelligenceList( controllers, *factory, *icons, profile ),            tr( "Intelligences" ) );
     pListDockWnd_->setWidget( box );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
@@ -341,6 +345,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
+    Layer_ABC& intelligences        = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligenceFactory_ );
     Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
     Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, publisher );
     Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
@@ -363,6 +368,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( folkLayer );                preferences.AddLayer( tr( "Folk" ), folkLayer );
     glProxy_->Register( meteo );
     glProxy_->Register( limits );
+    glProxy_->Register( intelligences );
     glProxy_->Register( objectKnowledges );
     glProxy_->Register( populationKnowledges );
     glProxy_->Register( agentKnowledges );
@@ -385,6 +391,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( automats );
     forward_->Register( populations );
     forward_->Register( objectsLayer );
+    forward_->Register( intelligences );
     forward_->Register( agentKnowledges );
     forward_->Register( populationKnowledges );
     forward_->Register( objectKnowledges );

@@ -15,6 +15,7 @@
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/IntelligenceHierarchies.h"
 
 using namespace gui;
 
@@ -65,7 +66,7 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Intelligence_ABC& entity, const 
 {
     QPixmap stub( 1, 1 );
     stub.fill( Qt::white );
-    if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+    if( const kernel::IntelligenceHierarchies* hierarchies = entity.Retrieve< kernel::IntelligenceHierarchies >() )
     {
         const std::string symbolName = hierarchies->GetSymbol();
         const std::string levelName  = hierarchies->GetLevel();

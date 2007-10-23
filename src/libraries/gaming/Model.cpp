@@ -28,7 +28,6 @@
 #include "FireFactory.h"
 #include "WeatherModel.h"
 #include "StaticModel.h"
-#include "clients_kernel/AgentTypes.h"
 #include "TacticalLineFactory.h"
 #include "UserProfilesModel.h"
 #include "UserProfileFactory.h"
@@ -37,6 +36,10 @@
 #include "ActionsModel.h"
 #include "FolkModel.h"
 #include "AfterActionModel.h"
+#include "IntelligenceFactory.h"
+#include "IntelligencesModel.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/FormationLevels.h"
 
 using namespace kernel;
 
@@ -61,6 +64,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
     , actionParameterFactory_( *new ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_ ) )
     , actionFactory_( *new ActionFactory( controllers, actionParameterFactory_, *this, staticModel.types_, staticModel.types_, simulation ) )
+    , intelligenceFactory_( *new IntelligenceFactory( controllers, staticModel.coordinateConverter_, *this, staticModel.levels_, publisher ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
@@ -73,6 +77,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , actions_( *new ActionsModel( actionFactory_, simulation ) )
     , folk_( *new FolkModel( controllers.controller_ ) )
     , aar_( *new AfterActionModel( controllers.controller_, publisher ) )
+    , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )
 {
     // NOTHING
 }
@@ -83,6 +88,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &intelligences_;
     delete &aar_;
     delete &folk_;
     delete &actions_;
@@ -95,6 +101,7 @@ Model::~Model()
     delete &teams_;
     delete &objects_;
     delete &agents_;
+    delete &intelligenceFactory_;
     delete &actionFactory_;
     delete &actionParameterFactory_;
     delete &userProfileFactory_;
@@ -117,6 +124,7 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
+    intelligences_.Purge();
     actions_.Purge();
     profiles_.Purge();
     weather_.Purge();

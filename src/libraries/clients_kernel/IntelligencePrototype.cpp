@@ -17,11 +17,12 @@ using namespace kernel;
 // Name: IntelligencePrototype constructor
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-IntelligencePrototype::IntelligencePrototype( Team_ABC& team, const std::string& symbol, const std::string& level, const Karma& karma )
-    : team_  ( team )
-    , symbol_( symbol )
-    , level_ ( level )
-    , karma_ ( karma )
+IntelligencePrototype::IntelligencePrototype( Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool embarked, const Karma& karma )
+    : superior_( superior )
+    , symbol_  ( symbol )
+    , level_   ( level )
+    , embarked_( embarked )
+    , karma_   ( karma )
 {
     // NOTHING
 }
@@ -41,5 +42,5 @@ IntelligencePrototype::~IntelligencePrototype()
 // -----------------------------------------------------------------------------
 Intelligence_ABC& IntelligencePrototype::CreateIntelligence( IntelligenceFactory_ABC& factory, const geometry::Point2f& point ) const
 {
-    return factory.Create( team_, symbol_, level_, karma_, point );
+    return *factory.Create( superior_, symbol_, level_, embarked_, karma_, point );
 }

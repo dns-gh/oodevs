@@ -1266,6 +1266,28 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyP
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgIntelligenceCreationRequest
+// Created: SBO 2007-10-22
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgIntelligenceCreationRequest( const ASN1T_MsgIntelligenceCreationRequest& message )
+{
+    if( message.intelligence.diffusion.t == T_IntelligenceDiffusion_formation )
+        if( MIL_Formation* formation = FindFormation( message.intelligence.diffusion.u.formation ) )
+            formation->Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgIntelligenceDestructionRequest
+// Created: SBO 2007-10-22
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgIntelligenceDestructionRequest( const ASN1T_MsgIntelligenceDestructionRequest& message )
+{
+    if( message.diffusion.t == T_IntelligenceDiffusion_formation )
+        if( MIL_Formation* formation = FindFormation( message.diffusion.u.formation ) )
+            formation->Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::RegisterLocalAgents
 // Created: AGE 2004-11-22
 // -----------------------------------------------------------------------------

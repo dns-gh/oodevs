@@ -13,6 +13,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/UnitsPanel.h"
+#include "clients_gui/IntelligencesPanel.h"
 #include "gaming/Simulation.h"
 #include "ObjectCreationPanel.h"
 
@@ -31,6 +32,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     AddPanel( units_   = new gui::UnitsPanel    ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, publisher, staticModel, paramLayer, tools ) );
     controllers_.Register( *this );
+    AddPanel( new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
 }
 
 // -----------------------------------------------------------------------------

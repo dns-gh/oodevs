@@ -51,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::HierarchyLevel_ABC& level_;
+    const kernel::HierarchyLevel_ABC& level_;
     //@}
 };
 

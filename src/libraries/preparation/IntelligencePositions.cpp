@@ -123,10 +123,10 @@ void IntelligencePositions::Draw( const geometry::Point2f& where, const kernel::
 }
 
 // -----------------------------------------------------------------------------
-// Name: IntelligencePositions::SerializeAttributes
+// Name: IntelligencePositions::SerializeIntelligences
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-void IntelligencePositions::SerializeAttributes( xml::xostream& xos ) const
+void IntelligencePositions::SerializeIntelligences( xml::xostream& xos ) const
 {
     xos << attribute( "position", converter_.ConvertToMgrs( position_ ) );
 }

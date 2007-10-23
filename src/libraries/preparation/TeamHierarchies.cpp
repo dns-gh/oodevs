@@ -34,7 +34,7 @@ TeamHierarchies::~TeamHierarchies()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamHierarchies::DoSerialize
+// Name: TeamHierarchies::SerializeAttributes
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
 void TeamHierarchies::SerializeAttributes( xml::xostream& xos ) const
@@ -44,6 +44,7 @@ void TeamHierarchies::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << start( "formation" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
+        it->second->Interface().Apply( & Serializable_ABC::SerializeIntelligences, xos );
         xos << end();
     }
     xos << end();

@@ -157,6 +157,8 @@ GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationFlowKnowledgeCreation  
 GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationFlowKnowledgeDestruction            , population_flow_knowledge_destruction             );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationFlowKnowledgeUpdate                 , population_flow_knowledge_update                  );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, FolkCreation                                  , folk_creation                                     );
+GENERATE_ASN_MSG_SENDER         ( SimToClient, IntelligenceCreation                          , intelligence_creation                             );
+GENERATE_ASN_MSG_SENDER         ( SimToClient, IntelligenceDestruction                       , intelligence_destruction                          );
 
 GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, AuthenticationResponse       , authentication_response         );
 GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, ProfileCreation              , profile_creation                );

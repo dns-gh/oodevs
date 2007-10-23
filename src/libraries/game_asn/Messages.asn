@@ -27,13 +27,15 @@ IMPORTS BaseExports                   FROM Base
         ArmyExports                   FROM Army
         AuthExports                   FROM Auth
         FolkExports                   FROM Folk
-        AarExports                    FROM Aar;
+        AarExports                    FROM Aar
+        IntelligenceExports           FROM Intelligence;
 
 MessagesIncludes ::= SEQUENCE
 { BaseExports, LimaLimiteExports, OrderExports, ControlExports, KnowledgeGroupExports,
   FormationExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports,
   ObjectKnowledgeExports, PopulationExports, PopulationKnowledgeExports, LogMaintenanceExports,
-  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports, AarExports }
+  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports, 
+  AarExports, IntelligenceExports }
 MessagesExports  ::= NULL
 -- END includes
 
@@ -53,6 +55,9 @@ MsgsSimToClient ::= SEQUENCE
         msg-lima-creation-request-ack                           MsgLimaCreationRequestAck,
         msg-lima-destruction-request-ack                        MsgLimaDestructionRequestAck,
         msg-lima-update-request-ack                             MsgLimaUpdateRequestAck,
+
+        msg-intelligence-creation-request-ack                   MsgIntelligenceCreationRequestAck,
+        msg-intelligence-destruction-request-ack                MsgIntelligenceDestructionRequestAck,
 
         msg-unit-order-ack                                      MsgUnitOrderAck,
         msg-automat-order-ack                                   MsgAutomatOrderAck,
@@ -186,7 +191,10 @@ MsgsSimToClient ::= SEQUENCE
         msg-population-flow-knowledge-update                    MsgPopulationFlowKnowledgeUpdate,
 
         msg-folk-creation                                       MsgFolkCreation,
-        msg-folk-graph-update                                   MsgFolkGraphUpdate
+        msg-folk-graph-update                                   MsgFolkGraphUpdate,
+        
+        msg-intelligence-creation                               MsgIntelligenceCreation,
+        msg-intelligence-destruction                            MsgIntelligenceDestruction
     }
 }
 
@@ -209,8 +217,11 @@ MsgsClientToSim ::= SEQUENCE
         msg-limit-destruction-request           MsgLimitDestructionRequest,
         msg-limit-update-request                MsgLimitUpdateRequest,
         msg-lima-creation-request               MsgLimaCreationRequest,
-        msg-lima-destruction-request            MsgLimaDestruction,
+        msg-lima-destruction-request            MsgLimaDestructionRequest,
         msg-lima-update-request                 MsgLimaUpdateRequest,
+
+        msg-intelligence-creation-request       MsgIntelligenceCreationRequest,
+        msg-intelligence-destruction-request    MsgIntelligenceDestructionRequest,
 
         msg-unit-order                          MsgUnitOrder,
         msg-automat-order                       MsgAutomatOrder,

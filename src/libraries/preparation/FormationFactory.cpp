@@ -12,6 +12,8 @@
 #include "Formation.h"
 #include "FormationHierarchies.h"
 #include "TacticalLines.h"
+#include "Intelligences.h"
+#include "EntityIntelligences.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
 
@@ -45,6 +47,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
 {
     Formation* formation = new Formation( controllers_.controller_, level, idManager_ );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
+    formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach( *new TacticalLines() );
     formation->Polish();
     return formation;
@@ -58,6 +61,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
 {
     Formation* formation = new Formation( xis, controllers_.controller_, levels, idManager_ );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
+    formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach( *new TacticalLines() );
     formation->Polish();
     return formation;

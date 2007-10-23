@@ -23,6 +23,7 @@ namespace kernel
 {
     class Controller;
     class CoordinateConverter_ABC;
+    class FormationLevels;
 }
 
 class IdManager;
@@ -41,15 +42,15 @@ class IntelligencesModel : public kernel::Resolver< kernel::Intelligence_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             IntelligencesModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, IdManager& idManager );
+             IntelligencesModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, IdManager& idManager, const kernel::FormationLevels& levels );
     virtual ~IntelligencesModel();
     //@}
 
     //! @name Operations
     //@{
     void Purge();
-    virtual kernel::Intelligence_ABC& Create( kernel::Team_ABC& team, const std::string& symbol, const std::string& level, const kernel::Karma& karma, const geometry::Point2f& position );
-    void Create( xml::xistream& xis, kernel::Team_ABC& team );
+    virtual kernel::Intelligence_ABC* Create( kernel::Entity_ABC& superior, const std::string& symbol, const kernel::HierarchyLevel_ABC& level, bool embarked, const kernel::Karma& karma, const geometry::Point2f& position );
+    void Create( xml::xistream& xis, kernel::Entity_ABC& superior );
     //@}
 
 private:
@@ -70,6 +71,7 @@ private:
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     IdManager& idManager_;
+    const kernel::FormationLevels& levels_;
     //@}
 };
 

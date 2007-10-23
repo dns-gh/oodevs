@@ -101,6 +101,9 @@ GENERATE_ASN_MSG_SENDER( ClientToSim, LimaCreationRequest, lima_creation_request
 GENERATE_NOPTR_ASN_MSG_SENDER( ClientToSim, LimaDestructionRequest, lima_destruction_request )
 GENERATE_ASN_MSG_SENDER( ClientToSim, LimaUpdateRequest, lima_update_request )
 
+GENERATE_ASN_MSG_SENDER( ClientToSim, IntelligenceCreationRequest   , intelligence_creation_request )
+GENERATE_ASN_MSG_SENDER( ClientToSim, IntelligenceDestructionRequest, intelligence_destruction_request )
+
 GENERATE_ASN_MSG_SENDER( ClientToSim, ObjectMagicAction, object_magic_action )
 GENERATE_ASN_MSG_SENDER( ClientToSim, UnitMagicAction, unit_magic_action )
 GENERATE_ASN_MSG_SENDER( ClientToSim, PopulationMagicAction, population_magic_action )

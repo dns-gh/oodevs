@@ -22,7 +22,7 @@
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
-#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 
 using namespace gui;
 using namespace kernel;
@@ -36,13 +36,13 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
     , controllers_( controllers )
     , icons_( icons )
     , symbolFactory_( new SymbolFactory() )
-    , selectedTeam_( controllers )
+    , selectedEntity_( controllers )
 {
     layout()->setAlignment( Qt::AlignTop );
     QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tr( "Intelligence description" ), this );
     {
-        new QLabel( tr( "Owner team:" ), group );
-        teamLabel_ = new QLabel( "---", group );
+        new QLabel( tr( "Superior:" ), group );
+        superiorLabel_ = new QLabel( "---", group );
     }
     {
         new QLabel( tr( "Level: " ), group );
@@ -63,6 +63,10 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
         karmaCombo_->insertItem( Karma::neutral_.GetName() );
         karmaCombo_->insertItem( Karma::unknown_.GetName() );
         connect( karmaCombo_, SIGNAL( activated( int ) ), SLOT( UpdateSymbol() ) );
+    }
+    {
+        new QLabel( tr( "Is embarked fight: " ), group );
+        embarked_ = new QCheckBox( group );
     }
     {
         NatureSelectionWidget* nature = new NatureSelectionWidget( this, "symbols.xml" );
@@ -101,13 +105,30 @@ void IntelligencesPanel::NotifyUpdated( const ModelLoaded& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IntelligencesPanel::Select
-// Created: SBO 2007-10-16
+// Name: IntelligencesPanel::BeforeSelection
+// Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
-void IntelligencesPanel::Select( const kernel::Team_ABC* element )
+void IntelligencesPanel::BeforeSelection()
 {
-    selectedTeam_ = element;
-    teamLabel_->setText( selectedTeam_ ? selectedTeam_->GetName() : "---" );
+    selectedEntity_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencesPanel::AfterSelection
+// Created: SBO 2007-10-18
+// -----------------------------------------------------------------------------
+void IntelligencesPanel::AfterSelection()
+{
+    superiorLabel_->setText( selectedEntity_ ? selectedEntity_->GetName() : "---" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencesPanel::Select
+// Created: SBO 2007-10-18
+// -----------------------------------------------------------------------------
+void IntelligencesPanel::Select( const Formation_ABC& element )
+{
+    selectedEntity_ = &element;
 }
 
 namespace
@@ -132,14 +153,12 @@ void IntelligencesPanel::UpdateSymbol()
 {
     if( !nature_.isEmpty() )
     {
-        const std::string level  = symbolFactory_->CreateLevelSymbol( levelCombo_->GetValue()->GetName().ascii() );
         symbol_ = symbolFactory_->CreateSymbol( nature_.ascii() );
         const Karma& karma = Karma::ResolveName( karmaCombo_->currentText() );
         App6Symbol::SetKarma( symbol_, karma );
-        QImage img;
-        img = icons_.GetSymbol( symbol_, level, GetColor( karma ), QSize( 128, 128 ) ); // $$$$ SBO 2007-10-12: 
-        if( !img.isNull() )
-            icon_->setPixmap( img );
+        QPixmap pixmap = icons_.GetSymbol( symbol_, levelCombo_->GetValue()->GetSymbol(), GetColor( karma ), QSize( 128, 128 ) ); // $$$$ SBO 2007-10-12: 
+        if( !pixmap.isNull() )
+            icon_->setPixmap( pixmap );
         else
             QTimer::singleShot( 100, this, SLOT( UpdateSymbol() ) );
     }
@@ -186,9 +205,9 @@ void IntelligencesPanel::mouseMoveEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void IntelligencesPanel::DoDrag()
 {
-    if( !selectedTeam_ )
+    if( !selectedEntity_ )
         return;
-    intelligence_.reset( new IntelligencePrototype( *selectedTeam_.ConstCast(), symbol_, levelCombo_->GetValue()->GetSymbol(), Karma::ResolveName( karmaCombo_->currentText() ) ) );
+    intelligence_.reset( new IntelligencePrototype( *selectedEntity_.ConstCast(), symbol_, *levelCombo_->GetValue(), embarked_->isChecked(), Karma::ResolveName( karmaCombo_->currentText() ) ) );
     QDragObject* drag = new ValuedDragObject( intelligence_.get(), this );
     drag->drag();
 }

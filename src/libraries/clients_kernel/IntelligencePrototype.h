@@ -15,7 +15,8 @@ namespace kernel
     class Intelligence_ABC;
     class IntelligenceFactory_ABC;
     class Karma;
-    class Team_ABC;
+    class HierarchyLevel_ABC;
+    class Entity_ABC;
 
 // =============================================================================
 /** @class  IntelligencePrototype
@@ -29,7 +30,7 @@ class IntelligencePrototype
 public:
     //! @name Constructors/Destructor
     //@{
-             IntelligencePrototype( kernel::Team_ABC& team, const std::string& symbol, const std::string& level, const Karma& karma );
+             IntelligencePrototype( Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool embarked, const Karma& karma );
     virtual ~IntelligencePrototype();
     //@}
 
@@ -52,9 +53,10 @@ private:
 private:
     //! @name Member data
     //@{
-          kernel::Team_ABC& team_;
+          kernel::Entity_ABC& superior_;
     const std::string symbol_;
-    const std::string level_;
+    const HierarchyLevel_ABC& level_;
+    const bool embarked_;
     const Karma& karma_;
     //@}
 };

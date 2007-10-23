@@ -30,6 +30,7 @@
 #include "Troops.h"
 #include "Dotations.h"
 #include "ConvexHulls.h"
+#include "EntityIntelligences.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -68,6 +69,7 @@ Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     result->Attach< CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result, *this ) );
     result->Attach< TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
+    result->Attach< IntelligenceHierarchies > ( *new EntityIntelligences    ( controllers_.controller_, *result, 0, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
@@ -89,6 +91,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const ASN1T_MsgFormationCre
     Formation* result = new Formation( asnMsg, controllers_.controller_, model_.static_.levels_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
+    result->Attach< IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );

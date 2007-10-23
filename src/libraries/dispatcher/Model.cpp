@@ -36,6 +36,7 @@
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "AgentTypes.h"
 #include "FolkModel.h"
+#include "Intelligence.h"
 #include "Report.h"
 
 #include "SimulationModel.h"
@@ -76,6 +77,10 @@ void Model::Reset()
 {
     pSimulationModel_->Reset();
 
+    intelligences_          .Clear();
+    fireEffects_            .Clear();
+    populationFires_        .Clear();
+    fires_                  .Clear();
     limits_                 .Clear();
     limas_                  .Clear();
     agentKnowledges_        .Clear();
@@ -239,6 +244,10 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_update               : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_update->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_update ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_destruction->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_destruction ); break;
         case T_MsgsSimToClient_msg_msg_folk_creation                                  : folkModel_->Update( *asnMsg.msg.u.msg_folk_creation ); break;
+
+        case T_MsgsSimToClient_msg_msg_intelligence_creation    : CreateUpdate( intelligences_, asnMsg.msg.u.msg_intelligence_creation->oid, *asnMsg.msg.u.msg_intelligence_creation ); break;
+        case T_MsgsSimToClient_msg_msg_intelligence_destruction : intelligences_.Destroy( asnMsg.msg.u.msg_intelligence_destruction->oid ); break;
+
 //        default:
 //            assert( false );
     }
@@ -332,6 +341,7 @@ void Model::Accept( ModelVisitor_ABC& visitor ) const
     fires_                 .Apply( std::mem_fun_ref( &Fire                 ::Accept ), visitor );
     populationFires_       .Apply( std::mem_fun_ref( &PopulationFire       ::Accept ), visitor );
     fireEffects_           .Apply( std::mem_fun_ref( &FireEffect           ::Accept ), visitor );
+    intelligences_         .Apply( std::mem_fun_ref( &Intelligence         ::Accept ), visitor );
     reports_               .Apply( std::mem_fun_ref( &Report               ::Accept ), visitor );
 }
 

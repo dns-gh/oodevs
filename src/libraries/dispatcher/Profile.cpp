@@ -230,6 +230,8 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_unit_magic_action                  : return true;
         case T_MsgsClientToSim_msg_msg_object_magic_action                : return true;
         case T_MsgsClientToSim_msg_msg_population_magic_action            : return true;
+        case T_MsgsClientToSim_msg_msg_intelligence_creation_request      : return true;
+        case T_MsgsClientToSim_msg_msg_intelligence_destruction_request   : return true;
 
         case T_MsgsClientToSim_msg_msg_change_diplomacy                   : return true;
         case T_MsgsClientToSim_msg_msg_automat_change_knowledge_group     : return true;

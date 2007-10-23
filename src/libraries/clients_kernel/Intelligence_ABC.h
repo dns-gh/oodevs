@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Karma;
+    class HierarchyLevel_ABC;
 
 // =============================================================================
 /** @class  Intelligence_ABC
@@ -32,11 +33,17 @@ public:
     virtual ~Intelligence_ABC();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     virtual std::string GetSymbol() const = 0;
-    virtual std::string GetLevel() const = 0;
+    virtual const kernel::HierarchyLevel_ABC& GetLevel() const = 0;
     virtual const kernel::Karma& GetKarma() const = 0;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Delete() = 0;
+    virtual void Rename( const QString& name ) = 0;
 
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;

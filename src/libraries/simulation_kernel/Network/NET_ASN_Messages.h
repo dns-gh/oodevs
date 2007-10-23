@@ -233,8 +233,13 @@ GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFlowKnowledgeCreation           
 GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFlowKnowledgeDestruction         , population_flow_knowledge_destruction          )
 GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFlowKnowledgeUpdate              , population_flow_knowledge_update               )
 
-GENERATE_ASN_MSG_SENDER( SimToClient,       FolkCreation               , folk_creation           )
-GENERATE_ASN_MSG_SENDER( SimToClient,       FolkGraphUpdate            , folk_graph_update       )
+GENERATE_ASN_MSG_SENDER( SimToClient, FolkCreation   , folk_creation     )
+GENERATE_ASN_MSG_SENDER( SimToClient, FolkGraphUpdate, folk_graph_update )
+
+GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceCreation             , intelligence_creation )
+GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceDestruction          , intelligence_destruction )
+GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceCreationRequestAck   , intelligence_creation_request_ack )
+GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceDestructionRequestAck, intelligence_destruction_request_ack )
 
 #endif // __NET_ASN_Messages_h_
 

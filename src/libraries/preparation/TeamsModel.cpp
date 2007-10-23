@@ -140,6 +140,7 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
         xos << start( "side" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
+        it->second->Interface().Apply( & Serializable_ABC::SerializeIntelligences, xos );
         xos << end();
     }
     xos << end();
@@ -208,9 +209,6 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
         >> end();
     xis >> start( "populations" )
             >> list( "population", model.agents_, &AgentsModel::CreatePopulation, *team )
-        >> end();
-    xis >> start( "intelligences" )
-            >> list( "intelligence", model.intelligences_, &IntelligencesModel::Create, *team )
         >> end();
 }
 

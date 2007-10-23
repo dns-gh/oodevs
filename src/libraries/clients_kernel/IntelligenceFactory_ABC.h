@@ -7,14 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef __IntelligenceFactory_ABC_h_
-#define __IntelligenceFactory_ABC_h_
+#ifndef __kernel_IntelligenceFactory_ABC_h_
+#define __kernel_IntelligenceFactory_ABC_h_
 
 namespace kernel
 {
+    class Entity_ABC;
     class Intelligence_ABC;
     class Karma;
-    class Team_ABC;
+    class HierarchyLevel_ABC;
 
 // =============================================================================
 /** @class  IntelligenceFactory_ABC
@@ -34,10 +35,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual Intelligence_ABC& Create( Team_ABC& team, const std::string& symbol, const std::string& level, const Karma& karma, const geometry::Point2f& position ) = 0;
+    virtual Intelligence_ABC* Create( Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool embarked, const Karma& karma, const geometry::Point2f& position ) = 0;
     //@}
 };
 
 }
 
-#endif // __IntelligenceFactory_ABC_h_
+#endif // __kernel_IntelligenceFactory_ABC_h_
