@@ -59,7 +59,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxDockableWindows.Register(regKey);
-
+            GMxDockableWindows.Register(regKey);
         }
         /// <summary>
         /// Required method for ArcGIS Component Category unregistration -
@@ -69,7 +69,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxDockableWindows.Unregister(regKey);
-
+            GMxDockableWindows.Unregister(regKey);
         }
 
         #endregion

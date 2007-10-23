@@ -80,14 +80,17 @@ namespace Crossbow
             }
             public override void OnSelect()
             {
+                IScreenDisplay display = Tools.GetDocument().Display;
+                if (display == null)
+                    return;
                 m_polygon = null;
                 IRubberBand rubber = new RubberPolygonClass();
-                m_polygon = rubber.TrackNew(Tools.GetDisplay(), null) as IPointCollection;                
+                m_polygon = rubber.TrackNew(display, null) as IPointCollection;
                 if (m_polygon != null)
                 {
                     ISpatialReference spRef = ((IGeometry)m_polygon).SpatialReference;
                     if (spRef == null)
-                        ((IGeometry)m_polygon).SpatialReference = Tools.GetDisplay().DisplayTransformation.SpatialReference;
+                        ((IGeometry)m_polygon).SpatialReference = Tools.GetDocument().SpatialReference;
                     Tools.Store(m_OrderPolygon, (IGeometry)m_polygon);
                 }                
             }
@@ -149,13 +152,16 @@ namespace Crossbow
             {
                 if (m_path == null)
                 {
+                    IScreenDisplay display = Tools.GetDocument().Display;
+                    if (display == null)
+                        return;
                     IRubberBand rubber = new RubberLineClass();                    
-                    m_path = (IPolyline)rubber.TrackNew(Tools.GetDisplay(), null);
+                    m_path = (IPolyline)rubber.TrackNew(display, null);
                     if (m_path != null)
                     {
                         ISpatialReference spRef = m_path.SpatialReference;
                         if (spRef == null)
-                            m_path.SpatialReference = Tools.GetDisplay().DisplayTransformation.SpatialReference;
+                            m_path.SpatialReference = Tools.GetDocument().SpatialReference;
                         Tools.Store(m_OrderLine, m_path);
                     }
                 }

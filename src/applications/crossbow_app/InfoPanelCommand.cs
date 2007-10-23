@@ -19,6 +19,56 @@ namespace Crossbow
     [ProgId("CSword.InfoPanelCommand")]
     public sealed class InfoPanelCommand : BaseCommand
     {
+        #region COM Registration Function(s)
+        [ComRegisterFunction()]
+        [ComVisible(false)]
+        static void RegisterFunction(Type registerType)
+        {
+            // Required for ArcGIS Component Category Registrar support
+            ArcGISCategoryRegistration(registerType);
+
+            //
+            // TODO: Add any COM registration code here
+            //
+        }
+
+        [ComUnregisterFunction()]
+        [ComVisible(false)]
+        static void UnregisterFunction(Type registerType)
+        {
+            // Required for ArcGIS Component Category Registrar support
+            ArcGISCategoryUnregistration(registerType);
+
+            //
+            // TODO: Add any COM unregistration code here
+            //
+        }
+
+        #region ArcGIS Component Category Registrar generated code
+        /// <summary>
+        /// Required method for ArcGIS Component Category registration -
+        /// Do not modify the contents of this method with the code editor.
+        /// </summary>
+        private static void ArcGISCategoryRegistration(Type registerType)
+        {
+            string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
+            MxCommands.Register(regKey);
+            GMxCommands.Register(regKey);
+        }
+        /// <summary>
+        /// Required method for ArcGIS Component Category unregistration -
+        /// Do not modify the contents of this method with the code editor.
+        /// </summary>
+        private static void ArcGISCategoryUnregistration(Type registerType)
+        {
+            string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
+            MxCommands.Unregister(regKey);
+            GMxCommands.Unregister(regKey);
+        }
+
+        #endregion
+        #endregion
+
         private IDockableWindow m_dockableWindow;
 
         public InfoPanelCommand()
@@ -51,7 +101,7 @@ namespace Crossbow
         /// <param name="hook">Instance of the application</param>
         public override void OnCreate(object hook)
         {
-            if (hook != null && hook is IMxApplication)
+            if (Tools.IsSupportedApplication(hook))
             {
                 CreateDockableWindow(hook as IDockableWindowManager);
                 Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoaded);

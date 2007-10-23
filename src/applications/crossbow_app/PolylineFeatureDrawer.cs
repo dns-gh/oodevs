@@ -13,7 +13,7 @@ namespace Crossbow
         #region Drawing methods
         public static void Draw(IDynamicDisplay dynamicDisplay, IDynamicElement element, IFeature feature, bool selected)
         {
-            ISpatialReference reference = Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation.SpatialReference;
+            ISpatialReference reference = Tools.GetDocument().SpatialReference;
             IPointCollection points = feature.Shape as IPointCollection;
             for (int i = 0; i < points.PointCount; ++i)
             {
@@ -44,9 +44,7 @@ namespace Crossbow
             center.X = (envelope.XMax + envelope.XMin) / 2;
             center.Y = (envelope.YMax + envelope.YMin) / 2;
 
-            IDisplayTransformation transformation = Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation;
-            double xScale = envelope.Width / transformation.FromPoints(element.Width);
-            double yScale = envelope.Height / transformation.FromPoints(element.Height);
+            double xScale = envelope.Width / Tools.GetDocument().FromPoints(element.Width);
             properties.SetScale(esriDynamicSymbolType.esriDSymbolMarker, (float)xScale, (float)xScale);
             dynamicDisplay.DrawMarker(center);
 

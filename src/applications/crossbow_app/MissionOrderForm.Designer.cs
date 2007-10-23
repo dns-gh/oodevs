@@ -206,7 +206,7 @@ namespace Crossbow
             this.Name = "MissionOrderForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "MissionOrderForm";
+            this.Text = "Order";
             this.TopMost = true;
             this.m_OrderBox.ResumeLayout(false);
             this.m_OrderBox.PerformLayout();

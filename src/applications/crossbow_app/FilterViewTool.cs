@@ -54,7 +54,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Register(regKey);
-
+            GMxCommands.Register(regKey);
         }
         /// <summary>
         /// Required method for ArcGIS Component Category unregistration -
@@ -64,7 +64,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Unregister(regKey);
-
+            GMxCommands.Unregister(regKey);
         }
 
         #endregion
@@ -104,8 +104,7 @@ namespace Crossbow
         /// <param name="hook">Instance of the application</param>
         public override void OnCreate(object hook)
         {
-            //Disable if it is not ArcMap
-            base.m_enabled = hook is IMxApplication;
+            base.m_enabled = Tools.IsSupportedApplication(hook);
             InitControl();
         }
 
@@ -170,12 +169,11 @@ namespace Crossbow
         private void OnSelectionChanged(object sender, System.EventArgs e)
         {
             string filter = m_teamCombo.SelectedItem.ToString();
-            IMxDocument mxDocument = Tools.GetMxDocument();
-            IFeatureLayer layer = Tools.GetIFeatureLayerFromLayerName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
+            IFeatureLayer layer = Tools.GetFeatureLayerByName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
             if (layer != null)
             {
                 FilterLayer(layer, filter);
-                mxDocument.ActiveView.Refresh();
+                Tools.GetDocument().RefreshView();
             }
         }
 

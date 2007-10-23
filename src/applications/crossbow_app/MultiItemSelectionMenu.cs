@@ -134,6 +134,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Register(regKey);
+            GMxCommands.Register(regKey);
         }
         /// <summary>
         /// Required method for ArcGIS Component Category unregistration -
@@ -143,6 +144,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Unregister(regKey);
+            GMxCommands.Unregister(regKey);
         }
 
         #endregion
@@ -189,6 +191,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Register(regKey);
+            GMxCommands.Register(regKey);
         }
         /// <summary>
         /// Required method for ArcGIS Component Category unregistration -
@@ -198,6 +201,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Unregister(regKey);
+            GMxCommands.Unregister(regKey);
         }
 
         #endregion

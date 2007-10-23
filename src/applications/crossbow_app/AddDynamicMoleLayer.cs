@@ -55,7 +55,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Register(regKey);
-
+            GMxCommands.Register(regKey);
         }
         /// <summary>
         /// Required method for ArcGIS Component Category unregistration -
@@ -65,6 +65,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Unregister(regKey);
+            GMxCommands.Unregister(regKey);
         }
 
         #endregion
@@ -97,10 +98,9 @@ namespace Crossbow
         /// <param name="hook">Instance of the application</param>
         public override void OnCreate(object hook)
         {
-            base.m_enabled = hook != null && hook is IMxApplication;
+            base.m_enabled = Tools.IsSupportedApplication(hook);
         }
-        
-        
+                
         /// <summary>
         /// Occurs when this command is clicked
         /// </summary>
@@ -119,9 +119,9 @@ namespace Crossbow
                     if (gxDs != null)
                     {
                         ILayer layer = CreateLayerGroup(element.Name, gxDs.Dataset as IFeatureClass);
-                        IMxDocument mxDocument = Tools.GetMxDocument();
-                        mxDocument.AddLayer(layer);
-                        mxDocument.ActiveView.Refresh();
+                        DocumentProxy document = Tools.GetDocument();
+                        document.AddLayer(layer);
+                        document.RefreshView();
                     }
                 }
             }

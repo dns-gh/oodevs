@@ -11,7 +11,7 @@ namespace Crossbow
         {
             if (feature == null)
                 return;
-            feature.Shape.Project(Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation.SpatialReference);
+            feature.Shape.Project(Tools.GetDocument().SpatialReference);
 
             switch (feature.Shape.GeometryType)
             {

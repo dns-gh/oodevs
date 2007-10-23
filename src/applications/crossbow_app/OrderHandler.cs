@@ -42,7 +42,7 @@ namespace Crossbow
 
         private bool SelectFeature(int x, int y)
         {            
-            UpdateSelection(Tools.GetMxDocument().FocusMap.FeatureSelection);
+            UpdateSelection(Tools.GetDocument().FeatureSelection);
             m_targetX = x; m_targetY = y;
             return m_order != null || (m_targetFeature != null && m_targetFeature.Class.FindField("Public_OID") > 0); // m_order.NeedContextMenu()
         }
@@ -66,7 +66,7 @@ namespace Crossbow
 
         private static void CreateMissionContextMenu()
         {
-            ICommandBar menu = ((IDocument)Tools.GetMxDocument()).CommandBars.Create("OrderMenu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
+            ICommandBar menu = Tools.GetIDocument().CommandBars.Create("OrderMenu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
             UID uid = new UIDClass();
             uid.Value = "Crossbow.OrderSelectionMenu";
             object Missing = Type.Missing;

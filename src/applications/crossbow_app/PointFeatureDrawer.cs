@@ -26,7 +26,7 @@ namespace Crossbow
             }
 
             IPoint position = feature.Shape as IPoint;
-            position.Project(Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation.SpatialReference);
+            position.Project(Tools.GetDocument().SpatialReference);
             if (selected)
                 DrawEnvelope(dynamicDisplay, element, position);
 
@@ -46,9 +46,9 @@ namespace Crossbow
             m_properties.SetColor(esriDynamicSymbolType.esriDSymbolFill, 0.6f, 0.75f, 1.0f, 0.8f);
             m_properties.SetColor(esriDynamicSymbolType.esriDSymbolLine, 0.25f, 0.5f, 0.75f, 1.0f);
 
-            IDisplayTransformation transformation = Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation;
+            DocumentProxy doc = Tools.GetDocument();
             IEnvelope envelope = center.Envelope;
-            envelope.Expand(transformation.FromPoints(element.Width / 2), transformation.FromPoints(element.Height / 2), false);
+            envelope.Expand(doc.FromPoints(element.Width / 2), doc.FromPoints(element.Height / 2), false);
             dynamicDisplay.DrawRectangle(envelope);
         }
 
@@ -59,9 +59,9 @@ namespace Crossbow
             m_properties.SetColor(esriDynamicSymbolType.esriDSymbolLine, 0.3f, 0.3f, 0.3f, 0.7f);
 
             IEnvelope envelope = center.Envelope;
-            IDisplayTransformation transformation = Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation;
-            envelope.Expand(transformation.FromPoints(element.Width / 3), transformation.FromPoints(element.Width / 30), false);
-            envelope.Offset(0, -(transformation.FromPoints(element.Height / 2) - envelope.Height));
+            DocumentProxy doc = Tools.GetDocument();
+            envelope.Expand(doc.FromPoints(element.Width / 3), doc.FromPoints(element.Width / 30), false);
+            envelope.Offset(0, -(doc.FromPoints(element.Height / 2) - envelope.Height));
             dynamicDisplay.DrawRectangle(envelope);
 
             short state = Tools.GetValue<short>(feature, "OpsState");

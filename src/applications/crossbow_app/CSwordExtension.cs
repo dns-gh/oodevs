@@ -49,6 +49,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxExtension.Register(regKey);
+            GMxExtensions.Register(regKey);
 
         }
         /// <summary>
@@ -59,7 +60,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxExtension.Unregister(regKey);
-
+            GMxExtensions.Unregister(regKey);
         }
 
         #endregion
@@ -107,26 +108,26 @@ namespace Crossbow
         private void SetupEvents()
         {
             m_newDocumentEvent = new IDocumentEvents_NewDocumentEventHandler(OnNewDocumentHandler);
-            ((IDocumentEvents_Event)(Tools.GetMxDocument())).NewDocument += m_newDocumentEvent;
+            ((IDocumentEvents_Event)(Tools.GetIDocument())).NewDocument += m_newDocumentEvent;
             m_openDocumentEvent = new IDocumentEvents_OpenDocumentEventHandler(OnOpenDocumentHandler);
-            ((IDocumentEvents_Event)(Tools.GetMxDocument())).OpenDocument += m_openDocumentEvent;
+            ((IDocumentEvents_Event)(Tools.GetIDocument())).OpenDocument += m_openDocumentEvent;
             m_closeDocumentEvent = new IDocumentEvents_CloseDocumentEventHandler(OnCloseDocumentHandler);
-            ((IDocumentEvents_Event)(Tools.GetMxDocument())).CloseDocument += m_closeDocumentEvent;
+            ((IDocumentEvents_Event)(Tools.GetIDocument())).CloseDocument += m_closeDocumentEvent;
         }
 
         private void OnNewDocumentHandler()
         {
-            Tools.EnableDynamicDisplay(true);
+            Tools.GetDocument().EnableDynamicDisplay(true);
         }
 
         private void OnOpenDocumentHandler()
         {
-            Tools.EnableDynamicDisplay(true);
+            Tools.GetDocument().EnableDynamicDisplay(true);
         }
 
         private void OnCloseDocumentHandler()
         {
-            Tools.EnableDynamicDisplay(false);
+            Tools.GetDocument().EnableDynamicDisplay(false);
         }
 
         public void NotifyModelLoaded()

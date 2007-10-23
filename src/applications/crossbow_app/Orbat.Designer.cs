@@ -220,7 +220,7 @@ namespace Crossbow
         /// </summary>
         public void LoadLayer(string layerName)
         {
-            IFeatureLayer layer = Tools.GetIFeatureLayerFromLayerName(layerName);
+            IFeatureLayer layer = Tools.GetFeatureLayerByName(layerName);
             if (layer == null || layer == m_featureLayer)
                 return;
             m_featureLayer = layer;

@@ -1,9 +1,11 @@
 using System;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.MOLE;
 using ESRI.ArcGIS.DataSourcesGDB;
+using ESRI.ArcGIS.ArcGlobe;
 
 namespace Crossbow
 {
@@ -11,17 +13,17 @@ namespace Crossbow
     {
         public static void Build(WorkspaceConfiguration config)
         {
-            Tools.EnableDynamicDisplay(true);
+            DocumentProxy document = Tools.GetDocument();
+            document.EnableDynamicDisplay(true);
 
             IWorkspaceFactory factory = new AccessWorkspaceFactoryClass();
             IFeatureWorkspace workspace = (IFeatureWorkspace)factory.OpenFromFile(config.WorkspaceFile, 0);
 
-            IMxDocument document = Tools.GetMxDocument();
             document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.Units));
             document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limits));
             document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limas));
             document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.TacticalObjectPoint));
-            document.ActiveView.Refresh();
+            document.RefreshView();
         }
 
         private static ILayer BuildDynamicLayer(IFeatureWorkspace workspace, string name)

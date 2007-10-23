@@ -89,7 +89,8 @@ namespace Crossbow
             get
             {
                 UID id = new UIDClass();
-                id.Value = "Crossbow.DynamicMoleLayer";
+                id.Value = "{e5798908-98b7-466f-9eee-43e58516f700}";
+                //id.Value = "Crossbow.DynamicMoleLayer";
                 return id;
             }
         }

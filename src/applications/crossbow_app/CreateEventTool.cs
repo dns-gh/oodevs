@@ -54,7 +54,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Register(regKey);
-
+            GMxCommands.Register(regKey);
         }
         /// <summary>
         /// Required method for ArcGIS Component Category unregistration -
@@ -64,7 +64,7 @@ namespace Crossbow
         {
             string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
             MxCommands.Unregister(regKey);
-
+            GMxCommands.Unregister(regKey);
         }
 
         #endregion
@@ -99,7 +99,7 @@ namespace Crossbow
 
         public override void OnCreate(object hook)
         {
-            if (hook != null && hook is IMxApplication)
+            if (Tools.IsSupportedApplication(hook))
                 Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoaded);
             m_enabled = false;
         }
@@ -114,7 +114,7 @@ namespace Crossbow
             try
             {
                 Tools.GetCSwordExtension().EmergencyHandler.OnContextMenu(X, Y);
-                ICommandBar menu = ((IDocument)Tools.GetMxDocument()).CommandBars.Create("EmergencyMenu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
+                ICommandBar menu = Tools.GetIDocument().CommandBars.Create("EmergencyMenu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
                 BuildContextMenu(menu);
                 if (menu.Count > 0)
                     menu.Popup(0, 0);

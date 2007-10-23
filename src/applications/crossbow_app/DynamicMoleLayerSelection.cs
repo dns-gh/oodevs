@@ -95,9 +95,7 @@ namespace Crossbow
 
         private static void UpdateEnveloppe(ISpatialFilter spatialFilter)
         {
-            IDisplayTransformation transformation = Tools.GetMxDocument().ActiveView.ScreenDisplay.DisplayTransformation;
-
-            double symbolSize = transformation.FromPoints(64);
+            double symbolSize = Tools.GetDocument().FromPoints(64);
 
             IEnvelope envelope = spatialFilter.Geometry.Envelope;
             double symbolWidth = (symbolSize > envelope.Width) ? symbolSize - envelope.Width : envelope.Width - symbolSize;
