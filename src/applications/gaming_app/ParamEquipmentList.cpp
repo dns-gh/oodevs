@@ -81,6 +81,7 @@ void ParamEquipmentList::BuildInterface( QWidget* parent )
         removeBtn->setFixedSize( 32, 32 );
 
         connect( addBtn, SIGNAL( clicked() ), SLOT( OnAdd() ) );
+        connect( baseList_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnAdd() ) );
         connect( removeBtn, SIGNAL( clicked() ), SLOT( OnRemove() ) );
     }
 
@@ -95,6 +96,7 @@ void ParamEquipmentList::BuildInterface( QWidget* parent )
         QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, buttonBox );
         downBtn->setFixedSize( 32, 32 );
 
+        connect( list_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnRemove() ) );
         connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
         connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
     }
