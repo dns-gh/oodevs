@@ -77,28 +77,6 @@ namespace extractors
         { return message.msg.t == T_MsgsSimToClient_msg_msg_stop_unit_fire; }
     };
 
-    // Events
-    struct FireComponentDamage : public Extractor< float >
-    {
-        bool HasValue( const ASN1T_MsgsSimToClient& message ) const
-        { return message.msg.t == T_MsgsSimToClient_msg_msg_stop_unit_fire; }
-        float Extract( const ASN1T_MsgsSimToClient& message ) const
-        { 
-            const ASN1T_MsgStopUnitFire& stop = *message.msg.u.msg_stop_unit_fire;
-            float result = 0;
-            for( unsigned u = 0; u < stop.units_damages.n; ++u )
-            {
-                const ASN1T_UnitFireDamages& damages = stop.units_damages.elem[u];
-                for( unsigned e = 0; e < damages.equipments.n; ++e )
-                {
-                    const ASN1T_UnitEquipmentFireDamage& damage = damages.equipments.elem[e];
-                    result += damage.unavailable_nbr;
-                }
-            }
-            return result;
-        }
-    };
-
 }
 
 #endif // __Extractors_h_

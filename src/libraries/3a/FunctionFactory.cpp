@@ -177,7 +177,7 @@ void FunctionFactory::Extract( xml::xistream& xis, Task& result )
     else if( value == "direct-fire-unit" )
         Extract< existences::DirectFireUnitId >( name, xis, result );
     else if( value == "fire-component-damage" )
-        Extract< events::FireComponentDamage >( name, xis, result );
+        Extract< events::FireComponentDamages >( name, xis, result );
     else
         ValueError( value );
 }

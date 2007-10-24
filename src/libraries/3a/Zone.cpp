@@ -19,11 +19,11 @@
 
 namespace
 {
-    class NullZone : public Zone_ABC
+    class WorldZone : public Zone_ABC
     {
         virtual bool Contains( const Position& ) const
         {
-            return false;
+            return true;
         }
     };
 }
@@ -33,7 +33,7 @@ namespace
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
 Zone::Zone()
-    : zone_( new NullZone() )
+    : zone_( new WorldZone() )
 {
     // NOTHING
 }
@@ -43,7 +43,7 @@ Zone::Zone()
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
 Zone::Zone( unsigned int )
-    : zone_( new NullZone() )
+    : zone_( new WorldZone() )
 {
     // NOTHING
 }
@@ -81,13 +81,16 @@ namespace
 // -----------------------------------------------------------------------------
 void Zone::Read( const std::string& content )
 {
-    std::string::size_type first = content.find_first_of( "(" );
-    std::string::size_type last  = content.find_last_of ( ")" );
-    if( first == std::string::npos || last == std::string::npos || last <= first )
-        throw std::runtime_error( "Invalid zone : " + content );
-    const std::string type        = content.substr( 0, first );
-    const std::string coordinates = content.substr( first+1, last - first - 1 );
-    zone_.reset( CreateZone( type, coordinates ) );
+    if( ! content.empty() )
+    {
+        std::string::size_type first = content.find_first_of( "(" );
+        std::string::size_type last  = content.find_last_of ( ")" );
+        if( first == std::string::npos || last == std::string::npos || last <= first )
+            throw std::runtime_error( "Invalid zone : " + content );
+        const std::string type        = content.substr( 0, first );
+        const std::string coordinates = content.substr( first+1, last - first - 1 );
+        zone_.reset( CreateZone( type, coordinates ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

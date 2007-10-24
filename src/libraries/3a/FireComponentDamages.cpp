@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "Resources.h"
+#include "FireComponentDamages.h"
 #include <xeumeuleu/xml.h>
 #include <vector>
 #pragma warning (push)
@@ -18,21 +18,21 @@
 using namespace extractors;
 
 // -----------------------------------------------------------------------------
-// Name: Resources constructor
-// Created: AGE 2007-10-23
+// Name: FireComponentDamages constructor
+// Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-Resources::Resources()
+FireComponentDamages::FireComponentDamages()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Resources constructor
-// Created: AGE 2007-10-23
+// Name: FireComponentDamages constructor
+// Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-Resources::Resources( xml::xistream& xis )
+FireComponentDamages::FireComponentDamages( xml::xistream& xis )
 {
-    const std::string values = xml::attribute( xis, "dotations", std::string() );
+    const std::string values = xml::attribute( xis, "components", std::string() );
     if( ! values.empty() )
     {
         std::vector< std::string > split;
@@ -42,22 +42,22 @@ Resources::Resources( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Resources::Extract
-// Created: AGE 2007-10-23
+// Name: FireComponentDamages::Extract
+// Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-int Resources::Extract( const ASN1T_MsgUnitAttributes& attributes )
+float FireComponentDamages::Extract( const ASN1T_MsgsSimToClient& message ) const
 {
-    unsigned size = attributes.dotation_eff_ressource.n;
-    while( size > 0 )
+    const ASN1T_MsgStopUnitFire& stop = *message.msg.u.msg_stop_unit_fire;
+    float result = 0;
+    for( unsigned u = 0; u < stop.units_damages.n; ++u )
     {
-        --size;
-        const int dotation = attributes.dotation_eff_ressource.elem[ size ].ressource_id;
-        const int quantity = attributes.dotation_eff_ressource.elem[ size ].quantite_disponible;
-        if( filter_.empty() || filter_.find( dotation ) != filter_.end() )
-            resources_[ dotation ] = quantity;
+        const ASN1T_UnitFireDamages& damages = stop.units_damages.elem[u];
+        for( unsigned e = 0; e < damages.equipments.n; ++e )
+        {
+            const ASN1T_UnitEquipmentFireDamage& damage = damages.equipments.elem[e];
+            if( filter_.empty() || filter_.find( damage.equipement_type ) != filter_.end() )
+                result += damage.unavailable_nbr;
+        }
     }
-    int result = 0;
-    for( std::map< int, int >::const_iterator it = resources_.begin(); it != resources_.end(); ++it )
-        result += it->second;
     return result;
 }

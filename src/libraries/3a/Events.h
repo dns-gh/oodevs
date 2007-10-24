@@ -11,7 +11,7 @@
 #define __Events_h_
 
 #include "Values.h"
-#include "Extractors.h"
+#include "FireComponentDamages.h"
 
 // =============================================================================
 /** @namespace  Existences
@@ -36,7 +36,8 @@ namespace events
         Extractor extractor_;
     };
 
-typedef Event< extractors::FireComponentDamage > FireComponentDamage;
+typedef Event< extractors::FireComponentDamages > FireComponentDamages;
+
 }
 
 #endif // __Events_h_
