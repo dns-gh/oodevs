@@ -11,6 +11,10 @@
 #include "ActionParameterMaintenancePriorities.h"
 #include "clients_kernel/EquipmentType.h"
 #include "xeumeuleu/xml.h"
+#pragma warning (push)
+#pragma warning (disable : 4127 4511 4512 )
+#include <boost/lexical_cast.hpp>
+#pragma warning (pop)
 
 using namespace kernel;
 using namespace xml;
@@ -71,6 +75,7 @@ void ActionParameterMaintenancePriorities::AddPriority( const EquipmentType& val
         current += ", ";
     SetValue( current + value.GetName() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterMaintenancePriorities::CommitTo
 // Created: SBO 2007-06-26
@@ -87,6 +92,21 @@ void ActionParameterMaintenancePriorities::CommitTo( ASN1T_MissionParameter& asn
     for( unsigned int i = 0; i < priorities_.size(); ++i )
         list->elem[i] = priorities_.at( i )->GetId();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterMaintenancePriorities::CommitTo
+// Created: AGE 2007-10-24
+// -----------------------------------------------------------------------------
+void ActionParameterMaintenancePriorities::CommitTo( std::string& content ) const
+{
+    for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
+    {
+        if( !content.empty() )
+            content += ",";
+        content += boost::lexical_cast< std::string >( (*it)->GetId() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterMaintenancePriorities::Clean
 // Created: SBO 2007-06-26

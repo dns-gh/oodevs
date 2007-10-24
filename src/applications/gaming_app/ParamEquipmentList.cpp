@@ -42,6 +42,19 @@ ParamEquipmentList::~ParamEquipmentList()
     // NOTHING
 }
 
+namespace
+{
+    QListView* CreateList( QWidget* parent )
+    {
+        QListView* list = new QListView( parent );
+        list->addColumn( "" );
+        list->header()->hide();
+        list->setResizeMode( QListView::ResizeMode::LastColumn );
+        list->setAllColumnsShowFocus( true );
+        return list;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList::BuildInterface
 // Created: SBO 2007-03-13
@@ -49,23 +62,42 @@ ParamEquipmentList::~ParamEquipmentList()
 void ParamEquipmentList::BuildInterface( QWidget* parent )
 {
     QHBox* hBox = new QHBox( parent );
-    list_ = new QListView( hBox );
-    list_->addColumn( "" );
-    list_->header()->hide();
-    list_->setSorting( -1, true );
-    list_->setResizeMode( QListView::ResizeMode::LastColumn );
-    list_->setAllColumnsShowFocus( true );
+    {
+        baseList_ = CreateList( hBox );
+        baseList_->setSorting( 0, true );
+        Iterator< const EquipmentType& > it( resolver_.CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            const EquipmentType& type = it.NextElement();
+            ValuedListItem* item = new ValuedListItem( baseList_ );
+            item->SetNamed( type );
+        }
 
-    QVBox* buttonBox = new QVBox( hBox );
-    buttonBox->layout()->setAlignment( Qt::AlignVCenter );
-    QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, buttonBox );
-    upBtn->setFixedSize( 32, 32 );
-    QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, buttonBox );
-    downBtn->setFixedSize( 32, 32 );
+        QVBox* buttonBox = new QVBox( hBox );
+        buttonBox->layout()->setAlignment( Qt::AlignVCenter );
+        QPushButton* addBtn = new QPushButton( MAKE_ICON( right_arrow ), QString::null, buttonBox );
+        addBtn->setFixedSize( 32, 32 );
+        QPushButton* removeBtn = new QPushButton( MAKE_ICON( left_arrow ), QString::null, buttonBox );
+        removeBtn->setFixedSize( 32, 32 );
 
-    connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
-    connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
-    connect( list_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnContextMenu( QListViewItem*, const QPoint&, int ) ) );
+        connect( addBtn, SIGNAL( clicked() ), SLOT( OnAdd() ) );
+        connect( removeBtn, SIGNAL( clicked() ), SLOT( OnRemove() ) );
+    }
+
+    {
+        list_ = CreateList( hBox );
+        list_->setSorting( -1, true );
+
+        QVBox* buttonBox = new QVBox( hBox );
+        buttonBox->layout()->setAlignment( Qt::AlignVCenter );
+        QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, buttonBox );
+        upBtn->setFixedSize( 32, 32 );
+        QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, buttonBox );
+        downBtn->setFixedSize( 32, 32 );
+
+        connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
+        connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -104,45 +136,33 @@ void ParamEquipmentList::OnDown()
 
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList::OnAdd
-// Created: SBO 2007-06-26
+// Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-void ParamEquipmentList::OnAdd( int index )
+void ParamEquipmentList::OnAdd()
 {
-    ValuedListItem* item = new ValuedListItem( list_, list_->lastItem() );
-    const EquipmentType& type = resolver_.Get( index );
-    item->SetNamed( type );
+    Move( baseList_, list_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList::OnRemove
-// Created: SBO 2007-06-26
+// Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::OnRemove()
 {
-    delete list_->currentItem();
+    Move( list_, baseList_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamEquipmentList::OnContextMenu
-// Created: SBO 2007-06-26
+// Name: ParamEquipmentList::Move
+// Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-void ParamEquipmentList::OnContextMenu( QListViewItem* item, const QPoint& point, int )
+void ParamEquipmentList::Move( QListView* from, QListView* to )
 {
-    QPopupMenu* menu = new QPopupMenu( list_ );
-    QPopupMenu* items = new QPopupMenu( menu );
-    Iterator< const EquipmentType& > it( resolver_.CreateIterator() );
-    while( it.HasMoreElements() )
-    {
-        const EquipmentType& type = it.NextElement();
-        if( !FindItem( &type, list_->firstChild() ) )
-        {
-            int id = items->insertItem( type.GetName(), this, SLOT( OnAdd( int ) ) );
-            items->setItemParameter( id, type.GetId() );
-        }
-    }
-    if( items->count() )
-        menu->insertItem( tr( "Add..." ), items );
+    ValuedListItem* item = static_cast< ValuedListItem* >( from->selectedItem() );
     if( item )
-        menu->insertItem( tr( "Remove" ), this, SLOT( OnRemove() ) );
-    menu->popup( point );
+    {
+        ValuedListItem* newItem = new ValuedListItem( to );
+        newItem->SetNamed( *item->GetValue< const EquipmentType >() );
+        delete item;
+    }
 }

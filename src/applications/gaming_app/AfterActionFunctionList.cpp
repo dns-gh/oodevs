@@ -24,6 +24,7 @@
 #include "ParamAgentList.h"
 #include "ParamLocation.h"
 #include "ParamDotationTypeList.h"
+#include "ParamEquipmentList.h"
 #include "icons.h"
 #include <qtoolbox.h>
 #include <qvgroupbox.h>
@@ -168,6 +169,8 @@ boost::shared_ptr< Param_ABC > AfterActionFunctionList::CreateParameter( const s
         result.reset( new ParamAgentList( this, parameter, controllers_.actions_ ) );
     else if( type == "dotation list" )
         result.reset( new ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
+    else if( type == "equipment list" )
+        result.reset( new ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
     else if( type == "zone" )
     {
         std::auto_ptr< ParamLocation > location( new ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );

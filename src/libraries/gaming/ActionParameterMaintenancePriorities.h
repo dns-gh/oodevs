@@ -41,6 +41,7 @@ public:
     //@{
     void AddPriority( const kernel::EquipmentType& value );
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( std::string& content ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 

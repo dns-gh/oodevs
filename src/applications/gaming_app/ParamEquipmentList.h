@@ -47,9 +47,14 @@ private slots:
     //@{
     void OnUp();
     void OnDown();
-    void OnAdd( int index );
+    void OnAdd();
     void OnRemove();
-    void OnContextMenu( QListViewItem* item, const QPoint& point, int col );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void Move( QListView* from, QListView* to );
     //@}
 
 private:
@@ -57,6 +62,7 @@ private:
     //@{
     kernel::OrderParameter parameter_;
     const kernel::Resolver< kernel::EquipmentType >& resolver_;
+    QListView* baseList_;
     QListView* list_;
     //@}
 };
