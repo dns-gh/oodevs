@@ -14,6 +14,7 @@
 #include "Extractors.h"
 #include "Resources.h"
 #include "Equipments.h"
+#include "Humans.h"
 
 // =============================================================================
 /** @namespace  Attributes
@@ -56,6 +57,7 @@ typedef UnitAttribute< extractors::OperationalState > OperationalState;
 typedef UnitAttribute< extractors::Position >         Position;
 typedef UnitAttribute< extractors::Resources >        Resources;
 typedef UnitAttribute< extractors::Equipments >       Equipments;
+typedef UnitAttribute< extractors::Humans >           Humans;
 
 } // namespace attributes
 

@@ -631,7 +631,6 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
     publisher.verify();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Facade_TestEquipments
 // Created: AGE 2004-12-15
@@ -640,7 +639,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestEquipments )
 {
     const std::string input =
     "<indicator>"
-        "<extract function='equipments' states='available,prisoner' id='equipments'/>"
+        "<extract function='equipments' states='available,prisoner' equipments='12,42' id='equipments'/>"
         "<reduce type='int' function='sum' input='equipments' id='sum'/>"
         "<plot input='sum' type='int'/>"
     "</indicator>";
@@ -650,6 +649,32 @@ BOOST_AUTO_TEST_CASE( Facade_TestEquipments )
     boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
 
     BOOST_WARN_MESSAGE( 0, "TODO. I'm lazy." );
+
+//    MockPublisher publisher;
+//    double expectedResult[] = { 0, -54, 0, 0, -100 };
+//    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+//    task->Commit( publisher );
+//    publisher.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestHumans
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestHumans )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='humans' states='operational,nbc' ranks='troopers' id='humans'/>"
+        "<reduce type='int' function='sum' input='humans' id='sum'/>"
+        "<plot input='sum' type='int'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
+
+    BOOST_WARN_MESSAGE( 0, "TODO. I'm still lazy." );
 
 //    MockPublisher publisher;
 //    double expectedResult[] = { 0, -54, 0, 0, -100 };

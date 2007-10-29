@@ -7,23 +7,28 @@
 //
 // *****************************************************************************
 
-#ifndef __FireComponentDamages_h_
-#define __FireComponentDamages_h_
+#ifndef __Humans_h_
+#define __Humans_h_
 
 #include "Extractors.h"
 #include "FilterHelper.h"
+#pragma warning( push )
+#pragma warning( disable : 4702 )
+#include <map>
+#pragma warning( pop )
 
 namespace extractors
 {
 
 // =============================================================================
-/** @class  FireComponentDamages
-    @brief  FireComponentDamages
-            components='id1,id2,...'
+/** @class  Humans
+    @brief  Humans
+            ranks='officer,sub-officer,troopers'
+            states='total,operational,dead,wounded,mental,nbc,in-treatment,in-maintenance'
 */
-// Created: AGE 2007-10-24
+// Created: AGE 2007-10-29
 // =============================================================================
-class FireComponentDamages: public Extractor< float >
+class Humans : public Extractor< int >
 {
 public:
     //! @name Types
@@ -34,26 +39,28 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-                 FireComponentDamages();
-    /*implicit*/ FireComponentDamages( xml::xistream& xis );
+                 Humans();
+    /*implicit*/ Humans( xml::xistream& xis );
     //@}
 
     //! @name Operations
     //@{
-    bool HasValue( const ASN1T_MsgsSimToClient& message ) const
+    bool HasFlag( const ASN1T_MsgUnitAttributes& attributes ) const
     { 
-        return message.msg.t == T_MsgsSimToClient_msg_msg_stop_unit_fire;
+        return attributes.m.dotation_eff_personnelPresent;
     }
-    float Extract( const ASN1T_MsgsSimToClient& message ) const;
+    int Extract( const ASN1T_MsgUnitAttributes& attributes );
     //@}
 
 private:
     //! @name Member data
     //@{
-    FilterHelper< int > filter_;
+    std::vector< int > humans_;
+    int rankMask_;
+    int stateMask_;
     //@}
 };
 
 }
 
-#endif // __FireComponentDamages_h_
+#endif // __Humans_h_

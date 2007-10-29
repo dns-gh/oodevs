@@ -154,8 +154,8 @@ MsgUnitAttributes ::= SEQUENCE
     oid                           Unit,
 
     dotation-eff-personnel        SEQUENCE OF HumanDotations      OPTIONAL, -- Dotations effectives du pion DELTA
-    dotation-eff-materiel         SEQUENCE OF EquipmentDotations  OPTIONAL, -- DELTA 
-    dotation-eff-ressource        SEQUENCE OF ResourceDotations   OPTIONAL, -- DELTA // $$$$ AGE 2007-10-16: non, pas du tout DELTA
+    dotation-eff-materiel         SEQUENCE OF EquipmentDotations  OPTIONAL, -- DELTA // $$$$ AGE 2007-10-16: non, pas du tout DELTA
+    dotation-eff-ressource        SEQUENCE OF ResourceDotations   OPTIONAL, -- DELTA // $$$$ AGE 2007-10-16: non, pas du tout DELTA non plus
     equipements-pretes            SEQUENCE OF LentEquipment       OPTIONAL, -- FULL
     equipements-empruntes         SEQUENCE OF BorrowedEquipment   OPTIONAL, -- FULL
 
