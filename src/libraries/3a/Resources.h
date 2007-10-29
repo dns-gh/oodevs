@@ -11,8 +11,11 @@
 #define __Resources_h_
 
 #include "Extractors.h"
-#include <set>
+#include "FilterHelper.h"
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <map>
+#pragma warning( pop )
 
 namespace xml
 {
@@ -25,7 +28,6 @@ namespace extractors
 // =============================================================================
 /** @class  Resources
     @brief  Resources
-    // $$$$ AGE 2007-10-23: dotations ?
 */
 // Created: AGE 2007-10-23
 // =============================================================================
@@ -55,8 +57,8 @@ public:
 
 private:
     //! @name Member data
-    //@{
-    std::set< int >      filter_;
+    //@{*
+    FilterHelper< int > filter_;
     std::map< int, int > resources_;
     //@}
 };

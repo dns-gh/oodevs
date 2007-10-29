@@ -12,7 +12,11 @@
 
 #include "Zone_ABC.h"
 #include "Position.h"
+
+#pragma warning (push)
+#pragma warning (disable : 4702 )
 #include <vector>
+#pragma warning (pop)
 
 // =============================================================================
 /** @class  Circle

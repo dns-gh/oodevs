@@ -13,7 +13,8 @@
 #include <boost/type_traits/integral_constant.hpp>
 #include <stdexcept>
 
-#pragma warning( disable : 4800 4804 )
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 
 namespace types
 {
@@ -54,7 +55,6 @@ struct Arithmetic
 
 }
 
-
-
+#pragma warning( pop )
 
 #endif // __TypeConstraints_h_

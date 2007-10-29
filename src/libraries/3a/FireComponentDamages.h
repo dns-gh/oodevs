@@ -11,7 +11,7 @@
 #define __FireComponentDamages_h_
 
 #include "Extractors.h"
-#include <set>
+#include "FilterHelper.h"
 
 namespace xml
 {
@@ -54,7 +54,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::set< int > filter_;
+    FilterHelper< int > filter_;
     //@}
 };
 

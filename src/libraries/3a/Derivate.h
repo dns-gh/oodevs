@@ -13,6 +13,9 @@
 #include "Functions.h"
 #include "TypeChecks.h"
 
+#pragma warning( push )
+#pragma warning( disable : 4800 4804 )
+
 namespace xml { class xistream; }
 
 // =============================================================================
@@ -82,5 +85,7 @@ private:
     K currentKey_;
     //@}
 };
+
+#pragma warning( pop )
 
 #endif // __Derivate_h_

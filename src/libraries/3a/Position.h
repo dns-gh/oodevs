@@ -12,7 +12,10 @@
 
 #include "game_asn/asn.h"
 #include <string>
+#pragma warning (push)
+#pragma warning (disable : 4702 )
 #include <geometry/Types.h>
+#pragma warning (pop)
 
 // =============================================================================
 /** @class  Position

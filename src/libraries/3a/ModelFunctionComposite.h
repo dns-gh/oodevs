@@ -11,8 +11,11 @@
 #define __ModelFunctionComposite_h_
 
 #include "ModelFunction_ABC.h"
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#pragma warning( pop )
 
 // =============================================================================
 /** @class  ModelFunctionComposite

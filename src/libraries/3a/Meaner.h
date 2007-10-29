@@ -13,6 +13,9 @@
 #include "Reductor_ABC.h"
 #include "TypeChecks.h"
 
+#pragma warning( push )
+#pragma warning( disable : 4800 4804 )
+
 namespace xml { class xistream; }
 
 // =============================================================================
@@ -76,5 +79,7 @@ private:
     unsigned               count_;
     //@}
 };
+
+#pragma warning( pop )
 
 #endif // __Meaner_h_

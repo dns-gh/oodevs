@@ -278,7 +278,7 @@ void FunctionFactory::Transform1( const std::string& name, xml::xistream& xis, T
 // Created: AGE 2007-10-08
 // -----------------------------------------------------------------------------
 template< typename T >
-void FunctionFactory::Compose( const std::string& name, xml::xistream& xis, Task& result )
+void FunctionFactory::Compose( const std::string& name, xml::xistream& , Task& result )
 {
     typedef Composer< unsigned long, unsigned long, T > C;
     typedef FunctionConnector< typename C::Key_Type, typename C::Result_Type > Connector;

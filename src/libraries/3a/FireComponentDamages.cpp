@@ -8,12 +8,6 @@
 // *****************************************************************************
 
 #include "FireComponentDamages.h"
-#include <xeumeuleu/xml.h>
-#include <vector>
-#pragma warning (push)
-#pragma warning (disable : 4100 4127 4511 4512 )
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
 
 using namespace extractors;
 
@@ -31,14 +25,9 @@ FireComponentDamages::FireComponentDamages()
 // Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
 FireComponentDamages::FireComponentDamages( xml::xistream& xis )
+    : filter_( xis, "components" )
 {
-    const std::string values = xml::attribute( xis, "components", std::string() );
-    if( ! values.empty() )
-    {
-        std::vector< std::string > split;
-        boost::algorithm::split( split, values, boost::algorithm::is_any_of( "," ) );
-        std::transform( split.begin(), split.end(), std::inserter( filter_, filter_.begin() ), &boost::lexical_cast< int, std::string > );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +44,7 @@ float FireComponentDamages::Extract( const ASN1T_MsgsSimToClient& message ) cons
         for( unsigned e = 0; e < damages.equipments.n; ++e )
         {
             const ASN1T_UnitEquipmentFireDamage& damage = damages.equipments.elem[e];
-            if( filter_.empty() || filter_.find( damage.equipement_type ) != filter_.end() )
+            if( filter_.IsAllowed( damage.equipement_type ) )
                 result += damage.unavailable_nbr;
         }
     }

@@ -11,7 +11,10 @@
 #define __Count_h_
 
 #include "Reductor_ABC.h"
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <set>
+#pragma warning( pop )
 
 namespace xml { class xistream; }
 

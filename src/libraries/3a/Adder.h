@@ -12,6 +12,8 @@
 
 #include "Reductor_ABC.h"
 #include "TypeChecks.h"
+#pragma warning( push )
+#pragma warning( disable : 4800 4804 )
 
 namespace xml { class xistream; }
 
@@ -72,5 +74,7 @@ private:
     T sum_;
     //@}
 };
+
+#pragma warning( pop )
 
 #endif // __Adder_h_

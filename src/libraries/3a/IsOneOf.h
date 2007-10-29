@@ -11,12 +11,7 @@
 #define __IsOneOf_h_
 
 #include "Functions.h"
-#include "xeumeuleu/xml.h"
-#include <vector>
-#pragma warning (push)
-#pragma warning (disable : 4100 4127 4511 4512 )
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
+#include "FilterHelper.h"
 
 // =============================================================================
 /** @class  IsOneOf
@@ -38,14 +33,9 @@ public:
     //@{
     IsOneOf( xml::xistream& xis, Function1_ABC< K, bool >& next )
         : next_( next )
+        , filter_( xis, "select" )
     {
-        const std::string values = xml::attribute< std::string >( xis, "select" );
-        if( !values.empty() )
-        {
-            std::vector< std::string > split;
-            boost::algorithm::split( split, values, boost::algorithm::is_any_of( "," ) );
-            std::transform( split.begin(), split.end(), std::back_inserter( allowed_ ), &boost::lexical_cast< T, std::string > );
-        }
+        // NOTHING
     }
     //@}
 
@@ -61,7 +51,7 @@ public:
     }
     virtual void Apply( const T& arg )
     {
-        next_.Apply( allowed_.empty() || std::find( allowed_.begin(), allowed_.end(), arg ) != allowed_.end() );
+        next_.Apply( filter_.IsAllowed( arg ) );
     }
     virtual void EndTick()
     {
@@ -90,10 +80,8 @@ private:
     //! @name Member data
     //@{
     Function1_ABC< K, bool >& next_;
-    T_Values allowed_;
+    FilterHelper< T > filter_;
     //@}
 };
-
-#pragma warning (pop)
 
 #endif // __IsOneOf_h_

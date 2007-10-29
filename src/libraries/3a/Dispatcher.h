@@ -12,9 +12,11 @@
 
 #include "ModelFunction_ABC.h"
 #include "ValueHandler_ABC.h"
-#pragma warning (disable : 4702)
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <map>
 #include <algorithm>
+#pragma warning( pop )
 
 // =============================================================================
 /** @class  Dispatcher

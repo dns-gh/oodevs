@@ -15,11 +15,11 @@
 #include "Slots.h"
 #include "ValueHandler_ABC.h"
 #include "KeyMarshaller.h"
-#include <vector>
-#include <boost/bind.hpp>
 
 #pragma warning (push)
-#pragma warning (disable : 4355)
+#pragma warning (disable : 4355 4702 )
+#include <vector>
+#include <boost/bind.hpp>
 
 // =============================================================================
 /** @class  Connector_ABC

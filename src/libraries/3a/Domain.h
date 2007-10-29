@@ -11,12 +11,7 @@
 #define __Domain_h_
 
 #include "Functions.h"
-#include <xeumeuleu/xml.h>
-#include <vector>
-#pragma warning (push)
-#pragma warning (disable : 4100 4127 4511 4512 )
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
+#include "FilterHelper.h"
 
 // =============================================================================
 /** @class  Domain
@@ -38,15 +33,10 @@ public:
     //@{
     Domain( xml::xistream& xis, Function1_ABC< K, T >& next )
         : next_    ( next )
+        , filter_  ( xis, "select" )
         , selected_( false )
     {
-        const std::string values = xml::attribute< std::string >( xis, "select" );
-        if( !values.empty() )
-        {
-            std::vector< std::string > split;
-            boost::algorithm::split( split, values, boost::algorithm::is_any_of( "," ) );
-            std::transform( split.begin(), split.end(), std::back_inserter( allowed_ ), &boost::lexical_cast< K, std::string > );
-        }
+        // NOTHING
     }
     //@}
 
@@ -58,7 +48,7 @@ public:
     }
     virtual void SetKey( const K& key )
     {
-        selected_ = allowed_.empty() || std::find( allowed_.begin(), allowed_.end(), key ) != allowed_.end();
+        selected_ = filter_.IsAllowed( key );
         if( selected_ )
             next_.SetKey( key );
     }
@@ -86,16 +76,11 @@ private:
     virtual std::string GetName() const { return "Domain"; }
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< K > T_Keys;
-    //@}
-
 private:
     //! @name Member data
     //@{
     Function1_ABC< K, T >& next_;
-    T_Keys allowed_;
+    FilterHelper< K > filter_;
     bool selected_;
     //@}
 };

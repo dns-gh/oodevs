@@ -12,10 +12,14 @@
 
 #include "ModelFunctionComposite.h"
 #include "dispatcher/MessageHandler_ABC.h"
+
+#pragma warning (push)
+#pragma warning (disable : 4702 )
 #include <memory>
 #include <string>
 #include <map>
 #include <boost/enable_shared_from_this.hpp>
+#pragma warning( pop )
 
 class Connector_ABC;
 class ModelFunction_ABC;
