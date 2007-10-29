@@ -40,9 +40,12 @@ public:
         : next_( next )
     {
         const std::string values = xml::attribute< std::string >( xis, "select" );
-        std::vector< std::string > split;
-        boost::algorithm::split( split, values, boost::algorithm::is_any_of( "," ) );
-        std::transform( split.begin(), split.end(), std::back_inserter( allowed_ ), &boost::lexical_cast< T, std::string > );
+        if( !values.empty() )
+        {
+            std::vector< std::string > split;
+            boost::algorithm::split( split, values, boost::algorithm::is_any_of( "," ) );
+            std::transform( split.begin(), split.end(), std::back_inserter( allowed_ ), &boost::lexical_cast< T, std::string > );
+        }
     }
     //@}
 
@@ -58,7 +61,7 @@ public:
     }
     virtual void Apply( const T& arg )
     {
-        next_.Apply( std::find( allowed_.begin(), allowed_.end(), arg ) != allowed_.end() );
+        next_.Apply( allowed_.empty() || std::find( allowed_.begin(), allowed_.end(), arg ) != allowed_.end() );
     }
     virtual void EndTick()
     {

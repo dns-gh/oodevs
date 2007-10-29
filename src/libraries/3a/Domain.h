@@ -41,9 +41,12 @@ public:
         , selected_( false )
     {
         const std::string values = xml::attribute< std::string >( xis, "select" );
-        std::vector< std::string > split;
-        boost::algorithm::split( split, values, boost::algorithm::is_any_of( "," ) );
-        std::transform( split.begin(), split.end(), std::back_inserter( allowed_ ), &boost::lexical_cast< K, std::string > );
+        if( !values.empty() )
+        {
+            std::vector< std::string > split;
+            boost::algorithm::split( split, values, boost::algorithm::is_any_of( "," ) );
+            std::transform( split.begin(), split.end(), std::back_inserter( allowed_ ), &boost::lexical_cast< K, std::string > );
+        }
     }
     //@}
 
@@ -55,7 +58,7 @@ public:
     }
     virtual void SetKey( const K& key )
     {
-        selected_ = std::find( allowed_.begin(), allowed_.end(), key ) != allowed_.end();
+        selected_ = allowed_.empty() || std::find( allowed_.begin(), allowed_.end(), key ) != allowed_.end();
         if( selected_ )
             next_.SetKey( key );
     }
