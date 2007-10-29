@@ -75,7 +75,7 @@ namespace Crossbow
                         for (int j = 0; j < composite.Count; ++j)
                         {
                             layer = composite.get_Layer(j) as IFeatureLayer;
-                            if (layer != null && layer.Name == name)
+                            if (layer != null && layer.Name == name + " - Features")
                                 return layer;
                         }
                 }

@@ -111,7 +111,7 @@ namespace Crossbow
 
         public ILayer GetLayer(int index)
         {
-            if (LayerCount >= index)
+            if (index >= LayerCount)
                 return null;
             if (m_mxDocument != null)
                 return m_mxDocument.FocusMap.get_Layer(index);
