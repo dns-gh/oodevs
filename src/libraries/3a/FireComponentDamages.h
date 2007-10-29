@@ -13,11 +13,6 @@
 #include "Extractors.h"
 #include "FilterHelper.h"
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace extractors
 {
 

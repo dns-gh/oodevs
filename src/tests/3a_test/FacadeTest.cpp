@@ -624,12 +624,38 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
     task->Receive( MakeResourceVariation( 5100, 12, 42 ) );
     task->Receive( EndTick() );
 
-
     MockPublisher publisher;
     double expectedResult[] = { 0, -54, 0, 0, -100 };
     MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
     task->Commit( publisher );
     publisher.verify();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestEquipments
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestEquipments )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='equipments' states='available,prisoner' id='equipments'/>"
+        "<reduce type='int' function='sum' input='equipments' id='sum'/>"
+        "<plot input='sum' type='int'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    FunctionFactory facade;
+    boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
+
+    BOOST_WARN_MESSAGE( 0, "TODO. I'm lazy." );
+
+//    MockPublisher publisher;
+//    double expectedResult[] = { 0, -54, 0, 0, -100 };
+//    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+//    task->Commit( publisher );
+//    publisher.verify();
 }
 
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0

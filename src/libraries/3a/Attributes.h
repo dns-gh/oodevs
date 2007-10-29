@@ -13,6 +13,7 @@
 #include "Values.h"
 #include "Extractors.h"
 #include "Resources.h"
+#include "Equipments.h"
 
 // =============================================================================
 /** @namespace  Attributes
@@ -54,6 +55,7 @@ struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
 typedef UnitAttribute< extractors::OperationalState > OperationalState;
 typedef UnitAttribute< extractors::Position >         Position;
 typedef UnitAttribute< extractors::Resources >        Resources;
+typedef UnitAttribute< extractors::Equipments >       Equipments;
 
 } // namespace attributes
 

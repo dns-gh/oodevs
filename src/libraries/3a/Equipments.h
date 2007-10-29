@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Resources_h_
-#define __Resources_h_
+#ifndef __Equipments_h_
+#define __Equipments_h_
 
 #include "Extractors.h"
 #include "FilterHelper.h"
@@ -21,12 +21,12 @@ namespace extractors
 {
 
 // =============================================================================
-/** @class  Resources
-    @brief  Resources
+/** @class  Equipments
+    @brief  Equipments
 */
-// Created: AGE 2007-10-23
+// Created: AGE 2007-10-29
 // =============================================================================
-class Resources : public Extractor< int >
+class Equipments : public Extractor< int >
 {
 public:
     //! @name Types
@@ -37,27 +37,28 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-                 Resources();
-    /*implicit*/ Resources( xml::xistream& xis );
+                 Equipments();
+    /*implicit*/ Equipments( xml::xistream& xis );
     //@}
 
     //! @name Operations
     //@{
     bool HasFlag( const ASN1T_MsgUnitAttributes& attributes ) const
     { 
-        return attributes.m.dotation_eff_ressourcePresent;
+        return attributes.m.dotation_eff_materielPresent;
     }
     int Extract( const ASN1T_MsgUnitAttributes& attributes );
     //@}
 
 private:
     //! @name Member data
-    //@{*
+    //@{
     FilterHelper< int > filter_;
-    std::map< int, int > resources_;
+    std::map< int, int > equipments_;
+    int stateMask_;
     //@}
 };
 
 }
 
-#endif // __Resources_h_
+#endif // __Equipments_h_

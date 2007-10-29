@@ -172,6 +172,8 @@ void FunctionFactory::Extract( xml::xistream& xis, Task& result )
         Extract< attributes::Position >( name, xis, result );
     else if( value == "resources" )
         Extract< attributes::Resources >( name, xis, result );
+    else if( value == "equipments" )
+        Extract< attributes::Equipments >( name, xis, result );
     else if( value == "maintenance-handling-unit" )
         Extract< existences::MaintenanceHandlingUnitId >( name, xis, result );
     else if( value == "direct-fire-unit" )
