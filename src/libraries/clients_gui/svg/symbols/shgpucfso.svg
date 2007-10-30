@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <svg style="stroke:rgb(0,0,0);stroke-width:2;fill:currentColor">
-    <polyline points="200,373 373,200 200,27 27,200 200,373"/>
+    <polyline class="border" points="200,373 373,200 200,27 27,200 200,373"/>
     <g transform="translate(20 -13) scale(0.9 0.9)">
         <polyline points="200,240 300,185 200,130 200,240" style="fill:rgb(255,255,255);"/>
         <line x1="150" x2="200" y1="290" y2="240"/>

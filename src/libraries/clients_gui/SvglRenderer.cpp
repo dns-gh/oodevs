@@ -14,6 +14,8 @@
 #include "svgl/ListPaint.h"
 #include "svgl/ListLength.h"
 #include "svgl/ListLengthFactory.h"
+#include "svgl/PropertyFactory.h"
+#include "svgl/Style.h"
 #include "xeumeuleu/xml.h"
 
 using namespace geometry;
@@ -103,6 +105,11 @@ unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const geometry::Re
         glNewList( result, GL_COMPILE );
             const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
             ListPaint color( colorList_ );
+            // $$$$ AGE 2007-10-30: <<<< TEMP
+            svg::PropertyFactory factory;
+            static svg::Style border( "stroke:black;fill:currentColor;stroke-width:4", factory );
+            references_->Register( "border", border );
+            // $$$$ AGE 2007-10-30: >>>> TEMP
             renderingContext_->SetViewport( box, vWidth, vHeight );
             renderingContext_->PushProperty( RenderingContext::color, color );
             node->Draw( *renderingContext_, *references_ );
