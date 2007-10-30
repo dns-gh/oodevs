@@ -30,7 +30,7 @@ SvglRenderer::SvglRenderer()
     , renderer_( new TextRenderer() )
     , references_( new References() )
     , renderingContext_( new RenderingContext() )
-    , listLenghts_( new ListLengthFactory( 1, 3, 5 ) )
+    , listLenghts_( new ListLengthFactory() )
     , colorList_  ( 0 )
     , colorDirty_ ( true )
 {
@@ -155,6 +155,5 @@ void SvglRenderer::CreateStaticLists()
     {
         renderer_->InitializeFont( "Arial", 700 ); // $$$$ AGE 2007-05-24:
         colorList_ = glGenLists( 1 );
-        listLenghts_->InitializeLists();
     }
 }
