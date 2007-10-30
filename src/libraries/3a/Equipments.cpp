@@ -69,7 +69,7 @@ Equipments::Equipments( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 int Equipments::Extract( const ASN1T_MsgUnitAttributes& attributes )
 {
-    unsigned size = attributes.dotation_eff_ressource.n;
+    unsigned size = attributes.dotation_eff_materiel.n;
     while( size > 0 )
     {
         --size;

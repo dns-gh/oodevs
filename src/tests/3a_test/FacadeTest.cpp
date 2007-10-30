@@ -631,6 +631,29 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
     publisher.verify();
 }
 
+namespace
+{
+    ASN1T_MsgsSimToClient MakeEquipementVariation( int variation[5], unsigned long id, unsigned long equipmentId = 42 )
+    {
+        static ASN1T_MsgUnitAttributes attributes;
+        static ASN1T_EquipmentDotations equipment;
+        attributes.m.dotation_eff_materielPresent = 1;
+        attributes.dotation_eff_materiel.n = 1;
+        attributes.dotation_eff_materiel.elem = &equipment;
+        equipment.type_equipement = equipmentId;
+        equipment.nb_disponibles             = variation[0];
+        equipment.nb_indisponibles           = variation[1];
+        equipment.nb_reparables              = variation[2];
+        equipment.nb_dans_chaine_maintenance = variation[3];
+        equipment.nb_prisonniers             = variation[4];
+        attributes.oid = id;
+        ASN1T_MsgsSimToClient result;
+        result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;
+        result.msg.u.msg_unit_attributes = &attributes;
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Facade_TestEquipments
 // Created: AGE 2004-12-15
@@ -648,13 +671,36 @@ BOOST_AUTO_TEST_CASE( Facade_TestEquipments )
     FunctionFactory facade;
     boost::shared_ptr< Task > task( facade.CreateTask( 42, xis ) );
 
-    BOOST_WARN_MESSAGE( 0, "TODO. I'm lazy." );
+    int base  [5] = { 5, 0, 0, 0, 0 }; //  0
+    int prison[5] = { 2, 1, 0, 1, 1 }; // -2
+    int casse [5] = { 2, 1, 1, 1, 0 }; // -3
 
-//    MockPublisher publisher;
-//    double expectedResult[] = { 0, -54, 0, 0, -100 };
-//    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
-//    task->Commit( publisher );
-//    publisher.verify();
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( base, 12, 42 ) );
+    task->Receive( MakeEquipementVariation( base, 13, 42 ) );
+    task->Receive( MakeEquipementVariation( base, 15, 12 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( prison, 12, 42 ) );
+    task->Receive( MakeEquipementVariation( casse, 13, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( casse, 12, 42 ) );
+    task->Receive( MakeEquipementVariation( prison, 13, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( base, 14, 15 ) );
+    task->Receive( MakeEquipementVariation( base, 16, 12 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( prison, 12, 42 ) );
+    task->Receive( EndTick() );
+
+    MockPublisher publisher;
+    double expectedResult[] = { 15, 10, 10, 15, 16 };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit( publisher );
+    publisher.verify();
 }
 
 // -----------------------------------------------------------------------------
