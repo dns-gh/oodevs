@@ -164,7 +164,7 @@ void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned t
     asn().current_tick = nCurrentTick_;
     asn().date_time  = date_.c_str();
     asn().tick_duration = nTickDuration_;
-    asn().time_factor = nTimeFactor_;
+    asn().time_factor = nTimeFactor_; // $$$$ AGE 2007-10-31: time factor sim vs replay
     asn().status = status;
     asn().tick_count = totalTicks;
     asn.Send( publisher );

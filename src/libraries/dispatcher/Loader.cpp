@@ -90,6 +90,7 @@ void Loader::SkipToFrame( unsigned frame )
 // -----------------------------------------------------------------------------
 bool Loader::Tick()
 {
+    loader_->ReloadIndices();
     if( loader_->LoadFrame( currentFrame_, handler_ ) )
     {
         ++currentFrame_;

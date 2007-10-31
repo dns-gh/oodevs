@@ -34,10 +34,11 @@ MessageLoader::MessageLoader( const Config& config, const std::string& records, 
     }
     const bfs::path dir( config.BuildRecordsDirectory( records ), bfs::native );
 
-    LoadIndex   ( ( dir / "index" ).string() );
-    LoadKeyIndex( ( dir / "keyindex" ).string() );
-    updates_  .open( ( dir / "update" ).string().c_str(), std::ios_base::binary | std::ios_base::in );
-    keys_     .open( ( dir / "key"    ).string().c_str(), std::ios_base::binary | std::ios_base::in );
+    index_    .open( ( dir / "index" ).string().c_str(),    std::ios_base::binary | std::ios_base::in  );
+    keyIndex_ .open( ( dir / "keyindex" ).string().c_str(), std::ios_base::binary | std::ios_base::in  );
+    updates_  .open( ( dir / "update" ).string().c_str(),   std::ios_base::binary | std::ios_base::in );
+    keys_     .open( ( dir / "key"    ).string().c_str(),   std::ios_base::binary | std::ios_base::in );
+    LoadIndices();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,6 +104,18 @@ void MessageLoader::Synchronize()
         cpu_->Enqueue( barrier.command() );
         barrier.wait();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageLoader::ReloadIndices
+// Created: AGE 2007-10-31
+// -----------------------------------------------------------------------------
+void MessageLoader::ReloadIndices()
+{
+    if( disk_.get() )
+        disk_->Enqueue( boost::bind( &MessageLoader::LoadIndices, this ) );
+    else
+        LoadIndices();
 }
 
 namespace dispatcher
@@ -181,34 +194,32 @@ void MessageLoader::LoadSimToClientMessage( const unsigned char*& input, Message
     input += messageSize;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MessageLoader::LoadIndex
-// Created: AGE 2007-07-09
-// -----------------------------------------------------------------------------
-void MessageLoader::LoadIndex( const std::string& file )
+namespace
 {
-    frames_.reserve( 100 );
-    tools::InputBinaryStream input( file );
-    while( ! input.EndOfFile() )
+    template< typename C >
+    void Load( C& frames, std::ifstream& file )
     {
-        frames_.push_back( Frame() );
-        input >> frames_.back();
+        typedef typename C::value_type T;
+        tools::InputBinaryWrapper input( file );
+        T frame;
+        input >> frame;
+        while( file )
+        {
+            frames.push_back( frame );
+            input >> frame;
+        }
+        file.clear();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MessageLoader::LoadKeyIndex
-// Created: AGE 2007-07-09
+// Name: MessageLoader::LoadIndices
+// Created: AGE 2007-10-31
 // -----------------------------------------------------------------------------
-void MessageLoader::LoadKeyIndex( const std::string& file )
+void MessageLoader::LoadIndices()
 {
-    keyFrames_.reserve( 100 );
-    tools::InputBinaryStream input( file );
-    while( ! input.EndOfFile() )
-    {
-        keyFrames_.push_back( KeyFrame() );
-        input >> keyFrames_.back();
-    }
+    ::Load( frames_, index_ );
+    ::Load( keyFrames_, keyIndex_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -50,7 +50,7 @@ public:
     virtual bool         LoadFrame   ( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() );
     virtual unsigned int LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback()  );
     void Synchronize();
-
+    void ReloadIndices();
     unsigned int GetTickNumber() const;
     //@}
 
@@ -69,8 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    void LoadIndex( const std::string& file );
-    void LoadKeyIndex( const std::string& file );
+    void LoadIndices();
     void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadSimToClientMessage( const unsigned char*& input, MessageHandler_ABC& handler );
@@ -79,10 +78,13 @@ private:
 private:
     //! @name Member data
     //@{
-    T_Frames frames_;
-    T_KeyFrames keyFrames_;
+    std::ifstream index_;
+    std::ifstream keyIndex_;
     std::ifstream updates_;
     std::ifstream keys_;
+
+    T_Frames frames_;
+    T_KeyFrames keyFrames_;
 
     std::auto_ptr< tools::thread::ThreadPool > disk_;
     std::auto_ptr< tools::thread::ThreadPool > cpu_;

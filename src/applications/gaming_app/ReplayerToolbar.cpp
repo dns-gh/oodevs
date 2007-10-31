@@ -24,7 +24,6 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , controllers_( controllers )
     , network_( network )
     , slider_( 0 )
-    , previousTickCount_( unsigned( -2 ) )
     , userMove_( true )
 {
     setLabel( tr( "Replay control" ) );
@@ -52,17 +51,12 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 {
     if( simulation.GetTickCount() != unsigned( -1 ) )
     {
-        if( previousTickCount_ != simulation.GetTickCount() )
-        {
-            delete slider_;
-            slider_ = 0;
-        }
         if( ! slider_ )
         {
-            previousTickCount_ = simulation.GetTickCount();
-            slider_ = new QSlider( 0, simulation.GetTickCount() - 1, 1, simulation.GetCurrentTick(), Qt::Horizontal, this );
+            slider_ = new QSlider( Qt::Horizontal, this );
+            slider_->setMinValue( 0 );
+            slider_->setPageStep( 1 );
             slider_->setMinimumWidth( 200 );
-            slider_->setTickInterval( slider_->maxValue() / 20 );
             slider_->setTickmarks( QSlider::Below );
             addSeparator();
             value_ = new QLabel( this );
@@ -71,6 +65,8 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
         }
         userMove_ = false;
+        slider_->setMaxValue( simulation.GetTickCount() - 1 );
+        slider_->setTickInterval( slider_->maxValue() / 20 );
         slider_->setValue( simulation.GetCurrentTick() );
         OnSliderMoved( simulation.GetCurrentTick() );
         userMove_ = true;

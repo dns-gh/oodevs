@@ -92,6 +92,7 @@ void AarPlugin::OnReceive( const std::string& client, const ASN1T_MsgsClientToAa
 // -----------------------------------------------------------------------------
 void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const ASN1T_MsgIndicatorRequest& request )
 {
+    messages_->ReloadIndices();
     try
     {
         xml::xistringstream xis( request.request );

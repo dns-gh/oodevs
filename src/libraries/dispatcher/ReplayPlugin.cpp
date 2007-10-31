@@ -94,7 +94,10 @@ void ReplayPlugin::NotifyClientLeft( ClientPublisher_ABC& )
 void ReplayPlugin::OnTimer()
 {
     if( running_ )
+    {
         loader_.Tick();
+        model_.SendReplayInfo( clients_, loader_.GetTickNumber(), running_ ? EnumSimulationState::running : EnumSimulationState::paused );
+    }
 }
 
 // -----------------------------------------------------------------------------

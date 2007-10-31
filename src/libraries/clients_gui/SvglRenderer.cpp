@@ -159,7 +159,6 @@ namespace
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SvglRenderer::CreateStaticLists
 // Created: AGE 2007-05-31
