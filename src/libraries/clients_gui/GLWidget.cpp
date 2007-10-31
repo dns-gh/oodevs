@@ -202,20 +202,11 @@ void GlWidget::RemoveMiniView( MiniView* view )
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::CreateIcon
-// Created: AGE 2006-11-22
+// Created: AGE 2007-10-31
 // -----------------------------------------------------------------------------
-void GlWidget::CreateIcon( const std::string& symbol, const QColor& color, IconHandler_ABC& handler, const QSize& size /*= QSize( 32, 32 )*/ )
+void GlWidget::CreateIcon( const SymbolIcon& symbol, IconHandler_ABC& handler )
 {
-    tasks_.push_back( T_IconTask( symbol, color, size, handler ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlWidget::CreateIcon
-// Created: AGE 2006-11-23
-// -----------------------------------------------------------------------------
-void GlWidget::CreateIcon( const std::string& symbol, const std::string& level, const QColor& color, IconHandler_ABC& handler, const QSize& size /*= QSize( 32, 32 )*/ )
-{
-    tasks_.push_back( T_IconTask( symbol, level, color, size, handler ) );
+    tasks_.push_back( T_IconTask( symbol, &handler ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,21 +256,22 @@ void GlWidget::RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& 
     QImage image( iconSide_, iconSide_, 32 );
     glColor3f( 1, 1, 1 );
     glRectf( viewport.Left() - 50, viewport.Bottom() - 50, viewport.Right() + 50, viewport.Top() + 50 );
-    SetCurrentColor( task.color.red() / 255.f, task.color.green() / 255.f, task.color.blue() / 255.f );
+    const SymbolIcon& symbol = task.first;
+    SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
     windowWidth_ = windowHeight_ = viewport.Width() * 1.5f; // => trait svg de 2 px
     const Point2f center( 300, 100 );
-    DrawApp6Symbol( task.name, center );
-    if( ! task.name2.empty() )
-        DrawApp6Symbol( task.name2, center );
+    DrawApp6Symbol( symbol.symbol_, center );
+    if( ! symbol.level_.empty() )
+        DrawApp6Symbol( symbol.level_, center );
     windowWidth_ = windowHeight_ = iconSide_;
 
     glFlush();
     glReadPixels( 0, 0, iconSide_, iconSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
     glFlush();
 
-    QPixmap result( image.mirror().smoothScale( task.size ) );
+    QPixmap result( image.mirror().smoothScale( symbol.size_ ) );
     result.setMask( result.createHeuristicMask( true ) );
-    task.handler->AddIcon( task.name, task.name2, task.color, task.size, result );
+    task.second->AddIcon( task.first, result );
 }
 
 // -----------------------------------------------------------------------------

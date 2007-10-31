@@ -156,7 +156,10 @@ void IntelligencesPanel::UpdateSymbol()
         symbol_ = symbolFactory_->CreateSymbol( nature_.ascii() );
         const Karma& karma = Karma::ResolveName( karmaCombo_->currentText() );
         App6Symbol::SetKarma( symbol_, karma );
-        QPixmap pixmap = icons_.GetSymbol( symbol_, levelCombo_->GetValue()->GetSymbol(), GetColor( karma ), QSize( 128, 128 ) ); // $$$$ SBO 2007-10-12: 
+        SymbolIcon icon( symbol_, levelCombo_->GetValue()->GetSymbol() );
+        icon.SetColor( GetColor( karma ) );
+        icon.SetSize( 128 );
+        QPixmap pixmap = icons_.GetSymbol( icon );
         if( !pixmap.isNull() )
             icon_->setPixmap( pixmap );
         else

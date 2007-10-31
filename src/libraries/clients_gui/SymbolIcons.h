@@ -11,6 +11,7 @@
 #define __SymbolIcons_h_
 
 #include "IconHandler_ABC.h"
+#include "SymbolIcon.h"
 
 namespace gui
 {
@@ -35,8 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QPixmap GetSymbol( const std::string& symbol, const QColor& color = Qt::white, const QSize& size = QSize( 32, 32 ) );
-    virtual QPixmap GetSymbol( const std::string& symbol, const std::string& level, const QColor& color = Qt::white, const QSize& size = QSize( 32, 32 ) );
+    virtual QPixmap GetSymbol( SymbolIcon symbol );
     //@}
 
 public slots:
@@ -54,33 +54,14 @@ private:
 
     //! @name Types
     //@{
-    struct Key
-    {
-        Key( const std::string& symbol, const std::string& level, const QColor& color, const QSize& size )
-            : symbol_( symbol )
-            , level_( level )
-            , color_( color )
-            , size_( size )
-        {}
-
-        bool operator<( const Key& rhs ) const
-        {
-            return make_pair( make_pair( make_pair( make_pair(     symbol_,     level_ ),     color_.rgb() ),     size_.width() ),     size_.height() )
-                 < make_pair( make_pair( make_pair( make_pair( rhs.symbol_, rhs.level_ ), rhs.color_.rgb() ), rhs.size_.width() ), rhs.size_.height() );
-        }
-        std::string symbol_, level_;
-        QColor color_;
-        QSize size_;
-    };
-
-    typedef std::map< Key, QPixmap >            T_Icons;
-    typedef std::set< Key >                     T_PendingIcons;
+    typedef std::map< SymbolIcon, QPixmap >       T_Icons;
+    typedef std::set< SymbolIcon >                T_PendingIcons;
     typedef T_PendingIcons::const_iterator      CIT_PendingIcons;
     //@}
 
     //! @name Helpers
     //@{
-    virtual void AddIcon( const std::string& symbol, const std::string& level, const QColor& color, const QSize& size, const QPixmap& icon );
+    virtual void AddIcon( const SymbolIcon& task, const QPixmap& icon );
     //@}
 
 private:

@@ -119,7 +119,10 @@ void UnitPreviewIcon::UpdateSymbol()
     if( selectedParent_ )
     {
         QImage img;
-        img = icons_.GetSymbol( symbol_, level_, colorStrategy_.FindColor( *selectedParent_ ), QSize( 128, 128 ) );
+        SymbolIcon icon( symbol_, level_ );
+        icon.SetColor( colorStrategy_.FindColor( *selectedParent_ ) );
+        icon.SetSize( 128 );
+        img = icons_.GetSymbol( icon );
         if( !img.isNull() )
             icon_->setPixmap( img );
         else

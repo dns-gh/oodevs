@@ -53,7 +53,10 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize&
         const std::string levelName  = hierarchies->GetLevel();
         if( symbolName.empty() && levelName.empty() )
             return stub;
-        return icons_.GetSymbol( symbolName, levelName, strategy_.FindColor( entity ), size );
+        SymbolIcon icon( symbolName, levelName );
+        icon.SetColor( strategy_.FindColor( entity ) );
+        icon.SetSize( size );
+        return icons_.GetSymbol( icon );
     }
     return stub;
 }
@@ -72,7 +75,10 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Intelligence_ABC& entity, const 
         const std::string levelName  = hierarchies->GetLevel();
         if( symbolName.empty() && levelName.empty() )
             return stub;
-        return icons_.GetSymbol( symbolName, levelName, strategy_.FindColor( entity ), size );
+        SymbolIcon icon( symbolName, levelName );
+        icon.SetColor( strategy_.FindColor( entity ) );
+        icon.SetSize( size );
+        return icons_.GetSymbol( icon );
     }
     return stub;
 }
@@ -87,5 +93,8 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Knowledge_ABC& entity, const QSi
     if( const kernel::Entity_ABC* realOne = entity.GetRecognizedEntity() )
         if( const kernel::TacticalHierarchies* hierarchies = entity.GetEntity()->Retrieve< kernel::TacticalHierarchies >() )
             level = hierarchies->GetLevel();
-    return icons_.GetSymbol( entity.GetSymbol(), level, strategy_.FindColor( entity ), size );
+    SymbolIcon icon( entity.GetSymbol(), level );
+    icon.SetColor( strategy_.FindColor( entity ) );
+    icon.SetSize( size );
+    return icons_.GetSymbol( icon );
 }

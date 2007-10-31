@@ -47,35 +47,22 @@ void SymbolIcons::OnWidget2dChanged( gui::GlWidget* widget )
 // Name: SymbolIcons::GetSymbol
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-QPixmap SymbolIcons::GetSymbol( const std::string& name, const QColor& color /*= Qt::white*/, const QSize& size /*= QSize( 32, 32 )*/ )
+QPixmap SymbolIcons::GetSymbol( SymbolIcon symbol )
 {
-    return GetSymbol( name, "", color, size );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SymbolIcons::GetSymbol
-// Created: AGE 2006-11-23
-// -----------------------------------------------------------------------------
-QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level, const QColor& color /*= Qt::white*/, const QSize& size /*= QSize( 32, 32 )*/ )
-{
-    std::string symbolName( s );
-    std::replace( symbolName.begin(), symbolName.end(), '*', 'f' ); // $$$$ AGE 2006-11-22: 
-
-    const Key key( symbolName, level, color, size );
-    const QPixmap& result = icons_[ key ];
+    std::replace( symbol.symbol_.begin(), symbol.symbol_.end(), '*', 'f' ); // $$$$ AGE 2006-11-22: 
+    const QPixmap& result = icons_[ symbol ];
     if( result.isNull() )
-        if( widget_ && pending_.insert( key ).second )
-            widget_->CreateIcon( key.symbol_, key.level_, key.color_, *this, key.size_ );
+        if( widget_ && pending_.insert( symbol ).second )
+            widget_->CreateIcon( symbol, *this );
     return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolIcons::AddIcon
-// Created: AGE 2006-11-22
+// Created: AGE 2007-10-31
 // -----------------------------------------------------------------------------
-void SymbolIcons::AddIcon( const std::string& symbol, const std::string& level, const QColor& color, const QSize& size, const QPixmap& icon )
+void SymbolIcons::AddIcon( const SymbolIcon& task, const QPixmap& icon )
 {
-    const Key key( symbol, level, color, size );
-    icons_[ key ] = icon;
-    pending_.erase( key );
+    icons_[ task ] = icon;
+    pending_.erase( task );
 }

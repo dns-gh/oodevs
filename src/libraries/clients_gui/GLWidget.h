@@ -15,6 +15,7 @@
 #include "SetGlOptions.h"
 #include "View_ABC.h"
 #include "GlToolsBase.h"
+#include "SymbolIcon.h"
 
 namespace kernel
 {
@@ -53,8 +54,7 @@ public:
     void AddMiniView   ( MiniView* view );
     void RemoveMiniView( MiniView* view );
 
-    void CreateIcon( const std::string& symbol, const QColor& color, IconHandler_ABC& handler, const QSize& size = QSize( 32, 32 ) );
-    void CreateIcon( const std::string& symbol, const std::string& level, const QColor& color, IconHandler_ABC& handler, const QSize& size = QSize( 32, 32 ) );
+    void CreateIcon( const SymbolIcon& symbol, IconHandler_ABC& handler );
     //@}
 
     //! @name Operations
@@ -96,20 +96,9 @@ private:
     typedef T_Views::iterator         IT_Views;
     typedef T_Views::const_iterator  CIT_Views;
 
-    struct T_IconTask
-    {
-        T_IconTask( const std::string& name, const QColor& color, const QSize& size, IconHandler_ABC& handler )
-            : name( name ), color( color ), size( size ), handler( &handler ) {};
-        T_IconTask( const std::string& name, const std::string& name2, const QColor& color, const QSize& size, IconHandler_ABC& handler )
-            : name( name ), name2( name2 ), color( color ), size( size ), handler( &handler ) {};
-        std::string name;
-        std::string name2;
-        QColor color;
-        QSize size;
-        IconHandler_ABC* handler;
-    };
-    typedef std::vector< T_IconTask >                    T_IconTasks;
-    typedef T_IconTasks::const_iterator                CIT_IconTasks;
+    typedef std::pair< SymbolIcon, IconHandler_ABC* > T_IconTask;
+    typedef std::vector< T_IconTask >                 T_IconTasks;
+    typedef T_IconTasks::const_iterator             CIT_IconTasks;
 
     struct sFontLess : public std::binary_function< QFont, QFont, bool >
     {

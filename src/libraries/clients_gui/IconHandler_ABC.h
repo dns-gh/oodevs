@@ -12,6 +12,7 @@
 
 namespace gui
 {
+    class SymbolIcon;
 
 // =============================================================================
 /** @class  IconHandler_ABC
@@ -31,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void AddIcon( const std::string& level, const std::string& symbol, const QColor& color, const QSize& size, const QPixmap& icon ) = 0;
+    virtual void AddIcon( const SymbolIcon& task, const QPixmap& icon ) = 0;
     //@}
 };
 
