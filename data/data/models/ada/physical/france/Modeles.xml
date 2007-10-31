@@ -4351,6 +4351,8 @@
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="ABC GTIA Reconnaitre"/>
+        <mission name="ABC GTIA ControlerZone"/>
+        <mission name="ABC GTIA EffectuerRaid"/>
       </missions>
     </automat>
   </automats>
