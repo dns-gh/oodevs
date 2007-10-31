@@ -55,11 +55,11 @@ void DEC_Population_PathClass::ReadPopulationRule( xml::xistream& xis )
     {
         pBase  = rules_[ strBase ];
         if( !pBase )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base rule '" + strBase + "' is undefined" ); // $$$$ ABL 2007-07-25: error context
+            xis.error( "base rule '" + strBase + "' is undefined" );
     }
     DEC_Population_PathClass*& pRule = rules_[ strType ];
     if( pRule )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strType + "' already defined" ); // $$$$ ABL 2007-07-25: error context
+        xis.error( "Rule '" + strType + "' already defined" );
     pRule = new DEC_Population_PathClass( xis, pBase );
 }
     

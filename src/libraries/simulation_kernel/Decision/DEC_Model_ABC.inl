@@ -218,7 +218,7 @@ void DEC_Model_ABC< T >::ReadMission( xml::xistream& xis )
 
     const T* pType = T::Find( strMission );
     if ( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Invalid mission name '%s' for model '%s'", strMission.c_str(), GetName().c_str() ) ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Invalid mission name '" + strMission + "' for model '" + GetName() + "'" );
 
     if ( missionBitset_.size() < pType->GetID() + 1 )
         missionBitset_.resize( pType->GetID() + 1, false );
@@ -226,7 +226,7 @@ void DEC_Model_ABC< T >::ReadMission( xml::xistream& xis )
 
     // Check if the DIA behavior is present
     if( !IsMissionAvailable( *pType ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Missing behaviors for mission" ); // $$$$ ABL 2007-07-26: error context
+        xis.error( "Missing behaviors for mission" );
 
     InitializeMissionFragOrders( xis, *pType );
 }
@@ -252,7 +252,7 @@ void DEC_Model_ABC< T >::ReadFragorder( xml::xistream& xis, const T& missionType
 
         const MIL_FragOrderType* pType = MIL_FragOrderType::Find( strOrdreConduite );
         if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown orderConduite type" ); // $$$$ ABL 2007-07-26: error context
+            xis.error( "Unknown orderConduite type" );
 
         T_IDBitVector& bitVector = fragOrdersPerMission_[ &missionType ];
         if( bitVector.size() < pType->GetID() + 1 )

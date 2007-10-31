@@ -16,8 +16,10 @@ namespace tools
 {
     class GeneralConfig;
 }
+class QSpinBox;
 class QListBox;
 class InfoBubble;
+class GameConfigPanel;
 
 // =============================================================================
 /** @class  StartAnalysePanel
@@ -64,6 +66,8 @@ private:
     QListBox* replays_;
     QPushButton* okay_;
     InfoBubble* bubble_;
+    QSpinBox* exerciseNumber_;
+    GameConfigPanel* configPanel_;
     //@}
 };
 

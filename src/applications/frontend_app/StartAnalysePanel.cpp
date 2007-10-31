@@ -13,9 +13,11 @@
 #include "commands.h"
 #include "StartReplay.h"
 #include "InfoBubble.h"
+#include "GameConfigPanel.h"
 #include "resources.h"
 #include <qaction.h>
 #include <qlistbox.h>
+#include <qspinbox.h>
 #include <qpushbutton.h>
 
 // -----------------------------------------------------------------------------
@@ -51,7 +53,13 @@ StartAnalysePanel::StartAnalysePanel( QWidgetStack* widget, QAction& action, con
         QFont font( "Arial", 10, QFont::Bold );
         okay_->setFont( font );
     }
-    
+
+    QHBox* exerciseNumberBox = new QHBox( group );
+    new QLabel( tr( "Exercise number:" ), exerciseNumberBox );
+    exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
+
+    configPanel_ = new GameConfigPanel( box, config_ );
+    configPanel_->hide();
     connect( okay_, SIGNAL( pressed() ), SLOT( StartReplay() ) );
     Update();
 }
@@ -78,6 +86,8 @@ void StartAnalysePanel::ExerciseSelected()
         replays_->insertStringList( commands::ListReplays( config_, exercise.ascii() ) );
         replays_->setSelected( 0, true );
         ReplaySelected();
+        configPanel_->Show( exercise.ascii() );
+        configPanel_->hide();
     }
 }
 
@@ -101,6 +111,7 @@ void StartAnalysePanel::ReplaySelected()
 // -----------------------------------------------------------------------------
 void StartAnalysePanel::StartReplay()
 {
+    configPanel_->Commit( exercises_->selectedItem()->text().ascii(), exerciseNumber_->value() );
     if( exercises_->selectedItem() && replays_->selectedItem() )
         new ::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text() );
     Update();
