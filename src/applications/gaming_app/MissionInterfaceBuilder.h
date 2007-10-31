@@ -107,6 +107,7 @@ private:
     Param_ABC* BuildLimaList             ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildDangerousDirection   ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildDotationTypeList     ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildIntelligenceList     ( const kernel::OrderParameter& parameter ) const;
 
     template < class T >
     ParamComboBox<T>& BuildVarList( const kernel::OrderParameter& parameter ) const

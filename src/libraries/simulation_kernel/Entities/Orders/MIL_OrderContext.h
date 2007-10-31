@@ -17,6 +17,7 @@
 
 class MIL_LimaOrder;
 class MIL_LimaFunction;
+class MIL_IntelligenceOrder;
 
 // =============================================================================
 /** @class  MIL_OrderContext
@@ -58,10 +59,17 @@ private:
     MIL_OrderContext& operator=( const MIL_OrderContext& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    typedef std::vector< MIL_IntelligenceOrder* >   T_IntelligenceOrders;
+    typedef T_IntelligenceOrders::const_iterator  CIT_IntelligenceOrders;
+    //@}
+
 private:
-    T_LimaVector limas_;
-    MIL_Fuseau   fuseau_;
-    MT_Vector2D  dirDanger_;
+    T_LimaVector         limas_;
+    T_IntelligenceOrders intelligences_;
+    MIL_Fuseau           fuseau_;
+    MT_Vector2D          dirDanger_;
 };
 
 #include "MIL_OrderContext.inl"

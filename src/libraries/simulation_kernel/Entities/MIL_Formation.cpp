@@ -79,8 +79,6 @@ MIL_Formation::~MIL_Formation()
         pParent_->UnregisterFormation( *this );
     else
         pArmy_->UnregisterFormation( *this );
-    for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +92,7 @@ void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, MIL_Tact
         >> list( "automat"     , *this,   &MIL_Formation::CreateAutomat, manager, *this )
         >> list( "limit"       , *this,   &MIL_Formation::CreateLimit, tacticalLines )
         >> list( "lima"        , *this,   &MIL_Formation::CreateLima,  tacticalLines )
-        >> list( "intelligence", *this,   &MIL_Formation::CreateIntelligence );
+        >> list( "intelligence", manager, &MIL_EntityManager::CreateIntelligence, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,17 +120,6 @@ void MIL_Formation::CreateLimit( xml::xistream& xis, MIL_TacticalLineManager& ta
 void MIL_Formation::CreateLima( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines )
 {
     tacticalLines.CreateLima( xis, *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Formation::CreateIntelligence
-// Created: SBO 2007-10-22
-// -----------------------------------------------------------------------------
-void MIL_Formation::CreateIntelligence( xml::xistream& xis )
-{
-    std::auto_ptr< MIL_Intelligence > intelligence( new MIL_Intelligence( xis, *this ) );
-    intelligences_[intelligence->GetId()] = intelligence.get();
-    intelligence.release();
 }
 
 // =============================================================================
@@ -233,7 +220,7 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
         (**it).WriteODB( xos );
 
     for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        it->second->WriteODB( xos );
+        (*it)->WriteODB( xos );
 
     xos << end(); // formation
 }
@@ -283,7 +270,7 @@ void MIL_Formation::SendCreation() const
         (**it).SendCreation();
 
     for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        it->second->SendCreation();
+        (*it)->SendCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -299,42 +286,5 @@ void MIL_Formation::SendFullState() const
         (**it).SendFullState();
 
     for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        it->second->SendFullState();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Formation::Update
-// Created: SBO 2007-10-22
-// -----------------------------------------------------------------------------
-void MIL_Formation::Update( const ASN1T_MsgIntelligenceCreationRequest& message )
-{
-    std::auto_ptr< MIL_Intelligence > intelligence( new MIL_Intelligence( message, *this ) );
-    intelligences_[intelligence->GetId()] = intelligence.get();
-    intelligence->SendCreation();
-    intelligence.release();
-
-    // $$$$ SBO 2007-10-22: add more error handling...
-    NET_ASN_MsgIntelligenceCreationRequestAck ack;
-    ack().error_code = EnumIntelligenceErrorCode::no_error;
-    ack.Send();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Formation::Update
-// Created: SBO 2007-10-22
-// -----------------------------------------------------------------------------
-void MIL_Formation::Update( const ASN1T_MsgIntelligenceDestructionRequest& message )
-{
-    NET_ASN_MsgIntelligenceDestructionRequestAck ack;
-    T_Intelligences::iterator it = intelligences_.find( message.oid );
-    if( it != intelligences_.end() )
-    {
-        it->second->SendDestruction();
-        delete it->second;
-        intelligences_.erase( it );
-        ack().error_code = EnumIntelligenceErrorCode::no_error;
-    }
-    else
-        ack().error_code = EnumIntelligenceErrorCode::error_invalid_oid;
-    ack.Send();
+        (*it)->SendFullState();
 }

@@ -68,4 +68,5 @@ void MissionType::AddContextParameters()
     Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Limits" ), "limits", !automat_, true ) );
     Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Limas" ) , "limalist", true, true ) );
     Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Dangerous Direction" ), "dangerousdirection", !automat_, true ) );
+    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Intelligences" ) , "intelligencelist", true, true ) );
 }

@@ -9,34 +9,10 @@
 
 #include "dispatcher_pch.h"
 #include "OrderContext.h"
+#include "LimaOrder.h"
+#include "IntelligenceOrder.h"
 
 using namespace dispatcher;
-
-// -----------------------------------------------------------------------------
-// Name: OrderContext constructor
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-OrderContext::OrderContext( Model& model, const ASN1T_OrderContext& asn )
-    : dangerDirection_   ( asn.direction_dangereuse )
-    , limaOrders_        ()
-    , rightLimit_        ()
-    , leftLimit_         ()
-    , bRightLimitPresent_( false ) 
-    , bLeftLimitPresent_ ( false ) 
-{
-    if( asn.m.limite_droitePresent )
-    {
-        bRightLimitPresent_ = true;
-        rightLimit_.Update( asn.limite_droite );
-    }
-    if( asn.m.limite_gauchePresent )
-    {
-        bLeftLimitPresent_ = true;
-        leftLimit_.Update( asn.limite_gauche );
-    }
-    for( unsigned int i = 0; i < asn.limas.n; ++i )
-        limaOrders_.Create( model, i, asn.limas.elem[ i ] );
-}
 
 // -----------------------------------------------------------------------------
 // Name: OrderContext constructor
@@ -45,12 +21,36 @@ OrderContext::OrderContext( Model& model, const ASN1T_OrderContext& asn )
 OrderContext::OrderContext()
     : dangerDirection_   ( 0 )
     , limaOrders_        ()
+    , intelligenceOrders_()
     , rightLimit_        ()
     , leftLimit_         ()
     , bRightLimitPresent_( false )
     , bLeftLimitPresent_ ( false )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderContext constructor
+// Created: NLD 2007-04-20
+// -----------------------------------------------------------------------------
+OrderContext::OrderContext( Model& model, const ASN1T_OrderContext& asn )
+    : dangerDirection_   ( asn.direction_dangereuse )
+    , limaOrders_        ()
+    , intelligenceOrders_()
+    , rightLimit_        ()
+    , leftLimit_         ()
+    , bRightLimitPresent_( asn.m.limite_droitePresent ? true : false ) 
+    , bLeftLimitPresent_ ( asn.m.limite_gauchePresent ? true : false )
+{
+    if( bRightLimitPresent_ )
+        rightLimit_.Update( asn.limite_droite );
+    if( bLeftLimitPresent_ )
+        leftLimit_.Update( asn.limite_gauche );
+    for( unsigned int i = 0; i < asn.limas.n; ++i )
+        limaOrders_.Create( model, i, asn.limas.elem[ i ] );
+    for( unsigned int i = 0; i < asn.intelligences.n; ++i )
+        intelligenceOrders_.Create( model, i, asn.intelligences.elem[ i ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,17 +72,14 @@ OrderContext::~OrderContext()
 // -----------------------------------------------------------------------------
 void OrderContext::Send( ASN1T_OrderContext& asn ) const
 {
+    asn.m.limite_droitePresent = bRightLimitPresent_;
+    asn.m.limite_gauchePresent = bLeftLimitPresent_;
     if( bRightLimitPresent_ )
-    {
         rightLimit_.Send( asn.limite_droite );
-        asn.m.limite_droitePresent = 1;
-    }
     if( bLeftLimitPresent_ )
-    {
         leftLimit_.Send( asn.limite_gauche );
-        asn.m.limite_gauchePresent = 1;
-    }
     limaOrders_.Send< ASN1T_LimasOrder, ASN1T_LimaOrder >( asn.limas );
+    intelligenceOrders_.Send< ASN1T_IntelligenceList, ASN1T_Intelligence >( asn.intelligences );
     asn.direction_dangereuse = dangerDirection_;
 }
     
@@ -98,8 +95,10 @@ void OrderContext::AsnDelete( ASN1T_OrderContext& asn )
         Localisation::AsnDelete( asn.limite_gauche );
     if( asn.limas.n > 0 )
     {
-        for( unsigned i = 0; i != asn.limas.n; ++i )
+        for( unsigned i = 0; i < asn.limas.n; ++i )
             LimaOrder::AsnDelete( asn.limas.elem[i] );
-        delete [] asn.limas.elem;
+        delete[] asn.limas.elem;
     }
+    if( asn.intelligences.n > 0 )
+        delete[] asn.intelligences.elem;
 }

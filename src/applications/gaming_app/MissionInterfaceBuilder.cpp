@@ -41,6 +41,7 @@
 #include "ParamMissionObjective.h"
 #include "ParamMissionObjectiveList.h"
 #include "ParamDotationTypeList.h"
+#include "ParamIntelligenceList.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Tools.h"
 #include "gaming/AgentKnowledge_ABC.h"
@@ -110,6 +111,7 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( ActionController& controller, 
     builderFunctors_["dangerousdirection"]    = &MissionInterfaceBuilder::BuildDangerousDirection;
 
     builderFunctors_["dotationlist"]          = &MissionInterfaceBuilder::BuildDotationTypeList;
+    builderFunctors_["intelligencelist"]      = &MissionInterfaceBuilder::BuildIntelligenceList;
 }
 
 // -----------------------------------------------------------------------------
@@ -465,4 +467,13 @@ Param_ABC* MissionInterfaceBuilder::BuildDangerousDirection( const OrderParamete
 Param_ABC* MissionInterfaceBuilder::BuildDotationTypeList( const kernel::OrderParameter& parameter ) const
 {
     return new ParamDotationTypeList( missionInterface_, parameter, staticModel_.objectTypes_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildIntelligenceList
+// Created: SBO 2007-10-29
+// -----------------------------------------------------------------------------
+Param_ABC* MissionInterfaceBuilder::BuildIntelligenceList( const kernel::OrderParameter& parameter ) const
+{
+    return new ParamIntelligenceList( missionInterface_, parameter, converter_, controller_ );
 }

@@ -53,8 +53,8 @@ IntelligenceFactory::~IntelligenceFactory()
 // -----------------------------------------------------------------------------
 Intelligence_ABC* IntelligenceFactory::Create( const ASN1T_MsgIntelligenceCreation& message ) const
 {
-    std::auto_ptr< Intelligence > element( new Intelligence( message, controllers_.controller_, model_.teams_, levels_ ) );
-    element->Attach< kernel::Positions >( *new IntelligencePositions( converter_ ) );
+    std::auto_ptr< Intelligence > element( new Intelligence( message, controllers_.controller_, model_.teams_, levels_, publisher_ ) );
+    element->Attach< kernel::Positions >( *new IntelligencePositions( converter_, *element, publisher_ ) );
     element->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *element, model_.teams_ ) );
     element->Update( message );
     element->Polish();
@@ -93,8 +93,7 @@ Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::
     asn().intelligence.diplomacy = GetDiplomacy( superior, karma );
     asn().intelligence.embarked = embarked;
     asn().intelligence.location = converter_.ConvertToMgrs( position ).c_str();
-    asn().intelligence.diffusion.t = T_IntelligenceDiffusion_formation; // $$$$ SBO 2007-10-19: something else one day... maybe
-    asn().intelligence.diffusion.u.formation = superior.GetId();
+    asn().intelligence.formation = superior.GetId();
     asn.Send( publisher_ );
     return 0;
 }

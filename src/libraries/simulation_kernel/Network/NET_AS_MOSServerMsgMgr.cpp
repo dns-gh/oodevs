@@ -114,6 +114,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& from, const ASN
         case T_MsgsClientToSim_msg_msg_log_supply_change_quotas           : workspace.GetEntityManager        ().OnReceiveMsgLogSupplyChangeQuotas          ( *asnMsg.msg.u.msg_log_supply_change_quotas           , nCtx ); break;
         case T_MsgsClientToSim_msg_msg_log_supply_push_flow               : workspace.GetEntityManager        ().OnReceiveMsgLogSupplyPushFlow              ( *asnMsg.msg.u.msg_log_supply_push_flow               , nCtx ); break;
         case T_MsgsClientToSim_msg_msg_intelligence_creation_request      : workspace.GetEntityManager        ().OnReceiveMsgIntelligenceCreationRequest    ( *asnMsg.msg.u.msg_intelligence_creation_request             ); break;
+        case T_MsgsClientToSim_msg_msg_intelligence_update_request        : workspace.GetEntityManager        ().OnReceiveMsgIntelligenceUpdateRequest      ( *asnMsg.msg.u.msg_intelligence_update_request               ); break;
         case T_MsgsClientToSim_msg_msg_intelligence_destruction_request   : workspace.GetEntityManager        ().OnReceiveMsgIntelligenceDestructionRequest ( *asnMsg.msg.u.msg_intelligence_destruction_request          ); break;
 
         default:

@@ -86,6 +86,5 @@ std::string EntityIntelligences::GetLevel() const
 // -----------------------------------------------------------------------------
 void EntityIntelligences::DoUpdate( const ASN1T_MsgIntelligenceCreation& message )
 {
-    if( message.intelligence.diffusion.t == T_IntelligenceDiffusion_formation )
-        SetSuperior( &resolver_.Get( message.intelligence.diffusion.u.formation ) );
+    SetSuperior( &resolver_.Get( message.intelligence.formation ) );
 }

@@ -319,7 +319,7 @@ EXTERN int asn1PE_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
 
    /* Encode choice index value */
 
-   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 121);
+   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 123);
    if (stat != ASN_OK) return stat;
 
    /* Encode root element data value */
@@ -368,692 +368,704 @@ EXTERN int asn1PE_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          if (stat != ASN_OK) return stat;
          break;
 
-      /* msg_intelligence_destruction_request_ack */
+      /* msg_intelligence_update_request_ack */
       case 8:
+         stat = asn1PE_MsgIntelligenceUpdateRequestAck (ctxt_p, pvalue->u.msg_intelligence_update_request_ack);
+         if (stat != ASN_OK) return stat;
+         break;
+
+      /* msg_intelligence_destruction_request_ack */
+      case 9:
          stat = asn1PE_MsgIntelligenceDestructionRequestAck (ctxt_p, pvalue->u.msg_intelligence_destruction_request_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_order_ack */
-      case 9:
+      case 10:
          stat = asn1PE_MsgUnitOrderAck (ctxt_p, pvalue->u.msg_unit_order_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_order_ack */
-      case 10:
+      case 11:
          stat = asn1PE_MsgAutomatOrderAck (ctxt_p, pvalue->u.msg_automat_order_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_order_ack */
-      case 11:
+      case 12:
          stat = asn1PE_MsgPopulationOrderAck (ctxt_p, pvalue->u.msg_population_order_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_frag_order_ack */
-      case 12:
+      case 13:
          stat = asn1PE_MsgFragOrderAck (ctxt_p, pvalue->u.msg_frag_order_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_set_automat_mode_ack */
-      case 13:
+      case 14:
          stat = asn1PE_MsgSetAutomatModeAck (ctxt_p, pvalue->u.msg_set_automat_mode_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_creation_request_ack */
-      case 14:
+      case 15:
          stat = asn1PE_MsgUnitCreationRequestAck (ctxt_p, pvalue->u.msg_unit_creation_request_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_magic_action_ack */
-      case 15:
+      case 16:
          stat = asn1PE_MsgUnitMagicActionAck (ctxt_p, pvalue->u.msg_unit_magic_action_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_object_magic_action_ack */
-      case 16:
+      case 17:
          stat = asn1PE_MsgObjectMagicActionAck (ctxt_p, pvalue->u.msg_object_magic_action_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_magic_action_ack */
-      case 17:
+      case 18:
          stat = asn1PE_MsgPopulationMagicActionAck (ctxt_p, pvalue->u.msg_population_magic_action_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_change_diplomacy_ack */
-      case 18:
+      case 19:
          stat = asn1PE_MsgChangeDiplomacyAck (ctxt_p, pvalue->u.msg_change_diplomacy_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_change_knowledge_group_ack */
-      case 19:
+      case 20:
          stat = asn1PE_MsgAutomatChangeKnowledgeGroupAck (ctxt_p, pvalue->u.msg_automat_change_knowledge_group_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_change_logistic_links_ack */
-      case 20:
+      case 21:
          stat = asn1PE_MsgAutomatChangeLogisticLinksAck (ctxt_p, pvalue->u.msg_automat_change_logistic_links_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_change_superior_ack */
-      case 21:
+      case 22:
          stat = asn1PE_MsgAutomatChangeSuperiorAck (ctxt_p, pvalue->u.msg_automat_change_superior_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_change_superior_ack */
-      case 22:
+      case 23:
          stat = asn1PE_MsgUnitChangeSuperiorAck (ctxt_p, pvalue->u.msg_unit_change_superior_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_supply_push_flow_ack */
-      case 23:
+      case 24:
          stat = asn1PE_MsgLogSupplyPushFlowAck (ctxt_p, pvalue->u.msg_log_supply_push_flow_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_supply_change_quotas_ack */
-      case 24:
+      case 25:
          stat = asn1PE_MsgLogSupplyChangeQuotasAck (ctxt_p, pvalue->u.msg_log_supply_change_quotas_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_information */
-      case 25:
+      case 26:
          stat = asn1PE_MsgControlInformation (ctxt_p, pvalue->u.msg_control_information);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_profiling_information */
-      case 26:
+      case 27:
          stat = asn1PE_MsgControlProfilingInformation (ctxt_p, pvalue->u.msg_control_profiling_information);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_begin_tick */
-      case 27:
+      case 28:
          stat = asn1PE_MsgControlBeginTick (ctxt_p, pvalue->u.msg_control_begin_tick);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_end_tick */
-      case 28:
+      case 29:
          stat = asn1PE_MsgControlEndTick (ctxt_p, pvalue->u.msg_control_end_tick);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_stop_ack */
-      case 29:
+      case 30:
          stat = asn1PE_MsgControlStopAck (ctxt_p, pvalue->u.msg_control_stop_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_pause_ack */
-      case 30:
+      case 31:
          stat = asn1PE_MsgControlPauseAck (ctxt_p, pvalue->u.msg_control_pause_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_resume_ack */
-      case 31:
+      case 32:
          stat = asn1PE_MsgControlResumeAck (ctxt_p, pvalue->u.msg_control_resume_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_change_time_factor_ack */
-      case 32:
+      case 33:
          stat = asn1PE_MsgControlChangeTimeFactorAck (ctxt_p, pvalue->u.msg_control_change_time_factor_ack);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_global_meteo_ack */
-      case 33:
+      case 34:
          stat = asn1PE_MsgControlGlobalMeteoAck (ctxt_p);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_local_meteo_ack */
-      case 34:
+      case 35:
          stat = asn1PE_MsgControlLocalMeteoAck (ctxt_p);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_checkpoint_save_begin */
-      case 35:
+      case 36:
          stat = asn1PE_MsgControlCheckPointSaveBegin (ctxt_p);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_checkpoint_save_end */
-      case 36:
+      case 37:
          stat = asn1PE_MsgControlCheckPointSaveEnd (ctxt_p);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_checkpoint_set_frequency_ack */
-      case 37:
+      case 38:
          stat = asn1PE_MsgControlCheckPointSetFrequencyAck (ctxt_p);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_checkpoint_save_now_ack */
-      case 38:
+      case 39:
          stat = asn1PE_MsgControlCheckPointSaveNowAck (ctxt_p);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_send_current_state_begin */
-      case 39:
+      case 40:
          stat = asn1PE_MsgControlSendCurrentStateBegin (ctxt_p);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_control_send_current_state_end */
-      case 40:
+      case 41:
          stat = asn1PE_MsgControlSendCurrentStateEnd (ctxt_p);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_limit_creation */
-      case 41:
+      case 42:
          stat = asn1PE_MsgLimitCreation (ctxt_p, pvalue->u.msg_limit_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_limit_update */
-      case 42:
+      case 43:
          stat = asn1PE_MsgLimitUpdate (ctxt_p, pvalue->u.msg_limit_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_limit_destruction */
-      case 43:
+      case 44:
          stat = asn1PE_MsgLimitDestruction (ctxt_p, pvalue->u.msg_limit_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_lima_creation */
-      case 44:
+      case 45:
          stat = asn1PE_MsgLimaCreation (ctxt_p, pvalue->u.msg_lima_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_lima_update */
-      case 45:
+      case 46:
          stat = asn1PE_MsgLimaUpdate (ctxt_p, pvalue->u.msg_lima_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_lima_destruction */
-      case 46:
+      case 47:
          stat = asn1PE_MsgLimaDestruction (ctxt_p, pvalue->u.msg_lima_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_formation_creation */
-      case 47:
+      case 48:
          stat = asn1PE_MsgFormationCreation (ctxt_p, pvalue->u.msg_formation_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_knowledge_group_creation */
-      case 48:
+      case 49:
          stat = asn1PE_MsgKnowledgeGroupCreation (ctxt_p, pvalue->u.msg_knowledge_group_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_side_creation */
-      case 49:
+      case 50:
          stat = asn1PE_MsgTeamCreation (ctxt_p, pvalue->u.msg_side_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_creation */
-      case 50:
+      case 51:
          stat = asn1PE_MsgAutomatCreation (ctxt_p, pvalue->u.msg_automat_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_attributes */
-      case 51:
+      case 52:
          stat = asn1PE_MsgAutomatAttributes (ctxt_p, pvalue->u.msg_automat_attributes);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_creation */
-      case 52:
+      case 53:
          stat = asn1PE_MsgUnitCreation (ctxt_p, pvalue->u.msg_unit_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_attributes */
-      case 53:
+      case 54:
          stat = asn1PE_MsgUnitAttributes (ctxt_p, pvalue->u.msg_unit_attributes);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_pathfind */
-      case 54:
+      case 55:
          stat = asn1PE_MsgUnitPathFind (ctxt_p, pvalue->u.msg_unit_pathfind);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_destruction */
-      case 55:
+      case 56:
          stat = asn1PE_MsgUnitDestruction (ctxt_p, pvalue->u.msg_unit_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_environment_type */
-      case 56:
+      case 57:
          stat = asn1PE_MsgUnitEnvironmentType (ctxt_p, pvalue->u.msg_unit_environment_type);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_change_diplomacy */
-      case 57:
+      case 58:
          stat = asn1PE_MsgChangeDiplomacy (ctxt_p, pvalue->u.msg_change_diplomacy);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_change_superior */
-      case 58:
+      case 59:
          stat = asn1PE_MsgUnitChangeSuperior (ctxt_p, pvalue->u.msg_unit_change_superior);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_change_logistic_links */
-      case 59:
+      case 60:
          stat = asn1PE_MsgAutomatChangeLogisticLinks (ctxt_p, pvalue->u.msg_automat_change_logistic_links);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_knowledge_creation */
-      case 60:
+      case 61:
          stat = asn1PE_MsgUnitKnowledgeCreation (ctxt_p, pvalue->u.msg_unit_knowledge_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_knowledge_update */
-      case 61:
+      case 62:
          stat = asn1PE_MsgUnitKnowledgeUpdate (ctxt_p, pvalue->u.msg_unit_knowledge_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_knowledge_destruction */
-      case 62:
+      case 63:
          stat = asn1PE_MsgUnitKnowledgeDestruction (ctxt_p, pvalue->u.msg_unit_knowledge_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_start_unit_fire */
-      case 63:
+      case 64:
          stat = asn1PE_MsgStartUnitFire (ctxt_p, pvalue->u.msg_start_unit_fire);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_stop_unit_fire */
-      case 64:
+      case 65:
          stat = asn1PE_MsgStopUnitFire (ctxt_p, pvalue->u.msg_stop_unit_fire);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_start_population_fire */
-      case 65:
+      case 66:
          stat = asn1PE_MsgStartPopulationFire (ctxt_p, pvalue->u.msg_start_population_fire);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_stop_population_fire */
-      case 66:
+      case 67:
          stat = asn1PE_MsgStopPopulationFire (ctxt_p, pvalue->u.msg_stop_population_fire);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_explosion */
-      case 67:
+      case 68:
          stat = asn1PE_MsgExplosion (ctxt_p, pvalue->u.msg_explosion);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_start_fire_effect */
-      case 68:
+      case 69:
          stat = asn1PE_MsgStartFireEffect (ctxt_p, pvalue->u.msg_start_fire_effect);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_stop_fire_effect */
-      case 69:
+      case 70:
          stat = asn1PE_MsgStopFireEffect (ctxt_p, pvalue->u.msg_stop_fire_effect);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_report */
-      case 70:
+      case 71:
          stat = asn1PE_MsgReport (ctxt_p, pvalue->u.msg_report);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_invalidate_report */
-      case 71:
+      case 72:
          stat = asn1PE_MsgInvalidateReport (ctxt_p, pvalue->u.msg_invalidate_report);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_trace */
-      case 72:
+      case 73:
          stat = asn1PE_MsgTrace (ctxt_p, pvalue->u.msg_trace);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_decisional_state */
-      case 73:
+      case 74:
          stat = asn1PE_MsgDecisionalState (ctxt_p, pvalue->u.msg_decisional_state);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_debug_points */
-      case 74:
+      case 75:
          stat = asn1PE_MsgDebugPoints (ctxt_p, pvalue->u.msg_debug_points);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_vision_cones */
-      case 75:
+      case 76:
          stat = asn1PE_MsgUnitVisionCones (ctxt_p, pvalue->u.msg_unit_vision_cones);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_detection */
-      case 76:
+      case 77:
          stat = asn1PE_MsgUnitDetection (ctxt_p, pvalue->u.msg_unit_detection);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_object_detection */
-      case 77:
+      case 78:
          stat = asn1PE_MsgObjectDetection (ctxt_p, pvalue->u.msg_object_detection);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_concentration_detection */
-      case 78:
+      case 79:
          stat = asn1PE_MsgPopulationConcentrationDetection (ctxt_p, pvalue->u.msg_population_concentration_detection);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_flow_detection */
-      case 79:
+      case 80:
          stat = asn1PE_MsgPopulationFlowDetection (ctxt_p, pvalue->u.msg_population_flow_detection);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_order */
-      case 80:
+      case 81:
          stat = asn1PE_MsgUnitOrder (ctxt_p, pvalue->u.msg_unit_order);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_order */
-      case 81:
+      case 82:
          stat = asn1PE_MsgAutomatOrder (ctxt_p, pvalue->u.msg_automat_order);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_order */
-      case 82:
+      case 83:
          stat = asn1PE_MsgPopulationOrder (ctxt_p, pvalue->u.msg_population_order);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_object_creation */
-      case 83:
+      case 84:
          stat = asn1PE_MsgObjectCreation (ctxt_p, pvalue->u.msg_object_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_object_destruction */
-      case 84:
+      case 85:
          stat = asn1PE_MsgObjectDestruction (ctxt_p, pvalue->u.msg_object_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_object_update */
-      case 85:
+      case 86:
          stat = asn1PE_MsgObjectUpdate (ctxt_p, pvalue->u.msg_object_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_object_knowledge_creation */
-      case 86:
+      case 87:
          stat = asn1PE_MsgObjectKnowledgeCreation (ctxt_p, pvalue->u.msg_object_knowledge_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_object_knowledge_update */
-      case 87:
+      case 88:
          stat = asn1PE_MsgObjectKnowledgeUpdate (ctxt_p, pvalue->u.msg_object_knowledge_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_object_knowledge_destruction */
-      case 88:
+      case 89:
          stat = asn1PE_MsgObjectKnowledgeDestruction (ctxt_p, pvalue->u.msg_object_knowledge_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_medical_handling_creation */
-      case 89:
+      case 90:
          stat = asn1PE_MsgLogMedicalHandlingCreation (ctxt_p, pvalue->u.msg_log_medical_handling_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_medical_handling_update */
-      case 90:
+      case 91:
          stat = asn1PE_MsgLogMedicalHandlingUpdate (ctxt_p, pvalue->u.msg_log_medical_handling_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_medical_handling_destruction */
-      case 91:
+      case 92:
          stat = asn1PE_MsgLogMedicalHandlingDestruction (ctxt_p, pvalue->u.msg_log_medical_handling_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_medical_state */
-      case 92:
+      case 93:
          stat = asn1PE_MsgLogMedicalState (ctxt_p, pvalue->u.msg_log_medical_state);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_maintenance_handling_creation */
-      case 93:
+      case 94:
          stat = asn1PE_MsgLogMaintenanceHandlingCreation (ctxt_p, pvalue->u.msg_log_maintenance_handling_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_maintenance_handling_update */
-      case 94:
+      case 95:
          stat = asn1PE_MsgLogMaintenanceHandlingUpdate (ctxt_p, pvalue->u.msg_log_maintenance_handling_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_maintenance_handling_destruction */
-      case 95:
+      case 96:
          stat = asn1PE_MsgLogMaintenanceHandlingDestruction (ctxt_p, pvalue->u.msg_log_maintenance_handling_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_maintenance_state */
-      case 96:
+      case 97:
          stat = asn1PE_MsgLogMaintenanceState (ctxt_p, pvalue->u.msg_log_maintenance_state);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_supply_handling_creation */
-      case 97:
+      case 98:
          stat = asn1PE_MsgLogSupplyHandlingCreation (ctxt_p, pvalue->u.msg_log_supply_handling_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_supply_handling_update */
-      case 98:
+      case 99:
          stat = asn1PE_MsgLogSupplyHandlingUpdate (ctxt_p, pvalue->u.msg_log_supply_handling_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_supply_handling_destruction */
-      case 99:
+      case 100:
          stat = asn1PE_MsgLogSupplyHandlingDestruction (ctxt_p, pvalue->u.msg_log_supply_handling_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_supply_state */
-      case 100:
+      case 101:
          stat = asn1PE_MsgLogSupplyState (ctxt_p, pvalue->u.msg_log_supply_state);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_supply_quotas */
-      case 101:
+      case 102:
          stat = asn1PE_MsgLogSupplyQuotas (ctxt_p, pvalue->u.msg_log_supply_quotas);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_creation */
-      case 102:
+      case 103:
          stat = asn1PE_MsgPopulationCreation (ctxt_p, pvalue->u.msg_population_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_update */
-      case 103:
+      case 104:
          stat = asn1PE_MsgPopulationUpdate (ctxt_p, pvalue->u.msg_population_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_concentration_creation */
-      case 104:
+      case 105:
          stat = asn1PE_MsgPopulationConcentrationCreation (ctxt_p, pvalue->u.msg_population_concentration_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_concentration_destruction */
-      case 105:
+      case 106:
          stat = asn1PE_MsgPopulationConcentrationDestruction (ctxt_p, pvalue->u.msg_population_concentration_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_concentration_update */
-      case 106:
+      case 107:
          stat = asn1PE_MsgPopulationConcentrationUpdate (ctxt_p, pvalue->u.msg_population_concentration_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_flow_creation */
-      case 107:
+      case 108:
          stat = asn1PE_MsgPopulationFlowCreation (ctxt_p, pvalue->u.msg_population_flow_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_flow_destruction */
-      case 108:
+      case 109:
          stat = asn1PE_MsgPopulationFlowDestruction (ctxt_p, pvalue->u.msg_population_flow_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_flow_update */
-      case 109:
+      case 110:
          stat = asn1PE_MsgPopulationFlowUpdate (ctxt_p, pvalue->u.msg_population_flow_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_knowledge_creation */
-      case 110:
+      case 111:
          stat = asn1PE_MsgPopulationKnowledgeCreation (ctxt_p, pvalue->u.msg_population_knowledge_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_knowledge_update */
-      case 111:
+      case 112:
          stat = asn1PE_MsgPopulationKnowledgeUpdate (ctxt_p, pvalue->u.msg_population_knowledge_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_knowledge_destruction */
-      case 112:
+      case 113:
          stat = asn1PE_MsgPopulationKnowledgeDestruction (ctxt_p, pvalue->u.msg_population_knowledge_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_concentration_knowledge_creation */
-      case 113:
+      case 114:
          stat = asn1PE_MsgPopulationConcentrationKnowledgeCreation (ctxt_p, pvalue->u.msg_population_concentration_knowledge_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_concentration_knowledge_destruction */
-      case 114:
+      case 115:
          stat = asn1PE_MsgPopulationConcentrationKnowledgeDestruction (ctxt_p, pvalue->u.msg_population_concentration_knowledge_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_concentration_knowledge_update */
-      case 115:
+      case 116:
          stat = asn1PE_MsgPopulationConcentrationKnowledgeUpdate (ctxt_p, pvalue->u.msg_population_concentration_knowledge_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_flow_knowledge_creation */
-      case 116:
+      case 117:
          stat = asn1PE_MsgPopulationFlowKnowledgeCreation (ctxt_p, pvalue->u.msg_population_flow_knowledge_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_flow_knowledge_destruction */
-      case 117:
+      case 118:
          stat = asn1PE_MsgPopulationFlowKnowledgeDestruction (ctxt_p, pvalue->u.msg_population_flow_knowledge_destruction);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_flow_knowledge_update */
-      case 118:
+      case 119:
          stat = asn1PE_MsgPopulationFlowKnowledgeUpdate (ctxt_p, pvalue->u.msg_population_flow_knowledge_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_folk_creation */
-      case 119:
+      case 120:
          stat = asn1PE_MsgFolkCreation (ctxt_p, pvalue->u.msg_folk_creation);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_folk_graph_update */
-      case 120:
+      case 121:
          stat = asn1PE_MsgFolkGraphUpdate (ctxt_p, pvalue->u.msg_folk_graph_update);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_intelligence_creation */
-      case 121:
+      case 122:
          stat = asn1PE_MsgIntelligenceCreation (ctxt_p, pvalue->u.msg_intelligence_creation);
          if (stat != ASN_OK) return stat;
          break;
 
+      /* msg_intelligence_update */
+      case 123:
+         stat = asn1PE_MsgIntelligenceUpdate (ctxt_p, pvalue->u.msg_intelligence_update);
+         if (stat != ASN_OK) return stat;
+         break;
+
       /* msg_intelligence_destruction */
-      case 122:
+      case 124:
          stat = asn1PE_MsgIntelligenceDestruction (ctxt_p, pvalue->u.msg_intelligence_destruction);
          if (stat != ASN_OK) return stat;
          break;
@@ -1076,7 +1088,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
    int stat = ASN_OK;
    ASN1UINT ui;
 
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 121);
+   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 123);
    if (stat != ASN_OK) return stat;
    else pvalue->t = ui + 1;
 
@@ -1132,8 +1144,17 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
 
          break;
 
-      /* msg_intelligence_destruction_request_ack */
+      /* msg_intelligence_update_request_ack */
       case 7:
+         pvalue->u.msg_intelligence_update_request_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgIntelligenceUpdateRequestAck);
+
+         stat = asn1PD_MsgIntelligenceUpdateRequestAck (ctxt_p, pvalue->u.msg_intelligence_update_request_ack);
+         if (stat != ASN_OK) return stat;
+
+         break;
+
+      /* msg_intelligence_destruction_request_ack */
+      case 8:
          pvalue->u.msg_intelligence_destruction_request_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgIntelligenceDestructionRequestAck);
 
          stat = asn1PD_MsgIntelligenceDestructionRequestAck (ctxt_p, pvalue->u.msg_intelligence_destruction_request_ack);
@@ -1142,7 +1163,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_order_ack */
-      case 8:
+      case 9:
          pvalue->u.msg_unit_order_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitOrderAck);
 
          stat = asn1PD_MsgUnitOrderAck (ctxt_p, pvalue->u.msg_unit_order_ack);
@@ -1151,7 +1172,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_automat_order_ack */
-      case 9:
+      case 10:
          pvalue->u.msg_automat_order_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatOrderAck);
 
          stat = asn1PD_MsgAutomatOrderAck (ctxt_p, pvalue->u.msg_automat_order_ack);
@@ -1160,7 +1181,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_order_ack */
-      case 10:
+      case 11:
          pvalue->u.msg_population_order_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationOrderAck);
 
          stat = asn1PD_MsgPopulationOrderAck (ctxt_p, pvalue->u.msg_population_order_ack);
@@ -1169,7 +1190,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_frag_order_ack */
-      case 11:
+      case 12:
          pvalue->u.msg_frag_order_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgFragOrderAck);
 
          stat = asn1PD_MsgFragOrderAck (ctxt_p, pvalue->u.msg_frag_order_ack);
@@ -1178,7 +1199,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_set_automat_mode_ack */
-      case 12:
+      case 13:
          pvalue->u.msg_set_automat_mode_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgSetAutomatModeAck);
 
          stat = asn1PD_MsgSetAutomatModeAck (ctxt_p, pvalue->u.msg_set_automat_mode_ack);
@@ -1187,14 +1208,14 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_creation_request_ack */
-      case 13:
+      case 14:
          stat = asn1PD_MsgUnitCreationRequestAck (ctxt_p, &pvalue->u.msg_unit_creation_request_ack);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_unit_magic_action_ack */
-      case 14:
+      case 15:
          pvalue->u.msg_unit_magic_action_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitMagicActionAck);
 
          stat = asn1PD_MsgUnitMagicActionAck (ctxt_p, pvalue->u.msg_unit_magic_action_ack);
@@ -1203,7 +1224,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_object_magic_action_ack */
-      case 15:
+      case 16:
          pvalue->u.msg_object_magic_action_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgObjectMagicActionAck);
 
          stat = asn1PD_MsgObjectMagicActionAck (ctxt_p, pvalue->u.msg_object_magic_action_ack);
@@ -1212,7 +1233,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_magic_action_ack */
-      case 16:
+      case 17:
          pvalue->u.msg_population_magic_action_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationMagicActionAck);
 
          stat = asn1PD_MsgPopulationMagicActionAck (ctxt_p, pvalue->u.msg_population_magic_action_ack);
@@ -1221,7 +1242,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_change_diplomacy_ack */
-      case 17:
+      case 18:
          pvalue->u.msg_change_diplomacy_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgChangeDiplomacyAck);
 
          stat = asn1PD_MsgChangeDiplomacyAck (ctxt_p, pvalue->u.msg_change_diplomacy_ack);
@@ -1230,7 +1251,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_automat_change_knowledge_group_ack */
-      case 18:
+      case 19:
          pvalue->u.msg_automat_change_knowledge_group_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatChangeKnowledgeGroupAck);
 
          stat = asn1PD_MsgAutomatChangeKnowledgeGroupAck (ctxt_p, pvalue->u.msg_automat_change_knowledge_group_ack);
@@ -1239,7 +1260,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_automat_change_logistic_links_ack */
-      case 19:
+      case 20:
          pvalue->u.msg_automat_change_logistic_links_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatChangeLogisticLinksAck);
 
          stat = asn1PD_MsgAutomatChangeLogisticLinksAck (ctxt_p, pvalue->u.msg_automat_change_logistic_links_ack);
@@ -1248,7 +1269,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_automat_change_superior_ack */
-      case 20:
+      case 21:
          pvalue->u.msg_automat_change_superior_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatChangeSuperiorAck);
 
          stat = asn1PD_MsgAutomatChangeSuperiorAck (ctxt_p, pvalue->u.msg_automat_change_superior_ack);
@@ -1257,7 +1278,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_change_superior_ack */
-      case 21:
+      case 22:
          pvalue->u.msg_unit_change_superior_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitChangeSuperiorAck);
 
          stat = asn1PD_MsgUnitChangeSuperiorAck (ctxt_p, pvalue->u.msg_unit_change_superior_ack);
@@ -1266,21 +1287,21 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_supply_push_flow_ack */
-      case 22:
+      case 23:
          stat = asn1PD_MsgLogSupplyPushFlowAck (ctxt_p, &pvalue->u.msg_log_supply_push_flow_ack);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_log_supply_change_quotas_ack */
-      case 23:
+      case 24:
          stat = asn1PD_MsgLogSupplyChangeQuotasAck (ctxt_p, &pvalue->u.msg_log_supply_change_quotas_ack);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_information */
-      case 24:
+      case 25:
          pvalue->u.msg_control_information = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgControlInformation);
 
          stat = asn1PD_MsgControlInformation (ctxt_p, pvalue->u.msg_control_information);
@@ -1289,7 +1310,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_control_profiling_information */
-      case 25:
+      case 26:
          pvalue->u.msg_control_profiling_information = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgControlProfilingInformation);
 
          stat = asn1PD_MsgControlProfilingInformation (ctxt_p, pvalue->u.msg_control_profiling_information);
@@ -1298,7 +1319,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_control_begin_tick */
-      case 26:
+      case 27:
          pvalue->u.msg_control_begin_tick = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgControlBeginTick);
 
          stat = asn1PD_MsgControlBeginTick (ctxt_p, pvalue->u.msg_control_begin_tick);
@@ -1307,7 +1328,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_control_end_tick */
-      case 27:
+      case 28:
          pvalue->u.msg_control_end_tick = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgControlEndTick);
 
          stat = asn1PD_MsgControlEndTick (ctxt_p, pvalue->u.msg_control_end_tick);
@@ -1316,28 +1337,28 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_control_stop_ack */
-      case 28:
+      case 29:
          stat = asn1PD_MsgControlStopAck (ctxt_p, &pvalue->u.msg_control_stop_ack);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_pause_ack */
-      case 29:
+      case 30:
          stat = asn1PD_MsgControlPauseAck (ctxt_p, &pvalue->u.msg_control_pause_ack);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_resume_ack */
-      case 30:
+      case 31:
          stat = asn1PD_MsgControlResumeAck (ctxt_p, &pvalue->u.msg_control_resume_ack);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_change_time_factor_ack */
-      case 31:
+      case 32:
          pvalue->u.msg_control_change_time_factor_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgControlChangeTimeFactorAck);
 
          stat = asn1PD_MsgControlChangeTimeFactorAck (ctxt_p, pvalue->u.msg_control_change_time_factor_ack);
@@ -1346,63 +1367,63 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_control_global_meteo_ack */
-      case 32:
+      case 33:
          stat = asn1PD_MsgControlGlobalMeteoAck (ctxt_p);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_local_meteo_ack */
-      case 33:
+      case 34:
          stat = asn1PD_MsgControlLocalMeteoAck (ctxt_p);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_checkpoint_save_begin */
-      case 34:
+      case 35:
          stat = asn1PD_MsgControlCheckPointSaveBegin (ctxt_p);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_checkpoint_save_end */
-      case 35:
+      case 36:
          stat = asn1PD_MsgControlCheckPointSaveEnd (ctxt_p);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_checkpoint_set_frequency_ack */
-      case 36:
+      case 37:
          stat = asn1PD_MsgControlCheckPointSetFrequencyAck (ctxt_p);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_checkpoint_save_now_ack */
-      case 37:
+      case 38:
          stat = asn1PD_MsgControlCheckPointSaveNowAck (ctxt_p);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_send_current_state_begin */
-      case 38:
+      case 39:
          stat = asn1PD_MsgControlSendCurrentStateBegin (ctxt_p);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_control_send_current_state_end */
-      case 39:
+      case 40:
          stat = asn1PD_MsgControlSendCurrentStateEnd (ctxt_p);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_limit_creation */
-      case 40:
+      case 41:
          pvalue->u.msg_limit_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLimitCreation);
 
          stat = asn1PD_MsgLimitCreation (ctxt_p, pvalue->u.msg_limit_creation);
@@ -1411,7 +1432,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_limit_update */
-      case 41:
+      case 42:
          pvalue->u.msg_limit_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLimitUpdate);
 
          stat = asn1PD_MsgLimitUpdate (ctxt_p, pvalue->u.msg_limit_update);
@@ -1420,14 +1441,14 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_limit_destruction */
-      case 42:
+      case 43:
          stat = asn1PD_MsgLimitDestruction (ctxt_p, &pvalue->u.msg_limit_destruction);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_lima_creation */
-      case 43:
+      case 44:
          pvalue->u.msg_lima_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLimaCreation);
 
          stat = asn1PD_MsgLimaCreation (ctxt_p, pvalue->u.msg_lima_creation);
@@ -1436,7 +1457,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_lima_update */
-      case 44:
+      case 45:
          pvalue->u.msg_lima_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLimaUpdate);
 
          stat = asn1PD_MsgLimaUpdate (ctxt_p, pvalue->u.msg_lima_update);
@@ -1445,14 +1466,14 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_lima_destruction */
-      case 45:
+      case 46:
          stat = asn1PD_MsgLimaDestruction (ctxt_p, &pvalue->u.msg_lima_destruction);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_formation_creation */
-      case 46:
+      case 47:
          pvalue->u.msg_formation_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgFormationCreation);
 
          stat = asn1PD_MsgFormationCreation (ctxt_p, pvalue->u.msg_formation_creation);
@@ -1461,7 +1482,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_knowledge_group_creation */
-      case 47:
+      case 48:
          pvalue->u.msg_knowledge_group_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgKnowledgeGroupCreation);
 
          stat = asn1PD_MsgKnowledgeGroupCreation (ctxt_p, pvalue->u.msg_knowledge_group_creation);
@@ -1470,7 +1491,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_side_creation */
-      case 48:
+      case 49:
          pvalue->u.msg_side_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgTeamCreation);
 
          stat = asn1PD_MsgTeamCreation (ctxt_p, pvalue->u.msg_side_creation);
@@ -1479,7 +1500,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_automat_creation */
-      case 49:
+      case 50:
          pvalue->u.msg_automat_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatCreation);
 
          stat = asn1PD_MsgAutomatCreation (ctxt_p, pvalue->u.msg_automat_creation);
@@ -1488,7 +1509,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_automat_attributes */
-      case 50:
+      case 51:
          pvalue->u.msg_automat_attributes = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatAttributes);
 
          stat = asn1PD_MsgAutomatAttributes (ctxt_p, pvalue->u.msg_automat_attributes);
@@ -1497,7 +1518,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_creation */
-      case 51:
+      case 52:
          pvalue->u.msg_unit_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitCreation);
 
          stat = asn1PD_MsgUnitCreation (ctxt_p, pvalue->u.msg_unit_creation);
@@ -1506,7 +1527,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_attributes */
-      case 52:
+      case 53:
          pvalue->u.msg_unit_attributes = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitAttributes);
 
          stat = asn1PD_MsgUnitAttributes (ctxt_p, pvalue->u.msg_unit_attributes);
@@ -1515,7 +1536,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_pathfind */
-      case 53:
+      case 54:
          pvalue->u.msg_unit_pathfind = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitPathFind);
 
          stat = asn1PD_MsgUnitPathFind (ctxt_p, pvalue->u.msg_unit_pathfind);
@@ -1524,14 +1545,14 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_destruction */
-      case 54:
+      case 55:
          stat = asn1PD_MsgUnitDestruction (ctxt_p, &pvalue->u.msg_unit_destruction);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_unit_environment_type */
-      case 55:
+      case 56:
          pvalue->u.msg_unit_environment_type = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitEnvironmentType);
 
          stat = asn1PD_MsgUnitEnvironmentType (ctxt_p, pvalue->u.msg_unit_environment_type);
@@ -1540,7 +1561,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_change_diplomacy */
-      case 56:
+      case 57:
          pvalue->u.msg_change_diplomacy = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgChangeDiplomacy);
 
          stat = asn1PD_MsgChangeDiplomacy (ctxt_p, pvalue->u.msg_change_diplomacy);
@@ -1549,7 +1570,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_change_superior */
-      case 57:
+      case 58:
          pvalue->u.msg_unit_change_superior = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitChangeSuperior);
 
          stat = asn1PD_MsgUnitChangeSuperior (ctxt_p, pvalue->u.msg_unit_change_superior);
@@ -1558,7 +1579,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_automat_change_logistic_links */
-      case 58:
+      case 59:
          pvalue->u.msg_automat_change_logistic_links = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatChangeLogisticLinks);
 
          stat = asn1PD_MsgAutomatChangeLogisticLinks (ctxt_p, pvalue->u.msg_automat_change_logistic_links);
@@ -1567,7 +1588,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_knowledge_creation */
-      case 59:
+      case 60:
          pvalue->u.msg_unit_knowledge_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitKnowledgeCreation);
 
          stat = asn1PD_MsgUnitKnowledgeCreation (ctxt_p, pvalue->u.msg_unit_knowledge_creation);
@@ -1576,7 +1597,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_knowledge_update */
-      case 60:
+      case 61:
          pvalue->u.msg_unit_knowledge_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitKnowledgeUpdate);
 
          stat = asn1PD_MsgUnitKnowledgeUpdate (ctxt_p, pvalue->u.msg_unit_knowledge_update);
@@ -1585,7 +1606,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_knowledge_destruction */
-      case 61:
+      case 62:
          pvalue->u.msg_unit_knowledge_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitKnowledgeDestruction);
 
          stat = asn1PD_MsgUnitKnowledgeDestruction (ctxt_p, pvalue->u.msg_unit_knowledge_destruction);
@@ -1594,7 +1615,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_start_unit_fire */
-      case 62:
+      case 63:
          pvalue->u.msg_start_unit_fire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgStartUnitFire);
 
          stat = asn1PD_MsgStartUnitFire (ctxt_p, pvalue->u.msg_start_unit_fire);
@@ -1603,7 +1624,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_stop_unit_fire */
-      case 63:
+      case 64:
          pvalue->u.msg_stop_unit_fire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgStopUnitFire);
 
          stat = asn1PD_MsgStopUnitFire (ctxt_p, pvalue->u.msg_stop_unit_fire);
@@ -1612,7 +1633,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_start_population_fire */
-      case 64:
+      case 65:
          pvalue->u.msg_start_population_fire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgStartPopulationFire);
 
          stat = asn1PD_MsgStartPopulationFire (ctxt_p, pvalue->u.msg_start_population_fire);
@@ -1621,7 +1642,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_stop_population_fire */
-      case 65:
+      case 66:
          pvalue->u.msg_stop_population_fire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgStopPopulationFire);
 
          stat = asn1PD_MsgStopPopulationFire (ctxt_p, pvalue->u.msg_stop_population_fire);
@@ -1630,7 +1651,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_explosion */
-      case 66:
+      case 67:
          pvalue->u.msg_explosion = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgExplosion);
 
          stat = asn1PD_MsgExplosion (ctxt_p, pvalue->u.msg_explosion);
@@ -1639,7 +1660,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_start_fire_effect */
-      case 67:
+      case 68:
          pvalue->u.msg_start_fire_effect = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgStartFireEffect);
 
          stat = asn1PD_MsgStartFireEffect (ctxt_p, pvalue->u.msg_start_fire_effect);
@@ -1648,14 +1669,14 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_stop_fire_effect */
-      case 68:
+      case 69:
          stat = asn1PD_MsgStopFireEffect (ctxt_p, &pvalue->u.msg_stop_fire_effect);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_report */
-      case 69:
+      case 70:
          pvalue->u.msg_report = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgReport);
 
          stat = asn1PD_MsgReport (ctxt_p, pvalue->u.msg_report);
@@ -1664,7 +1685,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_invalidate_report */
-      case 70:
+      case 71:
          pvalue->u.msg_invalidate_report = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgInvalidateReport);
 
          stat = asn1PD_MsgInvalidateReport (ctxt_p, pvalue->u.msg_invalidate_report);
@@ -1673,7 +1694,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_trace */
-      case 71:
+      case 72:
          pvalue->u.msg_trace = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgTrace);
 
          stat = asn1PD_MsgTrace (ctxt_p, pvalue->u.msg_trace);
@@ -1682,7 +1703,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_decisional_state */
-      case 72:
+      case 73:
          pvalue->u.msg_decisional_state = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgDecisionalState);
 
          stat = asn1PD_MsgDecisionalState (ctxt_p, pvalue->u.msg_decisional_state);
@@ -1691,7 +1712,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_debug_points */
-      case 73:
+      case 74:
          pvalue->u.msg_debug_points = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgDebugPoints);
 
          stat = asn1PD_MsgDebugPoints (ctxt_p, pvalue->u.msg_debug_points);
@@ -1700,7 +1721,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_vision_cones */
-      case 74:
+      case 75:
          pvalue->u.msg_unit_vision_cones = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitVisionCones);
 
          stat = asn1PD_MsgUnitVisionCones (ctxt_p, pvalue->u.msg_unit_vision_cones);
@@ -1709,7 +1730,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_detection */
-      case 75:
+      case 76:
          pvalue->u.msg_unit_detection = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitDetection);
 
          stat = asn1PD_MsgUnitDetection (ctxt_p, pvalue->u.msg_unit_detection);
@@ -1718,7 +1739,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_object_detection */
-      case 76:
+      case 77:
          pvalue->u.msg_object_detection = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgObjectDetection);
 
          stat = asn1PD_MsgObjectDetection (ctxt_p, pvalue->u.msg_object_detection);
@@ -1727,7 +1748,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_concentration_detection */
-      case 77:
+      case 78:
          pvalue->u.msg_population_concentration_detection = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationConcentrationDetection);
 
          stat = asn1PD_MsgPopulationConcentrationDetection (ctxt_p, pvalue->u.msg_population_concentration_detection);
@@ -1736,7 +1757,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_flow_detection */
-      case 78:
+      case 79:
          pvalue->u.msg_population_flow_detection = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationFlowDetection);
 
          stat = asn1PD_MsgPopulationFlowDetection (ctxt_p, pvalue->u.msg_population_flow_detection);
@@ -1745,7 +1766,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_unit_order */
-      case 79:
+      case 80:
          pvalue->u.msg_unit_order = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitOrder);
 
          stat = asn1PD_MsgUnitOrder (ctxt_p, pvalue->u.msg_unit_order);
@@ -1754,7 +1775,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_automat_order */
-      case 80:
+      case 81:
          pvalue->u.msg_automat_order = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatOrder);
 
          stat = asn1PD_MsgAutomatOrder (ctxt_p, pvalue->u.msg_automat_order);
@@ -1763,7 +1784,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_order */
-      case 81:
+      case 82:
          pvalue->u.msg_population_order = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationOrder);
 
          stat = asn1PD_MsgPopulationOrder (ctxt_p, pvalue->u.msg_population_order);
@@ -1772,7 +1793,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_object_creation */
-      case 82:
+      case 83:
          pvalue->u.msg_object_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgObjectCreation);
 
          stat = asn1PD_MsgObjectCreation (ctxt_p, pvalue->u.msg_object_creation);
@@ -1781,14 +1802,14 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_object_destruction */
-      case 83:
+      case 84:
          stat = asn1PD_MsgObjectDestruction (ctxt_p, &pvalue->u.msg_object_destruction);
          if (stat != ASN_OK) return stat;
 
          break;
 
       /* msg_object_update */
-      case 84:
+      case 85:
          pvalue->u.msg_object_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgObjectUpdate);
 
          stat = asn1PD_MsgObjectUpdate (ctxt_p, pvalue->u.msg_object_update);
@@ -1797,7 +1818,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_object_knowledge_creation */
-      case 85:
+      case 86:
          pvalue->u.msg_object_knowledge_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgObjectKnowledgeCreation);
 
          stat = asn1PD_MsgObjectKnowledgeCreation (ctxt_p, pvalue->u.msg_object_knowledge_creation);
@@ -1806,7 +1827,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_object_knowledge_update */
-      case 86:
+      case 87:
          pvalue->u.msg_object_knowledge_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgObjectKnowledgeUpdate);
 
          stat = asn1PD_MsgObjectKnowledgeUpdate (ctxt_p, pvalue->u.msg_object_knowledge_update);
@@ -1815,7 +1836,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_object_knowledge_destruction */
-      case 87:
+      case 88:
          pvalue->u.msg_object_knowledge_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgObjectKnowledgeDestruction);
 
          stat = asn1PD_MsgObjectKnowledgeDestruction (ctxt_p, pvalue->u.msg_object_knowledge_destruction);
@@ -1824,7 +1845,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_medical_handling_creation */
-      case 88:
+      case 89:
          pvalue->u.msg_log_medical_handling_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogMedicalHandlingCreation);
 
          stat = asn1PD_MsgLogMedicalHandlingCreation (ctxt_p, pvalue->u.msg_log_medical_handling_creation);
@@ -1833,7 +1854,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_medical_handling_update */
-      case 89:
+      case 90:
          pvalue->u.msg_log_medical_handling_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogMedicalHandlingUpdate);
 
          stat = asn1PD_MsgLogMedicalHandlingUpdate (ctxt_p, pvalue->u.msg_log_medical_handling_update);
@@ -1842,7 +1863,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_medical_handling_destruction */
-      case 90:
+      case 91:
          pvalue->u.msg_log_medical_handling_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogMedicalHandlingDestruction);
 
          stat = asn1PD_MsgLogMedicalHandlingDestruction (ctxt_p, pvalue->u.msg_log_medical_handling_destruction);
@@ -1851,7 +1872,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_medical_state */
-      case 91:
+      case 92:
          pvalue->u.msg_log_medical_state = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogMedicalState);
 
          stat = asn1PD_MsgLogMedicalState (ctxt_p, pvalue->u.msg_log_medical_state);
@@ -1860,7 +1881,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_maintenance_handling_creation */
-      case 92:
+      case 93:
          pvalue->u.msg_log_maintenance_handling_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogMaintenanceHandlingCreation);
 
          stat = asn1PD_MsgLogMaintenanceHandlingCreation (ctxt_p, pvalue->u.msg_log_maintenance_handling_creation);
@@ -1869,7 +1890,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_maintenance_handling_update */
-      case 93:
+      case 94:
          pvalue->u.msg_log_maintenance_handling_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogMaintenanceHandlingUpdate);
 
          stat = asn1PD_MsgLogMaintenanceHandlingUpdate (ctxt_p, pvalue->u.msg_log_maintenance_handling_update);
@@ -1878,7 +1899,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_maintenance_handling_destruction */
-      case 94:
+      case 95:
          pvalue->u.msg_log_maintenance_handling_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogMaintenanceHandlingDestruction);
 
          stat = asn1PD_MsgLogMaintenanceHandlingDestruction (ctxt_p, pvalue->u.msg_log_maintenance_handling_destruction);
@@ -1887,7 +1908,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_maintenance_state */
-      case 95:
+      case 96:
          pvalue->u.msg_log_maintenance_state = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogMaintenanceState);
 
          stat = asn1PD_MsgLogMaintenanceState (ctxt_p, pvalue->u.msg_log_maintenance_state);
@@ -1896,7 +1917,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_supply_handling_creation */
-      case 96:
+      case 97:
          pvalue->u.msg_log_supply_handling_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogSupplyHandlingCreation);
 
          stat = asn1PD_MsgLogSupplyHandlingCreation (ctxt_p, pvalue->u.msg_log_supply_handling_creation);
@@ -1905,7 +1926,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_supply_handling_update */
-      case 97:
+      case 98:
          pvalue->u.msg_log_supply_handling_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogSupplyHandlingUpdate);
 
          stat = asn1PD_MsgLogSupplyHandlingUpdate (ctxt_p, pvalue->u.msg_log_supply_handling_update);
@@ -1914,7 +1935,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_supply_handling_destruction */
-      case 98:
+      case 99:
          pvalue->u.msg_log_supply_handling_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogSupplyHandlingDestruction);
 
          stat = asn1PD_MsgLogSupplyHandlingDestruction (ctxt_p, pvalue->u.msg_log_supply_handling_destruction);
@@ -1923,7 +1944,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_supply_state */
-      case 99:
+      case 100:
          pvalue->u.msg_log_supply_state = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogSupplyState);
 
          stat = asn1PD_MsgLogSupplyState (ctxt_p, pvalue->u.msg_log_supply_state);
@@ -1932,7 +1953,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_log_supply_quotas */
-      case 100:
+      case 101:
          pvalue->u.msg_log_supply_quotas = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogSupplyQuotas);
 
          stat = asn1PD_MsgLogSupplyQuotas (ctxt_p, pvalue->u.msg_log_supply_quotas);
@@ -1941,7 +1962,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_creation */
-      case 101:
+      case 102:
          pvalue->u.msg_population_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationCreation);
 
          stat = asn1PD_MsgPopulationCreation (ctxt_p, pvalue->u.msg_population_creation);
@@ -1950,7 +1971,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_update */
-      case 102:
+      case 103:
          pvalue->u.msg_population_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationUpdate);
 
          stat = asn1PD_MsgPopulationUpdate (ctxt_p, pvalue->u.msg_population_update);
@@ -1959,7 +1980,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_concentration_creation */
-      case 103:
+      case 104:
          pvalue->u.msg_population_concentration_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationConcentrationCreation);
 
          stat = asn1PD_MsgPopulationConcentrationCreation (ctxt_p, pvalue->u.msg_population_concentration_creation);
@@ -1968,7 +1989,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_concentration_destruction */
-      case 104:
+      case 105:
          pvalue->u.msg_population_concentration_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationConcentrationDestruction);
 
          stat = asn1PD_MsgPopulationConcentrationDestruction (ctxt_p, pvalue->u.msg_population_concentration_destruction);
@@ -1977,7 +1998,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_concentration_update */
-      case 105:
+      case 106:
          pvalue->u.msg_population_concentration_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationConcentrationUpdate);
 
          stat = asn1PD_MsgPopulationConcentrationUpdate (ctxt_p, pvalue->u.msg_population_concentration_update);
@@ -1986,7 +2007,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_flow_creation */
-      case 106:
+      case 107:
          pvalue->u.msg_population_flow_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationFlowCreation);
 
          stat = asn1PD_MsgPopulationFlowCreation (ctxt_p, pvalue->u.msg_population_flow_creation);
@@ -1995,7 +2016,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_flow_destruction */
-      case 107:
+      case 108:
          pvalue->u.msg_population_flow_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationFlowDestruction);
 
          stat = asn1PD_MsgPopulationFlowDestruction (ctxt_p, pvalue->u.msg_population_flow_destruction);
@@ -2004,7 +2025,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_flow_update */
-      case 108:
+      case 109:
          pvalue->u.msg_population_flow_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationFlowUpdate);
 
          stat = asn1PD_MsgPopulationFlowUpdate (ctxt_p, pvalue->u.msg_population_flow_update);
@@ -2013,7 +2034,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_knowledge_creation */
-      case 109:
+      case 110:
          pvalue->u.msg_population_knowledge_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationKnowledgeCreation);
 
          stat = asn1PD_MsgPopulationKnowledgeCreation (ctxt_p, pvalue->u.msg_population_knowledge_creation);
@@ -2022,7 +2043,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_knowledge_update */
-      case 110:
+      case 111:
          pvalue->u.msg_population_knowledge_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationKnowledgeUpdate);
 
          stat = asn1PD_MsgPopulationKnowledgeUpdate (ctxt_p, pvalue->u.msg_population_knowledge_update);
@@ -2031,7 +2052,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_knowledge_destruction */
-      case 111:
+      case 112:
          pvalue->u.msg_population_knowledge_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationKnowledgeDestruction);
 
          stat = asn1PD_MsgPopulationKnowledgeDestruction (ctxt_p, pvalue->u.msg_population_knowledge_destruction);
@@ -2040,7 +2061,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_concentration_knowledge_creation */
-      case 112:
+      case 113:
          pvalue->u.msg_population_concentration_knowledge_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationConcentrationKnowledgeCreation);
 
          stat = asn1PD_MsgPopulationConcentrationKnowledgeCreation (ctxt_p, pvalue->u.msg_population_concentration_knowledge_creation);
@@ -2049,7 +2070,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_concentration_knowledge_destruction */
-      case 113:
+      case 114:
          pvalue->u.msg_population_concentration_knowledge_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationConcentrationKnowledgeDestruction);
 
          stat = asn1PD_MsgPopulationConcentrationKnowledgeDestruction (ctxt_p, pvalue->u.msg_population_concentration_knowledge_destruction);
@@ -2058,7 +2079,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_concentration_knowledge_update */
-      case 114:
+      case 115:
          pvalue->u.msg_population_concentration_knowledge_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationConcentrationKnowledgeUpdate);
 
          stat = asn1PD_MsgPopulationConcentrationKnowledgeUpdate (ctxt_p, pvalue->u.msg_population_concentration_knowledge_update);
@@ -2067,7 +2088,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_flow_knowledge_creation */
-      case 115:
+      case 116:
          pvalue->u.msg_population_flow_knowledge_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationFlowKnowledgeCreation);
 
          stat = asn1PD_MsgPopulationFlowKnowledgeCreation (ctxt_p, pvalue->u.msg_population_flow_knowledge_creation);
@@ -2076,7 +2097,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_flow_knowledge_destruction */
-      case 116:
+      case 117:
          pvalue->u.msg_population_flow_knowledge_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationFlowKnowledgeDestruction);
 
          stat = asn1PD_MsgPopulationFlowKnowledgeDestruction (ctxt_p, pvalue->u.msg_population_flow_knowledge_destruction);
@@ -2085,7 +2106,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_population_flow_knowledge_update */
-      case 117:
+      case 118:
          pvalue->u.msg_population_flow_knowledge_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationFlowKnowledgeUpdate);
 
          stat = asn1PD_MsgPopulationFlowKnowledgeUpdate (ctxt_p, pvalue->u.msg_population_flow_knowledge_update);
@@ -2094,7 +2115,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_folk_creation */
-      case 118:
+      case 119:
          pvalue->u.msg_folk_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgFolkCreation);
 
          stat = asn1PD_MsgFolkCreation (ctxt_p, pvalue->u.msg_folk_creation);
@@ -2103,7 +2124,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_folk_graph_update */
-      case 119:
+      case 120:
          pvalue->u.msg_folk_graph_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgFolkGraphUpdate);
 
          stat = asn1PD_MsgFolkGraphUpdate (ctxt_p, pvalue->u.msg_folk_graph_update);
@@ -2112,7 +2133,7 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
          break;
 
       /* msg_intelligence_creation */
-      case 120:
+      case 121:
          pvalue->u.msg_intelligence_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgIntelligenceCreation);
 
          stat = asn1PD_MsgIntelligenceCreation (ctxt_p, pvalue->u.msg_intelligence_creation);
@@ -2120,8 +2141,17 @@ EXTERN int asn1PD_MsgsSimToClient_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsSimToClient_m
 
          break;
 
+      /* msg_intelligence_update */
+      case 122:
+         pvalue->u.msg_intelligence_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgIntelligenceUpdate);
+
+         stat = asn1PD_MsgIntelligenceUpdate (ctxt_p, pvalue->u.msg_intelligence_update);
+         if (stat != ASN_OK) return stat;
+
+         break;
+
       /* msg_intelligence_destruction */
-      case 121:
+      case 123:
          pvalue->u.msg_intelligence_destruction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgIntelligenceDestruction);
 
          stat = asn1PD_MsgIntelligenceDestruction (ctxt_p, pvalue->u.msg_intelligence_destruction);
@@ -2232,7 +2262,7 @@ EXTERN int asn1PE_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
 
    /* Encode choice index value */
 
-   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 32);
+   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 33);
    if (stat != ASN_OK) return stat;
 
    /* Encode root element data value */
@@ -2335,104 +2365,110 @@ EXTERN int asn1PE_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          if (stat != ASN_OK) return stat;
          break;
 
-      /* msg_intelligence_destruction_request */
+      /* msg_intelligence_update_request */
       case 17:
+         stat = asn1PE_MsgIntelligenceUpdateRequest (ctxt_p, pvalue->u.msg_intelligence_update_request);
+         if (stat != ASN_OK) return stat;
+         break;
+
+      /* msg_intelligence_destruction_request */
+      case 18:
          stat = asn1PE_MsgIntelligenceDestructionRequest (ctxt_p, pvalue->u.msg_intelligence_destruction_request);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_order */
-      case 18:
+      case 19:
          stat = asn1PE_MsgUnitOrder (ctxt_p, pvalue->u.msg_unit_order);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_order */
-      case 19:
+      case 20:
          stat = asn1PE_MsgAutomatOrder (ctxt_p, pvalue->u.msg_automat_order);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_order */
-      case 20:
+      case 21:
          stat = asn1PE_MsgPopulationOrder (ctxt_p, pvalue->u.msg_population_order);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_frag_order */
-      case 21:
+      case 22:
          stat = asn1PE_MsgFragOrder (ctxt_p, pvalue->u.msg_frag_order);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_set_automat_mode */
-      case 22:
+      case 23:
          stat = asn1PE_MsgSetAutomatMode (ctxt_p, pvalue->u.msg_set_automat_mode);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_creation_request */
-      case 23:
+      case 24:
          stat = asn1PE_MsgUnitCreationRequest (ctxt_p, pvalue->u.msg_unit_creation_request);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_magic_action */
-      case 24:
+      case 25:
          stat = asn1PE_MsgUnitMagicAction (ctxt_p, pvalue->u.msg_unit_magic_action);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_object_magic_action */
-      case 25:
+      case 26:
          stat = asn1PE_MsgObjectMagicAction (ctxt_p, pvalue->u.msg_object_magic_action);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_population_magic_action */
-      case 26:
+      case 27:
          stat = asn1PE_MsgPopulationMagicAction (ctxt_p, pvalue->u.msg_population_magic_action);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_change_diplomacy */
-      case 27:
+      case 28:
          stat = asn1PE_MsgChangeDiplomacy (ctxt_p, pvalue->u.msg_change_diplomacy);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_change_knowledge_group */
-      case 28:
+      case 29:
          stat = asn1PE_MsgAutomatChangeKnowledgeGroup (ctxt_p, pvalue->u.msg_automat_change_knowledge_group);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_change_logistic_links */
-      case 29:
+      case 30:
          stat = asn1PE_MsgAutomatChangeLogisticLinks (ctxt_p, pvalue->u.msg_automat_change_logistic_links);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_automat_change_superior */
-      case 30:
+      case 31:
          stat = asn1PE_MsgAutomatChangeSuperior (ctxt_p, pvalue->u.msg_automat_change_superior);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_unit_change_superior */
-      case 31:
+      case 32:
          stat = asn1PE_MsgUnitChangeSuperior (ctxt_p, pvalue->u.msg_unit_change_superior);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_supply_push_flow */
-      case 32:
+      case 33:
          stat = asn1PE_MsgLogSupplyPushFlow (ctxt_p, pvalue->u.msg_log_supply_push_flow);
          if (stat != ASN_OK) return stat;
          break;
 
       /* msg_log_supply_change_quotas */
-      case 33:
+      case 34:
          stat = asn1PE_MsgLogSupplyChangeQuotas (ctxt_p, pvalue->u.msg_log_supply_change_quotas);
          if (stat != ASN_OK) return stat;
          break;
@@ -2455,7 +2491,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
    int stat = ASN_OK;
    ASN1UINT ui;
 
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 32);
+   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 33);
    if (stat != ASN_OK) return stat;
    else pvalue->t = ui + 1;
 
@@ -2588,8 +2624,17 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
 
          break;
 
-      /* msg_intelligence_destruction_request */
+      /* msg_intelligence_update_request */
       case 16:
+         pvalue->u.msg_intelligence_update_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgIntelligenceUpdateRequest);
+
+         stat = asn1PD_MsgIntelligenceUpdateRequest (ctxt_p, pvalue->u.msg_intelligence_update_request);
+         if (stat != ASN_OK) return stat;
+
+         break;
+
+      /* msg_intelligence_destruction_request */
+      case 17:
          pvalue->u.msg_intelligence_destruction_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgIntelligenceDestructionRequest);
 
          stat = asn1PD_MsgIntelligenceDestructionRequest (ctxt_p, pvalue->u.msg_intelligence_destruction_request);
@@ -2598,7 +2643,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_unit_order */
-      case 17:
+      case 18:
          pvalue->u.msg_unit_order = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitOrder);
 
          stat = asn1PD_MsgUnitOrder (ctxt_p, pvalue->u.msg_unit_order);
@@ -2607,7 +2652,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_automat_order */
-      case 18:
+      case 19:
          pvalue->u.msg_automat_order = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatOrder);
 
          stat = asn1PD_MsgAutomatOrder (ctxt_p, pvalue->u.msg_automat_order);
@@ -2616,7 +2661,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_population_order */
-      case 19:
+      case 20:
          pvalue->u.msg_population_order = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationOrder);
 
          stat = asn1PD_MsgPopulationOrder (ctxt_p, pvalue->u.msg_population_order);
@@ -2625,7 +2670,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_frag_order */
-      case 20:
+      case 21:
          pvalue->u.msg_frag_order = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgFragOrder);
 
          stat = asn1PD_MsgFragOrder (ctxt_p, pvalue->u.msg_frag_order);
@@ -2634,7 +2679,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_set_automat_mode */
-      case 21:
+      case 22:
          pvalue->u.msg_set_automat_mode = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgSetAutomatMode);
 
          stat = asn1PD_MsgSetAutomatMode (ctxt_p, pvalue->u.msg_set_automat_mode);
@@ -2643,7 +2688,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_unit_creation_request */
-      case 22:
+      case 23:
          pvalue->u.msg_unit_creation_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitCreationRequest);
 
          stat = asn1PD_MsgUnitCreationRequest (ctxt_p, pvalue->u.msg_unit_creation_request);
@@ -2652,7 +2697,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_unit_magic_action */
-      case 23:
+      case 24:
          pvalue->u.msg_unit_magic_action = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitMagicAction);
 
          stat = asn1PD_MsgUnitMagicAction (ctxt_p, pvalue->u.msg_unit_magic_action);
@@ -2661,7 +2706,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_object_magic_action */
-      case 24:
+      case 25:
          pvalue->u.msg_object_magic_action = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgObjectMagicAction);
 
          stat = asn1PD_MsgObjectMagicAction (ctxt_p, pvalue->u.msg_object_magic_action);
@@ -2670,7 +2715,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_population_magic_action */
-      case 25:
+      case 26:
          pvalue->u.msg_population_magic_action = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPopulationMagicAction);
 
          stat = asn1PD_MsgPopulationMagicAction (ctxt_p, pvalue->u.msg_population_magic_action);
@@ -2679,7 +2724,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_change_diplomacy */
-      case 26:
+      case 27:
          pvalue->u.msg_change_diplomacy = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgChangeDiplomacy);
 
          stat = asn1PD_MsgChangeDiplomacy (ctxt_p, pvalue->u.msg_change_diplomacy);
@@ -2688,7 +2733,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_automat_change_knowledge_group */
-      case 27:
+      case 28:
          pvalue->u.msg_automat_change_knowledge_group = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatChangeKnowledgeGroup);
 
          stat = asn1PD_MsgAutomatChangeKnowledgeGroup (ctxt_p, pvalue->u.msg_automat_change_knowledge_group);
@@ -2697,7 +2742,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_automat_change_logistic_links */
-      case 28:
+      case 29:
          pvalue->u.msg_automat_change_logistic_links = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatChangeLogisticLinks);
 
          stat = asn1PD_MsgAutomatChangeLogisticLinks (ctxt_p, pvalue->u.msg_automat_change_logistic_links);
@@ -2706,7 +2751,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_automat_change_superior */
-      case 29:
+      case 30:
          pvalue->u.msg_automat_change_superior = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAutomatChangeSuperior);
 
          stat = asn1PD_MsgAutomatChangeSuperior (ctxt_p, pvalue->u.msg_automat_change_superior);
@@ -2715,7 +2760,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_unit_change_superior */
-      case 30:
+      case 31:
          pvalue->u.msg_unit_change_superior = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgUnitChangeSuperior);
 
          stat = asn1PD_MsgUnitChangeSuperior (ctxt_p, pvalue->u.msg_unit_change_superior);
@@ -2724,7 +2769,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_log_supply_push_flow */
-      case 31:
+      case 32:
          pvalue->u.msg_log_supply_push_flow = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogSupplyPushFlow);
 
          stat = asn1PD_MsgLogSupplyPushFlow (ctxt_p, pvalue->u.msg_log_supply_push_flow);
@@ -2733,7 +2778,7 @@ EXTERN int asn1PD_MsgsClientToSim_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsClientToSim_m
          break;
 
       /* msg_log_supply_change_quotas */
-      case 32:
+      case 33:
          pvalue->u.msg_log_supply_change_quotas = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgLogSupplyChangeQuotas);
 
          stat = asn1PD_MsgLogSupplyChangeQuotas (ctxt_p, pvalue->u.msg_log_supply_change_quotas);

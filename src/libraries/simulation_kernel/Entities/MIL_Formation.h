@@ -53,9 +53,13 @@ public:
     //! @name Hierarchy
     //@{
     void RegisterAutomate   ( MIL_Automate& automate );
-    void RegisterFormation  ( MIL_Formation& formation );
     void UnregisterAutomate ( MIL_Automate& automate );
+
+    void RegisterFormation  ( MIL_Formation& formation );
     void UnregisterFormation( MIL_Formation& formation );
+
+    void RegisterIntelligence  ( MIL_Intelligence& intelligence );
+    void UnregisterIntelligence( MIL_Intelligence& intelligence );
     //@}
 
     //! @name Accessors
@@ -68,8 +72,6 @@ public:
     //@{
     void SendCreation () const;
     void SendFullState() const;
-    void Update( const ASN1T_MsgIntelligenceCreationRequest&    message );
-    void Update( const ASN1T_MsgIntelligenceDestructionRequest& message );
     //@}
 
 private:
@@ -85,7 +87,6 @@ private:
     void CreateAutomat         ( xml::xistream& xis, MIL_EntityManager& manager, MIL_Formation& formation );
     void CreateLimit           ( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
     void CreateLima            ( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
-    void CreateIntelligence    ( xml::xistream& xis );
     //@}
 
 private:
@@ -97,8 +98,8 @@ private:
     typedef std::set< MIL_Automate* >      T_AutomateSet;
     typedef T_AutomateSet::const_iterator  CIT_AutomateSet;
 
-    typedef std::map< unsigned int, MIL_Intelligence* > T_Intelligences;
-    typedef T_Intelligences::const_iterator           CIT_Intelligences;
+    typedef std::set< MIL_Intelligence* >     T_Intelligences;
+    typedef T_Intelligences::const_iterator CIT_Intelligences;
     //@}
 
 private:

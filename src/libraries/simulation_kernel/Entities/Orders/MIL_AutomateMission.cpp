@@ -196,6 +196,7 @@ void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
     asn().parametres.n                       = 0;
     asn().order_context.direction_dangereuse = 0;
     asn().order_context.limas.n              = 0;
+    asn().order_context.intelligences.n      = 0;
     asn.Send();
 }
 

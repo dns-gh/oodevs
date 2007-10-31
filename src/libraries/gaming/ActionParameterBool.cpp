@@ -72,3 +72,12 @@ void ActionParameterBool::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.value.t = T_MissionParameter_value_aBool;
     asn.value.u.aBool = GetValue();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterBool::CommitTo
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+void ActionParameterBool::CommitTo( ASN1BOOL& asn ) const
+{
+    asn = GetValue();
+}

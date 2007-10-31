@@ -74,3 +74,15 @@ void ActionParameterPoint::Clean( ASN1T_MissionParameter& asn ) const
         ActionParameterLocation::Clean( *asn.value.u.point );
     delete asn.value.u.point;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPoint::CommitTo
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+void ActionParameterPoint::CommitTo( ASN1T_CoordUTM& asn ) const
+{
+    ASN1T_Location loc;
+    ActionParameterLocation::CommitTo( loc );
+    asn = loc.coordinates.elem[0];
+    ActionParameterLocation::Clean( loc );
+}

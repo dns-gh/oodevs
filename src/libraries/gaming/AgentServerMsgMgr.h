@@ -232,8 +232,10 @@ private:
 
     // Intelligence
     void OnReceiveMsgIntelligenceCreation             ( const ASN1T_MsgIntelligenceCreation&              message );
+    void OnReceiveMsgIntelligenceUpdate               ( const ASN1T_MsgIntelligenceUpdate&                message );
     void OnReceiveMsgIntelligenceDestruction          ( const ASN1T_MsgIntelligenceDestruction&           message );
     void OnReceiveMsgIntelligenceCreationRequestAck   ( const ASN1T_MsgIntelligenceCreationRequestAck&    message );
+    void OnReceiveMsgIntelligenceUpdateRequestAck     ( const ASN1T_MsgIntelligenceUpdateRequestAck&      message );
     void OnReceiveMsgIntelligenceDestructionRequestAck( const ASN1T_MsgIntelligenceDestructionRequestAck& message );
 
     // 3a

@@ -40,9 +40,11 @@
 #include "ActionParameterAtlasNature.h"
 #include "ActionParameterMaintenancePriorities.h"
 #include "ActionParameterMedicalPriorities.h"
+#include "ActionParameterIntelligenceList.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
+#include "TeamsModel.h"
 #include "ObjectsModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -178,6 +180,15 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterFactory::CreateParameter
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_IntelligenceList& asn ) const
+{
+    return new ActionParameterIntelligenceList( parameter, converter_, asn, model_.teams_, staticModel_.levels_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
 ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_Heading& asn ) const
@@ -229,6 +240,8 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         param.reset( new ActionParameterDirection( parameter, xis ) );
     else if( type == "limalist" )
         param.reset( new ActionParameterLimaList( parameter, converter_, xis ) );
+    else if( type == "intelligencelist" )
+        param.reset( new ActionParameterIntelligenceList( parameter, converter_, xis, model_.teams_, staticModel_.levels_ ) );
     else if( type == "limits" )
         param.reset( new ActionParameterLimits( parameter, converter_, xis ) );
     else if( type == "enumeration" )

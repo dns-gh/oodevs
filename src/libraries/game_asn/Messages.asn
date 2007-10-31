@@ -57,6 +57,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-lima-update-request-ack                             MsgLimaUpdateRequestAck,
 
         msg-intelligence-creation-request-ack                   MsgIntelligenceCreationRequestAck,
+        msg-intelligence-update-request-ack                     MsgIntelligenceUpdateRequestAck,
         msg-intelligence-destruction-request-ack                MsgIntelligenceDestructionRequestAck,
 
         msg-unit-order-ack                                      MsgUnitOrderAck,
@@ -194,6 +195,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-folk-graph-update                                   MsgFolkGraphUpdate,
         
         msg-intelligence-creation                               MsgIntelligenceCreation,
+        msg-intelligence-update                                 MsgIntelligenceUpdate,
         msg-intelligence-destruction                            MsgIntelligenceDestruction
     }
 }
@@ -221,6 +223,7 @@ MsgsClientToSim ::= SEQUENCE
         msg-lima-update-request                 MsgLimaUpdateRequest,
 
         msg-intelligence-creation-request       MsgIntelligenceCreationRequest,
+        msg-intelligence-update-request         MsgIntelligenceUpdateRequest,
         msg-intelligence-destruction-request    MsgIntelligenceDestructionRequest,
 
         msg-unit-order                          MsgUnitOrder,

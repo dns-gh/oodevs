@@ -73,5 +73,6 @@ void AutomatOrder::SendNoMission( const Automat& automat, ClientPublisher_ABC& p
     asn().parametres.n                       = 0;
     asn().order_context.direction_dangereuse = 0;
     asn().order_context.limas.n              = 0;
+    asn().order_context.intelligences.n      = 0;
     asn.Send( publisher );
 }

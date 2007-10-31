@@ -9,9 +9,11 @@
 
 #include "gaming_pch.h"
 #include "IntelligencePositions.h"
+#include "ASN_Messages.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Intelligence_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -22,8 +24,10 @@ using namespace kernel;
 // Name: IntelligencePositions constructor
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-IntelligencePositions::IntelligencePositions( const CoordinateConverter_ABC& converter )
+IntelligencePositions::IntelligencePositions( const CoordinateConverter_ABC& converter, const Intelligence_ABC& holder, Publisher_ABC& publisher )
     : converter_( converter )
+    , holder_   ( holder )
+    , publisher_( publisher )
     , position_ ()
     , height_   ( 0 )
 {
@@ -107,4 +111,28 @@ void IntelligencePositions::Draw( const geometry::Point2f& where, const kernel::
 void IntelligencePositions::DoUpdate( const ASN1T_MsgIntelligenceCreation& message )
 {
     position_ = converter_.ConvertToXY( message.intelligence.location );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencePositions::DoUpdate
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+void IntelligencePositions::DoUpdate( const ASN1T_MsgIntelligenceUpdate& message )
+{
+    if( message.m.locationPresent )
+        position_ = converter_.ConvertToXY( message.location );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencePositions::Set
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+void IntelligencePositions::Set( const geometry::Point2f& point )
+{
+    ASN_MsgIntelligenceUpdateRequest message;
+    message().oid = holder_.GetId();
+    message().m.locationPresent = 1;
+    const std::string mgrs = converter_.ConvertToMgrs( point );
+    message().location = mgrs.c_str();
+    message.Send( publisher_ );
 }

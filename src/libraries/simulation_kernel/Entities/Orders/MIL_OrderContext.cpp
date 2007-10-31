@@ -17,6 +17,7 @@
 #include "TER_LimitData.h"
 #include "MIL_AgentServer.h"
 #include "MIL_TacticalLineManager.h"
+#include "MIL_IntelligenceOrder.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 
@@ -25,10 +26,12 @@
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_OrderContext::MIL_OrderContext()
-    : limas_    ()  
-    , fuseau_   ()
-    , dirDanger_( 0., 1. )
+    : limas_        ()
+    , intelligences_()
+    , fuseau_       ()
+    , dirDanger_    ( 0., 1. )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,9 +39,10 @@ MIL_OrderContext::MIL_OrderContext()
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
 MIL_OrderContext::MIL_OrderContext( const ASN1T_OrderContext& asn, const MT_Vector2D& vOrientationRefPos )
-    : limas_    ()  
-    , fuseau_   ()
-    , dirDanger_()
+    : limas_        ()
+    , intelligences_()
+    , fuseau_       ()
+    , dirDanger_    ()
 {
     // Dir danger
     NET_ASN_Tools::ReadDirection( asn.direction_dangereuse, dirDanger_ );
@@ -65,6 +69,10 @@ MIL_OrderContext::MIL_OrderContext( const ASN1T_OrderContext& asn, const MT_Vect
         fuseau_.Reset();
     else
         fuseau_.Reset( vOrientationRefPos, leftLimitData, rightLimitData, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
+
+    // Intelligences
+    for( unsigned int i = 0; i < asn.intelligences.n; ++i )
+        intelligences_.push_back( new MIL_IntelligenceOrder( asn.intelligences.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,11 +80,14 @@ MIL_OrderContext::MIL_OrderContext( const ASN1T_OrderContext& asn, const MT_Vect
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_OrderContext::MIL_OrderContext( const MIL_OrderContext& rhs )
-    : limas_    ( rhs.limas_     )  
-    , fuseau_   () //$$$
-    , dirDanger_( rhs.dirDanger_ )
+    : limas_        ( rhs.limas_     )
+    , intelligences_()
+    , fuseau_       () //$$$
+    , dirDanger_    ( rhs.dirDanger_ )
 {
     fuseau_ = rhs.fuseau_;
+    for( CIT_IntelligenceOrders it = rhs.intelligences_.begin(); it != rhs.intelligences_.end(); ++it )
+        intelligences_.push_back( new MIL_IntelligenceOrder( **it ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -86,6 +97,8 @@ MIL_OrderContext::MIL_OrderContext( const MIL_OrderContext& rhs )
 MIL_OrderContext::~MIL_OrderContext()
 {
     fuseau_.Reset();
+    for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
+        delete *it;
 }
 
 // =============================================================================
@@ -121,6 +134,15 @@ void MIL_OrderContext::Serialize( ASN1T_OrderContext& asn ) const
         for( CIT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
             it->Serialize( asn.limas.elem[i++] );
     }
+
+    asn.intelligences.n = intelligences_.size();
+    if( !intelligences_.empty() )
+    {
+        asn.intelligences.elem = new ASN1T_Intelligence[ asn.intelligences.n ];
+        unsigned int i = 0;
+        for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
+            (*it)->Serialize( asn.intelligences.elem[i++] );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -144,4 +166,6 @@ void MIL_OrderContext::CleanAfterSerialization( ASN1T_OrderContext& asn ) const
         }
         delete [] asn.limas.elem;
     }
+    if( asn.intelligences.n )
+        delete[] asn.intelligences.elem;
 }

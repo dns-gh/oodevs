@@ -69,5 +69,6 @@ void AgentOrder::SendNoMission( const Agent& agent, ClientPublisher_ABC& publish
     asn().parametres.n                       = 0;
     asn().order_context.direction_dangereuse = 0;
     asn().order_context.limas.n              = 0;
+    asn().order_context.intelligences.n      = 0;
     asn.Send( publisher );
 }

@@ -38,6 +38,9 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgsSimToClient& message )
 {
     switch( message.msg.t )
     {
+        case T_MsgsSimToClient_msg_msg_intelligence_creation_request_ack:
+        case T_MsgsSimToClient_msg_msg_intelligence_update_request_ack:
+        case T_MsgsSimToClient_msg_msg_intelligence_destruction_request_ack:
         case T_MsgsSimToClient_msg_msg_limit_creation_request_ack:
         case T_MsgsSimToClient_msg_msg_limit_destruction_request_ack:
         case T_MsgsSimToClient_msg_msg_limit_update_request_ack:

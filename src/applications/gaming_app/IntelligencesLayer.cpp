@@ -9,6 +9,8 @@
 
 #include "gaming_app_pch.h"
 #include "IntelligencesLayer.h"
+#include "gaming/IntelligencePositions.h"
+#include "clients_kernel/Intelligence_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: IntelligencesLayer constructor
@@ -35,7 +37,7 @@ IntelligencesLayer::~IntelligencesLayer()
 // -----------------------------------------------------------------------------
 void IntelligencesLayer::Delete( const kernel::Intelligence_ABC& element )
 {
-    // $$$$ SBO 2007-10-19: ASN_IntelligenceDestructionRequest( element.GetId() )
+    const_cast< kernel::Intelligence_ABC& >( element ).Delete();
 }
 
 // -----------------------------------------------------------------------------
@@ -44,5 +46,5 @@ void IntelligencesLayer::Delete( const kernel::Intelligence_ABC& element )
 // -----------------------------------------------------------------------------
 void IntelligencesLayer::Move( kernel::Positions& position, const geometry::Point2f& point )
 {
-    // $$$$ SBO 2007-10-19: ASN_IntelligenceUpdateRequest( position.GetHolder(), point ) / position.Update( publisher, point ) ...
+    static_cast< IntelligencePositions& >( position ).Set( point );
 }

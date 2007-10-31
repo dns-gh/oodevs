@@ -140,7 +140,6 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
         xos << start( "side" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
-        it->second->Interface().Apply( & Serializable_ABC::SerializeIntelligences, xos );
         xos << end();
     }
     xos << end();

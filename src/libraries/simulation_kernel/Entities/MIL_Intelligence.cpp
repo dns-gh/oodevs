@@ -68,7 +68,7 @@ MIL_Intelligence::MIL_Intelligence()
 // Name: MIL_Intelligence constructor
 // Created: SBO 2007-10-22
 // -----------------------------------------------------------------------------
-MIL_Intelligence::MIL_Intelligence( xml::xistream& xis, const MIL_Formation& formation )
+MIL_Intelligence::MIL_Intelligence( xml::xistream& xis, MIL_Formation& formation )
     : formation_( &formation )
     , id_       ( attribute< unsigned int >( xis, "id" ) )
     , name_     ( attribute< std::string > ( xis, "name" ) )
@@ -79,13 +79,14 @@ MIL_Intelligence::MIL_Intelligence( xml::xistream& xis, const MIL_Formation& for
     , position_ ( ConvertPosition( attribute< std::string >( xis, "position" ) ) )
 {
     idManager_.LockMosID( id_ );
+    formation_->RegisterIntelligence( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Intelligence constructor
 // Created: SBO 2007-10-22
 // -----------------------------------------------------------------------------
-MIL_Intelligence::MIL_Intelligence( const ASN1T_MsgIntelligenceCreationRequest& message, const MIL_Formation& formation )
+MIL_Intelligence::MIL_Intelligence( const ASN1T_MsgIntelligenceCreationRequest& message, MIL_Formation& formation )
     : formation_( &formation )
     , id_       ( idManager_.GetFreeSimID() )
     , name_     ( message.intelligence.name )
@@ -96,6 +97,7 @@ MIL_Intelligence::MIL_Intelligence( const ASN1T_MsgIntelligenceCreationRequest& 
     , position_ ( ConvertPosition( message.intelligence.location ) )
 {
     idManager_.LockMosID( id_ );
+    formation_->RegisterIntelligence( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,6 +106,7 @@ MIL_Intelligence::MIL_Intelligence( const ASN1T_MsgIntelligenceCreationRequest& 
 // -----------------------------------------------------------------------------
 MIL_Intelligence::~MIL_Intelligence()
 {
+    formation_->UnregisterIntelligence( *this );
     idManager_.ReleaseMosID( id_ );
 }
 
@@ -117,8 +120,62 @@ unsigned int MIL_Intelligence::GetId() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Intelligence::Update
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+void MIL_Intelligence::Update( const ASN1T_MsgIntelligenceCreationRequest& /*message*/ )
+{
+    SendCreation();
+    {
+        NET_ASN_MsgIntelligenceCreationRequestAck message;
+        message().error_code = EnumIntelligenceErrorCode::no_error;
+        message.Send();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Intelligence::Update
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+void MIL_Intelligence::Update( const ASN1T_MsgIntelligenceUpdateRequest& message )
+{
+    if( message.m.namePresent )
+        name_ = message.name;
+    if( message.m.naturePresent )
+        nature_ = message.nature;
+    if( message.m.embarkedPresent )
+        embarked_ = message.embarked ? true : false;
+    if( message.m.levelPresent )
+        level_ = message.level;
+    if( message.m.diplomacyPresent )
+        diplomacy_ = message.diplomacy;
+    if( message.m.locationPresent )
+        position_ = ConvertPosition( message.location );
+    SendFullState();
+    {
+        NET_ASN_MsgIntelligenceUpdateRequestAck message;
+        message().error_code = EnumIntelligenceErrorCode::no_error;
+        message.Send();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Intelligence::Update
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+void MIL_Intelligence::Update( const ASN1T_MsgIntelligenceDestructionRequest& /*message*/ )
+{
+    SendDestruction();
+    {
+        NET_ASN_MsgIntelligenceDestructionRequestAck message;
+        message().error_code = EnumIntelligenceErrorCode::no_error;
+        message.Send();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Intelligence::SendCreation
-// Created: SBO 2007-10-22
+// Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 void MIL_Intelligence::SendCreation() const
 {
@@ -129,31 +186,40 @@ void MIL_Intelligence::SendCreation() const
     message().intelligence.embarked = embarked_ ? 1 : 0;
     message().intelligence.level = level_;
     message().intelligence.diplomacy = diplomacy_;
-    message().intelligence.diffusion.t = T_IntelligenceDiffusion_formation;
-    message().intelligence.diffusion.u.formation = formation_->GetID();
+    message().intelligence.formation = formation_->GetID();
     const std::string mgrs = MIL_Tools::ConvertCoordSimToMos( position_ );
     message().intelligence.location = mgrs.c_str();
     message.Send();
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Intelligence::SendFullState
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+void MIL_Intelligence::SendFullState() const
+{
+    NET_ASN_MsgIntelligenceUpdate message;
+    message().oid = id_;
+    message().formation = formation_->GetID();
+    message().m.namePresent      = 1; message().name = name_.c_str();
+    message().m.naturePresent    = 1; message().nature = nature_.c_str();
+    message().m.embarkedPresent  = 1; message().embarked = embarked_ ? 1 : 0;
+    message().m.levelPresent     = 1; message().level = level_;
+    message().m.diplomacyPresent = 1; message().diplomacy = diplomacy_;
+    const std::string mgrs = MIL_Tools::ConvertCoordSimToMos( position_ );
+    message().m.locationPresent  = 1; message().location = mgrs.c_str();
+    message.Send();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Intelligence::SendDestruction
-// Created: SBO 2007-10-22
+// Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 void MIL_Intelligence::SendDestruction() const
 {
     NET_ASN_MsgIntelligenceDestruction message;
     message().oid = id_;
     message.Send();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Intelligence::SendFullState
-// Created: SBO 2007-10-22
-// -----------------------------------------------------------------------------
-void MIL_Intelligence::SendFullState() const
-{
-    // $$$$ SBO 2007-10-22: TODO ?
 }
 
 namespace
@@ -177,13 +243,15 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_Intelligence::WriteODB( xml::xostream& xos ) const
 {
-    xos << attribute( "id", id_ )
-        << attribute( "name", name_ )
-        << attribute( "karma", ResolveKarma( diplomacy_ ) )
-        << attribute( "level", PHY_NatureLevel::Find( level_ )->GetName() )
-        << attribute( "embarked", embarked_ )
-        << attribute( "type" , nature_ )
-        << attribute( "position", MIL_Tools::ConvertCoordSimToMos( position_ ) );
+    xos << start( "intelligence" )
+            << attribute( "id", id_ )
+            << attribute( "name", name_ )
+            << attribute( "karma", ResolveKarma( diplomacy_ ) )
+            << attribute( "level", PHY_NatureLevel::Find( level_ )->GetName() )
+            << attribute( "embarked", embarked_ )
+            << attribute( "type" , nature_ )
+            << attribute( "position", MIL_Tools::ConvertCoordSimToMos( position_ ) )
+        << end();
 }
 
 // -----------------------------------------------------------------------------
@@ -202,4 +270,5 @@ void MIL_Intelligence::serialize( Archive& file, const uint )
          & diplomacy_
          & position_;
     idManager_.LockMosID( id_ ); // $$$$ SBO 2007-10-22: 
+//    formation_->RegisterIntelligence( *this ); // $$$$ SBO 2007-10-23: ?
 }

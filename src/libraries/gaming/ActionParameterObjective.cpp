@@ -27,22 +27,12 @@ ActionParameterObjective::ActionParameterObjective( const OrderParameter& parame
     // NOTHING
 }
 
-namespace
-{
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> attribute( "name", name );
-        return name.c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObjective constructor
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
 ActionParameterObjective::ActionParameterObjective( xml::xistream& xis, const CoordinateConverter_ABC& converter )
-    : ActionParameter< QString >( OrderParameter( ReadName( xis ), "objective", false ) )
+    : ActionParameter< QString >( OrderParameter( attribute< std::string >( xis, "name" ).c_str(), "objective", false ) )
 {
     xis >> list( "parameter", *this, &ActionParameterObjective::ReadParameter, converter );
 }

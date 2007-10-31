@@ -13,12 +13,6 @@ IntelligenceIncludes ::= SEQUENCE { BaseExports, ArmyExports }
 IntelligenceExports  ::= NULL
 -- END includes
 
-IntelligenceDiffusion ::= CHOICE
-{
---   automat Automat,
-    formation Formation
-}
-
 Intelligence ::= SEQUENCE
 {
     name        VisibleString,
@@ -26,14 +20,28 @@ Intelligence ::= SEQUENCE
     level       EnumNatureLevel,
     embarked    BOOLEAN,
     location    CoordUTM,
-    diffusion   IntelligenceDiffusion,
-    diplomacy   EnumDiplomacy
+    diplomacy   EnumDiplomacy,
+    formation   Formation
 }
+
+IntelligenceList ::= SEQUENCE OF Intelligence
 
 MsgIntelligenceCreation ::= SEQUENCE
 {
     oid          OID,
     intelligence Intelligence
+}
+
+MsgIntelligenceUpdate ::= SEQUENCE
+{
+    oid          OID,
+    formation    Formation          OPTIONAL,
+    name         VisibleString      OPTIONAL,
+    nature       VisibleString      OPTIONAL,
+    level        EnumNatureLevel    OPTIONAL,
+    embarked     BOOLEAN            OPTIONAL,
+    location     CoordUTM           OPTIONAL,
+    diplomacy    EnumDiplomacy      OPTIONAL
 }
 
 MsgIntelligenceDestruction ::= SEQUENCE
@@ -46,10 +54,21 @@ MsgIntelligenceCreationRequest ::= SEQUENCE
     intelligence Intelligence
 }
 
+MsgIntelligenceUpdateRequest ::= SEQUENCE
+{
+    oid          OID,
+    formation    Formation          OPTIONAL,
+    name         VisibleString      OPTIONAL,
+    nature       VisibleString      OPTIONAL,
+    level        EnumNatureLevel    OPTIONAL,
+    embarked     BOOLEAN            OPTIONAL,
+    location     CoordUTM           OPTIONAL,
+    diplomacy    EnumDiplomacy      OPTIONAL
+}
+
 MsgIntelligenceDestructionRequest ::= SEQUENCE
 {
-    oid         OID,
-    diffusion   IntelligenceDiffusion
+    oid          OID
 }
 
 -- Error handling
@@ -59,10 +78,15 @@ EnumIntelligenceErrorCode ::= ENUMERATED
    no-error                        (0),
    error-invalid-oid               (1),
    error-invalid-geometry          (2),
-   error-invalid-diffusion         (3)
+   error-invalid-formation         (3)
 }
 
 MsgIntelligenceCreationRequestAck ::= SEQUENCE
+{
+    error-code EnumIntelligenceErrorCode
+}
+
+MsgIntelligenceUpdateRequestAck ::= SEQUENCE
 {
     error-code EnumIntelligenceErrorCode
 }

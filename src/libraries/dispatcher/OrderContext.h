@@ -11,12 +11,14 @@
 #define __OrderContext_h_
 
 #include "ModelsContainer.h"
-#include "LimaOrder.h"
+#include "Localisation.h"
 
 struct ASN1T_OrderContext;
 
 namespace dispatcher
 {
+    class LimaOrder;
+    class IntelligenceOrder;
 
 // =============================================================================
 /** @class  OrderContext
@@ -30,9 +32,9 @@ class OrderContext
 public:
     //! @name Constructors/Destructor
     //@{
-     OrderContext( Model& model, const ASN1T_OrderContext& context );
-     OrderContext();
-    ~OrderContext();
+             OrderContext();
+             OrderContext( Model& model, const ASN1T_OrderContext& context );
+    virtual ~OrderContext();
     //@}
 
     //! @name Operations
@@ -51,12 +53,13 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int                  dangerDirection_;
-    ModelsContainer< LimaOrder >  limaOrders_;
-    Localisation                  rightLimit_;
-    Localisation                  leftLimit_;
-    bool                          bRightLimitPresent_;
-    bool                          bLeftLimitPresent_;
+    unsigned int                          dangerDirection_;
+    ModelsContainer< LimaOrder >          limaOrders_;
+    ModelsContainer< IntelligenceOrder >  intelligenceOrders_;
+    Localisation                          rightLimit_;
+    Localisation                          leftLimit_;
+    bool                                  bRightLimitPresent_;
+    bool                                  bLeftLimitPresent_;
     //@}
 };
 

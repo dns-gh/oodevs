@@ -1303,6 +1303,15 @@ void AgentServerMsgMgr::OnReceiveMsgIntelligenceCreation( const ASN1T_MsgIntelli
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgIntelligenceUpdate
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgIntelligenceUpdate( const ASN1T_MsgIntelligenceUpdate& message )
+{
+    GetModel().intelligences_.Get( message.oid ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgIntelligenceDestruction
 // Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
@@ -1318,6 +1327,15 @@ void AgentServerMsgMgr::OnReceiveMsgIntelligenceDestruction( const ASN1T_MsgInte
 void AgentServerMsgMgr::OnReceiveMsgIntelligenceCreationRequestAck( const ASN1T_MsgIntelligenceCreationRequestAck& message )
 {
     CheckAcknowledge( message, "IntelligenceCreationRequestAck" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgIntelligenceUpdateRequestAck
+// Created: SBO 2007-10-23
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgIntelligenceUpdateRequestAck( const ASN1T_MsgIntelligenceUpdateRequestAck& message )
+{
+    CheckAcknowledge( message, "IntelligenceUpdateRequestAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1506,8 +1524,10 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_folk_graph_update                              : OnReceiveMsgFolkGraphUpdate( *message.msg.u.msg_folk_graph_update ); break;
 
         case T_MsgsSimToClient_msg_msg_intelligence_creation:                OnReceiveMsgIntelligenceCreation             ( *message.msg.u.msg_intelligence_creation                ); break;
+        case T_MsgsSimToClient_msg_msg_intelligence_update:                  OnReceiveMsgIntelligenceUpdate               ( *message.msg.u.msg_intelligence_update                  ); break;
         case T_MsgsSimToClient_msg_msg_intelligence_destruction:             OnReceiveMsgIntelligenceDestruction          ( *message.msg.u.msg_intelligence_destruction             ); break;
         case T_MsgsSimToClient_msg_msg_intelligence_creation_request_ack:    OnReceiveMsgIntelligenceCreationRequestAck   ( *message.msg.u.msg_intelligence_creation_request_ack    ); break;
+        case T_MsgsSimToClient_msg_msg_intelligence_update_request_ack:      OnReceiveMsgIntelligenceUpdateRequestAck     ( *message.msg.u.msg_intelligence_update_request_ack      ); break;
         case T_MsgsSimToClient_msg_msg_intelligence_destruction_request_ack: OnReceiveMsgIntelligenceDestructionRequestAck( *message.msg.u.msg_intelligence_destruction_request_ack ); break;
 
         default:

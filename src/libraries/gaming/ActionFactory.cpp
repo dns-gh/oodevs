@@ -193,6 +193,8 @@ void ActionFactory::AddOrderContext( Action_ABC& action, const OrderType& order,
             action.AddParameter( *factory_.CreateParameter( param, asn.limas ) );
         else if( param.GetType() == "dangerousdirection" )
             action.AddParameter( *factory_.CreateParameter( param, asn.direction_dangereuse ) );
+        else if( param.GetType() == "intelligencelist" )
+            action.AddParameter( *factory_.CreateParameter( param, asn.intelligences ) );
     }
 }
 

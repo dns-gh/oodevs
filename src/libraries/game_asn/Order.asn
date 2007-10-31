@@ -11,8 +11,9 @@ IMPORTS BaseExports           FROM Base
         LimaLimiteExports     FROM LimaLimite
         LogMaintenanceExports FROM LogMaintenance
         LogSanteExports       FROM LogSante
-        ObjectExports         FROM Object;
-OrderIncludes ::= SEQUENCE { BaseExports, LimaLimiteExports, LogMaintenanceExports, LogSanteExports, ObjectExports }
+        ObjectExports         FROM Object
+        IntelligenceExports   FROM Intelligence;
+OrderIncludes ::= SEQUENCE { BaseExports, LimaLimiteExports, LogMaintenanceExports, LogSanteExports, ObjectExports, IntelligenceExports }
 OrderExports  ::= NULL
 -- END includes
 
@@ -38,7 +39,8 @@ OrderContext ::= SEQUENCE
     limite-gauche           Line OPTIONAL,
     limite-droite           Line OPTIONAL,   
     limas                   LimasOrder,
-    direction-dangereuse    Heading
+    direction-dangereuse    Heading,
+    intelligences           IntelligenceList
 }
 
 

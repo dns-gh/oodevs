@@ -22,6 +22,8 @@ namespace kernel
     class HierarchyLevel_ABC;
 }
 
+class Publisher_ABC;
+
 // =============================================================================
 /** @class  Intelligence
     @brief  Intelligence
@@ -31,6 +33,7 @@ namespace kernel
 class Intelligence : public kernel::EntityImplementation< kernel::Intelligence_ABC >
                    , public kernel::Extension_ABC
                    , public kernel::Drawable_ABC
+                   , public kernel::Updatable_ABC< ASN1T_MsgIntelligenceUpdate >
 {
 
 public:
@@ -38,7 +41,8 @@ public:
     //@{
              Intelligence( const ASN1T_MsgIntelligenceCreation& message, kernel::Controller& controller
                          , const kernel::Resolver_ABC< kernel::Formation_ABC >& formations
-                         , const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels );
+                         , const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels
+                         , Publisher_ABC& publisher);
     virtual ~Intelligence();
     //@}
 
@@ -60,17 +64,22 @@ private:
     virtual const kernel::Karma& GetKarma() const;
     virtual std::string GetSymbol() const;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    virtual bool IsEmbarked() const;
     virtual void Delete();
     virtual void Rename( const QString& name );
+    virtual void DoUpdate( const ASN1T_MsgIntelligenceUpdate& message );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string symbol_;
-    const kernel::HierarchyLevel_ABC& level_;
-    const kernel::Karma& karma_;
-    const bool embarked_;
+    const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels_;
+    const kernel::Formation_ABC& formation_;
+    std::string symbol_;
+    kernel::HierarchyLevel_ABC& level_;
+    const kernel::Karma* karma_;
+    bool embarked_;
+    Publisher_ABC& publisher_;
     //@}
 };
 

@@ -42,6 +42,7 @@ class TER_Localisation;
 class MIL_Config;
 class MIL_ProfilerMgr;
 class MIL_Time_ABC;
+class MIL_Intelligence;
 
 class HLA_Federate;
 
@@ -157,6 +158,7 @@ public:
     void OnReceiveMsgLogSupplyPushFlow           ( const ASN1T_MsgLogSupplyPushFlow&                msg, uint nCtx );
 
     void OnReceiveMsgIntelligenceCreationRequest   ( const ASN1T_MsgIntelligenceCreationRequest&    message );
+    void OnReceiveMsgIntelligenceUpdateRequest     ( const ASN1T_MsgIntelligenceUpdateRequest&      message );
     void OnReceiveMsgIntelligenceDestructionRequest( const ASN1T_MsgIntelligenceDestructionRequest& message );
     //@}
 
@@ -189,6 +191,9 @@ private:
 
     typedef std::map< uint, MIL_Population* > T_PopulationMap;
     typedef T_PopulationMap::const_iterator   CIT_PopulationMap;
+
+    typedef std::map< uint, MIL_Intelligence* > T_IntelligenceMap;
+    typedef T_IntelligenceMap::const_iterator   CIT_IntelligenceMap;
     //@}
 
 private:
@@ -228,11 +233,11 @@ private:
     MIL_EffectManager&  effectManager_;
     MIL_ObjectManager*  pObjectManager_;
 
-    T_ArmyMap       armies_;
-    T_FormationMap  formations_;
-    T_PionMap       pions_;
-    T_AutomateMap   automates_;
-
+    T_ArmyMap         armies_;
+    T_FormationMap    formations_;
+    T_PionMap         pions_;
+    T_AutomateMap     automates_;
+    T_IntelligenceMap intelligences_;
 
 
     T_PopulationMap populations_;

@@ -43,7 +43,7 @@ Intelligence::Intelligence( Controller& controller, IdManager& idManager, const 
 // -----------------------------------------------------------------------------
 Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const Resolver_ABC< HierarchyLevel_ABC, QString >& levels )
     : EntityImplementation< Intelligence_ABC >( controller, attribute< int >( xis, "id" ), attribute< std::string >( xis, "name" ).c_str() )
-    , symbol_   ( attribute< std::string >( xis, "type" ) )
+    , symbol_   ( attribute< std::string >( xis, "nature" ) )
     , level_    ( levels.Get( attribute< std::string >( xis, "level" ).c_str() ) )
     , embarked_ ( attribute< bool >( xis, "embarked" ) )
     , karma_    ( Karma::ResolveId( attribute< std::string >( xis, "karma" ) ) )
@@ -113,7 +113,7 @@ void Intelligence::SerializeIntelligences( xml::xostream& xos ) const
         << attribute( "karma", karma_.GetId() )
         << attribute( "level", level_.GetName() )
         << attribute( "embarked", embarked_ )
-        << attribute( "type" , symbol_ );
+        << attribute( "nature" , symbol_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +126,7 @@ void Intelligence::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(      Entity_ABC*)this, tools::translate( "Intelligence", "Info/Name" ) , name_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Type" ) , symbol_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Nature" ) , symbol_ );
     dictionary.Register( *(      Entity_ABC*)this, tools::translate( "Intelligence", "Info/Embarked" ), embarked_ );
 //    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Level" ), level_ );
     dictionary.Register( *(      Entity_ABC*)this, tools::translate( "Intelligence", "Info/Karma" ), karma_ );

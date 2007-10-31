@@ -235,7 +235,7 @@ namespace
 void MIL_CheckPointManager::CheckFilesCRC( const MIL_Config& config )
 {
     CrcChecker checker;
-    xml::xifstream xis( "CRCs.xml" );
+    xml::xifstream xis( config.BuildCheckpointChildFile( "CRCs.xml" ) );
     xis >> xml::start( "files" )
         >> xml::list( "file", checker, &CrcChecker::ReadCrc );
 }

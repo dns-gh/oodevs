@@ -34,23 +34,30 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_Intelligence();
-             MIL_Intelligence( xml::xistream& xis, const MIL_Formation& formation );
-             MIL_Intelligence( const ASN1T_MsgIntelligenceCreationRequest& message, const MIL_Formation& formation );
+             MIL_Intelligence( xml::xistream& xis, MIL_Formation& formation );
+             MIL_Intelligence( const ASN1T_MsgIntelligenceCreationRequest& message, MIL_Formation& formation );
     virtual ~MIL_Intelligence();
-    //@}
-
-    //! @name Operations
-    //@{
-    template< typename Archive > void serialize( Archive&, const uint );
-    void SendCreation () const;
-    void SendFullState() const;
-    void SendDestruction() const;
-    void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Accessors
     //@{
     unsigned int GetId() const;
+    //@}
+
+    //! @name Serialization
+    //@{
+    template< typename Archive > void serialize( Archive&, const uint );
+    void WriteODB( xml::xostream& xos ) const;
+    //@}
+
+    //! @name Network
+    //@{
+    void SendCreation() const;
+    void SendFullState() const;
+    void SendDestruction() const;
+    void Update( const ASN1T_MsgIntelligenceCreationRequest&    message );
+    void Update( const ASN1T_MsgIntelligenceUpdateRequest&      message );
+    void Update( const ASN1T_MsgIntelligenceDestructionRequest& message );
     //@}
 
 private:
@@ -62,12 +69,13 @@ private:
 
     //! @name Helpers
     //@{
+    void SendUpdate();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const MIL_Formation* formation_;
+    MIL_Formation* formation_;
     unsigned int id_;
     std::string name_;
     std::string nature_;

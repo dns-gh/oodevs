@@ -18,7 +18,10 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class Intelligence_ABC;
 }
+
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  IntelligencePositions
@@ -28,13 +31,14 @@ namespace kernel
 // =============================================================================
 class IntelligencePositions : public kernel::Positions
                             , public kernel::Updatable_ABC< ASN1T_MsgIntelligenceCreation >
+                            , public kernel::Updatable_ABC< ASN1T_MsgIntelligenceUpdate >
                             , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IntelligencePositions( const kernel::CoordinateConverter_ABC& converter );
+             IntelligencePositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Intelligence_ABC& holder, Publisher_ABC& publisher );
     virtual ~IntelligencePositions();
     //@}
 
@@ -45,6 +49,11 @@ public:
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
+    //@}
+
+    //! @name Operations
+    //@{
+    void Set( const geometry::Point2f& point );
     //@}
 
 private:
@@ -58,12 +67,15 @@ private:
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DoUpdate( const ASN1T_MsgIntelligenceCreation& message );
+    virtual void DoUpdate( const ASN1T_MsgIntelligenceUpdate& message );
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::Intelligence_ABC& holder_;
+    Publisher_ABC& publisher_;
     geometry::Point2f position_;
     float height_;
     //@}

@@ -30,22 +30,12 @@ ActionMission::ActionMission( const Entity_ABC& entity, const MissionType& missi
     // NOTHING
 }
 
-namespace
-{
-    const MissionType& ReadMission( xml::xistream& xis, const Resolver_ABC< MissionType >& missions )
-    {
-        unsigned int id = 0;
-        xis >> attribute( "id", id );
-        return missions.Get( id );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionMission constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 ActionMission::ActionMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
-    : Action_ABC( controller, ReadMission( xis, missions ), entity )
+    : Action_ABC( controller, missions.Get( attribute< unsigned int >( xis, "id" ) ), entity )
     , controller_( controller )
     , registered_( true )
 {
