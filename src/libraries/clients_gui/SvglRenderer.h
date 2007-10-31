@@ -19,6 +19,7 @@ namespace svg
     class References;
     class RenderingContext;
     class ListLengthFactory;
+    class Style;
 }
 
 namespace xml
@@ -82,6 +83,7 @@ private:
     std::auto_ptr< svg::References >        references_;
     std::auto_ptr< svg::RenderingContext >  renderingContext_;
     std::auto_ptr< svg::ListLengthFactory > listLenghts_;
+    std::auto_ptr< svg::Style >             border_;
     
     T_Lists                                 lists_;
     unsigned                                colorList_;

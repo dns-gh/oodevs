@@ -105,11 +105,6 @@ unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const geometry::Re
         glNewList( result, GL_COMPILE );
             const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
             ListPaint color( colorList_ );
-            // $$$$ AGE 2007-10-30: <<<< TEMP
-            svg::PropertyFactory factory;
-            static svg::Style border( "stroke:black;fill:currentColor;stroke-width:4", factory );
-            references_->Register( "border", border );
-            // $$$$ AGE 2007-10-30: >>>> TEMP
             renderingContext_->SetViewport( box, vWidth, vHeight );
             renderingContext_->PushProperty( RenderingContext::color, color );
             node->Draw( *renderingContext_, *references_ );
@@ -152,6 +147,19 @@ void SvglRenderer::ConfigureWidthList( const geometry::Rectangle2f& viewport, un
     }
 }
 
+namespace
+{
+    Style* CreateBorderStyle( References& references, ListLengthFactory& lengths )
+    {
+        PropertyFactory factory;
+        factory.ChangeFactory( RenderingContext_ABC::strokeWidth, lengths );
+        Style* result = new Style( "stroke:black;fill:currentColor;stroke-width:4", factory );
+        references.Register( "border", *result );
+        return result;
+    }
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: SvglRenderer::CreateStaticLists
 // Created: AGE 2007-05-31
@@ -162,5 +170,7 @@ void SvglRenderer::CreateStaticLists()
     {
         renderer_->InitializeFont( "Arial", 700 ); // $$$$ AGE 2007-05-24:
         colorList_ = glGenLists( 1 );
+        border_.reset( CreateBorderStyle( *references_, *listLenghts_ ) );
+        references_->Register( "border", *border_ );
     }
 }

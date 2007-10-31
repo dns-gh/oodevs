@@ -16,6 +16,7 @@
 #include "DrawerStyle.h"
 #include "IconHandler_ABC.h"
 #include "xeumeuleu/xml.h"
+#include <qbitmap.h>
 
 using namespace geometry;
 using namespace kernel;
@@ -223,9 +224,10 @@ void GlWidget::CreateIcon( const std::string& symbol, const std::string& level, 
 // -----------------------------------------------------------------------------
 void GlWidget::RenderIcons()
 {
-    if( tasks_.empty() )
+    if( tasks_.empty() || frame_ < 10 ) // whatever
         return;
 
+    setAutoUpdate( false );
     const geometry::Rectangle2f viewport = viewport_;
     const int windowHeight = windowHeight_;
     const int windowWidth = windowWidth_;
@@ -249,9 +251,8 @@ void GlWidget::RenderIcons()
     windowHeight_ = windowHeight;
     windowWidth_ = windowWidth;
     MapWidget::resizeGL( windowWidth_, windowHeight_ );
+    setAutoUpdate( true );
 }
-
-#include <qbitmap.h>
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::RenderIcon
