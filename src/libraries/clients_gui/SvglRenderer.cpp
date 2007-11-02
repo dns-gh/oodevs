@@ -72,6 +72,8 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
     CreateStaticLists();
     SVGFactory factory( *renderer_ );
     factory.ChangePropertyFactory( svg::RenderingContext_ABC::strokeWidth, *listLenghts_ );
+    std::auto_ptr< Style > border( CreateStyle( "stroke:black;fill:currentColor;stroke-width:4" ) );
+    references_->Register( "border", *border );
     return factory.Compile( input, *references_, lod );
 }
 
@@ -107,6 +109,8 @@ unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const geometry::Re
             ListPaint color( colorList_ );
             renderingContext_->SetViewport( box, vWidth, vHeight );
             renderingContext_->PushProperty( RenderingContext::color, color );
+            std::auto_ptr< Style > border( CreateStyle( "stroke:black;fill:currentColor;stroke-width:4" ) );
+            references_->Register( "border", *border );
             node->Draw( *renderingContext_, *references_ );
             renderingContext_->PopProperty( RenderingContext::color );
         glEndList();
@@ -147,16 +151,15 @@ void SvglRenderer::ConfigureWidthList( const geometry::Rectangle2f& viewport, un
     }
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: std::auto_ptr< Style > SvglRenderer::CreateStyle
+// Created: AGE 2007-10-31
+// -----------------------------------------------------------------------------
+std::auto_ptr< Style > SvglRenderer::CreateStyle( const std::string& style )
 {
-    Style* CreateBorderStyle( References& references, ListLengthFactory& lengths )
-    {
-        PropertyFactory factory;
-        factory.ChangeFactory( RenderingContext_ABC::strokeWidth, lengths );
-        Style* result = new Style( "stroke:black;fill:currentColor;stroke-width:4", factory );
-        references.Register( "border", *result );
-        return result;
-    }
+    PropertyFactory factory;
+    factory.ChangeFactory( RenderingContext_ABC::strokeWidth, *listLenghts_ );
+    return std::auto_ptr< Style >( new Style( style, factory ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +172,5 @@ void SvglRenderer::CreateStaticLists()
     {
         renderer_->InitializeFont( "Arial", 700 ); // $$$$ AGE 2007-05-24:
         colorList_ = glGenLists( 1 );
-        border_.reset( CreateBorderStyle( *references_, *listLenghts_ ) );
-        references_->Register( "border", *border_ );
     }
 }

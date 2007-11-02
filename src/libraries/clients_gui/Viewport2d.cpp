@@ -19,7 +19,8 @@ using namespace gui;
 Viewport2d::Viewport2d( const geometry::Rectangle2f& viewport )
     : viewport_( viewport )
 {
-    // NOTHING
+    viewport_.Incorporate( viewport_.BottomLeft() - geometry::Vector2f( 600, 600 ) );
+    viewport_.Incorporate( viewport_.TopRight()   + geometry::Vector2f( 600, 600 ) );
 }
 
 // -----------------------------------------------------------------------------

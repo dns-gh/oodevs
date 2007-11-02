@@ -72,6 +72,7 @@ private:
     void         ConfigureColorList();
     void         ConfigureWidthList( const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
     void         CreateStaticLists();
+    std::auto_ptr< svg::Style > CreateStyle( const std::string& style );
     //@}
 
 private:
@@ -83,7 +84,6 @@ private:
     std::auto_ptr< svg::References >        references_;
     std::auto_ptr< svg::RenderingContext >  renderingContext_;
     std::auto_ptr< svg::ListLengthFactory > listLenghts_;
-    std::auto_ptr< svg::Style >             border_;
     
     T_Lists                                 lists_;
     unsigned                                colorList_;

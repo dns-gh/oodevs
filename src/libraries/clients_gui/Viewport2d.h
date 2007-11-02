@@ -47,7 +47,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const geometry::Rectangle2f& viewport_;
+    geometry::Rectangle2f viewport_;
     //@}
 };
 
