@@ -103,6 +103,15 @@ const HierarchyLevel_ABC& Intelligence::GetLevel() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Intelligence::IsEmbarked
+// Created: SBO 2007-11-02
+// -----------------------------------------------------------------------------
+bool Intelligence::IsEmbarked() const
+{
+    return embarked_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Intelligence::SerializeIntelligences
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------

@@ -65,6 +65,7 @@ private:
     void CreateDictionary( kernel::Controller& controller );
     virtual const kernel::Karma& GetKarma() const;
     virtual std::string GetSymbol() const;
+    virtual bool IsEmbarked() const;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
     virtual void SerializeIntelligences( xml::xostream& ) const;
 
