@@ -37,7 +37,9 @@ namespace
             return EnumDiplomacy::ami;
         if( karma == "enemy" )
             return EnumDiplomacy::ennemi;
-        return EnumDiplomacy::neutre; // $$$$ SBO 2007-10-22: do not allow "unknown" as a karma
+        if( karma == "neutral" )
+            return EnumDiplomacy::neutre;
+        return EnumDiplomacy::inconnu;
     }
 
     MT_Vector2D ConvertPosition( const std::string& mgrs )
@@ -232,8 +234,10 @@ namespace
             return "friend";
         case EnumDiplomacy::ennemi:
             return "enemy";
+        case EnumDiplomacy::neutre:
+            return "neutral";
         }
-        return "neutral";
+        return "unknown";
     }
 }
 
@@ -249,7 +253,7 @@ void MIL_Intelligence::WriteODB( xml::xostream& xos ) const
             << attribute( "karma", ResolveKarma( diplomacy_ ) )
             << attribute( "level", PHY_NatureLevel::Find( level_ )->GetName() )
             << attribute( "embarked", embarked_ )
-            << attribute( "type" , nature_ )
+            << attribute( "nature", nature_ )
             << attribute( "position", MIL_Tools::ConvertCoordSimToMos( position_ ) )
         << end();
 }

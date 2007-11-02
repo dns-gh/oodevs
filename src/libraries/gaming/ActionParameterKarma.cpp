@@ -26,8 +26,10 @@ namespace
             return Karma::friend_;
         case EnumDiplomacy::ennemi:
             return Karma::enemy_;
+        case EnumDiplomacy::neutre:
+            return Karma::neutral_;
         }
-        return Karma::neutral_;
+        return Karma::unknown_;
     }
 
     ASN1T_EnumDiplomacy ResolveDiplomacy( const Karma& karma )
@@ -37,7 +39,9 @@ namespace
             return EnumDiplomacy::ami;
         if( karma == Karma::enemy_ )
             return EnumDiplomacy::ennemi;
-        return EnumDiplomacy::neutre;
+        if( karma == Karma::neutral_ )
+            return EnumDiplomacy::neutre;
+        return EnumDiplomacy::inconnu;
     }
 }
 
@@ -45,7 +49,7 @@ namespace
 // Name: ActionParameterKarma constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-ActionParameterKarma::ActionParameterKarma( const kernel::OrderParameter& parameter, const kernel::Karma& karma )
+ActionParameterKarma::ActionParameterKarma( const OrderParameter& parameter, const Karma& karma )
     : ActionParameter< QString >( parameter, karma.GetName() )
     , karma_( karma )
 {
@@ -56,7 +60,7 @@ ActionParameterKarma::ActionParameterKarma( const kernel::OrderParameter& parame
 // Name: ActionParameterKarma constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-ActionParameterKarma::ActionParameterKarma( const kernel::OrderParameter& parameter, const ASN1T_EnumDiplomacy& asn )
+ActionParameterKarma::ActionParameterKarma( const OrderParameter& parameter, const ASN1T_EnumDiplomacy& asn )
     : ActionParameter< QString >( parameter )
     , karma_( ResolveKarma( asn ) )
 {
@@ -67,7 +71,7 @@ ActionParameterKarma::ActionParameterKarma( const kernel::OrderParameter& parame
 // Name: ActionParameterKarma constructor
 // Created: SBO 2007-10-24
 // -----------------------------------------------------------------------------
-ActionParameterKarma::ActionParameterKarma( const kernel::OrderParameter& parameter, xml::xistream& xis )
+ActionParameterKarma::ActionParameterKarma( const OrderParameter& parameter, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
     , karma_( Karma::ResolveId( attribute< std::string >( xis, "value" ) ) )
 {

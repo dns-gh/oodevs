@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "StaticModel.h"
 #include "TeamKarmas.h"
+#include "IntelligenceKarmas.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/DetectionMap.h"
@@ -34,6 +35,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , objectTypes_        ( *new ObjectTypes() )
     , levels_             ( *new FormationLevels() )
     , teamKarmas_         ( *new TeamKarmas() )
+    , intelligenceKarmas_ ( *new IntelligenceKarmas() )
 {
     // NOTHING
 }
@@ -44,6 +46,7 @@ StaticModel::StaticModel( Controllers& controllers )
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &intelligenceKarmas_;
     delete &teamKarmas_;
     delete &levels_;
     delete &objectTypes_;
@@ -76,5 +79,4 @@ void StaticModel::Purge()
     objectTypes_.Purge();
     controllers_.controller_.Update( ModelUnLoaded() );
 }
-
     

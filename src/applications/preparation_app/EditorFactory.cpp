@@ -16,6 +16,7 @@
 #include "preparation/AgentsModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
+#include "preparation/IntelligenceKarmas.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/ValueEditor.h"
@@ -108,9 +109,9 @@ void EditorFactory::NotifySelected( const kernel::Entity_ABC* element )
 
 namespace
 {
-    template< typename Entity, typename Resolver >
+    template< typename Entity, typename Resolver, typename EditorType = Entity* >
     class SimpleResolverEditor : public gui::ValuedComboBox< const Entity* >
-                               , public kernel::ValueEditor< Entity* >
+                               , public kernel::ValueEditor< EditorType >
     {
     public:
         SimpleResolverEditor( QWidget* parent, const Resolver& resolver ) 
@@ -125,9 +126,9 @@ namespace
         }
         virtual ~SimpleResolverEditor() {}
 
-        virtual Entity* GetValue()
+        virtual EditorType GetValue()
         {
-            return const_cast< Entity* >( gui::ValuedComboBox< const Entity* >::GetValue() );
+            return EditorType( const_cast< Entity* >( gui::ValuedComboBox< const Entity* >::GetValue() ) );
         }
 
     };
@@ -147,11 +148,22 @@ void EditorFactory::Call( kernel::KnowledgeGroupType** const& value )
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
-// Created: SBO 2006-10-27
+// Created: SBO 2007-11-02
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( kernel::Karma** const& value )
+void EditorFactory::Call( TeamKarma* const& value )
 {
-    SimpleResolverEditor< kernel::Karma, TeamKarmas >* editor = new SimpleResolverEditor< kernel::Karma, TeamKarmas >( parent_, staticModel_.teamKarmas_ );
+    SimpleResolverEditor< kernel::Karma, TeamKarmas, TeamKarma >* editor = new SimpleResolverEditor< kernel::Karma, TeamKarmas, TeamKarma >( parent_, staticModel_.teamKarmas_ );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2007-11-02
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( IntelligenceKarma* const& value )
+{
+    SimpleResolverEditor< kernel::Karma, IntelligenceKarmas, IntelligenceKarma >* editor = new SimpleResolverEditor< kernel::Karma, IntelligenceKarmas, IntelligenceKarma >( parent_, staticModel_.intelligenceKarmas_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

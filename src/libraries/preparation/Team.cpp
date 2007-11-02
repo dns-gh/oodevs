@@ -184,7 +184,7 @@ const kernel::Karma& Team::GetKarma() const
 // Name: Team::SetKarma
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
-void Team::SetKarma( kernel::Karma* const& karma )
+void Team::SetKarma( const TeamKarma& karma )
 {
     karma_ = karma;
     Touch();

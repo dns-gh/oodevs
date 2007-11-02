@@ -24,7 +24,6 @@ namespace kernel
     class Entity_ABC;
     class NBCAgent;
     class KnowledgeGroupType;
-    class Karma;
 }
 
 class Model;
@@ -45,7 +44,8 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< MedicalSuperior* >
                     , public tools::Caller< SupplySuperior* >
                     , public tools::Caller< kernel::KnowledgeGroupType** >
-                    , public tools::Caller< kernel::Karma** >
+                    , public tools::Caller< TeamKarma* >
+                    , public tools::Caller< IntelligenceKarma* >
                     , public tools::Caller< kernel::NBCAgent** >
                     , public tools::Caller< std::vector< kernel::NBCAgent* >* >
                     , public tools::Caller< Enum_PopulationAttitude* >
@@ -67,7 +67,8 @@ public:
     virtual void Call( MedicalSuperior* const& value );
     virtual void Call( SupplySuperior* const& value );
     virtual void Call( kernel::KnowledgeGroupType** const& value );
-    virtual void Call( kernel::Karma** const& value );
+    virtual void Call( TeamKarma* const& value );
+    virtual void Call( IntelligenceKarma* const& value );
     virtual void Call( kernel::NBCAgent** const& value );
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
     virtual void Call( Enum_PopulationAttitude* const& value );

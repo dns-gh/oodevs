@@ -47,18 +47,17 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize&
 {
     QPixmap stub( 1, 1 );
     stub.fill( Qt::white );
-    if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
-    {
-        const std::string symbolName = hierarchies->GetSymbol();
-        const std::string levelName  = hierarchies->GetLevel();
-        if( symbolName.empty() && levelName.empty() )
-            return stub;
-        SymbolIcon icon( symbolName, levelName );
-        icon.SetColor( strategy_.FindColor( entity ) );
-        icon.SetSize( size );
-        return icons_.GetSymbol( icon );
-    }
-    return stub;
+    const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::TacticalHierarchies >();
+    if( !symbol )
+        return stub;
+    const std::string symbolName = symbol->GetSymbol();
+    const std::string levelName  = symbol->GetLevel();
+    if( symbolName.empty() && levelName.empty() )
+        return stub;
+    SymbolIcon icon( symbolName, levelName );
+    icon.SetColor( strategy_.FindColor( entity ) );
+    icon.SetSize( size );
+    return icons_.GetSymbol( icon );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,18 +68,17 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Intelligence_ABC& entity, const 
 {
     QPixmap stub( 1, 1 );
     stub.fill( Qt::white );
-    if( const kernel::IntelligenceHierarchies* hierarchies = entity.Retrieve< kernel::IntelligenceHierarchies >() )
-    {
-        const std::string symbolName = hierarchies->GetSymbol();
-        const std::string levelName  = hierarchies->GetLevel();
-        if( symbolName.empty() && levelName.empty() )
-            return stub;
-        SymbolIcon icon( symbolName, levelName );
-        icon.SetColor( strategy_.FindColor( entity ) );
-        icon.SetSize( size );
-        return icons_.GetSymbol( icon );
-    }
-    return stub;
+    const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::IntelligenceHierarchies >();
+    if( !symbol )
+        return stub;
+    const std::string symbolName = symbol->GetSymbol();
+    const std::string levelName  = symbol->GetLevel();
+    if( symbolName.empty() && levelName.empty() )
+        return stub;
+    SymbolIcon icon( symbolName, levelName );
+    icon.SetColor( strategy_.FindColor( entity ) );
+    icon.SetSize( size );
+    return icons_.GetSymbol( icon );
 }
 
 // -----------------------------------------------------------------------------

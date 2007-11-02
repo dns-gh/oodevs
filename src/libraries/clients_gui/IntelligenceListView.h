@@ -39,11 +39,6 @@ public:
     virtual ~IntelligenceListView();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Display( const kernel::Entity_ABC& entity, ValuedListItem* item );
-    //@}
-
 private slots:
     //! @name Slots
     //@{
@@ -61,6 +56,7 @@ private:
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void keyPressEvent( QKeyEvent* event );
+    virtual void DisplayIcon( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     //@}
 
 private:

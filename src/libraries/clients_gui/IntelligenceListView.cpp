@@ -64,23 +64,6 @@ void IntelligenceListView::keyPressEvent( QKeyEvent* event )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IntelligenceListView::Display
-// Created: SBO 2007-10-18
-// -----------------------------------------------------------------------------
-void IntelligenceListView::Display( const Entity_ABC& entity, ValuedListItem* item )
-{
-    HierarchyListView< IntelligenceHierarchies >::Display( entity, item );
-    if( const Intelligence_ABC* intelligence = dynamic_cast< const Intelligence_ABC* >( &entity ) )
-    {
-        QPixmap pixmap = icons_.GetSymbol( *intelligence );
-        if( pixmap.isNull() )
-            QTimer::singleShot( 500, this, SLOT( Update() ) );
-        item->setPixmap( 0, pixmap );
-        item->setRenameEnabled( 0, true );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: IntelligenceListView::OnRename
 // Created: SBO 2007-10-19
 // -----------------------------------------------------------------------------
@@ -90,4 +73,22 @@ void IntelligenceListView::OnRename( QListViewItem* item, int /*col*/, const QSt
         // $$$$ SBO 2007-10-19: could rename any team/formation/intelligence, maybe add Entity_ABC::Rename( const QString& )
         if( const Intelligence_ABC* intelligence = dynamic_cast< const Intelligence_ABC* >( entity ) )
             const_cast< Intelligence_ABC* >( intelligence )->Rename( name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntelligenceListView::DisplayIcon
+// Created: SBO 2007-11-02
+// -----------------------------------------------------------------------------
+void IntelligenceListView::DisplayIcon( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
+{
+    if( const Intelligence_ABC* intelligence = dynamic_cast< const Intelligence_ABC* >( &entity ) )
+    {
+        QPixmap pixmap = icons_.GetSymbol( *intelligence );
+        if( pixmap.isNull() )
+            QTimer::singleShot( 500, this, SLOT( Update() ) );
+        item->setPixmap( 0, pixmap );
+        item->setRenameEnabled( 0, true );
+    }
+    else
+        HierarchyListView< kernel::IntelligenceHierarchies >::DisplayIcon( entity, item );
 }

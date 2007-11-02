@@ -76,7 +76,7 @@ private:
     const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels_;
     const kernel::Formation_ABC& formation_;
     std::string symbol_;
-    kernel::HierarchyLevel_ABC& level_;
+    const kernel::HierarchyLevel_ABC* level_;
     const kernel::Karma* karma_;
     bool embarked_;
     Publisher_ABC& publisher_;

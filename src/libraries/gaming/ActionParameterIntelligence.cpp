@@ -139,7 +139,7 @@ void ActionParameterIntelligence::CommitTo( ASN1T_Intelligence& asn ) const
 // -----------------------------------------------------------------------------
 void ActionParameterIntelligence::Clean( ASN1T_Intelligence& asn ) const
 {
-    // NOTHING  // $$$$ SBO 2007-10-23: too good to be true?
+    // NOTHING  // $$$$ SBO 2007-10-23: too good to be true!
 }
 
 // -----------------------------------------------------------------------------
@@ -158,17 +158,17 @@ void ActionParameterIntelligence::Accept( ActionParameterVisitor_ABC& visitor ) 
 void ActionParameterIntelligence::CommitToChildren()
 {
     const Intelligence_ABC& entity = *GetValue();
+    const Formation_ABC* formation = static_cast< const Formation_ABC* >( entity.Get< IntelligenceHierarchies >().GetSuperior() );
+    kernel::Point position;
+    position.AddPoint( entity.Get< kernel::Positions >().GetPosition() );
 
     AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Name" )     , "name"     , false ), entity.GetName() ) );
     AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Nature" )   , "nature"   , false ), entity.GetSymbol() ) );
     AddParameter( *new ActionParameterKarma    ( OrderParameter( tools::translate( "ActionParameter", "Karma" )    , "karma"    , false ), entity.GetKarma() ) );
     AddParameter( *new ActionParameterLevel    ( OrderParameter( tools::translate( "ActionParameter", "Level" )    , "level"    , false ), entity.GetLevel() ) );
     AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Embarked" ) , "bool"     , false ), entity.IsEmbarked() ) );
-    AddParameter( *new ActionParameterFormation( OrderParameter( tools::translate( "ActionParameter", "Formation" ), "formation", false )
-                                               , *static_cast< const Formation_ABC* >( entity.Get< IntelligenceHierarchies >().GetSuperior() ) ) );
-    kernel::Point point;
-    point.AddPoint( entity.Get< kernel::Positions >().GetPosition() );
-    AddParameter( *new ActionParameterPoint    ( OrderParameter( tools::translate( "ActionParameter", "Point" )    , "point"    , false ), converter_, point ) );
+    AddParameter( *new ActionParameterFormation( OrderParameter( tools::translate( "ActionParameter", "Formation" ), "formation", false ), *formation ) );
+    AddParameter( *new ActionParameterPoint    ( OrderParameter( tools::translate( "ActionParameter", "Point" )    , "point"    , false ), converter_, position ) );
 }
 
 // -----------------------------------------------------------------------------

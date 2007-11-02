@@ -22,6 +22,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 EntityIntelligences::EntityIntelligences( Controller& controller, Entity_ABC& holder, kernel::Entity_ABC* superior, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver )
     : EntityHierarchies< IntelligenceHierarchies >( controller, holder, superior )
+    , controller_( controller )
     , holder_( 0 )
     , resolver_( resolver )
 {
@@ -34,6 +35,7 @@ EntityIntelligences::EntityIntelligences( Controller& controller, Entity_ABC& ho
 // -----------------------------------------------------------------------------
 EntityIntelligences::EntityIntelligences( Controller& controller, Intelligence_ABC& holder, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver )
     : EntityHierarchies< IntelligenceHierarchies >( controller, holder, 0 )
+    , controller_( controller )
     , holder_( &holder )
     , resolver_( resolver )
 {
@@ -87,4 +89,14 @@ std::string EntityIntelligences::GetLevel() const
 void EntityIntelligences::DoUpdate( const ASN1T_MsgIntelligenceCreation& message )
 {
     SetSuperior( &resolver_.Get( message.intelligence.formation ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityIntelligences::UpdateSymbol
+// Created: SBO 2007-11-02
+// -----------------------------------------------------------------------------
+void EntityIntelligences::UpdateSymbol( bool /*up = true*/ )
+{
+    controller_.Update( *this );
+    controller_.Update( *(Symbol_ABC*)this );
 }

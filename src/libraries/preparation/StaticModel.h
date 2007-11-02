@@ -21,8 +21,8 @@ namespace kernel
     class FormationLevels;
 }
 
-class SurfaceFactory;
 class TeamKarmas;
+class IntelligenceKarmas;
 
 // =============================================================================
 /** @class  StaticModel
@@ -57,6 +57,7 @@ public:
     kernel::ObjectTypes&             objectTypes_;
     kernel::FormationLevels&         levels_;
     TeamKarmas&                      teamKarmas_;
+    IntelligenceKarmas&              intelligenceKarmas_;
     //@}
 
 private:

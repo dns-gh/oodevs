@@ -8,35 +8,26 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "TeamKarmas.h"
+#include "IntelligenceKarmas.h"
 #include "clients_kernel/Karma.h"
 
 // -----------------------------------------------------------------------------
-// Name: TeamKarmas constructor
+// Name: IntelligenceKarmas constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-TeamKarmas::TeamKarmas()
-    : default_( kernel::Karma::friend_ )
+IntelligenceKarmas::IntelligenceKarmas()
 {
     Register( "friend" , kernel::Karma::friend_ );
-    Register( "neutral", kernel::Karma::neutral_ );
     Register( "enemy"  , kernel::Karma::enemy_ );
+    Register( "neutral", kernel::Karma::neutral_ );
+    Register( "unknown", kernel::Karma::unknown_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamKarmas destructor
+// Name: IntelligenceKarmas destructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-TeamKarmas::~TeamKarmas()
+IntelligenceKarmas::~IntelligenceKarmas()
 {
     DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamKarmas::GetDefault
-// Created: SBO 2006-10-27
-// -----------------------------------------------------------------------------
-kernel::Karma& TeamKarmas::GetDefault() const
-{
-    return default_;
 }

@@ -24,6 +24,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 EntityIntelligences::EntityIntelligences( Controller& controller, Entity_ABC& holder, Entity_ABC* superior )
     : EntityHierarchies< IntelligenceHierarchies >( controller, holder, superior )
+    , controller_( controller )
     , holder_( 0 )
 {
     // NOTHING
@@ -35,6 +36,7 @@ EntityIntelligences::EntityIntelligences( Controller& controller, Entity_ABC& ho
 // -----------------------------------------------------------------------------
 EntityIntelligences::EntityIntelligences( Controller& controller, Intelligence_ABC& holder, Entity_ABC* superior )
     : EntityHierarchies< IntelligenceHierarchies >( controller, holder, superior )
+    , controller_( controller )
     , holder_( &holder )
 {
     // NOTHING
@@ -92,4 +94,14 @@ std::string EntityIntelligences::GetLevel() const
     if( holder_ )
         return holder_->GetLevel().GetSymbol();
     return GetEntity().Get< kernel::TacticalHierarchies >().GetLevel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityIntelligences::UpdateSymbol
+// Created: SBO 2007-11-02
+// -----------------------------------------------------------------------------
+void EntityIntelligences::UpdateSymbol( bool /*up = true*/ )
+{
+    controller_.Update( *this );
+    controller_.Update( *(Symbol_ABC*)this );
 }

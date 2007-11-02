@@ -30,6 +30,7 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/KnowledgeGroupType.h"
+#include "clients_kernel/HierarchyLevel_ABC.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -250,6 +251,15 @@ void BaseDisplayer::Call( const Mission& value )
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const kernel::KnowledgeGroupType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: SBO 2007-11-02
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::HierarchyLevel_ABC& value )
 {
     AddToDisplay( value.GetName() );
 }

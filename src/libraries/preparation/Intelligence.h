@@ -10,6 +10,7 @@
 #ifndef __Intelligence_h_
 #define __Intelligence_h_
 
+#include "Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -71,15 +72,17 @@ private:
 
     virtual void Delete();
     virtual void Rename( const QString& name );
+    void SetKarma( const IntelligenceKarma& karma );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string symbol_;
-    const kernel::HierarchyLevel_ABC& level_;
+    kernel::Controller& controller_;
+    std::string symbol_;
+    const kernel::HierarchyLevel_ABC* level_;
+    IntelligenceKarma karma_;
     bool embarked_;
-    const kernel::Karma& karma_;
     //@}
 };
 

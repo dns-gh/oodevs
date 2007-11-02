@@ -10,7 +10,7 @@
 #ifndef __kernel_IntelligenceHierarchies_h_
 #define __kernel_IntelligenceHierarchies_h_
 
-#include "Hierarchies.h"
+#include "TacticalHierarchies.h"
 
 namespace kernel
 {
@@ -22,7 +22,7 @@ namespace kernel
 */
 // Created: SBO 2007-10-18
 // =============================================================================
-class IntelligenceHierarchies : public Hierarchies
+class IntelligenceHierarchies : public Hierarchies, public Symbol_ABC
 {
 
 public:
@@ -30,12 +30,6 @@ public:
     //@{
              IntelligenceHierarchies() {}
     virtual ~IntelligenceHierarchies() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual std::string GetSymbol() const = 0;
-    virtual std::string GetLevel() const = 0;
     //@}
 };
 

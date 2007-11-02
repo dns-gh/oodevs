@@ -59,11 +59,13 @@ private:
     virtual void DoUpdate( const ASN1T_MsgIntelligenceCreation& message );
     virtual std::string GetSymbol() const;
     virtual std::string GetLevel() const;
+    virtual void UpdateSymbol( bool up = true );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::Intelligence_ABC* holder_;
     const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver_;
     //@}

@@ -25,17 +25,19 @@ using namespace kernel;
 
 namespace
 {
-    const Karma& ComputeFriendship( const Formation_ABC& formation, const ASN1T_EnumDiplomacy& diplomacy )
+    const Karma& ComputeKarma( const Formation_ABC& formation, const ASN1T_EnumDiplomacy& diplomacy )
     {
-        const Karma& karma = formation.Get< kernel::TacticalHierarchies >().GetTop().Get< Diplomacies >().GetKarma();
+        const Karma& karma = formation.Get< TacticalHierarchies >().GetTop().Get< Diplomacies >().GetKarma();
         switch( diplomacy )
         {
         case EnumDiplomacy::ami:
             return karma;
         case EnumDiplomacy::ennemi:
             return !karma;
+        case EnumDiplomacy::neutre:
+            return Karma::neutral_;
         }
-        return Karma::neutral_; // $$$$ SBO 2007-10-23: do not allow unknown Karma
+        return Karma::unknown_;
     }
 }
 
@@ -48,8 +50,8 @@ Intelligence::Intelligence( const ASN1T_MsgIntelligenceCreation& message, Contro
     , levels_   ( levels )
     , formation_( formations.Get( message.intelligence.formation ) )
     , symbol_   ( message.intelligence.nature )
-    , level_    ( levels_.Get( message.intelligence.level ) )
-    , karma_    ( &ComputeFriendship( formation_, message.intelligence.diplomacy ) )
+    , level_    ( &levels_.Get( message.intelligence.level ) )
+    , karma_    ( &ComputeKarma( formation_, message.intelligence.diplomacy ) )
     , embarked_ ( message.intelligence.embarked )
     , publisher_( publisher )
 {
@@ -75,7 +77,7 @@ void Intelligence::Draw( const geometry::Point2f& where, const Viewport_ABC& vie
     if( viewport.IsHotpointVisible() )
     {
         tools.DrawApp6Symbol( symbol_, where );
-        tools.DrawApp6Symbol( level_.GetSymbol(), where );
+        tools.DrawApp6Symbol( level_->GetSymbol(), where );
     }
 }
 
@@ -101,9 +103,9 @@ std::string Intelligence::GetSymbol() const
 // Name: Intelligence::GetLevel
 // Created: SBO 2007-10-17
 // -----------------------------------------------------------------------------
-const kernel::HierarchyLevel_ABC& Intelligence::GetLevel() const
+const HierarchyLevel_ABC& Intelligence::GetLevel() const
 {
-    return level_;
+    return *level_;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +129,7 @@ void Intelligence::CreateDictionary( Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Name" ) , name_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Type" ) , symbol_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Embarked" ) , embarked_ );
-//    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Level" ), level_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Level" ), level_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Karma" ), karma_ );
 }
 
@@ -166,9 +168,9 @@ void Intelligence::DoUpdate( const ASN1T_MsgIntelligenceUpdate& message )
     if( message.m.naturePresent )
         symbol_ = message.nature;
     if( message.m.levelPresent )
-        level_ = levels_.Get( message.level );
+        level_ = &levels_.Get( message.level );
     if( message.m.diplomacyPresent )
-        karma_ = &ComputeFriendship( formation_, message.diplomacy );
+        karma_ = &ComputeKarma( formation_, message.diplomacy );
     if( message.m.embarkedPresent )
         embarked_ = message.embarked ? true : false;
 //    if( message.m.formationPresent ) // $$$$ SBO 2007-10-23: someday if needed maybe...

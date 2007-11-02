@@ -55,12 +55,14 @@ private:
     //@{
     virtual std::string GetSymbol() const;
     virtual std::string GetLevel() const;
+    virtual void UpdateSymbol( bool up = true );
     virtual void SerializeIntelligences( xml::xostream& xos ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::Intelligence_ABC* holder_;
     //@}
 };

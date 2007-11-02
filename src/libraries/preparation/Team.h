@@ -10,6 +10,7 @@
 #ifndef __Team_h_
 #define __Team_h_
 
+#include "Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -85,7 +86,7 @@ private:
 
     static unsigned long ReadId  ( xml::xistream& xis );
     static QString       ReadName( xml::xistream& xis );
-    void SetKarma( kernel::Karma* const& karma );
+    void SetKarma( const TeamKarma& karma );
     //@}
 
 private:
@@ -93,7 +94,7 @@ private:
     //@{
     KnowledgeGroupFactory_ABC& kgFactory_;
     ObjectFactory_ABC& objectFactory_;
-    kernel::Karma* karma_;
+    TeamKarma karma_;
     //@}
 };
 

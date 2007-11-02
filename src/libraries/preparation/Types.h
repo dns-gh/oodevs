@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Automat_ABC;
+    class Karma;
 }
 
 #define DECLARE_SUBTYPE( name, base ) \
@@ -25,6 +26,9 @@ DECLARE_SUBTYPE( TC2, const kernel::Automat_ABC* );
 DECLARE_SUBTYPE( MaintenanceSuperior, const kernel::Automat_ABC* );
 DECLARE_SUBTYPE( MedicalSuperior, const kernel::Automat_ABC* );
 DECLARE_SUBTYPE( SupplySuperior, const kernel::Automat_ABC* );
+
+DECLARE_SUBTYPE( TeamKarma, const kernel::Karma* );
+DECLARE_SUBTYPE( IntelligenceKarma, const kernel::Karma* );
 
 enum E_FuncLimaType
 {
