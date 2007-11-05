@@ -63,18 +63,15 @@ Intelligence_ABC* IntelligenceFactory::Create( const ASN1T_MsgIntelligenceCreati
 
 namespace
 {
-    ASN1T_EnumDiplomacy GetDiplomacy( const Entity_ABC& superior, const Karma& karma )
+    ASN1T_EnumDiplomacy ConvertToDiplomacy( const Karma& karma )
     {
-        const Hierarchies& hierarchies = superior.Get< kernel::TacticalHierarchies >();
-        const Karma& teamKarma = hierarchies.GetTop().Get< Diplomacies >().GetKarma();
-
-        if( karma == Karma::unknown_ || teamKarma == Karma::unknown_ )
-            return EnumDiplomacy::inconnu;
+        if( karma == Karma::friend_ )
+            return EnumDiplomacy::ami;
+        if( karma == Karma::enemy_ )
+            return EnumDiplomacy::ennemi;
         if( karma == Karma::neutral_ )
             return EnumDiplomacy::neutre;
-        if( teamKarma == karma )
-            return EnumDiplomacy::ami;
-        return EnumDiplomacy::ennemi;
+        return EnumDiplomacy::inconnu;
     }
 }
 
@@ -90,7 +87,7 @@ Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::
     asn().intelligence.name = name.ascii();
     asn().intelligence.nature = symbol.c_str();
     asn().intelligence.level = (ASN1T_EnumNatureLevel)level.GetId();
-    asn().intelligence.diplomacy = GetDiplomacy( superior, karma );
+    asn().intelligence.diplomacy = ConvertToDiplomacy( karma );
     asn().intelligence.embarked = embarked;
     asn().intelligence.location = converter_.ConvertToMgrs( position ).c_str();
     asn().intelligence.formation = superior.GetId();

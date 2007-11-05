@@ -164,7 +164,7 @@ void ActionParameterIntelligence::CommitToChildren()
 
     AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Name" )     , "name"     , false ), entity.GetName() ) );
     AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Nature" )   , "nature"   , false ), entity.GetSymbol() ) );
-    AddParameter( *new ActionParameterKarma    ( OrderParameter( tools::translate( "ActionParameter", "Karma" )    , "karma"    , false ), entity.GetKarma() ) );
+    AddParameter( *new ActionParameterKarma    ( OrderParameter( tools::translate( "ActionParameter", "Karma" )    , "karma"    , false ), entity.GetKarma(), *formation ) );
     AddParameter( *new ActionParameterLevel    ( OrderParameter( tools::translate( "ActionParameter", "Level" )    , "level"    , false ), entity.GetLevel() ) );
     AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Embarked" ) , "bool"     , false ), entity.IsEmbarked() ) );
     AddParameter( *new ActionParameterFormation( OrderParameter( tools::translate( "ActionParameter", "Formation" ), "formation", false ), *formation ) );

@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "Intelligence.h"
 #include "IdManager.h"
+#include "Team.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -79,13 +80,27 @@ void Intelligence::Draw( const geometry::Point2f& where, const Viewport_ABC& vie
     }
 }
 
+namespace
+{
+    const Karma& ComputeKarma( const Karma& karma, const Entity_ABC& parent )
+    {
+        // $$$$ SBO 2007-11-02: GetKarma could be in Team_ABC...
+        const Karma& teamKarma = static_cast< const Team& >( parent.Get< IntelligenceHierarchies >().GetTop() ).GetKarma();
+        if( karma == Karma::friend_ )
+            return teamKarma;
+        if( karma == Karma::enemy_ )
+            return !teamKarma;
+        return karma;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Intelligence::GetKarma
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
 const kernel::Karma& Intelligence::GetKarma() const
 {
-    return *karma_;
+    return ComputeKarma( *karma_, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +186,7 @@ void Intelligence::Rename( const QString& name )
 void Intelligence::SetKarma( const IntelligenceKarma& karma )
 {
     karma_ = karma;
-    App6Symbol::SetKarma( symbol_, *karma_ );
+    App6Symbol::SetKarma( symbol_, GetKarma() );
     Touch();
     Get< IntelligenceHierarchies >().UpdateSymbol( false );
 }

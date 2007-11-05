@@ -9,7 +9,9 @@
 
 #include "gaming_pch.h"
 #include "ActionParameterKarma.h"
+#include "Diplomacies.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/IntelligenceHierarchies.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -17,9 +19,8 @@ using namespace xml;
 
 namespace
 {
-    const Karma& ResolveKarma( const ASN1T_EnumDiplomacy& asn )
+    const Karma& ConvertToKarma( const ASN1T_EnumDiplomacy& asn )
     {
-        // $$$$ SBO 2007-10-29: should use formation karma
         switch( asn )
         {
         case EnumDiplomacy::ami:
@@ -32,9 +33,8 @@ namespace
         return Karma::unknown_;
     }
 
-    ASN1T_EnumDiplomacy ResolveDiplomacy( const Karma& karma )
+    ASN1T_EnumDiplomacy ConvertToDiplomacy( const Karma& karma )
     {
-        // $$$$ SBO 2007-10-29: should use formation karma
         if( karma == Karma::friend_ )
             return EnumDiplomacy::ami;
         if( karma == Karma::enemy_ )
@@ -43,17 +43,28 @@ namespace
             return EnumDiplomacy::neutre;
         return EnumDiplomacy::inconnu;
     }
+
+    // Reverts diplomacy effect applied on karma => "diplomacy" karma
+    const Karma& ComputeKarma( const Karma& karma, const Entity_ABC& parent )
+    {
+        const Karma& parentKarma = parent.Get< IntelligenceHierarchies >().GetTop().Get< Diplomacies >().GetKarma();
+        if( parentKarma == karma )
+            return Karma::friend_;
+        if( parentKarma == !karma )
+            return Karma::enemy_;
+        return karma;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterKarma constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-ActionParameterKarma::ActionParameterKarma( const OrderParameter& parameter, const Karma& karma )
-    : ActionParameter< QString >( parameter, karma.GetName() )
-    , karma_( karma )
+ActionParameterKarma::ActionParameterKarma( const OrderParameter& parameter, const Karma& karma, const Entity_ABC& parent )
+    : ActionParameter< QString >( parameter )
+    , karma_( ComputeKarma( karma, parent ) )
 {
-    // NOTHING
+    SetValue( karma_.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +73,7 @@ ActionParameterKarma::ActionParameterKarma( const OrderParameter& parameter, con
 // -----------------------------------------------------------------------------
 ActionParameterKarma::ActionParameterKarma( const OrderParameter& parameter, const ASN1T_EnumDiplomacy& asn )
     : ActionParameter< QString >( parameter )
-    , karma_( ResolveKarma( asn ) )
+    , karma_( ConvertToKarma( asn ) )
 {
     SetValue( karma_.GetName() );
 }
@@ -93,7 +104,7 @@ ActionParameterKarma::~ActionParameterKarma()
 // -----------------------------------------------------------------------------
 void ActionParameterKarma::CommitTo( ASN1T_EnumDiplomacy& asn ) const
 {
-    asn = ResolveDiplomacy( karma_ );
+    asn = ConvertToDiplomacy( karma_ );
 }
 
 // -----------------------------------------------------------------------------

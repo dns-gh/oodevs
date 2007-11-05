@@ -29,7 +29,7 @@ class ActionParameterKarma : public ActionParameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterKarma( const kernel::OrderParameter& parameter, const kernel::Karma& karma );
+             ActionParameterKarma( const kernel::OrderParameter& parameter, const kernel::Karma& karma, const kernel::Entity_ABC& parent );
              ActionParameterKarma( const kernel::OrderParameter& parameter, const ASN1T_EnumDiplomacy& asn );
              ActionParameterKarma( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~ActionParameterKarma();

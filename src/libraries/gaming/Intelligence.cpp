@@ -17,7 +17,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/IntelligenceHierarchies.h"
 #include "ASN_Messages.h"
 #include "Tools.h"
 
@@ -25,15 +25,14 @@ using namespace kernel;
 
 namespace
 {
-    const Karma& ComputeKarma( const Formation_ABC& formation, const ASN1T_EnumDiplomacy& diplomacy )
+    const Karma& ConvertToKarma( const ASN1T_EnumDiplomacy& diplomacy )
     {
-        const Karma& karma = formation.Get< TacticalHierarchies >().GetTop().Get< Diplomacies >().GetKarma();
         switch( diplomacy )
         {
         case EnumDiplomacy::ami:
-            return karma;
+            return Karma::friend_;
         case EnumDiplomacy::ennemi:
-            return !karma;
+            return Karma::enemy_;
         case EnumDiplomacy::neutre:
             return Karma::neutral_;
         }
@@ -51,7 +50,7 @@ Intelligence::Intelligence( const ASN1T_MsgIntelligenceCreation& message, Contro
     , formation_( formations.Get( message.intelligence.formation ) )
     , symbol_   ( message.intelligence.nature )
     , level_    ( &levels_.Get( message.intelligence.level ) )
-    , karma_    ( &ComputeKarma( formation_, message.intelligence.diplomacy ) )
+    , karma_    ( &ConvertToKarma( message.intelligence.diplomacy ) )
     , embarked_ ( message.intelligence.embarked )
     , publisher_( publisher )
 {
@@ -81,13 +80,26 @@ void Intelligence::Draw( const geometry::Point2f& where, const Viewport_ABC& vie
     }
 }
 
+namespace
+{
+    const Karma& ComputeKarma( const Karma& karma, const Entity_ABC& parent )
+    {
+        const Karma& parentKarma = parent.Get< IntelligenceHierarchies >().GetTop().Get< Diplomacies >().GetKarma();
+        if( karma == Karma::friend_ )
+            return parentKarma;
+        if( karma == Karma::enemy_ )
+            return !parentKarma;
+        return karma;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Intelligence::GetKarma
 // Created: SBO 2007-10-17
 // -----------------------------------------------------------------------------
 const Karma& Intelligence::GetKarma() const
 {
-    return *karma_;
+    return ComputeKarma( *karma_, formation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +182,7 @@ void Intelligence::DoUpdate( const ASN1T_MsgIntelligenceUpdate& message )
     if( message.m.levelPresent )
         level_ = &levels_.Get( message.level );
     if( message.m.diplomacyPresent )
-        karma_ = &ComputeKarma( formation_, message.diplomacy );
+        karma_ = &ConvertToKarma( message.diplomacy );
     if( message.m.embarkedPresent )
         embarked_ = message.embarked ? true : false;
 //    if( message.m.formationPresent ) // $$$$ SBO 2007-10-23: someday if needed maybe...
