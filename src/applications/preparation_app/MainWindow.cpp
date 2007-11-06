@@ -33,11 +33,11 @@
 #include "TemplatesPanel.h"
 #include "IntelligencesLayer.h"
 
-#include "preparation/Exceptions.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
 #include "preparation/FormationModel.h"
 #include "preparation/IntelligencesModel.h"
+#include "preparation/ModelChecker_ABC.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -317,20 +317,12 @@ bool MainWindow::New()
 // -----------------------------------------------------------------------------
 void MainWindow::Open()
 {
-    try
+    if( New() && bfs::exists( bfs::path( config_.GetOrbatFile(), bfs::native ) ) )
     {
-        if( New() && bfs::exists( bfs::path( config_.GetOrbatFile(), bfs::native ) ) )
-        {
-            loading_ = true;
-            model_.Load( config_ );
-            loading_ = false;
-            SetWindowTitle( false );
-        }
-    }
-    catch( InvalidModelException& e )
-    {
-        Close();
-        QMessageBox::critical( this, APP_NAME, e.what() );
+        loading_ = true;
+        model_.Load( config_ );
+        loading_ = false;
+        SetWindowTitle( false );
     }
 }
 
@@ -368,23 +360,44 @@ void MainWindow::Close()
     staticModel_.Purge();
 }
 
+namespace
+{
+    struct SaveModelChecker : public ModelChecker_ABC
+    {
+        explicit SaveModelChecker( QMainWindow* window ) : window_( window ) {}
+        virtual bool Validate()
+        {
+            return true;
+        }
+
+        virtual bool Reject( const QString& reason )
+        {
+            QMessageBox::critical( window_, APP_NAME, reason );
+            return false;
+        }
+
+        virtual bool Prompt( const QString& question )
+        {
+            if( QMessageBox::question( window_, APP_NAME, question + QString( "\nDo you want to save anyway?" ), QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                return true;
+            return false;
+        }
+
+        QMainWindow* window_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MainWindow::Save
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
 bool MainWindow::Save()
 {
-    try
-    {
-        model_.Save( config_ );
+    SaveModelChecker checker( this );
+    const bool result = model_.Save( config_, checker );
+    if( result )
         SetWindowTitle( false );
-    }
-    catch( InvalidModelException& e )
-    {
-        QMessageBox::critical( this, APP_NAME, e.what() );
-        return false;
-    }
-    return true;
+    return result;
 }
 
 // -----------------------------------------------------------------------------

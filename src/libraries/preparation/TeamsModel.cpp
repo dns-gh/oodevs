@@ -15,9 +15,9 @@
 #include "FormationModel.h"
 #include "AgentsModel.h"
 #include "Diplomacies.h"
-#include "Exceptions.h"
 #include "Tools.h"
 #include "IntelligencesModel.h"
+#include "ModelChecker_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -180,8 +180,6 @@ void TeamsModel::Load( const std::string& filename, Model& model )
                 >> list( "side", *this, &TeamsModel::ReadDiplomacy )
             >> end()
         >> end();
-
-    CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -226,21 +224,24 @@ void TeamsModel::ReadDiplomacy( xml::xistream& xis )
 // Name: TeamsModel::CheckValidity
 // Created: SBO 2006-10-10
 // -----------------------------------------------------------------------------
-void TeamsModel::CheckValidity() const
+bool TeamsModel::CheckValidity( ModelChecker_ABC& checker ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const CommunicationHierarchies& hierarchies = it->second->Get< CommunicationHierarchies >();
         Iterator< const Entity_ABC& > itSub = hierarchies.CreateSubordinateIterator();
         if( !itSub.HasMoreElements() )
-            throw InvalidModelException( tools::translate( "Preparation", "Communication model" )
-                                       , tools::translate( "Preparation", "Team '%1' has no knowledge group" ).arg( it->second->GetName() ) );
+            return checker.Reject( QString( "%1:\n%2" )
+                                  .arg( tools::translate( "Preparation", "Communication model" ) )
+                                  .arg( tools::translate( "Preparation", "Team '%1' has no knowledge group" ).arg( it->second->GetName() ) ) );
         while( itSub.HasMoreElements() )
         {
             const Entity_ABC* entity = &itSub.NextElement();
             if( !dynamic_cast< const KnowledgeGroup_ABC* >( entity ) )
-                throw InvalidModelException( tools::translate( "Preparation", "Communication model" )
-                                           , tools::translate( "Preparation", "Unit '%1' in team '%2' has no knowledge group" ).arg( entity->GetName() ).arg( it->second->GetName() ) );
+                return checker.Reject( QString( "%1:\n%2" )
+                                      .arg( tools::translate( "Preparation", "Communication model" ) )
+                                      .arg( tools::translate( "Preparation", "Unit '%1' in team '%2' has no knowledge group" ).arg( entity->GetName() ).arg( it->second->GetName() ) ) );
         }
     }
+    return checker.Validate();
 }

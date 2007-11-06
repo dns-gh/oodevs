@@ -15,8 +15,15 @@ namespace xml
     class xistream;
 }
 
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 class UserProfile;
 class ProfileFactory_ABC;
+class Model;
+class ModelChecker_ABC;
 
 // =============================================================================
 /** @class  ProfilesModel
@@ -39,6 +46,7 @@ public:
     void Load( const std::string& file );
     void Serialize( const std::string& file ) const;
     void Purge();
+    bool CheckValidity( const Model& model, ModelChecker_ABC& checker ) const;
 
     void CreateProfile();
     void DeleteProfile( const UserProfile& profile );
@@ -56,6 +64,8 @@ private:
     //! @name Helpers
     //@{
     void LoadProfile( xml::xistream& xis );
+    bool IsReadable( const kernel::Entity_ABC& entity ) const;
+    bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     //@}
 
     //! @name Types

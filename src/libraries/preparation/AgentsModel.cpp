@@ -288,10 +288,10 @@ void AgentsModel::ReadLogisticLink( xml::xistream& xis, const std::string& type,
 // Name: AgentsModel::CheckValidity
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void AgentsModel::CheckValidity() const
+bool AgentsModel::CheckValidity( ModelChecker_ABC& checker ) const
 {
-    AgentsModelChecker checker;
-    checker.Check( *this );
+    AgentsModelChecker agentChecker;
+    return agentChecker.Check( *this, checker );
 }
 
 // -----------------------------------------------------------------------------

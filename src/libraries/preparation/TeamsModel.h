@@ -32,6 +32,7 @@ namespace kernel
 
 class TeamFactory_ABC;
 class Model;
+class ModelChecker_ABC;
 struct Enum_ObstacleType;
 
 // =============================================================================
@@ -66,7 +67,7 @@ public:
     void Serialize( xml::xostream& xos ) const;
 
     kernel::Iterator< const kernel::Entity_ABC& > CreateEntityIterator() const;
-    void CheckValidity() const;
+    bool CheckValidity( ModelChecker_ABC& checker ) const;
     //@}
 
 private:

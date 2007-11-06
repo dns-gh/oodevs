@@ -11,6 +11,7 @@
 #define __AgentsModelChecker_h_
 
 class AgentsModel;
+class ModelChecker_ABC;
 
 // =============================================================================
 /** @class  AgentsModelChecker
@@ -30,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    void Check( const AgentsModel& model ) const;
+    bool Check( const AgentsModel& model, ModelChecker_ABC& checker ) const;
     //@}
 
 private:
@@ -42,7 +43,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CheckCommandPosts( const AgentsModel& model ) const;
+    bool CheckCommandPosts( const AgentsModel& model, ModelChecker_ABC& checker ) const;
     //@}
 };
 

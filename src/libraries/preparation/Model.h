@@ -38,6 +38,7 @@ class WeatherModel;
 class ProfilesModel;
 class ProfileFactory_ABC;
 class IntelligencesModel;
+class ModelChecker_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -58,7 +59,7 @@ public:
     //! @name Operations
     //@
     void Load( const kernel::ExerciseConfig& config );
-    void Save( const kernel::ExerciseConfig& config );
+    bool Save( const kernel::ExerciseConfig& config, ModelChecker_ABC& checker );
     void Purge();
     QString GetName() const;
     //@}

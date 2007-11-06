@@ -105,7 +105,7 @@ void Model::Purge()
 // Name: Model::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void Model::Load( const kernel::ExerciseConfig& config )
+void Model::Load( const ExerciseConfig& config )
 {
     UpdateName( config.GetOrbatFile() );
     teams_.Load( config.GetOrbatFile(), *this );
@@ -117,20 +117,24 @@ void Model::Load( const kernel::ExerciseConfig& config )
 // Name: Model::Save
 // Created: SBO 2006-11-21
 // -----------------------------------------------------------------------------
-void Model::Save( const kernel::ExerciseConfig& config )
+bool Model::Save( const ExerciseConfig& config, ModelChecker_ABC& checker )
 {
-    teams_ .CheckValidity();
-    agents_.CheckValidity();
-    
-    xml::xofstream xos( config.GetOrbatFile(), xml::encoding( "ISO-8859-1" ) );
+    const bool valid = teams_.CheckValidity( checker )
+                    && agents_.CheckValidity( checker )
+                    && profiles_.CheckValidity( *this, checker );
+    if( valid )
+    {
+        xml::xofstream xos( config.GetOrbatFile(), xml::encoding( "ISO-8859-1" ) );
 
-    xos << start( "orbat" );
-    teams_.Serialize( xos );
-    xos << end();
-    UpdateName( config.GetOrbatFile() );
+        xos << start( "orbat" );
+        teams_.Serialize( xos );
+        xos << end();
+        UpdateName( config.GetOrbatFile() );
 
-    weather_ .Serialize( config.GetWeatherFile() );
-    profiles_.Serialize( config.GetProfilesFile() );
+        weather_ .Serialize( config.GetWeatherFile() );
+        profiles_.Serialize( config.GetProfilesFile() );
+    }
+    return valid;
 }
 
 // -----------------------------------------------------------------------------

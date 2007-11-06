@@ -145,7 +145,7 @@ void UserProfile::ReadRights( xml::xistream& xis, T_Ids& list, const ExistenceCh
     if( checker( id ) )
         list.push_back( id );
     else
-        std::cout << "Invalid entity id in profile: " << id << std::endl;
+        std::cerr << "Invalid entity id in profile: " << id << std::endl; // $$$$ SBO 2007-11-06: 
 }
 
 // -----------------------------------------------------------------------------

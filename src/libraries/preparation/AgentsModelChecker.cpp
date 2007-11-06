@@ -10,8 +10,8 @@
 #include "preparation_pch.h"
 #include "AgentsModelChecker.h"
 #include "AgentsModel.h"
-#include "Exceptions.h"
 #include "Tools.h"
+#include "ModelChecker_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -40,16 +40,16 @@ AgentsModelChecker::~AgentsModelChecker()
 // Name: AgentsModelChecker::Check
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void AgentsModelChecker::Check( const AgentsModel& model ) const
+bool AgentsModelChecker::Check( const AgentsModel& model, ModelChecker_ABC& checker ) const
 {
-    CheckCommandPosts( model );
+    return CheckCommandPosts( model, checker );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentsModelChecker::CheckCommandPosts
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void AgentsModelChecker::CheckCommandPosts( const AgentsModel& model ) const
+bool AgentsModelChecker::CheckCommandPosts( const AgentsModel& model, ModelChecker_ABC& checker ) const
 {
     Iterator< const Automat_ABC& > it = static_cast< const Resolver< Automat_ABC >& >( model ).CreateIterator();
     while( it.HasMoreElements() )
@@ -65,10 +65,13 @@ void AgentsModelChecker::CheckCommandPosts( const AgentsModel& model ) const
                 ++commandPostCount;
         }
         if( commandPostCount == 0 )
-            throw InvalidModelException( tools::translate( "AgentsModelChecker", "Units model" )
-                                       , tools::translate( "AgentsModelChecker", "Automat '%1' [%2] has no command post." ).arg( automat.GetName() ).arg( automat.GetId() ) );
+            return checker.Reject( QString( "%1:\n%2" )
+                                  .arg( tools::translate( "AgentsModelChecker", "Units model" ) )
+                                  .arg( tools::translate( "AgentsModelChecker", "Automat '%1' [%2] has no command post." ).arg( automat.GetName() ).arg( automat.GetId() ) ) );
         else if( commandPostCount > 1 )
-            throw InvalidModelException( tools::translate( "AgentsModelChecker", "Units model" )
-                                       , tools::translate( "AgentsModelChecker", "Automat '%1' [%2] has '%3' command posts." ).arg( automat.GetName() ).arg( automat.GetId() ).arg( commandPostCount ) );
+            return checker.Reject( QString( "%1:\n%2" )
+                                  .arg( tools::translate( "AgentsModelChecker", "Units model" ) )
+                                  .arg( tools::translate( "AgentsModelChecker", "Automat '%1' [%2] has '%3' command posts." ).arg( automat.GetName() ).arg( automat.GetId() ).arg( commandPostCount ) ) );
     }
+    return checker.Validate();
 }

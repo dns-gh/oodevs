@@ -35,6 +35,7 @@ namespace xml
 
 class AgentFactory_ABC;
 class LimitsModel;
+class ModelChecker_ABC;
 
 // =============================================================================
 /** @class  AgentsModel
@@ -81,7 +82,7 @@ public:
     kernel::Population_ABC* FindPopulation( unsigned long id );
 
     void Purge();
-    void CheckValidity() const;
+    bool CheckValidity( ModelChecker_ABC& checker ) const;
     //@}
 
     //! @name Delayed initialization
