@@ -38,12 +38,15 @@ namespace Crossbow
             IFeatureWorkspace workspace = Tools.OpenWorkspace(tableName);
             IFeatureClass featureClass = workspace.OpenFeatureClass(tableName);
             IFeature feature = featureClass.CreateFeature();
+            Tools.SetValue<string>(feature, "Symbol_ID", "GFMPOEIF------X");
             Tools.SetValue<string>(feature, "Info", name);
             IPoint point = Tools.MakePoint(m_contextMenuX, m_contextMenuY);
-            IZAware aware = point as IZAware;
+            IPoint shape = (IPoint)feature.Shape;
+            shape.PutCoords(point.X, point.Y);
+            shape.Z = point.Z;
+            shape.SpatialReference = point.SpatialReference;
+            IZAware aware = (IZAware)shape;
             aware.ZAware = true;
-            point.Z = 0;
-            feature.Shape = point;
             feature.Store();
         }
 

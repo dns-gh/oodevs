@@ -81,7 +81,6 @@ namespace Crossbow
         {
             if (parameter == null)
                 return;
-            System.Console.Write("SelectParameter[ " + parameter.ToString() + "]:" + value);
             parameter.SetValue(value);
             parameter.NotifyUpdate(m_orderForm);
         }
@@ -129,7 +128,6 @@ namespace Crossbow
             // ScopeLockEditor editor = new ScopeLockEditor(featureWorkspace);
 
             IWorkspace wks = (IWorkspace)featureWorkspace;
-            System.Console.Write(wks.PathName);
             // editor.Lock();
             int id = SerializeOrder(featureWorkspace);
             SerializeParameters(featureWorkspace, id);

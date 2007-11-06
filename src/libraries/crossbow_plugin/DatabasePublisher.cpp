@@ -101,7 +101,7 @@ void DatabasePublisher::Receive( const ASN1T_MsgsSimToClient& asn )
     case T_MsgsSimToClient_msg_msg_control_send_current_state_begin: modelLoaded_ = false; break;
     case T_MsgsSimToClient_msg_msg_control_send_current_state_end:   modelLoaded_ = true;  break;
     case T_MsgsSimToClient_msg_msg_control_begin_tick: 
-        MT_LOG_INFO_MSG( "tick " << asn.msg.u.msg_control_begin_tick );
+        MT_LOG_INFO_MSG( "tick " << asn.msg.u.msg_control_begin_tick->current_tick );
         database_->Lock();
         UpdateListeners();
         break;

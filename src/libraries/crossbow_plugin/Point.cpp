@@ -33,6 +33,17 @@ crossbow::Point::Point( const ASN1T_CoordUTM& coord )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Point constructor
+// Created: SBO 2007-11-06
+// -----------------------------------------------------------------------------
+crossbow::Point::Point( IGeometryPtr geometry )
+{
+    IPointPtr point;
+    if( SUCCEEDED( geometry.QueryInterface( IID_IPoint, &point ) ) )
+        point->QueryCoords( &x_, &y_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Point destructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------

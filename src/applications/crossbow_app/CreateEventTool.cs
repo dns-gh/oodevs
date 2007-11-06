@@ -122,7 +122,7 @@ namespace Crossbow
             }
             catch (Exception e)
             {
-                System.Console.Write("OnContextMenu throws :" + e.Message);
+                System.Diagnostics.Trace.WriteLine(e.Message);
                 return false;
             }
         }

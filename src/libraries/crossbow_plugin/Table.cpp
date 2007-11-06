@@ -47,7 +47,6 @@ namespace
         _stprintf( szFinal, _T( "%s" ), ( LPCTSTR )_bstr_t( strError ) );
         MT_LOG_ERROR_MSG( szFinal ); // $$$$ SBO 2007-08-24: should throw
     }
-
 }
 
 // -----------------------------------------------------------------------------

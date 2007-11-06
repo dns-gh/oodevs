@@ -42,7 +42,7 @@ namespace Crossbow
         #region Factory methods
         public IDynamicElement CreateElement(IDisplay display, IDynamicDisplay dynamicDisplay, IFeature feature, string symbolId)
         {
-            if (symbolId == null)
+            if (!IsValid(symbolId))
                 return null;
             if (IsEmergencyForceElement(symbolId))            
                 return CreateEmergencyForceElement(display, dynamicDisplay, symbolId);
@@ -50,7 +50,12 @@ namespace Crossbow
                 return CreateTacticalElement(display, dynamicDisplay, feature, symbolId);                
             else
                 return CreateForceElement(display, dynamicDisplay, symbolId);            
-        } 
+        }
+
+        private bool IsValid(string symbolId)
+        {
+            return symbolId != null && symbolId.Trim().Length > 0;
+        }
 
         public System.Drawing.Bitmap GetSymbol(IDisplay pDisplay, string symbolId, string name, int size)
         {
@@ -232,9 +237,9 @@ namespace Crossbow
                 bmp.MakeTransparent(System.Drawing.Color.FromArgb( 255, 255, 255 ));
                 return bmp;
             }
-            catch (System.Exception ex)
+            catch (Exception e)
             {
-                System.Console.WriteLine("Exception catched: " + ex.Message);
+                System.Diagnostics.Trace.WriteLine(e.Message);
             }
             return null;
         }

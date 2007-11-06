@@ -31,6 +31,26 @@ crossbow::Line::Line( const ASN1T_CoordUTMList& asn )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Line constructor
+// Created: SBO 2007-11-06
+// -----------------------------------------------------------------------------
+crossbow::Line::Line( IGeometryPtr geometry )
+{
+    IPointCollectionPtr points;
+    if( SUCCEEDED( geometry.QueryInterface( IID_IPointCollection, &points ) ) )
+    {
+        long count = 0;
+        points->get_PointCount( &count );
+        for( long i = 0; i < count; ++i )
+        {
+            IPointPtr point;
+            points->get_Point( i, &point );
+            points_.push_back( Point( point ) );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: Line destructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------

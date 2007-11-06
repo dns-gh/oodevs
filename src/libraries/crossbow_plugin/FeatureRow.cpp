@@ -83,13 +83,11 @@ Shape_ABC& FeatureRow::GetShape() const
     esriGeometryType shapeType;
     geometry->get_GeometryType( &shapeType );
     if( shapeType == esriGeometryPoint )
-        shape_.reset( new Point() );
+        shape_.reset( new Point( geometry ) );
     else if( shapeType == esriGeometryLine )
-        shape_.reset( new Line() );
+        shape_.reset( new Line( geometry ) );
     else
         throw std::runtime_error( "Unsupported feature geometry type" ); // $$$$ SBO 2007-09-26: 
-    GeometryConverter converter( geometry, spatialReference_ );
-    shape_->Accept( converter );
     return *shape_;
 }
 
@@ -100,6 +98,7 @@ Shape_ABC& FeatureRow::GetShape() const
 void FeatureRow::BindFeature( IFeaturePtr feature )
 {
     feature_ = feature;
+    shape_.reset();
     IRowPtr row;
     feature.QueryInterface( IID_IRow, &row ); // $$$$ SBO 2007-08-30: check
     crossbow::Row::BindRow( row );

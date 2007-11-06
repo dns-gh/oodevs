@@ -171,7 +171,7 @@ namespace Crossbow
             }
             catch (System.Exception e)
             {
-                System.Console.Write(e.Message);
+                System.Diagnostics.Trace.WriteLine(e.Message);
             }
         }
 
@@ -195,22 +195,23 @@ namespace Crossbow
             }
             catch (System.Exception e)
             {
-                System.Console.Write(e.Message);
+                System.Diagnostics.Trace.WriteLine(e.Message);
             }
         }
+
         public static void ClearClass(string workspace, string name)
         {
             try
             {
                 IFeatureWorkspace ws = OpenWorkspace(workspace);
-                ITable table = ws.OpenFeatureClass(name) as ITable;
+                ITable table = (ITable)ws.OpenFeatureClass(name);
                 IQueryFilter filter = new QueryFilterClass();
                 filter.WhereClause = "1";
                 table.DeleteSearchedRows(filter);                
             }
             catch (System.Exception e)
             {
-                System.Console.Write(e.Message);
+                System.Diagnostics.Trace.WriteLine(e.Message);
             }
         }
         #endregion
@@ -229,8 +230,18 @@ namespace Crossbow
         #region "Geometry tools"
         static public IPoint MakePoint(int x, int y)
         {
+            return MakePoint(x, y, 0);
+        }
+        static public IPoint MakePoint(int x, int y, int z)
+        {
             IPoint point = GetDocument().Display.DisplayTransformation.ToMapPoint(x, y);
-            point.Project(GetDocument().SpatialReference);
+            IZAware aware = point as IZAware;
+            if (aware != null)
+            {
+                aware.ZAware = true;
+                point.Z = z;
+            }
+            point.Project(GetDocument().Display.DisplayTransformation.SpatialReference);
             return point;
         }
         static public string ConvertToMGRS(IPoint point)
@@ -248,7 +259,7 @@ namespace Crossbow
             }
             catch (System.Exception e)
             {
-                System.Console.WriteLine(e.Message);
+                System.Diagnostics.Trace.WriteLine(e.Message);
             }
             return mgrs;
         }

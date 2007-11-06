@@ -30,9 +30,10 @@ crossbow::FeatureClass::FeatureClass( IFeatureClassPtr featureClass, const std::
     , name_( name )
     , featureClass_( featureClass )
     , spatialReference_()
-    , feature_( new FeatureRow( spatialReference_ ) )
+    , feature_( 0 )
 {
     InitializeSpatialReference();
+    feature_.reset( new FeatureRow( spatialReference_ ) );
 }
 
 // -----------------------------------------------------------------------------

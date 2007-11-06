@@ -31,6 +31,7 @@ public:
     //@{
              Point();
     explicit Point( const ASN1T_CoordUTM& coord );
+    explicit Point( IGeometryPtr geometry );
     virtual ~Point();
     //@}
 

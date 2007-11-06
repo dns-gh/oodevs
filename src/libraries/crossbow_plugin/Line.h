@@ -32,6 +32,7 @@ public:
     //@{
              Line();
     explicit Line( const ASN1T_CoordUTMList& asn );
+    explicit Line( IGeometryPtr geometry );
     virtual ~Line();
     //@}
 
