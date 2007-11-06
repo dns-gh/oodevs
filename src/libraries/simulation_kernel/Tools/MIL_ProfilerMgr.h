@@ -28,15 +28,18 @@ class MIL_ProfilerMgr
     MT_COPYNOTALLOWED( MIL_ProfilerMgr );
 
 public:
+    //! @name Constructor/Destructor
+    //@{
     explicit MIL_ProfilerMgr( bool bEnabled );
     virtual ~MIL_ProfilerMgr();
+    //@}
 
-    //! @name Main
+    //! @name Accessors
     //@{
     bool IsProfilingEnabled() const;
     //@}
 
-    //! @name 
+    //! @name Operations
     //@{
     void    NotifyTickBegin        ( uint nTick );
     void    NotifyTickEnd          ( uint nTick );
@@ -65,11 +68,14 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const bool                   bEnabled_;
     T_DecFunctionProfilingVector decFunctionProfilingVector_;
     MT_Profiler                  tickDurationProfiler_;  
     std::ofstream                decFunctionsFile_;
     std::ofstream                decisionUpdateFile_;
+    //@}
 };
 
 #include "MIL_ProfilerMgr.inl"

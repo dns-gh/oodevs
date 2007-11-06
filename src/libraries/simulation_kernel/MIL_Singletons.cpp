@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Singletons.h"
 #include "MIL_AgentServer.h"
+#include "Entities/MIL_EntityManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Singletons::GetTime
@@ -26,7 +27,7 @@ MIL_Time_ABC& MIL_Singletons::GetTime()
 // -----------------------------------------------------------------------------
 MIL_EntityManager& MIL_Singletons::GetEntityManager()
 {
-    return MIL_AgentServer::GetWorkspace().GetEntityManager();
+    return MIL_EntityManager::GetSingleton();
 }
 
 // -----------------------------------------------------------------------------

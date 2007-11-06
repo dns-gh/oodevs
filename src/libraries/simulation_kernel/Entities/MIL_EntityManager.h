@@ -83,6 +83,7 @@ public:
     virtual ~MIL_EntityManager();
 
     static void Initialize( MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects );
+    static MIL_EntityManager& GetSingleton();
 
     //! @name Factory
     //@{
@@ -253,6 +254,12 @@ private:
     MT_Float      rStatesTime_;
 
     uint          nRandomBreakdownsNextTimeStep_;
+
+private:
+    //! @name Singleton
+    //@{
+    static MIL_EntityManager* singleton_;
+    //@}
 };
 
 #include "MIL_EntityManager.inl"

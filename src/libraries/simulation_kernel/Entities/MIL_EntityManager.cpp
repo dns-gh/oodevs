@@ -79,6 +79,8 @@ using namespace xml;
 
 BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
+MIL_EntityManager* MIL_EntityManager::singleton_ = 0;
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::Initialize
 // Created: JVT 2005-03-07
@@ -157,7 +159,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
 {
-    // NOTHING
+    if( !singleton_ )
+        singleton_ = this;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,9 +182,20 @@ MIL_EntityManager::MIL_EntityManager()
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
 {
-    // NOTHING
+    if( !singleton_ )
+        singleton_ = this;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetSingleton
+// Created: SBO 2007-11-06
+// -----------------------------------------------------------------------------
+MIL_EntityManager& MIL_EntityManager::GetSingleton()
+{
+    if( !singleton_ )
+        throw std::runtime_error( "Entity manager singleton not initialized." );
+    return *singleton_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::InitializeSensors
@@ -349,6 +363,9 @@ MIL_EntityManager::~MIL_EntityManager()
     MIL_LimaFunction              ::Terminate();
 
     delete pObjectManager_;
+
+    if( this == singleton_ )
+        singleton_ = 0;
 }
 
 // =============================================================================
