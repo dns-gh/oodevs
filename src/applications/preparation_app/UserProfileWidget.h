@@ -13,6 +13,7 @@
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -23,7 +24,6 @@ namespace gui
 
 class UserProfile;
 class UserProfileRights_ABC;
-class ProfilesModel;
 
 // =============================================================================
 /** @class  UserProfileWidget
@@ -33,20 +33,27 @@ class ProfilesModel;
 // =============================================================================
 class UserProfileWidget : public QTabWidget
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model );
+             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons );
     virtual ~UserProfileWidget();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const UserProfile& profile );
-    void Commit();
-    void Reset();
+    void Display( UserProfile& profile );
     void SetEnabled( bool enabled );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnLoginChanged( const QString& text );
+    void OnPasswordChanged( const QString& text );
+    void OnSupervisorChanged( bool supervisor );
     //@}
 
 private:
@@ -56,23 +63,16 @@ private:
     UserProfileWidget& operator=( const UserProfileWidget& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    bool NeedsSaving() const;
-    bool CheckValidity() const;
-    //@}
-
 private:
     //! @name Member data
     //@{
-    ProfilesModel& model_;
-    const UserProfile* selectedProfile_;
-    std::auto_ptr< UserProfile > editedProfile_;
+    UserProfile*           profile_;
+    QLineEdit*             login_;
+    QLineEdit*             password_;
+    QCheckBox*             supervisor_;
     UserProfileRights_ABC* unitRights_;
     UserProfileRights_ABC* populationRights_;
-    QLineEdit* login_;
-    QLineEdit* password_;
-    QCheckBox* supervisor_;
+
     //@}
 };
 

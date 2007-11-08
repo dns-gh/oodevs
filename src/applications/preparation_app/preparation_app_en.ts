@@ -187,30 +187,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sides</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Top-level formations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All formations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All automats</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto-assign</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profiles...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Profiles</source>
         <translation type="unfinished"></translation>
     </message>
@@ -284,6 +260,14 @@
     </message>
     <message>
         <source>&amp;Display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View/Edit...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation wizard...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -421,19 +405,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Profile edition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile has changed, commit modifications?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Invalid profile information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duplicate login: &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

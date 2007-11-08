@@ -11,6 +11,7 @@
 #include "UserProfileList.h"
 #include "moc_UserProfileList.cpp"
 #include "UserProfileWidget.h"
+#include "ProfileEditor.h"
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "clients_kernel/Controllers.h"
@@ -46,13 +47,40 @@ UserProfileList::~UserProfileList()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileList::Save
+// Created: SBO 2007-11-08
+// -----------------------------------------------------------------------------
+void UserProfileList::Save()
+{
+    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+        *const_cast< UserProfile* >( it->first ) = *it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileList::Cancel
+// Created: SBO 2007-11-08
+// -----------------------------------------------------------------------------
+void UserProfileList::Cancel()
+{
+    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+        delete it->second;
+    editors_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileList::OnCurrentChanged
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 void UserProfileList::OnSelectionChanged()
 {
-    if( list_->currentItem() != -1 )
-        pages_.Display( *userProfiles_.at( list_->currentItem() ) );
+    if( isVisible() && list_->currentItem() != -1 )
+    {
+        const UserProfile* profile = profiles_.at( list_->currentItem() );
+        UserProfile*& editor = editors_[profile];
+        if( !editor )
+            editor = new ProfileEditor( *profile, controllers_.controller_, model_ );
+        pages_.Display( *editor );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +99,7 @@ void UserProfileList::OnCreate()
 void UserProfileList::OnDelete()
 {
     if( list_->currentItem() != -1 )
-        model_.DeleteProfile( *userProfiles_.at( list_->currentItem() ) );
+        model_.DeleteProfile( *profiles_.at( list_->currentItem() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +108,7 @@ void UserProfileList::OnDelete()
 // -----------------------------------------------------------------------------
 void UserProfileList::NotifyCreated( const UserProfile& profile )
 {
-    userProfiles_.push_back( &profile );
+    profiles_.push_back( &profile );
     const bool itemSelected = list_->selectedItem();
     list_->insertItem( profile.GetLogin() );
     if( !itemSelected )
@@ -96,12 +124,17 @@ void UserProfileList::NotifyCreated( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileList::NotifyUpdated( const UserProfile& profile )
 {
-    T_UserProfiles::iterator it = std::find( userProfiles_.begin(), userProfiles_.end(), &profile );
-    if( it != userProfiles_.end() )
+    const UserProfile* updated = &profile;
+    CIT_ProfileEditors editorIt = editors_.find( &profile );
+    if( editorIt != editors_.end() )
+        updated = editorIt->second;
+
+    T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
+    if( it != profiles_.end() )
     {
-        const int index = std::distance( userProfiles_.begin(), it );
-        if( list_->text( index ) != profile.GetLogin() )
-            list_->changeItem( profile.GetLogin(), index );
+        const int index = std::distance( profiles_.begin(), it );
+        if( list_->text( index ) != updated->GetLogin() )
+            list_->changeItem( updated->GetLogin(), index );
     }
 }
 
@@ -111,15 +144,31 @@ void UserProfileList::NotifyUpdated( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileList::NotifyDeleted( const UserProfile& profile )
 {
-    T_UserProfiles::iterator it = std::find( userProfiles_.begin(), userProfiles_.end(), &profile );
-    if( it != userProfiles_.end() )
+    T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
+    if( it != profiles_.end() )
     {
-        const int index = std::distance( userProfiles_.begin(), it );
+        const int index = std::distance( profiles_.begin(), it );
         const bool selected = list_->isSelected( index );
         list_->removeItem( index );
-        userProfiles_.erase( it );
+        profiles_.erase( it );
+        T_ProfileEditors::iterator editorIt = editors_.find( &profile );
+        if( editorIt != editors_.end() )
+        {
+            delete editorIt->second;
+            editors_.erase( editorIt );
+        }
         if( selected && list_->count() )
             list_->setSelected( list_->item( index ) ? index : index - 1, true );
-        pages_.SetEnabled( !userProfiles_.empty() );
+        pages_.SetEnabled( !profiles_.empty() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileList::showEvent
+// Created: SBO 2007-11-08
+// -----------------------------------------------------------------------------
+void UserProfileList::showEvent( QShowEvent* event )
+{
+    QVBox::showEvent( event );
+    OnSelectionChanged();
 }

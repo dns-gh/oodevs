@@ -49,6 +49,7 @@ public:
     bool CheckValidity( const Model& model, ModelChecker_ABC& checker ) const;
 
     void CreateProfile();
+    void CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly );
     void DeleteProfile( const UserProfile& profile );
 
     bool Exists( const QString& login ) const;

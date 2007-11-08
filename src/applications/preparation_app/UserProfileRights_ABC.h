@@ -36,11 +36,6 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( bool savedStatus );
-    void Reset();
-    bool NeedsSaving() const;
-    virtual bool NeedsCommit() const = 0;
-
     void Display( UserProfile& profile );
     //@}
 
@@ -48,8 +43,6 @@ protected:
     //! @name Slots
     //@{
     void OnItemClicked( QListViewItem* item, const QPoint& point, int column );
-    void OnShow();
-    void OnHide();
     //@}
 
 private:
@@ -73,21 +66,19 @@ private:
 
     //! @name Helpers
     //@{
-    void CloseAll();
-
+    void Commit();
+    void Clear();
     void SetStatus( QListViewItem* item, Status status );
     void SetStatus( gui::ValuedListItem* item, bool inheritsReadable, bool inheritsWriteable );
     void SetStatus( gui::ValuedListItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable );
     Status MakeStatus( bool read, bool write, bool inheritedRead, bool inheritedWrite );
-    void SetInheritedStatus( QListViewItem* item, Status status );
     //@}
 
 private:
     //! @name Member data
     //@{
     QListView* listView_;
-    UserProfile* selectedProfile_;
-    bool needsSaving_;
+    UserProfile* profile_;
     QPixmap check_, check_grey_;
     //@}
 };

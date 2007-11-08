@@ -55,39 +55,10 @@ void UserProfileUnitRights::setColumnWidth( int column, int w )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::showEvent
-// Created: SBO 2007-01-18
-// -----------------------------------------------------------------------------
-void UserProfileUnitRights::showEvent( QShowEvent* event )
-{
-    OnShow();
-    T_Parent::showEvent( event );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::hideEvent
-// Created: SBO 2007-03-29
-// -----------------------------------------------------------------------------
-void UserProfileUnitRights::hideEvent( QHideEvent* event )
-{
-    OnHide();
-    T_Parent::hideEvent( event );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights::OnItemClicked
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
 void UserProfileUnitRights::OnItemClicked( QListViewItem* item, const QPoint& point, int column )
 {
     UserProfileRights_ABC::OnItemClicked( item, point, column );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::NeedsCommit
-// Created: SBO 2007-03-29
-// -----------------------------------------------------------------------------
-bool UserProfileUnitRights::NeedsCommit() const
-{
-    return isVisible();
 }

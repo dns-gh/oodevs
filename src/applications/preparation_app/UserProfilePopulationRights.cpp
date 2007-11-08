@@ -52,39 +52,10 @@ void UserProfilePopulationRights::setColumnWidth( int column, int w )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfilePopulationRights::showEvent
-// Created: SBO 2007-01-18
-// -----------------------------------------------------------------------------
-void UserProfilePopulationRights::showEvent( QShowEvent* event )
-{
-    OnShow();
-    gui::PopulationListView::showEvent( event );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfilePopulationRights::hideEvent
-// Created: SBO 2007-03-29
-// -----------------------------------------------------------------------------
-void UserProfilePopulationRights::hideEvent( QHideEvent* event )
-{
-    OnHide();
-    gui::PopulationListView::hideEvent( event );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UserProfilePopulationRights::OnItemClicked
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
 void UserProfilePopulationRights::OnItemClicked( QListViewItem* item, const QPoint& point, int column )
 {
     UserProfileRights_ABC::OnItemClicked( item, point, column );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfilePopulationRights::NeedsCommit
-// Created: SBO 2007-03-29
-// -----------------------------------------------------------------------------
-bool UserProfilePopulationRights::NeedsCommit() const
-{
-    return isVisible();
 }

@@ -55,7 +55,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog )
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
@@ -69,18 +69,13 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     insertItem( tr( "&File" ), menu );
 
     menu = new QPopupMenu( this );
-    QPopupMenu* subMenu = new QPopupMenu( menu );
-    subMenu->insertItem( tr( "Sides" ) );
-    subMenu->insertItem( tr( "Top-level formations" ) );
-    subMenu->insertItem( tr( "All formations" ) );
-    subMenu->insertItem( tr( "All automats" ) );
-    menu->insertItem( tr( "Auto-assign" ), subMenu );
-    menu->insertItem( tr( "Profiles..." ), &profileDialog, SLOT( exec() ) );
+    menu->insertItem( tr( "View/Edit..." ), &profileDialog, SLOT( exec() ) );
+    menu->insertSeparator();
+    menu->insertItem( tr( "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
     insertItem( tr( "&Profiles" ), menu );
 
     menu = new QPopupMenu( this );
-    subMenu = new QPopupMenu( menu );
-
+    QPopupMenu* subMenu = new QPopupMenu( menu );
     AddSubMenu4( subMenu, tr( "Logistic links" )        , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
     AddSubMenu4( subMenu, tr( "Missing logistic links" ), MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
     menu->insertItem( tr( "Logistic..." ), subMenu );

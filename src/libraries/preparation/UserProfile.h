@@ -54,7 +54,7 @@ public:
 
     //! @name Setters
     //@{
-    void SetLogin( const QString& value );
+    virtual void SetLogin( const QString& value );
     void SetPassword( const QString& value );
     void SetSupervisor( bool value );
 

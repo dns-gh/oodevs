@@ -40,6 +40,12 @@ public:
     virtual ~UserProfileList();
     //@}
 
+    //! @name Operations
+    //@{
+    void Save();
+    void Cancel();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -60,21 +66,25 @@ private:
     virtual void NotifyCreated( const UserProfile& profile );
     virtual void NotifyUpdated( const UserProfile& profile );
     virtual void NotifyDeleted( const UserProfile& profile );
+    virtual void showEvent( QShowEvent* event );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< const UserProfile* > T_UserProfiles;
+    typedef std::vector< const UserProfile* >            T_Profiles;
+    typedef std::map< const UserProfile*, UserProfile* > T_ProfileEditors;
+    typedef T_ProfileEditors::const_iterator           CIT_ProfileEditors;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    UserProfileWidget& pages_;
-    ProfilesModel&     model_;
-    T_UserProfiles     userProfiles_;
-    QListBox*          list_;
+    ProfilesModel&       model_;
+    T_Profiles           profiles_;
+    T_ProfileEditors     editors_;
+    UserProfileWidget&   pages_;
+    QListBox*            list_;
     //@}
 };
 

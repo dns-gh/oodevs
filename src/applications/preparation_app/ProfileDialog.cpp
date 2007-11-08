@@ -46,7 +46,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new QVBox( this );
     box->setMargin( 5 );
-    pages_ = new UserProfileWidget( box, controllers, factory, icons, model );
+    pages_ = new UserProfileWidget( box, controllers, factory, icons );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
     
@@ -92,7 +92,7 @@ QSize ProfileDialog::sizeHint() const
 // -----------------------------------------------------------------------------
 void ProfileDialog::OnAccept()
 {
-    pages_->Commit();
+    list_->Save();
     accept();
 }
 
@@ -102,6 +102,6 @@ void ProfileDialog::OnAccept()
 // -----------------------------------------------------------------------------
 void ProfileDialog::OnReject()
 {
-    pages_->Reset();
+    list_->Cancel();
     reject();
 }

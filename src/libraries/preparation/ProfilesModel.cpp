@@ -95,7 +95,22 @@ void ProfilesModel::CreateProfile()
     std::auto_ptr< UserProfile > profile( factory_.Create() );
     userProfiles_.push_back( profile.release() );
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::CreateProfile
+// Created: SBO 2007-11-07
+// -----------------------------------------------------------------------------
+void ProfilesModel::CreateProfile( const QString& name, const kernel::Entity_ABC& entity, bool readonly )
+{
+    std::auto_ptr< UserProfile > profile( factory_.Create() );
+    profile->SetLogin( name );
+    if( readonly )
+        profile->SetReadable( entity, true );
+    else
+        profile->SetWriteable( entity, true );
+    userProfiles_.push_back( profile.release() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel::DeleteProfile
 // Created: SBO 2007-01-16

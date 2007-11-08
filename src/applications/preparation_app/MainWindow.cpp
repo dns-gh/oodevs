@@ -30,6 +30,7 @@
 #include "WeatherPanel.h"
 #include "FileToolbar.h"
 #include "ProfileDialog.h"
+#include "ProfileWizardDialog.h"
 #include "TemplatesPanel.h"
 #include "IntelligencesLayer.h"
 
@@ -135,6 +136,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_ );
+    ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
 
     QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
     QVBox* listsTabBox = new QVBox( pListsTabWidget );
@@ -206,7 +208,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
 
-    new Menu( this, controllers, *prefDialog, *profileDialog );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );

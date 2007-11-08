@@ -23,8 +23,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 UserProfileRights_ABC::UserProfileRights_ABC( QListView* listView )
     : listView_( listView )
-    , selectedProfile_( 0 )
-    , needsSaving_( false )
+    , profile_( 0 )
     , check_( MAKE_PIXMAP( check ) )
     , check_grey_( MAKE_PIXMAP( check_grey ) )
 {
@@ -47,37 +46,23 @@ UserProfileRights_ABC::~UserProfileRights_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::CommitTo
+// Name: UserProfileRights_ABC::Commit
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::Commit( bool savedStatus )
+void UserProfileRights_ABC::Commit()
 {
-    needsSaving_ = savedStatus;
-    if( !selectedProfile_ )
+    if( !profile_ )
         return;
-    QListViewItemIterator it( listView_ );
-    while( QListViewItem* item = it.current() )
-    {
-        if( const ValuedListItem* value = static_cast< const ValuedListItem* >( item ) )
+    for( QListViewItemIterator it( listView_ ); it.current(); ++it )
+        if( const ValuedListItem* item = static_cast< const ValuedListItem* >( *it ) )
         {
-            const Entity_ABC* entity = value->GetValue< const Entity_ABC >();
+            const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
             const Status status = Status( item->text( 3 ).toInt() );
             const bool isWriteable = status == eWrite;
             const bool isReadable  = status == eReadOnly;
-            selectedProfile_->SetReadable ( *entity, isReadable && !isWriteable );
-            selectedProfile_->SetWriteable( *entity, isWriteable );
+            profile_->SetReadable ( *entity, isReadable && !isWriteable );
+            profile_->SetWriteable( *entity, isWriteable );
         }
-        ++it;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::Reset
-// Created: SBO 2007-01-18
-// -----------------------------------------------------------------------------
-void UserProfileRights_ABC::Reset()
-{
-    // $$$$ SBO 2007-01-17: TODO: somehow undo changes
 }
 
 // -----------------------------------------------------------------------------
@@ -86,10 +71,9 @@ void UserProfileRights_ABC::Reset()
 // -----------------------------------------------------------------------------
 void UserProfileRights_ABC::Display( UserProfile& profile )
 {
-    CloseAll();
+    Clear();
     listView_->setDisabled( false );
-    needsSaving_ = false;
-    selectedProfile_ = &profile;
+    profile_ = &profile;
     ValuedListItem* value = static_cast< ValuedListItem* >( listView_->firstChild() );
     while( value )
     {
@@ -108,7 +92,6 @@ void UserProfileRights_ABC::OnItemClicked( QListViewItem* item, const QPoint&, i
         return;
     
     const Status status = Status( item->text( 3 ).toInt() );
-    
     if( status == eWriteInherited || ( column == 1 && status == eReadInherited ) )
         return;
     bool write = status == eWrite;
@@ -118,36 +101,21 @@ void UserProfileRights_ABC::OnItemClicked( QListViewItem* item, const QPoint&, i
     if( column == 1 )
         read = !read;
     SetStatus( static_cast< ValuedListItem* >( item ), read, write, false, false );
-    needsSaving_ = true;
+    Commit(); // $$$$ SBO 2007-11-08: should not be done after every change...
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::OnShow
+// Name: UserProfileRights_ABC::Clear
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::OnShow()
-{
-    if( selectedProfile_ )
-        Display( *selectedProfile_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::OnHide
-// Created: SBO 2007-03-29
-// -----------------------------------------------------------------------------
-void UserProfileRights_ABC::OnHide()
-{
-    Commit( needsSaving_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::CloseAll
-// Created: SBO 2007-01-18
-// -----------------------------------------------------------------------------
-void UserProfileRights_ABC::CloseAll()
+void UserProfileRights_ABC::Clear()
 {
     for( QListViewItemIterator it( listView_ ); it.current(); ++it )
+    {
+        (*it)->setPixmap( 1, QPixmap() );
+        (*it)->setPixmap( 2, QPixmap() );
         listView_->setOpen( *it, false );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -193,9 +161,8 @@ void UserProfileRights_ABC::SetStatus( gui::ValuedListItem* item, bool inheritsR
     const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
     if( !entity )
         return;
-    const bool isWriteable = selectedProfile_->IsWriteable( *entity );
-    const bool isReadable  = isWriteable || selectedProfile_->IsReadable( *entity );
-
+    const bool isWriteable = profile_->IsWriteable( *entity );
+    const bool isReadable  = isWriteable || profile_->IsReadable( *entity );
     SetStatus( item, isReadable, isWriteable, inheritsReadable, inheritsWriteable );
 }
 
@@ -233,25 +200,4 @@ UserProfileRights_ABC::Status UserProfileRights_ABC::MakeStatus( bool read, bool
     else if( inheritedRead )
         status = eReadInherited;
     return status;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::SetInheritedStatus
-// Created: SBO 2007-01-18
-// -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetInheritedStatus( QListViewItem* item, Status status )
-{
-    if( !item )
-        return;
-    for( QListViewItem* child = item->firstChild(); child; child = child->nextSibling() )
-        SetStatus( child, status );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::NeedsSaving
-// Created: SBO 2007-03-29
-// -----------------------------------------------------------------------------
-bool UserProfileRights_ABC::NeedsSaving() const
-{
-    return needsSaving_;
 }

@@ -31,11 +31,6 @@ public:
     virtual ~UserProfilePopulationRights();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual bool NeedsCommit() const;
-    //@}
-
 private slots:
     //! @name Slots
     //@{
@@ -53,8 +48,6 @@ private:
     //@{
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
-    virtual void showEvent( QShowEvent* event );
-    virtual void hideEvent( QHideEvent* event );
     //@}
 };
 
