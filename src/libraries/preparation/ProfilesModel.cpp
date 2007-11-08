@@ -161,11 +161,11 @@ bool ProfilesModel::CheckValidity( const Model& model, ModelChecker_ABC& checker
     }
     if(     unReadableUnits
         && !checker.Prompt( tools::translate( "ProfilesModel", "Some units in the orbat are not \"readable\" to any user profile.\n"
-                                                               "You will not be able to see this units on the game.\n" ) ) )
+                                                               "You will not be able to see these units on the game.\n" ) ) )
         return false;
     if(     unWriteableUnits
         && !checker.Prompt( tools::translate( "ProfilesModel", "Some units in the orbat are not \"writeable\" to any user profile.\n"
-                                                               "You will not be able to give orders to this units.\n" ) ) )
+                                                               "You will not be able to give orders to these units.\n" ) ) )
         return false;
     return checker.Validate();
 }
