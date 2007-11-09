@@ -14,6 +14,7 @@
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/ComponentType.h"
 #include "ValuedDragObject.h"
 
 using namespace kernel;
@@ -45,6 +46,25 @@ UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const Age
 UnitListView::~UnitListView()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::viewportResizeEvent
+// Created: SBO 2007-11-09
+// -----------------------------------------------------------------------------
+void UnitListView::viewportResizeEvent( QResizeEvent* e )
+{
+    QScrollView::viewportResizeEvent( e );
+    setColumnWidth( 0, -1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::setColumnWidth
+// Created: SBO 2007-11-09
+// -----------------------------------------------------------------------------
+void UnitListView::setColumnWidth( int column, int w )
+{
+    QListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,6 +146,8 @@ void UnitListView::DisplayBy( const std::string& (kernel::AgentNature::*function
         ValuedListItem* item = new ValuedListItem( parentItem );
         item->SetNamed( type );
         item->setDragEnabled( true );
+        Iterator< const ComponentType& > it( type.CreateIterator() );
+        DeleteTail( ListView< UnitListView >::Display( it, item ) );
     }
 }
 
@@ -191,6 +213,8 @@ void UnitListView::DisplayByNature()
         ValuedListItem* item = new ValuedListItem( parentItem );
         item->SetNamed( type );
         item->setDragEnabled( true );
+        Iterator< const ComponentType& > it( type.CreateIterator() );
+        DeleteTail( ListView< UnitListView >::Display( it, item ) );
     }
     Sort( firstChild() );
 }
@@ -226,6 +250,16 @@ void UnitListView::Sort( QListViewItem* item )
 
 // -----------------------------------------------------------------------------
 // Name: UnitListView::Display
+// Created: SBO 2007-11-09
+// -----------------------------------------------------------------------------
+void UnitListView::Display( const ComponentType& type, ValuedListItem* item )
+{
+    item->SetFontColor( QColor( 100, 100, 100 ) ); 
+    item->Set( &type, type.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::Display
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
 void UnitListView::Display( const AutomatComposition& type, ValuedListItem* item )
@@ -235,6 +269,9 @@ void UnitListView::Display( const AutomatComposition& type, ValuedListItem* item
         cnt = QString( "%1..%2" ).arg( type.GetMin() ).arg( type.GetMax() == std::numeric_limits< unsigned int >::max() ? "*" : QString::number( type.GetMax() ) );
     else
         cnt = QString::number( type.GetMin() );
+
+    Iterator< const ComponentType& > it( type.GetType().CreateIterator() );
+    DeleteTail( ListView< UnitListView >::Display( it, item ) );
 
     item->Set( &type.GetType(), type.GetType().GetName(), cnt );
     item->setDragEnabled( true );

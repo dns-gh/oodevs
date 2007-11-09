@@ -22,6 +22,7 @@ namespace kernel
     class SymbolFactory;
     class GlTools_ABC;
     class Viewport_ABC;
+    template< typename Container > class Iterator;
 
 // =============================================================================
 /** @class  AgentType
@@ -47,6 +48,7 @@ public:
     QString GetName() const;
     const DecisionalModel& GetDecisionalModel() const;
     const AgentNature& GetNature() const;
+    Iterator< const ComponentType& > CreateIterator() const;
 
     const std::string& GetSymbol() const;
     const std::string& GetLevelSymbol() const;

@@ -101,6 +101,15 @@ const AgentNature& AgentType::GetNature() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Iterator< const ComponentType& > AgentType::CreateIterator
+// Created: SBO 2007-11-09
+// -----------------------------------------------------------------------------
+Iterator< const ComponentType& > AgentType::CreateIterator() const
+{
+    return new SimpleIterator< const ComponentType&, T_Components >( equipments_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentType::GetSymbol
 // Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
