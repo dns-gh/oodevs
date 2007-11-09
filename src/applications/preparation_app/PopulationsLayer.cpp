@@ -47,8 +47,8 @@ PopulationsLayer::~PopulationsLayer()
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
-    return event->provides( "csword/PopulationType" )
-        || ( selectedPopulation_ && event->provides( "population" ) );
+    return ( gui::ValuedDragObject::Provides< const PopulationType >     ( event ) && selectedEntity_ )
+        || ( gui::ValuedDragObject::Provides< const PopulationPositions >( event ) && selectedPopulation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,25 +57,17 @@ bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geome
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( selectedEntity_ && ValuedDragObject::Provides< const PopulationType >( event ) )
+    if( selectedEntity_ && gui::ValuedDragObject::Provides< const PopulationType >( event ) )
     {
-        const kernel::Hierarchies* hierarchies = selectedEntity_->Retrieve< kernel::TacticalHierarchies >();
-        if( !hierarchies )
-            if( !( hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() ) )
-                return false;
-        const kernel::Entity_ABC& top = hierarchies->GetTop();
-        if( const kernel::Team_ABC* team = dynamic_cast< const kernel::Team_ABC* >( &top ) )
+        if( const PopulationType* droppedItem = gui::ValuedDragObject::GetValue< const PopulationType >( event ) )
         {
-            if( const PopulationType* droppedItem = ValuedDragObject::GetValue< const PopulationType >( event ) )
-            {
-                model_.agents_.CreatePopulation( *const_cast< kernel::Team_ABC* >( team ), *droppedItem, point );
-                return true;
-            }
+            model_.agents_.CreatePopulation( *selectedEntity_.ConstCast(), *droppedItem, point );
+            return true;
         }
     }
-    else if( selectedPopulation_ && ValuedDragObject::Provides< const PopulationPositions >( event ) )
+    else if( selectedPopulation_ && gui::ValuedDragObject::Provides< const PopulationPositions >( event ) )
     {
-        if( PopulationPositions* positions = ValuedDragObject::GetValue< PopulationPositions >( event ) )
+        if( PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event ) )
         {
             positions->Set( point );
             return true;
@@ -146,7 +138,8 @@ bool PopulationsLayer::HandleMousePress( QMouseEvent* event, const geometry::Poi
     bool result = gui::PopulationsLayer::HandleMousePress( event, point );
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
-        QDragObject* drag = new QStoredDrag( "Population" );
+        const PopulationPositions* pos = static_cast< const PopulationPositions* >( selectedPopulation_->Retrieve< Positions >() );
+        QDragObject* drag = new gui::ValuedDragObject( pos );
         drag->drag();
     }
     return result;

@@ -10,6 +10,9 @@
 #ifndef __ValuedDragObject_h_
 #define __ValuedDragObject_h_
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  ValuedDragObject
     @brief  ValuedDragObject
@@ -94,6 +97,8 @@ T* ValuedDragObject::GetValue( QDropEvent* event )
         return *reinterpret_cast< T** >( tmp.data() );
     }
     return 0;
+}
+
 }
 
 #endif // __ValuedDragObject_h_

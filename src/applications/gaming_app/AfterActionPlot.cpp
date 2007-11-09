@@ -136,7 +136,7 @@ void AfterActionPlot::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void AfterActionPlot::dragEnterEvent( QDragEnterEvent* e )
 {
-    e->accept( ValuedDragObject::Provides< const AfterActionRequest >( e ) );
+    e->accept( gui::ValuedDragObject::Provides< const AfterActionRequest >( e ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void AfterActionPlot::dragEnterEvent( QDragEnterEvent* e )
 // -----------------------------------------------------------------------------
 void AfterActionPlot::dropEvent( QDropEvent* e )
 {
-    if( const AfterActionRequest* request = ValuedDragObject::GetValue< const AfterActionRequest >( e ) )
+    if( const AfterActionRequest* request = gui::ValuedDragObject::GetValue< const AfterActionRequest >( e ) )
         Add( *request );
 }
 

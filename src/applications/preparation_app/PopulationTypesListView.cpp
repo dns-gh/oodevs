@@ -81,5 +81,5 @@ QDragObject* PopulationTypesListView::dragObject()
     if( !pItem )
         return 0;
     const PopulationType* pType = pItem->GetValue< const PopulationType >();
-    return new ValuedDragObject( pType, this );
+    return new gui::ValuedDragObject( pType, this );
 }

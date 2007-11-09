@@ -123,13 +123,15 @@ kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType
 // Name: AgentFactory::Create
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-kernel::Population_ABC* AgentFactory::Create( kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position )
+kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position )
 {
+    Entity_ABC& top = const_cast< kernel::Entity_ABC& >( parent.Get< kernel::TacticalHierarchies >().GetTop() );
+
     Population* result = new Population( type, controllers_.controller_, idManager_ );
     result->Attach< Positions >( *new PopulationPositions( *result, static_.coordinateConverter_, position ) );
-    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &top ) );
 
-    if( Populations* popus = parent.Retrieve< Populations >() )
+    if( Populations* popus = top.Retrieve< Populations >() )
         popus->AddPopulation( *result );
     result->Polish();
     return result;

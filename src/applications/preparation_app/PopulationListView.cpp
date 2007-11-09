@@ -12,6 +12,8 @@
 #include "moc_PopulationListView.cpp"
 #include "PreparationProfile.h"
 #include "ModelBuilder.h"
+#include "clients_gui/ValuedDragObject.h"
+#include "preparation/PopulationPositions.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationListView constructor
@@ -87,8 +89,13 @@ void PopulationListView::NotifyCreated( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 QDragObject* PopulationListView::dragObject()
 {
-    QListViewItem* pItem = selectedItem();
-    if( !pItem || !pItem->parent() )
+    gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
+    if( !pItem )
         return 0;
-    return new QStoredDrag( "population", this );
+    if( dynamic_cast< const kernel::Population_ABC* >( &*selected_ ) )
+    {
+        const PopulationPositions* pos = static_cast< const PopulationPositions* >( selected_->Retrieve< kernel::Positions >() );
+        return new gui::ValuedDragObject( pos );
+    }
+    return 0;
 }

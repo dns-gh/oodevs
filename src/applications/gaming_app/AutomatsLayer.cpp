@@ -78,7 +78,7 @@ void AutomatsLayer::NotifySelected( const Automat_ABC* automat )
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
-    return selected_ && ValuedDragObject::Provides< const AgentType >( event );
+    return selected_ && gui::ValuedDragObject::Provides< const AgentType >( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 {
     if( !selected_ )
         return false;
-    if( const AgentType* droppedItem = ValuedDragObject::GetValue< const AgentType >( event ) )
+    if( const AgentType* droppedItem = gui::ValuedDragObject::GetValue< const AgentType >( event ) )
     {
         RequestCreation( point, *droppedItem );
         return true;

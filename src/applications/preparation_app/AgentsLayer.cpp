@@ -109,10 +109,10 @@ void AgentsLayer::Select( const kernel::Team_ABC& element )
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
-    return ( ValuedDragObject::Provides< const AgentPositions >   ( event ) && selectedAgent_ )
-        || ( ValuedDragObject::Provides< const AgentType >        ( event ) && selectedAutomat_ )
-        || ( ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ ) )
-        || ( ValuedDragObject::Provides< const HierarchyTemplate >( event ) && IsValidTemplate( event ) );
+    return ( gui::ValuedDragObject::Provides< const AgentPositions >   ( event ) && selectedAgent_ )
+        || ( gui::ValuedDragObject::Provides< const AgentType >        ( event ) && selectedAutomat_ )
+        || ( gui::ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ ) )
+        || ( gui::ValuedDragObject::Provides< const HierarchyTemplate >( event ) && IsValidTemplate( event ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ bool AgentsLayer::IsValidTemplate( QDragEnterEvent* event ) const
 {
     if( !selectedFormation_ && !selectedTeam_ )
         return false;
-    const HierarchyTemplate* droppedItem = ValuedDragObject::GetValue< const HierarchyTemplate >( event );
+    const HierarchyTemplate* droppedItem = gui::ValuedDragObject::GetValue< const HierarchyTemplate >( event );
     if( ! droppedItem )
         return false;
     return selectedTeam_ ? droppedItem->IsCompatible( *selectedTeam_ )
@@ -136,7 +136,7 @@ bool AgentsLayer::IsValidTemplate( QDragEnterEvent* event ) const
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( AgentPositions* position = ValuedDragObject::GetValue< AgentPositions >( event ) )
+    if( AgentPositions* position = gui::ValuedDragObject::GetValue< AgentPositions >( event ) )
     {
         if( !selectedAgent_ )
             return false;
@@ -145,14 +145,14 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             position->Set( point );
         return true;
     }
-    if( const AgentType* droppedItem = ValuedDragObject::GetValue< const AgentType >( event ) )
+    if( const AgentType* droppedItem = gui::ValuedDragObject::GetValue< const AgentType >( event ) )
     {
         if( !selectedAutomat_ )
             return false;
         model_.agents_.CreateAgent( *selectedAutomat_.ConstCast(), *droppedItem, point );
         return true;
     }
-    if( const AutomatType* droppedItem = ValuedDragObject::GetValue< const AutomatType >( event ) )
+    if( const AutomatType* droppedItem = gui::ValuedDragObject::GetValue< const AutomatType >( event ) )
     {
         Entity_ABC* selectedEntity = selectedFormation_.ConstCast();
         if( ! selectedEntity )
@@ -162,7 +162,7 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         model_.agents_.CreateAutomat( *selectedEntity, *droppedItem, point );
         return true;
     }
-    if( const HierarchyTemplate* droppedItem= ValuedDragObject::GetValue< const HierarchyTemplate >( event ) )
+    if( const HierarchyTemplate* droppedItem = gui::ValuedDragObject::GetValue< const HierarchyTemplate >( event ) )
     {
         if( !selectedFormation_ && !selectedTeam_ )
             return false;
@@ -183,7 +183,7 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
         const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() );
-        QDragObject* drag = new ValuedDragObject( pos );
+        QDragObject* drag = new gui::ValuedDragObject( pos );
         drag->drag();
     }
     return result;

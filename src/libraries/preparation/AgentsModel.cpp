@@ -180,7 +180,7 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 // Name: AgentsModel::CreatePopulation
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void AgentsModel::CreatePopulation( Team_ABC& parent, const PopulationType& type, const geometry::Point2f& position )
+void AgentsModel::CreatePopulation( Entity_ABC& parent, const PopulationType& type, const geometry::Point2f& position )
 {
     Population_ABC* popu = agentFactory_.Create( parent, type, parameters_.Clip( position ) );
     Resolver< Population_ABC >::Register( popu->GetId(), *popu );
