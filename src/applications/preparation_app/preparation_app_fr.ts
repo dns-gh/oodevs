@@ -343,6 +343,10 @@
         <source>Disengage</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UserProfileList</name>

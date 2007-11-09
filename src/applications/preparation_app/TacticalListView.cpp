@@ -153,6 +153,17 @@ void TacticalListView::OnContextMenuRequested( QListViewItem* item, const QPoint
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::NotifyContextMenu
+// Created: SBO 2007-11-09
+// -----------------------------------------------------------------------------
+void TacticalListView::NotifyContextMenu( const Entity_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
@@ -164,7 +175,7 @@ void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
     while( level && ( level = level->GetNext() ) )
         subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2006-09-25
@@ -180,6 +191,16 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
         while( level && ( level = level->GetNext() ) )
             subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::OnRename
+// Created: SBO 2007-11-09
+// -----------------------------------------------------------------------------
+void TacticalListView::OnRename()
+{
+    if( selectedItem() )
+        selectedItem()->startRename( 0 );
 }
 
 // -----------------------------------------------------------------------------

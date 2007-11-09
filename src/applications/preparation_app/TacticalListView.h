@@ -36,6 +36,7 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
                        , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                        , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
                        , public kernel::ElementObserver_ABC< AutomatDecisions >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
@@ -58,6 +59,7 @@ private slots:
     //! @name Slots
     //@{
     void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
+    void OnRename();
     void Engage();
     void Disengage();
     //@}
@@ -77,6 +79,7 @@ private:
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyUpdated( const AutomatDecisions& );
+    virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
