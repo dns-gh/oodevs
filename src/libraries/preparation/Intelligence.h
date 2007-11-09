@@ -63,6 +63,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void DoUpdate( const kernel::InstanciationComplete& ic );
     void CreateDictionary( kernel::Controller& controller );
     virtual const kernel::Karma& GetKarma() const;
     virtual std::string GetSymbol() const;

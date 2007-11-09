@@ -75,9 +75,18 @@ void Intelligence::Draw( const geometry::Point2f& where, const Viewport_ABC& vie
 {
     if( viewport.IsHotpointVisible() )
     {
-        tools.DrawApp6Symbol( symbol_, where );
+        tools.DrawApp6Symbol( GetSymbol(), where );
         tools.DrawApp6Symbol( level_->GetSymbol(), where );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Intelligence::DoUpdate
+// Created: SBO 2007-11-09
+// -----------------------------------------------------------------------------
+void Intelligence::DoUpdate( const kernel::InstanciationComplete& /*ic*/ )
+{
+    SetKarma( karma_ );
 }
 
 namespace
@@ -109,7 +118,9 @@ const kernel::Karma& Intelligence::GetKarma() const
 // -----------------------------------------------------------------------------
 std::string Intelligence::GetSymbol() const
 {
-    return symbol_;
+    std::string symbol = symbol_;
+    App6Symbol::SetKarma( symbol, GetKarma() );
+    return symbol;
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +197,6 @@ void Intelligence::Rename( const QString& name )
 void Intelligence::SetKarma( const IntelligenceKarma& karma )
 {
     karma_ = karma;
-    App6Symbol::SetKarma( symbol_, GetKarma() );
     Touch();
     Get< IntelligenceHierarchies >().UpdateSymbol( false );
 }

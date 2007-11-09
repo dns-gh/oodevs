@@ -18,6 +18,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/IntelligenceHierarchies.h"
 #include "Tools.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
@@ -189,6 +190,7 @@ void Team::SetKarma( const TeamKarma& karma )
     karma_ = karma;
     Touch();
     Get< kernel::TacticalHierarchies >().UpdateSymbol( false );
+    Get< kernel::IntelligenceHierarchies >().UpdateSymbol( false );
 }
 
 // -----------------------------------------------------------------------------

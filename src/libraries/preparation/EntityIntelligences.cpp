@@ -100,8 +100,18 @@ std::string EntityIntelligences::GetLevel() const
 // Name: EntityIntelligences::UpdateSymbol
 // Created: SBO 2007-11-02
 // -----------------------------------------------------------------------------
-void EntityIntelligences::UpdateSymbol( bool /*up = true*/ )
+void EntityIntelligences::UpdateSymbol( bool up /*= true*/ )
 {
     controller_.Update( *this );
     controller_.Update( *(Symbol_ABC*)this );
+    if( ! up )
+    {
+        kernel::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::IntelligenceHierarchies* child = it.NextElement().Retrieve< kernel::IntelligenceHierarchies >();
+            if( child )
+                const_cast< kernel::IntelligenceHierarchies* >( child )->UpdateSymbol( false );
+        }
+    }
 }
