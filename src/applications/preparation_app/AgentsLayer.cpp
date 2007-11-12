@@ -13,6 +13,7 @@
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/AgentPositions.h"
+#include "preparation/AutomatPositions.h"
 #include "preparation/HierarchyTemplate.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -112,7 +113,8 @@ bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::
     return ( gui::ValuedDragObject::Provides< const AgentPositions >   ( event ) && selectedAgent_ )
         || ( gui::ValuedDragObject::Provides< const AgentType >        ( event ) && selectedAutomat_ )
         || ( gui::ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ ) )
-        || ( gui::ValuedDragObject::Provides< const HierarchyTemplate >( event ) && IsValidTemplate( event ) );
+        || ( gui::ValuedDragObject::Provides< const HierarchyTemplate >( event ) && IsValidTemplate( event ) )
+        || ( gui::ValuedDragObject::Provides< const Entity_ABC >       ( event ) && selectedAutomat_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,6 +170,15 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             return false;
         Entity_ABC* superior = selectedFormation_ ? selectedFormation_.ConstCast() : (Entity_ABC*)selectedTeam_.ConstCast();
         droppedItem->Instanciate( *superior, point );
+        return true;
+    }
+    if( const Entity_ABC* droppedItem = gui::ValuedDragObject::GetValue< const Entity_ABC >( event ) )
+    {
+        if( !selectedAutomat_ )
+            return false;
+        const AutomatPositions* pos = static_cast< const AutomatPositions* >( selectedAutomat_->Retrieve< Positions >() );
+        if( pos )
+            const_cast< AutomatPositions* >( pos )->Set( point );
         return true;
     }
     return false;
