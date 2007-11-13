@@ -11,6 +11,7 @@
 #define __MIL_IntelligenceOrder_h_
 
 struct ASN1T_Intelligence;
+class MIL_Fuseau;
 
 // =============================================================================
 /** @class  MIL_IntelligenceOrder
@@ -30,6 +31,10 @@ public:
 
     //! @name Operations
     //@{
+    bool IsInside( const MIL_Fuseau& fuseau ) const;
+    bool IsInside( const TER_Localisation& location ) const;
+    bool IsEmbarked() const;
+    ASN1T_EnumNatureLevel GetLevel() const;
     void Serialize( ASN1T_Intelligence& asn ) const;
     //@}
 

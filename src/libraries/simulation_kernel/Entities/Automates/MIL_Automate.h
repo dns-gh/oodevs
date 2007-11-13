@@ -41,7 +41,6 @@ class PHY_DotationCategory;
 class NET_ASN_MsgAutomatCreation;
 class DEC_KnowledgeBlackBoard_Automate;
 
-
 // =============================================================================
 // @class  MIL_Automate
 // Created: JVT 2004-08-03

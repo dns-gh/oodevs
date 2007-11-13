@@ -18,6 +18,7 @@
 #include "MIL_AgentServer.h"
 #include "MIL_TacticalLineManager.h"
 #include "MIL_IntelligenceOrder.h"
+#include "MIL_IntelligenceOrdersVisitor_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 
@@ -168,4 +169,14 @@ void MIL_OrderContext::CleanAfterSerialization( ASN1T_OrderContext& asn ) const
     }
     if( asn.intelligences.n )
         delete[] asn.intelligences.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::Accept
+// Created: SBO 2007-11-12
+// -----------------------------------------------------------------------------
+void MIL_OrderContext::Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const
+{
+    for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
+        visitor.Visit( **it );
 }

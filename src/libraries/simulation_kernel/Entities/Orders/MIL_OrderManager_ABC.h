@@ -19,6 +19,7 @@ class MIL_Mission_ABC;
 class MIL_Fuseau;
 class MIL_LimaFunction;
 class MIL_MissionType_ABC;
+class MIL_IntelligenceOrdersVisitor_ABC;
 
 //=============================================================================
 // Created: NLD 2003-01-10
@@ -48,6 +49,7 @@ public:
     const T_LimaVector&  GetLimas             () const;
     const MT_Vector2D&   GetDirDanger         () const;
     const std::string&   GetMissionName       () const;
+    void                 Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Missions accessors

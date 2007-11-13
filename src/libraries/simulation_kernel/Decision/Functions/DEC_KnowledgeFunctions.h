@@ -42,18 +42,11 @@ public:
     static void GetLivingEnemiesInFuseau         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLivingEnemiesInCircle         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
-    template< typename T > static void ComputeFuseauUnloadedEnemiesRatio    ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void ComputeFuseauLoadedEnemiesRatio      ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void ComputeLocationUnloadedEnemiesRatio  ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void ComputeLocationLoadedEnemiesRatio    ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void ComputeUnloadedEnemiesRatio   ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void ComputeLoadedEnemiesRatio     ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void SortAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void SortAccordingToLoadedEnemies  ( DIA_Call_ABC& call, const T& caller );
 
-//    template< typename T > static void ComputeFuseauUnloadedEnemyIntelligenceRatio  ( DIA_Call_ABC& call, const T& caller );
-//    template< typename T > static void ComputeFuseauLoadedEnemyIntelligenceRatio    ( DIA_Call_ABC& call, const T& caller );
-//    template< typename T > static void ComputeLocationUnloadedEnemyIntelligenceRatio( DIA_Call_ABC& call, const T& caller );
-//    template< typename T > static void ComputeLocationLoadedEnemyIntelligencesRatio ( DIA_Call_ABC& call, const T& caller );
-
-    template< typename T > static void SortFuseauxAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void SortFuseauxAccordingToLoadedEnemies  ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetLivingEnemiesPerceivedByPion      ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetDangerousEnemiesInZoneOfPion      ( DIA_Call_ABC& call, const T& caller );
 
@@ -79,8 +72,7 @@ public:
 
     //! @name Tools
     //@{
-    template< typename T, typename U > static float _ComputeZoneEnemiesRatio          ( const T& caller, const U& zone, bool unloaded );
-//    template< typename T, typename U > static float _ComputeZoneEnemyIntelligenceRatio( const T& caller, const U& zone, bool unloaded );
+    template< typename T, typename B > static float ComputeEnemiesRatio( const T& caller, const B& boundaries, bool unloaded );
     //@}
 };
 

@@ -18,6 +18,7 @@
 class MIL_LimaOrder;
 class MIL_LimaFunction;
 class MIL_IntelligenceOrder;
+class MIL_IntelligenceOrdersVisitor_ABC;
 
 // =============================================================================
 /** @class  MIL_OrderContext
@@ -45,6 +46,7 @@ public:
           MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function );
           MIL_LimaOrder* FindNextScheduledLima();
           void           AffectFuseau         ( const MIL_Fuseau& fuseau );
+          void           Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Network

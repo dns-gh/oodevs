@@ -138,3 +138,12 @@ void MIL_Mission_ABC::CleanAfterSerialization( ASN1T_MissionParameters& asn ) co
 {
     type_.CleanAfterSerialization( asn );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::Accept
+// Created: SBO 2007-11-13
+// -----------------------------------------------------------------------------
+void MIL_Mission_ABC::Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const
+{
+    context_.Accept( visitor );
+}

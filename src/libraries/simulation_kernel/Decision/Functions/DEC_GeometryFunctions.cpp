@@ -24,6 +24,8 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
+#include "Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Random.h"
@@ -1508,41 +1510,72 @@ void DEC_GeometryFunctions::SplitPath( DIA_Call_ABC& call )
     call.GetResult().SetValue( ::SplitListPoints( points, rNbrParts ), &DEC_Tools::GetTypeListePoints() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau
-// Created: NLD 2007-04-13
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau( DIA_Call_ABC& call )
+namespace
 {
-    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
-    const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau );
-    assert( pFuseau );
-    call.GetResult().SetValue( pFuseau->ComputeClosedTerrainRatio() );
-}
-
-namespace {
-
-    bool CompareFuseauTerrainOpening( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
+    float ComputeClosedTerrainRatio( const TER_Localisation& location )
     {
-        MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
-        MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
+        uint nForestSurface = 0, nEmptySurface  = 0, nUrbanSurface  = 0;
+        MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObjectsInSurface( location, nEmptySurface, nForestSurface, nUrbanSurface );
+        return float( nForestSurface + nUrbanSurface ) / float( nForestSurface + nUrbanSurface + nEmptySurface );
+    }
 
-        return pFuseau1->ComputeOpenTerrainRatio() < pFuseau2->ComputeOpenTerrainRatio();
+    float ComputeOpenTerrainRatio( const TER_Localisation& location )
+    {
+        return 1. - ComputeClosedTerrainRatio( location );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening
+// Name: DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone
 // Created: NLD 2007-04-13
 // -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening( DIA_Call_ABC& call )
+void DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone( DIA_Call_ABC& call )
 {
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );   
+    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+    if( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) )
+    {
+        if( const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau ) )
+            call.GetResult().SetValue( pFuseau->ComputeClosedTerrainRatio() );
+    }
+    else if( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) )
+    {
+        if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
+            call.GetResult().SetValue( ComputeClosedTerrainRatio( *location ) );
+    }
+}
+
+namespace {
+
+    bool CompareTerrainOpening( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
+    {
+        if( DEC_Tools::CheckTypeFuseau( *dia1 ) && DEC_Tools::CheckTypeFuseau( *dia2 ) )
+        {
+            MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
+            MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
+            return pFuseau1->ComputeOpenTerrainRatio() < pFuseau2->ComputeOpenTerrainRatio();
+        }
+        else if( DEC_Tools::CheckTypeLocalisation( *dia1 ) && DEC_Tools::CheckTypeLocalisation( *dia2 ) )
+        {
+            TER_Localisation* location1 = dia1->ToUserPtr( location1 );
+            TER_Localisation* location2 = dia2->ToUserPtr( location2 );
+            return ComputeOpenTerrainRatio( *location1 ) < ComputeOpenTerrainRatio( *location2 );
+        }
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening
+// Created: NLD 2007-04-13
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
     
     call.GetResult() = call.GetParameter( 0 );
 
-    T_ObjectVariableVector& fuseaux = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( fuseaux.begin(), fuseaux.end(), CompareFuseauTerrainOpening );  
+    T_ObjectVariableVector& zones = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
+    std::sort( zones.begin(), zones.end(), CompareTerrainOpening );  
 }
 
 // -----------------------------------------------------------------------------

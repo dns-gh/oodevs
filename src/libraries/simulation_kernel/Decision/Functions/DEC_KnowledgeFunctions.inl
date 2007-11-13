@@ -215,11 +215,11 @@ void DEC_KnowledgeFunctions::GetPopulations( DIA_Call_ABC& call, const T& caller
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static float DEC_KnowledgeFunctions::_ComputeZoneEnemiesRatio
+// Name: DEC_KnowledgeFunctions::ComputeEnemiesRatio
 // Created: NLD 2007-04-19
 // -----------------------------------------------------------------------------
-template< typename T, typename U >
-float DEC_KnowledgeFunctions::_ComputeZoneEnemiesRatio( const T& caller, const U& zone, bool unloaded )
+template< typename T, typename B >
+float DEC_KnowledgeFunctions::ComputeEnemiesRatio( const T& caller, const B& boundaries, bool unloaded )
 {
     uint nNbrTotalLivingEnemies    = 0;
     uint nNbrSelectedLivingEnemies = 0;
@@ -228,8 +228,7 @@ float DEC_KnowledgeFunctions::_ComputeZoneEnemiesRatio( const T& caller, const U
     for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
     {
         const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
-
-        if( !knowledge.IsDead() && zone.IsInside( knowledge.GetPosition() ) )
+        if( !knowledge.IsDead() && boundaries.IsInside( knowledge.GetPosition() ) )
         {
             ++ nNbrTotalLivingEnemies;
             if( knowledge.IsHuman() == unloaded )
@@ -242,75 +241,67 @@ float DEC_KnowledgeFunctions::_ComputeZoneEnemiesRatio( const T& caller, const U
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::ComputeFuseauUnloadedEnemiesRatio
+// Name: DEC_KnowledgeFunctions::ComputeUnloadedEnemiesRatio
 // Created: NLD 2007-04-19
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::ComputeFuseauUnloadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
+void DEC_KnowledgeFunctions::ComputeUnloadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
 {
-    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
-    const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau );
-    assert( pFuseau );
-
-    call.GetResult().SetValue( _ComputeZoneEnemiesRatio( caller, *pFuseau, true ) );
+    if( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) )
+    {
+        if( const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau ) )
+            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *pFuseau, true ) );
+    }
+    else if( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) )
+    {
+        if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
+            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *location, true ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::ComputeFuseauLoadedEnemiesRatio
+// Name: DEC_KnowledgeFunctions::ComputeLoadedEnemiesRatio
 // Created: NLD 2007-04-19
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::ComputeFuseauLoadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
+void DEC_KnowledgeFunctions::ComputeLoadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
 {
-    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
-    const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau );
-    assert( pFuseau );
-
-    call.GetResult().SetValue( _ComputeZoneEnemiesRatio( caller, *pFuseau, false ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::ComputeLocationUnloadedEnemiesRatio
-// Created: NLD 2007-11-05
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_KnowledgeFunctions::ComputeLocationUnloadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
-{
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    const TER_Localisation* pLocalisation = call.GetParameter( 0 ).ToUserPtr( pLocalisation );
-    assert( pLocalisation );
-
-    call.GetResult().SetValue( _ComputeZoneEnemiesRatio( caller, *pLocalisation, true ) );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::ComputeLocationLoadedEnemiesRatio
-// Created: NLD 2007-11-05
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_KnowledgeFunctions::ComputeLocationLoadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
-{
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    const TER_Localisation* pLocalisation = call.GetParameter( 0 ).ToUserPtr( pLocalisation );
-    assert( pLocalisation );
-
-    call.GetResult().SetValue( _ComputeZoneEnemiesRatio( caller, *pLocalisation, false ) );
+    if( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) )
+    {
+        if( const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau ) )
+            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *pFuseau, false ) );
+    }
+    else if( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) )
+    {
+        if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
+            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *location, false ) );
+    }
 }
 
 namespace 
 {
     template< typename T >
-    struct CompareFuseauEnemies
+    struct CompareBoundariesEnemies
     {
-        CompareFuseauEnemies( const T& caller, bool unloaded )
+        CompareBoundariesEnemies( const T& caller, bool unloaded )
             : pCaller_( &caller ), unloaded_( unloaded ) {}
         bool operator()( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
         {
-            MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
-            MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
-
-            return DEC_KnowledgeFunctions::_ComputeZoneEnemiesRatio( *pCaller_, *pFuseau1, unloaded_ )
-                 < DEC_KnowledgeFunctions::_ComputeZoneEnemiesRatio( *pCaller_, *pFuseau2, unloaded_ );
+            if( DEC_Tools::CheckTypeFuseau( *dia1 ) && DEC_Tools::CheckTypeFuseau( *dia2 ) )
+            {
+                MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
+                MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
+                return DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *pFuseau1, unloaded_ )
+                     < DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *pFuseau2, unloaded_ );
+            }
+            else if( DEC_Tools::CheckTypeLocalisation( *dia1 ) && DEC_Tools::CheckTypeLocalisation( *dia2 ) )
+            {
+                TER_Localisation* location1 = dia1->ToUserPtr( location1 );
+                TER_Localisation* location2 = dia2->ToUserPtr( location2 );
+                return DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *location1, unloaded_ )
+                     < DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *location2, unloaded_ );
+            }
+            return false;
         }
 
         const T* pCaller_;
@@ -319,36 +310,31 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_KnowledgeFunctions::SortFuseauxAccordingToUnloadedEnemies
+// Name: DEC_KnowledgeFunctions::SortAccordingToUnloadedEnemies
 // Created: NLD 2007-04-19
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::SortFuseauxAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller )
+void DEC_KnowledgeFunctions::SortAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller )
 {
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
 
     call.GetResult() = call.GetParameter( 0 );
     
-    T_ObjectVariableVector& fuseaux = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( fuseaux.begin(), fuseaux.end(), CompareFuseauEnemies< MIL_Automate >( caller, true ) );
+    T_ObjectVariableVector& boundaries = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
+    std::sort( boundaries.begin(), boundaries.end(), CompareBoundariesEnemies< MIL_Automate >( caller, true ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::SortFuseauxAccordingToLoadedEnemies
+// Name: DEC_KnowledgeFunctions::SortAccordingToLoadedEnemies
 // Created: AGE 2007-10-16
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_KnowledgeFunctions::SortFuseauxAccordingToLoadedEnemies( DIA_Call_ABC& call, const T& caller )
+void DEC_KnowledgeFunctions::SortAccordingToLoadedEnemies( DIA_Call_ABC& call, const T& caller )
 {
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
 
     call.GetResult() = call.GetParameter( 0 );
-    T_ObjectVariableVector& fuseaux = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( fuseaux.begin(), fuseaux.end(), CompareFuseauEnemies< MIL_Automate >( caller, false ) );
+    
+    T_ObjectVariableVector& boundaries = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
+    std::sort( boundaries.begin(), boundaries.end(), CompareBoundariesEnemies< MIL_Automate >( caller, false ) );
 }
-
-//template< typename T > static void ComputeFuseauUnloadedEnemyIntelligenceRatio  ( DIA_Call_ABC& call, const T& caller );
-//template< typename T > static void ComputeFuseauLoadedEnemyIntelligenceRatio    ( DIA_Call_ABC& call, const T& caller );
-//template< typename T > static void ComputeLocationUnloadedEnemyIntelligenceRatio( DIA_Call_ABC& call, const T& caller );
-//template< typename T > static void ComputeLocationLoadedEnemyIntelligencesRatio ( DIA_Call_ABC& call, const T& caller );
-

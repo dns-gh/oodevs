@@ -9,7 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_IntelligenceOrder.h"
+#include "MIL_Fuseau.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "game_asn/generated/Intelligence.h"
+#include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_IntelligenceOrder constructor
@@ -49,4 +52,44 @@ void MIL_IntelligenceOrder::Serialize( ASN1T_Intelligence& asn ) const
     asn.location  = position_;
     asn.diplomacy = diplomacy_;
     asn.formation = formation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntelligenceOrder::IsInside
+// Created: SBO 2007-11-13
+// -----------------------------------------------------------------------------
+bool MIL_IntelligenceOrder::IsInside( const MIL_Fuseau& fuseau ) const
+{
+    MT_Vector2D pos;
+    MIL_Tools::ConvertCoordMosToSim( position_, pos );
+    return fuseau.IsInside( pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntelligenceOrder::IsInside
+// Created: SBO 2007-11-13
+// -----------------------------------------------------------------------------
+bool MIL_IntelligenceOrder::IsInside( const TER_Localisation& location ) const
+{
+    MT_Vector2D pos;
+    MIL_Tools::ConvertCoordMosToSim( position_, pos );
+    return location.IsInside( pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntelligenceOrder::IsEmbarked
+// Created: SBO 2007-11-13
+// -----------------------------------------------------------------------------
+bool MIL_IntelligenceOrder::IsEmbarked() const
+{
+    return embarked_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntelligenceOrder::GetLevel
+// Created: SBO 2007-11-13
+// -----------------------------------------------------------------------------
+ASN1T_EnumNatureLevel MIL_IntelligenceOrder::GetLevel() const
+{
+    return level_;
 }

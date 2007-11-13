@@ -30,6 +30,7 @@
 #include "Decision/Functions/DEC_PathFunctions.h"
 #include "Decision/Functions/DEC_LogisticFunctions.h"
 #include "Decision/Functions/DEC_ObjectFunctions.h"
+#include "Decision/Functions/DEC_IntelligenceFunctions.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Specialisations/ASA/MIL_AutomateTypeASA.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
@@ -346,13 +347,17 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetDangerousEnemiesInZoneOfPion       < MIL_Automate >, "DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetRapForGlobal                                       , "DEC_RapportDeForceGlobal"                                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetPopulations                        < MIL_Automate >, "DEC_Connaissances_Populations"                              );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeFuseauUnloadedEnemiesRatio     < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisDebarquesDansFuseau"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeFuseauLoadedEnemiesRatio       < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisEmbarquesDansFuseau"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeLocationUnloadedEnemiesRatio   < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisDebarquesDansZone"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeLocationLoadedEnemiesRatio     < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisEmbarquesDansZone"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeUnloadedEnemiesRatio           < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisDebarquesDansZone"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeLoadedEnemiesRatio             < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisEmbarquesDansZone"      );
 
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortFuseauxAccordingToUnloadedEnemies < MIL_Automate >, "DEC_Connaissances_TrierFuseauxSelonPresenceEnnemisDebarques" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortFuseauxAccordingToLoadedEnemies   < MIL_Automate >, "DEC_Connaissances_TrierFuseauxSelonPresenceEnnemisEmbarques" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortAccordingToUnloadedEnemies        < MIL_Automate >, "DEC_Connaissances_TrierZonesSelonPresenceEnnemisDebarques"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortAccordingToLoadedEnemies          < MIL_Automate >, "DEC_Connaissances_TrierZonesSelonPresenceEnnemisEmbarques"  );
+
+    // Intelligence
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::ComputeUnloadedEnemiesRatio                           , "DEC_Rens_PourcentageEnnemisDebarquesDansZone"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::ComputeLoadedEnemiesRatio                             , "DEC_Rens_PourcentageEnnemisEmbarquesDansZone"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::SortAccordingToUnloadedEnemies                        , "DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::SortAccordingToLoadedEnemies                          , "DEC_Rens_TrierZonesSelonPresenceEnnemisEmbarques"  );
 
     // RCS
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_Automate >, "DEC_RC"      );
