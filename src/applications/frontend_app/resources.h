@@ -14,9 +14,14 @@
 
 DECLARE_ICON( exercise_create );
 DECLARE_ICON( exercise_edit );
+DECLARE_ICON( exercise_start );
+DECLARE_ICON( exercise_restart );
+DECLARE_ICON( exercise_join );
 DECLARE_ICON( terrain_create );
 DECLARE_ICON( data_create );
 DECLARE_ICON( data_edit );
+DECLARE_ICON( analyse_create );
+DECLARE_ICON( analyse_join );
 DECLARE_ICON( banner_left );
 DECLARE_ICON( banner_fill );
 DECLARE_ICON( banner_right );

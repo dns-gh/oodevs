@@ -88,7 +88,7 @@ QAction& Actions::EditExercise()
 QAction& Actions::StartExercise()
 {
     QAction& result = CreateAction( tr( "Start exercise" ), "Start exercise" );
-    result.setIconSet( MAKE_PIXMAP( data_create ) ); // $$$$ AGE 2007-10-10: 
+    result.setIconSet( MAKE_PIXMAP( exercise_start ) );
     result.setToolTip( tr( "Start a new simulation session using an existing exercise" ) );
     return result;
 }
@@ -100,7 +100,7 @@ QAction& Actions::StartExercise()
 QAction& Actions::RestartExercise()
 {
     QAction& result = CreateAction( tr( "Restart exercise" ), "Restart exercise" );
-    result.setIconSet( MAKE_PIXMAP( data_create ) ); // $$$$ AGE 2007-10-10: 
+    result.setIconSet( MAKE_PIXMAP( exercise_restart ) );
     result.setToolTip( tr( "Restart a simulation session using an existing checkpoint" ) );
     return result;
 }
@@ -112,7 +112,7 @@ QAction& Actions::RestartExercise()
 QAction& Actions::JoinExercise()
 {
     QAction& result = CreateAction( tr( "Join exercise" ), "Join exercise" );
-    result.setIconSet( MAKE_PIXMAP( data_create ) ); // $$$$ AGE 2007-10-10: 
+    result.setIconSet( MAKE_PIXMAP( exercise_join ) );
     result.setToolTip( tr( "Join a simulation session" ) );
     return result;
 }
@@ -124,7 +124,7 @@ QAction& Actions::JoinExercise()
 QAction& Actions::StartAnalysis()
 {
     QAction& result = CreateAction( tr( "Start analysis" ), "Start analysis" );
-    result.setIconSet( MAKE_PIXMAP( data_create ) ); // $$$$ AGE 2007-10-10: 
+    result.setIconSet( MAKE_PIXMAP( analyse_create ) );
     result.setToolTip( tr( "Start the analysis of a previous simulation session" ) );
     return result;
 }
@@ -136,7 +136,7 @@ QAction& Actions::StartAnalysis()
 QAction& Actions::JoinAnalysis()
 {
     QAction& result = CreateAction( tr( "Join analysis" ), "Join analysis" );
-    result.setIconSet( MAKE_PIXMAP( data_edit ) ); // $$$$ AGE 2007-10-10: 
+    result.setIconSet( MAKE_PIXMAP( analyse_join ) );
     result.setToolTip( tr( "Join an analysis session" ) );
     return result;
 }
