@@ -44,6 +44,14 @@ public:
 
     template< typename T > static void ComputeFuseauUnloadedEnemiesRatio    ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void ComputeFuseauLoadedEnemiesRatio      ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void ComputeLocationUnloadedEnemiesRatio  ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void ComputeLocationLoadedEnemiesRatio    ( DIA_Call_ABC& call, const T& caller );
+
+//    template< typename T > static void ComputeFuseauUnloadedEnemyIntelligenceRatio  ( DIA_Call_ABC& call, const T& caller );
+//    template< typename T > static void ComputeFuseauLoadedEnemyIntelligenceRatio    ( DIA_Call_ABC& call, const T& caller );
+//    template< typename T > static void ComputeLocationUnloadedEnemyIntelligenceRatio( DIA_Call_ABC& call, const T& caller );
+//    template< typename T > static void ComputeLocationLoadedEnemyIntelligencesRatio ( DIA_Call_ABC& call, const T& caller );
+
     template< typename T > static void SortFuseauxAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void SortFuseauxAccordingToLoadedEnemies  ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetLivingEnemiesPerceivedByPion      ( DIA_Call_ABC& call, const T& caller );
@@ -71,10 +79,12 @@ public:
 
     //! @name Tools
     //@{
-    template< typename T > static float _ComputeFuseauEnemiesRatio( const T& caller, const MIL_Fuseau& fuseau, bool unloaded );
+    template< typename T, typename U > static float _ComputeZoneEnemiesRatio          ( const T& caller, const U& zone, bool unloaded );
+//    template< typename T, typename U > static float _ComputeZoneEnemyIntelligenceRatio( const T& caller, const U& zone, bool unloaded );
     //@}
 };
 
 #include "DEC_KnowledgeFunctions.inl"
 
 #endif // __DEC_KnowledgeFunctions_h_
+

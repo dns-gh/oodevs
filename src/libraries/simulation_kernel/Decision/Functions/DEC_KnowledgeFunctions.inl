@@ -215,11 +215,11 @@ void DEC_KnowledgeFunctions::GetPopulations( DIA_Call_ABC& call, const T& caller
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static float DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio
+// Name: template< typename T > static float DEC_KnowledgeFunctions::_ComputeZoneEnemiesRatio
 // Created: NLD 2007-04-19
 // -----------------------------------------------------------------------------
-template< typename T >
-float DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( const T& caller, const MIL_Fuseau& fuseau, bool unloaded )
+template< typename T, typename U >
+float DEC_KnowledgeFunctions::_ComputeZoneEnemiesRatio( const T& caller, const U& zone, bool unloaded )
 {
     uint nNbrTotalLivingEnemies    = 0;
     uint nNbrSelectedLivingEnemies = 0;
@@ -229,7 +229,7 @@ float DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( const T& caller, const
     {
         const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
 
-        if( !knowledge.IsDead() && fuseau.IsInside( knowledge.GetPosition() ) )
+        if( !knowledge.IsDead() && zone.IsInside( knowledge.GetPosition() ) )
         {
             ++ nNbrTotalLivingEnemies;
             if( knowledge.IsHuman() == unloaded )
@@ -252,7 +252,7 @@ void DEC_KnowledgeFunctions::ComputeFuseauUnloadedEnemiesRatio( DIA_Call_ABC& ca
     const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau );
     assert( pFuseau );
 
-    call.GetResult().SetValue( _ComputeFuseauEnemiesRatio( caller, *pFuseau, true ) );
+    call.GetResult().SetValue( _ComputeZoneEnemiesRatio( caller, *pFuseau, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,7 +266,35 @@ void DEC_KnowledgeFunctions::ComputeFuseauLoadedEnemiesRatio( DIA_Call_ABC& call
     const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau );
     assert( pFuseau );
 
-    call.GetResult().SetValue( _ComputeFuseauEnemiesRatio( caller, *pFuseau, false ) );
+    call.GetResult().SetValue( _ComputeZoneEnemiesRatio( caller, *pFuseau, false ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::ComputeLocationUnloadedEnemiesRatio
+// Created: NLD 2007-11-05
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::ComputeLocationUnloadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
+{
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+    const TER_Localisation* pLocalisation = call.GetParameter( 0 ).ToUserPtr( pLocalisation );
+    assert( pLocalisation );
+
+    call.GetResult().SetValue( _ComputeZoneEnemiesRatio( caller, *pLocalisation, true ) );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::ComputeLocationLoadedEnemiesRatio
+// Created: NLD 2007-11-05
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::ComputeLocationLoadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
+{
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+    const TER_Localisation* pLocalisation = call.GetParameter( 0 ).ToUserPtr( pLocalisation );
+    assert( pLocalisation );
+
+    call.GetResult().SetValue( _ComputeZoneEnemiesRatio( caller, *pLocalisation, false ) );
 }
 
 namespace 
@@ -281,8 +309,8 @@ namespace
             MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
             MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
 
-            return DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( *pCaller_, *pFuseau1, unloaded_ )
-                 < DEC_KnowledgeFunctions::_ComputeFuseauEnemiesRatio( *pCaller_, *pFuseau2, unloaded_ );
+            return DEC_KnowledgeFunctions::_ComputeZoneEnemiesRatio( *pCaller_, *pFuseau1, unloaded_ )
+                 < DEC_KnowledgeFunctions::_ComputeZoneEnemiesRatio( *pCaller_, *pFuseau2, unloaded_ );
         }
 
         const T* pCaller_;
@@ -318,4 +346,9 @@ void DEC_KnowledgeFunctions::SortFuseauxAccordingToLoadedEnemies( DIA_Call_ABC& 
     T_ObjectVariableVector& fuseaux = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
     std::sort( fuseaux.begin(), fuseaux.end(), CompareFuseauEnemies< MIL_Automate >( caller, false ) );
 }
+
+//template< typename T > static void ComputeFuseauUnloadedEnemyIntelligenceRatio  ( DIA_Call_ABC& call, const T& caller );
+//template< typename T > static void ComputeFuseauLoadedEnemyIntelligenceRatio    ( DIA_Call_ABC& call, const T& caller );
+//template< typename T > static void ComputeLocationUnloadedEnemyIntelligenceRatio( DIA_Call_ABC& call, const T& caller );
+//template< typename T > static void ComputeLocationLoadedEnemyIntelligencesRatio ( DIA_Call_ABC& call, const T& caller );
 
