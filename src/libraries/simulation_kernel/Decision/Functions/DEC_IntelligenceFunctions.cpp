@@ -20,13 +20,14 @@ namespace
     template< typename T >
     struct IntelligenceStatusAccumulator : public MIL_IntelligenceOrdersVisitor_ABC
     {
-        IntelligenceStatusAccumulator( const T& boundaries, bool loaded ) : boundaries_( &boundaries ), loaded_( loaded ) {}
+        IntelligenceStatusAccumulator( const T& boundaries, bool loaded )
+            : boundaries_( &boundaries ), loaded_( loaded ), count_( 0 ), sum_( 0 ) {}
 
         virtual void Visit( const MIL_IntelligenceOrder& intelligence )
         {
             if( intelligence.IsInside( *boundaries_ ) )
             {
-                const unsigned int factor = (unsigned int)intelligence.GetLevel() * 4;
+                const unsigned int factor = (unsigned int)std::pow( 4, (unsigned int)intelligence.GetLevel() );
                 count_ += factor;
                 if( intelligence.IsEmbarked() == loaded_ )
                     sum_ += factor;
@@ -44,7 +45,7 @@ namespace
     {
         IntelligenceStatusAccumulator< T > accu( boundaries, embarked );
         caller.GetOrderManager().Accept( accu );
-        return accu.count_ == 0 ? 0. : float( accu.sum_ ) / float( accu.count_ );
+        return accu.count_ == 0 ? 0.f : float( accu.sum_ ) / float( accu.count_ );
     }
 
     void ComputeEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller, bool embarked )
@@ -84,7 +85,7 @@ namespace
 {
     struct CompareBoundariesEnemies
     {
-        CompareBoundariesEnemies( const MIL_Automate& caller, bool unloaded ) : pCaller_( &caller ), unloaded_( unloaded ) {}
+        CompareBoundariesEnemies( const MIL_Automate& caller, bool loaded ) : pCaller_( &caller ), loaded_( loaded ) {}
 
         bool operator()( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
         {
@@ -92,21 +93,21 @@ namespace
             {
                 MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
                 MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
-                return ComputeEnemiesRatio( *pCaller_, *pFuseau1, unloaded_ )
-                     < ComputeEnemiesRatio( *pCaller_, *pFuseau2, unloaded_ );
+                return ComputeEnemiesRatio( *pCaller_, *pFuseau1, loaded_ )
+                     < ComputeEnemiesRatio( *pCaller_, *pFuseau2, loaded_ );
             }
             else if( DEC_Tools::CheckTypeLocalisation( *dia1 ) && DEC_Tools::CheckTypeLocalisation( *dia2 ) )
             {
                 TER_Localisation* location1 = dia1->ToUserPtr( location1 );
                 TER_Localisation* location2 = dia2->ToUserPtr( location2 );
-                return ComputeEnemiesRatio( *pCaller_, *location1, unloaded_ )
-                     < ComputeEnemiesRatio( *pCaller_, *location2, unloaded_ );
+                return ComputeEnemiesRatio( *pCaller_, *location1, loaded_ )
+                     < ComputeEnemiesRatio( *pCaller_, *location2, loaded_ );
             }
             return false;
         }
 
         const MIL_Automate* pCaller_;
-        bool unloaded_;
+        bool loaded_;
     };    
 }
 
@@ -119,7 +120,7 @@ void DEC_IntelligenceFunctions::SortAccordingToUnloadedEnemies( DIA_Call_ABC& ca
     assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
     call.GetResult() = call.GetParameter( 0 );   
     T_ObjectVariableVector& boundariesList = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( boundariesList.begin(), boundariesList.end(), CompareBoundariesEnemies( caller, true ) );
+    std::sort( boundariesList.begin(), boundariesList.end(), CompareBoundariesEnemies( caller, false ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,5 +132,5 @@ void DEC_IntelligenceFunctions::SortAccordingToLoadedEnemies( DIA_Call_ABC& call
     assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
     call.GetResult() = call.GetParameter( 0 );
     T_ObjectVariableVector& boundariesList = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( boundariesList.begin(), boundariesList.end(), CompareBoundariesEnemies( caller, false ) );
+    std::sort( boundariesList.begin(), boundariesList.end(), CompareBoundariesEnemies( caller, true ) );
 }
