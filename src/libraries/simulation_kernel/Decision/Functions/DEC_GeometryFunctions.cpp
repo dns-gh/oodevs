@@ -1544,6 +1544,26 @@ void DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone( DIA_Call_ABC& call 
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone
+// Created: SBO 2007-11-14
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+    if( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) )
+    {
+        if( const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau ) )
+            call.GetResult().SetValue( pFuseau->ComputeOpenTerrainRatio() );
+    }
+    else if( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) )
+    {
+        if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
+            call.GetResult().SetValue( ComputeOpenTerrainRatio( *location ) );
+    }
+}
+
+
 namespace {
 
     bool CompareTerrainOpening( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
