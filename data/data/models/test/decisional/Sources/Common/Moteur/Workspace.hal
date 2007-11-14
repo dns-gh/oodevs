@@ -1,5 +1,5 @@
 signatures
-{
+{ 
     // Geometrie
     U /*T_ListePoints*/                 DEC_Geometrie_DecouperListePoints              ( U /*T_ListePions*/, R /*nb parts*/ ); // Effacer résultat
     U /*T_ListePoints*/                 DEC_Geometrie_DecouperItineraire               ( U /*T_Itineraire*/, R /*nb parts*/ ); // Effacer résultat
@@ -30,8 +30,8 @@ signatures
     U /*T_Localisation*/                DEC_Geometrie_CreerLocalisationCercle          ( U /*T_Point centre*/, R /*rayon*/ );
     S /*T_ListePions*/                  DEC_Geometrie_PionEstCoordonne                 ( A /*T_Pion*/, S /*T_ListePions*/, R /*dist min*/ ); // Retourne les pions de la liste avec lesquels le pion n'est pas coordonné
     R                                   DEC_Geometrie_AireLocalisation                 ( U /*T_Localisation*/ );
-    R                                   DEC_Geometrie_PourcentageTerrainCompartimente  ( U /*T_Fuseau*/ );
-    S /*T_ListeFuseaux*/                DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain( S /*T_ListeFuseaux*/ ); // Retourne liste moins ouvert -> plus ouvert
+    R                                   DEC_Geometrie_PourcentageTerrainCompartimente  ( U /*T_Fuseau ou T_Localisation*/ );
+    S /*T_ListeFuseaux/Localisations*/  DEC_Geometrie_TrierZonesSelonOuvertureTerrain( S /*T_ListeFuseaux ou T_ListLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
     B                                   DEC_Geometrie_EstLocalisationDansFuseau        ( U /*T_Localisation*/, U /*T_Fuseau*/ );
     U /*T_Localisation*/                DEC_Geometrie_ConvertirFuseauEnLocalisation    ( U /*T_Fuseau*/ );
     U /*T_Point*/                       DEC_Geometrie_CalculerBarycentreAutomates      ( S /*T_ListeAutomates*/ );   

@@ -45,9 +45,9 @@ signatures
     V                                         A::DEC_Warning( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );    
     
     // Test / debug 
-    V                                         A::DEC_Trace             ( X );
-    V                                         A::DEC_DecisionalState   ( X, X );    
+    V                                         A::DEC_Trace             ( X );    
     V                                         A::DEC_Debug             ( X );
+    V                                         A::DEC_DecisionalState   ( X, X );
     V                                         A::DEC_DebugAffichePoint ( U /*T_Point*/ );
     V                                         A::DEC_DebugAffichePoints( U /*T_ListePoints*/ );        
 }

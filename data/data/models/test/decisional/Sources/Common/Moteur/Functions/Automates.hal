@@ -2,7 +2,7 @@
 // globals
 // *****************************************************************************
 signatures
-{   
+{     
     // RC
     V                                A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
     V                                A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
@@ -70,13 +70,10 @@ signatures
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion     ( A /*T_Pion*/ );    
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion  ( A /*T_Pion*/, U /*T_Localisation*/ );
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesAmiesDansZone                      ( U /*T_Localisation*/ );            
-    R                                A::DEC_Connaissances_PourcentageEnnemisDebarquesDansFuseau    ( U /*T_Fuseau*/ );
-    R                                A::DEC_Connaissances_PourcentageEnnemisEmbarquesDansFuseau    ( U /*T_Fuseau*/ );    
-    R                                A::DEC_Connaissances_PourcentageEnnemisDebarquesDansZone      ( U /*T_Localisation*/ );
-    R                                A::DEC_Connaissances_PourcentageEnnemisEmbarquesDansZone      ( U /*T_Localisation*/ );    
-    S /*T_ListeFuseaux*/             A::DEC_Connaissances_TrierFuseauxSelonPresenceEnnemisDebarques( S /*T_ListeFuseaux*/ ); // Retourne liste moins ouvert -> plus ouvert
-    S /*T_ListeFuseaux*/             A::DEC_Connaissances_TrierFuseauxSelonPresenceEnnemisEmbarques( S /*T_ListeFuseaux*/ ); // Retourne liste moins ouvert -> plus ouvert    
-           
+    R                                A::DEC_Connaissances_PourcentageEnnemisDebarquesDansZone      ( U /*T_Fuseau ou T_Localisation*/ );
+    R                                A::DEC_Connaissances_PourcentageEnnemisEmbarquesDansZone      ( U /*T_Fuseau ou T_Localisation*/ );               
+    S /*T_ListeFuseaux/Loc*/         A::DEC_Connaissances_TrierZonesSelonPresenceEnnemisDebarques  ( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); 
+    S /*T_ListeFuseaux/Loc*/         A::DEC_Connaissances_TrierZonesSelonPresenceEnnemisEmbarques  ( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
     I /*E_NiveauPerception*/         A::DEC_ConnaissanceAgent_NiveauPerceptionMax                ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne le niveau de perception MAX d'une connaissance (le plus haut niveau ayant été associé à cette connaissance depuis sa création)    
     R                                A::DEC_ConnaissanceAgent_EtatOps                            ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1
     R                                A::DEC_ConnaissanceAgent_EtatOpsMajeur                      ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1    
@@ -123,8 +120,6 @@ signatures
     V                                A::DEC_Geometrie_StopCalculLignesAvantEtArriere           ( U /*T_CalculLignesAvantArriere*/ );  
     R                                A::DEC_Geometrie_CalculerDistanceLigneAvant               ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion ou T_Automate*/ );
     R                                A::DEC_Geometrie_CalculerDistanceLigneArriere             ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion ou T_Automate*/ );
-    R                                A::DEC_Geometrie_CalculerDistancePointLigneAvant          ( U /*T_CalculLignesAvantArriere*/, U /*T_Point*/ );
-    R                                A::DEC_Geometrie_CalculerDistancePointLigneArriere        ( U /*T_CalculLignesAvantArriere*/, U /*T_Point*/ );        
     B                                A::DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( U /*T_Localisation localisation*/, U /*T_Point result*/ );
     B                                A::DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau   ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
     A                                A::DEC_Geometrie_PionDevant                               ( S /*T_ListePions*/, U /*T_Direction*/ );
@@ -174,12 +169,20 @@ signatures
     B                                    A::DEC_ConnaissancePopulation_EstDansZone( U /*T_ConnaissancePopulation*/, U /*T_Localisation*/ );
     S /*T_ListeConnaissancesPopulation*/ A::DEC_Connaissances_Populations         ();
 
+    // Renseignement eni
+    R                                  A::DEC_Rens_PourcentageEnnemisDebarquesDansZone    ( U /*T_Fuseau ou T_Localisation*/ );
+    R                                  A::DEC_Rens_PourcentageEnnemisEmbarquesDansZone    ( U /*T_Fuseau ou T_Localisation*/ );
+    S /*T_ListeFuseaux/Localisations*/ A::DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert 
+    S /*T_ListeFuseaux/Localisations*/ A::DEC_Rens_TrierZonesSelonPresenceEnnemisEmbarques( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
+
+
+
     // Debug
     V                                A::DEC_DebugAffichePoint ( U /*T_Point*/ );
     V                                A::DEC_DebugAffichePoints( U /*T_ListePoints*/ );
     V                                A::DEC_Debug( X );
-    V                                A::DEC_Trace( X ); 
-    V                                A::DEC_DecisionalState( X, X );   
+    V                                A::DEC_Trace( X );    
+    V                                A::DEC_DecisionalState   ( X, X );
 }
 
 
