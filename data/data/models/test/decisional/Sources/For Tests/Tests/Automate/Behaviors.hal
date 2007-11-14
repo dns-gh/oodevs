@@ -186,10 +186,10 @@ behavior MIS_Automate_CDT_LOG_SeDeployer( T_Mission_Automate_LOG_SeDeployer miss
 {
     if( mission.positionDeploiement_ != 0 )
     {
-        persistent T_CalculLignesAvantArriere tacheTmp = DEC_Geometrie_StartCalculLignesAvantEtArriere( DEC_Automate_PionsAvecPC() );
-        float rProut  = DEC_Geometrie_CalculerDistancePointLigneAvant  ( tacheTmp, mission.positionDeploiement_ );
-        float rProut2 = DEC_Geometrie_CalculerDistancePointLigneArriere( tacheTmp, mission.positionDeploiement_ );
-        DEC_Debug( "Distance ligne avant : " + FloatToString( rProut ) + " - Distance ligne arrière : " + FloatToString( rProut2 ) );
+        //persistent T_CalculLignesAvantArriere tacheTmp = DEC_Geometrie_StartCalculLignesAvantEtArriere( DEC_Automate_PionsAvecPC() );
+        //float rProut  = DEC_Geometrie_CalculerDistancePointLigneAvant  ( tacheTmp, mission.positionDeploiement_ );
+        //float rProut2 = DEC_Geometrie_CalculerDistancePointLigneArriere( tacheTmp, mission.positionDeploiement_ );
+        //DEC_Debug( "Distance ligne avant : " + FloatToString( rProut ) + " - Distance ligne arrière : " + FloatToString( rProut2 ) );
     }
 }
 
