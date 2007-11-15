@@ -51,12 +51,12 @@ Section "!Basic"
     SectionIn RO
     
     SetOutPath "$INSTDIR\applications"
-    File "${OUTDIR}\release\applications\adaptation_app\*.exe"
-    File "${OUTDIR}\release\applications\gaming_app\*.exe"
-    File "${OUTDIR}\release\applications\preparation_app\*.exe"
-    File "${OUTDIR}\release\applications\simulation_app\*.exe"
-    File "${OUTDIR}\release\applications\replayer_app\*.exe"
-    File "${OUTDIR}\release\applications\frontend_app\*.exe"
+    ;File "${OUTDIR}\release\applications\adaptation_app\*.exe"
+    ;File "${OUTDIR}\release\applications\gaming_app\*.exe"
+    ;File "${OUTDIR}\release\applications\preparation_app\*.exe"
+    ;File "${OUTDIR}\release\applications\simulation_app\*.exe"
+    ;File "${OUTDIR}\release\applications\replayer_app\*.exe"
+    ;File "${OUTDIR}\release\applications\frontend_app\*.exe"
     ;File /nonfatal "${OUTDIR}\release\applications\gaming_app\*.qm"
     ;File "${OUTDIR}\release\applications\adaptation_app\translator\*.qm"
     ;File "${LIBDIR}\clients_gui\*.qm"
@@ -109,7 +109,6 @@ SectionEnd
 SectionGroup "Main models"
 
 Section "Decisional models"
-    SectionIn RO
     SetOutPath "$INSTDIR\data\models\main\decisional"
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\*.xml"
@@ -136,7 +135,6 @@ SectionGroupEnd
 SectionGroup "ADA models"
 
 Section "Decisional models"
-    SectionIn RO
     SetOutPath "$INSTDIR\data\models\ada\decisional"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\*.xml"
@@ -170,19 +168,18 @@ SectionGroupEnd
 ;--------------------------------
 SectionGroup "Civilian models"
 
-Section "Decisional models"
-    SectionIn RO
+Section /o "Decisional models"
     SetOutPath "$INSTDIR\data\models\civilian\decisional"
     File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\*.xml"
 SectionEnd    
 
-Section "Decisional models sources"
+Section /o "Decisional models sources"
     SetOutPath "$INSTDIR\data\models\civilian\decisional"
     File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Sources"
 SectionEnd
 
-Section "Physical models"
+Section /o "Physical models"
     SetOutPath "$INSTDIR\data\models\civilian\physical"
     File /r /x ".svn" "${DATADIR}\data\models\civilian\physical"
     
@@ -190,7 +187,7 @@ Section "Physical models"
     File /r /x ".svn" "${DATADIR}\data\population"
 SectionEnd
 
-Section "Sample exercises"
+Section /o "Sample exercises"
     SetOutPath "$INSTDIR\exercises"
     File /r /x ".svn" "${DATADIR}\exercises\bruxelles"
 SectionEnd
