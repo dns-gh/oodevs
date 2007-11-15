@@ -126,8 +126,6 @@ Section "Exercises"
     File /r /x ".svn" "${DATADIR}\exercises\ADA - Freiner"
 SectionEnd
 
-SectionGroupEnd
-
 ;--------------------------------
 Section "Uninstaller files"
     SectionIn RO
