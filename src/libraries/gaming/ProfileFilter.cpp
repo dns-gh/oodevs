@@ -114,51 +114,38 @@ bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
     const TacticalHierarchies*      t = entity.Retrieve< TacticalHierarchies >();
     const CommunicationHierarchies* c = entity.Retrieve< CommunicationHierarchies >();
     const IntelligenceHierarchies*  i = entity.Retrieve< IntelligenceHierarchies >();
-    const Hierarchies* h = t;
-    if( ! h ) h = c;
-    if( ! h ) h = i;
 
-    // simple cases
-    if( ( h && h->IsSubordinateOf( *entity_ ) )
-     || ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
+    if( ( t && t->IsSubordinateOf( *entity_ ) )
+     || ( c && c->IsSubordinateOf( *entity_ ) )
+     || ( i && i->IsSubordinateOf( *entity_ ) ) )
+        return true;
+
+    if( ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
      || ( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) )
      || ( iHierarchies_ && iHierarchies_->IsSubordinateOf( entity ) ) )
         return true;
 
-    if( c && ! t && tHierarchies_ && ! cHierarchies_ )
-        return IsInMixedHierarchy( *c );
-    if( i && ! t && tHierarchies_ && ! iHierarchies_ )
-        return IsInMixedHierarchy( *i );
+    if( ! t && tHierarchies_ )
+        return ( c && IsChildSubordinateOf( *c, *tHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *tHierarchies_ ) );
+    if( ! c && cHierarchies_ )
+        return ( t && IsChildSubordinateOf( *t, *cHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *cHierarchies_ ) );
+    if( ! i && iHierarchies_ )
+        return ( t && IsChildSubordinateOf( *t, *iHierarchies_ ) ) || ( c && IsChildSubordinateOf( *c, *iHierarchies_ ) );
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsInMixedHierarchy
-// Created: AGE 2007-06-14
-// -----------------------------------------------------------------------------
-bool ProfileFilter::IsInMixedHierarchy( const kernel::CommunicationHierarchies& h ) const
-{
-    kernel::Iterator< const kernel::Entity_ABC& > children = h.CreateSubordinateIterator();
-    while( children.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& child = children.NextElement();
-        if( IsInHierarchy( child ) )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsInMixedHierarchy
+// Name: ProfileFilter::IsChildSubordinateOf
 // Created: SBO 2007-11-15
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsInMixedHierarchy( const kernel::IntelligenceHierarchies& i ) const
+template< typename D, typename U >
+bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
 {
-    kernel::Iterator< const kernel::Entity_ABC& > children = i.CreateSubordinateIterator();
+    kernel::Iterator< const kernel::Entity_ABC& > children = down.CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = children.NextElement();
-        if( IsInHierarchy( child ) )
+        if( child.Retrieve< U >() && IsInHierarchy( child ) )
             return true;
     }
     return false;

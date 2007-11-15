@@ -60,8 +60,8 @@ private:
     //! @name Helpers
     //@{
     bool IsInHierarchy( const kernel::Entity_ABC& entity ) const;
-    bool IsInMixedHierarchy( const kernel::CommunicationHierarchies& h ) const;
-    bool IsInMixedHierarchy( const kernel::IntelligenceHierarchies& i ) const;
+    template< typename D, typename U >
+    bool IsChildSubordinateOf( const D& down, const U& up ) const;
     //@}
 
 private:
