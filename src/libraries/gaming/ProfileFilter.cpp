@@ -11,6 +11,7 @@
 #include "ProfileFilter.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Controller.h"
 
 using namespace kernel;
@@ -25,6 +26,7 @@ ProfileFilter::ProfileFilter( kernel::Controllers& controllers, const kernel::Pr
      , entity_( controllers )
      , tHierarchies_( 0 )
      , cHierarchies_( 0 )
+     , iHierarchies_( 0 )
 {
     // NOTHING
 }
@@ -83,6 +85,7 @@ void ProfileFilter::SetFilter( const kernel::Entity_ABC& entity )
     entity_ = & entity;
     tHierarchies_ = entity.Retrieve< TacticalHierarchies >();
     cHierarchies_ = entity.Retrieve< CommunicationHierarchies >();
+    iHierarchies_ = entity.Retrieve< IntelligenceHierarchies >();
     controller_.Update( *(Profile_ABC*)this );
 }
 
@@ -95,6 +98,7 @@ void ProfileFilter::RemoveFilter()
     entity_ = 0;
     tHierarchies_ = 0;
     cHierarchies_ = 0;
+    iHierarchies_ = 0;
     controller_.Update( *(Profile_ABC*)this );
 }
 
@@ -109,17 +113,22 @@ bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
 
     const TacticalHierarchies*      t = entity.Retrieve< TacticalHierarchies >();
     const CommunicationHierarchies* c = entity.Retrieve< CommunicationHierarchies >();
+    const IntelligenceHierarchies*  i = entity.Retrieve< IntelligenceHierarchies >();
     const Hierarchies* h = t;
     if( ! h ) h = c;
+    if( ! h ) h = i;
 
     // simple cases
     if( ( h && h->IsSubordinateOf( *entity_ ) )
      || ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
-     || ( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) ) )
+     || ( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) )
+     || ( iHierarchies_ && iHierarchies_->IsSubordinateOf( entity ) ) )
         return true;
 
     if( c && ! t && tHierarchies_ && ! cHierarchies_ )
         return IsInMixedHierarchy( *c );
+    if( i && ! t && tHierarchies_ && ! iHierarchies_ )
+        return IsInMixedHierarchy( *i );
     return false;
 }
 
@@ -130,6 +139,22 @@ bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
 bool ProfileFilter::IsInMixedHierarchy( const kernel::CommunicationHierarchies& h ) const
 {
     kernel::Iterator< const kernel::Entity_ABC& > children = h.CreateSubordinateIterator();
+    while( children.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& child = children.NextElement();
+        if( IsInHierarchy( child ) )
+            return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsInMixedHierarchy
+// Created: SBO 2007-11-15
+// -----------------------------------------------------------------------------
+bool ProfileFilter::IsInMixedHierarchy( const kernel::IntelligenceHierarchies& i ) const
+{
+    kernel::Iterator< const kernel::Entity_ABC& > children = i.CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = children.NextElement();

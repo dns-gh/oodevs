@@ -20,6 +20,7 @@ namespace kernel {
     class Hierarchies;
     class TacticalHierarchies;
     class CommunicationHierarchies;
+    class IntelligenceHierarchies;
 }
 
 // =============================================================================
@@ -60,6 +61,7 @@ private:
     //@{
     bool IsInHierarchy( const kernel::Entity_ABC& entity ) const;
     bool IsInMixedHierarchy( const kernel::CommunicationHierarchies& h ) const;
+    bool IsInMixedHierarchy( const kernel::IntelligenceHierarchies& i ) const;
     //@}
 
 private:
@@ -70,6 +72,7 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     const kernel::TacticalHierarchies* tHierarchies_;
     const kernel::CommunicationHierarchies* cHierarchies_;
+    const kernel::IntelligenceHierarchies* iHierarchies_;
     //@}
 };
 
