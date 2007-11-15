@@ -33,7 +33,7 @@
 !endif
 
 Name "C-Sword"
-OutFile "${DISTDIR}\csword-installer.exe"
+OutFile "${DISTDIR}\csword-ada-installer.exe"
 InstallDir "$PROGRAMFILES\C-Sword"
 InstallDirRegKey HKLM "Software\Masa\C-Sword" "Install_Dir"
 
