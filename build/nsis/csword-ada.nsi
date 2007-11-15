@@ -32,14 +32,14 @@
     !define APPLICATIONSDIR "..\..\src\applications"
 !endif
 
-Name "C-Sword"
+Name "C-Sword-ADA"
 OutFile "${DISTDIR}\csword-ada-installer.exe"
-InstallDir "$PROGRAMFILES\C-Sword"
-InstallDirRegKey HKLM "Software\Masa\C-Sword" "Install_Dir"
+InstallDir "$PROGRAMFILES\C-Sword-ADA"
+InstallDirRegKey HKLM "Software\Masa\C-Sword-ADA" "Install_Dir"
 
 ;--------------------------------
 Function .onInit
-    System::Call 'kernel32::CreateMutexA(i 0, i 0, t "c-sword") i .r1 ?e'
+    System::Call 'kernel32::CreateMutexA(i 0, i 0, t "c-sword-ada") i .r1 ?e'
     Pop $R0
     StrCmp $R0 0 +3
         MessageBox MB_OK|MB_ICONEXCLAMATION "Installer already running"
@@ -99,10 +99,10 @@ Section "!Basic"
     File /r /x ".svn" "${DATADIR}\data\terrains"
        
     SetOutPath "$INSTDIR\applications"
-    WriteRegStr HKLM "Software\Masa\C-Sword" "Install_Dir" "$INSTDIR"
-    CreateDirectory "$SMPROGRAMS\C-Sword"
-    CreateShortCut "$SMPROGRAMS\C-Sword\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
-    CreateShortCut "$SMPROGRAMS\C-Sword\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe"
+    WriteRegStr HKLM "Software\Masa\C-Sword-ADA" "Install_Dir" "$INSTDIR"
+    CreateDirectory "$SMPROGRAMS\C-Sword-ADA"
+    CreateShortCut "$SMPROGRAMS\C-Sword-ADA\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
+    CreateShortCut "$SMPROGRAMS\C-Sword-ADA\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe"
 SectionEnd
 
 Section "Decisional models"
@@ -129,25 +129,25 @@ SectionEnd
 ;--------------------------------
 Section "Uninstaller files"
     SectionIn RO
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "DisplayName" "C-Sword"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "UninstallString" '"$INSTDIR\uninstall.exe"'
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "NoModify" 1
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "NoRepair" 1
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-ADA-Masa" "DisplayName" "C-Sword-ADA"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-ADA-Masa" "UninstallString" '"$INSTDIR\uninstall.exe"'
+    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-ADA-Masa" "NoModify" 1
+    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-ADA-Masa" "NoRepair" 1
     WriteUninstaller "uninstall.exe"
-    CreateShortCut "$SMPROGRAMS\C-Sword\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+    CreateShortCut "$SMPROGRAMS\C-Sword-ADA\Uninstall.lnk" "$INSTDIR\uninstall.exe"
 SectionEnd
 
 ;--------------------------------
 Section "Uninstall"
-    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa"
-    DeleteRegKey HKLM "Software\Masa\C-Sword"
+    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-ADA-Masa"
+    DeleteRegKey HKLM "Software\Masa\C-Sword-ADA"
     Delete "$INSTDIR\uninstall.exe"
     RmDir /r "$INSTDIR\applications"
     RmDir /r "$INSTDIR\data"
     RmDir /r "$INSTDIR\exercises"
     RmDir "$INSTDIR"
-    Delete "$SMPROGRAMS\C-Sword\Adaptation.lnk"
-    Delete "$SMPROGRAMS\C-Sword\Frontend.lnk"
-    Delete "$SMPROGRAMS\C-Sword\uninstall.lnk"
-    RmDir "$SMPROGRAMS\C-Sword"
+    Delete "$SMPROGRAMS\C-Sword-ADA\Adaptation.lnk"
+    Delete "$SMPROGRAMS\C-Sword-ADA\Frontend.lnk"
+    Delete "$SMPROGRAMS\C-Sword-ADA\uninstall.lnk"
+    RmDir "$SMPROGRAMS\C-Sword-ADA"
 SectionEnd
