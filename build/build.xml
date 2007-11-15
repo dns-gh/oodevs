@@ -477,7 +477,8 @@
     </target>
     
     <target name="installer" description="create the installer">
-        <nsis todir="${dist.dir}/current"/>
+        <nsis todir="${dist.dir}/current"/>        
+        <nsis todir="${dist.dir}/current name="csword-ada" script="csword-ada.nsi"/>
     </target>
 
     <!--
