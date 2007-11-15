@@ -97,11 +97,7 @@ Section "!Basic"
     
     SetOutPath "$INSTDIR\data"
     File /r /x ".svn" "${DATADIR}\data\terrains"
-    
-    SetOutPath "$INSTDIR\data\models\main\decisional"
-    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Binaires"
-    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\*.xml"
-    
+       
     SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\C-Sword" "Install_Dir" "$INSTDIR"
     CreateDirectory "$SMPROGRAMS\C-Sword"
@@ -119,43 +115,56 @@ Section "DirectIA models sources"
 SectionEnd
 
 ;--------------------------------
-SectionGroup "Physical models"
+SectionGroup "Main models"
 
-Section "France"
+Section "Decisional models"
+    SectionIn RO
+    SetOutPath "$INSTDIR\data\models\main\decisional"
+    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Binaires"
+    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\*.xml"
+SectionEnd    
+
+Section "France Physical models"
     SetOutPath "$INSTDIR\data\models\main\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\main\physical\france"
-
-    ;SetOutPath "$INSTDIR\exercises"
-    ;File /r /x ".svn" "${DATADIR}\exercises\empty-france"
-
-    SetOutPath "$INSTDIR\applications"
-    CreateDirectory "$SMPROGRAMS\C-Sword"
-    CreateDirectory "$SMPROGRAMS\C-Sword\France"
-    CreateShortCut "$SMPROGRAMS\C-Sword\France\Preparation.lnk" "$INSTDIR\applications\preparation_app.exe" "--exercise=empty-france"
-    CreateShortCut "$SMPROGRAMS\C-Sword\France\Simulation.lnk" "$INSTDIR\applications\simulation_app.exe" "--exercise=empty-france"
-    CreateShortCut "$SMPROGRAMS\C-Sword\France\Gaming.lnk" "$INSTDIR\applications\gaming_app.exe" "--exercise=empty-france"
-    CreateShortCut "$SMPROGRAMS\C-Sword\France\Replayer.lnk" "$INSTDIR\applications\replayer_app.exe" "--exercise=empty-france"    
+    File /r /x ".svn" "${DATADIR}\data\models\main\physical\france"    
 SectionEnd
 
-;--------------------------------
-Section "Worldwide"
+Section "Worldwide Physical models"
     SetOutPath "$INSTDIR\data\models\main\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\main\physical\worldwide"
-
-    ;SetOutPath "$INSTDIR\exercises"
-    ;File /r /x ".svn" "${DATADIR}\exercises\empty-worldwide"
-
-    SetOutPath "$INSTDIR\applications"
-    CreateDirectory "$SMPROGRAMS\C-Sword"
-    CreateDirectory "$SMPROGRAMS\C-Sword\WorldWide"
-    CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\Preparation.lnk" "$INSTDIR\applications\preparation_app.exe" "--exercise=empty-worldwide"
-    CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\Simulation.lnk" "$INSTDIR\applications\simulation_app.exe" "--exercise=empty-worldwide"
-    CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\Gaming.lnk" "$INSTDIR\applications\gaming_app.exe" "--exercise=empty-worldwide"
-    CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\Replayer.lnk" "$INSTDIR\applications\replayer_app.exe" "--exercise=worldwide"
+    File /r /x ".svn" "${DATADIR}\data\models\main\physical\worldwide"    
 SectionEnd
 
 SectionGroupEnd
 
+;--------------------------------
+SectionGroup "ADA models"
+
+Section "Decisional models"
+    SectionIn RO
+    SetOutPath "$INSTDIR\data\models\ada\decisional"
+    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Binaires"
+    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\*.xml"
+SectionEnd    
+
+Section "France Physical models"
+    SetOutPath "$INSTDIR\data\models\ada\physical"
+    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\france"    
+SectionEnd
+
+Section "Worldwide Physical models"
+    SetOutPath "$INSTDIR\data\models\ada\physical"
+    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\worldwide"    
+SectionEnd
+
+Section "Sample exercises"
+    SetOutPath "$INSTDIR\exercises"
+    File /r /x ".svn" "${DATADIR}\exercises\ADA - Attaquer"
+    File /r /x ".svn" "${DATADIR}\exercises\ADA - Donner_coup_arret"
+    File /r /x ".svn" "${DATADIR}\exercises\ADA - Freiner"
+    File /r /x ".svn" "${DATADIR}\exercises\BAE"
+SectionEnd
+
+SectionGroupEnd
 
 ;--------------------------------
 Section "Uninstaller files"
@@ -177,18 +186,8 @@ Section "Uninstall"
     RmDir /r "$INSTDIR\data"
     RmDir /r "$INSTDIR\exercises"
     RmDir "$INSTDIR"
-    Delete "$SMPROGRAMS\C-Sword\France\Simulation.lnk"
-    Delete "$SMPROGRAMS\C-Sword\France\Preparation.lnk"
-    Delete "$SMPROGRAMS\C-Sword\France\Gaming.lnk"
-    Delete "$SMPROGRAMS\C-Sword\France\Replayer.lnk"
-    Delete "$SMPROGRAMS\C-Sword\WorldWide\Simulation.lnk"
-    Delete "$SMPROGRAMS\C-Sword\WorldWide\Preparation.lnk"
-    Delete "$SMPROGRAMS\C-Sword\WorldWide\Gaming.lnk"
-    Delete "$SMPROGRAMS\C-Sword\WorldWide\Replayer.lnk"
     Delete "$SMPROGRAMS\C-Sword\Adaptation.lnk"
     Delete "$SMPROGRAMS\C-Sword\Frontend.lnk"
     Delete "$SMPROGRAMS\C-Sword\uninstall.lnk"
-    RmDir "$SMPROGRAMS\C-Sword\France"
-    RmDir "$SMPROGRAMS\C-Sword\WorldWide"
     RmDir "$SMPROGRAMS\C-Sword"
 SectionEnd
