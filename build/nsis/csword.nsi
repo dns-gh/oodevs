@@ -106,15 +106,6 @@ Section "!Basic"
 SectionEnd
 
 ;--------------------------------
-Section "DirectIA models sources"
-    SetOutPath "$INSTDIR\data\models\main\decisional"
-    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Sources"
-
-    ;SetOutPath "$INSTDIR\exercises"
-    ;File /r /x ".svn" "${DATADIR}\exercises\empty-france"
-SectionEnd
-
-;--------------------------------
 SectionGroup "Main models"
 
 Section "Decisional models"
@@ -123,6 +114,11 @@ Section "Decisional models"
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\*.xml"
 SectionEnd    
+
+Section "Decisional models sources"
+    SetOutPath "$INSTDIR\data\models\main\decisional"
+    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Sources"
+SectionEnd
 
 Section "France Physical models"
     SetOutPath "$INSTDIR\data\models\main\physical"
@@ -145,6 +141,11 @@ Section "Decisional models"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\*.xml"
 SectionEnd    
+
+Section "Decisional models sources"
+    SetOutPath "$INSTDIR\data\models\ada\decisional"
+    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Sources"
+SectionEnd
 
 Section "France Physical models"
     SetOutPath "$INSTDIR\data\models\ada\physical"
