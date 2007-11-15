@@ -168,6 +168,36 @@ SectionEnd
 SectionGroupEnd
 
 ;--------------------------------
+SectionGroup "Civilian models"
+
+Section "Decisional models"
+    SectionIn RO
+    SetOutPath "$INSTDIR\data\models\civilian\decisional"
+    File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Binaires"
+    File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\*.xml"
+SectionEnd    
+
+Section "Decisional models sources"
+    SetOutPath "$INSTDIR\data\models\civilian\decisional"
+    File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Sources"
+SectionEnd
+
+Section "Physical models"
+    SetOutPath "$INSTDIR\data\models\civilian\physical"
+    File /r /x ".svn" "${DATADIR}\data\models\civilian\physical"
+    
+    SetOutPath "$INSTDIR\data\population"
+    File /r /x ".svn" "${DATADIR}\data\population"
+SectionEnd
+
+Section "Sample exercises"
+    SetOutPath "$INSTDIR\exercises"
+    File /r /x ".svn" "${DATADIR}\exercises\bruxelles"
+SectionEnd
+
+SectionGroupEnd
+
+;--------------------------------
 Section "Uninstaller files"
     SectionIn RO
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "DisplayName" "C-Sword"
