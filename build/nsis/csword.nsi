@@ -170,7 +170,7 @@ SectionGroup "Civilian models"
 
 Section /o "Decisional models"
     SetOutPath "$INSTDIR\data\models\civilian\decisional"
-    File /r /x  /nonfatal ".svn" "${DATADIR}\data\models\civilian\decisional\Binaires"
+    File /nonfatal /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\*.xml"
 SectionEnd    
 
