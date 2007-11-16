@@ -2322,7 +2322,7 @@
         <mission name="Battalion - To Attack"/>
         <mission name="Battalion - To conduct a blocking action"/>
         <mission name="Battalion - To delay"/>
-        <mission name="Battalion - To Reconnoiter"/>
+        <mission name="Battalion - Movement to contact"/>
         <mission name="Battalion - To Control"/>
         <mission name="Battalion - To make a raid"/>
       </missions>
