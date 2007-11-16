@@ -948,7 +948,7 @@
       <parameter dia-name="DelaisCourts_" name="Delais courts" optional="true" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="Pas de rearticulation" optional="true" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_Reconnaitre" dia-type="T_Mission_Automate_ABC_GTIA_Reconnaitre" id="212" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_Reconnaitre" name="ABC GTIA Reconnaitre">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi" dia-type="T_Mission_Automate_ABC_GTIA_MarcheEnnemi" id="212" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_MarcheEnnemi" name="ABC GTIA Marche a l'ennemi">
       <parameter dia-name="DelaisCourts_" name="Short delay" optional="false" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="without dynamic assets organization" optional="true" type="Bool"/>
     </mission>
