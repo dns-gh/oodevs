@@ -24,9 +24,9 @@ namespace
     {
         xml::xofstream xos( file );
         xos << xml::start( "exercise" )
-                << xml::start( "profile" ) << xml::attribute( "file", "profiles.xml" ) << xml::end()
-                << xml::start( "orbat" )   << xml::attribute( "file", "orbat.xml" ) << xml::end()
-                << xml::start( "weather" ) << xml::attribute( "file", "weather.xml" ) << xml::end()
+                << xml::start( "profiles" ) << xml::attribute( "file", "profiles.xml" ) << xml::end()
+                << xml::start( "orbat" )    << xml::attribute( "file", "orbat.xml" ) << xml::end()
+                << xml::start( "weather" )  << xml::attribute( "file", "weather.xml" ) << xml::end()
                 << xml::start( "terrain" )
                     << xml::attribute( "name", terrain )
                 << xml::end()
