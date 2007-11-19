@@ -16,6 +16,7 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/ComponentType.h"
 #include "ValuedDragObject.h"
+#include "resources.h"
 
 using namespace kernel;
 using namespace gui;
@@ -288,10 +289,8 @@ void UnitListView::Display( const AutomatType& type, ValuedListItem* item )
     Iterator< const AutomatComposition& > it( type.CreateIterator() );
     DeleteTail( ListView< UnitListView >::Display( it, item ) );
 
-    const AgentType& pc = *type.GetTypePC();
-    ValuedListItem* pcItem = new ValuedListItem( item );
-    pcItem->Set( &pc, pc.GetName(), tr( "CP" ) );
-    pcItem->setDragEnabled( true );
+    if( ValuedListItem* pcItem = FindChild( type.GetTypePC(), item ) )
+        pcItem->setPixmap( 0, MAKE_PIXMAP( commandpost ) );
 }
 
 // -----------------------------------------------------------------------------

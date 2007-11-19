@@ -41,7 +41,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/AgentType.h"

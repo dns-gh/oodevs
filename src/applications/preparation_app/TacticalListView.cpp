@@ -15,7 +15,7 @@
 #include "preparation/AutomatDecisions.h"
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
-#include "clients_kernel/CommandPostAttributes.h"
+#include "preparation/CommandPostAttributes.h"
 #include "clients_kernel/Level.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -84,8 +84,8 @@ void TacticalListView::Display( const Entity_ABC& entity, gui::ValuedListItem* i
     item->setRenameEnabled( 0, true );
     if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
-    else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
-        item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
+    else if( entity.Retrieve< CommandPostAttributes >() )
+        item->setPixmap( 1, commandPost_ );
     HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
 }
 
@@ -120,8 +120,8 @@ void TacticalListView::NotifyUpdated( const kernel::Entity_ABC& entity )
     if( gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() ) )
     {
         item->SetNamed( entity );
-        if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< CommandPostAttributes >() )
-            item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
+        if( entity.Retrieve< CommandPostAttributes >() )
+            item->setPixmap( 1, commandPost_ );
     }
 }
 

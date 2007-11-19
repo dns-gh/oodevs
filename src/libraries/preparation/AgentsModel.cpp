@@ -81,13 +81,18 @@ void AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::Autom
 {
     kernel::Automat_ABC& automat = CreateAutomat( parent, type );
     DiamondFormation formation( position );
-    CreateAgent( automat, *type.GetTypePC(), parameters_.Clip( formation.NextPosition() ), true );
+    bool pcSet = false;
     Iterator< const AutomatComposition& > it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
         const AutomatComposition& composition = it.NextElement();
         for( unsigned toAdd = composition.GetSensibleNumber(); toAdd > 0; --toAdd )
-            CreateAgent( automat, composition.GetType(), formation.NextPosition() );
+        {
+            const bool isPc = !pcSet && &composition.GetType() == type.GetTypePC();
+            CreateAgent( automat, composition.GetType(), formation.NextPosition(), isPc );
+            if( isPc )
+                pcSet = true;
+        }
     }
 }
     
