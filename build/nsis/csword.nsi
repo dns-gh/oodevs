@@ -94,6 +94,7 @@ Section "!Basic"
     File "${RUNDIR}\zlib1.dll"
     File "${RUNDIR}\population-vc71-mt.dll"
     File "${RUNDIR}\shapelib.dll"
+    File "${OUTDIR}\generation_app\*.exe"
     
     SetOutPath "$INSTDIR\data"
     File /r /x ".svn" "${DATADIR}\data\terrains"
