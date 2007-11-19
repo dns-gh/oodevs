@@ -67,11 +67,13 @@ void EntityIntelligences::ChangeSuperior( Entity_ABC& superior )
 void EntityIntelligences::SerializeIntelligences( xml::xostream& xos ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        xos << start( "intelligence" );
-        it->second->Interface().Apply( &Serializable_ABC::SerializeIntelligences, xos );
-        xos << end();
-    }
+        if( const kernel::IntelligenceHierarchies* hierarchies = it->second->Retrieve< kernel::IntelligenceHierarchies >() )
+            if( static_cast< const EntityIntelligences* >( hierarchies )->holder_ )
+            {
+                xos << start( "intelligence" );
+                it->second->Interface().Apply( &Serializable_ABC::SerializeIntelligences, xos );
+                xos << end();
+            }
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 #include "Formation.h"
 #include "FormationHierarchies.h"
 #include "TacticalLines.h"
-#include "Intelligences.h"
 #include "EntityIntelligences.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
