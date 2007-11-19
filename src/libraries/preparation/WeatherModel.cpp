@@ -28,7 +28,7 @@ WeatherModel::WeatherModel( kernel::Controller& controller, const kernel::Coordi
     : controller_   ( controller )
     , converter_    ( converter )
     , time_         ( QDateTime::currentDateTime() )
-    , lighting_     ( (kernel::E_LightingType)-1 )
+    , lighting_     ( eLightingJourSansNuage )
     , globalWeather_( new Weather() )
 {
     controller_.Create( *this );
