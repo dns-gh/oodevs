@@ -113,11 +113,11 @@ Section "Decisional models"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\*.xml"
 SectionEnd    
 
-Section "Decisional models sources"
-    SectionIn RO
-    SetOutPath "$INSTDIR\data\models\main\decisional"
-    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Sources"
-SectionEnd
+;Section "Decisional models sources"
+;    SectionIn RO
+;    SetOutPath "$INSTDIR\data\models\main\decisional"
+;    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Sources"
+;SectionEnd
 
 Section "Physical models"
     SectionIn RO
