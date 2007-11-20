@@ -39,6 +39,8 @@
 #include "DIA/DIA_SDK_Manager.h"
 #include "xeumeuleu/xml.h"
 #include "tools/InputBinaryStream.h"
+#include <boost/filesystem/operations.hpp>
+
 
 #include <sys/stat.h>
 
@@ -254,7 +256,7 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 // Name: DEC_Workspace::InitializeDIATypes
 // Created: NLD 2005-04-11
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeDIATypes( xml::xistream& xis, bool& bNeedScriptParsing, const std::string& strBinaryPath )
+void DEC_Workspace::InitializeDIATypes( xml::xistream& xis, bool& bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
 {
     MT_LOG_INFO_MSG( "\tReading DIA types" );
 
@@ -263,7 +265,7 @@ void DEC_Workspace::InitializeDIATypes( xml::xistream& xis, bool& bNeedScriptPar
     std::string strScript;
     xis >> xml::content( "DIATypes", strScript );
 
-    if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
+    if( bUseOnlyDIAArchive )
     {
         if( !DIA_ReadScript_TypesBin( strScript, strBinaryPath + "/type.model", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading type file", strErrors );
@@ -290,7 +292,7 @@ void DEC_Workspace::InitializeDIATypes( xml::xistream& xis, bool& bNeedScriptPar
 // Name: DEC_Workspace::InitializeDIAWorkspace
 // Created: NLD 2005-04-11
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeDIAWorkspace( xml::xistream& xis, bool& bNeedScriptParsing, const std::string& strBinaryPath )
+void DEC_Workspace::InitializeDIAWorkspace( xml::xistream& xis, bool& bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
 {
     MT_LOG_INFO_MSG( "\tReading DIA Workspace" );
 
@@ -298,7 +300,7 @@ void DEC_Workspace::InitializeDIAWorkspace( xml::xistream& xis, bool& bNeedScrip
     T_StringVector openedFiles;
     std::string strScript;
     xis >> xml::content( "DIAWorkspace", strScript );
-    if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
+    if( bUseOnlyDIAArchive )
     {
         if( !DIA_ReadScript_WorkspaceBin( strScript, strBinaryPath + "/workspace.model", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading workspace file", strErrors );
@@ -337,21 +339,30 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
         >> xml::content( "RepertoireSources" , strSourcePath );
     strBinaryPath = config.BuildDecisionalChildFile( strBinaryPath );
     strSourcePath = config.BuildDecisionalChildFile( strSourcePath );
-    MT_MakeDir( strBinaryPath                  );
-    MT_MakeDir( strBinaryPath + "/automats"   );
-    MT_MakeDir( strBinaryPath + "/units"       );
-    MT_MakeDir( strBinaryPath + "/populations" );
-    MT_MakeDir( strSourcePath + "/debug"  );
-    MT_MakeDir( strSourcePath + "/debug/automats"  );
-    MT_MakeDir( strSourcePath + "/debug/units"       );
-    MT_MakeDir( strSourcePath + "/debug/populations" );
+
+    // Force "use binary only" if the sources directory doesn't exist
+    bool bUseOnlyDIAArchive = config.UseOnlyDIAArchive();
+    if( !bUseOnlyDIAArchive && !boost::filesystem::exists( strSourcePath ) )
+    {
+        MT_LOG_INFO_MSG( "DirectIA scripts sources directory not present - trying to load binary models" );
+        bUseOnlyDIAArchive = true;
+    }
+
     DIA_Workspace::Instance().SetWorkingDirectory( strSourcePath );
     MT_LOG_INFO_MSG( MT_FormatString( "DirectIA scripts sources base directory : %s", strSourcePath.c_str() ) );
+    MT_MakeDir( strBinaryPath                  );
+    MT_MakeDir( strBinaryPath + "/automats"    );
+    MT_MakeDir( strBinaryPath + "/units"       );
+    MT_MakeDir( strBinaryPath + "/populations" );
+    MT_MakeDir( strSourcePath + "/debug"       );
+    MT_MakeDir( strSourcePath + "/debug/automats"    );
+    MT_MakeDir( strSourcePath + "/debug/units"       );
+    MT_MakeDir( strSourcePath + "/debug/populations" );    
 
     DIA_Workspace::Instance().RegisterDebugInfoGenerator( DIA_CreateDebugInfoGenerator( "/debug/workspace.ddi" ) );
     DIA_Workspace::Instance().RegisterGarbageCollector  ( DEC_Tools::ManageDeletion );
     DIA_SetParsingOptions( eParsingOption_Default );
-
+ 
     //$$$$$$$ NLD ??
     // test if an older workspace debug file exist
     MT_File workspaceDebugFile;
@@ -365,8 +376,8 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     bool bNeedScriptParsing = false;//!MIL_AgentServer::GetWorkspace().GetConfig().UseDIAArchive();
 
     MT_LOG_INFO_MSG( "Initializing DIA" );
-    InitializeDIATypes    ( xis, bNeedScriptParsing, strBinaryPath );
-    InitializeDIAWorkspace( xis, bNeedScriptParsing, strBinaryPath );
+    InitializeDIATypes    ( xis, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath );
+    InitializeDIAWorkspace( xis, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath );
 
     DEC_Tools                ::InitializeDIA();
     DEC_PopulationDecision   ::InitializeDIA();
@@ -382,8 +393,9 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     MIL_FragOrder            ::InitializeDIA();
     MIL_ParameterType_ABC    ::Initialize   ();
 
+
     InitializeMissions( config );
-    InitializeModels  ( config, bNeedScriptParsing, strBinaryPath );
+    InitializeModels  ( config, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath );
 
     // Finish the initialiazation of the Workspace by linking function calls
     pFuncTable_ = new DIA_FunctionTable< DEC_Workspace >();
@@ -446,7 +458,7 @@ void DEC_Workspace::InitializeMissions( MIL_Config& config )
 // Name: DEC_Workspace::InitializeModels
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsing, const std::string& strBinaryPath )
+void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
 {
     xml::xifstream xis( config.GetPhysicalFile() );
 
@@ -468,19 +480,19 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
     // Pions
     MT_LOG_INFO_MSG( "Initializing unit DIA models" );
     xisModels >> start( "units" )
-                  >> list( "unit", *this, &DEC_Workspace::ReadUnit, bNeedScriptParsing, config, strBinaryPath )
+                  >> list( "unit", *this, &DEC_Workspace::ReadUnit, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
               >> end();
 
     // Automates
     MT_LOG_INFO_MSG( "Initializing automat DIA models" );
     xisModels >> start( "automats" )
-                  >> list( "automat", *this, &DEC_Workspace::ReadAutomat, bNeedScriptParsing, config, strBinaryPath )
+                  >> list( "automat", *this, &DEC_Workspace::ReadAutomat, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
               >> end();
 
     // Populations
     MT_LOG_INFO_MSG( "Initializing population DIA models" );
     xisModels >> start( "populations" )
-                  >> list( "population", *this, &DEC_Workspace::ReadPopulation, bNeedScriptParsing, config, strBinaryPath )
+                  >> list( "population", *this, &DEC_Workspace::ReadPopulation, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
               >> end();
 
     xisModels >> end(); // models
@@ -490,7 +502,7 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
 // Name: DEC_Workspace::ReadUnit
 // Created: ABL 2007-07-26
 // -----------------------------------------------------------------------------
-void DEC_Workspace::ReadUnit( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath )
+void DEC_Workspace::ReadUnit( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
 {
     std::string strName;
     xis >> attribute( "name", strName );
@@ -498,7 +510,7 @@ void DEC_Workspace::ReadUnit( xml::xistream& xis, bool bNeedScriptParsing, MIL_C
     const DEC_ModelPion*& pModel = pionModels_[ strName ];
     if( pModel )
         xis.error( "Unknown model name" ); // $$$$ AGE 2007-09-24: n'importe quoi
-    pModel = new DEC_ModelPion( *this, strName, xis, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
+    pModel = new DEC_ModelPion( *this, strName, xis, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath );
     static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 }
 
@@ -506,7 +518,7 @@ void DEC_Workspace::ReadUnit( xml::xistream& xis, bool bNeedScriptParsing, MIL_C
 // Name: DEC_Workspace::ReadAutomat
 // Created: ABL 2007-07-26
 // -----------------------------------------------------------------------------
-void DEC_Workspace::ReadAutomat( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath )
+void DEC_Workspace::ReadAutomat( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
 {
     std::string strName;
     xis >> attribute( "name", strName );
@@ -514,7 +526,7 @@ void DEC_Workspace::ReadAutomat( xml::xistream& xis, bool bNeedScriptParsing, MI
     const DEC_ModelAutomate*& pModel = automateModels_[ strName ];
     if( pModel )
         xis.error( "Unknwon model name" );
-    pModel = new DEC_ModelAutomate( *this, strName, xis, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
+    pModel = new DEC_ModelAutomate( *this, strName, xis, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath );
     static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 }
 
@@ -522,7 +534,7 @@ void DEC_Workspace::ReadAutomat( xml::xistream& xis, bool bNeedScriptParsing, MI
 // Name: DEC_Workspace::ReadPopulation
 // Created: ABL 2007-07-26
 // -----------------------------------------------------------------------------
-void DEC_Workspace::ReadPopulation( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath )
+void DEC_Workspace::ReadPopulation( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
 {
     std::string strName;
     xis >> attribute( "name", strName );
@@ -530,7 +542,7 @@ void DEC_Workspace::ReadPopulation( xml::xistream& xis, bool bNeedScriptParsing,
     const DEC_ModelPopulation*& pModel = populationModels_[ strName ];
     if( pModel )
         xis.error( "Unknwon model name" );
-    pModel = new DEC_ModelPopulation( *this, strName, xis, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath );
+    pModel = new DEC_ModelPopulation( *this, strName, xis, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath );
     static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 }
 

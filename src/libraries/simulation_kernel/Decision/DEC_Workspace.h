@@ -58,9 +58,9 @@ private:
     void InitializeConfig      ( MIL_Config& config );
     void InitializeMissions    ( MIL_Config& config );
     void InitializeDIA         ( MIL_Config& config );
-    void InitializeDIATypes    ( xml::xistream& xis, bool& bNeedScriptParsing, const std::string& strBinaryPath );
-    void InitializeDIAWorkspace( xml::xistream& xis, bool& bNeedScriptParsing, const std::string& strBinaryPath );
-    void InitializeModels      ( MIL_Config& config, bool  bNeedScriptParsing, const std::string& strBinaryPath );   
+    void InitializeDIATypes    ( xml::xistream& xis, bool& bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath );
+    void InitializeDIAWorkspace( xml::xistream& xis, bool& bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath );
+    void InitializeModels      ( MIL_Config& config, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath );   
     //@}
 
 private:
@@ -78,9 +78,9 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadUnit      ( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath );
-    void ReadAutomat   ( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath );
-    void ReadPopulation( xml::xistream& xis, bool bNeedScriptParsing, MIL_Config& config, const std::string& strBinaryPath );
+    void ReadUnit      ( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath );
+    void ReadAutomat   ( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath );
+    void ReadPopulation( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath );
     //@}
 
 private:
