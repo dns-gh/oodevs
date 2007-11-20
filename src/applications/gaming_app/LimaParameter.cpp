@@ -93,7 +93,8 @@ void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport
                 functions.append( tools::ToString( (E_FuncLimaType)i ) );
         const geometry::Point2f position = lima_->Get< kernel::Positions >().GetPosition();
         const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
-        tools.Print( functions.join( ", " ).ascii(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
+        if( ! functions.isEmpty() )
+            tools.Print( functions.join( ", " ).ascii(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
         schedule_->Draw( position + lineFeed * 2.f, viewport, tools );
     glPopAttrib();
 }
