@@ -28,6 +28,8 @@ WeatherModel::WeatherModel( kernel::Controller& controller, const kernel::Coordi
     : controller_   ( controller )
     , converter_    ( converter )
     , time_         ( QDateTime::currentDateTime() )
+    , sunrise_      (  7, 30 )
+    , sunset_       ( 21, 30 )
     , lighting_     ( eLightingJourSansNuage )
     , globalWeather_( new Weather() )
 {
