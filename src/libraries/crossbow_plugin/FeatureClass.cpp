@@ -91,17 +91,41 @@ void crossbow::FeatureClass::UpdateRow( const Row_ABC& row )
     feature_->Commit( InTransaction() ? cursor_ : NULL );
 }
 
+namespace
+{
+    void ThrowError()
+    {
+        IErrorInfoPtr ipError;
+        BSTR strError;
+        ::GetErrorInfo( 0, &ipError );
+        ipError->GetDescription( &strError );
+
+        TCHAR szFinal[ 255 ];
+        _stprintf( szFinal, _T( "%s" ), ( LPCTSTR )_bstr_t( strError ) );
+        MT_LOG_ERROR_MSG( szFinal ); // $$$$ SBO 2007-08-24: should throw
+    }
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: FeatureClass::Find
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
 crossbow::Row_ABC* crossbow::FeatureClass::Find( const std::string& query )
 {
-    IQueryFilterPtr filter( CLSID_QueryFilter );
-    filter->put_WhereClause( CComBSTR( query.c_str() ) );
-    HRESULT res = InTransaction() ? featureClass_->Update( filter, false, &cursor_ ) : featureClass_->Search( filter, false, &cursor_ );
+    IQueryFilterPtr filter;
+
+    if ( query != "" )
+    {
+        filter.CreateInstance( CLSID_QueryFilter );
+        filter->put_WhereClause( CComBSTR( query.c_str() ) );
+    }
+    HRESULT res = InTransaction() ? featureClass_->Update( filter, true, &cursor_ ) : featureClass_->Search( filter, true, &cursor_ );
     if( FAILED( res ) )
+    {
+        ThrowError();
         throw std::runtime_error( "Error executing query: " + query );
+    }
     return GetNextRow();
 }
 

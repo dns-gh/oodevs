@@ -34,7 +34,10 @@ public:
     //@{
     virtual void Lock() = 0;
     virtual void UnLock() = 0;
+    virtual void StartEdit() = 0;
+    virtual void StopEdit() = 0;
     virtual Table_ABC& OpenTable( const std::string& name, bool clear = true ) = 0;
+    virtual void ReleaseTable( const std::string& name ) = 0;
     //@}
 };
 

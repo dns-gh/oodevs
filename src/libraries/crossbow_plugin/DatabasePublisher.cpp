@@ -106,6 +106,7 @@ void DatabasePublisher::Receive( const ASN1T_MsgsSimToClient& asn )
         UpdateListeners();
         break;
     case T_MsgsSimToClient_msg_msg_control_end_tick:
+        databaseUpdater_->Drop();
         database_->UnLock();
         break;
 

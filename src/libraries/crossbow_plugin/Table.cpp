@@ -147,3 +147,4 @@ bool crossbow::Table::InTransaction() const
 {
     return inTransaction_;
 }
+

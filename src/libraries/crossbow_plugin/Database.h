@@ -41,7 +41,10 @@ public:
     //@{
     virtual void Lock();
     virtual void UnLock();
+    virtual void StartEdit();
+    virtual void StopEdit();
     virtual Table_ABC& OpenTable( const std::string& name, bool clear = true );
+    virtual void ReleaseTable( const std::string& name );
     //@}
 
 private:
@@ -59,6 +62,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, Table_ABC* > T_Tables;
+    typedef T_Tables::iterator                  IT_Tables;
     //@}
 
 private:

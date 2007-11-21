@@ -60,6 +60,11 @@ public:
     void Update( const ASN1T_MsgFolkGraphUpdate& msg );
     //@}
 
+    //! @name 
+    //@{
+    void Drop();
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

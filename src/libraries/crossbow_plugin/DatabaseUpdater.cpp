@@ -146,6 +146,20 @@ namespace
         }
         return className;
     }
+
+    struct ScopeEditor
+    {
+        explicit ScopeEditor( crossbow::Database_ABC& database ) 
+            : database_ ( database )
+        {
+            database_.StartEdit();
+        }
+        ~ScopeEditor()
+        {
+            database_.StopEdit();
+        }
+        crossbow::Database_ABC& database_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -154,6 +168,7 @@ namespace
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgObjectCreation& msg )
 {
+    ScopeEditor editor( database_ );
     Table_ABC& table = database_.OpenTable( GetObjectTable( msg.location ) );
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
@@ -174,6 +189,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgObjectCreation& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgReport& msg )
 {
+    ScopeEditor editor( database_ );
     Table_ABC& table = database_.OpenTable( "Reports" );
     Row_ABC& row = table.CreateRow();
     row.SetField( "unit_id", FieldVariant( msg.oid ) );
@@ -187,6 +203,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgReport& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgFormationCreation& asn )
 {
+    ScopeEditor editor( database_ );
     Table_ABC& table = database_.OpenTable( "Formations" );
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID", FieldVariant( asn.oid ) );
@@ -202,6 +219,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgFormationCreation& asn )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgAutomatCreation& asn )
 {
+    ScopeEditor editor( database_ );
     Table_ABC& table = database_.OpenTable( "Formations" );
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID", FieldVariant( asn.oid ) );
@@ -220,6 +238,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgAutomatCreation& asn )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgUnitAttributes& msg )
 {
+    ScopeEditor editor( database_ );
     Table_ABC& table = database_.OpenTable( "UnitForces" );
     std::stringstream query;
     query << "Public_OID=" << msg.oid;
@@ -241,6 +260,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitAttributes& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeUpdate& msg )
 {
+    ScopeEditor editor( database_ );
     Table_ABC& table = database_.OpenTable( "KnowledgeUnits" );
     std::stringstream query;
     query << "Public_OID=" << msg.oid;
@@ -264,6 +284,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeUpdate& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::DestroyUnit( const ASN1T_MsgUnitDestruction& msg )
 {
+    ScopeEditor editor( database_ );
     Table_ABC& table = database_.OpenTable( "UnitForces" );
     std::stringstream query;
     query << "Public_OID=" << msg;
@@ -276,6 +297,7 @@ void DatabaseUpdater::DestroyUnit( const ASN1T_MsgUnitDestruction& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeDestruction& msg )
 {
+    ScopeEditor editor( database_ );
     Table_ABC& table = database_.OpenTable( "KnowledgeUnits" );
     std::stringstream query;
     query << "Public_OID=" << msg.oid;
@@ -288,6 +310,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeDestruction& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::DestroyObject( const ASN1T_MsgObjectDestruction& msg )
 {
+    ScopeEditor editor( database_ );
     std::stringstream ss;
     ss << "Public_OID=" << msg;
     database_.OpenTable( "TacticalObjectPoint" ).DeleteRows( ss.str() );
@@ -301,7 +324,17 @@ void DatabaseUpdater::DestroyObject( const ASN1T_MsgObjectDestruction& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgFolkCreation& msg )
 {
+    ScopeEditor editor( database_ );
     folkUpdater_->Update( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Drop
+// Created: JCR 2007-11-21
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::Drop()
+{
+    database_.ReleaseTable( "Population" );
 }
 
 // -----------------------------------------------------------------------------
@@ -310,5 +343,6 @@ void DatabaseUpdater::Update( const ASN1T_MsgFolkCreation& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgFolkGraphUpdate& msg )
 {
+    ScopeEditor editor( database_ );
     folkUpdater_->Update( database_.OpenTable( "Population", false ), msg );
 }

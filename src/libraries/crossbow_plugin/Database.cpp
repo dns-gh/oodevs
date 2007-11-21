@@ -44,7 +44,10 @@ Database::~Database()
 {
     VARIANT_BOOL editing;
     if( SUCCEEDED( workspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_TRUE )
+    {
+        StopEdit();
         UnLock();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +60,7 @@ void Database::Lock()
     {
         VARIANT_BOOL editing;
         if( SUCCEEDED( workspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_FALSE )
-            if( SUCCEEDED( workspaceEdit_->StartEditing( VARIANT_FALSE ) ) )
-                workspaceEdit_->StartEditOperation();
+            workspaceEdit_->StartEditing( VARIANT_FALSE );
     }
     catch( std::exception& e )
     {
@@ -71,9 +73,26 @@ void Database::Lock()
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
 void Database::UnLock()
+{    
+    workspaceEdit_->StopEditing( VARIANT_TRUE );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Database::StartEdit
+// Created: JCR 2007-11-21
+// -----------------------------------------------------------------------------
+void Database::StartEdit()
+{
+    workspaceEdit_->StartEditOperation();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Database::StopEdit
+// Created: JCR 2007-11-21
+// -----------------------------------------------------------------------------
+void Database::StopEdit()
 {
     workspaceEdit_->StopEditOperation();
-    workspaceEdit_->StopEditing( VARIANT_TRUE );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,4 +126,18 @@ Table_ABC* Database::OpenWrappedTable( const std::string& name )
     if( SUCCEEDED( workspace_->OpenTable( CComBSTR( name.c_str() ), &table ) ) )
         return new Table( table, name );
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Database::ReleaseTable
+// Created: JCR 2007-11-21
+// -----------------------------------------------------------------------------
+void Database::ReleaseTable( const std::string& name )
+{
+    IT_Tables it = openedTables_.find( name );
+    if ( it != openedTables_.end() && it->second )
+    {
+        delete it->second;
+        openedTables_.erase( it );
+    }
 }
