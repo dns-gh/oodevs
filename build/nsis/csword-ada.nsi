@@ -97,8 +97,10 @@ Section "!Basic"
     File "${RUNDIR}\shapelib.dll"
     File "${OUTDIR}\generation_app\*.exe"
     
-    SetOutPath "$INSTDIR\data"
-    File /r /x ".svn" "${DATADIR}\data\terrains"
+    SetOutPath "$INSTDIR\data\terrains"
+    File /r /x ".svn" "${DATADIR}\data\terrains\Angers"
+    File /r /x ".svn" "${DATADIR}\data\terrains\Mailly"
+    File /r /x ".svn" "${DATADIR}\data\terrains\Paris_Est"
        
     SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\C-Sword-ADA" "Install_Dir" "$INSTDIR"
