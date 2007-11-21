@@ -95,5 +95,5 @@ const PHY_Lighting& PHY_Lighting::GetDegradedLighting( uint nDegradationFactor )
 {
     if( nDegradationFactor == 0 || !pNextDegradedLighting_ )
         return *this;
-    return GetDegradedLighting( nDegradationFactor - 1 );
+    return pNextDegradedLighting_->GetDegradedLighting( nDegradationFactor - 1 );
 }
