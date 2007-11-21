@@ -107,14 +107,14 @@ namespace Crossbow
     [ClassInterface(ClassInterfaceType.None)]
     [ProgId("Crossbow.OrderSelectionMenu")]
     public class OrderSelectionMenu : MultiItemContextMenu
-    {     
+    {
         #region COM Registration Function(s)
         [ComRegisterFunction()]
         [ComVisible(false)]
         static void RegisterFunction(Type registerType)
         {
             // Required for ArcGIS Component Category Registrar support
-            ArcGISCategoryRegistration(registerType);
+            ArcGISCategoryRegistration(registerType);            
         }
 
         [ComUnregisterFunction()]

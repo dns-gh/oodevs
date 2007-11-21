@@ -153,7 +153,7 @@ namespace Crossbow
             reportsList.BeginUpdate();
             IQueryFilter query = new QueryFilterClass();
             query.WhereClause = "unit_id=" + Tools.GetValue<int>(selected, "Public_OID");
-            ICursor cursor = reportsTable.Search(query, false);
+            ICursor cursor = reportsTable.Search(query, true);
             for (IRow result = cursor.NextRow(); result != null; result = cursor.NextRow() )
                 reportsList.Items.Add(Tools.GetValue<string>(result, "message"));
             reportsList.EndUpdate();

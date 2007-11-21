@@ -76,7 +76,7 @@ namespace Crossbow
             {
                 lock (m_Glyph)
                 {
-                    m_Glyph[symbolId] = CreateDynamicGlyphFromFile(dynamicDisplay, symbolId, 128, 64);
+                    m_Glyph[symbolId] = CreateDynamicGlyphFromFile(dynamicDisplay, symbolId, 32, 32);
                 }
             }
             element.Glyph = m_Glyph[symbolId];
@@ -92,7 +92,7 @@ namespace Crossbow
             {
                 lock (m_Glyph)
                 {
-                    m_Glyph[symbolId] = CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 128, 64);
+                    m_Glyph[symbolId] = CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 32, 32);
                 }
             }
             element.Glyph = m_Glyph[symbolId];            

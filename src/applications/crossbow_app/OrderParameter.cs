@@ -204,7 +204,8 @@ namespace Crossbow
         {
             m_name = name;
             m_type = CreateType(type);
-            m_type.Selected = false;
+            if (m_type != null)
+                m_type.Selected = false;
         }
 
         public void Serialize(ITable table, int id)

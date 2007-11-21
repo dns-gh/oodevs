@@ -40,6 +40,8 @@ namespace Crossbow
             IFeature feature = featureClass.CreateFeature();
             Tools.SetValue<string>(feature, "Symbol_ID", "GFMPOEIF------X");
             Tools.SetValue<string>(feature, "Info", name);
+            IZAware aware = feature.Shape as IZAware;
+            aware.ZAware = true;
             IPoint point = Tools.MakePoint(m_contextMenuX, m_contextMenuY);
             IPoint shape = (IPoint)feature.Shape;
             shape.PutCoords(point.X, point.Y);

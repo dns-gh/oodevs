@@ -204,10 +204,15 @@ namespace Crossbow
             try
             {
                 IFeatureWorkspace ws = OpenWorkspace(workspace);
+                if (ws == null)
+                    return;
                 ITable table = (ITable)ws.OpenFeatureClass(name);
-                IQueryFilter filter = new QueryFilterClass();
-                filter.WhereClause = "1";
-                table.DeleteSearchedRows(filter);                
+                if (table != null)
+                {
+                    IQueryFilter filter = new QueryFilterClass();
+                    filter.WhereClause = "1";
+                    table.DeleteSearchedRows(filter);
+                }
             }
             catch (System.Exception e)
             {

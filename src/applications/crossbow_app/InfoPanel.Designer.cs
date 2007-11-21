@@ -31,8 +31,8 @@ namespace Crossbow
             this.labelPlaceholder = new System.Windows.Forms.Label();
             this.infoTabs = new System.Windows.Forms.TabControl();
             this.reportsTab = new System.Windows.Forms.TabPage();
-            this.dotationsTab = new System.Windows.Forms.TabPage();
             this.reportsList = new System.Windows.Forms.ListBox();
+            this.dotationsTab = new System.Windows.Forms.TabPage();
             this.infoTabs.SuspendLayout();
             this.reportsTab.SuspendLayout();
             this.SuspendLayout();
@@ -71,6 +71,15 @@ namespace Crossbow
             this.reportsTab.Text = "Reports";
             this.reportsTab.UseVisualStyleBackColor = true;
             // 
+            // reportsList
+            // 
+            this.reportsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reportsList.FormattingEnabled = true;
+            this.reportsList.Location = new System.Drawing.Point(3, 3);
+            this.reportsList.Name = "reportsList";
+            this.reportsList.Size = new System.Drawing.Size(326, 121);
+            this.reportsList.TabIndex = 0;
+            // 
             // dotationsTab
             // 
             this.dotationsTab.Location = new System.Drawing.Point(4, 4);
@@ -80,15 +89,6 @@ namespace Crossbow
             this.dotationsTab.TabIndex = 1;
             this.dotationsTab.Text = "Dotations";
             this.dotationsTab.UseVisualStyleBackColor = true;
-            // 
-            // reportsList
-            // 
-            this.reportsList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reportsList.FormattingEnabled = true;
-            this.reportsList.Location = new System.Drawing.Point(3, 3);
-            this.reportsList.Name = "reportsList";
-            this.reportsList.Size = new System.Drawing.Size(326, 121);
-            this.reportsList.TabIndex = 0;
             // 
             // InfoPanel
             // 
