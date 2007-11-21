@@ -61,7 +61,8 @@ void TacticalLine_ABC::Draw( const geometry::Point2f& where, const kernel::Viewp
 {
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor3f( 0.f, 0.f, 0.f );
-        tools.Print( name_.ascii(), Get< kernel::Positions >().GetPosition() );
+        if( !name_.isEmpty() )
+            tools.Print( name_.ascii(), Get< kernel::Positions >().GetPosition() );
     glPopAttrib();
 }
 
@@ -71,7 +72,7 @@ void TacticalLine_ABC::Draw( const geometry::Point2f& where, const kernel::Viewp
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "name", std::string( name_.ascii() ) );
+    xos << attribute( "name", name_.ascii() );
 }
 
 // -----------------------------------------------------------------------------
