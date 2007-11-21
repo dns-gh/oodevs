@@ -101,6 +101,7 @@ Section "!Basic"
     File /r /x ".svn" "${DATADIR}\data\terrains\Angers"
     File /r /x ".svn" "${DATADIR}\data\terrains\Mailly"
     File /r /x ".svn" "${DATADIR}\data\terrains\Paris_Est"
+    File /r /x ".svn" "${DATADIR}\data\terrains\main"
        
     SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\C-Sword-ADA" "Install_Dir" "$INSTDIR"
