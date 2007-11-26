@@ -11,7 +11,6 @@
 #include "PropertiesTableDisplayer.h"
 #include "preparation/DotationsItem.h"
 #include "preparation/Dotation.h"
-#include "clients_kernel/Karma.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_gui/Tools.h"
 
@@ -31,15 +30,6 @@ PropertiesTableDisplayer::PropertiesTableDisplayer()
 PropertiesTableDisplayer::~PropertiesTableDisplayer()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
-// Created: SBO 2006-10-27
-// -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const kernel::Karma& value )
-{
-    AddToDisplay( value.GetName() ); // $$$$ SBO 2007-03-08: move to BaseDisplayer
 }
 
 // -----------------------------------------------------------------------------
