@@ -75,7 +75,7 @@ void ReplayPlugin::Receive( const ASN1T_MsgsSimToClient& )
 void ReplayPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& )
 {
     model_.Send( client );
-    model_.SendReplayInfo( client, loader_.GetTickNumber(), running_ ? EnumSimulationState::running : EnumSimulationState::paused );
+    SendReplayInfo( client );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,9 +96,19 @@ void ReplayPlugin::OnTimer()
     if( running_ )
     {
         loader_.Tick();
-        model_.SendReplayInfo( clients_, loader_.GetTickNumber(), running_ ? EnumSimulationState::running : EnumSimulationState::paused, factor_ );
+        SendReplayInfo( clients_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ReplayPlugin::SendReplayInfo
+// Created: AGE 2007-11-28
+// -----------------------------------------------------------------------------
+void ReplayPlugin::SendReplayInfo( ClientPublisher_ABC& client )
+{
+    model_.SendReplayInfo( client, loader_.GetTickNumber(), running_ ? EnumSimulationState::running : EnumSimulationState::paused, factor_ );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPlugin::OnReceive

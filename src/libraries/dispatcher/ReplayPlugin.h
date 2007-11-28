@@ -66,6 +66,7 @@ private:
     void Pause();
     void Resume();
     void SkipToFrame( unsigned frame );
+    void SendReplayInfo( ClientPublisher_ABC& client );
     //@}
 
 private:
