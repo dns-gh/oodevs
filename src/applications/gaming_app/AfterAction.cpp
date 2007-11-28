@@ -29,6 +29,7 @@ AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, ItemFac
     , controllers_ ( controllers )
     , model_       ( model )
     , functionsTab_( 0 )
+    , replay_      ( false )
 {
     CreateAfterActionDock( window, controllers, factory, publisher, layer, staticModel );
     controllers_.Register( *this );
@@ -82,8 +83,10 @@ void AfterAction::NotifyCreated( const AfterActionRequest& )
 // -----------------------------------------------------------------------------
 void AfterAction::NotifyUpdated( const Simulation& simu )
 {
-    window_->setAppropriate( aarDock_, simu.IsReplayer() );
-    aarDock_->setShown( simu.IsReplayer() );
+    const bool replay = simu.IsReplayer();
+    window_->setAppropriate( aarDock_, replay );
+    aarDock_->setShown( replay && !replay_ );
+    replay_ = replay;
 }
 
 // -----------------------------------------------------------------------------

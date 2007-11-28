@@ -72,7 +72,7 @@ public:
     void Update( const ASN1T_MsgsSimToClient& asnMsg );
     void Send         ( ClientPublisher_ABC& publisher ) const;
 
-    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status ) const;
+    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const;
     void SendFirstTick( ClientPublisher_ABC& publisher ) const;
     //@}
 

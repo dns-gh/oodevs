@@ -318,9 +318,9 @@ void Model::SendFirstTick( ClientPublisher_ABC& publisher ) const
 // Name: Model::SendReplayInfo
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status ) const
+void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const
 {
-    pSimulationModel_->SendReplayInfo( publisher, totalTicks, status );
+    pSimulationModel_->SendReplayInfo( publisher, totalTicks, status, factor );
 }
 
 // -----------------------------------------------------------------------------

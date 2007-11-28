@@ -158,13 +158,13 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 // Name: SimulationModel::SendReplayInfo
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status ) const
+void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const
 {
     AsnMsgReplayToClientControlReplayInformation asn;
     asn().current_tick = nCurrentTick_;
     asn().date_time  = date_.c_str();
     asn().tick_duration = nTickDuration_;
-    asn().time_factor = nTimeFactor_; // $$$$ AGE 2007-10-31: time factor sim vs replay
+    asn().time_factor = factor;
     asn().status = status;
     asn().tick_count = totalTicks;
     asn.Send( publisher );

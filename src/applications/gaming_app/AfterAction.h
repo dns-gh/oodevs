@@ -76,6 +76,7 @@ private:
     AfterActionModel& model_;
     QDockWindow* aarDock_;
     QTabWidget* functionsTab_;
+    bool replay_;
     //@}
 };
 
