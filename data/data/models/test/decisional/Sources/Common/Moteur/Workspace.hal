@@ -36,6 +36,7 @@ signatures
     U /*T_Localisation*/                DEC_Geometrie_ConvertirFuseauEnLocalisation    ( U /*T_Fuseau*/ );
     U /*T_Point*/                       DEC_Geometrie_CalculerBarycentreAutomates      ( S /*T_ListeAutomates*/ );   
     U /*T_Objectif*/                    DEC_Geometrie_ProchainObjectifDansFuseau       ( U /*T_Fuseau*/, U /*T_Point ref*/, S /*T_ListeObjectifs*/ );
+    U /*T_Localisation*/                DEC_Geometrie_CalculerZoneAutourPointDansFuseau( U /*T_Fuseau*/, U /*T_Point*/ );
    
     
     // Temps                            

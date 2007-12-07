@@ -488,11 +488,11 @@ void DEC_GeometryFunctions::CompareDirection( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 0 ) ) );
     assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 1 ) ) );
-    
+
     MT_Vector2D* pD1 = call.GetParameter( 0 ).ToUserPtr( pD1 );
     MT_Vector2D* pD2 = call.GetParameter( 1 ).ToUserPtr( pD2 );
     assert( pD1 && pD2 );
-    
+
     call.GetResult().SetValue( *pD1 == *pD2 );
 }
 
@@ -808,14 +808,14 @@ void DEC_GeometryFunctions::ComputePosDeploiementASANasse( DIA_Call_ABC& call, c
     pResult->reserve( nNbrPos );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
 
-    if ( nNbrPos % 2 )
+    if( nNbrPos % 2 )
     {    // cas impair : on a en plus un point au centre
         pResult->push_back( vCenter );
 
         if( !--nNbrPos )
             return;
     }
-    
+
     assert( nNbrPos >= 2 && !( nNbrPos % 2 ) );
 
     pResult->push_back( vCenter + vSupport1 );
@@ -887,7 +887,7 @@ void DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau( DIA_Call_ABC& 
 void DEC_GeometryFunctions::ComputePointsBeforeLima( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
 {
     assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
-    
+
     MIL_LimaOrder*    pLima           = callerAutomate.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
     MT_Float          rDistBeforeLima = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
     MT_Float          rNbPoints       = call.GetParameter( 2 ).ToFloat();
@@ -1283,7 +1283,7 @@ void DEC_GeometryFunctions::ComputeRandomPointOnCircle( DIA_Call_ABC& call )
     pResult->Rotate( rand.rand_io( 0., 2. * MT_PI ) );
     *pResult *= ( MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() ) );
     *pResult += *call.GetParameter( 0 ).ToUserPtr( pResult );
-    TER_World::GetWorld().ClipPointInsideWorld( *pResult ); 
+    TER_World::GetWorld().ClipPointInsideWorld( *pResult );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
 
@@ -1300,15 +1300,15 @@ void DEC_GeometryFunctions::ComputeRandomPointInCircle( DIA_Call_ABC& call )
     MT_Vector2D* pCenter  = call.GetParameter( 0 ).ToUserPtr( pCenter );
     MT_Float     rRadius_ = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
     assert( pCenter );
-   
+
     // retrieve a random position in the circle (vCenter_,rRadius_)
     MT_Float rAlpha = randomGenerator.rand_ii( -MT_PI, MT_PI );
     MT_Float rMod   = randomGenerator.rand_oi();
 
     MT_Vector2D* pRandomPosition = new MT_Vector2D( *pCenter );
-    (*pRandomPosition) += MT_Vector2D( rMod * rRadius_ * cos( rAlpha ), rMod * rRadius_ * sin( rAlpha ) ); 
+    (*pRandomPosition) += MT_Vector2D( rMod * rRadius_ * cos( rAlpha ), rMod * rRadius_ * sin( rAlpha ) );
 
-    TER_World::GetWorld().ClipPointInsideWorld( *pRandomPosition ); 
+    TER_World::GetWorld().ClipPointInsideWorld( *pRandomPosition );
     call.GetResult().SetValue( pRandomPosition, &DEC_Tools::GetTypePoint() );
 }
 
@@ -1345,18 +1345,18 @@ bool DEC_GeometryFunctions::GetInterceptionPoint( const MT_Vector2D& vToIntercep
 
     const MT_Float delta = rB * rB - 4. * rA * rC;
 
-    if ( rA == 0. || delta < 0. )
+    if( rA == 0. || delta < 0. )
         return false;
 
     MT_Float t = ( std::sqrt( delta ) - rB ) / ( 2. * rA );
 
-    if ( t < 0. && ( t = ( std::sqrt( delta ) + rB ) / ( -2. * rA ) ) < 0. )
+    if( t < 0. && ( t = ( std::sqrt( delta ) + rB ) / ( -2. * rA ) ) < 0. )
         return false;
-    
+
     result.rX_ = vToInterceptPosition.rX_ + vToInterceptSpeed.rX_ * t;
     result.rY_ = vToInterceptPosition.rY_ + vToInterceptSpeed.rY_ * t;
-    
-    return TER_World::GetWorld().IsValidPosition( result ); 
+
+    return TER_World::GetWorld().IsValidPosition( result );
 }
 
 // -----------------------------------------------------------------------------
@@ -1369,7 +1369,7 @@ void DEC_GeometryFunctions::GetInterceptionPosition( DIA_Call_ABC& call, const M
     assert( DEC_Tools::CheckTypePoint            ( call.GetParameter( 1 ) ) );
 
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
-    if ( !pKnowledge )
+    if( !pKnowledge )
     {
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return;
@@ -1377,11 +1377,11 @@ void DEC_GeometryFunctions::GetInterceptionPosition( DIA_Call_ABC& call, const M
 
     MT_Vector2D* pInterceptingPosition = call.GetParameter( 1 ).ToUserPtr( pInterceptingPosition );
     const MT_Float     rInterceptingSpeed    = MIL_Tools::ConvertSpeedMosToSim( 3.6 /*m.s-1 => km.h-1*/ * call.GetParameter( 2 ).ToFloat() );
-    
+
     assert( pInterceptingPosition );
-    
+
     MT_Vector2D vInterceptionPosition;
-    if ( !GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(), *pInterceptingPosition, rInterceptingSpeed, vInterceptionPosition ) )
+    if( !GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(), *pInterceptingPosition, rInterceptingSpeed, vInterceptionPosition ) )
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
     else
         call.GetResult().SetValue( new MT_Vector2D( vInterceptionPosition ), &DEC_Tools::GetTypePoint() );
@@ -1470,7 +1470,7 @@ T_PointVector* SplitListPoints( const T_PointVector& points, MT_Float rNbrParts 
         for( uint i = 0; i < rNbrParts + 1; ++i, rDist+= rPartSize )
             pResult->push_back( polyLine.GetPointAt( rDist ) );
     }
-    
+
     return pResult;
 }
 
@@ -1481,7 +1481,7 @@ T_PointVector* SplitListPoints( const T_PointVector& points, MT_Float rNbrParts 
 void DEC_GeometryFunctions::SplitListPoints( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeListePoints( call.GetParameter( 0 ) ) );
-    
+
     T_PointVector* pListPoint = call.GetParameter( 0 ).ToUserPtr( pListPoint );
     const MT_Float rNbrParts  = call.GetParameter( 1 ).ToFloat();
     assert( pListPoint );
@@ -1496,7 +1496,7 @@ void DEC_GeometryFunctions::SplitListPoints( DIA_Call_ABC& call )
 void DEC_GeometryFunctions::SplitPath( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
-    
+
     DEC_Agent_Path* pPath     = call.GetParameter( 0 ).ToUserPtr( pPath );
     const MT_Float  rNbrParts = call.GetParameter( 1 ).ToFloat();
     assert( pPath );
@@ -1591,11 +1591,11 @@ namespace {
 void DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
-    
+
     call.GetResult() = call.GetParameter( 0 );
 
     T_ObjectVariableVector& zones = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( zones.begin(), zones.end(), CompareTerrainOpening );  
+    std::sort( zones.begin(), zones.end(), CompareTerrainOpening );
 }
 
 // -----------------------------------------------------------------------------
@@ -1699,9 +1699,28 @@ void DEC_GeometryFunctions::GetNextObjectiveInFuseau( DIA_Call_ABC& call )
             }
         }
     }
-    
+
     if( pNextObjective )
         call.GetResult() = *pNextObjective;
     else
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeObjectif() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeAreaInZone
+// Created: SBO 2007-12-07
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeAreaInZone( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypePoint ( call.GetParameter( 1 ) ) );
+    const MIL_Fuseau*  zone   = call.GetParameter( 0 ).ToUserPtr( zone );
+    const MT_Vector2D* center = call.GetParameter( 1 ).ToUserPtr( center );
+    if( zone && center )
+    {
+        TER_Localisation* location = new TER_Localisation( *center, zone->Distance( *center, true ) );
+        call.GetResult().SetValue( (void*)location, &DEC_Tools::GetTypeLocalisation() );
+    }
+    else
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLocalisation() );
 }

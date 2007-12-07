@@ -17,7 +17,6 @@
 #include "DEC_KnowledgeBlackBoard_ABC.h"
 
 class MIL_Automate;
-class MIL_RealObjectTypeFilter;
 class DEC_Knowledge_RapForGlobal;
 
 // =============================================================================

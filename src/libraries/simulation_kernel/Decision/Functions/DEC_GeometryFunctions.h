@@ -65,7 +65,7 @@ public:
     static void ConvertFuseauToLocalisation         ( DIA_Call_ABC& );
     static void ComputeAutomatesBarycenter          ( DIA_Call_ABC& );
     static void GetNextObjectiveInFuseau            ( DIA_Call_ABC& );
-
+    static void ComputeAreaInZone                   ( DIA_Call_ABC& call );
 
     
                            static void ComputeChantierPosition                          ( DIA_Call_ABC& call, const MIL_AgentPion& );

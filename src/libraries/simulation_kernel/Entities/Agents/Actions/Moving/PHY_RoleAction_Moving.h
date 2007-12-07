@@ -20,7 +20,6 @@
 
 class PHY_RolePion_Location;
 class MIL_AgentPion;
-class MIL_RealObjectTypeFilter;
 class DEC_Knowledge_Object;
 
 // =============================================================================

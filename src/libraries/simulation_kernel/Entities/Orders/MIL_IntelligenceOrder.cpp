@@ -77,6 +77,17 @@ bool MIL_IntelligenceOrder::IsInside( const TER_Localisation& location ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_IntelligenceOrder::IsOnFlank
+// Created: SBO 2007-12-06
+// -----------------------------------------------------------------------------
+bool MIL_IntelligenceOrder::IsOnFlank( const MIL_Fuseau& fuseau, bool left, bool right ) const
+{
+    MT_Vector2D pos;
+    MIL_Tools::ConvertCoordMosToSim( position_, pos );
+    return fuseau.IsOnFlank( pos, left, right );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_IntelligenceOrder::IsEmbarked
 // Created: SBO 2007-11-13
 // -----------------------------------------------------------------------------
@@ -86,10 +97,50 @@ bool MIL_IntelligenceOrder::IsEmbarked() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_IntelligenceOrder::IsEnemy
+// Created: SBO 2007-12-06
+// -----------------------------------------------------------------------------
+bool MIL_IntelligenceOrder::IsEnemy() const
+{
+    return diplomacy_ == EnumDiplomacy::ennemi; // $$$$ SBO 2007-12-06: should depend upon caller
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntelligenceOrder::IsFriend
+// Created: SBO 2007-12-06
+// -----------------------------------------------------------------------------
+bool MIL_IntelligenceOrder::IsFriend() const
+{
+    return diplomacy_ == EnumDiplomacy::ami; // $$$$ SBO 2007-12-06: should depend upon caller
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_IntelligenceOrder::GetLevel
 // Created: SBO 2007-11-13
 // -----------------------------------------------------------------------------
 ASN1T_EnumNatureLevel MIL_IntelligenceOrder::GetLevel() const
 {
     return level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntelligenceOrder::SquareDistance
+// Created: SBO 2007-12-06
+// -----------------------------------------------------------------------------
+MT_Float MIL_IntelligenceOrder::SquareDistance( const MT_Vector2D& point ) const
+{
+    MT_Vector2D pos;
+    MIL_Tools::ConvertCoordMosToSim( position_, pos );
+    return pos.SquareDistance( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntelligenceOrder::ComputeDirection
+// Created: SBO 2007-12-06
+// -----------------------------------------------------------------------------
+MT_Vector2D MIL_IntelligenceOrder::ComputeDirection( const MT_Vector2D& origin ) const
+{
+    MT_Vector2D pos;
+    MIL_Tools::ConvertCoordMosToSim( position_, pos );
+    return pos - origin;
 }

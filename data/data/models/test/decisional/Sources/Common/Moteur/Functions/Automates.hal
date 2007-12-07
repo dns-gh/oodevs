@@ -174,6 +174,9 @@ signatures
     R                                  A::DEC_Rens_PourcentageEnnemisEmbarquesDansZone    ( U /*T_Fuseau ou T_Localisation*/ );
     S /*T_ListeFuseaux/Localisations*/ A::DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert 
     S /*T_ListeFuseaux/Localisations*/ A::DEC_Rens_TrierZonesSelonPresenceEnnemisEmbarques( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
+    B                                  A::DEC_Rens_EnnemiSurFlanc                         ( U /*T_Fuseau*/ );
+    B                                  A::DEC_Rens_AmiSurFlanc                            ( U /*T_Fuseau*/ );
+    U /*T_Direction*/                  A::DEC_Rens_CalculerDirectionCouverture            ( U /*T_Fuseau*/ );
 
 
 

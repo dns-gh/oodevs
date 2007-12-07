@@ -33,7 +33,12 @@ public:
     //@{
     bool IsInside( const MIL_Fuseau& fuseau ) const;
     bool IsInside( const TER_Localisation& location ) const;
+    MT_Float SquareDistance( const MT_Vector2D& point ) const;
+    MT_Vector2D ComputeDirection( const MT_Vector2D& origin ) const;
+    bool IsOnFlank( const MIL_Fuseau& fuseau, bool left, bool right ) const;
     bool IsEmbarked() const;
+    bool IsEnemy() const;
+    bool IsFriend() const;
     ASN1T_EnumNatureLevel GetLevel() const;
     void Serialize( ASN1T_Intelligence& asn ) const;
     //@}

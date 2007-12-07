@@ -1095,4 +1095,47 @@ MT_Float MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, MT_Floa
     }
 }
 
+namespace
+{
+    bool IsFlank( const TER_LimitData* parentLimit, const TER_LimitData* childLimit )
+    {
+        if( !parentLimit || !childLimit )
+            return false;
+        const T_PointVector& limit = childLimit->GetPoints();
+        for( CIT_PointVector it = limit.begin(); it != limit.end(); ++it )
+            if( parentLimit->Distance( *it ) > 0.001f ) // $$$$ SBO 2007-12-06: epsilon
+                return false;
+        return true;
+    }
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::IsLeftFlank
+// Created: SBO 2007-12-06
+// -----------------------------------------------------------------------------
+bool MIL_Fuseau::IsLeftFlank( const MIL_Fuseau& fuseau ) const
+{
+    return IsFlank( fuseau.GetLeftLimit(), pLeftLimit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::IsRightFlank
+// Created: SBO 2007-12-06
+// -----------------------------------------------------------------------------
+bool MIL_Fuseau::IsRightFlank( const MIL_Fuseau& fuseau ) const
+{
+    return IsFlank( fuseau.GetRightLimit(), pRightLimit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::IsOnFlank
+// Created: SBO 2007-12-06
+// -----------------------------------------------------------------------------
+bool MIL_Fuseau::IsOnFlank( const MT_Vector2D& position, bool left, bool right ) const
+{
+    if( !pLeftLimit_ || !pRightLimit_ )
+        return false;
+    if( left && pLeftLimit_->Distance( position ) < pRightLimit_->Distance( position ) )
+        return true;
+    return right && pRightLimit_->Distance( position ) < pLeftLimit_->Distance( position );
+}

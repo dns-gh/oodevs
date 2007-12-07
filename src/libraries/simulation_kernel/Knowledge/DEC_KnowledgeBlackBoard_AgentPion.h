@@ -30,7 +30,6 @@ class DEC_KS_Perception;
 class MIL_RealObject_ABC;
 class MIL_PopulationConcentration;
 class MIL_Population;
-class MIL_RealObjectTypeFilter;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_AgentPion

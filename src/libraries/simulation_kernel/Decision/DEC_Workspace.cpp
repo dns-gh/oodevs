@@ -125,6 +125,7 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertFuseauToLocalisation         , "DEC_Geometrie_ConvertirFuseauEnLocalisation"     );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAutomatesBarycenter          , "DEC_Geometrie_CalculerBarycentreAutomates"       );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::GetNextObjectiveInFuseau            , "DEC_Geometrie_ProchainObjectifDansFuseau"        );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAreaInZone                   , "DEC_Geometrie_CalculerZoneAutourPointDansFuseau" );
 
     // Time management
     // $$$$ AGE 2007-10-11: Un seul temps

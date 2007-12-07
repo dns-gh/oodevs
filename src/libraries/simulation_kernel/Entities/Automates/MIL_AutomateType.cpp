@@ -358,6 +358,9 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::ComputeLoadedEnemiesRatio                             , "DEC_Rens_PourcentageEnnemisEmbarquesDansZone"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::SortAccordingToUnloadedEnemies                        , "DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::SortAccordingToLoadedEnemies                          , "DEC_Rens_TrierZonesSelonPresenceEnnemisEmbarques"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::IsEnemyOnFlank                                        , "DEC_Rens_EnnemiSurFlanc"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::IsFriendOnFlank                                       , "DEC_Rens_AmiSurFlanc"     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::ComputeCoverDirection                                 , "DEC_Rens_CalculerDirectionCouverture" );
 
     // RCS
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_Automate >, "DEC_RC"      );

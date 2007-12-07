@@ -36,13 +36,13 @@ public:
      explicit MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima = 0, const MIL_LimaOrder* pEndMissionLima = 0 );
     ~MIL_Fuseau();
 
-    //! @name Init */
+    //! @name Init
     //@{
     void Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima = 0 );
     void Reset();
     //@}
 
-    //! @name Geometry */
+    //! @name Geometry
     //@{
     bool IsInside           ( const MT_Vector2D& vPos  ) const;
     bool IntersectWithBorder( const MT_Line& line ) const;
@@ -59,6 +59,10 @@ public:
 
     float ComputeOpenTerrainRatio  () const;
     float ComputeClosedTerrainRatio() const;
+
+    bool IsLeftFlank ( const MIL_Fuseau& fuseau ) const;
+    bool IsRightFlank( const MIL_Fuseau& fuseau ) const;
+    bool IsOnFlank   ( const MT_Vector2D& position, bool left, bool right ) const;
     //@}
 
     //! @name Pathfind
