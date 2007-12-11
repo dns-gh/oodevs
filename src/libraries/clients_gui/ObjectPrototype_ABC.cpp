@@ -123,8 +123,24 @@ void ObjectPrototype_ABC::showEvent( QShowEvent* e )
 {
     Populate( eNbrObstacleType, *obstacleTypes_ );
     FillObjectTypes();
+    OnTypeChanged();
     controllers_.Register( *locationCreator_ );
     QGroupBox::showEvent( e );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::hideEvent
+// Created: AGE 2006-04-21
+// -----------------------------------------------------------------------------
+void ObjectPrototype_ABC::hideEvent( QHideEvent* )
+{
+    if( locationCreator_ )
+        controllers_.Unregister( *locationCreator_ );
+    delete location_;
+    location_ = 0;
+    if( activeAttributes_ )
+        activeAttributes_->hide();
+    activeAttributes_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -141,17 +157,7 @@ void ObjectPrototype_ABC::FillObjectTypes()
         objectTypes_->AddItem( element.GetName(), &element );
     }
 }
-    
-// -----------------------------------------------------------------------------
-// Name: ObjectPrototype_ABC::hideEvent
-// Created: AGE 2006-04-21
-// -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::hideEvent( QHideEvent* )
-{
-    if( locationCreator_ )
-        controllers_.Unregister( *locationCreator_ );
-}
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype_ABC destructor
 // Created: SBO 2006-04-18
@@ -208,7 +214,7 @@ void ObjectPrototype_ABC::NotifyCreated( const Team_ABC& team )
         return;
     teams_->AddItem( team.GetName(), &team );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype_ABC::NotifyDeleted
 // Created: SBO 2006-04-19
@@ -305,4 +311,3 @@ void ObjectPrototype_ABC::Draw( const GlTools_ABC& tools ) const
     if( isVisible() && location_ )
         location_->Draw( tools );
 }
-
