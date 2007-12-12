@@ -35,7 +35,6 @@ LogisticRouteAttributes.cpp \
 MaintenanceStates.cpp \
 MedicalStates.cpp \
 MineAttributes.cpp \
-MsgRecorder.cpp \
 NBCAttributes.cpp \
 Network.cpp \
 Object.cpp \

@@ -79,7 +79,6 @@ Param_ABC.cpp \
 PopulationKnowledgePanel.cpp \
 ProfilingPanel.cpp \
 Properties.cpp \
-RecorderToolbar.cpp \
 ReportFilterOptions.cpp \
 ReportListView.cpp \
 ReportPanel.cpp \

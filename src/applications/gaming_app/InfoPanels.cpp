@@ -14,12 +14,6 @@
 #include "ObjectKnowledgePanel.h"
 #include "ObjectReportPanel.h"
 #include "PopulationKnowledgePanel.h"
-#include "ReportPanel.h"
-#include "AgentStatePanel.h"
-#include "AgentResourcesPanel.h"
-#include "AgentMaintenancePanel.h"
-#include "AgentMedicalPanel.h"
-#include "AgentSupplyPanel.h"
 #include "ObjectPanel.h"
 #include "clients_gui/PopulationPanel.h"
 
@@ -33,18 +27,12 @@ using namespace gui;
 InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, Publisher_ABC& publisher  )
     : Panels( parent )
 {
-    AddPanel( new AgentStatePanel         ( this, *this, controllers, factory ) );
-    AddPanel( new AgentResourcesPanel     ( this, *this, controllers, factory ) );
     AddPanel( new AgentKnowledgePanel     ( this, *this, controllers, factory ) );
     AddPanel( new PopulationPanel         ( this, *this, controllers, factory ) );
     AddPanel( new PopulationKnowledgePanel( this, *this, controllers, factory ) );
     AddPanel( new ::ObjectPanel           ( this, *this, controllers, factory, publisher ) );
     AddPanel( new ObjectReportPanel       ( this, *this, controllers, factory ) );
     AddPanel( new ObjectKnowledgePanel    ( this, *this, controllers, factory ) );
-    AddPanel( new ReportPanel             ( this, *this, controllers, factory ) );
-    AddPanel( new AgentMaintenancePanel   ( this, *this, controllers, factory ) );
-    AddPanel( new AgentMedicalPanel       ( this, *this, controllers, factory ) );
-    AddPanel( new AgentSupplyPanel        ( this, *this, controllers, factory ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,7 +13,6 @@
 #include "Limit.h"
 #include "ASN_Messages.h"
 #include "Tools.h"
-#include "MsgRecorder.h"
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
 #include "LogSupplyConsign.h"
@@ -57,7 +56,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, Message
     , sender_          ( sender )
     , simulation_      ( simu )
     , profile_         ( profile )
-    , msgRecorder_     ( 0 )
 {
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgSimToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient );
@@ -72,25 +70,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, Message
 AgentServerMsgMgr::~AgentServerMsgMgr()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::RegisterMessageRecorder
-// Created: AGE 2006-06-30
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::RegisterMessageRecorder( MsgRecorder& recorder )
-{
-    msgRecorder_ = & recorder;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::UnregisterMessageRecorder
-// Created: AGE 2006-06-30
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::UnregisterMessageRecorder( MsgRecorder& recorder )
-{
-    if( msgRecorder_ == & recorder )
-        msgRecorder_  = 0;
 }
 
 // -----------------------------------------------------------------------------

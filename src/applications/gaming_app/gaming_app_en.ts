@@ -135,228 +135,9 @@
     </message>
 </context>
 <context>
-    <name>AgentMaintenancePanel</name>
-    <message>
-        <source>Maintenance system</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AgentMedicalPanel</name>
-    <message>
-        <source>Medical system</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AgentResourcesPanel</name>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AgentStatePanel</name>
     <message>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Communications</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Experience:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Moral:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Operational state:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dead:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Neutralized:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Troops:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Human transportation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contaminating agents:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contamination level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stances</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Previous stance:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New stance:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Setup state:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Jammed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Radio silence:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Human factors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tiredness:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decisional state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rules of engagement:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population RoE:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Force ratio:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Indirect fire availability:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Intention:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reinforcements</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reinforcing:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reinforced by:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintenance superior:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Medical superior:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supply superior:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Military state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prisoner:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Surrender:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refugees picked up:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC suit:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Towed units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Heading:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AgentSupplyPanel</name>
-    <message>
-        <source>Supply system</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AttributeView</name>
-    <message>
-        <source>Attribute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1126,10 +907,6 @@
     </message>
     <message>
         <source>Orbat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1996,37 +1773,6 @@
     </message>
 </context>
 <context>
-    <name>RecorderToolbar</name>
-    <message>
-        <source>Order recorder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replay order file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start recording</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Order file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File is not a valid order file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stop recording</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ReportFilterOptions</name>
     <message>
         <source>Display reports</source>
@@ -2089,13 +1835,6 @@
     </message>
 </context>
 <context>
-    <name>ReportPanel</name>
-    <message>
-        <source>Reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SIMControlToolbar</name>
     <message>
         <source>Simulation control</source>
@@ -2135,17 +1874,6 @@
     </message>
     <message>
         <source>Checkpoint name: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Spy</name>
-    <message>
-        <source>Spy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

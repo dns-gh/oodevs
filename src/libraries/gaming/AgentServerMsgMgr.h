@@ -25,7 +25,6 @@ namespace kernel
     class Agent_ABC;
 }
 
-class MsgRecorder;
 class Model;
 class Simulation;
 class Profile;
@@ -45,9 +44,6 @@ public:
 
     //! @name Operations
     //@{
-    void RegisterMessageRecorder( MsgRecorder& recorder );
-    void UnregisterMessageRecorder( MsgRecorder& recorder );
-
     void Connect( const std::string& host );
     void Disconnect();
 
@@ -264,7 +260,6 @@ private:
     Model*               model_;
     Simulation&          simulation_;
     Profile&             profile_;
-    MsgRecorder*         msgRecorder_;
     //@}
 };
 

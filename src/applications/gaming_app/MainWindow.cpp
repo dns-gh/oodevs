@@ -19,7 +19,6 @@
 #include "Menu.h"
 #include "MissionPanel.h"
 #include "CreationPanels.h"
-#include "RecorderToolbar.h"
 #include "OrderBrowser.h"
 #include "SIMControlToolbar.h"
 #include "LinkInterpreter.h"
@@ -32,10 +31,8 @@
 #include "ObjectKnowledgesLayer.h"
 #include "LimitsLayer.h"
 #include "StatusBar.h"
-#include "Spy.h"
 #include "AgentList.h"
 #include "LoginDialog.h"
-#include "Properties.h"
 #include "TacticalList.h"
 #include "XPSPlayer.h"
 #include "ProfilingPanel.h"
@@ -52,6 +49,7 @@
 #include "AfterAction.h"
 #include "SimulationLighting.h"
 #include "IntelligencesLayer.h"
+#include "Properties.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -195,16 +193,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pListDockWnd_->setCaption( tr( "Orbat" ) );
     setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
-    // Spy
-    QDockWindow* pSpyWnd = new QDockWindow( this );
-    moveDockWindow( pSpyWnd, Qt::DockLeft );
-    spy_ = new Spy( pSpyWnd, controllers );
-    pSpyWnd->setWidget( spy_ );
-    pSpyWnd->setResizeEnabled( true );
-    pSpyWnd->setCloseMode( QDockWindow::Always );
-    pSpyWnd->setCaption( tr( "Spy" ) );
-    setDockEnabled( pSpyWnd, Qt::DockTop, false );
-
     // Mini views
     MiniViews* miniviews = new MiniViews( this, controllers_ );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), miniviews, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
@@ -300,7 +288,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // $$$$ AGE 2007-05-14: mettre un GetOrdersDirectory
     OrderBrowser* browser = new OrderBrowser( this, config.BuildExerciseChildFile( "orders" ).c_str() );
-    new RecorderToolbar( this, network, browser );
     
     // Drawer
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
