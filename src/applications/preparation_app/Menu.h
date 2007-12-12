@@ -20,6 +20,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+    class ItemFactory_ABC;
+}
+
 // =============================================================================
 /** @class  Menu
     @brief  Menu
@@ -32,7 +37,7 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog );
+             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, gui::ItemFactory_ABC& factory );
     virtual ~Menu();
     //@}
 };

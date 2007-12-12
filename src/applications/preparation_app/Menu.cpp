@@ -9,7 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "Menu.h"
-//#include "AboutDialog.h"
+#include "AboutDialog.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/FourStateOption.h"
@@ -55,7 +55,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, gui::ItemFactory_ABC& factory )
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
@@ -104,10 +104,12 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( tr( "&Preferences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
     insertItem( tr( "&Display" ), menu );
 
-//    menu = new QPopupMenu( this );
-//    menu->insertItem( tr( "A propos" ), new AboutDialog( this, factory ), SLOT( exec() ) );
-//    itemId = insertItem( tr( "Ai&de" ), menu );
-//    setAccel( ALT + Key_D, itemId );
+    menu = pParent->createDockWindowMenu();
+    insertItem( tr( "&Windows" ), menu );
+
+    menu = new QPopupMenu( this );
+    menu->insertItem( tr( "About" ), new AboutDialog( this, factory ), SLOT( exec() ) );
+    insertItem( tr( "&Help" ), menu );
 }
     
 // -----------------------------------------------------------------------------

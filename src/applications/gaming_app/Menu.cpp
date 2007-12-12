@@ -134,6 +134,9 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     profileMenu_ = insertItem( tr( "Profi&les" ), menu );
     setItemVisible( profileMenu_, false );
 
+    menu = pParent->createDockWindowMenu();
+    insertItem( tr( "&Windows" ), menu );
+
     menu = new QPopupMenu( this );
     menu->insertItem( tr( "About" ), new AboutDialog( this, factory ), SLOT( exec() ) );
     insertItem( tr( "&Help" ), menu );

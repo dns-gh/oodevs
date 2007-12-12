@@ -1331,6 +1331,10 @@
         <source>Formations</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Windows</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>

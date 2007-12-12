@@ -208,7 +208,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
 
-    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *factory );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );
