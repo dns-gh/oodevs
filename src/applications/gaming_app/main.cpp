@@ -65,7 +65,9 @@ int main( int argc, char** argv )
 {   
     _set_purecall_handler( PureHandler );
     SetConsoleTitle( APP_NAME " - " APP_VERSION " - " __TIMESTAMP__ );
-    BugTrap::Setup( "Sword Officer Training" ).SetEmail( "sword-ot@masagroup.net" );
+    BugTrap::Setup( "Sword Officer Training" )
+            .SetEmail( "sword-ot@masagroup.net" )
+            .SetVersion( APP_VERSION " - " __TIMESTAMP__ );
 
     Run( argc, argv );
     return 0;
