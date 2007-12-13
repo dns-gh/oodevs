@@ -1,4 +1,5 @@
-SOURCES = AgentResourcesPanel.cpp \
+SOURCES = AboutDialog.cpp \
+AgentResourcesPanel.cpp \
 ChangeDiplomacyDialog.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
@@ -13,11 +14,13 @@ PopulationListView.cpp \
 PopulationTypesListView.cpp \
 PopulationsPanel.cpp \
 ProfileDialog.cpp \
+ProfileEditor.cpp \
+ProfileWizardDialog.cpp \
 PropertiesPanel.cpp \
 PropertiesTableDisplayer.cpp \
 TacticalListView.cpp \
-UnitListView.cpp \
-UnitsPanel.cpp \
+TemplateListView.cpp \
+TemplatesPanel.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \

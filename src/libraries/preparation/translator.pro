@@ -1,15 +1,19 @@
 SOURCES = Agent.cpp \
+AgentTemplateElement.cpp \
 AgentsModelChecker.cpp \
 Automat.cpp \
 AutomatHierarchies.cpp \
+AutomatTemplateElement.cpp \
 CampAttributes.cpp \
 CrossingSiteAttributes.cpp \
 Diplomacies.cpp \
 Diplomacy.cpp \
 Dotation.cpp \
 Dotations.cpp \
-EnumTypes.h \
 Formation.cpp \
+FormationTemplateElement.cpp \
+HierarchyTemplate.cpp \
+Intelligence.cpp \
 KnowledgeGroup.cpp \
 Lima.cpp \
 Limit.cpp \
@@ -24,6 +28,7 @@ NBCAttributes.cpp \
 Object.cpp \
 Population.cpp \
 ProfileFactory.cpp \
+ProfilesModel.cpp \
 RotaAttributes.cpp \
 Stocks.cpp \
 SupplyStates.cpp \

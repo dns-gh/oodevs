@@ -1,5 +1,20 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AgentResourcesPanel</name>
     <message>
         <source>Resources</source>
@@ -324,6 +339,68 @@
     </message>
 </context>
 <context>
+    <name>ProfileEditor</name>
+    <message>
+        <source>Duplicate login: &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProfileWizardDialog</name>
+    <message>
+        <source>User profiles creation wizard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select profiles to generate: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one profile per side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one profile per top-level formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one profile per formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select creation mode: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>clear existing profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>add new profiles to existing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select creation rights: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>writeable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>readonly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PropertiesPanel</name>
     <message>
         <source>Properties</source>
@@ -357,6 +434,24 @@
     </message>
     <message>
         <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TemplateListView</name>
+    <message>
+        <source>Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TemplatesPanel</name>
+    <message>
+        <source>Templates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create template</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

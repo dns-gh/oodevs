@@ -175,6 +175,17 @@ Please check access rights or write protection.</source>
     </message>
 </context>
 <context>
+    <name>GradientWidget</name>
+    <message>
+        <source>Copy preset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete preset</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GraphicPreferences</name>
     <message>
         <source>Colors</source>
@@ -208,6 +219,37 @@ Please check access rights or write protection.</source>
     <name>HierarchyListView_ABC</name>
     <message>
         <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>IntelligencesPanel</name>
+    <message>
+        <source>Intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligence description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Superior:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Karma: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Is embarked fight: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new intelligence unit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -666,6 +708,51 @@ Please check access rights or write protection.</source>
     <name>Time Format</name>
     <message>
         <source>hh:mm:ss</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnitListView</name>
+    <message>
+        <source>Unit type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnitPreviewIcon</name>
+    <message>
+        <source>Drag and drop symbol to map to create a new unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnitsPanel</name>
+    <message>
+        <source>Hierarchical view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Atlas qualifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display type: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

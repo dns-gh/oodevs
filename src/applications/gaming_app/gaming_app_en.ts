@@ -1,5 +1,20 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>@default</name>
+    <message>
+        <source>Alarm parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AboutDialog</name>
     <message>
         <source>About</source>
@@ -44,6 +59,66 @@
     </message>
     <message>
         <source>Error loading order file</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AfterAction</name>
+    <message>
+        <source>Functions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After action review</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AfterActionFunctionList</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send request</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AfterActionPlot</name>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time (Tick)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AfterActionRequestList</name>
+    <message>
+        <source>Request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plot</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -138,6 +213,33 @@
     <name>AgentStatePanel</name>
     <message>
         <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AlarmsWidget</name>
+    <message>
+        <source>Alarms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alarm triggered</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -441,6 +543,17 @@
     </message>
     <message>
         <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FolkToolbar</name>
+    <message>
+        <source>Folk control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>any</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1544,6 +1657,37 @@
     </message>
 </context>
 <context>
+    <name>ObjectMagicOrdersInterface</name>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sweep mines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate reserved obstacle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate reserved obstacle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OrbatToolbar</name>
     <message>
         <source>Aggregate all automats</source>
@@ -1563,6 +1707,78 @@
     </message>
 </context>
 <context>
+    <name>OrderBrowser</name>
+    <message>
+        <source> Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save order file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load order file</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamAgentKnowledgeList</name>
+    <message>
+        <source>Add agent knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent knowledge %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamAgentList</name>
+    <message>
+        <source>Add agent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent %1:%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add hierarchy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamAutomatList</name>
+    <message>
+        <source>Add automat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ParamHumanWoundList</name>
     <message>
         <source>Add...</source>
@@ -1570,6 +1786,17 @@
     </message>
     <message>
         <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamIntelligenceList</name>
+    <message>
+        <source>Add intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligence %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1599,6 +1826,35 @@
     <name>ParamLocationList</name>
     <message>
         <source>Location %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamMissionObjective</name>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamMissionObjectiveList</name>
+    <message>
+        <source>Objective %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamObjectKnowledgeList</name>
+    <message>
+        <source>Add object knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object knowledge %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1723,6 +1979,41 @@
     </message>
 </context>
 <context>
+    <name>PopulationMagicOrdersInterface</name>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Teleport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kill all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kill people:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resurect people:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change population attitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type-in value then press &apos;Enter&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfilingPanel</name>
     <message>
         <source>Incoming: </source>
@@ -1773,6 +2064,24 @@
     <name>Properties</name>
     <message>
         <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RcEntityResolver</name>
+    <message>
+        <source>[Unknown]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ReplayerToolbar</name>
+    <message>
+        <source>Replay control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tick %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1971,6 +2280,60 @@
     </message>
     <message>
         <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TimelinePanel</name>
+    <message>
+        <source>Actions timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnitMagicOrdersInterface</name>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Teleport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recover - Transporters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroy - Component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recover - All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recover - Troops</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recover - Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recover - Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroy - All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel surrender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Surrender to</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -4,7 +4,6 @@ ADN_AiEngine_GUI.cpp \
 ADN_App.cpp \
 ADN_AutomatLogCategory_ListView.cpp \
 ADN_AutomatLog_ListView.cpp \
-ADN_Automata_Data.cpp \
 ADN_Automata_GUI.cpp \
 ADN_Automata_ListView.cpp \
 ADN_Automata_SubUnitsTable.cpp \
@@ -16,7 +15,6 @@ ADN_Breakdowns_GUI.cpp \
 ADN_Breakdowns_ListView.cpp \
 ADN_Breakdowns_PartsTable.cpp \
 ADN_Categories_AttritionEffect_Table.cpp \
-ADN_Categories_Data.cpp \
 ADN_Categories_GUI.cpp \
 ADN_ChangeValueCommand_Bool.cpp \
 ADN_ChangeValueCommand_Double.cpp \
@@ -44,7 +42,6 @@ ADN_DialogLog.cpp \
 ADN_EquipementSelector.cpp \
 ADN_Equipement_AmmoListView.cpp \
 ADN_Equipement_AttritionTable.cpp \
-ADN_Equipement_Data.cpp \
 ADN_Equipement_GUI.cpp \
 ADN_Equipement_GenericListView.cpp \
 ADN_Equipement_Postures_GUI.cpp \
@@ -92,7 +89,6 @@ ADN_Missions_GUI.cpp \
 ADN_Model_Wizard.cpp \
 ADN_Models_Data.cpp \
 ADN_Models_GUI.cpp \
-ADN_NBC_Datas.cpp \
 ADN_NBC_GUI.cpp \
 ADN_NBC_Intox_GUI.cpp \
 ADN_NBC_NbcAgentListView.cpp \
@@ -120,7 +116,6 @@ ADN_Rich_ListViewItem.h \
 ADN_RunProcessDialog.cpp \
 ADN_SaveFile_Exception.cpp \
 ADN_Sensor_Wizard.cpp \
-ADN_Sensors_Data.cpp \
 ADN_Sensors_Environments_GUI.cpp \
 ADN_Sensors_GUI.cpp \
 ADN_Sensors_Illumination_GUI.cpp \

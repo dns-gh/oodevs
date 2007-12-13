@@ -12,6 +12,7 @@ Drawer.cpp \
 EntityHierarchies.inl \
 EquipmentType.cpp \
 Formatter.cpp \
+FourStateOption.cpp \
 Karma.cpp \
 KnowledgeGroupType.cpp \
 Lines.cpp \
@@ -30,11 +31,9 @@ Polygon.cpp \
 PopulationType.cpp \
 Resolver.h \
 Resolver2.h \
-SensorType.cpp \
 SymbolRule.cpp \
 Tools.cpp \
 TristateOption.cpp \
-FourStateOption.cpp \
 Units.cpp \
 
 TRANSLATIONS = clients_kernel_fr.ts clients_kernel_en.ts

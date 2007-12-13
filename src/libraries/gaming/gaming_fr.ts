@@ -11,6 +11,25 @@
     </message>
 </context>
 <context>
+    <name>ActionFactory</name>
+    <message>
+        <source>Mission&apos;s entity &apos;%1&apos; not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter mismatch: too few parameters provided.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frag order&apos;s entity &apos;%1&apos; not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter mismatch: too much parameters provided.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ActionParameter</name>
     <message>
         <source>Action</source>
@@ -58,6 +77,90 @@
     </message>
     <message>
         <source>Error loading mission parameters. Non-optional parameter &apos;%1&apos; is not set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent knowledge not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid agent knowledge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent knowledge %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Karma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Embarked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligence %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object knowledge not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid object knowledge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object knowledge %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objective %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Way point %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Route %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population knowledge not found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -158,6 +261,53 @@
     </message>
     <message>
         <source>Unknown unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AtlasNature</name>
+    <message>
+        <source>Armored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mortar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rocket launcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Footman</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Helicopter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undefined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -485,6 +635,37 @@
     </message>
     <message>
         <source>Tiredness:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Intelligence</name>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Embarked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Karma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligence [%1]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

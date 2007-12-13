@@ -136,6 +136,37 @@
     </message>
 </context>
 <context>
+    <name>Intelligence</name>
+    <message>
+        <source>Intelligence [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Nature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Embarked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Karma</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeGroup</name>
     <message>
         <source>Info/Identifier</source>
@@ -446,6 +477,18 @@
     <name>ProfilesModel</name>
     <message>
         <source>New profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some units in the orbat are not &quot;readable&quot; to any user profile.
+You will not be able to see these units on the game.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some units in the orbat are not &quot;writeable&quot; to any user profile.
+You will not be able to give orders to these units.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
