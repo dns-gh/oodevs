@@ -504,6 +504,7 @@
         <update name="svgl"/>
         <update name="zipstream"/>
         <update name="zlib"/>
+        <update name="bugtrap"/>
         <update name="system"/>
         <update name="shapelib"/>
         <update name="terrain" package="generation_app"/>

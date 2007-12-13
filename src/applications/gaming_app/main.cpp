@@ -12,7 +12,7 @@
 
 #include "ENT/ENT_Tr.h"
 
-#include "tools/Win32/StackWalkerProxy.h"
+#include "tools/Win32/BugTrap.h"
 #include <qapplication.h>
 #include <qmessagebox.h>
 #include <fstream>
@@ -40,32 +40,18 @@ namespace
     {
         Application* app = 0;
 
-        try
-        {
-            app = new Application( argc, argv );
-            AddTranslator( "qt_" );
-            AddTranslator( "ENT" );
-            AddTranslator( "clients_kernel" );
-            AddTranslator( "clients_gui" );
-            AddTranslator( "gaming" );
-            AddTranslator( "gaming_app" );
-            ENT_Tr::InitTranslations();
-            app->Initialize();
-        }
-        catch( ... )
-        {
-            std::exit( EXIT_FAILURE );
-        }
+        app = new Application( argc, argv );
+        AddTranslator( "qt_" );
+        AddTranslator( "ENT" );
+        AddTranslator( "clients_kernel" );
+        AddTranslator( "clients_gui" );
+        AddTranslator( "gaming" );
+        AddTranslator( "gaming_app" );
+        ENT_Tr::InitTranslations();
+        app->Initialize();
 
-        try
-        {
-            app->exec();
-            delete app;
-        }
-        catch( std::exception& e )
-        {
-            QMessageBox::critical( 0, APP_NAME, e.what() );
-        }
+        app->exec();
+        delete app;
     }
 
     std::ostream& GetLog()
@@ -79,13 +65,8 @@ int main( int argc, char** argv )
 {   
     _set_purecall_handler( PureHandler );
     SetConsoleTitle( APP_NAME " - " APP_VERSION " - " __TIMESTAMP__ );
+    BugTrap::Setup( "Sword Officer Training" ).SetEmail( "sword-ot@masagroup.net" );
 
-    __try
-    {
-        Run( argc, argv );
-    }
-    __except( StackWalkerProxy::ContinueSearch( GetExceptionInformation(), GetLog() ) )
-    {
-    }
+    Run( argc, argv );
     return 0;
 }
