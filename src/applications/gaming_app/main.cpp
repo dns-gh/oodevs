@@ -53,12 +53,6 @@ namespace
         app->exec();
         delete app;
     }
-
-    std::ostream& GetLog()
-    {
-        static std::ofstream log( "crash.log" );
-        return log;
-    }
 }
 
 int main( int argc, char** argv )
