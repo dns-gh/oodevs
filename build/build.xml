@@ -241,7 +241,7 @@
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
         <build-app name="gaming_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
-                   libs="asn1per,svgl,zipstream,zlib,shapelib
+                   libs="asn1per,svgl,zipstream,zlib,shapelib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
@@ -255,7 +255,7 @@
 
     <target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
         <build-app name="preparation_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
-                   libs="svgl,zipstream,zlib
+                   libs="svgl,zipstream,zlib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
                          lib${ant.project.name}_preparation-${platform}-mt
