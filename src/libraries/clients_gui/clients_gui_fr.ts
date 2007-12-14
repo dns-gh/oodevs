@@ -10,45 +10,45 @@
     <name>AutomatsLayer</name>
     <message>
         <source>Aggregate</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggréger</translation>
     </message>
     <message>
         <source>Disaggregate</source>
-        <translation type="unfinished"></translation>
+        <translation>Désaggréger</translation>
     </message>
 </context>
 <context>
     <name>CampPrototype_ABC</name>
     <message>
         <source>TC2:</source>
-        <translation type="unfinished"></translation>
+        <translation>TC2:</translation>
     </message>
     <message>
         <source>Side</source>
-        <translation type="unfinished"></translation>
+        <translation>Camp</translation>
     </message>
     <message>
         <source>Side&apos;s TC2</source>
-        <translation type="unfinished"></translation>
+        <translation>TC2 du camp</translation>
     </message>
 </context>
 <context>
     <name>CrossingSitePrototype_ABC</name>
     <message>
         <source>Crossing site</source>
-        <translation type="unfinished"></translation>
+        <translation>Site de franchissement</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur:</translation>
     </message>
     <message>
         <source>Depth:</source>
-        <translation type="unfinished"></translation>
+        <translation>Profondeur:</translation>
     </message>
     <message>
         <source>Stream speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Débit du courant:</translation>
     </message>
     <message>
         <source>Build river banks:</source>
@@ -59,152 +59,152 @@
     <name>DisplayToolbar</name>
     <message>
         <source>Display toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barre d&apos;outils Affichage</translation>
     </message>
     <message>
         <source>3D</source>
-        <translation type="unfinished"></translation>
+        <translation>3D</translation>
     </message>
 </context>
 <context>
     <name>DrawerPanel</name>
     <message>
         <source>Load drawings file</source>
-        <translation type="unfinished"></translation>
+        <translation>Charge le fichier de dessins</translation>
     </message>
     <message>
         <source>Save drawings to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder le fichier de dessins</translation>
     </message>
     <message>
         <source>Clear drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Effacer les dessins</translation>
     </message>
     <message>
         <source>Drawings (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dessins (*.xml)</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is not a valid drawings file.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; n&apos;est pas un fichier de dessins valide.</translation>
     </message>
     <message>
         <source>Unable to save drawings to file &apos;%1&apos;. 
 Please check access rights or write protection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de sauvegarder les dessins dans le fichier &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>
     <name>DrawerToolbar</name>
     <message>
         <source>Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Dessin</translation>
     </message>
     <message>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Dessiner</translation>
     </message>
     <message>
         <source>Display drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les dessins</translation>
     </message>
     <message>
         <source>Drawing tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Outils de dessin</translation>
     </message>
 </context>
 <context>
     <name>EditorFactory</name>
     <message>
         <source>True</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrai</translation>
     </message>
     <message>
         <source>False</source>
-        <translation type="unfinished"></translation>
+        <translation>Faux</translation>
     </message>
 </context>
 <context>
     <name>ElevationPanel</name>
     <message>
         <source>Elevation colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleurs de l&apos;ipsométrie</translation>
     </message>
     <message>
         <source>Fit color gradient to viewport</source>
-        <translation type="unfinished"></translation>
+        <translation>Adapter le gradient de couleur à la zone affichée</translation>
     </message>
     <message>
         <source>Hillshade</source>
-        <translation type="unfinished"></translation>
+        <translation>Ombrage du relief</translation>
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direction</translation>
     </message>
     <message>
         <source>Strength</source>
-        <translation type="unfinished"></translation>
+        <translation>Force</translation>
     </message>
     <message>
         <source>Gradient: </source>
-        <translation type="unfinished"></translation>
+        <translation>Gradient: </translation>
     </message>
 </context>
 <context>
     <name>FixedLightWidget</name>
     <message>
         <source>Light direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direction de la lumière</translation>
     </message>
     <message>
         <source>Light colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleurs</translation>
     </message>
     <message>
         <source>Ambient</source>
-        <translation type="unfinished"></translation>
+        <translation>Ambiante</translation>
     </message>
     <message>
         <source>Diffuse</source>
-        <translation type="unfinished"></translation>
+        <translation>Diffuse</translation>
     </message>
 </context>
 <context>
     <name>GradientWidget</name>
     <message>
         <source>Copy preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier le jeu de couleur</translation>
     </message>
     <message>
         <source>Delete preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le jeu de couleur</translation>
     </message>
 </context>
 <context>
     <name>GraphicPreferences</name>
     <message>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleurs</translation>
     </message>
 </context>
 <context>
     <name>Graphics3dPanel</name>
     <message>
         <source>Display type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;affichage</translation>
     </message>
     <message>
         <source>USRP</source>
-        <translation type="unfinished"></translation>
+        <translation>USRP</translation>
     </message>
     <message>
         <source>Elevation map</source>
-        <translation type="unfinished"></translation>
+        <translation>Ipsométrie</translation>
     </message>
     <message>
         <source>Lowest heights color: </source>

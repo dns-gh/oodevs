@@ -23,7 +23,7 @@ using namespace gui;
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
 CampPrototype_ABC::CampPrototype_ABC( QWidget* parent, Controllers& controllers )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "Side" ) )
+    : ObjectPrototypeAttributes_ABC( parent, tr( "Camp" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {
@@ -85,7 +85,7 @@ void CampPrototype_ABC::NotifyContextMenu( const Automat_ABC& agent, ContextMenu
     if( isVisible() && agent.GetType().IsTC2() )
     {
         selected_ = &agent;
-        menu.InsertItem( "Parameter", tr( "Side's TC2" ), this, SLOT( SetSelected() ) );
+        menu.InsertItem( "Parameter", tr( "Camp's TC2" ), this, SLOT( SetSelected() ) );
     }
 }
 

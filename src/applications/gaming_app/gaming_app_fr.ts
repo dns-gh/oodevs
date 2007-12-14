@@ -500,7 +500,7 @@
     </message>
     <message>
         <source>Instruction:</source>
-        <translation>Instruction:</translation>
+        <translation>Consigne:</translation>
     </message>
     <message>
         <source>Consumer:</source>
