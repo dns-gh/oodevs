@@ -467,15 +467,15 @@
     </message>
     <message>
         <source>Prisoner:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prisionnier:</translation>
     </message>
     <message>
         <source>Surrender:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rendu:</translation>
     </message>
     <message>
         <source>Refugees picked up:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Réfugiés pris en compte:</translation>
     </message>
     <message>
         <source>Info/Heading</source>
@@ -483,7 +483,7 @@
     </message>
     <message>
         <source>Heading:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Direction:</translation>
     </message>
 </context>
 <context>

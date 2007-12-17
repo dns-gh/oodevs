@@ -77,6 +77,7 @@
 #include "ConvexHulls.h"
 #include "AgentConvexHulls.h"
 #include "DecisionalStates.h"
+#include "Speeds.h"
 
 #include "Quotas.h"
 
@@ -183,6 +184,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgUnitCreation& asnMsg )
     result->Attach( *new Contaminations( controllers_.controller_, static_.objectTypes_, dico ) );
     result->Attach< ConvexHulls >( *new AgentConvexHulls( *result, static_.coordinateConverter_ ) );
     result->Attach( *new DecisionalStates() );
+    result->Attach( *new Speeds( static_.coordinateConverter_ ) );
     AttachExtensions( *result );
 
     result->Update( asnMsg );

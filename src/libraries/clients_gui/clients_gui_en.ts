@@ -24,11 +24,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Side</source>
+        <source>Camp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Side&apos;s TC2</source>
+        <source>Camp&apos;s TC2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -189,29 +189,6 @@ Please check access rights or write protection.</source>
     <name>GraphicPreferences</name>
     <message>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Graphics3dPanel</name>
-    <message>
-        <source>Display type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>USRP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Elevation map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lowest heights color: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Highest heights color: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -623,14 +600,6 @@ Please check access rights or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>3D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3D/Lighting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>2D</source>
         <translation type="unfinished"></translation>
     </message>
@@ -640,6 +609,10 @@ Please check access rights or write protection.</source>
     </message>
     <message>
         <source>2D/Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

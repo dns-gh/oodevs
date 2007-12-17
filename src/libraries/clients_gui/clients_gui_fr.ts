@@ -25,11 +25,19 @@
     </message>
     <message>
         <source>Side</source>
-        <translation>Camp</translation>
+        <translation type="obsolete">Camp</translation>
     </message>
     <message>
         <source>Side&apos;s TC2</source>
-        <translation>TC2 du camp</translation>
+        <translation type="obsolete">TC2 du camp</translation>
+    </message>
+    <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Camp&apos;s TC2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -196,499 +204,487 @@ Please check access rights or write protection.</source>
     <name>Graphics3dPanel</name>
     <message>
         <source>Display type</source>
-        <translation>Type d&apos;affichage</translation>
+        <translation type="obsolete">Type d&apos;affichage</translation>
     </message>
     <message>
         <source>USRP</source>
-        <translation>USRP</translation>
+        <translation type="obsolete">USRP</translation>
     </message>
     <message>
         <source>Elevation map</source>
-        <translation>Ipsométrie</translation>
-    </message>
-    <message>
-        <source>Lowest heights color: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Highest heights color: </source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Ipsométrie</translation>
     </message>
 </context>
 <context>
     <name>HierarchyListView_ABC</name>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Unités</translation>
     </message>
 </context>
 <context>
     <name>IntelligencesPanel</name>
     <message>
         <source>Intelligence</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignement</translation>
     </message>
     <message>
         <source>Intelligence description</source>
-        <translation type="unfinished"></translation>
+        <translation>Description du renseignement</translation>
     </message>
     <message>
         <source>Superior:</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur:</translation>
     </message>
     <message>
         <source>Level: </source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau: </translation>
     </message>
     <message>
         <source>Karma: </source>
-        <translation type="unfinished"></translation>
+        <translation>Karma: </translation>
     </message>
     <message>
         <source>Is embarked fight: </source>
-        <translation type="unfinished"></translation>
+        <translation>Combat embarqué: </translation>
     </message>
     <message>
         <source>Drag and drop symbol to map to create a new intelligence unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Glissez/déposez le symbole sur la carte pour créer un nouveau renseignement.</translation>
     </message>
 </context>
 <context>
     <name>LayersPanel</name>
     <message>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Couche</translation>
     </message>
     <message>
         <source>Transparency</source>
-        <translation type="unfinished"></translation>
+        <translation>Transparence</translation>
     </message>
 </context>
 <context>
     <name>LightingPanel</name>
     <message>
         <source>Lighting type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;illumination</translation>
     </message>
     <message>
         <source>Fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>Fixe</translation>
     </message>
     <message>
         <source>Simulation time</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de la simulation</translation>
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Source position</source>
-        <translation type="unfinished"></translation>
+        <translation>Position de la source</translation>
     </message>
     <message>
         <source>Ambient color</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleur ambiante</translation>
     </message>
     <message>
         <source>Diffuse color</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleur diffuse</translation>
     </message>
 </context>
 <context>
     <name>LimitsLayer</name>
     <message>
         <source>Create limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer une limite</translation>
     </message>
     <message>
         <source>Create lima</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer une lima</translation>
     </message>
 </context>
 <context>
     <name>Localisation</name>
     <message>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Point</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne</translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Polygone</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Cercle</translation>
     </message>
 </context>
 <context>
     <name>LocationEditorToolbar</name>
     <message>
         <source>Location editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editeur de position</translation>
     </message>
     <message>
         <source>Location: </source>
-        <translation type="unfinished"></translation>
+        <translation>Position: </translation>
     </message>
     <message>
         <source>Enter UTM coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Saisissez les coordonnées UTM</translation>
     </message>
     <message>
         <source>Center on location</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrer la vue sur la position</translation>
     </message>
     <message>
         <source>Add point to current location</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter le point à la localisation courante</translation>
     </message>
     <message>
         <source>Set special point</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir en tant que point spécial</translation>
     </message>
     <message>
         <source>Clear bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Vider les favoris</translation>
     </message>
     <message>
         <source>No bookmark defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun favori n&apos;est défini</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Bookmark location</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter la position en tant que favori</translation>
     </message>
     <message>
         <source> is not a valid coordinate.</source>
-        <translation type="unfinished"></translation>
+        <translation> n&apos;est pas une coordonnée valide.</translation>
     </message>
 </context>
 <context>
     <name>Logger</name>
     <message>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Date</translation>
     </message>
     <message>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Message</translation>
     </message>
     <message>
         <source>Clear list</source>
-        <translation type="unfinished"></translation>
+        <translation>Vider la liste</translation>
     </message>
 </context>
 <context>
     <name>LogisticRoutePrototype_ABC</name>
     <message>
         <source>Logistic route</source>
-        <translation type="unfinished"></translation>
+        <translation>Itinéraire logistique</translation>
     </message>
     <message>
         <source>Flow:</source>
-        <translation type="unfinished"></translation>
+        <translation>Débit:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Longueur:</translation>
     </message>
     <message>
         <source>Maximum weight:</source>
-        <translation type="unfinished"></translation>
+        <translation>Poids maximum:</translation>
     </message>
     <message>
         <source>Equipped:</source>
-        <translation type="unfinished"></translation>
+        <translation>Equippé:</translation>
     </message>
 </context>
 <context>
     <name>MinePrototype_ABC</name>
     <message>
         <source>Mine parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres des mines</translation>
     </message>
     <message>
         <source>Activity time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps d&apos;activité:</translation>
     </message>
     <message>
         <source>Density:</source>
-        <translation type="unfinished"></translation>
+        <translation>Densité:</translation>
     </message>
 </context>
 <context>
     <name>MiniViews</name>
     <message>
         <source>Miniviews</source>
-        <translation type="unfinished"></translation>
+        <translation>Minivues</translation>
     </message>
     <message>
         <source>Remove miniview</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer la minivue</translation>
     </message>
     <message>
         <source>Add miniview</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une minivue</translation>
     </message>
 </context>
 <context>
     <name>NBCPrototype_ABC</name>
     <message>
         <source>NBC parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres NBC</translation>
     </message>
     <message>
         <source>NBC Agent:</source>
-        <translation type="unfinished"></translation>
+        <translation>Agent NBC:</translation>
     </message>
 </context>
 <context>
     <name>NatureEditionCategory</name>
     <message>
         <source>undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>non défini</translation>
     </message>
 </context>
 <context>
     <name>ObjectListView</name>
     <message>
         <source>Objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Objets</translation>
     </message>
 </context>
 <context>
     <name>ObjectPanel</name>
     <message>
         <source>Object state</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat de l&apos;objet</translation>
     </message>
 </context>
 <context>
     <name>ObjectPrototype_ABC</name>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <source>---</source>
-        <translation type="unfinished"></translation>
+        <translation>---</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom:</translation>
     </message>
     <message>
         <source>Side:</source>
-        <translation type="unfinished"></translation>
+        <translation>Camp:</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Position:</translation>
     </message>
     <message>
         <source>New object</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouvel objet</translation>
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;obstacle:</translation>
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Obstacle de manoeuvre activé:</translation>
     </message>
 </context>
 <context>
     <name>OptionsPanel</name>
     <message>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille des polices</translation>
     </message>
     <message>
         <source>Display object icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les icônes des objets</translation>
     </message>
     <message>
         <source>Display state summary on mouse over</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher un résumé sous le curseur</translation>
     </message>
     <message>
         <source>Display reports on map</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les rapports sur la carte</translation>
     </message>
     <message>
         <source>Display only subscribed-unit reports on map</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher uniquement les rapports des unités souscrites</translation>
     </message>
     <message>
         <source>Display message</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les messages</translation>
     </message>
     <message>
         <source>Display traces</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les traces</translation>
     </message>
     <message>
         <source>Display detection reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les rapports de détection</translation>
     </message>
 </context>
 <context>
     <name>PopulationListView</name>
     <message>
         <source>Populations</source>
-        <translation type="unfinished"></translation>
+        <translation>Populations</translation>
     </message>
 </context>
 <context>
     <name>PopulationPanel</name>
     <message>
         <source>Population state</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat de la population</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom:</translation>
     </message>
     <message>
         <source>Alive people:</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnes en vie:</translation>
     </message>
     <message>
         <source>Dead people:</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnes décédées:</translation>
     </message>
     <message>
         <source>Chunks</source>
-        <translation type="unfinished"></translation>
+        <translation>Portions</translation>
     </message>
     <message>
         <source>Alive</source>
-        <translation type="unfinished"></translation>
+        <translation>En vie</translation>
     </message>
     <message>
         <source>Dead</source>
-        <translation type="unfinished"></translation>
+        <translation>Décedés</translation>
     </message>
     <message>
         <source>Mood</source>
-        <translation type="unfinished"></translation>
+        <translation>Attitude</translation>
     </message>
     <message>
         <source>Alive density</source>
-        <translation type="unfinished"></translation>
+        <translation>Densité des personnes en vie</translation>
     </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Préférences</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Appliquer</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3D/Lighting</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>2D</source>
-        <translation type="unfinished"></translation>
+        <translation>2D</translation>
     </message>
     <message>
         <source>2D/Terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>2D/Terrain</translation>
     </message>
     <message>
         <source>2D/Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>2D/Elevation</translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation>3D</translation>
     </message>
 </context>
 <context>
     <name>PreferencesList</name>
     <message>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Catégorie</translation>
     </message>
 </context>
 <context>
     <name>RotaPrototype_ABC</name>
     <message>
         <source>ROTA</source>
-        <translation type="unfinished"></translation>
+        <translation>ROTA</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Danger level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau de danger:</translation>
     </message>
     <message>
         <source>NBC agents:</source>
-        <translation type="unfinished"></translation>
+        <translation>Agents NBC:</translation>
     </message>
 </context>
 <context>
     <name>R&#xe8;gle GL</name>
     <message>
         <source> %1m</source>
-        <translation type="unfinished"></translation>
+        <translation> %1m</translation>
     </message>
 </context>
 <context>
     <name>StatusBar</name>
     <message>
         <source>---</source>
-        <translation type="unfinished"></translation>
+        <translation>---</translation>
     </message>
     <message>
         <source>x:%1 y:%2 h:%3</source>
-        <translation type="unfinished"></translation>
+        <translation>x:%1 y:%2 h:%3</translation>
     </message>
     <message>
         <source>Lat:%1 Lon:%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Lat:%1 Lon:%2</translation>
     </message>
 </context>
 <context>
@@ -696,75 +692,75 @@ Please check access rights or write protection.</source>
     <message>
         <source> px</source>
         <comment>TerrainPreference</comment>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Line thickness: </source>
         <comment>TerrainPreference</comment>
-        <translation type="unfinished"></translation>
+        <translation>Epaisseur du trait:</translation>
     </message>
 </context>
 <context>
     <name>Time Format</name>
     <message>
         <source>hh:mm:ss</source>
-        <translation type="unfinished"></translation>
+        <translation>hh:mm:ss</translation>
     </message>
 </context>
 <context>
     <name>UnitListView</name>
     <message>
         <source>Unit type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;unité</translation>
     </message>
     <message>
         <source>Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre</translation>
     </message>
 </context>
 <context>
     <name>UnitPreviewIcon</name>
     <message>
         <source>Drag and drop symbol to map to create a new unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Glissez/déposez le symbole sur la carte pour créer une nouvelle unité.</translation>
     </message>
 </context>
 <context>
     <name>UnitsPanel</name>
     <message>
         <source>Hierarchical view</source>
-        <translation type="unfinished"></translation>
+        <translation>Vue hiérachique</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau</translation>
     </message>
     <message>
         <source>Nature</source>
-        <translation type="unfinished"></translation>
+        <translation>Nature</translation>
     </message>
     <message>
         <source>Atlas qualifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualificatif Atlas</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Unités</translation>
     </message>
     <message>
         <source>Display type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;affichage: </translation>
     </message>
 </context>
 <context>
     <name>Yes/No</name>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Oui</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Non</translation>
     </message>
 </context>
 </TS>

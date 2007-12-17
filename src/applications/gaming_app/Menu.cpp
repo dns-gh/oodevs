@@ -80,6 +80,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     subMenu->insertSeparator();
     AddSubMenu4( subMenu, tr( "Routes" )        , MAKE_ICON( path )          , controllers.options_, "Paths" );
     AddSubMenu4( subMenu, tr( "Covered routes" ), MAKE_ICON( oldpath )       , controllers.options_, "OldPaths" );
+    AddSubMenu4( subMenu, tr( "Direction" )     , MAKE_ICON( oldpath )       , controllers.options_, "Direction" ); // $$$$ AGE 2007-12-17: Icon
     subMenu->insertSeparator();
     // $$$$ AGE 2007-05-30: icons
     AddSubMenu4( subMenu, tr( "Convex hulls" ),     MAKE_ICON( oldpath )       , controllers.options_, "ConvexHulls" );

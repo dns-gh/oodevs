@@ -1448,6 +1448,10 @@
         <source>&amp;Windows</source>
         <translation>F&amp;enêtres</translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>

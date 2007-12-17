@@ -15,7 +15,6 @@
 #include "GraphicPreferences.h"
 #include "PreferencesList.h"
 #include "PreferencePanel_ABC.h"
-#include "Graphics3dPanel.h"
 #include "LightingPanel.h"
 #include "LayersPanel.h"
 #include "resources.h"
@@ -67,8 +66,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
 
     pGraphicPrefPanel_ = new GraphicsPanel( this );
     layersPanel_       = new LayersPanel( this, controllers );
-    AddPage( tr( "3D" ), *new Graphics3dPanel( this ) );
-    AddPage( tr( "3D/Lighting" ), *new LightingPanel( this, lighting, controllers ) );
+    AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" )        , *layersPanel_ ); 
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
     AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) );    
