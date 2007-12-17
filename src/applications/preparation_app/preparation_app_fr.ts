@@ -3,602 +3,602 @@
     <name>AboutDialog</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>A propos</translation>
     </message>
     <message>
         <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>(sp)© 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermer</translation>
     </message>
 </context>
 <context>
     <name>AgentResourcesPanel</name>
     <message>
         <source>Resources</source>
-        <translation type="unfinished"></translation>
+        <translation>Ressources</translation>
     </message>
     <message>
         <source>Dotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotations</translation>
     </message>
     <message>
         <source>Quantity</source>
-        <translation type="unfinished"></translation>
+        <translation>Quantité</translation>
     </message>
 </context>
 <context>
     <name>ChangeDiplomacyDialog</name>
     <message>
         <source>Diplomacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Diplomacie</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
     <name>CommunicationListView</name>
     <message>
         <source>Create knowledge group</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un groupe de connaissance</translation>
     </message>
 </context>
 <context>
     <name>DotationsEditor</name>
     <message>
         <source>Dotations editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Edition des dotations</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Quantity</source>
-        <translation type="unfinished"></translation>
+        <translation>Quantité</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
     <name>FileToolbar</name>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder</translation>
     </message>
 </context>
 <context>
     <name>LocalWeathersList</name>
     <message>
         <source>Local patch</source>
-        <translation type="unfinished"></translation>
+        <translation>Zones locales</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Tactical</source>
-        <translation type="unfinished"></translation>
+        <translation>Tactique</translation>
     </message>
     <message>
         <source>Communication</source>
-        <translation type="unfinished"></translation>
+        <translation>Communication</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Unités</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Objets</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished"></translation>
+        <translation>Populations</translation>
     </message>
     <message>
         <source>Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Création</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>Terrain</translation>
     </message>
     <message>
         <source>Raster</source>
-        <translation type="unfinished"></translation>
+        <translation>Cartes Raster</translation>
     </message>
     <message>
         <source>Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Elévation</translation>
     </message>
     <message>
         <source>Automats</source>
-        <translation type="unfinished"></translation>
+        <translation>Automates</translation>
     </message>
     <message>
         <source>Load exercise definition file (exercise.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
     </message>
     <message>
         <source>Error reading xml file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur au chargement du fichier xml: </translation>
     </message>
     <message>
         <source>Save modifications?</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer les modifications ?</translation>
     </message>
     <message>
         <source>New ORBAT</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouvel ODB</translation>
     </message>
     <message>
         <source>Intelligences</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignement</translation>
     </message>
 </context>
 <context>
     <name>Menu</name>
     <message>
         <source>&amp;New...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nouveau...</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ouvrir...</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sauvegarder</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Quitter</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fichier</translation>
     </message>
     <message>
         <source>&amp;Profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Profils</translation>
     </message>
     <message>
         <source>Logistic links</source>
-        <translation type="unfinished"></translation>
+        <translation>Liens logistiques</translation>
     </message>
     <message>
         <source>Missing logistic links</source>
-        <translation type="unfinished"></translation>
+        <translation>Liens logistiques manquants</translation>
     </message>
     <message>
         <source>Logistic...</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique...</translation>
     </message>
     <message>
         <source>Small text</source>
-        <translation type="unfinished"></translation>
+        <translation>Petit texte</translation>
     </message>
     <message>
         <source>Large text</source>
-        <translation type="unfinished"></translation>
+        <translation>Gros texte</translation>
     </message>
     <message>
         <source>Tactical lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Lignes tactiques</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Off</translation>
     </message>
     <message>
         <source>100m</source>
-        <translation type="unfinished"></translation>
+        <translation>100m</translation>
     </message>
     <message>
         <source>250m</source>
-        <translation type="unfinished"></translation>
+        <translation>250m</translation>
     </message>
     <message>
         <source>500m</source>
-        <translation type="unfinished"></translation>
+        <translation>500m</translation>
     </message>
     <message>
         <source>1km</source>
-        <translation type="unfinished"></translation>
+        <translation>1km</translation>
     </message>
     <message>
         <source>2.5km</source>
-        <translation type="unfinished"></translation>
+        <translation>2.5km</translation>
     </message>
     <message>
         <source>5km</source>
-        <translation type="unfinished"></translation>
+        <translation>5km</translation>
     </message>
     <message>
         <source>10km</source>
-        <translation type="unfinished"></translation>
+        <translation>10km</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Grille</translation>
     </message>
     <message>
         <source>Terrain...</source>
-        <translation type="unfinished"></translation>
+        <translation>Terrain...</translation>
     </message>
     <message>
         <source>&amp;Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Préférences...</translation>
     </message>
     <message>
         <source>&amp;Display</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Affichage</translation>
     </message>
     <message>
         <source>View/Edit...</source>
-        <translation type="unfinished"></translation>
+        <translation>Voir/Editer...</translation>
     </message>
     <message>
         <source>Creation wizard...</source>
-        <translation type="unfinished"></translation>
+        <translation>Assistant de création...</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fenêtres</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>A propos</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aide</translation>
     </message>
 </context>
 <context>
     <name>ModelBuilder</name>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Objets</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer</translation>
     </message>
 </context>
 <context>
     <name>PopulationListView</name>
     <message>
         <source>Create side</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un camp</translation>
     </message>
 </context>
 <context>
     <name>ProfileDialog</name>
     <message>
         <source>User profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Profils utilisateurs</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
     <name>ProfileEditor</name>
     <message>
         <source>Duplicate login: &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil en double: &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>
     <name>ProfileWizardDialog</name>
     <message>
         <source>User profiles creation wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>Assistant de création de profils utilisateurs</translation>
     </message>
     <message>
         <source>Select profiles to generate: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner les profils à générer: </translation>
     </message>
     <message>
         <source>one profile per side</source>
-        <translation type="unfinished"></translation>
+        <translation>un profil par camp</translation>
     </message>
     <message>
         <source>one profile per top-level formation</source>
-        <translation type="unfinished"></translation>
+        <translation>un profil par formation de plus haut niveau</translation>
     </message>
     <message>
         <source>one profile per formation</source>
-        <translation type="unfinished"></translation>
+        <translation>un profil par formation</translation>
     </message>
     <message>
         <source>Select creation mode: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le mode de création: </translation>
     </message>
     <message>
         <source>clear existing profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>supprimer les profils existants</translation>
     </message>
     <message>
         <source>add new profiles to existing</source>
-        <translation type="unfinished"></translation>
+        <translation>ajouter les nouveaux profils au profils existants</translation>
     </message>
     <message>
         <source>Select creation rights: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner les droits: </translation>
     </message>
     <message>
         <source>writeable</source>
-        <translation type="unfinished"></translation>
+        <translation>écriture</translation>
     </message>
     <message>
         <source>readonly</source>
-        <translation type="unfinished"></translation>
+        <translation>lecture seule</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
     <name>PropertiesPanel</name>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés</translation>
     </message>
 </context>
 <context>
     <name>PropertiesTableDisplayer</name>
     <message>
         <source>&lt;Edit Property Group...&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Editer le groupe de propriétés...&gt;</translation>
     </message>
 </context>
 <context>
     <name>TacticalListView</name>
     <message>
         <source>Create side</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un camp</translation>
     </message>
     <message>
         <source>Create formation</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer une formation</translation>
     </message>
     <message>
         <source>Engage</source>
-        <translation type="unfinished"></translation>
+        <translation>Embrayer</translation>
     </message>
     <message>
         <source>Disengage</source>
-        <translation type="unfinished"></translation>
+        <translation>Désembrayer</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Renommer</translation>
     </message>
 </context>
 <context>
     <name>TemplateListView</name>
     <message>
         <source>Template</source>
-        <translation type="unfinished"></translation>
+        <translation>Patron</translation>
     </message>
 </context>
 <context>
     <name>TemplatesPanel</name>
     <message>
         <source>Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Patrons</translation>
     </message>
     <message>
         <source>Create template</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un patron</translation>
     </message>
 </context>
 <context>
     <name>UserProfileList</name>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>UserProfileRights</name>
     <message>
         <source>Read</source>
-        <translation type="unfinished"></translation>
+        <translation>Lecture</translation>
     </message>
     <message>
         <source>Write</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecriture</translation>
     </message>
 </context>
 <context>
     <name>UserProfileWidget</name>
     <message>
         <source>Profile information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information sur le profil</translation>
     </message>
     <message>
         <source>Login:</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mot de passe:</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Access rights</source>
-        <translation type="unfinished"></translation>
+        <translation>Droits d&apos;accès</translation>
     </message>
     <message>
         <source>Supervisor actions:</source>
-        <translation type="unfinished"></translation>
+        <translation>Actions de supervision:</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Unités</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished"></translation>
+        <translation>Populations</translation>
     </message>
     <message>
         <source>Rights</source>
-        <translation type="unfinished"></translation>
+        <translation>Droits</translation>
     </message>
     <message>
         <source>Invalid profile information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information de profile invalide</translation>
     </message>
 </context>
 <context>
     <name>WeatherWidget</name>
     <message>
         <source>Wind direction/speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse/direction du vent:</translation>
     </message>
     <message>
         <source>Clouds floor/ceiling/density:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plancher/Plafond/Densité de la couverture nuageuse:</translation>
     </message>
     <message>
         <source>Weather type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de temps:</translation>
     </message>
 </context>
 <context>
     <name>gui</name>
     <message>
         <source>Population type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de population</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished"></translation>
+        <translation>Populations</translation>
     </message>
     <message>
         <source>Weather</source>
-        <translation type="unfinished"></translation>
+        <translation>Météorologie</translation>
     </message>
     <message>
         <source>Ephemerides</source>
-        <translation type="unfinished"></translation>
+        <translation>Ephémérides</translation>
     </message>
     <message>
         <source>Sunrise:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lever du soleil:</translation>
     </message>
     <message>
         <source>Sunset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Coucher du soleil:</translation>
     </message>
     <message>
         <source>Lighting:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eclairage:</translation>
     </message>
     <message>
         <source>Global weather</source>
-        <translation type="unfinished"></translation>
+        <translation>Météorologie du théatre</translation>
     </message>
     <message>
         <source>Local weather</source>
-        <translation type="unfinished"></translation>
+        <translation>Zones météorologiques locales</translation>
     </message>
     <message>
         <source>Weather parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres météo</translation>
     </message>
     <message>
         <source>Set location</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter la localisation</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Exercise date:</source>
-        <translation type="unfinished"></translation>
+        <translation>Date de l&apos;exercice:</translation>
     </message>
 </context>
 <context>
     <name>kernel</name>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun</translation>
     </message>
 </context>
 </TS>

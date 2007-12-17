@@ -3,63 +3,63 @@
     <name>Agent</name>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Command post</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Poste de commande</translation>
     </message>
 </context>
 <context>
     <name>AgentsModelChecker</name>
     <message>
         <source>Units model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle d&apos;unités</translation>
     </message>
     <message>
         <source>Automat &apos;%1&apos; [%2] has no command post.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;automate &apos;%1&apos; [%2] n&apos;a pas de poste de commande.</translation>
     </message>
     <message>
         <source>Automat &apos;%1&apos; [%2] has &apos;%3&apos; command posts.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;automate &apos;%1&apos; [%2] a %3 postes de commande.</translation>
     </message>
 </context>
 <context>
     <name>Automat</name>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nom</translation>
     </message>
 </context>
 <context>
     <name>CampAttributes</name>
     <message>
         <source>Info/Camp attributes/Superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de camp/Supérieur</translation>
     </message>
 </context>
 <context>
     <name>CrossingSiteAttributes</name>
     <message>
         <source>Info/Crossing site attributes/Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de site de franchissement/Largeur</translation>
     </message>
     <message>
         <source>Info/Crossing site attributes/Depth</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de site de franchissement/Profondeur</translation>
     </message>
     <message>
         <source>Info/Crossing site attributes/Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de site de franchissement/Débit</translation>
     </message>
     <message>
         <source>Info/Crossing site attributes/Build river banks</source>
@@ -70,177 +70,179 @@
     <name>Dotations</name>
     <message>
         <source>Dotations</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotations</translation>
     </message>
     <message>
         <source>Dotations/Dotations</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotations/Dotations</translation>
     </message>
 </context>
 <context>
     <name>E_FuncLimaType</name>
     <message>
         <source>LD</source>
-        <translation type="unfinished"></translation>
+        <translation>LD</translation>
     </message>
     <message>
         <source>LCA</source>
-        <translation type="unfinished"></translation>
+        <translation>LCA</translation>
     </message>
     <message>
         <source>LC</source>
-        <translation type="unfinished"></translation>
+        <translation>LC</translation>
     </message>
     <message>
         <source>LI</source>
-        <translation type="unfinished"></translation>
+        <translation>LI</translation>
     </message>
     <message>
         <source>LO</source>
-        <translation type="unfinished"></translation>
+        <translation>LO</translation>
     </message>
     <message>
         <source>LCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>LCAR</translation>
     </message>
     <message>
         <source>LR</source>
-        <translation type="unfinished"></translation>
+        <translation>LR</translation>
     </message>
     <message>
         <source>LDM</source>
-        <translation type="unfinished"></translation>
+        <translation>LDM</translation>
     </message>
     <message>
         <source>LFM</source>
-        <translation type="unfinished"></translation>
+        <translation>LFM</translation>
     </message>
     <message>
         <source>LIA</source>
-        <translation type="unfinished"></translation>
+        <translation>LIA</translation>
     </message>
 </context>
 <context>
     <name>Formation</name>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Formation [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Formation [%1]</translation>
     </message>
 </context>
 <context>
     <name>Intelligence</name>
     <message>
         <source>Intelligence [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignement [%1]</translation>
     </message>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Nature</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nature</translation>
     </message>
     <message>
         <source>Info/Embarked</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Embarqué</translation>
     </message>
     <message>
         <source>Info/Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Niveau</translation>
     </message>
     <message>
         <source>Info/Karma</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Karma</translation>
     </message>
 </context>
 <context>
     <name>KnowledgeGroup</name>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Type</translation>
     </message>
     <message>
         <source>Knowledge group [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Groupe de connaissance [%1]</translation>
     </message>
 </context>
 <context>
     <name>Lima</name>
     <message>
         <source>Lima</source>
-        <translation type="unfinished"></translation>
+        <translation>Lima</translation>
     </message>
 </context>
 <context>
     <name>Limit</name>
     <message>
         <source>Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Limite</translation>
     </message>
 </context>
 <context>
     <name>LocalWeather</name>
     <message>
         <source>Local weather %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zone météorologique locale %1</translation>
     </message>
 </context>
 <context>
     <name>LogisticRouteAttributes</name>
     <message>
         <source>Info/Logistic route attributes/Flow</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de l&apos;itinéraire logistique/Débit</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de l&apos;itinéraire logistique/Largeur</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de l&apos;itinéraire logistique/Longueur</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Maximum weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de l&apos;itinéraire logistique/Poids maximum</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Equipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de l&apos;itinéraire logistique/Equippé</translation>
     </message>
 </context>
 <context>
     <name>MaintenanceStates</name>
     <message>
         <source>Logistic/Maintenance/Superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique/Maintenance/Supérieur
+</translation>
     </message>
 </context>
 <context>
     <name>MedicalStates</name>
     <message>
         <source>Logistic/Medical/Superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique/Santé/Supérieur
+</translation>
     </message>
 </context>
 <context>
@@ -258,23 +260,23 @@
     <name>NBC</name>
     <message>
         <source>NBC cloud/zone</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuage/zone NBC</translation>
     </message>
     <message>
         <source>NBC agent:</source>
-        <translation type="unfinished"></translation>
+        <translation>Agent NBC:</translation>
     </message>
     <message>
         <source>ROTA</source>
-        <translation type="unfinished"></translation>
+        <translation>ROTA</translation>
     </message>
     <message>
         <source>Danger level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau de danger:</translation>
     </message>
     <message>
         <source>NBC agent(s):</source>
-        <translation type="unfinished"></translation>
+        <translation>Agent(s) NBC:</translation>
     </message>
 </context>
 <context>
@@ -288,27 +290,27 @@
     <name>Object</name>
     <message>
         <source>Camp</source>
-        <translation type="unfinished"></translation>
+        <translation>Camp</translation>
     </message>
     <message>
         <source>TC2:</source>
-        <translation type="unfinished"></translation>
+        <translation>TC2:</translation>
     </message>
     <message>
         <source>Crossing site</source>
-        <translation type="unfinished"></translation>
+        <translation>Site de franchissement</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur:</translation>
     </message>
     <message>
         <source>Depth:</source>
-        <translation type="unfinished"></translation>
+        <translation>Profondeur:</translation>
     </message>
     <message>
         <source>Stream speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Débit du courant:</translation>
     </message>
     <message>
         <source>Build river banks:</source>
@@ -316,27 +318,27 @@
     </message>
     <message>
         <source>Logistic route</source>
-        <translation type="unfinished"></translation>
+        <translation>Itinéraire logistique</translation>
     </message>
     <message>
         <source>Equipped:</source>
-        <translation type="unfinished"></translation>
+        <translation>Equippé:</translation>
     </message>
     <message>
         <source>Flow:</source>
-        <translation type="unfinished"></translation>
+        <translation>Débit:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Longueur:</translation>
     </message>
     <message>
         <source>Maximum weight:</source>
-        <translation type="unfinished"></translation>
+        <translation>Poids maximum:</translation>
     </message>
     <message>
         <source>Mine parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres des mines</translation>
     </message>
     <message>
         <source>Activity time:</source>
@@ -344,67 +346,67 @@
     </message>
     <message>
         <source>Density:</source>
-        <translation type="unfinished"></translation>
+        <translation>Densité:</translation>
     </message>
     <message>
         <source>%1 [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 [%2]</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Identifier:</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifiant:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Position:</translation>
     </message>
     <message>
         <source>Construction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Construction:</translation>
     </message>
     <message>
         <source>Mining:</source>
-        <translation type="unfinished"></translation>
+        <translation>Valorisation:</translation>
     </message>
     <message>
         <source>Bypass:</source>
-        <translation type="unfinished"></translation>
+        <translation>Contournement:</translation>
     </message>
     <message>
         <source>Construction dotation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotation de construction:</translation>
     </message>
     <message>
         <source>Development dotation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotation de valorisation:</translation>
     </message>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Type</translation>
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;obstacle:</translation>
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
@@ -412,7 +414,7 @@
     </message>
     <message>
         <source>Info/Obstacle type</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Type d&apos;obstacle</translation>
     </message>
     <message>
         <source>Info/Reserved obstacle activated</source>
@@ -423,19 +425,19 @@
     <name>Population</name>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Type</translation>
     </message>
     <message>
         <source>Info/Humans</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Peronnes</translation>
     </message>
     <message>
         <source>Info/Mood</source>
@@ -446,50 +448,54 @@
     <name>Preparation</name>
     <message>
         <source>friend</source>
-        <translation type="unfinished"></translation>
+        <translation>ami</translation>
     </message>
     <message>
         <source>enemy</source>
-        <translation type="unfinished"></translation>
+        <translation>ennemi</translation>
     </message>
     <message>
         <source>neutral</source>
-        <translation type="unfinished"></translation>
+        <translation>neutre</translation>
     </message>
     <message>
         <source>Army %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Camp %1</translation>
     </message>
     <message>
         <source>Communication model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle de communication</translation>
     </message>
     <message>
         <source>Team &apos;%1&apos; has no knowledge group</source>
-        <translation type="unfinished"></translation>
+        <translation>Le camp &apos;%1&apos; n&apos;a pas de groupe de connaissance</translation>
     </message>
     <message>
         <source>Unit &apos;%1&apos; in team &apos;%2&apos; has no knowledge group</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;unité &apos;%1&apos; du camp &apos;%2&apos; n&apos;a pas de groupe de connaissance</translation>
     </message>
 </context>
 <context>
     <name>ProfilesModel</name>
     <message>
         <source>New profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau profil</translation>
     </message>
     <message>
         <source>Some units in the orbat are not &quot;readable&quot; to any user profile.
 You will not be able to see these units on the game.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Certaines unités de l&apos;ODB ne sont &quot;lisibles&quot; par aucun profile utilisateur.
+Vous ne pourrez pas voir ces unités lors de la simulation.
+</translation>
     </message>
     <message>
         <source>Some units in the orbat are not &quot;writeable&quot; to any user profile.
 You will not be able to give orders to these units.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Certaines unités de l&apos;ODB ne sont &quot;en écriture&quot; pour aucun profile utilisateur.
+Vous ne pourrez pas donner d&apos;ordres à ces unités lors de la simulation.
+</translation>
     </message>
 </context>
 <context>
@@ -507,11 +513,11 @@ You will not be able to give orders to these units.
     <name>Stocks</name>
     <message>
         <source>Stocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Stocks</translation>
     </message>
     <message>
         <source>Stocks/Stocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Stocks/Stocks</translation>
     </message>
 </context>
 <context>
@@ -533,33 +539,33 @@ You will not be able to give orders to these units.
     <name>TacticalLine_ABC</name>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nom</translation>
     </message>
 </context>
 <context>
     <name>Tc2States</name>
     <message>
         <source>Logistic/TC2/Superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique/TC2/Supérieur</translation>
     </message>
 </context>
 <context>
     <name>Team</name>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Karma</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Karma</translation>
     </message>
 </context>
 </TS>
