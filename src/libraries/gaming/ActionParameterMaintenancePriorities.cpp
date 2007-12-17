@@ -125,7 +125,7 @@ void ActionParameterMaintenancePriorities::Clean( ASN1T_MissionParameter& asn ) 
 void ActionParameterMaintenancePriorities::Serialize( xml::xostream& xos ) const
 {
     ActionParameter< QString >::Serialize( xos );
-    QString value;
+    QString value( "" );
     for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
         value += ( !value.isEmpty() ? ";" : "" ) + QString::number( (*it)->GetId() );
     xos << attribute( "value", value.ascii() );

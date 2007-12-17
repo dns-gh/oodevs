@@ -52,7 +52,7 @@ Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFa
 {
     std::string karma;
     xis >> attribute( "type", karma );
-    karma_ = &karmas.Get( karma.c_str() );
+    name_ = tools::translate( "Preparation", "Army %1" ).arg( id_ );
     RegisterSelf( *this );
     idManager.Lock( id_ );
     CreateDictionary( controller );

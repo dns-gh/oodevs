@@ -60,7 +60,7 @@ ActionParameterString::~ActionParameterString()
 void ActionParameterString::CommitTo( ASN1VisibleString& asn ) const
 {
     const QString value = GetValue();
-    asn = value.ascii();
+    asn = value.isNull() ? "" : value.ascii();
 }
 
 // -----------------------------------------------------------------------------

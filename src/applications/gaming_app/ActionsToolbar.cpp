@@ -96,7 +96,7 @@ void ActionsToolbar::Play()
 void ActionsToolbar::Load()
 {
     const QString filename = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) );
-    if( filename == QString::null )
+    if( filename.isEmpty() )
         return;
     try
     {

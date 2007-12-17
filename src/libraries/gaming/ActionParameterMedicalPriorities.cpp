@@ -106,7 +106,7 @@ void ActionParameterMedicalPriorities::Clean( ASN1T_MissionParameter& asn ) cons
 void ActionParameterMedicalPriorities::Serialize( xml::xostream& xos ) const
 {
     ActionParameter< QString >::Serialize( xos );
-    QString value;
+    QString value( "" );
     for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
         value += ( !value.isEmpty() ? ";" : "" ) + QString::number( *it );
     xos << attribute( "value", value.ascii() );

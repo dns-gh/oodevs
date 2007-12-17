@@ -25,6 +25,7 @@ UserProfile::UserProfile( const ASN1T_MsgProfileCreation& message, kernel::Contr
     : controller_( controller )
     , publisher_( publisher )
     , registered_( true )
+    , login_      ( "" )
     , supervision_( false )
 {
     controller_.Create( *this );

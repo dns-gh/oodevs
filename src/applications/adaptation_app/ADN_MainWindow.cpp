@@ -269,7 +269,7 @@ void ADN_MainWindow::SaveProject()
 void ADN_MainWindow::SaveAsProject()
 {
     QString strFileName = QFileDialog::getSaveFileName( QString::null, tr( "Physical model file (physical.xml)" ) , this, "", tr( "Save project as" ) );
-    if( strFileName == QString::null )
+    if( strFileName.isEmpty() )
         return;
     
     QApplication::setOverrideCursor( waitCursor ); // this might take time

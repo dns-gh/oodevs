@@ -67,8 +67,5 @@ void GQ_PlotToolTip::maybeTip( const QPoint& point )
 
     // $$$$ CBX 2003-11-18: TODO: truncate list if it is too long or pan on several columns
     QString tipStr( tipList.join( "\n" ) );
-
-//    GQ_LOG( "[ToolTip]: " << tipStr.ascii() );
-
     tip( tipRect, tipStr );
 }

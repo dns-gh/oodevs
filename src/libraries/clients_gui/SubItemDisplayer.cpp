@@ -127,5 +127,4 @@ QListViewItem* SubItemDisplayer::FindChild( const QString& name )
     }
     AddChild( name );
     return FindChild( name );
-//    throw std::runtime_error( std::string( "Element '" ) + name.ascii() + "' does not exist" );
 }

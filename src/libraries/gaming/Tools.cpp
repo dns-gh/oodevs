@@ -89,7 +89,7 @@ E_LocationType tools::LocationFromString( const QString& type )
 // -----------------------------------------------------------------------------
 E_AmmunitionFamily tools::AmmunitionFamilyFromString( const QString& type )
 {
-    return ENT_Tr::ConvertToAmmunitionFamily( type.ascii() );
+    return type.isNull() ? (E_AmmunitionFamily)-1 : ENT_Tr::ConvertToAmmunitionFamily( type.ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,5 +98,5 @@ E_AmmunitionFamily tools::AmmunitionFamilyFromString( const QString& type )
 // -----------------------------------------------------------------------------
 E_DotationFamily tools::DotationFamilyFromString( const QString& type )
 {
-    return DotationFamilyFromString( std::string( type.ascii() ) );
+    return type.isNull() ? (E_DotationFamily)-1 : DotationFamilyFromString( std::string( type.ascii() ) );
 }

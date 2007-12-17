@@ -27,6 +27,7 @@ using namespace kernel;
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
 HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& base, bool root /*=true*/ )
+    : name_( "" )
 {
     element_.reset( CreateElement( agents, formations, base ) );
     if( element_.get() )
@@ -53,6 +54,7 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& forma
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
 HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input )
+    : name_( "" )
 {
     element_.reset( CreateElement( agents, formations, types, input ) );
     input >> xml::list( "template", *this, HierarchyTemplate::ReadSubTemplate, agents, formations, types );
