@@ -51,6 +51,23 @@ void Speeds::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Speeds::DoUpdate
+// Created: AGE 2007-12-17
+// -----------------------------------------------------------------------------
+void Speeds::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
+{
+    // $$$$ AGE 2007-12-17: *soupir*
+    if( message.m.speedPresent )
+        speed_ = message.speed;
+    if( message.m.directionPresent )
+    {
+        const float angle = message.direction * 3.14f / 180.f;
+        direction_ = geometry::Vector2f( std::sin( angle ), std::cos( angle ) );
+    }
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: Speeds::Draw
 // Created: AGE 2007-12-17
 // -----------------------------------------------------------------------------

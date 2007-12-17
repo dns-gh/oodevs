@@ -3,19 +3,19 @@
     <name>E_PerceptionResult</name>
     <message>
         <source>Identification</source>
-        <translation type="unfinished"></translation>
+        <translation>Identification</translation>
     </message>
     <message>
         <source>Detection</source>
-        <translation type="unfinished"></translation>
+        <translation>Détection</translation>
     </message>
     <message>
         <source>Not seen</source>
-        <translation type="unfinished"></translation>
+        <translation>Non vu</translation>
     </message>
     <message>
         <source>Recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>Reconnu</translation>
     </message>
     <message>
         <source>JourSansNuage</source>
@@ -94,194 +94,194 @@
     <name>E_TroopHealthState</name>
     <message>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Operational</source>
-        <translation type="unfinished"></translation>
+        <translation>Opérationnel</translation>
     </message>
     <message>
         <source>Dead</source>
-        <translation type="unfinished"></translation>
+        <translation>Mort</translation>
     </message>
     <message>
         <source>Injured</source>
-        <translation type="unfinished"></translation>
+        <translation>Blessé</translation>
     </message>
     <message>
         <source>Mentally injured</source>
-        <translation type="unfinished"></translation>
+        <translation>Réac. mental</translation>
     </message>
     <message>
         <source>Contaminated</source>
-        <translation type="unfinished"></translation>
+        <translation>Contaminé</translation>
     </message>
     <message>
         <source>Under treatment </source>
-        <translation type="unfinished"></translation>
+        <translation>En traitement </translation>
     </message>
     <message>
         <source>Assigned to maintenance</source>
-        <translation type="unfinished"></translation>
+        <translation>Assigné à la maintenance</translation>
     </message>
 </context>
 <context>
     <name>EntityHierarchies</name>
     <message>
         <source>Hierarchies/Superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiérarchie/Supérieur</translation>
     </message>
 </context>
 <context>
     <name>Formatter</name>
     <message>
         <source> - </source>
-        <translation type="unfinished"></translation>
+        <translation> - </translation>
     </message>
     <message>
         <source>, </source>
-        <translation type="unfinished"></translation>
+        <translation>, </translation>
     </message>
 </context>
 <context>
     <name>Fourstate</name>
     <message>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Jamais</translation>
     </message>
     <message>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Toujours</translation>
     </message>
     <message>
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionné</translation>
     </message>
     <message>
         <source>Superior Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur sélectionné</translation>
     </message>
 </context>
 <context>
     <name>Karma</name>
     <message>
         <source>Friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Ami</translation>
     </message>
     <message>
         <source>Enemy</source>
-        <translation type="unfinished"></translation>
+        <translation>Ennemi</translation>
     </message>
     <message>
         <source>Neutral</source>
-        <translation type="unfinished"></translation>
+        <translation>Neutre</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Inconnu</translation>
     </message>
 </context>
 <context>
     <name>Localisation</name>
     <message>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Point</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Cercle</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin</translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Polygone</translation>
     </message>
 </context>
 <context>
     <name>MissionType</name>
     <message>
         <source>Limits</source>
-        <translation type="unfinished"></translation>
+        <translation>Limites</translation>
     </message>
     <message>
         <source>Limas</source>
-        <translation type="unfinished"></translation>
+        <translation>Limas</translation>
     </message>
     <message>
         <source>Dangerous Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direction dangereuse</translation>
     </message>
     <message>
         <source>Intelligences</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignement</translation>
     </message>
 </context>
 <context>
     <name>Tristate</name>
     <message>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Off</translation>
     </message>
     <message>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>On</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto</translation>
     </message>
 </context>
 <context>
     <name>Units</name>
     <message>
         <source>m</source>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <source>&#xb0;</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <source>m/s</source>
-        <translation type="unfinished"></translation>
+        <translation>m/s</translation>
     </message>
     <message>
         <source>veh/h</source>
-        <translation type="unfinished"></translation>
+        <translation>véh/s</translation>
     </message>
     <message>
         <source>t</source>
-        <translation type="unfinished"></translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>km/h</source>
-        <translation type="unfinished"></translation>
+        <translation>km/h</translation>
     </message>
     <message>
         <source>h</source>
-        <translation type="unfinished"></translation>
+        <translation>h</translation>
     </message>
     <message>
         <source>mines/m</source>
-        <translation type="unfinished"></translation>
+        <translation>mines/m</translation>
     </message>
 </context>
 <context>
     <name>tools</name>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Inconnu</translation>
     </message>
 </context>
 </TS>

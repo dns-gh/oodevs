@@ -18,6 +18,7 @@
 #include "clients_kernel/Controllers.h"
 #include "AgentKnowledgePositions.h"
 #include "PopulationKnowledgePositions.h"
+#include "Speeds.h"
 
 using namespace kernel;
 
@@ -51,6 +52,7 @@ AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const Knowledge
     AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, converter_, model_.agents_, model_.teams_ );
     result->Attach( *new PerceptionMap( controllers_.controller_, model_.agents_ ) );
     result->Attach< Positions >( *new AgentKnowledgePositions( converter_ ) );
+    result->Attach< Speeds >( *new Speeds( converter_ ) );
     result->Polish();
     return result;
 }
