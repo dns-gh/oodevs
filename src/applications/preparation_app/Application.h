@@ -35,7 +35,7 @@ class Application : public QApplication
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int argc, char** argv );
+             Application( int argc, char** argv, const QString& locale );
     virtual ~Application();
     //@}
 
@@ -54,6 +54,7 @@ private:
     //! @name Helpers
     //@{
     void Initialize( int argc, char** argv );
+    void AddTranslator( const QString& locale, const char* t );
     //@}
 
 private:

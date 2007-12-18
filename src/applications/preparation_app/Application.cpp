@@ -16,6 +16,7 @@
 #include "preparation/Model.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Workers.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 
@@ -28,11 +29,17 @@ namespace
 // Name: Application::Application
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv )
+Application::Application( int argc, char** argv, const QString& locale )
     : QApplication  ( argc, argv )
     , mainWindow_( 0 )
 {
-    // NOTHING
+    AddTranslator( locale, "qt_" );
+    AddTranslator( locale, "ENT" );
+    AddTranslator( locale, "clients_kernel" );
+    AddTranslator( locale, "clients_gui" );
+    AddTranslator( locale, "preparation" );
+    AddTranslator( locale, "preparation_app" );
+    ENT_Tr::InitTranslations();
 }
 
 // -----------------------------------------------------------------------------
@@ -42,6 +49,18 @@ Application::Application( int argc, char** argv )
 Application::~Application()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::AddTranslator
+// Created: AGE 2007-12-18
+// -----------------------------------------------------------------------------
+void Application::AddTranslator( const QString& locale, const char* t )
+{
+    QTranslator* trans = new QTranslator( this );
+    if( ! trans->load( t + locale, "." ) )
+        std::cerr << "Error loading " << t << std::endl; // $$$$ AGE 2007-12-18: 
+    installTranslator( trans );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,11 +76,6 @@ void Application::Initialize()
     catch( std::exception& e )
     {
         QMessageBox::critical( 0, APP_NAME, e.what() );
-        throw CatchMeIfYouCan();
-    }
-    catch( ... )
-    {
-        QMessageBox::critical( 0, APP_NAME, "Whooops. CSword has crashed" );
         throw CatchMeIfYouCan();
     }
 }

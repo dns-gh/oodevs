@@ -9,49 +9,18 @@
 
 #include "gaming_app_pch.h"
 #include "Application.h"
-
-#include "ENT/ENT_Tr.h"
-
 #include "tools/Win32/BugTrap.h"
-#include <qapplication.h>
-#include <qmessagebox.h>
-#include <fstream>
 
 namespace
 {
     ////
     static const QString locale = "_en";
+//    static const QString locale = "_fr";
     ////
-
-    void AddTranslator( const char* t )
-    {
-        QTranslator* trans = new QTranslator( qApp );
-        trans->load( t + locale, "." );
-        qApp->installTranslator( trans );
-    }
-
 
     void PureHandler()
     {
         throw std::exception( "Pure virtual call" );
-    }
-
-    void Run( int argc, char** argv )
-    {
-        Application* app = 0;
-
-        app = new Application( argc, argv );
-        AddTranslator( "qt_" );
-        AddTranslator( "ENT" );
-        AddTranslator( "clients_kernel" );
-        AddTranslator( "clients_gui" );
-        AddTranslator( "gaming" );
-        AddTranslator( "gaming_app" );
-        ENT_Tr::InitTranslations();
-        app->Initialize();
-
-        app->exec();
-        delete app;
     }
 }
 
@@ -59,10 +28,14 @@ int main( int argc, char** argv )
 {   
     _set_purecall_handler( PureHandler );
     SetConsoleTitle( APP_NAME " - " APP_VERSION " - " __TIMESTAMP__ );
+
     BugTrap::Setup( "Sword Officer Training" )
             .SetEmail( "sword-ot@masagroup.net" )
             .SetVersion( APP_VERSION " - " __TIMESTAMP__ );
 
-    Run( argc, argv );
+    Application app( argc, argv, locale );
+    app.Initialize();
+    app.exec();
+
     return 0;
 }

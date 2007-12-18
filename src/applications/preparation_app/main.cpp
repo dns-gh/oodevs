@@ -9,48 +9,18 @@
 
 #include "preparation_app_pch.h"
 #include "Application.h"
-
 #include "tools/Win32/BugTrap.h"
-#include <qapplication.h>
-#include <qmessagebox.h>
-#include <fstream>
-#include "ENT/ENT_Tr.h"
 
 namespace
 {
     ////
     static const QString locale = "_en";
+//    static const QString locale = "_fr";
     ////
-
-    void AddTranslator( const char* t )
-    {
-        QTranslator* trans = new QTranslator( qApp );
-        trans->load( t + locale, "." );
-        qApp->installTranslator( trans );
-    }
-
 
     void PureHandler()
     {
         throw std::exception( "Pure virtual call" );
-    }
-
-    void Run( int argc, char** argv )
-    {
-        Application* app = 0;
-        
-        app = new Application( argc, argv );
-        AddTranslator( "qt_" );
-        AddTranslator( "ENT" );
-        AddTranslator( "clients_kernel" );
-        AddTranslator( "clients_gui" );
-        AddTranslator( "preparation" );
-        AddTranslator( "preparation_app" );
-        ENT_Tr::InitTranslations();
-        app->Initialize();
-
-        app->exec();
-        delete app;
     }
 }
 
@@ -63,7 +33,9 @@ int main( int argc, char** argv )
             .SetEmail( "sword-ot@masagroup.net" )
             .SetVersion( APP_VERSION " - " __TIMESTAMP__ );
 
-    Run( argc, argv );
+    Application app( argc, argv, locale );
+    app.Initialize();
+    app.exec();
     
     return 0;
 }
