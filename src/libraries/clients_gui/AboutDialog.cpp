@@ -7,8 +7,9 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "AboutDialog.h"
+#include "moc_AboutDialog.cpp"
 #include "splashscreen.cpp"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ItemFactory_ABC.h"
@@ -19,7 +20,7 @@ using namespace gui;
 // Name: AboutDialog constructor
 // Created: SBO 2006-05-04
 // -----------------------------------------------------------------------------
-AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory )
+AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QString& line )
     : QDialog( parent, 0, FALSE, WStyle_Splash )
 {
     setCaption( tr( "About" ) );
@@ -35,7 +36,7 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory )
     box->layout()->setAlignment( Qt::AlignBottom | Qt::AlignRight );
     QHBox* hbox = new QHBox( box );
     QString message;
-    message += QString( APP_NAME ) + QString( " " ) + QString( APP_VERSION )
+    message += line
             + tr( " © 2007 Masa-SCI <a href=\"http://www.masa-sci.com\">www.masa-sci.com</a>" );
     RichLabel* label = factory.CreateLabel( message, hbox );
     label->setAlignment( Qt::SingleLine );

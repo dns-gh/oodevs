@@ -9,12 +9,13 @@
 
 #include "preparation_app_pch.h"
 #include "Menu.h"
-#include "AboutDialog.h"
+#include "moc_Menu.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/FourStateOption.h"
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/AboutDialog.h"
 
 using namespace kernel;
 using namespace gui;
@@ -108,7 +109,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     insertItem( tr( "&Windows" ), menu );
 
     menu = new QPopupMenu( this );
-    menu->insertItem( tr( "About" ), new AboutDialog( this, factory ), SLOT( exec() ) );
+    menu->insertItem( tr( "About" ), new AboutDialog( this, factory, QString( APP_NAME ) + " " + QString( APP_VERSION ) ), SLOT( exec() ) );
     insertItem( tr( "&Help" ), menu );
 }
     

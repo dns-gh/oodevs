@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "WeatherWidget.h"
+#include "moc_WeatherWidget.cpp"
 #include "preparation/Weather.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"

@@ -2,15 +2,15 @@
 <context>
     <name>AboutDialog</name>
     <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -306,6 +306,13 @@
     </message>
 </context>
 <context>
+    <name>None</name>
+    <message>
+        <source>LogisticSuperiorEditor</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
@@ -591,13 +598,6 @@
     </message>
     <message>
         <source>Exercise date:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>kernel</name>
-    <message>
-        <source>None</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

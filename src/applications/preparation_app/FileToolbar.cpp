@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "FileToolbar.h"
+#include "moc_FileToolbar.cpp"
 #include "icons.h"
 
 // -----------------------------------------------------------------------------

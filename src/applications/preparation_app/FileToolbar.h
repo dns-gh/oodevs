@@ -20,6 +20,7 @@
 // =============================================================================
 class FileToolbar : public QToolBar
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

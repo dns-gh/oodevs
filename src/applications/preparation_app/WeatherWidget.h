@@ -23,6 +23,7 @@ class Weather;
 // =============================================================================
 class WeatherWidget : public QGroupBox
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

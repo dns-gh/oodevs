@@ -33,6 +33,7 @@ namespace gui
 // =============================================================================
 class Menu : public QMenuBar
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

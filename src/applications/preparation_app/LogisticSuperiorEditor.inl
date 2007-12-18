@@ -20,7 +20,7 @@ LogisticSuperiorEditor< Superior >::LogisticSuperiorEditor( QWidget* parent, ker
     , controllers_( controllers )
     , filter_( selected )
 {
-    AddItem( tr( "None" ), 0 );
+    AddItem( tools::translate( "None", "LogisticSuperiorEditor" ), 0 );
     kernel::Iterator< const kernel::Automat_ABC& > it = resolver.CreateIterator();
     while( it.HasMoreElements() )
     {

@@ -3,15 +3,25 @@
     <name>AboutDialog</name>
     <message>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation type="unfinished">A propos</translation>
     </message>
     <message>
         <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation>(sp)© 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
+        <translation type="unfinished"> © 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Close</source>
         <translation>Fermer</translation>
+    </message>
+    <message>
+        <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
+        <comment>AboutDialog</comment>
+        <translation type="obsolete">(sp)© 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <comment>AboutDialog</comment>
+        <translation type="obsolete">A propos</translation>
     </message>
 </context>
 <context>
@@ -303,6 +313,13 @@
     <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>None</name>
+    <message>
+        <source>LogisticSuperiorEditor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -598,7 +615,7 @@
     <name>kernel</name>
     <message>
         <source>None</source>
-        <translation>Aucun</translation>
+        <translation type="obsolete">Aucun</translation>
     </message>
 </context>
 </TS>

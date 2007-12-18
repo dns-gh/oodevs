@@ -13,7 +13,6 @@
 namespace gui
 {
     class ItemFactory_ABC;
-}
 
 // =============================================================================
 /** @class  AboutDialog
@@ -23,11 +22,11 @@ namespace gui
 // =============================================================================
 class AboutDialog : public QDialog
 {
-
+    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             AboutDialog( QWidget* parent, gui::ItemFactory_ABC& factory );
+             AboutDialog( QWidget* parent, gui::ItemFactory_ABC& factory, const QString& line );
     virtual ~AboutDialog();
     //@}
 
@@ -49,5 +48,7 @@ private:
     QSize sizeHint_;
     //@}
 };
+
+}
 
 #endif // __AboutDialog_h_

@@ -20,7 +20,6 @@ GLWidget.cpp \
 Gradient.cpp \
 GradientWidget.cpp \
 GraphicPreferences.cpp \
-Graphics3dPanel.cpp \
 HierarchyListView_ABC.cpp \
 IntelligencesPanel.cpp \
 LayersPanel.cpp \

@@ -57,10 +57,9 @@ Application::~Application()
 // -----------------------------------------------------------------------------
 void Application::AddTranslator( const QString& locale, const char* t )
 {
-    QTranslator* trans = new QTranslator( this );
-    if( ! trans->load( t + locale, "." ) )
-        std::cerr << "Error loading " << t << std::endl; // $$$$ AGE 2007-12-18: 
-    installTranslator( trans );
+    std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
+    if( trans->load( t + locale, "." ) )
+       installTranslator( trans.release() );
 }
 
 // -----------------------------------------------------------------------------
