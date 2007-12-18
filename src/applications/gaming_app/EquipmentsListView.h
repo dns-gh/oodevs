@@ -32,6 +32,7 @@ namespace gui
 // =============================================================================
 class EquipmentsListView : public ResourcesListView_ABC< EquipmentsListView, Equipments >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

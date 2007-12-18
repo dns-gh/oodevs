@@ -35,6 +35,7 @@ class UserProfileRights_ABC;
 // =============================================================================
 class UserProfileWidget : public QTabWidget
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

@@ -26,7 +26,7 @@ StatisticsWidget::StatisticsWidget( QWidget* parent )
     YAxis().SetAxisRange( 0, 1, true );
     YAxis().ShowTicks( 10 );
     YAxis().ShowTicksValue( true );
-    YAxis().SetAxisCaption( tr( "Rate (B)" ).ascii() );
+    YAxis().SetAxisCaption( GQ_Plot::tr( "Rate (B)" ).ascii() );
     YAxis().SetCaptionMargin( 8 );
 
     XAxis().ShowAxis( true );
@@ -34,7 +34,7 @@ StatisticsWidget::StatisticsWidget( QWidget* parent )
     XAxis().SetAxisRange( 0, 1, false );
     XAxis().ShowTicks( 1 );
     XAxis().ShowTicksValue( true );
-    XAxis().SetAxisCaption( tr( "Time (Tick)" ).ascii() );
+    XAxis().SetAxisCaption( GQ_Plot::tr( "Time (Tick)" ).ascii() );
 
     SetBackgroundColor( Qt::white );
     setMinimumHeight( 130 );

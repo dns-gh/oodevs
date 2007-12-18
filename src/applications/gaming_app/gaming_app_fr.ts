@@ -18,15 +18,15 @@
     <name>AboutDialog</name>
     <message>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation type="obsolete">A propos</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Fermer</translation>
+        <translation type="obsolete">Fermer</translation>
     </message>
     <message>
         <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation> © 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
+        <translation type="obsolete"> © 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
     </message>
 </context>
 <context>
@@ -34,6 +34,22 @@
     <message>
         <source>Target: %1</source>
         <translation>Cible: %1</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Temps</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Action</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Valeur</translation>
     </message>
 </context>
 <context>
@@ -210,13 +226,6 @@
     </message>
 </context>
 <context>
-    <name>AgentStatePanel</name>
-    <message>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AlarmsWidget</name>
     <message>
         <source>Alarms</source>
@@ -375,7 +384,7 @@
     <name>ClockDock</name>
     <message>
         <source>Clock</source>
-        <translation>Horloge</translation>
+        <translation type="obsolete">Horloge</translation>
     </message>
 </context>
 <context>
@@ -558,6 +567,17 @@
     </message>
 </context>
 <context>
+    <name>GQ_Plot</name>
+    <message>
+        <source>Rate (B)</source>
+        <translation>Taux (B)</translation>
+    </message>
+    <message>
+        <source>Time (Tick)</source>
+        <translation>Temps (ticks)</translation>
+    </message>
+</context>
+<context>
     <name>HumansListView</name>
     <message>
         <source>Rank</source>
@@ -580,15 +600,15 @@
     <name>InfoCompositionDialog</name>
     <message>
         <source>Composition</source>
-        <translation>Composition</translation>
+        <translation type="obsolete">Composition</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Equipements</translation>
+        <translation type="obsolete">Equipements</translation>
     </message>
     <message>
         <source>Humans</source>
-        <translation>Personnel</translation>
+        <translation type="obsolete">Personnel</translation>
     </message>
 </context>
 <context>
@@ -602,7 +622,7 @@
     <name>InfoDotationsDialog</name>
     <message>
         <source>Dotations</source>
-        <translation>Dotations</translation>
+        <translation type="obsolete">Dotations</translation>
     </message>
 </context>
 <context>
@@ -640,45 +660,56 @@
     <name>InfoLendingsDialog</name>
     <message>
         <source>Lendings</source>
-        <translation>Prêts</translation>
+        <translation type="obsolete">Prêts</translation>
     </message>
     <message>
         <source>Lent equipment(s)</source>
-        <translation>Equipement(s) prêté(s)</translation>
+        <translation type="obsolete">Equipement(s) prêté(s)</translation>
     </message>
     <message>
         <source>Borrowed equipment(s)</source>
-        <translation>Equipement(s) emprunté(s)</translation>
+        <translation type="obsolete">Equipement(s) emprunté(s)</translation>
     </message>
 </context>
 <context>
     <name>InfoMaintenanceDialog</name>
     <message>
         <source>Maintenance system</source>
-        <translation>Chaîne de maintenance</translation>
+        <translation type="obsolete">Chaîne de maintenance</translation>
     </message>
     <message>
         <source>Consigns</source>
-        <translation>Consignes</translation>
+        <translation type="obsolete">Consignes</translation>
     </message>
     <message>
         <source>Equipment availabilities</source>
-        <translation>Disponibilités d&apos;équipements</translation>
+        <translation type="obsolete">Disponibilités d&apos;équipements</translation>
     </message>
 </context>
 <context>
     <name>InfoMedicalDialog</name>
     <message>
         <source>Medical system</source>
-        <translation>Chaîne médicale</translation>
+        <translation type="obsolete">Chaîne médicale</translation>
     </message>
     <message>
         <source>Consigns</source>
-        <translation>Consignes</translation>
+        <translation type="obsolete">Consignes</translation>
     </message>
     <message>
         <source>Equipment availabilities</source>
-        <translation>Disponibilités d&apos;équipements</translation>
+        <translation type="obsolete">Disponibilités d&apos;équipements</translation>
+    </message>
+</context>
+<context>
+    <name>InfoMissionsTab</name>
+    <message>
+        <source>Action</source>
+        <translation>Action</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Valeur</translation>
     </message>
 </context>
 <context>
@@ -730,19 +761,19 @@
     <name>InfoSupplyDialog</name>
     <message>
         <source>Supply system</source>
-        <translation>Chaîne ravitaillement</translation>
+        <translation type="obsolete">Chaîne ravitaillement</translation>
     </message>
     <message>
         <source>Consigns</source>
-        <translation>Consignes</translation>
+        <translation type="obsolete">Consignes</translation>
     </message>
     <message>
         <source>Stocks &amp;&amp; Quotas</source>
-        <translation>Stocks et Quotas</translation>
+        <translation type="obsolete">Stocks et Quotas</translation>
     </message>
     <message>
         <source>Transporters</source>
-        <translation>Transporteurs</translation>
+        <translation type="obsolete">Transporteurs</translation>
     </message>
 </context>
 <context>
@@ -1079,191 +1110,187 @@
     <name>MaintenanceConsignsWidget</name>
     <message>
         <source>Equipment:</source>
-        <translation>Equipement:</translation>
+        <translation type="obsolete">Equipement:</translation>
     </message>
     <message>
         <source>Breakdown:</source>
-        <translation>Panne:</translation>
+        <translation type="obsolete">Panne:</translation>
     </message>
     <message>
         <source>State:</source>
-        <translation>Etat:</translation>
+        <translation type="obsolete">Etat:</translation>
     </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
     <message>
         <source>Tow trucks</source>
-        <translation>Remorqueurs</translation>
+        <translation type="obsolete">Remorqueurs</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation>Total</translation>
+        <translation type="obsolete">Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation>Disponible</translation>
+        <translation type="obsolete">Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation>Occupé</translation>
+        <translation type="obsolete">Occupé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation>En repos</translation>
+        <translation type="obsolete">En repos</translation>
     </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>
     <message>
         <source>Repairers</source>
-        <translation>Réparateurs</translation>
+        <translation type="obsolete">Réparateurs</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation>Total</translation>
+        <translation type="obsolete">Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation>Disponible</translation>
+        <translation type="obsolete">Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation>Occupé</translation>
+        <translation type="obsolete">Occupé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation>En repos</translation>
+        <translation type="obsolete">En repos</translation>
     </message>
 </context>
 <context>
     <name>MaintenanceStatusWidget</name>
     <message>
         <source>Maintenance system state</source>
-        <translation>Etat de la chaîne maintenance</translation>
+        <translation type="obsolete">Etat de la chaîne maintenance</translation>
     </message>
     <message>
         <source>System status</source>
-        <translation>Etat du système</translation>
+        <translation type="obsolete">Etat du système</translation>
     </message>
     <message>
         <source>Working scheme</source>
-        <translation>Régime de travail</translation>
+        <translation type="obsolete">Régime de travail</translation>
     </message>
     <message>
         <source>Priorities</source>
-        <translation>Priorités</translation>
+        <translation type="obsolete">Priorités</translation>
     </message>
     <message>
         <source>Tactical priorities</source>
-        <translation>Priorités tactiques</translation>
+        <translation type="obsolete">Priorités tactiques</translation>
     </message>
 </context>
 <context>
     <name>MedicalCollectAmbulancesListView</name>
     <message>
         <source>Collect ambulances</source>
-        <translation>Ambulances de ramassage</translation>
+        <translation type="obsolete">Ambulances de ramassage</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation>Total</translation>
+        <translation type="obsolete">Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation>Disponible</translation>
+        <translation type="obsolete">Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation>Occupé</translation>
+        <translation type="obsolete">Occupé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation>En repos</translation>
+        <translation type="obsolete">En repos</translation>
     </message>
 </context>
 <context>
     <name>MedicalConsignsWidget</name>
     <message>
         <source>Injury:</source>
-        <translation>Niveau de blessure:</translation>
+        <translation type="obsolete">Niveau de blessure:</translation>
     </message>
     <message>
         <source>Mentally injured:</source>
-        <translation>Réac. mentale:</translation>
+        <translation type="obsolete">Réac. mentale:</translation>
     </message>
     <message>
         <source>NBC contaminated:</source>
-        <translation>Contamination NBC:</translation>
+        <translation type="obsolete">Contamination NBC:</translation>
     </message>
     <message>
         <source>State:</source>
-        <translation>Etat:</translation>
+        <translation type="obsolete">Etat:</translation>
     </message>
 </context>
 <context>
     <name>MedicalDoctorsListView</name>
     <message>
         <source>Doctors</source>
-        <translation>Docteurs</translation>
+        <translation type="obsolete">Docteurs</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation>Total</translation>
+        <translation type="obsolete">Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation>Disponible</translation>
+        <translation type="obsolete">Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation>Occupé</translation>
+        <translation type="obsolete">Occupé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation>En repos</translation>
+        <translation type="obsolete">En repos</translation>
     </message>
 </context>
 <context>
     <name>MedicalReliefAmbulancesListView</name>
     <message>
-        <source>Relief ambulances</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Total</source>
-        <translation>Total</translation>
+        <translation type="obsolete">Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation>Disponible</translation>
+        <translation type="obsolete">Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation>Occupé</translation>
+        <translation type="obsolete">Occupé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation>En repos</translation>
+        <translation type="obsolete">En repos</translation>
     </message>
 </context>
 <context>
     <name>MedicalStatusWidget</name>
     <message>
         <source>Medical system state</source>
-        <translation>Etat de la chaîne médicale</translation>
+        <translation type="obsolete">Etat de la chaîne médicale</translation>
     </message>
     <message>
         <source>System status</source>
-        <translation>Etat du système</translation>
+        <translation type="obsolete">Etat du système</translation>
     </message>
     <message>
         <source>Priorities</source>
-        <translation>Priorités</translation>
+        <translation type="obsolete">Priorités</translation>
     </message>
     <message>
         <source>Tactical priorities</source>
-        <translation>Priorités tactiques</translation>
+        <translation type="obsolete">Priorités tactiques</translation>
     </message>
 </context>
 <context>
@@ -1450,7 +1477,7 @@
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direction</translation>
     </message>
 </context>
 <context>
@@ -1830,7 +1857,7 @@
     <name>ParamLocationList</name>
     <message>
         <source>Location %1</source>
-        <translation>Localisation %1</translation>
+        <translation type="obsolete">Localisation %1</translation>
     </message>
 </context>
 <context>
@@ -1848,7 +1875,7 @@
     <name>ParamMissionObjectiveList</name>
     <message>
         <source>Objective %1</source>
-        <translation>Objectif %1</translation>
+        <translation type="obsolete">Objectif %1</translation>
     </message>
 </context>
 <context>
@@ -1893,14 +1920,14 @@
     <name>ParamObstacleList</name>
     <message>
         <source>Obstacle %1</source>
-        <translation>Obstacle %1</translation>
+        <translation type="obsolete">Obstacle %1</translation>
     </message>
 </context>
 <context>
     <name>ParamPathList</name>
     <message>
         <source>Route %1</source>
-        <translation>Itinéraire %1</translation>
+        <translation type="obsolete">Itinéraire %1</translation>
     </message>
 </context>
 <context>
@@ -2072,6 +2099,221 @@
     </message>
 </context>
 <context>
+    <name>QDialog</name>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
+    <message>
+        <source>Humans</source>
+        <translation>Personnel</translation>
+    </message>
+    <message>
+        <source>Composition</source>
+        <translation>Composition</translation>
+    </message>
+    <message>
+        <source>Dotations</source>
+        <translation>Dotations</translation>
+    </message>
+    <message>
+        <source>Lendings</source>
+        <translation>Prêts</translation>
+    </message>
+    <message>
+        <source>Lent equipment(s)</source>
+        <translation>Equipement(s) prêté(s)</translation>
+    </message>
+    <message>
+        <source>Borrowed equipment(s)</source>
+        <translation>Equipement(s) emprunté(s)</translation>
+    </message>
+    <message>
+        <source>Maintenance system</source>
+        <translation>Chaîne de maintenance</translation>
+    </message>
+    <message>
+        <source>Consigns</source>
+        <translation>Consignes</translation>
+    </message>
+    <message>
+        <source>Equipment availabilities</source>
+        <translation>Disponibilités d&apos;équipements</translation>
+    </message>
+    <message>
+        <source>Medical system</source>
+        <translation>Chaîne médicale</translation>
+    </message>
+    <message>
+        <source>Supply system</source>
+        <translation>Chaîne ravitaillement</translation>
+    </message>
+    <message>
+        <source>Stocks &amp;&amp; Quotas</source>
+        <translation>Stocks et Quotas</translation>
+    </message>
+    <message>
+        <source>Transporters</source>
+        <translation>Transporteurs</translation>
+    </message>
+</context>
+<context>
+    <name>QDockWindow</name>
+    <message>
+        <source>Clock</source>
+        <translation>Horloge</translation>
+    </message>
+    <message>
+        <source>Actions timeline</source>
+        <translation>Chronogramme des actions</translation>
+    </message>
+</context>
+<context>
+    <name>QListView</name>
+    <message>
+        <source>Tow trucks</source>
+        <translation>Remorqueurs</translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation>Total</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation>Occupé</translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation>En repos</translation>
+    </message>
+    <message>
+        <source>Repairers</source>
+        <translation>Réparateurs</translation>
+    </message>
+    <message>
+        <source>Collect ambulances</source>
+        <translation>Ambulances de ramassage</translation>
+    </message>
+    <message>
+        <source>Doctors</source>
+        <translation>Docteurs</translation>
+    </message>
+    <message>
+        <source>Relief ambulances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Quota</source>
+        <translation>Quota</translation>
+    </message>
+    <message>
+        <source>Stock</source>
+        <translation>Stock</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation>Quantité</translation>
+    </message>
+    <message>
+        <source>Transporters</source>
+        <translation>Transporteurs</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>Location %1</source>
+        <translation>Localisation %1</translation>
+    </message>
+    <message>
+        <source>Objective %1</source>
+        <translation>Objectif %1</translation>
+    </message>
+    <message>
+        <source>Obstacle %1</source>
+        <translation>Obstacle %1</translation>
+    </message>
+    <message>
+        <source>Route %1</source>
+        <translation>Itinéraire %1</translation>
+    </message>
+</context>
+<context>
+    <name>QVBox</name>
+    <message>
+        <source>Maintenance system state</source>
+        <translation>Etat de la chaîne maintenance</translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation>Etat du système</translation>
+    </message>
+    <message>
+        <source>Working scheme</source>
+        <translation>Régime de travail</translation>
+    </message>
+    <message>
+        <source>Priorities</source>
+        <translation>Priorités</translation>
+    </message>
+    <message>
+        <source>Tactical priorities</source>
+        <translation>Priorités tactiques</translation>
+    </message>
+    <message>
+        <source>Medical system state</source>
+        <translation>Etat de la chaîne médicale</translation>
+    </message>
+    <message>
+        <source>Supply system state</source>
+        <translation>Etat de la chaîne ravitaillement</translation>
+    </message>
+    <message>
+        <source>Equipment:</source>
+        <translation>Equipement:</translation>
+    </message>
+    <message>
+        <source>Breakdown:</source>
+        <translation>Panne:</translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation>Etat:</translation>
+    </message>
+    <message>
+        <source>Injury:</source>
+        <translation>Niveau de blessure:</translation>
+    </message>
+    <message>
+        <source>Mentally injured:</source>
+        <translation>Réac. mentale:</translation>
+    </message>
+    <message>
+        <source>NBC contaminated:</source>
+        <translation>Contamination NBC:</translation>
+    </message>
+    <message>
+        <source>Supplier:</source>
+        <translation>Fournisseur:</translation>
+    </message>
+    <message>
+        <source>Convoyer:</source>
+        <translation>Convoyeur:</translation>
+    </message>
+    <message>
+        <source>Dotations requested/granted/convoyed</source>
+        <translation>Dotations demandées/accordées/convoyées</translation>
+    </message>
+</context>
+<context>
     <name>RcEntityResolver</name>
     <message>
         <source>[Unknown]</source>
@@ -2198,11 +2440,11 @@
     <name>StatisticsWidget</name>
     <message>
         <source>Rate (B)</source>
-        <translation>Taux (B)</translation>
+        <translation type="obsolete">Taux (B)</translation>
     </message>
     <message>
         <source>Time (Tick)</source>
-        <translation>Temps (Tick)</translation>
+        <translation type="obsolete">Temps (Tick)</translation>
     </message>
 </context>
 <context>
@@ -2216,82 +2458,82 @@
     <name>SupplyConsignsWidget</name>
     <message>
         <source>Supplier:</source>
-        <translation>Fournisseur:</translation>
+        <translation type="obsolete">Fournisseur:</translation>
     </message>
     <message>
         <source>Convoyer:</source>
-        <translation>Convoyeur:</translation>
+        <translation type="obsolete">Convoyeur:</translation>
     </message>
     <message>
         <source>State:</source>
-        <translation>Etat:</translation>
+        <translation type="obsolete">Etat:</translation>
     </message>
     <message>
         <source>Dotations requested/granted/convoyed</source>
-        <translation>Dotations demandées/accordées/convoyées</translation>
+        <translation type="obsolete">Dotations demandées/accordées/convoyées</translation>
     </message>
 </context>
 <context>
     <name>SupplyQuotasListView</name>
     <message>
         <source>Type</source>
-        <translation>Type</translation>
+        <translation type="obsolete">Type</translation>
     </message>
     <message>
         <source>Quota</source>
-        <translation>Quota</translation>
+        <translation type="obsolete">Quota</translation>
     </message>
 </context>
 <context>
     <name>SupplyStatusWidget</name>
     <message>
         <source>Supply system state</source>
-        <translation>Etat de la chaîne ravitaillement</translation>
+        <translation type="obsolete">Etat de la chaîne ravitaillement</translation>
     </message>
     <message>
         <source>System status</source>
-        <translation>Etat du système</translation>
+        <translation type="obsolete">Etat du système</translation>
     </message>
 </context>
 <context>
     <name>SupplyStocksListView</name>
     <message>
         <source>Stock</source>
-        <translation>Stock</translation>
+        <translation type="obsolete">Stock</translation>
     </message>
     <message>
         <source>Quantity</source>
-        <translation>Quantité</translation>
+        <translation type="obsolete">Quantité</translation>
     </message>
 </context>
 <context>
     <name>SupplyTransportersListView</name>
     <message>
         <source>Transporters</source>
-        <translation>Transporteurs</translation>
+        <translation type="obsolete">Transporteurs</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation>Total</translation>
+        <translation type="obsolete">Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation>Disponible</translation>
+        <translation type="obsolete">Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation>Occupé</translation>
+        <translation type="obsolete">Occupé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation>En repos</translation>
+        <translation type="obsolete">En repos</translation>
     </message>
 </context>
 <context>
     <name>TimelinePanel</name>
     <message>
         <source>Actions timeline</source>
-        <translation>Chronogramme des actions</translation>
+        <translation type="obsolete">Chronogramme des actions</translation>
     </message>
 </context>
 <context>
@@ -2553,11 +2795,11 @@
     </message>
     <message>
         <source>Action</source>
-        <translation>Action</translation>
+        <translation type="obsolete">Action</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valeur</translation>
+        <translation type="obsolete">Valeur</translation>
     </message>
     <message>
         <source>Mining:</source>
@@ -2573,11 +2815,11 @@
     </message>
     <message>
         <source>Time</source>
-        <translation>Temps</translation>
+        <translation type="obsolete">Temps</translation>
     </message>
     <message>
         <source>S</source>
-        <translation>S</translation>
+        <translation type="obsolete">S</translation>
     </message>
 </context>
 </TS>

@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "UserProfileWidget.h"
+#include "moc_UserProfileWidget.cpp"
 #include "UserProfileUnitRights.h"
 #include "UserProfilePopulationRights.h"
 #include "gaming/UserProfile.h"

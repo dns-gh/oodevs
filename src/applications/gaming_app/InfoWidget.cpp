@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "InfoWidget.h"
+#include "moc_InfoWidget.cpp"
 #include "InfoStatusWidget.h"
 #include "InfoSubordinatesWidget.h"
 #include "InfoStancesWidget.h"

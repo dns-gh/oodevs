@@ -17,11 +17,11 @@
 SupplyTransportersListView::SupplyTransportersListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : SupplyAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( tr( "Transporters" ) )
-    .AddColumn( tr( "Total" ) )
-    .AddColumn( tr( "Available" ) )
-    .AddColumn( tr( "Working" ) )
-    .AddColumn( tr( "Resting" ) );
+    AddColumn( QListView::tr( "Transporters" ) )
+    .AddColumn( QListView::tr( "Total" ) )
+    .AddColumn( QListView::tr( "Available" ) )
+    .AddColumn( QListView::tr( "Working" ) )
+    .AddColumn( QListView::tr( "Resting" ) );
 }
 
 // -----------------------------------------------------------------------------

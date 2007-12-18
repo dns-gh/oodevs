@@ -17,11 +17,11 @@
 MaintenanceHaulersListView::MaintenanceHaulersListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : MaintenanceAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( tr( "Tow trucks" ) )
-    .AddColumn( tr( "Total" ) )
-    .AddColumn( tr( "Available" ) )
-    .AddColumn( tr( "Working" ) )
-    .AddColumn( tr( "Resting" ) );
+    AddColumn( QListView::tr( "Tow trucks" ) )
+    .AddColumn( QListView::tr( "Total" ) )
+    .AddColumn( QListView::tr( "Available" ) )
+    .AddColumn( QListView::tr( "Working" ) )
+    .AddColumn( QListView::tr( "Resting" ) );
 }
 
 // -----------------------------------------------------------------------------

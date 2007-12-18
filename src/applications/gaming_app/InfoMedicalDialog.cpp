@@ -20,15 +20,15 @@
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : InfoDialog< MedicalStates >( parent, controllers, tr( "Medical system" ) )
+    : InfoDialog< MedicalStates >( parent, controllers, QDialog::tr( "Medical system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
-    tabs->addTab( new MedicalConsignsWidget( tabs, controllers, factory ), tr( "Consigns" ) );
+    tabs->addTab( new MedicalConsignsWidget( tabs, controllers, factory ), QDialog::tr( "Consigns" ) );
     QVBox* box = new QVBox( tabs );
     new MedicalReliefAmbulancesListView( box, controllers, factory );
     new MedicalCollectAmbulancesListView( box, controllers, factory );
     new MedicalDoctorsListView( box, controllers, factory );
-    tabs->addTab( box, tr( "Equipment availabilities" ) );
+    tabs->addTab( box, QDialog::tr( "Equipment availabilities" ) );
     new MedicalStatusWidget( RootWidget(), controllers, factory );
 }
 

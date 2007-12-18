@@ -19,10 +19,10 @@
 MedicalConsignsWidget::MedicalConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticConsignsWidget_ABC< MedicalConsignsWidget, LogMedicalConsign, LogMedicalConsigns >( parent, controllers, factory )
 {
-    AddConsignColumn( tr( "Injury:" ) );
-    AddConsignColumn( tr( "Mentally injured:" ) );
-    AddConsignColumn( tr( "NBC contaminated:" ) );
-    AddConsignColumn( tr( "State:" ) );
+    AddConsignColumn( QVBox::tr( "Injury:" ) );
+    AddConsignColumn( QVBox::tr( "Mentally injured:" ) );
+    AddConsignColumn( QVBox::tr( "NBC contaminated:" ) );
+    AddConsignColumn( QVBox::tr( "State:" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -17,11 +17,11 @@
 MaintenanceStatusWidget::MaintenanceStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticStatusWidget_ABC< MaintenanceStates >( parent, controllers, factory )
 {
-    display_->AddGroup( tr( "Maintenance system state" ) )
-                .AddLabel( tr( "System status" ) )
-                .AddLabel( tr( "Working scheme" ) )
-                .AddLabel( tr( "Priorities" ) )
-                .AddLabel( tr( "Tactical priorities" ) );
+    display_->AddGroup( QVBox::tr( "Maintenance system state" ) )
+                .AddLabel( QVBox::tr( "System status" ) )
+                .AddLabel( QVBox::tr( "Working scheme" ) )
+                .AddLabel( QVBox::tr( "Priorities" ) )
+                .AddLabel( QVBox::tr( "Tactical priorities" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,10 +40,10 @@ MaintenanceStatusWidget::~MaintenanceStatusWidget()
 MedicalStatusWidget::MedicalStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticStatusWidget_ABC< MedicalStates >( parent, controllers, factory )
 {
-    display_->AddGroup( tr( "Medical system state" ) )
-                .AddLabel( tr( "System status" ) )
-                .AddLabel( tr( "Priorities" ) )
-                .AddLabel( tr( "Tactical priorities" ) );
+    display_->AddGroup( QVBox::tr( "Medical system state" ) )
+                .AddLabel( QVBox::tr( "System status" ) )
+                .AddLabel( QVBox::tr( "Priorities" ) )
+                .AddLabel( QVBox::tr( "Tactical priorities" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,8 +62,8 @@ MedicalStatusWidget::~MedicalStatusWidget()
 SupplyStatusWidget::SupplyStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticStatusWidget_ABC< SupplyStates >( parent, controllers, factory )
 {
-    display_->AddGroup( tr( "Supply system state" ) )
-                .AddLabel( tr( "System status" ) );
+    display_->AddGroup( QVBox::tr( "Supply system state" ) )
+                .AddLabel( QVBox::tr( "System status" ) );
 }
 
 // -----------------------------------------------------------------------------

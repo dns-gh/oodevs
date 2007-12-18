@@ -17,8 +17,8 @@
 SupplyQuotasListView::SupplyQuotasListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : QuotasAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( tr( "Type" ) )
-    .AddColumn( tr( "Quota" ) );
+    AddColumn( QListView::tr( "Type" ) )
+    .AddColumn( QListView::tr( "Quota" ) );
 }
 
 // -----------------------------------------------------------------------------

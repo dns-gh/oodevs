@@ -59,5 +59,5 @@ void ParamPathList::CommitTo( ActionParameterContainer_ABC& action ) const
 // -----------------------------------------------------------------------------
 Param_ABC* ParamPathList::CreateElement()
 {
-    return new ParamPath( this, OrderParameter( tr( "Route %1" ).arg( ++count_ ), "path", false ), layer_, converter_, entity_ );
+    return new ParamPath( this, OrderParameter( QObject::tr( "Route %1" ).arg( ++count_ ), "path", false ), layer_, converter_, entity_ );
 }

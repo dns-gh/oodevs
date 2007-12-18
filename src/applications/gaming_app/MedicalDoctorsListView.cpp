@@ -17,11 +17,11 @@
 MedicalDoctorsListView::MedicalDoctorsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : MedicalAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( tr( "Doctors" ) )
-    .AddColumn( tr( "Total" ) )
-    .AddColumn( tr( "Available" ) )
-    .AddColumn( tr( "Working" ) )
-    .AddColumn( tr( "Resting" ) );
+    AddColumn( QListView::tr( "Doctors" ) )
+    .AddColumn( QListView::tr( "Total" ) )
+    .AddColumn( QListView::tr( "Available" ) )
+    .AddColumn( QListView::tr( "Working" ) )
+    .AddColumn( QListView::tr( "Resting" ) );
 }
 
 // -----------------------------------------------------------------------------

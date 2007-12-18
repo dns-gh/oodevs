@@ -1,5 +1,4 @@
-HEADERS = AboutDialog.h \
-ActionsListView.h \
+HEADERS = ActionsListView.h \
 ActionsPanel.h \
 ActionsToolbar.h \
 AfterAction.h \
@@ -104,8 +103,7 @@ UserProfileList.h \
 UserProfileRights_ABC.h \
 UserProfileWidget.h \
 
-SOURCES = AboutDialog.cpp \
-ActionsListView.cpp \
+SOURCES = ActionsListView.cpp \
 ActionsPanel.cpp \
 ActionsToolbar.cpp \
 AfterAction.cpp \

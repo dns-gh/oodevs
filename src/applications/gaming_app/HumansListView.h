@@ -32,6 +32,7 @@ namespace gui
 // =============================================================================
 class HumansListView : public ResourcesListView_ABC< HumansListView, Troops >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

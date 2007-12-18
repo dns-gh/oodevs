@@ -58,5 +58,5 @@ void ParamMissionObjectiveList::CommitTo( ActionParameterContainer_ABC& action )
 // -----------------------------------------------------------------------------
 Param_ABC* ParamMissionObjectiveList::CreateElement()
 {
-    return new ParamMissionObjective( OrderParameter( tr( "Objective %1" ).arg( ++count_ ), "objective", false ), layer_, simulation_, converter_ );
+    return new ParamMissionObjective( OrderParameter( QObject::tr( "Objective %1" ).arg( ++count_ ), "objective", false ), layer_, simulation_, converter_ );
 }

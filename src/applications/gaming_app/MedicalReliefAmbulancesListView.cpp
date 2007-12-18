@@ -17,11 +17,11 @@
 MedicalReliefAmbulancesListView::MedicalReliefAmbulancesListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : MedicalAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( tr( "Relief ambulances" ) )
-    .AddColumn( tr( "Total" ) )
-    .AddColumn( tr( "Available" ) )
-    .AddColumn( tr( "Working" ) )
-    .AddColumn( tr( "Resting" ) );
+    AddColumn( QListView::tr( "Relief ambulances" ) )
+    .AddColumn( QListView::tr( "Total" ) )
+    .AddColumn( QListView::tr( "Available" ) )
+    .AddColumn( QListView::tr( "Working" ) )
+    .AddColumn( QListView::tr( "Resting" ) );
 }
 
 // -----------------------------------------------------------------------------

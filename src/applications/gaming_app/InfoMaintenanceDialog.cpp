@@ -19,14 +19,14 @@
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : InfoDialog< MaintenanceStates >( parent, controllers, tr( "Maintenance system" ) )
+    : InfoDialog< MaintenanceStates >( parent, controllers, QDialog::tr( "Maintenance system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
-    tabs->addTab( new MaintenanceConsignsWidget( tabs, controllers, factory ), tr( "Consigns" ) );
+    tabs->addTab( new MaintenanceConsignsWidget( tabs, controllers, factory ), QDialog::tr( "Consigns" ) );
     QVBox* box = new QVBox( tabs );
     new MaintenanceHaulersListView( box, controllers, factory );
     new MaintenanceRepairersListView( box, controllers, factory );
-    tabs->addTab( box, tr( "Equipment availabilities" ) );
+    tabs->addTab( box, QDialog::tr( "Equipment availabilities" ) );
     new MaintenanceStatusWidget( RootWidget(), controllers, factory );
 }
 

@@ -17,10 +17,10 @@
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 InfoCompositionDialog::InfoCompositionDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : InfoDialog< Equipments >( parent, controllers, tr( "Composition" ) )
+    : InfoDialog< Equipments >( parent, controllers, QDialog::tr( "Composition" ) )
 {
-    new EquipmentsListView( new QHGroupBox( tr( "Equipments" ), RootWidget() ), controllers, factory );
-    new HumansListView    ( new QHGroupBox( tr( "Humans" ), RootWidget() ), controllers, factory );
+    new EquipmentsListView( new QHGroupBox( QDialog::tr( "Equipments" ), RootWidget() ), controllers, factory );
+    new HumansListView    ( new QHGroupBox( QDialog::tr( "Humans" ), RootWidget() ), controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

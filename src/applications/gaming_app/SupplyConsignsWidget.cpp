@@ -21,9 +21,9 @@ SupplyConsignsWidget::SupplyConsignsWidget( QWidget* parent, kernel::Controllers
     : LogisticConsignsWidget_ABC< SupplyConsignsWidget, LogSupplyConsign, LogSupplyConsigns >( parent, controllers, factory )
     , factory_( factory )
 {
-    AddConsignColumn( tr( "Supplier:" ) );
-    AddConsignColumn( tr( "Convoyer:" ) );
-    AddConsignColumn( tr( "State:" ) );
+    AddConsignColumn( QVBox::tr( "Supplier:" ) );
+    AddConsignColumn( QVBox::tr( "Convoyer:" ) );
+    AddConsignColumn( QVBox::tr( "State:" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void SupplyConsignsWidget::Display( const LogSupplyConsign* consign, kernel::Dis
     // $$$$ AGE 2006-02-28: crado
     QListViewItem* last  = item->firstChild();
     QListViewItem* child = last;
-    while( child && child->text( 0 ) != tr( "Dotations requested/granted/convoyed" ) )
+    while( child && child->text( 0 ) != QVBox::tr( "Dotations requested/granted/convoyed" ) )
     {
         last = child;
         child = child->nextSibling();
@@ -57,7 +57,7 @@ void SupplyConsignsWidget::Display( const LogSupplyConsign* consign, kernel::Dis
     if( ! child )
     {
         child = factory_.CreateItem( item, last );
-        child->setText( 0, tr( "Dotations requested/granted/convoyed" ) );
+        child->setText( 0, QVBox::tr( "Dotations requested/granted/convoyed" ) );
         child->setText( 1, "" );
     }
 

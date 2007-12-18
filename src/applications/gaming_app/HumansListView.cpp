@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "HumansListView.h"
+#include "moc_HumansListView.cpp"
 #include "clients_kernel/Types.h"
 
 // -----------------------------------------------------------------------------

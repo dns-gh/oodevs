@@ -58,5 +58,5 @@ void ParamObstacleList::CommitTo( ActionParameterContainer_ABC& action ) const
 // -----------------------------------------------------------------------------
 Param_ABC* ParamObstacleList::CreateElement()
 {
-    return new ParamObstacle(this, OrderParameter( tr( "Obstacle %1" ).arg( ++count_ ), "obstacle", false ), objectTypes_, layer_, converter_ );
+    return new ParamObstacle(this, OrderParameter( QObject::tr( "Obstacle %1" ).arg( ++count_ ), "obstacle", false ), objectTypes_, layer_, converter_ );
 }

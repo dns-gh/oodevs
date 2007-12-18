@@ -32,6 +32,7 @@ namespace gui
 // =============================================================================
 class BorrowingsListView : public ResourcesListView_ABC< BorrowingsListView, Borrowings >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

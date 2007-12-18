@@ -17,10 +17,10 @@
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 InfoLendingsDialog::InfoLendingsDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : InfoDialog< Lendings >( parent, controllers, tr( "Lendings" ) )
+    : InfoDialog< Lendings >( parent, controllers, QDialog::tr( "Lendings" ) )
 {
-    new LendingsListView( new QHGroupBox( tr( "Lent equipment(s)" ), RootWidget() ), controllers, factory );
-    new BorrowingsListView( new QHGroupBox( tr( "Borrowed equipment(s)" ), RootWidget() ), controllers, factory );
+    new LendingsListView( new QHGroupBox( QDialog::tr( "Lent equipment(s)" ), RootWidget() ), controllers, factory );
+    new BorrowingsListView( new QHGroupBox( QDialog::tr( "Borrowed equipment(s)" ), RootWidget() ), controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

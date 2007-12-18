@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "DotationsListView.h"
+#include "moc_DotationsListView.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: DotationsListView constructor

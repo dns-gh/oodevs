@@ -31,6 +31,7 @@ class ActionsScheduler;
 // =============================================================================
 class ActionsPanel : public QDockWindow
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

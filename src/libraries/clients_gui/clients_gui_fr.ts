@@ -1,12 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>AgentStatePanel</name>
-    <message>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AutomatsLayer</name>
     <message>
         <source>Aggregate</source>
@@ -33,11 +26,11 @@
     </message>
     <message>
         <source>Camp</source>
-        <translation type="unfinished"></translation>
+        <translation>Camp</translation>
     </message>
     <message>
         <source>Camp&apos;s TC2</source>
-        <translation type="unfinished"></translation>
+        <translation>TC2 du camp</translation>
     </message>
 </context>
 <context>

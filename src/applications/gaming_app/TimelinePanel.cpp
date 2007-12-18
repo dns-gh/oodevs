@@ -19,7 +19,7 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     : QDockWindow( parent )
 {
     setResizeEnabled( true );
-    setCaption( tr( "Actions timeline" ) );
+    setCaption( QDockWindow::tr( "Actions timeline" ) );
     setCloseMode( QDockWindow::Always );
     QVBox* box = new QVBox( this );
     new TimelineWidget( box, controllers, scheduler );

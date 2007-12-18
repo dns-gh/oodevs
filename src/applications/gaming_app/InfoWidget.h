@@ -30,6 +30,7 @@ namespace gui
 // =============================================================================
 class InfoWidget : public QHBox
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

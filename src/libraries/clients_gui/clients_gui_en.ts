@@ -1,12 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>AgentStatePanel</name>
-    <message>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AutomatsLayer</name>
     <message>
         <source>Aggregate</source>

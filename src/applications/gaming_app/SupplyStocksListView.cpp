@@ -17,8 +17,8 @@
 SupplyStocksListView::SupplyStocksListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : SupplyAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( tr( "Stock" ) )
-    .AddColumn( tr( "Quantity" ) );
+    AddColumn( QListView::tr( "Stock" ) )
+    .AddColumn( QListView::tr( "Quantity" ) );
 }
 
 // -----------------------------------------------------------------------------

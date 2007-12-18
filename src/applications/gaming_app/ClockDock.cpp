@@ -22,7 +22,7 @@ ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers, const S
     setWidget( new ClockWidget( this, controllers, simulation ) );
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
-    setCaption( tr( "Clock" ) );
+    setCaption( QDockWindow::tr( "Clock" ) );
 }
 
 // -----------------------------------------------------------------------------

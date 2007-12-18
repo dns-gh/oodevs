@@ -25,7 +25,6 @@ class Simulation;
 // =============================================================================
 class ClockDock : public QDockWindow
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -33,24 +32,11 @@ public:
     virtual ~ClockDock();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
     ClockDock( const ClockDock& );            //!< Copy constructor
     ClockDock& operator=( const ClockDock& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

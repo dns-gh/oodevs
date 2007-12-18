@@ -19,9 +19,9 @@
 MaintenanceConsignsWidget::MaintenanceConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticConsignsWidget_ABC< MaintenanceConsignsWidget, LogMaintenanceConsign, LogMaintenanceConsigns >( parent, controllers, factory )
 {
-    AddConsignColumn( tr( "Equipment:" ) );
-    AddConsignColumn( tr( "Breakdown:" ) );
-    AddConsignColumn( tr( "State:" ) );
+    AddConsignColumn( QVBox::tr( "Equipment:" ) );
+    AddConsignColumn( QVBox::tr( "Breakdown:" ) );
+    AddConsignColumn( QVBox::tr( "State:" ) );
 }
 
 // -----------------------------------------------------------------------------

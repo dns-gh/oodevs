@@ -58,5 +58,5 @@ void ParamLocationList::CommitTo( ActionParameterContainer_ABC& action ) const
 // -----------------------------------------------------------------------------
 Param_ABC* ParamLocationList::CreateElement()
 {
-    return new ParamLocation( OrderParameter( tr( "Location %1" ).arg( ++count_ ), "location", false ), layer_, converter_ );
+    return new ParamLocation( OrderParameter( QObject::tr( "Location %1" ).arg( ++count_ ), "location", false ), layer_, converter_ );
 }

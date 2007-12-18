@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "EquipmentsListView.h"
+#include "moc_EquipmentsListView.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: EquipmentsListView constructor

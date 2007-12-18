@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "LendingsListView.h"
+#include "moc_LendingsListView.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: LendingsListView constructor

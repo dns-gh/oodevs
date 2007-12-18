@@ -32,6 +32,7 @@ namespace gui
 // =============================================================================
 class DotationsListView : public ResourcesListView_ABC< DotationsListView, Dotations >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

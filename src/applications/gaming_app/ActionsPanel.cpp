@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "ActionsPanel.h"
+#include "moc_ActionsPanel.cpp"
 #include "ActionsToolbar.h"
 #include "ActionsListView.h"
 
