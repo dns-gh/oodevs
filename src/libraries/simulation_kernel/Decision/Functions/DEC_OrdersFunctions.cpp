@@ -196,6 +196,22 @@ void DEC_OrdersFunctions::AssignFuseauToAutomateMission( DIA_Call_ABC& call, MIL
     pMission->AffectFuseau( *pFuseau );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::AssignDirectionToAutomateMission
+// Created: SBO 2008-01-04
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::AssignDirectionToAutomateMission( DIA_Call_ABC& call, MIL_Automate& /*callerAutomate*/ )
+{
+    assert( DEC_Tools::CheckTypeDirection      ( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeMissionAutomate( call.GetParameter( 1 ) ) );
+
+    MT_Vector2D*         pDirection = call.GetParameter( 0 ).ToUserPtr   ( pDirection );
+    MIL_AutomateMission* pMission   = call.GetParameter( 1 ).ToUserObject( pMission );
+    assert( pMission && pDirection );
+
+    pMission->AffectDirection( *pDirection );
+}
+
 // =============================================================================
 // LIMAS
 // =============================================================================

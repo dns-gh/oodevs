@@ -40,6 +40,16 @@ void MIL_OrderContext::AffectFuseau( const MIL_Fuseau& fuseau )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::AffectDirection
+// Created: SBO 2008-01-04
+// -----------------------------------------------------------------------------
+inline
+void MIL_OrderContext::AffectDirection( const MT_Vector2D& direction )
+{
+    dirDanger_ = direction;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::GetLimas
 // Created: NLD 2006-11-16
 // -----------------------------------------------------------------------------

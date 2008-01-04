@@ -48,10 +48,11 @@ public:
     static void CDT_CreatePionMission  ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void CDT_GivePionMission    ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
 
-    static void CreateAutomateMission        ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void AssignFuseauToAutomateMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void GiveAutomateMission          ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void SplitFuseau                  ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void CreateAutomateMission           ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void AssignFuseauToAutomateMission   ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void AssignDirectionToAutomateMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void GiveAutomateMission             ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void SplitFuseau                     ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
 
 private:
     //! @name Tools

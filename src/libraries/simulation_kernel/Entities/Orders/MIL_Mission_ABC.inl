@@ -48,6 +48,16 @@ void MIL_Mission_ABC::AffectFuseau( const MIL_Fuseau& fuseau )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::AffectDirection
+// Created: SBO 2008-01-04
+// -----------------------------------------------------------------------------
+inline
+void MIL_Mission_ABC::AffectDirection( const MT_Vector2D& direction )
+{
+    context_.AffectDirection( direction );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::GetLimas
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

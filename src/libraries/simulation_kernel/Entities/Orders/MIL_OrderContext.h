@@ -46,6 +46,7 @@ public:
           MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function );
           MIL_LimaOrder* FindNextScheduledLima();
           void           AffectFuseau         ( const MIL_Fuseau& fuseau );
+          void           AffectDirection      ( const MT_Vector2D& direction );
           void           Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
     //@}
 

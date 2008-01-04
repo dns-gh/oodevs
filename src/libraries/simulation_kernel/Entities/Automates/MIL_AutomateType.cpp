@@ -405,15 +405,16 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaScheduleFlag        < MIL_Automate >, "DEC_GetMissionLimaFlagHoraire"      );
 
     // MRT / conduite
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_CreatePionMission        , "DEC_MRT_CreerMissionPion"           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_Validate                 , "DEC_MRT_Valide"                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_AffectFuseaux            , "DEC_MRT_AffecteFuseaux"             );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_CreatePionMission        , "DEC_CDT_CreerMissionPion"           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_GivePionMission          , "DEC_CDT_DonnerMissionPion"          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CreateAutomateMission        , "DEC_CreerMissionAutomate"           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GiveAutomateMission          , "DEC_DonnerMissionAutomate"          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AssignFuseauToAutomateMission, "DEC_AssignerFuseauAMissionAutomate" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::SplitFuseau                  , "DEC_DecouperFuseau"                 );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_CreatePionMission           , "DEC_MRT_CreerMissionPion"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_Validate                    , "DEC_MRT_Valide"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_AffectFuseaux               , "DEC_MRT_AffecteFuseaux"                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_CreatePionMission           , "DEC_CDT_CreerMissionPion"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_GivePionMission             , "DEC_CDT_DonnerMissionPion"             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CreateAutomateMission           , "DEC_CreerMissionAutomate"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GiveAutomateMission             , "DEC_DonnerMissionAutomate"             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AssignFuseauToAutomateMission   , "DEC_AssignerFuseauAMissionAutomate"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AssignDirectionToAutomateMission, "DEC_AssignerDirectionAMissionAutomate" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::SplitFuseau                     , "DEC_DecouperFuseau"                    );
 
     // Pion management
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::PionChangeAutomate , "DEC_Pion_ChangeAutomate" );

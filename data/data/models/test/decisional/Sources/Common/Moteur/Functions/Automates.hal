@@ -32,6 +32,7 @@ signatures
     A /*T_Mission_Automate*/         A::DEC_CreerMissionAutomate          ( A /*T_Automate*/, I /*T_Mission_Automate_XXX*/ );
     V                                A::DEC_DonnerMissionAutomate         ( A /*T_Mission_Automate*/ );
     V                                A::DEC_AssignerFuseauAMissionAutomate( U /*T_Fuseau*/, A /*T_Mission_Automate_XXX*/ );
+    V                                A::DEC_AssignerDirectionAMissionAutomate( U /*T_Direction*/, A /*T_Mission_Automate_XXX*/ );
     S /*T_ListeFuseaux*/             A::DEC_DecouperFuseau                ( R /*nbr*/ );
                                             
     // Limas / Missions
