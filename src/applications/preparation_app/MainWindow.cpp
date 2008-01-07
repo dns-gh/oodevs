@@ -251,28 +251,20 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& populations         = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
     Layer_ABC& defaultLayer        = *new DefaultLayer( controllers_ );
 
-    preferences.AddLayer( tr( "Terrain" ), terrain );
-    preferences.AddLayer( tr( "Raster" ), raster );
-    preferences.AddLayer( tr( "Elevation" ), elevation2d );
-    preferences.AddLayer( tr( "Units" ), agents );
-    preferences.AddLayer( tr( "Automats" ), automats );
-    preferences.AddLayer( tr( "Objects" ), objectsLayer );
-    preferences.AddLayer( tr( "Populations" ), populations );
-
     // ordre de dessin
     glProxy_->Register( defaultLayer );
-    glProxy_->Register( elevation2d );
-    glProxy_->Register( raster );
-    glProxy_->Register( terrain );
+    glProxy_->Register( terrain );                 preferences.AddLayer( tr( "Terrain" ), terrain );
+    glProxy_->Register( raster );                  preferences.AddLayer( tr( "Raster" ), raster );
+    glProxy_->Register( elevation2d );             preferences.AddLayer( tr( "Elevation" ), elevation2d );
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );
     glProxy_->Register( weather );
     glProxy_->Register( limits );
-    glProxy_->Register( intelligences );
-    glProxy_->Register( objectsLayer );
-    glProxy_->Register( populations );
-    glProxy_->Register( agents );
-    glProxy_->Register( automats );
+    glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );
+    glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );
+    glProxy_->Register( populations );              preferences.AddLayer( tr( "Populations" ), populations );
+    glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );
+    glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );
     glProxy_->Register( objectCreationLayer );
     glProxy_->Register( parameters );
     glProxy_->Register( metrics );

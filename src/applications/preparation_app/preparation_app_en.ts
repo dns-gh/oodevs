@@ -1,20 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>AboutDialog</name>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AgentResourcesPanel</name>
     <message>
         <source>Resources</source>
