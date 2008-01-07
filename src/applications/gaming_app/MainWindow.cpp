@@ -236,7 +236,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( timelinePanel, Qt::DockTop );
     timelinePanel->hide();
 
-
     // Logger
     QDockWindow* pLogDockWnd_ = new QDockWindow( this );
     moveDockWindow( pLogDockWnd_, Qt::DockBottom );
@@ -355,7 +354,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( folkLayer );                preferences.AddLayer( tr( "Folk" ), folkLayer );
     glProxy_->Register( meteo );
     glProxy_->Register( limits );
-    glProxy_->Register( intelligences );
+    glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );
     glProxy_->Register( objectKnowledges );
     glProxy_->Register( populationKnowledges );
     glProxy_->Register( agentKnowledges );
