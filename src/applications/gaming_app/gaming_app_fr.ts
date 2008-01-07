@@ -37,19 +37,19 @@
     </message>
     <message>
         <source>S</source>
-        <translation>S</translation>
+        <translation type="obsolete">S</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation>Temps</translation>
+        <translation type="obsolete">Temps</translation>
     </message>
     <message>
         <source>Action</source>
-        <translation>Action</translation>
+        <translation type="obsolete">Action</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valeur</translation>
+        <translation type="obsolete">Valeur</translation>
     </message>
 </context>
 <context>
@@ -705,11 +705,11 @@
     <name>InfoMissionsTab</name>
     <message>
         <source>Action</source>
-        <translation>Action</translation>
+        <translation type="obsolete">Action</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valeur</translation>
+        <translation type="obsolete">Valeur</translation>
     </message>
 </context>
 <context>
@@ -2795,11 +2795,11 @@
     </message>
     <message>
         <source>Action</source>
-        <translation type="obsolete">Action</translation>
+        <translation type="unfinished">Action</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="obsolete">Valeur</translation>
+        <translation type="unfinished">Valeur</translation>
     </message>
     <message>
         <source>Mining:</source>
@@ -2815,11 +2815,11 @@
     </message>
     <message>
         <source>Time</source>
-        <translation type="obsolete">Temps</translation>
+        <translation type="unfinished">Temps</translation>
     </message>
     <message>
         <source>S</source>
-        <translation type="obsolete">S</translation>
+        <translation type="unfinished">S</translation>
     </message>
 </context>
 </TS>
