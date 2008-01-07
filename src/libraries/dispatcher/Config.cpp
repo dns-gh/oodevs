@@ -30,13 +30,12 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 Config::Config()
     : tools::GeneralConfig()
+    , networkClientsParameters_( 0 )
 {
     po::options_description desc( "Dispatcher/replayer options" );
-//    desc.add_options()
-//        ( "nothing"     , "specify checkpoint to load"               )
-//        ( "test"        ,                                                  "test mode: loading + first tick"          )
-//        ( "testdata"    ,                                                  "test mode: load models only (no terrain)" )
-//    ;
+    desc.add_options()
+        ( "port" , po::value( &networkClientsParameters_ ), "specify the serving port" )
+    ;
     AddOptions( desc );
 }
 
@@ -85,7 +84,8 @@ void Config::Parse( int argc, char** argv )
                     >> end()
                 >> end()
             >> end();
-    networkClientsParameters_ = unsigned short( port );
+    if( ! networkClientsParameters_ )
+        networkClientsParameters_ = unsigned short( port );
 }
 
 // -----------------------------------------------------------------------------
