@@ -14,6 +14,8 @@
 #include "StartReplay.h"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "tools/GeneralConfig.h"
+#include <xeumeuleu/xml.h>
 #include <qaction.h>
 #include <qlistbox.h>
 #include <qspinbox.h>
@@ -95,9 +97,36 @@ void StartAnalysisPanel::ReplaySelected()
     const bool selected = replays_->selectedItem();
     okay_->setEnabled( selected );
     if( selected )
-        bubble_->ShowInfo( tr( "Replay session: %1" ).arg( replays_->selectedItem()->text() ) ); // $$$$ SBO 2007-10-05: TODO meta
+        bubble_->ShowInfo( BuildMessage( replays_->selectedItem()->text() ) );
     else
-        bubble_->ShowError( tr( "The selected exercise has no session to replay." ) ); // $$$$ SBO 2007-10-05: TODO
+        bubble_->ShowError( tr( "The selected exercise has no session to replay." ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartAnalysisPanel::BuildMessage
+// Created: AGE 2008-01-07
+// -----------------------------------------------------------------------------
+QString StartAnalysisPanel::BuildMessage( const QString& session ) const
+{
+    const QString exercise = exercises_->selectedItem()->text();
+    const std::string sessionXml = config_.BuildSessionDir( exercise.ascii(), session.ascii() ) + "/session.xml"; // $$$$ AGE 2008-01-07: 
+    
+    std::string name( " --- " ), comment(  " --- " );
+    try
+    {
+        xml::xifstream xis( sessionXml );
+        xis >> xml::start( "session" )
+                >> xml::start( "meta" )
+                    >> xml::content( "name", name )
+                    >> xml::content( "comment", comment );
+    }
+    catch( ... )
+    {
+    }
+
+    return tr( "Replay session: %1\n"
+               "Name: %2\n"
+               "Description: %3" ).arg( session ).arg( name.c_str() ).arg( comment.c_str() );
 }
 
 // -----------------------------------------------------------------------------

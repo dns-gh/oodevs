@@ -248,11 +248,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Replay session: %1</source>
+        <source>The selected exercise has no session to replay.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The selected exercise has no session to replay.</source>
+        <source>Replay session: %1
+Name: %2
+Description: %3</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

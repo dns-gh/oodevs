@@ -55,6 +55,7 @@ private:
     //! @name Operations
     //@{
     virtual void Update();
+    QString BuildMessage( const QString& session ) const;
     //@}
 
 private:
