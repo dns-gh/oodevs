@@ -22,7 +22,7 @@ using namespace crossbow;
 // -----------------------------------------------------------------------------
 Database::Database( const dispatcher::Config& config )
 {
-    const std::string geodatabase = config.BuildGameChildFile( config.GetPluginConfig( "crossbow" ).GetParameter( "geodatabase" ) );
+    const std::string geodatabase = config.BuildSessionChildFile( config.GetPluginConfig( "crossbow" ).GetParameter( "geodatabase" ) );
 
     IWorkspaceFactoryPtr spWorkspaceFactory( CLSID_AccessWorkspaceFactory );
     if( spWorkspaceFactory == NULL )
