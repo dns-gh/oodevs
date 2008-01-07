@@ -465,7 +465,8 @@
                 <include name="xerces-c_2_7.dll"/>
                 <include name="zlib1.dll"/>
                 <include name="population-vc71-mt.dll"/>
-                <include name="shapelib.dll"/>                
+                <include name="shapelib.dll"/>
+                <include name="bugtrap.dll"/>
             </zipfileset>
         </zip>
 
