@@ -41,7 +41,7 @@ class MessageLoader : public MessageLoader_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageLoader( const Config& config, const std::string& records, bool threaded );
+             MessageLoader( const Config& config, bool threaded );
     virtual ~MessageLoader();
     //@}
 

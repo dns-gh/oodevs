@@ -13,11 +13,12 @@
 #include "MainMenu.h"
 #include "TerrainCreationPanel.h"
 #include "StartExercisePanel.h"
-#include "StartAnalysePanel.h"
-#include "ExerciseCreationPanel.h"
+#include "StartAnalysisPanel.h"
+#include "CreateExercisePanel.h"
 #include "EditExercisePanel.h"
 #include "RestartExercisePanel.h"
 #include "JoinExercisePanel.h"
+#include "JoinAnalysisPanel.h"
 #include "Actions.h"
 #include "tools/GeneralConfig.h"
 
@@ -50,15 +51,15 @@ MainWindow::MainWindow()
     Actions& actions = *new Actions( this );
 
     AddAction< TerrainCreationPanel >( tr( "Prepare" ), actions.CreateTerrain() );
-    AddAction< ExerciseCreationPanel >( tr( "Prepare" ), actions.CreateExercise() );
+    AddAction< CreateExercisePanel >( tr( "Prepare" ), actions.CreateExercise() );
     AddAction< EditExercisePanel >( tr( "Prepare" ), actions.EditExercise() );
 
     AddAction< StartExercisePanel >( tr( "Play" ), actions.StartExercise() );
     AddAction< RestartExercisePanel >( tr( "Play" ), actions.RestartExercise() );
     AddAction< JoinExercisePanel >( tr( "Play" ), actions.JoinExercise() );
 
-    AddAction< StartAnalysePanel >( tr( "Analyse" ), actions.StartAnalysis() );
-    AddAction< JoinExercisePanel >( tr( "Analyse" ), actions.JoinAnalysis() );
+    AddAction< StartAnalysisPanel >( tr( "Analyse" ), actions.StartAnalysis() );
+    AddAction< JoinAnalysisPanel >( tr( "Analyse" ), actions.JoinAnalysis() );
 
     linker_, "Create exercise", "Edit exercise", "Start exercise", "Join exercise";
     linker_, "Start analysis", "Join analysis";

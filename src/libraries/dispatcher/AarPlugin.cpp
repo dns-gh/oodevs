@@ -23,10 +23,10 @@ using namespace dispatcher;
 // Name: AarPlugin constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, LinkResolver_ABC& resolver, const Config& config, const std::string& records )
+AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, LinkResolver_ABC& resolver, const Config& config )
     : resolver_( resolver )
     , factory_ ( new FunctionFactory() )
-    , messages_( new MessageLoader( config, records, true ) )
+    , messages_( new MessageLoader( config, true ) )
 {
     dispatcher.RegisterMessage( *this, &AarPlugin::OnReceive );
 }

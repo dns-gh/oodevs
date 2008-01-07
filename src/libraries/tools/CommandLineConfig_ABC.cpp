@@ -56,7 +56,7 @@ void CommandLineConfig_ABC::Parse( int argc, char** argv )
     {
         std::stringstream ss;
         ss << *options_;
-        throw std::runtime_error( ss.str().c_str() );
+        throw std::runtime_error( ss.str() );
     }
 }
 

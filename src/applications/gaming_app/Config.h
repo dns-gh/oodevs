@@ -35,6 +35,12 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void LoadSession( Network& network ) const;
+    //@}
+
+private:
     //! @name Member data
     //@{
     std::string host_;

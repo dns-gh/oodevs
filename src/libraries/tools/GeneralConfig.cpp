@@ -32,7 +32,7 @@ GeneralConfig::GeneralConfig()
     : CommandLineConfig_ABC()
     , terrainConfigFile_   ( "terrain.xml"  )
     , exerciseConfigFile_  ( "exercise.xml" )
-    , gameConfigFile_      ( "game.xml"     )
+    , sessionConfigFile_   ( "session.xml"  )
 {
     po::options_description desc( "General options" );
     desc.add_options()
@@ -41,8 +41,8 @@ GeneralConfig::GeneralConfig()
         ( "models-dir"    , po::value< std::string >( &modelsDir_    )->default_value( "data/models/"    ), "specify models root directory"    )
         ( "population-dir", po::value< std::string >( &populationDir_)->default_value( "data/population/"), "specify population root directory")
         ( "exercises-dir" , po::value< std::string >( &exercisesDir_ )->default_value( "exercises/"      ), "specify exercises root directory" )
-        ( "games-dir"     , po::value< std::string >( &gamesDir_     )                                    , "specify games root directory"     )
-        ( "game"          , po::value< std::string >( &gameName_     )                                    , "specify game name"                )
+        ( "sessions-dir"  , po::value< std::string >( &sessionsDir_  )                                    , "specify sessions root directory"  )
+        ( "session"       , po::value< std::string >( &sessionName_  )                                    , "specify session name"             )
         ( "exercise"      , po::value< std::string >( &exerciseName_ )                                    , "specify exercise name"            )
     ;
     AddOptions( desc );
@@ -75,15 +75,17 @@ void GeneralConfig::Parse( int argc, char** argv )
 {
     CommandLineConfig_ABC::Parse( argc, argv );
 
-    if( !IsSet( "games-dir" ) )
-        gamesDir_ = ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exerciseName_, bfs::native ) ).native_file_string();
+    if( !IsSet( "sessions-dir" ) )
+        sessionsDir_ = ( bfs::path( exercisesDir_, bfs::native )
+                       / bfs::path( exerciseName_, bfs::native )
+                       / "sessions" ).native_file_string();
     // $$$$ NLD 2007-01-10: gerer exerciseName_ = poseidon/exercise.xml
 
     const bfs::path root( rootDir_, bfs::native );
     ResolveRelativePath( root, terrainsDir_ );
     ResolveRelativePath( root, modelsDir_ );
     ResolveRelativePath( root, exercisesDir_ );
-    ResolveRelativePath( root, gamesDir_ );
+    ResolveRelativePath( root, sessionsDir_ );
     ResolveRelativePath( root, populationDir_ );
 }
 
@@ -235,21 +237,41 @@ std::string GeneralConfig::BuildTerrainChildFile( const std::string& terrain, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: GeneralConfig::GetGameFile
-// Created: NLD 2007-01-10
+// Name: GeneralConfig::GetSessionsDir
+// Created: AGE 2008-01-04
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetGameFile() const
+std::string GeneralConfig::GetSessionsDir( const std::string& exercise ) const
 {
-    return ( bfs::path( gamesDir_, bfs::native ) / bfs::path( gameName_, bfs::native ) / gameConfigFile_ ).native_file_string();
+    return ( bfs::path( GetExerciseDir( exercise ), bfs::native ) / "sessions" ).native_directory_string();
 }
 
 // -----------------------------------------------------------------------------
-// Name: GeneralConfig::BuildGameChildFile
+// Name: GeneralConfig::GetSessionFile
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetSessionFile() const
+{
+    if( !sessionName_.empty() )
+        return ( bfs::path( sessionsDir_, bfs::native ) / bfs::path( sessionName_, bfs::native ) / sessionConfigFile_ ).native_file_string();
+    return sessionName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::BuildSessionChildFile
 // Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildGameChildFile( const std::string& file ) const
+std::string GeneralConfig::BuildSessionChildFile( const std::string& file ) const
 {
-    return BuildChildPath( GetGameFile(), file );
+    return BuildChildPath( GetSessionFile(), file );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::BuildSessionDir
+// Created: AGE 2008-01-04
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::BuildSessionDir( const std::string& exercise, const std::string& session ) const
+{
+    return ( bfs::path( GetSessionsDir( exercise ), bfs::native ) / bfs::path( session, bfs::native ) ).native_directory_string();
 }
 
 // -----------------------------------------------------------------------------
@@ -281,28 +303,10 @@ std::string GeneralConfig::BuildPopulationChildFile( const std::string& file ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: GeneralConfig::GetRecordsDir
-// Created: AGE 2007-10-05
-// -----------------------------------------------------------------------------
-std::string GeneralConfig::GetRecordsDir( const std::string& exercise ) const
-{
-    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exercise, bfs::native ) / "records" ).string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeneralConfig::BuildRecordsDirectory
-// Created: AGE 2007-10-04
-// -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildRecordsDirectory( const std::string& record ) const
-{
-    return BuildGameChildFile( ( bfs::path( "records", bfs::native ) / bfs::path( record, bfs::native ) ).string() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetCheckpointsDir
 // Created: AGE 2007-10-08
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetCheckpointsDir( const std::string& exercise ) const
+std::string GeneralConfig::GetCheckpointsDir( const std::string& exercise, const std::string& session ) const
 {
-    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exercise, bfs::native ) / "checkpoints" ).string();
+    return ( bfs::path( BuildSessionDir( exercise, session ), bfs::native ) / "checkpoints" ).native_directory_string();
 }

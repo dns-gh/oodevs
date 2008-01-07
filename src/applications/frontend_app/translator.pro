@@ -1,14 +1,14 @@
 SOURCES = Actions.cpp \
 CreateTerrain.cpp \
 EditExercisePanel.cpp \
-ExerciseCreationPanel.cpp \
+CreateExercisePanel.cpp \
 GameConfigPanel.cpp \
 JoinExercise.cpp \
 JoinExercisePanel.cpp \
 MainWindow.cpp \
 RestartExercisePanel.cpp \
 SpawnCommand.cpp \
-StartAnalysePanel.cpp \
+StartAnalysisPanel.cpp \
 StartExercisePanel.cpp \
 TerrainCreationPanel.cpp \
 commands.cpp \

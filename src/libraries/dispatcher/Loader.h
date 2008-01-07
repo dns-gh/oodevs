@@ -34,7 +34,7 @@ class Loader
 public:
     //! @name Constructors/Destructor
     //@{
-             Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, const std::string& records );
+             Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config );
     virtual ~Loader();
     //@}
 

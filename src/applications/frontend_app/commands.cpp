@@ -61,18 +61,20 @@ namespace commands
         return ListDirectories( config.GetExercisesDir(), &IsValidExercise );
     }
 
-    bool IsValidReplay( const bfs::path& record )
+    bool IsValidReplay( const bfs::path& session )
     {
-        return bfs::is_directory( record )
-            && bfs::exists( record / "index" )
-            && bfs::exists( record / "keyindex" )
-            && bfs::exists( record / "update" )
-            && bfs::exists( record / "key" );
+        return bfs::is_directory( session )
+            && bfs::exists      ( session / "record" )
+            && bfs::is_directory( session / "record" )
+            && bfs::exists( session / "record" / "index" )
+            && bfs::exists( session / "record" / "keyindex" )
+            && bfs::exists( session / "record" / "update" )
+            && bfs::exists( session / "record" / "key" );
     }
 
-    QStringList ListReplays( const tools::GeneralConfig& config, const std::string& exercise )
+    QStringList ListSessions( const tools::GeneralConfig& config, const std::string& exercise )
     {
-        return ListDirectories( config.GetRecordsDir( exercise ), &IsValidReplay );
+        return ListDirectories( config.GetSessionsDir( exercise ), &IsValidReplay );
     }
 
     bool IsValidCheckpoint( const bfs::path& record )
@@ -82,9 +84,9 @@ namespace commands
             && bfs::exists( record / "MetaData.xml" );
     }
 
-    QStringList ListCheckpoints( const tools::GeneralConfig& config, const std::string& exercise )
+    QStringList ListCheckpoints( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
     {
-        return ListDirectories( config.GetCheckpointsDir( exercise ), &IsValidCheckpoint );
+        return ListDirectories( config.GetCheckpointsDir( exercise, session ), &IsValidCheckpoint );
     }
 
     bool IsValidModel( const bfs::path& record )

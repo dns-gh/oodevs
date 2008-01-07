@@ -38,8 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( const std::string& exercise, unsigned exerciseNumber );
-    void Show( const std::string& exercise );
+    void Commit( const std::string& exercise, const std::string& session, const std::string& name, const std::string& comment, unsigned exerciseNumber );
 
     static unsigned SimulationPort( unsigned exerciseNumber );
     static unsigned DispatcherPort( unsigned exerciseNumber );
@@ -57,7 +56,7 @@ private:
     QWidget* CreateSimulationPanel( QWidget* parent );
     QWidget* CreateDebugPanel( QWidget* parent );
     QWidget* CreateSystemPanel( QWidget* parent );
-    std::string GetGameXml( const std::string& exercise );
+    std::string GetSessionXml( const std::string& exercise, const std::string& session );
     //@}
 
 private:

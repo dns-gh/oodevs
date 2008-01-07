@@ -12,7 +12,7 @@
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 
 #include "dispatcher/Loader.h"
-#include "dispatcher/PluginConfig.h"
+#include "dispatcher/Config.h"
 
 #include <windows.h> //$$$ A VIRER
 
@@ -29,11 +29,10 @@ App::App( int argc, char** argv )
     MT_LOG_STARTUP_MESSAGE( "CSword(tm) Replayer" );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
 
-    config_.Parse( argc, argv );
-
-    const std::string record = config_.GetRecord();
-    MT_LOG_INFO_MSG( "Loading record " << record );
-    replayer_ = new Replayer( config_, record );
+    dispatcher::Config config;
+    config.Parse( argc, argv );
+    MT_LOG_INFO_MSG( "Loading record " << config.GetSessionFile() );
+    replayer_ = new Replayer( config );
 }
 
 // -----------------------------------------------------------------------------

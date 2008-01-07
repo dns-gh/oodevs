@@ -14,11 +14,12 @@
 // Name: StartExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise )
+StartExercise::StartExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session )
     : SpawnCommand( parent, config, "simulation_app.exe" )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
+    AddSessionArgument( session );
     Start();
 }
 
@@ -26,11 +27,12 @@ StartExercise::StartExercise( QObject* parent, const tools::GeneralConfig& confi
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& checkpoint )
+StartExercise::StartExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint )
     : SpawnCommand( parent, config, "simulation_app.exe" )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
+    AddSessionArgument( session );
     addArgument( "--checkpoint=" + checkpoint );
     Start();
 }

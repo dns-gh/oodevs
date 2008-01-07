@@ -102,7 +102,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadGameFile               ( const std::string& file );
+    void ReadSessionFile            ( const std::string& file );
     void ReadCheckPointConfiguration( xml::xistream& xis );
     void ReadDebugConfiguration     ( xml::xistream& xis );
     void ReadExerciseFile           ();

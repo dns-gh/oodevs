@@ -38,7 +38,7 @@ class AarPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AarPlugin( tools::MessageDispatcher_ABC& dispatcher, LinkResolver_ABC& resolver, const Config& config, const std::string& records );
+             AarPlugin( tools::MessageDispatcher_ABC& dispatcher, LinkResolver_ABC& resolver, const Config& config );
     virtual ~AarPlugin();
     //@}
 

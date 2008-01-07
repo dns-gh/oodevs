@@ -161,64 +161,77 @@ unsigned GameConfigPanel::DispatcherPort( unsigned exerciseNumber )
 // Name: GameConfigPanel::Commit
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
-void GameConfigPanel::Commit( const std::string& exercise, unsigned exerciseNumber )
+void GameConfigPanel::Commit( const std::string& exercise, const std::string& session, const std::string& name, const std::string& comment, unsigned exerciseNumber )
 {
-    const std::string gameXml = GetGameXml( exercise );
+    const std::string sessionXml = GetSessionXml( exercise, session );
 
-    xml::xofstream xos( gameXml );
-    xos << xml::start( "config" )
-            << xml::start( "simulation" )
-                << xml::start( "checkpoint" )
-                    << xml::attribute( "frequency", QString( "%1s" ).arg( QTime().secsTo( checkFrequency_->time() ) ).ascii() )
-                    << xml::attribute( "keep", keepSpin_->value() )
-                    << xml::attribute( "usecrc", true )
-                << xml::end()
-                << xml::start( "debug" )
-                    << xml::attribute( "decisional", decisionalLogs_->isChecked() )
-                    << xml::attribute( "pathfind", pathfindLogs_->isChecked() )
-                    << xml::attribute( "diadebugger", diaDebugBox_->isChecked() )
-                    << xml::attribute( "diadebuggerport", diaDebugPort_->value() )
-                    << xml::attribute( "networklogger", netConBox_->isChecked() )
-                    << xml::attribute( "networkloggerport", netConPort_->value() )
-                << xml::end()
-                << xml::start( "decisional" )
-                    << xml::attribute( "useonlybinaries", false ) // $$$$ AGE 2007-10-09: 
+    xml::xofstream xos( sessionXml );
+    xos << xml::start( "session" )
+            << xml::start( "meta" )
+                << xml::content( "date", session )
+                << xml::content( "name", xml::cdata( name ) )
+                << xml::content( "comment", xml::cdata( comment ) )
+            << xml::end()
+            << xml::start( "config" )
+                << xml::start( "simulation" )
+                    << xml::start( "checkpoint" )
+                        << xml::attribute( "frequency", QString( "%1s" ).arg( QTime().secsTo( checkFrequency_->time() ) ).ascii() )
+                        << xml::attribute( "keep", keepSpin_->value() )
+                        << xml::attribute( "usecrc", true )
+                    << xml::end()
+                    << xml::start( "debug" )
+                        << xml::attribute( "decisional", decisionalLogs_->isChecked() )
+                        << xml::attribute( "pathfind", pathfindLogs_->isChecked() )
+                        << xml::attribute( "diadebugger", diaDebugBox_->isChecked() )
+                        << xml::attribute( "diadebuggerport", diaDebugPort_->value() )
+                        << xml::attribute( "networklogger", netConBox_->isChecked() )
+                        << xml::attribute( "networkloggerport", netConPort_->value() )
+                    << xml::end()
+                    << xml::start( "decisional" )
+                        << xml::attribute( "useonlybinaries", false ) // $$$$ AGE 2007-10-09: 
+                    << xml::end()
+                    << xml::start( "dispatcher" )
+                        << xml::attribute( "embedded", true ) // $$$$ AGE 2007-10-09: 
+                    << xml::end()
+                    << xml::start( "network" )
+                        << xml::attribute( "port", SimulationPort( exerciseNumber ) )
+                    << xml::end()
+                    << xml::start( "orbat" )
+                        << xml::attribute( "checkcomposition", checkOdb_->isChecked() )
+                    << xml::end()
+                    << xml::start( "profiling" )
+                        << xml::attribute( "enabled", profile_->isChecked() )
+                    << xml::end()
+                    << xml::start( "time" )
+                        << xml::attribute( "step", stepSpin_->value() )
+                        << xml::attribute( "factor", factorSpin_->value() )
+                    << xml::end()
+                    << xml::start( "pathfinder" )
+                        << xml::attribute( "threads", pathThreads_->value() )
+                    << xml::end()
+                    << xml::start( "hla" ) 
+                        << xml::attribute( "enabled", false ) // $$$$ AGE 2007-10-09: 
+                        << xml::attribute( "federation", "MyFederation" )
+                        << xml::attribute( "federate", "CSword power" )
+                    << xml::end()
                 << xml::end()
                 << xml::start( "dispatcher" )
-                    << xml::attribute( "embedded", true ) // $$$$ AGE 2007-10-09: 
+                    << xml::start( "network" )
+                        << xml::attribute( "client", "localhost:" +  // $$$$ AGE 2007-10-09: 
+                                    boost::lexical_cast< std::string >( SimulationPort( exerciseNumber ) ) )
+                        << xml::attribute( "server", DispatcherPort( exerciseNumber ) )
+                    << xml::end()
+                    << xml::start( "plugins" )
+                        << xml::start( "plugin" )
+                            << xml::attribute( "name", "recorder" ) // $$$$ AGE 2007-10-09: 
+                            << xml::attribute( "enabled", true )
+                        << xml::end()
+                    << xml::end()
                 << xml::end()
-                << xml::start( "network" )
-                    << xml::attribute( "port", SimulationPort( exerciseNumber ) )
-                << xml::end()
-                << xml::start( "orbat" )
-                    << xml::attribute( "checkcomposition", checkOdb_->isChecked() )
-                << xml::end()
-                << xml::start( "profiling" )
-                    << xml::attribute( "enabled", profile_->isChecked() )
-                << xml::end()
-                << xml::start( "time" )
-                    << xml::attribute( "step", stepSpin_->value() )
-                    << xml::attribute( "factor", factorSpin_->value() )
-                << xml::end()
-                << xml::start( "pathfinder" )
-                    << xml::attribute( "threads", pathThreads_->value() )
-                << xml::end()
-                << xml::start( "hla" ) 
-                    << xml::attribute( "enabled", false ) // $$$$ AGE 2007-10-09: 
-                    << xml::attribute( "federation", "MyFederation" )
-                    << xml::attribute( "federate", "CSword power" )
-                << xml::end()
-            << xml::end()
-            << xml::start( "dispatcher" )
-                << xml::start( "network" )
-                    << xml::attribute( "client", "localhost:" + 
-                                boost::lexical_cast< std::string >( SimulationPort( exerciseNumber ) ) )
-                    << xml::attribute( "server", DispatcherPort( exerciseNumber ) )
-                << xml::end()
-                << xml::start( "plugins" )
-                    << xml::start( "plugin" )
-                        << xml::attribute( "name", "recorder" ) // $$$$ AGE 2007-10-09: 
-                        << xml::attribute( "enabled", true )
+                << xml::start( "gaming" )
+                    << xml::start( "network" )
+                        << xml::attribute( "server", "localhost:" +  // $$$$ AGE 2007-10-09: 
+                                    boost::lexical_cast< std::string >( DispatcherPort( exerciseNumber ) ) )
                     << xml::end()
                 << xml::end()
             << xml::end()
@@ -226,77 +239,13 @@ void GameConfigPanel::Commit( const std::string& exercise, unsigned exerciseNumb
 }
 
 // -----------------------------------------------------------------------------
-// Name: GameConfigPanel::GetGameXml
+// Name: GameConfigPanel::GetSessionXml
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
-std::string GameConfigPanel::GetGameXml( const std::string& exercise )
+std::string GameConfigPanel::GetSessionXml( const std::string& exercise, const std::string& session )
 {
-    return ( bfs::path( config_.GetExerciseDir( exercise ), bfs::native ) / "game.xml" ).native_file_string();
+    const bfs::path dir( config_.BuildSessionDir( exercise, session ), bfs::native );
+    bfs::create_directories( dir );
+    return ( dir / "session.xml" ).native_file_string();
 }
 
-// -----------------------------------------------------------------------------
-// Name: GameConfigPanel::Show
-// Created: AGE 2007-10-09
-// -----------------------------------------------------------------------------
-void GameConfigPanel::Show( const std::string& exercise )
-{
-    const std::string gameXml = GetGameXml( exercise );
-    if( !bfs::exists( gameXml ) )
-        return;
-
-    xml::xifstream xis( gameXml );
-
-    unsigned step, factor;
-    xis >> xml::start( "config" )
-            >> xml::start( "simulation" )
-                >> xml::start( "time" )
-                    >> xml::attribute( "step", step )
-                    >> xml::attribute( "factor", factor )
-                >> xml::end();
-    stepSpin_->setValue( step );
-    factorSpin_->setValue( factor );
-
-    std::string frequency; unsigned keep, seconds;
-    xis         >> xml::start( "checkpoint" )
-                    >> xml::attribute( "frequency", frequency )
-                    >> xml::attribute( "keep", keep )
-                >> xml::end();
-    tools::DecodeTime( frequency, seconds );
-    seconds = std::min( seconds, 60*60*24u - 1 ); // $$$$ AGE 2007-10-09: 
-    checkFrequency_->setTime( QTime().addSecs( seconds ) );
-    keepSpin_->setValue( keep );
-
-    bool dec, path, debug, net;
-    unsigned diaport = 15000, netPort = 20000; 
-    xis         >> xml::start( "debug" )
-                    >> xml::attribute( "decisional", dec )
-                    >> xml::attribute( "pathfind", path )
-                    >> xml::attribute( "diadebugger", debug )
-                    >> xml::attribute( "networklogger", net )
-                    >> xml::optional() >> xml::attribute( "diadebuggerport", diaport )
-                    >> xml::optional() >> xml::attribute( "networkloggerport", netPort )
-                >> xml::end();
-    decisionalLogs_->setChecked( dec );
-    pathfindLogs_->setChecked( path );
-    diaDebugBox_->setChecked( debug );
-    diaDebugPort_->setValue( diaport );
-    netConBox_->setChecked( net );
-    netConPort_->setValue( netPort );
-
-    unsigned threads; bool profile, checkOrbat;
-    xis         >> xml::start( "pathfinder" )
-                    >> xml::attribute( "threads", threads )
-                >> xml::end()
-                >> xml::start( "profiling" )
-                    >> xml::attribute( "enabled", profile )
-                >> xml::end()
-                >> xml::start( "orbat" )
-                    >> xml::attribute( "checkcomposition", checkOrbat )
-                >> xml::end();
-    pathThreads_->setValue( threads );
-    profile_->setChecked( profile );
-    checkOdb_->setChecked( checkOrbat );
-    
-    xis     >> xml::end()
-        >> xml::end();
-}

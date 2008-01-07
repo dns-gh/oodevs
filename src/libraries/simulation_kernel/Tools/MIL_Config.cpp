@@ -69,13 +69,14 @@ MIL_Config::~MIL_Config()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::ReadGameFile
+// Name: MIL_Config::ReadSessionFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-void MIL_Config::ReadGameFile( const std::string& file )
+void MIL_Config::ReadSessionFile( const std::string& file )
 {
     xifstream xis( file );
-    xis >> start( "config" )
+    xis >> start( "session" )
+        >> start( "config" )
             >> start( "simulation" )
                 >> start( "decisional" )
                     >> attribute( "useonlybinaries", bUseOnlyDIAArchive_ )
@@ -217,7 +218,7 @@ void MIL_Config::Parse( int argc, char** argv )
     bTestMode_        = bDataTestMode_ || IsSet( "test" );
     bCheckPoint_      = IsSet( "checkpoint" );
     bCheckPointOrbat_ = IsSet( "checkpointorbat" );
-    ReadGameFile( GetGameFile() );
+    ReadSessionFile( GetSessionFile() );
     ReadExerciseFile();
 }
 
@@ -301,7 +302,7 @@ std::string MIL_Config::GetOrbatFile() const
 // -----------------------------------------------------------------------------
 std::string MIL_Config::BuildCheckpointChildFile( const std::string& file, std::string name /*= ""*/ ) const
 {
-    return BuildGameChildFile( ( bfs::path( "checkpoints", bfs::native ) / bfs::path( name.empty() ?  strCheckPointName_ : name, bfs::native ) / file ).native_file_string() );
+    return BuildSessionChildFile( ( bfs::path( "checkpoints", bfs::native ) / bfs::path( name.empty() ?  strCheckPointName_ : name, bfs::native ) / file ).native_file_string() );
 }
 
 // -----------------------------------------------------------------------------

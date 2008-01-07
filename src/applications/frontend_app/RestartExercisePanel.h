@@ -10,14 +10,7 @@
 #ifndef __RestartExercisePanel_h_
 #define __RestartExercisePanel_h_
 
-#include "Panel_ABC.h"
-
-namespace tools
-{
-    class GeneralConfig;
-}
-class QListBox;
-class InfoBubble;
+#include "StartExercisePanel.h"
 
 // =============================================================================
 /** @class  RestartExercisePanel
@@ -25,7 +18,7 @@ class InfoBubble;
 */
 // Created: AGE 2007-10-05
 // =============================================================================
-class RestartExercisePanel : public Panel_ABC
+class RestartExercisePanel : public StartExercisePanel
 {
     Q_OBJECT;
 
@@ -39,8 +32,10 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void StartExercise();
-    void ExerciseSelected();
+    virtual void StartExercise();
+    virtual void OnTimer();
+    virtual void ExerciseSelected();
+    void SessionSelected();
     void CheckpointSelected();
     //@}
 
@@ -59,11 +54,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    QListBox* list_;
+    QListBox* sessionList_;
     QListBox* checkpointList_;
-    InfoBubble* bubble_;
-    QPushButton* okay_;
     //@}
 };
 

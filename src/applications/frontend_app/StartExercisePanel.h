@@ -16,10 +16,13 @@ namespace tools
 {
     class GeneralConfig;
 }
-class QListBox;
 class InfoBubble;
 class GameConfigPanel;
+class QListBox;
 class QSpinBox;
+class QLineEdit;
+class QTextEdit;
+class QPushButton;
 
 // =============================================================================
 /** @class  StartExercisePanel
@@ -41,8 +44,9 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void ExerciseSelected();
-    void StartExercise();
+    virtual void StartExercise();
+    virtual void OnTimer();
+    virtual void ExerciseSelected();
     //@}
 
 private:
@@ -55,16 +59,22 @@ private:
     //! @name Operations
     //@{
     virtual void Update();
+    QString BuildSessionDirectory();
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    QGroupBox* listBox_;
     QListBox* list_;
     GameConfigPanel* configPanel_;
-    InfoBubble* bubble_;
+    QLineEdit* sessionName_;
+    QTextEdit* sessionComment_;
     QSpinBox* exerciseNumber_;
+    InfoBubble* bubble_;
+    QPushButton* okay_;
+    std::string session_;
     //@}
 };
 

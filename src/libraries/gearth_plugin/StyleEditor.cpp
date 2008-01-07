@@ -37,7 +37,7 @@ namespace
 StyleEditor::StyleEditor( const dispatcher::Config& config )
 {
     const dispatcher::PluginConfig& plugin = config.GetPluginConfig( "gearth" );        
-    xml::xifstream xis( config.BuildGameChildFile( plugin.GetParameter( "styles" ) ) );    
+    xml::xifstream xis( config.BuildSessionChildFile( plugin.GetParameter( "styles" ) ) );    
     xis >> xml::start( "kml-styles" )
         >> xml::start( "icons" ) >> xml::attribute( "small", path_small_ ) >> xml::attribute( "large", path_large_ )
                 >> xml::list( "icon", *this, ReadStyle )
@@ -47,8 +47,8 @@ StyleEditor::StyleEditor( const dispatcher::Config& config )
     std::string opt_path = plugin.GetParameter( "virtual-path" );
     if ( opt_path == "" )
     {
-        path_small_ = GetPath( config.BuildGameChildFile( path_small_ ) );
-        path_large_ = GetPath( config.BuildGameChildFile( path_large_ ) );
+        path_small_ = GetPath( config.BuildSessionChildFile( path_small_ ) );
+        path_large_ = GetPath( config.BuildSessionChildFile( path_large_ ) );
     }
     else
     {

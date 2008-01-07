@@ -64,7 +64,6 @@ bool Network::Connect( const std::string& strHost )
     return true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Network::Disconnect
 // Created: AGE 2006-02-08

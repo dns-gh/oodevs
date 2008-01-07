@@ -11,7 +11,6 @@
 #define __App_h_
 
 #include <string>
-#include "ReplayConfig.h"
 
 namespace dispatcher
 {
@@ -49,7 +48,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ReplayConfig          config_;
     dispatcher::Replayer* replayer_;
     //@}
 };

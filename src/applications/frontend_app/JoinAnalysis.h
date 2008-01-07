@@ -7,44 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __ReplayConfig_h_
-#define __ReplayConfig_h_
+#ifndef __JoinAnalysis_h_
+#define __JoinAnalysis_h_
 
-#include "dispatcher/Config.h"
+#include "SpawnCommand.h"
 
 // =============================================================================
-/** @class  ReplayConfig
-    @brief  ReplayConfig
+/** @class  JoinAnalysis
+    @brief  JoinAnalysis
 */
-// Created: AGE 2007-10-04
+// Created: AGE 2007-10-05
 // =============================================================================
-class ReplayConfig : public dispatcher::Config
+class JoinAnalysis : public SpawnCommand
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayConfig();
-    virtual ~ReplayConfig();
-    //@}
-
-    //! @name Operations
-    //@{
-    std::string GetRecord();
+             JoinAnalysis( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, unsigned number );
+    virtual ~JoinAnalysis();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ReplayConfig( const ReplayConfig& );            //!< Copy constructor
-    ReplayConfig& operator=( const ReplayConfig& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::string record_;
+    JoinAnalysis( const JoinAnalysis& );            //!< Copy constructor
+    JoinAnalysis& operator=( const JoinAnalysis& ); //!< Assignment operator
     //@}
 };
 
-#endif // __ReplayConfig_h_
+#endif // __JoinAnalysis_h_

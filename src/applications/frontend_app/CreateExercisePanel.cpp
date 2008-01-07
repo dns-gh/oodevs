@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "frontend_app_pch.h"
-#include "ExerciseCreationPanel.h"
-#include "moc_ExerciseCreationPanel.cpp"
+#include "CreateExercisePanel.h"
+#include "moc_CreateExercisePanel.cpp"
 #include "CreateExercise.h"
 #include "commands.h"
 #include "InfoBubble.h"
@@ -21,10 +21,10 @@
 #include <qlistbox.h>
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseCreationPanel constructor
+// Name: CreateExercisePanel constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-ExerciseCreationPanel::ExerciseCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
+CreateExercisePanel::CreateExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
     : Panel_ABC         ( widget, action )
     , config_           ( config )
     , existingExercises_( commands::ListExercises( config ) )
@@ -64,19 +64,19 @@ ExerciseCreationPanel::ExerciseCreationPanel( QWidgetStack* widget, QAction& act
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseCreationPanel destructor
+// Name: CreateExercisePanel destructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-ExerciseCreationPanel::~ExerciseCreationPanel()
+CreateExercisePanel::~CreateExercisePanel()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseCreationPanel::showEvent
+// Name: CreateExercisePanel::showEvent
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-void ExerciseCreationPanel::showEvent( QShowEvent* event )
+void CreateExercisePanel::showEvent( QShowEvent* event )
 {
     name_->selectAll();
     name_->setFocus();
@@ -84,10 +84,10 @@ void ExerciseCreationPanel::showEvent( QShowEvent* event )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseCreationPanel::CreateExercise
+// Name: CreateExercisePanel::CreateExercise
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-void ExerciseCreationPanel::CreateExercise()
+void CreateExercisePanel::CreateExercise()
 {
     if( terrainList_->selectedItem() && modelList_->selectedItem()
         && ( physicalList_->selectedItem() || ! physicalList_->isVisible() ) )
@@ -100,10 +100,10 @@ void ExerciseCreationPanel::CreateExercise()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseCreationPanel::ModelSelected
+// Name: CreateExercisePanel::ModelSelected
 // Created: AGE 2007-10-08
 // -----------------------------------------------------------------------------
-void ExerciseCreationPanel::ModelSelected()
+void CreateExercisePanel::ModelSelected()
 {
     if( modelList_->selectedItem() )
     {
@@ -117,10 +117,10 @@ void ExerciseCreationPanel::ModelSelected()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseCreationPanel::NameChanged
+// Name: CreateExercisePanel::NameChanged
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-void ExerciseCreationPanel::NameChanged( const QString& name )
+void CreateExercisePanel::NameChanged( const QString& name )
 {
     const bool exists = existingExercises_.contains( name );
     okay_->setDisabled( exists );
@@ -131,10 +131,10 @@ void ExerciseCreationPanel::NameChanged( const QString& name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseCreationPanel::Update
+// Name: CreateExercisePanel::Update
 // Created: AGE 2007-10-16
 // -----------------------------------------------------------------------------
-void ExerciseCreationPanel::Update()
+void CreateExercisePanel::Update()
 {
     modelList_->clear();
     modelList_->insertStringList( commands::ListModels( config_ ) );

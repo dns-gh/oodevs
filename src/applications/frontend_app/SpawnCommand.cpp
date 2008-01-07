@@ -54,6 +54,15 @@ void SpawnCommand::AddExerciseArgument( const QString& exercise )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SpawnCommand::AddSessionArgument
+// Created: AGE 2008-01-04
+// -----------------------------------------------------------------------------
+void SpawnCommand::AddSessionArgument( const QString& session )
+{
+    addArgument( "--session=\"" + session +"\"" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SpawnCommand::Start
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------

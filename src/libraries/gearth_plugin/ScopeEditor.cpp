@@ -35,7 +35,7 @@ ScopeEditor::ScopeEditor( const dispatcher::Config& config, const dispatcher::Mo
     , styles_           ( new StyleEditor( config ) )
 {
     const dispatcher::PluginConfig& plugin = config.GetPluginConfig( "gearth" );
-    xos_.reset( new xml::xofstream( config.BuildGameChildFile( plugin.GetParameter( "output" ) ) ) );
+    xos_.reset( new xml::xofstream( config.BuildSessionChildFile( plugin.GetParameter( "output" ) ) ) );
     *xos_ << xml::start( "kml" )
           << xml::attribute( "xmlns", "http://earth.google.com/kml/2.1" )
             << xml::start( "Document" )

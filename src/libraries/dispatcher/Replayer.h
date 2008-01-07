@@ -35,7 +35,7 @@ class Replayer
 public:
     //! @name Constructors/Destructor
     //@{
-             Replayer( const Config& config, const std::string& records );
+    explicit Replayer( const Config& config );
     virtual ~Replayer();
     //@}
 

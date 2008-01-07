@@ -50,6 +50,7 @@ public:
     const std::string&   GetPhysicalFile() const;
           std::string    BuildPhysicalChildFile( const std::string& file ) const;
     const PluginConfig&  GetPluginConfig( const std::string& name ) const;
+          std::string    GetRecordDirectory() const;
     //@}
 
 private:

@@ -19,7 +19,6 @@
 #include <qlistbox.h>
 #include <qpushbutton.h>
 #include <qtabwidget.h>
-#include <qspinbox.h>
 
 // -----------------------------------------------------------------------------
 // Name: JoinExercisePanel constructor
@@ -33,9 +32,15 @@ JoinExercisePanel::JoinExercisePanel( QWidgetStack* widget, QAction& action, con
     box->setMargin( 10 );
     box->setSpacing( 10 );
 
-    QGroupBox* group = new QGroupBox( 3, Qt::Vertical, action.text(), box );
-    new QLabel( tr( "Choose the exercise to join:" ), group );
-    list_ = new QListBox( group );
+    QGroupBox* group = new QGroupBox( 2, Qt::Vertical, action.text(), box );
+    {
+        new QLabel( tr( "Choose the exercise to join:" ), group );
+        list_ = new QListBox( group );
+    }
+    {
+        new QLabel( tr( "Choose the session to join:" ), group );
+        sessionList_ = new QListBox( group );
+    }
 
     bubble_ = new InfoBubble( box ); // $$$$ SBO 2007-10-05: TODO
     QHBox* btnBox = new QHBox( box );
@@ -43,12 +48,11 @@ JoinExercisePanel::JoinExercisePanel( QWidgetStack* widget, QAction& action, con
     QPushButton* okay = new QPushButton( MAKE_PIXMAP( next ), action.text(), btnBox );
     QFont font( "Arial", 10, QFont::Bold );
     okay->setFont( font );
-    connect( okay, SIGNAL( pressed() ), SLOT( StartExercise() ) );
-    connect( list_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( StartExercise() ) );
 
-    QHBox* exerciseNumberBox = new QHBox( group );
-    new QLabel( tr( "Exercise number:" ), exerciseNumberBox );
-    exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
+    connect( okay, SIGNAL( pressed() ), SLOT( StartExercise() ) );
+    connect( sessionList_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( StartExercise() ) );
+    connect( list_, SIGNAL( selectionChanged() ), SLOT( ExerciseSelected() ) );
+    connect( sessionList_, SIGNAL( selectionChanged() ), SLOT( SessionSelected() ) );
 
     Update();
 }
@@ -68,10 +72,34 @@ JoinExercisePanel::~JoinExercisePanel()
 // -----------------------------------------------------------------------------
 void JoinExercisePanel::StartExercise()
 {
-    if( list_->selectedItem() )
-        new ::JoinExercise( this, config_, list_->selectedItem()->text(), exerciseNumber_->value() );
+    if( sessionList_->selectedItem() )
+        new ::JoinExercise( this, config_, list_->selectedItem()->text(), sessionList_->selectedItem()->text() );
     Update();
     ShowNext();
+}
+
+// -----------------------------------------------------------------------------
+// Name: JoinExercisePanel::ExerciseSelected
+// Created: AGE 2008-01-04
+// -----------------------------------------------------------------------------
+void JoinExercisePanel::ExerciseSelected()
+{
+    sessionList_->clear();
+    if( QListBoxItem* item = list_->selectedItem() )
+    {
+        sessionList_->insertStringList( commands::ListSessions( config_, item->text().ascii() ) );
+        sessionList_->setSelected( 0, true );
+    }
+    SessionSelected();
+}
+
+// -----------------------------------------------------------------------------
+// Name: JoinExercisePanel::SessionSelected
+// Created: AGE 2008-01-04
+// -----------------------------------------------------------------------------
+void JoinExercisePanel::SessionSelected()
+{
+    // $$$$ AGE 2008-01-04: bubbule
 }
 
 // -----------------------------------------------------------------------------
@@ -83,4 +111,5 @@ void JoinExercisePanel::Update()
     list_->clear();
     list_->insertStringList( commands::ListExercises( config_ ) );
     list_->setSelected( 0, true );
+    ExerciseSelected();
 }

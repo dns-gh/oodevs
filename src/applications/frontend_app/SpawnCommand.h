@@ -40,6 +40,7 @@ protected:
     void Start();
     void AddRootDirArgument();
     void AddExerciseArgument( const QString& exercise );
+    void AddSessionArgument ( const QString& session );
     void addArgument( QString arg );
     //@}
 

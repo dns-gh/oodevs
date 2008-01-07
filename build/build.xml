@@ -335,7 +335,9 @@
         <sequential>
             <delete dir="${data.dir}/exercises/test-scripts"/>
             <mkdir dir="${data.dir}/exercises/test-scripts"/>
-            <copy file="test-scripts/game.xml" todir="${data.dir}/exercises/test-scripts"/>
+            <mkdir dir="${data.dir}/exercises/test-scripts/sessions"/>
+            <mkdir dir="${data.dir}/exercises/test-scripts/sessions/test-session"/>
+            <copy file="test-scripts/session.xml" todir="${data.dir}/exercises/test-scripts/sessions/test-session"/>
             <copy file="test-scripts/orbat.xml" todir="${data.dir}/exercises/test-scripts"/>
             <copy file="test-scripts/profiles.xml" todir="${data.dir}/exercises/test-scripts"/>
             <copy file="test-scripts/weather.xml" todir="${data.dir}/exercises/test-scripts"/>
@@ -350,6 +352,7 @@
             <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
                 <arg value="--root-dir=../../data"/>
                 <arg value="--exercise=test-scripts"/>
+                <arg value="--session=test-session"/>
                 <arg value="--test"/>
             </exec>
             <delete dir="${data.dir}/exercises/test-scripts"/>

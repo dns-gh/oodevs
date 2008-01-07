@@ -67,18 +67,7 @@
     </message>
 </context>
 <context>
-    <name>EditExercisePanel</name>
-    <message>
-        <source>Choose the exercise to edit:</source>
-        <translation>Choisissez l&apos;exercice à éditer:</translation>
-    </message>
-    <message>
-        <source>Edit exercise</source>
-        <translation>Editer l&apos;exercice</translation>
-    </message>
-</context>
-<context>
-    <name>ExerciseCreationPanel</name>
+    <name>CreateExercisePanel</name>
     <message>
         <source>New exercise name:</source>
         <translation>Nom du nouvel exercice:</translation>
@@ -112,6 +101,17 @@
 %1</source>
         <translation>Le nouvel exercice sera crée dans:
 %1</translation>
+    </message>
+</context>
+<context>
+    <name>EditExercisePanel</name>
+    <message>
+        <source>Choose the exercise to edit:</source>
+        <translation>Choisissez l&apos;exercice à éditer:</translation>
+    </message>
+    <message>
+        <source>Edit exercise</source>
+        <translation>Editer l&apos;exercice</translation>
     </message>
 </context>
 <context>
@@ -193,7 +193,11 @@
     </message>
     <message>
         <source>Exercise number:</source>
-        <translation>Numéro de l&apos;exercice:</translation>
+        <translation type="obsolete">Numéro de l&apos;exercice:</translation>
+    </message>
+    <message>
+        <source>Choose the session to join:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -215,7 +219,7 @@
     <name>RestartExercisePanel</name>
     <message>
         <source>Choose the exercise to start:</source>
-        <translation>Choisissez l&apos;exercice à démarrer:</translation>
+        <translation type="obsolete">Choisissez l&apos;exercice à démarrer:</translation>
     </message>
     <message>
         <source>Choose the checkpoint to load:</source>
@@ -223,7 +227,7 @@
     </message>
     <message>
         <source>Start exercise</source>
-        <translation>Démarrer l&apos;exercice</translation>
+        <translation type="obsolete">Démarrer l&apos;exercice</translation>
     </message>
     <message>
         <source>Restart game: %1</source>
@@ -233,20 +237,28 @@
         <source>The selected exercise as no checkpoint to restart.</source>
         <translation>L&apos;exercice séléctionné n&apos;a pas de sauvegarde.</translation>
     </message>
+    <message>
+        <source>Choose the session to restart:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exercise number:</source>
+        <translation type="obsolete">Numéro de l&apos;exercice:</translation>
+    </message>
 </context>
 <context>
-    <name>StartAnalysePanel</name>
+    <name>StartAnalysisPanel</name>
     <message>
         <source>Choose the exercise to analyse:</source>
         <translation>Choisissez l&apos;exercice à analyser:</translation>
     </message>
     <message>
         <source>Choose the replay to analyse:</source>
-        <translation>Choissisez l&apos;enregistrement à analyser:</translation>
+        <translation type="obsolete">Choissisez l&apos;enregistrement à analyser:</translation>
     </message>
     <message>
         <source>Start replay</source>
-        <translation>Démarrer l&apos;analyse</translation>
+        <translation type="obsolete">Démarrer l&apos;analyse</translation>
     </message>
     <message>
         <source>Exercise number:</source>
@@ -254,18 +266,34 @@
     </message>
     <message>
         <source>Replay game: %1</source>
-        <translation>Analyse l&apos;exercice: %1</translation>
+        <translation type="obsolete">Analyse l&apos;exercice: %1</translation>
     </message>
     <message>
         <source>The selected exercise has no replay.</source>
-        <translation>L&apos;exercice sélectionné n&apos;a pas d&apos;enregistrement.</translation>
+        <translation type="obsolete">L&apos;exercice sélectionné n&apos;a pas d&apos;enregistrement.</translation>
+    </message>
+    <message>
+        <source>Choose the session to analyse:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start replay session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replay session: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected exercise has no session to replay.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>StartExercisePanel</name>
     <message>
         <source>Exercise</source>
-        <translation>Exercice</translation>
+        <translation type="obsolete">Exercice</translation>
     </message>
     <message>
         <source>Options</source>
@@ -273,11 +301,27 @@
     </message>
     <message>
         <source>Start exercise</source>
-        <translation>Démarrer l&apos;exercice</translation>
+        <translation type="obsolete">Démarrer l&apos;exercice</translation>
     </message>
     <message>
         <source>Exercise number:</source>
         <translation>Numéro de l&apos;exercice:</translation>
+    </message>
+    <message>
+        <source>Session name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Session comments:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The session will be created in directory &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an exercise to start</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

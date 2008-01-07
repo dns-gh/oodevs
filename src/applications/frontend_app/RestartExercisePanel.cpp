@@ -17,38 +17,28 @@
 #include <qaction.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
+#include <qspinbox.h>
+#include <qlineedit.h>
+#include <qtextedit.h>
+#include <qtimer.h>
 
 // -----------------------------------------------------------------------------
 // Name: RestartExercisePanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 RestartExercisePanel::RestartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
-    : Panel_ABC( widget, action )
-    , config_( config )
+    : StartExercisePanel( widget, action, config )
 {
-    QVBox* box = new QVBox( this );
-    box->setMargin( 10 );
-    box->setSpacing( 10 );
-
-    QGroupBox* group = new QGroupBox( 2, Qt::Vertical, action.text(), box );
-    new QLabel( tr( "Choose the exercise to start:" ), group );
-    list_ = new QListBox( group );
-
-    new QLabel( tr( "Choose the checkpoint to load:" ), group );
-    checkpointList_ = new QListBox( group );
-
-    bubble_ = new InfoBubble( box ); // $$$$ SBO 2007-10-05: TODO
-    QHBox* btnBox = new QHBox( box );
-    btnBox->layout()->setAlignment( Qt::AlignRight );
-    okay_ = new QPushButton( MAKE_PIXMAP( next ), tr( "Start exercise" ), btnBox );
-    QFont font( "Arial", 10, QFont::Bold );
-    okay_->setFont( font );
-
-    connect( okay_, SIGNAL( pressed() ), SLOT( StartExercise() ) );
-    connect( checkpointList_, SIGNAL( doubleClicked( QListBoxItem* ) ), SLOT( StartExercise() ) );
-    connect( list_, SIGNAL( selectionChanged() ), SLOT( ExerciseSelected() ) );
+    {
+        new QLabel( tr( "Choose the session to restart:" ), listBox_ );
+        sessionList_ = new QListBox( listBox_ );
+    }
+    {
+        new QLabel( tr( "Choose the checkpoint to load:" ), listBox_ );
+        checkpointList_ = new QListBox( listBox_ );
+    }
+    connect( sessionList_,    SIGNAL( selectionChanged() ), SLOT( SessionSelected() ) );
     connect( checkpointList_, SIGNAL( selectionChanged() ), SLOT( CheckpointSelected() ) );
-
     Update();
 }
 
@@ -67,10 +57,19 @@ RestartExercisePanel::~RestartExercisePanel()
 // -----------------------------------------------------------------------------
 void RestartExercisePanel::StartExercise()
 {
-    if( list_->selectedItem() )
-        new ::StartExercise( this, config_, list_->selectedItem()->text() );
+//    if( list_->selectedItem() )
+//        new ::StartExercise( this, config_, list_->selectedItem()->text(),  ); // $$$$ AGE 2008-01-04: 
     Update();
     ShowNext();
+}
+
+// -----------------------------------------------------------------------------
+// Name: RestartExercisePanel::OnTimer
+// Created: AGE 2008-01-04
+// -----------------------------------------------------------------------------
+void RestartExercisePanel::OnTimer()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -79,9 +78,27 @@ void RestartExercisePanel::StartExercise()
 // -----------------------------------------------------------------------------
 void RestartExercisePanel::ExerciseSelected()
 {
+    sessionList_->clear();
+    if( QListBoxItem* item = list_->selectedItem() )
+    {
+        sessionList_->insertStringList( commands::ListSessions( config_, item->text().ascii() ) );
+        sessionList_->setSelected( 0, true );
+    }
+    SessionSelected();
+}
+
+// -----------------------------------------------------------------------------
+// Name: RestartExercisePanel::SessionSelected
+// Created: AGE 2008-01-04
+// -----------------------------------------------------------------------------
+void RestartExercisePanel::SessionSelected()
+{
     checkpointList_->clear();
-    checkpointList_->insertStringList( commands::ListCheckpoints( config_, list_->selectedItem()->text().ascii() ) );
-    checkpointList_->setSelected( 0, true );
+    if( QListBoxItem* item = sessionList_->selectedItem() )
+    {
+        checkpointList_->insertStringList( commands::ListCheckpoints( config_, list_->selectedItem()->text().ascii(), item->text().ascii() ) );
+        checkpointList_->setSelected( 0, true );
+    }
     CheckpointSelected();
 }
 

@@ -55,15 +55,14 @@ public:
     std::string GetTerrainFile( const std::string& terrain ) const;
     std::string BuildTerrainChildFile( const std::string& terrain, const std::string& file ) const;
 
-    std::string GetGameFile() const;
-    std::string BuildGameChildFile( const std::string& file ) const;
+    std::string GetSessionsDir( const std::string& exercise ) const;
+    std::string GetSessionFile() const;
+    std::string BuildSessionChildFile( const std::string& file ) const;
+    std::string BuildSessionDir( const std::string& exercise, const std::string& session ) const;
 
     std::string BuildPopulationChildFile( const std::string& file ) const;
 
-    std::string GetRecordsDir( const std::string& exercise ) const;
-    std::string BuildRecordsDirectory( const std::string& record ) const;
-
-    std::string GetCheckpointsDir( const std::string& exercise ) const;
+    std::string GetCheckpointsDir( const std::string& exercise, const std::string& session ) const;
 
     std::string GetModelsDir() const;
 
@@ -89,14 +88,14 @@ private:
     std::string terrainsDir_;
     std::string modelsDir_;
     std::string exercisesDir_;
-    std::string gamesDir_;
+    std::string sessionsDir_;
     std::string exerciseName_;
-    std::string gameName_;
+    std::string sessionName_;
     std::string populationDir_;
 
     const std::string terrainConfigFile_;
     const std::string exerciseConfigFile_;
-    const std::string gameConfigFile_;
+    const std::string sessionConfigFile_;
     //@}
 };
 

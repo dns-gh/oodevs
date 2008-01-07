@@ -71,15 +71,17 @@ void Config::Parse( int argc, char** argv )
     physical_ = tools::GeneralConfig::GetPhysicalFile( dataset, physical );
 
     int port;
-    xml::xifstream xisGame( GetGameFile() );
-    xisGame >> start( "config" )
-                >> start( "dispatcher" )
-                    >> start( "network" )
-                        >> attribute( "client", networkSimulationParameters_ )
-                        >> attribute( "server", port )
-                    >> end()
-                    >> start( "plugins" )
-                        >> list( "plugin", *this, &Config::ReadPlugin )
+    xml::xifstream xisGame( GetSessionFile() );
+    xisGame >> start( "session" )
+                >> start( "config" )
+                    >> start( "dispatcher" )
+                        >> start( "network" )
+                            >> attribute( "client", networkSimulationParameters_ )
+                            >> attribute( "server", port )
+                        >> end()
+                        >> start( "plugins" )
+                            >> list( "plugin", *this, &Config::ReadPlugin )
+                        >> end()
                     >> end()
                 >> end()
             >> end();
@@ -162,4 +164,13 @@ const PluginConfig& Config::GetPluginConfig( const std::string& name ) const
     if( it == plugins_.end() )
         throw std::runtime_error( "Unable to find configuration information for plugin: " + name );
     return *it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetRecordDirectory
+// Created: AGE 2008-01-07
+// -----------------------------------------------------------------------------
+std::string Config::GetRecordDirectory() const
+{
+    return BuildSessionChildFile( "record" );
 }

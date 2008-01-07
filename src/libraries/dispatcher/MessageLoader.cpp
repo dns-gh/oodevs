@@ -25,14 +25,14 @@ using namespace dispatcher;
 // Name: MessageLoader constructor
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-MessageLoader::MessageLoader( const Config& config, const std::string& records, bool threaded )
+MessageLoader::MessageLoader( const Config& config, bool threaded )
 {
     if( threaded )
     {
         disk_.reset( new tools::thread::ThreadPool( 1 ) );
         cpu_.reset ( new tools::thread::ThreadPool( 1 ) );
     }
-    const bfs::path dir( config.BuildRecordsDirectory( records ), bfs::native );
+    const bfs::path dir( config.GetRecordDirectory(), bfs::native );
 
     index_    .open( ( dir / "index" ).string().c_str(),    std::ios_base::binary | std::ios_base::in  );
     keyIndex_ .open( ( dir / "keyindex" ).string().c_str(), std::ios_base::binary | std::ios_base::in  );

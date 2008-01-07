@@ -8,12 +8,11 @@
 // *****************************************************************************
 
 #include "frontend_app_pch.h"
-#include "StartAnalysePanel.h"
-#include "moc_StartAnalysePanel.cpp"
+#include "StartAnalysisPanel.h"
+#include "moc_StartAnalysisPanel.cpp"
 #include "commands.h"
 #include "StartReplay.h"
 #include "InfoBubble.h"
-#include "GameConfigPanel.h"
 #include "resources.h"
 #include <qaction.h>
 #include <qlistbox.h>
@@ -21,10 +20,10 @@
 #include <qpushbutton.h>
 
 // -----------------------------------------------------------------------------
-// Name: StartAnalysePanel constructor
+// Name: StartAnalysisPanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartAnalysePanel::StartAnalysePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
+StartAnalysisPanel::StartAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
     : Panel_ABC( widget, action )
     , config_( config )
 {
@@ -41,7 +40,7 @@ StartAnalysePanel::StartAnalysePanel( QWidgetStack* widget, QAction& action, con
     }
     {
         QVBox* replays = new QVBox( group );
-        new QLabel( tr( "Choose the replay to analyse:" ), replays );
+        new QLabel( tr( "Choose the session to analyse:" ), replays );
         replays_ = new QListBox( replays );
         connect( replays_, SIGNAL( selectionChanged() ), SLOT( ReplaySelected() ) );
     }
@@ -49,7 +48,7 @@ StartAnalysePanel::StartAnalysePanel( QWidgetStack* widget, QAction& action, con
     {
         QHBox* btnBox = new QHBox( box );
         btnBox->layout()->setAlignment( Qt::AlignRight );
-        okay_ = new QPushButton( MAKE_PIXMAP( next ), tr( "Start replay" ), btnBox );
+        okay_ = new QPushButton( MAKE_PIXMAP( next ), tr( "Start replay session" ), btnBox );
         QFont font( "Arial", 10, QFont::Bold );
         okay_->setFont( font );
     }
@@ -58,71 +57,66 @@ StartAnalysePanel::StartAnalysePanel( QWidgetStack* widget, QAction& action, con
     new QLabel( tr( "Exercise number:" ), exerciseNumberBox );
     exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
 
-    configPanel_ = new GameConfigPanel( box, config_ );
-    configPanel_->hide();
     connect( okay_, SIGNAL( pressed() ), SLOT( StartReplay() ) );
     Update();
 }
 
 // -----------------------------------------------------------------------------
-// Name: StartAnalysePanel destructor
+// Name: StartAnalysisPanel destructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartAnalysePanel::~StartAnalysePanel()
+StartAnalysisPanel::~StartAnalysisPanel()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: StartAnalysePanel::ExerciseSelected
+// Name: StartAnalysisPanel::ExerciseSelected
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-void StartAnalysePanel::ExerciseSelected()
+void StartAnalysisPanel::ExerciseSelected()
 {
     replays_->clear();
     if( exercises_->selectedItem() )
     {
         QString exercise = exercises_->selectedItem()->text();
-        replays_->insertStringList( commands::ListReplays( config_, exercise.ascii() ) );
+        replays_->insertStringList( commands::ListSessions( config_, exercise.ascii() ) );
         replays_->setSelected( 0, true );
         ReplaySelected();
-        configPanel_->Show( exercise.ascii() );
-        configPanel_->hide();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: StartAnalysePanel::ReplaySelected
+// Name: StartAnalysisPanel::ReplaySelected
 // Created: SBO 2007-10-05
 // -----------------------------------------------------------------------------
-void StartAnalysePanel::ReplaySelected()
+void StartAnalysisPanel::ReplaySelected()
 {
     const bool selected = replays_->selectedItem();
     okay_->setEnabled( selected );
     if( selected )
-        bubble_->ShowInfo( tr( "Replay game: %1" ).arg( replays_->selectedItem()->text() ) ); // $$$$ SBO 2007-10-05: TODO
+        bubble_->ShowInfo( tr( "Replay session: %1" ).arg( replays_->selectedItem()->text() ) ); // $$$$ SBO 2007-10-05: TODO meta
     else
-        bubble_->ShowError( tr( "The selected exercise has no replay." ) ); // $$$$ SBO 2007-10-05: TODO
+        bubble_->ShowError( tr( "The selected exercise has no session to replay." ) ); // $$$$ SBO 2007-10-05: TODO
 }
 
 // -----------------------------------------------------------------------------
-// Name: StartAnalysePanel::StartReplay
+// Name: StartAnalysisPanel::StartReplay
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-void StartAnalysePanel::StartReplay()
+void StartAnalysisPanel::StartReplay()
 {
-    configPanel_->Commit( exercises_->selectedItem()->text().ascii(), exerciseNumber_->value() );
     if( exercises_->selectedItem() && replays_->selectedItem() )
-        new ::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text() );
+        new ::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text(), exerciseNumber_->value() );
     Update();
     ShowNext();
 }
 
 // -----------------------------------------------------------------------------
-// Name: StartAnalysePanel::Update
+// Name: StartAnalysisPanel::Update
 // Created: AGE 2007-10-16
 // -----------------------------------------------------------------------------
-void StartAnalysePanel::Update()
+void StartAnalysisPanel::Update()
 {
     exercises_->clear();
     exercises_->insertStringList( commands::ListExercises( config_ ) );

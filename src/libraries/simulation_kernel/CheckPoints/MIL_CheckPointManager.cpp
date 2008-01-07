@@ -19,7 +19,7 @@
 #include "Network/NET_ASN_Messages.h"
 
 #include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/convenience.hpp>
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -48,7 +48,7 @@ MIL_CheckPointManager::MIL_CheckPointManager( const MIL_Config& config )
     , nNextCheckPointTick_  ( 0 )
     , currentCheckPoints_   ()
 {
-    _mkdir( config.BuildGameChildFile( "checkpoints" ).c_str() );
+    boost::filesystem::create_directories( config.BuildSessionChildFile( "checkpoints" ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );   
     UpdateNextCheckPointTick();

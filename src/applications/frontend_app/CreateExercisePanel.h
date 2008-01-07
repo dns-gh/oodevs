@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __JoinExercisePanel_h_
-#define __JoinExercisePanel_h_
+#ifndef __CreateExercisePanel_h_
+#define __CreateExercisePanel_h_
 
 #include "Panel_ABC.h"
 
@@ -16,44 +16,45 @@ namespace tools
 {
     class GeneralConfig;
 }
+class QLineEdit;
 class QListBox;
 class InfoBubble;
-class QSpinBox;
 
 // =============================================================================
-/** @class  JoinExercisePanel
-    @brief  JoinExercisePanel
+/** @class  CreateExercisePanel
+    @brief  CreateExercisePanel
 */
-// Created: AGE 2007-10-05
+// Created: SBO 2007-10-04
 // =============================================================================
-class JoinExercisePanel : public Panel_ABC
+class CreateExercisePanel : public Panel_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
-    virtual ~JoinExercisePanel();
+             CreateExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
+    virtual ~CreateExercisePanel();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void StartExercise();
-    void ExerciseSelected();
-    void SessionSelected();
+    void CreateExercise();
+    void ModelSelected();
+    void NameChanged( const QString& );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    JoinExercisePanel( const JoinExercisePanel& );            //!< Copy constructor
-    JoinExercisePanel& operator=( const JoinExercisePanel& ); //!< Assignment operator
+    CreateExercisePanel( const CreateExercisePanel& );            //!< Copy constructor
+    CreateExercisePanel& operator=( const CreateExercisePanel& ); //!< Assignment operator
     //@}
 
-    //! @name Operations
+    //! @name Helpers
     //@{
+    virtual void showEvent( QShowEvent* event );
     virtual void Update();
     //@}
 
@@ -61,10 +62,15 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QListBox* list_;
-    QListBox* sessionList_;
+    QStringList existingExercises_;
+    QLineEdit* name_;
+    QListBox* modelList_;
+    QLabel* physicalLabel_;
+    QListBox* physicalList_;
+    QListBox* terrainList_;
+    QPushButton* okay_;
     InfoBubble* bubble_;
     //@}
 };
 
-#endif // __JoinExercisePanel_h_
+#endif // __CreateExercisePanel_h_

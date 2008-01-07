@@ -45,11 +45,11 @@ namespace
 // Name: Replayer constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Replayer::Replayer( const Config& config, const std::string& records )
+Replayer::Replayer( const Config& config )
     : model_           ( CreateModel( handler_, config ) )
     , clientsNetworker_( new ClientsNetworker( config, handler_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
-    , loader_          ( new Loader( *simulation_, handler_, config, records ) )
+    , loader_          ( new Loader( *simulation_, handler_, config ) )
     , plugin_          ( new ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_ ) )
 {
     handler_.AddHandler( clientsNetworker_ );
@@ -58,7 +58,7 @@ Replayer::Replayer( const Config& config, const std::string& records )
     RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_ );
     handler_.Add( rights  );
     handler_.Add( plugin_ );
-    handler_.Add( new AarPlugin( *clientsNetworker_, *rights, config, records ) );
+    handler_.Add( new AarPlugin( *clientsNetworker_, *rights, config ) );
     loader_->Start();
 }
  

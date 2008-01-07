@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ExerciseCreationPanel_h_
-#define __ExerciseCreationPanel_h_
+#ifndef __StartAnalysisPanel_h_
+#define __StartAnalysisPanel_h_
 
 #include "Panel_ABC.h"
 
@@ -16,45 +16,44 @@ namespace tools
 {
     class GeneralConfig;
 }
-class QLineEdit;
+class QSpinBox;
 class QListBox;
 class InfoBubble;
 
 // =============================================================================
-/** @class  ExerciseCreationPanel
-    @brief  ExerciseCreationPanel
+/** @class  StartAnalysisPanel
+    @brief  StartAnalysisPanel
 */
-// Created: SBO 2007-10-04
+// Created: AGE 2007-10-05
 // =============================================================================
-class ExerciseCreationPanel : public Panel_ABC
+class StartAnalysisPanel : public Panel_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
-    virtual ~ExerciseCreationPanel();
+             StartAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
+    virtual ~StartAnalysisPanel();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void CreateExercise();
-    void ModelSelected();
-    void NameChanged( const QString& );
+    void ExerciseSelected();
+    void StartReplay();
+    void ReplaySelected();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ExerciseCreationPanel( const ExerciseCreationPanel& );            //!< Copy constructor
-    ExerciseCreationPanel& operator=( const ExerciseCreationPanel& ); //!< Assignment operator
+    StartAnalysisPanel( const StartAnalysisPanel& );            //!< Copy constructor
+    StartAnalysisPanel& operator=( const StartAnalysisPanel& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
+    //! @name Operations
     //@{
-    virtual void showEvent( QShowEvent* event );
     virtual void Update();
     //@}
 
@@ -62,15 +61,12 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QStringList existingExercises_;
-    QLineEdit* name_;
-    QListBox* modelList_;
-    QLabel* physicalLabel_;
-    QListBox* physicalList_;
-    QListBox* terrainList_;
+    QListBox* exercises_;
+    QListBox* replays_;
     QPushButton* okay_;
     InfoBubble* bubble_;
+    QSpinBox* exerciseNumber_;
     //@}
 };
 
-#endif // __ExerciseCreationPanel_h_
+#endif // __StartAnalysisPanel_h_

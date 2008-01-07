@@ -67,18 +67,7 @@
     </message>
 </context>
 <context>
-    <name>EditExercisePanel</name>
-    <message>
-        <source>Choose the exercise to edit:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit exercise</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ExerciseCreationPanel</name>
+    <name>CreateExercisePanel</name>
     <message>
         <source>New exercise name:</source>
         <translation type="unfinished"></translation>
@@ -110,6 +99,17 @@
     <message>
         <source>The new exercise will be created in:
 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditExercisePanel</name>
+    <message>
+        <source>Choose the exercise to edit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit exercise</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -191,7 +191,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exercise number:</source>
+        <source>Choose the session to join:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -213,15 +213,7 @@
 <context>
     <name>RestartExercisePanel</name>
     <message>
-        <source>Choose the exercise to start:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Choose the checkpoint to load:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start exercise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -232,19 +224,15 @@
         <source>The selected exercise as no checkpoint to restart.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Choose the session to restart:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
-    <name>StartAnalysePanel</name>
+    <name>StartAnalysisPanel</name>
     <message>
         <source>Choose the exercise to analyse:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose the replay to analyse:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start replay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -252,30 +240,46 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Replay game: %1</source>
+        <source>Choose the session to analyse:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The selected exercise has no replay.</source>
+        <source>Start replay session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replay session: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected exercise has no session to replay.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>StartExercisePanel</name>
     <message>
-        <source>Exercise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start exercise</source>
+        <source>Exercise number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exercise number:</source>
+        <source>Session name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Session comments:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The session will be created in directory &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an exercise to start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
