@@ -88,7 +88,8 @@ void JoinExercisePanel::ExerciseSelected()
     if( QListBoxItem* item = list_->selectedItem() )
     {
         sessionList_->insertStringList( commands::ListSessions( config_, item->text().ascii() ) );
-        sessionList_->setSelected( 0, true );
+        if( sessionList_->count() )
+            sessionList_->setSelected( sessionList_->count()-1, true );
     }
     SessionSelected();
 }
