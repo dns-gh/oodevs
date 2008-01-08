@@ -85,7 +85,8 @@ void AfterAction::NotifyUpdated( const Simulation& simu )
 {
     const bool replay = simu.IsReplayer();
     window_->setAppropriate( aarDock_, replay );
-    aarDock_->setShown( replay && !replay_ );
+    if( ! aarDock_->isVisible() )
+        aarDock_->setShown( replay && !replay_ );
     replay_ = replay;
 }
 
