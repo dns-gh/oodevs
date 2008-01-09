@@ -163,8 +163,8 @@
             depends="application.gaming_app,application.preparation_app,application.adaptation_app" />
 
     <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
-        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu"
-                   libs="masalloc,paranoia,tools,asn1per
+        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
+                   libs="masalloc,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
@@ -175,8 +175,8 @@
     </target>
 
     <target name="application.dispatcher_app.crossbowed" description="build CSword Dispatcher executable with crossbow plugin" depends="library.dispatcher,library.crossbow_plugin,library.gearth_plugin">
-        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu" input="dispatcher_app"
-                   libs="masalloc,paranoia,tools,asn1per
+        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm" input="dispatcher_app"
+                   libs="masalloc,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
@@ -190,8 +190,8 @@
     </target>
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher">
-        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu"
-                   libs="HLA,libFedTime,masalloc,paranoia,tools,asn1per,population-${platform}-mt
+        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm"
+                   libs="HLA,libFedTime,masalloc,tools,asn1per,population-${platform}-mt
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
@@ -209,7 +209,7 @@
 
     <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher,library.3a">
         <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu"
-                   libs="tools,asn1per,paranoia
+                   libs="tools,asn1per,
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
@@ -322,9 +322,12 @@
     </target>
 
     <target name="generate-license" description="generate license file in run directory">
-        <exec executable="${bin.dir}/hostid_light.exe" failonerror="true" outputproperty="hostid"/>
-        <exec executable="${bin.dir}/paranoia_light.exe" failonerror="true" inputstring="${hostid}" output="${run.dir}/sword.license"> <!-- FIXME license name is still scipio -->
-            <arg value="sword"/>
+        <exec executable="${bin.dir}/lmhostid" failonerror="true" outputproperty="hostid">
+          <arg value="-n"/>
+        </exec>
+        <echo file="${run.dir}/sword.lic">FEATURE sword bkmasa 1.0 permanent uncounted TS_OK HOSTID=${hostid} SIGN=0</echo>
+        <exec executable="${bin.dir}/lmcrypt" failonerror="true">
+          <arg value="${run.dir}/sword.lic"/>
         </exec>
     </target>
     
@@ -504,7 +507,7 @@
         <update name="DIA"/>
         <update name="hla"/>
         <update name="tools"/>
-        <update name="paranoia"/>
+        <update name="flexlm"/>
         <update name="xerces-c"/>
         <update name="xeumeuleu"/>
         <update name="svgl"/>

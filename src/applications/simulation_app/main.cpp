@@ -10,7 +10,7 @@
 
 #include "MT/MT_Logger/MT_ConsoleLogger.h"
 #include "MT/MT_Logger/MT_FileLogger.h"
-#include "paranoia/ParanoiaFacade.h"
+#include "tools/win32/FlexLmLicense.h"
 #include "xeumeuleu/exception.h"
 
 #include <commctrl.h>
@@ -151,7 +151,7 @@ void SetLowFragmentationHeapAlgorithm()
 int Run( uint nArgc, char* pArgv[] )
 {
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    ParanoiaFacade::CheckLicense( "sword" );
+    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
 #endif
     _mkdir( "./Debug" );
     MT_ConsoleLogger        consoleLogger;

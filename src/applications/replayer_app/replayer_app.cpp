@@ -10,13 +10,13 @@
 #include "App.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
-#include "paranoia/ParanoiaFacade.h"
+#include "tools/win32/FlexLmLicense.h"
 #include <windows.h>
 
 int Run( int argc, char* argv[] )
 {
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    ParanoiaFacade::CheckLicense( "sword" );
+    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
 #endif
 
     MT_ConsoleLogger        consoleLogger;
