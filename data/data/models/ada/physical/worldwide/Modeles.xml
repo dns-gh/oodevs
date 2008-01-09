@@ -292,6 +292,7 @@
         <mission name="To deny population crossing"/>
         <mission name="To secure area (against populations assault)"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.hal" name="MRA infantery platoon">
@@ -311,6 +312,7 @@
         <mission name="To manage refugees"/>
         <mission name="To manage prisoners"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.hal" name="LRA infantery platoon">
@@ -330,6 +332,7 @@
         <mission name="To manage refugees"/>
         <mission name="To manage prisoners"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.hal" name="Mortar support troop">
@@ -347,6 +350,7 @@
         <mission name="To manage refugees"/>
         <mission name="To manage prisoners"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.hal" name="Infantery company CP">
@@ -367,6 +371,7 @@
         <mission name="To report information on populations"/>
         <mission name="To secure area (against populations assault)"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.hal" name="Battery CP">
@@ -392,6 +397,7 @@
         <mission name="Logistics - To deploy"/>
         <mission name="To cross"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.hal" name="Section Maintenance">
@@ -574,6 +580,7 @@
         <mission name="To manage prisoners"/>
         <mission name="To cross"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.hal" name="Truck convoy">
@@ -639,6 +646,7 @@
           <fragorder name="Fire"/>
         </mission>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.hal" name="Firefinder radar">
@@ -696,6 +704,7 @@
         <mission name="To manage refugees"/>
         <mission name="To manage prisoners"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.hal" name="Peloton Transport Blindes">
@@ -859,6 +868,7 @@
         <mission name="Armor - To reconnoiter"/>
         <mission name="Armor - To seize"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="Antitank patrol">
@@ -891,6 +901,7 @@
         <mission name="Armor - To seize"/>
         <mission name="Armor - To support (dynamic)"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.hal" name="Armored squadron CP">
@@ -905,6 +916,7 @@
         <mission name="To go through decontamination process"/>
         <mission name="To adopt transportation posture"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
         <mission name="Armor CP To Deploy"/>
       </missions>
     </unit>
@@ -954,6 +966,7 @@
         <mission name="Armor - To open a route"/>
         <mission name="Armor - To report information"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.hal" name="Light armored platoon">
@@ -1001,6 +1014,7 @@
         <mission name="Armor - To open a route"/>
         <mission name="Armor - To report information"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Mobility support platoon">
@@ -1033,6 +1047,7 @@
         <mission name="Engineer - To resume work"/>
         <mission name="Engineer - To restore a route"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Countermobility platoon">
@@ -1141,6 +1156,7 @@
         <mission name="To manage refugees"/>
         <mission name="To manage prisoners"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="Drone_SDTI" file="\Appui\Rens\Pions\Roim\Drone SDTI\Model.hal" name="Drone">
@@ -1759,6 +1775,7 @@
         <mission name="To manage prisoners"/>
         <mission name="Infantry - To monitor"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.hal" name="LRA infantery company">
@@ -2015,6 +2032,7 @@
         <mission name="Armor - To protect CP"/>
         <mission name="Armor - To reconnoiter (a position)"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.hal" name="Light armored squadron">
@@ -2065,6 +2083,7 @@
         <mission name="Armor - To protect CP"/>
         <mission name="Armor - To reconnoiter (a position)"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
     <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\PEL EEI\model.hal" name="Scout platoon">
@@ -2088,6 +2107,7 @@
         <mission name="Armor - To escort Units"/>
         <mission name="Armor - To cover"/>
         <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Deployment support company">

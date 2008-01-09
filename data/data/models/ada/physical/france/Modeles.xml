@@ -20,7 +20,8 @@
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
@@ -29,7 +30,8 @@
     <unit dia-type="MarineCP" file="Marine\Pions\PC\model.hal" name="PC Marine">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
@@ -181,7 +183,8 @@
         <mission name="ASA Defendre Site A Partir Position"/>
         <mission name="ASA Surveiller"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Transporter"/>
@@ -201,7 +204,8 @@
         <mission name="ASA Surveiller"/>
         <mission name="ASA Defendre Unites"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Transporter"/>
@@ -215,7 +219,8 @@
     <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.hal" name="SATCP MISTRAL">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Transporter"/>
@@ -234,7 +239,8 @@
     <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.hal" name="PC MISTRAL">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Transporter"/>
@@ -248,7 +254,8 @@
     <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.hal" name="PC ROLAND CAROL">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Transporter"/>
@@ -262,7 +269,8 @@
     <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.hal" name="PC HAWK">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Transporter"/>
@@ -295,7 +303,8 @@
         <mission name="GEN Renforcer"/>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -309,7 +318,8 @@
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -324,7 +334,8 @@
         <mission name="GEN Renforcer"/>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -339,7 +350,8 @@
         <mission name="Franchir"/>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -353,7 +365,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -368,7 +381,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -383,7 +397,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -398,7 +413,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -413,7 +429,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="GEN Realiser Travaux Protection"/>
@@ -429,7 +446,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="GEN Realiser Travaux Protection"/>
@@ -445,7 +463,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -460,7 +479,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -475,7 +495,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -493,7 +514,8 @@
         <mission name="GEN Reconnaitre Zone"/>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -509,7 +531,8 @@
         <mission name="GEN Reconnaitre Zone"/>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -523,7 +546,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -538,7 +562,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -553,7 +578,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -596,7 +622,8 @@
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
@@ -622,7 +649,8 @@
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
@@ -641,7 +669,8 @@
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
@@ -659,7 +688,8 @@
         <mission name="INF Defendre"/>
         <mission name="INF Surveiller Secteur"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
@@ -676,7 +706,8 @@
           <fragorder name="Pion Appliquer Feux"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
@@ -690,7 +721,8 @@
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.hal" name="PC INF">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Decrocher"/>
         <mission name="Suivre"/>
@@ -711,7 +743,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -757,7 +790,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -807,7 +841,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -828,7 +863,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -855,7 +891,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -880,7 +917,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -895,7 +933,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -909,7 +948,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -924,7 +964,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -938,7 +979,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -954,7 +996,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -970,7 +1013,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -985,7 +1029,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -1002,7 +1047,8 @@
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="LOG Se Deployer">
           <fragorder name="Modifier Regime Travail Maintenance"/>
           <fragorder name="Modifier Priorites Reparations"/>
@@ -1031,7 +1077,8 @@
           <fragorder name="Modifier Priorites Tactiques Reparations"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
       </missions>
     </unit>
@@ -1054,7 +1101,8 @@
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="LOG Renforcer"/>
         <mission name="Franchir"/>
@@ -1076,7 +1124,8 @@
         <mission name="Se Faire Transporter"/>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="LOG Renforcer"/>
       </missions>
     </unit>
@@ -1098,7 +1147,8 @@
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Transporter"/>
         <mission name="LOG Renforcer"/>
@@ -1119,7 +1169,8 @@
         <mission name="Decrocher"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="LOG Renforcer"/>
       </missions>
@@ -1138,7 +1189,8 @@
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Transporter"/>
         <mission name="LOG Renforcer"/>
@@ -1159,7 +1211,8 @@
         <mission name="Decrocher"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="LOG Renforcer"/>
       </missions>
@@ -1184,7 +1237,8 @@
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="LOG Renforcer"/>
         <mission name="Franchir"/>
@@ -1197,7 +1251,8 @@
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Franchir"/>
       </missions>
@@ -1209,7 +1264,8 @@
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Stationner"/>
@@ -1224,7 +1280,8 @@
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Decrocher"/>
         <mission name="LOG Renforcer"/>
@@ -1239,7 +1296,8 @@
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Franchir"/>
         <mission name="LOG Renforcer"/>
@@ -1253,7 +1311,8 @@
         <mission name="GEN Renforcer"/>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -1269,7 +1328,8 @@
           <fragorder name="Pion Appliquer Feux"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1287,7 +1347,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1304,7 +1365,8 @@
           <fragorder name="Pion Appliquer Feux"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1322,7 +1384,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1339,7 +1402,8 @@
           <fragorder name="Pion Appliquer Feux"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1357,7 +1421,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1374,7 +1439,8 @@
           <fragorder name="Pion Appliquer Feux"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1392,7 +1458,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1407,7 +1474,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1422,7 +1490,8 @@
       <missions>
         <mission name="ASS Acquerir Lanceurs Eni"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1437,7 +1506,8 @@
       <missions>
         <mission name="ASS RATAC Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -1452,7 +1522,8 @@
       <missions>
         <mission name="ASS EO Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1467,7 +1538,8 @@
       <missions>
         <mission name="ASS EOP Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -1482,7 +1554,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROHUM SExfiltrer"/>
         <mission name="RENS ROHUM Renseigner Sur"/>
@@ -1497,7 +1570,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROHUM SExfiltrer"/>
         <mission name="RENS ROHUM Renseigner Sur"/>
@@ -1512,7 +1586,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROHUM SExfiltrer"/>
         <mission name="RENS ROHUM Renseigner Sur"/>
@@ -1527,7 +1602,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROHUM SExfiltrer"/>
         <mission name="RENS ROHUM Renseigner Sur"/>
@@ -1542,7 +1618,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROHUM SExfiltrer"/>
         <mission name="RENS ROHUM Renseigner Sur"/>
@@ -1557,7 +1634,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROEM Mettre En Oeuvre"/>
         <mission name="Franchir"/>
@@ -1572,7 +1650,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROEM Renseigner Sur"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1608,7 +1687,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROIM Mettre En Oeuvre"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1625,7 +1705,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROIM Mettre En Oeuvre"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1642,7 +1723,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROEM Renseigner Sur"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1654,7 +1736,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROEM Renseigner Sur"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1668,7 +1751,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROEM Renseigner Sur"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1682,7 +1766,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROEM Appuyer"/>
         <mission name="RENS ROEM Renseigner Sur"/>
@@ -1697,7 +1782,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="RENS ROEM Appuyer"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1710,7 +1796,8 @@
     <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.hal" name="Peloton Transport Blindes">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
@@ -1725,7 +1812,8 @@
     <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.hal" name="Patrouille Circulation">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
@@ -1749,7 +1837,8 @@
     <unit dia-type="Refugie" file="Population\Refugies\Pions\Refugie\Model.hal" name="Refugie">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -1765,7 +1854,8 @@
         <mission name="INF Detruire Par Coup De Main"/>
         <mission name="INF Harceler"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
@@ -1782,7 +1872,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1797,7 +1888,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1812,7 +1904,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1827,7 +1920,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1842,7 +1936,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -1894,7 +1989,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="INF Detruire Par Coup De Main"/>
         <mission name="Franchir"/>
@@ -1916,7 +2012,8 @@
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Zone A Partir Position"/>
@@ -1928,7 +2025,8 @@
     <unit dia-type="PCAppuiMob" file="Appui\AppuiMob\Pions\Model.hal" name="PC Appui Mob">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
@@ -1942,7 +2040,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -1961,7 +2060,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -1979,7 +2079,8 @@
     <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.hal" name="Terroriste">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="ASY Renseigner"/>
         <mission name="ASY SInfiltrer"/>
         <mission name="ASY Commettre Attentat Contre Forces Armees"/>
@@ -2009,7 +2110,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -2073,7 +2175,8 @@
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
@@ -2089,7 +2192,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -2103,7 +2207,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -2125,7 +2230,8 @@
     <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.hal" name="GLAISE ASA section tcp">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Transporter"/>
@@ -2144,7 +2250,8 @@
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.hal" name="GLAISE ASS SAM">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -2180,7 +2287,8 @@
         <mission name="GEN Renforcer"/>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -2193,7 +2301,8 @@
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.hal" name="GLAISE INF PC inf">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Decrocher"/>
         <mission name="Suivre"/>
@@ -2210,7 +2319,8 @@
           <fragorder name="Pion Appliquer Feux"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
@@ -2224,7 +2334,8 @@
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.hal" name="GLAISE ASS section tractee">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -2242,7 +2353,8 @@
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.hal" name="GLAISE ASS section automoteur">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -2260,7 +2372,8 @@
     <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.hal" name="GLAISE ASS section LRM">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -2278,7 +2391,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -2297,7 +2411,8 @@
         <mission name="ASA Surveiller"/>
         <mission name="ASA Defendre Unites"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Transporter"/>
@@ -2316,7 +2431,8 @@
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
@@ -2331,7 +2447,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -2346,7 +2463,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -2361,7 +2479,8 @@
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -2375,7 +2494,8 @@
     <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.hal" name="GLAISE ASA groupe tcp">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Transporter"/>
@@ -2395,7 +2515,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -2411,7 +2532,8 @@
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -2425,7 +2547,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -2440,7 +2563,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -2490,7 +2614,8 @@
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Zone A Partir Position"/>
@@ -2503,7 +2628,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Stationner"/>
         <mission name="Orienter Refugies"/>
@@ -2520,7 +2646,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Franchir"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
@@ -2537,7 +2664,8 @@
       <missions>
         <mission name="ASS EO Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -2552,7 +2680,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -2566,7 +2695,8 @@
     <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.hal" name="GLAISE ASA PC">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Transporter"/>
@@ -2653,7 +2783,8 @@
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
@@ -2686,7 +2817,8 @@
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
@@ -2720,7 +2852,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Stationner"/>
         <mission name="Orienter Refugies"/>
@@ -2732,7 +2865,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -2754,7 +2888,8 @@
         <mission name="ASA Surveiller"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -2773,7 +2908,8 @@
         <mission name="ASA Surveiller"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -2791,7 +2927,8 @@
         <mission name="ALAT Jalonner"/>
         <mission name="ALAT Surveiller"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Recompleter"/>
@@ -2864,7 +3001,8 @@
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="GEN Realiser Travaux">
           <fragorder name="Automate Activer Obstacle"/>
@@ -2891,7 +3029,8 @@
         <mission name="Franchir"/>
         <mission name="GEN Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -2906,7 +3045,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -2952,7 +3092,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Transporter"/>
@@ -3001,7 +3142,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -3027,7 +3169,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -3043,7 +3186,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -3060,7 +3204,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -3077,7 +3222,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -3123,7 +3269,8 @@
         <mission name="Se Recompleter"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -3162,7 +3309,8 @@
         <mission name="Se Recompleter"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -3187,7 +3335,8 @@
         <mission name="Se Recompleter"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="INF Attaquer Souplesse">
@@ -3214,7 +3363,8 @@
         <mission name="Se Recompleter"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -3241,7 +3391,8 @@
         <mission name="Se Faire Transporter"/>
         <mission name="Se Recompleter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
       </missions>
     </automat>
@@ -3252,7 +3403,8 @@
         <mission name="Se Faire Transporter"/>
         <mission name="Se Recompleter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
       </missions>
     </automat>
@@ -3260,7 +3412,8 @@
       <missions>
         <mission name="Se Recompleter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Transporter"/>
@@ -3275,7 +3428,8 @@
       <missions>
         <mission name="Se Recompleter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="LOG Surveiller"/>
@@ -3299,7 +3453,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3314,7 +3469,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3329,7 +3485,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3344,7 +3501,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3359,7 +3517,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3374,7 +3533,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3389,7 +3549,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3404,7 +3565,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3419,7 +3581,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3434,7 +3597,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3449,7 +3613,8 @@
       <missions>
         <mission name="ASS Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3465,7 +3630,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3481,7 +3647,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3496,7 +3663,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROIM CL289 Renseigner Sur"/>
@@ -3512,7 +3680,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROIM SDTI Renseigner Sur"/>
@@ -3527,7 +3696,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROHUM SExfiltrer"/>
@@ -3543,7 +3713,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROHUM SExfiltrer"/>
@@ -3559,7 +3730,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROEM Appuyer"/>
@@ -3574,7 +3746,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROEM Appuyer"/>
@@ -3590,7 +3763,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROEM Renseigner Sur"/>
@@ -3602,7 +3776,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROEM Renseigner Sur"/>
@@ -3617,7 +3792,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROEM Renseigner Sur"/>
@@ -3632,7 +3808,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROEM Renseigner Sur"/>
@@ -3646,7 +3823,8 @@
     <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.hal" name="Escadrille Horizon">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS RADINT Renseigner Sur"/>
@@ -3657,7 +3835,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Recompleter"/>
@@ -3701,7 +3880,8 @@
     <automat dia-type="Viviane" file="Appui\Rens\Automates\Radint\Pat Viviane\Model.hal" name="Viviane">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS RADINT Renseigner Sur"/>
@@ -3712,7 +3892,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3727,7 +3908,8 @@
     <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.hal" name="Section Commando">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3743,7 +3925,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3761,7 +3944,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3774,7 +3958,8 @@
     <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.hal" name="Terroristes">
       <missions>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Se Recompleter"/>
       </missions>
@@ -3783,7 +3968,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -3860,7 +4046,8 @@
         <mission name="Se Recompleter"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -3875,7 +4062,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -3901,7 +4089,8 @@
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="GEN Realiser Travaux">
           <fragorder name="Automate Activer Obstacle"/>
@@ -3927,7 +4116,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3942,7 +4132,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3957,7 +4148,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3979,7 +4171,8 @@
         <mission name="Se Recompleter"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -3997,7 +4190,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -4019,7 +4213,8 @@
         <mission name="ASA Surveiller"/>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -4036,7 +4231,8 @@
         <mission name="Franchir"/>
         <mission name="GEN Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -4050,7 +4246,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -4069,7 +4266,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -4086,7 +4284,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -4115,7 +4314,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -4133,7 +4333,8 @@
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="RENS ROHUM SExfiltrer"/>
@@ -4149,7 +4350,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
@@ -4172,7 +4374,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Stationner"/>
@@ -4202,7 +4405,8 @@
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -4217,7 +4421,8 @@
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Se Faire Decontaminer"/>
@@ -4283,7 +4488,8 @@
         <mission name="Se Recompleter"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -4307,7 +4513,8 @@
         <mission name="Se Recompleter"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Decrocher"/>
         <mission name="Franchir"/>
@@ -4328,7 +4535,8 @@
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
-        <mission name="Soutenir en mesure de"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
