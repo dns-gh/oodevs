@@ -10,7 +10,7 @@
 #ifndef __frontend_app_pch_h_
 #define __frontend_app_pch_h_
 
-#define APP_NAME "CSword"
+#define APP_NAME "SWORD Officer Training"
 
 #include <exception>
 #include <memory>
