@@ -87,6 +87,7 @@ public:
     template< typename T > static void ComputeObstaclePosition                          ( DIA_Call_ABC& call, const T&              caller       );
                            static void ComputePointsBeforeLima                          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     template< typename T > static void ComputePointBeforeLima                           ( DIA_Call_ABC& call, const T& caller                    );
+    template< typename T > static void ComputePointBeforeLimaInFuseau                   ( DIA_Call_ABC& call, const T& caller                    );
     template< typename T > static void SplitLocalisationInParts                         ( DIA_Call_ABC& call, const T& caller                    );
     template< typename T > static void SplitLocalisationInSurfaces                      ( DIA_Call_ABC& call, const T& caller                    );
     template< typename T > static void SplitLocalisationInSections                      ( DIA_Call_ABC& call, const T& caller                    );

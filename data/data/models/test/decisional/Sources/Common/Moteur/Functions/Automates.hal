@@ -115,6 +115,7 @@ signatures
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPointArriveePourPion             ( A /*T_Pion*/ );
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPointDepart                      ();           
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionParRapportALima          ( U /*T_Lima*/, R /*dist avant lima*/, B /*retour*/ );
+    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( U /*T_Lima*/, R /*dist avant lima*/, U /*fuseau*/, B /*retour*/ );
     U /*T_ListePoints*/              A::DEC_Geometrie_CalculerPositionsParRapportALima         ( U /*T_Lima*/, R /*dist avant lima*/, R /*nb points*/, B /*retour*/ );
     U /*T_ListePoints*/              A::DEC_Geometrie_PositionsParRapportALocalisation         ( S /*T_ListePions*/, U /*T_Localisation*/, U /*dirdanger*/, R /*Dist max*/, I /*E_LocalisationFunctionsReturnCode*/ ); // Retourne T_ListePoints à EFFACER !!!
     U /*T_CalculLignesAvantArriere*/ A::DEC_Geometrie_StartCalculLignesAvantEtArriere          ( S /*T_ListePions ou T_ListeAutomates*/ );
