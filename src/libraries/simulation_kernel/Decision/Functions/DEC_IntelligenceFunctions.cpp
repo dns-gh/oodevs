@@ -140,26 +140,12 @@ void DEC_IntelligenceFunctions::SortAccordingToLoadedEnemies( DIA_Call_ABC& call
 
 namespace
 {
-    bool IsLeftFlank( const MIL_Fuseau& zone, const MIL_Automate& automat )
-    {
-        if( const MIL_Automate* parent = automat.GetParentAutomate() )
-            return parent->GetOrderManager().GetFuseau().IsLeftFlank( zone );
-        return false;
-    }
-
-    bool IsRightFlank( const MIL_Fuseau& zone, const MIL_Automate& automat )
-    {
-        if( const MIL_Automate* parent = automat.GetParentAutomate() )
-            return parent->GetOrderManager().GetFuseau().IsRightFlank( zone );
-        return false;
-    }
-
     template< typename Filter, typename Handler >
     struct FlankIntelligenceFinder : public MIL_IntelligenceOrdersVisitor_ABC
     {
         FlankIntelligenceFinder( const MIL_Fuseau& zone, const MIL_Automate& automat, const Filter& filter, Handler& handler )
-            : leftFlank_ ( IsLeftFlank ( zone, automat ) )
-            , rightFlank_( IsRightFlank( zone, automat ) )
+            : leftFlank_ ( automat.GetFuseau().IsLeftFlank ( zone ) )
+            , rightFlank_( automat.GetFuseau().IsRightFlank( zone ) )
             , zone_      ( &zone )
             , filter_    ( filter )
             , handler_   ( &handler )
@@ -169,9 +155,9 @@ namespace
 
         virtual void Visit( const MIL_IntelligenceOrder& intelligence )
         {
-            const bool onFlank = intelligence.IsOnFlank( *zone_, leftFlank_, rightFlank_ );
             if( filter_( intelligence ) )
             {
+                const bool onFlank = intelligence.IsOnFlank( *zone_, leftFlank_, rightFlank_ );
                 result_ = result_ || onFlank;
                 (*handler_)( intelligence );
             }
@@ -225,7 +211,7 @@ namespace
     MT_Vector2D ComputeClosestDirection( const MIL_Fuseau& zone, const MIL_Automate& automat, const Filter& filter )
     {
         MT_Vector2D automatPosition;
-        if( automat.GetAlivePionsBarycenter( automatPosition ) )
+        if( ! automat.GetAlivePionsBarycenter( automatPosition ) )
             return automat.GetDirDanger();
         ClosestIntelligenceHandler handler( automatPosition );
         FlankIntelligenceFinder< Filter, ClosestIntelligenceHandler > finder( zone, automat, filter, handler );
@@ -245,7 +231,7 @@ namespace
 void DEC_IntelligenceFunctions::IsEnemyOnFlank( DIA_Call_ABC& call, const MIL_Automate& caller )
 {
     assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
-    MIL_Fuseau* zone = call.GetParameter( 0 ).ToUserPtr( zone );
+    const MIL_Fuseau* zone = call.GetParameter( 0 ).ToUserPtr( zone );
     call.GetResult().SetValue( zone && ::IsOnFlank( *zone, caller, boost::bind( &MIL_IntelligenceOrder::IsEnemy, _1 ) ) );
 }
 
@@ -256,7 +242,7 @@ void DEC_IntelligenceFunctions::IsEnemyOnFlank( DIA_Call_ABC& call, const MIL_Au
 void DEC_IntelligenceFunctions::IsFriendOnFlank( DIA_Call_ABC& call, const MIL_Automate& caller )
 {
     assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
-    MIL_Fuseau* zone = call.GetParameter( 0 ).ToUserPtr( zone );
+    const MIL_Fuseau* zone = call.GetParameter( 0 ).ToUserPtr( zone );
     call.GetResult().SetValue( zone && ::IsOnFlank( *zone, caller, boost::bind( &MIL_IntelligenceOrder::IsFriend, _1 ) ) );
 }
 
@@ -267,7 +253,15 @@ void DEC_IntelligenceFunctions::IsFriendOnFlank( DIA_Call_ABC& call, const MIL_A
 void DEC_IntelligenceFunctions::ComputeCoverDirection( DIA_Call_ABC& call, const MIL_Automate& caller )
 {
     assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
-    MIL_Fuseau* zone = call.GetParameter( 0 ).ToUserPtr( zone );
-    MT_Vector2D* result = new MT_Vector2D( ComputeClosestDirection( *zone, caller, boost::bind( &MIL_IntelligenceOrder::IsEnemy, _1 ) ) ); // $$$$ SBO 2007-12-07: RAM
-    call.GetResult().SetValue( (void*)result, &DEC_Tools::GetTypeDirection(), 1 );
+    if( const MIL_Fuseau* zone = call.GetParameter( 0 ).ToUserPtr( zone ) )
+    {
+        MT_Vector2D* result = new MT_Vector2D( ComputeClosestDirection( *zone, caller, boost::bind( &MIL_IntelligenceOrder::IsEnemy, _1 ) ) ); // $$$$ SBO 2007-12-07: RAM
+        call.GetResult().SetValue( (void*)result, &DEC_Tools::GetTypeDirection(), 1 );
+    }
+    else
+    {
+        // $$$$ SBO 2008-01-11: should not happen as a zone parameter is supposed to be provided
+        MT_Vector2D* result = new MT_Vector2D( caller.GetDirDanger() ); // $$$$ SBO 2008-01-11: RAM
+        call.GetResult().SetValue( (void*)result, &DEC_Tools::GetTypeDirection(), 1 );
+    }
 }

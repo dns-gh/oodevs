@@ -142,5 +142,5 @@ MT_Vector2D MIL_IntelligenceOrder::ComputeDirection( const MT_Vector2D& origin )
 {
     MT_Vector2D pos;
     MIL_Tools::ConvertCoordMosToSim( position_, pos );
-    return pos - origin;
+    return ( pos - origin ).Normalize();
 }
