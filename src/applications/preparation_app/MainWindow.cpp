@@ -253,9 +253,9 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
-    glProxy_->Register( terrain );                 preferences.AddLayer( tr( "Terrain" ), terrain );
-    glProxy_->Register( raster );                  preferences.AddLayer( tr( "Raster" ), raster );
     glProxy_->Register( elevation2d );             preferences.AddLayer( tr( "Elevation" ), elevation2d );
+    glProxy_->Register( raster );                  preferences.AddLayer( tr( "Raster" ), raster );
+    glProxy_->Register( terrain );                 preferences.AddLayer( tr( "Terrain" ), terrain );
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );
     glProxy_->Register( weather );
@@ -326,6 +326,7 @@ void MainWindow::Open()
 // -----------------------------------------------------------------------------
 bool MainWindow::Load()
 {
+    WriteOptions();
     try
     {
         model_.Purge();
@@ -339,6 +340,7 @@ bool MainWindow::Load()
         QMessageBox::critical( this, APP_NAME, ( tr( "Error reading xml file: " ) + e.what() ).ascii() );
         return false;
     }
+    ReadOptions();
     return true;
 }
 

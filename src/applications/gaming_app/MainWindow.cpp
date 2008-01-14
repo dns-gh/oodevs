@@ -306,6 +306,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     ReadSettings();
     ReadOptions();
+
     pMissionPanel_->hide();
     replayerToolbar->hide();
     folkToolbar->hide();
@@ -408,9 +409,11 @@ void MainWindow::Open()
 // -----------------------------------------------------------------------------
 void MainWindow::Load()
 {
+    WriteOptions();
     model_.Purge();
     selector_->Load();
     staticModel_.Load( config_ );
+    ReadOptions();
 }
 
 // -----------------------------------------------------------------------------

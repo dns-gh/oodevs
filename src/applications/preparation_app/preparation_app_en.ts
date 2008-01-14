@@ -159,6 +159,10 @@
         <source>Intelligences</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>
