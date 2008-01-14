@@ -26,7 +26,7 @@ ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin )
     : ServerNetworker( config.GetNetworkClientsParameters() )
     , plugin_( plugin )
 {
-    // NOTHING
+    DenyConnections();
 }
 
 // -----------------------------------------------------------------------------
