@@ -208,12 +208,9 @@ namespace
     }
 
     template< typename Filter >
-    MT_Vector2D ComputeClosestDirection( const MIL_Fuseau& zone, const MIL_Automate& automat, const Filter& filter )
+    MT_Vector2D ComputeClosestDirection( const MT_Vector2D& origin, const MIL_Fuseau& zone, const MIL_Automate& automat, const Filter& filter )
     {
-        MT_Vector2D automatPosition;
-        if( ! automat.GetAlivePionsBarycenter( automatPosition ) )
-            return automat.GetDirDanger();
-        ClosestIntelligenceHandler handler( automatPosition );
+        ClosestIntelligenceHandler handler( origin );
         FlankIntelligenceFinder< Filter, ClosestIntelligenceHandler > finder( zone, automat, filter, handler );
         automat.GetOrderManager().Accept( finder );
         if( handler.closest_ )
@@ -252,10 +249,13 @@ void DEC_IntelligenceFunctions::IsFriendOnFlank( DIA_Call_ABC& call, const MIL_A
 // -----------------------------------------------------------------------------
 void DEC_IntelligenceFunctions::ComputeCoverDirection( DIA_Call_ABC& call, const MIL_Automate& caller )
 {
-    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
-    if( const MIL_Fuseau* zone = call.GetParameter( 0 ).ToUserPtr( zone ) )
+    assert( DEC_Tools::CheckTypePoint ( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 1 ) ) );
+    const MT_Vector2D* origin = call.GetParameter( 0 ).ToUserPtr( origin );
+    const MIL_Fuseau*  zone   = call.GetParameter( 1 ).ToUserPtr( zone );
+    if( zone && origin )
     {
-        MT_Vector2D* result = new MT_Vector2D( ComputeClosestDirection( *zone, caller, boost::bind( &MIL_IntelligenceOrder::IsEnemy, _1 ) ) ); // $$$$ SBO 2007-12-07: RAM
+        MT_Vector2D* result = new MT_Vector2D( ComputeClosestDirection( *origin, *zone, caller, boost::bind( &MIL_IntelligenceOrder::IsEnemy, _1 ) ) ); // $$$$ SBO 2007-12-07: RAM
         call.GetResult().SetValue( (void*)result, &DEC_Tools::GetTypeDirection(), 1 );
     }
     else

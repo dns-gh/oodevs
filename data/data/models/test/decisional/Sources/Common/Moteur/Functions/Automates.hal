@@ -178,7 +178,7 @@ signatures
     S /*T_ListeFuseaux/Localisations*/ A::DEC_Rens_TrierZonesSelonPresenceEnnemisEmbarques( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
     B                                  A::DEC_Rens_EnnemiSurFlanc                         ( U /*T_Fuseau*/ );
     B                                  A::DEC_Rens_AmiSurFlanc                            ( U /*T_Fuseau*/ );
-    U /*T_Direction*/                  A::DEC_Rens_CalculerDirectionCouverture            ( U /*T_Fuseau*/ );
+    U /*T_Direction*/                  A::DEC_Rens_CalculerDirectionCouverture            ( U /*T_Point*/, U /*T_Fuseau*/ );
 
 
 
