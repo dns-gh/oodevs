@@ -25,7 +25,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Sector::Sector( const Point2f& vOrigin, unsigned heading, float rAngle )
     : vOrigin_   ( vOrigin )
-    , vDirection_( std::cos( heading * pi_ / 180.f ), std::sin( heading * pi_ / 180.f ) )
+    , vDirection_( std::sin( heading * pi_ / 180.f ), std::cos( heading * pi_ / 180.f ) )
     , rSemiAngle_( rAngle / 2. )
 {
     if ( vDirection_.IsNull() )
