@@ -222,3 +222,12 @@ void MIL_AutomateMission::Send() const
     MIL_Mission_ABC::CleanAfterSerialization( asn().order_context );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateMission::AffectDirection
+// Created: SBO 2008-01-15
+// -----------------------------------------------------------------------------
+void MIL_AutomateMission::AffectDirection( const MT_Vector2D& direction )
+{
+    MIL_Mission_ABC::AffectDirection( direction );
+    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
+}

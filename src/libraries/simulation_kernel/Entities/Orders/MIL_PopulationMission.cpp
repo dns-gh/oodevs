@@ -131,4 +131,3 @@ void MIL_PopulationMission::Send() const
 
     MIL_Mission_ABC::CleanAfterSerialization( asn().parametres    );
 }
-

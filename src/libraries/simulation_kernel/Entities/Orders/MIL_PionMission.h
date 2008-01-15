@@ -52,6 +52,7 @@ public:
     virtual void             Start               ();
     virtual bool             IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
             MIL_PionMission& CreateCopy          ( MIL_AgentPion& target ) const;
+    virtual void             AffectDirection     ( const MT_Vector2D& direction );
     //@}
 
 private:

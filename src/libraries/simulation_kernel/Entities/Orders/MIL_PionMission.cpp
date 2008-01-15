@@ -189,3 +189,13 @@ void MIL_PionMission::Send() const
     MIL_Mission_ABC::CleanAfterSerialization( asn().parametres    );
     MIL_Mission_ABC::CleanAfterSerialization( asn().order_context );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMission::AffectDirection
+// Created: SBO 2008-01-15
+// -----------------------------------------------------------------------------
+void MIL_PionMission::AffectDirection( const MT_Vector2D& direction )
+{
+    MIL_Mission_ABC::AffectDirection( direction );
+    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
+}

@@ -41,17 +41,17 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&         GetName              () const;
-    const MIL_MissionType_ABC& GetType              () const;
-    const MT_Vector2D&         GetDirDanger         () const;
-    const MIL_Fuseau&          GetFuseau            () const;
-    const T_LimaVector&        GetLimas             () const;
-          MIL_LimaOrder*       FindLima             ( uint nID );
-          MIL_LimaOrder*       FindLima             ( const MIL_LimaFunction& function );
-          MIL_LimaOrder*       FindNextScheduledLima();
-          void                 AffectFuseau         ( const MIL_Fuseau& fuseau );
-          void                 AffectDirection      ( const MT_Vector2D& direction );
-          void                 Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
+    const   std::string&         GetName              () const;
+    const   MIL_MissionType_ABC& GetType              () const;
+    const   MT_Vector2D&         GetDirDanger         () const;
+    const   MIL_Fuseau&          GetFuseau            () const;
+    const   T_LimaVector&        GetLimas             () const;
+            MIL_LimaOrder*       FindLima             ( uint nID );
+            MIL_LimaOrder*       FindLima             ( const MIL_LimaFunction& function );
+            MIL_LimaOrder*       FindNextScheduledLima();
+            void                 AffectFuseau         ( const MIL_Fuseau& fuseau );
+    virtual void                 AffectDirection      ( const MT_Vector2D& direction );
+            void                 Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
     //@}
 
 protected:
