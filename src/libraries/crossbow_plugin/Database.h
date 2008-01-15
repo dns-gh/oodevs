@@ -33,7 +33,7 @@ class Database : public Database_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Database( const dispatcher::Config& config );
+    explicit Database( const dispatcher::Config& config, const std::string& name );
     virtual ~Database();
     //@}
 

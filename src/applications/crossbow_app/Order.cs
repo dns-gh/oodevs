@@ -93,50 +93,26 @@ namespace Crossbow
                 param.Value.OnContextMenu(menu, x, y, selected);
         }
 
-        /*
-         * Enable IFeatureWorkspace edition during instance life
-         */
-        class ScopeLockEditor
-        {
-            IWorkspaceEdit m_edit;
-
-            public ScopeLockEditor(IFeatureWorkspace featureWorkspace)
-            {
-                m_edit = (IWorkspaceEdit)featureWorkspace;                
-            }
-            public void Lock()
-            {
-                m_edit.StartEditing(false);
-                m_edit.StartEditOperation();
-            }
-            public void Unlock()
-            {
-                m_edit.StopEditOperation();
-                m_edit.StopEditing(true);
-            }
-        }
-
         public void Validate()
         {
-            IFeatureWorkspace workspace = Tools.RetrieveWorkspace(m_feature.Table);
+            IFeatureWorkspace workspace = (IFeatureWorkspace)Tools.OpenWorkspace(Tools.GetCSwordExtension().Config.SharedFile);
             if (workspace != null)
                 Serialize(workspace);
         }
 
         public void Serialize(IFeatureWorkspace featureWorkspace)
         {
-            // ScopeLockEditor editor = new ScopeLockEditor(featureWorkspace);
-
-            IWorkspace wks = (IWorkspace)featureWorkspace;
-            // editor.Lock();
+            ScopeLockEditor editor = new ScopeLockEditor(featureWorkspace);
+            
+            editor.Lock();
             int id = SerializeOrder(featureWorkspace);
             SerializeParameters(featureWorkspace, id);
-            // editor.Unlock();
+            editor.Unlock();
         }
 
         int SerializeOrder(IFeatureWorkspace featureWorkspace)
         {
-            ITable table = featureWorkspace.OpenTable("Orders"); // $$$$ SBO 2007-07-20: keep it maybe...                
+            ITable table = featureWorkspace.OpenTable("Orders"); // $$$$ SBO 2007-07-20: keep it maybe...
             IRow row = table.CreateRow();
             Tools.SetValue<int>(row, "target_id", m_Id);
             Tools.SetValue<string>(row, "OrderName", m_name);

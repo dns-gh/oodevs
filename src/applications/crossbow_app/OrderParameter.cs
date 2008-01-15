@@ -41,6 +41,22 @@ namespace Crossbow
             public abstract void OnContextMenu(int x, int y, IFeature selected);
             public abstract void OnSelect();
             public abstract string GetValue();
+
+            protected void UpdateZAware(IPointCollection points)
+            {
+                IZAware zaware = points as IZAware;
+                zaware.ZAware = true;
+                for (int i = 0; i < points.PointCount; ++i)
+                    points.UpdatePoint(i, UpdateZAware(points.get_Point(i)));
+            }
+
+            protected IPoint UpdateZAware(IPoint point)
+            {
+                IZAware zaware = point as IZAware;
+                zaware.ZAware = true;
+                point.Z = 0;
+                return point;
+            }
         };
 
         sealed class TypePoint : Type_ABC
@@ -58,7 +74,7 @@ namespace Crossbow
             {
                 m_point = Tools.MakePoint(m_x, m_y);
                 if (m_point != null)
-                    Tools.Store(m_OrderPoint, m_point);
+                    Tools.Store(m_OrderPoint, UpdateZAware(m_point));
             }
             public override string GetValue()
             {
@@ -88,12 +104,15 @@ namespace Crossbow
                 m_polygon = rubber.TrackNew(display, null) as IPointCollection;
                 if (m_polygon != null)
                 {
+                    // Get GeometryCollection for direct modification otherwise copy
+                    UpdateZAware(m_polygon);
                     ISpatialReference spRef = ((IGeometry)m_polygon).SpatialReference;
                     if (spRef == null)
                         ((IGeometry)m_polygon).SpatialReference = Tools.GetDocument().SpatialReference;
                     Tools.Store(m_OrderPolygon, (IGeometry)m_polygon);
                 }                
             }
+
             public override string GetValue()
             {
                 if (m_polygon == null || m_polygon.PointCount == 0)
@@ -159,6 +178,7 @@ namespace Crossbow
                     m_path = (IPolyline)rubber.TrackNew(display, null);
                     if (m_path != null)
                     {
+                        UpdateZAware(m_path as IPointCollection);
                         ISpatialReference spRef = m_path.SpatialReference;
                         if (spRef == null)
                             m_path.SpatialReference = Tools.GetDocument().SpatialReference;
@@ -166,6 +186,7 @@ namespace Crossbow
                     }
                 }
             }
+
             public override string GetValue()
             {
                 if (m_path != null)

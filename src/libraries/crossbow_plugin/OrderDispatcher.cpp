@@ -189,7 +189,7 @@ void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsign
     parameters.elem = new ASN1T_MissionParameter[ parameters.n ];
 
     std::stringstream ss;
-    ss << "order_id=" << orderId << " AND context=false";
+    ss << "order_id=" << orderId << " AND context=0";
     Row_ABC* result = paramTable_.Find( ss.str() );
     for( unsigned int i = 0; result != 0 && i < parameters.n; ++i )
     {
@@ -232,9 +232,11 @@ void OrderDispatcher::SetOrderContext( ASN1T_OrderContext& asn, unsigned long or
     asn.limas.elem = 0;
     asn.m.limite_droitePresent = 0;
     asn.m.limite_gauchePresent = 0;
+    asn.intelligences.n = 0;
+    asn.intelligences.elem = 0;
 
     std::stringstream ss;
-    ss << "order_id=" << orderId << " AND context=true";
+    ss << "order_id=" << orderId << " AND context=-1";
     Row_ABC* result = paramTable_.Find( ss.str() );
     while( result )
     {
@@ -274,7 +276,7 @@ void OrderDispatcher::CleanOrderContext( ASN1T_OrderContext& asn )
 unsigned int OrderDispatcher::GetLimaCount( unsigned long orderId )
 {
     std::stringstream ss;
-    ss << "order_id=" << orderId << " AND context=true AND name='lima'";
+    ss << "order_id=" << orderId << " AND context=-1 AND name='lima'";
     Row_ABC* result = paramTable_.Find( ss.str() );
     unsigned int count = 0;
     while( result != 0 )

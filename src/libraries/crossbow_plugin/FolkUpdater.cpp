@@ -9,8 +9,10 @@
 
 #include "crossbow_plugin_pch.h"
 #include "FolkUpdater.h"
+#include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
+#include "ScopeEditor.h"
 
 using namespace crossbow;
 
@@ -18,8 +20,9 @@ using namespace crossbow;
 // Name: FolkUpdater constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-FolkUpdater::FolkUpdater()
-    : updated_( 0 )
+FolkUpdater::FolkUpdater( Database_ABC& database )
+    : database_ ( database )
+    , updated_( 0 )
 {
     // NOTHING
 }
@@ -31,6 +34,24 @@ FolkUpdater::FolkUpdater()
 FolkUpdater::~FolkUpdater()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkUpdater::Lock
+// Created: JCR 2008-01-11
+// -----------------------------------------------------------------------------
+void FolkUpdater::Lock()
+{
+    database_.Lock();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: FolkUpdater::Unlock
+// Created: JCR 2008-01-11
+// -----------------------------------------------------------------------------
+void FolkUpdater::UnLock()
+{
+    database_.UnLock();
 }
 
 namespace
@@ -56,6 +77,45 @@ void FolkUpdater::Update( const ASN1T_MsgFolkCreation& msg )
     edges_.resize( msg.edge_number );
 }
 
+namespace 
+{
+    class LockedScopeEditor
+    {
+    public: 
+        explicit LockedScopeEditor( Database_ABC& database ) 
+            : database_ ( database )
+        {
+            database_.Lock();
+        }
+        ~LockedScopeEditor()
+        {
+            database_.UnLock();
+        }
+    private:
+        Database_ABC& database_;
+    };
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Update
+// Created: SBO 2007-09-27
+// -----------------------------------------------------------------------------
+void FolkUpdater::Update( const ASN1T_MsgFolkGraphUpdate& msg )
+{    
+    Update( database_.OpenTable( "Population", false ), msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Drop
+// Created: JCR 2007-11-21
+// -----------------------------------------------------------------------------
+void FolkUpdater::Drop()
+{
+    // LockedScopeEditor   lock( database_ );    
+    database_.ReleaseTable( "Population" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: FolkUpdater::Update
 // Created: SBO 2007-09-19
@@ -63,11 +123,9 @@ void FolkUpdater::Update( const ASN1T_MsgFolkCreation& msg )
 void FolkUpdater::Update( Table_ABC& table, const ASN1T_MsgFolkGraphUpdate& msg )
 {
     if( edges_.size() == 0 )
-        throw std::runtime_error( "Trying to update population graph before its creation." );
-    table.BeginTransaction();
+        throw std::runtime_error( "Trying to update population graph before its creation." );    
     for( unsigned int i = 0; i < msg.n; ++i )
         Update( table, msg.elem[i] );
-    table.EndTransaction();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +148,11 @@ void FolkUpdater::Update( Table_ABC& table, const ASN1T_MsgFolkGraphEdgeUpdate& 
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
 void FolkUpdater::Commit( Table_ABC& table )
-{
+{    
+    LockedScopeEditor   lock( database_ );
+    ScopeEditor         editor( database_ );
+    
+    table.BeginTransaction();
     Row_ABC* row = table.Find( "" );
     for( CIT_Edges it = edges_.begin(); it != edges_.end() && row; ++it )
     {
@@ -98,6 +160,7 @@ void FolkUpdater::Commit( Table_ABC& table )
         table.UpdateRow( *row );
         row = table.GetNextRow();
     }
+    table.EndTransaction();
 }
 
 // -----------------------------------------------------------------------------

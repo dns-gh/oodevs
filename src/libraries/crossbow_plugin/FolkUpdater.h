@@ -16,6 +16,7 @@ namespace crossbow
 {    
     class Table_ABC;
     class Row_ABC;
+    class Database_ABC;
 
 // =============================================================================
 /** @class  FolkUpdater
@@ -28,14 +29,21 @@ class FolkUpdater
 public:
     //! @name Constructors/Destructor
     //@{
-             FolkUpdater();
+    explicit FolkUpdater( Database_ABC& database );
     virtual ~FolkUpdater();
+    //@}
+
+    //! @name 
+    //@{
+    void Lock();
+    void UnLock();
     //@}
 
     //! @name Operations
     //@{
     void Update( const ASN1T_MsgFolkCreation& msg );
-    void Update( Table_ABC& table, const ASN1T_MsgFolkGraphUpdate& msg );
+    void Update( const ASN1T_MsgFolkGraphUpdate& msg );    
+    void Drop();
     //@}
 
 private:
@@ -62,6 +70,7 @@ private:
     //@{
     void Commit( Table_ABC& table );
     void CommitEdge( Row_ABC& row, const Edge& edge );
+    void Update( Table_ABC& table, const ASN1T_MsgFolkGraphUpdate& msg );
     void Update( Table_ABC& table, const ASN1T_MsgFolkGraphEdgeUpdate& msg );
     void Update( Edge& edge, const ASN1T_MsgFolkGraphEdgeUpdate& msg ) const;
     //@}
@@ -73,6 +82,11 @@ private:
     std::vector< std::string > profiles_;
     T_Edges edges_;
     unsigned long updated_;
+    //@}
+
+    //! @name Folk Database
+    //@{
+    Database_ABC&                database_;
     //@}
 };
 

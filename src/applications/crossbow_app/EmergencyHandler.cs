@@ -34,22 +34,44 @@ namespace Crossbow
 
         public void ActivateItem(string name, object value)
         {
-            string tableName = Tools.GetCSwordExtension().Config.LayersConfiguration.TacticalObjectPoint;
-            IFeatureWorkspace workspace = Tools.OpenWorkspace(tableName);
-            IFeatureClass featureClass = workspace.OpenFeatureClass(tableName);
-            IFeature feature = featureClass.CreateFeature();
-            Tools.SetValue<string>(feature, "Symbol_ID", "GFMPOEIF------X");
-            Tools.SetValue<string>(feature, "Info", name);
-            IZAware aware = feature.Shape as IZAware;
-            aware.ZAware = true;
-            IPoint point = Tools.MakePoint(m_contextMenuX, m_contextMenuY);
-            IPoint shape = (IPoint)feature.Shape;
-            shape.PutCoords(point.X, point.Y);
-            shape.Z = point.Z;
-            shape.SpatialReference = point.SpatialReference;
-            IZAware aware = (IZAware)shape;
-            aware.ZAware = true;
-            feature.Store();
+            IFeatureWorkspace workspace = (IFeatureWorkspace)Tools.OpenWorkspace(Tools.GetCSwordExtension().Config.SharedFile);
+            ScopeLockEditor locker = new ScopeLockEditor(workspace);
+            
+            locker.Lock();
+            try
+            {
+                string tableName = Tools.GetCSwordExtension().Config.LayersConfiguration.TacticalObjectPoint;
+                IFeatureClass featureClass = workspace.OpenFeatureClass(tableName);
+                IFeatureBuffer feature = featureClass.CreateFeatureBuffer();                
+                // IFeature feature = featureClass.CreateFeature();
+
+                Tools.SetValue<string>(feature, "Symbol_ID", "GFMPOEIF------X");
+                Tools.SetValue<string>(feature, "Info", name);
+                feature.Shape = CreatePosition(m_contextMenuX, m_contextMenuY);
+
+                IFeatureCursor featureCursor = featureClass.Insert(true);
+                featureCursor.InsertFeature(feature);
+                featureCursor.Flush();
+                // feature.Store();
+                //Release the Cursor
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(featureCursor);
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(featureClass);
+            }
+            catch (System.Exception e)
+            {
+                locker.Abord();
+                System.Diagnostics.Trace.WriteLine(e.Message);
+            } 
+            locker.Unlock();
+        }
+
+        private IGeometry CreatePosition(int x, int y)
+        {
+            IPoint point = Tools.MakePoint(m_contextMenuX, m_contextMenuY);            
+            IZAware zaware = point as IZAware;
+            zaware.ZAware = true;
+            point.Z = 0;
+            return point;
         }
 
         public string GetCurrentMessage()

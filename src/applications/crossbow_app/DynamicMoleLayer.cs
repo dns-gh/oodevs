@@ -43,7 +43,7 @@ namespace Crossbow
         {
             m_symbolFactory = symbolFactory;
             m_selectionColor = Tools.MakeColor(255, 0, 0);
-            SetupTimer(2000); // 2s
+            SetupTimer(500); // 2s
         }
 
         ~DynamicMoleLayer()

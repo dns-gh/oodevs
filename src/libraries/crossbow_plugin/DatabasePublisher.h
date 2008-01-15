@@ -31,6 +31,7 @@ namespace crossbow
     class Database_ABC;
     class ReportFactory;
     class DatabaseUpdater;
+    class FolkUpdater;
     class Listener_ABC;
 
 // =============================================================================
@@ -60,9 +61,17 @@ private:
     DatabasePublisher& operator=( const DatabasePublisher& ); //!< Assignement operator
     //@}
 
+    //! @name Database Initializer
+    //@{
+    void Initialize( const std::string& name, const dispatcher::Config& config );
+    //@}
+
     //! @name Helpers
     //@{
     bool IsRelevant( const ASN1T_MsgsSimToClient& asn ) const;
+    void UpdateOnTick( const ASN1T_MsgsSimToClient& asn );
+    void UpdateDatabase( const ASN1T_MsgsSimToClient& asn );
+    void UpdateFolkDatabase( const ASN1T_MsgsSimToClient& asn );
     void UpdateListeners();
     //@}
 
@@ -71,16 +80,20 @@ private:
     typedef boost::shared_ptr< Listener_ABC >  T_SharedListener;
     typedef std::list< T_SharedListener >      T_Listeners;
     typedef T_Listeners::const_iterator      CIT_Listeners;
+    
+    typedef boost::shared_ptr< Database_ABC >           T_SharedDatabase;
+    typedef std::map< std::string, T_SharedDatabase >   T_Databases;    
     //@}
 
 private:
     //! @name Member data
     //@{
     std::auto_ptr< Workspace_ABC >      workspace_;
-    std::auto_ptr< Database_ABC >       database_;                  
+    T_Databases                         databases_;
     std::auto_ptr< ReportFactory >      reportFactory_; // $$$$ SBO 2007-09-27: nothing to do here, maybe create a "PluginModel"
     std::auto_ptr< kernel::OrderTypes > orderTypes_;    // $$$$ SBO 2007-09-27: to put this stuff
     std::auto_ptr< DatabaseUpdater >    databaseUpdater_;
+    std::auto_ptr< FolkUpdater >        folkUpdater_;
     T_Listeners                         listeners_;
     bool                                modelLoaded_;
     //@}

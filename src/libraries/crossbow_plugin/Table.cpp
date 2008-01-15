@@ -69,8 +69,12 @@ crossbow::Row_ABC& crossbow::Table::CreateRow()
 // -----------------------------------------------------------------------------
 void crossbow::Table::DeleteRows( const std::string& query )
 {
-    IQueryFilterPtr filter( CLSID_QueryFilter );
-    filter->put_WhereClause( CComBSTR( query.c_str() ) );
+    IQueryFilterPtr filter;
+    if ( query != "" )
+    {
+        filter.CreateInstance( CLSID_QueryFilter );
+        filter->put_WhereClause( CComBSTR( query.c_str() ) );
+    }
     table_->DeleteSearchedRows( filter );
 }
 
@@ -80,7 +84,7 @@ void crossbow::Table::DeleteRows( const std::string& query )
 // -----------------------------------------------------------------------------
 void crossbow::Table::Clear()
 {
-    DeleteRows( "1" );
+    DeleteRows( "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,11 +104,19 @@ void crossbow::Table::UpdateRow( const Row_ABC& row )
 // -----------------------------------------------------------------------------
 crossbow::Row_ABC* crossbow::Table::Find( const std::string& query )
 {
-    IQueryFilterPtr filter( CLSID_QueryFilter );
-    filter->put_WhereClause( CComBSTR( query.c_str() ) );
-    HRESULT res = InTransaction() ? table_->Update( filter, false, &cursor_ ) : table_->Search( filter, false, &cursor_ );
+    IQueryFilterPtr filter;
+    
+    if ( query != "" )
+    {
+        filter.CreateInstance( CLSID_QueryFilter );
+        filter->put_WhereClause( CComBSTR( query.c_str() ) );
+    }
+    HRESULT res = InTransaction() ? table_->Update( filter, false, &cursor_ ) : table_->Search( filter, true, &cursor_ );    
     if( FAILED( res ) )
+    {
+        ThrowError();
         throw std::runtime_error( "Error executing query: " + query );
+    }
     return GetNextRow();
 }
 
@@ -115,7 +127,7 @@ crossbow::Row_ABC* crossbow::Table::Find( const std::string& query )
 crossbow::Row_ABC* crossbow::Table::GetNextRow()
 {
     IRowPtr row;
-    if( FAILED( cursor_->NextRow( &row ) ) || row == NULL )
+    if( cursor_ != NULL && ( FAILED( cursor_->NextRow( &row ) ) || row == NULL ) )
         return 0;
     row_->BindRow( row );
     return row_.get();

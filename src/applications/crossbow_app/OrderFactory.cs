@@ -27,6 +27,8 @@ namespace Crossbow
         {
             string entityName = Tools.GetValue<string>(selected, "Name");
             EntityModel model = null;
+            if (entityName == null)
+                return;
             if (m_model.UnitTypes.ContainsKey(entityName))
             {
                 string type = m_model.UnitTypes[entityName];

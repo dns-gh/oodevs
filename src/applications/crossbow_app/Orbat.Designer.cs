@@ -75,7 +75,7 @@ namespace Crossbow
             {
                 IFeatureSelection selection = (IFeatureSelection)m_featureLayer;
                 IQueryFilter filter = new QueryFilterClass();
-                filter.WhereClause = "Public_OID=" + node.Name;
+                filter.WhereClause = "Public_OID = " + node.Name;
                 selection.SelectFeatures(filter, esriSelectionResultEnum.esriSelectionResultNew, true);
                 // m_featureLayer.Search(filter, true);
             }
@@ -106,9 +106,16 @@ namespace Crossbow
             ICursor cursor = GetCursor(table);
             if (cursor == null)
                 return;
-            for (IRow row = cursor.NextRow(); row != null; row = cursor.NextRow())
+
+            IDataStatistics dataStatistics = new DataStatisticsClass();
+            dataStatistics.Field = "Symbol_ID";
+            dataStatistics.Cursor = cursor;
+
+            System.Collections.IEnumerator enumerator = dataStatistics.UniqueValues;
+            enumerator.Reset();
+            while (enumerator.MoveNext())
             {
-                string symbolID = Tools.GetValue<string>(row, "Symbol_ID");
+                string symbolID = enumerator.Current.ToString();
                 if (!m_symbolTree.ImageList.Images.ContainsKey(symbolID))
                 {
                     Image image = (Image)m_pSymbolFactory.GetSymbol(m_SimpleDisplay, symbolID, "", 32);
@@ -127,7 +134,7 @@ namespace Crossbow
         {
             ICursor pCursor;
             IQueryFilter pQueryFilter = new QueryFilterClass();
-            pQueryFilter.SubFields = "distinct (Symbol_ID)";
+            pQueryFilter.SubFields = "Symbol_ID";
             pCursor = pTable.Search(pQueryFilter, true);
             pQueryFilter = null;
             return pCursor;
@@ -170,8 +177,8 @@ namespace Crossbow
         private void RunAgentCursor(IFeatureClass pFeatureClass)
         {
             IQueryFilter pQueryFilter = new QueryFilterClass();
-            pQueryFilter.WhereClause = "Symbol_ID Like \"??????????A????\"";
-
+            // pQueryFilter.WhereClause = "Symbol_ID LIKE '__________A____'";
+            pQueryFilter.WhereClause = "Symbol_ID LIKE '??????????A????'";
             IFeatureCursor pCursor = pFeatureClass.Search(pQueryFilter, true);
             IFeature pFeature = pCursor.NextFeature();
             while (pFeature != null)

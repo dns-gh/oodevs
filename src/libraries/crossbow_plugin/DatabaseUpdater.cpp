@@ -13,7 +13,7 @@
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
-#include "FolkUpdater.h"
+#include "ScopeEditor.h"
 #include "ReportFactory.h"
 #include "Line.h"
 #include "Point.h"
@@ -37,7 +37,6 @@ DatabaseUpdater::DatabaseUpdater( Database_ABC& database, const dispatcher::Mode
     : database_     ( database )
     , model_        ( model )
     , reportFactory_( reportFactory )
-    , folkUpdater_  ( new FolkUpdater() )
 {
     // NOTHING
 }
@@ -49,6 +48,24 @@ DatabaseUpdater::DatabaseUpdater( Database_ABC& database, const dispatcher::Mode
 DatabaseUpdater::~DatabaseUpdater()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Lock
+// Created: JCR 2008-01-11
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::Lock()
+{
+    database_.Lock();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Unlock
+// Created: JCR 2008-01-11
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::UnLock()
+{
+    database_.UnLock();
 }
 
 namespace
@@ -75,7 +92,8 @@ namespace
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgUnitCreation& msg )
 {
-    Table_ABC& table = database_.OpenTable( "UnitForces" );
+    ScopeEditor editor( database_ );
+    Table_ABC&  table = database_.OpenTable( "UnitForces" );
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
     row.SetField( "Parent_OID", FieldVariant( msg.oid_automate ) );
@@ -91,7 +109,8 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitCreation& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeCreation& msg )
 {
-    Table_ABC& table = database_.OpenTable( "KnowledgeUnits" );
+    ScopeEditor editor( database_ );
+    Table_ABC& table = database_.OpenTable( "KnowledgeUnits" );    
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID"  , FieldVariant( msg.oid ) );
     row.SetField( "Group_OID"   , FieldVariant( msg.oid_groupe_possesseur ) );
@@ -110,6 +129,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeCreation& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgLimitCreation& msg )
 {
+    ScopeEditor editor( database_ );
     Table_ABC& table = database_.OpenTable( "BoundaryLimits" );
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
@@ -125,7 +145,8 @@ void DatabaseUpdater::Update( const ASN1T_MsgLimitCreation& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgLimaCreation& msg )
 {
-    Table_ABC& table = database_.OpenTable( "TacticalLines" );
+    ScopeEditor editor( database_ );
+    Table_ABC& table = database_.OpenTable( "TacticalLines" );    
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
     row.SetField( "Name"      , FieldVariant( std::string( msg.tactical_line.name ) ) );
@@ -146,20 +167,6 @@ namespace
         }
         return className;
     }
-
-    struct ScopeEditor
-    {
-        explicit ScopeEditor( crossbow::Database_ABC& database ) 
-            : database_ ( database )
-        {
-            database_.StartEdit();
-        }
-        ~ScopeEditor()
-        {
-            database_.StopEdit();
-        }
-        crossbow::Database_ABC& database_;
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -232,18 +239,50 @@ void DatabaseUpdater::Update( const ASN1T_MsgAutomatCreation& asn )
     table.UpdateRow( row );
 }
 
+namespace 
+{
+    class ScopeTransaction
+    {
+    public:
+        explicit ScopeTransaction( Table_ABC& table ) 
+            : table_ ( table ) 
+        {
+            table_.BeginTransaction();
+        }
+        ~ScopeTransaction()
+        {
+            table_.EndTransaction();
+        }
+    
+    private:
+        Table_ABC& table_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: DatabaseUpdater::Update
+/* Update and insert cursors are bulk data loading and data update API's 
+   de-signed for performing direct updates and inserts, outside of an edit 
+   session, on simple data, during the data loading phase of a project. 
+   Avoid using these API's in editing applications. Using these API's within an 
+   edit session or on complex objects (objects with non-simple row or feature 
+   behavior or on objects participating in composite relationships or 
+   relationships with notifica-tion) negates any performance advantages they 
+   may have
+
+   http://edndoc.esri.com/arcobjects/8.3/ComponentHelp/esriCore/IWorkspaceEdit.htm
+*/
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgUnitAttributes& msg )
-{
-    ScopeEditor editor( database_ );
-    Table_ABC& table = database_.OpenTable( "UnitForces" );
+{    
+    Table_ABC& table = database_.OpenTable( "UnitForces" );    
     std::stringstream query;
     query << "Public_OID=" << msg.oid;
+    ScopeTransaction transaction( table );
     if( Row_ABC* row = table.Find( query.str() ) )
     {
+        ScopeEditor editor( database_ );
         if( msg.m.vitessePresent )
             row->SetField( "Speed", FieldVariant( msg.vitesse ) );
         if( msg.m.etat_operationnelPresent )
@@ -251,7 +290,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitAttributes& msg )
         if( msg.m.positionPresent )
             row->SetShape( Point( msg.position ) );
         table.UpdateRow( *row );
-    }
+    }    
 }
 
 // -----------------------------------------------------------------------------
@@ -259,13 +298,14 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitAttributes& msg )
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeUpdate& msg )
-{
-    ScopeEditor editor( database_ );
+{    
     Table_ABC& table = database_.OpenTable( "KnowledgeUnits" );
     std::stringstream query;
     query << "Public_OID=" << msg.oid;
+    ScopeTransaction transaction( table );
     if( Row_ABC* row = table.Find( query.str() ) )
     {
+        ScopeEditor editor( database_ );        
         if( msg.m.speedPresent )
             row->SetField( "Speed", FieldVariant( msg.speed ) );
         if( msg.m.identification_levelPresent )
@@ -275,7 +315,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeUpdate& msg )
         if( msg.m.positionPresent )
             row->SetShape( Point( msg.position ) );
         table.UpdateRow( *row );
-    }
+    }    
 }
 
 // -----------------------------------------------------------------------------
@@ -316,33 +356,4 @@ void DatabaseUpdater::DestroyObject( const ASN1T_MsgObjectDestruction& msg )
     database_.OpenTable( "TacticalObjectPoint" ).DeleteRows( ss.str() );
     database_.OpenTable( "TacticalObjectLine" ) .DeleteRows( ss.str() );
     database_.OpenTable( "TacticalObjectArea" ) .DeleteRows( ss.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DatabaseUpdater::Update
-// Created: SBO 2007-09-27
-// -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgFolkCreation& msg )
-{
-    ScopeEditor editor( database_ );
-    folkUpdater_->Update( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DatabaseUpdater::Drop
-// Created: JCR 2007-11-21
-// -----------------------------------------------------------------------------
-void DatabaseUpdater::Drop()
-{
-    database_.ReleaseTable( "Population" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DatabaseUpdater::Update
-// Created: SBO 2007-09-27
-// -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgFolkGraphUpdate& msg )
-{
-    ScopeEditor editor( database_ );
-    folkUpdater_->Update( database_.OpenTable( "Population", false ), msg );
 }

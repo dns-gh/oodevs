@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using ESRI.ArcGIS.Catalog;
 using ESRI.ArcGIS.CatalogUI;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.DataSourcesGDB;
+using System.Xml;
 
 namespace Crossbow
 {
@@ -30,29 +32,38 @@ namespace Crossbow
         {
             exerciseFileText.Text = exerciseFileDialog.FileName;
             m_workspace.ExerciseFile = exerciseFileDialog.FileName;
+            
+            string rootDir = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "\\sessions";
+            foreach (string dir in System.IO.Directory.GetDirectories(rootDir) )
+            {
+                int index = dir.LastIndexOf('\\');
+                if ( index < dir.Length )
+                    sessionList.Items.Add(dir.Substring(index + 1, dir.Length - index - 1));
+            }
         }
 
-        private void databaseButton_Click(object sender, EventArgs e)
+        private void sessionList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GxDialog openDialog = new GxDialog();
-            openDialog.Title = "Open dataset";
-            openDialog.ObjectFilter = new GxFilterPersonalGeodatabases();
-            IEnumGxObject selection;
-            if (openDialog.DoModalOpen(Handle.ToInt32(), out selection))
+            string item = (string)sessionList.SelectedItem;
+            string sessionDir = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/sessions/" + item;
+            XmlDocument doc = new XmlDocument();
+            doc.Load(sessionDir + "/session.xml");
+            string workspace = doc.SelectSingleNode("/session/config/dispatcher/plugins/plugin[@name='crossbow']/parameter[@name=\"geodatabase\"]/@value").Value;
+            LookupLayer( System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/" + workspace );
+            string shared = doc.SelectSingleNode("/session/config/dispatcher/plugins/plugin[@name='crossbow']/parameter[@name=\"geodatabase-shared\"]/@value").Value;
+            m_workspace.SharedFile = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/" + shared;
+        }
+
+        private void LookupLayer(string file)
+        {
+            m_workspace.WorkspaceFile = file;
+            IWorkspaceFactory factory = new AccessWorkspaceFactoryClass();
+            IWorkspace workspace = factory.OpenFromFile(file, 0);
+            if (workspace != null)
             {
-                IGxObject element;
-                while ((element = selection.Next()) != null)
-                {
-                    databaseText.Text = element.FullName;
-                    m_workspace.WorkspaceFile = element.FullName;
-                    IGxDatabase database = element as IGxDatabase;
-                    if (database != null)
-                    {
-                        layersGrid.SelectedObject = null;
-                        FeatureLayerList.SetValues( database.Workspace.get_DatasetNames(esriDatasetType.esriDTFeatureClass) );
-                        layersGrid.SelectedObject = m_workspace.LayersConfiguration;
-                    }
-                }
+                layersGrid.SelectedObject = null;
+                FeatureLayerList.SetValues(workspace.get_DatasetNames(esriDatasetType.esriDTFeatureClass));
+                layersGrid.SelectedObject = m_workspace.LayersConfiguration;
             }
         }
 

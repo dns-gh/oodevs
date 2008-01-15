@@ -15,6 +15,7 @@
 #include "Line.h"
 #include "Point.h"
 #include "dispatcher/Network_Def.h"
+#include "ScopeEditor.h"
 
 using namespace crossbow;
 
@@ -24,7 +25,8 @@ using namespace crossbow;
 // -----------------------------------------------------------------------------
 ObjectListener::ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher )
     : publisher_( publisher )
-    , table_    ( database.OpenTable( "TacticalObjectPoint" ) )
+    , table_    ( database.OpenTable( "TacticalObjectPoint", false ) )
+    , database_  ( database )
 {
     // NOTHING
 }
@@ -44,15 +46,20 @@ ObjectListener::~ObjectListener()
 // -----------------------------------------------------------------------------
 void ObjectListener::Listen()
 {
-    static const std::string query = "`Info`<>\"\"";
-
+    static const std::string query = "Info <> ''";
+    
     Row_ABC* row = table_.Find( query );
+    bool bHasUpdates = row != 0;
     while( row )
     {
         SendCreation( *row );
         row = table_.GetNextRow();
     }
-    table_.DeleteRows( query );
+    if ( bHasUpdates )
+    {
+        ScopeEditor editor( database_ );
+        table_.DeleteRows( query );
+    }
 }
 
 namespace

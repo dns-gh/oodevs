@@ -69,6 +69,7 @@ private:
     dispatcher::SimulationPublisher_ABC& publisher_;
     std::auto_ptr< OrderDispatcher >     dispatcher_;
     Table_ABC&                           table_;
+    Database_ABC&                        database_;
     //@}
 };
 

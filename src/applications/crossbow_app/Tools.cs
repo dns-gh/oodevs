@@ -2,6 +2,7 @@ using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
@@ -154,13 +155,44 @@ namespace Crossbow
             return null;
         }
 
-        public static IFeatureWorkspace OpenWorkspace(string name)
+        public static IFeatureWorkspace GetWorkspace(string name)
         {
             return RetrieveWorkspace(Tools.GetFeatureLayerByName(name));            
+        }
+
+        ///<summary>
+        /// Open a valid workspace according to the database's extension
+        ///</summary>
+        ///<param name="file">Name of the workspace</param>
+        public static IWorkspace OpenWorkspace(string file)
+        {
+            IWorkspaceFactory factory = null;
+            string ext = file.Substring(file.LastIndexOf('.') + 1, 3);
+            if (ext == "mdb")
+                factory = new AccessWorkspaceFactoryClass();
+            if (ext == "gdb")
+                factory = new FileGDBWorkspaceFactoryClass();
+            if (factory != null)
+                return factory.OpenFromFile(file, 0);
+            return null;
         }
         #endregion
 
         #region "Data manipulation"
+        public static void SetValue<T>(IRowBuffer row, string field, T value)
+        {
+            try
+            {
+                int id = row.Fields.FindField(field);
+                if (id >= 0 && row.Fields.get_Field(id).Editable)
+                    row.set_Value(id, value);
+            }
+            catch (System.Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine(e.Message);
+            }
+        }
+
         public static void SetValue<T>(IRow row, string field, T value)
         {
             try
@@ -175,6 +207,13 @@ namespace Crossbow
             }
         }
 
+        /// <summary>
+        ///  Retrieve value from a specific data field
+        /// </summary>
+        /// <typeparam name="T">Value type</typeparam>
+        /// <param name="row">row</param>
+        /// <param name="field">field name</param>
+        /// <returns>Value of the field</returns>
         public static T GetValue<T>(IRow row, string field)
         {
             int id = row.Fields.FindField(field);
@@ -183,15 +222,25 @@ namespace Crossbow
             return default(T);
         }
 
+        /// <summary>
+        ///  Store geometry into table. Create a new feature and store input geometry
+        /// </summary>
+        /// <param name="table">Name of the output table</param>
+        /// <param name="value">Input geometry</param>
+        /// <remarks>Input geometry should be zAwared according to the table</remarks>
         public static void Store(string table, IGeometry value)
         {
             try
             {
-                IFeatureWorkspace ws = OpenWorkspace(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
-                IFeatureClass features = ws.OpenFeatureClass(table);
-                IFeature feature = features.CreateFeature();
+                IFeatureWorkspace ws = (IFeatureWorkspace)OpenWorkspace(Tools.GetCSwordExtension().Config.SharedFile);
+                ScopeLockEditor locker = new ScopeLockEditor(ws);
+
+                locker.Lock();
+                IFeatureClass features = ws.OpenFeatureClass(table);                                
+                IFeature feature = features.CreateFeature();         
                 feature.Shape = value;
                 feature.Store();
+                locker.Unlock();
             }
             catch (System.Exception e)
             {
@@ -199,18 +248,22 @@ namespace Crossbow
             }
         }
 
+        /// <summary>
+        ///  Remove all features of the specified feature class
+        /// </summary>
+        /// <param name="workspace">Workspace</param>
+        /// <param name="name">Feature class</param>
         public static void ClearClass(string workspace, string name)
         {
             try
             {
-                IFeatureWorkspace ws = OpenWorkspace(workspace);
+                IFeatureWorkspace ws = (IFeatureWorkspace)OpenWorkspace(workspace);
                 if (ws == null)
                     return;
                 ITable table = (ITable)ws.OpenFeatureClass(name);
                 if (table != null)
                 {
-                    IQueryFilter filter = new QueryFilterClass();
-                    filter.WhereClause = "1";
+                    IQueryFilter filter = null;
                     table.DeleteSearchedRows(filter);
                 }
             }
@@ -235,17 +288,7 @@ namespace Crossbow
         #region "Geometry tools"
         static public IPoint MakePoint(int x, int y)
         {
-            return MakePoint(x, y, 0);
-        }
-        static public IPoint MakePoint(int x, int y, int z)
-        {
             IPoint point = GetDocument().Display.DisplayTransformation.ToMapPoint(x, y);
-            IZAware aware = point as IZAware;
-            if (aware != null)
-            {
-                aware.ZAware = true;
-                point.Z = z;
-            }
             point.Project(GetDocument().Display.DisplayTransformation.SpatialReference);
             return point;
         }

@@ -13,6 +13,7 @@
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
+#include "ScopeEditor.h"
 
 using namespace dispatcher;
 using namespace crossbow;
@@ -25,6 +26,7 @@ OrderListener::OrderListener( Database_ABC& database, const dispatcher::Model& m
     : publisher_ ( publisher )
     , dispatcher_( new OrderDispatcher( database, types, model ) )
     , table_     ( database.OpenTable( "Orders" ) )
+    , database_  ( database )
 {
     // NOTHING
 }
@@ -43,13 +45,16 @@ OrderListener::~OrderListener()
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
 void OrderListener::Listen()
-{
-    Row_ABC* row = table_.Find( "processed=false" );
-    while( row != 0 )
+{    
+    Row_ABC* row = table_.Find( "processed=0" );
+    if ( row != 0 )
     {
-        dispatcher_->Dispatch( publisher_, *row );
-        MarkProcessed( *row );
-        row = table_.GetNextRow();
+        while( row != 0 )
+        {
+            dispatcher_->Dispatch( publisher_, *row );
+            MarkProcessed( *row );
+            row = table_.GetNextRow();
+        }
     }
 }
 
@@ -58,7 +63,7 @@ void OrderListener::Listen()
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
 void OrderListener::MarkProcessed( Row_ABC& row ) const
-{
-    row.SetField( "processed", FieldVariant( true ) );
+{    
+    row.SetField( "processed", FieldVariant( -1 ) );    
     table_.UpdateRow( row );
 }

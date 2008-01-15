@@ -21,8 +21,7 @@ namespace crossbow
 {
     class Database_ABC;
     class ReportFactory;
-    class FolkUpdater;
-
+    
 // =============================================================================
 /** @class  DatabaseUpdater
     @brief  DatabaseUpdater
@@ -36,6 +35,12 @@ public:
     //@{
              DatabaseUpdater( Database_ABC& database, const dispatcher::Model& model, const ReportFactory& reportFactory );
     virtual ~DatabaseUpdater();
+    //@}
+
+    //! @name 
+    //@{
+    void Lock();
+    void UnLock();
     //@}
 
     //! @name Operators
@@ -55,14 +60,6 @@ public:
     void DestroyUnit( const ASN1T_MsgUnitDestruction& msg );
     void Update( const ASN1T_MsgUnitKnowledgeDestruction& msg );
     void DestroyObject( const ASN1T_MsgObjectDestruction& msg ); // $$$$ SBO 2007-09-27: typedef bullshit
-
-    void Update( const ASN1T_MsgFolkCreation& msg );
-    void Update( const ASN1T_MsgFolkGraphUpdate& msg );
-    //@}
-
-    //! @name 
-    //@{
-    void Drop();
     //@}
 
 private:
@@ -77,8 +74,7 @@ private:
     //@{
     Database_ABC&                database_;
     const dispatcher::Model&     model_;
-    const ReportFactory&         reportFactory_;
-    std::auto_ptr< FolkUpdater > folkUpdater_;
+    const ReportFactory&         reportFactory_;    
     //@}
 };
 

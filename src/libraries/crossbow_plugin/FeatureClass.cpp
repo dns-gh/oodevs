@@ -88,7 +88,8 @@ void crossbow::FeatureClass::UpdateRow( const Row_ABC& row )
 {
     if( &row != feature_.get() )
         return;
-    feature_->Commit( InTransaction() ? cursor_ : NULL );
+    feature_->Commit( cursor_ != NULL ? cursor_ : NULL );
+    // feature_->Commit( InTransaction() ? cursor_ : NULL );
 }
 
 namespace
@@ -119,7 +120,7 @@ crossbow::Row_ABC* crossbow::FeatureClass::Find( const std::string& query )
     {
         filter.CreateInstance( CLSID_QueryFilter );
         filter->put_WhereClause( CComBSTR( query.c_str() ) );
-    }
+    }    
     HRESULT res = InTransaction() ? featureClass_->Update( filter, true, &cursor_ ) : featureClass_->Search( filter, true, &cursor_ );
     if( FAILED( res ) )
     {

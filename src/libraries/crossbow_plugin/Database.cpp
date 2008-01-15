@@ -16,15 +16,30 @@
 
 using namespace crossbow;
 
+namespace 
+{
+    IWorkspaceFactoryPtr GetWorkspaceFactory( const std::string& geodatabase )
+    {
+        IWorkspaceFactoryPtr spWorkspaceFactory;
+
+        std::string extension( geodatabase, geodatabase.rfind( '.' ) + 1 );
+        if ( extension == "mdb" )
+            spWorkspaceFactory.CreateInstance( CLSID_AccessWorkspaceFactory );
+        if ( extension == "gdb" )
+            spWorkspaceFactory.CreateInstance( CLSID_FileGDBWorkspaceFactory );
+        return spWorkspaceFactory;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Database constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-Database::Database( const dispatcher::Config& config )
+Database::Database( const dispatcher::Config& config, const std::string& name )
 {
-    const std::string geodatabase = config.BuildSessionChildFile( config.GetPluginConfig( "crossbow" ).GetParameter( "geodatabase" ) );
+    const std::string geodatabase = config.BuildExerciseChildFile( config.GetPluginConfig( "crossbow" ).GetParameter( name ) );
 
-    IWorkspaceFactoryPtr spWorkspaceFactory( CLSID_AccessWorkspaceFactory );
+    IWorkspaceFactoryPtr spWorkspaceFactory = GetWorkspaceFactory( geodatabase );
     if( spWorkspaceFactory == NULL )
         throw std::runtime_error( "Unable to create Access workspace factory." );
     IWorkspacePtr workspace;
@@ -73,8 +88,17 @@ void Database::Lock()
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
 void Database::UnLock()
-{    
-    workspaceEdit_->StopEditing( VARIANT_TRUE );
+{
+    try
+    {
+        VARIANT_BOOL editing;
+        if( SUCCEEDED( workspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_TRUE )
+            workspaceEdit_->StopEditing( VARIANT_TRUE );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_INFO_MSG( e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

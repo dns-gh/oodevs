@@ -34,10 +34,8 @@ namespace Crossbow
             this.label1 = new System.Windows.Forms.Label();
             this.exerciseFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.sessionList = new System.Windows.Forms.ListBox();
             this.layersGrid = new System.Windows.Forms.PropertyGrid();
-            this.databaseButton = new System.Windows.Forms.Button();
-            this.databaseText = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -98,60 +96,38 @@ namespace Crossbow
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.sessionList);
             this.groupBox2.Controls.Add(this.layersGrid);
-            this.groupBox2.Controls.Add(this.databaseButton);
-            this.groupBox2.Controls.Add(this.databaseText);
-            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Location = new System.Drawing.Point(15, 73);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(467, 311);
+            this.groupBox2.Size = new System.Drawing.Size(467, 320);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Layers";
+            this.groupBox2.Text = "Sessions";
+            // 
+            // sessionList
+            // 
+            this.sessionList.FormattingEnabled = true;
+            this.sessionList.Location = new System.Drawing.Point(19, 19);
+            this.sessionList.Name = "sessionList";
+            this.sessionList.Size = new System.Drawing.Size(427, 69);
+            this.sessionList.TabIndex = 4;
+            this.sessionList.SelectedIndexChanged += new System.EventHandler(this.sessionList_SelectedIndexChanged);
             // 
             // layersGrid
             // 
             this.layersGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.layersGrid.Location = new System.Drawing.Point(19, 46);
+            this.layersGrid.Location = new System.Drawing.Point(19, 94);
             this.layersGrid.Name = "layersGrid";
-            this.layersGrid.Size = new System.Drawing.Size(427, 249);
+            this.layersGrid.Size = new System.Drawing.Size(427, 220);
             this.layersGrid.TabIndex = 3;
-            // 
-            // databaseButton
-            // 
-            this.databaseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.databaseButton.Location = new System.Drawing.Point(371, 20);
-            this.databaseButton.Name = "databaseButton";
-            this.databaseButton.Size = new System.Drawing.Size(75, 23);
-            this.databaseButton.TabIndex = 2;
-            this.databaseButton.Text = "Browse...";
-            this.databaseButton.UseVisualStyleBackColor = true;
-            this.databaseButton.Click += new System.EventHandler(this.databaseButton_Click);
-            // 
-            // databaseText
-            // 
-            this.databaseText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.databaseText.Location = new System.Drawing.Point(82, 20);
-            this.databaseText.Name = "databaseText";
-            this.databaseText.Size = new System.Drawing.Size(289, 20);
-            this.databaseText.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 20);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Database:";
             // 
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.okButton.Location = new System.Drawing.Point(328, 390);
+            this.okButton.Location = new System.Drawing.Point(328, 399);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(76, 24);
             this.okButton.TabIndex = 2;
@@ -163,7 +139,7 @@ namespace Crossbow
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(404, 390);
+            this.cancelButton.Location = new System.Drawing.Point(404, 399);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 24);
             this.cancelButton.TabIndex = 3;
@@ -177,7 +153,7 @@ namespace Crossbow
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(494, 424);
+            this.ClientSize = new System.Drawing.Size(494, 433);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.groupBox2);
@@ -188,7 +164,6 @@ namespace Crossbow
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -201,11 +176,9 @@ namespace Crossbow
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.OpenFileDialog exerciseFileDialog;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button databaseButton;
-        private System.Windows.Forms.TextBox databaseText;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.PropertyGrid layersGrid;
+        private System.Windows.Forms.ListBox sessionList;
     }
 }

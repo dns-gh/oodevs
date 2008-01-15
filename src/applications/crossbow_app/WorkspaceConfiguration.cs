@@ -45,6 +45,7 @@ namespace Crossbow
         private LayersConfiguration m_layers = new LayersConfiguration();
         private string m_exerciseFile;
         private string m_workspaceFile;
+        private string m_sharedFile;
 
         public event EventHandler ConfigurationLoaded;
 
@@ -84,6 +85,18 @@ namespace Crossbow
             set
             {
                 m_workspaceFile = value;
+            }
+        }
+
+        public string SharedFile
+        {
+            get
+            {
+                return m_sharedFile;
+            }
+            set
+            {
+                m_sharedFile = value;
             }
         }
 
