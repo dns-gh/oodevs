@@ -53,15 +53,12 @@ void Acceptor::DenyConnections()
 // -----------------------------------------------------------------------------
 void Acceptor::AllowConnections()
 {
-    if( ! accept_ )
-    {
-        accept_ = true;
-        boost::asio::ip::tcp::endpoint endpoint( boost::asio::ip::tcp::v4(), port_ );
-        acceptor_.open( endpoint.protocol() );
-        acceptor_.bind( endpoint );
-        acceptor_.listen( 0 );
-        Listen();
-    }
+    accept_ = true;
+    boost::asio::ip::tcp::endpoint endpoint( boost::asio::ip::tcp::v4(), port_ );
+    acceptor_.open( endpoint.protocol() );
+    acceptor_.bind( endpoint );
+    acceptor_.listen( 0 );
+    Listen();
 }
 
 // -----------------------------------------------------------------------------
