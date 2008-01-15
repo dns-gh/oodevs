@@ -22,7 +22,7 @@ StartReplay::StartReplay( QObject* parent, const tools::GeneralConfig& config, c
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
-    addArgument( "--record=\"" + session + "\"" );
+    AddSessionArgument ( session );
     const std::string port = "--port=" + boost::lexical_cast< std::string >( GameConfigPanel::DispatcherPort( number ) );
     addArgument( port.c_str() );
     Start();
