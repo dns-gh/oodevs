@@ -109,7 +109,6 @@ void ReplayPlugin::SendReplayInfo( ClientPublisher_ABC& client )
     model_.SendReplayInfo( client, loader_.GetTickNumber(), running_ ? EnumSimulationState::running : EnumSimulationState::paused, factor_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ReplayPlugin::OnReceive
 // Created: AGE 2007-08-24
