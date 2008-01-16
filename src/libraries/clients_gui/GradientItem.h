@@ -38,6 +38,7 @@ public:
     unsigned short GetPercentage() const;
     void SetPercentage( unsigned short percentage );
     virtual void draw( QPainter& painter );
+    virtual QPointArray areaPoints() const;
     //@}
 
 private:

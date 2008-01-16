@@ -33,14 +33,14 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
     , previousStrengthHs_( 1 )
 {
     {
-        QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Elevation colors" ), this );
+        QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tr( "Elevation colors" ), this );
         
-        new QLabel( tr( "Fit color gradient to viewport" ), box );
-        QCheckBox* check = new QCheckBox( box );
+        QHBox* hBox = new QHBox( box );
+        new QLabel( tr( "Fit color gradient to viewport" ), hBox );
+        QCheckBox* check = new QCheckBox( hBox );
         check->setChecked( true );
 
-	    new QLabel( tr( "Gradient: " ), box );
-    	gradient_ = new GradientWidget( box, preferences_, controllers );
+        gradient_ = new GradientWidget( new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), box ), preferences_, controllers );
 
         connect( check, SIGNAL( toggled( bool ) ), SLOT( OnEnableVariable( bool ) ) );
         connect( gradient_, SIGNAL( GradientChanged( const Gradient& ) ), SLOT( OnGradientChanged( const Gradient& ) ) );

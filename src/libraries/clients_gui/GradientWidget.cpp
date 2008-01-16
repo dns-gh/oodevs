@@ -47,9 +47,11 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     removePreset->setFixedSize( 22, 22 );
 
     box = new QHBox( this );
-    box->setMaximumHeight( 30 );
+    box->layout()->setAlignment( Qt::AlignCenter );
+    box->setMaximumHeight( 50 );
     gradientEditor_ = new GradientButton( box );
     color_          = new ColorButton( box );
+    color_->setMaximumHeight( 30 );
 
     connect( gradientEditor_, SIGNAL( SelectionChanged( const QColor& ) ), SLOT( OnSelectionChanged( const QColor& ) ) );
     connect( gradientEditor_, SIGNAL( GradientChanged( const Gradient& ) ), SLOT( OnGradientEdited( const Gradient& ) ) );

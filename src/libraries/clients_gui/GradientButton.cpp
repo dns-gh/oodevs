@@ -29,7 +29,8 @@ namespace
         {
             setBackgroundColor( parent->backgroundColor() );
             resize( 140, 30 );
-            setUpdatePeriod( 50 );
+            retune( 140, 1 );
+//            setUpdatePeriod( 50 );
         }
         virtual ~GradientCanvas() {}
 
@@ -113,7 +114,7 @@ GradientButton::GradientButton( QWidget* parent )
 {
     setFrameStyle( QFrame::Raised | QFrame::Box );
     
-    setFixedHeight( 30 );
+    setFixedHeight( 50 );
     setHScrollBarMode( QScrollView::AlwaysOff );
     setVScrollBarMode( QScrollView::AlwaysOff );
     

@@ -144,7 +144,7 @@ Please check access permissions or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gradient: </source>
+        <source>Gradient map</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -158,7 +158,11 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Gradient: </source>
-        <translation>Gradient: </translation>
+        <translation type="obsolete">Gradient: </translation>
+    </message>
+    <message>
+        <source>Gradient map</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -84,7 +84,16 @@ void GradientItem::draw( QPainter& painter )
     else
         setPen( QColor( Qt::black ) );
     QCanvasLine::draw( painter );
-    painter.fillRect( startPoint().x() - 2, startPoint().y(), 5, 5, pen().color() );
+    painter.fillRect( startPoint().x() - 3, startPoint().y(), 7, 7, pen().color() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientItem::areaPoints
+// Created: SBO 2008-01-16
+// -----------------------------------------------------------------------------
+QPointArray GradientItem::areaPoints() const
+{
+    return QPointArray( QRect( startPoint().x(), startPoint().y(), 7, canvas()->rect().height() ) );
 }
 
 // -----------------------------------------------------------------------------
