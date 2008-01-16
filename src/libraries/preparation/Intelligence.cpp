@@ -28,12 +28,12 @@ using namespace kernel;
 // Name: Intelligence constructor
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( Controller& controller, IdManager& idManager, const std::string& symbol, const HierarchyLevel_ABC& level, bool embarked, const Karma& karma )
+Intelligence::Intelligence( Controller& controller, IdManager& idManager, const std::string& symbol, const HierarchyLevel_ABC& level, bool mounted, const Karma& karma )
     : EntityImplementation< Intelligence_ABC >( controller, idManager.GetNextId(), "" )
     , controller_( controller )
     , symbol_    ( symbol )
     , level_     ( &level )
-    , embarked_  ( embarked )
+    , mounted_   ( mounted )
     , karma_     ( &karma )
 {
     RegisterSelf( *this );
@@ -50,7 +50,7 @@ Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager
     , controller_( controller )
     , symbol_    ( attribute< std::string >( xis, "nature" ) )
     , level_     ( &levels.Get( attribute< std::string >( xis, "level" ).c_str() ) )
-    , embarked_  ( attribute< bool >( xis, "embarked" ) )
+    , mounted_   ( attribute< bool >( xis, "embarked" ) ) // $$$$ AGE 2008-01-16: odb : embarked => mounted
     , karma_     ( &Karma::ResolveId( attribute< std::string >( xis, "karma" ) ) )
 {
     RegisterSelf( *this );
@@ -133,12 +133,12 @@ const HierarchyLevel_ABC& Intelligence::GetLevel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Intelligence::IsEmbarked
+// Name: Intelligence::IsMounted
 // Created: SBO 2007-11-02
 // -----------------------------------------------------------------------------
-bool Intelligence::IsEmbarked() const
+bool Intelligence::IsMounted() const
 {
-    return embarked_;
+    return mounted_;
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ void Intelligence::SerializeIntelligences( xml::xostream& xos ) const
         << attribute( "name", GetName().ascii() )
         << attribute( "karma", karma_->GetId() )
         << attribute( "level", level_->GetName() )
-        << attribute( "embarked", embarked_ )
+        << attribute( "embarked", mounted_ ) // $$$$ AGE 2008-01-16: odb
         << attribute( "nature" , symbol_ );
 }
 
@@ -166,7 +166,7 @@ void Intelligence::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(      Entity_ABC*)this, tools::translate( "Intelligence", "Info/Name" ) , name_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Nature" ) , symbol_ );
-    dictionary.Register( *(      Entity_ABC*)this, tools::translate( "Intelligence", "Info/Embarked" ), embarked_ );
+    dictionary.Register( *(      Entity_ABC*)this, tools::translate( "Intelligence", "Info/Mounted" ), mounted_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Level" ), level_ );
     dictionary.Register( *(      Entity_ABC*)this, tools::translate( "Intelligence", "Info/Karma" ), karma_, *this, &Intelligence::SetKarma );
 }

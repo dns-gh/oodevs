@@ -211,15 +211,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Limas</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dangerous Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Intelligences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phase lines</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

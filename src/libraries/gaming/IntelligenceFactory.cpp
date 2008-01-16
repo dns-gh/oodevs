@@ -79,7 +79,7 @@ namespace
 // Name: IntelligenceFactory::Create
 // Created: SBO 2007-10-19
 // -----------------------------------------------------------------------------
-Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool embarked, const Karma& karma, const geometry::Point2f& position )
+Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool mounted, const Karma& karma, const geometry::Point2f& position )
 {
     static unsigned int counter = 0;
     ASN_MsgIntelligenceCreationRequest asn;
@@ -88,7 +88,7 @@ Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::
     asn().intelligence.nature = symbol.c_str();
     asn().intelligence.level = (ASN1T_EnumNatureLevel)level.GetId();
     asn().intelligence.diplomacy = ConvertToDiplomacy( karma );
-    asn().intelligence.embarked = embarked;
+    asn().intelligence.embarked = mounted;
     asn().intelligence.location = converter_.ConvertToMgrs( position ).c_str();
     asn().intelligence.formation = superior.GetId();
     asn.Send( publisher_ );

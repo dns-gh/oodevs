@@ -64,7 +64,7 @@ private:
     virtual const kernel::Karma& GetKarma() const;
     virtual std::string GetSymbol() const;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
-    virtual bool IsEmbarked() const;
+    virtual bool IsMounted() const;
     virtual void Delete();
     virtual void Rename( const QString& name );
     virtual void DoUpdate( const ASN1T_MsgIntelligenceUpdate& message );
@@ -78,7 +78,7 @@ private:
     std::string symbol_;
     const kernel::HierarchyLevel_ABC* level_;
     const kernel::Karma* karma_;
-    bool embarked_;
+    bool mounted_;
     Publisher_ABC& publisher_;
     //@}
 };

@@ -24,7 +24,7 @@ using namespace xml;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( Controller& controller, Publisher_ABC& publisher )
-    : TacticalLine_ABC( "Lima", 0, publisher )
+    : TacticalLine_ABC( "Phase line", 0, publisher )
     , controller_     ( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );

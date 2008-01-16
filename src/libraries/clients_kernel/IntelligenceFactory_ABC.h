@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual Intelligence_ABC* Create( Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool embarked, const Karma& karma, const geometry::Point2f& position ) = 0;
+    virtual Intelligence_ABC* Create( Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool mounted, const Karma& karma, const geometry::Point2f& position ) = 0;
     //@}
 };
 

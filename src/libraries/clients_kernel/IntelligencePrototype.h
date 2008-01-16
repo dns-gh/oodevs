@@ -30,7 +30,7 @@ class IntelligencePrototype
 public:
     //! @name Constructors/Destructor
     //@{
-             IntelligencePrototype( Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool embarked, const Karma& karma );
+             IntelligencePrototype( Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool mounted, const Karma& karma );
     virtual ~IntelligencePrototype();
     //@}
 
@@ -56,7 +56,7 @@ private:
           kernel::Entity_ABC& superior_;
     const std::string symbol_;
     const HierarchyLevel_ABC& level_;
-    const bool embarked_;
+    const bool mounted_;
     const Karma& karma_;
     //@}
 };

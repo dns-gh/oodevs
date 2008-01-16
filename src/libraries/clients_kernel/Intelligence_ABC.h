@@ -38,7 +38,7 @@ public:
     virtual std::string GetSymbol() const = 0;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const = 0;
     virtual const kernel::Karma& GetKarma() const = 0;
-    virtual bool IsEmbarked() const = 0;
+    virtual bool IsMounted() const = 0;
     //@}
 
     //! @name Operations

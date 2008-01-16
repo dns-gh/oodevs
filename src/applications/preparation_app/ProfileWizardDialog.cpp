@@ -63,7 +63,7 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, P
         creationMode_->insert( new QRadioButton( tr( "add new profiles to existing" ), creationMode_ ), 1 );
         creationMode_->setButton( 0 );
 
-        creationRight_ = new QHButtonGroup( tr( "Select creation rights: " ), box );
+        creationRight_ = new QHButtonGroup( tr( "Select creation permissions: " ), box );
         creationRight_->setRadioButtonExclusive( true );
         creationRight_->insert( new QRadioButton( tr( "writeable" ), creationRight_ ), 0 );
         creationRight_->insert( new QRadioButton( tr( "readonly" ) , creationRight_ ), 1 );

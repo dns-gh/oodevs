@@ -65,8 +65,8 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
         connect( karmaCombo_, SIGNAL( activated( int ) ), SLOT( UpdateSymbol() ) );
     }
     {
-        new QLabel( tr( "Is embarked fight: " ), group );
-        embarked_ = new QCheckBox( group );
+        new QLabel( tr( "Mounted combat: " ), group );
+        mounted_ = new QCheckBox( group );
     }
     {
         NatureSelectionWidget* nature = new NatureSelectionWidget( this, "symbols.xml" );
@@ -210,7 +210,7 @@ void IntelligencesPanel::DoDrag()
 {
     if( !selectedEntity_ )
         return;
-    intelligence_.reset( new IntelligencePrototype( *selectedEntity_.ConstCast(), symbol_, *levelCombo_->GetValue(), embarked_->isChecked(), Karma::ResolveName( karmaCombo_->currentText() ) ) );
+    intelligence_.reset( new IntelligencePrototype( *selectedEntity_.ConstCast(), symbol_, *levelCombo_->GetValue(), mounted_->isChecked(), Karma::ResolveName( karmaCombo_->currentText() ) ) );
     QDragObject* drag = new ValuedDragObject( intelligence_.get(), this );
     drag->drag();
 }

@@ -79,8 +79,8 @@ void TacticalLinesLayer::NotifyContextMenu( const kernel::Nothing&, kernel::Cont
 {
     if( CanCreateLine() )
     {
-        menu.InsertItem( "Creation", tools::translate( "LimitsLayer", "Create limit" ), this, SLOT( OnCreateLimit() ) );
-        menu.InsertItem( "Creation", tools::translate( "LimitsLayer", "Create lima"  ), this, SLOT( OnCreateLima() ) );
+        menu.InsertItem( "Creation", tools::translate( "LimitsLayer", "Create limit" ),       this, SLOT( OnCreateLimit() ) );
+        menu.InsertItem( "Creation", tools::translate( "LimitsLayer", "Create phase line"  ), this, SLOT( OnCreateLima() ) );
     }
 }
 

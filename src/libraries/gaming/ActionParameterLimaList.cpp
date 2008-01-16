@@ -33,7 +33,7 @@ ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& paramete
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < limas.n; ++i )
-        AddParameter( *new ActionParameterLima( OrderParameter( tools::translate( "ActionParameter", "Lima %1" ).arg( i ), "lima", true ), converter, limas.elem[i] ) );
+        AddParameter( *new ActionParameterLima( OrderParameter( tools::translate( "ActionParameter", "Phase line %1" ).arg( i ), "lima", true ), converter, limas.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -212,7 +212,7 @@
     </message>
     <message>
         <source>Limas</source>
-        <translation>Limas</translation>
+        <translation type="obsolete">Limas</translation>
     </message>
     <message>
         <source>Dangerous Direction</source>
@@ -221,6 +221,10 @@
     <message>
         <source>Intelligences</source>
         <translation>Renseignement</translation>
+    </message>
+    <message>
+        <source>Phase lines</source>
+        <translation>Limas</translation>
     </message>
 </context>
 <context>

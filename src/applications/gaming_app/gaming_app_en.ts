@@ -1516,11 +1516,11 @@
 <context>
     <name>ParamLimaList</name>
     <message>
-        <source>Lima %1</source>
+        <source>Add line as</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add line as</source>
+        <source>Phase line %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2200,10 +2200,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Access rights</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Supervisor actions:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2216,15 +2212,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rights</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Profile edition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Profile has changed, commit modifications?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access permissions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Permissions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

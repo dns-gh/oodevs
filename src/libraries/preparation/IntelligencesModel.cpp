@@ -54,9 +54,9 @@ void IntelligencesModel::Purge()
 // Name: IntelligencesModel::Create
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-Intelligence_ABC* IntelligencesModel::Create( kernel::Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool embarked, const Karma& karma, const geometry::Point2f& position )
+Intelligence_ABC* IntelligencesModel::Create( kernel::Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool mounted, const Karma& karma, const geometry::Point2f& position )
 {
-    std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, symbol, level, embarked, karma ) );
+    std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, symbol, level, mounted, karma ) );
     intelligence->Attach< kernel::Positions >( *new IntelligencePositions( converter_, position ) );
     intelligence->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controller_, *intelligence, &superior ) );
     intelligence->Polish();

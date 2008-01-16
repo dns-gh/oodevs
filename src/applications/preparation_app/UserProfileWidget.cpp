@@ -37,7 +37,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     }
     {
         QVBox* box = new QVBox( this );
-        QGroupBox* group = new QGroupBox( 2, Qt::Vertical, tr( "Access rights" ), box );
+        QGroupBox* group = new QGroupBox( 2, Qt::Vertical, tr( "Access permissions" ), box );
         group->setMargin( 5 );
         QHBox* holder = new QHBox( group );
         new QLabel( tr( "Supervisor actions:" ), holder );
@@ -49,7 +49,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
         UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( tabs, controllers, factory );
         tabs->addTab( populationRights, tr( "Populations" ) );
         populationRights_ = populationRights;
-        addTab( box, tr( "Rights" ) );
+        addTab( box, tr( "Permissions" ) );
         connect( supervisor_, SIGNAL( toggled( bool ) ), SLOT( OnSupervisorChanged( bool ) ) );
     }
     SetEnabled( false );

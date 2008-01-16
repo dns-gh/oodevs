@@ -117,7 +117,7 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
     if( element )
         model_.limits_.CreateLima( points, *const_cast< kernel::Entity_ABC* >( element ) );
 //    else
-//        throw std::exception( tr( "Cannot create a lima at the selected tactical level." ) );
+//        throw std::exception( tr( "Cannot create a phase line at the selected tactical level." ) );
 }
 
 // -----------------------------------------------------------------------------

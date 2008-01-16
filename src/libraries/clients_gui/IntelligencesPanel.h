@@ -98,7 +98,7 @@ private:
     QLabel* superiorLabel_;
     QString nature_;
     std::string symbol_;
-    QCheckBox* embarked_;
+    QCheckBox* mounted_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     std::auto_ptr< kernel::IntelligencePrototype > intelligence_;
     //@}

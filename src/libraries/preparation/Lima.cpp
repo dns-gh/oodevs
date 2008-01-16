@@ -22,7 +22,7 @@ using namespace xml;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( Controller& controller, IdManager& idManager )
-    : TacticalLine_ABC( controller, tools::translate( "Lima", "Lima" ), idManager )
+    : TacticalLine_ABC( controller, tools::translate( "Lima", "Phase line" ), idManager )
     , controller_     ( controller )
 {
     // NOTHING

@@ -70,7 +70,7 @@ ActionParameterIntelligence::ActionParameterIntelligence( const OrderParameter& 
     AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Nature" )   , "nature"   , false ), asn.nature ) );
     AddParameter( *new ActionParameterKarma    ( OrderParameter( tools::translate( "ActionParameter", "Karma" )    , "karma"    , false ), asn.diplomacy ) );
     AddParameter( *new ActionParameterLevel    ( OrderParameter( tools::translate( "ActionParameter", "Level" )    , "level"    , false ), asn.level, levels ) );
-    AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Embarked" ) , "bool"     , false ), asn.embarked ) );
+    AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Mounted" )  , "bool"     , false ), asn.embarked ) );
     AddParameter( *new ActionParameterFormation( OrderParameter( tools::translate( "ActionParameter", "Formation" ), "formation", false ), asn.formation, resolver ) );
     AddParameter( *new ActionParameterPoint    ( OrderParameter( tools::translate( "ActionParameter", "Point" )    , "point"    , false ), converter, MakePoint( converter, asn.location ) ) );
 }
@@ -166,7 +166,7 @@ void ActionParameterIntelligence::CommitToChildren()
     AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Nature" )   , "nature"   , false ), entity.GetSymbol() ) );
     AddParameter( *new ActionParameterKarma    ( OrderParameter( tools::translate( "ActionParameter", "Karma" )    , "karma"    , false ), entity.GetKarma(), *formation ) );
     AddParameter( *new ActionParameterLevel    ( OrderParameter( tools::translate( "ActionParameter", "Level" )    , "level"    , false ), entity.GetLevel() ) );
-    AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Embarked" ) , "bool"     , false ), entity.IsEmbarked() ) );
+    AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Mounted" )  , "bool"     , false ), entity.IsMounted() ) );
     AddParameter( *new ActionParameterFormation( OrderParameter( tools::translate( "ActionParameter", "Formation" ), "formation", false ), *formation ) );
     AddParameter( *new ActionParameterPoint    ( OrderParameter( tools::translate( "ActionParameter", "Point" )    , "point"    , false ), converter_, position ) );
 }

@@ -1107,7 +1107,7 @@
     </message>
     <message>
         <source>Intelligence</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignement</translation>
     </message>
 </context>
 <context>
@@ -1839,11 +1839,15 @@
     <name>ParamLimaList</name>
     <message>
         <source>Lima %1</source>
-        <translation>Lima %1</translation>
+        <translation type="obsolete">Lima %1</translation>
     </message>
     <message>
         <source>Add line as</source>
         <translation>Ajouter la lima en tant que</translation>
+    </message>
+    <message>
+        <source>Phase line %1</source>
+        <translation>Lima %1</translation>
     </message>
 </context>
 <context>
@@ -2644,7 +2648,7 @@
     </message>
     <message>
         <source>Access rights</source>
-        <translation>Droits d&apos;accès</translation>
+        <translation type="obsolete">Droits d&apos;accès</translation>
     </message>
     <message>
         <source>Supervisor actions:</source>
@@ -2660,7 +2664,7 @@
     </message>
     <message>
         <source>Rights</source>
-        <translation>Droits</translation>
+        <translation type="obsolete">Droits</translation>
     </message>
     <message>
         <source>Profile edition</source>
@@ -2669,6 +2673,14 @@
     <message>
         <source>Profile has changed, commit modifications?</source>
         <translation>Le profil a été modifié, appliquer les changements ?</translation>
+    </message>
+    <message>
+        <source>Access permissions</source>
+        <translation>Droits d&apos;accès</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translation>Droits</translation>
     </message>
 </context>
 <context>
@@ -2799,11 +2811,11 @@
     </message>
     <message>
         <source>Action</source>
-        <translation type="unfinished">Action</translation>
+        <translation>Action</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Valeur</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Mining:</source>

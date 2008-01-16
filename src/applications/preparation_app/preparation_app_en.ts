@@ -376,7 +376,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select creation rights: </source>
+        <source>Select creation permissions: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -492,7 +492,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Access rights</source>
+        <source>Access permissions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -508,7 +508,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rights</source>
+        <source>Permissions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

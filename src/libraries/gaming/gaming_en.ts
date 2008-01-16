@@ -52,10 +52,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lima %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error loading mission parameters. Found type: &apos;%1&apos; expecting: &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -116,7 +112,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Embarked</source>
+        <source>Mounted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -161,6 +157,10 @@
     </message>
     <message>
         <source>Population knowledge not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phase line %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -653,7 +653,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Embarked</source>
+        <source>Info/Mounted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

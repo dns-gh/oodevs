@@ -153,7 +153,7 @@ void DrawerPanel::Save()
     }
     catch( xml::exception& )
     {
-        QMessageBox::critical( this, tr( "Error" ), tr( "Unable to save drawings to file '%1'. \nPlease check access rights or write protection." ).arg( filename ) );
+        QMessageBox::critical( this, tr( "Error" ), tr( "Unable to save drawings to file '%1'. \nPlease check access permissions or write protection." ).arg( filename ) );
     }
 }
 

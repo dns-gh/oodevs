@@ -87,7 +87,7 @@
     </message>
     <message>
         <source>Unable to save drawings to file &apos;%1&apos;. 
-Please check access rights or write protection.</source>
+Please check access permissions or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -215,7 +215,7 @@ Please check access rights or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Is embarked fight: </source>
+        <source>Mounted combat: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -272,7 +272,7 @@ Please check access rights or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create lima</source>
+        <source>Create phase line</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

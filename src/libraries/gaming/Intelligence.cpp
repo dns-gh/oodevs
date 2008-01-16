@@ -51,7 +51,7 @@ Intelligence::Intelligence( const ASN1T_MsgIntelligenceCreation& message, Contro
     , symbol_   ( message.intelligence.nature )
     , level_    ( &levels_.Get( message.intelligence.level ) )
     , karma_    ( &ConvertToKarma( message.intelligence.diplomacy ) )
-    , embarked_ ( message.intelligence.embarked )
+    , mounted_  ( message.intelligence.embarked )
     , publisher_( publisher )
 {
     RegisterSelf( *this );
@@ -121,12 +121,12 @@ const HierarchyLevel_ABC& Intelligence::GetLevel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Intelligence::IsEmbarked
+// Name: Intelligence::IsMounted
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-bool Intelligence::IsEmbarked() const
+bool Intelligence::IsMounted() const
 {
-    return embarked_;
+    return mounted_;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,9 +138,9 @@ void Intelligence::CreateDictionary( Controller& controller )
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Identifier" ), (const unsigned long)id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Name" ) , name_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Type" ) , symbol_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Embarked" ) , embarked_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Name" ), name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Type" ), symbol_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Mounted" ), mounted_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Level" ), level_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Intelligence", "Info/Karma" ), karma_ );
 }
@@ -184,7 +184,7 @@ void Intelligence::DoUpdate( const ASN1T_MsgIntelligenceUpdate& message )
     if( message.m.diplomacyPresent )
         karma_ = &ConvertToKarma( message.diplomacy );
     if( message.m.embarkedPresent )
-        embarked_ = message.embarked ? true : false;
+        mounted_ = message.embarked ? true : false;
 //    if( message.m.formationPresent ) // $$$$ SBO 2007-10-23: someday if needed maybe...
 //        formation_ = formations_.Find( message.formation );
 }

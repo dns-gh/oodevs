@@ -96,6 +96,11 @@
     <message>
         <source>Unable to save drawings to file &apos;%1&apos;. 
 Please check access rights or write protection.</source>
+        <translation type="obsolete">Impossible de sauvegarder les dessins dans le fichier &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Unable to save drawings to file &apos;%1&apos;. 
+Please check access permissions or write protection.</source>
         <translation>Impossible de sauvegarder les dessins dans le fichier &apos;%1&apos;.</translation>
     </message>
 </context>
@@ -238,7 +243,7 @@ Please check access rights or write protection.</source>
         <translation>Karma: </translation>
     </message>
     <message>
-        <source>Is embarked fight: </source>
+        <source>Mounted combat: </source>
         <translation>Combat embarqué: </translation>
     </message>
     <message>
@@ -296,6 +301,10 @@ Please check access rights or write protection.</source>
     </message>
     <message>
         <source>Create lima</source>
+        <translation type="obsolete">Créer une lima</translation>
+    </message>
+    <message>
+        <source>Create phase line</source>
         <translation>Créer une lima</translation>
     </message>
 </context>

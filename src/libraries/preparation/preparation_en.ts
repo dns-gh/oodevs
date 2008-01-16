@@ -154,7 +154,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Embarked</source>
+        <source>Info/Mounted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -188,7 +188,7 @@
 <context>
     <name>Lima</name>
     <message>
-        <source>Lima</source>
+        <source>Phase line</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

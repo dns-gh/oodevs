@@ -73,7 +73,7 @@ Param_ABC* ParamLimaList::CreateElement()
 {
     if( potential_ )
     {
-        LimaParameter* lima = new LimaParameter( this, tr( "Lima %1" ).arg( ++count_ ), converter_, simulation_, *potential_ );
+        LimaParameter* lima = new LimaParameter( this, tr( "Phase line %1" ).arg( ++count_ ), converter_, simulation_, *potential_ );
         limas_[potential_] = lima;
         return lima;
     }

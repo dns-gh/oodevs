@@ -44,7 +44,7 @@ class Intelligence : public kernel::EntityImplementation< kernel::Intelligence_A
 public:
     //! @name Constructors/Destructor
     //@{
-             Intelligence( kernel::Controller& controller, IdManager& idManager, const std::string& symbol, const kernel::HierarchyLevel_ABC& level, bool embarked, const kernel::Karma& karma );
+             Intelligence( kernel::Controller& controller, IdManager& idManager, const std::string& symbol, const kernel::HierarchyLevel_ABC& level, bool mounted, const kernel::Karma& karma );
              Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC, QString >& levels );
     virtual ~Intelligence();
     //@}
@@ -67,7 +67,7 @@ private:
     void CreateDictionary( kernel::Controller& controller );
     virtual const kernel::Karma& GetKarma() const;
     virtual std::string GetSymbol() const;
-    virtual bool IsEmbarked() const;
+    virtual bool IsMounted() const;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
     virtual void SerializeIntelligences( xml::xostream& ) const;
 
@@ -83,7 +83,7 @@ private:
     std::string symbol_;
     const kernel::HierarchyLevel_ABC* level_;
     IntelligenceKarma karma_;
-    bool embarked_;
+    bool mounted_;
     //@}
 };
 

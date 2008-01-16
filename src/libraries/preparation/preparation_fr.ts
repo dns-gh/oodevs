@@ -154,7 +154,7 @@
         <translation>Info/Nature</translation>
     </message>
     <message>
-        <source>Info/Embarked</source>
+        <source>Info/Mounted</source>
         <translation>Info/Embarqué</translation>
     </message>
     <message>
@@ -189,6 +189,10 @@
     <name>Lima</name>
     <message>
         <source>Lima</source>
+        <translation type="obsolete">Lima</translation>
+    </message>
+    <message>
+        <source>Phase line</source>
         <translation>Lima</translation>
     </message>
 </context>

@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Lima %1</source>
-        <translation>Lima %1</translation>
+        <translation type="obsolete">Lima %1</translation>
     </message>
     <message>
         <source>Error loading mission parameters. Found type: &apos;%1&apos; expecting: &apos;%2&apos;.</source>
@@ -116,7 +116,7 @@
         <translation>Niveau</translation>
     </message>
     <message>
-        <source>Embarked</source>
+        <source>Mounted</source>
         <translation>Embarqué</translation>
     </message>
     <message>
@@ -162,6 +162,10 @@
     <message>
         <source>Population knowledge not found.</source>
         <translation>La connaissance de population n&apos;existe pas.</translation>
+    </message>
+    <message>
+        <source>Phase line %1</source>
+        <translation>Lima %1</translation>
     </message>
 </context>
 <context>
@@ -296,7 +300,7 @@
     </message>
     <message>
         <source>Footman</source>
-        <translation type="unfinished">Infanterie</translation>
+        <translation>Infanterie</translation>
     </message>
     <message>
         <source>Helicopter</source>
@@ -419,7 +423,7 @@
     </message>
     <message>
         <source>New stance:</source>
-        <translation type="unfinished">Posture sui</translation>
+        <translation>Posture future:</translation>
     </message>
     <message>
         <source>Setup state:</source>
@@ -653,7 +657,7 @@
         <translation>Info/Type</translation>
     </message>
     <message>
-        <source>Info/Embarked</source>
+        <source>Info/Mounted</source>
         <translation>Info/Embarqué</translation>
     </message>
     <message>

@@ -186,7 +186,7 @@
     </message>
     <message>
         <source>Intelligence</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignement</translation>
     </message>
 </context>
 <context>
@@ -401,7 +401,7 @@
         <translation>ajouter les nouveaux profils au profils existants</translation>
     </message>
     <message>
-        <source>Select creation rights: </source>
+        <source>Select creation permissions: </source>
         <translation>Sélectionner les droits: </translation>
     </message>
     <message>
@@ -517,7 +517,7 @@
         <translation>Général</translation>
     </message>
     <message>
-        <source>Access rights</source>
+        <source>Access permissions</source>
         <translation>Droits d&apos;accès</translation>
     </message>
     <message>
@@ -533,12 +533,16 @@
         <translation>Populations</translation>
     </message>
     <message>
-        <source>Rights</source>
-        <translation>Droits</translation>
+        <source>permissions</source>
+        <translation type="obsolete">Droits</translation>
     </message>
     <message>
         <source>Invalid profile information</source>
         <translation>Information de profile invalide</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translation>Droits</translation>
     </message>
 </context>
 <context>
