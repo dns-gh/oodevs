@@ -68,6 +68,7 @@ private slots:
     void Save();
     void Clear();
     void OnSelect( DrawerStyle& style );
+    void OnColorChange( const QColor& color );
     //@}
 
 private:

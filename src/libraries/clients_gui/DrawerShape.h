@@ -52,6 +52,8 @@ public:
     virtual void Draw( const geometry::Rectangle2f& viewport, bool overlined ) const;
     virtual void Draw( const geometry::Rectangle2f& viewport, const QColor& color, bool overlined ) const;
 
+    void ChangeColor( const QColor& color );
+
     void ReadPoint( xml::xistream& xis );
     void Serialize( xml::xostream& xos ) const;
     //@}

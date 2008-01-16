@@ -159,6 +159,16 @@ void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const QColor& col
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawerShape::ChangeColor
+// Created: AGE 2008-01-16
+// -----------------------------------------------------------------------------
+void DrawerShape::ChangeColor( const QColor& color )
+{
+    color_ = color;
+    complement_ = Complement( color );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawerShape::IsAt
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------

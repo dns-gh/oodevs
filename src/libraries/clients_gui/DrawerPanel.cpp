@@ -64,6 +64,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_A
     toolBox_ = new QToolBox( this );
     toolBox_->setMargin( 0 );
     toolBox_->setBackgroundColor( Qt::white );
+    connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChange( const QColor& ) ) );
     
     controllers_.Register( *this );
 
@@ -102,6 +103,15 @@ void DrawerPanel::OnSelect( DrawerStyle& style )
 {
     color_->Commit();
     layer_.StartShape( style, color_->GetColor() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::OnColorChange
+// Created: AGE 2008-01-16
+// -----------------------------------------------------------------------------
+void DrawerPanel::OnColorChange( const QColor& color )
+{
+    layer_.ChangeColor( color );
 }
 
 // -----------------------------------------------------------------------------

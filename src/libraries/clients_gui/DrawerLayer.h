@@ -53,6 +53,7 @@ public:
     void Save( const std::string& filename ) const;
     void Clear();
 
+    void ChangeColor( const QColor& color );
     void StartShape( const DrawerStyle& style, const QColor& color );
 
     virtual void Paint( const geometry::Rectangle2f& viewport );

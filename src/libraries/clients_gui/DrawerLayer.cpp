@@ -63,6 +63,17 @@ void DrawerLayer::Show( bool show )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawerLayer::ChangeColor
+// Created: AGE 2008-01-16
+// -----------------------------------------------------------------------------
+void DrawerLayer::ChangeColor( const QColor& color )
+{
+    selectedColor_ = color;
+    if( current_ )
+        current_->ChangeColor( color );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawerLayer::StartShape
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
