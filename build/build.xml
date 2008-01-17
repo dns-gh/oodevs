@@ -305,13 +305,7 @@
     </target>
 
     <target name="generate-license" description="generate license file in run directory">
-        <exec executable="${bin.dir}/lmhostid" failonerror="true" outputproperty="hostid">
-            <arg value="-n"/>
-        </exec>
-        <echo file="${run.dir}/sword.lic">FEATURE sword bkmasa 1.0 permanent uncounted TS_OK HOSTID=${hostid} SIGN=0</echo>
-        <exec executable="${bin.dir}/lmcrypt" failonerror="true">
-            <arg value="${run.dir}/sword.lic"/>
-        </exec>
+        <flexlm-generate-license feature="sword" vendor="bkmasa"/>
     </target>
 
     <macrodef name="test-scripts">
