@@ -288,24 +288,7 @@
     ============================================================================
     -->
     <target name="clean" description="clean intermediate build artifacts">
-        <clean name="tools"/>
-        <clean name="MT_Tools"/>
-        <clean name="game_asn"/>
-        <clean name="ENT"/>
-        <clean name="simulation_terrain"/>
-        <clean name="simulation_kernel"/>
-        <clean name="simulation_tester"/>
-        <clean name="simulation_app"/>
-        <clean name="replayer_app"/>
-        <clean name="clients_kernel"/>
-        <clean name="clients_gui"/>
-        <clean name="gaming"/>
-        <clean name="gaming_app"/>
-        <clean name="preparation"/>
-        <clean name="preparation_app"/>
-        <clean name="adaptation_app"/>
-        <clean name="frontend_app"/>
-        <clean name="AGR"/>
+        <delete dir="${out.dir}"/>
     </target>
 
     <!--
@@ -314,27 +297,26 @@
     ============================================================================
     -->
     <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test" description="run all tests"/>
-    
+
     <target name="3a_test" depends="library.3a">
-      <build-test name="3a" depends="xeumeuleu,terrain" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
-        <includepath path="${include.dir}/ASN"/>
-      </build-test>
+        <build-test name="3a" depends="xeumeuleu,terrain" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
+            <includepath path="${include.dir}/ASN"/>
+        </build-test>
     </target>
 
     <target name="generate-license" description="generate license file in run directory">
         <exec executable="${bin.dir}/lmhostid" failonerror="true" outputproperty="hostid">
-          <arg value="-n"/>
+            <arg value="-n"/>
         </exec>
         <echo file="${run.dir}/sword.lic">FEATURE sword bkmasa 1.0 permanent uncounted TS_OK HOSTID=${hostid} SIGN=0</echo>
         <exec executable="${bin.dir}/lmcrypt" failonerror="true">
-          <arg value="${run.dir}/sword.lic"/>
+            <arg value="${run.dir}/sword.lic"/>
         </exec>
     </target>
-    
-    <macrodef name="macro-test-scripts">
+
+    <macrodef name="test-scripts">
         <attribute name="dataset"/>
         <attribute name="physical"/>
-        
         <sequential>
             <delete dir="${data.dir}/exercises/test-scripts"/>
             <mkdir dir="${data.dir}/exercises/test-scripts"/>
@@ -344,14 +326,12 @@
             <copy file="test-scripts/orbat.xml" todir="${data.dir}/exercises/test-scripts"/>
             <copy file="test-scripts/profiles.xml" todir="${data.dir}/exercises/test-scripts"/>
             <copy file="test-scripts/weather.xml" todir="${data.dir}/exercises/test-scripts"/>
-            
             <copy file="test-scripts/exercise.xml.tmpl" tofile="${data.dir}/exercises/test-scripts/exercise.xml" overwrite="true">
                 <filterset>
                     <filter token="DATASET" value="@{dataset}"/>
                     <filter token="PHYSICAL" value="@{physical}"/>
                 </filterset>
-            </copy>         
-            
+            </copy>
             <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
                 <arg value="--root-dir=../../data"/>
                 <arg value="--exercise=test-scripts"/>
@@ -363,14 +343,14 @@
     </macrodef>
 
     <target name="test-scripts" description="run all tests">
-        <macro-test-scripts dataset="test" physical=""/>
-        <macro-test-scripts dataset="main" physical="france"/>
-        <macro-test-scripts dataset="main" physical="worldwide"/>
-        <macro-test-scripts dataset="ada" physical="france"/>
-        <macro-test-scripts dataset="ada" physical="worldwide"/>
+        <test-scripts dataset="test" physical=""/>
+        <test-scripts dataset="main" physical="france"/>
+        <test-scripts dataset="main" physical="worldwide"/>
+        <test-scripts dataset="ada" physical="france"/>
+        <test-scripts dataset="ada" physical="worldwide"/>
     </target>
-          
-    <macrodef name="macro-test-adaptation">
+
+    <macrodef name="test-adaptation">
         <attribute name="physical"/>
         <sequential>
             <property name="adaptation_test.dir1" value="${data.dir}/data/models/@{physical}"/>
@@ -397,9 +377,9 @@
     </macrodef>
 
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
-        <macro-test-adaptation physical="main/physical/worldwide"/>
-        <macro-test-adaptation physical="main/physical/france"/>
-        <macro-test-adaptation physical="test/physical"/>
+        <test-adaptation physical="main/physical/worldwide"/>
+        <test-adaptation physical="main/physical/france"/>
+        <test-adaptation physical="test/physical"/>
     </target>
 
     <!--
@@ -484,7 +464,7 @@
         </zip>
      <!--   <delete file="${dist.dir}/current/exercise.xml"/>-->
     </target>
-    
+
     <target name="installer" description="create the installer">
         <nsis todir="${dist.dir}/current"/>        
         <nsis todir="${dist.dir}/current" name="csword-ada" script="csword-ada.nsi"/>
