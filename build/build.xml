@@ -305,7 +305,7 @@
     </target>
 
     <target name="generate-license" description="generate license file in run directory">
-        <flexlm-generate-license feature="sword" vendor="bkmasa"/>
+        <flexlm feature="sword" vendor="bkmasa"/>
     </target>
 
     <macrodef name="test-scripts">
