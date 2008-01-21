@@ -15,6 +15,7 @@
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
 
 namespace kernel
 {
@@ -33,6 +34,7 @@ class Publisher_ABC;
 class Intelligence : public kernel::EntityImplementation< kernel::Intelligence_ABC >
                    , public kernel::Extension_ABC
                    , public kernel::Drawable_ABC
+                   , public kernel::Displayable_ABC
                    , public kernel::Updatable_ABC< ASN1T_MsgIntelligenceUpdate >
 {
 
@@ -49,6 +51,8 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
+    virtual void DisplayInSummary( kernel::Displayer_ABC& ) const;
     //@}
 
 private:

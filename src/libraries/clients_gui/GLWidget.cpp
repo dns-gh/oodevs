@@ -363,16 +363,14 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawConvexPolygon( const T_PointVector& points ) const
 {
+    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
     glPushAttrib( GL_CURRENT_BIT );
         float color[4];
         glGetFloatv( GL_CURRENT_COLOR, color );
         color[3]*=0.5f;
         glColor4fv( color );
-        glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
         glDrawArrays( GL_POLYGON, 0, points.size() );
     glPopAttrib();
-
-    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
     glDrawArrays( GL_LINE_LOOP, 0, points.size() );
 }
 

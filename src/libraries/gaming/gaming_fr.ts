@@ -672,6 +672,18 @@
         <source>Intelligence [%1]</source>
         <translation>Renseignement [%1]</translation>
     </message>
+    <message>
+        <source>Level:</source>
+        <translation type="unfinished">Niveau:</translation>
+    </message>
+    <message>
+        <source>Mounted:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Karma:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KnowledgeGroup</name>

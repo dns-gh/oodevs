@@ -12,6 +12,8 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Intelligence_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -57,6 +59,24 @@ void NoLinkDisplayer::Call( const Population_ABC& value )
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
 void NoLinkDisplayer::Call( const Object_ABC& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NoLinkDisplayer::Call
+// Created: AGE 2008-01-21
+// -----------------------------------------------------------------------------
+void NoLinkDisplayer::Call( const Intelligence_ABC& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NoLinkDisplayer::Call
+// Created: AGE 2008-01-21
+// -----------------------------------------------------------------------------
+void NoLinkDisplayer::Call( const Formation_ABC& value )
 {
     AddToDisplay( value.GetName() );
 }

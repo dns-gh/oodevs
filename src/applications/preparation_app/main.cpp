@@ -34,8 +34,16 @@ int main( int argc, char** argv )
             .SetVersion( APP_VERSION " - " __TIMESTAMP__ );
 
     Application app( argc, argv, locale );
-    app.Initialize();
-    app.exec();
+    try
+    {
+        app.Initialize();
+        app.exec();
+    }
+    catch( std::exception& e )
+    {
+        QMessageBox::critical( 0, APP_NAME " has crashed.", e.what() );
+        throw;
+    }
     
     return 0;
 }

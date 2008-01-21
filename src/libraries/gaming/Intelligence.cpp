@@ -13,11 +13,13 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
+#include "clients_kernel/Styles.h"
 #include "ASN_Messages.h"
 #include "Tools.h"
 
@@ -78,6 +80,30 @@ void Intelligence::Draw( const geometry::Point2f& where, const Viewport_ABC& vie
         tools.DrawApp6Symbol( symbol_, where );
         tools.DrawApp6Symbol( level_->GetSymbol(), where );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Intelligence::DisplayInTooltip
+// Created: AGE 2008-01-21
+// -----------------------------------------------------------------------------
+void Intelligence::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Item( "" ).Start( Styles::bold )
+                .Add( (Intelligence_ABC*)this )
+             .End();
+    DisplayInSummary( displayer );
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: Intelligence::DisplayInSummary
+// Created: AGE 2008-01-21
+// -----------------------------------------------------------------------------
+void Intelligence::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "Intelligence", "Level:" ), level_ )
+             .Display( tools::translate( "Intelligence", "Karma:" ), karma_ )
+             .Display( tools::translate( "Intelligence", "Mounted:" ), mounted_ );
 }
 
 namespace
