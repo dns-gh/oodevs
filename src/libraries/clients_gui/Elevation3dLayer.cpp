@@ -22,6 +22,7 @@
 #include "graphics/MultiTextureLayer.h"
 #include "graphics/Lighting_ABC.h"
 #include "graphics/TextureSet.h"
+#include "graphics/CompiledVisitor3d.h"
 
 using namespace kernel;
 using namespace gui;
@@ -88,9 +89,14 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
         CreateShaders();
     if( ! textures_.get() && !graphicsDirectory_.empty() && !ignoreTextures_ )
         CreateTextures();
+    if( ! visitor_.get() && !graphicsDirectory_.empty() )
+        visitor_.reset( new CompiledVisitor3d( elevation_.GetMap() ) );
 
     if( !textures_.get() )
         return;
+
+    if( frustum != lastFrustum_ )
+        textures_->Accept( visitor_->Compiler( frustum, 1 ) );
 
     lighting_.Set();
 
@@ -105,8 +111,7 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
     glPushMatrix(); 
         glScalef( 1.f, 1.f, zRatio_ );
         glColor3f( 1, 1, 1 );
-        Visitor3d visitor( elevation_.GetMap(), frustum, frustum != lastFrustum_ );
-        textures_->Accept( visitor );
+        textures_->Accept( visitor_->Compiled( frustum ) );
     glPopMatrix();
     glPopAttrib();
 
@@ -191,6 +196,7 @@ void Elevation3dLayer::Reset()
     textures_.reset();
     fragment_.reset();
     program_.reset();
+    visitor_.reset();
     zRatio_ = 5.f;
     ignoreTextures_ = ignoreShader_ = false;
 }

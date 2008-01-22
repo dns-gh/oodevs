@@ -20,6 +20,7 @@
 class MultiTextureLayer;
 class Lighting_ABC;
 class TextureSet;
+class CompiledVisitor3d;
 
 namespace kernel
 {
@@ -89,6 +90,7 @@ private:
     std::auto_ptr< MultiTextureLayer >  textures_;
     std::auto_ptr< gl::FragmentShader > fragment_;
     std::auto_ptr< gl::ShaderProgram >  program_;
+    std::auto_ptr< CompiledVisitor3d >  visitor_;
     float zRatio_;
     bool ignoreShader_;
     bool ignoreTextures_;
