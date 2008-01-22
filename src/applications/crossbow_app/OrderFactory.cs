@@ -7,59 +7,62 @@ using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.SystemUI;
 using ESRI.ArcGIS.ArcMapUI;
 
-namespace Crossbow
+namespace Sword
 {
-    public interface IParameterFactory
+    namespace Crossbow
     {
-        void CreateParameters(IOrder order);        
-    }
-
-    public class OrderFactory : IParameterFactory
-    {
-        private StaticModel m_model;
-
-        public OrderFactory(StaticModel model)
+        public interface IParameterFactory
         {
-            m_model = model;
+            void CreateParameters(IOrder order);
         }
 
-        public void BuildMissionContextMenu(MultiItemContextMenu menu, IFeature selected)
+        public class OrderFactory : IParameterFactory
         {
-            string entityName = Tools.GetValue<string>(selected, "Name");
-            EntityModel model = null;
-            if (entityName == null)
-                return;
-            if (m_model.UnitTypes.ContainsKey(entityName))
+            private StaticModel m_model;
+
+            public OrderFactory(StaticModel model)
             {
-                string type = m_model.UnitTypes[entityName];
-                if (m_model.UnitModels.ContainsKey(type))
-                    model = m_model.UnitModels[type];
+                m_model = model;
             }
-            else if (m_model.AutomatTypes.ContainsKey(entityName))
-            {
-                string type = m_model.AutomatTypes[entityName];
-                if (m_model.AutomatModels.ContainsKey(type))
-                    model = m_model.AutomatModels[type];
-            }
-            if (model == null)
-                return;
-            foreach (string mission in model)
-                menu.Add(mission, null);
-        }
-        
-        public Order CreateOrder(string name, OrderHandler handler)
-        {
-            return new Order(name, handler, this);
-        }
 
-        public virtual void CreateParameters(IOrder order)
-        {
-            if (m_model.AutomatMissions.ContainsKey(order.Name))
-                foreach (KeyValuePair<string, string> definition in m_model.AutomatMissions[order.Name])
-                    order.RegisterParameter(new OrderParameter(definition.Key.ToString(), definition.Value.ToString()));
-            else if (m_model.UnitMissions.ContainsKey(order.Name))
-                foreach (KeyValuePair<string, string> definition in m_model.UnitMissions[order.Name])
-                    order.RegisterParameter(new OrderParameter(definition.Key.ToString(), definition.Value.ToString()));
+            public void BuildMissionContextMenu(MultiItemContextMenu menu, IFeature selected)
+            {
+                string entityName = Tools.GetValue<string>(selected, "Name");
+                EntityModel model = null;
+                if (entityName == null)
+                    return;
+                if (m_model.UnitTypes.ContainsKey(entityName))
+                {
+                    string type = m_model.UnitTypes[entityName];
+                    if (m_model.UnitModels.ContainsKey(type))
+                        model = m_model.UnitModels[type];
+                }
+                else if (m_model.AutomatTypes.ContainsKey(entityName))
+                {
+                    string type = m_model.AutomatTypes[entityName];
+                    if (m_model.AutomatModels.ContainsKey(type))
+                        model = m_model.AutomatModels[type];
+                }
+                if (model == null)
+                    return;
+                foreach (string mission in model)
+                    menu.Add(mission, null);
+            }
+
+            public Order CreateOrder(string name, OrderHandler handler)
+            {
+                return new Order(name, handler, this);
+            }
+
+            public virtual void CreateParameters(IOrder order)
+            {
+                if (m_model.AutomatMissions.ContainsKey(order.Name))
+                    foreach (KeyValuePair<string, string> definition in m_model.AutomatMissions[order.Name])
+                        order.RegisterParameter(new OrderParameter(definition.Key.ToString(), definition.Value.ToString()));
+                else if (m_model.UnitMissions.ContainsKey(order.Name))
+                    foreach (KeyValuePair<string, string> definition in m_model.UnitMissions[order.Name])
+                        order.RegisterParameter(new OrderParameter(definition.Key.ToString(), definition.Value.ToString()));
+            }
         }
     }
 }

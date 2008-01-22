@@ -15,108 +15,106 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 
-namespace Crossbow
+namespace Sword
 {
-    [ComVisible(true)]
-    [Guid("02a14a61-dd9f-493e-80be-7927ae8a5bac")]
-    [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("Crossbow.Orbat")]
-    public partial class Orbat : UserControl, IDockableWindowDef
+    namespace Crossbow
     {
-        private SymbolFactory m_pSymbolFactory = new SymbolFactory();
-        private IDisplay m_SimpleDisplay = new SimpleDisplayClass();
-
-        #region COM Registration Function(s)
-        [ComRegisterFunction()]
-        [ComVisible(false)]
-        static void RegisterFunction(Type registerType)
+        [ComVisible(true)]
+        [Guid("02a14a61-dd9f-493e-80be-7927ae8a5bac")]
+        [ClassInterface(ClassInterfaceType.None)]
+        [ProgId("Sword.Crossbow.Orbat")]
+        public partial class Orbat : UserControl, IDockableWindowDef
         {
-            // Required for ArcGIS Component Category Registrar support
-            ArcGISCategoryRegistration(registerType);
-            //
-            // TODO: Add any COM registration code here
-            //
-        }
+            private SymbolFactory m_pSymbolFactory = new SymbolFactory();
+            private IDisplay m_SimpleDisplay = new SimpleDisplayClass();
 
-        [ComUnregisterFunction()]
-        [ComVisible(false)]
-        static void UnregisterFunction(Type registerType)
-        {
-            // Required for ArcGIS Component Category Registrar support
-            ArcGISCategoryUnregistration(registerType);
-
-            //
-            // TODO: Add any COM unregistration code here
-            //
-        }
-
-        #region ArcGIS Component Category Registrar generated code
-        /// <summary>
-        /// Required method for ArcGIS Component Category registration -
-        /// Do not modify the contents of this method with the code editor.
-        /// </summary>
-        private static void ArcGISCategoryRegistration(Type registerType)
-        {
-            string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
-            MxDockableWindows.Register(regKey);
-            GMxDockableWindows.Register(regKey);
-        }
-        /// <summary>
-        /// Required method for ArcGIS Component Category unregistration -
-        /// Do not modify the contents of this method with the code editor.
-        /// </summary>
-        private static void ArcGISCategoryUnregistration(Type registerType)
-        {
-            string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
-            MxDockableWindows.Unregister(regKey);
-            GMxDockableWindows.Unregister(regKey);
-        }
-
-        #endregion
-        #endregion
-                
-        public Orbat()
-        {            
-            InitializeComponent();
-            InitializeEvents();
-        }
-        
-        #region IDockableWindowDef Members
-
-        public string Caption
-        {
-            get
-            {                
-                return "Order of Battle";
+            #region COM Registration Function(s)
+            [ComRegisterFunction()]
+            [ComVisible(false)]
+            static void RegisterFunction(Type registerType)
+            {
+                // Required for ArcGIS Component Category Registrar support
+                ArcGISCategoryRegistration(registerType);
+                //Registry.Register(registerType, //Registry.COMPONENT_MX_DOCKABLEWINDOW);
             }
-        }
 
-        public int ChildHWND
-        {
-            get { return this.Handle.ToInt32(); }
-        }
+            [ComUnregisterFunction()]
+            [ComVisible(false)]
+            static void UnregisterFunction(Type registerType)
+            {
+                // Required for ArcGIS Component Category Registrar support
+                ArcGISCategoryUnregistration(registerType);
+                //Registry.Unregister(registerType, //Registry.COMPONENT_MX_DOCKABLEWINDOW);
+            }
 
-        public void OnCreate(object hook)
-        {
-            Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoadedHandler);
-        }
+            #region ArcGIS Component Category Registrar generated code
+            /// <summary>
+            /// Required method for ArcGIS Component Category registration -
+            /// Do not modify the contents of this method with the code editor.
+            /// </summary>
+            private static void ArcGISCategoryRegistration(Type registerType)
+            {
+                string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
+                MxDockableWindows.Register(regKey);
+                GMxDockableWindows.Register(regKey);
+            }
+            /// <summary>
+            /// Required method for ArcGIS Component Category unregistration -
+            /// Do not modify the contents of this method with the code editor.
+            /// </summary>
+            private static void ArcGISCategoryUnregistration(Type registerType)
+            {
+                string regKey = string.Format("HKEY_CLASSES_ROOT\\CLSID\\{{{0}}}", registerType.GUID);
+                MxDockableWindows.Unregister(regKey);
+                GMxDockableWindows.Unregister(regKey);
+            }
 
-        public void OnDestroy()
-        {
-            m_SimpleDisplay = null;
-            m_pSymbolFactory = null;
-        }
+            #endregion
+            #endregion
 
-        public object UserData
-        {
-            get { return this; }
-        }
+            public Orbat()
+            {
+                InitializeComponent();
+                InitializeEvents();
+            }
 
-        #endregion
+            #region IDockableWindowDef Members
 
-        private void OnModelLoadedHandler(object sender, EventArgs e)
-        {
-            LoadLayer(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
+            public string Caption
+            {
+                get
+                {
+                    return "Order of Battle";
+                }
+            }
+
+            public int ChildHWND
+            {
+                get { return this.Handle.ToInt32(); }
+            }
+
+            public void OnCreate(object hook)
+            {
+                Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoadedHandler);
+            }
+
+            public void OnDestroy()
+            {
+                m_SimpleDisplay = null;
+                m_pSymbolFactory = null;
+            }
+
+            public object UserData
+            {
+                get { return this; }
+            }
+
+            #endregion
+
+            private void OnModelLoadedHandler(object sender, EventArgs e)
+            {
+                LoadLayer(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
+            }
         }
     }
 }

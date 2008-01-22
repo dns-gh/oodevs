@@ -460,10 +460,19 @@
     </target>
 
     <target name="installer" description="create the installer">
-        <nsis todir="${dist.dir}/current"/>        
+        <nsis todir="${dist.dir}/current"/>
         <nsis todir="${dist.dir}/current" name="csword-ada" script="csword-ada.nsi"/>
     </target>
 
+    <target name="crossbow-installer" description="create the crossbow installer">
+        <nsis todir="${dist.dir}/current" name="crossbow_install" script="crossbow.nsi"/>
+        <!-- <exec executable="${bin.dir}/RegAsm.exe">
+            <arg value="../out/applications/crossbow_app/vc80/Release/Crossbow.dll"/>
+            <arg value="/codebase"/>
+            <arg value="/regfile:SwordCrossbow.reg"/>
+        </exec> -->
+        <!--<nsis todir="${dist.dir}/current" name="crossbow_installer" script="crossbow_installer.nsi"/>-->
+    </target>
     <!--
     ============================================================================
       configure

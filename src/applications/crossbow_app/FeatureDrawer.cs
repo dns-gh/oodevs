@@ -3,24 +3,27 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.ArcMapUI;
 
-namespace Crossbow
+namespace Sword
 {
-    static class FeatureDrawer
+    namespace Crossbow
     {
-        public static void Draw(IDynamicDisplay display, IDynamicElement element, IFeature feature, bool selected)
+        static class FeatureDrawer
         {
-            if (feature == null)
-                return;
-            feature.Shape.Project(Tools.GetDocument().SpatialReference);
-
-            switch (feature.Shape.GeometryType)
+            public static void Draw(IDynamicDisplay display, IDynamicElement element, IFeature feature, bool selected)
             {
-                case esriGeometryType.esriGeometryPoint:
-                    PointFeatureDrawer.Draw(display, element, feature, selected);
+                if (feature == null)
                     return;
-                case esriGeometryType.esriGeometryPolyline:
-                    PolylineFeatureDrawer.Draw(display, element, feature, selected);
-                    return;
+                feature.Shape.Project(Tools.GetDocument().SpatialReference);
+
+                switch (feature.Shape.GeometryType)
+                {
+                    case esriGeometryType.esriGeometryPoint:
+                        PointFeatureDrawer.Draw(display, element, feature, selected);
+                        return;
+                    case esriGeometryType.esriGeometryPolyline:
+                        PolylineFeatureDrawer.Draw(display, element, feature, selected);
+                        return;
+                }
             }
         }
     }

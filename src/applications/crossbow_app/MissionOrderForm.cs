@@ -9,89 +9,92 @@ using System.Runtime.InteropServices;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.esriSystem;
 
-namespace Crossbow
+namespace Sword
 {
-    public interface IMissionObserver
+    namespace Crossbow
     {
-        void Update(ParameterLimits param, string limit1, string limit2);
-        void Update(ParameterLimas param, string key, string value);
-        void Update(OrderParameter param);
-    }
-
-    public partial class MissionOrderForm : Form, IMissionObserver
-    {
-        private IOrder m_order;
-
-        public MissionOrderForm(IOrder order)
+        public interface IMissionObserver
         {
-            if (order == null)
-                return;
-            InitializeComponent();
-            m_order = order;
-            OrderName = m_order.Name;
-            UnitName = m_order.Target + " - [" + m_order.Id + "]";
-            Show();
+            void Update(ParameterLimits param, string limit1, string limit2);
+            void Update(ParameterLimas param, string key, string value);
+            void Update(OrderParameter param);
         }
 
-        #region IMissionForm implementation
-        public string OrderName
+        public partial class MissionOrderForm : Form, IMissionObserver
         {
-            get
+            private IOrder m_order;
+
+            public MissionOrderForm(IOrder order)
             {
-                return base.Text;
+                if (order == null)
+                    return;
+                InitializeComponent();
+                m_order = order;
+                OrderName = m_order.Name;
+                UnitName = m_order.Target + " - [" + m_order.Id + "]";
+                Show();
             }
 
-            set
+            #region IMissionForm implementation
+            public string OrderName
             {
-                base.Text = value;
+                get
+                {
+                    return base.Text;
+                }
+
+                set
+                {
+                    base.Text = value;
+                }
             }
+            public string UnitName
+            {
+                get
+                {
+                    return m_UnitName.Text;
+                }
+
+                set
+                {
+                    m_UnitName.Text = value;
+                }
+            }
+            #endregion
+
+            #region IMissionObserver Members
+            public void Update(ParameterLimits param, string limit1, string limit2)
+            {
+                m_Limit1.Text = limit1;
+                m_Limit2.Text = limit2;
+            }
+
+            public void Update(ParameterLimas param, string key, string value)
+            {
+                System.Windows.Forms.TreeNode[] node = m_ParameterTree.Nodes.Find(key, false);
+                if (node.Length == 0)
+                    m_ParameterTree.Nodes.Add(key, value);
+            }
+
+            public void Update(OrderParameter param)
+            {
+                if (param == null)
+                    return;
+                TreeNode[] nodes = m_ParameterTree.Nodes.Find(param.Name, false);
+                if (nodes.Length == 0)
+                {
+                    TreeNode node = m_ParameterTree.Nodes.Add(param.Name, param.Name);
+                    node.Checked = false;
+                    node = node.Nodes.Add(param.Value);
+                }
+                else
+                {
+                    nodes[0].Checked = true;
+                    nodes[0].Nodes[0].Text = param.Value;
+                }
+            }
+            #endregion
+
         }
-        public string UnitName
-        {
-            get
-            {
-                return m_UnitName.Text;
-            }
-
-            set
-            {
-                m_UnitName.Text = value;
-            }
-        }        
-        #endregion
-               
-        #region IMissionObserver Members                        
-        public void Update(ParameterLimits param, string limit1, string limit2)
-        {
-            m_Limit1.Text = limit1;
-            m_Limit2.Text = limit2;
-        }
-
-        public void Update(ParameterLimas param, string key, string value)
-        {            
-            System.Windows.Forms.TreeNode[] node = m_ParameterTree.Nodes.Find(key, false);
-            if (node.Length == 0)
-                m_ParameterTree.Nodes.Add(key, value);
-        }
-
-        public void Update(OrderParameter param)
-        {
-            if (param == null)
-                return;
-            TreeNode[] nodes = m_ParameterTree.Nodes.Find(param.Name, false);
-            if (nodes.Length == 0)
-            {
-                TreeNode node = m_ParameterTree.Nodes.Add(param.Name, param.Name);
-                node.Checked = false;
-                node = node.Nodes.Add(param.Value);
-            }
-            else
-            {
-                nodes[0].Checked = true;
-                nodes[0].Nodes[0].Text = param.Value;
-            }
-        }
-        #endregion
-
     }
 }
