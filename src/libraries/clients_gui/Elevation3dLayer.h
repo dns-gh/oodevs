@@ -92,6 +92,7 @@ private:
     std::auto_ptr< gl::ShaderProgram >  program_;
     std::auto_ptr< CompiledVisitor3d >  visitor_;
     float zRatio_;
+    bool reset_;
     bool ignoreShader_;
     bool ignoreTextures_;
     //@}

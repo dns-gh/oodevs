@@ -84,6 +84,7 @@ private:
     std::auto_ptr< ElevationExtrema >    extrema_;
     std::auto_ptr< ElevationShader >     shader_;
     std::auto_ptr< TextureSet >          layer_;
+    bool reset_;
     bool modelLoaded_;
     bool ignore_;
 

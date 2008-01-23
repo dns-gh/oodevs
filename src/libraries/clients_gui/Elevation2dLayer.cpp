@@ -30,6 +30,7 @@ using namespace gui;
 Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& elevation )
     : controller_     ( controller )
     , elevation_      ( elevation )
+    , reset_          ( false )
     , modelLoaded_    ( false )
     , ignore_         ( false )
     , updateGradient_ ( true )
@@ -118,7 +119,9 @@ void Elevation2dLayer::SetElevations()
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 {
-    layer_.reset();
+    // $$$$ AGE 2008-01-23: les ressources opengl doivent etre detruites quand le bon contexte opengl est actif
+    // $$$$ AGE 2008-01-23: ie en pratique dans le Paint. C'est pénible
+    reset_       = true;
     modelLoaded_ = true;
 }
 
@@ -162,6 +165,14 @@ namespace
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 {
+    if( reset_ )
+    {
+        bool modelLoaded = modelLoaded_;
+        Reset();
+        reset_ = false;
+        modelLoaded_ = modelLoaded;
+    }
+
     if( GetAlpha() == 0 )
         return;
     gl::Initialize();

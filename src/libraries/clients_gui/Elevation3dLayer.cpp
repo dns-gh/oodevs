@@ -36,6 +36,7 @@ Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& 
     , elevation_( elevation )
     , lighting_ ( lighting )
     , zRatio_( 5.f )
+    , reset_( false )
     , ignoreShader_( false )
     , ignoreTextures_( false )
 {
@@ -58,6 +59,7 @@ Elevation3dLayer::~Elevation3dLayer()
 void Elevation3dLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
     Load( modelLoaded.config_ );
+    reset_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,18 +87,28 @@ bool Elevation3dLayer::HandleKeyPress( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::Paint( const ViewFrustum& frustum )
 {
+    if( reset_ )
+    {
+        Reset();
+        reset_ = false;
+    }
+
     if(  !program_.get() && ! ignoreShader_ )
         CreateShaders();
     if( ! textures_.get() && !graphicsDirectory_.empty() && !ignoreTextures_ )
         CreateTextures();
-    if( ! visitor_.get() && !graphicsDirectory_.empty() )
+    if( ! visitor_.get() && !graphicsDirectory_.empty() && elevation_.Data() )
         visitor_.reset( new CompiledVisitor3d( elevation_.GetMap() ) );
 
-    if( !textures_.get() )
+    if( !textures_.get() || !visitor_.get() )
         return;
 
     if( frustum != lastFrustum_ )
+    {
+        glPushAttrib( GL_TEXTURE_BIT );
         textures_->Accept( visitor_->Compiler( frustum, 1 ) );
+        glPopAttrib();
+    }
 
     lighting_.Set();
 
