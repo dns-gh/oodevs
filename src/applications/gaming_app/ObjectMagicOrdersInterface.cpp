@@ -76,11 +76,14 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::SendObjectMagic( ASN1T_MagicActionUpdateObject& asn )
 {
-    asn.oid = selectedEntity_->GetId();
-    ASN_MsgObjectMagicAction asnMsg;
-    asnMsg().action.t               = T_MsgObjectMagicAction_action_update_object;
-    asnMsg().action.u.update_object = &asn;
-    asnMsg.Send( publisher_ );
+    if( selectedEntity_ )
+    {
+        asn.oid = selectedEntity_->GetId();
+        ASN_MsgObjectMagicAction asnMsg;
+        asnMsg().action.t               = T_MsgObjectMagicAction_action_update_object;
+        asnMsg().action.u.update_object = &asn;
+        asnMsg.Send( publisher_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
