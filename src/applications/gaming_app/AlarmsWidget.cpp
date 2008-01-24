@@ -90,7 +90,7 @@ bool AlarmsWidget::IsAfter( QListViewItem* item, const QDateTime& date )
      || item->text( 0 ).isEmpty() )
         return false;
 
-    QDateTime myTime = QDateTime::fromString( item->text( 0 ) );
+    QDateTime myTime = QDateTime::fromString( item->text( 0 ), Qt::ISODate );
     return date >= myTime;
 }
 
@@ -170,7 +170,7 @@ namespace
         {
             item_ = item;
             if( item_ && ! item_->text( 0 ).isEmpty() )
-                time_->setDateTime( QDateTime::fromString( item_->text( 0 ) ) );
+                time_->setDateTime( QDateTime::fromString( item_->text( 0 ), Qt::ISODate ) );
             else
                 time_->setDateTime( simulation_.GetDateTime() );
             if( item_ )
@@ -184,7 +184,7 @@ namespace
 
         virtual void accept()
         {
-            item_->setText( 0, time_->dateTime().toString() );
+            item_->setText( 0, time_->dateTime().toString( Qt::ISODate ) );
             item_->setText( 1, text_->text() );
             QDialog::accept();
         }
