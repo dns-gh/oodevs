@@ -10,7 +10,7 @@
 
 #include "MT/MT_Logger/MT_ConsoleLogger.h"
 #include "MT/MT_Logger/MT_FileLogger.h"
-#include "tools/win32/FlexLmLicense.h"
+#include "tools/win32/FlexLm.h"
 #include "xeumeuleu/exception.h"
 
 #include <commctrl.h>

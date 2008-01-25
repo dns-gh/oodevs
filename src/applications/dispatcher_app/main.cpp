@@ -10,7 +10,7 @@
 #include "App.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
-#include "tools/win32/FlexLmLicense.h"
+#include "tools/win32/FlexLm.h"
 #include <windows.h>
 
 //-----------------------------------------------------------------------------
