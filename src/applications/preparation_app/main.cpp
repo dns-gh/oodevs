@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "Application.h"
+#include "tools/win32/FlexLm.h"
 #include "tools/Win32/BugTrap.h"
 
 namespace
@@ -28,6 +29,10 @@ int main( int argc, char** argv )
 {   
     _set_purecall_handler( PureHandler );
     SetConsoleTitle( APP_NAME " - " APP_VERSION " - " __TIMESTAMP__ );
+
+#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
+#endif
 
     BugTrap::Setup( "Sword Officer Training" )
             .SetEmail( "sword-ot@masagroup.net" )

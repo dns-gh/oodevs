@@ -1,5 +1,4 @@
-SOURCES = AboutDialog.cpp \
-AgentResourcesPanel.cpp \
+SOURCES = AgentResourcesPanel.cpp \
 ChangeDiplomacyDialog.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
