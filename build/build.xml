@@ -240,7 +240,7 @@
     </target>
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
-        <build-app name="gaming_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost"
+        <build-app name="gaming_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost,flexlm"
                    libs="asn1per,svgl,zipstream,zlib,shapelib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
@@ -254,7 +254,7 @@
     </target>
 
     <target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
-        <build-app name="preparation_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost"
+        <build-app name="preparation_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost,flexlm"
                    libs="svgl,zipstream,zlib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
@@ -266,7 +266,7 @@
     </target>
 
     <target name="application.frontend_app" description="build CSword Frontend executable" depends="library.clients_gui">
-        <build-app name="frontend_app" depends="mt,qt,boost,xeumeuleu"
+        <build-app name="frontend_app" depends="mt,qt,boost,xeumeuleu,flexlm"
                    libs="bugtrap,tools
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
