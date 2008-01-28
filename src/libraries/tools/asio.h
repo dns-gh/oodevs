@@ -12,7 +12,7 @@
 
 #pragma warning( push, 0 )
 #ifndef _WIN32_WINNT
-#   define _WIN32_WINNT 0x0500
+#   define _WIN32_WINNT 0x0501
 #endif
 #include <boost/asio.hpp>
 #include <boost/lexical_cast.hpp>

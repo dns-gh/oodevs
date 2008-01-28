@@ -49,9 +49,9 @@ private:
 
     //! @name Helpers
     //@{
-    void Sent      ( const Message& message, const boost::asio::error& error );
-    void HeaderRead( Message& message, const boost::asio::error& error );
-    void Read      ( Message& message, const boost::asio::error& error );
+    void Sent      ( const Message& message, const boost::system::error_code& error );
+    void HeaderRead( Message& message, const boost::system::error_code& error );
+    void Read      ( Message& message, const boost::system::error_code& error );
     //@}
 
 private:
@@ -60,7 +60,7 @@ private:
     boost::shared_ptr< boost::asio::ip::tcp::socket > socket_;
     std::string endpoint_;
     MessageCallback_ABC& message_;
-    boost::asio::error previous_;
+    boost::system::error_code previous_;
     //@}
 };
 

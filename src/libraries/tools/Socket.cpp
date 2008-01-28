@@ -42,7 +42,8 @@ Socket::~Socket()
 // -----------------------------------------------------------------------------
 void Socket::Close()
 {
-    socket_->close( boost::asio::ignore_error() );
+    boost::system::error_code code;
+    socket_->close( code );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,12 +61,12 @@ void Socket::Send( unsigned long tag, const Message& message )
 // Name: Socket::Sent
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-void Socket::Sent( const Message& , const boost::asio::error& error )
+void Socket::Sent( const Message& , const boost::system::error_code& error )
 {
     if( error && error != boost::asio::error::operation_aborted && error != previous_)
     {
         previous_ = error;
-        message_.OnError( endpoint_, error.what() );
+        message_.OnError( endpoint_, error.message() );
     }
 }
 
@@ -85,7 +86,7 @@ void Socket::StartReading()
 // Name: Socket::HeaderRead
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void Socket::HeaderRead( Message& header, const boost::asio::error& error )
+void Socket::HeaderRead( Message& header, const boost::system::error_code& error )
 {
     if( ! error )
     {
@@ -97,14 +98,14 @@ void Socket::HeaderRead( Message& header, const boost::asio::error& error )
                                               message, boost::asio::placeholders::error ) );
     }
     else
-        message_.OnError( endpoint_, error.what() );
+        message_.OnError( endpoint_, error.message() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Socket::Read
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void Socket::Read( Message& message, const boost::asio::error& error )
+void Socket::Read( Message& message, const boost::system::error_code& error )
 {
     if( ! error )
     {
@@ -112,5 +113,5 @@ void Socket::Read( Message& message, const boost::asio::error& error )
         message_.OnMessage( endpoint_, message );
     }
     else
-        message_.OnError( endpoint_, error.what() );
+        message_.OnError( endpoint_, error.message() );
 }

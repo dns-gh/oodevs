@@ -47,7 +47,7 @@ private:
 
     //! @name Helpers
     //@{
-    void OnAccepted( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::asio::error& error );
+    void OnAccepted( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::system::error_code& error );
     void Listen();
     //@}
 

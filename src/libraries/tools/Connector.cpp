@@ -73,12 +73,12 @@ void Connector::Close()
 // Name: Connector::OnResolve
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void Connector::OnResolve( const std::string& endpoint, const boost::asio::error& error, boost::asio::ip::tcp::resolver::iterator it )
+void Connector::OnResolve( const std::string& endpoint, const boost::system::error_code& error, boost::asio::ip::tcp::resolver::iterator it )
 {
     if( ! error )
         DoConnect( *it );
     else
-        callback_.ConnectionFailed( endpoint, error.what() );
+        callback_.ConnectionFailed( endpoint, error.message() );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,10 +95,10 @@ void Connector::DoConnect( const boost::asio::ip::tcp::endpoint& endpoint )
 // Name: Connector::OnConnect
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void Connector::OnConnect( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::asio::ip::tcp::endpoint& endpoint, const boost::asio::error& error )
+void Connector::OnConnect( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::asio::ip::tcp::endpoint& endpoint, const boost::system::error_code& error )
 {
     if( ! error )
         manager_.Add( socket );
     else
-        callback_.ConnectionFailed( ToString( endpoint ), error.what() );
+        callback_.ConnectionFailed( ToString( endpoint ), error.message() );
 }

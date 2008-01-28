@@ -337,10 +337,10 @@ void Message::Write( const char* data, unsigned size )
 // Name: Message::MakeOutputBuffer
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-boost::asio::const_buffer_container_1 Message::MakeOutputBuffer( unsigned long tag ) const
+boost::asio::const_buffers_1 Message::MakeOutputBuffer( unsigned long tag ) const
 {
     if( ! data_ || data_->size() < 8 )
-        return boost::asio::const_buffer_container_1( boost::asio::const_buffer() );
+        return boost::asio::const_buffers_1( boost::asio::const_buffer() );
     unsigned long* data = reinterpret_cast< unsigned long* >( & data_->front() );
     *data     = htonl( data_->size() - 4 );
     *(data+1) = htonl( tag );
@@ -352,7 +352,7 @@ boost::asio::const_buffer_container_1 Message::MakeOutputBuffer( unsigned long t
 // Name: Message::MakeInputBuffer
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-boost::asio::mutable_buffer_container_1 Message::MakeInputBuffer()
+boost::asio::mutable_buffers_1 Message::MakeInputBuffer()
 {
     return boost::asio::buffer( *data_ );
 }

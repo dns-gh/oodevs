@@ -15,8 +15,8 @@
 
 namespace boost { 
     namespace asio {
-        class const_buffer_container_1;
-        class mutable_buffer_container_1;
+        class const_buffers_1;
+        class mutable_buffers_1;
     }
 }
 
@@ -76,8 +76,8 @@ public:
 
     //! @name Operations
     //@{
-    boost::asio::const_buffer_container_1   MakeOutputBuffer( unsigned long tag ) const;
-    boost::asio::mutable_buffer_container_1 MakeInputBuffer();
+    boost::asio::const_buffers_1   MakeOutputBuffer( unsigned long tag ) const;
+    boost::asio::mutable_buffers_1 MakeInputBuffer();
     //@}
 
 private:

@@ -163,7 +163,7 @@
             depends="application.gaming_app,application.preparation_app,application.adaptation_app" />
 
     <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
-        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
+        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,asio,terrain,xeumeuleu,flexlm"
                    libs="masalloc,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -175,7 +175,7 @@
     </target>
 
     <target name="application.dispatcher_app.crossbowed" description="build CSword Dispatcher executable with crossbow plugin" depends="library.dispatcher,library.crossbow_plugin,library.gearth_plugin">
-        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm" input="dispatcher_app"
+        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,asio,terrain,xeumeuleu,flexlm" input="dispatcher_app"
                    libs="masalloc,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -190,7 +190,7 @@
     </target>
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher">
-        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm"
+        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,asio,xeumeuleu,flexlm"
                    libs="HLA,libFedTime,masalloc,tools,asn1per,population-${platform}-mt
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -208,7 +208,7 @@
     </target>
 
     <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher,library.3a">
-        <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm"
+        <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,asio,xeumeuleu,flexlm"
                    libs="tools,asn1per,
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -240,7 +240,7 @@
     </target>
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
-        <build-app name="gaming_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost,flexlm"
+        <build-app name="gaming_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost,asio,flexlm"
                    libs="asn1per,svgl,zipstream,zlib,shapelib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt

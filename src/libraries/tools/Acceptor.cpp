@@ -44,7 +44,8 @@ Acceptor::~Acceptor()
 void Acceptor::DenyConnections()
 {
     accept_ = false;
-    acceptor_.close( boost::asio::ignore_error() );
+    boost::system::error_code code;
+    acceptor_.close( code );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +79,7 @@ void Acceptor::Listen()
 // Name: Acceptor::OnAccepted
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void Acceptor::OnAccepted( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::asio::error& error )
+void Acceptor::OnAccepted( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::system::error_code& error )
 {
     if( ! error )
         manager_.Add( socket );
