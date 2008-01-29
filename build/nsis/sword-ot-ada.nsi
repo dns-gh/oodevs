@@ -23,7 +23,7 @@
     !define DISTDIR "."
 !endif
 !ifndef DOCDIR
-    !define DOCDIR "..\..\src\documentations"
+    !define DOCDIR "..\..\doc"
 !endif
 !ifndef LIBRARIESDIR
     !define LIBRARIESDIR "..\..\src\libraries"
