@@ -32,14 +32,14 @@
     !define APPLICATIONSDIR "..\..\src\applications"
 !endif
 
-Name "C-Sword"
-OutFile "${DISTDIR}\csword-installer.exe"
-InstallDir "$PROGRAMFILES\C-Sword"
-InstallDirRegKey HKLM "Software\Masa\C-Sword" "Install_Dir"
+Name "SWORD Officer Training - ADA version"
+OutFile "${DISTDIR}\sword-ot-ada-installer.exe"
+InstallDir "$PROGRAMFILES\Sword-OT-ADA"
+InstallDirRegKey HKLM "Software\Masa\Sword-OT-ADA" "Install_Dir"
 
 ;--------------------------------
 Function .onInit
-    System::Call 'kernel32::CreateMutexA(i 0, i 0, t "c-sword") i .r1 ?e'
+    System::Call 'kernel32::CreateMutexA(i 0, i 0, t "sword-ot-ada") i .r1 ?e'
     Pop $R0
     StrCmp $R0 0 +3
         MessageBox MB_OK|MB_ICONEXCLAMATION "Installer already running"
@@ -92,127 +92,68 @@ Section "!Basic"
     File "${RUNDIR}\shapelib.dll"
     File "${OUTDIR}\generation_app\*.exe"
     
-    SetOutPath "$INSTDIR\data"
-    File /r /x ".svn" "${DATADIR}\data\terrains"
+    SetOutPath "$INSTDIR\data\terrains"
+    File /r /x ".svn" "${DATADIR}\data\terrains\Angers"
+    File /r /x ".svn" "${DATADIR}\data\terrains\Mailly"
+    File /r /x ".svn" "${DATADIR}\data\terrains\Paris_Est"
+    File /r /x ".svn" "${DATADIR}\data\terrains\main"
        
     SetOutPath "$INSTDIR\applications"
-    WriteRegStr HKLM "Software\Masa\C-Sword" "Install_Dir" "$INSTDIR"
-    CreateDirectory "$SMPROGRAMS\C-Sword"
-    CreateShortCut "$SMPROGRAMS\C-Sword\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
-    CreateShortCut "$SMPROGRAMS\C-Sword\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe"
+    WriteRegStr HKLM "Software\Masa\Sword-OT-ADA" "Install_Dir" "$INSTDIR"
+    CreateDirectory "$SMPROGRAMS\Sword-OT-ADA"
+    CreateShortCut "$SMPROGRAMS\Sword-OT-ADA\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
+    CreateShortCut "$SMPROGRAMS\Sword-OT-ADA\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe"
 SectionEnd
-
-;--------------------------------
-SectionGroup "Main models"
 
 Section "Decisional models"
-    SetOutPath "$INSTDIR\data\models\main\decisional"
-    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Binaires"
-    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\*.xml"
-SectionEnd    
-
-Section "Decisional models sources"
-    SetOutPath "$INSTDIR\data\models\main\decisional"
-    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Sources"
-SectionEnd
-
-Section "France Physical models"
-    SetOutPath "$INSTDIR\data\models\main\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\main\physical\france"    
-SectionEnd
-
-Section "Worldwide Physical models"
-    SetOutPath "$INSTDIR\data\models\main\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\main\physical\worldwide"    
-SectionEnd
-
-SectionGroupEnd
-
-;--------------------------------
-SectionGroup "ADA models"
-
-Section "Decisional models"
+    SectionIn RO
     SetOutPath "$INSTDIR\data\models\ada\decisional"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\*.xml"
 SectionEnd    
 
-Section "Decisional models sources"
-    SetOutPath "$INSTDIR\data\models\ada\decisional"
-    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Sources"
-SectionEnd
+;Section "Decisional models sources"
+;    SectionIn RO
+;    SetOutPath "$INSTDIR\data\models\main\decisional"
+;    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Sources"
+;SectionEnd
 
-Section "France Physical models"
+Section "Physical models"
+    SectionIn RO
     SetOutPath "$INSTDIR\data\models\ada\physical"
     File /r /x ".svn" "${DATADIR}\data\models\ada\physical\france"    
 SectionEnd
 
-Section "Worldwide Physical models"
-    SetOutPath "$INSTDIR\data\models\ada\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\worldwide"    
-SectionEnd
-
-Section "Sample exercises"
+Section "Exercises"
+    SectionIn RO
     SetOutPath "$INSTDIR\exercises"
     File /r /x ".svn" "${DATADIR}\exercises\ADA - Attaquer"
     File /r /x ".svn" "${DATADIR}\exercises\ADA - Donner_coup_arret"
     File /r /x ".svn" "${DATADIR}\exercises\ADA - Freiner"
-    File /r /x ".svn" "${DATADIR}\exercises\BAE"
 SectionEnd
-
-SectionGroupEnd
-
-;--------------------------------
-SectionGroup "Civilian models"
-
-Section /o "Decisional models"
-    SetOutPath "$INSTDIR\data\models\civilian\decisional"
-    File /nonfatal /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Binaires"
-    File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\*.xml"
-SectionEnd    
-
-Section /o "Decisional models sources"
-    SetOutPath "$INSTDIR\data\models\civilian\decisional"
-    File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Sources"
-SectionEnd
-
-Section /o "Physical models"
-    SetOutPath "$INSTDIR\data\models\civilian\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\civilian\physical"
-    
-    SetOutPath "$INSTDIR\data\population"
-    File /r /x ".svn" "${DATADIR}\data\population"
-SectionEnd
-
-Section /o "Sample exercises"
-    SetOutPath "$INSTDIR\exercises"
-    File /r /x ".svn" "${DATADIR}\exercises\bruxelles"
-SectionEnd
-
-SectionGroupEnd
 
 ;--------------------------------
 Section "Uninstaller files"
     SectionIn RO
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "DisplayName" "C-Sword"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "UninstallString" '"$INSTDIR\uninstall.exe"'
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "NoModify" 1
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "NoRepair" 1
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "DisplayName" "Sword-OT-ADA"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "UninstallString" '"$INSTDIR\uninstall.exe"'
+    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "NoModify" 1
+    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "NoRepair" 1
     WriteUninstaller "uninstall.exe"
-    CreateShortCut "$SMPROGRAMS\C-Sword\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+    CreateShortCut "$SMPROGRAMS\Sword-OT-ADA\Uninstall.lnk" "$INSTDIR\uninstall.exe"
 SectionEnd
 
 ;--------------------------------
 Section "Uninstall"
-    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa"
-    DeleteRegKey HKLM "Software\Masa\C-Sword"
+    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa"
+    DeleteRegKey HKLM "Software\Masa\Sword-OT-ADA"
     Delete "$INSTDIR\uninstall.exe"
     RmDir /r "$INSTDIR\applications"
     RmDir /r "$INSTDIR\data"
     RmDir /r "$INSTDIR\exercises"
     RmDir "$INSTDIR"
-    Delete "$SMPROGRAMS\C-Sword\Adaptation.lnk"
-    Delete "$SMPROGRAMS\C-Sword\Frontend.lnk"
-    Delete "$SMPROGRAMS\C-Sword\uninstall.lnk"
-    RmDir "$SMPROGRAMS\C-Sword"
+    Delete "$SMPROGRAMS\Sword-OT-ADA\Adaptation.lnk"
+    Delete "$SMPROGRAMS\Sword-OT-ADA\Frontend.lnk"
+    Delete "$SMPROGRAMS\Sword-OT-ADA\uninstall.lnk"
+    RmDir "$SMPROGRAMS\Sword-OT-ADA"
 SectionEnd
