@@ -194,7 +194,7 @@ SectionGroupEnd
 Section "Documentation"
     SectionIn RO
     SetOutPath "$INSTDIR\doc"
-    File /r /x ".svn" "${DOCDIR}\*.pdf"
+    File /nonfatal /r /x ".svn" "${DOCDIR}\*.pdf"
 SectionEnd
 
 ;--------------------------------
