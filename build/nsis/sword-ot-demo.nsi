@@ -33,8 +33,8 @@
 !endif
 
 Name "SWORD Officer Training"
-OutFile "${DISTDIR}\sword-ot-demo-installer.exe"
-InstallDir "$PROGRAMFILES\Sword-OT"
+OutFile "${DISTDIR}\SWORD Officer Training - Demo.exe"
+InstallDir "$PROGRAMFILES\SWORD Officer Training"
 InstallDirRegKey HKLM "Software\Masa\Sword-OT" "Install_Dir"
 
 ;--------------------------------
@@ -97,9 +97,9 @@ Section "!Basic"
        
     SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\Sword-OT" "Install_Dir" "$INSTDIR"
-    CreateDirectory "$SMPROGRAMS\Sword-OT"
-    CreateShortCut "$SMPROGRAMS\Sword-OT\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
-    CreateShortCut "$SMPROGRAMS\Sword-OT\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe"
+    CreateDirectory "$SMPROGRAMS\SWORD Officer Training"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe"
 SectionEnd
 
 Section "Decisional models"
@@ -130,12 +130,12 @@ SectionEnd
 ;--------------------------------
 Section "Uninstaller files"
     SectionIn RO
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-Masa" "DisplayName" "Sword-OT"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-Masa" "DisplayName" "SWORD Officer Training"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-Masa" "UninstallString" '"$INSTDIR\uninstall.exe"'
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-Masa" "NoModify" 1
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-Masa" "NoRepair" 1
     WriteUninstaller "uninstall.exe"
-    CreateShortCut "$SMPROGRAMS\Sword-OT\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Uninstall.lnk" "$INSTDIR\uninstall.exe"
 SectionEnd
 
 ;--------------------------------
@@ -148,8 +148,8 @@ Section "Uninstall"
     RmDir /r "$INSTDIR\exercises"
     RmDir /r "$INSTDIR\doc"
     RmDir "$INSTDIR"
-    Delete "$SMPROGRAMS\Sword-OT\Adaptation.lnk"
-    Delete "$SMPROGRAMS\Sword-OT\Frontend.lnk"
-    Delete "$SMPROGRAMS\Sword-OT\uninstall.lnk"
-    RmDir "$SMPROGRAMS\Sword-OT"
+    Delete "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk"
+    Delete "$SMPROGRAMS\SWORD Officer Training\Frontend.lnk"
+    Delete "$SMPROGRAMS\SWORD Officer Training\uninstall.lnk"
+    RmDir "$SMPROGRAMS\SWORD Officer Training"
 SectionEnd

@@ -33,8 +33,8 @@
 !endif
 
 Name "SWORD Officer Training - ADA version"
-OutFile "${DISTDIR}\sword-ot-ada-installer.exe"
-InstallDir "$PROGRAMFILES\Sword-OT-ADA"
+OutFile "${DISTDIR}\SWORD Officer Training ADA.exe"
+InstallDir "$PROGRAMFILES\SWORD Officer Training ADA"
 InstallDirRegKey HKLM "Software\Masa\Sword-OT-ADA" "Install_Dir"
 
 ;--------------------------------
@@ -100,9 +100,9 @@ Section "!Basic"
        
     SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\Sword-OT-ADA" "Install_Dir" "$INSTDIR"
-    CreateDirectory "$SMPROGRAMS\Sword-OT-ADA"
-    CreateShortCut "$SMPROGRAMS\Sword-OT-ADA\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
-    CreateShortCut "$SMPROGRAMS\Sword-OT-ADA\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe"
+    CreateDirectory "$SMPROGRAMS\SWORD Officer Training ADA"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training ADA\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training ADA\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe"
 SectionEnd
 
 Section "Decisional models"
@@ -135,12 +135,12 @@ SectionEnd
 ;--------------------------------
 Section "Uninstaller files"
     SectionIn RO
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "DisplayName" "Sword-OT-ADA"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "DisplayName" "SWORD Officer Training ADA"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "UninstallString" '"$INSTDIR\uninstall.exe"'
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "NoModify" 1
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "NoRepair" 1
     WriteUninstaller "uninstall.exe"
-    CreateShortCut "$SMPROGRAMS\Sword-OT-ADA\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training ADA\Uninstall.lnk" "$INSTDIR\uninstall.exe"
 SectionEnd
 
 ;--------------------------------
@@ -152,8 +152,8 @@ Section "Uninstall"
     RmDir /r "$INSTDIR\data"
     RmDir /r "$INSTDIR\exercises"
     RmDir "$INSTDIR"
-    Delete "$SMPROGRAMS\Sword-OT-ADA\Adaptation.lnk"
-    Delete "$SMPROGRAMS\Sword-OT-ADA\Frontend.lnk"
-    Delete "$SMPROGRAMS\Sword-OT-ADA\uninstall.lnk"
-    RmDir "$SMPROGRAMS\Sword-OT-ADA"
+    Delete "$SMPROGRAMS\SWORD Officer Training ADA\Adaptation.lnk"
+    Delete "$SMPROGRAMS\SWORD Officer Training ADA\Frontend.lnk"
+    Delete "$SMPROGRAMS\SWORD Officer Training ADA\uninstall.lnk"
+    RmDir "$SMPROGRAMS\SWORD Officer Training ADA"
 SectionEnd
