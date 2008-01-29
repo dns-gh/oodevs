@@ -191,6 +191,12 @@ SectionEnd
 
 SectionGroupEnd
 
+Section "Documentation"
+    SectionIn RO
+    SetOutPath "$INSTDIR\doc"
+    File /r /x ".svn" "${DOCDIR}\*.pdf"
+SectionEnd
+
 ;--------------------------------
 Section "Uninstaller files"
     SectionIn RO
