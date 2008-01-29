@@ -163,7 +163,7 @@
             depends="application.gaming_app,application.preparation_app,application.adaptation_app" />
 
     <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
-        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
+        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,asio,terrain,xeumeuleu,flexlm"
                    libs="masalloc,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -175,7 +175,7 @@
     </target>
 
     <target name="application.dispatcher_app.crossbowed" description="build CSword Dispatcher executable with crossbow plugin" depends="library.dispatcher,library.crossbow_plugin,library.gearth_plugin">
-        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm" input="dispatcher_app"
+        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,asio,terrain,xeumeuleu,flexlm" input="dispatcher_app"
                    libs="masalloc,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -190,7 +190,7 @@
     </target>
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher">
-        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm"
+        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,asio,xeumeuleu,flexlm"
                    libs="HLA,libFedTime,masalloc,tools,asn1per,population-${platform}-mt
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -208,7 +208,7 @@
     </target>
 
     <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher,library.3a">
-        <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm"
+        <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,asio,xeumeuleu,flexlm"
                    libs="tools,asn1per,
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -240,7 +240,7 @@
     </target>
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
-        <build-app name="gaming_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost"
+        <build-app name="gaming_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost,asio,flexlm"
                    libs="asn1per,svgl,zipstream,zlib,shapelib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
@@ -254,7 +254,7 @@
     </target>
 
     <target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
-        <build-app name="preparation_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost"
+        <build-app name="preparation_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost,asio,flexlm"
                    libs="svgl,zipstream,zlib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
@@ -266,7 +266,7 @@
     </target>
 
     <target name="application.frontend_app" description="build CSword Frontend executable" depends="library.clients_gui">
-        <build-app name="frontend_app" depends="mt,qt,boost,xeumeuleu"
+        <build-app name="frontend_app" depends="mt,qt,boost,asio,xeumeuleu,flexlm"
                    libs="bugtrap,tools
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
@@ -465,6 +465,15 @@
         <nsis todir="${dist.dir}/current" name="sword-ot-demo" script="sword-ot-demo.nsi"/>
     </target>
 
+    <target name="crossbow-installer" description="create the crossbow installer">
+        <nsis todir="${dist.dir}/current" name="crossbow_install" script="crossbow.nsi"/>
+        <!-- <exec executable="${bin.dir}/RegAsm.exe">
+            <arg value="../out/applications/crossbow_app/vc80/Release/Crossbow.dll"/>
+            <arg value="/codebase"/>
+            <arg value="/regfile:SwordCrossbow.reg"/>
+        </exec> -->
+        <!--<nsis todir="${dist.dir}/current" name="crossbow_installer" script="crossbow_installer.nsi"/>-->
+    </target>
     <!--
     ============================================================================
       configure
