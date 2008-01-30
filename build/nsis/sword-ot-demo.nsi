@@ -124,7 +124,8 @@ SectionEnd
 Section "Documentation"
     SectionIn RO
     SetOutPath "$INSTDIR\doc"
-    File /nonfatal /r /x ".svn" "${DOCDIR}\*.pdf"
+    File /r /x ".svn" "${DOCDIR}\*.pdf"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\User Guide.lnk" "$INSTDIR\doc\User Guide.pdf"
 SectionEnd
 
 ;--------------------------------
@@ -150,6 +151,7 @@ Section "Uninstall"
     RmDir "$INSTDIR"
     Delete "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk"
     Delete "$SMPROGRAMS\SWORD Officer Training\Frontend.lnk"
-    Delete "$SMPROGRAMS\SWORD Officer Training\uninstall.lnk"
+    Delete "$SMPROGRAMS\SWORD Officer Training\User Guide.lnk"    
+    Delete "$SMPROGRAMS\SWORD Officer Training\uninstall.lnk"    
     RmDir "$SMPROGRAMS\SWORD Officer Training"
 SectionEnd
