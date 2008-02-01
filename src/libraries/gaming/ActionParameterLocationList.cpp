@@ -112,6 +112,8 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterLocationList::CommitTo( ASN1T_LocationList& asn ) const
 {
+    asn.n = Count();
+    asn.elem = asn.n ? new ASN1T_Location[ asn.n ] : 0;
     AsnSerializer serializer( asn );
     Accept( serializer );
 }
