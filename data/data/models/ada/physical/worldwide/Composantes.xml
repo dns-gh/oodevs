@@ -1129,6 +1129,7 @@
       <object type="zone minee lineaire"/>
       <object type="zone poser helicoptere"/>
       <object type="zone minee par dispersion"/>
+      <object construction-time-factor="20m" initial-construction-time="2h" initial-destruction-time="02h" type="fosse anti char"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
