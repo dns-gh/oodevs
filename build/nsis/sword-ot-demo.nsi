@@ -112,7 +112,7 @@ SectionEnd
 Section "Physical models"
     SectionIn RO
     SetOutPath "$INSTDIR\data\models\ada\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\france"
+    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\worldwide"
 SectionEnd
 
 Section "Exercises"
