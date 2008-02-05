@@ -88,8 +88,7 @@ const T& ActionParameter< T >::GetValue() const
 template< typename T >
 void ActionParameter< T >::Display( kernel::Displayer_ABC& displayer ) const
 {
-    const QString name = GetName() + QString( " [%1] " ).arg( parameter_.GetType() ); // $$$$ SBO 2007-05-25: not really useful
-    displayer.Item( tools::translate( "ActionParameter", "Action" ) ).Display( name )
+    displayer.Item( tools::translate( "ActionParameter", "Action" ) ).Display( GetName() )
              .Item( tools::translate( "ActionParameter", "Value" ) ).Display( value_ );
 }
 
