@@ -308,7 +308,8 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Initialize( xml::xistream& xis )
 {
-    xis >> optional() >> attribute( "command-post", bIsPC_ );
+    xis >> optional() >> attribute( "command-post", bIsPC_ )
+        >> optional() >> attribute( "name", strName_ );
 
     // Position - $$$ DEGEU
     std::string strPosition;
@@ -316,7 +317,6 @@ void MIL_AgentPion::Initialize( xml::xistream& xis )
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
 
-    xis >> optional() >> content( "name", strName_ );
     Initialize( vPosTmp );
 }
 
