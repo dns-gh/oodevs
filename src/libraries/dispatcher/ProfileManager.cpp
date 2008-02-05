@@ -167,6 +167,11 @@ ASN1T_MsgProfileUpdateRequestAck_error_code ProfileManager::Update( const ASN1T_
         return MsgProfileUpdateRequestAck_error_code::duplicate_login;
     // $$$$ SBO 2007-01-22: check password id needed
     pProfile->Update( message );
+    if( newLogin != message.login )
+    {
+        profiles_[ newLogin ] = pProfile;
+        profiles_.erase( message.login );
+    }
     return MsgProfileUpdateRequestAck_error_code::success;
 }
 
