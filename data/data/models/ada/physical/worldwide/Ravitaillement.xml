@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <supply>
-  <convoys mission="Logistics - To convey" unit-type="Pion Convoi">
+  <convoys mission="Logistics - convey" unit-type="Pion Convoi">
     <constitution-times>
       <unit-time time="10m" truck-count="1"/>
       <unit-time time="10m" truck-count="10"/>

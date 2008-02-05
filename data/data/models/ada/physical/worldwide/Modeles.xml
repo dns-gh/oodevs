@@ -4,18 +4,18 @@
     <unit dia-type="StrategicBomberPatrol" file="Air\Pions\Patrouille Assaut\model.hal" name="Strategic Bomber Patrol">
       <missions>
         <mission name="JOINT AIR - Air strike"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
+        <mission name="move"/>
+        <mission name="follow"/>
       </missions>
     </unit>
     <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.hal" name="Landing Craft">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To follow"/>
-        <mission name="To transport">
+        <mission name="withdraw"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="follow"/>
+        <mission name="transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
@@ -25,87 +25,87 @@
     </unit>
     <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.hal" name="Antitank Helicopter Patrol">
       <missions>
-        <mission name="Army Aviation - To cover">
+        <mission name="Army Aviation - cover">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To destroy flying enemy">
+        <mission name="Army Aviation - destroy flying enemy">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To scout">
+        <mission name="Army Aviation - scout">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To escort">
+        <mission name="Army Aviation - escort">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To screen">
+        <mission name="Army Aviation - screen">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To reconnoiter enemy positions">
+        <mission name="Army Aviation - reconnoiter enemy positions">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To reconnoiter">
+        <mission name="Army Aviation - reconnoiter">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To monitor">
+        <mission name="Army Aviation - monitor">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To move">
+        <mission name="move">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To follow">
+        <mission name="follow">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To go through decontamination process">
+        <mission name="go through decontamination process">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To park">
+        <mission name="park">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To adopt transportation posture">
+        <mission name="adopt transportation posture">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To deny population crossing">
+        <mission name="deny population crossing">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To report information on populations">
+        <mission name="report information on populations">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To replenish">
+        <mission name="Army Aviation - replenish">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="To withdraw">
+        <mission name="withdraw">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To support (in contact)">
+        <mission name="Army Aviation - support (in contact)">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To attack">
+        <mission name="Army Aviation - attack">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To destroy (in a specific area)">
+        <mission name="Army Aviation - destroy (in a specific area)">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To delay">
+        <mission name="Army Aviation - delay">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -113,57 +113,57 @@
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.hal" name="Transport Helicopter Patrol">
       <missions>
-        <mission name="Army Aviation - To helitransport">
+        <mission name="Army Aviation - helitransport">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Modify Disembarking point"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To heliport">
+        <mission name="Army Aviation - heliport">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Modify Disembarking point"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To helitransport replenishment sites">
+        <mission name="Army Aviation - helitransport replenishment sites">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To extract">
+        <mission name="Army Aviation - extract">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To move">
+        <mission name="move">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To follow">
+        <mission name="follow">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To go through decontamination process">
+        <mission name="go through decontamination process">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To park">
+        <mission name="park">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To adopt transportation posture">
+        <mission name="adopt transportation posture">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To deny population crossing">
+        <mission name="deny population crossing">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To report information on populations">
+        <mission name="report information on populations">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To replenish">
+        <mission name="Army Aviation - replenish">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="To withdraw">
+        <mission name="withdraw">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -171,259 +171,259 @@
     </unit>
     <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.hal" name="Short Range Surface To Air Defense Troop">
       <missions>
-        <mission name="Air Defense Artillery - To defend area"/>
-        <mission name="Air Defense Artillery - To defend area (from a position)"/>
-        <mission name="Air Defense Artillery - To defend site"/>
-        <mission name="Air Defense Artillery - To defend site (from a position)"/>
-        <mission name="Air Defense Artillery - To monitor"/>
-        <mission name="To move"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To follow"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="Air Defense Artillery - defend area"/>
+        <mission name="Air Defense Artillery - defend area (from a position)"/>
+        <mission name="Air Defense Artillery - defend site"/>
+        <mission name="Air Defense Artillery - defend site (from a position)"/>
+        <mission name="Air Defense Artillery - monitor"/>
+        <mission name="move"/>
+        <mission name="go through decontamination process"/>
+        <mission name="follow"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.hal" name="Very Short Range Surface To Air Defense Troop">
       <missions>
-        <mission name="To move"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To follow"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Air Defense Artillery (MISTRAL) - To defend site"/>
-        <mission name="Air Defense Artillery (MISTRAL) - To defend site (from a position)"/>
-        <mission name="Air Defense Artillery (MISTRAL) - To defend area"/>
-        <mission name="Air Defense Artillery (MISTRAL) - To defend area (from a position)"/>
-        <mission name="Air Defense Artillery (MISTRAL) - To monitor"/>
+        <mission name="move"/>
+        <mission name="go through decontamination process"/>
+        <mission name="follow"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Air Defense Artillery (MISTRAL) - defend site"/>
+        <mission name="Air Defense Artillery (MISTRAL) - defend site (from a position)"/>
+        <mission name="Air Defense Artillery (MISTRAL) - defend area"/>
+        <mission name="Air Defense Artillery (MISTRAL) - defend area (from a position)"/>
+        <mission name="Air Defense Artillery (MISTRAL) - monitor"/>
       </missions>
     </unit>
     <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.hal" name="Very Short Range Surface To Air Battery CP">
       <missions>
-        <mission name="To move"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To follow"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="move"/>
+        <mission name="go through decontamination process"/>
+        <mission name="follow"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.hal" name="Short Range Surface To Air Defense Battery CP">
       <missions>
-        <mission name="To move"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To follow"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="move"/>
+        <mission name="go through decontamination process"/>
+        <mission name="follow"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.hal" name="Theater High Altitude Aera Defense CP">
       <missions>
-        <mission name="To move"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To follow"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="move"/>
+        <mission name="go through decontamination process"/>
+        <mission name="follow"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.hal" name="Infantery platoon">
       <missions>
-        <mission name="Infantry - To support"/>
-        <mission name="Infantry - To counter-attack"/>
-        <mission name="Infantry - To control an area"/>
-        <mission name="Infantry - To cover"/>
-        <mission name="Infantry - To defend"/>
-        <mission name="Infantry - To destroy"/>
-        <mission name="Infantry - To ambush">
+        <mission name="Infantry - support"/>
+        <mission name="Infantry - counter-attack"/>
+        <mission name="Infantry - control an area"/>
+        <mission name="Infantry - cover"/>
+        <mission name="Infantry - defend"/>
+        <mission name="Infantry - destroy"/>
+        <mission name="Infantry - ambush">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="Infantry - To scout"/>
-        <mission name="Infantry - To fix"/>
-        <mission name="Infantry - To flank-guard"/>
-        <mission name="Infantry - To delay">
+        <mission name="Infantry - scout"/>
+        <mission name="Infantry - fix"/>
+        <mission name="Infantry - flank-guard"/>
+        <mission name="Infantry - delay">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="Infantry - To harass"/>
-        <mission name="Infantry - To deny"/>
-        <mission name="Infantry - To operate a checkpoint"/>
-        <mission name="Infantry - To take contact"/>
-        <mission name="Infantry - To reconnoiter an axis"/>
-        <mission name="Infantry - To reconnoiter"/>
-        <mission name="Infantry - To assist units in their rearward maneuvers">
+        <mission name="Infantry - harass"/>
+        <mission name="Infantry - deny"/>
+        <mission name="Infantry - operate a checkpoint"/>
+        <mission name="Infantry - take contact"/>
+        <mission name="Infantry - reconnoiter an axis"/>
+        <mission name="Infantry - reconnoiter"/>
+        <mission name="Infantry - assist units in their rearward maneuvers">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="Infantry - To reduce"/>
-        <mission name="Infantry - To seize"/>
-        <mission name="Infantry - To monitor an area">
+        <mission name="Infantry - reduce"/>
+        <mission name="Infantry - seize"/>
+        <mission name="Infantry - monitor an area">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Infantry - To escort"/>
-        <mission name="To filtrate populations"/>
-        <mission name="To control Populations (in an area)"/>
-        <mission name="To report information on populations"/>
-        <mission name="To channel populations"/>
-        <mission name="To deny population crossing"/>
-        <mission name="To secure area (against populations assault)"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Infantry - escort"/>
+        <mission name="filtrate populations"/>
+        <mission name="control Populations (in an area)"/>
+        <mission name="report information on populations"/>
+        <mission name="channel populations"/>
+        <mission name="deny population crossing"/>
+        <mission name="secure area (against populations assault)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.hal" name="MRA infantery platoon">
       <missions>
-        <mission name="Infantry - To bar"/>
-        <mission name="Infantry - To support"/>
-        <mission name="Infantry - To monitor an area">
+        <mission name="Infantry - bar"/>
+        <mission name="Infantry - support"/>
+        <mission name="Infantry - monitor an area">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.hal" name="LRA infantery platoon">
       <missions>
-        <mission name="Infantry - To support"/>
-        <mission name="Infantry - To bar"/>
-        <mission name="Infantry - To monitor an area">
+        <mission name="Infantry - support"/>
+        <mission name="Infantry - bar"/>
+        <mission name="Infantry - monitor an area">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.hal" name="Mortar support troop">
       <missions>
-        <mission name="Infantry - To support">
+        <mission name="Infantry - support">
           <fragorder name="Fire"/>
         </mission>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.hal" name="Infantery company CP">
       <missions>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To withdraw"/>
-        <mission name="To follow"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To deny population crossing"/>
-        <mission name="To channel populations"/>
-        <mission name="To control Populations (in an area)"/>
-        <mission name="To filtrate populations"/>
-        <mission name="To report information on populations"/>
-        <mission name="To secure area (against populations assault)"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="follow"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="deny population crossing"/>
+        <mission name="channel populations"/>
+        <mission name="control Populations (in an area)"/>
+        <mission name="filtrate populations"/>
+        <mission name="report information on populations"/>
+        <mission name="secure area (against populations assault)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.hal" name="Battery CP">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To follow"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="follow"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
       </missions>
     </unit>
     <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.hal" name="PC TC2">
       <missions>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To follow"/>
-        <mission name="To move"/>
-        <mission name="Logistics - To deploy"/>
-        <mission name="To cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="follow"/>
+        <mission name="move"/>
+        <mission name="Logistics - deploy"/>
+        <mission name="cross"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.hal" name="Section Maintenance">
       <missions>
-        <mission name="Logistics - To step up">
+        <mission name="Logistics - step up">
           <fragorder name="Change work mode"/>
           <fragorder name="Change reparations priorities"/>
           <fragorder name="Change tactical reparations priorities"/>
         </mission>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Logistics - To reinforce"/>
-        <mission name="Logistics - To repair">
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Logistics - reinforce"/>
+        <mission name="Logistics - repair">
           <fragorder name="Change work mode"/>
           <fragorder name="Change reparations priorities"/>
           <fragorder name="Change tactical reparations priorities"/>
         </mission>
-        <mission name="To move"/>
-        <mission name="To cross"/>
+        <mission name="move"/>
+        <mission name="cross"/>
       </missions>
     </unit>
     <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.hal" name="Groupe Maintenance Evacuation">
       <missions>
-        <mission name="Logistics - To deploy">
+        <mission name="Logistics - deploy">
           <fragorder name="Change work mode"/>
           <fragorder name="Change reparations priorities"/>
           <fragorder name="Change tactical reparations priorities"/>
@@ -431,218 +431,218 @@
           <fragorder name="Send lended carriers"/>
           <fragorder name="Send carriers"/>
         </mission>
-        <mission name="Logistics - To step up">
+        <mission name="Logistics - step up">
           <fragorder name="Change work mode"/>
           <fragorder name="Change reparations priorities"/>
           <fragorder name="Change tactical reparations priorities"/>
         </mission>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Logistics - To reinforce"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
     <unit dia-type="SectionTriage" file="Appui\Log\Pions\Model.hal" name="Section Triage Modulaire">
       <missions>
-        <mission name="Logistics - To step up">
+        <mission name="Logistics - step up">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Logistics - To sort and treat wounded">
+        <mission name="Logistics - sort and treat wounded">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To cross"/>
-        <mission name="To move"/>
-        <mission name="Logistics - To reinforce"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="cross"/>
+        <mission name="move"/>
+        <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
     <unit dia-type="ACA" file="Appui\Log\Pions\Model.hal" name="ACA">
       <missions>
-        <mission name="Logistics - To step up">
+        <mission name="Logistics - step up">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Logistics - To sort wounded">
+        <mission name="Logistics - sort wounded">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Logistics - To treat wounded">
+        <mission name="Logistics - treat wounded">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Logistics - To reinforce"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
     <unit dia-type="UniteSoin" file="Appui\Log\Pions\Model.hal" name="Unite de soin">
       <missions>
-        <mission name="Logistics - To step up">
+        <mission name="Logistics - step up">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Logistics - To treat wounded">
+        <mission name="Logistics - treat wounded">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="Logistics - To reinforce"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
     <unit dia-type="DecontaminationNBC" file="Appui\Log\Pions\Model.hal" name="Decontamination NBC">
       <missions>
-        <mission name="Logistics - To step up">
+        <mission name="Logistics - step up">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Logistics - To decontaminate wounded">
+        <mission name="Logistics - decontaminate wounded">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Logistics - To reinforce"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
     <unit dia-type="UniteSpy" file="Appui\Log\Pions\Model.hal" name="Unite PSY">
       <missions>
-        <mission name="Logistics - To step up">
+        <mission name="Logistics - step up">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Logistics - To manage PSY OPS">
+        <mission name="Logistics - manage PSY OPS">
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="Logistics - To reinforce"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
     <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.hal" name="Groupe Ramassage">
       <missions>
-        <mission name="Logistics - To deploy">
+        <mission name="Logistics - deploy">
           <fragorder name="Send ambulances"/>
           <fragorder name="Get back lended ambulances"/>
           <fragorder name="Send lended ambulances"/>
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Logistics - To step up">
+        <mission name="Logistics - step up">
           <fragorder name="Send ambulances"/>
           <fragorder name="Get back lended ambulances"/>
           <fragorder name="Send lended ambulances"/>
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Logistics - To reinforce"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
     <unit dia-type="SectionLOG" file="Appui\Log\Pions\Model.hal" name="PC Log">
       <missions>
-        <mission name="Logistics - To deploy"/>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To cross"/>
+        <mission name="Logistics - deploy"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="cross"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.hal" name="Truck convoy">
       <missions>
-        <mission name="Logistics - To convey"/>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="Logistics - convey"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.hal" name="Peloton Transport">
       <missions>
-        <mission name="Logistics - To deploy"/>
-        <mission name="Logistics - To step up"/>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To withdraw"/>
-        <mission name="Logistics - To reinforce"/>
-        <mission name="To transport">
+        <mission name="Logistics - deploy"/>
+        <mission name="Logistics - step up"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="withdraw"/>
+        <mission name="Logistics - reinforce"/>
+        <mission name="transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
     </unit>
     <unit dia-type="PionStock" file="Appui\Log\Pions\Model.hal" name="Pion stock">
       <missions>
-        <mission name="Logistics - To deploy"/>
-        <mission name="Logistics - To step up"/>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To cross"/>
-        <mission name="Logistics - To reinforce"/>
+        <mission name="Logistics - deploy"/>
+        <mission name="Logistics - step up"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="cross"/>
+        <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
     <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.hal" name="MLRS firing platoon">
       <missions>
-        <mission name="Field Artillery - To operate">
+        <mission name="Field Artillery - operate">
           <fragorder name="Fire"/>
         </mission>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Field Artillery - To operate (on position)">
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Field Artillery - operate (on position)">
           <fragorder name="Fire"/>
         </mission>
         <mission name="prepare to"/>
@@ -651,270 +651,270 @@
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.hal" name="Firefinder radar">
       <missions>
-        <mission name="Field Artillery - To collect enemy artillery intelligence"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="Field Artillery - collect enemy artillery intelligence"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="GroupeASS_RATAC" file="Appui\ArtFdp\Pions\Grp RATAC\Model.hal" name="Artillery locating radar group">
       <missions>
-        <mission name="Field Artillery - (Short Range Radar) - To collect intelligence on objectives"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
+        <mission name="Field Artillery - (Short Range Radar) - collect intelligence on objectives"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
       </missions>
     </unit>
     <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.hal" name="SD">
       <missions>
-        <mission name="Field Artillery - (Surveillance Detachment) - To collect intelligence on objectives"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="Field Artillery - (Surveillance Detachment) - collect intelligence on objectives"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EOP\Model.hal" name="LRSD">
       <missions>
-        <mission name="Field Artillery - (Long Range Surveillance Detachment) - To collect intelligence on objectives"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="Field Artillery - (Long Range Surveillance Detachment) - collect intelligence on objectives"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.hal" name="Peloton Transport Blindes">
       <missions>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To cross"/>
-        <mission name="To transport">
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="cross"/>
+        <mission name="transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
     </unit>
     <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.hal" name="Patrouille Circulation">
       <missions>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="Logistics - To reconnoiter a route"/>
-        <mission name="Logistics - To monitor"/>
-        <mission name="Logistics - To support mobility (in an area)"/>
-        <mission name="Logistics - To support mobility"/>
-        <mission name="Logistics - To operate parking area"/>
-        <mission name="Logistics - To reconnoiter a contaminated area"/>
-        <mission name="Logistics - To operate a checkpoint"/>
-        <mission name="Logistics - To block an area"/>
-        <mission name="Logistics - To support crossing maneuvers"/>
-        <mission name="Logistics - To reconnoiter a deployment area"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Engineer - To reinforce"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="Logistics - reconnoiter a route"/>
+        <mission name="Logistics - monitor"/>
+        <mission name="Logistics - support mobility (in an area)"/>
+        <mission name="Logistics - support mobility"/>
+        <mission name="Logistics - operate parking area"/>
+        <mission name="Logistics - reconnoiter a contaminated area"/>
+        <mission name="Logistics - operate a checkpoint"/>
+        <mission name="Logistics - block an area"/>
+        <mission name="Logistics - support crossing maneuvers"/>
+        <mission name="Logistics - reconnoiter a deployment area"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Engineer - reinforce"/>
       </missions>
     </unit>
     <unit dia-type="Refugie" file="Population\Refugies\Pions\Refugie\Model.hal" name="Refugee">
       <missions>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="Milice" file="Population\Milices\Pion\Model.hal" name="Militia">
       <missions>
-        <mission name="Militia - To seize and hold position"/>
-        <mission name="Militia - To ambush"/>
-        <mission name="Infantry - To destroy"/>
-        <mission name="Infantry - To harass"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Asymetric - To attack population (in an area)"/>
-        <mission name="Asymetric - To report information"/>
+        <mission name="Militia - seize and hold position"/>
+        <mission name="Militia - ambush"/>
+        <mission name="Infantry - destroy"/>
+        <mission name="Infantry - harass"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Asymetric - attack population (in an area)"/>
+        <mission name="Asymetric - report information"/>
       </missions>
     </unit>
     <unit dia-type="PCBIA" file="Appui\Trans\Pions\Model.hal" name="Command post">
       <missions>
-        <mission name="Communication - To operate"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
+        <mission name="Communication - operate"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
       </missions>
     </unit>
     <unit dia-type="GroupeInfanterie_Commando" file="Melee\Inf\Pions\Grp Commando\Model.hal" name="Commando troop">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Infantry - To destroy"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To follow"/>
-        <mission name="Infantry - To monitor an area"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Infantry - destroy"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="follow"/>
+        <mission name="Infantry - monitor an area"/>
       </missions>
     </unit>
     <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.hal" name="Theater High Altitude Defense Troop">
       <missions>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="Air Defense Artillery - To defend area"/>
-        <mission name="Air Defense Artillery - To defend area (from a position)"/>
-        <mission name="Air Defense Artillery - To defend site"/>
-        <mission name="Air Defense Artillery - To defend site (from a position)"/>
-        <mission name="Air Defense Artillery - To monitor"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="Air Defense Artillery - defend area"/>
+        <mission name="Air Defense Artillery - defend area (from a position)"/>
+        <mission name="Air Defense Artillery - defend site"/>
+        <mission name="Air Defense Artillery - defend site (from a position)"/>
+        <mission name="Air Defense Artillery - monitor"/>
       </missions>
     </unit>
     <unit dia-type="PCAppuiMob" file="Appui\AppuiMob\Pions\Model.hal" name="PC Appui Mob">
       <missions>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To withdraw"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To transport">
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="go through decontamination process"/>
+        <mission name="withdraw"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
     </unit>
     <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.hal" name="Terroriste">
       <missions>
-        <mission name="To move"/>
-        <mission name="Asymetric - To report information"/>
-        <mission name="Asymetric - To infiltrate"/>
-        <mission name="Asymetric - To carry out an attack (against armed forces)"/>
-        <mission name="Asymetric - To destroy (against critical infrastructure)"/>
-        <mission name="Asymetric - To carry out a bombing (against population)"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="Asymetric - report information"/>
+        <mission name="Asymetric - infiltrate"/>
+        <mission name="Asymetric - carry out an attack (against armed forces)"/>
+        <mission name="Asymetric - destroy (against critical infrastructure)"/>
+        <mission name="Asymetric - carry out a bombing (against population)"/>
+        <mission name="adopt transportation posture"/>
       </missions>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="Scout patrol">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To follow"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="Armor - To operate an identification point"/>
-        <mission name="Armor - To control"/>
-        <mission name="Armor - To scout"/>
-        <mission name="Armor - To escort"/>
-        <mission name="Armor - To screen"/>
-        <mission name="Armor - To open a route"/>
-        <mission name="Armor - To monitor"/>
-        <mission name="Armor - To report information"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Armor - To escort Units"/>
-        <mission name="Armor - To cover"/>
-        <mission name="Armor - To flank-guard"/>
-        <mission name="Armor - To reconnoiter an axis"/>
-        <mission name="Armor - To reconnoiter"/>
-        <mission name="Armor - To seize"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="follow"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="Armor - operate an identification point"/>
+        <mission name="Armor - control"/>
+        <mission name="Armor - scout"/>
+        <mission name="Armor - escort"/>
+        <mission name="Armor - screen"/>
+        <mission name="Armor - open a route"/>
+        <mission name="Armor - monitor"/>
+        <mission name="Armor - report information"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Armor - escort Units"/>
+        <mission name="Armor - cover"/>
+        <mission name="Armor - flank-guard"/>
+        <mission name="Armor - reconnoiter an axis"/>
+        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - seize"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="Antitank patrol">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To follow"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="Armor - To operate an identification point"/>
-        <mission name="Armor - To support"/>
-        <mission name="Armor - To bar"/>
-        <mission name="Armor - To control"/>
-        <mission name="Armor - To scout"/>
-        <mission name="Armor - To escort"/>
-        <mission name="Armor - To screen"/>
-        <mission name="Armor - To monitor"/>
-        <mission name="Armor - To report information"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Armor - To escort Units"/>
-        <mission name="Armor - To support (from a position)"/>
-        <mission name="Armor - To cover"/>
-        <mission name="Armor - To delay"/>
-        <mission name="Armor - To open a route"/>
-        <mission name="Armor - To reconnoiter an axis"/>
-        <mission name="Armor - To reconnoiter"/>
-        <mission name="Armor - To seize"/>
-        <mission name="Armor - To support (dynamic)"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="follow"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="Armor - operate an identification point"/>
+        <mission name="Armor - support"/>
+        <mission name="Armor - bar"/>
+        <mission name="Armor - control"/>
+        <mission name="Armor - scout"/>
+        <mission name="Armor - escort"/>
+        <mission name="Armor - screen"/>
+        <mission name="Armor - monitor"/>
+        <mission name="Armor - report information"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Armor - escort Units"/>
+        <mission name="Armor - support (from a position)"/>
+        <mission name="Armor - cover"/>
+        <mission name="Armor - delay"/>
+        <mission name="Armor - open a route"/>
+        <mission name="Armor - reconnoiter an axis"/>
+        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - seize"/>
+        <mission name="Armor - support (dynamic)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.hal" name="Armored squadron CP">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To follow"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="follow"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
         <mission name="Armor CP To Deploy"/>
@@ -922,474 +922,474 @@
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.hal" name="MBT platoon">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To follow"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Armor - To support"/>
-        <mission name="Armor - To attack">
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="follow"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Armor - support"/>
+        <mission name="Armor - attack">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Armor - To bar"/>
-        <mission name="Armor - To counter-attack">
+        <mission name="Armor - bar"/>
+        <mission name="Armor - counter-attack">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Armor - To control"/>
-        <mission name="Armor - To cover"/>
-        <mission name="Armor - To fix"/>
-        <mission name="Armor - To delay"/>
-        <mission name="Armor - To screen"/>
-        <mission name="Armor - To reconnoiter an axis"/>
-        <mission name="Armor - To reconnoiter"/>
-        <mission name="Armor - To reduce"/>
-        <mission name="Armor - To relieve"/>
-        <mission name="Armor - To seize"/>
-        <mission name="Armor - To support (dynamic)"/>
-        <mission name="Armor - To monitor"/>
-        <mission name="Armor - To flank-guard"/>
-        <mission name="Armor - To support (from a position)"/>
-        <mission name="To channel populations"/>
-        <mission name="To control Populations (in an area)"/>
-        <mission name="To filtrate populations"/>
-        <mission name="To deny population crossing"/>
-        <mission name="To report information on populations"/>
-        <mission name="To secure area (against populations assault)"/>
-        <mission name="Armor - To operate an identification point"/>
-        <mission name="Armor - To scout"/>
-        <mission name="Armor - To escort"/>
-        <mission name="Armor - To escort Units"/>
-        <mission name="Armor - To open a route"/>
-        <mission name="Armor - To report information"/>
+        <mission name="Armor - control"/>
+        <mission name="Armor - cover"/>
+        <mission name="Armor - fix"/>
+        <mission name="Armor - delay"/>
+        <mission name="Armor - screen"/>
+        <mission name="Armor - reconnoiter an axis"/>
+        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - reduce"/>
+        <mission name="Armor - relieve"/>
+        <mission name="Armor - seize"/>
+        <mission name="Armor - support (dynamic)"/>
+        <mission name="Armor - monitor"/>
+        <mission name="Armor - flank-guard"/>
+        <mission name="Armor - support (from a position)"/>
+        <mission name="channel populations"/>
+        <mission name="control Populations (in an area)"/>
+        <mission name="filtrate populations"/>
+        <mission name="deny population crossing"/>
+        <mission name="report information on populations"/>
+        <mission name="secure area (against populations assault)"/>
+        <mission name="Armor - operate an identification point"/>
+        <mission name="Armor - scout"/>
+        <mission name="Armor - escort"/>
+        <mission name="Armor - escort Units"/>
+        <mission name="Armor - open a route"/>
+        <mission name="Armor - report information"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.hal" name="Light armored platoon">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To follow"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="Armor - To support"/>
-        <mission name="Armor - To attack">
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="follow"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="go through decontamination process"/>
+        <mission name="Armor - support"/>
+        <mission name="Armor - attack">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Armor - To bar"/>
-        <mission name="Armor - To counter-attack">
+        <mission name="Armor - bar"/>
+        <mission name="Armor - counter-attack">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Armor - To control"/>
-        <mission name="Armor - To cover"/>
-        <mission name="Armor - To escort"/>
-        <mission name="Armor - To fix"/>
-        <mission name="Armor - To flank-guard"/>
-        <mission name="Armor - To screen"/>
-        <mission name="Armor - To reconnoiter an axis"/>
-        <mission name="Armor - To reconnoiter"/>
-        <mission name="Armor - To reduce"/>
-        <mission name="Armor - To relieve"/>
-        <mission name="Armor - To seize"/>
-        <mission name="Armor - To support (dynamic)"/>
-        <mission name="Armor - To monitor"/>
-        <mission name="Armor - To delay"/>
-        <mission name="Armor - To escort Units"/>
-        <mission name="Armor - To support (from a position)"/>
-        <mission name="To channel populations"/>
-        <mission name="To control Populations (in an area)"/>
-        <mission name="To filtrate populations"/>
-        <mission name="To deny population crossing"/>
-        <mission name="To report information on populations"/>
-        <mission name="To secure area (against populations assault)"/>
-        <mission name="Armor - To operate an identification point"/>
-        <mission name="Armor - To open a route"/>
-        <mission name="Armor - To report information"/>
+        <mission name="Armor - control"/>
+        <mission name="Armor - cover"/>
+        <mission name="Armor - escort"/>
+        <mission name="Armor - fix"/>
+        <mission name="Armor - flank-guard"/>
+        <mission name="Armor - screen"/>
+        <mission name="Armor - reconnoiter an axis"/>
+        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - reduce"/>
+        <mission name="Armor - relieve"/>
+        <mission name="Armor - seize"/>
+        <mission name="Armor - support (dynamic)"/>
+        <mission name="Armor - monitor"/>
+        <mission name="Armor - delay"/>
+        <mission name="Armor - escort Units"/>
+        <mission name="Armor - support (from a position)"/>
+        <mission name="channel populations"/>
+        <mission name="control Populations (in an area)"/>
+        <mission name="filtrate populations"/>
+        <mission name="deny population crossing"/>
+        <mission name="report information on populations"/>
+        <mission name="secure area (against populations assault)"/>
+        <mission name="Armor - operate an identification point"/>
+        <mission name="Armor - open a route"/>
+        <mission name="Armor - report information"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Mobility support platoon">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To follow"/>
-        <mission name="Engineer - To activate obstacle"/>
-        <mission name="Engineer - To enhance mobility"/>
-        <mission name="Engineer - To bypass obstacles"/>
-        <mission name="Engineer - To clear obstacles"/>
-        <mission name="Engineer - To clean up area"/>
-        <mission name="Engineer - To operate a crossing site"/>
-        <mission name="Engineer - To operate a new crossing site"/>
-        <mission name="Engineer - To open a route"/>
-        <mission name="Engineer - To build camps"/>
-        <mission name="Engineer - To perform deployment support work"/>
-        <mission name="Engineer - To perform counter-mobility work"/>
-        <mission name="Engineer - To perform protection work"/>
-        <mission name="Engineer - To reconnoiter a route"/>
-        <mission name="Engineer - To reconnoiter a crossing site"/>
-        <mission name="Engineer - To reconnoiter an area"/>
-        <mission name="Engineer - To reinforce"/>
-        <mission name="Engineer - To resume work"/>
-        <mission name="Engineer - To restore a route"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="follow"/>
+        <mission name="Engineer - activate obstacle"/>
+        <mission name="Engineer - enhance mobility"/>
+        <mission name="Engineer - bypass obstacles"/>
+        <mission name="Engineer - clear obstacles"/>
+        <mission name="Engineer - clean up area"/>
+        <mission name="Engineer - operate a crossing site"/>
+        <mission name="Engineer - operate a new crossing site"/>
+        <mission name="Engineer - open a route"/>
+        <mission name="Engineer - build camps"/>
+        <mission name="Engineer - perform deployment support work"/>
+        <mission name="Engineer - perform counter-mobility work"/>
+        <mission name="Engineer - perform protection work"/>
+        <mission name="Engineer - reconnoiter a route"/>
+        <mission name="Engineer - reconnoiter a crossing site"/>
+        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - reinforce"/>
+        <mission name="Engineer - resume work"/>
+        <mission name="Engineer - restore a route"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Countermobility platoon">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To follow"/>
-        <mission name="Engineer - To activate obstacle"/>
-        <mission name="Engineer - To enhance mobility"/>
-        <mission name="Engineer - To bypass obstacles"/>
-        <mission name="Engineer - To clear obstacles"/>
-        <mission name="Engineer - To clean up area"/>
-        <mission name="Engineer - To operate a crossing site"/>
-        <mission name="Engineer - To operate a new crossing site"/>
-        <mission name="Engineer - To open a route"/>
-        <mission name="Engineer - To build camps"/>
-        <mission name="Engineer - To perform deployment support work"/>
-        <mission name="Engineer - To perform counter-mobility work"/>
-        <mission name="Engineer - To perform protection work"/>
-        <mission name="Engineer - To reconnoiter a route"/>
-        <mission name="Engineer - To reconnoiter a crossing site"/>
-        <mission name="Engineer - To reconnoiter an area"/>
-        <mission name="Engineer - To reinforce"/>
-        <mission name="Engineer - To resume work"/>
-        <mission name="Engineer - To restore a route"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="follow"/>
+        <mission name="Engineer - activate obstacle"/>
+        <mission name="Engineer - enhance mobility"/>
+        <mission name="Engineer - bypass obstacles"/>
+        <mission name="Engineer - clear obstacles"/>
+        <mission name="Engineer - clean up area"/>
+        <mission name="Engineer - operate a crossing site"/>
+        <mission name="Engineer - operate a new crossing site"/>
+        <mission name="Engineer - open a route"/>
+        <mission name="Engineer - build camps"/>
+        <mission name="Engineer - perform deployment support work"/>
+        <mission name="Engineer - perform counter-mobility work"/>
+        <mission name="Engineer - perform protection work"/>
+        <mission name="Engineer - reconnoiter a route"/>
+        <mission name="Engineer - reconnoiter a crossing site"/>
+        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - reinforce"/>
+        <mission name="Engineer - resume work"/>
+        <mission name="Engineer - restore a route"/>
       </missions>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Bridging troop">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To follow"/>
-        <mission name="Engineer - To activate obstacle"/>
-        <mission name="Engineer - To enhance mobility"/>
-        <mission name="Engineer - To bypass obstacles"/>
-        <mission name="Engineer - To clear obstacles"/>
-        <mission name="Engineer - To clean up area"/>
-        <mission name="Engineer - To operate a crossing site"/>
-        <mission name="Engineer - To operate a new crossing site"/>
-        <mission name="Engineer - To open a route"/>
-        <mission name="Engineer - To build camps"/>
-        <mission name="Engineer - To perform deployment support work"/>
-        <mission name="Engineer - To perform counter-mobility work"/>
-        <mission name="Engineer - To perform protection work"/>
-        <mission name="Engineer - To reconnoiter a route"/>
-        <mission name="Engineer - To reconnoiter a crossing site"/>
-        <mission name="Engineer - To reconnoiter an area"/>
-        <mission name="Engineer - To reinforce"/>
-        <mission name="Engineer - To resume work"/>
-        <mission name="Engineer - To restore a route"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="follow"/>
+        <mission name="Engineer - activate obstacle"/>
+        <mission name="Engineer - enhance mobility"/>
+        <mission name="Engineer - bypass obstacles"/>
+        <mission name="Engineer - clear obstacles"/>
+        <mission name="Engineer - clean up area"/>
+        <mission name="Engineer - operate a crossing site"/>
+        <mission name="Engineer - operate a new crossing site"/>
+        <mission name="Engineer - open a route"/>
+        <mission name="Engineer - build camps"/>
+        <mission name="Engineer - perform deployment support work"/>
+        <mission name="Engineer - perform counter-mobility work"/>
+        <mission name="Engineer - perform protection work"/>
+        <mission name="Engineer - reconnoiter a route"/>
+        <mission name="Engineer - reconnoiter a crossing site"/>
+        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - reinforce"/>
+        <mission name="Engineer - resume work"/>
+        <mission name="Engineer - restore a route"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Deployment support platoon">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To follow"/>
-        <mission name="Engineer - To activate obstacle"/>
-        <mission name="Engineer - To enhance mobility"/>
-        <mission name="Engineer - To bypass obstacles"/>
-        <mission name="Engineer - To clear obstacles"/>
-        <mission name="Engineer - To clean up area"/>
-        <mission name="Engineer - To operate a crossing site"/>
-        <mission name="Engineer - To operate a new crossing site"/>
-        <mission name="Engineer - To open a route"/>
-        <mission name="Engineer - To build camps"/>
-        <mission name="Engineer - To perform deployment support work"/>
-        <mission name="Engineer - To perform counter-mobility work"/>
-        <mission name="Engineer - To perform protection work"/>
-        <mission name="Engineer - To reconnoiter a route"/>
-        <mission name="Engineer - To reconnoiter a crossing site"/>
-        <mission name="Engineer - To reconnoiter an area"/>
-        <mission name="Engineer - To reinforce"/>
-        <mission name="Engineer - To resume work"/>
-        <mission name="Engineer - To restore a route"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="follow"/>
+        <mission name="Engineer - activate obstacle"/>
+        <mission name="Engineer - enhance mobility"/>
+        <mission name="Engineer - bypass obstacles"/>
+        <mission name="Engineer - clear obstacles"/>
+        <mission name="Engineer - clean up area"/>
+        <mission name="Engineer - operate a crossing site"/>
+        <mission name="Engineer - operate a new crossing site"/>
+        <mission name="Engineer - open a route"/>
+        <mission name="Engineer - build camps"/>
+        <mission name="Engineer - perform deployment support work"/>
+        <mission name="Engineer - perform counter-mobility work"/>
+        <mission name="Engineer - perform protection work"/>
+        <mission name="Engineer - reconnoiter a route"/>
+        <mission name="Engineer - reconnoiter a crossing site"/>
+        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - reinforce"/>
+        <mission name="Engineer - resume work"/>
+        <mission name="Engineer - restore a route"/>
       </missions>
     </unit>
     <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche blindee\Model.hal" name="LRS troop">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="Human Intelligence - To exfiltrate"/>
-        <mission name="Human Intelligence - To report information"/>
-        <mission name="Human Intelligence - To guide"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="Human Intelligence - exfiltrate"/>
+        <mission name="Human Intelligence - report information"/>
+        <mission name="Human Intelligence - guide"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="Drone_SDTI" file="\Appui\Rens\Pions\Roim\Drone SDTI\Model.hal" name="Drone">
       <missions>
-        <mission name="Imagery Intelligence (real time UAV) - To report information"/>
+        <mission name="Imagery Intelligence (real time UAV) - report information"/>
       </missions>
     </unit>
     <unit dia-type="Section_SDTI_MiseEnOeuvre" file="\Appui\Rens\Pions\Roim\Son mise en oeuvre SDTI\Model.hal" name="Drones station_">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="Imagery Intelligence - To operate"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="Imagery Intelligence - operate"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="Systeme_Start" file="Appui\Rens\Pions\Roem\Systeme START_\Model.hal" name="Listening station_">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="Electronic Intelligence - To report information"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="Electronic Intelligence - report information"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="section_Brovab" file="Appui\Rens\Pions\Roem\BROVAB\Model.hal" name="Jamming station_">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="Electronic Intelligence - To support"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="Electronic Intelligence - support"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="Systeme_Stair" file="Appui\Rens\Pions\Roem\Systeme STAIR\Model.hal" name="Radar detection station_">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="Electronic Intelligence - To report information"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="Electronic Intelligence - report information"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="Patrouille_RBRR_RASIT" file="\Appui\Rens\Pions\Rohum\RBRR\Pat recherche RASIT\Model.hal" name="Ground radar surveillance">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="Human Intelligence - To exfiltrate"/>
-        <mission name="Human Intelligence - To report information"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="Human Intelligence - exfiltrate"/>
+        <mission name="Human Intelligence - report information"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="Equipe_NBC_Dec" file="Appui\Nbc\Pions\Pat Dec\model.hal" name="NBC decontamination troop">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To follow"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="NBC - To operate a decontamination site"/>
-        <mission name="NBC - To decontaminate an area"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="follow"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="NBC - operate a decontamination site"/>
+        <mission name="NBC - decontaminate an area"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
       </missions>
     </unit>
     <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.hal" name="NBC reconnaissance troop">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To follow"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="NBC - To reconnoiter a route"/>
-        <mission name="NBC - To reconnoiter an area"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="follow"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="NBC - reconnoiter a route"/>
+        <mission name="NBC - reconnoiter an area"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
       </missions>
     </unit>
     <unit dia-type="Patrouille_NBC_RE" file="Appui\Nbc\Pions\Pat RE\model.hal" name="NBC ROTA troop">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To follow"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="NBC - To reconnoiter a ROTA site"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="follow"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="NBC - reconnoiter a ROTA site"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
       </missions>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1\Model.hal" name="Firing platoon">
       <missions>
-        <mission name="Field Artillery - To operate">
+        <mission name="Field Artillery - operate">
           <fragorder name="Fire"/>
         </mission>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Field Artillery - To operate (on position)">
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Field Artillery - operate (on position)">
           <fragorder name="Fire"/>
         </mission>
       </missions>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco TRF1\Model.hal" name="Field artillery reconnaissance">
       <missions>
-        <mission name="Field Artillery - To reconnoiter deployment area"/>
-        <mission name="To move"/>
-        <mission name="To follow"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="Field Artillery - reconnoiter deployment area"/>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\model.hal" name="Escort And Close Support Helicopter Patrol">
       <missions>
-        <mission name="Army Aviation - To cover">
+        <mission name="Army Aviation - cover">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To destroy flying enemy">
+        <mission name="Army Aviation - destroy flying enemy">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To scout">
+        <mission name="Army Aviation - scout">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To escort">
+        <mission name="Army Aviation - escort">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To screen">
+        <mission name="Army Aviation - screen">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To reconnoiter enemy positions">
+        <mission name="Army Aviation - reconnoiter enemy positions">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To reconnoiter">
+        <mission name="Army Aviation - reconnoiter">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To monitor">
+        <mission name="Army Aviation - monitor">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To move">
+        <mission name="move">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To follow">
+        <mission name="follow">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To go through decontamination process">
+        <mission name="go through decontamination process">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To park">
+        <mission name="park">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To adopt transportation posture">
+        <mission name="adopt transportation posture">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To deny population crossing">
+        <mission name="deny population crossing">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To report information on populations">
+        <mission name="report information on populations">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To replenish">
+        <mission name="Army Aviation - replenish">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="To withdraw">
+        <mission name="withdraw">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To support (in contact)">
+        <mission name="Army Aviation - support (in contact)">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To attack">
+        <mission name="Army Aviation - attack">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To destroy (in a specific area)">
+        <mission name="Army Aviation - destroy (in a specific area)">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To delay">
+        <mission name="Army Aviation - delay">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1397,71 +1397,71 @@
     </unit>
     <unit dia-type="AirDefenseHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.hal" name="Air Defence Helicopter Patrol">
       <missions>
-        <mission name="Army Aviation - To cover">
+        <mission name="Army Aviation - cover">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To destroy flying enemy">
+        <mission name="Army Aviation - destroy flying enemy">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To scout">
+        <mission name="Army Aviation - scout">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To escort">
+        <mission name="Army Aviation - escort">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To screen">
+        <mission name="Army Aviation - screen">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To reconnoiter enemy positions">
+        <mission name="Army Aviation - reconnoiter enemy positions">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To reconnoiter">
+        <mission name="Army Aviation - reconnoiter">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To monitor">
+        <mission name="Army Aviation - monitor">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To move">
+        <mission name="move">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To follow">
+        <mission name="follow">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To go through decontamination process">
+        <mission name="go through decontamination process">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To park">
+        <mission name="park">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To adopt transportation posture">
+        <mission name="adopt transportation posture">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To deny population crossing">
+        <mission name="deny population crossing">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To report information on populations">
+        <mission name="report information on populations">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To replenish">
+        <mission name="Army Aviation - replenish">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="To withdraw">
+        <mission name="withdraw">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1469,49 +1469,49 @@
     </unit>
     <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.hal" name="General Purpose Helicopter Patrol">
       <missions>
-        <mission name="To move">
+        <mission name="move">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To follow">
+        <mission name="follow">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To go through decontamination process">
+        <mission name="go through decontamination process">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To park">
+        <mission name="park">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To adopt transportation posture">
+        <mission name="adopt transportation posture">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To replenish">
+        <mission name="Army Aviation - replenish">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="To withdraw">
+        <mission name="withdraw">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To heliport">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="Modify Disembarking point"/>
-          <fragorder name="Army Aviation - Change mission type"/>
-        </mission>
-        <mission name="Army Aviation - To helitransport replenishment sites">
-          <fragorder name="Cancel maneuver"/>
-          <fragorder name="Army Aviation - Change mission type"/>
-        </mission>
-        <mission name="Army Aviation - To helitransport">
+        <mission name="Army Aviation - heliport">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Modify Disembarking point"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To extract">
+        <mission name="Army Aviation - helitransport replenishment sites">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - helitransport">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Modify Disembarking point"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - extract">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1519,31 +1519,31 @@
     </unit>
     <unit dia-type="AACCP" file="Appui\Alat\Pions\Pat Hm\model.hal" name="AAC CP">
       <missions>
-        <mission name="To move">
+        <mission name="move">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To follow">
+        <mission name="follow">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To go through decontamination process">
+        <mission name="go through decontamination process">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To park">
+        <mission name="park">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To adopt transportation posture">
+        <mission name="adopt transportation posture">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To replenish">
+        <mission name="Army Aviation - replenish">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="To withdraw">
+        <mission name="withdraw">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1551,10 +1551,10 @@
     </unit>
     <unit dia-type="AirCP" file="Air\Pions\PC\model.hal" name="Air CP">
       <missions>
-        <mission name="To move">
+        <mission name="move">
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="To follow">
+        <mission name="follow">
           <fragorder name="Cancel maneuver"/>
         </mission>
       </missions>
@@ -1563,805 +1563,781 @@
   <automats>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.hal" name="Strategic Bomber Squadron">
       <missions>
-        <mission name="To move"/>
+        <mission name="move"/>
       </missions>
     </automat>
     <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.hal" name="Marine Squadron">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To transport">
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
     </automat>
     <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.hal" name="Very Short Range Surface To Air Battery">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Air Defense Artillery - To defend a route"/>
-        <mission name="Air Defense Artillery (MISTRAL) - To defend site"/>
-        <mission name="Air Defense Artillery (MISTRAL) - To defend area"/>
-        <mission name="Air Defense Artillery (MISTRAL) - To monitor"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Air Defense Artillery - defend a route"/>
+        <mission name="Air Defense Artillery (MISTRAL) - defend site"/>
+        <mission name="Air Defense Artillery (MISTRAL) - defend area"/>
+        <mission name="Air Defense Artillery (MISTRAL) - monitor"/>
+        <mission name="adopt transportation posture"/>
       </missions>
     </automat>
     <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.hal" name="Short Range Surface To Air Battery">
       <missions>
-        <mission name="Air Defense Artillery - To defend area"/>
-        <mission name="Air Defense Artillery - To defend site"/>
-        <mission name="Air Defense Artillery - To monitor"/>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Air Defense Artillery - To defend a route"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="Air Defense Artillery - defend area"/>
+        <mission name="Air Defense Artillery - defend site"/>
+        <mission name="Air Defense Artillery - monitor"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Air Defense Artillery - defend a route"/>
+        <mission name="adopt transportation posture"/>
       </missions>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.hal" name="Attack Helicopter Squadron">
       <missions>
-        <mission name="Army Aviation - To reconnoiter">
+        <mission name="Army Aviation - reconnoiter">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To screen">
+        <mission name="Army Aviation - screen">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To monitor">
+        <mission name="Army Aviation - monitor">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To move">
+        <mission name="move">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To go through decontamination process">
+        <mission name="go through decontamination process">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To replenish">
+        <mission name="replenish">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To attack">
+        <mission name="Army Aviation - attack">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="Army Aviation - To destroy">
+        <mission name="Army Aviation - destroy">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To delay">
+        <mission name="Army Aviation - delay">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To block">
+        <mission name="Army Aviation - block">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To attack (flying enemy)">
+        <mission name="Army Aviation - attack (flying enemy)">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="Army Aviation - To support">
+        <mission name="Army Aviation - support">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="Army Aviation - To cover">
+        <mission name="Army Aviation - cover">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To destroy (in an area)">
+        <mission name="Army Aviation - destroy (in an area)">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="Army Aviation - To escort">
+        <mission name="Army Aviation - escort">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To assist flying unit in rearward maneuver">
+        <mission name="Army Aviation - assist flying unit in rearward maneuver">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To park">
+        <mission name="park">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To adopt transportation posture">
+        <mission name="adopt transportation posture">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To replenish">
+        <mission name="Army Aviation - replenish">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="To withdraw"/>
+        <mission name="withdraw"/>
       </missions>
     </automat>
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.hal" name="Transport Helicopter Squadron">
       <missions>
-        <mission name="Army Aviation - To heliport">
+        <mission name="Army Aviation - heliport">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Modify Disembarking point"/>
         </mission>
-        <mission name="Army Aviation - To helitransport">
+        <mission name="Army Aviation - helitransport">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Modify Disembarking point"/>
         </mission>
-        <mission name="To move">
+        <mission name="move">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To go through decontamination process">
+        <mission name="go through decontamination process">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To replenish">
+        <mission name="replenish">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To park">
+        <mission name="park">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="To adopt transportation posture">
+        <mission name="adopt transportation posture">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - To replenish">
+        <mission name="Army Aviation - replenish">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="To withdraw"/>
+        <mission name="withdraw"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.hal" name="Infantery company">
       <missions>
-        <mission name="Infantry - To support"/>
-        <mission name="Infantry - To attack (smoothly)">
+        <mission name="Infantry - support"/>
+        <mission name="Infantry - attack (smoothly)">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Infantry - To bar a direction"/>
-        <mission name="Infantry - To control"/>
-        <mission name="Infantry - To cover"/>
-        <mission name="Infantry - To block">
+        <mission name="Infantry - bar a direction"/>
+        <mission name="Infantry - control"/>
+        <mission name="Infantry - cover"/>
+        <mission name="Infantry - defend (until the end)"/>
+        <mission name="Infantry - scout"/>
+        <mission name="Infantry - flank-guard"/>
+        <mission name="Infantry - delay">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="Infantry - To defend (until the end)"/>
-        <mission name="Infantry - To scout"/>
-        <mission name="Infantry - To fix"/>
-        <mission name="Infantry - To flank-guard"/>
-        <mission name="Infantry - To delay">
-          <fragorder name="Withdraw"/>
-        </mission>
-        <mission name="Infantry - To harass"/>
-        <mission name="Infantry - To deny"/>
-        <mission name="Infantry - To defend (wear)">
-          <fragorder name="Withdraw"/>
-        </mission>
-        <mission name="Infantry - To take and maintain contact"/>
-        <mission name="Infantry - To reconnoiter"/>
-        <mission name="Infantry - To assist units in their rearward maneuvers"/>
-        <mission name="Infantry - To reduce"/>
-        <mission name="Infantry - To relieve"/>
-        <mission name="Infantry - To break contact"/>
-        <mission name="Infantry - To seize"/>
-        <mission name="Infantry - To hold"/>
-        <mission name="To replenish"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Infantry - To monitor"/>
+        <mission name="Infantry - harass"/>
+        <mission name="Infantry - deny"/>
+        <mission name="Infantry - take and maintain contact"/>
+        <mission name="Infantry - reconnoiter"/>
+        <mission name="Infantry - relieve"/>
+        <mission name="Infantry - break contact"/>
+        <mission name="Infantry - seize"/>
+        <mission name="Infantry - hold"/>
+        <mission name="replenish"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Infantry - monitor"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.hal" name="LRA infantery company">
       <missions>
-        <mission name="Infantry - To bar a direction"/>
-        <mission name="Infantry - To cover"/>
-        <mission name="Infantry - To block">
+        <mission name="Infantry - bar a direction"/>
+        <mission name="Infantry - cover"/>
+        <mission name="Infantry - block">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="Infantry - To monitor"/>
-        <mission name="To replenish"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Infantry - To support an attack"/>
-        <mission name="Infantry - To assist units in their rearward maneuvers"/>
-        <mission name="Infantry - To support a delay maneuver"/>
-        <mission name="Infantry - To support (dynamic)"/>
+        <mission name="Infantry - monitor"/>
+        <mission name="replenish"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Infantry - support an attack"/>
+        <mission name="Infantry - assist units in their rearward maneuvers"/>
+        <mission name="Infantry - support a delay maneuver"/>
+        <mission name="Infantry - support (dynamic)"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieLogTC2" file="Appui\Log\Automates\Model.hal" name="TC2">
       <missions>
-        <mission name="Logistics - To deploy">
+        <mission name="Logistics - deploy">
           <fragorder name="Change work mode"/>
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change tactical reparations priorities"/>
           <fragorder name="Change reparations priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To Follow"/>
-        <mission name="To move"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="Follow"/>
+        <mission name="move"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieLog" file="Appui\Log\Automates\Model.hal" name="Logistic CP">
       <missions>
-        <mission name="Logistics - To deploy"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
+        <mission name="Logistics - deploy"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
       </missions>
     </automat>
     <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.hal" name="Escadron Transport Blindes">
       <missions>
-        <mission name="To replenish"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To transport">
+        <mission name="replenish"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
       </missions>
     </automat>
     <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.hal" name="Peloton Circulation">
       <missions>
-        <mission name="To replenish"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="Logistics - To monitor"/>
-        <mission name="Logistics - To support mobility (in an area)"/>
-        <mission name="Logistics - To support mobility"/>
-        <mission name="Logistics - To operate parking area"/>
-        <mission name="Logistics - To reconnoiter a contaminated area"/>
-        <mission name="Logistics - To block an area"/>
-        <mission name="Logistics - To operate checkpoints"/>
-        <mission name="Logistics - To reconnoiter a route"/>
-        <mission name="Logistics - To support crossing"/>
-        <mission name="Logistics - To reconnoiter a deployment area"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="replenish"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="Logistics - monitor"/>
+        <mission name="Logistics - support mobility (in an area)"/>
+        <mission name="Logistics - support mobility"/>
+        <mission name="Logistics - operate parking area"/>
+        <mission name="Logistics - reconnoiter a contaminated area"/>
+        <mission name="Logistics - block an area"/>
+        <mission name="Logistics - operate checkpoints"/>
+        <mission name="Logistics - reconnoiter a route"/>
+        <mission name="Logistics - support crossing"/>
+        <mission name="Logistics - reconnoiter a deployment area"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat COBRA\Model.hal" name="Firefinder radar battery">
       <missions>
-        <mission name="Field Artillery - To deploy"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="Field Artillery - deploy"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.hal" name="Firefinder reconnaissance battery">
       <missions>
-        <mission name="Field Artillery - To reconnoiter deployment areas"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="Field Artillery - reconnoiter deployment areas"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Section RATAC\Model.hal" name="Artillery locating radar platoon">
       <missions>
-        <mission name="Field Artillery - To collect intelligence on objectives"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To cross"/>
+        <mission name="Field Artillery - collect intelligence on objectives"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="cross"/>
       </missions>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.hal" name="FIST">
       <missions>
-        <mission name="Field Artillery - To deploy"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Field Artillery - To collect intelligence for battalion"/>
+        <mission name="Field Artillery - deploy"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Field Artillery - collect intelligence for battalion"/>
       </missions>
     </automat>
     <automat dia-type="Refugies" file="Population\Refugies\Automates\Refugie\Model.hal" name="Refugees">
       <missions>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.hal" name="Major units CP">
       <missions>
-        <mission name="Communication - To command"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To move"/>
+        <mission name="Communication - command"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="move"/>
       </missions>
     </automat>
     <automat dia-type="T_AutomateModeleDEC" file="Population\Milices\Automate\Model.hal" name="Militias">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Asymetric - To attack populations(in an area)"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Asymetric - attack populations(in an area)"/>
       </missions>
     </automat>
     <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.hal" name="Commando platoon">
       <missions>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="withdraw"/>
       </missions>
     </automat>
     <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.hal" name="Theater High Altitude Aera Defense Battery">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Air Defense Artillery (HAWK) - To defend site"/>
-        <mission name="Air Defense Artillery (HAWK) - To defend area"/>
-        <mission name="Air Defense Artillery (HAWK) - To monitor"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Air Defense Artillery (HAWK) - defend site"/>
+        <mission name="Air Defense Artillery (HAWK) - defend area"/>
+        <mission name="Air Defense Artillery (HAWK) - monitor"/>
+        <mission name="adopt transportation posture"/>
       </missions>
     </automat>
     <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.hal" name="Terroristes">
       <missions>
-        <mission name="To move"/>
-        <mission name="To replenish"/>
+        <mission name="move"/>
+        <mission name="replenish"/>
       </missions>
     </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.hal" name="MBT squadron">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Armor - To support"/>
-        <mission name="Armor - To attack">
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Armor - support"/>
+        <mission name="Armor - attack">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Armor - To counter-attack">
+        <mission name="Armor - control"/>
+        <mission name="Armor - cover"/>
+        <mission name="Armor - block"/>
+        <mission name="Armor - scout"/>
+        <mission name="Armor - carry out a raid">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Armor - To control"/>
-        <mission name="Armor - To cover"/>
-        <mission name="Armor - To block"/>
-        <mission name="Armor - To scout"/>
-        <mission name="Armor - To carry out a raid">
-          <fragorder name="Cross departure line"/>
-        </mission>
-        <mission name="Armor - To flank-guard"/>
-        <mission name="Armor - To delay">
+        <mission name="Armor - flank-guard"/>
+        <mission name="Armor - delay">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="Armor - To fix"/>
-        <mission name="Armor - To deny"/>
-        <mission name="Armor - To take contact"/>
-        <mission name="Armor - To reconnoiter"/>
-        <mission name="Armor - To reduce"/>
-        <mission name="Armor - To report information"/>
-        <mission name="Armor - To relieve"/>
-        <mission name="Armor - To assist units in their rearward maneuvers"/>
-        <mission name="Armor - To seize"/>
-        <mission name="Armor - To support (dynamic)"/>
-        <mission name="Armor - To hold"/>
-        <mission name="Armor - To monitor"/>
-        <mission name="Armor - To support (from a position)"/>
-        <mission name="Armor - To escort"/>
-        <mission name="Armor - To escort Units"/>
-        <mission name="Armor - To screen"/>
-        <mission name="Armor - To protect CP"/>
-        <mission name="Armor - To reconnoiter (a position)"/>
+        <mission name="Armor - deny"/>
+        <mission name="Armor - take contact"/>
+        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - reduce"/>
+        <mission name="Armor - relieve"/>
+        <mission name="Armor - seize"/>
+        <mission name="Armor - hold"/>
+        <mission name="Armor - monitor"/>
+        <mission name="Armor - escort"/>
+        <mission name="Armor - escort Units"/>
+        <mission name="Armor - screen"/>
+        <mission name="Armor - protect CP"/>
+        <mission name="Armor - reconnoiter (a position)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.hal" name="Light armored squadron">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Armor - To support"/>
-        <mission name="Armor - To attack">
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Armor - attack">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Armor - To counter-attack">
+        <mission name="Armor - counter-attack">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Armor - To control"/>
-        <mission name="Armor - To cover"/>
-        <mission name="Armor - To block"/>
-        <mission name="Armor - To scout"/>
-        <mission name="Armor - To carry out a raid">
+        <mission name="Armor - control"/>
+        <mission name="Armor - cover"/>
+        <mission name="Armor - block"/>
+        <mission name="Armor - scout"/>
+        <mission name="Armor - carry out a raid">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Armor - To flank-guard"/>
-        <mission name="Armor - To delay">
+        <mission name="Armor - flank-guard"/>
+        <mission name="Armor - delay">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="Armor - To fix"/>
-        <mission name="Armor - To deny"/>
-        <mission name="Armor - To take contact"/>
-        <mission name="Armor - To reconnoiter"/>
-        <mission name="Armor - To reduce"/>
-        <mission name="Armor - To report information"/>
-        <mission name="Armor - To relieve"/>
-        <mission name="Armor - To assist units in their rearward maneuvers"/>
-        <mission name="Armor - To seize"/>
-        <mission name="Armor - To support (dynamic)"/>
-        <mission name="Armor - To hold"/>
-        <mission name="Armor - To monitor"/>
-        <mission name="Armor - To support (from a position)"/>
-        <mission name="Armor - To escort"/>
-        <mission name="Armor - To escort Units"/>
-        <mission name="Armor - To screen"/>
-        <mission name="Armor - To protect CP"/>
-        <mission name="Armor - To reconnoiter (a position)"/>
+        <mission name="Armor - deny"/>
+        <mission name="Armor - take contact"/>
+        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - reduce"/>
+        <mission name="Armor - seize"/>
+        <mission name="Armor - hold"/>
+        <mission name="Armor - monitor"/>
+        <mission name="Armor - escort"/>
+        <mission name="Armor - escort Units"/>
+        <mission name="Armor - screen"/>
+        <mission name="Armor - protect CP"/>
+        <mission name="Armor - reconnoiter (a position)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
+        <mission name="Armor - support"/>
       </missions>
     </automat>
     <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\PEL EEI\model.hal" name="Scout platoon">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="Armor - To control"/>
-        <mission name="Armor - To scout"/>
-        <mission name="Armor - To screen"/>
-        <mission name="Armor - To report information"/>
-        <mission name="Armor - To monitor"/>
-        <mission name="Armor - To reconnoiter (a position)"/>
-        <mission name="Armor - To escort"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="Armor - To escort Units"/>
-        <mission name="Armor - To cover"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="Armor - control"/>
+        <mission name="Armor - scout"/>
+        <mission name="Armor - screen"/>
+        <mission name="Armor - monitor"/>
+        <mission name="Armor - reconnoiter (a position)"/>
+        <mission name="Armor - escort"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="Armor - escort Units"/>
+        <mission name="Armor - cover"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Deployment support company">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Engineer - To clear obstacles in an area"/>
-        <mission name="Engineer - To support bridging"/>
-        <mission name="Engineer - To breach"/>
-        <mission name="Engineer - To open routes"/>
-        <mission name="Engineer - To perform work"/>
-        <mission name="Engineer - To reconnoiter an area"/>
-        <mission name="Engineer - To restore routes"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Engineer - clear obstacles in an area"/>
+        <mission name="Engineer - support bridging"/>
+        <mission name="Engineer - breach"/>
+        <mission name="Engineer - open routes"/>
+        <mission name="Engineer - perform work"/>
+        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Mobility support company">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Engineer - To clear obstacles in an area"/>
-        <mission name="Engineer - To support bridging"/>
-        <mission name="Engineer - To breach"/>
-        <mission name="Engineer - To open routes"/>
-        <mission name="Engineer - To perform work"/>
-        <mission name="Engineer - To reconnoiter an area"/>
-        <mission name="Engineer - To restore routes"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Engineer - clear obstacles in an area"/>
+        <mission name="Engineer - support bridging"/>
+        <mission name="Engineer - breach"/>
+        <mission name="Engineer - open routes"/>
+        <mission name="Engineer - perform work"/>
+        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Countermobility company">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Engineer - To clear obstacles in an area"/>
-        <mission name="Engineer - To support bridging"/>
-        <mission name="Engineer - To breach"/>
-        <mission name="Engineer - To open routes"/>
-        <mission name="Engineer - To perform work"/>
-        <mission name="Engineer - To reconnoiter an area"/>
-        <mission name="Engineer - To restore routes"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Engineer - clear obstacles in an area"/>
+        <mission name="Engineer - support bridging"/>
+        <mission name="Engineer - breach"/>
+        <mission name="Engineer - open routes"/>
+        <mission name="Engineer - perform work"/>
+        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Bridging company">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Engineer - To clear obstacles in an area"/>
-        <mission name="Engineer - To support bridging"/>
-        <mission name="Engineer - To breach"/>
-        <mission name="Engineer - To open routes"/>
-        <mission name="Engineer - To perform work"/>
-        <mission name="Engineer - To reconnoiter an area"/>
-        <mission name="Engineer - To restore routes"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Engineer - clear obstacles in an area"/>
+        <mission name="Engineer - support bridging"/>
+        <mission name="Engineer - breach"/>
+        <mission name="Engineer - open routes"/>
+        <mission name="Engineer - perform work"/>
+        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
     <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.hal" name="Drone station">
       <missions>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="Imagery Intelligence (real time UAV) - To report information"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To replenish"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="Imagery Intelligence (real time UAV) - report information"/>
+        <mission name="go through decontamination process"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="replenish"/>
       </missions>
     </automat>
     <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.hal" name="Listening station">
       <missions>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="Electronic Intelligence - To report information"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="Electronic Intelligence - report information"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
       </missions>
     </automat>
     <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.hal" name="Jamming station">
       <missions>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="Electronic Intelligence - To report information"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="Electronic Intelligence - report information"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </automat>
     <automat dia-type="Stair" file="Appui\Rens\Automates\Roem\Systeme STAIR\Model.hal" name="Radar detection station">
       <missions>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="Electronic Intelligence - To report information"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="Electronic Intelligence - report information"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </automat>
     <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.hal" name="Ground Surveillance Radar">
       <missions>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="Human Intelligence - To report information"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="Human Intelligence - report information"/>
       </missions>
     </automat>
     <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.hal" name="LRS units">
       <missions>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="Human Intelligence - To exfiltrate"/>
-        <mission name="Human Intelligence - To guide"/>
-        <mission name="Human Intelligence - To report information"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="Human Intelligence - exfiltrate"/>
+        <mission name="Human Intelligence - guide"/>
+        <mission name="Human Intelligence - report information"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </automat>
     <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.hal" name="NBC reconnaissance platoon">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="NBC - To reconnoiter an axis"/>
-        <mission name="NBC - To reconnoiter an area"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="NBC - reconnoiter an axis"/>
+        <mission name="NBC - reconnoiter an area"/>
+        <mission name="adopt transportation posture"/>
       </missions>
     </automat>
     <automat dia-type="Section_NBC_Dec" file="Appui\Nbc\Automates\Son Dec\model.hal" name="NBC decontamination platoon">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="NBC - To operate a decontamination site"/>
-        <mission name="NBC - To decontaminate an area"/>
-        <mission name="To adopt transportation posture"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="NBC - operate a decontamination site"/>
+        <mission name="NBC - decontaminate an area"/>
+        <mission name="adopt transportation posture"/>
       </missions>
     </automat>
     <automat dia-type="Section_NBC_RE" file="Appui\Nbc\Automates\Son RE\model.hal" name="NBC ROTA  platoon">
       <missions>
-        <mission name="To withdraw"/>
-        <mission name="To move"/>
-        <mission name="To cross"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To replenish"/>
-        <mission name="NBC - To reconnoiter ROTA sites"/>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="go through decontamination process"/>
+        <mission name="replenish"/>
+        <mission name="NBC - reconnoiter ROTA sites"/>
       </missions>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.hal" name="Field battery">
       <missions>
-        <mission name="Field Artillery - To deploy"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="Field Artillery - deploy"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.hal" name="Recconnaissance battery">
       <missions>
-        <mission name="Field Artillery - To reconnoiter deployment areas"/>
-        <mission name="To move"/>
-        <mission name="To withdraw"/>
-        <mission name="To go through decontamination process"/>
-        <mission name="To adopt transportation posture"/>
-        <mission name="To replenish"/>
-        <mission name="To park"/>
-        <mission name="To manage refugees"/>
-        <mission name="To manage prisoners"/>
+        <mission name="Field Artillery - reconnoiter deployment areas"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="replenish"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
       </missions>
     </automat>
     <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.hal" name="Battalion">
       <missions>
         <mission name="Battalion - Move to"/>
-        <mission name="Battalion - To Attack"/>
-        <mission name="Battalion - To conduct a blocking action"/>
-        <mission name="Battalion - To delay"/>
+        <mission name="Battalion - Attack"/>
+        <mission name="Battalion - conduct a blocking action"/>
+        <mission name="Battalion - delay"/>
         <mission name="Battalion - Movement to contact"/>
-        <mission name="Battalion - To Control"/>
-        <mission name="Battalion - To make a raid"/>
+        <mission name="Battalion - Control"/>
+        <mission name="Battalion - make a raid"/>
       </missions>
     </automat>
   </automats>
   <populations>
     <population dia-type="T_Population" file="Population\Populations\Model.hal" name="Population">
       <missions>
-        <mission name="Population - To move">
+        <mission name="Population - move">
           <fragorder name="Population - Change attitude"/>
           <fragorder name="Resume maneuver"/>
           <fragorder name="Pause maneuver"/>
         </mission>
-        <mission name="Population - To attack">
+        <mission name="Population - attack">
           <fragorder name="Population - Change attitude"/>
           <fragorder name="Resume maneuver"/>
           <fragorder name="Pause maneuver"/>
         </mission>
-        <mission name="Population - To demonstrate">
+        <mission name="Population - demonstrate">
           <fragorder name="Population - Change attitude"/>
           <fragorder name="Resume maneuver"/>
           <fragorder name="Pause maneuver"/>
