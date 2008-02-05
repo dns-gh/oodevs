@@ -1741,18 +1741,15 @@
         <mission name="Infantry - bar a direction"/>
         <mission name="Infantry - control"/>
         <mission name="Infantry - cover"/>
-        <mission name="Infantry - defend (until the end)"/>
         <mission name="Infantry - scout"/>
         <mission name="Infantry - flank-guard"/>
         <mission name="Infantry - delay">
           <fragorder name="Withdraw"/>
         </mission>
         <mission name="Infantry - harass"/>
-        <mission name="Infantry - deny"/>
         <mission name="Infantry - take and maintain contact"/>
         <mission name="Infantry - reconnoiter"/>
         <mission name="Infantry - relieve"/>
-        <mission name="Infantry - break contact"/>
         <mission name="Infantry - seize"/>
         <mission name="Infantry - hold"/>
         <mission name="replenish"/>
@@ -1767,6 +1764,7 @@
         <mission name="Infantry - monitor"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
+        <mission name="Infantry - block"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.hal" name="LRA infantery company">
@@ -1786,9 +1784,6 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="Infantry - support an attack"/>
-        <mission name="Infantry - assist units in their rearward maneuvers"/>
-        <mission name="Infantry - support a delay maneuver"/>
         <mission name="Infantry - support (dynamic)"/>
       </missions>
     </automat>
@@ -2001,7 +1996,6 @@
         <mission name="Armor - delay">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="Armor - deny"/>
         <mission name="Armor - take contact"/>
         <mission name="Armor - reconnoiter"/>
         <mission name="Armor - reduce"/>
@@ -2012,7 +2006,6 @@
         <mission name="Armor - escort"/>
         <mission name="Armor - escort Units"/>
         <mission name="Armor - screen"/>
-        <mission name="Armor - protect CP"/>
         <mission name="Armor - reconnoiter (a position)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
@@ -2046,7 +2039,6 @@
         <mission name="Armor - delay">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="Armor - deny"/>
         <mission name="Armor - take contact"/>
         <mission name="Armor - reconnoiter"/>
         <mission name="Armor - reduce"/>
@@ -2056,7 +2048,6 @@
         <mission name="Armor - escort"/>
         <mission name="Armor - escort Units"/>
         <mission name="Armor - screen"/>
-        <mission name="Armor - protect CP"/>
         <mission name="Armor - reconnoiter (a position)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
