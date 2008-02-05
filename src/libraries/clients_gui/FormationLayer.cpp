@@ -45,7 +45,7 @@ void FormationLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_AB
 {
     const kernel::Formation_ABC& formation = static_cast< const kernel::Formation_ABC& >( entity );
     strategy_.SelectColor( formation );
-    if( tools_.ShouldDisplay( "Formations" ) )
+    if( tools_.ShouldDisplay( "Formations" ) && EntityLayer< kernel::Formation_ABC >::ShouldDisplay( formation ) )
     {
 //        viewport.SetHotpoint( position );
         entity.Draw( geometry::Point2f(), viewport, tools_ );
