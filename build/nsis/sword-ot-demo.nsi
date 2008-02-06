@@ -93,7 +93,8 @@ Section "!Basic"
     File "${OUTDIR}\generation_app\*.exe"
     
     SetOutPath "$INSTDIR\data\terrains"
-    File /r /x ".svn" "${DATADIR}\data\terrains\demo"
+    File /r /x ".svn" "${DATADIR}\data\terrains\Nord egypt"
+    File /r /x ".svn" "${DATADIR}\data\terrains\Paris_Est"
        
     SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\Sword-OT" "Install_Dir" "$INSTDIR"
@@ -118,7 +119,8 @@ SectionEnd
 Section "Exercises"
     SectionIn RO
     SetOutPath "$INSTDIR\exercises"
-    File /r /x ".svn" "${DATADIR}\exercises\demo"
+    File /r /x ".svn" "${DATADIR}\exercises\Egypt"
+    File /r /x ".svn" "${DATADIR}\exercises\Paris"
 SectionEnd
 
 Section "Documentation"
