@@ -426,7 +426,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="Truck convoy" id="14" name="Pion Convoi" type="Pion LOG Convoi">
+  <unit decisional-model="Truck convoy" id="14" name="Convoy" type="Pion LOG Convoi">
     <nature atlas-nature="Blinde" level="oo" nature="combat service support/transportation"/>
     <equipments/>
     <crew-ranks>
@@ -543,7 +543,7 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="Peloton Transport Blindes" id="18" name="Peloton Transport Blindes CL100" type="Pion CIRCULATION">
+  <unit decisional-model="Peloton Transport Blindes" id="18" name="Medium transportation platoon" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/transportation"/>
     <equipments>
       <equipment count="15" crew="2" major="true" type="TRM 700 100"/>
@@ -2046,7 +2046,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2850s"/>
   </unit>
-  <unit decisional-model="Peloton Transport Blindes" id="71" name="Peloton Transport Blindes CL50" type="Pion CIRCULATION">
+  <unit decisional-model="Peloton Transport Blindes" id="71" name="Heavy transportation platoon" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>

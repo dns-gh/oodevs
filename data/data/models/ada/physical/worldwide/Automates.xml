@@ -39,12 +39,12 @@
     <unit max-occurs="3" type="Heavy Escort and Close Support Helicopter Patrol"/>
     <unit max-occurs="2" type="General Purpose Helicopter Patrol"/>
   </automat>
-  <automat decisional-model="Escadron Transport Blindes" id="131" name="Escadron Transport Blinde" type="Automate CIRCULATION">
+  <automat decisional-model="Escadron Transport Blindes" id="131" name="Transportation squadron" type="Automate CIRCULATION">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton CDT ESC TRPT"/>
-    <unit max-occurs="1" min-occurs="1" type="Peloton Transport Blindes CL100"/>
-    <unit max-occurs="1" min-occurs="1" type="Peloton Transport Blindes CL50"/>
+    <unit max-occurs="1" min-occurs="1" type="Medium transportation platoon"/>
+    <unit max-occurs="1" min-occurs="1" type="Heavy transportation platoon"/>
   </automat>
-  <automat decisional-model="Marine Squadron" id="132" name="Marine Squadron" type="Automate JOINT">
+  <automat decisional-model="Marine Squadron" id="132" name="Marine squadron" type="Automate JOINT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Marine CP"/>
     <unit max-occurs="8" min-occurs="8" type="Landing Crafts"/>
   </automat>
