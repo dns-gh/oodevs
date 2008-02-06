@@ -45,6 +45,7 @@ namespace tools
     QString ToString( E_LogSupplyHandlingStatus nType );
     QString ToString( E_LogMedicalHandlingStatus nType );
     QString ToString( E_LogMaintenanceHandlingStatus nType );
+    QString ToString( E_DotationFamily nType );
 
     QString Unknown();
 
@@ -55,6 +56,8 @@ namespace tools
     E_ObjectType       ObjectTypeFromString    ( const std::string& type );
     E_DotationFamily   DotationFamilyFromString( const std::string& type );
     E_NatureLevel      NatureLevelFromString   ( const std::string& type );
+
+    QString TranslateObjectType( const std::string& xmlType );
 };
 
 #endif // __Kernel_Tools_h_

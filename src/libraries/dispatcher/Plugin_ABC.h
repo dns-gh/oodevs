@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& message ) = 0;
+    virtual void Receive                  ( const ASN1T_MsgsSimToClient& message ) = 0;
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile ) = 0;
     virtual void NotifyClientLeft         ( ClientPublisher_ABC& client ) = 0;
     //@}

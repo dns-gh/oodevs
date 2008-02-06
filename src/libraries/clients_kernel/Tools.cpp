@@ -341,6 +341,15 @@ QString tools::ToString( E_LogMaintenanceHandlingStatus nType )
 }
 
 // -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2008-02-05
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_DotationFamily nType )
+{
+    return ENT_Tr::ConvertFromDotationFamily( nType ).c_str();
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::ObjectTypeFromString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
@@ -365,4 +374,15 @@ E_DotationFamily tools::DotationFamilyFromString( const std::string& type )
 E_NatureLevel tools::NatureLevelFromString( const std::string& type )
 {
     return ENT_Tr::ConvertToNatureLevel( type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::TranslateObjectType
+// Created: AGE 2008-02-06
+// -----------------------------------------------------------------------------
+QString tools::TranslateObjectType( const std::string& xmlType )
+{
+    return ENT_Tr::ConvertFromObjectType( 
+                ENT_Tr::ConvertToObjectType( xmlType ), ENT_Tr::eToTr
+                ).c_str();
 }

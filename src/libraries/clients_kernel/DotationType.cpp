@@ -22,15 +22,17 @@ using namespace xml;
 DotationType::DotationType( xistream& xis )
     : dType_( false )
 {
-    std::string name, category;
+    std::string xmlName, category;
     xis >> attribute( "id", id_ )
-        >> attribute( "name", name )
+        >> attribute( "name", xmlName )
         >> attribute( "category", category )
         >> optional() >> attribute( "d-type", dType_ );
-    name_ = name.c_str(); category_ = category.c_str();
-    nameId_ = tools::DotationFamilyFromString( name_.ascii() );
-    gaz_        = ( name_ == "carburant" );
-    ammunition_ = ( name_ == "munition" );
+    category_ = category.c_str();
+    nameId_ = tools::DotationFamilyFromString( xmlName );
+    name_ = tools::ToString( E_DotationFamily( nameId_ ) );
+
+    gaz_        = ( xmlName == "carburant" );
+    ammunition_ = ( xmlName == "munition" );
 }
     
 // -----------------------------------------------------------------------------

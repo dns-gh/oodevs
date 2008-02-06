@@ -56,7 +56,7 @@ PopulationKnowledge::~PopulationKnowledge()
 // Name: PopulationKnowledge::Update
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeCreation& msg )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeCreation&  )
 {
     FlagUpdate();
 }

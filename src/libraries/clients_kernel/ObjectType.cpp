@@ -13,6 +13,7 @@
 #include "Viewport_ABC.h"
 #include "objecticons.h"
 #include "xeumeuleu/xml.h"
+#include "tools.h"
 
 using namespace kernel;
 using namespace xml;
@@ -25,12 +26,12 @@ ObjectType::ObjectType( xistream& xis, unsigned long id )
     : id_( id )
 {
     xpm_ = TypeIcon();
-    std::string name;
-    xis >> attribute( "type", name )
+    std::string xmlType;
+    xis >> attribute( "type", xmlType )
         >> attribute( "can-be-maneuver-obstacle", canBeReservedObstacle_ )
         >> attribute( "can-be-developed", canBeValorized_ )
         >> attribute( "can-be-bypassed", canBeBypassed_ );
-    name_ = name.c_str();
+    name_ = tools::TranslateObjectType( xmlType );
 }
 
 // -----------------------------------------------------------------------------

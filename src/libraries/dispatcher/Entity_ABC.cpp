@@ -68,11 +68,10 @@ void Entity_ABC::EndSynchronisation( Synchroniser& synch )
 // Name: Entity_ABC::FlagUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-bool Entity_ABC::FlagUpdate( bool special /*= false */)
+void Entity_ABC::FlagUpdate( bool special /*= false */)
 {
     updated_ = true;
     special_ = special;
-    return synching_;
 }
 
 // -----------------------------------------------------------------------------

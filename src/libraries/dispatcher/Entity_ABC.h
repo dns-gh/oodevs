@@ -49,7 +49,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    bool FlagUpdate( bool special = false );
+    void FlagUpdate( bool special = false );
     void StartSynchronisation( Entity_ABC& next, bool create );
     //@}
 
