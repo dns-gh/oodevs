@@ -562,25 +562,7 @@
     </postures>
     <nbc decontamination-delay="7800s"/>
   </unit>
-  <unit decisional-model="Patrouille Circulation" id="19" name="Patrouille CIRCU P4" type="Pion CIRCULATION">
-    <nature atlas-nature="Log" level="oo" nature="combat service support/transportation"/>
-    <equipments>
-      <equipment count="2" crew="1" type="Motocycle"/>
-    </equipments>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="2" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="300s"/>
-      <posture name="Poste" setup-time="900s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="2700s"/>
-    </postures>
-    <nbc decontamination-delay="300s"/>
-    <drill-blow length="500" width="300"/>
-  </unit>
-  <unit decisional-model="Refugee" id="20" name="Refugee" type="Pion REFUGIE">
+  <unit decisional-model="Refugee" id="19" name="Refugee" type="Pion REFUGIE">
     <nature atlas-nature="None" level="none" nature=""/>
     <equipments>
       <equipment count="10" crew="100" major="true" type="Refugee"/>
@@ -597,7 +579,7 @@
     </postures>
     <nbc decontamination-delay="600s"/>
   </unit>
-  <unit decisional-model="LRSD" id="21" name="Artillery LRSD" type="Pion ASS">
+  <unit decisional-model="LRSD" id="20" name="Artillery LRSD" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Long Range Surveillance Detachment Soldier"/>
@@ -629,7 +611,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Command post" id="22" name="Major units command post" type="Pion TRANS">
+  <unit decisional-model="Command post" id="21" name="Major units command post" type="Pion TRANS">
     <nature atlas-nature="PC" level="x" nature="combat support/signal unit"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Armoured Personnel Carrier Command Post"/>
@@ -646,7 +628,7 @@
     </postures>
     <nbc decontamination-delay="9300s"/>
   </unit>
-  <unit decisional-model="Theater High Altitude Defense Troop" id="23" name="Theater High Altitude Defense Troop" type="Pion ASA">
+  <unit decisional-model="Theater High Altitude Defense Troop" id="22" name="Theater High Altitude Defense Troop" type="Pion ASA">
     <nature atlas-nature="ASA" level="ooo" nature="combat/air defense/missile/h_mad/hawk"/>
     <equipments>
       <equipment count="1" crew="3" type="Theater High Altitude Radar Vehicle"/>
@@ -654,8 +636,8 @@
       <equipment convoyer="true" count="2" crew="1" type="Light Medium Tactical Vehicle"/>
     </equipments>
     <crew-ranks>
-      <crew-rank count="2" type="Officier"/>
-      <crew-rank count="15" type="SousOfficier"/>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="13" type="SousOfficier"/>
     </crew-ranks>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
@@ -673,7 +655,7 @@
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
   </unit>
-  <unit decisional-model="Commando troop" id="24" name="Commando troop" type="Pion INF">
+  <unit decisional-model="Commando troop" id="23" name="Commando troop" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature="combat/infantry"/>
     <equipments>
       <equipment count="16" crew="1" loadable="true" major="true" type="Commando"/>
@@ -710,7 +692,7 @@
     </distance-before-points>
     <drill-blow length="1000" width="300"/>
   </unit>
-  <unit decisional-model="Theater High Altitude Aera Defense CP" id="25" name="Theatre High Altitude Aera Defense CP" type="Pion ASA">
+  <unit decisional-model="Theater High Altitude Aera Defense CP" id="24" name="Theatre High Altitude Aera Defense CP" type="Pion ASA">
     <nature atlas-nature="ASA" level="ooo" nature="combat/air defense"/>
     <equipments>
       <equipment count="1" crew="3" type="Theater High Altitude Radar Vehicle"/>
@@ -736,7 +718,7 @@
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
   </unit>
-  <unit decisional-model="PC TC2" id="26" name="TC2 RG BIA" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="25" name="TC2 RG BIA" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply/class iv"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Recovery Vehicle"/>
@@ -777,7 +759,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="PC Log" id="27" name="PC LOG BLD Ravitaillerment" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="PC Log" id="26" name="PC LOG BLD Ravitaillerment" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
@@ -802,7 +784,7 @@
     </postures>
     <nbc decontamination-delay="2250s"/>
   </unit>
-  <unit decisional-model="PC Log" id="28" name="PC LOG BLD Sante" type="Pion LOG BLD Sante">
+  <unit decisional-model="PC Log" id="27" name="PC LOG BLD Sante" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
@@ -827,7 +809,7 @@
     </postures>
     <nbc decontamination-delay="2250s"/>
   </unit>
-  <unit decisional-model="PC Appui Mob" id="29" name="Peloton CDT ESC TRPT" type="Pion CIRCULATION">
+  <unit decisional-model="PC Appui Mob" id="28" name="Peloton CDT ESC TRPT" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="3" type="7.62-mm Armed Load Carrying Vehicle"/>
@@ -849,7 +831,7 @@
     <nbc decontamination-delay="750s"/>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="PC TC2" id="30" name="TC2 BAT ART 32AUF1" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="29" name="TC2 BAT ART 32AUF1" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment count="4" crew="3" type="Regimental Aid Post"/>
@@ -889,7 +871,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="PC TC2" id="31" name="TC2 10RC" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="30" name="TC2 10RC" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment count="6" crew="2" major="true" type="Light Recovery Vehicle"/>
@@ -930,7 +912,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="PC TC2" id="32" name="TC2 RB ERC90" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="31" name="TC2 RB ERC90" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" type="Medical Cell"/>
@@ -967,7 +949,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="PC TC2" id="33" name="TC2 LOG" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="32" name="TC2 LOG" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="8" crew="3" type="TRM 10000 12,7"/>
@@ -1006,33 +988,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="Patrouille Circulation" id="34" name="Patrouille CDT PON CIRCU P4" type="Pion CIRCULATION">
-    <nature atlas-nature="Log" level="oo" nature="combat service support/transportation"/>
-    <equipments>
-      <equipment convoyer="true" count="1" crew="3" type="Light Medium Tactical Vehicle"/>
-      <equipment convoyer="true" count="1" crew="2" type="Load Carrying Vehicle"/>
-    </equipments>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="1" type="SousOfficier"/>
-    </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="1200" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
-    <postures>
-      <posture name="PosteReflexe" setup-time="300s"/>
-      <posture name="Poste" setup-time="900s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="2700s"/>
-    </postures>
-    <nbc decontamination-delay="1200s"/>
-  </unit>
-  <unit decisional-model="Battery CP" id="35" name="Battery CP" type="Pion ASS">
+  <unit decisional-model="Battery CP" id="33" name="Battery CP" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
@@ -1066,7 +1022,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Landing Craft" id="36" name="Landing Crafts" type="Pion JOINT">
+  <unit decisional-model="Landing Craft" id="34" name="Landing Crafts" type="Pion JOINT">
     <nature atlas-nature="None" level="ooo" nature="combat support/landing support"/>
     <equipments>
       <equipment count="2" crew="10" major="true" type="Landing Craft"/>
@@ -1089,7 +1045,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="PC TC2" id="37" name="TC2 GTIA INF AMX 10P" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="35" name="TC2 GTIA INF AMX 10P" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Armoured Recovery Vehicule"/>
@@ -1130,7 +1086,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="PC TC2" id="38" name="TC2 RGT AMX30B2 BRENNUS" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="36" name="TC2 RGT AMX30B2 BRENNUS" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Light Recovery Vehicle"/>
@@ -1173,7 +1129,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="Command post" id="39" name="Battle group command post" type="Pion TRANS">
+  <unit decisional-model="Command post" id="37" name="Battle group command post" type="Pion TRANS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/armor/track"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical Vehicle"/>
@@ -1208,7 +1164,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="MRA infantery platoon" id="40" name="MRA troop" type="Pion INF">
+  <unit decisional-model="MRA infantery platoon" id="38" name="MRA troop" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="5" loadable="true" major="true" type="Medium Range Antitank Weapon Team"/>
@@ -1242,7 +1198,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Mortar support troop" id="41" name="Mortar troop" type="Pion INF">
+  <unit decisional-model="Mortar support troop" id="39" name="Mortar troop" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Mortar Troop"/>
@@ -1276,7 +1232,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="PC TC2" id="42" name="TC2 GTIA INF VAB" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="40" name="TC2 GTIA INF VAB" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="8" crew="2" type="Light Medium Tactical Vehicle"/>
@@ -1315,7 +1271,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="PC TC2" id="43" name="TC2 BAT ART 32TRF1" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="41" name="TC2 BAT ART 32TRF1" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="3" type="Regimental Aid Post"/>
@@ -1354,7 +1310,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="SD" id="44" name="Artillery SD" type="Pion ASS">
+  <unit decisional-model="SD" id="42" name="Artillery SD" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Armoured Personnel Carrier Artillery"/>
@@ -1377,7 +1333,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="PC TC2" id="45" name="TC2 BON ART 24LRM" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="43" name="TC2 BON ART 24LRM" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="TRM 10000 CLD"/>
@@ -1414,7 +1370,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="PC Log" id="46" name="PC LOG BLD Maintenance" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="PC Log" id="44" name="PC LOG BLD Maintenance" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
@@ -1439,7 +1395,7 @@
     </postures>
     <nbc decontamination-delay="2250s"/>
   </unit>
-  <unit decisional-model="Pion stock" id="47" name="Groupe Munitions OFF TT- D" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="45" name="Groupe Munitions OFF TT- D" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/supply/class v"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
@@ -1465,7 +1421,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1950s"/>
   </unit>
-  <unit decisional-model="Pion stock" id="48" name="Groupe Munitions SOFF TT - D" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="46" name="Groupe Munitions SOFF TT - D" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/supply/class v"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
@@ -1491,7 +1447,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1950s"/>
   </unit>
-  <unit decisional-model="Pion stock" id="49" name="Groupe Appro Vivre Eau" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="47" name="Groupe Appro Vivre Eau" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/supply/class ii"/>
     <equipments/>
     <crew-ranks>
@@ -1515,7 +1471,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2250s"/>
   </unit>
-  <unit decisional-model="Pion stock" id="50" name="Groupe Munitions OFF TD" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="48" name="Groupe Munitions OFF TD" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/supply/class v"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
@@ -1541,7 +1497,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1950s"/>
   </unit>
-  <unit decisional-model="Pion stock" id="51" name="Groupe Munitions SOFF TD" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="49" name="Groupe Munitions SOFF TD" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/supply/class v"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
@@ -1567,7 +1523,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1950s"/>
   </unit>
-  <unit decisional-model="Pion stock" id="52" name="Section Magasin CAP" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="50" name="Section Magasin CAP" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/supply/class ii"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="3" type="Load Carrying Vehicle"/>
@@ -1585,7 +1541,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="6000s"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="53" name="Escouade Trspt CARB 60m3" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="51" name="Escouade Trspt CARB 60m3" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="2" major="true" type="10m3 Gasoil Tank Trunk"/>
@@ -1604,7 +1560,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2700s"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="54" name="Peloton Ravitaillement (PR)" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="52" name="Peloton Ravitaillement (PR)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
@@ -1634,7 +1590,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="4200s"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="55" name="Peloton Transport VTLR (PT)" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="53" name="Peloton Transport VTLR (PT)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
@@ -1653,7 +1609,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="8850s"/>
   </unit>
-  <unit decisional-model="Groupe Ramassage" id="56" name="Groupe VS J5" type="Pion LOG BLD Sante">
+  <unit decisional-model="Groupe Ramassage" id="54" name="Groupe VS J5" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Ambulance"/>
@@ -1671,7 +1627,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1800s"/>
   </unit>
-  <unit decisional-model="Groupe Ramassage" id="57" name="Groupe VS VAB" type="Pion LOG BLD Sante">
+  <unit decisional-model="Groupe Ramassage" id="55" name="Groupe VS VAB" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="VAB SAN"/>
@@ -1697,7 +1653,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2400s"/>
   </unit>
-  <unit decisional-model="Groupe Ramassage" id="58" name="Equipe HM EVASAN" type="Pion LOG BLD Sante">
+  <unit decisional-model="Groupe Ramassage" id="56" name="Equipe HM EVASAN" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="6" major="true" type="Medical Evacuation Helicopter"/>
@@ -1715,7 +1671,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="450s"/>
   </unit>
-  <unit decisional-model="ACA" id="59" name="Antenne Chirurgicale" type="Pion LOG BLD Sante">
+  <unit decisional-model="ACA" id="57" name="Antenne Chirurgicale" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" type="Equipe Triage Medical"/>
@@ -1735,7 +1691,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="600s"/>
   </unit>
-  <unit decisional-model="Unite PSY" id="60" name="Section Medico Psychologique" type="Pion LOG BLD Sante">
+  <unit decisional-model="Unite PSY" id="58" name="Section Medico Psychologique" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/medical/psychological"/>
     <equipments>
       <equipment count="3" crew="1" major="true" type="Medical and Psychological Staff"/>
@@ -1753,7 +1709,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="300s"/>
   </unit>
-  <unit decisional-model="Unite de soin" id="61" name="Section Chirurgicale Modulaire" type="Pion LOG BLD Sante">
+  <unit decisional-model="Unite de soin" id="59" name="Section Chirurgicale Modulaire" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="7" type="TBU15 CLD"/>
@@ -1774,7 +1730,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="4650s"/>
   </unit>
-  <unit decisional-model="Decontamination NBC" id="62" name="Section Decontamination Medicale NBC" type="Pion LOG BLD Sante">
+  <unit decisional-model="Decontamination NBC" id="60" name="Section Decontamination Medicale NBC" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat support/nbc/decontamination"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Groupe Decontamination Medicale NBC"/>
@@ -1801,7 +1757,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="600s"/>
   </unit>
-  <unit decisional-model="Section Triage Modulaire" id="63" name="Section de Triage modulaire" type="Pion LOG BLD Sante">
+  <unit decisional-model="Section Triage Modulaire" id="61" name="Section de Triage modulaire" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="1" type="Motocycle"/>
@@ -1824,7 +1780,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2700s"/>
   </unit>
-  <unit decisional-model="Unite de soin" id="64" name="Section Chirurgicale HMC" type="Pion LOG BLD Sante">
+  <unit decisional-model="Unite de soin" id="62" name="Section Chirurgicale HMC" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Champ Operatoire"/>
@@ -1844,7 +1800,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="600s"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="65" name="Section Reparation Mob BLD" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="63" name="Section Reparation Mob BLD" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Equipe Reparation MOB BLD"/>
@@ -1864,7 +1820,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2850s"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="66" name="Section Reparation EA BLD" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="64" name="Section Reparation EA BLD" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/maintenance"/>
     <equipments>
       <equipment convoyer="true" count="4" crew="3" type="TRM 10000 12,7"/>
@@ -1884,7 +1840,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="8400s"/>
   </unit>
-  <unit decisional-model="Groupe Maintenance Evacuation" id="67" name="Section CDT CMM" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Groupe Maintenance Evacuation" id="65" name="Section CDT CMM" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="TRM 10000 CLD 2Pers"/>
@@ -1904,7 +1860,7 @@
     </postures>
     <nbc decontamination-delay="3450s"/>
   </unit>
-  <unit decisional-model="PC TC2" id="68" name="TC2 GAM603" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="66" name="TC2 GAM603" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment count="1" crew="3" type="Regimental Aid Post"/>
@@ -1946,7 +1902,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="PC TC2" id="69" name="TC2 GAM602" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="67" name="TC2 GAM602" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="2" major="true" type="5m3 Kerosene Tank Trunk"/>
@@ -1985,7 +1941,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="PC TC2" id="70" name="TC2 RC53 LECLERC" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="68" name="TC2 RC53 LECLERC" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="3" type="TRM 10000 12,7"/>
@@ -2030,7 +1986,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="PC TC2" id="71" name="TC2 Groupement Roland Mistral" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="69" name="TC2 Groupement Roland Mistral" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" major="true" type="5m3 Gasoil Tank Trunk"/>
@@ -2070,7 +2026,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="72" name="Section Reparation Mob Feu BLD" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="70" name="Section Reparation Mob Feu BLD" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/maintenance"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="12.7-mm Armed Load Carrying Vehicle"/>
@@ -2090,61 +2046,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2850s"/>
   </unit>
-  <unit decisional-model="Patrouille Circulation" id="73" name="Patrouille CDT PON CIRCU VAB" type="Pion CIRCULATION">
-    <nature atlas-nature="Log" level="oo" nature="combat service support/transportation"/>
-    <equipments>
-      <equipment count="1" crew="2" major="true" type="VAB CIRCU 2PAX"/>
-      <equipment convoyer="true" count="1" crew="2" type="Load Carrying Vehicle"/>
-      <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
-    </equipments>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="2" type="SousOfficier"/>
-    </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="1200" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
-    <postures>
-      <posture name="PosteReflexe" setup-time="300s"/>
-      <posture name="Poste" setup-time="900s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="2700s"/>
-    </postures>
-    <nbc decontamination-delay="1200s"/>
-  </unit>
-  <unit decisional-model="Patrouille Circulation" id="74" name="Patrouille CIRCU VAB" type="Pion CIRCULATION">
-    <nature atlas-nature="Log" level="oo" nature="combat service support/transportation"/>
-    <equipments>
-      <equipment count="1" crew="2" major="true" type="VAB CIRCU 2PAX"/>
-      <equipment count="1" crew="3" major="true" type="VAB CIRCU 3PAX"/>
-      <equipment count="2" crew="1" type="Motocycle"/>
-    </equipments>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="2" type="SousOfficier"/>
-    </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="1200" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
-    <postures>
-      <posture name="PosteReflexe" setup-time="300s"/>
-      <posture name="Poste" setup-time="900s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="2700s"/>
-    </postures>
-    <nbc decontamination-delay="1200s"/>
-  </unit>
-  <unit decisional-model="Peloton Transport Blindes" id="75" name="Peloton Transport Blindes CL50" type="Pion CIRCULATION">
+  <unit decisional-model="Peloton Transport Blindes" id="71" name="Peloton Transport Blindes CL50" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
@@ -2163,7 +2065,7 @@
     </postures>
     <nbc decontamination-delay="7800s"/>
   </unit>
-  <unit decisional-model="Groupe Ramassage" id="76" name="Groupe VS J5 BLIAT" type="Pion LOG BLD Sante">
+  <unit decisional-model="Groupe Ramassage" id="72" name="Groupe VS J5 BLIAT" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="30" crew="2" major="true" type="Ambulance"/>
@@ -2181,7 +2083,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1800s"/>
   </unit>
-  <unit decisional-model="Groupe Ramassage" id="77" name="Equipe HM EVASAN BLIAT" type="Pion LOG BLD Sante">
+  <unit decisional-model="Groupe Ramassage" id="73" name="Equipe HM EVASAN BLIAT" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="10" crew="6" type="Medical Evacuation Helicopter"/>
@@ -2199,7 +2101,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="450s"/>
   </unit>
-  <unit decisional-model="Unite de soin" id="78" name="Section Chirurgicale HMC BLIAT" type="Pion LOG BLD Sante">
+  <unit decisional-model="Unite de soin" id="74" name="Section Chirurgicale HMC BLIAT" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="20" crew="1" major="true" type="Champ Operatoire"/>
@@ -2219,7 +2121,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="600s"/>
   </unit>
-  <unit decisional-model="Unite PSY" id="79" name="Section Medico Psychologique BLIAT" type="Pion LOG BLD Sante">
+  <unit decisional-model="Unite PSY" id="75" name="Section Medico Psychologique BLIAT" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/medical/psychological"/>
     <equipments>
       <equipment count="30" crew="1" major="true" type="Medical and Psychological Staff"/>
@@ -2237,7 +2139,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="300s"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="80" name="Section Reparation Mob Feu BLT" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="76" name="Section Reparation Mob Feu BLT" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/maintenance"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="12.7-mm Armed Load Carrying Vehicle"/>
@@ -2257,7 +2159,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2850s"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="81" name="Section Reparation Mob BLT" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="77" name="Section Reparation Mob BLT" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/maintenance"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="12.7-mm Armed Load Carrying Vehicle"/>
@@ -2277,7 +2179,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2850s"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="82" name="Section Reparation EA BLT" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="78" name="Section Reparation EA BLT" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/maintenance"/>
     <equipments>
       <equipment convoyer="true" count="4" crew="3" type="TRM 10000 12,7"/>
@@ -2297,7 +2199,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="8400s"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="83" name="Section Reparation BLIAT" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="79" name="Section Reparation BLIAT" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/maintenance"/>
     <equipments>
       <equipment count="60" crew="2" type="Equipe Reparation BLIAT"/>
@@ -2315,7 +2217,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="8400s"/>
   </unit>
-  <unit decisional-model="Groupe Maintenance Evacuation" id="84" name="Section Evacuation BLIAT" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Groupe Maintenance Evacuation" id="80" name="Section Evacuation BLIAT" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/maintenance"/>
     <equipments>
       <equipment count="40" crew="2" major="true" type="TRM 10000 CLD 2Pers"/>
@@ -2333,7 +2235,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="3450s"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="85" name="Peloton Transport TRM 10000" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="81" name="Peloton Transport TRM 10000" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
@@ -2352,7 +2254,7 @@
     </postures>
     <nbc decontamination-delay="8850s"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="86" name="Escouade Trspt CARB 35m3" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="82" name="Escouade Trspt CARB 35m3" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="5" crew="2" major="true" type="5m3 Gasoil Tank Trunk"/>
@@ -2372,7 +2274,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2700s"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="87" name="Escouade Trspt CARB180m3" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="83" name="Escouade Trspt CARB180m3" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="2" major="true" type="30m3 Semi-Trailer Gasoil Tank Trunk"/>
@@ -2391,7 +2293,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2700s"/>
   </unit>
-  <unit decisional-model="Pion stock" id="88" name="Groupe Munitions BLIAT" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="84" name="Groupe Munitions BLIAT" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/supply/class v"/>
     <equipments>
       <equipment convoyer="true" count="50" crew="2" major="true" type="Load Carrying Vehicle"/>
@@ -2417,7 +2319,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1950s"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="89" name="Escouade Trspt CARB BLIAT" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="85" name="Escouade Trspt CARB BLIAT" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="60" crew="2" major="true" type="30m3 Semi-Trailer Gasoil Tank Trunk"/>
@@ -2436,7 +2338,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2700s"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="90" name="Peloton Transport BLIAT" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="86" name="Peloton Transport BLIAT" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/transportation"/>
     <equipments/>
     <crew-ranks>
@@ -2452,7 +2354,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="8850s"/>
   </unit>
-  <unit decisional-model="Pion stock" id="91" name="Section Magasin CAP BLIAT" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="87" name="Section Magasin CAP BLIAT" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/supply/class ii"/>
     <equipments/>
     <crew-ranks>
@@ -2468,7 +2370,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="6000s"/>
   </unit>
-  <unit decisional-model="Pion stock" id="92" name="Groupe Appro Vivre Eau BLIAT" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="88" name="Groupe Appro Vivre Eau BLIAT" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature="combat service support/supply/class ii"/>
     <equipments/>
     <crew-ranks>
@@ -2492,7 +2394,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2250s"/>
   </unit>
-  <unit decisional-model="Short Range Surface To Air Defense Battery CP" id="93" name="Short Range Surface To Air Defense Battery CP" type="Pion ASA">
+  <unit decisional-model="Short Range Surface To Air Defense Battery CP" id="89" name="Short Range Surface To Air Defense Battery CP" type="Pion ASA">
     <nature atlas-nature="None" level="ooo" nature="combat/air defense/short range"/>
     <equipments>
       <equipment count="1" crew="1" type="Motocycle"/>
@@ -2518,7 +2420,7 @@
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
   </unit>
-  <unit decisional-model="Terroriste" id="94" name="Terroriste" type="Pion ASY">
+  <unit decisional-model="Terroriste" id="90" name="Terrorist" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terroriste"/>
@@ -2541,7 +2443,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Militia" id="95" name="Militia" type="Pion MILICE">
+  <unit decisional-model="Militia" id="91" name="Militia" type="Pion MILICE">
     <nature atlas-nature="None" level="none" nature="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Militia 14.5mm Armed Vehicle"/>
@@ -2581,7 +2483,7 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="MBT platoon" id="96" name="MBT platoon" type="Pion ABC">
+  <unit decisional-model="MBT platoon" id="92" name="MBT platoon" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Main Battle Tank"/>
@@ -2606,7 +2508,7 @@
     </distance-before-points>
     <drill-blow length="500" width="350"/>
   </unit>
-  <unit decisional-model="Light armored platoon" id="97" name="Light armored platoon" type="Pion ABC">
+  <unit decisional-model="Light armored platoon" id="93" name="Light armored platoon" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature="combat/armor/wheeled/medium"/>
     <equipments>
       <equipment count="3" crew="4" major="true" type="Medium Tank"/>
@@ -2633,7 +2535,7 @@
     </distance-before-points>
     <drill-blow length="500" width="500"/>
   </unit>
-  <unit decisional-model="Armored squadron CP" id="98" name="Armored squadron CP" type="Pion ABC">
+  <unit decisional-model="Armored squadron CP" id="94" name="Armored squadron CP" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/armor/wheeled"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Armoured Personnel Carrier Command Post"/>
@@ -2665,7 +2567,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Antitank patrol" id="99" name="Antitank patrol" type="Pion ABC">
+  <unit decisional-model="Antitank patrol" id="95" name="Antitank patrol" type="Pion ABC">
     <nature atlas-nature="PC" level="oo" nature="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="Light Armored Vehicle Antitiank"/>
@@ -2682,7 +2584,7 @@
     </postures>
     <nbc decontamination-delay="300s"/>
   </unit>
-  <unit decisional-model="Scout patrol" id="100" name="Scout patrol" type="Pion ABC">
+  <unit decisional-model="Scout patrol" id="96" name="Scout patrol" type="Pion ABC">
     <nature atlas-nature="PC" level="oo" nature="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="Light Armored Vehicle 12.7-mm"/>
@@ -2699,7 +2601,7 @@
     </postures>
     <nbc decontamination-delay="300s"/>
   </unit>
-  <unit decisional-model="Countermobility platoon" id="101" name="Countermobility platoon" type="Pion GEN">
+  <unit decisional-model="Countermobility platoon" id="97" name="Countermobility platoon" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="4" crew="8" major="true" type="Engineer VPC"/>
@@ -2739,7 +2641,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Mobility support platoon" id="102" name="Mobility support platoon" type="Pion GEN">
+  <unit decisional-model="Mobility support platoon" id="98" name="Mobility support platoon" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="4" crew="8" major="true" type="Engineer VPC"/>
@@ -2779,7 +2681,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Bridging troop" id="103" name="Bridging troop" type="Pion GEN">
+  <unit decisional-model="Bridging troop" id="99" name="Bridging troop" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Engineer Bridge Vehicule"/>
@@ -2810,7 +2712,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="LRS troop" id="104" name="LRS troop" type="Pion RENS">
+  <unit decisional-model="LRS troop" id="100" name="LRS troop" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature="combat/reconnaissance/marine/light armored reconnaissance"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="Light Armored Vehicle 7.62-mm"/>
@@ -2834,7 +2736,7 @@
     </distance-before-points>
     <drill-blow length="500" width="300"/>
   </unit>
-  <unit can-fly="true" decisional-model="Drone" id="105" is-autonomous="true" name="Drone (real time)" type="Pion RENS">
+  <unit can-fly="true" decisional-model="Drone" id="101" is-autonomous="true" name="Drone (real time)" type="Pion RENS">
     <nature atlas-nature="Indefini" level="oo" nature="combat/aviation/unmanned aerial vehicle/fixed wing"/>
     <equipments>
       <equipment count="1" crew="0" major="true" type="Real Time Drone"/>
@@ -2857,7 +2759,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Drones station_" id="106" name="Drones station" type="Pion RENS">
+  <unit decisional-model="Drones station_" id="102" name="Drones station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/aviation/unmanned aerial vehicle/fixed wing"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="RSV"/>
@@ -2885,7 +2787,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Listening station_" id="107" name="Listening Station" type="Pion RENS">
+  <unit decisional-model="Listening station_" id="103" name="Listening Station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="5" crew="3" major="true" type="Listening Vehicle"/>
@@ -2914,7 +2816,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Jamming station_" id="108" name="Jamming station" type="Pion RENS">
+  <unit decisional-model="Jamming station_" id="104" name="Jamming station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature="combat support/military intelligence/signal intelligence/electronic warfare/jamming"/>
     <equipments>
       <equipment count="4" crew="3" type="Jammer"/>
@@ -2942,7 +2844,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Radar detection station_" id="109" name="Radar detection station" type="Pion RENS">
+  <unit decisional-model="Radar detection station_" id="105" name="Radar detection station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="Radar Detection Vehicle"/>
@@ -2971,7 +2873,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Ground radar surveillance" id="110" name="Ground surveillance radar" type="Pion RENS">
+  <unit decisional-model="Ground radar surveillance" id="106" name="Ground surveillance radar" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature="combat/field artillery/target acquisition/radar"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Light Medium Tactical Vehicle (RASIT)"/>
@@ -2999,7 +2901,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="NBC reconnaissance troop" id="111" name="NBC reconnaissance troop" type="Pion NBC">
+  <unit decisional-model="NBC reconnaissance troop" id="107" name="NBC reconnaissance troop" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature="combat support/nbc/chemical/recon"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="RSV reconnaissance NBC"/>
@@ -3023,7 +2925,7 @@
     </distance-before-points>
     <drill-blow length="500" width="500"/>
   </unit>
-  <unit decisional-model="NBC ROTA troop" id="112" name="NBC ROTA troop" type="Pion NBC">
+  <unit decisional-model="NBC ROTA troop" id="108" name="NBC ROTA troop" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature="combat support/nbc/chemical/recon"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="RSV reconnaissance NBC"/>
@@ -3047,7 +2949,7 @@
     </distance-before-points>
     <drill-blow length="500" width="500"/>
   </unit>
-  <unit decisional-model="NBC decontamination troop" id="113" name="NBC decontamination troop" type="Pion NBC">
+  <unit decisional-model="NBC decontamination troop" id="109" name="NBC decontamination troop" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature="combat support/nbc/decontamination"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="RSV decontamination NBC"/>
@@ -3070,7 +2972,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Firing platoon" id="114" name="Artillery firing platoon" type="Pion ASS">
+  <unit decisional-model="Firing platoon" id="110" name="Artillery firing platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="155-mm Artillery Tank"/>
@@ -3106,7 +3008,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Field artillery reconnaissance" id="115" name="Artillery reconnaissance platoon" type="Pion ASS">
+  <unit decisional-model="Field artillery reconnaissance" id="111" name="Artillery reconnaissance platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Artillery Recce Vehicle"/>
@@ -3141,7 +3043,7 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="MLRS firing platoon" id="116" name="MLRS firing platoon" type="Pion ASS">
+  <unit decisional-model="MLRS firing platoon" id="112" name="MLRS firing platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature="combat/field artillery"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Multiple Launch Rocket System"/>
@@ -3175,7 +3077,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Field artillery reconnaissance" id="117" name="MLRS reconnaissance platoon" type="Pion ASS">
+  <unit decisional-model="Field artillery reconnaissance" id="113" name="MLRS reconnaissance platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature="combat/artillery/artillery survey"/>
     <equipments>
       <equipment count="2" crew="6" major="true" type="Artillery Recce Vehicle"/>
@@ -3207,7 +3109,7 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="Firing platoon" id="118" name="Mortar firing platoon" type="Pion ASS">
+  <unit decisional-model="Firing platoon" id="114" name="Mortar firing platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="4" crew="6" loadable="true" major="true" type="Mortar Launcher 120mm"/>
@@ -3239,7 +3141,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Field artillery reconnaissance" id="119" name="Mortar reconnaissance platoon" type="Pion ASS">
+  <unit decisional-model="Field artillery reconnaissance" id="115" name="Mortar reconnaissance platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature="combat/field artillery/artillery survey"/>
     <equipments>
       <equipment count="2" crew="6" major="true" type="Artillery Recce Vehicle"/>
@@ -3271,7 +3173,7 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit can-fly="true" decisional-model="AAC CP" id="120" name="AAC CP" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="AAC CP" id="116" name="AAC CP" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Transport helicopter"/>
@@ -3296,7 +3198,7 @@
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
   </unit>
-  <unit can-fly="true" decisional-model="Air Defence Helicopter Patrol" id="121" name="Air Defence Helicopter Patrol" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Air Defence Helicopter Patrol" id="117" name="Air Defence Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature="combat/aviation/rotary wing/scout"/>
     <equipments>
       <equipment count="3" crew="6" major="true" type="Air Defence Helicopter"/>
@@ -3321,7 +3223,7 @@
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
   </unit>
-  <unit can-fly="true" decisional-model="Escort And Close Support Helicopter Patrol" id="122" name="Heavy Escort and Close Support Helicopter Patrol" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Escort And Close Support Helicopter Patrol" id="118" name="Heavy Escort and Close Support Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="3" crew="6" major="true" type="Tigre helicopter"/>
@@ -3346,7 +3248,7 @@
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
   </unit>
-  <unit can-fly="true" decisional-model="General Purpose Helicopter Patrol" id="123" name="General Purpose Helicopter Patrol" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="General Purpose Helicopter Patrol" id="119" name="General Purpose Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Transport helicopter"/>
@@ -3371,7 +3273,7 @@
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
   </unit>
-  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="124" name="Strategic Bomber Patrol" type="Pion JOINT">
+  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="120" name="Strategic Bomber Patrol" type="Pion JOINT">
     <nature atlas-nature="Indefini" level="ooo" nature="combat/aviation/fixed wing/attack"/>
     <equipments>
       <equipment count="3" crew="6" major="true" type="Strategic Bomber"/>
@@ -3396,7 +3298,7 @@
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
   </unit>
-  <unit can-fly="true" decisional-model="Air CP" id="125" name="Air CP" type="Pion JOINT">
+  <unit can-fly="true" decisional-model="Air CP" id="121" name="Air CP" type="Pion JOINT">
     <nature atlas-nature="Indefini" level="ooo" nature="combat/aviation/fixed wing"/>
     <equipments>
       <equipment count="3" crew="6" major="true" type="Strategic Bomber"/>
@@ -3420,45 +3322,5 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
-  </unit>
-  <unit decisional-model="PC Appui Mob" id="126" name="Engineer company CP" type="Pion GEN">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
-    <equipments>
-      <equipment count="4" crew="8" major="true" type="Engineer VPC"/>
-    </equipments>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="4" type="SousOfficier"/>
-    </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-      </category>
-      <category name="explosif">
-        <dotation capacity="600" logistic-threshold="30" name="explosif classique" normalized-consumption="0"/>
-      </category>
-      <category name="mine">
-        <dotation capacity="150" logistic-threshold="30" name="mine classique" normalized-consumption="0"/>
-      </category>
-      <category name="barbele">
-        <dotation capacity="40" logistic-threshold="30" name="barbele classique" normalized-consumption="0"/>
-      </category>
-    </logistics>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <nbc decontamination-delay="2400s"/>
-    <distance-before-points>
-      <distance-before-point type="foret" value="500"/>
-      <distance-before-point type="urbain" value="500"/>
-      <distance-before-point type="carrefour" value="500"/>
-      <distance-before-point type="pont" value="500"/>
-    </distance-before-points>
   </unit>
 </units>
