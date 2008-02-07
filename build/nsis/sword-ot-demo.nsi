@@ -37,6 +37,8 @@ OutFile "${DISTDIR}\SWORD Officer Training - Demo.exe"
 InstallDir "$PROGRAMFILES\SWORD Officer Training"
 InstallDirRegKey HKLM "Software\Masa\Sword-OT" "Install_Dir"
 
+LicenseForceSelection radiobuttons
+
 ;--------------------------------
 Function .onInit
     System::Call 'kernel32::CreateMutexA(i 0, i 0, t "sword-ot-demo") i .r1 ?e'
