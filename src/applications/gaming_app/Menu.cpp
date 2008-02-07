@@ -31,9 +31,9 @@ namespace
     }
     void Populate( OptionMenu< FourStateOption >& menu )
     {
-        menu.AddItem( FourStateOption::OnName(), FourStateOption::On() );
-        menu.AddItem( FourStateOption::SuperiorSelectedName(), FourStateOption::SuperiorSelected() );
         menu.AddItem( FourStateOption::SelectedName(), FourStateOption::Selected() );
+        menu.AddItem( FourStateOption::SuperiorSelectedName(), FourStateOption::SuperiorSelected() );
+        menu.AddItem( FourStateOption::OnName(), FourStateOption::On() );
         menu.AddItem( FourStateOption::OffName(), FourStateOption::Off() );
     }
 
