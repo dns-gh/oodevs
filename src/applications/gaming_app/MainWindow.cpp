@@ -207,6 +207,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pPropertiesWnd->setCloseMode( QDockWindow::Always );
     pPropertiesWnd->setCaption( tr( "Properties" ) );
     setDockEnabled( pPropertiesWnd, Qt::DockTop, false );
+    pPropertiesWnd->hide();
 
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
@@ -217,6 +218,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
     pInfoDockWnd_->setCaption( tr( "Information" ) );
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
+    pInfoDockWnd_->hide();
 
      // Mission panel
     MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
@@ -246,6 +248,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pLogDockWnd_->setCaption( tr( "Log" ) );
     setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
     connect( pLogPanel_, SIGNAL( Error() ), pLogDockWnd_, SLOT( show() ) );
+    pLogDockWnd_->hide();
 
     // Info
     QDockWindow* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory );
@@ -266,6 +269,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pProfilerDockWnd_->setCloseMode( QDockWindow::Always );
     pProfilerDockWnd_->setCaption( tr( "Profiling" ) );
     setDockEnabled( pProfilerDockWnd_, Qt::DockTop, false );
+    pProfilerDockWnd_->hide();
 
     // object/unit creation window
     QDockWindow* pCreationWnd = new QDockWindow( this );
