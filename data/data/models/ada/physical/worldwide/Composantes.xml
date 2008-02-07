@@ -1542,7 +1542,7 @@
       <speed terrain="foret" value="30"/>
       <speed terrain="plantation" value="10"/>
       <speed terrain="marais" value="10"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="15"/>
       <speed terrain="urbain" value="30"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -1674,7 +1674,7 @@
       <speed terrain="foret" value="50"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="0"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="25"/>
       <speed terrain="urbain" value="40"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -1817,7 +1817,7 @@
       <speed terrain="foret" value="50"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="0"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="25"/>
       <speed terrain="urbain" value="40"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -2265,7 +2265,7 @@
       <speed terrain="foret" value="35"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="5"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="15"/>
       <speed terrain="urbain" value="35"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -2483,7 +2483,7 @@
       <speed terrain="foret" value="45"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="0"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="20"/>
       <speed terrain="urbain" value="45"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -4222,7 +4222,7 @@
       <speed terrain="foret" value="45"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="5"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="10"/>
       <speed terrain="urbain" value="45"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -5199,7 +5199,7 @@
       <speed terrain="foret" value="50"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="0"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="20"/>
       <speed terrain="urbain" value="40"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -5320,7 +5320,7 @@
       <speed terrain="foret" value="50"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="0"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="15"/>
       <speed terrain="urbain" value="40"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -5450,7 +5450,7 @@
       <speed terrain="foret" value="45"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="1"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="20"/>
       <speed terrain="urbain" value="45"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -5566,7 +5566,7 @@
       <speed terrain="foret" value="45"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="0"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="20"/>
       <speed terrain="urbain" value="45"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -5676,7 +5676,7 @@
       <speed terrain="foret" value="45"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="0"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="20"/>
       <speed terrain="urbain" value="45"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -5921,7 +5921,7 @@
       <speed terrain="foret" value="15"/>
       <speed terrain="plantation" value="15"/>
       <speed terrain="marais" value="0"/>
-      <speed terrain="dune" value="19"/>
+      <speed terrain="dune" value="20"/>
       <speed terrain="urbain" value="25"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -6257,7 +6257,7 @@
       <speed terrain="foret" value="45"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="0"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="20"/>
       <speed terrain="urbain" value="45"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -6437,7 +6437,7 @@
       <speed terrain="foret" value="45"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="5"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="10"/>
       <speed terrain="urbain" value="45"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -8187,7 +8187,7 @@
       <speed terrain="foret" value="45"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="5"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="15"/>
       <speed terrain="urbain" value="45"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
@@ -8622,7 +8622,7 @@
       <speed terrain="foret" value="45"/>
       <speed terrain="plantation" value="5"/>
       <speed terrain="marais" value="5"/>
-      <speed terrain="dune" value="5"/>
+      <speed terrain="dune" value="20"/>
       <speed terrain="urbain" value="45"/>
       <speed terrain="etendue eau" value="0"/>
       <speed terrain="glace" value="5"/>
