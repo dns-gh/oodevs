@@ -135,8 +135,6 @@ public:
     void SendStateToNewClient() const;
     void Update              ();
     void Clean               ();
-
-    void RegisterLocalAgents( HLA_Federate& federate ) const;
     //@}
 
     //! @name Network

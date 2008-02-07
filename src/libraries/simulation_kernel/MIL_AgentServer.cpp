@@ -85,9 +85,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         Resume();
     }
 
-    if( pFederate_ )
-        pEntityManager_->RegisterLocalAgents( *pFederate_ );
-
     timerManager_.Register( *this );
 
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );

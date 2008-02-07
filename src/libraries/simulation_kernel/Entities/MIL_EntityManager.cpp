@@ -1355,19 +1355,6 @@ void MIL_EntityManager::OnReceiveMsgIntelligenceDestructionRequest( const ASN1T_
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::RegisterLocalAgents
-// Created: AGE 2004-11-22
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::RegisterLocalAgents( HLA_Federate& federate ) const
-{
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-    {
-        assert( itPion->second );
-        federate.Register( *itPion->second );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ChannelPopulations
 // Created: SBO 2006-01-16
 // -----------------------------------------------------------------------------
