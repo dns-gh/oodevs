@@ -1,6 +1,6 @@
 BETWEEN
 
-MASA (MASA Group), a French Limited liability Company with a capital of 1.835.770 €, which head office is located 8, Rue de la Michodière – 75002 Paris - France (Registered in RCS PARIS under the number B 408 953 271);
+MASA (MASA Group), a French Sociéte Anonyme (S.A.) with a capital of 1.835.770 €, which head office is located 8, Rue de la Michodière – 75002 Paris - France (Registered in RCS PARIS under the number B 408 953 271);
 hereinafter the Supplier,
 AND
 Any user of the Software as defined here-after;
@@ -9,18 +9,18 @@ hereinafter the Customer,
 
 PREAMBLE
 
-$$$SWORD Officer Training Software is $$$.
+SWORD Officer Training software is a tool dedicated to the training and self-training of Army staff Officers and Army Command Posts.
 The Customer acknowledges that it was able to appreciate the scope of the Software functionality as well as its adequacy with its needs based on the Documentation communicated by the Supplier.
 
 1. DEFINITIONS
 
-Under this agreement, the following shall mean :
-$$$Software: The modules of SWORD Officer Training software which have been bought or rented by the Customer or have been lent to the Customer for a defined number of users or network sites and for a predefined duration.
-$$$Documentation: All the on-line help files and printed documents supplied with the Software in order to explain the Software functioning and facilitate its understanding.
-$$$Version: The package consisting of technical and functional characteristics of the Software which is made available to the users from time to time. The Version includes corrections, enhancements and functional add-ons compared with the previous version. It is identified by a change in the numbering of the first index, for example, V 5.0.0 ? V 6.0.0.
-$$$Release: The successive deliveries of a same Version, issued after evolutions and corrections. It is identified by a change in the numbering of the second index, for example, V 5.3.0 ? V 5.4.0.
-$$$Correction: The successive deliveries of a same Release, issued after corrections. It is identified by a change in the numbering of the third index, for example, V 5.3.5 ? V 5.3.6.
-$$$Site: Single production, test or R&D building or administrative entity where the Software is used in compliance with this agreement. In the context of a campus-type manufacturing complex, a separate manufacturing facility in the complex utilizing common support facilities with another manufacturing facility in the complex shall be considered an independent, self-contained manufacturing facility, and, therefore, a separate Site, if it constitutes a separate integrated production process.
+Under this agreement, the following shall mean:
+Software: The modules of SWORD Officer Training software which have been bought or rented by the Customer or have been lent to the Customer for a defined number of users or network sites and for a predefined duration.
+Documentation: All the on-line help files and printed documents supplied with the Software in order to explain the Software functioning and facilitate its understanding.
+Version: The package consisting of technical and functional characteristics of the Software which is made available to the users from time to time. The Version includes corrections, enhancements and functional add-ons compared with the previous version. It is identified by a change in the numbering of the first index, for example, V 5.0.0 & V 6.0.0
+Release: The successive deliveries of a same Version, issued after evolutions and corrections. It is identified by a change in the numbering of the second index, for example, V 5.3.0 & V 5.4.0
+Correction: The successive deliveries of a same Release, issued after corrections. It is identified by a change in the numbering of the third index, for example, V 5.3.5 & V 5.3.6
+Site: Single production, test or R&D building or administrative entity where the Software is used in compliance with this agreement, for example a Training Center.
 
 2. GRANT OF LICENSE
 
@@ -37,11 +37,11 @@ However, the Customer is entitled to make a backup copy of the Software, provide
 4. DELIVERY AND INSTALLATION 
 
 The Supplier delivers the Software to the Customer at the address defined in written terms as the Site of use. The term "delivery" means the operation which consists in handing over to the Customer the physical media and the Documentation allowing the Customer to exercise the right of use. Except as provided otherwise in written, the Software is always be delivered in its "object" code version.
-The Parties agree that the Supplier shall not be liable in the event of incorrect installation of the Software by the Customer or any other third party not authorised in written by the Supplier.
+The Parties agree that the Supplier shall not be liable in the event of incorrect installation of the Software by the Customer or any other third party not authorized in written by the Supplier.
 
 5. ACCEPTANCE
 
-The delivery of the Software is considered as firm an definitive. The Customer shall be deemed to have accepted the Software.
+The delivery of the Software is considered as firm and definitive. The Customer shall be deemed to have accepted the Software.
 
 6. WARRANTIES
 
@@ -56,7 +56,7 @@ Customer shall have no claim against Supplier under this warranty unless it prov
 The Customer shall use the Software solely for the processing the Software has been bought, rented or lent.
 Except with the Supplier prior written consent, the Customer shall not transfer the Software to another site than that where the Software has been delivered.
 The Customer shall only use the Software to satisfy its own needs.
-SWORD Officer Training is a registered trademark. No one is authorised to exploit it without the Supplier prior written consent.
+SWORD Officer Training is a registered trademark. No one is authorized to exploit it without the Supplier prior written consent.
 In this respect, the Customer shall not remove nor alter the trademark or any other proprietary or confidentiality sign contained in the Software. Furthermore, the Customer shall reproduce and include in all the copies of the Software, all the mentions of proprietary rights and all other proprietary and confidentiality sign contained in the original copy and shall keep a register, regularly up-dated, of the places where all the Software copies can be located.
 
 7.2. FEES AND PAYMENT TERMS
@@ -81,23 +81,23 @@ The Customer shall indemnify and hold the Supplier harmless from and against any
 
 9.3. INDEMNIFICATION FOR INFRINGEMENT
 
-In the event of any claim or allegation against the Customer that the Software infringes any third party proprietary rights, the Supplier shall defend and save the Customer harmless from and against any such claim, and pay any cost, expense and finally, damages actually awarded in connection therewith, including the fees and expenses of the attorney engaged by the Supplier for such defence provided that :
+In the event of any claim or allegation against the Customer that the Software infringes any third party proprietary rights, the Supplier shall defend and save the Customer harmless from and against any such claim, and pay any cost, expense and finally, damages actually awarded in connection therewith, including the fees and expenses of the attorney engaged by the Supplier for such defense provided that:
 - the Customer will immediately notify in written the Supplier of such claim or action,
 - the Supplier shall have the authority to defend and/or settle any such claim or action,
 - the Customer will exert reasonable efforts to co-operate with the Supplier in connection therewith.
 
 The Supplier shall keep the Customer informed of, and shall consult with, any independent attorney appointed by the Customer at Customer's own expense regarding the progress of such litigation.
-In addition to the foregoing, if the Software has become, or in Supplier reasonable opinion is likely to become, the subject of any claim of infringement of a third party’s proprietary rights, the Supplier may at its option and expense :
+In addition to the foregoing, if the Software has become, or in Supplier reasonable opinion is likely to become, the subject of any claim of infringement of a third party’s proprietary rights, the Supplier may at its option and expense:
 - procure for the Customer the right to continue to use the Software as set forth hereunder, or
 - replace or modify the Software to make it non-infringing, or
 - substitute an equivalent for the Software.
 
-The Supplier shall have no liability or obligation hereunder with respect to any proprietary rights infringement claim if such infringement is caused by :
+The Supplier shall have no liability or obligation hereunder with respect to any proprietary rights infringement claim if such infringement is caused by:
 - use of the Software in an application or environment other than as specified in applicable documentation, or
 - modification of the Software by any third party other than the Supplier or
 - use of the Software with other software or services where the Software would not by itself be infringing.
 
-The Customer agrees to indemnify and hold the Supplier harmless from and against liabilities, obligations, costs, expenses and judgements, including court costs, reasonable attorneys fees and expert fees, arising out of any circumstances stated in the three items above, provided that any of such circumstances result from the acts or omissions of the Customer, its agents or its consultants in connection with this Agreement.
+The Customer agrees to indemnify and hold the Supplier harmless from and against liabilities, obligations, costs, expenses and judgments, including court costs, reasonable attorneys fees and expert fees, arising out of any circumstances stated in the three items above, provided that any of such circumstances result from the acts or omissions of the Customer, its agents or its consultants in connection with this Agreement.
 As soon as the Customer is aware that any third party infringes the proprietary rights related to the Software, it shall inform the Supplier.
 
 10. SOFTWARE EVOLUTION
@@ -122,7 +122,7 @@ a) cease forthwith the use of the Software,
 b) return the Software to the Supplier together with the Documentation and all the corresponding media and supplies,
 c) testify that all the software copies have been either returned to the Supplier or destroyed.
 
-If any termination event occurs, the following sections will survive termination of this agreement for any reason : Section 3 (Nature of the agreement), Section 6.1 (Limitation of the right of use), Section 8 (Limitation of liability and indemnification), Section 11 (Non disclosure), Section 13 (Notices) and Section 14 (Miscellaneous).
+If any termination event occurs, the following sections will survive termination of this agreement for any reason: Section 3 (Nature of the agreement), Section 6.1 (Limitation of the right of use), Section 8 (Limitation of liability and indemnification), Section 11 (Non disclosure), Section 13 (Notices) and Section 14 (Miscellaneous).
 
 12. NON DISCLOSURE
 
@@ -152,7 +152,7 @@ In the case of termination, the sums paid under this contract may not be refunde
 
 15.2. SEVERABILITY
 
-If any term, condition, or provision in this agreement is found to be invalid, unlawful or unenforceable to any extent, the Parties shall endeavour in good faith to agree to such amendments that will preserve, as far as possible, the intentions expressed in this agreement. If the Parties fail to agree on such an amendment, such invalid term, condition or provision is severed from the remaining terms, conditions and provisions, which continues to be valid and enforceable to the fullest extent permitted by law.
+If any term, condition, or provision in this agreement is found to be invalid, unlawful or unenforceable to any extent, the Parties shall endeavor in good faith to agree to such amendments that will preserve, as far as possible, the intentions expressed in this agreement. If the Parties fail to agree on such an amendment, such invalid term, condition or provision is severed from the remaining terms, conditions and provisions, which continue to be valid and enforceable to the fullest extent permitted by law.
 
 15.3. STANDARD TERMS
 
@@ -176,6 +176,8 @@ Supplier address
 
 MASA Group
 8, rue de la Michodière
-75002 Paris
+F-75002 Paris
 France
+
+
 
