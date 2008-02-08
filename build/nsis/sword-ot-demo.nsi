@@ -123,6 +123,16 @@ Section "Exercises"
     SetOutPath "$INSTDIR\exercises"
     File /r /x ".svn" "${DATADIR}\exercises\Egypt"
     File /r /x ".svn" "${DATADIR}\exercises\Paris"
+    
+    CreateDirectory "$SMPROGRAMS\SWORD Officer Training\Egypt Scenario Readme"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Egypt Scenario Readme\Readme.lnk" "$INSTDIR\exercises\Egypt\doc\Egypt scenario.txt"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Egypt Scenario Readme\Screenshot.lnk" "$INSTDIR\exercises\Egypt\doc\Egypt scenario.png"
+    
+    CreateDirectory "$SMPROGRAMS\SWORD Officer Training\Paris Scenario Readme"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Paris Scenario Readme\Readme.lnk" "$INSTDIR\exercises\Paris\doc\Paris scenario.txt"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Paris Scenario Readme\Screenshot.lnk" "$INSTDIR\exercises\Paris\doc\Paris scenario.png"
+    
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"    
 SectionEnd
 
 Section "Documentation"
