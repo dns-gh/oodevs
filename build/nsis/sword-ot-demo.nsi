@@ -137,6 +137,7 @@ Section "Documentation"
     SectionIn RO
     SetOutPath "$INSTDIR\doc"
     File /r /x ".svn" "${DOCDIR}\*.pdf"
+    File /r /x ".svn" "third party"
     CreateShortCut "$SMPROGRAMS\SWORD Officer Training\User Guide.lnk" "$INSTDIR\doc\User Guide.pdf"
 SectionEnd
 
