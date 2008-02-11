@@ -21,6 +21,7 @@
 #include "JoinAnalysisPanel.h"
 #include "Actions.h"
 #include "tools/GeneralConfig.h"
+#include "clients_gui/resources.h"
 
 #include <qapplication.h>
 #include <qaction.h>
@@ -36,6 +37,7 @@ MainWindow::MainWindow()
 {
     config_->Parse( qApp->argc(), qApp->argv() );
     setCaption( APP_NAME );
+    setIcon( MAKE_PIXMAP( csword ) );
     setMinimumSize( 800, 600 );
 
     menu_ = new MainMenu( this );

@@ -94,6 +94,7 @@ Section "!Basic"
     File "${RUNDIR}\population-vc71-mt.dll"
     File "${RUNDIR}\shapelib.dll"
     File "${OUTDIR}\generation_app\*.exe"
+    File "*.ico"
 
     SetOutPath "$INSTDIR\data\terrains"
     File /r /x ".svn" "${DATADIR}\data\terrains\Nord egypt"
@@ -102,8 +103,8 @@ Section "!Basic"
     SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\Sword-OT" "Install_Dir" "$INSTDIR"
     CreateDirectory "$SMPROGRAMS\SWORD Officer Training"
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe" "adaptation.ico"
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe" "sword-ot.ico"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
 SectionEnd
 
 Section "Decisional models"
@@ -133,7 +134,6 @@ Section "Exercises"
     CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Paris Scenario Readme\Readme.lnk" "$INSTDIR\exercises\Paris\doc\Paris scenario.txt"
     CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Paris Scenario Readme\Screenshot.lnk" "$INSTDIR\exercises\Paris\doc\Paris scenario.png"
 
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
 SectionEnd
 
 Section "Documentation"
