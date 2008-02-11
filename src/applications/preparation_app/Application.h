@@ -22,6 +22,7 @@ class MainWindow;
 class StaticModel;
 class Model;
 class Config;
+class FlexLmLicense;
 
 // =============================================================================
 /** @class  Application
@@ -35,7 +36,7 @@ class Application : public QApplication
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int argc, char** argv, const QString& locale );
+             Application( int argc, char** argv, const QString& locale, const FlexLmLicense& license );
     virtual ~Application();
     //@}
 
@@ -66,6 +67,7 @@ private:
     Model* model_;
     kernel::Workers* workers_;
     MainWindow* mainWindow_;
+    const FlexLmLicense& license_;
     //@}
 };
 

@@ -47,6 +47,7 @@ class StaticModel;
 class ObjectCreationPanel;
 class WeatherLayer;
 class MapLayer_ABC;
+class FlexLmLicense;
 
 // =============================================================================
 /** @class  MainWindow
@@ -69,7 +70,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, kernel::ExerciseConfig& config );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, kernel::ExerciseConfig& config, const FlexLmLicense& license );
     virtual ~MainWindow();
     //@}
 

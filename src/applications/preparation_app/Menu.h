@@ -14,6 +14,7 @@
 
 class QMainWindow;
 class QDialog;
+class FlexLmLicense;
 
 namespace kernel
 {
@@ -38,7 +39,7 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, gui::ItemFactory_ABC& factory );
+             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, gui::ItemFactory_ABC& factory, const FlexLmLicense& license );
     virtual ~Menu();
     //@}
 };

@@ -32,13 +32,15 @@ int main( int argc, char** argv )
 
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
+#else
+    std::auto_ptr< FlexLmLicense > license( "sword", 1.0f );
 #endif
 
     BugTrap::Setup( "Sword Officer Training" )
             .SetEmail( "sword-ot@masagroup.net" )
             .SetVersion( APP_VERSION " - " __TIMESTAMP__ );
 
-    Application app( argc, argv, locale );
+    Application app( argc, argv, locale, *license );
     try
     {
         app.Initialize();

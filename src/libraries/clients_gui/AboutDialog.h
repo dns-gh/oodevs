@@ -10,6 +10,8 @@
 #ifndef __AboutDialog_h_
 #define __AboutDialog_h_
 
+class FlexLmLicense;
+
 namespace gui
 {
     class ItemFactory_ABC;
@@ -26,7 +28,7 @@ class AboutDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             AboutDialog( QWidget* parent, gui::ItemFactory_ABC& factory, const QString& line );
+             AboutDialog( QWidget* parent, gui::ItemFactory_ABC& factory, const QString& line, const FlexLmLicense& license );
     virtual ~AboutDialog();
     //@}
 

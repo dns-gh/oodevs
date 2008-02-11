@@ -101,7 +101,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, ExerciseConfig& config )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, ExerciseConfig& config, const FlexLmLicense& license )
     : QMainWindow   ( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )
@@ -208,7 +208,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
 
-    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *factory );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *factory, license );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );

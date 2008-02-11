@@ -56,7 +56,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, OrderBrowser& recorderToolBar, ItemFactory_ABC& factory )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, OrderBrowser& recorderToolBar, ItemFactory_ABC& factory, const FlexLmLicense& license )
     : QMenuBar( pParent )
     , controllers_( controllers )
     , profileDialog_( profileDialog )
@@ -139,7 +139,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     insertItem( tr( "&Windows" ), menu );
 
     menu = new QPopupMenu( this );
-    menu->insertItem( tr( "About" ), new AboutDialog( this, factory, QString( APP_NAME ) + " " + QString( APP_VERSION ) ), SLOT( exec() ) );
+    menu->insertItem( tr( "About" ), new AboutDialog( this, factory, QString( APP_NAME ) + " " + QString( APP_VERSION ), license ), SLOT( exec() ) );
     insertItem( tr( "&Help" ), menu );
 
     controllers_.Register( *this );
