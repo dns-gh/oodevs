@@ -37,8 +37,6 @@ OutFile "${DISTDIR}\SWORD Officer Training - Demo.exe"
 InstallDir "$PROGRAMFILES\SWORD Officer Training"
 InstallDirRegKey HKLM "Software\Masa\Sword-OT" "Install_Dir"
 
-LicenseForceSelection radiobuttons
-
 ;--------------------------------
 Function .onInit
     System::Call 'kernel32::CreateMutexA(i 0, i 0, t "sword-ot-demo") i .r1 ?e'
@@ -51,7 +49,7 @@ FunctionEnd
 ;--------------------------------
 Section "!Basic"
     SectionIn RO
-    
+
     SetOutPath "$INSTDIR\applications"
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"
     File "${OUTDIR}\release\applications\gaming_app\*.exe"
@@ -64,7 +62,7 @@ Section "!Basic"
     File "${RUNDIR}\symbols.xml"
     File "${RUNDIR}\gradients.xml"
     File "${RUNDIR}\preferences.xml"
-    File "${RUNDIR}\gradients.xml"    
+    File "${RUNDIR}\gradients.xml"
     File "${RUNDIR}\DrawingTemplates.xml"
     File "${RUNDIR}\functions.xml"
     File "${RUNDIR}\*.svg"
@@ -93,11 +91,11 @@ Section "!Basic"
     File "${RUNDIR}\population-vc71-mt.dll"
     File "${RUNDIR}\shapelib.dll"
     File "${OUTDIR}\generation_app\*.exe"
-    
+
     SetOutPath "$INSTDIR\data\terrains"
     File /r /x ".svn" "${DATADIR}\data\terrains\Nord egypt"
     File /r /x ".svn" "${DATADIR}\data\terrains\Paris_Est"
-       
+
     SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\Sword-OT" "Install_Dir" "$INSTDIR"
     CreateDirectory "$SMPROGRAMS\SWORD Officer Training"
@@ -110,7 +108,7 @@ Section "Decisional models"
     SetOutPath "$INSTDIR\data\models\ada\decisional"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\*.xml"
-SectionEnd    
+SectionEnd
 
 Section "Physical models"
     SectionIn RO
@@ -123,16 +121,16 @@ Section "Exercises"
     SetOutPath "$INSTDIR\exercises"
     File /r /x ".svn" "${DATADIR}\exercises\Egypt"
     File /r /x ".svn" "${DATADIR}\exercises\Paris"
-    
+
     CreateDirectory "$SMPROGRAMS\SWORD Officer Training\Egypt Scenario Readme"
     CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Egypt Scenario Readme\Readme.lnk" "$INSTDIR\exercises\Egypt\doc\Egypt scenario.txt"
     CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Egypt Scenario Readme\Screenshot.lnk" "$INSTDIR\exercises\Egypt\doc\Egypt scenario.png"
-    
+
     CreateDirectory "$SMPROGRAMS\SWORD Officer Training\Paris Scenario Readme"
     CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Paris Scenario Readme\Readme.lnk" "$INSTDIR\exercises\Paris\doc\Paris scenario.txt"
     CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Paris Scenario Readme\Screenshot.lnk" "$INSTDIR\exercises\Paris\doc\Paris scenario.png"
-    
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"    
+
+    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
 SectionEnd
 
 Section "Documentation"
@@ -165,7 +163,7 @@ Section "Uninstall"
     RmDir "$INSTDIR"
     Delete "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk"
     Delete "$SMPROGRAMS\SWORD Officer Training\Frontend.lnk"
-    Delete "$SMPROGRAMS\SWORD Officer Training\User Guide.lnk"    
-    Delete "$SMPROGRAMS\SWORD Officer Training\uninstall.lnk"    
+    Delete "$SMPROGRAMS\SWORD Officer Training\User Guide.lnk"
+    Delete "$SMPROGRAMS\SWORD Officer Training\uninstall.lnk"
     RmDir "$SMPROGRAMS\SWORD Officer Training"
 SectionEnd
