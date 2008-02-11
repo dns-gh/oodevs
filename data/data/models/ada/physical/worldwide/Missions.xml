@@ -1022,31 +1022,31 @@
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_Attaquer" dia-type="T_Mission_Automate_ABC_GTIA_Attaquer" id="243" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_Attaquer" name="Battalion - Attack">
       <parameter dia-name="objectifsPrioritaires_" name="Objectives" optional="true" type="ObjectiveList"/>
-      <parameter dia-name="DelaisCourts_" name="short delay" optional="true" type="Bool"/>
+      <parameter dia-name="delaisCourts_" name="short delay" optional="true" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="without dynamic assets organization" optional="true" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi" dia-type="T_Mission_Automate_ABC_GTIA_MarcheEnnemi" id="244" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_MarcheEnnemi" name="Battalion - Movement to contact">
-      <parameter dia-name="DelaisCourts_" name="short delay" optional="true" type="Bool"/>
+      <parameter dia-name="delaisCourts_" name="short delay" optional="true" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="without dynamic assets organization" optional="true" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_EffectuerRaid" dia-type="T_Mission_Automate_ABC_GTIA_EffectuerRaid" id="245" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_EffectuerRaid" name="Battalion - make a raid">
       <parameter dia-name="objectifs_" name="Objectives" optional="true" type="ObjectiveList"/>
-      <parameter dia-name="DelaisCourts_" name="short delay" optional="true" type="Bool"/>
+      <parameter dia-name="delaisCourts_" name="short delay" optional="true" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="without dynamic assets organization" optional="true" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_Controler" dia-type="T_Mission_Automate_ABC_GTIA_Controler" id="246" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_Controler" name="Battalion - Control">
       <parameter dia-name="travaux_" name="Engineer works" optional="true" type="GenObjectList"/>
       <parameter dia-name="zone_" name="Aera" optional="false" type="Polygon"/>
-      <parameter dia-name="DelaisCourts_" name="short delay" optional="true" type="Bool"/>
+      <parameter dia-name="delaisCourts_" name="short delay" optional="true" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="without dynamic assets organization" optional="true" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_Freiner" dia-type="T_Mission_Automate_ABC_GTIA_Freiner" id="247" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_Freiner" name="Battalion - delay">
-      <parameter dia-name="DelaisCourts_" name="Short delay" optional="false" type="Bool"/>
+      <parameter dia-name="delaisCourts_" name="Short delay" optional="false" type="Bool"/>
       <parameter dia-name="travaux_" name="Engineer works" optional="true" type="GenObjectList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret" dia-type="T_Mission_Automate_ABC_GTIA_DonnerCoupArret" id="248" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_DonnerCoupArret" name="Battalion - conduct a blocking action">
       <parameter dia-name="travaux_" name="Engineer works" optional="true" type="GenObjectList"/>
-      <parameter dia-name="DelaisCourts_" name="Delais courts" optional="false" type="Bool"/>
+      <parameter dia-name="delaisCourts_" name="Delais courts" optional="false" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="Pas de rearticulation" optional="true" type="Bool"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting aera" optional="false" type="Polygon"/>
     </mission>

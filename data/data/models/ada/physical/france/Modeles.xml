@@ -4561,6 +4561,7 @@
         <mission name="ABC GTIA Marche a l'ennemi"/>
         <mission name="ABC GTIA ControlerZone"/>
         <mission name="ABC GTIA EffectuerRaid"/>
+        <mission name="ABC GTIA Exploiter"/>
       </missions>
     </automat>
   </automats>
