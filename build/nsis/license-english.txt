@@ -67,7 +67,7 @@ In consideration of the licensed right of use, the Customer agrees to pay the am
 
 The Supplier maintenance only covers the substantial compliance of the Software with the specifications described in the Documentation. It is defined in the maintenance agreement and can be used only after signature of the maintenance agreement.
 
-9. LIMITATION OF LIABILITY AND ENDEMNIFICATION
+9. LIMITATION OF LIABILITY AND INDEMNIFICATION
 9.1. LIMITATION OF LIABILITY
 
 The Customer expressly acknowledges that it received all necessary information from the Supplier enabling it to be sure the Software matches its needs and to take all the necessary useful precautions for its implementation and use.
