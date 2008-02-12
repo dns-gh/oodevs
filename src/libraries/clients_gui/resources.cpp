@@ -108,6 +108,13 @@
 #include "res/trash.xpm"
 #include "res/copy.xpm"
 
+#include "cursors/pen_cursor.xpm"
+#include "cursors/point_cursor.xpm"
+#include "cursors/line_cursor.xpm"
+#include "cursors/polygon_cursor.xpm"
+#include "cursors/circle_cursor.xpm"
+#include "cursors/path_cursor.xpm"
+
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {
     QPixmap enabledPixmap ( pEnabledXpm );

@@ -77,6 +77,7 @@ public:
 
     virtual void CenterOn( const geometry::Point2f& point );
     virtual void CenterView();
+    virtual void SetCurrentCursor( const QCursor& cursor );
     //@}
 
 private:

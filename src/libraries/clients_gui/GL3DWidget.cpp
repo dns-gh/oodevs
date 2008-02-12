@@ -589,3 +589,12 @@ void Gl3dWidget::UndoRotations() const
             modelview[ i * 4 + j ] = ( i == j ) ? 1.0 : 0.0;
 	glLoadMatrixf( modelview );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::SetCurrentCursor
+// Created: SBO 2008-02-12
+// -----------------------------------------------------------------------------
+void Gl3dWidget::SetCurrentCursor( const QCursor& cursor )
+{
+    setCursor( cursor );
+}

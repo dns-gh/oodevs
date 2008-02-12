@@ -11,6 +11,8 @@
 #include "DrawerLayer.h"
 #include "DrawerShape.h"
 #include "DrawerShapeFactory.h"
+#include "CursorStrategy.h"
+#include "resources.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
 
@@ -21,8 +23,9 @@ using namespace xml;
 // Name: DrawerLayer constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerLayer::DrawerLayer( const kernel::GlTools_ABC& tools )
+DrawerLayer::DrawerLayer( kernel::GlTools_ABC& tools )
     : tools_( tools )
+    , cursors_( new CursorStrategy( tools ) )
     , factory_( *new DrawerShapeFactory() )
     , current_( 0 )
     , show_( true )
@@ -51,6 +54,7 @@ void DrawerLayer::TakeFocus( bool take )
 {
     if( ! take )
         overlined_ = selected_ = 0;
+    cursors_->SelectTool( QCursor( MAKE_PIXMAP( pen_cursor ) ), take );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,7 +186,10 @@ bool DrawerLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& 
         const geometry::Vector2f translation( dragPoint_, point );
         selected_->Translate( dragPoint_, translation, precision );
         dragPoint_ = point;
+        cursors_->SelectContext( QCursor( Qt::SizeAllCursor ), true );
     }
+    else
+        cursors_->SelectContext( QCursor( Qt::PointingHandCursor ), overlined_ );
 
     return true;
 }

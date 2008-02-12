@@ -96,7 +96,10 @@ void Circle::Accept( LocationVisitor_ABC& visitor ) const
 void Circle::Draw( const GlTools_ABC& tools ) const
 {
     if( IsValid() )
+    {
+        tools.DrawCross( center_ );
         tools.DrawCircle( center_, radius_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

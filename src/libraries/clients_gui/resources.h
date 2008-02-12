@@ -102,4 +102,12 @@ DECLARE_ICON( checkbox_off );
 DECLARE_ICON( trash );
 DECLARE_ICON( copy );
 
+// cursors
+DECLARE_ICON( pen_cursor );
+DECLARE_ICON( point_cursor );
+DECLARE_ICON( line_cursor );
+DECLARE_ICON( polygon_cursor );
+DECLARE_ICON( circle_cursor );
+DECLARE_ICON( path_cursor );
+
 #endif // __demo_resources_h_

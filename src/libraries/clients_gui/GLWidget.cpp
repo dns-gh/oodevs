@@ -684,3 +684,12 @@ void GlWidget::CenterOn( const Point2f& point )
 {
     Center( point );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::SetCurrentCursor
+// Created: SBO 2008-02-12
+// -----------------------------------------------------------------------------
+void GlWidget::SetCurrentCursor( const QCursor& cursor )
+{
+    setCursor( cursor );
+}

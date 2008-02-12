@@ -160,6 +160,16 @@ void GlProxy::SetCurrentColor( float r, float g, float b, float a /*= 1*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::SetCurrentCursor
+// Created: SBO 2008-02-12
+// -----------------------------------------------------------------------------
+void GlProxy::SetCurrentCursor( const QCursor& cursor )
+{
+    if( tools_ )
+        tools_->SetCurrentCursor( cursor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawCross
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

@@ -28,6 +28,7 @@ namespace gui
     class DrawerStyle;
     class DrawerShapeFactory;
     class DrawerModel;
+    class CursorStrategy_ABC;
 
 // =============================================================================
 /** @class  DrawerLayer
@@ -41,7 +42,7 @@ class DrawerLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DrawerLayer( const kernel::GlTools_ABC& tools );
+    explicit DrawerLayer( kernel::GlTools_ABC& tools );
     virtual ~DrawerLayer();
     //@}
 
@@ -90,6 +91,7 @@ private:
     //! @name Member data
     //@{
     const kernel::GlTools_ABC& tools_;
+    std::auto_ptr< CursorStrategy_ABC > cursors_;
     DrawerShapeFactory& factory_;
     bool         show_;
     DrawerShape* current_;

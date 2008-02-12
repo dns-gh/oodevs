@@ -23,6 +23,7 @@ namespace gui
 {
     class ShapeHandler_ABC;
     class LocationEditor_ABC;
+    class CursorStrategy_ABC;
 
 // =============================================================================
 /** @class  ParametersLayer
@@ -36,7 +37,7 @@ class ParametersLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParametersLayer( const kernel::GlTools_ABC& tools, LocationEditor_ABC& editor );
+             ParametersLayer( kernel::GlTools_ABC& tools, LocationEditor_ABC& editor );
     virtual ~ParametersLayer();
     //@}
 
@@ -76,11 +77,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
+    kernel::GlTools_ABC& tools_;
+    std::auto_ptr< CursorStrategy_ABC > cursors_;
     LocationEditor_ABC& editor_;
     ShapeHandler_ABC* handler_;
     kernel::Location_ABC* current_;
     geometry::Rectangle2f world_;
+    geometry::Point2f lastPoint_;
     //@}
 };
 

@@ -12,11 +12,13 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
 #include "LocationEditor_ABC.h"
+#include "CursorStrategy.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Circle.h"
 #include "clients_kernel/Path.h"
+#include "resources.h"
 
 using namespace kernel;
 using namespace gui;
@@ -25,8 +27,9 @@ using namespace gui;
 // Name: ParametersLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ParametersLayer::ParametersLayer( const GlTools_ABC& tools, LocationEditor_ABC& editor )
+ParametersLayer::ParametersLayer( GlTools_ABC& tools, LocationEditor_ABC& editor )
     : tools_( tools )
+    , cursors_( new CursorStrategy( tools_ ) )
     , editor_( editor )
     , handler_( 0 )
     , current_( 0 )
@@ -63,7 +66,9 @@ void ParametersLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor4f( COLOR_UNDERCONST );
         glLineWidth( 3.f );
+        current_->AddPoint( lastPoint_ );
         current_->Draw( tools_ );
+        current_->PopPoint();
     glPopAttrib();
 }
 
@@ -96,8 +101,9 @@ bool ParametersLayer::HandleKeyPress( QKeyEvent* key )
 // Name: ParametersLayer::HandleMouseMove
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-bool ParametersLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& )
+bool ParametersLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& point )
 {
+    lastPoint_ = point;
     return current_ != 0;
 }
 
@@ -155,6 +161,7 @@ bool ParametersLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry
 // -----------------------------------------------------------------------------
 void ParametersLayer::StartPoint( ShapeHandler_ABC& handler )
 {
+    cursors_->SelectTool( MAKE_PIXMAP( point_cursor ), true );
     Start( handler, *new Point() );
 }
 
@@ -164,6 +171,7 @@ void ParametersLayer::StartPoint( ShapeHandler_ABC& handler )
 // -----------------------------------------------------------------------------
 void ParametersLayer::StartLine( ShapeHandler_ABC& handler )
 {
+    cursors_->SelectTool( MAKE_PIXMAP( line_cursor ), true );
     Start( handler, *new Lines() );
 }
 
@@ -173,6 +181,7 @@ void ParametersLayer::StartLine( ShapeHandler_ABC& handler )
 // -----------------------------------------------------------------------------
 void ParametersLayer::StartPolygon( ShapeHandler_ABC& handler )
 {
+    cursors_->SelectTool( MAKE_PIXMAP( polygon_cursor ), true );
     Start( handler, *new class Polygon() );
 }
 
@@ -182,6 +191,7 @@ void ParametersLayer::StartPolygon( ShapeHandler_ABC& handler )
 // -----------------------------------------------------------------------------
 void ParametersLayer::StartCircle( ShapeHandler_ABC& handler )
 {
+    cursors_->SelectTool( MAKE_PIXMAP( circle_cursor ), true );
      Start( handler, *new Circle() );
 }
 
@@ -191,6 +201,7 @@ void ParametersLayer::StartCircle( ShapeHandler_ABC& handler )
 // -----------------------------------------------------------------------------
 void ParametersLayer::StartPath( ShapeHandler_ABC& handler, const Positions& position )
 {
+    cursors_->SelectTool( MAKE_PIXMAP( path_cursor ), true );
     Start( handler, *new Path( position ) );
 }
 
@@ -228,4 +239,5 @@ void ParametersLayer::NotifyDone()
     handler_ = 0; current_ = 0;
     if( location )
         handler->Handle( *location );
+    cursors_->SelectTool( QCursor(), false );
 }

@@ -59,6 +59,7 @@ public:
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
+    virtual void SetCurrentCursor ( const QCursor& cursor );
     virtual std::auto_ptr< kernel::GlTooltip_ABC > CreateTooltip() const;
     virtual void DrawCross        ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
