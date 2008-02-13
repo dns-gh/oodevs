@@ -125,14 +125,16 @@ GENERATE_ASN_MSG_SENDER( SimToClient, KnowledgeGroupCreation, knowledge_group_cr
 GENERATE_ASN_MSG_SENDER( SimToClient, TeamCreation          , side_creation            )
 
 // Hierarchie update
-GENERATE_ASN_MSG_SENDER( SimToClient, ChangeDiplomacyAck            , change_diplomacy_ack                )
-GENERATE_ASN_MSG_SENDER( SimToClient, AutomatChangeKnowledgeGroupAck, automat_change_knowledge_group_ack  )
-GENERATE_ASN_MSG_SENDER( SimToClient, AutomatChangeLogisticLinksAck , automat_change_logistic_links_ack   )
-GENERATE_ASN_MSG_SENDER( SimToClient, AutomatChangeLogisticLinks    , automat_change_logistic_links       )
-GENERATE_ASN_MSG_SENDER( SimToClient, AutomatChangeSuperiorAck      , automat_change_superior_ack         )
-GENERATE_ASN_MSG_SENDER( SimToClient, UnitChangeSuperior            , unit_change_superior                )
-GENERATE_ASN_MSG_SENDER( SimToClient, UnitChangeSuperiorAck         , unit_change_superior_ack            )
-GENERATE_ASN_MSG_SENDER( SimToClient, ChangeDiplomacy               , change_diplomacy                    )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, ChangeDiplomacyAck            , change_diplomacy_ack                )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, AutomatChangeLogisticLinks    , automat_change_logistic_links       )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, AutomatChangeLogisticLinksAck , automat_change_logistic_links_ack   )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, AutomatChangeKnowledgeGroup   , automat_change_knowledge_group      )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, AutomatChangeKnowledgeGroupAck, automat_change_knowledge_group_ack  )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, AutomatChangeSuperior         , automat_change_superior             )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, AutomatChangeSuperiorAck      , automat_change_superior_ack         )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitChangeSuperior            , unit_change_superior                )
+GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, UnitChangeSuperiorAck         , unit_change_superior_ack            )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, ChangeDiplomacy               , change_diplomacy                    )
 
 // Logistic
 GENERATE_ASN_MSG_SENDER( SimToClient, LogMaintenanceHandlingCreation   , log_maintenance_handling_creation    )
@@ -240,7 +242,7 @@ GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceCreation             , intelli
 GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceUpdate               , intelligence_update )
 GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceDestruction          , intelligence_destruction )
 GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceCreationRequestAck   , intelligence_creation_request_ack )
-GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceUpdateRequestAck   , intelligence_update_request_ack )
+GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceUpdateRequestAck     , intelligence_update_request_ack )
 GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceDestructionRequestAck, intelligence_destruction_request_ack )
 
 #endif // __NET_ASN_Messages_h_

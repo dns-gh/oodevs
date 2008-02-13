@@ -87,7 +87,6 @@ public:
     //@{
     void FlagForCreation     ( Entity_ABC& synch );
     void FlagForUpdate       ( Entity_ABC& synch );
-    void FlagForSpecialUpdate( Entity_ABC& synch );
     void FlagForDestruction  ( Entity_ABC& synch );
     //@}
 

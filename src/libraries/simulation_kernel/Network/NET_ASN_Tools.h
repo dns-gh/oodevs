@@ -314,6 +314,4 @@ private:
     //@}
 };
 
-#include "NET_ASN_Tools.inl"
-
 #endif // __NET_ASN_Tools_h_

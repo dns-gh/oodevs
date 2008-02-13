@@ -65,6 +65,4 @@ private:
     //@}
 };
 
-#include "NET_AS_MOSServerMsgMgr.inl"
-
 #endif // __NET_AS_MOSServerMsgMgr_h_

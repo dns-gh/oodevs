@@ -33,7 +33,6 @@ namespace kernel
 // =============================================================================
 class LogisticLinks : public kernel::LogisticLinks_ABC
                     , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeLogisticLinks >
-                    , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeLogisticLinksAck >
                     , public kernel::Drawable_ABC
 {
 
@@ -65,7 +64,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgAutomatChangeLogisticLinksAck& message );
     virtual void DoUpdate( const ASN1T_MsgAutomatChangeLogisticLinks& message );
     void DrawLink( const geometry::Point2f& from, kernel::Automat_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;

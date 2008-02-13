@@ -109,9 +109,8 @@ Agent::~Agent()
 // -----------------------------------------------------------------------------
 void Agent::Update( const ASN1T_MsgUnitCreation& asnMsg )
 {
-    const bool superiorChanged = pAutomat_->GetID() != asnMsg.oid_automate;
-    FlagUpdate( superiorChanged );
-    if( superiorChanged )
+    FlagUpdate();
+    if( pAutomat_->GetID() != asnMsg.oid_automate )
     {
         pAutomat_->GetAgents().Unregister( *this );
         pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
@@ -304,20 +303,6 @@ void Agent::Update( const ASN1T_MsgUnitChangeSuperior& asnMsg )
     pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
     pAutomat_->GetAgents().Register( *this );
 }
-    
-// -----------------------------------------------------------------------------
-// Name: Agent::Update
-// Created: NLD 2006-10-02
-// -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgUnitChangeSuperiorAck& asnMsg )
-{
-    if( asnMsg.error_code == EnumChangeHierarchyErrorCode::no_error )
-    {
-        pAutomat_->GetAgents().Unregister( *this );
-        pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
-        pAutomat_->GetAgents().Register( *this );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: Agent::Update
@@ -355,7 +340,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     { // Attributes $$$
         AsnMsgSimToClientUnitAttributes asn;
 
-        asn().oid = nID_;     
+        asn().oid = nID_;
 
         asn().m.dotation_eff_materielPresent = 1;
         asn().m.dotation_eff_personnelPresent = 1;
@@ -470,6 +455,14 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             delete [] asn().equipements_pretes.elem;
     }
 
+    if( pAutomat_ )
+    {
+        AsnMsgSimToClientUnitChangeSuperior asn;
+        asn().oid = nID_;
+        asn().oid_automate = pAutomat_->GetID();
+        asn.Send( publisher );
+    }
+
     // Log
     if( pLogMedical_ )
         pLogMedical_->Send( publisher );
@@ -497,19 +490,6 @@ void Agent::SendDestruction( ClientPublisher_ABC& publisher ) const
     AsnMsgSimToClientUnitDestruction asn;
     asn() = nID_;
     asn.Send( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::SendSpecialUpdate
-// Created: AGE 2007-04-25
-// -----------------------------------------------------------------------------
-void Agent::SendSpecialUpdate( ClientPublisher_ABC& publisher ) const
-{   
-    AsnMsgSimToClientUnitChangeSuperiorAck ack;
-    ack().error_code   = EnumChangeHierarchyErrorCode::no_error;
-    ack().oid_automate = pAutomat_->GetID();
-    ack().oid          = nID_;
-    ack.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

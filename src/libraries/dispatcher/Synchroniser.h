@@ -36,7 +36,6 @@ public:
     //@{
     void FlagForCreation     ( Entity_ABC& entity );
     void FlagForUpdate       ( Entity_ABC& entity );
-    void FlagForSpecialUpdate( Entity_ABC& entity );
     void FlagForDestruction  ( Entity_ABC& entity );
 
     void Commit( ClientPublisher_ABC& publisher, Model& model );
@@ -60,7 +59,6 @@ private:
     //@{
     T_Entities toCreate_;
     T_Entities toUpdate_;
-    T_Entities toSpecial_;
     T_Entities toDestroy_;
     //@}
 };

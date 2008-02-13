@@ -1143,11 +1143,7 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplom
 void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg, uint nCtx )
 {
     NET_ASN_MsgAutomatChangeKnowledgeGroupAck ack;
-    ack().oid                     = asnMsg.oid;
-    ack().oid_camp                = asnMsg.oid_camp;
-    ack().oid_groupe_connaissance = asnMsg.oid_groupe_connaissance;
-    ack().error_code              = EnumChangeHierarchyErrorCode::no_error;
-
+    ack() = EnumChangeHierarchyErrorCode::no_error;
     try
     {
         MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
@@ -1157,9 +1153,18 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_Ms
     }
     catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack() = e.GetErrorID();
     }
     ack.Send( nCtx );
+
+    if( ack() == EnumChangeHierarchyErrorCode::no_error )
+    {
+        NET_ASN_MsgAutomatChangeKnowledgeGroup msg;
+        msg().oid                     = asnMsg.oid;
+        msg().oid_camp                = asnMsg.oid_camp;
+        msg().oid_groupe_connaissance = asnMsg.oid_groupe_connaissance;
+        msg.Send();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1169,17 +1174,7 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_Ms
 void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const ASN1T_MsgAutomatChangeLogisticLinks& asnMsg, uint nCtx )
 {
     NET_ASN_MsgAutomatChangeLogisticLinksAck ack;
-    ack().oid                         = asnMsg.oid;
-    ack().m.oid_tc2Present            = asnMsg.m.oid_tc2Present;
-    ack().m.oid_maintenancePresent    = asnMsg.m.oid_maintenancePresent;
-    ack().m.oid_santePresent          = asnMsg.m.oid_santePresent;
-    ack().m.oid_ravitaillementPresent = asnMsg.m.oid_ravitaillementPresent;
-    ack().oid_tc2                     = asnMsg.oid_tc2;
-    ack().oid_maintenance             = asnMsg.oid_maintenance;
-    ack().oid_sante                   = asnMsg.oid_sante;
-    ack().oid_ravitaillement          = asnMsg.oid_ravitaillement;
-    ack().error_code                  = EnumChangeHierarchyErrorCode::no_error;
-
+    ack() = EnumChangeHierarchyErrorCode::no_error;
     try
     {
         MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
@@ -1189,9 +1184,24 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const ASN1T_Msg
     }
     catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack() = e.GetErrorID();
     }
     ack.Send( nCtx );
+
+    if( ack() == EnumChangeHierarchyErrorCode::no_error )
+    {
+        NET_ASN_MsgAutomatChangeLogisticLinks msg;
+        msg().oid                         = asnMsg.oid;
+        msg().m.oid_tc2Present            = asnMsg.m.oid_tc2Present;
+        msg().m.oid_maintenancePresent    = asnMsg.m.oid_maintenancePresent;
+        msg().m.oid_santePresent          = asnMsg.m.oid_santePresent;
+        msg().m.oid_ravitaillementPresent = asnMsg.m.oid_ravitaillementPresent;
+        msg().oid_tc2                     = asnMsg.oid_tc2;
+        msg().oid_maintenance             = asnMsg.oid_maintenance;
+        msg().oid_sante                   = asnMsg.oid_sante;
+        msg().oid_ravitaillement          = asnMsg.oid_ravitaillement;
+        msg.Send();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1201,14 +1211,7 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const ASN1T_Msg
 void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const ASN1T_MsgAutomatChangeSuperior& asnMsg, uint nCtx )
 {
     NET_ASN_MsgAutomatChangeSuperiorAck ack;
-    ack().oid            = asnMsg.oid;
-    ack().oid_superior.t = asnMsg.oid_superior.t;
-    ack().error_code     = EnumChangeHierarchyErrorCode::no_error;
-    if( asnMsg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
-        ack().oid_superior.u.formation = asnMsg.oid_superior.u.formation;
-    else if( asnMsg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
-        ack().oid_superior.u.automate = asnMsg.oid_superior.u.automate;
-
+    ack() = EnumChangeHierarchyErrorCode::no_error;
     try
     {
         MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
@@ -1218,9 +1221,21 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const ASN1T_MsgAutom
     }
     catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack() = e.GetErrorID();
     }
     ack.Send( nCtx );
+
+    if( ack() == EnumChangeHierarchyErrorCode::no_error )
+    {
+        NET_ASN_MsgAutomatChangeSuperior msg;
+        msg().oid            = asnMsg.oid;
+        msg().oid_superior.t = asnMsg.oid_superior.t;
+        if( asnMsg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
+            msg().oid_superior.u.formation = asnMsg.oid_superior.u.formation;
+        else if( asnMsg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
+            msg().oid_superior.u.automate = asnMsg.oid_superior.u.automate;
+        msg.Send();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1230,10 +1245,7 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const ASN1T_MsgAutom
 void MIL_EntityManager::OnReceiveMsgUnitChangeSuperior( const ASN1T_MsgUnitChangeSuperior& asnMsg, uint nCtx )
 {
     NET_ASN_MsgUnitChangeSuperiorAck ack;
-    ack().oid          = asnMsg.oid;
-    ack().oid_automate = asnMsg.oid_automate;
-    ack().error_code   = EnumChangeHierarchyErrorCode::no_error;
-
+    ack() = EnumChangeHierarchyErrorCode::no_error;
     try
     {
         MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid );
@@ -1243,9 +1255,17 @@ void MIL_EntityManager::OnReceiveMsgUnitChangeSuperior( const ASN1T_MsgUnitChang
     }
     catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack() = e.GetErrorID();
     }
     ack.Send( nCtx );
+
+    if( ack() == EnumChangeHierarchyErrorCode::no_error )
+    {
+        NET_ASN_MsgUnitChangeSuperior msg;
+        msg().oid          = asnMsg.oid;
+        msg().oid_automate = asnMsg.oid_automate;
+        msg.Send();
+    }
 }
 
 // -----------------------------------------------------------------------------

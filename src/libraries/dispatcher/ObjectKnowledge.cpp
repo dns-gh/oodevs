@@ -84,8 +84,7 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
     bool realObjectChanged = ( message.real_object && ! pObject_ )
                           || ( pObject_ && pObject_->GetID() != message.real_object );
-
-    FlagUpdate( realObjectChanged );
+    FlagUpdate();
     if( realObjectChanged )
         pObject_ = model_.GetObjects().Find( message.real_object );
 }
@@ -274,20 +273,5 @@ void ObjectKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
     AsnMsgSimToClientObjectKnowledgeDestruction asn;
     asn().oid  = nID_;
     asn().team = side_.GetID();
-    asn.Send( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::SendSpecialUpdate
-// Created: AGE 2007-05-11
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::SendSpecialUpdate( ClientPublisher_ABC& publisher ) const
-{
-    AsnMsgSimToClientObjectKnowledgeUpdate asn;
-
-    asn().oid                  = nID_;
-    asn().team                 = side_.GetID();
-    asn().m.real_objectPresent = 1;
-    asn().real_object          = pObject_ ? pObject_->GetID() : 0;
     asn.Send( publisher );
 }

@@ -120,6 +120,8 @@ MsgsSimToClient ::= SEQUENCE
         msg-change-diplomacy                                    MsgChangeDiplomacy,
         msg-unit-change-superior                                MsgUnitChangeSuperior,
         msg-automat-change-logistic-links                       MsgAutomatChangeLogisticLinks,
+        msg-automat-change-knowledge-group                      MsgAutomatChangeKnowledgeGroup,
+        msg-automat-change-superior                             MsgAutomatChangeSuperior,
 
         msg-unit-knowledge-creation                             MsgUnitKnowledgeCreation,
         msg-unit-knowledge-update                               MsgUnitKnowledgeUpdate,

@@ -49,10 +49,9 @@ void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomatCreation& message )
 // Name: AutomatHierarchies::DoUpdate
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& message )
+void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomatChangeKnowledgeGroup& message )
 {
-    if( ! message.error_code )
-        ChangeSuperior( & groupResolver_.Get( message.oid_groupe_connaissance) );
+    ChangeSuperior( & groupResolver_.Get( message.oid_groupe_connaissance) );
 }
 
 // -----------------------------------------------------------------------------

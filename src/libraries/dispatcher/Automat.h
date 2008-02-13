@@ -51,18 +51,16 @@ public:
 
     //! @name Main
     //@{
-    void Update( const ASN1T_MsgAutomatCreation&                msg );
-    void Update( const ASN1T_MsgDecisionalState&                msg );
-    void Update( const ASN1T_MsgAutomatAttributes&              msg );
-    void Update( const ASN1T_MsgLogSupplyQuotas&                msg );
-    void Update( const ASN1T_MsgAutomatChangeLogisticLinksAck&  msg );
-    void Update( const ASN1T_MsgAutomatChangeLogisticLinks&     msg );
-    void Update( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& msg );
-    void Update( const ASN1T_MsgAutomatChangeSuperiorAck&       msg );
-    void Update( const ASN1T_MsgAutomatOrder&                   msg );
+    void Update( const ASN1T_MsgAutomatCreation&             msg );
+    void Update( const ASN1T_MsgDecisionalState&             msg );
+    void Update( const ASN1T_MsgAutomatAttributes&           msg );
+    void Update( const ASN1T_MsgLogSupplyQuotas&             msg );
+    void Update( const ASN1T_MsgAutomatChangeLogisticLinks&  msg );
+    void Update( const ASN1T_MsgAutomatChangeSuperior&       msg );
+    void Update( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg );
+    void Update( const ASN1T_MsgAutomatOrder&                msg );
 
     virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
 
     void Accept( ModelVisitor_ABC& visitor );

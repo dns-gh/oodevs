@@ -836,8 +836,7 @@ void AgentServerMsgMgr::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomat
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperiorAck( const ASN1T_MsgUnitChangeSuperiorAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "UnitChangeSuperiorAck" ) )
-        GetModel().agents_.GetAgent( message.oid ).Update( message );
+    CheckAcknowledge( message, "UnitChangeSuperiorAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -863,13 +862,30 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDip
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperior
+// Created: SBO 2008-02-13
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperior( const ASN1T_MsgAutomatChangeSuperior& asnMsg )
+{
+    GetModel().agents_.GetAutomat( asnMsg.oid ).Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperiorAck
 // Created: NLD 2007-04-12
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperiorAck( const ASN1T_MsgAutomatChangeSuperiorAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "AutomatChangeSuperiorAck" ) )
-        GetModel().agents_.GetAutomat( message.oid ).Update( message );
+    CheckAcknowledge( message, "AutomatChangeSuperiorAck" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroup
+// Created: SBO 2008-02-13
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg )
+{
+    GetModel().agents_.GetAutomat( asnMsg.oid ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -878,8 +894,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperiorAck( const ASN1T_MsgAut
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroupAck( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "AutomatChangeKnowledgeGroupAck" ) )
-        GetModel().agents_.GetAutomat( message.oid ).Update( message );
+    CheckAcknowledge( message, "AutomatChangeKnowledgeGroupAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -897,8 +912,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinks( const ASN1T_MsgA
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinksAck( const ASN1T_MsgAutomatChangeLogisticLinksAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "AutomatChangeLogisticLinksAck" ) )
-        GetModel().agents_.GetAutomat( message.oid ).Update( message );
+    CheckAcknowledge( message, "AutomatChangeLogisticLinksAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1376,14 +1390,14 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_unit_magic_action_ack:                  OnReceiveMsgUnitMagicActionAck                 ( *message.msg.u.msg_unit_magic_action_ack                   , message.context ); break;
         case T_MsgsSimToClient_msg_msg_unit_creation_request_ack:              OnReceiveMsgUnitCreationRequestAck             (  message.msg.u.msg_unit_creation_request_ack                                 ); break;
         case T_MsgsSimToClient_msg_msg_set_automat_mode_ack:                   OnReceiveMsgSetAutomatModeAck                  ( *message.msg.u.msg_set_automat_mode_ack                    , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_unit_change_superior_ack:               OnReceiveMsgUnitChangeSuperiorAck              ( *message.msg.u.msg_unit_change_superior_ack                , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_unit_change_superior_ack:               OnReceiveMsgUnitChangeSuperiorAck              (  message.msg.u.msg_unit_change_superior_ack                , message.context ); break;
         case T_MsgsSimToClient_msg_msg_change_diplomacy_ack:                   OnReceiveMsgChangeDiplomacyAck                 ( *message.msg.u.msg_change_diplomacy_ack                    , message.context ); break;
-        case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack:     OnReceiveMsgAutomatChangeKnowledgeGroupAck     ( *message.msg.u.msg_automat_change_knowledge_group_ack      , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack:     OnReceiveMsgAutomatChangeKnowledgeGroupAck     (  message.msg.u.msg_automat_change_knowledge_group_ack      , message.context ); break;
         case T_MsgsSimToClient_msg_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck               ( *message.msg.u.msg_object_magic_action_ack                 , message.context ); break;
 
-        case T_MsgsSimToClient_msg_msg_automat_change_logistic_links_ack:      OnReceiveMsgAutomatChangeLogisticLinksAck      ( *message.msg.u.msg_automat_change_logistic_links_ack       , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automat_change_logistic_links_ack:      OnReceiveMsgAutomatChangeLogisticLinksAck      (  message.msg.u.msg_automat_change_logistic_links_ack       , message.context ); break;
         case T_MsgsSimToClient_msg_msg_automat_change_logistic_links:          OnReceiveMsgAutomatChangeLogisticLinks         ( *message.msg.u.msg_automat_change_logistic_links                             ); break;
-        case T_MsgsSimToClient_msg_msg_automat_change_superior_ack:            OnReceiveMsgAutomatChangeSuperiorAck           ( *message.msg.u.msg_automat_change_superior_ack             , message.context ); break;
+        case T_MsgsSimToClient_msg_msg_automat_change_superior_ack:            OnReceiveMsgAutomatChangeSuperiorAck           (  message.msg.u.msg_automat_change_superior_ack             , message.context ); break;
         case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack:               OnReceiveMsgLogSupplyPushFlowAck               (  message.msg.u.msg_log_supply_push_flow_ack                , message.context ); break;
         case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack:           OnReceiveMsgLogRavitaillementChangeQuotaAck    (  message.msg.u.msg_log_supply_change_quotas_ack            , message.context ); break;
         case T_MsgsSimToClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck           ( *message.msg.u.msg_population_magic_action_ack             , message.context ); break;
@@ -1455,12 +1469,14 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_object_knowledge_update:              OnReceiveMsgObjectKnowledgeUpdate     ( *message.msg.u.msg_object_knowledge_update             ); break;
         case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:         OnReceiveMsgObjectKnowledgeDestruction( *message.msg.u.msg_object_knowledge_destruction        ); break;
 
-        case T_MsgsSimToClient_msg_msg_unit_change_superior:                 OnReceiveMsgUnitChangeSuperior        ( *message.msg.u.msg_unit_change_superior ); break;
+        case T_MsgsSimToClient_msg_msg_unit_change_superior:                 OnReceiveMsgUnitChangeSuperior         ( *message.msg.u.msg_unit_change_superior ); break;
+        case T_MsgsSimToClient_msg_msg_automat_change_superior:              OnReceiveMsgAutomatChangeSuperior      ( *message.msg.u.msg_automat_change_superior ); break;
+        case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group:       OnReceiveMsgAutomatChangeKnowledgeGroup( *message.msg.u.msg_automat_change_knowledge_group ); break;
 
-        case T_MsgsSimToClient_msg_msg_unit_creation:                        OnReceiveMsgUnitCreation              ( *message.msg.u.msg_unit_creation                       ); break;
-        case T_MsgsSimToClient_msg_msg_automat_creation:                     OnReceiveMsgAutomatCreation           ( *message.msg.u.msg_automat_creation                   ); break;
-        case T_MsgsSimToClient_msg_msg_change_diplomacy:                     OnReceiveMsgChangeDiplomacy           ( *message.msg.u.msg_change_diplomacy                   ); break;
-        case T_MsgsSimToClient_msg_msg_unit_destruction:                     OnReceiveMsgUnitDestruction           (  message.msg.u.msg_unit_destruction                    ); break;
+        case T_MsgsSimToClient_msg_msg_unit_creation:                        OnReceiveMsgUnitCreation              ( *message.msg.u.msg_unit_creation ); break;
+        case T_MsgsSimToClient_msg_msg_automat_creation:                     OnReceiveMsgAutomatCreation           ( *message.msg.u.msg_automat_creation ); break;
+        case T_MsgsSimToClient_msg_msg_change_diplomacy:                     OnReceiveMsgChangeDiplomacy           ( *message.msg.u.msg_change_diplomacy ); break;
+        case T_MsgsSimToClient_msg_msg_unit_destruction:                     OnReceiveMsgUnitDestruction           (  message.msg.u.msg_unit_destruction ); break;
 
         case T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation:    OnReceiveMsgLogMaintenanceHandlingCreation   ( *message.msg.u.msg_log_maintenance_handling_creation ); break;
         case T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction: OnReceiveMsgLogMaintenanceHandlingDestruction( *message.msg.u.msg_log_maintenance_handling_destruction ); break;

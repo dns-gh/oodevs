@@ -189,7 +189,9 @@ private:
     void OnReceiveMsgUnitChangeSuperiorAck          ( const ASN1T_MsgUnitChangeSuperiorAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgUnitChangeSuperior             ( const ASN1T_MsgUnitChangeSuperior& asnMsg );
     void OnReceiveMsgChangeDiplomacyAck             ( const ASN1T_MsgChangeDiplomacyAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgAutomatChangeSuperior          ( const ASN1T_MsgAutomatChangeSuperior& asnMsg );
     void OnReceiveMsgAutomatChangeSuperiorAck       ( const ASN1T_MsgAutomatChangeSuperiorAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgAutomatChangeKnowledgeGroup    ( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg );
     void OnReceiveMsgAutomatChangeKnowledgeGroupAck ( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgAutomatChangeLogisticLinks     ( const ASN1T_MsgAutomatChangeLogisticLinks& asnMsg );
     void OnReceiveMsgAutomatChangeLogisticLinksAck  ( const ASN1T_MsgAutomatChangeLogisticLinksAck& asnMsg, unsigned long nCtx );

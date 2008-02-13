@@ -22,7 +22,6 @@ Entity_ABC::Entity_ABC()
     : synching_( false )
     , updated_ ( false )
     , created_ ( false )
-    , special_ ( false )
 {
     // NOTHING
 }
@@ -43,7 +42,6 @@ Entity_ABC::~Entity_ABC()
 void Entity_ABC::StartSynchronisation( bool create )
 {
     synching_ = true;
-    special_  = false;
     updated_ = created_ = create;
 }
 
@@ -58,8 +56,6 @@ void Entity_ABC::EndSynchronisation( Synchroniser& synch )
         synch.FlagForCreation( *this );
     if( updated_ )
         synch.FlagForUpdate( *this );
-    if( special_ )
-        synch.FlagForSpecialUpdate( *this );
     if( ! updated_ )
         synch.FlagForDestruction( *this );
 }
@@ -68,10 +64,9 @@ void Entity_ABC::EndSynchronisation( Synchroniser& synch )
 // Name: Entity_ABC::FlagUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Entity_ABC::FlagUpdate( bool special /*= false */)
+void Entity_ABC::FlagUpdate()
 {
     updated_ = true;
-    special_ = special;
 }
 
 // -----------------------------------------------------------------------------
@@ -81,15 +76,6 @@ void Entity_ABC::FlagUpdate( bool special /*= false */)
 void Entity_ABC::SendDestruction( ClientPublisher_ABC& ) const
 {
     throw std::runtime_error( typeid( *this ).name() + std::string( "::SendDestruction" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::SendSpecialUpdate
-// Created: AGE 2007-04-25
-// -----------------------------------------------------------------------------
-void Entity_ABC::SendSpecialUpdate( ClientPublisher_ABC& ) const
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

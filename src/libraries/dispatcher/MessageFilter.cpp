@@ -91,9 +91,11 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgsSimToClient& message )
         case T_MsgsSimToClient_msg_msg_frag_order_ack:
         case T_MsgsSimToClient_msg_msg_set_automat_mode_ack:
         case T_MsgsSimToClient_msg_msg_change_diplomacy_ack:
+            return true;
         case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack:
         case T_MsgsSimToClient_msg_msg_automat_change_logistic_links_ack:
-        case T_MsgsSimToClient_msg_msg_unit_change_superior_ack:
+        case T_MsgsSimToClient_msg_msg_automat_change_superior_ack:
+            return false;
         case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack:
         case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack:
         case T_MsgsSimToClient_msg_msg_limit_creation:
@@ -110,6 +112,8 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgsSimToClient& message )
         case T_MsgsSimToClient_msg_msg_change_diplomacy:
         case T_MsgsSimToClient_msg_msg_unit_change_superior:
         case T_MsgsSimToClient_msg_msg_automat_change_logistic_links:
+        case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group:
+        case T_MsgsSimToClient_msg_msg_automat_change_superior:
         case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:
         case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
         case T_MsgsSimToClient_msg_msg_start_unit_fire:

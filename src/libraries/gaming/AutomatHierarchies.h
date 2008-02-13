@@ -29,7 +29,7 @@ namespace kernel
 // =============================================================================
 class AutomatHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
                          , public kernel::Updatable_ABC< ASN1T_MsgAutomatCreation >
-                         , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeKnowledgeGroupAck >
+                         , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeKnowledgeGroup >
 {
 
 public:
@@ -51,7 +51,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgAutomatCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomatChangeKnowledgeGroup& message );
     virtual void AddSuperiorToDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC* const& superior ) const;
     //@}
 

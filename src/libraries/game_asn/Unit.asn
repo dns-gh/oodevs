@@ -316,18 +316,12 @@ MsgUnitCreationRequest ::= SEQUENCE
     position        CoordUTM
 }
 MsgUnitCreationRequestAck ::= EnumUnitErrorCode
+MsgUnitChangeSuperiorAck  ::= EnumChangeHierarchyErrorCode
 
 MsgUnitPathFind ::= SEQUENCE
 {
     oid         OID,
     itineraire  Path
-}
-
-MsgUnitChangeSuperiorAck ::= SEQUENCE
-{
-    oid          Unit,
-    oid-automate Automat,
-    error-code   EnumChangeHierarchyErrorCode
 }
 
 MsgUnitChangeSuperior ::= SEQUENCE

@@ -28,7 +28,7 @@ namespace kernel
 // Created: AGE 2006-10-19
 // =============================================================================
 class AutomatTacticalHierarchies : public kernel::MergingTacticalHierarchies
-                                 , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeSuperiorAck >
+                                 , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeSuperior >
 {
 
 public:
@@ -55,7 +55,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgAutomatChangeSuperiorAck& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomatChangeSuperior& message );
     virtual void DoUpdate( const kernel::InstanciationComplete& message );
     virtual void MergeSymbol( const kernel::Entity_ABC& entity );
     static std::string Max( const std::string& lhs, const std::string& rhs );

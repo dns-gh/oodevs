@@ -35,12 +35,12 @@ MsgAutomatCreation ::= SEQUENCE
 
 MsgAutomatAttributes ::= SEQUENCE
 {
-    oid                           Automat,    
-    etat-automate                 EnumAutomatMode       OPTIONAL,   
+    oid                           Automat,
+    etat-automate                 EnumAutomatMode               OPTIONAL,
     rapport-de-force              EnumForceRatioStatus          OPTIONAL,
-    combat-de-rencontre           EnumMeetingEngagementStatus OPTIONAL,
-    etat-operationnel             EnumOperationalStatus    OPTIONAL,
-    roe                           EnumRoe                 OPTIONAL
+    combat-de-rencontre           EnumMeetingEngagementStatus   OPTIONAL,
+    etat-operationnel             EnumOperationalStatus         OPTIONAL,
+    roe                           EnumRoe                       OPTIONAL
 }
 
 -- Misc
@@ -66,34 +66,7 @@ MsgAutomatChangeKnowledgeGroup ::= SEQUENCE
 {
     oid                      Automat,
     oid-camp                 Team,
-    oid-groupe-connaissance  KnowledgeGroup 
-}
-
-MsgAutomatChangeKnowledgeGroupAck ::= SEQUENCE
-{
-    oid                      Automat,
-    oid-camp                 Team,
-    oid-groupe-connaissance  KnowledgeGroup,
-    error-code               EnumChangeHierarchyErrorCode
-}
-   
-MsgAutomatChangeLogisticLinks ::= SEQUENCE
-{
-    oid                Automat,
-    oid-tc2            Automat OPTIONAL,
-    oid-maintenance    Automat OPTIONAL,
-    oid-sante          Automat OPTIONAL,
-    oid-ravitaillement Automat OPTIONAL
-}
-
-MsgAutomatChangeLogisticLinksAck ::= SEQUENCE
-{
-    oid                Automat,
-    oid-tc2            Automat OPTIONAL,
-    oid-maintenance    Automat OPTIONAL,
-    oid-sante          Automat OPTIONAL,
-    oid-ravitaillement Automat OPTIONAL,
-    error-code         EnumChangeHierarchyErrorCode   
+    oid-groupe-connaissance  KnowledgeGroup
 }
 
 MsgAutomatChangeSuperior ::= SEQUENCE
@@ -103,17 +76,20 @@ MsgAutomatChangeSuperior ::= SEQUENCE
     {
         formation Formation,
         automate  Automat
-    }    
+    }
 }
-MsgAutomatChangeSuperiorAck ::= SEQUENCE
+
+MsgAutomatChangeLogisticLinks ::= SEQUENCE
 {
-    oid           Automat,
-    oid-superior  CHOICE
-    {
-        formation Formation,
-        automate  Automat
-    },
-    error-code   EnumChangeHierarchyErrorCode
+    oid                Automat,
+    oid-tc2            Automat OPTIONAL,
+    oid-maintenance    Automat OPTIONAL,
+    oid-sante          Automat OPTIONAL,
+    oid-ravitaillement Automat OPTIONAL
 }
+
+MsgAutomatChangeSuperiorAck       ::= EnumChangeHierarchyErrorCode
+MsgAutomatChangeKnowledgeGroupAck ::= EnumChangeHierarchyErrorCode
+MsgAutomatChangeLogisticLinksAck  ::= EnumChangeHierarchyErrorCode
 
 END -- Automat

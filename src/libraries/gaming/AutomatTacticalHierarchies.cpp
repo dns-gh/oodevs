@@ -44,15 +44,12 @@ AutomatTacticalHierarchies::~AutomatTacticalHierarchies()
 // Name: AutomatTacticalHierarchies::DoUpdate
 // Created: NLD 2007-04-12
 // -----------------------------------------------------------------------------
-void AutomatTacticalHierarchies::DoUpdate( const ASN1T_MsgAutomatChangeSuperiorAck& message )
+void AutomatTacticalHierarchies::DoUpdate( const ASN1T_MsgAutomatChangeSuperior& message )
 {
-    if( !message.error_code )
-    {
-        if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
-            ChangeSuperior( &automatResolver_.Get( message.oid_superior.u.automate ) );
-        else if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
-            ChangeSuperior( &formationResolver_.Get( message.oid_superior.u.formation ) );
-    }
+    if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
+        ChangeSuperior( &automatResolver_.Get( message.oid_superior.u.automate ) );
+    else if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
+        ChangeSuperior( &formationResolver_.Get( message.oid_superior.u.formation ) );
 }
 
 // -----------------------------------------------------------------------------

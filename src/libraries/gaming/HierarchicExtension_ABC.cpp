@@ -81,22 +81,10 @@ void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgUnitChangeSuperior& messa
 
 // -----------------------------------------------------------------------------
 // Name: HierarchicExtension_ABC::DoUpdate
-// Created: SBO 2007-04-12
-// -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgUnitChangeSuperiorAck& message )
-{
-    if( !message.error_code )
-        UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchicExtension_ABC::DoUpdate
 // Created: NLD 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgAutomatChangeSuperiorAck& message )
+void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgAutomatChangeSuperior& message )
 {
-    if( message.error_code )
-        return;
     if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
         UpdateSuperior( automatResolver_.Get( message.oid_superior.u.automate ) );
     else if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )

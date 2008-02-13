@@ -10,6 +10,10 @@
 #ifndef __Synchronisable_h_
 #define __Synchronisable_h_
 
+#include "tools/Extendable.h"
+#include "tools/InterfaceContainer.h"
+#include "Extension_ABC.h"
+
 namespace dispatcher
 {
     class ClientPublisher_ABC;
@@ -23,7 +27,8 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-12
 // =============================================================================
-class Entity_ABC
+class Entity_ABC : public tools::Extendable< Extension_ABC >
+                 , public tools::InterfaceContainer< Extension_ABC >
 {
 
 public:
@@ -41,15 +46,25 @@ public:
     virtual void SendFullUpdate   ( ClientPublisher_ABC& publisher ) const = 0;
     virtual void SendCreation     ( ClientPublisher_ABC& publisher ) const = 0;
     virtual void SendDestruction  ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
+
     virtual void Accept           ( ModelVisitor_ABC& visitor );
     virtual std::string BuildSymbol( bool up = true ) const; // $$$$ SBO 2007-08-22: abstract
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename T >
+    void Attach( T& extension )
+    {
+        tools::Extendable< Extension_ABC >::Attach( extension );
+        AddExtension( extension );
+    }
     //@}
 
 protected:
     //! @name Operations
     //@{
-    void FlagUpdate( bool special = false );
+    void FlagUpdate();
     void StartSynchronisation( Entity_ABC& next, bool create );
     //@}
 
@@ -66,7 +81,6 @@ private:
     bool synching_ : 1;
     bool updated_  : 1;
     bool created_  : 1;
-    bool special_  : 1;
     //@}
 };
 

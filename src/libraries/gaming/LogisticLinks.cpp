@@ -96,24 +96,6 @@ Automat_ABC* LogisticLinks::GetSupply() const
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks::DoUpdate
-// Created: AGE 2006-02-13
-// -----------------------------------------------------------------------------
-void LogisticLinks::DoUpdate( const ASN1T_MsgAutomatChangeLogisticLinksAck& message )
-{
-    if( message.m.oid_tc2Present )
-        tc2_ = resolver_.Find( message.oid_tc2 );
-    if( message.m.oid_maintenancePresent )
-        maintenanceSuperior_ = resolver_.Find( message.oid_maintenance );
-    if( message.m.oid_santePresent )
-         medicalSuperior_ = resolver_.Find( message.oid_sante );
-    if( message.m.oid_ravitaillementPresent )
-        supplySuperior_ = resolver_.Find( message.oid_ravitaillement );
-
-    controller_.Update( *(LogisticLinks_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticLinks::DoUpdate
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const ASN1T_MsgAutomatChangeLogisticLinks& message )

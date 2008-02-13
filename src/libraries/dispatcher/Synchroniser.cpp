@@ -52,15 +52,6 @@ void Synchroniser::FlagForUpdate( Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Synchroniser::FlagForSpecialUpdate
-// Created: AGE 2007-04-25
-// -----------------------------------------------------------------------------
-void Synchroniser::FlagForSpecialUpdate( Entity_ABC& entity )
-{
-    toSpecial_.push_back( &entity );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Synchroniser::FlagForDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
@@ -100,9 +91,6 @@ void Synchroniser::Commit( ClientPublisher_ABC& publisher, Model& model )
 
     for( CIT_Entities it = toUpdate_.begin(); it != toUpdate_.end(); ++it )
         (*it)->SendFullUpdate( publisher );
-
-    for( CIT_Entities it = toSpecial_.begin(); it != toSpecial_.end(); ++it )
-        (*it)->SendSpecialUpdate( publisher );
 
     Publisher p( publisher, model );
     for( std::vector< Entity_ABC* >::reverse_iterator it = toDestroy_.rbegin(); it != toDestroy_.rend(); ++it )

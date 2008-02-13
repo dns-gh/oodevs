@@ -46,7 +46,6 @@ public:
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    virtual void SendSpecialUpdate( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:

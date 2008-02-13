@@ -35,7 +35,6 @@ namespace kernel
 template< typename I >
 class AgentHierarchies : public kernel::EntityHierarchies< I  >
                        , public kernel::Updatable_ABC< ASN1T_MsgUnitCreation >
-                       , public kernel::Updatable_ABC< ASN1T_MsgUnitChangeSuperiorAck >
                        , public kernel::Updatable_ABC< ASN1T_MsgUnitChangeSuperior >
 {
 
@@ -63,7 +62,6 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgUnitChangeSuperiorAck& message );
     virtual void DoUpdate( const ASN1T_MsgUnitChangeSuperior& message );
 
     void UpdateSuperior( kernel::Entity_ABC& superior );
@@ -116,17 +114,6 @@ void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgUnitCreation& message )
     if( diplo )
         App6Symbol::SetKarma( symbol_, diplo->GetKarma() );
     SetSuperior( & superior );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentHierarchies::DoUpdate
-// Created: AGE 2006-10-19
-// -----------------------------------------------------------------------------
-template< typename I >
-void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgUnitChangeSuperiorAck& message )
-{
-    if( message.error_code == EnumObjectErrorCode::no_error )
-        UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
 }
 
 // -----------------------------------------------------------------------------
