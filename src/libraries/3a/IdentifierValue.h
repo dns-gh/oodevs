@@ -40,7 +40,6 @@ struct IdentifierValue : public InstantValue< unsigned long >
         switch( message.msg.t )
         {
             SET_OID( msg_unit_order_ack );
-            SET_OID( msg_unit_change_superior_ack );
             SET_OID( msg_unit_creation );
             SET_OID( msg_unit_attributes );
             SET_OID( msg_unit_pathfind );
