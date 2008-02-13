@@ -134,9 +134,7 @@ namespace
             , count_       ( 0 )
         { 
             messages_.reserve( 50 );
-            const unsigned maxAsnSize      = 100000;
-            const unsigned maxBufferSize   = maxAsnSize * 4 / 5;
-            const unsigned maxBufferLength = maxBufferSize / sizeof( int );
+            const unsigned maxBufferLength = 0x4000 - 1; // $$$$ AGE 2008-02-13: ASN1.PER limit before fragmentation 
             buffer_.resize( maxBufferLength );
         }
 
