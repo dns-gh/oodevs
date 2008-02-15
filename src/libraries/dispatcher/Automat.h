@@ -18,13 +18,13 @@
 
 namespace dispatcher
 {
-class Side;
-class KnowledgeGroup;
-class Model;
-class Formation;
-class Agent;
-class DotationQuota;
-class AutomatOrder;
+    class Side;
+    class KnowledgeGroup;
+    class Model;
+    class Formation;
+    class Agent;
+    class DotationQuota;
+    class AutomatOrder;
 
 // =============================================================================
 /** @class  Automat
@@ -33,6 +33,8 @@ class AutomatOrder;
 // Created: NLD 2006-09-19
 // =============================================================================
 class Automat : public Entity_ABC
+              , public Extension_ABC
+              , public Updatable_ABC< ASN1T_MsgAutomatCreation >
 {
 public:
     //! @name Constructors/Destructor
@@ -51,7 +53,8 @@ public:
 
     //! @name Main
     //@{
-    void Update( const ASN1T_MsgAutomatCreation&             msg );
+    virtual void DoUpdate( const ASN1T_MsgAutomatCreation& msg );
+
     void Update( const ASN1T_MsgDecisionalState&             msg );
     void Update( const ASN1T_MsgAutomatAttributes&           msg );
     void Update( const ASN1T_MsgLogSupplyQuotas&             msg );
@@ -62,9 +65,7 @@ public:
 
     virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
-
-    void Accept( ModelVisitor_ABC& visitor );
-    virtual std::string BuildSymbol( bool up = true ) const;
+    virtual void Accept        ( ModelVisitor_ABC& visitor );
     //@}
 
 private:
@@ -74,7 +75,7 @@ private:
     Automat& operator=( const Automat& ); //!< Assignement operator
     //@}
 
-private:
+public:
           Model&                              model_;
     const unsigned long                       nID_;
     const unsigned long                       nType_; // XML reference - no resolved by dispatcher

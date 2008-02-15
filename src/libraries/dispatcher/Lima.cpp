@@ -8,11 +8,9 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Lima.h"
 #include "Model.h"
 #include "Network_Def.h"
-#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -41,7 +39,6 @@ Lima::~Lima()
 // -----------------------------------------------------------------------------
 void Lima::Update( const ASN1T_MsgLimaCreation& message )
 {
-    FlagUpdate();
     TacticalLine_ABC::Update( message.tactical_line );
 }
 
@@ -87,17 +84,4 @@ void Lima::SendDestruction( ClientPublisher_ABC& publisher ) const
     AsnMsgSimToClientLimaDestruction asn;
     asn() = GetID();
     asn.Send( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lima::BuildSymbol
-// Created: SBO 2007-08-22
-// -----------------------------------------------------------------------------
-std::string Lima::BuildSymbol( bool up /*= true*/ ) const
-{
-    std::string symbol;
-    tools::app6::SetFunction( symbol, "**P***" );
-    if( up )
-        return tools::app6::MergeSymbol( symbol, TacticalLine_ABC::BuildSymbol() );
-    return symbol;
 }

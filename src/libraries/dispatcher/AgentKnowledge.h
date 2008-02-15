@@ -38,12 +38,10 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgUnitKnowledgeCreation& asnMsg );
-    void Update        ( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg );
+    void Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    virtual std::string BuildSymbol( bool up = true ) const;
     //@}
 
     //! @name Accessors
@@ -77,7 +75,7 @@ private:
     };
     //@}
 
-private:
+public:
           Model&          model_;
     const unsigned int    nID_;
     const KnowledgeGroup& knowledgeGroup_;

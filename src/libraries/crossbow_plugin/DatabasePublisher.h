@@ -45,7 +45,7 @@ class DatabasePublisher : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DatabasePublisher( const dispatcher::Config& config, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher );
+             DatabasePublisher( const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~DatabasePublisher();
     //@}
 

@@ -17,9 +17,9 @@
 
 namespace dispatcher
 {
-class Agent;
-class Automat;
-class Model;
+    class Agent;
+    class Automat;
+    class Model;
 
 // =============================================================================
 /** @class  LogConsignSupply
@@ -43,8 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgLogSupplyHandlingCreation& msg );
-    void Update        ( const ASN1T_MsgLogSupplyHandlingUpdate& msg );
+    void Update( const ASN1T_MsgLogSupplyHandlingUpdate& msg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;

@@ -11,6 +11,7 @@
 #include "ConnectorFacade.h"
 #include "ScopeEditor.h"
 #include "ReportFactory.h"
+#include "ExtensionFactory.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Visitors.h"
@@ -21,13 +22,13 @@ using namespace gearth;
 // Name: ConnectorFacade constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-ConnectorFacade::ConnectorFacade( const dispatcher::Config& config, const dispatcher::Model& model )
+ConnectorFacade::ConnectorFacade( const dispatcher::Config& config, dispatcher::Model& model )
     : reportFactory_ ( new ReportFactory( config, model ) )
     , model_ ( model )    
     , config_ ( config )
     , bNeedUpdate_ ( false )
 {
-    // NOTHING
+    model.RegisterFactory( *new ExtensionFactory() );
 }
 
 // -----------------------------------------------------------------------------

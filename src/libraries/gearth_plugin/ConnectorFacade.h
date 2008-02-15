@@ -44,7 +44,7 @@ class ConnectorFacade : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ConnectorFacade( const dispatcher::Config& config, const dispatcher::Model& model );
+             ConnectorFacade( const dispatcher::Config& config, dispatcher::Model& model );
     virtual ~ConnectorFacade();
     //@}
 

@@ -13,6 +13,7 @@
 #include "game_asn/Asn.h"
 #include "ModelsContainer.h"
 #include "MessageHandler_ABC.h"
+#include "CompositeFactory.h"
 
 namespace kernel
 {
@@ -48,6 +49,7 @@ class FireEffect;
 class FolkModel;
 class Intelligence;
 class Report;
+class CompositeFactory;
 
 // =============================================================================
 /** @class  Model
@@ -70,7 +72,7 @@ public:
 
     virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
     void Update( const ASN1T_MsgsSimToClient& asnMsg );
-    void Send         ( ClientPublisher_ABC& publisher ) const;
+    void Send  ( ClientPublisher_ABC& publisher ) const;
 
     void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const;
     void SendFirstTick( ClientPublisher_ABC& publisher ) const;
@@ -79,15 +81,6 @@ public:
     //! @name Operations
     //@{
     void Accept( ModelVisitor_ABC& visitor ) const;
-    void StartSynchronisation();
-    void EndSynchronisation( ClientPublisher_ABC& publisher );
-    //@}
-
-    //! @name Synchro
-    //@{
-    void FlagForCreation     ( Entity_ABC& synch );
-    void FlagForUpdate       ( Entity_ABC& synch );
-    void FlagForDestruction  ( Entity_ABC& synch );
     //@}
 
     //! @name Accessors
@@ -111,6 +104,25 @@ public:
     const ModelsContainer< Lima           >& GetLimas          () const;
 
     const kernel::AgentTypes& GetAgentTypes() const;
+
+    template< typename T >
+    void RegisterFactory( T& factory )
+    {
+        compositeFactory_->Register( factory );
+    }
+
+    template< typename T >
+    void AddExtensions( T& entity )
+    {
+        AddExtensions( &entity );
+
+        compositeFactory_->Apply( ExtensionFactory_ABC< T >::Create, entity );
+    }
+    void AddExtensions( Entity_ABC* entity )
+    {
+        compositeFactory_->Apply( ExtensionFactory_ABC< Entity_ABC >::Create, *entity );
+    }
+    void AddExtensions( void* ) {}
     //@}
 
 private:
@@ -132,6 +144,7 @@ private:
     SimulationModel*    pSimulationModel_;
     std::auto_ptr< FolkModel > folkModel_;
 
+    std::auto_ptr< CompositeFactory >         compositeFactory_;
 
     ModelsContainer< Side                   > sides_;
     ModelsContainer< KnowledgeGroup         > knowledgeGroups_;
@@ -155,8 +168,6 @@ private:
     ModelsContainer< Report                 > reports_;
 
     std::auto_ptr< kernel::AgentTypes >     agentTypes_;
-
-    bool synching_;
 };
 
 }

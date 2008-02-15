@@ -16,9 +16,9 @@
 
 namespace dispatcher
 {
-class Side;
-class Model;
-class ObjectAttribute_ABC;
+    class Side;
+    class Model;
+    class ObjectAttribute_ABC;
 
 // =============================================================================
 /** @class  Object
@@ -42,12 +42,10 @@ public:
 
     //! @name Operations
     //@{
-            void Update         ( const ASN1T_MsgObjectCreation& msg );
-            void Update         ( const ASN1T_MsgObjectUpdate&   msg );
+    void Update( const ASN1T_MsgObjectUpdate&   msg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    virtual std::string BuildSymbol( bool up = true ) const;
     //@}
 
 private:
@@ -68,7 +66,7 @@ private:
     };
     //@}
 
-private:
+public:
     const unsigned long          nID_;
     const ASN1T_EnumObjectType   nType_; // XML reference - no resolved by dispatcher
     const ASN1T_EnumObstacleType nObstacleType_;

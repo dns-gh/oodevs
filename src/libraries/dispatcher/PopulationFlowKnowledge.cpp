@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "PopulationFlowKnowledge.h"
-
 #include "Population.h"
 #include "PopulationFlow.h"
 #include "PopulationFlowPart.h"
@@ -54,19 +52,6 @@ PopulationFlowKnowledge::PopulationFlowKnowledge( Model& model, PopulationKnowle
 PopulationFlowKnowledge::~PopulationFlowKnowledge()
 {
     // NOTHING
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PopulationFlowKnowledge::Update
-// Created: AGE 2007-04-13
-// -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeCreation& )
-{
-    FlagUpdate();
 }
 
 // -----------------------------------------------------------------------------
@@ -122,10 +107,6 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeUpda
         optionals_.est_percuPresent = 1;
     }
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFlowKnowledge::SendCreation

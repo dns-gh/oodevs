@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Agent.h"
-
 #include "Model.h"
 #include "Automat.h"
 #include "Equipment.h"
@@ -25,7 +23,6 @@
 #include "Network_Def.h"
 #include "AgentTypes.h"
 #include "AgentType.h"
-#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -88,6 +85,7 @@ Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     , pOrder_                       ( 0 )
 {
     pAutomat_->GetAgents().Register( *this );
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,17 +97,12 @@ Agent::~Agent()
     pAutomat_->GetAgents().Unregister( *this );
 }
 
-// =============================================================================
-// MAIN
-// =============================================================================
-
 // -----------------------------------------------------------------------------
-// Name: Agent::Update
+// Name: Agent::DoUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgUnitCreation& asnMsg )
+void Agent::DoUpdate( const ASN1T_MsgUnitCreation& asnMsg )
 {
-    FlagUpdate();
     if( pAutomat_->GetID() != asnMsg.oid_automate )
     {
         pAutomat_->GetAgents().Unregister( *this );
@@ -490,19 +483,4 @@ void Agent::SendDestruction( ClientPublisher_ABC& publisher ) const
     AsnMsgSimToClientUnitDestruction asn;
     asn() = nID_;
     asn.Send( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::BuildSymbol
-// Created: SBO 2007-08-22
-// -----------------------------------------------------------------------------
-std::string Agent::BuildSymbol( bool up /*= true*/ ) const
-{
-    std::string symbol( type_.GetSymbol() );
-    symbol = symbol.substr( symbol.find_last_of( "/" ) + 1 );
-    tools::app6::SetCommandPost( symbol, bPC_ );
-    tools::app6::SetLevel( symbol, type_.GetLevelSymbol() );
-    if( up && pAutomat_ )
-        return tools::app6::MergeSymbol( symbol, pAutomat_->BuildSymbol() );
-    return symbol;
 }

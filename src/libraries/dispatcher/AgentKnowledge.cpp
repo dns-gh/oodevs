@@ -8,15 +8,12 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "AgentKnowledge.h"
-
 #include "KnowledgeGroup.h"
 #include "Agent.h"
 #include "Network_Def.h"
 #include "Model.h"
 #include "Side.h"
-#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -71,10 +68,6 @@ AgentKnowledge::~AgentKnowledge()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 #define UPDATE_ASN_ATTRIBUTE( ASN, CPP ) \
     if( asnMsg.m.##ASN##Present )        \
     {                                    \
@@ -116,15 +109,6 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
     UPDATE_ASN_ATTRIBUTE( rendu                    , bDead_                 );
     UPDATE_ASN_ATTRIBUTE( prisonnier               , bPrisoner_             );
     UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte   , bRefugeeManaged_       );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::Update
-// Created: AGE 2007-04-13
-// -----------------------------------------------------------------------------
-void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeCreation& )
-{
-    FlagUpdate();
 }
 
 // -----------------------------------------------------------------------------
@@ -218,17 +202,6 @@ void AgentKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
     asn().oid                   = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
     asn.Send( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::BuildSymbol
-// Created: SBO 2007-08-23
-// -----------------------------------------------------------------------------
-std::string AgentKnowledge::BuildSymbol( bool /*up = true*/ ) const
-{
-    std::string symbol = agent_.BuildSymbol( true );
-    tools::app6::FilterPerceptionLevel( symbol, (unsigned int)nMaxPerceptionLevel_ );
-    return symbol;
 }
 
 // -----------------------------------------------------------------------------

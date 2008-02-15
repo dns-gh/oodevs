@@ -1,4 +1,4 @@
- // *****************************************************************************
+// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -41,8 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgPopulationConcentrationCreation& msg );
-    void Update        ( const ASN1T_MsgPopulationConcentrationUpdate& msg );
+    void Update( const ASN1T_MsgPopulationConcentrationUpdate& msg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;

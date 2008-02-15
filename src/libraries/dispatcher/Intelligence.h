@@ -36,7 +36,6 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgIntelligenceCreation& message );
     void Update( const ASN1T_MsgIntelligenceUpdate& message );
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
@@ -48,12 +47,6 @@ private:
     //@{
     Intelligence( const Intelligence& );            //!< Copy constructor
     Intelligence& operator=( const Intelligence& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    template< typename Message >
-    void SendMessage( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:

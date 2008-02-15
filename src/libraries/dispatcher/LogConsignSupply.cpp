@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "LogConsignSupply.h"
-
 #include "Model.h"
 #include "Automat.h"
 #include "Agent.h"
@@ -43,19 +41,6 @@ LogConsignSupply::LogConsignSupply( Model& model, const ASN1T_MsgLogSupplyHandli
 LogConsignSupply::~LogConsignSupply()
 {
     // NOTHING
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: LogConsignSupply::Update
-// Created: AGE 2007-04-16
-// -----------------------------------------------------------------------------
-void LogConsignSupply::Update( const ASN1T_MsgLogSupplyHandlingCreation& )
-{
-    FlagUpdate();
 }
 
 // -----------------------------------------------------------------------------

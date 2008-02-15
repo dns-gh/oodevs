@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 
+#include "Model.h"
 
 namespace dispatcher
 {
@@ -39,7 +40,10 @@ T& ModelsContainer< T >::Create( Model& model, unsigned long nID, P& param )
 {
     T*& pModel = models_[ nID ];
     if( ! pModel )
+    {
         pModel = new T( model, param );
+        model.AddExtensions( *pModel );
+    }
     return *pModel;
 }
 
@@ -52,7 +56,10 @@ T& ModelsContainer< T >::Create( Model& model, unsigned long nID, P1& param1, P2
 {
     T*& pModel = models_[ nID ];
     if( ! pModel )
+    {
         pModel = new T( model, param1, param2 );
+        model.AddExtensions( *pModel );
+    }
     return *pModel;
 }
 

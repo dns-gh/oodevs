@@ -27,7 +27,7 @@ VisionConesToggler::VisionConesToggler( Controllers& controllers, Publisher_ABC&
     , publisher_( publisher )
     , displayCones_   ( false )
     , displaySurfaces_( false )
-    , replay_         ( false )
+    , replay_         ( true )
 {
     controllers_.Register( *this );
 }

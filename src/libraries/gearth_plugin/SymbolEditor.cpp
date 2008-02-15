@@ -20,6 +20,7 @@
 #include "dispatcher/Object.h"
 #include "dispatcher/Limit.h"
 #include "dispatcher/Lima.h"
+#include "dispatcher/EntitySymbols_ABC.h"
 
 #include "dispatcher/AgentTypes.h"
 #include "dispatcher/AgentType.h"
@@ -71,7 +72,7 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgUnitCreation& asn ) const
         return styles_.GetStyle( name );
 
     if( const dispatcher::Agent* agent = model_.GetAgents().Find( asn.oid ) )
-        return FormatSymbol( agent->BuildSymbol() ).c_str();
+        return FormatSymbol( agent->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ).c_str();
     return "";
 }
     
@@ -83,7 +84,7 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgUnitKnowledgeCreation& asn )
 {    
     std::string symbol( "SUZP********---" );
     if( const dispatcher::AgentKnowledge* knowledge = model_.GetAgentKnowledges().Find( asn.oid ) )
-        return FormatSymbol( knowledge->BuildSymbol() ).c_str();
+        return FormatSymbol( knowledge->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ).c_str();
     return "";
 }
     
@@ -107,7 +108,7 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgObjectCreation& asn ) const
         return styles_.GetStyle( "HS - EmergencyShelter" );
     }
     if( const dispatcher::Object* object = model_.GetObjects().Find( asn.oid ) )
-        return FormatSymbol( object->BuildSymbol() ).c_str();
+        return FormatSymbol( object->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ).c_str();
     return "";
 }
     
@@ -124,7 +125,7 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgFormationCreation& asn ) con
         return styles_.GetStyle( name );
 
     if( const dispatcher::Formation* formation = model_.GetFormations().Find( asn.oid ) )
-        FormatSymbol( formation->BuildSymbol() ).c_str();
+        FormatSymbol( formation->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ).c_str();
     return "";
 }
     

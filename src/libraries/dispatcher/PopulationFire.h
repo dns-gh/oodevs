@@ -35,7 +35,6 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgStartPopulationFire& msg );
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;

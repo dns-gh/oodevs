@@ -31,6 +31,8 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class ObjectKnowledge : public Entity_ABC
+                      , public Extension_ABC
+                      , public Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
 {
 public:
     //! @name Constructors/Destructor
@@ -41,8 +43,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
-    void Update        ( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
+    virtual void DoUpdate       ( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
+            void Update         ( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;

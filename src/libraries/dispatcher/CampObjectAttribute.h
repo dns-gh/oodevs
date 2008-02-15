@@ -24,7 +24,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-    class CampObjectAttribute : public ObjectAttribute_ABC
+class CampObjectAttribute : public ObjectAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor

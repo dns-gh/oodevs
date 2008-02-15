@@ -16,12 +16,12 @@
 
 namespace dispatcher
 {
-class KnowledgeGroup;
-class Model;
-class Side;
-class Population;
-class PopulationConcentrationKnowledge;
-class PopulationFlowKnowledge;
+    class KnowledgeGroup;
+    class Model;
+    class Side;
+    class Population;
+    class PopulationConcentrationKnowledge;
+    class PopulationFlowKnowledge;
 
 // =============================================================================
 /** @class  PopulationKnowledge
@@ -47,18 +47,18 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgPopulationKnowledgeCreation& msg );
-    void Update        ( const ASN1T_MsgPopulationKnowledgeUpdate&                   msg );
-    void Update        ( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    msg );
-    void Update        ( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      msg );
-    void Update        ( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& msg );
-    void Update        ( const ASN1T_MsgPopulationFlowKnowledgeCreation&             msg );
-    void Update        ( const ASN1T_MsgPopulationFlowKnowledgeUpdate&               msg );
-    void Update        ( const ASN1T_MsgPopulationFlowKnowledgeDestruction&          msg );
+    void Update( const ASN1T_MsgPopulationKnowledgeUpdate&                   msg );
+    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    msg );
+    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      msg );
+    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& msg );
+    void Update( const ASN1T_MsgPopulationFlowKnowledgeCreation&             msg );
+    void Update( const ASN1T_MsgPopulationFlowKnowledgeUpdate&               msg );
+    void Update( const ASN1T_MsgPopulationFlowKnowledgeDestruction&          msg );
+
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept        ( ModelVisitor_ABC& visitor );
+    virtual void Accept         ( ModelVisitor_ABC& visitor );
     //@}
 
 private:

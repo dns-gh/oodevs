@@ -12,7 +12,6 @@
 #include "Model.h"
 #include "Formation.h"
 #include "Automat.h"
-#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -99,21 +98,4 @@ void TacticalLine_ABC::Send( ASN1T_Location& asn ) const
 unsigned int TacticalLine_ABC::GetID() const
 {
     return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::BuildSymbol
-// Created: SBO 2007-08-22
-// -----------------------------------------------------------------------------
-std::string TacticalLine_ABC::BuildSymbol( bool up /*= true*/ ) const
-{
-    std::string symbol( "G*GPGL-----*--X" ); // $$$$ SBO 2007-08-23: could be built using tool::app6 operations or symbol.xml
-    if( up )
-    {
-        if( automat_ )
-            return tools::app6::MergeSymbol( symbol, automat_->BuildSymbol() );
-        if( formation_ )
-            return tools::app6::MergeSymbol( symbol, formation_->BuildSymbol() );
-    }
-    return symbol;
 }

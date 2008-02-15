@@ -12,10 +12,11 @@
 #include "Loader.h"
 #include "ClientPublisher_ABC.h"
 #include "network_def.h"
+#include "Model.h"
+#include "ReplayExtensionFactory.h"
 #include "game_asn/Asn.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "tools/MessageDispatcher_ABC.h"
-#include "Model.h"
 
 using namespace dispatcher;
 
@@ -23,7 +24,7 @@ using namespace dispatcher;
 // Name: ReplayPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-ReplayPlugin::ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader )
+ReplayPlugin::ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader, const ReplayModel_ABC& replayModel )
     : model_      ( model )
     , clients_    ( clients )
     , loader_     ( loader )
@@ -31,6 +32,7 @@ ReplayPlugin::ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::M
     , running_    ( false )
     , skipToFrame_( -1 )
 {
+    model.RegisterFactory( *new ReplayExtensionFactory( replayModel ) );
     clientCommands.RegisterMessage( *this, &ReplayPlugin::OnReceive );
     ChangeTimeFactor( factor_ );
     manager_.Register( *this );

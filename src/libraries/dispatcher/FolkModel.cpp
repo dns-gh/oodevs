@@ -21,7 +21,7 @@ FolkModel::FolkModel()
     : container_size( 0 )
     , edge_number   ( 0 )
 {
-    // NOTHING
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,10 +34,10 @@ FolkModel::~FolkModel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FolkModel::Update
+// Name: FolkModel::DoUpdate
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-void FolkModel::Update( const ASN1T_MsgFolkCreation& message )
+void FolkModel::DoUpdate( const ASN1T_MsgFolkCreation& message )
 {
     activities_.reserve( message.activities.n );
     for( unsigned i = 0; i < message.activities.n; ++i )

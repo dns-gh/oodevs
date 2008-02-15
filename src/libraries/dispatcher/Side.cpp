@@ -17,7 +17,6 @@
 #include "Object.h"
 #include "Population.h"
 #include "ModelVisitor_ABC.h"
-#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -36,6 +35,7 @@ Side::Side( Model& model, const ASN1T_MsgTeamCreation& msg )
 	, objects_		  ()
 	, populations_    ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,19 +44,7 @@ Side::Side( Model& model, const ASN1T_MsgTeamCreation& msg )
 // -----------------------------------------------------------------------------
 Side::~Side()
 {
-}
-
-// =============================================================================
-// MAIN
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: Side::Update
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void Side::Update( const ASN1T_MsgTeamCreation& asnMsg )
-{
-    FlagUpdate();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -65,8 +53,6 @@ void Side::Update( const ASN1T_MsgTeamCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void Side::Update( const ASN1T_MsgChangeDiplomacy& asnMsg )
 {
-    FlagUpdate();
-
     Side& side = model_.GetSides().Get( asnMsg.oid_camp2 );   
     diplomacies_[ &side ] = asnMsg.diplomatie;
 }
@@ -77,8 +63,6 @@ void Side::Update( const ASN1T_MsgChangeDiplomacy& asnMsg )
 // -----------------------------------------------------------------------------
 void Side::Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg )
 {
-    FlagUpdate();
-
     Side& side = model_.GetSides().Get( asnMsg.oid_camp2 );   
     diplomacies_[ &side ] = asnMsg.diplomatie;
 }
@@ -123,15 +107,4 @@ void Side::Accept( ModelVisitor_ABC& visitor )
 	formations_		.Apply( std::mem_fun_ref( &Formation     ::Accept ), visitor );
 	objects_		.Apply( std::mem_fun_ref( &Object        ::Accept ), visitor );
 	populations_	.Apply( std::mem_fun_ref( &Population    ::Accept ), visitor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side::BuildSymbol
-// Created: SBO 2007-08-22
-// -----------------------------------------------------------------------------
-std::string Side::BuildSymbol( bool /*up = true*/ ) const
-{
-    std::string symbol;
-    tools::app6::SetAffiliation( symbol, (unsigned int)nType_ ); // $$$$ SBO 2007-08-23: enumerate value... find something better
-    return symbol;
 }

@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "LogConsignMaintenance.h"
-
 #include "Model.h"
 #include "Agent.h"
 #include "Network_Def.h"
@@ -44,19 +42,6 @@ LogConsignMaintenance::~LogConsignMaintenance()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: LogConsignMaintenance::Update
-// Created: AGE 2007-04-16
-// -----------------------------------------------------------------------------
-void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceHandlingCreation& )
-{
-    FlagUpdate();
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogConsignMaintenance::Update
 // Created: NLD 2006-09-26
@@ -65,10 +50,8 @@ void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceHandlingUpdate&
 {
     if( msg.m.diagnostique_effectuePresent )
         bDiagnosed_ = msg.diagnostique_effectue;
-
     if( msg.m.etatPresent )
         nState_ = msg.etat;
-
     pTreatingAgent_ = ( msg.oid_pion_log_traitant == 0 ) ? 0 : &model_.GetAgents().Get( msg.oid_pion_log_traitant );
 }
 

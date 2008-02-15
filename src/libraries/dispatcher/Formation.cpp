@@ -8,14 +8,12 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Formation.h"
 #include "Network_Def.h"
 #include "Model.h"
 #include "Side.h"
 #include "Automat.h"
 #include "ModelVisitor_ABC.h"
-#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -54,15 +52,6 @@ Formation::~Formation()
 // =============================================================================
 // MAIN
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: Formation::Update
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void Formation::Update( const ASN1T_MsgFormationCreation& )
-{
-    FlagUpdate();
-}
 
 // -----------------------------------------------------------------------------
 // Name: Formation::SendCreation
@@ -104,35 +93,4 @@ void Formation::Accept( ModelVisitor_ABC& visitor )
     visitor.Visit( *this );
     subordinates_ .Apply( std::mem_fun_ref( &Formation   ::Accept ), visitor );
     automats_     .Apply( std::mem_fun_ref( &Automat     ::Accept ), visitor );
-}
-
-namespace
-{
-    struct SymbolAggregator
-    {
-        void operator()( Automat& automat )
-        {
-            symbol_ = tools::app6::FilterSymbol( automat.BuildSymbol( false ), symbol_ );
-        }
-        void operator()( Formation& formation )
-        {
-            symbol_ = tools::app6::FilterSymbol( formation.BuildSymbol( false ), symbol_ );
-        }
-        std::string symbol_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::BuildSymbol
-// Created: SBO 2007-08-22
-// -----------------------------------------------------------------------------
-std::string Formation::BuildSymbol( bool up /*= true*/ ) const
-{
-    SymbolAggregator aggregator;
-    automats_.Apply< SymbolAggregator& >( aggregator );
-    subordinates_.Apply< SymbolAggregator& >( aggregator );
-    if( up )
-        aggregator.symbol_ = tools::app6::MergeSymbol( pParent_ ? pParent_->BuildSymbol() : side_.BuildSymbol(), aggregator.symbol_ );
-    tools::app6::SetLevel( aggregator.symbol_, (unsigned int)nLevel_ );
-    return aggregator.symbol_;
 }

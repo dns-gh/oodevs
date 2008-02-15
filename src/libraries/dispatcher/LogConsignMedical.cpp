@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "LogConsignMedical.h"
-
 #include "Model.h"
 #include "Agent.h"
 #include "Network_Def.h"
@@ -44,19 +42,6 @@ LogConsignMedical::LogConsignMedical( Model& model, const ASN1T_MsgLogMedicalHan
 LogConsignMedical::~LogConsignMedical()
 {
     // NOTHING
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: LogConsignMedical::Update
-// Created: AGE 2007-04-16
-// -----------------------------------------------------------------------------
-void LogConsignMedical::Update( const ASN1T_MsgLogMedicalHandlingCreation& )
-{
-    FlagUpdate();
 }
 
 // -----------------------------------------------------------------------------

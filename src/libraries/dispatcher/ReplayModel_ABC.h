@@ -33,6 +33,7 @@ public:
     //@{
     virtual void StartSynchronisation() = 0;
     virtual void EndSynchronisation() = 0;
+    virtual bool IsSynching() const = 0;
     //@}
 };
 

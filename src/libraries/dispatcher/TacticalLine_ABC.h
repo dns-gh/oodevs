@@ -12,6 +12,7 @@
 
 #include "game_asn/Asn.h"
 #include "Localisation.h"
+#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -25,7 +26,7 @@ namespace dispatcher
 */
 // Created: SBO 2006-11-15
 // =============================================================================
-class TacticalLine_ABC
+class TacticalLine_ABC : public Entity_ABC
 {
 
 public:
@@ -45,7 +46,6 @@ protected:
     //@{
     void Update( const ASN1T_TacticalLine& asn );
     void Send  ( ASN1T_TacticalLine& asn ) const;
-    std::string BuildSymbol( bool up = true ) const;
     //@}
 
     //! @name Accessors
@@ -65,7 +65,7 @@ private:
     void UpdateDiffusion( const ASN1T_TacticalLinesDiffusion& diffusion );
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     const Model&        model_;

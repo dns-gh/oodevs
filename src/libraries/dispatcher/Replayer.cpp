@@ -50,7 +50,7 @@ Replayer::Replayer( const Config& config )
     , clientsNetworker_( new ClientsNetworker( config, handler_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config ) )
-    , plugin_          ( new ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_ ) )
+    , plugin_          ( new ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
 {
     handler_.AddHandler( clientsNetworker_ );
 

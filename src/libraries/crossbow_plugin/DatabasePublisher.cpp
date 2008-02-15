@@ -19,6 +19,8 @@
 #include "StatusListener.h"
 #include "ObjectListener.h"
 #include "ScopeEditor.h"
+#include "ExtensionFactory.h"
+#include "dispatcher/Model.h"
 
 using namespace crossbow;
 
@@ -26,12 +28,14 @@ using namespace crossbow;
 // Name: DatabasePublisher constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher )
-    : workspace_      ( new Workspace() )
-    , reportFactory_  ( new ReportFactory( config, model ) )
-    , orderTypes_     ( new kernel::OrderTypes( config ) )
-    , modelLoaded_    ( false )
+DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher )
+    : workspace_       ( new Workspace() )
+    , reportFactory_   ( new ReportFactory( config, model ) )
+    , orderTypes_      ( new kernel::OrderTypes( config ) )
+    , modelLoaded_     ( false )
 {
+    model.RegisterFactory( *new ExtensionFactory() );
+
     Initialize( "geodatabase", config );
     Initialize( "geodatabase-population", config );
     Initialize( "geodatabase-shared", config );

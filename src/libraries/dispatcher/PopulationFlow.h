@@ -41,8 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgPopulationFlowCreation& msg );
-    void Update        ( const ASN1T_MsgPopulationFlowUpdate& msg );
+    void Update( const ASN1T_MsgPopulationFlowUpdate& msg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;

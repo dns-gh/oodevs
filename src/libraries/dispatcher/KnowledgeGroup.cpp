@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "KnowledgeGroup.h"
 #include "Side.h"
 #include "Model.h"
@@ -35,19 +34,6 @@ KnowledgeGroup::KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreat
 KnowledgeGroup::~KnowledgeGroup()
 {
     side_.GetKnowledgeGroups().Unregister( *this );
-}
-
-// =============================================================================
-// MAIN
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Update
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Update( const ASN1T_MsgKnowledgeGroupCreation& )
-{
-    FlagUpdate();
 }
 
 // -----------------------------------------------------------------------------

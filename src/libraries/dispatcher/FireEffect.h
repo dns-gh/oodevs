@@ -35,7 +35,6 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgStartFireEffect& message );
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -46,10 +45,6 @@ private:
     //@{
     FireEffect( const FireEffect& );            //!< Copy constructor
     FireEffect& operator=( const FireEffect& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

@@ -39,6 +39,7 @@ public:
     virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
     virtual void StartSynchronisation();
     virtual void EndSynchronisation();
+    virtual bool IsSynching() const;
     //@}
 
 private:

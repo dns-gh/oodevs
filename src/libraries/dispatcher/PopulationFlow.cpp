@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "PopulationFlow.h"
-
 #include "Population.h"
 #include "Network_Def.h"
 
@@ -41,19 +39,6 @@ PopulationFlow::PopulationFlow( Model& /*model*/, Population& population, const 
 PopulationFlow::~PopulationFlow()
 {
     // NOTHING
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PopulationFlow::Update
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void PopulationFlow::Update( const ASN1T_MsgPopulationFlowCreation& )
-{
-    FlagUpdate();
 }
 
 // -----------------------------------------------------------------------------

@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "PopulationConcentrationKnowledge.h"
-
 #include "Population.h"
 #include "PopulationConcentration.h"
 #include "PopulationKnowledge.h"
@@ -49,19 +47,6 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Model& /*mod
 PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 {
     // NOTHING
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PopulationConcentrationKnowledge::Update
-// Created: AGE 2007-04-13
-// -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& )
-{
-    FlagUpdate();
 }
 
 // -----------------------------------------------------------------------------
@@ -104,10 +89,6 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
         optionals_.est_percuPresent = 1;
     }
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::SendCreation

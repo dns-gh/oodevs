@@ -43,15 +43,6 @@ Intelligence::~Intelligence()
 
 // -----------------------------------------------------------------------------
 // Name: Intelligence::Update
-// Created: SBO 2007-10-22
-// -----------------------------------------------------------------------------
-void Intelligence::Update( const ASN1T_MsgIntelligenceCreation& /*message*/ )
-{
-    FlagUpdate();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Intelligence::Update
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 void Intelligence::Update( const ASN1T_MsgIntelligenceUpdate& message )

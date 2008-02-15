@@ -50,7 +50,7 @@ using namespace dispatcher;
 Model::Model( const Config& config )
     : pSimulationModel_( new SimulationModel() )
     , folkModel_( new FolkModel() )
-    , synching_( false )
+    , compositeFactory_( new CompositeFactory() )
     , agentTypes_( new kernel::AgentTypes( config ) )
 {
     // NOTHING
@@ -246,7 +246,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_creation             : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_creation->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_creation ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_update               : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_update->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_update ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_destruction->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_folk_creation                                  : folkModel_->Update( *asnMsg.msg.u.msg_folk_creation ); break;
+        case T_MsgsSimToClient_msg_msg_folk_creation                                  : folkModel_->ApplyUpdate( *asnMsg.msg.u.msg_folk_creation ); break;
 
         case T_MsgsSimToClient_msg_msg_intelligence_creation    : CreateUpdate( intelligences_, asnMsg.msg.u.msg_intelligence_creation->oid, *asnMsg.msg.u.msg_intelligence_creation ); break;
         case T_MsgsSimToClient_msg_msg_intelligence_destruction : intelligences_.Destroy( asnMsg.msg.u.msg_intelligence_destruction->oid ); break;
@@ -263,11 +263,8 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
 template< typename T, typename P >
 void Model::CreateUpdate( ModelsContainer< T >& container, unsigned id, const P& parameter )
 {
-    bool create = ! container.Find( id );
     T& object = container.Create( *this, id, parameter );
-    if( synching_ )
-        object.StartSynchronisation( create );
-    object.Update( parameter );
+    object.ApplyUpdate( parameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,32 +343,4 @@ void Model::Accept( ModelVisitor_ABC& visitor ) const
     fireEffects_           .Apply( std::mem_fun_ref( &FireEffect           ::Accept ), visitor );
     intelligences_         .Apply( std::mem_fun_ref( &Intelligence         ::Accept ), visitor );
     reports_               .Apply( std::mem_fun_ref( &Report               ::Accept ), visitor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::StartSynchronisation
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void Model::StartSynchronisation()
-{
-    synching_ = true;
-    StartSynchVisitor visitor;
-    Accept( visitor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::EndSynchronisation
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void Model::EndSynchronisation( ClientPublisher_ABC& publisher )
-{
-    Synchroniser synch;
-    EndSynchVisitor visitor( synch );
-    Accept( visitor );
-    synch.Commit( publisher, *this );
-    synching_ = false;
-
-    // $$$$ AGE 2007-04-24: Le commit va Update le Model et donc supprimer l'entité en question
-    // $$$$ AGE 2007-04-24: c'est crado. Séparer l'envoi au client (dans le CommitDestruction() )
-    // $$$$ AGE 2007-04-24: et la destruction (depuis la liste, séparément).
 }

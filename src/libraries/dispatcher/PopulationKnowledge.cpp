@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "PopulationKnowledge.h"
-
 #include "Model.h"
 #include "Side.h"
 #include "KnowledgeGroup.h"
@@ -48,19 +46,6 @@ PopulationKnowledge::~PopulationKnowledge()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::Update
-// Created: AGE 2007-04-13
-// -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeCreation&  )
-{
-    FlagUpdate();
-}
-
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
@@ -77,10 +62,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& msg 
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg )
 {
-    bool create = ! concentrations_.Find( msg.oid_connaissance_concentration );
     PopulationConcentrationKnowledge& concentration = concentrations_.Create( model_, msg.oid_connaissance_concentration, *this, msg );
-    StartSynchronisation( concentration, create );
-    concentration.Update( msg );
+    concentration.ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,10 +90,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeCreation& msg )
 {
-    bool create = ! flows_.Find( msg.oid_connaissance_flux );
     PopulationFlowKnowledge& flow = flows_.Create( model_, msg.oid_connaissance_flux, *this, msg );
-    StartSynchronisation( flow, create );
-    flow.Update( msg );
+    flow.ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------

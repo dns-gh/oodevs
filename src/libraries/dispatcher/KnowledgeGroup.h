@@ -41,10 +41,9 @@ public:
     ModelRefsContainer< Automat >& GetAutomats();
     //@}
 
-    //! @name Main
+    //! @name Operations
     //@{
-    void Update( const ASN1T_MsgKnowledgeGroupCreation& msg );
-    void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
 	virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     //@}
 

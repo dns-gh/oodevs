@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Automat.h"
-
 #include "Side.h"
 #include "Formation.h"
 #include "Model.h"
@@ -22,7 +20,6 @@
 #include "AutomatOrder.h"
 #include "AgentTypes.h"
 #include "Report.h"
-#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -60,6 +57,8 @@ Automat::Automat( Model& model, const ASN1T_MsgAutomatCreation& msg )
         pParentFormation_->GetAutomats().Register( *this );
     else if( pParentAutomat_ )
         pParentAutomat_->GetAutomats().Register( *this );
+
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,12 +80,11 @@ Automat::~Automat()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: Automat::Update
+// Name: Automat::DoUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomatCreation& msg )
+void Automat::DoUpdate( const ASN1T_MsgAutomatCreation& msg )
 {
-    FlagUpdate();
     if( pKnowledgeGroup_->GetID() != msg.oid_groupe_connaissance )
     {
         pKnowledgeGroup_->GetAutomats().Unregister( *this );
@@ -339,34 +337,4 @@ void Automat::Accept( ModelVisitor_ABC& visitor )
     visitor.Visit( *this );
     automats_.Apply( std::mem_fun_ref( &Automat::Accept ), visitor );
     agents_  .Apply( std::mem_fun_ref( &Agent  ::Accept ), visitor );
-}
-
-namespace
-{
-    struct SymbolAggregator
-    {
-        SymbolAggregator() : level_( 0 ) {}
-        void operator()( Agent& agent )
-        {
-            const std::string agentSymbol = agent.BuildSymbol( false );
-            level_ = std::max( level_, tools::app6::GetLevel( agentSymbol ) );
-            symbol_ = tools::app6::FilterSymbol( agentSymbol, symbol_ );
-        }
-        std::string symbol_;
-        unsigned int level_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::BuildSymbol
-// Created: SBO 2007-08-22
-// -----------------------------------------------------------------------------
-std::string Automat::BuildSymbol( bool up /*= true*/ ) const
-{
-    SymbolAggregator aggregator;
-    agents_.Apply< SymbolAggregator& >( aggregator );
-    if( up )
-        aggregator.symbol_ = tools::app6::MergeSymbol( pParentFormation_ ? pParentFormation_->BuildSymbol() : pParentAutomat_->BuildSymbol(), aggregator.symbol_ );
-    tools::app6::SetLevel( aggregator.symbol_, aggregator.level_ + 1 );
-    return aggregator.symbol_;
 }

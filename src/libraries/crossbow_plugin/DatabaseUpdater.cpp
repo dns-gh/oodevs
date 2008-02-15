@@ -17,6 +17,7 @@
 #include "ReportFactory.h"
 #include "Line.h"
 #include "Point.h"
+#include "EntitySymbols_ABC.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
@@ -82,7 +83,7 @@ namespace
     void UpdateSymbol( Row_ABC& row, List& list, int id )
     {
         if( const dispatcher::Entity_ABC* element = list.Find( id ) )
-            row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( element->BuildSymbol() ) ) );
+            row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( element->Get< EntitySymbols_ABC >().BuildSymbol() ) ) );
     }
 }
 
@@ -117,7 +118,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeCreation& msg )
     row.SetField( "RealUnit_OID", FieldVariant( msg.oid_unite_reelle ) );
 
     if( const dispatcher::Agent* realAgent = model_.GetAgents().Find( msg.oid_unite_reelle ) )
-        row.SetField( "ObserverAffiliation", FieldVariant( tools::app6::GetAffiliation( realAgent->BuildSymbol() ) ) );
+        row.SetField( "ObserverAffiliation", FieldVariant( tools::app6::GetAffiliation( realAgent->Get< EntitySymbols_ABC >().BuildSymbol() ) ) );
     row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( "SUZP********---" ) ) ); // $$$$ SBO 2007-09-27: hard coded...
     row.SetShape( Point() );
     table.UpdateRow( row );

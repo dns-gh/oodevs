@@ -35,7 +35,7 @@ class GearthPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GearthPlugin( const dispatcher::Model& model, const dispatcher::Config& config );
+             GearthPlugin( dispatcher::Model& model, const dispatcher::Config& config );
     virtual ~GearthPlugin();
     //@}
 

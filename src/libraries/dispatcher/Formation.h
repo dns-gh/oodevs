@@ -42,13 +42,11 @@ public:
     unsigned long                    GetID          () const;
     //@}
 
-    //! @name Main
+    //! @name Operations
     //@{
-    void Update( const ASN1T_MsgFormationCreation& msg );
-    void SendCreation  ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
-    void Accept( ModelVisitor_ABC& visitor );
-    virtual std::string BuildSymbol( bool up = true ) const;
+    virtual void Accept        ( ModelVisitor_ABC& visitor );
     //@}
 
 private:
@@ -58,7 +56,7 @@ private:
     Formation& operator=( const Formation& ); //!< Assignement operator
     //@}
 
-private:
+public:
           Model&                               model_;
     const unsigned long                        nID_;
           Side&                                side_;

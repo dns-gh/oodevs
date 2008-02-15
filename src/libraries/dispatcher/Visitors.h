@@ -34,21 +34,6 @@ namespace dispatcher
     private:
         ClientPublisher_ABC* publisher_;
     };
-
-    class StartSynchVisitor : public ModelVisitor_ABC
-    {
-    public:
-        virtual void Visit( Entity_ABC& entity );
-    };
-
-    class EndSynchVisitor : public ModelVisitor_ABC
-    {
-    public:
-        EndSynchVisitor( Synchroniser& model );
-        virtual void Visit( Entity_ABC& entity );
-    private:
-        Synchroniser* model_;
-    };
 }
 
 #endif // __Visitors_h_

@@ -18,7 +18,7 @@ using namespace gearth;
 // Name: GearthPlugin constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-GearthPlugin::GearthPlugin( const dispatcher::Model& model, const dispatcher::Config& config )
+GearthPlugin::GearthPlugin( dispatcher::Model& model, const dispatcher::Config& config )
     : facade_ ( new ConnectorFacade( config, model ) )
 {
     // NOTHING

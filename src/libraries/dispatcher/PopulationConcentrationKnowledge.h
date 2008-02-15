@@ -16,9 +16,9 @@
 
 namespace dispatcher
 {
-class Model;
-class PopulationKnowledge;
-class PopulationConcentration;
+    class Model;
+    class PopulationKnowledge;
+    class PopulationConcentration;
 
 // =============================================================================
 /** @class  PopulationConcentrationKnowledge
@@ -42,8 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg );
-    void Update        ( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& msg );
+    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& msg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;

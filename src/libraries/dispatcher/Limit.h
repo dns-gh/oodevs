@@ -11,7 +11,6 @@
 #define __Limit_h_
 
 #include "TacticalLine_ABC.h"
-#include "Entity_ABC.h"
 
 namespace dispatcher
 {
@@ -22,7 +21,7 @@ namespace dispatcher
 */
 // Created: SBO 2006-11-15
 // =============================================================================
-class Limit : public TacticalLine_ABC, public Entity_ABC
+class Limit : public TacticalLine_ABC
 {
 
 public:
@@ -34,12 +33,11 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgLimitCreation& message );
-    void Update        ( const ASN1T_MsgLimitUpdate& message );
-    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
+    void Update( const ASN1T_MsgLimitCreation& message );
+    void Update( const ASN1T_MsgLimitUpdate& message );
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    virtual std::string BuildSymbol( bool up = true ) const;
     //@}
 
 private:

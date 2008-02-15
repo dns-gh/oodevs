@@ -10,6 +10,10 @@
 #include "dispatcher_pch.h"
 #include "SimulationDispatcher.h"
 #include "Model.h"
+#include "Entity_ABC.h"
+#include "Synchroniser.h"
+#include "ReplaySynchronisations.h"
+#include "ModelVisitor_ABC.h"
 #include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
@@ -84,6 +88,31 @@ void SimulationDispatcher::Receive( const ASN1T_MsgsSimToClient& asnMsg )
     clientsPublisher_.Send( asnMsg );
 }
 
+namespace
+{
+    class StartSynchVisitor : public ModelVisitor_ABC
+    {
+    public:
+        virtual void Visit( Entity_ABC& entity )
+        {
+            entity.Get< ReplaySynchronisations >().StartSynchronisation( false );
+        }
+    };
+
+    class EndSynchVisitor : public ModelVisitor_ABC
+    {
+    public:
+        EndSynchVisitor( Synchroniser& model )
+            : model_( &model ) {}
+        virtual void Visit( Entity_ABC& entity )
+        {
+            entity.Get< ReplaySynchronisations >().EndSynchronisation( *model_ );
+        }
+    private:
+        Synchroniser* model_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: SimulationDispatcher::StartSynchronisation
 // Created: AGE 2007-04-12
@@ -91,7 +120,8 @@ void SimulationDispatcher::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 void SimulationDispatcher::StartSynchronisation()
 {
     synching_ = true;
-    model_.StartSynchronisation();
+    StartSynchVisitor visitor;
+    model_.Accept( visitor );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,6 +130,22 @@ void SimulationDispatcher::StartSynchronisation()
 // -----------------------------------------------------------------------------
 void SimulationDispatcher::EndSynchronisation()
 {
-    model_.EndSynchronisation( clientsPublisher_ );
+    Synchroniser synch;
+    EndSynchVisitor visitor( synch );
+    model_.Accept( visitor );
+    synch.Commit( clientsPublisher_, model_ );
     synching_ = false;
+
+    // $$$$ AGE 2007-04-24: Le commit va Update le Model et donc supprimer l'entité en question
+    // $$$$ AGE 2007-04-24: c'est crado. Séparer l'envoi au client (dans le CommitDestruction() )
+    // $$$$ AGE 2007-04-24: et la destruction (depuis la liste, séparément).
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationDispatcher::IsSynching
+// Created: SBO 2008-02-14
+// -----------------------------------------------------------------------------
+bool SimulationDispatcher::IsSynching() const
+{
+    return synching_;
 }

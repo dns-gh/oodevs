@@ -15,8 +15,8 @@
 
 namespace dispatcher
 {
-class Agent;
-class Model;
+    class Agent;
+    class Model;
 
 // =============================================================================
 /** @class  LogConsignMaintenance
@@ -40,10 +40,9 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgLogMaintenanceHandlingCreation& msg );
-    void Update        ( const ASN1T_MsgLogMaintenanceHandlingUpdate& msg );
-    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
+    void Update( const ASN1T_MsgLogMaintenanceHandlingUpdate& msg );
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     //@}
 
@@ -59,8 +58,8 @@ private:
     const unsigned long nID_;
     const Agent&        agent_;
     const unsigned long nTickCreation_;
-    const unsigned int  nEquipmentType_; // XML reference - no resolved by dispatcher
-    const unsigned int  nBreakdownType_; // XML reference - no resolved by dispatcher
+    const unsigned int  nEquipmentType_; // XML reference - not resolved by dispatcher
+    const unsigned int  nBreakdownType_; // XML reference - not resolved by dispatcher
 
     Agent*                                 pTreatingAgent_;
     ASN1T_EnumLogMaintenanceHandlingStatus nState_;

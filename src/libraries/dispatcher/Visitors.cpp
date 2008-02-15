@@ -50,32 +50,3 @@ void CreationVisitor::Visit( Entity_ABC& entity )
 {
     entity.SendCreation( *publisher_ );
 }
-
-// -----------------------------------------------------------------------------
-// Name: StartSynchVisitor::Visit
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void StartSynchVisitor::Visit( Entity_ABC& entity )
-{
-    entity.StartSynchronisation( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EndSynchVisitor::EndSynchVisitor
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-EndSynchVisitor::EndSynchVisitor( Synchroniser& model )
-    : model_( &model )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EndSynchVisitor::Visit
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void EndSynchVisitor::Visit( Entity_ABC& entity )
-{
-    entity.EndSynchronisation( *model_ );
-}
-

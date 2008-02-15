@@ -46,15 +46,13 @@ public:
     unsigned long                         GetID             () const;
     //@}
 
-    //! @name Main
+    //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgTeamCreation&        asnMsg );
-    void Update        ( const ASN1T_MsgChangeDiplomacy&    asnMsg );
-    void Update        ( const ASN1T_MsgChangeDiplomacyAck& asnMsg );
-    void SendCreation  ( ClientPublisher_ABC& publisher ) const;
+    void Update( const ASN1T_MsgChangeDiplomacy&    asnMsg );
+    void Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg );
+    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
-    void Accept( ModelVisitor_ABC& visitor );
-    virtual std::string BuildSymbol( bool up = true ) const;
+    virtual void Accept        ( ModelVisitor_ABC& visitor );
     //@}
 
 private:
@@ -71,7 +69,7 @@ private:
     typedef T_DiplomacyMap::const_iterator          CIT_DiplomacyMap;
     //@}
 
-private:
+public:
           Model&                               model_;
     const unsigned long                        nID_;
           std::string                          strName_;

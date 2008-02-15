@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "PopulationConcentration.h"
 #include "Population.h"
 #include "Network_Def.h"
@@ -37,19 +36,6 @@ PopulationConcentration::PopulationConcentration( Model& /*model*/, Population& 
 PopulationConcentration::~PopulationConcentration()
 {
     // NOTHING
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PopulationConcentration::Update
-// Created: AGE 2007-04-12
-// -----------------------------------------------------------------------------
-void PopulationConcentration::Update( const ASN1T_MsgPopulationConcentrationCreation& )
-{
-    FlagUpdate();
 }
 
 // -----------------------------------------------------------------------------

@@ -24,6 +24,7 @@ namespace dispatcher
 {
     class Loader;
     class Model;
+    class ReplayModel_ABC;
 
 // =============================================================================
 /** @class  ReplayPlugin
@@ -38,7 +39,7 @@ class ReplayPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader );
+             ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands, Loader& loader, const ReplayModel_ABC& replayModel );
     virtual ~ReplayPlugin();
     //@}
 

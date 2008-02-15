@@ -24,17 +24,17 @@ namespace kernel
 
 namespace dispatcher
 {
-class Automat;
-class Model;
-class Equipment;
-class Dotation;
-class Humans;
-class Loan;
-class AgentLogMedical;
-class AgentLogMaintenance;
-class AgentLogSupply;
-class Side;
-class AgentOrder;
+    class Automat;
+    class Model;
+    class Equipment;
+    class Dotation;
+    class Humans;
+    class Loan;
+    class AgentLogMedical;
+    class AgentLogMaintenance;
+    class AgentLogSupply;
+    class Side;
+    class AgentOrder;
 
 // =============================================================================
 /** @class  Agent
@@ -43,6 +43,8 @@ class AgentOrder;
 // Created: NLD 2006-09-19
 // =============================================================================
 class Agent : public Entity_ABC
+            , public Extension_ABC
+            , public Updatable_ABC< ASN1T_MsgUnitCreation >
 {
 public:
     //! @name Constructors/Destructor
@@ -53,15 +55,15 @@ public:
 
     //! @name Main
     //@{
-    void Update        ( const ASN1T_MsgUnitCreation&        asnMsg );
-    void Update        ( const ASN1T_MsgUnitAttributes&      asnMsg );
-    void Update        ( const ASN1T_MsgDecisionalState&     asnMsg );
-    void Update        ( const ASN1T_MsgLogMedicalState&     asnMsg );
-    void Update        ( const ASN1T_MsgLogMaintenanceState& asnMsg );
-    void Update        ( const ASN1T_MsgLogSupplyState&      asnMsg );
-    void Update        ( const ASN1T_MsgUnitChangeSuperior&  asnMsg );
-    void Update        ( const ASN1T_MsgUnitOrder&           asnMsg );
-    
+    virtual void DoUpdate( const ASN1T_MsgUnitCreation& asnMsg );
+    void Update( const ASN1T_MsgUnitAttributes&      asnMsg );
+    void Update( const ASN1T_MsgDecisionalState&     asnMsg );
+    void Update( const ASN1T_MsgLogMedicalState&     asnMsg );
+    void Update( const ASN1T_MsgLogMaintenanceState& asnMsg );
+    void Update( const ASN1T_MsgLogSupplyState&      asnMsg );
+    void Update( const ASN1T_MsgUnitChangeSuperior&  asnMsg );
+    void Update( const ASN1T_MsgUnitOrder&           asnMsg );
+
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -72,7 +74,6 @@ public:
     unsigned long GetID() const;
     std::string GetName() const;
     const Automat& GetAutomat() const;
-    virtual std::string BuildSymbol( bool up = true ) const;
     //@}
 
 private:
@@ -88,7 +89,7 @@ private:
     typedef std::vector< unsigned int > T_OIDVector;
     //@}
 
-private:
+public:
           Model&         model_;
     const unsigned long  nID_;
     const unsigned long  nType_; // XML reference - no resolved by dispatcher

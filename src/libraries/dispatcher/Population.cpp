@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Population.h"
-
 #include "Model.h"
 #include "Side.h"
 #include "Network_Def.h"
@@ -35,6 +33,7 @@ Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
     , pOrder_          ( 0 )
 {
 	side_.GetPopulations().Register( *this );
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,17 +45,12 @@ Population::~Population()
 	side_.GetPopulations().Unregister( *this );
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationCreation& )
+void Population::DoUpdate( const ASN1T_MsgPopulationCreation& )
 {
-    FlagUpdate();
     decisionalInfos_.Clear();
 }
 
@@ -76,10 +70,8 @@ void Population::Update( const ASN1T_MsgPopulationUpdate& msg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& msg )
 {
-    bool create = ! concentrations_.Find( msg.oid );
     PopulationConcentration& concentration = concentrations_.Create( model_, msg.oid, *this, msg );
-    StartSynchronisation( concentration, create );
-    concentration.Update( msg );
+    concentration.ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,10 +98,8 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& msg 
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFlowCreation& msg )
 {
-    bool create = ! flows_.Find( msg.oid );
     PopulationFlow& flow = flows_.Create( model_, msg.oid, *this, msg );
-    StartSynchronisation( flow, create );
-    flow.Update( msg );
+    flow.ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------

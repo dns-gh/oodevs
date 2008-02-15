@@ -8,11 +8,9 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Limit.h"
 #include "Model.h"
 #include "Network_Def.h"
-#include "tools/App6Symbol.h"
 
 using namespace dispatcher;
 
@@ -41,7 +39,6 @@ Limit::~Limit()
 // -----------------------------------------------------------------------------
 void Limit::Update( const ASN1T_MsgLimitCreation& message )
 {
-    FlagUpdate();
     TacticalLine_ABC::Update( message.tactical_line );
 }
 
@@ -87,17 +84,4 @@ void Limit::SendDestruction( ClientPublisher_ABC& publisher ) const
     AsnMsgSimToClientLimitDestruction asn;
     asn() = GetID();
     asn.Send( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Limit::BuildSymbol
-// Created: SBO 2007-08-22
-// -----------------------------------------------------------------------------
-std::string Limit::BuildSymbol( bool up /*= true*/ ) const
-{
-    std::string symbol;
-    tools::app6::SetFunction( symbol, "**B***" );
-    if( up )
-        return tools::app6::MergeSymbol( symbol, TacticalLine_ABC::BuildSymbol() );
-    return symbol;
 }

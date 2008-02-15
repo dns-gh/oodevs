@@ -3,13 +3,10 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
-#include "ModelRefsContainer.h"
-
-using namespace dispatcher;
+#include "ExtensionFactory_ABC.h"
 

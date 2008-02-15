@@ -35,7 +35,7 @@ class CrossbowPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossbowPlugin( const dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher );
+             CrossbowPlugin( dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~CrossbowPlugin();
     //@}
 
