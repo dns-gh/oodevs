@@ -101,7 +101,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, ExerciseConfig& config, const FlexLmLicense& license )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, ExerciseConfig& config, const FlexLmLicense* license )
     : QMainWindow   ( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )

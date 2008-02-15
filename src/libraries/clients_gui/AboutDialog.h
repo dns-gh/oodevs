@@ -28,7 +28,7 @@ class AboutDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             AboutDialog( QWidget* parent, gui::ItemFactory_ABC& factory, const QString& line, const FlexLmLicense& license );
+             AboutDialog( QWidget* parent, gui::ItemFactory_ABC& factory, const QString& line, const FlexLmLicense* license );
     virtual ~AboutDialog();
     //@}
 

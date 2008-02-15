@@ -23,7 +23,7 @@ using namespace boost::gregorian;
 // Name: AboutDialog constructor
 // Created: SBO 2006-05-04
 // -----------------------------------------------------------------------------
-AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QString& line, const FlexLmLicense& license )
+AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QString& line, const FlexLmLicense* license )
     : QDialog( parent, 0, FALSE, WStyle_Splash )
 {
     setCaption( tr( "About" ) );
@@ -39,12 +39,14 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
     box->layout()->setAlignment( Qt::AlignBottom | Qt::AlignRight );
     QHBox* hbox = new QHBox( box );
     QString message;
-    message += line
-            + tr( " © 2007 Masa-SCI <a href=\"http://www.masa-sci.com\">www.masa-sci.com</a>" );
+    message += line + tr( " © 2007 Masa-SCI <a href=\"http://www.masa-sci.com\">www.masa-sci.com</a>" );
 
-    const boost::gregorian::date expiration( license.GetExpirationDate() );
-    if( !expiration.is_infinity() )
-        message += tr( "<br>License will expire on " ) + QString( boost::gregorian::to_simple_string( license.GetExpirationDate() ).c_str() );
+    if( license )
+    {
+        const boost::gregorian::date expiration( license->GetExpirationDate() );
+        if( !expiration.is_infinity() )
+            message += tr( "<br>License will expire on " ) + QString( boost::gregorian::to_simple_string( expiration ).c_str() );
+    }
     RichLabel* label = factory.CreateLabel( message, hbox );
     label->setAlignment( Qt::SingleLine );
     label->setBackgroundPixmap( pixmap );

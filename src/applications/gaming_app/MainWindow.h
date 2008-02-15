@@ -74,7 +74,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& profile, kernel::ExerciseConfig& config, const FlexLmLicense& license );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& profile, kernel::ExerciseConfig& config, const FlexLmLicense* license );
     virtual ~MainWindow();
     //@}
 

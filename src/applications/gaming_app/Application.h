@@ -40,7 +40,7 @@ class Application : public QApplication
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int argc, char** argv, const QString& locale, const FlexLmLicense& license );
+             Application( int argc, char** argv, const QString& locale, const FlexLmLicense* license );
     virtual ~Application();
     //@}
 
@@ -81,7 +81,7 @@ private:
     Network* network_;
     MainWindow* mainWindow_;
     QTimer* networkTimer_;
-    const FlexLmLicense& license_;
+    const FlexLmLicense* license_;
     //@}
 };
 

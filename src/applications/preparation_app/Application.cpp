@@ -29,7 +29,7 @@ namespace
 // Name: Application::Application
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv, const QString& locale, const FlexLmLicense& license )
+Application::Application( int argc, char** argv, const QString& locale, const FlexLmLicense* license )
     : QApplication  ( argc, argv )
     , mainWindow_( 0 )
     , license_( license )
