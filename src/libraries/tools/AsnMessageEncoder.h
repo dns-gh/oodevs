@@ -10,8 +10,8 @@
 #ifndef __AsnMessageEncoder_h_
 #define __AsnMessageEncoder_h_
 
-#include "asn/asn1per.h"
-#include "asn/asn1PerCppTypes.h"
+#include <asn1per.h>
+#include <asn1PerCppTypes.h>
 #include "AsnControllers.h"
 
 namespace tools 
