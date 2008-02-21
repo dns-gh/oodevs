@@ -7,59 +7,51 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentExtension_h_
-#define __AgentExtension_h_
-
-#include "HlaExtension_ABC.h"
-
-namespace dispatcher
-{
-    class Agent;
-}
-
-namespace hla
-{
-    class FederateFacade;
+#ifndef __EntityIdentifier_h_
+#define __EntityIdentifier_h_
 
 // =============================================================================
-/** @class  AgentExtension
-    @brief  AgentExtension
+/** @class  EntityIdentifier
+    @brief  EntityIdentifierStruct complex data type
 */
-// Created: SBO 2008-02-18
+// Created: AGE 2008-02-21
 // =============================================================================
-class AgentExtension : public HlaExtension_ABC
+class EntityIdentifier
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, FederateFacade& federate );
-    virtual ~AgentExtension();
+             EntityIdentifier();
+    virtual ~EntityIdentifier();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AgentExtension( const AgentExtension& );            //!< Copy constructor
-    AgentExtension& operator=( const AgentExtension& ); //!< Assignment operator
+    EntityIdentifier( const EntityIdentifier& );            //!< Copy constructor
+    EntityIdentifier& operator=( const EntityIdentifier& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
+    //! @name Types
     //@{
+    struct FederateIdentifier
+    {
+        unsigned short siteID_;
+        unsigned short applicationID_;
+    };
     //@}
 
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
+    FederateIdentifier federateIdentifier_;
+    unsigned short entityNumber_;
     //@}
 };
 
-}
-
-#endif // __AgentExtension_h_
+#endif // __EntityIdentifier_h_

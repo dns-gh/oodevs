@@ -7,59 +7,57 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentExtension_h_
-#define __AgentExtension_h_
+#ifndef __Spatial_h_
+#define __Spatial_h_
 
-#include "HlaExtension_ABC.h"
-
-namespace dispatcher
-{
-    class Agent;
-}
-
-namespace hla
-{
-    class FederateFacade;
+#include "Coordinates.h"
 
 // =============================================================================
-/** @class  AgentExtension
-    @brief  AgentExtension
+/** @class  Spatial
+    @brief  Spatial
 */
-// Created: SBO 2008-02-18
+// Created: AGE 2008-02-21
 // =============================================================================
-class AgentExtension : public HlaExtension_ABC
+class Spatial
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, FederateFacade& federate );
-    virtual ~AgentExtension();
+             Spatial();
+    virtual ~Spatial();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AgentExtension( const AgentExtension& );            //!< Copy constructor
-    AgentExtension& operator=( const AgentExtension& ); //!< Assignment operator
+    Spatial( const Spatial& );            //!< Copy constructor
+    Spatial& operator=( const Spatial& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
+    //! @name Types
     //@{
+    struct SpatialFPW
+    {
+        WorldLocation  worldLocation_;
+        bool           isFrozen_;
+        unsigned char  padding_[3];
+        Orientation    orientation_;
+        VelocityVector velocityVector_;
+    };
     //@}
 
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
+    unsigned char deadReckoningAlgorithm_;
+    unsigned char padding_[7];
+    SpatialFPW fpw_;
     //@}
 };
 
-}
-
-#endif // __AgentExtension_h_
+#endif // __Spatial_h_

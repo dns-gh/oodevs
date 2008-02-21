@@ -40,12 +40,3 @@ void AgentExtension::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) co
 {
     
 }
-
-// -----------------------------------------------------------------------------
-// Name: AgentExtension::Deserialize
-// Created: SBO 2008-02-20
-// -----------------------------------------------------------------------------
-void AgentExtension::Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer )
-{
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
-}

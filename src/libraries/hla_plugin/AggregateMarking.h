@@ -7,46 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentExtension_h_
-#define __AgentExtension_h_
-
-#include "HlaExtension_ABC.h"
-
-namespace dispatcher
-{
-    class Agent;
-}
-
-namespace hla
-{
-    class FederateFacade;
+#ifndef __AggregateMarking_h_
+#define __AggregateMarking_h_
 
 // =============================================================================
-/** @class  AgentExtension
-    @brief  AgentExtension
+/** @class  AggregateMarking
+    @brief  AggregateMarking
 */
-// Created: SBO 2008-02-18
+// Created: AGE 2008-02-21
 // =============================================================================
-class AgentExtension : public HlaExtension_ABC
+class AggregateMarking
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, FederateFacade& federate );
-    virtual ~AgentExtension();
+             AggregateMarking();
+    virtual ~AggregateMarking();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AgentExtension( const AgentExtension& );            //!< Copy constructor
-    AgentExtension& operator=( const AgentExtension& ); //!< Assignment operator
+    AggregateMarking( const AggregateMarking& );            //!< Copy constructor
+    AggregateMarking& operator=( const AggregateMarking& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -56,10 +44,9 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
+    unsigned char markingType_;
+    unsigned char markingData_[31];
     //@}
 };
 
-}
-
-#endif // __AgentExtension_h_
+#endif // __AggregateMarking_h_

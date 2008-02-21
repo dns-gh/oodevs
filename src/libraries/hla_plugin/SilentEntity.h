@@ -7,46 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentExtension_h_
-#define __AgentExtension_h_
+#ifndef __SilentEntity_h_
+#define __SilentEntity_h_
 
-#include "HlaExtension_ABC.h"
-
-namespace dispatcher
-{
-    class Agent;
-}
-
-namespace hla
-{
-    class FederateFacade;
+#include "EntityType.h"
 
 // =============================================================================
-/** @class  AgentExtension
-    @brief  AgentExtension
+/** @class  SilentEntity
+    @brief  SilentEntity
 */
-// Created: SBO 2008-02-18
+// Created: AGE 2008-02-21
 // =============================================================================
-class AgentExtension : public HlaExtension_ABC
+class SilentEntity
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, FederateFacade& federate );
-    virtual ~AgentExtension();
+             SilentEntity();
+    virtual ~SilentEntity();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AgentExtension( const AgentExtension& );            //!< Copy constructor
-    AgentExtension& operator=( const AgentExtension& ); //!< Assignment operator
+    SilentEntity( const SilentEntity& );            //!< Copy constructor
+    SilentEntity& operator=( const SilentEntity& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -56,10 +46,11 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
+    unsigned short numberOfEntitiesOfThisType_;
+    unsigned short numberOfAppearanceRecords_;
+    EntityType entityType_;
+    unsigned long entityAppearance_;
     //@}
 };
 
-}
-
-#endif // __AgentExtension_h_
+#endif // __SilentEntity_h_

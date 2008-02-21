@@ -7,46 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentExtension_h_
-#define __AgentExtension_h_
-
-#include "HlaExtension_ABC.h"
-
-namespace dispatcher
-{
-    class Agent;
-}
-
-namespace hla
-{
-    class FederateFacade;
+#ifndef __EntityType_h_
+#define __EntityType_h_
 
 // =============================================================================
-/** @class  AgentExtension
-    @brief  AgentExtension
+/** @class  EntityType
+    @brief  EntityTypeStruct complex data type
 */
-// Created: SBO 2008-02-18
+// Created: AGE 2008-02-21
 // =============================================================================
-class AgentExtension : public HlaExtension_ABC
+class EntityType
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, FederateFacade& federate );
-    virtual ~AgentExtension();
+             EntityType();
+    virtual ~EntityType();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AgentExtension( const AgentExtension& );            //!< Copy constructor
-    AgentExtension& operator=( const AgentExtension& ); //!< Assignment operator
+    EntityType( const EntityType& );            //!< Copy constructor
+    EntityType& operator=( const EntityType& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -56,10 +44,14 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
+    unsigned char entityKind_;
+    unsigned char domain_;
+    unsigned short countryCode_;
+    unsigned char category_;
+    unsigned char subcategory_;
+    unsigned char specific_;
+    unsigned char extra_;
     //@}
 };
 
-}
-
-#endif // __AgentExtension_h_
+#endif // __EntityType_h_

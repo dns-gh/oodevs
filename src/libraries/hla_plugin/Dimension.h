@@ -7,46 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentExtension_h_
-#define __AgentExtension_h_
-
-#include "HlaExtension_ABC.h"
-
-namespace dispatcher
-{
-    class Agent;
-}
-
-namespace hla
-{
-    class FederateFacade;
+#ifndef __Dimension_h_
+#define __Dimension_h_
 
 // =============================================================================
-/** @class  AgentExtension
-    @brief  AgentExtension
+/** @class  Dimension
+    @brief  Dimension
 */
-// Created: SBO 2008-02-18
+// Created: AGE 2008-02-21
 // =============================================================================
-class AgentExtension : public HlaExtension_ABC
+class Dimension
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, FederateFacade& federate );
-    virtual ~AgentExtension();
+             Dimension();
+    virtual ~Dimension();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AgentExtension( const AgentExtension& );            //!< Copy constructor
-    AgentExtension& operator=( const AgentExtension& ); //!< Assignment operator
+    Dimension( const Dimension& );            //!< Copy constructor
+    Dimension& operator=( const Dimension& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -56,10 +44,8 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
+    float xAxisLength_, yAxisLength_, zAxisLength_;
     //@}
 };
 
-}
-
-#endif // __AgentExtension_h_
+#endif // __Dimension_h_

@@ -11,6 +11,7 @@
 #define __HlaExtension_ABC_h_
 
 #include "dispatcher/Extension_ABC.h"
+#include <stdexcept>
 
 class ObjectIdentifier;
 class AttributeIdentifier;
@@ -38,7 +39,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer ) = 0;
+    void Deserialize( const AttributeIdentifier& , const Deserializer& )
+    {
+        throw std::runtime_error( __FUNCTION__ " not implemented" );
+    }
     virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const = 0;
     //@}
 };
