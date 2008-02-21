@@ -34,6 +34,11 @@ private:
     MenuButton( const MenuButton& );            //!< Copy constructor
     MenuButton& operator=( const MenuButton& ); //!< Assignment operator
     //@}
+
+    //! @name Operations
+    //@{
+    virtual void drawButton( QPainter* painter );
+    //@}
 };
 
 #endif // __MenuButton_h_

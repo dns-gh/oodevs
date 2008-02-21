@@ -9,6 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "MenuButton.h"
+#include <qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: MenuButton constructor
@@ -17,12 +18,9 @@
 MenuButton::MenuButton( const QString& text, QWidget* parent )
     : QPushButton( text, parent )
 {
-    QFont font( "Verdana", 24, QFont::Bold );
+    QFont font( font() );
+    font.setPixelSize( 24 );
     setFont( font );
-    setPaletteBackgroundColor( QColor( 32, 32, 48 ) );
-    setPaletteForegroundColor( Qt::white );
-    setFlat( true );
-    setDefault( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,4 +30,16 @@ MenuButton::MenuButton( const QString& text, QWidget* parent )
 MenuButton::~MenuButton()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MenuButton::drawButton
+// Created: SBO 2008-02-21
+// -----------------------------------------------------------------------------
+void MenuButton::drawButton( QPainter* painter )
+{
+    painter->fillRect( 0, 0, width(), height(), colorGroup().brush( QColorGroup::Background ) );
+    if( hasMouse() )
+        painter->setPen( colorGroup().color( QColorGroup::BrightText ) );
+    painter->drawText( rect(), Qt::AlignCenter | Qt::SingleLine, text() );
 }

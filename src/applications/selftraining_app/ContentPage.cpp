@@ -48,10 +48,11 @@ ContentPage::~ContentPage()
 void ContentPage::AddTitle( const QString& title )
 {
     QLabel* label = new QLabel( title, this );
-    QFont font( "Verdana", 30, QFont::Bold );
+    QFont font( font() );
+    font.setPixelSize( 30 );
     font.setItalic( true );
     label->setFont( font );
-    label->setFixedHeight( 80 );
+    label->setFixedHeight( 60 );
     grid_->addMultiCellWidget( label, 0, 0, 0, 1, Qt::AlignVCenter | Qt::AlignLeft );
 }
 

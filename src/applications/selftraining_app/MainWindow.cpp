@@ -15,6 +15,7 @@
 #include <qapplication.h>
 #include <qwidgetstack.h>
 #include <qpixmap.h>
+#include <qpalette.h>
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -29,8 +30,7 @@ MainWindow::MainWindow()
     setIcon( MAKE_PIXMAP( csword ) );
     setMinimumSize( 800, 600 );
 
-    setPaletteBackgroundColor( QColor( 64, 64, 80 ) );
-    setPaletteForegroundColor( Qt::white );
+    SetStyle();
 
     pages_ = new QWidgetStack( this );
     new HomePage( pages_, *config_ );
@@ -44,4 +44,27 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::SetStyle
+// Created: SBO 2008-02-21
+// -----------------------------------------------------------------------------
+void MainWindow::SetStyle()
+{
+    QFont font( "Verdana", 10, QFont::Bold );
+    setFont( font );
+
+    QPalette p( palette() );
+    p.setColor( QPalette::Active, QColorGroup::Background     , QColor( 48, 48, 64 ) );
+    p.setColor( QPalette::Active, QColorGroup::Foreground     , Qt::white );
+    p.setColor( QPalette::Active, QColorGroup::BrightText     , Qt::white );
+    p.setColor( QPalette::Active, QColorGroup::Base           , QColor( 200, 200, 225 ) );
+    p.setColor( QPalette::Active, QColorGroup::Text           , QColor(  32,  32,  48 ) );
+    p.setColor( QPalette::Active, QColorGroup::ButtonText     , QColor( 128, 128, 150 ) );
+    p.setColor( QPalette::Active, QColorGroup::Highlight      , QColor(  32,  32,  48 ) );
+    p.setColor( QPalette::Active, QColorGroup::HighlightedText, Qt::white );
+    p.setInactive( p.active() );
+    p.setDisabled( p.active() );
+    setPalette( p );
 }

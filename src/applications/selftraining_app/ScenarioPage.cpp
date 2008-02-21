@@ -24,7 +24,7 @@ ScenarioPage::ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools
 {
     QHBox* box = new QHBox( this );
     box->setSpacing( 50 );
-    box->setMargin( 50 );
+    box->setMargin( 40 );
     {
         QVBox* vBox = new QVBox( box );
         vBox->setSpacing( 10 );
@@ -36,6 +36,8 @@ ScenarioPage::ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools
     }
     {
         briefing_ = new QTextEdit( box );
+        briefing_->setText( "Briefing" );
+        briefing_->setReadOnly( true );
         box->setStretchFactor( briefing_, 4 );
     }
     AddContent( box );    

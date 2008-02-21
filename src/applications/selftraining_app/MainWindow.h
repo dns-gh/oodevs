@@ -35,10 +35,6 @@ public:
     virtual ~MainWindow();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -48,6 +44,7 @@ private:
 
     //! @name Helpers
     //@{
+    void SetStyle();
     //@}
 
 private:
