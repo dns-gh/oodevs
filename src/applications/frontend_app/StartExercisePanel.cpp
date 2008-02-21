@@ -10,11 +10,11 @@
 #include "frontend_app_pch.h"
 #include "StartExercisePanel.h"
 #include "moc_StartExercisePanel.cpp"
-#include "commands.h"
-#include "StartExercise.h"
 #include "InfoBubble.h"
 #include "GameConfigPanel.h"
 #include "resources.h"
+#include "frontend/commands.h"
+#include "frontend/StartExercise.h"
 #include "tools/GeneralConfig.h"
 #include <qaction.h>
 #include <qlistbox.h>
@@ -31,6 +31,8 @@
 #pragma warning( pop )
 
 namespace bpt = boost::posix_time;
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: StartExercisePanel constructor

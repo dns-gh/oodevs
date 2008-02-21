@@ -7,24 +7,24 @@
 //
 // *****************************************************************************
 
-#include "frontend_app_pch.h"
+#include "frontend_pch.h"
 #include "JoinAnalysis.h"
-#include "GameConfigPanel.h"
 #pragma warning( disable: 4127 4511 4512 )
 #include <boost/lexical_cast.hpp>
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: JoinAnalysis constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinAnalysis::JoinAnalysis( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, unsigned number )
+JoinAnalysis::JoinAnalysis( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, unsigned port )
     : SpawnCommand( parent, config, "gaming_app.exe" )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     const std::string host = "--host=localhost:"  // $$$$ AGE 2008-01-07: 
-                           + boost::lexical_cast< std::string >( 
-                                GameConfigPanel::DispatcherPort( number ) );
+                           + boost::lexical_cast< std::string >( port );
     addArgument( host.c_str() );
     Start();
 }

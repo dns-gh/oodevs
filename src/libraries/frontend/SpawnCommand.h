@@ -17,6 +17,9 @@ namespace tools
     class GeneralConfig;
 }
 
+namespace frontend
+{
+
 // =============================================================================
 /** @class  SpawnCommand
     @brief  Spawn command base class
@@ -58,5 +61,7 @@ private:
     QString commandLine_;
     //@}
 };
+
+}
 
 #endif // __SpawnCommand_h_

@@ -7,33 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __JoinExercise_h_
-#define __JoinExercise_h_
+#ifndef __JoinAnalysis_h_
+#define __JoinAnalysis_h_
 
 #include "SpawnCommand.h"
 
+namespace frontend
+{
+
 // =============================================================================
-/** @class  JoinExercise
-    @brief  JoinExercise
+/** @class  JoinAnalysis
+    @brief  JoinAnalysis
 */
 // Created: AGE 2007-10-05
 // =============================================================================
-class JoinExercise : public SpawnCommand
+class JoinAnalysis : public SpawnCommand
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session );
-    virtual ~JoinExercise();
+             JoinAnalysis( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, unsigned port );
+    virtual ~JoinAnalysis();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    JoinExercise( const JoinExercise& );            //!< Copy constructor
-    JoinExercise& operator=( const JoinExercise& ); //!< Assignment operator
+    JoinAnalysis( const JoinAnalysis& );            //!< Copy constructor
+    JoinAnalysis& operator=( const JoinAnalysis& ); //!< Assignment operator
     //@}
 };
 
-#endif // __JoinExercise_h_
+}
+
+#endif // __JoinAnalysis_h_

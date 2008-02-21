@@ -9,6 +9,7 @@
 
 #include "frontend_app_pch.h"
 #include "GameConfigPanel.h"
+#include "frontend/CommandLineTools.h"
 #include "tools/GeneralConfig.h"
 #include "tools/xmlcodecs.h"
 #include <qspinbox.h>
@@ -140,24 +141,6 @@ QWidget* GameConfigPanel::CreateSystemPanel( QWidget* parent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GameConfigPanel::SimulationPort
-// Created: AGE 2007-10-09
-// -----------------------------------------------------------------------------
-unsigned GameConfigPanel::SimulationPort( unsigned exerciseNumber )
-{
-    return 10000 + ( exerciseNumber - 1 ) * 2;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GameConfigPanel::DispatcherPort
-// Created: AGE 2007-10-09
-// -----------------------------------------------------------------------------
-unsigned GameConfigPanel::DispatcherPort( unsigned exerciseNumber )
-{
-    return SimulationPort( exerciseNumber ) + 1;
-}
-
-// -----------------------------------------------------------------------------
 // Name: GameConfigPanel::Commit
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
@@ -194,7 +177,7 @@ void GameConfigPanel::Commit( const std::string& exercise, const std::string& se
                         << xml::attribute( "embedded", true ) // $$$$ AGE 2007-10-09: 
                     << xml::end()
                     << xml::start( "network" )
-                        << xml::attribute( "port", SimulationPort( exerciseNumber ) )
+                        << xml::attribute( "port", frontend::tools::SimulationPort( exerciseNumber ) )
                     << xml::end()
                     << xml::start( "orbat" )
                         << xml::attribute( "checkcomposition", checkOdb_->isChecked() )
@@ -218,8 +201,8 @@ void GameConfigPanel::Commit( const std::string& exercise, const std::string& se
                 << xml::start( "dispatcher" )
                     << xml::start( "network" )
                         << xml::attribute( "client", "localhost:" +  // $$$$ AGE 2007-10-09: 
-                                    boost::lexical_cast< std::string >( SimulationPort( exerciseNumber ) ) )
-                        << xml::attribute( "server", DispatcherPort( exerciseNumber ) )
+                            boost::lexical_cast< std::string >( frontend::tools::SimulationPort( exerciseNumber ) ) )
+                        << xml::attribute( "server", frontend::tools::DispatcherPort( exerciseNumber ) )
                     << xml::end()
                     << xml::start( "plugins" )
                         << xml::start( "plugin" )
@@ -231,7 +214,7 @@ void GameConfigPanel::Commit( const std::string& exercise, const std::string& se
                 << xml::start( "gaming" )
                     << xml::start( "network" )
                         << xml::attribute( "server", "localhost:" +  // $$$$ AGE 2007-10-09: 
-                                    boost::lexical_cast< std::string >( DispatcherPort( exerciseNumber ) ) )
+                                    boost::lexical_cast< std::string >( frontend::tools::DispatcherPort( exerciseNumber ) ) )
                     << xml::end()
                 << xml::end()
             << xml::end()

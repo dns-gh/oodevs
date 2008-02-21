@@ -7,33 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __EditExercise_h_
-#define __EditExercise_h_
+#ifndef __CreateTerrain_h_
+#define __CreateTerrain_h_
 
 #include "SpawnCommand.h"
 
+namespace frontend
+{
+
 // =============================================================================
-/** @class  EditExercise
-    @brief  EditExercise
+/** @class  CreateTerrain
+    @brief  CreateTerrain
 */
 // Created: AGE 2007-10-04
 // =============================================================================
-class EditExercise : public SpawnCommand
+class CreateTerrain : public SpawnCommand
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EditExercise( QObject* parent, const tools::GeneralConfig& config, const QString& name );
-    virtual ~EditExercise();
+             CreateTerrain( QObject* parent, const tools::GeneralConfig& config, const QString& name );
+    virtual ~CreateTerrain();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    EditExercise( const EditExercise& );            //!< Copy constructor
-    EditExercise& operator=( const EditExercise& ); //!< Assignment operator
+    CreateTerrain( const CreateTerrain& );            //!< Copy constructor
+    CreateTerrain& operator=( const CreateTerrain& ); //!< Assignment operator
     //@}
 };
 
-#endif // __EditExercise_h_
+}
+
+#endif // __CreateTerrain_h_

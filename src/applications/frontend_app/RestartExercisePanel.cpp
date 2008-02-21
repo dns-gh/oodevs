@@ -10,10 +10,10 @@
 #include "frontend_app_pch.h"
 #include "RestartExercisePanel.h"
 #include "moc_RestartExercisePanel.cpp"
-#include "commands.h"
-#include "StartExercise.h"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "frontend/commands.h"
+#include "frontend/StartExercise.h"
 #include <qaction.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
@@ -21,6 +21,8 @@
 #include <qlineedit.h>
 #include <qtextedit.h>
 #include <qtimer.h>
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: RestartExercisePanel constructor

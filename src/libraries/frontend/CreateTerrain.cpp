@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "frontend_app_pch.h"
+#include "frontend_pch.h"
 #include "CreateTerrain.h"
 #include "tools/GeneralConfig.h"
 
@@ -16,6 +16,8 @@
 #include <boost/filesystem/convenience.hpp>
 
 namespace bfs = boost::filesystem;
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: CreateTerrain constructor

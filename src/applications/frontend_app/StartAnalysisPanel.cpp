@@ -10,10 +10,11 @@
 #include "frontend_app_pch.h"
 #include "StartAnalysisPanel.h"
 #include "moc_StartAnalysisPanel.cpp"
-#include "commands.h"
-#include "StartReplay.h"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "frontend/commands.h"
+#include "frontend/StartReplay.h"
+#include "frontend/CommandLineTools.h"
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.h>
 #include <qaction.h>
@@ -82,7 +83,7 @@ void StartAnalysisPanel::ExerciseSelected()
     if( exercises_->selectedItem() )
     {
         QString exercise = exercises_->selectedItem()->text();
-        replays_->insertStringList( commands::ListSessions( config_, exercise.ascii() ) );
+        replays_->insertStringList( frontend::commands::ListSessions( config_, exercise.ascii() ) );
         replays_->setSelected( 0, true );
         ReplaySelected();
     }
@@ -136,7 +137,7 @@ QString StartAnalysisPanel::BuildMessage( const QString& session ) const
 void StartAnalysisPanel::StartReplay()
 {
     if( exercises_->selectedItem() && replays_->selectedItem() )
-        new ::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text(), exerciseNumber_->value() );
+        new frontend::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text(), frontend::tools::DispatcherPort( exerciseNumber_->value() ) );
     Update();
     ShowNext();
 }
@@ -148,6 +149,6 @@ void StartAnalysisPanel::StartReplay()
 void StartAnalysisPanel::Update()
 {
     exercises_->clear();
-    exercises_->insertStringList( commands::ListExercises( config_ ) );
+    exercises_->insertStringList( frontend::commands::ListExercises( config_ ) );
     exercises_->setSelected( 0, true );
 }

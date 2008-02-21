@@ -10,15 +10,17 @@
 #include "frontend_app_pch.h"
 #include "JoinExercisePanel.h"
 #include "moc_JoinExercisePanel.cpp"
-#include "commands.h"
-#include "StartExercise.h"
-#include "JoinExercise.h"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "frontend/commands.h"
+#include "frontend/StartExercise.h"
+#include "frontend/JoinExercise.h"
 #include <qaction.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
 #include <qtabwidget.h>
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: JoinExercisePanel constructor

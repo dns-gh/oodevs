@@ -12,6 +12,9 @@
 
 #include "SpawnCommand.h"
 
+namespace frontend
+{
+
 // =============================================================================
 /** @class  StartExercise
     @brief  StartExercise
@@ -36,5 +39,7 @@ private:
     StartExercise& operator=( const StartExercise& ); //!< Assignment operator
     //@}
 };
+
+}
 
 #endif // __StartExercise_h_

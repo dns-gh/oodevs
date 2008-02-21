@@ -7,8 +7,10 @@
 //
 // *****************************************************************************
 
-#include "frontend_app_pch.h"
+#include "frontend_pch.h"
 #include "StartExercise.h"
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: StartExercise constructor

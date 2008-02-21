@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "frontend_app_pch.h"
+#include "frontend_pch.h"
 #include "CreateExercise.h"
 #include "tools/GeneralConfig.h"
 
@@ -38,10 +38,13 @@ namespace
     }
 }
 
-void CreateExercise( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical )
+namespace frontend
 {
-    const std::string dir = config.GetExerciseDir( name );
-    bfs::create_directories( dir );
+    void CreateExercise( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical )
+    {
+        const std::string dir = config.GetExerciseDir( name );
+        bfs::create_directories( dir );
 
-    CreateExerciseXml( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string(), terrain, model, physical );
+        CreateExerciseXml( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string(), terrain, model, physical );
+    }
 }

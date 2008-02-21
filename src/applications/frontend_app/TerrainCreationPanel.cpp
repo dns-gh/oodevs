@@ -10,14 +10,16 @@
 #include "frontend_app_pch.h"
 #include "TerrainCreationPanel.h"
 #include "moc_TerrainCreationPanel.cpp"
-#include "CreateTerrain.h"
-#include "commands.h"
 #include "InfoBubble.h"
-#include "tools/GeneralConfig.h"
 #include "resources.h"
+#include "frontend/CreateTerrain.h"
+#include "frontend/commands.h"
+#include "tools/GeneralConfig.h"
 #include <qaction.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: TerrainCreationPanel constructor

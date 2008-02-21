@@ -10,13 +10,15 @@
 #include "frontend_app_pch.h"
 #include "EditExercisePanel.h"
 #include "moc_EditExercisePanel.cpp"
-#include "commands.h"
-#include "EditExercise.h"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "frontend/commands.h"
+#include "frontend/EditExercise.h"
 #include <qaction.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: EditExercisePanel constructor

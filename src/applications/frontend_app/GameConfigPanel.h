@@ -39,9 +39,6 @@ public:
     //! @name Operations
     //@{
     void Commit( const std::string& exercise, const std::string& session, const std::string& name, const std::string& comment, unsigned exerciseNumber );
-
-    static unsigned SimulationPort( unsigned exerciseNumber );
-    static unsigned DispatcherPort( unsigned exerciseNumber );
     //@}
 
 private:

@@ -10,10 +10,11 @@
 #include "frontend_app_pch.h"
 #include "JoinAnalysisPanel.h"
 #include "moc_JoinAnalysisPanel.cpp"
-#include "commands.h"
-#include "JoinAnalysis.h"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "frontend/commands.h"
+#include "frontend/JoinAnalysis.h"
+#include "frontend/CommandLineTools.h"
 #include <qaction.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
@@ -68,7 +69,7 @@ JoinAnalysisPanel::~JoinAnalysisPanel()
 void JoinAnalysisPanel::StartExercise()
 {
     if( list_->selectedItem() )
-        new ::JoinAnalysis( this, config_, list_->selectedItem()->text(), exerciseNumber_->value() );
+        new frontend::JoinAnalysis( this, config_, list_->selectedItem()->text(), frontend::tools::DispatcherPort( exerciseNumber_->value() ) );
     Update();
     ShowNext();
 }
@@ -80,6 +81,6 @@ void JoinAnalysisPanel::StartExercise()
 void JoinAnalysisPanel::Update()
 {
     list_->clear();
-    list_->insertStringList( commands::ListExercises( config_ ) );
+    list_->insertStringList( frontend::commands::ListExercises( config_ ) );
     list_->setSelected( 0, true );
 }

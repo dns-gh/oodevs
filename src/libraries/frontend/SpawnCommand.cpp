@@ -7,10 +7,12 @@
 //
 // *****************************************************************************
 
-#include "frontend_app_pch.h"
+#include "frontend_pch.h"
 #include "SpawnCommand.h"
 #include "tools/GeneralConfig.h"
 #include <windows.h>
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand constructor

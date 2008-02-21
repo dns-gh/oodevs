@@ -7,30 +7,28 @@
 //
 // *****************************************************************************
 
-#include "frontend_app_pch.h"
-#include "JoinExercise.h"
-#include "GameConfigPanel.h"
-#pragma warning( disable: 4127 4511 4512 )
-#include <boost/lexical_cast.hpp>
+#include "frontend_pch.h"
+#include "EditExercise.h"
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
-// Name: JoinExercise constructor
-// Created: AGE 2007-10-05
+// Name: EditExercise constructor
+// Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session )
-    : SpawnCommand( parent, config, "gaming_app.exe" )
+EditExercise::EditExercise( QObject* parent, const tools::GeneralConfig& config, const QString& name )
+    : SpawnCommand( parent, config, "preparation_app.exe" )
 {
     AddRootDirArgument();
-    AddExerciseArgument( exercise );
-    AddSessionArgument ( session );
+    AddExerciseArgument( name );
     Start();
 }
 
 // -----------------------------------------------------------------------------
-// Name: JoinExercise destructor
-// Created: AGE 2007-10-05
+// Name: EditExercise destructor
+// Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-JoinExercise::~JoinExercise()
+EditExercise::~EditExercise()
 {
     // NOTHING
 }

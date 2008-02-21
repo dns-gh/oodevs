@@ -7,33 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __StartReplay_h_
-#define __StartReplay_h_
+#ifndef __JoinExercise_h_
+#define __JoinExercise_h_
 
 #include "SpawnCommand.h"
 
+namespace frontend
+{
+
 // =============================================================================
-/** @class  StartReplay
-    @brief  StartReplay
+/** @class  JoinExercise
+    @brief  JoinExercise
 */
 // Created: AGE 2007-10-05
 // =============================================================================
-class StartReplay : public SpawnCommand
+class JoinExercise : public SpawnCommand
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             StartReplay( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session, unsigned number );
-    virtual ~StartReplay();
+             JoinExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session );
+    virtual ~JoinExercise();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    StartReplay( const StartReplay& );            //!< Copy constructor
-    StartReplay& operator=( const StartReplay& ); //!< Assignment operator
+    JoinExercise( const JoinExercise& );            //!< Copy constructor
+    JoinExercise& operator=( const JoinExercise& ); //!< Assignment operator
     //@}
 };
 
-#endif // __StartReplay_h_
+}
+
+#endif // __JoinExercise_h_

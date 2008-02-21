@@ -7,26 +7,33 @@
 //
 // *****************************************************************************
 
-#include "frontend_app_pch.h"
-#include "EditExercise.h"
+#include "frontend_pch.h"
+#include "StartReplay.h"
+#pragma warning( disable: 4127 4511 4512 )
+#include <boost/lexical_cast.hpp>
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
-// Name: EditExercise constructor
-// Created: AGE 2007-10-04
+// Name: StartReplay constructor
+// Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-EditExercise::EditExercise( QObject* parent, const tools::GeneralConfig& config, const QString& name )
-    : SpawnCommand( parent, config, "preparation_app.exe" )
+StartReplay::StartReplay( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session, unsigned port )
+    : SpawnCommand( parent, config, "replayer_app.exe" )
 {
     AddRootDirArgument();
-    AddExerciseArgument( name );
+    AddExerciseArgument( exercise );
+    AddSessionArgument ( session );
+    const std::string portArg = "--port=" + boost::lexical_cast< std::string >( port );
+    addArgument( portArg.c_str() );
     Start();
 }
 
 // -----------------------------------------------------------------------------
-// Name: EditExercise destructor
-// Created: AGE 2007-10-04
+// Name: StartReplay destructor
+// Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-EditExercise::~EditExercise()
+StartReplay::~StartReplay()
 {
     // NOTHING
 }
