@@ -49,7 +49,7 @@ WorldLocation::~WorldLocation()
 VelocityVector::VelocityVector( const WorldLocation& location, float rSpeed, unsigned short heading )
 {
     static const double pi = std::acos( -1. );
-    geometry::Vector3d base( location.GetX(),  location.GetY(), location.GetZ() );
+    geometry::Vector3d base( location.X(), location.Y(), location.Z() );
 
     geometry::Vector3d yaxis( base.Y(), -base.X(), 0 );
     if( yaxis.SquareLength() < 1 )
@@ -61,7 +61,7 @@ VelocityVector::VelocityVector( const WorldLocation& location, float rSpeed, uns
 
     geometry::Vector3d zaxis( base );
     zaxis.Normalize();
-    const double angle = - double( heading ) / ( 2 * pi );
+    const double angle = - double( heading ) * pi / 180.;
     speed.Rotate( zaxis, angle );
 
     speed.Normalize();
@@ -116,10 +116,10 @@ namespace
 // -----------------------------------------------------------------------------
 Orientation::Orientation( const WorldLocation& location, const VelocityVector& velocity )
 {
-    geometry::Vector3d zAxis( location.GetX(),  location.GetY(), location.GetZ() );
+    geometry::Vector3d zAxis( location.X(),  location.Y(), location.Z() );
     zAxis.Normalize();
 
-    geometry::Vector3d xAxis( velocity.GetX(),  velocity.GetY(), velocity.GetZ() );
+    geometry::Vector3d xAxis( velocity.X(),  velocity.Y(), velocity.Z() );
     xAxis.Normalize();
 
     geometry::Vector3d yAxis = zAxis.CrossProduct( xAxis );

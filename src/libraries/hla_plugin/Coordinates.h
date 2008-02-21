@@ -37,9 +37,9 @@ public:
 
     //! @name Accessors
     //@{
-    double GetX() const { return x_; };
-    double GetY() const { return y_; };
-    double GetZ() const { return z_; };
+    double X() const { return x_; };
+    double Y() const { return y_; };
+    double Z() const { return z_; };
     //@}
 
 private:
@@ -76,9 +76,9 @@ public:
 
     //! @name Accessors
     //@{
-    double GetX() const { return xn_; };
-    double GetY() const { return yn_; };
-    double GetZ() const { return zn_; };
+    double X() const { return xn_; };
+    double Y() const { return yn_; };
+    double Z() const { return zn_; };
     //@}
 
 private:
@@ -112,6 +112,13 @@ public:
     {
         archive << psi_ << theta_ << phi;
     }
+    //@}
+
+    //! @name Accessors
+    //@{
+    double Psi() const   { return psi_; };
+    double Theta() const { return theta_; };
+    double Phi() const   { return phi_; };
     //@}
 
 private:
