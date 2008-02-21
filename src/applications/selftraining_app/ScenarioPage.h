@@ -20,6 +20,11 @@ namespace tools
     class GeneralConfig;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  ScenarioPage
     @brief  ScenarioPage
@@ -41,6 +46,7 @@ private slots:
     //! @name Operations
     //@{
     void OnStart();
+    void OnScenarioSelected();
     //@}
 
 private:
@@ -53,6 +59,8 @@ private:
     //! @name Helpers
     //@{
     virtual void Update();
+    void UpdateSides( const std::string& orbat );
+    void ReadSide( xml::xistream& xis );
     //@}
 
 private:
