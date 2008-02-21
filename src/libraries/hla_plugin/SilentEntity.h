@@ -24,12 +24,19 @@ class SilentEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             SilentEntity();
+             SilentEntity( const EntityType& type, unsigned short number );
     virtual ~SilentEntity();
     //@}
 
     //! @name Operations
     //@{
+    template< typename Archive >
+    void Serialize( Archive& archive )
+    {
+        archive << numberOfEntitiesOfThisType_  << numberOfAppearanceRecords_;
+        entityType_.Serialize( archive );
+        archive << entityAppearance_;
+    }
     //@}
 
 private:
@@ -37,10 +44,6 @@ private:
     //@{
     SilentEntity( const SilentEntity& );            //!< Copy constructor
     SilentEntity& operator=( const SilentEntity& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

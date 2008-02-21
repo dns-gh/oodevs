@@ -22,12 +22,18 @@ class EntityIdentifier
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityIdentifier();
+             EntityIdentifier( unsigned short site, unsigned short application, unsigned short number );
     virtual ~EntityIdentifier();
     //@}
 
     //! @name Operations
     //@{
+    template< typename Archive >
+    void Serialize( Archive& archive )
+    {
+        federateIdentifier_.Serialize( archive );
+        archive << entityNumber_;
+    }
     //@}
 
 private:
@@ -41,6 +47,13 @@ private:
     //@{
     struct FederateIdentifier
     {
+        FederateIdentifier( unsigned short site, unsigned short application )
+            : siteID_( site ), applicationID_( application ) {}
+        template< typename Archive >
+        void Serialize( Archive& archive )
+        {
+            archive << siteID_ << applicationID_;
+        }
         unsigned short siteID_;
         unsigned short applicationID_;
     };

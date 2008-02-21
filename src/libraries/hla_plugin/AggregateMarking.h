@@ -22,12 +22,18 @@ class AggregateMarking
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateMarking();
+    explicit AggregateMarking( const std::string& name );
     virtual ~AggregateMarking();
     //@}
 
     //! @name Operations
     //@{
+    template< typename Archive >
+    void Serialize( Archive& archive )
+    {
+        archive << markingType_;
+        archive << markingData_;
+    }
     //@}
 
 private:
@@ -35,10 +41,6 @@ private:
     //@{
     AggregateMarking( const AggregateMarking& );            //!< Copy constructor
     AggregateMarking& operator=( const AggregateMarking& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

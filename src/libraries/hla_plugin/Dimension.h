@@ -22,12 +22,17 @@ class Dimension
 public:
     //! @name Constructors/Destructor
     //@{
-             Dimension();
+             Dimension( float x, float y, float z );
     virtual ~Dimension();
     //@}
 
     //! @name Operations
     //@{
+    template< typename Archive >
+    void Serialize( Archive& archive )
+    {
+        archive << xAxisLength_ << yAxisLength_ << zAxisLength_;
+    }
     //@}
 
 private:
@@ -35,10 +40,6 @@ private:
     //@{
     Dimension( const Dimension& );            //!< Copy constructor
     Dimension& operator=( const Dimension& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

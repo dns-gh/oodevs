@@ -10,3 +10,22 @@
 #include "hla_plugin_pch.h"
 #include "AggregateMarking.h"
 
+// -----------------------------------------------------------------------------
+// Name: AggregateMarking constructor
+// Created: AGE 2008-02-21
+// -----------------------------------------------------------------------------
+AggregateMarking::AggregateMarking( const std::string& name )
+    : markingType_( 1 ) // ASCII
+{
+    const unsigned length = std::min( sizeof( markingData_ ), name.length() );
+    ::memcpy( markingData_, name.c_str(), length );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateMarking destructor
+// Created: AGE 2008-02-21
+// -----------------------------------------------------------------------------
+AggregateMarking::~AggregateMarking()
+{
+    // NOTHING
+}

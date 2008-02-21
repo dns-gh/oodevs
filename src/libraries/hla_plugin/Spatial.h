@@ -24,30 +24,39 @@ class Spatial
 public:
     //! @name Constructors/Destructor
     //@{
-             Spatial();
+             Spatial( const std::string mgrs, float altitude, float speed, unsigned short heading );
     virtual ~Spatial();
     //@}
 
     //! @name Operations
     //@{
+    template< typename Archive >
+    void Serialize( Archive& archive )
+    {
+        archive << deadReckoningAlgorithm_  << padding_;
+        fpw_.Serialize( archive );
+    }
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Spatial( const Spatial& );            //!< Copy constructor
-    Spatial& operator=( const Spatial& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     struct SpatialFPW
     {
+        SpatialFPW( const std::string mgrs, float altitude, float speed, unsigned short heading );
+        template< typename Archive >
+        void Serialize( Archive& archive )
+        {
+            worldLocation_.Serialize( archive );
+            archive << isFrozen_ << padding_;
+            orientation_.Serialize( archive );
+            velocityVector_.Serialize( archive );
+        }
         WorldLocation  worldLocation_;
         bool           isFrozen_;
         unsigned char  padding_[3];
-        Orientation    orientation_;
         VelocityVector velocityVector_;
+        Orientation    orientation_;
     };
     //@}
 
