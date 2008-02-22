@@ -7,61 +7,62 @@
 //
 // *****************************************************************************
 
-#ifndef __ScenarioPage_h_
-#define __ScenarioPage_h_
+#ifndef __SideList_h_
+#define __SideList_h_
 
-#include "ContentPage.h"
-
-class QListBox;
-class QTextEdit;
+#include <qlistbox.h>
 
 namespace tools
 {
     class GeneralConfig;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
-/** @class  ScenarioPage
-    @brief  ScenarioPage
+/** @class  SideList
+    @brief  SideList
 */
-// Created: SBO 2008-02-21
+// Created: SBO 2008-02-22
 // =============================================================================
-class ScenarioPage : public ContentPage
+class SideList : public QListBox
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config );
-    virtual ~ScenarioPage();
+             SideList( QWidget* parent, const tools::GeneralConfig& config );
+    virtual ~SideList();
     //@}
 
-private slots:
-    //! @name Operations
+public slots:
+    //! @name Slots
     //@{
-    void OnStart();
+    void Update( const QString& exercise );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ScenarioPage( const ScenarioPage& );            //!< Copy constructor
-    ScenarioPage& operator=( const ScenarioPage& ); //!< Assignment operator
+    SideList( const SideList& );            //!< Copy constructor
+    SideList& operator=( const SideList& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    virtual void Update();
+    void UpdateSides( const std::string& orbat );
+    void ReadSide( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QListBox* exercises_;
-    QTextEdit* briefing_;
     //@}
 };
 
-#endif // __ScenarioPage_h_
+#endif // __SideList_h_

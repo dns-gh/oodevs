@@ -10,18 +10,19 @@
 #include "selftraining_app_pch.h"
 #include "ScenarioPage.h"
 #include "moc_ScenarioPage.cpp"
+#include "SideList.h"
 #include "frontend/commands.h"
-#include "tools/GeneralConfig.h"
-#include <xeumeuleu/xml.h>
+#include "frontend/StartExercise.h"
+#include "frontend/JoinExercise.h"
 #include <qlistbox.h>
 #include <qtextedit.h>
 
-#pragma warning( disable: 4127 4244 4245 )
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
 
-namespace bfs = boost::filesystem;
-using namespace xml;
+namespace bpt = boost::posix_time;
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioPage constructor
@@ -34,25 +35,24 @@ ScenarioPage::ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools
     QHBox* box = new QHBox( this );
     box->setSpacing( 50 );
     box->setMargin( 40 );
-    {
-        QVBox* vBox = new QVBox( box );
-        vBox->setSpacing( 10 );
-        scenarios_ = new QListBox( vBox );
-        teams_ = new QListBox( vBox );
-        vBox->setStretchFactor( scenarios_, 3 );
-        vBox->setStretchFactor( teams_, 1 );
-        box->setStretchFactor( vBox, 5 );
-    }
-    {
-        briefing_ = new QTextEdit( box );
-        briefing_->setText( "Briefing" );
-        briefing_->setReadOnly( true );
-        box->setStretchFactor( briefing_, 4 );
-    }
+    
+    QVBox* vBox = new QVBox( box );
+    vBox->setSpacing( 10 );
+    exercises_ = new QListBox( vBox );
+    SideList* sides = new SideList( vBox, config );
+    vBox->setStretchFactor( exercises_, 3 );
+    vBox->setStretchFactor( sides, 1 );
+    box->setStretchFactor( vBox, 5 );
+    
+    briefing_ = new QTextEdit( box );
+    briefing_->setText( "Briefing" );
+    briefing_->setReadOnly( true );
+    box->setStretchFactor( briefing_, 4 );
+    
     AddContent( box );    
     AddNextButton( tr( "Start" ), *this, SLOT( OnStart() ) );
 
-    connect( scenarios_, SIGNAL( selectionChanged() ), SLOT( OnScenarioSelected() ) );
+    connect( exercises_, SIGNAL( highlighted( const QString& ) ), sides, SLOT( Update( const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,9 +70,17 @@ ScenarioPage::~ScenarioPage()
 // -----------------------------------------------------------------------------
 void ScenarioPage::Update()
 {
-    scenarios_->clear();
-    scenarios_->insertStringList( frontend::commands::ListExercises( config_ ) );
-    scenarios_->setSelected( 0, true );
+    exercises_->clear();
+    exercises_->insertStringList( frontend::commands::ListExercises( config_ ) );
+    exercises_->setSelected( 0, true );
+}
+
+namespace
+{
+    std::string BuildSessionName()
+    {
+        return bpt::to_iso_string( bpt::second_clock::local_time() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -81,48 +89,11 @@ void ScenarioPage::Update()
 // -----------------------------------------------------------------------------
 void ScenarioPage::OnStart()
 {
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioPage::OnScenarioSelected
-// Created: SBO 2008-02-21
-// -----------------------------------------------------------------------------
-void ScenarioPage::OnScenarioSelected()
-{
-    teams_->clear();
-    if( scenarios_->selectedItem() && !scenarios_->selectedItem()->text().isEmpty() )
+    if( exercises_->selectedItem() )
     {
-        const std::string exercise = scenarios_->selectedItem()->text().ascii();
-        xifstream xis( config_.GetExerciseFile( exercise ) );
-        std::string orbatFile;
-        xis >> start( "exercise" )
-                >> start( "orbat" )
-                    >> attribute( "file", orbatFile );
-        UpdateSides( config_.BuildChildPath( config_.GetExerciseFile( exercise ), orbatFile ) );
+        const QString exercise = exercises_->selectedItem()->text();
+        const QString session  = BuildSessionName().c_str();
+        new frontend::StartExercise( this, config_, exercise, session );
+        new frontend::JoinExercise ( this, config_, exercise, session );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioPage::UpdateSides
-// Created: SBO 2008-02-21
-// -----------------------------------------------------------------------------
-void ScenarioPage::UpdateSides( const std::string& orbat )
-{
-    xifstream xis( orbat );
-    xis >> start( "orbat" )
-            >> start( "sides" )
-                >> list( "side", *this, &ScenarioPage::ReadSide );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioPage::ReadSide
-// Created: SBO 2008-02-21
-// -----------------------------------------------------------------------------
-void ScenarioPage::ReadSide( xml::xistream& xis )
-{
-    std::string name, type;
-    xis >> attribute( "name", name )
-        >> attribute( "type", type );
-    teams_->insertItem( name.c_str() );
 }

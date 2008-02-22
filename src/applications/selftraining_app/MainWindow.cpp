@@ -56,13 +56,13 @@ void MainWindow::SetStyle()
     setFont( font );
 
     QPalette p( palette() );
-    p.setColor( QPalette::Active, QColorGroup::Background     , QColor( 48, 48, 64 ) );
+    p.setColor( QPalette::Active, QColorGroup::Background     , QColor( 48, 64, 48 ) );
     p.setColor( QPalette::Active, QColorGroup::Foreground     , Qt::white );
     p.setColor( QPalette::Active, QColorGroup::BrightText     , Qt::white );
-    p.setColor( QPalette::Active, QColorGroup::Base           , QColor( 200, 200, 225 ) );
-    p.setColor( QPalette::Active, QColorGroup::Text           , QColor(  32,  32,  48 ) );
-    p.setColor( QPalette::Active, QColorGroup::ButtonText     , QColor( 128, 128, 150 ) );
-    p.setColor( QPalette::Active, QColorGroup::Highlight      , QColor(  32,  32,  48 ) );
+    p.setColor( QPalette::Active, QColorGroup::Base           , QColor( 200, 225, 200 ) );
+    p.setColor( QPalette::Active, QColorGroup::Text           , QColor(  32,  48,  32 ) );
+    p.setColor( QPalette::Active, QColorGroup::ButtonText     , QColor( 128, 150, 128 ) );
+    p.setColor( QPalette::Active, QColorGroup::Highlight      , QColor(  32,  48,  32 ) );
     p.setColor( QPalette::Active, QColorGroup::HighlightedText, Qt::white );
     p.setInactive( p.active() );
     p.setDisabled( p.active() );
