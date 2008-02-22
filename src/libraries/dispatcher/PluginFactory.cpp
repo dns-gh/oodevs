@@ -77,7 +77,7 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis, Com
     else if( name == "gearth" )
         handler.Add( new gearth::GearthPlugin( model_, config_, xis ) );
     else if( name == "crossbow" )
-        handler.Add( new crossbow::CrossbowPlugin( model_, config_, simulation_ ) );
+        handler.Add( new crossbow::CrossbowPlugin( model_, config_, simulation_, xis ) );
 #endif
 
 }

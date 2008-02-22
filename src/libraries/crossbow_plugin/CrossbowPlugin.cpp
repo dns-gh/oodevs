@@ -17,8 +17,8 @@ using namespace crossbow;
 // Name: CrossbowPlugin constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-CrossbowPlugin::CrossbowPlugin( dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher )
-    : databasePublisher_( new DatabasePublisher( config, model, publisher ) )
+CrossbowPlugin::CrossbowPlugin( dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis )
+    : databasePublisher_( new DatabasePublisher( config, model, publisher, xis ) )
 {
     // NOTHING
 }

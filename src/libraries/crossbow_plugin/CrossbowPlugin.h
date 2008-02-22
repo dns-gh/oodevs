@@ -12,6 +12,11 @@
 
 #include "dispatcher/Plugin_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace dispatcher
 {
     class Model;
@@ -35,7 +40,7 @@ class CrossbowPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossbowPlugin( dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher );
+             CrossbowPlugin( dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis );
     virtual ~CrossbowPlugin();
     //@}
 
