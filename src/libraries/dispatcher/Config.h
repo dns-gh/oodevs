@@ -69,7 +69,7 @@ private:
     std::string    networkSimulationParameters_;
     unsigned short networkClientsParameters_;
     std::string    physical_;
-    T_Plugins      plugins_;
+    mutable T_Plugins      plugins_;
 };
 
 }

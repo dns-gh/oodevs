@@ -16,6 +16,17 @@ using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: PluginConfig constructor
+// Created: AGE 2008-02-22
+// -----------------------------------------------------------------------------
+PluginConfig::PluginConfig( const std::string& name )
+    : name_( name )
+    , enabled_( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PluginConfig constructor
 // Created: SBO 2007-07-24
 // -----------------------------------------------------------------------------
 PluginConfig::PluginConfig( xml::xistream& xis )

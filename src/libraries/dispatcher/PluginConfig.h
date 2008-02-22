@@ -30,6 +30,7 @@ class PluginConfig
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit PluginConfig( const std::string& name );
     explicit PluginConfig( xml::xistream& xis );
     virtual ~PluginConfig();
     //@}

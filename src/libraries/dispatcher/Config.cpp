@@ -160,10 +160,10 @@ std::string Config::BuildPhysicalChildFile( const std::string& file ) const
 // -----------------------------------------------------------------------------
 const PluginConfig& Config::GetPluginConfig( const std::string& name ) const
 {
-    T_Plugins::const_iterator it = plugins_.find( name );
-    if( it == plugins_.end() )
-        throw std::runtime_error( "Unable to find configuration information for plugin: " + name );
-    return *it->second;
+    const PluginConfig*& plugin = plugins_[ name ];
+    if( !plugin )
+        plugin = new PluginConfig( name );
+    return *plugin;
 }
 
 // -----------------------------------------------------------------------------
