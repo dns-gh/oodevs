@@ -181,7 +181,7 @@
 
     <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,asio,terrain,xeumeuleu,flexlm"
-                   libs="masalloc,tools,masasn
+                   libs="HLA,libFedTime,masalloc,tools,masasn
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
@@ -194,7 +194,7 @@
 
     <target name="application.dispatcher_app.crossbowed" description="build CSword Dispatcher executable with crossbow plugin" depends="library.dispatcher,library.crossbow_plugin,library.gearth_plugin">
         <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,asio,terrain,xeumeuleu,flexlm" input="dispatcher_app"
-                   libs="masalloc,tools,masasn
+                   libs="HLA,libFedTime,masalloc,tools,masasn
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
@@ -229,7 +229,7 @@
 
     <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher,library.3a">
         <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,asio,xeumeuleu,flexlm"
-                   libs="tools,masasn,
+                   libs="HLA,libFedTime,tools,masasn,
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
