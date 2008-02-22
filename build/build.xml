@@ -156,7 +156,9 @@
     </target>
     
     <target name="library.hla_plugin" description="build hla_plugin static library" depends="library.dispatcher">
-        <build-lib name="hla_plugin" pattern="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="hla_plugin" pattern="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
+        </build-lib>
     </target>
   
 
