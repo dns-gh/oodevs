@@ -12,7 +12,7 @@
 
 #include "tools/Extendable.h"
 #include "tools/InterfaceContainer.h"
-#include "Extension_ABC.h"
+#include "Factory_ABC.h"
 #include "ExtensionFactory_ABC.h"
 
 namespace dispatcher
@@ -24,8 +24,7 @@ namespace dispatcher
 */
 // Created: SBO 2008-02-13
 // =============================================================================
-class CompositeFactory : public tools::Extendable< Extension_ABC >
-                       , public tools::InterfaceContainer< Extension_ABC >
+class CompositeFactory : public tools::InterfaceContainer< Factory_ABC >
 {
 
 public:
@@ -37,12 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    template< typename T >
-    void Register( T& extension )
-    {
-        tools::Extendable< Extension_ABC >::Attach( extension );
-        AddExtension( extension );
-    }
+    using tools::InterfaceContainer< Factory_ABC >::Register;
+    using tools::InterfaceContainer< Factory_ABC >::Unregister;
 
     template< typename T >
     void Create( T& entity )
@@ -56,11 +51,6 @@ private:
     //@{
     CompositeFactory( const CompositeFactory& );            //!< Copy constructor
     CompositeFactory& operator=( const CompositeFactory& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void AddExtension( Extension_ABC& extension );
     //@}
 };
 

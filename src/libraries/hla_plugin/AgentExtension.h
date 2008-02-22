@@ -11,6 +11,8 @@
 #define __AgentExtension_h_
 
 #include "HlaExtension_ABC.h"
+#include "dispatcher/Updatable_ABC.h"
+#include "game_asn/asn.h"
 
 namespace dispatcher
 {
@@ -19,7 +21,6 @@ namespace dispatcher
 
 namespace hla
 {
-    class FederateFacade;
 
 // =============================================================================
 /** @class  AgentExtension
@@ -28,18 +29,20 @@ namespace hla
 // Created: SBO 2008-02-18
 // =============================================================================
 class AgentExtension : public HlaExtension_ABC
+                     , public dispatcher::Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, FederateFacade& federate );
+    explicit AgentExtension( dispatcher::Agent& holder );
     virtual ~AgentExtension();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
+    virtual void Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
+    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
     //@}
 
 private:

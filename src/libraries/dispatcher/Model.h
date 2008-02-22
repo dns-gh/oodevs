@@ -50,6 +50,7 @@ class FolkModel;
 class Intelligence;
 class Report;
 class CompositeFactory;
+class Factory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -105,17 +106,19 @@ public:
 
     const kernel::AgentTypes& GetAgentTypes() const;
 
-    template< typename T >
-    void RegisterFactory( T& factory )
+    void RegisterFactory( Factory_ABC& factory )
     {
         compositeFactory_->Register( factory );
+    }
+    void UnregisterFactory( Factory_ABC& factory )
+    {
+        compositeFactory_->Unregister( factory );
     }
 
     template< typename T >
     void AddExtensions( T& entity )
     {
         AddExtensions( &entity );
-
         compositeFactory_->Apply( ExtensionFactory_ABC< T >::Create, entity );
     }
     void AddExtensions( Entity_ABC* entity )

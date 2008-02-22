@@ -29,12 +29,3 @@ CompositeFactory::~CompositeFactory()
 {
     // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: CompositeFactory::AddExtension
-// Created: SBO 2008-02-13
-// -----------------------------------------------------------------------------
-void CompositeFactory::AddExtension( Extension_ABC& extension )
-{
-    tools::InterfaceContainer< Extension_ABC >::Register( extension );
-}

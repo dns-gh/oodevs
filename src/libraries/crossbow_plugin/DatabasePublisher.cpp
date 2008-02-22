@@ -29,12 +29,14 @@ using namespace crossbow;
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
 DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher )
-    : workspace_       ( new Workspace() )
+    : model_           ( model )
+    , workspace_       ( new Workspace() )
     , reportFactory_   ( new ReportFactory( config, model ) )
     , orderTypes_      ( new kernel::OrderTypes( config ) )
     , modelLoaded_     ( false )
+    , factory_         ( new ExtensionFactory() )
 {
-    model.RegisterFactory( *new ExtensionFactory() );
+    model.RegisterFactory( *factory_ );
 
     Initialize( "geodatabase", config );
     Initialize( "geodatabase-population", config );
@@ -54,6 +56,7 @@ DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, dispatch
 // -----------------------------------------------------------------------------
 DatabasePublisher::~DatabasePublisher()
 {
+    model_.UnregisterFactory( *factory_ );
      // $$$$ JCR 2008-01-11: why release ?
     // databaseUpdater_.release();
     // folkUpdater_.release();

@@ -63,8 +63,6 @@ ObjectKnowledge::ObjectKnowledge( Model& model, const ASN1T_MsgObjectKnowledgeCr
     optionals_.construction_dotation_nbrPresent         = 0;
     optionals_.mining_dotation_nbrPresent               = 0;
     optionals_.obstacle_typePresent                     = asnMsg.m.obstacle_typePresent;
-
-    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,12 +78,14 @@ ObjectKnowledge::~ObjectKnowledge()
 // Name: ObjectKnowledge::Update
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeCreation& message )
+void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
     bool realObjectChanged = ( message.real_object && ! pObject_ )
                           || ( pObject_ && pObject_->GetID() != message.real_object );
     if( realObjectChanged )
         pObject_ = model_.GetObjects().Find( message.real_object );
+
+    ApplyUpdate( message );
 }
 
 // =============================================================================

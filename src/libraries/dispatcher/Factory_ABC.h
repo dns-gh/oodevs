@@ -7,37 +7,29 @@
 //
 // *****************************************************************************
 
-#ifndef __ExtensionFactory_ABC_h_
-#define __ExtensionFactory_ABC_h_
-
-#include "Factory_ABC.h"
+#ifndef __Factory_ABC_h_
+#define __Factory_ABC_h_
 
 namespace dispatcher
 {
 
 // =============================================================================
-/** @class  ExtensionFactory_ABC
-    @brief  Extension Factory definition
+/** @class  Factory_ABC
+    @brief  Factory definition
 */
-// Created: SBO 2008-02-13
+// Created: AGE 2008-02-22
 // =============================================================================
-template< typename Entity >
-class ExtensionFactory_ABC : public virtual Factory_ABC
+class Factory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory_ABC() {}
-    virtual ~ExtensionFactory_ABC() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Create( Entity& entity ) = 0;
+             Factory_ABC() {};
+    virtual ~Factory_ABC() {};
     //@}
 };
 
 }
 
-#endif // __ExtensionFactory_ABC_h_
+#endif // __Factory_ABC_h_

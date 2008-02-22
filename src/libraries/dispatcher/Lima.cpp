@@ -40,6 +40,7 @@ Lima::~Lima()
 void Lima::Update( const ASN1T_MsgLimaCreation& message )
 {
     TacticalLine_ABC::Update( message.tactical_line );
+    ApplyUpdate( message );
 }
 
 // -----------------------------------------------------------------------------

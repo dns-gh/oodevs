@@ -246,7 +246,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_creation             : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_creation->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_creation ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_update               : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_update->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_update ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_destruction->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_folk_creation                                  : folkModel_->ApplyUpdate( *asnMsg.msg.u.msg_folk_creation ); break;
+        case T_MsgsSimToClient_msg_msg_folk_creation                                  : folkModel_->Update( *asnMsg.msg.u.msg_folk_creation ); break;
 
         case T_MsgsSimToClient_msg_msg_intelligence_creation    : CreateUpdate( intelligences_, asnMsg.msg.u.msg_intelligence_creation->oid, *asnMsg.msg.u.msg_intelligence_creation ); break;
         case T_MsgsSimToClient_msg_msg_intelligence_destruction : intelligences_.Destroy( asnMsg.msg.u.msg_intelligence_destruction->oid ); break;
@@ -264,7 +264,7 @@ template< typename T, typename P >
 void Model::CreateUpdate( ModelsContainer< T >& container, unsigned id, const P& parameter )
 {
     T& object = container.Create( *this, id, parameter );
-    object.ApplyUpdate( parameter );
+    object.Update( parameter );
 }
 
 // -----------------------------------------------------------------------------

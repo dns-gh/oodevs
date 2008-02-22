@@ -33,7 +33,6 @@ Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
     , pOrder_          ( 0 )
 {
 	side_.GetPopulations().Register( *this );
-    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,12 +45,13 @@ Population::~Population()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::DoUpdate
+// Name: Population::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const ASN1T_MsgPopulationCreation& )
+void Population::Update( const ASN1T_MsgPopulationCreation& message )
 {
     decisionalInfos_.Clear();
+    ApplyUpdate( message );
 }
 
 // -----------------------------------------------------------------------------

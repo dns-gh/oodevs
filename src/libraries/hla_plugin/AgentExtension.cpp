@@ -9,7 +9,6 @@
 
 #include "hla_plugin_pch.h"
 #include "AgentExtension.h"
-#include "FederateFacade.h"
 
 using namespace hla;
 
@@ -17,10 +16,10 @@ using namespace hla;
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Agent& holder, FederateFacade& federate )
+AgentExtension::AgentExtension( dispatcher::Agent& holder )
     : holder_( holder )
 {
-    federate.Register( holder_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,4 +38,13 @@ AgentExtension::~AgentExtension()
 void AgentExtension::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const
 {
     
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentExtension::DoUpdate
+// Created: AGE 2008-02-22
+// -----------------------------------------------------------------------------
+void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
+{
+
 }

@@ -31,8 +31,9 @@ ReplayPlugin::ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::M
     , factor_     ( 1 )
     , running_    ( false )
     , skipToFrame_( -1 )
+    , factory_    ( new ReplayExtensionFactory( replayModel ) )
 {
-    model.RegisterFactory( *new ReplayExtensionFactory( replayModel ) );
+    model.RegisterFactory( *factory_ );
     clientCommands.RegisterMessage( *this, &ReplayPlugin::OnReceive );
     ChangeTimeFactor( factor_ );
     manager_.Register( *this );
@@ -44,7 +45,7 @@ ReplayPlugin::ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::M
 // -----------------------------------------------------------------------------
 ReplayPlugin::~ReplayPlugin()
 {
-    // NOTHING
+    model_.UnregisterFactory( *factory_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -40,6 +40,7 @@ Limit::~Limit()
 void Limit::Update( const ASN1T_MsgLimitCreation& message )
 {
     TacticalLine_ABC::Update( message.tactical_line );
+    ApplyUpdate( message );
 }
 
 // -----------------------------------------------------------------------------

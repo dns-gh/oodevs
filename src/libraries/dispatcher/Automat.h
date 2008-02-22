@@ -33,8 +33,6 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class Automat : public Entity_ABC
-              , public Extension_ABC
-              , public Updatable_ABC< ASN1T_MsgAutomatCreation >
 {
 public:
     //! @name Constructors/Destructor
@@ -53,8 +51,7 @@ public:
 
     //! @name Main
     //@{
-    virtual void DoUpdate( const ASN1T_MsgAutomatCreation& msg );
-
+    void Update( const ASN1T_MsgAutomatCreation&             msg );
     void Update( const ASN1T_MsgDecisionalState&             msg );
     void Update( const ASN1T_MsgAutomatAttributes&           msg );
     void Update( const ASN1T_MsgLogSupplyQuotas&             msg );

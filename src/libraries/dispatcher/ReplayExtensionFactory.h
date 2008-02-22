@@ -24,8 +24,7 @@ namespace dispatcher
 */
 // Created: SBO 2008-02-14
 // =============================================================================
-class ReplayExtensionFactory : public Extension_ABC
-                             , public ExtensionFactory_ABC< Entity_ABC >
+class ReplayExtensionFactory : public ExtensionFactory_ABC< Entity_ABC >
 {
 
 public:

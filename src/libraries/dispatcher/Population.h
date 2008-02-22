@@ -30,8 +30,6 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class Population : public Entity_ABC
-                 , public Extension_ABC
-                 , public Updatable_ABC< ASN1T_MsgPopulationCreation >
 {
 public:
     //! @name Constructors/Destructor
@@ -49,16 +47,16 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPopulationCreation&                 msg );
-            void Update  ( const ASN1T_MsgPopulationUpdate&                   msg );
-            void Update  ( const ASN1T_MsgPopulationConcentrationCreation&    msg );
-            void Update  ( const ASN1T_MsgPopulationConcentrationUpdate&      msg );
-            void Update  ( const ASN1T_MsgPopulationConcentrationDestruction& msg );
-            void Update  ( const ASN1T_MsgPopulationFlowCreation&             msg );
-            void Update  ( const ASN1T_MsgPopulationFlowUpdate&               msg );
-            void Update  ( const ASN1T_MsgPopulationFlowDestruction&          msg );
-            void Update  ( const ASN1T_MsgPopulationOrder&                    msg );
-            void Update  ( const ASN1T_MsgDecisionalState&                    msg );
+    void Update( const ASN1T_MsgPopulationCreation&                 msg );
+    void Update( const ASN1T_MsgPopulationUpdate&                   msg );
+    void Update( const ASN1T_MsgPopulationConcentrationCreation&    msg );
+    void Update( const ASN1T_MsgPopulationConcentrationUpdate&      msg );
+    void Update( const ASN1T_MsgPopulationConcentrationDestruction& msg );
+    void Update( const ASN1T_MsgPopulationFlowCreation&             msg );
+    void Update( const ASN1T_MsgPopulationFlowUpdate&               msg );
+    void Update( const ASN1T_MsgPopulationFlowDestruction&          msg );
+    void Update( const ASN1T_MsgPopulationOrder&                    msg );
+    void Update( const ASN1T_MsgDecisionalState&                    msg );
 
     virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;

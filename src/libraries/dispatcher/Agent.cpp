@@ -85,7 +85,6 @@ Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     , pOrder_                       ( 0 )
 {
     pAutomat_->GetAgents().Register( *this );
-    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,10 +97,10 @@ Agent::~Agent()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::DoUpdate
+// Name: Agent::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const ASN1T_MsgUnitCreation& asnMsg )
+void Agent::Update( const ASN1T_MsgUnitCreation& asnMsg )
 {
     if( pAutomat_->GetID() != asnMsg.oid_automate )
     {
@@ -110,6 +109,7 @@ void Agent::DoUpdate( const ASN1T_MsgUnitCreation& asnMsg )
         pAutomat_->GetAgents().Register( *this );
     }
     decisionalInfos_.Clear();
+    ApplyUpdate( asnMsg );
 }
 
 #define UPDATE_ASN_ATTRIBUTE( ASN, CPP ) \
@@ -239,6 +239,8 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
         for( unsigned int i = 0; i < asnMsg.equipements_empruntes.n; ++i )
             borrowings_.Create( model_, i, asnMsg.equipements_empruntes.elem[ i ] );
     }
+
+    ApplyUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------

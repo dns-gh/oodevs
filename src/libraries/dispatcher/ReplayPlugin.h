@@ -25,6 +25,7 @@ namespace dispatcher
     class Loader;
     class Model;
     class ReplayModel_ABC;
+    class ReplayExtensionFactory;
 
 // =============================================================================
 /** @class  ReplayPlugin
@@ -82,6 +83,8 @@ private:
     int skipToFrame_;
 
     MT_TimerManager manager_;
+
+    std::auto_ptr< ReplayExtensionFactory > factory_;
     //@}
 };
 

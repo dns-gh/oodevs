@@ -31,6 +31,7 @@ namespace dispatcher
 namespace gearth
 {
     class ReportFactory;
+    class ExtensionFactory;
 
 // =============================================================================
 /** @class  ConnectorFacade
@@ -70,9 +71,10 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< ReportFactory >  reportFactory_;
-    const dispatcher::Model&        model_;
+    dispatcher::Model&              model_;
     const dispatcher::Config&       config_;    
     bool                            bNeedUpdate_;
+    std::auto_ptr< ExtensionFactory > factory_;
     //@}
 };
 

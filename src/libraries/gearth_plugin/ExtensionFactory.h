@@ -10,7 +10,6 @@
 #ifndef __ExtensionFactory_h_
 #define __ExtensionFactory_h_
 
-#include "dispatcher/Extension_ABC.h"
 #include "dispatcher/ExtensionFactory_ABC.h"
 
 namespace dispatcher
@@ -31,8 +30,7 @@ namespace gearth
 */
 // Created: SBO 2008-02-13
 // =============================================================================
-class ExtensionFactory : public dispatcher::Extension_ABC
-                       , public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
+class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Formation >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Object >

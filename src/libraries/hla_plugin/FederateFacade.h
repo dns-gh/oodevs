@@ -14,16 +14,10 @@ class RtiAmbassador_ABC;
 class Federate;
 class TimeFactory_ABC;
 class TimeIntervalFactory_ABC;
-template< typename ObjectClass > class Class;
-
-namespace dispatcher
-{
-    class Agent;
-}
 
 namespace hla
 {
-    class AgentExtension;
+    class ObjectClass_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -43,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
+    void AddClass( ObjectClass_ABC& objectClass );
     bool Join( const std::string& name );
-    void Register( dispatcher::Agent& entity );
     //@}
 
 private:
@@ -54,9 +48,9 @@ private:
     FederateFacade& operator=( const FederateFacade& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
+    //! @name Types
     //@{
-    void InitializeClasses();
+    typedef std::vector< ObjectClass_ABC* > T_Classes;
     //@}
 
 private:
@@ -67,7 +61,7 @@ private:
     std::auto_ptr< RtiAmbassador_ABC >       ambassador_;
     std::auto_ptr< Federate >                federate_;
 
-    std::auto_ptr< Class< AgentExtension > > agentClass_;
+    T_Classes classes_;
     //@}
 };
 

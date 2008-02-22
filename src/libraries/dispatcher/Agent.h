@@ -43,8 +43,6 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class Agent : public Entity_ABC
-            , public Extension_ABC
-            , public Updatable_ABC< ASN1T_MsgUnitCreation >
 {
 public:
     //! @name Constructors/Destructor
@@ -55,7 +53,7 @@ public:
 
     //! @name Main
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitCreation& asnMsg );
+    void Update( const ASN1T_MsgUnitCreation&        asnMsg );
     void Update( const ASN1T_MsgUnitAttributes&      asnMsg );
     void Update( const ASN1T_MsgDecisionalState&     asnMsg );
     void Update( const ASN1T_MsgLogMedicalState&     asnMsg );

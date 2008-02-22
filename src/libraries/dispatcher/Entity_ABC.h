@@ -57,19 +57,15 @@ public:
     }
 
     template< typename T >
+    void Update( const T& msg )
+    {
+        ApplyUpdate( msg );
+    }
+
+    template< typename T >
     void ApplyUpdate( const T& message )
     {
         Apply( Updatable_ABC< T >::DoUpdate, message );
-    }
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    template< typename T >
-    void RegisterSelf( T& extension )
-    {
-        tools::InterfaceContainer< Extension_ABC >::Register( extension );
     }
     //@}
 

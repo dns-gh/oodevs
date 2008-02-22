@@ -23,8 +23,6 @@ namespace dispatcher
 // Created: AGE 2007-09-04
 // =============================================================================
 class FolkModel : public Entity_ABC
-                , public Extension_ABC
-                , public Updatable_ABC< ASN1T_MsgFolkCreation >
 {
 
 public:
@@ -36,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate      ( const ASN1T_MsgFolkCreation& message );
+    void Update( const ASN1T_MsgFolkCreation& message );
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
     //@}

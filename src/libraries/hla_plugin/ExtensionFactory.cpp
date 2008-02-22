@@ -9,9 +9,10 @@
 
 #include "hla_plugin_pch.h"
 #include "ExtensionFactory.h"
-#include "FederateFacade.h"
 #include "AgentExtension.h"
+#include "AggregateEntityClass.h"
 #include "dispatcher/Agent.h"
+#include "hla/ObjectIdentifier.h"
 
 using namespace hla;
 
@@ -19,8 +20,8 @@ using namespace hla;
 // Name: ExtensionFactory constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( FederateFacade& federate )
-    : federate_( federate )
+ExtensionFactory::ExtensionFactory( AggregateEntityClass& agentClass )
+    : agentClass_( agentClass )
 {
     // NOTHING
 }
@@ -40,5 +41,7 @@ ExtensionFactory::~ExtensionFactory()
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
-    entity.Attach( *new AgentExtension( entity, federate_ ) );
+    std::auto_ptr< AgentExtension > extension( new AgentExtension( entity ) );
+    agentClass_.Register( *extension );
+    entity.Attach( *extension.release() );
 }

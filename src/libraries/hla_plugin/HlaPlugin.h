@@ -20,7 +20,9 @@ namespace dispatcher
 
 namespace hla
 {
+    class AggregateEntityClass;
     class FederateFacade;
+    class ExtensionFactory;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -59,7 +61,10 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< FederateFacade > federate_;
+    dispatcher::Model& model_;
+    std::auto_ptr< AggregateEntityClass > agentClass_;
+    std::auto_ptr< ExtensionFactory >     factory_;
+    std::auto_ptr< FederateFacade >       federate_;
     //@}
 };
 

@@ -33,8 +33,8 @@ class HlaExtension_ABC : public dispatcher::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HlaExtension_ABC();
-    virtual ~HlaExtension_ABC();
+             HlaExtension_ABC() {};
+    virtual ~HlaExtension_ABC() {};
     //@}
 
     //! @name Operations
@@ -43,7 +43,7 @@ public:
     {
         throw std::runtime_error( __FUNCTION__ " not implemented" );
     }
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const = 0;
+    virtual void Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const = 0;
     //@}
 };
 

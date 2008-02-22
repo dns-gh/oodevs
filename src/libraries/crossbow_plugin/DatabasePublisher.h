@@ -33,6 +33,7 @@ namespace crossbow
     class DatabaseUpdater;
     class FolkUpdater;
     class Listener_ABC;
+    class ExtensionFactory;
 
 // =============================================================================
 /** @class  DatabasePublisher
@@ -88,6 +89,7 @@ private:
 private:
     //! @name Member data
     //@{
+    dispatcher::Model&                  model_;
     std::auto_ptr< Workspace_ABC >      workspace_;
     T_Databases                         databases_;
     std::auto_ptr< ReportFactory >      reportFactory_; // $$$$ SBO 2007-09-27: nothing to do here, maybe create a "PluginModel"
@@ -96,6 +98,7 @@ private:
     std::auto_ptr< FolkUpdater >        folkUpdater_;
     T_Listeners                         listeners_;
     bool                                modelLoaded_;
+    std::auto_ptr< ExtensionFactory >   factory_;
     //@}
 };
 

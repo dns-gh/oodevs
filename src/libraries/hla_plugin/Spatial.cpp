@@ -19,7 +19,7 @@ Spatial::Spatial( const std::string mgrs, float altitude, float speed, unsigned 
     : deadReckoningAlgorithm_( 2 ) // FPW
     , fpw_( mgrs, altitude, speed, heading )
 {
-    ::memset( padding_, 0, sizeof( padding_ ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,5 +41,5 @@ Spatial::SpatialFPW::SpatialFPW( const std::string mgrs, float altitude, float s
     , velocityVector_( worldLocation_, speed, heading )
     , orientation_   ( worldLocation_, velocityVector_ )
 {
-    ::memset( padding_, 0, sizeof( padding_ ) );
+    // NOTHING
 }

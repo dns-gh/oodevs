@@ -11,6 +11,7 @@
 #include "HlaPlugin.h"
 #include "FederateFacade.h"
 #include "ExtensionFactory.h"
+#include "AggregateEntityClass.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/PluginConfig.h"
 #include "dispatcher/Model.h"
@@ -22,10 +23,13 @@ using namespace hla;
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 HlaPlugin::HlaPlugin( dispatcher::Model& model, const dispatcher::Config& config )
-    : federate_( new FederateFacade( config.GetPluginConfig( "hla" ).GetParameter( "name" ), 10 ) )
+    : model_     ( model )
+    , agentClass_( new AggregateEntityClass() )
+    , factory_   ( new ExtensionFactory( *agentClass_ ) )
+    , federate_  ( new FederateFacade( config.GetPluginConfig( "hla" ).GetParameter( "name" ), 10 ) ) // $$$$ AGE 2008-02-22: timestep: read from session
 {
-    model.RegisterFactory( *new ExtensionFactory( *federate_ ) );
-    federate_->Join( config.GetPluginConfig( "hla" ).GetParameter( "target" ) );
+    model_.RegisterFactory( *factory_ );
+    federate_->Join( config.GetPluginConfig( "hla" ).GetParameter( "federation" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +38,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model& model, const dispatcher::Config& config
 // -----------------------------------------------------------------------------
 HlaPlugin::~HlaPlugin()
 {
-    // NOTHING
+    model_.UnregisterFactory( *factory_ );
 }
 
 // -----------------------------------------------------------------------------

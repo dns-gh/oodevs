@@ -27,8 +27,9 @@ ConnectorFacade::ConnectorFacade( const dispatcher::Config& config, dispatcher::
     , model_ ( model )    
     , config_ ( config )
     , bNeedUpdate_ ( false )
+    , factory_( new ExtensionFactory() )
 {
-    model.RegisterFactory( *new ExtensionFactory() );
+    model_.RegisterFactory( *factory_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +38,7 @@ ConnectorFacade::ConnectorFacade( const dispatcher::Config& config, dispatcher::
 // -----------------------------------------------------------------------------
 ConnectorFacade::~ConnectorFacade()
 {
-    // NOTHING
+    model_.UnregisterFactory( *factory_ );
 }
 
 // -----------------------------------------------------------------------------

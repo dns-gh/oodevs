@@ -48,6 +48,7 @@ public:
 
     //! @name Operations
     //@{
+    using Entity_ABC::Update;
     void Update( const ASN1T_MsgChangeDiplomacy&    asnMsg );
     void Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg );
     virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;

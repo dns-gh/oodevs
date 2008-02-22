@@ -42,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    using Entity_ABC::Update;
     void Update( const ASN1T_MsgObjectUpdate&   msg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;

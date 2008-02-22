@@ -20,6 +20,7 @@
 
 #include "gearth_plugin/GearthPlugin.h"
 #include "crossbow_plugin/CrossbowPlugin.h"
+#include "hla_plugin/HlaPlugin.h"
 
 using namespace dispatcher;
 
@@ -56,6 +57,9 @@ void PluginFactory::RegisterPlugins( CompositePlugin& handler ) const
     handler.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights ) );
     if( config_.GetPluginConfig( "recorder" ).IsEnabled() )
         handler.Add( new SaverPlugin( model_, config_ ) );
+
+    if( config_.GetPluginConfig( "hla" ).IsEnabled() )
+        handler.Add( new hla::HlaPlugin( model_, config_ ) );
 
 #ifdef CROSSBOW_PLUGIN // $$$$ JCR 2007-08-08: for build server purpose - does not include <com and atl> components
     if( config_.GetPluginConfig( "gearth" ).IsEnabled() )

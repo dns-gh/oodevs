@@ -7,37 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __ExtensionFactory_ABC_h_
-#define __ExtensionFactory_ABC_h_
+#ifndef __Hla_Plugin_Class_ABC_h_
+#define __Hla_Plugin_Class_ABC_h_
 
-#include "Factory_ABC.h"
+class Federate;
 
-namespace dispatcher
+namespace hla
 {
 
 // =============================================================================
-/** @class  ExtensionFactory_ABC
-    @brief  Extension Factory definition
+/** @class  ObjectClass_ABC
+    @brief  Class definition
 */
-// Created: SBO 2008-02-13
+// Created: AGE 2008-02-22
 // =============================================================================
-template< typename Entity >
-class ExtensionFactory_ABC : public virtual Factory_ABC
+class ObjectClass_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory_ABC() {}
-    virtual ~ExtensionFactory_ABC() {}
+             ObjectClass_ABC() {};
+    virtual ~ObjectClass_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void Create( Entity& entity ) = 0;
+    virtual void RegisterTo( Federate& federate ) = 0;
     //@}
 };
 
 }
 
-#endif // __ExtensionFactory_ABC_h_
+#endif // __Hla_Plugin_Class_ABC_h_

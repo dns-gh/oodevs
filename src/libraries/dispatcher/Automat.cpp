@@ -57,8 +57,6 @@ Automat::Automat( Model& model, const ASN1T_MsgAutomatCreation& msg )
         pParentFormation_->GetAutomats().Register( *this );
     else if( pParentAutomat_ )
         pParentAutomat_->GetAutomats().Register( *this );
-
-    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,10 +78,10 @@ Automat::~Automat()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: Automat::DoUpdate
+// Name: Automat::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Automat::DoUpdate( const ASN1T_MsgAutomatCreation& msg )
+void Automat::Update( const ASN1T_MsgAutomatCreation& msg )
 {
     if( pKnowledgeGroup_->GetID() != msg.oid_groupe_connaissance )
     {
@@ -114,6 +112,8 @@ void Automat::DoUpdate( const ASN1T_MsgAutomatCreation& msg )
         
     }
     decisionalInfos_.Clear();
+
+    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------

@@ -47,6 +47,7 @@ public:
 
     //! @name Operations
     //@{
+    using Entity_ABC::Update;
     void Update( const ASN1T_MsgPopulationKnowledgeUpdate&                   msg );
     void Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    msg );
     void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      msg );

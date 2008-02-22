@@ -33,7 +33,8 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive )
     {
-        archive << deadReckoningAlgorithm_  << padding_;
+        unsigned char padding[7] = { 0, 0, 0, 0, 0, 0, 0 };
+        archive << deadReckoningAlgorithm_  << padding;
         fpw_.Serialize( archive );
     }
     //@}
@@ -47,6 +48,7 @@ private:
         template< typename Archive >
         void Serialize( Archive& archive )
         {
+            unsigned char  padding_[3] = { 0, 0, 0 };
             worldLocation_.Serialize( archive );
             archive << isFrozen_ << padding_;
             orientation_.Serialize( archive );
@@ -54,7 +56,6 @@ private:
         }
         WorldLocation  worldLocation_;
         bool           isFrozen_;
-        unsigned char  padding_[3];
         VelocityVector velocityVector_;
         Orientation    orientation_;
     };
@@ -64,7 +65,6 @@ private:
     //! @name Member data
     //@{
     unsigned char deadReckoningAlgorithm_;
-    unsigned char padding_[7];
     SpatialFPW fpw_;
     //@}
 };

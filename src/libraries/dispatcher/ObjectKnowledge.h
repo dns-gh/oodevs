@@ -31,9 +31,8 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class ObjectKnowledge : public Entity_ABC
-                      , public Extension_ABC
-                      , public Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -43,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate       ( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
-            void Update         ( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
+    void Update( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
+    void Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -54,7 +53,7 @@ private:
     //! @name Types
     //@{
     //$$$ bullshit
-    struct T_Optionals 
+    struct T_Optionals
     {
         unsigned relevancePresent : 1;
         unsigned locationPresent : 1;
@@ -73,9 +72,9 @@ private:
 
 private:
           Model&                 model_;
-    const unsigned int           nID_; 
+    const unsigned int           nID_;
     const Side&                  side_;
-    const Object*                pObject_;        
+    const Object*                pObject_;
     const ASN1T_EnumObjectType   nType_;
     const ASN1T_EnumObstacleType nObstacleType_;
     const unsigned int           nTypeDotationForConstruction_;

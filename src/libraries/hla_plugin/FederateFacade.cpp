@@ -11,6 +11,7 @@
 #include "FederateFacade.h"
 #include "AgentExtension.h"
 #include "dispatcher/Agent.h"
+#include "ObjectClass_ABC.h"
 #include "hla/hla_lib.h"
 #include "hla/SimpleTimeFactory.h"
 #include "hla/SimpleTimeIntervalFactory.h"
@@ -49,9 +50,10 @@ bool FederateFacade::Join( const std::string& name )
 {
     try
     {
-        if( ! federate_->Join( name, false, false ) )
+        if( ! federate_->Join( name, false, true ) )
             return false;
-        InitializeClasses();
+        for( T_Classes::iterator it = classes_.begin(); it != classes_.end(); ++it )
+            (*it)->RegisterTo( *federate_ );
         return true;
     }
     catch( HLAException& e )
@@ -61,42 +63,12 @@ bool FederateFacade::Join( const std::string& name )
     }
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::AddClass
+// Created: AGE 2008-02-22
+// -----------------------------------------------------------------------------
+void FederateFacade::AddClass( ObjectClass_ABC& objectClass )
 {
-    struct UnitRegistrar : public ObjectRegistration_ABC< AgentExtension >
-    {
-        virtual AgentExtension& Create ( const ObjectIdentifier& /*objectID*/ )
-        {
-            throw std::runtime_error( "Remote unit creation not supported." );
-        }
-        virtual void Destroy( AgentExtension& /*object*/ )
-        {
-            throw std::runtime_error( "Remote unit destruction not supported." );
-        }
-    };
+    classes_.push_back( &objectClass );
 }
 
-// -----------------------------------------------------------------------------
-// Name: FederateFacade::InitializeClasses
-// Created: SBO 2008-02-19
-// -----------------------------------------------------------------------------
-void FederateFacade::InitializeClasses()
-{
-    UnitRegistrar* unitRegistrar = new UnitRegistrar();
-    agentClass_.reset( new Class< AgentExtension >( *unitRegistrar ) );
-    {
-        agentClass_->Register( AttributeIdentifier( "EntityType" ) );
-        agentClass_->Register( AttributeIdentifier( "EntityIdentifier" ) );
-        agentClass_->Register( AttributeIdentifier( "Spatial" ) );
-    }
-    federate_->Register( ClassIdentifier( "BaseEntity.AggregateEntity" ), *agentClass_, true, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FederateFacade::Register
-// Created: SBO 2008-02-20
-// -----------------------------------------------------------------------------
-void FederateFacade::Register( dispatcher::Agent& entity )
-{
-    agentClass_->Register( entity.Get< AgentExtension >() );
-}

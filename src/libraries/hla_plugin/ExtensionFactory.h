@@ -10,7 +10,6 @@
 #ifndef __ExtensionFactory_h_
 #define __ExtensionFactory_h_
 
-#include "dispatcher/Extension_ABC.h"
 #include "dispatcher/ExtensionFactory_ABC.h"
 
 namespace dispatcher
@@ -20,7 +19,7 @@ namespace dispatcher
 
 namespace hla
 {
-    class FederateFacade;
+    class AggregateEntityClass;
 
 // =============================================================================
 /** @class  ExtensionFactory
@@ -28,14 +27,13 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class ExtensionFactory : public dispatcher::Extension_ABC
-                       , public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
+class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExtensionFactory( FederateFacade& federate );
+    explicit ExtensionFactory( AggregateEntityClass& agentClass );
     virtual ~ExtensionFactory();
     //@}
 
@@ -54,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    FederateFacade& federate_;
+    AggregateEntityClass& agentClass_;
     //@}
 };
 
