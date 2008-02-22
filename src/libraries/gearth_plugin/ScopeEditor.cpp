@@ -18,7 +18,6 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/PluginConfig.h"
 
 #include <sstream>
 #include "xeumeuleu/xml.h"
@@ -29,18 +28,17 @@ using namespace gearth;
 // Name: ScopeEditor constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-ScopeEditor::ScopeEditor( const dispatcher::Config& config, const dispatcher::Model& model, const ReportFactory& reportFactory )
+ScopeEditor::ScopeEditor( const dispatcher::Config& config, const dispatcher::Model& model, const ReportFactory& reportFactory, const std::string& vpath  )
     : model_            ( model )
     , reportFactory_    ( reportFactory )    
-    , styles_           ( new StyleEditor( config ) )
+    , styles_           ( new StyleEditor( config, vpath ) )
 {
-    const dispatcher::PluginConfig& plugin = config.GetPluginConfig( "gearth" );
-    xos_.reset( new xml::xofstream( config.BuildSessionChildFile( plugin.GetParameter( "output" ) ) ) );
+    xos_.reset( new xml::xofstream( config.BuildSessionChildFile( "sword-export.kml" ) ) );
     *xos_ << xml::start( "kml" )
           << xml::attribute( "xmlns", "http://earth.google.com/kml/2.1" )
             << xml::start( "Document" )
-                << xml::content( "name", plugin.GetParameter( "name" ) )
-                << xml::content( "description", plugin.GetParameter( "description" ) );    
+                << xml::content( "name", "MASA Group - SWORD Export" )
+                << xml::content( "description", "Current simulation situation" );    
     styles_->Load( *xos_ );
 }
 

@@ -12,6 +12,11 @@
 
 #include "dispatcher/Plugin_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace dispatcher
 {
     class Model;
@@ -35,7 +40,7 @@ class GearthPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GearthPlugin( dispatcher::Model& model, const dispatcher::Config& config );
+             GearthPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis );
     virtual ~GearthPlugin();
     //@}
 

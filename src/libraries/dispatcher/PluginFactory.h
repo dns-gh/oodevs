@@ -10,6 +10,11 @@
 #ifndef __PluginFactory_h_
 #define __PluginFactory_h_
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace dispatcher
 {
     class Config;
@@ -44,6 +49,11 @@ private:
     //@{
     PluginFactory( const PluginFactory& );            //!< Copy constructor
     PluginFactory& operator=( const PluginFactory& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadPlugin( const std::string& name, xml::xistream& xis, CompositePlugin& handler ) const;
     //@}
 
 private:

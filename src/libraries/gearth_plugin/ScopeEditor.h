@@ -43,7 +43,7 @@ class ScopeEditor : public dispatcher::ClientPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScopeEditor( const dispatcher::Config& config, const dispatcher::Model& model, const ReportFactory& reportFactory );
+             ScopeEditor( const dispatcher::Config& config, const dispatcher::Model& model, const ReportFactory& reportFactory, const std::string& vpath );
     virtual ~ScopeEditor();
     //@}
 

@@ -37,7 +37,7 @@ class StyleEditor
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StyleEditor( const dispatcher::Config& config );
+             StyleEditor( const dispatcher::Config& config, const std::string& virtualPath );
     virtual ~StyleEditor();
     //@}
 

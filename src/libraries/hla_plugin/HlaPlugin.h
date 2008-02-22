@@ -12,6 +12,11 @@
 
 #include "dispatcher/Plugin_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace dispatcher
 {
     class Model;
@@ -36,7 +41,7 @@ class HlaPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HlaPlugin( dispatcher::Model& model, const dispatcher::Config& config );
+             HlaPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis );
     virtual ~HlaPlugin();
     //@}
 

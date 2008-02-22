@@ -9,7 +9,6 @@
 
 #include "dispatcher_pch.h"
 #include "Config.h"
-#include "PluginConfig.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4244 )
@@ -78,24 +77,11 @@ void Config::Parse( int argc, char** argv )
                             >> attribute( "client", networkSimulationParameters_ )
                             >> attribute( "server", port )
                         >> end()
-                        >> start( "plugins" )
-                            >> list( "plugin", *this, &Config::ReadPlugin )
-                        >> end()
                     >> end()
                 >> end()
             >> end();
     if( ! networkClientsParameters_ )
         networkClientsParameters_ = unsigned short( port );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::ReadPlugin
-// Created: SBO 2007-07-24
-// -----------------------------------------------------------------------------
-void Config::ReadPlugin( xml::xistream& xis )
-{
-    std::auto_ptr< PluginConfig > plugin( new PluginConfig( xis ) );
-    plugins_[plugin->GetName()] = plugin.release();
 }
 
 // =============================================================================
@@ -152,18 +138,6 @@ namespace
 std::string Config::BuildPhysicalChildFile( const std::string& file ) const
 {
     return BuildChildPath( GetPhysicalFile(), file );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::GetPluginConfig
-// Created: SBO 2007-07-24
-// -----------------------------------------------------------------------------
-const PluginConfig& Config::GetPluginConfig( const std::string& name ) const
-{
-    const PluginConfig*& plugin = plugins_[ name ];
-    if( !plugin )
-        plugin = new PluginConfig( name );
-    return *plugin;
 }
 
 // -----------------------------------------------------------------------------

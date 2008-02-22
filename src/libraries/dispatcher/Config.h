@@ -20,7 +20,6 @@ namespace xml
 
 namespace dispatcher
 {
-    class PluginConfig;
 
 // =============================================================================
 /** @class  Config
@@ -49,27 +48,17 @@ public:
           unsigned short GetNetworkClientsParameters   () const;
     const std::string&   GetPhysicalFile() const;
           std::string    BuildPhysicalChildFile( const std::string& file ) const;
-    const PluginConfig&  GetPluginConfig( const std::string& name ) const;
           std::string    GetRecordDirectory() const;
     //@}
 
 private:
-    //! @name Types
+    //! @name Member data
     //@{
-    typedef std::map< std::string, const PluginConfig* > T_Plugins;
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadPlugin( xml::xistream& xis );
-    //@}
-
-private:
     std::string    profiles_;
     std::string    networkSimulationParameters_;
     unsigned short networkClientsParameters_;
     std::string    physical_;
-    mutable T_Plugins      plugins_;
+    //@}
 };
 
 }

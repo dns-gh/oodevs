@@ -21,6 +21,7 @@
 #include "ScopeEditor.h"
 #include "ExtensionFactory.h"
 #include "dispatcher/Model.h"
+#include <xeumeuleu/xml.h>
 
 using namespace crossbow;
 
@@ -28,7 +29,7 @@ using namespace crossbow;
 // Name: DatabasePublisher constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher )
+DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis )
     : model_           ( model )
     , workspace_       ( new Workspace() )
     , reportFactory_   ( new ReportFactory( config, model ) )
@@ -38,9 +39,9 @@ DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, dispatch
 {
     model.RegisterFactory( *factory_ );
 
-    Initialize( "geodatabase", config );
-    Initialize( "geodatabase-population", config );
-    Initialize( "geodatabase-shared", config );
+    Initialize( "geodatabase", config, xis );
+    Initialize( "geodatabase-population", config, xis );
+    Initialize( "geodatabase-shared", config, xis );
     
     databaseUpdater_.reset  ( new DatabaseUpdater( *databases_[ "geodatabase" ], model, *reportFactory_ ) );
     folkUpdater_.reset      ( new FolkUpdater( *databases_[ "geodatabase-population" ] ) );
@@ -68,9 +69,9 @@ DatabasePublisher::~DatabasePublisher()
 // Name: DatabasePublisher::Initialize
 // Created: JCR 2008-01-11
 // -----------------------------------------------------------------------------
-void DatabasePublisher::Initialize( const std::string& name, const dispatcher::Config& config )
+void DatabasePublisher::Initialize( const std::string& name, const dispatcher::Config& config, xml::xistream& xis )
 {
-    databases_[ name ].reset( new Database( config, name ) );
+    databases_[ name ].reset( new Database( config, xml::attribute< std::string >( xis, name ) ) );
 }
 
 // -----------------------------------------------------------------------------

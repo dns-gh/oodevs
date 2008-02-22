@@ -140,6 +140,8 @@ QWidget* GameConfigPanel::CreateSystemPanel( QWidget* parent )
     return box;
 }
 
+// $$$$ AGE 2008-02-22: bouger dans la lib frontend
+
 // -----------------------------------------------------------------------------
 // Name: GameConfigPanel::Commit
 // Created: AGE 2007-10-09
@@ -205,10 +207,7 @@ void GameConfigPanel::Commit( const std::string& exercise, const std::string& se
                         << xml::attribute( "server", frontend::tools::DispatcherPort( exerciseNumber ) )
                     << xml::end()
                     << xml::start( "plugins" )
-                        << xml::start( "plugin" )
-                            << xml::attribute( "name", "recorder" ) // $$$$ AGE 2007-10-09: 
-                            << xml::attribute( "enabled", true )
-                        << xml::end()
+                        << xml::start( "recorder" ) << xml::end() // $$$$ AGE 2008-02-22: 
                     << xml::end()
                 << xml::end()
                 << xml::start( "gaming" )

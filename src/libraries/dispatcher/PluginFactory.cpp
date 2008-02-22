@@ -11,7 +11,6 @@
 #include "PluginFactory.h"
 #include "SaverPlugin.h"
 #include "Config.h"
-#include "PluginConfig.h"
 #include "CompositePlugin.h"
 #include "SimulationNetworker.h"
 #include "DispatcherPlugin.h"
@@ -21,6 +20,7 @@
 #include "gearth_plugin/GearthPlugin.h"
 #include "crossbow_plugin/CrossbowPlugin.h"
 #include "hla_plugin/HlaPlugin.h"
+#include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
 
@@ -55,17 +55,29 @@ void PluginFactory::RegisterPlugins( CompositePlugin& handler ) const
     RightsPlugin* rights = new RightsPlugin( model_, clients_, config_, clients_, handler, clients_ );
     handler.Add( rights );
     handler.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights ) );
-    if( config_.GetPluginConfig( "recorder" ).IsEnabled() )
+
+    xml::xifstream xis( config_.GetSessionFile() );
+    xis >> xml::start( "session" ) >> xml::start( "config" )
+        >> xml::start( "dispatcher" ) >> xml::start( "plugins" );
+
+    xis >> xml::list( *this, &PluginFactory::ReadPlugin, handler );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PluginFactory::ReadPlugin
+// Created: AGE 2008-02-22
+// -----------------------------------------------------------------------------
+void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis, CompositePlugin& handler ) const
+{
+    if( name == "recorder" )
         handler.Add( new SaverPlugin( model_, config_ ) );
-
-    if( config_.GetPluginConfig( "hla" ).IsEnabled() )
-        handler.Add( new hla::HlaPlugin( model_, config_ ) );
-
+    else if( name == "hla" )
+        handler.Add( new hla::HlaPlugin( model_, config_, xis ) );
 #ifdef CROSSBOW_PLUGIN // $$$$ JCR 2007-08-08: for build server purpose - does not include <com and atl> components
-    if( config_.GetPluginConfig( "gearth" ).IsEnabled() )
-        handler.Add( new gearth::GearthPlugin( model_, config_ ) );
-
-    if( config_.GetPluginConfig( "crossbow" ).IsEnabled() )
+    else if( name == "gearth" )
+        handler.Add( new gearth::GearthPlugin( model_, config_, xis ) );
+    else if( name == "crossbow" )
         handler.Add( new crossbow::CrossbowPlugin( model_, config_, simulation_ ) );
 #endif
+
 }

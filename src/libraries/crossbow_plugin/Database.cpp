@@ -12,7 +12,6 @@
 #include "FeatureClass.h"
 #include "Table.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/PluginConfig.h"
 
 using namespace crossbow;
 
@@ -37,7 +36,7 @@ namespace
 // -----------------------------------------------------------------------------
 Database::Database( const dispatcher::Config& config, const std::string& name )
 {
-    const std::string geodatabase = config.BuildExerciseChildFile( config.GetPluginConfig( "crossbow" ).GetParameter( name ) );
+    const std::string geodatabase = config.BuildExerciseChildFile( name );
 
     IWorkspaceFactoryPtr spWorkspaceFactory = GetWorkspaceFactory( geodatabase );
     if( spWorkspaceFactory == NULL )

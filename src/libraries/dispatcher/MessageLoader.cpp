@@ -12,7 +12,6 @@
 #include "Config.h"
 #include "MessageHandler_ABC.h"
 #include "Config.h"
-#include "PluginConfig.h"
 #include "tools/InputBinaryStream.h"
 #include "tools/AsnMessageDecoder.h"
 #include "tools/thread/BarrierCommand.h"

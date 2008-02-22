@@ -15,6 +15,7 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Visitors.h"
+#include <xeumeuleu/xml.h>
 
 using namespace gearth;
 
@@ -22,12 +23,13 @@ using namespace gearth;
 // Name: ConnectorFacade constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-ConnectorFacade::ConnectorFacade( const dispatcher::Config& config, dispatcher::Model& model )
+ConnectorFacade::ConnectorFacade( const dispatcher::Config& config, dispatcher::Model& model, xml::xistream& xis )
     : reportFactory_ ( new ReportFactory( config, model ) )
     , model_ ( model )    
     , config_ ( config )
     , bNeedUpdate_ ( false )
     , factory_( new ExtensionFactory() )
+    , vpath_( xml::attribute( xis, "virtual-path", std::string() ) )
 {
     model_.RegisterFactory( *factory_ );
 }
@@ -105,7 +107,7 @@ void ConnectorFacade::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void ConnectorFacade::UpdateCurrentState()
 {
-    ScopeEditor    editor( config_, model_, *reportFactory_ );
+    ScopeEditor    editor( config_, model_, *reportFactory_, vpath_ );
     {
         dispatcher::CreationVisitor visitor( editor );        
         editor.VisitModel( visitor );        

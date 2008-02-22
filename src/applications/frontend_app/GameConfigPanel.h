@@ -38,6 +38,7 @@ public:
 
     //! @name Operations
     //@{
+    // $$$$ AGE 2008-02-22: bouger dans la lib frontend
     void Commit( const std::string& exercise, const std::string& session, const std::string& name, const std::string& comment, unsigned exerciseNumber );
     //@}
 

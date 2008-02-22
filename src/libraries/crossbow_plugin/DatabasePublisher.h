@@ -13,6 +13,11 @@
 #include "game_asn/Asn.h"
 #include "dispatcher/MessageHandler_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace kernel
 {
     class OrderTypes;
@@ -46,7 +51,7 @@ class DatabasePublisher : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DatabasePublisher( const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher );
+             DatabasePublisher( const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis );
     virtual ~DatabasePublisher();
     //@}
 
@@ -64,7 +69,7 @@ private:
 
     //! @name Database Initializer
     //@{
-    void Initialize( const std::string& name, const dispatcher::Config& config );
+    void Initialize( const std::string& name, const dispatcher::Config& config, xml::xistream& xis );
     //@}
 
     //! @name Helpers

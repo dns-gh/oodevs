@@ -9,7 +9,6 @@
 
 #include "gearth_plugin_pch.h"
 #include "StyleEditor.h"
-#include "dispatcher/PluginConfig.h"
 #include "dispatcher/Config.h"
 #include "xeumeuleu/xml.h"
 #include <boost/filesystem.hpp>
@@ -21,12 +20,12 @@ namespace fs = boost::filesystem;
 namespace po = boost::program_options;
 
 
-namespace 
+namespace
 {
     std::string GetPath( const std::string& file )
     {
-        fs::path full_path( fs::initial_path< fs::path >() );        
-        return full_path.native_file_string() + "/" + file;        
+        fs::path full_path( fs::initial_path< fs::path >() );
+        return full_path.native_file_string() + "/" + file;
     }
 }
 
@@ -34,18 +33,16 @@ namespace
 // Name: StyleEditor constructor
 // Created: JCR 2007-09-04
 // -----------------------------------------------------------------------------
-StyleEditor::StyleEditor( const dispatcher::Config& config )
+StyleEditor::StyleEditor( const dispatcher::Config& config, const std::string& opt_path )
 {
-    const dispatcher::PluginConfig& plugin = config.GetPluginConfig( "gearth" );        
-    xml::xifstream xis( config.BuildSessionChildFile( plugin.GetParameter( "styles" ) ) );    
+    xml::xifstream xis( config.BuildSessionChildFile( "kml-styles.xml" ) );    
     xis >> xml::start( "kml-styles" )
         >> xml::start( "icons" ) >> xml::attribute( "small", path_small_ ) >> xml::attribute( "large", path_large_ )
                 >> xml::list( "icon", *this, ReadStyle )
             >> xml::end()
         >> xml::end();
 
-    std::string opt_path = plugin.GetParameter( "virtual-path" );
-    if ( opt_path == "" )
+    if( opt_path == "" )
     {
         path_small_ = GetPath( config.BuildSessionChildFile( path_small_ ) );
         path_large_ = GetPath( config.BuildSessionChildFile( path_large_ ) );
@@ -73,7 +70,7 @@ StyleEditor::~StyleEditor()
 void StyleEditor::ReadStyle( xml::xistream& xis )
 {
     std::string name, value;
-    xis >> xml::attribute( "unit", name ) 
+    xis >> xml::attribute( "unit", name )
         >> xml::attribute( "file", value );
     styles_[ name ] = value;
 }
@@ -83,10 +80,10 @@ void StyleEditor::ReadStyle( xml::xistream& xis )
 // Created: JCR 2007-09-04
 // -----------------------------------------------------------------------------
 void StyleEditor::Load( xml::xostream& xos )
-{   
-    for ( CIT_StyleMap it = styles_.begin(); it != styles_.end(); ++it )
+{
+    for( CIT_StyleMap it = styles_.begin(); it != styles_.end(); ++it )
         WriteEntityStyle( xos, it->first, it->second );
-    
+
 //    WriteObjectStyle( xos, "Fire", "3f0000ff" );
     WriteLineStyle( xos, "Path", "3fff0000" );
     WriteLineStyle( xos, "Limit", "3fff0000" );
@@ -98,7 +95,7 @@ void StyleEditor::Load( xml::xostream& xos )
 // Created: JCR 2007-03-07
 // -----------------------------------------------------------------------------
 void StyleEditor::WriteEntityStyle( xml::xostream& xos, const std::string& style, const std::string& ref )
-{    
+{
     xos << xml::start( "Style" ) << xml::attribute( "id", style + "_Placemark" )
             << xml::start( "IconStyle" )
                 << xml::start( "Icon" )
@@ -115,7 +112,7 @@ void StyleEditor::WriteEntityStyle( xml::xostream& xos, const std::string& style
 void StyleEditor::WriteObjectStyle( xml::xostream& xos, const std::string& style, const std::string& color )
 {
     xos << xml::start( "Style" ) << xml::attribute( "id", style )
-            << xml::start( "PolyStyle" )                
+            << xml::start( "PolyStyle" )
                 << xml::content( "color", color )
                 << xml::content( "colorMode", "normal" )
             << xml::end()
@@ -129,7 +126,7 @@ void StyleEditor::WriteObjectStyle( xml::xostream& xos, const std::string& style
 void StyleEditor::WriteLineStyle( xml::xostream& xos, const std::string& style, const std::string& color )
 {
     xos << xml::start( "Style" ) << xml::attribute( "id", style )
-            << xml::start( "LineStyle" )                
+            << xml::start( "LineStyle" )
                 << xml::content( "color", color )
                 << xml::content( "colorMode", "normal" )
                 << xml::content( "width", 4 )
@@ -143,13 +140,13 @@ void StyleEditor::WriteLineStyle( xml::xostream& xos, const std::string& style, 
 // -----------------------------------------------------------------------------
 std::string StyleEditor::GetStyle( const std::string& type ) const
 {
-    if ( type.substr( 0, 2 ) == "HS" )
+    if( type.substr( 0, 2 ) == "HS" )
     {
         std::string ref( type, 5, type.size() );
         if( styles_.find( ref ) != styles_.end() )
-            return "#" + ref + "_Placemark"; 
+            return "#" + ref + "_Placemark";
     }
-    else if ( type == "Lima" || type == "Limit" )
+    else if( type == "Lima" || type == "Limit" )
         return "#" + type;
     return "";
 }

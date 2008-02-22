@@ -11,7 +11,6 @@
 #include "Saver.h"
 #include "Savable_ABC.h"
 #include "Config.h"
-#include "PluginConfig.h"
 #include "tools/OutputBinaryWrapper.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #pragma warning( push )

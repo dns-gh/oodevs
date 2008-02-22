@@ -14,6 +14,11 @@
 #include "dispatcher/MessageHandler_ABC.h"
 #include <list>
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace kernel
 {
     class OrderTypes;
@@ -45,7 +50,7 @@ class ConnectorFacade : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ConnectorFacade( const dispatcher::Config& config, dispatcher::Model& model );
+             ConnectorFacade( const dispatcher::Config& config, dispatcher::Model& model, xml::xistream& xis );
     virtual ~ConnectorFacade();
     //@}
 
@@ -75,6 +80,7 @@ private:
     const dispatcher::Config&       config_;    
     bool                            bNeedUpdate_;
     std::auto_ptr< ExtensionFactory > factory_;
+    std::string                     vpath_;
     //@}
 };
 

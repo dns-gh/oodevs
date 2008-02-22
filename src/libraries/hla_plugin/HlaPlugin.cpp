@@ -13,23 +13,36 @@
 #include "ExtensionFactory.h"
 #include "AggregateEntityClass.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/PluginConfig.h"
 #include "dispatcher/Model.h"
+#include <xeumeuleu/xml.h>
 
 using namespace hla;
+
+namespace
+{
+    unsigned ReadTimeStep( const std::string& session )
+    {
+        xml::xifstream xis( session );
+        unsigned step;
+        xis >> xml::start( "session" ) >> xml::start( "config" ) 
+                >> xml::start( "simulation" ) >> xml::start( "time" )
+                    >> xml::attribute( "step", step );
+        return step;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: HlaPlugin constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-HlaPlugin::HlaPlugin( dispatcher::Model& model, const dispatcher::Config& config )
+HlaPlugin::HlaPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis )
     : model_     ( model )
     , agentClass_( new AggregateEntityClass() )
     , factory_   ( new ExtensionFactory( *agentClass_ ) )
-    , federate_  ( new FederateFacade( config.GetPluginConfig( "hla" ).GetParameter( "name" ), 10 ) ) // $$$$ AGE 2008-02-22: timestep: read from session
+    , federate_  ( new FederateFacade( xml::attribute< std::string >( xis, "name" ), ReadTimeStep( config.GetSessionFile() ) ) )
 {
     model_.RegisterFactory( *factory_ );
-    federate_->Join( config.GetPluginConfig( "hla" ).GetParameter( "federation" ) );
+    federate_->Join( xml::attribute< std::string >( xis, "federation" ) );
 }
 
 // -----------------------------------------------------------------------------
