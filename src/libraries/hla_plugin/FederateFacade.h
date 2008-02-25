@@ -39,6 +39,8 @@ public:
     //@{
     void AddClass( ObjectClass_ABC& objectClass );
     bool Join( const std::string& name );
+
+    void Step();
     //@}
 
 private:

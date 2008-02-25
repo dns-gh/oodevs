@@ -10,6 +10,7 @@
 #ifndef __AgentExtension_h_
 #define __AgentExtension_h_
 
+#include "Formation.h"
 #include "HlaExtension_ABC.h"
 #include "dispatcher/Updatable_ABC.h"
 #include "game_asn/asn.h"
@@ -30,6 +31,7 @@ namespace hla
 // =============================================================================
 class AgentExtension : public HlaExtension_ABC
                      , public dispatcher::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                     , public dispatcher::Updatable_ABC< ASN1T_MsgUnitEnvironmentType >
 {
 
 public:
@@ -43,6 +45,7 @@ public:
     //@{
     virtual void Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
+    virtual void DoUpdate( const ASN1T_MsgUnitEnvironmentType& attributes );
     //@}
 
 private:
@@ -54,12 +57,18 @@ private:
 
     //! @name Helpers
     //@{
+    void UpdateSpatialData( UpdateFunctor_ABC& functor ) const;
+    void UpdateComposition( UpdateFunctor_ABC& functor ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     dispatcher::Agent& holder_;
+    Formation    formation_;
+    mutable bool spatialChanged_;
+    mutable bool compositionChanged_;
+
     //@}
 };
 

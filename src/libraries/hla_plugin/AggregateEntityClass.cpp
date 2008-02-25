@@ -38,17 +38,16 @@ AggregateEntityClass::AggregateEntityClass()
     : registration_( new UnitRegistration() )
     , hlaClass_    ( new Class< HlaExtension_ABC >( *registration_ ) )
 {
-    hlaClass_->Register( AttributeIdentifier( "EntityType" ) );
-    hlaClass_->Register( AttributeIdentifier( "EntityIdentifier" ) );
-    hlaClass_->Register( AttributeIdentifier( "Spatial" ) );
-    hlaClass_->Register( AttributeIdentifier( "AggregateMarking" ) );
-    hlaClass_->Register( AttributeIdentifier( "AggregateState" ) );
-    hlaClass_->Register( AttributeIdentifier( "Dimensions" ) );
-    hlaClass_->Register( AttributeIdentifier( "ForceIdentifier" ) );
-    hlaClass_->Register( AttributeIdentifier( "Formation" ) );
-    hlaClass_->Register( AttributeIdentifier( "NumberOfSilentEntities" ) );
-    hlaClass_->Register( AttributeIdentifier( "SilentEntities" ) );
-
+    hlaClass_->Register( AttributeIdentifier( "EntityType" ) );             // static
+    hlaClass_->Register( AttributeIdentifier( "EntityIdentifier" ) );       // static
+    hlaClass_->Register( AttributeIdentifier( "Spatial" ) );                // dynamic
+    hlaClass_->Register( AttributeIdentifier( "AggregateMarking" ) );       // static
+    hlaClass_->Register( AttributeIdentifier( "AggregateState" ) );         // static
+    hlaClass_->Register( AttributeIdentifier( "Dimensions" ) );             // static
+    hlaClass_->Register( AttributeIdentifier( "ForceIdentifier" ) );        // static
+    hlaClass_->Register( AttributeIdentifier( "Formation" ) );              // dynamic
+    hlaClass_->Register( AttributeIdentifier( "NumberOfSilentEntities" ) ); // dynamic
+    hlaClass_->Register( AttributeIdentifier( "SilentEntities" ) );         // dynamic
 }
 
 // -----------------------------------------------------------------------------

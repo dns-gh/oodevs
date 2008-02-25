@@ -53,6 +53,7 @@ public:
 
     //! @name Main
     //@{
+    using Entity_ABC::Update;
     void Update( const ASN1T_MsgUnitCreation&        asnMsg );
     void Update( const ASN1T_MsgUnitAttributes&      asnMsg );
     void Update( const ASN1T_MsgDecisionalState&     asnMsg );

@@ -181,6 +181,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_knowledge_group_creation:             CreateUpdate( knowledgeGroups_, asnMsg.msg.u.msg_knowledge_group_creation->oid, *asnMsg.msg.u.msg_knowledge_group_creation ); break;
         case T_MsgsSimToClient_msg_msg_formation_creation:                   CreateUpdate( formations_     , asnMsg.msg.u.msg_formation_creation->oid, *asnMsg.msg.u.msg_formation_creation ); break;
         case T_MsgsSimToClient_msg_msg_unit_creation:                        CreateUpdate( agents_         , asnMsg.msg.u.msg_unit_creation    ->oid , *asnMsg.msg.u.msg_unit_creation     ); break;
+        case T_MsgsSimToClient_msg_msg_unit_environment_type:                agents_.Get( asnMsg.msg.u.msg_unit_environment_type->oid).Update( *asnMsg.msg.u.msg_unit_environment_type ); break;
         case T_MsgsSimToClient_msg_msg_unit_destruction:                     agents_.Destroy( asnMsg.msg.u.msg_unit_destruction ); break;
         case T_MsgsSimToClient_msg_msg_automat_creation :                    CreateUpdate( automats_       , asnMsg.msg.u.msg_automat_creation->oid, *asnMsg.msg.u.msg_automat_creation ); break;
         case T_MsgsSimToClient_msg_msg_unit_attributes:                      agents_.Get( asnMsg.msg.u.msg_unit_attributes->oid).Update( *asnMsg.msg.u.msg_unit_attributes ); break;

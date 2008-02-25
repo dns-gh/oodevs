@@ -42,6 +42,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model& model, const dispatcher::Config& config
     , federate_  ( new FederateFacade( xml::attribute< std::string >( xis, "name" ), ReadTimeStep( config.GetSessionFile() ) ) )
 {
     model_.RegisterFactory( *factory_ );
+    federate_->AddClass( *agentClass_ );
     federate_->Join( xml::attribute< std::string >( xis, "federation" ) );
 }
 
@@ -60,7 +61,8 @@ HlaPlugin::~HlaPlugin()
 // -----------------------------------------------------------------------------
 void HlaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 {
-    // NOTHING yet
+    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
+        federate_->Step();
 }
 
 // -----------------------------------------------------------------------------

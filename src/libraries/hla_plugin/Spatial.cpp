@@ -9,15 +9,15 @@
 
 #include "hla_plugin_pch.h"
 #include "Spatial.h"
-
+#include "dispatcher/Position.h"
 
 // -----------------------------------------------------------------------------
 // Name: Spatial constructor
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
-Spatial::Spatial( const std::string mgrs, float altitude, float speed, unsigned short heading )
+Spatial::Spatial( const dispatcher::Position& mgrs, float altitude, float speed, unsigned short heading )
     : deadReckoningAlgorithm_( 2 ) // FPW
-    , fpw_( mgrs, altitude, speed, heading )
+    , fpw_( mgrs.strPosition_, altitude, speed, heading )
 {
     // NOTHING
 }

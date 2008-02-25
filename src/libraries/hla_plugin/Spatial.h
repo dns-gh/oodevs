@@ -12,6 +12,11 @@
 
 #include "Coordinates.h"
 
+namespace dispatcher
+{
+    class Position;
+}
+
 // =============================================================================
 /** @class  Spatial
     @brief  Spatial
@@ -24,7 +29,7 @@ class Spatial
 public:
     //! @name Constructors/Destructor
     //@{
-             Spatial( const std::string mgrs, float altitude, float speed, unsigned short heading );
+             Spatial( const dispatcher::Position& mgrs, float altitude, float speed, unsigned short heading );
     virtual ~Spatial();
     //@}
 

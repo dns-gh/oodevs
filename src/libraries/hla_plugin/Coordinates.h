@@ -110,7 +110,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive )
     {
-        archive << psi_ << theta_ << phi;
+        archive << psi_ << theta_ << phi_;
     }
     //@}
 

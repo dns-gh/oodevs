@@ -72,3 +72,11 @@ void FederateFacade::AddClass( ObjectClass_ABC& objectClass )
     classes_.push_back( &objectClass );
 }
 
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Step
+// Created: AGE 2008-02-25
+// -----------------------------------------------------------------------------
+void FederateFacade::Step()
+{
+    federate_->Step();
+}

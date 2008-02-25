@@ -39,7 +39,7 @@ public:
     void Send  ( ASN1T_CoordUTM& asn ) const;
     //@}
 
-private:
+public:
     std::string strPosition_;
 };
 
