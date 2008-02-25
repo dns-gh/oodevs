@@ -11,6 +11,7 @@
 #include "ExtensionFactory.h"
 #include "AgentExtension.h"
 #include "AggregateEntityClass.h"
+#include "EntityIdentifier.h"
 #include "dispatcher/Agent.h"
 #include "hla/ObjectIdentifier.h"
 
@@ -22,6 +23,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 ExtensionFactory::ExtensionFactory( AggregateEntityClass& agentClass )
     : agentClass_( agentClass )
+    , id_        ( 1 )
 {
     // NOTHING
 }
@@ -41,7 +43,9 @@ ExtensionFactory::~ExtensionFactory()
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
-    std::auto_ptr< AgentExtension > extension( new AgentExtension( entity ) );
+    EntityIdentifier id( 1, 1, id_ ); // site, application, id
+    std::auto_ptr< AgentExtension > extension( new AgentExtension( entity, id ) );
     agentClass_.Register( *extension );
     entity.Attach( *extension.release() );
+    ++id_;
 }

@@ -10,6 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "Formation.h"
 #include "SerializationTools.h"
+#include "Dimension.h"
 #include "hla/UpdateFunctor_ABC.h"
 #include "hla/AttributeIdentifier.h"
 #include "pathfind/TerrainData.h"
@@ -44,12 +45,36 @@ void Formation::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const
 {
     if( bUpdateAll || changed_ )
     {
-        long value = onRoad_ ? 5 : 1; // column, assembly
-        Serializer serializer;
-        serializer << value;
-        functor.Visit( AttributeIdentifier( "Formation" ), serializer );
+        SerializeFormation( functor );
+        SerializeDimension( functor );
         changed_ = false;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::SerializeFormation
+// Created: AGE 2008-02-25
+// -----------------------------------------------------------------------------
+void Formation::SerializeFormation( UpdateFunctor_ABC& functor ) const
+{
+    long value = onRoad_ ? 5 : 1; // column, assembly
+    Serializer serializer;
+    serializer << value;
+    functor.Visit( AttributeIdentifier( "Formation" ), serializer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::SerializeDimension
+// Created: AGE 2008-02-25
+// -----------------------------------------------------------------------------
+void Formation::SerializeDimension( UpdateFunctor_ABC& functor ) const
+{
+    Dimension dim( (onRoad_ ? 200.f : 100.f),
+                   (onRoad_ ?  50.f : 100.f),
+                   3.f );
+    Serializer serializer;
+    dim.Serialize( serializer );
+    functor.Visit( AttributeIdentifier( "Dimensions" ), serializer );
 }
 
 // -----------------------------------------------------------------------------

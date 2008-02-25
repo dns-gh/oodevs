@@ -29,7 +29,7 @@ public:
     //! @name Operations
     //@{
     template< typename Archive >
-    void Serialize( Archive& archive )
+    void Serialize( Archive& archive ) const
     {
         federateIdentifier_.Serialize( archive );
         archive << entityNumber_;
@@ -37,12 +37,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EntityIdentifier( const EntityIdentifier& );            //!< Copy constructor
-    EntityIdentifier& operator=( const EntityIdentifier& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     struct FederateIdentifier
@@ -50,7 +44,7 @@ private:
         FederateIdentifier( unsigned short site, unsigned short application )
             : siteID_( site ), applicationID_( application ) {}
         template< typename Archive >
-        void Serialize( Archive& archive )
+        void Serialize( Archive& archive ) const
         {
             archive << siteID_ << applicationID_;
         }

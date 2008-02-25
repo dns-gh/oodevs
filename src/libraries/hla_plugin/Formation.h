@@ -48,6 +48,8 @@ private:
     //! @name Helpers
     //@{
     static bool IsOnRoad( const ASN1T_MsgUnitEnvironmentType& message );
+    void SerializeFormation( UpdateFunctor_ABC& functor ) const;
+    void SerializeDimension( UpdateFunctor_ABC& functor ) const;
     //@}
 
 private:

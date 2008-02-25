@@ -11,6 +11,7 @@
 #define __ExtensionFactory_h_
 
 #include "dispatcher/ExtensionFactory_ABC.h"
+#include <map>
 
 namespace dispatcher
 {
@@ -53,6 +54,7 @@ private:
     //! @name Member data
     //@{
     AggregateEntityClass& agentClass_;
+    unsigned short id_;
     //@}
 };
 

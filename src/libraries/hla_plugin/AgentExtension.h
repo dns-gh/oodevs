@@ -10,8 +10,9 @@
 #ifndef __AgentExtension_h_
 #define __AgentExtension_h_
 
-#include "Formation.h"
 #include "HlaExtension_ABC.h"
+#include "Formation.h"
+#include "EntityIdentifier.h"
 #include "dispatcher/Updatable_ABC.h"
 #include "game_asn/asn.h"
 
@@ -37,7 +38,7 @@ class AgentExtension : public HlaExtension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentExtension( dispatcher::Agent& holder );
+             AgentExtension( dispatcher::Agent& holder, const EntityIdentifier& id );
     virtual ~AgentExtension();
     //@}
 
@@ -57,14 +58,20 @@ private:
 
     //! @name Helpers
     //@{
-    void UpdateSpatialData( UpdateFunctor_ABC& functor ) const;
-    void UpdateComposition( UpdateFunctor_ABC& functor ) const;
+    void UpdateEntityType      ( UpdateFunctor_ABC& functor ) const;
+    void UpdateEntityIdentifier( UpdateFunctor_ABC& functor ) const;
+    void UpdateSpatial         ( UpdateFunctor_ABC& functor ) const;
+    void UpdateAggregateMarking( UpdateFunctor_ABC& functor ) const;
+    void UpdateAggregateState  ( UpdateFunctor_ABC& functor ) const;
+    void UpdateForceIdentifier ( UpdateFunctor_ABC& functor ) const;
+    void UpdateComposition     ( UpdateFunctor_ABC& functor ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     dispatcher::Agent& holder_;
+    EntityIdentifier id_;
     Formation    formation_;
     mutable bool spatialChanged_;
     mutable bool compositionChanged_;
