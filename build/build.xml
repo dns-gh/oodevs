@@ -299,7 +299,7 @@
     </target>
 
     <target name="application.selftraining_app" description="build CSword Self-training executable" depends="library.frontend">
-        <build-app name="selftraining_app" depends="mt,qt,boost,asio,xeumeuleu,flexlm"
+        <build-app name="selftraining_app" depends="mt,qt,boost,asio,xeumeuleu,flexlm" excludes="**/graphics.cpp"
                    libs="bugtrap,tools
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
