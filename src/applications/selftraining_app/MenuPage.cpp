@@ -20,6 +20,7 @@ MenuPage::MenuPage( QWidgetStack* pages )
     : Page_ABC( pages )
 {
     layout()->setAlignment( Qt::AlignCenter );
+    setSpacing( 5 );
 }
 
 // -----------------------------------------------------------------------------

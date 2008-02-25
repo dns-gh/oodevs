@@ -39,6 +39,13 @@ private:
     //@{
     virtual void drawButton( QPainter* painter );
     //@}
+
+private:
+    //! @name Member data
+    //@{
+    QPixmap pixmap_;
+    QSize size_;
+    //@}
 };
 
 #endif // __MenuButton_h_

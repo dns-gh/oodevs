@@ -74,11 +74,11 @@ namespace
         QPixmap pixmap( 12, 12 );
         QColor bgColor;
         if( type == "friend" )
-            bgColor = Qt::blue;
+            bgColor = QColor( 30, 110, 200 );
         else if( type == "enemy" )
-            bgColor = Qt::red;
+            bgColor = QColor( 200, 50, 50 );
         else if( type == "neutral" )
-            bgColor = Qt::green;
+            bgColor = QColor( 30, 190, 70 );
         QPainter p( &pixmap );
         p.fillRect( 2, 2, pixmap.width() - 4, pixmap.height() - 4, bgColor );
         p.setPen( Qt::white );

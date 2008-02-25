@@ -63,7 +63,7 @@ void ContentPage::AddTitle( const QString& title )
 void ContentPage::AddBackButton( Page_ABC& previous )
 {
     QPushButton* button = new MenuButton( tr( "Back" ), this );
-    button->setMaximumWidth( 100 );
+    button->setFixedSize( 100, 40 );
     grid_->addWidget( button, 2, 0, Qt::AlignBottom | Qt::AlignLeft );
     connect( button, SIGNAL( clicked() ), &previous, SLOT( show() ) );
 }
@@ -84,7 +84,7 @@ void ContentPage::AddContent( QWidget* widget )
 void ContentPage::AddNextButton( const QString& caption, Page_ABC& page, const char* slot /*= 0*/ )
 {
     QPushButton* button = new MenuButton( caption, this );
-    button->setMaximumWidth( 100 );
+    button->setFixedSize( 100, 40 );
     grid_->addWidget( button, 2, 1, Qt::AlignBottom | Qt::AlignRight );
     connect( button, SIGNAL( clicked() ), &page, slot ? slot : SLOT( show() ) );
 }

@@ -12,6 +12,7 @@
 #include "HomePage.h"
 #include "clients_gui/resources.h"
 #include "tools/GeneralConfig.h"
+#include "graphics.cpp"
 #include <qapplication.h>
 #include <qwidgetstack.h>
 #include <qpixmap.h>
@@ -28,7 +29,7 @@ MainWindow::MainWindow()
     config_->Parse( qApp->argc(), qApp->argv() );
     setCaption( tr( "SWORD Officer Training" ) );
     setIcon( MAKE_PIXMAP( csword ) );
-    setMinimumSize( 800, 600 );
+    setFixedSize( 800, 600 );
 
     SetStyle();
 
@@ -52,19 +53,20 @@ MainWindow::~MainWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::SetStyle()
 {
-    QFont font( "Verdana", 10, QFont::Bold );
+    QFont font( "Geneva", 10, QFont::Bold );
     setFont( font );
 
     QPalette p( palette() );
-    p.setColor( QPalette::Active, QColorGroup::Background     , QColor( 48, 64, 48 ) );
+    p.setColor( QPalette::Active, QColorGroup::Background     , QColor( 48, 48, 64 ) );
     p.setColor( QPalette::Active, QColorGroup::Foreground     , Qt::white );
     p.setColor( QPalette::Active, QColorGroup::BrightText     , Qt::white );
-    p.setColor( QPalette::Active, QColorGroup::Base           , QColor( 200, 225, 200 ) );
-    p.setColor( QPalette::Active, QColorGroup::Text           , QColor(  32,  48,  32 ) );
-    p.setColor( QPalette::Active, QColorGroup::ButtonText     , QColor( 128, 150, 128 ) );
-    p.setColor( QPalette::Active, QColorGroup::Highlight      , QColor(  32,  48,  32 ) );
+    p.setColor( QPalette::Active, QColorGroup::Base           , QColor( 240, 240, 240 ) );
+    p.setColor( QPalette::Active, QColorGroup::Text           , QColor(  32,  32,  48 ) );
+    p.setColor( QPalette::Active, QColorGroup::ButtonText     , QColor(  32,  32,  48 ) );
+    p.setColor( QPalette::Active, QColorGroup::Highlight      , QColor(  40, 135, 220 ) );
     p.setColor( QPalette::Active, QColorGroup::HighlightedText, Qt::white );
     p.setInactive( p.active() );
     p.setDisabled( p.active() );
     setPalette( p );
+    setPaletteBackgroundPixmap( QPixmap( qembed_findData( "background2.jpg" ) ) );
 }

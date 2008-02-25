@@ -9,7 +9,9 @@
 
 #include "selftraining_app_pch.h"
 #include "MenuButton.h"
+#include "graphics.cpp"
 #include <qpainter.h>
+#include <qimage.h>
 
 // -----------------------------------------------------------------------------
 // Name: MenuButton constructor
@@ -17,10 +19,13 @@
 // -----------------------------------------------------------------------------
 MenuButton::MenuButton( const QString& text, QWidget* parent )
     : QPushButton( text, parent )
+    , pixmap_( qembed_findData( "menu-item.jpg" ) )
+    , size_( 200, 52 )
 {
     QFont font( font() );
-    font.setPixelSize( 24 );
+    font.setPixelSize( 20 );
     setFont( font );
+    setFixedSize( size_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +43,14 @@ MenuButton::~MenuButton()
 // -----------------------------------------------------------------------------
 void MenuButton::drawButton( QPainter* painter )
 {
-    painter->fillRect( 0, 0, width(), height(), colorGroup().brush( QColorGroup::Background ) );
+    if( size() != size_ )
+    {
+        QImage img( pixmap_.convertToImage() );
+        img = img.scale( size() );
+        pixmap_ = img;
+        size_ = size();
+    }
+    painter->drawPixmap( rect(), pixmap_ );
     if( hasMouse() )
         painter->setPen( colorGroup().color( QColorGroup::BrightText ) );
     painter->drawText( rect(), Qt::AlignCenter | Qt::SingleLine, text() );
