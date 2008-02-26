@@ -12,10 +12,12 @@
 #include "Spatial.h"
 #include "EntityType.h"
 #include "AggregateMarking.h"
+#include "SilentEntity.h"
 #include "SerializationTools.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Side.h"
+#include "dispatcher/Equipment.h"
 #include "hla/UpdateFunctor_ABC.h"
 #include "hla/AttributeIdentifier.h"
 
@@ -173,11 +175,44 @@ void AgentExtension::UpdateForceIdentifier( UpdateFunctor_ABC& functor ) const
     functor.Visit( AttributeIdentifier( "ForceIdentifier" ), archive );
 }
 
+namespace
+{
+    struct SilentEntitiesSerializer
+    {
+        SilentEntitiesSerializer() : count_( 0 ) {}
+        void operator()( const dispatcher::Equipment& e )
+        {
+            ++count_;
+            EntityType type;
+            type.SetKind( EntityType::platform );
+            type.SetDomain( EntityType::land );
+            type.SetCountry( EntityType::france );
+            type.SetCategory( EntityType::tank ); // $$$$ AGE 2008-02-25: 
+
+            SilentEntity entity( type, (unsigned short)e.nNbrAvailable_ );
+            entity.Serialize( serializer_ );
+        }
+        void Commit( UpdateFunctor_ABC& functor )
+        {
+            {
+                Serializer archive;
+                archive << count_;
+                functor.Visit( AttributeIdentifier( "NumberOfSilentEntities" ), archive );
+            }
+            functor.Visit( AttributeIdentifier( "SilentEntities" ), serializer_ );
+        }
+        unsigned short count_;
+        Serializer serializer_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentExtension::UpdateComposition
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateComposition( UpdateFunctor_ABC& functor ) const
 {
-
+    SilentEntitiesSerializer serializer;
+    holder_.equipments_.Apply( serializer );
+    serializer.Commit( functor );
 }

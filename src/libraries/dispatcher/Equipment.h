@@ -38,12 +38,21 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    Equipment& operator=( const Equipment& );
+    //@}
+
+public:
+    //! @name Member data
+    //@{
     const unsigned int nEquipmentType_; // XML reference - no resolved by dispatcher
           unsigned int nNbrAvailable_;
           unsigned int nNbrUnavailable_;
           unsigned int nNbrRepairable_;
           unsigned int nNbrInMaintenance_;
           unsigned int nNbrPrisoner_;
+    //@}
 };
 
 }
