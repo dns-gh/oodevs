@@ -137,7 +137,7 @@ QString StartAnalysisPanel::BuildMessage( const QString& session ) const
 void StartAnalysisPanel::StartReplay()
 {
     if( exercises_->selectedItem() && replays_->selectedItem() )
-        new frontend::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text(), frontend::tools::DispatcherPort( exerciseNumber_->value() ) );
+        new frontend::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text(), frontend::DispatcherPort( exerciseNumber_->value() ) );
     Update();
     ShowNext();
 }

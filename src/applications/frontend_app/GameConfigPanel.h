@@ -54,7 +54,6 @@ private:
     QWidget* CreateSimulationPanel( QWidget* parent );
     QWidget* CreateDebugPanel( QWidget* parent );
     QWidget* CreateSystemPanel( QWidget* parent );
-    std::string GetSessionXml( const std::string& exercise, const std::string& session );
     //@}
 
 private:

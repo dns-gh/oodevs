@@ -69,7 +69,7 @@ JoinAnalysisPanel::~JoinAnalysisPanel()
 void JoinAnalysisPanel::StartExercise()
 {
     if( list_->selectedItem() )
-        new frontend::JoinAnalysis( this, config_, list_->selectedItem()->text(), frontend::tools::DispatcherPort( exerciseNumber_->value() ) );
+        new frontend::JoinAnalysis( this, config_, list_->selectedItem()->text(), frontend::DispatcherPort( exerciseNumber_->value() ) );
     Update();
     ShowNext();
 }

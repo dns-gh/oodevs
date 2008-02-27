@@ -53,6 +53,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Update();
+    void CreateSession( const QString& exercise, const QString& session );
     //@}
 
 private:

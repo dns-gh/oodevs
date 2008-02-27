@@ -14,11 +14,12 @@
 #include "frontend/commands.h"
 #include "frontend/StartExercise.h"
 #include "frontend/JoinExercise.h"
+#include "frontend/CreateSession.h"
 #include <qlistbox.h>
 #include <qtextedit.h>
 
 #pragma warning( push )
-#pragma warning( disable: 4127 4512 )
+#pragma warning( disable: 4127 4511 4512 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 
@@ -93,7 +94,17 @@ void ScenarioPage::OnStart()
     {
         const QString exercise = exercises_->selectedItem()->text();
         const QString session  = BuildSessionName().c_str();
+        CreateSession( exercise, session );
         new frontend::StartExercise( this, config_, exercise, session );
         new frontend::JoinExercise ( this, config_, exercise, session );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioPage::CreateSession
+// Created: SBO 2008-02-27
+// -----------------------------------------------------------------------------
+void ScenarioPage::CreateSession( const QString& exercise, const QString& session )
+{
+    frontend::CreateSession action( config_, exercise.ascii(), session.ascii() );
 }

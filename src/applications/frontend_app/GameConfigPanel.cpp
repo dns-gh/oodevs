@@ -10,20 +10,16 @@
 #include "frontend_app_pch.h"
 #include "GameConfigPanel.h"
 #include "frontend/CommandLineTools.h"
+#include "frontend/CreateSession.h"
 #include "tools/GeneralConfig.h"
 #include "tools/xmlcodecs.h"
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qdatetimeedit.h>
-
-#pragma warning( disable: 4127 4244 4245 4511 4512 )
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
-#include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.h>
-#undef min
 
-namespace bfs = boost::filesystem;
+#pragma warning( disable: 4127 4511 4512 )
+#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: GameConfigPanel constructor
@@ -148,86 +144,42 @@ QWidget* GameConfigPanel::CreateSystemPanel( QWidget* parent )
 // -----------------------------------------------------------------------------
 void GameConfigPanel::Commit( const std::string& exercise, const std::string& session, const std::string& name, const std::string& comment, unsigned exerciseNumber )
 {
-    const std::string sessionXml = GetSessionXml( exercise, session );
-
-    xml::xofstream xos( sessionXml );
-    xos << xml::start( "session" )
-            << xml::start( "meta" )
-                << xml::content( "date", session )
-                << xml::content( "name", xml::cdata( name ) )
-                << xml::content( "comment", xml::cdata( comment ) )
-            << xml::end()
-            << xml::start( "config" )
-                << xml::start( "simulation" )
-                    << xml::start( "checkpoint" )
-                        << xml::attribute( "frequency", QString( "%1s" ).arg( QTime().secsTo( checkFrequency_->time() ) ).ascii() )
-                        << xml::attribute( "keep", keepSpin_->value() )
-                        << xml::attribute( "usecrc", true )
-                    << xml::end()
-                    << xml::start( "debug" )
-                        << xml::attribute( "decisional", decisionalLogs_->isChecked() )
-                        << xml::attribute( "pathfind", pathfindLogs_->isChecked() )
-                        << xml::attribute( "diadebugger", diaDebugBox_->isChecked() )
-                        << xml::attribute( "diadebuggerport", diaDebugPort_->value() )
-                        << xml::attribute( "networklogger", netConBox_->isChecked() )
-                        << xml::attribute( "networkloggerport", netConPort_->value() )
-                    << xml::end()
-                    << xml::start( "decisional" )
-                        << xml::attribute( "useonlybinaries", false ) // $$$$ AGE 2007-10-09: 
-                    << xml::end()
-                    << xml::start( "dispatcher" )
-                        << xml::attribute( "embedded", true ) // $$$$ AGE 2007-10-09: 
-                    << xml::end()
-                    << xml::start( "network" )
-                        << xml::attribute( "port", frontend::tools::SimulationPort( exerciseNumber ) )
-                    << xml::end()
-                    << xml::start( "orbat" )
-                        << xml::attribute( "checkcomposition", checkOdb_->isChecked() )
-                    << xml::end()
-                    << xml::start( "profiling" )
-                        << xml::attribute( "enabled", profile_->isChecked() )
-                    << xml::end()
-                    << xml::start( "time" )
-                        << xml::attribute( "step", stepSpin_->value() )
-                        << xml::attribute( "factor", factorSpin_->value() )
-                    << xml::end()
-                    << xml::start( "pathfinder" )
-                        << xml::attribute( "threads", pathThreads_->value() )
-                    << xml::end()
-                    << xml::start( "hla" ) 
-                        << xml::attribute( "enabled", false ) // $$$$ AGE 2007-10-09: 
-                        << xml::attribute( "federation", "MyFederation" )
-                        << xml::attribute( "federate", "CSword power" )
-                    << xml::end()
-                << xml::end()
-                << xml::start( "dispatcher" )
-                    << xml::start( "network" )
-                        << xml::attribute( "client", "localhost:" +  // $$$$ AGE 2007-10-09: 
-                            boost::lexical_cast< std::string >( frontend::tools::SimulationPort( exerciseNumber ) ) )
-                        << xml::attribute( "server", frontend::tools::DispatcherPort( exerciseNumber ) )
-                    << xml::end()
-                    << xml::start( "plugins" )
-                        << xml::start( "recorder" ) << xml::end() // $$$$ AGE 2008-02-22: 
-                    << xml::end()
-                << xml::end()
-                << xml::start( "gaming" )
-                    << xml::start( "network" )
-                        << xml::attribute( "server", "localhost:" +  // $$$$ AGE 2007-10-09: 
-                                    boost::lexical_cast< std::string >( frontend::tools::DispatcherPort( exerciseNumber ) ) )
-                    << xml::end()
-                << xml::end()
-            << xml::end()
-        << xml::end();
+    frontend::CreateSession action( config_, exercise, session );
+    {
+        action.SetOption( "session/meta/date", session );
+        action.SetOption( "session/meta/name", name );
+        action.SetOption( "session/meta/comment", comment );
+    }
+    {
+        action.SetOption( "session/config/simulation/checkpoint/@frequency", QString( "%1s" ).arg( QTime().secsTo( checkFrequency_->time() ) ).ascii() );
+        action.SetOption( "session/config/simulation/checkpoint/@keep", keepSpin_->value() );
+        action.SetOption( "session/config/simulation/checkpoint/@usecrc", true );
+        action.SetOption( "session/config/simulation/debug/@decisional", decisionalLogs_->isChecked() );
+        action.SetOption( "session/config/simulation/debug/@pathfind", pathfindLogs_->isChecked() );
+        action.SetOption( "session/config/simulation/debug/@diadebugger", diaDebugBox_->isChecked() );
+        action.SetOption( "session/config/simulation/debug/@diadebuggerport", diaDebugPort_->value() );
+        action.SetOption( "session/config/simulation/debug/@networklogger", netConBox_->isChecked() );
+        action.SetOption( "session/config/simulation/debug/@networkloggerport", netConPort_->value() );
+        action.SetOption( "session/config/simulation/decisional/@useonlybinaries", false ); // $$$$ AGE 2007-10-09: 
+        action.SetOption( "session/config/simulation/dispatcher/@embedded", true ); // $$$$ AGE 2007-10-09: 
+        action.SetOption( "session/config/simulation/network/@port", frontend::SimulationPort( exerciseNumber ) );
+        action.SetOption( "session/config/simulation/orbat/@checkcomposition", checkOdb_->isChecked() );
+        action.SetOption( "session/config/simulation/profiling/@enabled", profile_->isChecked() );
+        action.SetOption( "session/config/simulation/time/@step", stepSpin_->value() );
+        action.SetOption( "session/config/simulation/time/@factor", factorSpin_->value() );
+        action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreads_->value() );
+        action.SetOption( "session/config/simulation/hla/@enabled", false ); // $$$$ AGE 2007-10-09:
+        action.SetOption( "session/config/simulation/hla/@federation", "MyFederation" );
+        action.SetOption( "session/config/simulation/hla/@federate", "Sword OT Power" );
+    }
+    {
+        action.SetOption( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09: 
+                            boost::lexical_cast< std::string >( frontend::SimulationPort( exerciseNumber ) ) );
+        action.SetOption( "session/config/dispatcher/network/@server", frontend::DispatcherPort( exerciseNumber ) );
+        action.SetOption( "session/config/dispatcher/plugins/recorder", "" ); // $$$$ AGE 2008-02-22: 
+    }
+    {
+        action.SetOption( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09: 
+                                    boost::lexical_cast< std::string >( frontend::DispatcherPort( exerciseNumber ) ) );
+    }
 }
-
-// -----------------------------------------------------------------------------
-// Name: GameConfigPanel::GetSessionXml
-// Created: AGE 2007-10-09
-// -----------------------------------------------------------------------------
-std::string GameConfigPanel::GetSessionXml( const std::string& exercise, const std::string& session )
-{
-    const bfs::path dir( config_.BuildSessionDir( exercise, session ), bfs::native );
-    bfs::create_directories( dir );
-    return ( dir / "session.xml" ).native_file_string();
-}
-
