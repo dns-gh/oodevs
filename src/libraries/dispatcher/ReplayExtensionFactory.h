@@ -10,7 +10,6 @@
 #ifndef __ReplayExtensionFactory_h_
 #define __ReplayExtensionFactory_h_
 
-#include "Extension_ABC.h"
 #include "ExtensionFactory_ABC.h"
 
 namespace dispatcher

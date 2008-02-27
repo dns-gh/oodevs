@@ -10,7 +10,7 @@
 #ifndef __EntitySymbols_ABC_h_
 #define __EntitySymbols_ABC_h_
 
-#include "Extension_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
 
 namespace dispatcher
 {
@@ -21,7 +21,7 @@ namespace dispatcher
 */
 // Created: SBO 2008-02-13
 // =============================================================================
-class EntitySymbols_ABC : public Extension_ABC
+class EntitySymbols_ABC : public kernel::Extension_ABC
 {
 
 public:

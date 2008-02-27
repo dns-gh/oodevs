@@ -12,8 +12,8 @@
 
 #include "tools/Extendable.h"
 #include "tools/InterfaceContainer.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 
 namespace dispatcher
 {
@@ -27,8 +27,8 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-12
 // =============================================================================
-class Entity_ABC : public tools::Extendable< Extension_ABC >
-                 , public tools::InterfaceContainer< Extension_ABC >
+class Entity_ABC : public tools::Extendable< kernel::Extension_ABC >
+                 , public tools::InterfaceContainer< kernel::Extension_ABC >
 {
 
 public:
@@ -52,8 +52,8 @@ public:
     template< typename T >
     void Attach( T& extension )
     {
-        tools::Extendable< Extension_ABC >::Attach( extension );
-        tools::InterfaceContainer< Extension_ABC >::Register( extension );
+        tools::Extendable< kernel::Extension_ABC >::Attach( extension );
+        tools::InterfaceContainer< kernel::Extension_ABC >::Register( extension );
     }
 
     template< typename T >
@@ -65,7 +65,7 @@ public:
     template< typename T >
     void ApplyUpdate( const T& message )
     {
-        Apply( Updatable_ABC< T >::DoUpdate, message );
+        Apply( kernel::Updatable_ABC< T >::DoUpdate, message );
     }
     //@}
 

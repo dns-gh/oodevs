@@ -10,8 +10,8 @@
 #ifndef __ReplaySynchronisations_h_
 #define __ReplaySynchronisations_h_
 
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Asn.h"
 
 namespace dispatcher
@@ -26,33 +26,33 @@ namespace dispatcher
 */
 // Created: SBO 2008-02-14
 // =============================================================================
-class ReplaySynchronisations : public Extension_ABC
-                             , public Updatable_ABC< ASN1T_MsgUnitCreation >
-                             , public Updatable_ABC< ASN1T_MsgAutomatCreation >
-                             , public Updatable_ABC< ASN1T_MsgFormationCreation >
-                             , public Updatable_ABC< ASN1T_MsgKnowledgeGroupCreation >
-                             , public Updatable_ABC< ASN1T_MsgReport >
-                             , public Updatable_ABC< ASN1T_MsgTeamCreation >
-                             , public Updatable_ABC< ASN1T_MsgObjectCreation >
-                             , public Updatable_ABC< ASN1T_MsgLimaCreation >
-                             , public Updatable_ABC< ASN1T_MsgLimitCreation >
-                             , public Updatable_ABC< ASN1T_MsgPopulationCreation >
-                             , public Updatable_ABC< ASN1T_MsgPopulationConcentrationCreation >
-                             , public Updatable_ABC< ASN1T_MsgPopulationFlowCreation >
-                             , public Updatable_ABC< ASN1T_MsgIntelligenceCreation >
-                             , public Updatable_ABC< ASN1T_MsgUnitKnowledgeCreation >
-                             , public Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
-                             , public Updatable_ABC< ASN1T_MsgPopulationKnowledgeCreation >
-                             , public Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeCreation >
-                             , public Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeCreation >
-                             , public Updatable_ABC< ASN1T_MsgLogMaintenanceHandlingCreation >
-                             , public Updatable_ABC< ASN1T_MsgLogMedicalHandlingCreation >
-                             , public Updatable_ABC< ASN1T_MsgLogSupplyHandlingCreation >
-                             , public Updatable_ABC< ASN1T_MsgStartUnitFire >
-                             , public Updatable_ABC< ASN1T_MsgStartFireEffect >
-                             , public Updatable_ABC< ASN1T_MsgStartPopulationFire >
-                             , public Updatable_ABC< ASN1T_MsgChangeDiplomacy >
-                             , public Updatable_ABC< ASN1T_MsgChangeDiplomacyAck >
+class ReplaySynchronisations : public kernel::Extension_ABC
+                             , public kernel::Updatable_ABC< ASN1T_MsgUnitCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgAutomatCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgFormationCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgReport >
+                             , public kernel::Updatable_ABC< ASN1T_MsgTeamCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgLimaCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgLimitCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgPopulationCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgIntelligenceCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgPopulationKnowledgeCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgLogMaintenanceHandlingCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgLogMedicalHandlingCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgLogSupplyHandlingCreation >
+                             , public kernel::Updatable_ABC< ASN1T_MsgStartUnitFire >
+                             , public kernel::Updatable_ABC< ASN1T_MsgStartFireEffect >
+                             , public kernel::Updatable_ABC< ASN1T_MsgStartPopulationFire >
+                             , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomacy >
+                             , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomacyAck >
 {
 
 public:

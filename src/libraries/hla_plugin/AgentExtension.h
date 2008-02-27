@@ -13,8 +13,8 @@
 #include "HlaExtension_ABC.h"
 #include "Formation.h"
 #include "EntityIdentifier.h"
-#include "dispatcher/Updatable_ABC.h"
 #include "game_asn/asn.h"
+#include "clients_kernel/Updatable_ABC.h"
 
 namespace dispatcher
 {
@@ -31,8 +31,8 @@ namespace hla
 // Created: SBO 2008-02-18
 // =============================================================================
 class AgentExtension : public HlaExtension_ABC
-                     , public dispatcher::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                     , public dispatcher::Updatable_ABC< ASN1T_MsgUnitEnvironmentType >
+                     , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                     , public kernel::Updatable_ABC< ASN1T_MsgUnitEnvironmentType >
 {
 
 public:
