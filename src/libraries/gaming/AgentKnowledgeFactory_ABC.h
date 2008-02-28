@@ -10,7 +10,7 @@
 #ifndef __AgentKnowledgeFactory_ABC_h_
 #define __AgentKnowledgeFactory_ABC_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace kernel
 {

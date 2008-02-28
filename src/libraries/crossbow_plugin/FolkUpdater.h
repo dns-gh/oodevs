@@ -10,7 +10,7 @@
 #ifndef __crossbow_FolkUpdater_h_
 #define __crossbow_FolkUpdater_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace crossbow
 {    

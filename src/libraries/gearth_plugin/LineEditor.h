@@ -10,7 +10,7 @@
 #ifndef __gearth_LineEditor_h_
 #define __gearth_LineEditor_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "GeometryEditor.h"
 
 namespace xml

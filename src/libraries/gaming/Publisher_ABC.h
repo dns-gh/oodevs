@@ -10,7 +10,10 @@
 #ifndef __Publisher_ABC_h_
 #define __Publisher_ABC_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
+#include "game_asn/Authentication.h"
+#include "game_asn/Replay.h"
+#include "game_asn/Aar.h"
 
 // =============================================================================
 /** @class  Publisher_ABC

@@ -10,7 +10,7 @@
 #ifndef __LogConsignMedical_h_
 #define __LogConsignMedical_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Entity_ABC.h"
 
 namespace dispatcher

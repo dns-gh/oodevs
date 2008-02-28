@@ -11,7 +11,7 @@
 #define __Point_h_
 
 #include "Shape_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ESRI.h"
 
 namespace crossbow

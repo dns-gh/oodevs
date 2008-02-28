@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Profiling.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 // -----------------------------------------------------------------------------
 // Name: Profiling constructor

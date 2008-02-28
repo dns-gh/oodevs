@@ -10,7 +10,7 @@
 #ifndef __ActionParameterPath_h_
 #define __ActionParameterPath_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ActionParameter.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 

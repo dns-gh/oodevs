@@ -1,0 +1,48 @@
+--
+-- file name : AuthenticationMessages.asn
+--
+-- Authentication messages list
+--
+
+AuthenticationMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS AuthExports FROM Auth;
+
+AuthenticationMessagesIncludes ::= SEQUENCE
+{ AuthExports }
+AuthenticationMessagesExports  ::= NULL
+-- END includes
+
+
+--
+--
+--
+MsgsAuthenticationToClient ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
+        msg-authentication-response         MsgAuthenticationResponse,
+        msg-profile-creation                MsgProfileCreation,
+        msg-profile-creation-request-ack    MsgProfileCreationRequestAck,
+        msg-profile-update                  MsgProfileUpdate,
+        msg-profile-update-request-ack      MsgProfileUpdateRequestAck,
+        msg-profile-destruction             MsgProfileDestruction,
+        msg-profile-destruction-request-ack MsgProfileDestructionRequestAck
+    }
+}
+
+MsgsClientToAuthentication ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
+        msg-authentication-request      MsgAuthenticationRequest,
+        msg-profile-creation-request    MsgProfileCreationRequest,
+        msg-profile-update-request      MsgProfileUpdateRequest,
+        msg-profile-destruction-request MsgProfileDestructionRequest
+    }
+}
+
+END

@@ -57,7 +57,7 @@
 #include "MT_Tools/MT_Random.h"
 #include "MT_Tools/MT_GaussianRandom.h"
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 #include "simulation_terrain/TER.h"
 #include "simulation_terrain/TER_Localisation.h"

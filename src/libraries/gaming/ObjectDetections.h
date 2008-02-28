@@ -10,7 +10,7 @@
 #ifndef __ObjectDetections_h_
 #define __ObjectDetections_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"

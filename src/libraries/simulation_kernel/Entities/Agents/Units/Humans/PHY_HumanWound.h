@@ -16,7 +16,7 @@
 
 #include "MT_Tools/MT_Random.h"
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace xml
 {

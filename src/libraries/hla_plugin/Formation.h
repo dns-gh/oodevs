@@ -10,7 +10,7 @@
 #ifndef __Formation_h_
 #define __Formation_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 class UpdateFunctor_ABC;
 
 namespace hla

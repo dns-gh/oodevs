@@ -10,7 +10,7 @@
 #ifndef __ObjectKnowledge_h_
 #define __ObjectKnowledge_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ObjectKnowledge_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"

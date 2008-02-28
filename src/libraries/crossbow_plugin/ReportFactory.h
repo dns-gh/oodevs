@@ -10,7 +10,7 @@
 #ifndef __ReportFactory_h_
 #define __ReportFactory_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace xml
 {

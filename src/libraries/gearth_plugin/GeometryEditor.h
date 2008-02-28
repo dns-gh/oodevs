@@ -10,7 +10,7 @@
 #ifndef __gearth_GeometryEditor_h_
 #define __gearth_GeometryEditor_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "geometry/Types.h"
 
 namespace gearth

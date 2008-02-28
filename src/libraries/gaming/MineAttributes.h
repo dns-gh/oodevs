@@ -10,7 +10,7 @@
 #ifndef __MineAttributes_h_
 #define __MineAttributes_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"

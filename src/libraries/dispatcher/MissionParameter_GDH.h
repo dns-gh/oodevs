@@ -11,7 +11,7 @@
 #define __MissionParameter_GDH_h_
 
 #include "MissionParameter_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace dispatcher
 {

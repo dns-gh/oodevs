@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 #include "MIL_RealObject_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace xml
 {

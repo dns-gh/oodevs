@@ -10,7 +10,7 @@
 #ifndef __NET_Publisher_ABC_h_
 #define __NET_Publisher_ABC_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 
 // =============================================================================
 /** @class  NET_Publisher_ABC

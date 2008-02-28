@@ -11,7 +11,7 @@
 #define __Simulation_h_
 
 #include "SimulationPublisher_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace tools
 {

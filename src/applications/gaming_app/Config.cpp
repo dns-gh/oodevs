@@ -13,7 +13,7 @@
 #include <xeumeuleu/xml.h>
 
 #pragma warning( push )
-#pragma warning( disable: 4127 4244 )
+#pragma warning( disable: 4127 4244 4511 4512 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 namespace po  = boost::program_options;

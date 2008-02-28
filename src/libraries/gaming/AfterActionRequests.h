@@ -11,7 +11,7 @@
 #define __AfterActionRequests_h_
 
 #include "clients_kernel/Iterator.h"
-#include "game_asn/asn.h"
+#include "game_asn/Aar.h"
 namespace kernel
 {
     class Controller;

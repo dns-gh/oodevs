@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "AtlasNatures.h"
 #include "AtlasNature.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "tools.h"
 
 // -----------------------------------------------------------------------------

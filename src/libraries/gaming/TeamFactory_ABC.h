@@ -10,7 +10,7 @@
 #ifndef __TeamFactory_ABC_h_
 #define __TeamFactory_ABC_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace kernel
 {

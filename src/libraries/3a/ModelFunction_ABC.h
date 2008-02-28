@@ -10,7 +10,7 @@
 #ifndef __ModelFunction_ABC_h_
 #define __ModelFunction_ABC_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 
 // =============================================================================
 /** @class  ModelFunction_ABC

@@ -10,7 +10,7 @@
 #ifndef __LogConsignSupply_h_
 #define __LogConsignSupply_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "LogSupplyDotation.h"
 #include "ModelsContainer.h"
 #include "Entity_ABC.h"

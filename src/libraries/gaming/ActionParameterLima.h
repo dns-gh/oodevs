@@ -11,7 +11,7 @@
 #define __ActionParameterLima_h_
 
 #include "ActionParameter.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace kernel
 {

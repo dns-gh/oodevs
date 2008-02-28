@@ -10,7 +10,7 @@
 #ifndef __ObjectMagicOrdersInterface_h_
 #define __ObjectMagicOrdersInterface_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 

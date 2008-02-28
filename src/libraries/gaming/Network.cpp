@@ -15,8 +15,10 @@
 #include "Simulation.h"
 #include "Profile.h"
 #include "Tools.h"
-#include <boost/lexical_cast.hpp>
 #include "MT/MT_Logger/MT_Logger_lib.h"
+
+#pragma warning( disable: 4127 4511 4512 )
+#include <boost/lexical_cast.hpp>
 
 using namespace kernel;
 using namespace tools;

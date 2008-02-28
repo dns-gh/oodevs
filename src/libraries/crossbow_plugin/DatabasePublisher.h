@@ -10,7 +10,7 @@
 #ifndef __DatabasePublisher_h_
 #define __DatabasePublisher_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "dispatcher/MessageHandler_ABC.h"
 
 namespace xml

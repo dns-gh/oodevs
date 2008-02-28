@@ -11,7 +11,7 @@
 #define __AgentServerMsgMgr_h_
 
 #include "clients_kernel/Types.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Publisher_ABC.h"
 
 namespace tools

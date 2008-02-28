@@ -10,7 +10,7 @@
 #ifndef __Report_h_
 #define __Report_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Entity_ABC.h"
 
 namespace dispatcher

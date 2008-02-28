@@ -10,7 +10,7 @@
 #ifndef __Profile_h_
 #define __Profile_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "Simulation.h"

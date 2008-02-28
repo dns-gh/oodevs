@@ -10,7 +10,7 @@
 #ifndef __EntityParameter_h_
 #define __EntityParameter_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"

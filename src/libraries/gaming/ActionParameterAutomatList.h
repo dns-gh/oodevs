@@ -10,7 +10,7 @@
 #ifndef __ActionParameterAutomatList_h_
 #define __ActionParameterAutomatList_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ActionParameter.h"
 #include "clients_kernel/Resolver_ABC.h"
 

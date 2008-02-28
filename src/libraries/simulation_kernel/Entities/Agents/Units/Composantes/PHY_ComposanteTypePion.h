@@ -19,7 +19,7 @@
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace xml
 {

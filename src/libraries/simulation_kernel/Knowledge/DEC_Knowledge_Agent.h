@@ -20,7 +20,7 @@
 #include "DEC_Knowledge_AgentDataRecognition.h"
 #include "DEC_Knowledge_AgentDataIdentification.h"
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 

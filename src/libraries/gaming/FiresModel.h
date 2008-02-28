@@ -11,7 +11,7 @@
 #define __FiresModel_h_
 
 #include "clients_kernel/Resolver.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace kernel
 {

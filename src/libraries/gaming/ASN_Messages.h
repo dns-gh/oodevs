@@ -11,7 +11,8 @@
 #define __ASN_Messages_h_
 
 #include "Publisher_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
+#include "game_asn/Aar.h"
 
 //=============================================================================
 // ASN ENCODER WRAPPER MACROS

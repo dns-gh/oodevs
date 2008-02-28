@@ -10,7 +10,7 @@
 #ifndef __Object_h_
 #define __Object_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Extension_ABC.h"

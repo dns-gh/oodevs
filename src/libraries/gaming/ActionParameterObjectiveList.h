@@ -10,7 +10,7 @@
 #ifndef __ActionParameterObjectiveList_h_
 #define __ActionParameterObjectiveList_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ActionParameter.h"
 
 namespace kernel

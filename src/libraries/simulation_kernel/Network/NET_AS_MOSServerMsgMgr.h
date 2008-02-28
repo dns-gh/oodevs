@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 #include "NET_Publisher_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 class NET_AgentServer;
 class NET_Simulation_ABC;

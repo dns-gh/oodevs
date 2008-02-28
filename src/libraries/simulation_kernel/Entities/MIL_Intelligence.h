@@ -10,7 +10,7 @@
 #ifndef __MIL_Intelligence_h_
 #define __MIL_Intelligence_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Tools/MIL_MOSIDManager.h"
 
 namespace xml

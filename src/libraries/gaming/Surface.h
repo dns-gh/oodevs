@@ -12,7 +12,7 @@
 
 #include "Types.h"
 #include "Sector.h"
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel

@@ -10,7 +10,7 @@
 #ifndef __UserProfilesModel_h_
 #define __UserProfilesModel_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 class UserProfile;
 class UserProfileFactory_ABC;

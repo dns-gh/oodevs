@@ -10,7 +10,7 @@
 #ifndef __Gaming_Types_h_
 #define __Gaming_Types_h_
 
-#include "game_asn/Asn.h"
+//#include "game_asn/Simulation.h"
 #include "clients_kernel/Types.h"
 
 enum E_FuncLimaType

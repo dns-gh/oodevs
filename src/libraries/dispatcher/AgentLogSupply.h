@@ -10,7 +10,7 @@
 #ifndef __AgentLogSupply_h_
 #define __AgentLogSupply_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ModelsContainer.h"
 #include "EquipmentAvailability.h"
 #include "Dotation.h"

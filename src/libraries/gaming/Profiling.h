@@ -10,7 +10,7 @@
 #ifndef __Profiling_h_
 #define __Profiling_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 #include <ctime>
 
 // =============================================================================

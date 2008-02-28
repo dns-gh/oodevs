@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Game_Asn_h__
-#define __Game_Asn_h__
+#ifndef __Simulation_h__
+#define __Simulation_h__
 
 #pragma warning( push, 3 )
 
@@ -24,7 +24,7 @@
 #include "generated/Control.h"
 #include "generated/LimaLimite.h"
 #include "generated/Fire.h"
-#include "generated/Messages.h"
+#include "generated/SimMessages.h"
 #include "generated/UnitKnowledge.h"
 #include "generated/Unit.h"
 #include "generated/Automat.h"
@@ -34,8 +34,7 @@
 #include "generated/PopulationKnowledge.h"
 #include "generated/Folk.h"
 #include "generated/Intelligence.h"
-#include "generated/Aar.h"
 
 #pragma warning( pop ) 
 
-#endif // __Game_Asn_h__
+#endif // __Simulation_h__

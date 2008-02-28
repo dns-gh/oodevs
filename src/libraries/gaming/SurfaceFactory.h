@@ -11,7 +11,7 @@
 #define __SurfaceFactory_h_
 
 #include "clients_kernel/Resolver_ABC.h"
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 
 namespace kernel
 {

@@ -10,7 +10,7 @@
 #ifndef __Model_h_
 #define __Model_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ModelsContainer.h"
 #include "MessageHandler_ABC.h"
 #include "CompositeFactory.h"

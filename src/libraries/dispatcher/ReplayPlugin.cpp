@@ -14,7 +14,7 @@
 #include "network_def.h"
 #include "Model.h"
 #include "ReplayExtensionFactory.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "tools/MessageDispatcher_ABC.h"
 

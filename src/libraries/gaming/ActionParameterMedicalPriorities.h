@@ -11,7 +11,7 @@
 #define __ActionParameterMedicalPriorities_h_
 
 #include "ActionParameter.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 // =============================================================================
 /** @class  ActionParameterMedicalPriorities

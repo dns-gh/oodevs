@@ -16,7 +16,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/App6Symbol.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Diplomacies.h"
 
 namespace kernel

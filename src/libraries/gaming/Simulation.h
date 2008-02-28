@@ -10,7 +10,7 @@
 #ifndef __Simulation_h_
 #define __Simulation_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Profiling.h"
 
 namespace kernel

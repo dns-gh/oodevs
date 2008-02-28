@@ -10,7 +10,7 @@
 #ifndef __AfterActionRequest_h_
 #define __AfterActionRequest_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Aar.h"
 
 namespace kernel
 {

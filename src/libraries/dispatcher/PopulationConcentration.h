@@ -10,7 +10,7 @@
 #ifndef __PopulationConcentration_h_
 #define __PopulationConcentration_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Position.h"
 #include "Entity_ABC.h"
 

@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Tools.h"
 #include "Types.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace tools
 {

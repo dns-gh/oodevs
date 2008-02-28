@@ -11,14 +11,15 @@
 #define __AfterActionFunction_h_
 
 #include "clients_kernel/Resolver.h"
-class AfterActionFactory;
-class AfterActionItem_ABC;
-class AfterActionParameter;
 
 namespace xml
 {
     class xistream;
 }
+
+class AfterActionFactory;
+class AfterActionItem_ABC;
+class AfterActionParameter;
 
 // =============================================================================
 /** @class  AfterActionFunction

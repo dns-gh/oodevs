@@ -11,7 +11,7 @@
 #define __ActionParameterMaintenancePriorities_h_
 
 #include "ActionParameter.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel

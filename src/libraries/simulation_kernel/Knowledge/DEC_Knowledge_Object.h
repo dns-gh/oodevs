@@ -16,7 +16,7 @@
 
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "DEC_Knowledge_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "simulation_terrain/TER_Localisation.h"
 
 class MIL_Army;

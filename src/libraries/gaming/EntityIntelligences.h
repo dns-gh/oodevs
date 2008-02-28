@@ -14,7 +14,7 @@
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace kernel
 {

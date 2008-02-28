@@ -10,7 +10,7 @@
 #ifndef __MissionInterfaceBuilder_h_
 #define __MissionInterfaceBuilder_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ParamComboBox.h"
 
 namespace kernel

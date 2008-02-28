@@ -13,7 +13,7 @@
 #define __MIL_CheckPointManager_h_
 
 #include "MIL.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )

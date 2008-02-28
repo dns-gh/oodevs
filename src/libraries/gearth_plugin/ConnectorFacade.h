@@ -10,7 +10,7 @@
 #ifndef __gearth_ConnectorFacade_h_
 #define __gearth_ConnectorFacade_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "dispatcher/MessageHandler_ABC.h"
 #include <list>
 

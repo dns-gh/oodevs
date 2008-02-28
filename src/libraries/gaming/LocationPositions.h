@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace kernel
 {

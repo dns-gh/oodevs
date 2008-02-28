@@ -10,7 +10,7 @@
 #ifndef __AutomatTacticalHierarchies_h_
 #define __AutomatTacticalHierarchies_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/MergingTacticalHierarchies.h"
 #include "clients_kernel/Resolver_ABC.h"
 

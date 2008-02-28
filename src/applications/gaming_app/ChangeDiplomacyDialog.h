@@ -13,7 +13,7 @@
 
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_gui/ValuedComboBox.h"
 
 namespace kernel

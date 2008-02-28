@@ -10,7 +10,7 @@
 #ifndef __NBCObjectAttribute_h_
 #define __NBCObjectAttribute_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher

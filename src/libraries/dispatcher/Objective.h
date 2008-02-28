@@ -10,7 +10,7 @@
 #ifndef __Objective_h_
 #define __Objective_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Localisation.h"
 
 namespace dispatcher

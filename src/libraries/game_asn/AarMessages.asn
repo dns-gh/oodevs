@@ -1,0 +1,40 @@
+--
+-- file name : AarMessages.asn
+--
+-- After Action Review messages list
+--
+
+AarMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS AarExports FROM Aar;
+
+AarMessagesIncludes ::= SEQUENCE
+{ AarExports }
+AarMessagesExports  ::= NULL
+-- END includes
+
+
+-- 
+-- 
+-- 
+MsgsAarToClient ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
+        msg-aar-information             MsgAarInformation,
+        msg-indicator-result            MsgIndicatorResult
+    }
+}
+
+MsgsClientToAar ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
+        msg-indicator-request           MsgIndicatorRequest
+    }
+}
+
+END

@@ -13,7 +13,7 @@
 #include "HlaExtension_ABC.h"
 #include "Formation.h"
 #include "EntityIdentifier.h"
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/Updatable_ABC.h"
 
 namespace dispatcher

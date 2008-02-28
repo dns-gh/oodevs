@@ -10,7 +10,7 @@
 #ifndef __ObjectKnowledge_h_
 #define __ObjectKnowledge_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Localisation.h"
 #include "ModelRefsContainer.h"
 #include "Entity_ABC.h"

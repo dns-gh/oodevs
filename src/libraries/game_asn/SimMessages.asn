@@ -1,10 +1,10 @@
 --
--- file name : Messages.asn
+-- file name : SimMessages.asn
 --
 -- Liste des messages
 --
 
-Messages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+SimMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 -- BEGIN includes
 IMPORTS BaseExports                   FROM Base
@@ -27,16 +27,15 @@ IMPORTS BaseExports                   FROM Base
         ArmyExports                   FROM Army
         AuthExports                   FROM Auth
         FolkExports                   FROM Folk
-        AarExports                    FROM Aar
         IntelligenceExports           FROM Intelligence;
 
-MessagesIncludes ::= SEQUENCE
+SimMessagesIncludes ::= SEQUENCE
 { BaseExports, LimaLimiteExports, OrderExports, ControlExports, KnowledgeGroupExports,
   FormationExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports,
   ObjectKnowledgeExports, PopulationExports, PopulationKnowledgeExports, LogMaintenanceExports,
   LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports, 
-  AarExports, IntelligenceExports }
-MessagesExports  ::= NULL
+  IntelligenceExports }
+SimMessagesExports  ::= NULL
 -- END includes
 
 
@@ -257,88 +256,6 @@ MsgsMiddleToSim ::= SEQUENCE
     msg     CHOICE
     {
         msg-control-client-announcement MsgControlClientAnnouncement
-    }
-}
-
---
---
---
-MsgsReplayToClient ::= SEQUENCE
-{
-    context INTEGER DEFAULT 0,
-    msg     CHOICE
-    {
-        msg-control-replay-information      MsgControlReplayInformation,
-        msg-control-stop-ack                MsgControlStopAck,
-        msg-control-pause-ack               MsgControlPauseAck,
-        msg-control-resume-ack              MsgControlResumeAck,
-        msg-control-skip-to-tick-ack        MsgControlSkipToTickAck,
-        msg-control-change-time-factor-ack  MsgControlChangeTimeFactorAck
-    }
-}
-
-MsgsClientToReplay ::= SEQUENCE
-{
-    context INTEGER DEFAULT 0,
-    msg     CHOICE
-    {
-        msg-control-stop                MsgControlStop,
-        msg-control-pause               MsgControlPause,
-        msg-control-resume              MsgControlResume,
-        msg-control-skip-to-tick        MsgControlSkipToTick,
-        msg-control-change-time-factor  MsgControlChangeTimeFactor
-    }
-}
-
---
---
---
-MsgsAuthenticationToClient ::= SEQUENCE
-{
-    context INTEGER DEFAULT 0,
-    msg     CHOICE
-    {
-        msg-authentication-response         MsgAuthenticationResponse,
-        msg-profile-creation                MsgProfileCreation,
-        msg-profile-creation-request-ack    MsgProfileCreationRequestAck,
-        msg-profile-update                  MsgProfileUpdate,
-        msg-profile-update-request-ack      MsgProfileUpdateRequestAck,
-        msg-profile-destruction             MsgProfileDestruction,
-        msg-profile-destruction-request-ack MsgProfileDestructionRequestAck
-    }
-}
-
-MsgsClientToAuthentication ::= SEQUENCE
-{
-    context INTEGER DEFAULT 0,
-    msg     CHOICE
-    {
-        msg-authentication-request      MsgAuthenticationRequest,
-        msg-profile-creation-request    MsgProfileCreationRequest,
-        msg-profile-update-request      MsgProfileUpdateRequest,
-        msg-profile-destruction-request MsgProfileDestructionRequest
-    }
-}
-
--- 
--- 
--- 
-MsgsAarToClient ::= SEQUENCE
-{
-    context INTEGER DEFAULT 0,
-    msg     CHOICE
-    {
-        msg-aar-information             MsgAarInformation,
-        msg-indicator-result            MsgIndicatorResult
-    }
-}
-
-MsgsClientToAar ::= SEQUENCE
-{
-    context INTEGER DEFAULT 0,
-    msg     CHOICE
-    {
-        msg-indicator-request           MsgIndicatorRequest
     }
 }
 

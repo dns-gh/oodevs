@@ -10,7 +10,7 @@
 #ifndef __Troops_h_
 #define __Troops_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"

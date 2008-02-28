@@ -10,7 +10,7 @@
 #ifndef __Line_h_
 #define __Line_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Shape_ABC.h"
 #include "ESRI.h"
 

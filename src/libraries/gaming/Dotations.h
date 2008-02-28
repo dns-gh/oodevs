@@ -10,7 +10,7 @@
 #ifndef __Dotations_h_
 #define __Dotations_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver.h"

@@ -10,7 +10,7 @@
 #ifndef __Position_h_
 #define __Position_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 #include <string>
 #pragma warning (push)
 #pragma warning (disable : 4702 )

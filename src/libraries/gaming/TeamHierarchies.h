@@ -10,7 +10,7 @@
 #ifndef __TeamHierarchies_h_
 #define __TeamHierarchies_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"

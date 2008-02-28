@@ -16,7 +16,6 @@
 #include "gaming/ActionParameterLimaList.h"
 #include "gaming/Action_ABC.h"
 #include "clients_kernel/OrderParameter.h"
-#include "game_asn/Asn.h"
 
 using namespace kernel;
 

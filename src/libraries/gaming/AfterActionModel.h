@@ -10,7 +10,7 @@
 #ifndef __AfterActionModel_h_
 #define __AfterActionModel_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Aar.h"
 #include "clients_kernel/Resolver.h"
 
 namespace kernel

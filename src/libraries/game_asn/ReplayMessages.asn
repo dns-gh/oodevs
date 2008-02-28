@@ -1,0 +1,47 @@
+--
+-- file name : ReplayMessages.asn
+--
+-- Replay messages list
+--
+
+ReplayMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS ControlExports FROM Control;
+
+ReplayMessagesIncludes ::= SEQUENCE
+{ ControlExports }
+ReplayMessagesExports  ::= NULL
+-- END includes
+
+--
+--
+--
+MsgsReplayToClient ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
+        msg-control-replay-information      MsgControlReplayInformation,
+        msg-control-stop-ack                MsgControlStopAck,
+        msg-control-pause-ack               MsgControlPauseAck,
+        msg-control-resume-ack              MsgControlResumeAck,
+        msg-control-skip-to-tick-ack        MsgControlSkipToTickAck,
+        msg-control-change-time-factor-ack  MsgControlChangeTimeFactorAck
+    }
+}
+
+MsgsClientToReplay ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
+        msg-control-stop                MsgControlStop,
+        msg-control-pause               MsgControlPause,
+        msg-control-resume              MsgControlResume,
+        msg-control-skip-to-tick        MsgControlSkipToTick,
+        msg-control-change-time-factor  MsgControlChangeTimeFactor
+    }
+}
+
+END

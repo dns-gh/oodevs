@@ -10,7 +10,7 @@
 #ifndef __ParamDateTime_h_
 #define __ParamDateTime_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "Param_ABC.h"
 
 class Simulation;

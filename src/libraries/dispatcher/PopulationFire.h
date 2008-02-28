@@ -11,7 +11,7 @@
 #define __PopulationFire_h_
 
 #include "Entity_ABC.h"
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 
 namespace dispatcher
 {

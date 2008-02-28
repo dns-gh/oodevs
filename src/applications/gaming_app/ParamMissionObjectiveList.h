@@ -10,7 +10,7 @@
 #ifndef __ParamMissionObjectiveList_h_
 #define __ParamMissionObjectiveList_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ListParameter.h"
 
 namespace kernel

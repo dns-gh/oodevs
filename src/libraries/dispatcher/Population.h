@@ -10,7 +10,7 @@
 #ifndef __Population_h_
 #define __Population_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ModelsContainer.h"
 #include "Entity_ABC.h"
 #include "DecisionalState.h"

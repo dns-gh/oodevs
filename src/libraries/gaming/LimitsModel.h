@@ -10,7 +10,7 @@
 #ifndef __LimitsModel_h_
 #define __LimitsModel_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "clients_kernel/Resolver.h"
 
 class TacticalLine_ABC;

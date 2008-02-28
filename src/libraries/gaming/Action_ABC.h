@@ -10,7 +10,7 @@
 #ifndef __Action_ABC_h_
 #define __Action_ABC_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 #include "tools/Extendable.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "ActionParameterContainer_ABC.h"

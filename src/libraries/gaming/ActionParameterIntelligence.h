@@ -10,7 +10,7 @@
 #ifndef __ActionParameterIntelligence_h_
 #define __ActionParameterIntelligence_h_
 
-#include "game_asn/Asn.h"
+#include "game_asn/Simulation.h"
 #include "ActionParameterEntity.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
