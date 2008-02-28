@@ -8,13 +8,10 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Dispatcher.h"
-
 #include "Model.h"
 #include "SimulationNetworker.h"
 #include "ClientsNetworker.h"
-#include "ProfileManager.h"
 #include "PluginFactory.h"
 
 using namespace dispatcher;
@@ -25,16 +22,14 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Dispatcher::Dispatcher( const Config& config )
     : config_( config )
-    , pModel_( new Model( config_ ) )
+    , handler_()
+    , model_( new Model( config_ ) )
+    , clientsNetworker_( new ClientsNetworker( config_, handler_ ) )
+    , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, handler_, config_ ) )
+    , factory_( new PluginFactory( config_, *model_, *simulationNetworker_, *clientsNetworker_, handler_ ) )
 {
-    pClientsNetworker_   .reset( new ClientsNetworker   ( config_, handler_ ) );
-    pSimulationNetworker_.reset( new SimulationNetworker( *pModel_, *pClientsNetworker_, handler_, config_ ) );
-
-    handler_.AddHandler( pClientsNetworker_ );
-    handler_.AddHandler( pModel_ );
-
-    PluginFactory factory( config_, *pModel_, *pSimulationNetworker_, *pClientsNetworker_ );
-    factory.RegisterPlugins( handler_ );
+    handler_.AddHandler( clientsNetworker_ );
+    handler_.AddHandler( model_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,11 +38,8 @@ Dispatcher::Dispatcher( const Config& config )
 // -----------------------------------------------------------------------------
 Dispatcher::~Dispatcher()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: Dispatcher::Update
@@ -55,10 +47,24 @@ Dispatcher::~Dispatcher()
 // -----------------------------------------------------------------------------
 void Dispatcher::Update()
 {
-    assert( pClientsNetworker_    );
-    assert( pSimulationNetworker_ );
-
-    pClientsNetworker_   ->Update();
-    pSimulationNetworker_->Update();
+    clientsNetworker_   ->Update();
+    simulationNetworker_->Update();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Dispatcher::RegisterPluginFactory
+// Created: SBO 2008-02-28
+// -----------------------------------------------------------------------------
+void Dispatcher::RegisterPluginFactory( PluginFactory_ABC& factory )
+{
+    factory_->Register( factory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dispatcher::CreatePlugins
+// Created: SBO 2008-02-28
+// -----------------------------------------------------------------------------
+void Dispatcher::CreatePlugins()
+{
+    factory_->Instanciate();
+}

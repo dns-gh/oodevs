@@ -19,9 +19,10 @@ namespace dispatcher
 {
     class Config;
     class Model;
-    class CompositePlugin;
-    class SimulationNetworker;
+    class SimulationPublisher_ABC;
     class ClientsNetworker;
+    class CompositePlugin;
+    class PluginFactory_ABC;
 
 // =============================================================================
 /** @class  PluginFactory
@@ -35,13 +36,14 @@ class PluginFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model, SimulationNetworker& simulation, ClientsNetworker& clients );
+             PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler );
     virtual ~PluginFactory();
     //@}
 
     //! @name Operations
     //@{
-    void RegisterPlugins( CompositePlugin& handler ) const;
+    void Register( PluginFactory_ABC& factory );
+    void Instanciate();
     //@}
 
 private:
@@ -53,16 +55,23 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadPlugin( const std::string& name, xml::xistream& xis, CompositePlugin& handler ) const;
+    void ReadPlugin( const std::string& name, xml::xistream& xis ) const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< PluginFactory_ABC* > T_Factories;
     //@}
 
 private:
     //! @name Member data
     //@{
+    CompositePlugin& handler_;
     const Config& config_;
     Model& model_;
-    SimulationNetworker& simulation_;
+    SimulationPublisher_ABC& simulation_;
     ClientsNetworker& clients_;
+    T_Factories factories_;
     //@}
 };
 

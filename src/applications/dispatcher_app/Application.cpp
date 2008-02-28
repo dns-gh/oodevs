@@ -7,65 +7,57 @@
 //
 // *****************************************************************************
 
-#include "App.h"
-
-#include <cassert>
+#include "Application.h"
 #include "dispatcher/Dispatcher.h"
+#include "hla_plugin/HlaPluginFactory.h"
+#ifdef CROSSBOW_PLUGIN
+#   include "gearth_plugin/GearthPluginFactory.h"
+#   include "crossbow_plugin/CrossbowPluginFactory.h"
+#endif
 #include "MT/MT_Logger/MT_Logger_Lib.h"
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
-#include <boost/program_options.hpp>
-#pragma warning( pop )
-
 #include <windows.h> //$$$ A VIRER
 
-using namespace dispatcher;
-namespace po = boost::program_options;
-
 // -----------------------------------------------------------------------------
-// Name: App constructor
+// Name: Application constructor
 // Created: NLD 2006-10-10
 // -----------------------------------------------------------------------------
-App::App( int argc, char** argv )
-    : pDispatcher_ ( 0 )
-    , config_      ()
+Application::Application( int argc, char** argv )
 {
-    std::string strMsg = "CSword(tm) Dispatcher";
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    MT_LOG_STARTUP_MESSAGE( strMsg.c_str() );
+    MT_LOG_STARTUP_MESSAGE( "Sword Officer Training(tm) Dispatcher" );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-
     config_.Parse( argc, argv );
-    pDispatcher_ = new Dispatcher( config_ );
+
+    dispatcher_.reset( new dispatcher::Dispatcher( config_ ) );
+    dispatcher_->RegisterPluginFactory( *new hla::HlaPluginFactory() );
+#ifdef CROSSBOW_PLUGIN
+    dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
+    dispatcher_->RegisterPluginFactory( *new gearth::GearthPluginFactory() );
+#endif
+    dispatcher_->CreatePlugins();
 }
 
 // -----------------------------------------------------------------------------
 // Name: App destructor
 // Created: NLD 2006-10-10
 // -----------------------------------------------------------------------------
-App::~App()
+Application::~Application()
 {
-    delete pDispatcher_;
+    // NOTHING
 }
 
-// =============================================================================
-// MAIN
-// =============================================================================
-
 // -----------------------------------------------------------------------------
-// Name: App::Run
+// Name: Application::Run
 // Created: NLD 2006-10-10
 // -----------------------------------------------------------------------------
-int App::Execute()
+int Application::Execute()
 {
-    assert( pDispatcher_ );
     try
     {
         while( 1 )
         {
             ::Sleep( 10 );
-            pDispatcher_->Update();
+            dispatcher_->Update();
         }
     }
     catch( std::exception& e )

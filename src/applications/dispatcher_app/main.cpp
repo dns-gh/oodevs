@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "App.h"
+#include "Application.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 #include "tools/win32/FlexLm.h"
@@ -29,7 +29,7 @@ int Run( int argc, char** argv )
     int nResult = 0;
     try
     {
-        App app( argc, argv );
+        Application app( argc, argv );
         nResult = app.Execute();
     }
     catch( std::exception& e )

@@ -11,6 +11,11 @@
 
 #include "SIM_Dispatcher.h"
 #include "SIM_Config.h"
+#include "hla_plugin/HlaPluginFactory.h"
+#ifdef CROSSBOW_PLUGIN
+#   include "gearth_plugin/GearthPluginFactory.h"
+#   include "crossbow_plugin/CrossbowPluginFactory.h"
+#endif
 #include "tools/win32/Win32Exception.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
@@ -21,6 +26,13 @@
 SIM_Dispatcher::SIM_Dispatcher( SIM_Config& config )
     : dispatcher_( config )
 {
+//    dispatcher_.RegisterPluginFactory( *new hla::HlaPluginFactory() );
+#ifdef CROSSBOW_PLUGIN
+    dispatcher_.RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
+    dispatcher_.RegisterPluginFactory( *new gearth::GearthPluginFactory() );
+#endif
+    dispatcher_.CreatePlugins();
+
     Thread::Start();
 }
     

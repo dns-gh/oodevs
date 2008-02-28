@@ -19,6 +19,8 @@ namespace dispatcher
     class Model;
     class SimulationNetworker;
     class ClientsNetworker;
+    class PluginFactory_ABC;
+    class PluginFactory;
 
 // =============================================================================
 /** @class  Dispatcher
@@ -38,6 +40,8 @@ public:
     //! @name Operations
     //@{
     void Update();
+    void RegisterPluginFactory( PluginFactory_ABC& factory );
+    void CreatePlugins();
     //@}
 
 private:
@@ -50,9 +54,10 @@ private:
 private:
     const Config&                             config_;
     CompositePlugin                           handler_;
-    boost::shared_ptr< Model >                pModel_;
-    boost::shared_ptr< ClientsNetworker >     pClientsNetworker_;
-    boost::shared_ptr< SimulationNetworker >  pSimulationNetworker_;
+    boost::shared_ptr< Model >                model_;
+    boost::shared_ptr< ClientsNetworker >     clientsNetworker_;
+    boost::shared_ptr< SimulationNetworker >  simulationNetworker_;
+    std::auto_ptr< PluginFactory >            factory_;
 };
 
 }

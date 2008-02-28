@@ -12,27 +12,25 @@
 #include "SaverPlugin.h"
 #include "Config.h"
 #include "CompositePlugin.h"
-#include "SimulationNetworker.h"
+#include "SimulationPublisher_ABC.h"
+#include "ClientsNetworker.h"
 #include "DispatcherPlugin.h"
 #include "RightsPlugin.h"
-#include "ClientsNetworker.h"
-
-#include "gearth_plugin/GearthPlugin.h"
-#include "crossbow_plugin/CrossbowPlugin.h"
-#include "hla_plugin/HlaPlugin.h"
+#include "PluginFactory_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: PluginFactory constructor
-// Created: SBO 2007-07-24
+// Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-PluginFactory::PluginFactory( const Config& config, Model& model, SimulationNetworker& simulation, ClientsNetworker& clients )
-    : config_( config )
-    , model_( model )
-    , simulation_ ( simulation )
-    , clients_( clients )
+PluginFactory::PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler )
+    : handler_   ( handler )
+    , config_    ( config )
+    , model_     ( model )
+    , simulation_( simulation )
+    , clients_   ( clients )
 {
     // NOTHING
 }
@@ -43,41 +41,49 @@ PluginFactory::PluginFactory( const Config& config, Model& model, SimulationNetw
 // -----------------------------------------------------------------------------
 PluginFactory::~PluginFactory()
 {
-    // NOTHING
+    for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )
+        delete *it;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PluginFactory::RegisterPlugins
-// Created: SBO 2007-07-24
+// Name: PluginFactory::Register
+// Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-void PluginFactory::RegisterPlugins( CompositePlugin& handler ) const
+void PluginFactory::Register( PluginFactory_ABC& factory )
 {
-    RightsPlugin* rights = new RightsPlugin( model_, clients_, config_, clients_, handler, clients_ );
-    handler.Add( rights );
-    handler.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights ) );
+    factories_.push_back( &factory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PluginFactory::Instanciate
+// Created: SBO 2008-02-28
+// -----------------------------------------------------------------------------
+void PluginFactory::Instanciate()
+{
+    RightsPlugin* rights = new RightsPlugin( model_, clients_, config_, clients_, handler_, clients_ );
+    handler_.Add( rights );
+    handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights ) );
 
     xml::xifstream xis( config_.GetSessionFile() );
-    xis >> xml::start( "session" ) >> xml::start( "config" )
-        >> xml::start( "dispatcher" ) >> xml::start( "plugins" );
-
-    xis >> xml::list( *this, &PluginFactory::ReadPlugin, handler );
+    xis >> xml::start( "session" ) >> xml::start( "config" ) >> xml::start( "dispatcher" ) >> xml::start( "plugins" )
+        >> xml::list( *this, &PluginFactory::ReadPlugin );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PluginFactory::ReadPlugin
-// Created: AGE 2008-02-22
+// Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis, CompositePlugin& handler ) const
+void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis ) const
 {
     if( name == "recorder" )
-        handler.Add( new SaverPlugin( model_, config_ ) );
-    else if( name == "hla" )
-        handler.Add( new hla::HlaPlugin( model_, config_, xis ) );
-#ifdef CROSSBOW_PLUGIN // $$$$ JCR 2007-08-08: for build server purpose - does not include <com and atl> components
-    else if( name == "gearth" )
-        handler.Add( new gearth::GearthPlugin( model_, config_, xis ) );
-    else if( name == "crossbow" )
-        handler.Add( new crossbow::CrossbowPlugin( model_, config_, simulation_, xis ) );
-#endif
-
+    {
+        handler_.Add( new SaverPlugin( model_, config_ ) );
+        return;
+    }
+    for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )
+    {
+        std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, simulation_, clients_, clients_ ) );
+        if( plugin.get() )
+            handler_.Add( plugin.release() );
+    }
 }

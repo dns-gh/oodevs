@@ -7,10 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __App_h_
-#define __App_h_
+#ifndef __Application_h_
+#define __Application_h_
 
 #include <string>
+#include <memory>
 #include "dispatcher/Config.h"
 
 namespace dispatcher
@@ -19,19 +20,19 @@ namespace dispatcher
 }
 
 // =============================================================================
-/** @class  App
-    @brief  App
+/** @class  Application
+    @brief  Application
 */
 // Created: NLD 2006-10-10
 // =============================================================================
-class App
+class Application
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-     App( int argc, char** argv );
-    ~App();
+             Application( int argc, char** argv );
+    virtual ~Application();
     //@}
 
     //! @name Main
@@ -42,16 +43,16 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    App( const App& );            //!< Copy constructor
-    App& operator=( const App& ); //!< Assignement operator
+    Application( const Application& );            //!< Copy constructor
+    Application& operator=( const Application& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
     dispatcher::Config      config_;
-    dispatcher::Dispatcher* pDispatcher_;
+    std::auto_ptr< dispatcher::Dispatcher > dispatcher_;
     //@}
 };
 
-#endif // __App_h_
+#endif // __Application_h_
