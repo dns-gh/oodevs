@@ -12,6 +12,7 @@
 
 #include "Plugin_ABC.h"
 #include "LinkResolver_ABC.h"
+#include "game_asn/Authentication.h"
 
 namespace tools
 {

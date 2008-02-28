@@ -10,7 +10,9 @@
 #ifndef __Profile_ABC_h_
 #define __Profile_ABC_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
+#include "game_asn/Authentication.h"
+#include "game_asn/Replay.h"
 
 namespace dispatcher
 {

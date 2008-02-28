@@ -13,7 +13,7 @@
 #include "Plugin_ABC.h"
 #include "MT/MT_Time/MT_Timer_ABC.h"
 #include "MT/MT_Time/MT_TimerManager.h"
-#include "game_asn/Simulation.h"
+#include "game_asn/Replay.h"
 
 namespace tools
 {

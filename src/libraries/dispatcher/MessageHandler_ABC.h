@@ -10,7 +10,7 @@
 #ifndef __MessageHandler_ABC_h_
 #define __MessageHandler_ABC_h_
 
-#include "game_asn/asn.h"
+#include "game_asn/Simulation.h"
 
 namespace dispatcher
 {

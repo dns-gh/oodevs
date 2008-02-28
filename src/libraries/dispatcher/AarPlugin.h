@@ -11,6 +11,7 @@
 #define __AarPlugin_h_
 
 #include "Plugin_ABC.h"
+#include "game_asn/Aar.h"
 
 namespace tools
 {
