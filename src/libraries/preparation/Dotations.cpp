@@ -34,7 +34,7 @@ Dotations::Dotations( Controller& controller, Entity_ABC& entity, PropertiesDict
 // Name: Dotations constructor
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
-Dotations::Dotations( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
+Dotations::Dotations( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, std::string >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
 {
     CreateDictionary( entity, dico );
@@ -56,7 +56,7 @@ Dotations::~Dotations()
 // Name: Dotations::ReadDotation
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
-void Dotations::ReadDotation( xml::xistream& xis, const Resolver_ABC< DotationType, QString >& resolver )
+void Dotations::ReadDotation( xml::xistream& xis, const Resolver_ABC< DotationType, std::string >& resolver )
 {
     Dotation* dotation = new Dotation( xis, resolver );
     item_->AddDotation( *dotation );

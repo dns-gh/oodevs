@@ -146,9 +146,9 @@ QString ReportFactory::RenderParameter( const ASN1T_MissionParameter& value ) co
     case T_MissionParameter_value_populationKnowledge:
         return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.value.u.populationKnowledge );
     case T_MissionParameter_value_equipmentType:
-        return equipmentResolver_.Get( value.value.u.equipmentType ).GetName();
+        return equipmentResolver_.Get( value.value.u.equipmentType ).GetName().c_str();
     case T_MissionParameter_value_dotationType:
-        return dotationResolver_.Get( value.value.u.dotationType ).GetCategory();
+        return dotationResolver_.Get( value.value.u.dotationType ).GetCategory().c_str();
     case T_MissionParameter_value_tirIndirect:
         return QString::number( value.value.u.tirIndirect );
     case T_MissionParameter_value_aCharStr:

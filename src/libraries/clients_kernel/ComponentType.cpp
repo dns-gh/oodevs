@@ -23,10 +23,8 @@ ComponentType::ComponentType( xml::xistream& xis )
     , hasMedical_( false )
     , hasSupply_( false )
 {
-    std::string name;
-    xis >> attribute( "name", name )
+    xis >> attribute( "name", name_ )
         >> attribute( "id", id_ );
-    name_ = name.c_str();
 
     xis >> optional() 
         >> start( "logistic-functions" )
@@ -57,7 +55,7 @@ void ComponentType::ReadPresence( xml::xistream& , bool& flag ) const
 // Name: ComponentType::GetName
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-QString ComponentType::GetName() const
+std::string ComponentType::GetName() const
 {
     return name_;
 }

@@ -211,7 +211,7 @@ void LogisticSupplyChangeQuotasDialog::AddDotation( const kernel::Entity_ABC& en
         while( it.HasMoreElements() )
         {
             const Dotation& dotation = it.NextElement();
-            const QString type = dotation.type_->GetCategory();
+            const QString type = dotation.type_->GetCategory().c_str();
             Dotation& supply = supplies_[ type ];
             if( ! supply.type_ )
             {

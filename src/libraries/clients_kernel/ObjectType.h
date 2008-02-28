@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    QString GetName() const;
+    std::string GetName() const;
     virtual void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
 
     bool CanBeReservedObstacle() const;
@@ -58,7 +58,7 @@ public:
     //! @name Static members
     //@{
     unsigned long id_;
-    QString name_;
+    std::string name_;
     const char** xpm_;
 
     bool canBeReservedObstacle_;

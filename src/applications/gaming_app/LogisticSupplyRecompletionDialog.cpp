@@ -281,7 +281,7 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
         const unsigned nPos = dotationsTable_->numRows();
         dotationsTable_->insertRows( nPos, 1 );
         dotationsTable_->setItem( nPos, 0, new QCheckTableItem( dotationsTable_, 0 ) );
-        dotationsTable_->setText( nPos, 1, type.GetName() );
+        dotationsTable_->setText( nPos, 1, type.GetName().c_str() );
         dotationsTable_->setItem( nPos, 2, new SpinTableItem( dotationsTable_, 0, 100, 1 ) );
     }
     dotationsTable_->setMinimumHeight( dotationsTable_->rowHeight( 0 ) * 5 );
@@ -335,9 +335,9 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
             const unsigned nPos = stockTable_->numRows();
             stockTable_->insertRows( nPos, 1 );
             stockTable_->setItem( nPos, 0, new QCheckTableItem( stockTable_, 0 ) );
-            stockTable_->setText( nPos, 1, stock.type_->GetCategory() );
+            stockTable_->setText( nPos, 1, stock.type_->GetCategory().c_str() );
             stockTable_->setText( nPos, 2, QString::number( stock.quantity_ ) );
-            stocks_[ stock.type_->GetCategory() ] = &stock;
+            stocks_[ stock.type_->GetCategory().c_str() ] = &stock;
             show = true;
         }
     }

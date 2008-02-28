@@ -28,11 +28,9 @@ AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const kerne
 
 namespace
 {
-    const kernel::AutomatType& ReadType( const kernel::Resolver_ABC< kernel::AutomatType, QString >& types, xml::xistream& input )
+    const kernel::AutomatType& ReadType( const kernel::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input )
     {
-        std::string type;
-        input >> xml::attribute( "automatType", type );
-        return types.Get( QString( type.c_str() ) );
+        return types.Get( xml::attribute< std::string >( input, "automatType" ) );
     }
 }
 
@@ -40,7 +38,7 @@ namespace
 // Name: AutomatTemplateElement constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const kernel::Resolver_ABC< kernel::AutomatType, QString >& types, xml::xistream& input )
+AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const kernel::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input )
     : agents_( agents )
     , type_  ( ReadType( types, input ) )
 {
@@ -75,7 +73,7 @@ kernel::Entity_ABC* AutomatTemplateElement::Instanciate( kernel::Entity_ABC& sup
 void AutomatTemplateElement::Serialize( xml::xostream& output )
 {
     output << xml::attribute( "type", "automat" )
-           << xml::attribute( "automatType", type_.GetName().ascii() );
+           << xml::attribute( "automatType", type_.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,5 +92,5 @@ bool AutomatTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) 
 // -----------------------------------------------------------------------------
 QString AutomatTemplateElement::GetName() const
 {
-    return type_.GetName();
+    return type_.GetName().c_str();
 }

@@ -46,7 +46,7 @@ ActionParameter< T >::~ActionParameter()
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
 template< typename T >
-QString ActionParameter< T >::GetType() const
+std::string ActionParameter< T >::GetType() const
 {
     return parameter_.GetType();
 }

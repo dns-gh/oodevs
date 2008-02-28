@@ -24,7 +24,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-template< typename T, typename Identifier1 = unsigned long, typename Identifier2 = QString >
+template< typename T, typename Identifier1 = unsigned long, typename Identifier2 = std::string >
 class Resolver2 : public Resolver_ABC< T, Identifier1 >
                 , public Resolver_ABC< T, Identifier2 >
 {

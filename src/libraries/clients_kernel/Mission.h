@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     unsigned int GetId() const;
-    QString GetName() const;
+    std::string GetName() const;
     const MissionType& GetType() const;
     //@}
 

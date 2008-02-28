@@ -16,7 +16,7 @@
 // Created: AGE 2007-10-23
 // -----------------------------------------------------------------------------
 ActionParameterDotationTypeList::ActionParameterDotationTypeList( const kernel::OrderParameter& parameter )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
 {
     // NOTHING
 }

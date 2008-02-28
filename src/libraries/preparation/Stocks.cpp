@@ -34,7 +34,7 @@ Stocks::Stocks( Controller& controller, Entity_ABC& entity, PropertiesDictionary
 // Name: Stocks constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
+Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, std::string >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
 {
     CreateDictionary( entity, dico );
@@ -56,7 +56,7 @@ Stocks::~Stocks()
 // Name: Stocks::ReadDotation
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void Stocks::ReadDotation( xml::xistream& xis, const Resolver_ABC< DotationType, QString >& resolver )
+void Stocks::ReadDotation( xml::xistream& xis, const Resolver_ABC< DotationType, std::string >& resolver )
 {
     Dotation* dotation = new Dotation( xis, resolver );
     item_->AddDotation( *dotation );

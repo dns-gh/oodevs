@@ -26,7 +26,7 @@ using namespace xml;
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, Resolver_ABC< KnowledgeGroupType, QString >& types )
+KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( types.Find( "Standard" ) ) // $$$$ SBO 2006-11-17: Hard coded default
 {
@@ -39,13 +39,13 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, Re
 // Name: KnowledgeGroup constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, Resolver_ABC< KnowledgeGroupType, QString >& types )
-    : EntityImplementation< KnowledgeGroup_ABC >( controller, ReadId( xis ), "" )
+KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, Resolver_ABC< KnowledgeGroupType, std::string >& types )
+    : EntityImplementation< KnowledgeGroup_ABC >( controller, xml::attribute< unsigned int >( xis, "id" ), "" )
 {
     std::string type, name;
     xis >> attribute( "type", type )
         >> optional() >> attribute( "name", name );
-    type_ = &types.Get( type.c_str() );
+    type_ = &types.Get( type );
     name_ = name.empty() ? tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );
 
@@ -60,17 +60,6 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controll
 KnowledgeGroup::~KnowledgeGroup()
 {
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::ReadId
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-unsigned long KnowledgeGroup::ReadId( xml::xistream& xis )
-{
-    int id;
-    xis >> attribute( "id", id );
-    return id;
 }
 
 // -----------------------------------------------------------------------------

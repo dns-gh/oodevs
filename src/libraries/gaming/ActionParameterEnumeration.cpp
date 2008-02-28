@@ -16,23 +16,13 @@
 using namespace kernel;
 using namespace xml;
 
-namespace
-{
-    unsigned long ReadValue( xml::xistream& xis )
-    {
-        unsigned long value;
-        xis >> attribute( "value", value );
-        return value;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterEnumeration constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterEnumeration::ActionParameterEnumeration( const OrderParameter& parameter, xml::xistream& xis )
-    : ActionParameter< QString >( parameter )
-    , value_( parameter.GetValue( ReadValue( xis ) ) )
+    : ActionParameter< std::string >( parameter )
+    , value_( parameter.GetValue( xml::attribute< unsigned long >( xis, "value" ) ) )
 {
     SetValue( value_.GetName() );
 }
@@ -42,7 +32,7 @@ ActionParameterEnumeration::ActionParameterEnumeration( const OrderParameter& pa
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterEnumeration::ActionParameterEnumeration( const OrderParameter& parameter, unsigned int value )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
     , value_( parameter.GetValue( value ) )
 {
     SetValue( value_.GetName() );
@@ -63,7 +53,7 @@ ActionParameterEnumeration::~ActionParameterEnumeration()
 // -----------------------------------------------------------------------------
 void ActionParameterEnumeration::Serialize( xml::xostream& xos ) const
 {
-    ActionParameter< QString >::Serialize( xos );
+    ActionParameter< std::string >::Serialize( xos );
     xos << attribute( "value", value_.GetId() );
 }
 

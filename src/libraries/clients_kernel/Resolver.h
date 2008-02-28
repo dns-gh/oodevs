@@ -140,10 +140,10 @@ protected:
 };
 
 template< typename T >
-class StringResolver : public Resolver< T, QString >
+class StringResolver : public Resolver< T, std::string >
 {
 public:
-             StringResolver() : Resolver< T, QString >() {}
+             StringResolver() : Resolver< T, std::string >() {}
     virtual ~StringResolver() {}
 };
 

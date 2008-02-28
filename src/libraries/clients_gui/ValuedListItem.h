@@ -61,6 +61,8 @@ public:
     template< typename T >
     void Set( T* value, QString label1 = QString::null, QString label2 = QString::null );
     template< typename T >
+    void Set( T* value, const std::string& label1 );
+    template< typename T >
     void SetNamed( const T& value );
     void SetToolTip( const QString& text );
 
@@ -330,6 +332,17 @@ void ValuedListItem::Set( T* value, QString label1 /*= QString::null*/, QString 
     SetValue( value );
     setText( 0, label1 );
     setText( 1, label2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::Set
+// Created: AGE 2008-02-28
+// -----------------------------------------------------------------------------
+template< typename T >
+void ValuedListItem::Set( T* value, const std::string& label1 )
+{
+    SetValue( value );
+    setText( 0, label1.c_str() );
 }
 
 // -----------------------------------------------------------------------------

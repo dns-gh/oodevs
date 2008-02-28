@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetType() const;
+    virtual std::string GetType() const;
     virtual bool IsContext() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;

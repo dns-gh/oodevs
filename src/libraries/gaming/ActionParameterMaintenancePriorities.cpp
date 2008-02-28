@@ -24,7 +24,7 @@ using namespace xml;
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
 ActionParameterMaintenancePriorities::ActionParameterMaintenancePriorities( const OrderParameter& parameter )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
 {
     // NOTHING
 }
@@ -34,7 +34,7 @@ ActionParameterMaintenancePriorities::ActionParameterMaintenancePriorities( cons
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
 ActionParameterMaintenancePriorities::ActionParameterMaintenancePriorities( const OrderParameter& parameter, const Resolver_ABC< EquipmentType >& resolver, const ASN1T_LogMaintenancePriorities& asn )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
         AddPriority( resolver.Get( asn.elem[i] ) );
@@ -45,7 +45,7 @@ ActionParameterMaintenancePriorities::ActionParameterMaintenancePriorities( cons
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
 ActionParameterMaintenancePriorities::ActionParameterMaintenancePriorities( const OrderParameter& parameter, const Resolver_ABC< EquipmentType >& resolver, xml::xistream& xis )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
 {
     std::string value;
     xis >> attribute( "value", value );
@@ -70,8 +70,8 @@ ActionParameterMaintenancePriorities::~ActionParameterMaintenancePriorities()
 void ActionParameterMaintenancePriorities::AddPriority( const EquipmentType& value )
 {
     priorities_.push_back( &value );
-    QString current = GetValue();
-    if( !current.isEmpty() )
+    std::string current = GetValue();
+    if( !current.empty() )
         current += ", ";
     SetValue( current + value.GetName() );
 }
@@ -124,7 +124,7 @@ void ActionParameterMaintenancePriorities::Clean( ASN1T_MissionParameter& asn ) 
 // -----------------------------------------------------------------------------
 void ActionParameterMaintenancePriorities::Serialize( xml::xostream& xos ) const
 {
-    ActionParameter< QString >::Serialize( xos );
+    ActionParameter< std::string >::Serialize( xos );
     QString value( "" );
     for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
         value += ( !value.isEmpty() ? ";" : "" ) + QString::number( (*it)->GetId() );

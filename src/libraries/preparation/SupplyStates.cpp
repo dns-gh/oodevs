@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: SupplyStates constructor
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
-SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
+SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, std::string >& resolver, PropertiesDictionary& dico )
     : ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >( controller, entity )
     , controller_( controller )
     , resolver_( resolver )

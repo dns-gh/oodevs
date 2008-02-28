@@ -190,7 +190,7 @@ void InfoEventsWidget::SetContaminations( const Contaminations& attributes )
         QButton* btn = eventButtons_["contamination"];
         QStringList agents;
         for( unsigned int i = 0; i < attributes.contaminatingNbcAgents_.size(); ++i )
-            agents.append( attributes.contaminatingNbcAgents_[i]->GetName() );
+            agents.append( attributes.contaminatingNbcAgents_[i]->GetName().c_str() );
         btn->setText( QString::number( attributes.nContamination_ ) );
         QToolTip::add( btn, tr( "NBC: contamination of type '%1' level '%2'" ).arg( agents.join( ", " ) ).arg( attributes.nContamination_ ) );
     }

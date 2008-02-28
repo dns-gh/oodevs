@@ -20,10 +20,8 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 OrderParameterValue::OrderParameterValue( xml::xistream& xis )
 {
-    std::string name;
     xis >> attribute( "id", id_ )
-        >> attribute( "name", name );
-    name_ = name.c_str();
+        >> attribute( "name", name_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +46,7 @@ int OrderParameterValue::GetId() const
 // Name: OrderParameterValue::GetName
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
-QString OrderParameterValue::GetName() const
+std::string OrderParameterValue::GetName() const
 {
     return name_;
 }

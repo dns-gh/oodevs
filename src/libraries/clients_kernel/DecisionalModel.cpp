@@ -24,13 +24,11 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const Resolver_ABC< FragOrderType >& fragOrders )
 {
-    std::string name;
-    xis >> attribute( "name", name )
+    xis >> attribute( "name", name_ )
         >> optional() 
             >> start( "missions" )
 			>> list( "mission", *this, &DecisionalModel::ReadMission, factory, missionResolver )
             >> end();
-    name_ = name.c_str();
     RegisterDefaultFragOrders( factory, fragOrders );
 }
 
@@ -76,7 +74,7 @@ void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, Missi
 // Name: DecisionalModel::GetName
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-QString DecisionalModel::GetName() const
+std::string DecisionalModel::GetName() const
 {
     return name_;
 }
@@ -102,7 +100,7 @@ void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory, const 
 // -----------------------------------------------------------------------------
 void DecisionalModel::RegisterFragOrder( MissionFactory& factory, const FragOrderType& type )
 {
-    FragOrder* order = factory.CreateFragOrder( type.GetName().ascii() );
+    FragOrder* order = factory.CreateFragOrder( type.GetName() );
     Resolver< FragOrder >::Register( order->GetId(), *order );
 }
 

@@ -39,7 +39,7 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
     , valorization_                  ( 0 )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid );
     RegisterSelf( *this );
 
     if( message.m.construction_dotation_typePresent )

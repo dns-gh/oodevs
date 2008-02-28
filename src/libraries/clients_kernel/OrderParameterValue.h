@@ -37,14 +37,14 @@ public:
     //! @name Operations
     //@{
     int GetId() const;
-    QString GetName() const;
+    std::string GetName() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     int id_;
-    QString name_;
+    std::string name_;
     //@}
 };
 

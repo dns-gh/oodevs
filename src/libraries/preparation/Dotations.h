@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Dotations( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
-             Dotations( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico );
+             Dotations( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Dotations();
     //@}
 
@@ -64,7 +64,7 @@ private:
     //@{
     void CreateDictionary( kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    void ReadDotation( xml::xistream& xis, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver );
+    void ReadDotation( xml::xistream& xis, const kernel::Resolver_ABC< kernel::DotationType, std::string >& resolver );
     //@}
 
 private:

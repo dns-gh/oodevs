@@ -52,7 +52,7 @@ QString ActionParameter_ABC::GetName() const
 // Name: ActionParameter_ABC::GetType
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-QString ActionParameter_ABC::GetType() const
+std::string ActionParameter_ABC::GetType() const
 {
     return "undefined";
 }

@@ -64,6 +64,15 @@ void ValuedComboBox<T>::AddItem( const QString& label, const T& value )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ValuedComboBox::AddItem
+// Created: AGE 2008-02-28
+// -----------------------------------------------------------------------------
+template< typename T >
+void ValuedComboBox< T >::AddItem( const std::string& label, const T& value )
+{
+    AddItem( QString( label.c_str() ), value );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox::AddItem

@@ -50,7 +50,7 @@ public:
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                      const kernel::ObjectType& type, const QString& name, const Enum_ObstacleType& obstacleType, bool reservedObstacleActivated, IdManager& idManager );
              Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, 
-                     const kernel::Resolver_ABC< kernel::ObjectType, QString >& types, IdManager& idManager );
+                     const kernel::Resolver_ABC< kernel::ObjectType, std::string >& types, IdManager& idManager );
     virtual ~Object();
     //@}
 
@@ -79,7 +79,7 @@ private:
     void CreateDictionary( kernel::Controller& controller );
     unsigned long             ReadId                       ( xml::xistream& xis );
     QString                   ReadName                     ( xml::xistream& xis );
-    const kernel::ObjectType& ReadType                     ( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, QString >& types );
+    const kernel::ObjectType& ReadType                     ( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, std::string >& types );
     Enum_ObstacleType         ReadObstacleType             ( xml::xistream& xis );
     bool                      ReadReservedObstacleActivated( xml::xistream& xis );
     //@}

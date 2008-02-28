@@ -30,13 +30,13 @@ class PopulationType
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationType( xml::xistream& xis, const Resolver_ABC< DecisionalModel, QString >& modelResolver );
+             PopulationType( xml::xistream& xis, const Resolver_ABC< DecisionalModel, std::string >& modelResolver );
     virtual ~PopulationType();
     //@}
 
     //! @name Operations
     //@{
-    QString GetName() const;
+    std::string GetName() const;
     unsigned long GetId() const;
 
     float GetDensity() const;
@@ -58,7 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QString name_;
+    std::string name_;
     unsigned long id_;
     const DecisionalModel* model_;
 

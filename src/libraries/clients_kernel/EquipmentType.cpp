@@ -20,10 +20,8 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 EquipmentType::EquipmentType( xml::xistream& xis )
 {
-    std::string name;
-    xis >> attribute( "name", name )
+    xis >> attribute( "name", name_ )
         >> attribute( "id", id_ );
-    name_ = name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +37,7 @@ EquipmentType::~EquipmentType()
 // Name: EquipmentType::GetName
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-QString EquipmentType::GetName() const
+std::string EquipmentType::GetName() const
 {
     return name_;
 }

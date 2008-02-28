@@ -20,8 +20,8 @@ using namespace kernel;
 // Name: MissionFactory constructor
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-MissionFactory::MissionFactory( const Resolver_ABC< MissionType, QString >& unitMissions, const Resolver_ABC< MissionType, QString >& automatMissions
-                              , const Resolver_ABC< MissionType, QString >& populationMissions, const Resolver_ABC< FragOrderType, QString >& fragOrders )
+MissionFactory::MissionFactory( const Resolver_ABC< MissionType, std::string >& unitMissions, const Resolver_ABC< MissionType, std::string >& automatMissions
+                              , const Resolver_ABC< MissionType, std::string >& populationMissions, const Resolver_ABC< FragOrderType, std::string >& fragOrders )
     : unitMissions_( unitMissions )
     , automatMissions_( automatMissions )
     , populationMissions_( populationMissions )
@@ -45,7 +45,7 @@ MissionFactory::~MissionFactory()
 // -----------------------------------------------------------------------------
 Mission* MissionFactory::CreateAgentMission( const std::string& name )
 {
-    MissionType* type = unitMissions_.Find( name.c_str() );
+    MissionType* type = unitMissions_.Find( name );
     if( !type )
         throw std::runtime_error( "unknown agent mission '" + name + "'" );
     return AddFragOrders( new Mission( *type ) );
@@ -57,7 +57,7 @@ Mission* MissionFactory::CreateAgentMission( const std::string& name )
 // -----------------------------------------------------------------------------
 Mission* MissionFactory::CreateAutomatMission( const std::string& name )
 {
-    MissionType* type = automatMissions_.Find( name.c_str() );
+    MissionType* type = automatMissions_.Find( name );
     if( !type )
         throw std::runtime_error( "unknown automat mission '" + name + "'" );
     return AddFragOrders( new Mission( *type ) );
@@ -69,7 +69,7 @@ Mission* MissionFactory::CreateAutomatMission( const std::string& name )
 // -----------------------------------------------------------------------------
 Mission* MissionFactory::CreatePopulationMission( const std::string& name )
 {
-    MissionType* type = populationMissions_.Find( name.c_str() );
+    MissionType* type = populationMissions_.Find( name );
     if( !type )
         throw std::runtime_error( "unknown population mission '" + name + "'" );
     return new Mission( *type );
@@ -81,7 +81,7 @@ Mission* MissionFactory::CreatePopulationMission( const std::string& name )
 // -----------------------------------------------------------------------------
 FragOrder* MissionFactory::CreateFragOrder( const std::string& name )
 {
-    FragOrderType* type = fragOrders_.Find( name.c_str() );
+    FragOrderType* type = fragOrders_.Find( name );
     if( !type )
         throw std::runtime_error( "unknown frag order '" + name + "'" );
     return new FragOrder( *type );
@@ -99,7 +99,7 @@ Mission* MissionFactory::AddFragOrders( Mission* mission )
         const FragOrderType& type = it.NextElement();
         if( !type.IsMissionRequired() )
         {
-            FragOrder* newOrder = CreateFragOrder( type.GetName().ascii() );
+            FragOrder* newOrder = CreateFragOrder( type.GetName() );
             static_cast< Resolver< FragOrder >* >( mission )->Register( newOrder->GetId(), *newOrder );
         }
     }

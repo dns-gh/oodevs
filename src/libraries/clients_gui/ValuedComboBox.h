@@ -48,6 +48,7 @@ public:
     //! @name Operations
     //@{
     void AddItem( const QString& label, const T& value );
+    void AddItem( const std::string& label, const T& value );
     void ChangeItem( const QString& label, const T& value );
     void RemoveItem( const T& value );
 

@@ -47,7 +47,7 @@ Object::Object( kernel::Controller& controller, const kernel::CoordinateConverte
     , nDotationValorization_         ( 0 )
 {
     RegisterSelf( *this );
-    name_ = name.isEmpty() ? tools::translate( "Object", "%1 [%2]" ).arg( type.GetName() ).arg( id_ ) : name;
+    name_ = name.isEmpty() ? tools::translate( "Object", "%1 [%2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
     CreateDictionary( controller );
 }
 
@@ -55,7 +55,7 @@ Object::Object( kernel::Controller& controller, const kernel::CoordinateConverte
 // Name: Object constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, QString >& types, IdManager& idManager )
+Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& types, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, ReadId( xis ), ReadName( xis ) )
     , converter_                     ( converter )
     , type_                          ( ReadType( xis, types ) )
@@ -111,11 +111,11 @@ QString Object::ReadName( xml::xistream& xis )
 // Name: Object::ReadType
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_ABC< ObjectType, QString >& types )
+const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_ABC< ObjectType, std::string >& types )
 {
     std::string type;
     xis >> attribute( "type", type );
-    return types.Get( QString( type.c_str() ) );
+    return types.Get( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ void Object::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& v
 void Object::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
-        << attribute( "type", type_.GetName().ascii() )
+        << attribute( "type", type_.GetName() )
         << attribute( "name", name_ );
     
     if( type_.CanBeReservedObstacle() )

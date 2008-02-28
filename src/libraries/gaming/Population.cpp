@@ -38,7 +38,7 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
     , type_         ( typeResolver.Get( message.type_population ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid );
     RegisterSelf( *this );
     Attach( *new PropertiesDictionary( controller ) );
 }

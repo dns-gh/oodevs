@@ -47,7 +47,7 @@ ObjectType::~ObjectType()
 // Name: ObjectType::GetName
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-QString ObjectType::GetName() const
+std::string ObjectType::GetName() const
 {
     return name_;
 }

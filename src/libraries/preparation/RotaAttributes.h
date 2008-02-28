@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit RotaAttributes( kernel::PropertiesDictionary& dico );
-             RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents, kernel::PropertiesDictionary& dico );
+             RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico );
     virtual ~RotaAttributes();
     //@}
 
@@ -65,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents );
+    void ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents );
     void CreateDictionary( kernel::PropertiesDictionary& dico );
     //@}
 

@@ -40,8 +40,8 @@ class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGro
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( kernel::Controller& controller, IdManager& idManager, kernel::Resolver_ABC< kernel::KnowledgeGroupType, QString >& types );
-             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, kernel::Resolver_ABC< kernel::KnowledgeGroupType, QString >& types );
+             KnowledgeGroup( kernel::Controller& controller, IdManager& idManager, kernel::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, kernel::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -61,7 +61,6 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-    static unsigned long ReadId( xml::xistream& xis );
     //@}
 
 private:

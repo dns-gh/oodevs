@@ -45,7 +45,7 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
-    virtual QString GetType() const;
+    virtual std::string GetType() const;
     virtual bool IsContext() const;
     virtual geometry::Point2f GetPosition() const;
     //@}

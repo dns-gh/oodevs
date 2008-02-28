@@ -22,17 +22,15 @@ using namespace xml;
 // Name: AgentType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, QString >& componentResolver, const Resolver_ABC< DecisionalModel, QString >& modelResolver, const SymbolFactory& symbolFactory )
+AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& componentResolver, const Resolver_ABC< DecisionalModel, std::string >& modelResolver, const SymbolFactory& symbolFactory )
     : nature_( 0 )
 {
-    std::string modelName, name, type;
-    xis >> attribute( "name", name )
-        >> attribute( "type", type )
+    std::string modelName;
+    xis >> attribute( "name", name_ )
+        >> attribute( "type", type_ )
         >> attribute( "id", id_ )
         >> attribute(  "decisional-model", modelName );
-    name_ = name.c_str();
-    type_ = type.c_str();
-    model_ = & modelResolver.Get( modelName.c_str() );
+    model_ = & modelResolver.Get( modelName );
 
     std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );
     xis >> start( "equipments" )
@@ -57,11 +55,9 @@ AgentType::~AgentType()
 // Name: AgentType::ReadEquipment
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void AgentType::ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, QString >& resolver )
+void AgentType::ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& resolver )
 {
-    std::string name;
-    xis >> attribute( "type", name );
-    equipments_.push_back( & resolver.Get( name.c_str() ) );
+    equipments_.push_back( & resolver.Get( xml::attribute< std::string >( xis, "type" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +73,7 @@ unsigned long AgentType::GetId() const
 // Name: AgentType::GetName
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-QString AgentType::GetName() const
+std::string AgentType::GetName() const
 {
     return name_;
 }

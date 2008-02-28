@@ -112,7 +112,7 @@ void ActionParameterObjective::CommitTo( ASN1T_MissionObjective& asn ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        const QString& type = it->second->GetType();
+        const std::string type = it->second->GetType();
         if( type == "location" )
             static_cast< const ActionParameterLocation* >( it->second )->CommitTo( asn.localisation );
         else if( type == "datetime" )
@@ -128,7 +128,7 @@ void ActionParameterObjective::Clean( ASN1T_MissionObjective& asn ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        const QString& type = it->second->GetType();
+        const std::string type = it->second->GetType();
         if( type == "location" )
             static_cast< const ActionParameterLocation* >( it->second )->Clean( asn.localisation );
     }

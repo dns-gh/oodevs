@@ -194,7 +194,7 @@ namespace
             while( it.HasMoreElements() )
             {
                 const Entity& entity = it.NextElement();
-                AddItem( entity.GetName(), &entity );
+                AddItem( entity.GetName().c_str(), &entity );
             }
             setSelectionMode( QListBox::Multi );
             setMinimumHeight( 3 * itemHeight() );

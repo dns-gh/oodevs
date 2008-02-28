@@ -32,7 +32,7 @@ NBCAttributes::NBCAttributes( kernel::PropertiesDictionary& dico )
 // Name: NBCAttributes constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-NBCAttributes::NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents, kernel::PropertiesDictionary& dico )
+NBCAttributes::NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico )
 {
     std::string type;
     xis >> start( "specific-attributes" )
@@ -40,7 +40,7 @@ NBCAttributes::NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< ke
                 >> attribute( "type", type )
             >> end()
         >> end();
-    nbc_ = nbcAgents.Find( type.c_str() );
+    nbc_ = nbcAgents.Find( type );
     CreateDictionary( dico );
 }
 

@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit NBCAttributes( kernel::PropertiesDictionary& dico );
-             NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents, kernel::PropertiesDictionary& dico );
+             NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico );
     virtual ~NBCAttributes();
     //@}
 

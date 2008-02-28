@@ -18,7 +18,7 @@
 */
 // Created: SBO 2007-05-21
 // =============================================================================
-class ActionParameterEnumeration : public ActionParameter< QString >
+class ActionParameterEnumeration : public ActionParameter< std::string >
 {
 
 public:

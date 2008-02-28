@@ -33,7 +33,7 @@ public:
     //! @name Operations
     //@{
     unsigned int GetId() const;
-    QString GetName() const;
+    std::string GetName() const;
     const FragOrderType& GetType() const;
     //@}
 

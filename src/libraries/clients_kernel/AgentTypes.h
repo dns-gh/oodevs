@@ -37,18 +37,18 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class AgentTypes : public Resolver< AgentType >
-                 , public Resolver< AgentType, QString >
+                 , public Resolver< AgentType, std::string >
                  , public Resolver< PopulationType >
-                 , public Resolver< PopulationType, QString >
+                 , public Resolver< PopulationType, std::string >
                  , public Resolver< AutomatType >
-                 , public Resolver< AutomatType, QString >
+                 , public Resolver< AutomatType, std::string >
                  , public Resolver< ComponentType >
-                 , public Resolver< ComponentType, QString >
-                 , public Resolver< SensorType, QString >
-                 , public Resolver< KnowledgeGroupType, QString >
+                 , public Resolver< ComponentType, std::string >
+                 , public Resolver< SensorType, std::string >
+                 , public Resolver< KnowledgeGroupType, std::string >
                  , public Resolver< MissionType >
                  , public Resolver< FragOrderType >
-                 , public Resolver< FragOrderType, QString >
+                 , public Resolver< FragOrderType, std::string >
 {
 
 public:
@@ -74,7 +74,7 @@ private:
     //! @name Types
     //@{
     typedef Mission* (MissionFactory::*T_Resolver)( const std::string& );
-    typedef Resolver< MissionType, QString > T_MissionResolver;
+    typedef Resolver< MissionType, std::string > T_MissionResolver;
     //@}
 
     //! @name Helpers
@@ -95,7 +95,7 @@ private:
     void ReadComponent( xml::xistream& xis );
     void ReallyReadSensor( xml::xistream& xis, const std::string& sensor );
     void ReadSensor( xml::xistream& xis );
-    void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver, Resolver< DecisionalModel, QString >& models );
+    void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver, Resolver< DecisionalModel, std::string >& models );
     void ReadMissionType( xml::xistream& xis, T_MissionResolver& missions, const bool& addContext );
     void ReadFragOrderType( xml::xistream& xis );
     //@}
@@ -112,9 +112,9 @@ private:
 public:
     //! @name Member data
     //@{
-    Resolver< DecisionalModel, QString > unitModels_;
-    Resolver< DecisionalModel, QString > automatModels_;
-    Resolver< DecisionalModel, QString > populationModels_;
+    Resolver< DecisionalModel, std::string > unitModels_;
+    Resolver< DecisionalModel, std::string > automatModels_;
+    Resolver< DecisionalModel, std::string > populationModels_;
     //@}
 };
 

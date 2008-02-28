@@ -143,7 +143,7 @@ void ActionParameterLima::CommitTo( ASN1T_LimaOrder& asn ) const
 
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        const QString type = it->second->GetType();
+        const std::string type = it->second->GetType();
         if( type == "location" )
             static_cast< const ActionParameterLocation* >( it->second )->CommitTo( asn.lima );
         else if( type == "datetime" )
@@ -160,7 +160,7 @@ void ActionParameterLima::Clean( ASN1T_LimaOrder& asn ) const
     delete[] asn.fonctions.elem;
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        const QString& type = it->second->GetType();
+        const std::string type = it->second->GetType();
         if( type == "location" )
             static_cast< const ActionParameterLocation* >( it->second )->Clean( asn.lima );
     }

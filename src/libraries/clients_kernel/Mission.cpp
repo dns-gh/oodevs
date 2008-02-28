@@ -46,7 +46,7 @@ unsigned int Mission::GetId() const
 // Name: Mission::GetName
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-QString Mission::GetName() const
+std::string Mission::GetName() const
 {
     return type_.GetName();
 }

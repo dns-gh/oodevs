@@ -131,7 +131,7 @@ int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu,
     while( it.HasMoreElements() )
     {
         const Mission& mission = it.NextElement();
-        int nId = missions.insertItem( mission.GetName(), this, slot );
+        int nId = missions.insertItem( mission.GetName().c_str(), this, slot );
         missions.setItemParameter( nId, mission.GetId() );
     }
     return menu.InsertItem( "Order", name, &missions  );
@@ -177,7 +177,7 @@ void MissionPanel::AddFragOrders( Iterator< const FragOrder& > it, QPopupMenu& m
         const FragOrder& fragOrder = it.NextElement();
         if( ! ItemExists( menu, fragOrder.GetId() ) )
         {
-            const int id = menu.insertItem( fragOrder.GetName(), this, slot );
+            const int id = menu.insertItem( fragOrder.GetName().c_str(), this, slot );
             menu.setItemParameter( id, fragOrder.GetId() );
         }
     }

@@ -10,8 +10,6 @@
 #ifndef __AutomatComposition_h_
 #define __AutomatComposition_h_
 
-class QString;
-
 namespace xml
 {
     class xistream;
@@ -34,7 +32,7 @@ class AutomatComposition
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatComposition( xml::xistream& input, const Resolver_ABC< AgentType, QString >& agentResolver );
+             AutomatComposition( xml::xistream& input, const Resolver_ABC< AgentType, std::string >& agentResolver );
     virtual ~AutomatComposition();
     //@}
 

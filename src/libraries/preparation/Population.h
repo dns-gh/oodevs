@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Population( const kernel::PopulationType& type, kernel::Controller& controller, IdManager& idManager );
-             Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::Resolver_ABC< kernel::PopulationType, QString >& types );
+             Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::Resolver_ABC< kernel::PopulationType, std::string >& types );
     virtual ~Population();
     //@}
 

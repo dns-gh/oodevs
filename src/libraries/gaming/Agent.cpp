@@ -34,7 +34,7 @@ Agent::Agent( const ASN1T_MsgUnitCreation& message, Controller& controller,  con
     , isPc_( message.pc )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }

@@ -34,7 +34,7 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
     , type_         ( &type )
 {
-    name_ = type.GetName() + QString( " [%1]" ).arg( id_ );
+    name_ = type.GetName().c_str() + QString( " [%1]" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -48,7 +48,7 @@ Automat::Automat( xistream& xis, Controller& controller, IdManager& idManager, c
 {
     std::string type;
     xis >> attribute( "type", type );
-    type_ = &agentTypes.Resolver< AutomatType, QString >::Get( type.c_str() );
+    type_ = &agentTypes.Resolver< AutomatType, std::string >::Get( type );
     RegisterSelf( *this );
     CreateDictionary( controller );
     idManager.Lock( id_ );
@@ -153,7 +153,7 @@ void Automat::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "name", name_.ascii() )
-        << attribute( "type", type_->GetName().ascii() );
+        << attribute( "type", type_->GetName() );
 }
 
 // -----------------------------------------------------------------------------

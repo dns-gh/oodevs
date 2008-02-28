@@ -98,17 +98,17 @@ void AgentTypes::Purge()
     populationMissions_.DeleteAll();
     Resolver< MissionType >::Clear();
     Resolver< FragOrderType >::DeleteAll();
-    Resolver< FragOrderType, QString >::Clear();
-    Resolver< KnowledgeGroupType, QString >::DeleteAll();
+    Resolver< FragOrderType, std::string >::Clear();
+    Resolver< KnowledgeGroupType, std::string >::DeleteAll();
     Resolver< PopulationType >::DeleteAll();
-    Resolver< PopulationType, QString >::Clear();
+    Resolver< PopulationType, std::string >::Clear();
     Resolver< AgentType >::DeleteAll();
-    Resolver< AgentType, QString >::Clear();
+    Resolver< AgentType, std::string >::Clear();
     Resolver< AutomatType >::DeleteAll();
-    Resolver< AutomatType, QString >::Clear();
+    Resolver< AutomatType, std::string >::Clear();
     Resolver< ComponentType >::DeleteAll();
-    Resolver< ComponentType, QString >::Clear();
-    Resolver< SensorType, QString >::DeleteAll();
+    Resolver< ComponentType, std::string >::Clear();
+    Resolver< SensorType, std::string >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +138,7 @@ void AgentTypes::ReadComponents( const std::string& components )
 void AgentTypes::ReadComponent( xml::xistream& xis )
 {
     ComponentType* component = new ComponentType( xis );
-    Resolver< ComponentType, QString >::Register( component->GetName(), *component );
+    Resolver< ComponentType, std::string >::Register( component->GetName(), *component );
     Resolver< ComponentType >::Register( component->GetId(), *component );
 }
 
@@ -183,7 +183,7 @@ void AgentTypes::ReadFragOrderType( xml::xistream& xis )
 {
     FragOrderType* order = new FragOrderType( xis );
     Resolver< FragOrderType >::Register( order->GetId(), *order );
-    Resolver< FragOrderType, QString >::Register( order->GetName(), *order );
+    Resolver< FragOrderType, std::string >::Register( order->GetName(), *order );
 }
 
 
@@ -214,7 +214,7 @@ void AgentTypes::ReadModels( const std::string& models )
 // Name: AgentTypes::ReadModel
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void AgentTypes::ReadModel( xml::xistream& xis, const T_Resolver& missionResolver, Resolver< DecisionalModel, QString >& models )
+void AgentTypes::ReadModel( xml::xistream& xis, const T_Resolver& missionResolver, Resolver< DecisionalModel, std::string >& models )
 {
     MissionFactory factory( unitMissions_, automatMissions_, populationMissions_, *this );
     DecisionalModel* model = new DecisionalModel( xis, factory, missionResolver, (Resolver< FragOrderType >&)*this );
@@ -250,8 +250,8 @@ void AgentTypes::ReadSensor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReallyReadSensor( xml::xistream& xis, const std::string& sensor )
 {
-    SensorType* type = new SensorType( sensor.c_str(), xis );
-    Resolver< SensorType, QString >::Register( type->GetName(), *type );
+    SensorType* type = new SensorType( sensor, xis );
+    Resolver< SensorType, std::string >::Register( type->GetName(), *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ void AgentTypes::ReadAgentType( xml::xistream& xis )
 {
     AgentType* type = new AgentType( xis, *this, unitModels_, *symbolFactory_ );
     Resolver< AgentType >         ::Register( type->GetId(), *type );
-    Resolver< AgentType, QString >::Register( type->GetName(), *type );
+    Resolver< AgentType, std::string >::Register( type->GetName(), *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -295,7 +295,7 @@ void AgentTypes::ReadAutomatType( xml::xistream& xis )
 {
     AutomatType* type = new AutomatType( xis, *this, automatModels_ );
     Resolver< AutomatType >         ::Register( type->GetId(), *type );
-    Resolver< AutomatType, QString >::Register( type->GetName(), *type );
+    Resolver< AutomatType, std::string >::Register( type->GetName(), *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -317,7 +317,7 @@ void AgentTypes::ReadPopulationType( xml::xistream& xis )
 {
     PopulationType* type = new PopulationType( xis, populationModels_ );
     Resolver< PopulationType >::Register( type->GetId(), *type );
-    Resolver< PopulationType, QString >::Register( type->GetName(), *type );
+    Resolver< PopulationType, std::string >::Register( type->GetName(), *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -338,5 +338,5 @@ void AgentTypes::ReadKnowledgeGroups( const std::string& groups )
 void AgentTypes::ReadKnowledgeGroupType( xml::xistream& xis )
 {
     KnowledgeGroupType* type = new KnowledgeGroupType( xis );
-    Resolver< KnowledgeGroupType, QString >::Register( type->GetName(), *type );
+    Resolver< KnowledgeGroupType, std::string >::Register( type->GetName(), *type );
 }

@@ -31,8 +31,8 @@ class MissionFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionFactory( const Resolver_ABC< MissionType, QString >& unitMissions, const Resolver_ABC< MissionType, QString >& automatMissions
-                           , const Resolver_ABC< MissionType, QString >& populationMissions, const Resolver_ABC< FragOrderType, QString >& fragOrders );
+             MissionFactory( const Resolver_ABC< MissionType, std::string >& unitMissions, const Resolver_ABC< MissionType, std::string >& automatMissions
+                           , const Resolver_ABC< MissionType, std::string >& populationMissions, const Resolver_ABC< FragOrderType, std::string >& fragOrders );
     virtual ~MissionFactory();
     //@}
 
@@ -59,10 +59,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const Resolver_ABC< MissionType, QString >& unitMissions_;
-    const Resolver_ABC< MissionType, QString >& automatMissions_;
-    const Resolver_ABC< MissionType, QString >& populationMissions_;
-    const Resolver_ABC< FragOrderType, QString >& fragOrders_;
+    const Resolver_ABC< MissionType, std::string >& unitMissions_;
+    const Resolver_ABC< MissionType, std::string >& automatMissions_;
+    const Resolver_ABC< MissionType, std::string >& populationMissions_;
+    const Resolver_ABC< FragOrderType, std::string >& fragOrders_;
     //@}
 };
 

@@ -36,8 +36,8 @@ public:
     unsigned long GetId() const;
     unsigned long GetFamily() const;
 
-    QString GetName() const; // $$$$ AGE 2006-04-28: category and name are kind of mixed up
-    QString GetCategory() const;
+    std::string GetName() const; // $$$$ AGE 2006-04-28: category and name are kind of mixed up
+    std::string GetCategory() const;
 
     bool IsGas() const;
     bool IsAmmunition() const;
@@ -54,10 +54,10 @@ private:
 private:
     //! @name Member data
     //@{
-    QString name_;
+    std::string name_;
     unsigned long id_;
     unsigned long nameId_; // $$$$ AGE 2006-04-28: name == category
-    QString category_;
+    std::string category_;
     bool gaz_, ammunition_, dType_;
     //@}
 };

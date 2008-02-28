@@ -23,7 +23,7 @@ using namespace gui;
 // Name: DotationsEditor constructor
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-DotationsEditor::DotationsEditor( QWidget* parent, const Resolver_ABC< DotationType, QString >& dotationTypes, DotationsItem*& value )
+DotationsEditor::DotationsEditor( QWidget* parent, const Resolver_ABC< DotationType, std::string >& dotationTypes, DotationsItem*& value )
     : QDialog( parent, "DotationsEditor", true )
     , dotationTypes_( dotationTypes )
     , value_ ( value )
@@ -46,7 +46,7 @@ DotationsEditor::DotationsEditor( QWidget* parent, const Resolver_ABC< DotationT
     Iterator< const DotationType& > it = dotationTypes_.CreateIterator();
     types_.append( "" );
     while( it.HasMoreElements() )
-        types_.append( it.NextElement().GetCategory() );
+        types_.append( it.NextElement().GetCategory().c_str() );
 
     connect( ok    , SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
@@ -71,7 +71,7 @@ void DotationsEditor::OnAccept()
 {
     value_->Clear();
     for( int i = 0; i < table_->numRows() - 1; ++i )
-        value_->AddDotation( dotationTypes_.Get( table_->text( i, 0 ) ), table_->text( i, 1 ).toUInt() );
+        value_->AddDotation( dotationTypes_.Get( table_->text( i, 0 ).ascii() ), table_->text( i, 1 ).toUInt() );
     value_->Update();
     accept();
 }
@@ -159,7 +159,7 @@ void DotationsEditor::AddItem( const Dotation* dotation /*=0*/ )
     if( dotation )
     {
         table_->setText( row, 1, QString::number( dotation->quantity_ ) );
-        item->setCurrentItem( dotation->type_->GetCategory() );
+        item->setCurrentItem( dotation->type_->GetCategory().c_str() );
     }
     table_->setCurrentCell( row, 1 );
 }

@@ -207,9 +207,9 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     xis >> attribute( "type", type )
         >> optional() >> attribute( "set", isSet );
     type = QString( type.c_str() ).lower().ascii();
-    if( type != parameter.GetType().lower().ascii() )
+    if( type != parameter.GetType()  )
         throw std::runtime_error( tools::translate( "ActionParameter", "Error loading mission parameters. Found type: '%1' expecting: '%2'." )
-                                .arg( type.c_str() ).arg( parameter.GetType() ).ascii() );
+                                .arg( type.c_str() ).arg( parameter.GetType().c_str() ).ascii() );
 
     if( !isSet && !parameter.IsOptional() )
         throw std::runtime_error( tools::translate( "ActionParameter", "Error loading mission parameters. Non-optional parameter '%1' is not set." )

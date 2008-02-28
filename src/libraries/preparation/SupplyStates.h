@@ -35,7 +35,7 @@ class SupplyStates : public LogisticHierarchies< SupplySuperior, kernel::SupplyH
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStates( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico );
+             SupplyStates( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~SupplyStates();
     //@}
 
@@ -64,7 +64,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver_;
+    const kernel::Resolver_ABC< kernel::DotationType, std::string >& resolver_;
     DotationsItem* item_;
     //@}
 };

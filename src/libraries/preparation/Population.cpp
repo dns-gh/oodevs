@@ -18,17 +18,6 @@
 
 using namespace xml;
 
-namespace
-{
-    template< typename T >
-    T ReadAttribute( xml::xistream& xis, const std::string& name )
-    {
-        T value;
-        xis >> attribute( name, value );
-        return value;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Population constructor
 // Created: SBO 2006-11-08
@@ -40,7 +29,7 @@ Population::Population( const kernel::PopulationType& type, kernel::Controller& 
     , attitude_( ePopulationAttitude_Calme )
 {
     RegisterSelf( *this );
-    name_ = ( type.GetName() + " [%1]" ).arg( id_ );
+    name_ = ( type.GetName().c_str() + QString( " [%1]" ) ).arg( id_ );
     CreateDictionary( controller );
 }
 
@@ -48,11 +37,11 @@ Population::Population( const kernel::PopulationType& type, kernel::Controller& 
 // Name: Population constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-Population::Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::Resolver_ABC< kernel::PopulationType, QString >& types )
-    : kernel::EntityImplementation< kernel::Population_ABC >( controller, ReadAttribute< int >( xis, "id" ), ReadAttribute< std::string >( xis, "name" ).c_str() )
-    , type_( types.Get( ReadAttribute< std::string >( xis, "type" ).c_str() ) )
-    , livingHumans_( ReadAttribute< int >( xis, "humans" ) )
-    , attitude_( ReadAttribute< std::string >( xis, "attitude" ).c_str() )
+Population::Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::Resolver_ABC< kernel::PopulationType, std::string >& types )
+    : kernel::EntityImplementation< kernel::Population_ABC >( controller, xml::attribute< int >( xis, "id" ), xml::attribute< std::string >( xis, "name" ).c_str() )
+    , type_( types.Get( xml::attribute< std::string >( xis, "type" ) ) )
+    , livingHumans_( xml::attribute< int >( xis, "humans" ) )
+    , attitude_( xml::attribute< std::string >( xis, "attitude" ).c_str() )
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );
@@ -119,7 +108,7 @@ void Population::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "name", name_.ascii() )
-        << attribute( "type", type_.GetName().ascii() )
+        << attribute( "type", type_.GetName() )
         << attribute( "humans", long( livingHumans_ ) )
         << attribute( "attitude", attitude_.ToXml() );
 }

@@ -24,7 +24,7 @@ namespace kernel
 */
 // Created: SBO 2006-09-21
 // =============================================================================
-class FormationLevels : public Resolver2< HierarchyLevel_ABC >
+class FormationLevels : public Resolver2< HierarchyLevel_ABC, unsigned long, QString >
 {
 
 public:

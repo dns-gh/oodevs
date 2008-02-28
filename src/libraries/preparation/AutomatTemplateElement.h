@@ -33,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatTemplateElement( AgentsModel& agents, const kernel::Automat_ABC& automat );
-             AutomatTemplateElement( AgentsModel& agents, const kernel::Resolver_ABC< kernel::AutomatType, QString >& types, xml::xistream& input );
+             AutomatTemplateElement( AgentsModel& agents, const kernel::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input );
     virtual ~AutomatTemplateElement();
     //@}
 

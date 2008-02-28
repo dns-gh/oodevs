@@ -27,7 +27,7 @@ namespace kernel
 */
 // Created: SBO 2007-04-16
 // =============================================================================
-class ActionParameterObstacle : public ActionParameter< QString >
+class ActionParameterObstacle : public ActionParameter< std::string >
 {
 
 public:

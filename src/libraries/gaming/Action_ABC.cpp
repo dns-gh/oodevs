@@ -58,7 +58,7 @@ unsigned long Action_ABC::GetId() const
 // -----------------------------------------------------------------------------
 QString Action_ABC::GetName() const
 {
-    return type_.GetName();
+    return type_.GetName().c_str();
 }
 
 // -----------------------------------------------------------------------------

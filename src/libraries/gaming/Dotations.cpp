@@ -91,7 +91,7 @@ void Dotations::Update( const std::vector< Dotation >& differences )
         {
             dotation = new Dotation( *it );
             Register( it->type_->GetId(), *dotation );
-            dictionary_.Register( *this, tools::translate( "Dotations", "Dotations" ) + "/" + it->type_->GetCategory(), ((const Dotation&)dotation).quantity_ ); // $$$$ AGE 2006-06-22: 
+            dictionary_.Register( *this, tools::translate( "Dotations", "Dotations" ) + "/" + it->type_->GetCategory().c_str(), ((const Dotation&)dotation).quantity_ ); // $$$$ AGE 2006-06-22: 
         }
         else
             *dotation = *dotation + *it;

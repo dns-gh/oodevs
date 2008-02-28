@@ -91,7 +91,7 @@ ActionParameterIntelligence::~ActionParameterIntelligence()
 void ActionParameterIntelligence::ReadParameter( xml::xistream& xis, const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels )
 {
     const QString name = attribute< std::string >( xis, "name" ).c_str();
-    const QString type = attribute< std::string >( xis, "type" ).c_str();
+    const std::string type = attribute< std::string >( xis, "type" );
 
     if( type == "name" || type == "nature" )
         AddParameter( *new ActionParameterString( OrderParameter( name, type, false ), xis ) );
@@ -115,7 +115,7 @@ void ActionParameterIntelligence::CommitTo( ASN1T_Intelligence& asn ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        const QString type = it->second->GetType();
+        const std::string type = it->second->GetType();
         if( type == "name" )
             static_cast< const ActionParameterString* >( it->second )->CommitTo( asn.name );
         else if( type == "nature" )

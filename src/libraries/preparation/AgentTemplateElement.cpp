@@ -29,11 +29,9 @@ AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::A
 
 namespace
 {
-    const kernel::AgentType& ReadType( const kernel::Resolver_ABC< kernel::AgentType, QString >& types, xml::xistream& input )
+    const kernel::AgentType& ReadType( const kernel::Resolver_ABC< kernel::AgentType, std::string >& types, xml::xistream& input )
     {
-        std::string type;
-        input >> xml::attribute( "agentType", type );
-        return types.Get( QString( type.c_str() ) );
+        return types.Get( xml::attribute< std::string >( input, "agentType" ) );
     }
 }
 
@@ -41,7 +39,7 @@ namespace
 // Name: AgentTemplateElement constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::Resolver_ABC< kernel::AgentType, QString >& types, xml::xistream& input )
+AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::Resolver_ABC< kernel::AgentType, std::string >& types, xml::xistream& input )
     : agents_( agents )
     , type_  ( ReadType( types, input ) )
 {
@@ -74,7 +72,7 @@ kernel::Entity_ABC* AgentTemplateElement::Instanciate( kernel::Entity_ABC& super
 void AgentTemplateElement::Serialize( xml::xostream& output )
 {
     output << xml::attribute( "type", "agent" )
-           << xml::attribute( "agentType", type_.GetName().ascii() )
+           << xml::attribute( "agentType", type_.GetName() )
            << xml::attribute( "commandPost", cp_ );
 }
 
@@ -93,5 +91,5 @@ bool AgentTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) co
 // -----------------------------------------------------------------------------
 QString AgentTemplateElement::GetName() const
 {
-    return type_.GetName();
+    return type_.GetName().c_str();
 }

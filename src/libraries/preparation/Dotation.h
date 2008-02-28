@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Dotation( const kernel::DotationType& type, unsigned int quantity );
-             Dotation( xml::xistream& xis, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver );
+             Dotation( xml::xistream& xis, const kernel::Resolver_ABC< kernel::DotationType, std::string >& resolver );
     virtual ~Dotation();
     //@}
 

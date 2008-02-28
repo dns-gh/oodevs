@@ -22,12 +22,11 @@ using namespace xml;
 DotationType::DotationType( xistream& xis )
     : dType_( false )
 {
-    std::string xmlName, category;
+    std::string category, xmlName;
     xis >> attribute( "id", id_ )
         >> attribute( "name", xmlName )
-        >> attribute( "category", category )
+        >> attribute( "category", category_ )
         >> optional() >> attribute( "d-type", dType_ );
-    category_ = category.c_str();
     nameId_ = tools::DotationFamilyFromString( xmlName );
     name_ = tools::ToString( E_DotationFamily( nameId_ ) );
 
@@ -57,7 +56,7 @@ unsigned long DotationType::GetId() const
 // Name: DotationType::GetName
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-QString DotationType::GetName() const
+std::string DotationType::GetName() const
 {
     return name_;
 }
@@ -66,7 +65,7 @@ QString DotationType::GetName() const
 // Name: DotationType::GetCategory
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-QString DotationType::GetCategory() const
+std::string DotationType::GetCategory() const
 {
     return category_;
 }

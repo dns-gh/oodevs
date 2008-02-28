@@ -26,7 +26,7 @@ using namespace xml;
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const ObjectType& type )
-    : ActionParameter< QString >( parameter, type.GetName() )
+    : ActionParameter< std::string >( parameter, type.GetName() )
     , type_( type )
 {
     // NOTHING
@@ -37,7 +37,7 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
 ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWork& asn )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
     , type_( types.Get( asn.type ) )
 {
     AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, asn.position ) );
@@ -45,30 +45,13 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
     SetParameters( asn, automats );
 }
 
-namespace
-{
-    unsigned int ReadValue( xml::xistream& xis )
-    {
-        unsigned int value;
-        xis >> attribute( "value", value );
-        return value;
-    }
-
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> attribute( "name", name );
-        return name.c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterObstacle constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis )
-    : ActionParameter< QString >( parameter )
-    , type_( types.Get( ReadValue( xis ) ) )
+    : ActionParameter< std::string >( parameter )
+    , type_( types.Get( xml::attribute< unsigned int >( xis, "value" ) ) )
 {
     xis >> list( "parameter", *this, &ActionParameterObstacle::ReadParameter, converter, automats );
     SetValue( type_.GetName() );
@@ -79,8 +62,8 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterObstacle::ActionParameterObstacle( const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis )
-    : ActionParameter< QString >( OrderParameter( ReadName( xis ), "obstacle", false ) )
-    , type_( types.Get( ReadValue( xis ) ) )
+    : ActionParameter< std::string >( OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), "obstacle", false ) )
+    , type_( types.Get( xml::attribute< unsigned int >( xis, "value" ) ) )
 {
     xis >> list( "parameter", *this, &ActionParameterObstacle::ReadParameter, converter, automats );
     SetValue( type_.GetName() );
@@ -127,7 +110,7 @@ void ActionParameterObstacle::AddObstacleType( unsigned int type )
 // -----------------------------------------------------------------------------
 void ActionParameterObstacle::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    ActionParameter< QString >::Draw( where, viewport, tools );
+    ActionParameter< std::string >::Draw( where, viewport, tools );
     type_.Draw( GetPosition(), viewport, tools );
 }
 
@@ -137,7 +120,7 @@ void ActionParameterObstacle::Draw( const geometry::Point2f& where, const Viewpo
 // -----------------------------------------------------------------------------
 void ActionParameterObstacle::Serialize( xml::xostream& xos ) const
 {
-    ActionParameter< QString >::Serialize( xos );
+    ActionParameter< std::string >::Serialize( xos );
     xos << attribute( "value", type_.id_ );
 }
 
@@ -200,7 +183,7 @@ void ActionParameterObstacle::CommitTo( ASN1T_PlannedWork& asn ) const
     asn.type = ASN1T_EnumObjectType( type_.id_ );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        const QString& type = it->second->GetType();
+        const std::string type = it->second->GetType();
         if( type == "location" )
             static_cast< const ActionParameterLocation* >( it->second )->CommitTo( asn.position );
         else if( type == "obstacletype" )
@@ -220,7 +203,7 @@ void ActionParameterObstacle::Clean( ASN1T_PlannedWork& asn ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        const QString& type = it->second->GetType();
+        const std::string type = it->second->GetType();
         if( type == "location" )
             static_cast< const ActionParameterLocation* >( it->second )->Clean( asn.position );
     }
@@ -233,5 +216,5 @@ void ActionParameterObstacle::Clean( ASN1T_PlannedWork& asn ) const
 void ActionParameterObstacle::Accept( ActionParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    ActionParameter< QString >::Accept( visitor );
+    ActionParameter< std::string >::Accept( visitor );
 }

@@ -19,7 +19,7 @@
 */
 // Created: AGE 2007-10-23
 // =============================================================================
-class ActionParameterDotationTypeList : public ActionParameter< QString >
+class ActionParameterDotationTypeList : public ActionParameter< std::string >
 {
 
 public:

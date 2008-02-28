@@ -37,7 +37,7 @@ class SurfaceFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             SurfaceFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver );
+             SurfaceFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, std::string >& resolver );
     virtual ~SurfaceFactory();
     //@}
 
@@ -59,7 +59,7 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::DetectionMap& map_;
-    const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver_;
+    const kernel::Resolver_ABC< kernel::SensorType, std::string >& resolver_;
     //@}
 };
 

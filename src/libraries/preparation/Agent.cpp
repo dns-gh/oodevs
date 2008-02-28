@@ -31,7 +31,7 @@ using namespace xml;
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
 Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManager, bool commandPost )
-    : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName() )
+    : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName().c_str() )
     , type_( &type )
     , commandPost_( commandPost )
 {
@@ -50,7 +50,7 @@ Agent::Agent( xistream& xis, Controller& controller, IdManager& idManager, const
     std::string type;
     xis >> attribute( "type", type )
         >> optional() >> attribute( "command-post", commandPost_ );
-    type_ = &agentTypes.Resolver< AgentType, QString >::Get( type.c_str() );
+    type_ = &agentTypes.Resolver< AgentType, std::string >::Get( type );
     idManager.Lock( id_ );
     
     RegisterSelf( *this );
@@ -163,7 +163,7 @@ void Agent::CreateDictionary( kernel::Controller& controller )
 void Agent::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
-        << attribute( "type", type_->GetName().ascii() )
+        << attribute( "type", type_->GetName() )
         << attribute( "name", name_.ascii() )
         << attribute( "command-post", commandPost_ );
 }

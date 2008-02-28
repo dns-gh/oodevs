@@ -21,7 +21,7 @@ using namespace xml;
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& parameter )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
 {
     // NOTHING
 }
@@ -31,7 +31,7 @@ ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& 
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
 ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
         AddParameter( *new ActionParameterObstacle( OrderParameter( tools::translate( "ActionParameter", "Obstacle %1" ).arg( i + 1 ), "obstacle", false ), converter, resolver, automats, asn.elem[i] ) );
@@ -42,7 +42,7 @@ ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& 
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
 {
     xis >> list( "parameter", *this, &ActionParameterObstacleList::ReadObstacle, converter, resolver, automats );
 }
@@ -132,7 +132,7 @@ void ActionParameterObstacleList::Clean( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void ActionParameterObstacleList::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    ActionParameter< QString >::DisplayTooltip( viewport, tools );
+    ActionParameter< std::string >::DisplayTooltip( viewport, tools );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
 }

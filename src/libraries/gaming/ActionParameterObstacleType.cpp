@@ -27,20 +27,6 @@ ActionParameterObstacleType::ActionParameterObstacleType( const OrderParameter& 
 
 namespace
 {
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> attribute( "name", name );
-        return name.c_str();
-    }
-
-    QString ReadType( xml::xistream& xis )
-    {
-        std::string type;
-        xis >> attribute( "type", type );
-        return type.c_str();
-    }
-
     E_ObstacleType ReadValue( xml::xistream& xis )
     {
         unsigned int value;
@@ -54,7 +40,7 @@ namespace
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
 ActionParameterObstacleType::ActionParameterObstacleType( xml::xistream& xis )
-    : ActionParameter< QString >( OrderParameter( ReadName( xis ), ReadType( xis ), false ) )
+    : ActionParameter< QString >( OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), xml::attribute< std::string >( xis, "type" ), false ) )
     , value_( ReadValue( xis ) )
 {
     SetValue( tools::ToString( value_ ) );

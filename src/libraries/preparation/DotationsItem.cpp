@@ -47,7 +47,7 @@ DotationsItem::~DotationsItem()
 // -----------------------------------------------------------------------------
 void DotationsItem::AddDotation( const Dotation& dotation )
 {
-    dico_.Register( owner_, propertyName_ + "/" + dotation.type_->GetCategory(), (int&)dotation.quantity_ );
+    dico_.Register( owner_, propertyName_ + "/" + dotation.type_->GetCategory().c_str(), (int&)dotation.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ void DotationsItem::Clear()
     while( it.HasMoreElements() )
     {
         const Dotation& dotation = it.NextElement();
-        dico_.Remove( propertyName_ + "/" + dotation.type_->GetCategory() );
+        dico_.Remove( propertyName_ + "/" + dotation.type_->GetCategory().c_str() );
     }
     dotations_.DeleteAll();
     controller_.Delete( kernel::DictionaryUpdated( owner_, propertyName_ ) );

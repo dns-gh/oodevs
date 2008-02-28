@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    QString GetName() const;
+    std::string GetName() const;
     //@}
 
 private:
@@ -65,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QString name_;
+    std::string name_;
     //@}
 };
 

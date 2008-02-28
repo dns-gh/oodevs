@@ -22,7 +22,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller
                                                   , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model )
-    : MissionInterface_ABC( parent, mission.GetName(), entity, controller )
+    : MissionInterface_ABC( parent, mission.GetName().c_str(), entity, controller )
     , model_              ( model )
     , publisher_          ( publisher )
     , mission_            ( mission )

@@ -18,15 +18,14 @@ using namespace xml;
 // Name: PopulationType constructor
 // Created: AGE 2006-02-20
 // -----------------------------------------------------------------------------
-PopulationType::PopulationType( xml::xistream& xis, const Resolver_ABC< DecisionalModel, QString >& modelResolver )
+PopulationType::PopulationType( xml::xistream& xis, const Resolver_ABC< DecisionalModel, std::string >& modelResolver )
 {
-    std::string model, name;
-    xis >> attribute( "name", name )
+    std::string model;
+    xis >> attribute( "name", name_ )
         >> attribute( "id", id_ )
         >> attribute( "decisional-model", model )
         >> attribute( "concentration-density", density_ );
-    model_ = & modelResolver.Get( model.c_str() );
-    name_ = name.c_str();
+    model_ = & modelResolver.Get( model );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +41,7 @@ PopulationType::~PopulationType()
 // Name: PopulationType::GetName
 // Created: AGE 2006-02-20
 // -----------------------------------------------------------------------------
-QString PopulationType::GetName() const
+std::string PopulationType::GetName() const
 {
     return name_;
 }

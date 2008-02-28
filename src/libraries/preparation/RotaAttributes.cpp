@@ -32,7 +32,7 @@ RotaAttributes::RotaAttributes( kernel::PropertiesDictionary& dico )
 // Name: RotaAttributes constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-RotaAttributes::RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents, kernel::PropertiesDictionary& dico )
+RotaAttributes::RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico )
     : danger_( 0 )
 {
     xis >> start( "specific-attributes" )
@@ -57,11 +57,11 @@ RotaAttributes::~RotaAttributes()
 // Name: RotaAttributes::ReadNbcAgent
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-void RotaAttributes::ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents )
+void RotaAttributes::ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents )
 {
     std::string type;
     xis >> attribute( "type", type );
-    AddAgent( nbcAgents.Get( type.c_str() ) );
+    AddAgent( nbcAgents.Get( type ) );
 }
 
 // -----------------------------------------------------------------------------

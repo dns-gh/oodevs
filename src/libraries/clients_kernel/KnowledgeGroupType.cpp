@@ -19,9 +19,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 KnowledgeGroupType::KnowledgeGroupType( xml::xistream& xis )
 {
-    std::string name;
-    xis >> xml::attribute( "name", name );
-    name_ = name.c_str();
+    xis >> xml::attribute( "name", name_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -37,7 +35,7 @@ KnowledgeGroupType::~KnowledgeGroupType()
 // Name: KnowledgeGroupType::GetName
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-const QString& KnowledgeGroupType::GetName() const
+const std::string& KnowledgeGroupType::GetName() const
 {
     return name_;
 }

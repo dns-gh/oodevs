@@ -18,7 +18,7 @@ using namespace xml;
 // Name: SensorType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-SensorType::SensorType( const QString& name, xml::xistream& xis )
+SensorType::SensorType( const std::string& name, xml::xistream& xis )
     : strName_             ( name )
     , postureSourceFactors_( eNbrUnitPosture, 0. )
     , weatherFactors_      ( eNbrWeatherType, 0. )
@@ -186,7 +186,7 @@ float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentN
 // Name: SensorType::GetName
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-QString SensorType::GetName() const
+std::string SensorType::GetName() const
 {
     return strName_;
 }

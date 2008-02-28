@@ -36,8 +36,8 @@ class AgentType
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, QString >& componentResolver
-                                          , const Resolver_ABC< DecisionalModel, QString >& modelResolver
+             AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& componentResolver
+                                          , const Resolver_ABC< DecisionalModel, std::string >& modelResolver
                                           , const SymbolFactory& symbolFactory );
     virtual ~AgentType();
     //@}
@@ -45,7 +45,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    QString GetName() const;
+    std::string GetName() const;
     const DecisionalModel& GetDecisionalModel() const;
     const AgentNature& GetNature() const;
     Iterator< const ComponentType& > CreateIterator() const;
@@ -76,14 +76,14 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, QString >& resolver  );
+    void ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& resolver  );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QString name_;
-    QString type_;
+    std::string name_;
+    std::string type_;
     unsigned long id_;
 
     DecisionalModel* model_;

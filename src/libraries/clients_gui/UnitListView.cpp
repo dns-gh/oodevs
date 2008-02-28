@@ -274,7 +274,7 @@ void UnitListView::Display( const AutomatComposition& type, ValuedListItem* item
     Iterator< const ComponentType& > it( type.GetType().CreateIterator() );
     DeleteTail( ListView< UnitListView >::Display( it, item ) );
 
-    item->Set( &type.GetType(), type.GetType().GetName(), cnt );
+    item->Set( &type.GetType(), type.GetType().GetName().c_str(), cnt );
     item->setDragEnabled( true );
 }
 

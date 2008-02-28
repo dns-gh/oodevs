@@ -142,7 +142,7 @@ void MissionInterfaceBuilder::Build( MissionInterface_ABC& missionInterface, Ent
 // -----------------------------------------------------------------------------
 void MissionInterfaceBuilder::Build( const OrderParameter& parameter )
 {
-    CIT_BuilderFunctors it = builderFunctors_.find( parameter.GetType().lower() );
+    CIT_BuilderFunctors it = builderFunctors_.find( QString( parameter.GetType().c_str() ).lower() );
     if( it != builderFunctors_.end() )
     {
         T_BuilderFunctor functor = it->second;
@@ -153,7 +153,7 @@ void MissionInterfaceBuilder::Build( const OrderParameter& parameter )
                 missionInterface_->AddParameter( *param );
     }
     else
-        throw std::runtime_error( tools::translate( "MissionInterfaceBuilder", "Unknown mission parameter: %1" ).arg( parameter.GetType() ).ascii() );
+        throw std::runtime_error( tools::translate( "MissionInterfaceBuilder", "Unknown mission parameter: %1" ).arg( parameter.GetType().c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -415,7 +415,7 @@ namespace
         OrderParameterValueVisitor( ParamComboBox< ASN1INT >& param ) : param_( &param ) {}
         virtual void Visit( const OrderParameterValue& value )
         {
-            param_->AddItem( value.GetName(), value.GetId() );
+            param_->AddItem( value.GetName().c_str(), value.GetId() );
         }
         ParamComboBox< ASN1INT >* param_;
     };

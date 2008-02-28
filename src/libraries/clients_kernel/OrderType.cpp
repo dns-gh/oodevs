@@ -21,10 +21,8 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 OrderType::OrderType( xml::xistream& xis )
 {
-    std::string name;
-    xis >> attribute( "name", name )
+    xis >> attribute( "name", name_ )
         >> attribute( "id", id_ );
-    name_ = name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +47,7 @@ unsigned long OrderType::GetId() const
 // Name: OrderType::GetName
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-QString OrderType::GetName() const
+std::string OrderType::GetName() const
 {
     return name_;
 }

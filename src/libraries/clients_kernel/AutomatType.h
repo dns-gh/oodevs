@@ -33,15 +33,15 @@ class AutomatType
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver
-                                            , const Resolver_ABC< DecisionalModel, QString >& modelResolver );
+             AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver
+                                            , const Resolver_ABC< DecisionalModel, std::string >& modelResolver );
     virtual ~AutomatType();
     //@}
 
     //! @name Operations
     //@{
     unsigned long GetId();
-    QString GetName() const;
+    std::string GetName() const;
     const AgentType* GetTypePC() const;
     std::string GetSymbol() const;
     const DecisionalModel& GetDecisionalModel() const;
@@ -63,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAgent( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver );
+    void ReadAgent( xml::xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver );
     //@}
 
     //! @name Types
@@ -75,7 +75,7 @@ private:
     //! @name Member data
     //@{
     unsigned long id_;
-    QString name_;
+    std::string name_;
     std::string type_;
     std::string symbol_;
 

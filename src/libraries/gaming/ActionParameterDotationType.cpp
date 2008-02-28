@@ -25,7 +25,7 @@ using namespace xml;
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterDotationType::ActionParameterDotationType( const OrderParameter& parameter, unsigned int id, const Resolver_ABC< DotationType >& resolver )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
     , type_( resolver.Get( id ) )
 {
     SetValue( type_.GetCategory() );
@@ -36,7 +36,7 @@ ActionParameterDotationType::ActionParameterDotationType( const OrderParameter& 
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterDotationType::ActionParameterDotationType( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< DotationType >& resolver )
-    : ActionParameter< QString >( parameter )
+    : ActionParameter< std::string >( parameter )
     , type_( resolver.Get( xml::attribute< unsigned int >( xis, "value" ) ) )
 {
     SetValue( type_.GetCategory() );
@@ -57,7 +57,7 @@ ActionParameterDotationType::~ActionParameterDotationType()
 // -----------------------------------------------------------------------------
 void ActionParameterDotationType::Serialize( xml::xostream& xos ) const
 {
-    ActionParameter< QString >::Serialize( xos );
+    ActionParameter< std::string >::Serialize( xos );
     xos << attribute( "value", type_.GetId() );
 }
 

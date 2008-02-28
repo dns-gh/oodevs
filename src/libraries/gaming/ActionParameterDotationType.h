@@ -24,7 +24,7 @@ namespace kernel
 */
 // Created: SBO 2007-05-21
 // =============================================================================
-class ActionParameterDotationType : public ActionParameter< QString >
+class ActionParameterDotationType : public ActionParameter< std::string >
 {
 
 public:

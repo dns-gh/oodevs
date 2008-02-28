@@ -45,7 +45,7 @@ unsigned int FragOrder::GetId() const
 // Name: FragOrder::GetName
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-QString FragOrder::GetName() const
+std::string FragOrder::GetName() const
 {
     return type_.GetName();
 }

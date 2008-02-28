@@ -20,18 +20,17 @@ using namespace xml;
 // Name: AutomatType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AutomatType::AutomatType( xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver
-                                            , const Resolver_ABC< DecisionalModel, QString >& modelResolver )
+AutomatType::AutomatType( xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver
+                                            , const Resolver_ABC< DecisionalModel, std::string >& modelResolver )
     : pcType_( 0 )
 {
     std::string modelName, name;
-    xis >> attribute( "name", name )
+    xis >> attribute( "name", name_ )
         >> attribute( "type", type_ )
         >> attribute( "id", id_ )
         >> attribute( "decisional-model", modelName )
         >> list( "unit", *this, &AutomatType::ReadAgent, agentResolver );
-    name_ = name.c_str();
-    model_ = & modelResolver.Get( modelName.c_str() );
+    model_ = & modelResolver.Get( modelName );
     if( ! pcType_ )
         throw std::runtime_error( "Automat '" + name + "' has no command-post" );
     symbol_ = pcType_->GetSymbol();
@@ -50,7 +49,7 @@ AutomatType::~AutomatType()
 // Name: AutomatType::ReadAgent
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-void AutomatType::ReadAgent( xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver )
+void AutomatType::ReadAgent( xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver )
 {
     units_.push_back( new AutomatComposition( xis, agentResolver ) );
     bool commandPost = false;
@@ -90,7 +89,7 @@ unsigned long AutomatType::GetId()
 // Name: AutomatType::GetName
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-QString AutomatType::GetName() const
+std::string AutomatType::GetName() const
 {
     return name_;
 }

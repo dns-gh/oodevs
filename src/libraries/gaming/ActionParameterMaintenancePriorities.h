@@ -25,7 +25,7 @@ namespace kernel
 */
 // Created: SBO 2007-06-26
 // =============================================================================
-class ActionParameterMaintenancePriorities : public ActionParameter< QString >
+class ActionParameterMaintenancePriorities : public ActionParameter< std::string >
 {
 
 public:
