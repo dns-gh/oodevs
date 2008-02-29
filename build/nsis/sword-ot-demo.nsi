@@ -186,15 +186,16 @@ Section UnInstall
     !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\data\models\ada\physical"
     !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\exercises"
     !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\doc"
-    
-    ;uninstall from path, must be repeated for every install logged path individual
-    ;!insertmacro UNINSTALL.LOG_UNINSTALL "$APPDATA\${APP_NAME}"
 
     ;end uninstall, after uninstall from all logged paths has been performed
     !insertmacro UNINSTALL.LOG_END_UNINSTALL
 
     Delete "${UNINST_DAT}"
     Delete "${UNINST_EXE}"
+    RmDir $INSTDIR\data\models\ada
+    RmDir $INSTDIR\data\models
+    RmDir $INSTDIR\data
+    RmDir $INSTDIR
     RmDir /r "$SMPROGRAMS\${APP_NAME}"
 
     DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
