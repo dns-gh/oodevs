@@ -11,21 +11,21 @@
 #define __ExtensionFactory_h_
 
 #include "dispatcher/ExtensionFactory_ABC.h"
+#include <map>
 
 namespace dispatcher
 {
     class Agent;
 }
 
-namespace hla
+namespace bml
 {
-    class AggregateEntityClass;
 
 // =============================================================================
 /** @class  ExtensionFactory
     @brief  ExtensionFactory
 */
-// Created: SBO 2008-02-18
+// Created: SBO 2008-02-29
 // =============================================================================
 class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
 {
@@ -33,7 +33,7 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExtensionFactory( AggregateEntityClass& agentClass );
+             ExtensionFactory();
     virtual ~ExtensionFactory();
     //@}
 
@@ -49,11 +49,13 @@ private:
     ExtensionFactory& operator=( const ExtensionFactory& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    //@}
+
 private:
     //! @name Member data
     //@{
-    AggregateEntityClass& agentClass_;
-    unsigned short id_;
     //@}
 };
 

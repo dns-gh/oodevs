@@ -10,6 +10,8 @@
 #ifndef __ModelRefsContainer_h_
 #define __ModelRefsContainer_h_
 
+#include <map>
+
 namespace dispatcher 
 {
 

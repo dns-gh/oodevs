@@ -73,8 +73,8 @@
     -->
     <target name="libraries" description="build all libraries"
             depends="library.tools,library.MT_Tools,library.ENT,library.game_asn,library.game_asn,library.simulation_terrain,library.simulation_kernel,
-                     library.clients_kernel,library.clients_gui,library.gaming,library.preparation,library.crossbow_plugin,library.gearth_plugin,
-                     library.hla_plugin,library.3a"/>
+                     library.clients_kernel,library.clients_gui,library.gaming,library.preparation,
+                     library.bml_plugin,library.crossbow_plugin,library.gearth_plugin,library.hla_plugin,library.3a"/>
 
     <target name="library.tools" description="build tools static library">
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
@@ -94,6 +94,12 @@
 
     <target name="library.ENT" description="build ENT static library">
         <build-lib name="ENT" depends="qt" pattern="lib${ant.project.name}_ENT-${platform}-mt@{suffix}" suffix="-gd"/>
+    </target>
+
+    <target name="library.bml_plugin" description="build BML dispatcher plugin static library" depends="library.dispatcher">
+        <build-lib name="bml_plugin" pattern="lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
+        </build-lib>
     </target>
 
     <target name="library.crossbow_plugin" description="build crossbow dispatcher plugin static library" depends="library.MT_Tools,library.tools,library.game_asn">
