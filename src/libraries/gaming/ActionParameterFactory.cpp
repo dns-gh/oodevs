@@ -202,12 +202,13 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
 // -----------------------------------------------------------------------------
 ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const
 {
-    std::string type;
+    std::string type, expectedType = parameter.GetType();
     bool isSet = true;
     xis >> attribute( "type", type )
         >> optional() >> attribute( "set", isSet );
-    type = QString( type.c_str() ).lower().ascii();
-    if( type != parameter.GetType()  )
+    std::transform( type.begin(), type.end(), type.begin(), & tolower );
+    std::transform( expectedType.begin(), expectedType.end(), expectedType.begin(), & tolower );
+    if( type != expectedType  )
         throw std::runtime_error( tools::translate( "ActionParameter", "Error loading mission parameters. Found type: '%1' expecting: '%2'." )
                                 .arg( type.c_str() ).arg( parameter.GetType().c_str() ).ascii() );
 
