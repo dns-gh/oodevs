@@ -507,7 +507,7 @@
     </target>
 
     <target name="installer" description="create the installer">
-        <nsis todir="${dist.dir}/current" name="sword-ot"      script="sword-ot.nsi"/>
+        <!-- <nsis todir="${dist.dir}/current" name="sword-ot"      script="sword-ot.nsi"/> -->
         <nsis todir="${dist.dir}/current" name="sword-ot-ada"  script="sword-ot-ada.nsi"/>
         <nsis todir="${dist.dir}/current" name="sword-ot-demo" script="sword-ot-demo.nsi" license="true"/>
     </target>
