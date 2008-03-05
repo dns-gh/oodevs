@@ -103,11 +103,11 @@ void EventToolbar::NotifyCreated( const Report& report )
 // Name: EventToolbar::NotifyUpdated
 // Created: AGE 2006-10-26
 // -----------------------------------------------------------------------------
-void EventToolbar::NotifyUpdated( const Profile_ABC& profile )
+void EventToolbar::NotifyUpdated( const Profile_ABC& )
 {
     T_Agents filtered;
     for( CIT_Agents it = messageAgents_.begin(); it != messageAgents_.end(); ++it )
-        if( profile.IsVisible( **it ) )
+        if( profile_.IsVisible( **it ) )
             filtered.push_back( *it );
     std::swap( filtered, messageAgents_ );
     UpdateMessageButton();

@@ -103,6 +103,7 @@ void TimelineEditor::Update()
 {
     for( T_Lines::const_iterator it = lines_.begin(); it != lines_.end(); ++it )
         (*it)->Update();
+    canvas()->setAllChanged();
     canvas()->update();
 }
 

@@ -29,14 +29,13 @@ using namespace kernel;
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
 Profile::Profile( Controllers& controllers )
-    : controllers_( controllers )
-    , controller_( controllers.controller_ )
+    : controller_ ( controllers.controller_ )
     , loggedIn_   ( false )
     , supervision_( false )
     , replay_     ( false )
     , firstTicked_( false )
 {
-    controllers_.Register( *this );
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ Profile::Profile( Controllers& controllers )
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
-    controllers_.Unregister( *this );
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +108,8 @@ void Profile::Update( const ASN1T_MsgProfileUpdate& message )
     if( message.login == login_ )
     {
         Update( message.profile );
-        controllers_.Update( *this );
+        controller_.Update( *this );
+        controller_.Update( *(kernel::Profile_ABC*)this );
     }
 }
 

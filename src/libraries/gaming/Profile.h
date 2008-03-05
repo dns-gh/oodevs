@@ -118,7 +118,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     kernel::Controller& controller_;
     mutable std::string login_;
     mutable std::string password_;

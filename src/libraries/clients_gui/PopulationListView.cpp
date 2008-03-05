@@ -153,7 +153,7 @@ void PopulationListView::NotifySelected( const Entity_ABC* element )
 // Name: PopulationListView::NotifyUpdated
 // Created: AGE 2006-10-13
 // -----------------------------------------------------------------------------
-void PopulationListView::NotifyUpdated( const kernel::Profile_ABC& profile )
+void PopulationListView::NotifyUpdated( const kernel::Profile_ABC& )
 {
     QListViewItemIterator it( this );
     while( ValuedListItem* item = (ValuedListItem*)( *it ) )
@@ -161,7 +161,7 @@ void PopulationListView::NotifyUpdated( const kernel::Profile_ABC& profile )
         if( item->IsA< const Entity_ABC >() )
         {
             const Entity_ABC& entity = *item->GetValue< const Entity_ABC >();
-            item->setVisible( profile.IsVisible( entity ) );
+            item->setVisible( profile_.IsVisible( entity ) );
         }
         ++it;
     }
