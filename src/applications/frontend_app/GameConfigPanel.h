@@ -26,7 +26,7 @@ class QGroupBox;
 */
 // Created: AGE 2007-10-09
 // =============================================================================
-class GameConfigPanel : public QHBox
+class GameConfigPanel : public QVBox
 {
 
 public:

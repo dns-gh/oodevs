@@ -9,6 +9,7 @@
 
 #include "frontend_app_pch.h"
 #include "GameConfigPanel.h"
+#include "AdvancedButton.h"
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
 #include "tools/GeneralConfig.h"
@@ -26,13 +27,24 @@
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
 GameConfigPanel::GameConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
-    : QHBox( parent )
+    : QVBox( parent )
     , config_( config )
 {
     setSpacing( 5 );
-    CreateSimulationPanel( new QGroupBox( 1, Horizontal, tr( "Simulation" ), this ) );
-    CreateDebugPanel     ( new QGroupBox( 1, Horizontal, tr( "Debug" ),      this ) );
-    CreateSystemPanel    ( new QGroupBox( 1, Horizontal, tr( "System" ),     this ) );
+    QHBox* box = new QHBox( this );
+    box->setSpacing( 5 );
+    CreateSimulationPanel( new QGroupBox( 1, Horizontal, tr( "Simulation" ), box ) );
+    QWidget* debugPanel = new QGroupBox( 1, Horizontal, tr( "Debug" ), box );
+    CreateDebugPanel( debugPanel );
+    QWidget* systemPanel = new QGroupBox( 1, Horizontal, tr( "System" ), box );
+    CreateSystemPanel( systemPanel );
+    {
+        box = new QHBox( this );
+        box->layout()->setAlignment( Qt::AlignRight );
+        AdvancedButton* button = new AdvancedButton( box );
+        button->Link( debugPanel );
+        button->Link( systemPanel );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -145,6 +157,7 @@ QWidget* GameConfigPanel::CreateSystemPanel( QWidget* parent )
 void GameConfigPanel::Commit( const std::string& exercise, const std::string& session, const std::string& name, const std::string& comment, unsigned exerciseNumber )
 {
     frontend::CreateSession action( config_, exercise, session );
+    action.SetDefaultValues();
     {
         action.SetOption( "session/meta/date", session );
         action.SetOption( "session/meta/name", name );

@@ -107,4 +107,5 @@ void ScenarioPage::OnStart()
 void ScenarioPage::CreateSession( const QString& exercise, const QString& session )
 {
     frontend::CreateSession action( config_, exercise.ascii(), session.ascii() );
+    action.SetDefaultValues();
 }

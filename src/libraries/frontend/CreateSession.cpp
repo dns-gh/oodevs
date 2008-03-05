@@ -26,11 +26,29 @@ using namespace frontend;
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
 CreateSession::CreateSession( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
-    : config_( config )
-    , setter_( new ConfigurationManipulator( GetSessionXml( exercise, session ), "session" ) )
+    : setter_( new ConfigurationManipulator( GetSessionXml( config, exercise, session ), "session" ) )
+    , session_( session )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateSession destructor
+// Created: SBO 2008-02-25
+// -----------------------------------------------------------------------------
+CreateSession::~CreateSession()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateSession::SetDefaultValues
+// Created: SBO 2008-03-05
+// -----------------------------------------------------------------------------
+void CreateSession::SetDefaultValues()
 {
     {
-        setter_->SetValue( "session/meta/date"     , session );
+        setter_->SetValue( "session/meta/date"     , session_ );
         setter_->SetValue( "session/meta/name"     , "" );
         setter_->SetValue( "session/meta/comment"  , "" );
     }
@@ -69,21 +87,12 @@ CreateSession::CreateSession( const tools::GeneralConfig& config, const std::str
 }
 
 // -----------------------------------------------------------------------------
-// Name: CreateSession destructor
-// Created: SBO 2008-02-25
-// -----------------------------------------------------------------------------
-CreateSession::~CreateSession()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: CreateSession::GetSessionXml
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
-std::string CreateSession::GetSessionXml( const std::string& exercise, const std::string& session )
+std::string CreateSession::GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
 {
-    const bfs::path dir( config_.BuildSessionDir( exercise, session ), bfs::native );
+    const bfs::path dir( config.BuildSessionDir( exercise, session ), bfs::native );
     bfs::create_directories( dir );
     return ( dir / "session.xml" ).native_file_string();
 }

@@ -24,11 +24,9 @@ XmlNode::XmlNode( const std::string& filename, const std::string& root )
     if( boost::filesystem::exists( filename ) )
     {
         xml::xifstream xis( filename );
-        xis >> xml::start( root )
-                >> xml::attributes( *this, &XmlNode::ReadAttribute )
-                >> xml::list( *this, &XmlNode::ReadChild )
-                >> text_
-            >> xml::end();
+        xis >> xml::attributes( *this, &XmlNode::ReadAttribute )
+            >> xml::list( *this, &XmlNode::ReadChild )
+            >> xml::optional() >> text_;
     }
 }
 
@@ -40,7 +38,7 @@ XmlNode::XmlNode( xml::xistream& xis )
 {
     xis >> xml::attributes( *this, &XmlNode::ReadAttribute )
         >> xml::list( *this, &XmlNode::ReadChild )
-        >> text_;
+        >> xml::optional() >> text_;
 }
 
 // -----------------------------------------------------------------------------

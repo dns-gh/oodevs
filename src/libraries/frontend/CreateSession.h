@@ -40,6 +40,7 @@ public:
     //@{
     template< typename T >
     void SetOption( const std::string& path, const T& value );
+    void SetDefaultValues();
     //@}
 
 private:
@@ -51,14 +52,14 @@ private:
 
     //! @name Helpers
     //@{
-    std::string GetSessionXml( const std::string& exercise, const std::string& session );
+    std::string GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
     std::auto_ptr< ConfigurationManipulator > setter_;
+    std::string session_;
     //@}
 };
 

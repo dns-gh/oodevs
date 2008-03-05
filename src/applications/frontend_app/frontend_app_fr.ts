@@ -325,6 +325,10 @@ Description: %3</source>
         <source>Select an exercise to start</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>HLA Export</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TerrainCreationPanel</name>

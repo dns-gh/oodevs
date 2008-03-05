@@ -18,6 +18,7 @@ namespace tools
 }
 class InfoBubble;
 class GameConfigPanel;
+class HlaPluginConfigPanel;
 class QListBox;
 class QSpinBox;
 class QLineEdit;
@@ -69,6 +70,7 @@ protected:
     QGroupBox* listBox_;
     QListBox* list_;
     GameConfigPanel* configPanel_;
+    HlaPluginConfigPanel* hlaConfigPanel_;
     QLineEdit* sessionName_;
     QTextEdit* sessionComment_;
     QSpinBox* exerciseNumber_;
