@@ -21,16 +21,16 @@ HlaPluginConfigPanel::HlaPluginConfigPanel( QWidget* parent, const tools::Genera
     : QHBox( parent )
     , config_( config )
 {
-    box_ = new QGroupBox( 2, Horizontal, tr( "HLA export plugin configuration" ), this );
+    box_ = new QGroupBox( 2, Horizontal, tr( "Enable HLA RPR-FOM export" ), this );
     box_->setCheckable( true );
     box_->setChecked( false );
     {
         new QLabel( tr( "Federation: " ), box_ );
-        federation_ = new QLineEdit( box_ );
+        federation_ = new QLineEdit( box_, "MyFederation" );
     }
     {
         new QLabel( tr( "Federate name: " ), box_ );
-        name_ = new QLineEdit( box_ );
+        name_ = new QLineEdit( box_, "Sword Officer Training" );
     }
 }
 
