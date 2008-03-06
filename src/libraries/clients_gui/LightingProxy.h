@@ -39,6 +39,7 @@ public:
     //! @name Operations
     //@{
     void SwitchToFixed();
+    void SwitchToCameraFixed();
     void SwitchToSimulationTime();
     virtual void Set();
     //@}
@@ -66,6 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
+    bool camera_;
     std::auto_ptr< FixedLighting > fixed_;
     std::auto_ptr< TimeLighting > time_;
     Lighting_ABC* current_;

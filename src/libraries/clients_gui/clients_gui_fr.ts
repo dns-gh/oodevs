@@ -296,6 +296,10 @@ Please check access permissions or write protection.</source>
         <source>Diffuse color</source>
         <translation>Couleur diffuse</translation>
     </message>
+    <message>
+        <source>Camera fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LimitsLayer</name>

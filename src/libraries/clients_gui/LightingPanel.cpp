@@ -35,6 +35,7 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
     QButtonGroup* lightingType = new QButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), this );
     lightingType->insert( new QRadioButton( tr( "Fixed" ), lightingType ) );
+    lightingType->insert( new QRadioButton( tr( "Camera fixed" ), lightingType ) );
     lightingType->insert( new QRadioButton( tr( "Simulation time" ), lightingType ) );
     lightingType->setButton( 0 );
 
@@ -96,10 +97,12 @@ void LightingPanel::Reset()
 // -----------------------------------------------------------------------------
 void LightingPanel::OnLightingType( int type )
 {
-    fixedLightBox_->setShown( type == 0 );
+    fixedLightBox_->setShown( type == 0 || type == 1 );
     if( type == 0 )
         lighting_.SwitchToFixed();
     else if( type == 1 )
+        lighting_.SwitchToCameraFixed();
+    else if( type == 2 )
         lighting_.SwitchToSimulationTime();
 }
 

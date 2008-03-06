@@ -24,6 +24,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 LightingProxy::LightingProxy( QObject* parent )
     : QObject( parent )
+    , camera_( false )
     , fixed_( new FixedLighting() )
     , time_ ( new TimeLighting() )
 {
@@ -45,7 +46,14 @@ LightingProxy::~LightingProxy()
 // -----------------------------------------------------------------------------
 void LightingProxy::Set()
 {
+    if( camera_ )
+    {
+        glPushMatrix();
+        glLoadIdentity();
+    }
     current_->Set();
+    if( camera_ )
+        glPopMatrix();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,6 +62,17 @@ void LightingProxy::Set()
 // -----------------------------------------------------------------------------
 void LightingProxy::SwitchToFixed()
 {
+    camera_ = false;
+    current_ = fixed_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LightingProxy::SwitchToCameraFixed
+// Created: AGE 2008-03-06
+// -----------------------------------------------------------------------------
+void LightingProxy::SwitchToCameraFixed()
+{
+    camera_ = true;
     current_ = fixed_.get();
 }
 
@@ -63,6 +82,7 @@ void LightingProxy::SwitchToFixed()
 // -----------------------------------------------------------------------------
 void LightingProxy::SwitchToSimulationTime()
 {
+    camera_ = false;
     current_ = time_.get();
 }
 
