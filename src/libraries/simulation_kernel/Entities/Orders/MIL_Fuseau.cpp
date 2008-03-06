@@ -1021,6 +1021,7 @@ MIL_Fuseau& MIL_Fuseau::operator=( const MIL_Fuseau& fuseau )
     TER_Polygon::operator=( fuseau );
 
     //globalDirectionLine_    = fuseau.globalDirectionLine_; $$ NE PAS COPIER - MT_LINE SUCKS
+    vOrientationRefPos_     = fuseau.vOrientationRefPos_;
     vStartGlobalDirection_  = fuseau.vStartGlobalDirection_;
     vEndGlobalDirection_    = fuseau.vEndGlobalDirection_;
 
