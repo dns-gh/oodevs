@@ -112,6 +112,7 @@ QWidget* GameConfigPanel::CreateDebugPanel( QWidget* parent )
     {
         diaDebugBox_ = new QGroupBox( 1, Vertical, tr( "DIA Debugger" ), box );
         diaDebugBox_->setCheckable( true );
+        diaDebugBox_->setChecked( false );
         diaDebugPort_ = new QSpinBox( 1024, 65535, 1, diaDebugBox_ );
         diaDebugPort_->setValue( 15000 );
         connect( diaDebugBox_, SIGNAL( toggled( bool ) ), diaDebugPort_, SLOT( setEnabled( bool ) ) );
@@ -119,6 +120,7 @@ QWidget* GameConfigPanel::CreateDebugPanel( QWidget* parent )
     {
         netConBox_ = new QGroupBox( 1, Vertical, tr( "Network Console" ), box );
         netConBox_->setCheckable( true );
+        netConBox_->setChecked( false );
         netConPort_ = new QSpinBox( 1024, 65535, 1, netConBox_ );
         netConPort_->setValue( 20000 );
         connect( netConBox_, SIGNAL( toggled( bool ) ), netConPort_, SLOT( setEnabled( bool ) ) );
