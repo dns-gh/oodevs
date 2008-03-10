@@ -25,7 +25,8 @@ using namespace hla;
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 FederateFacade::FederateFacade( const std::string& name, unsigned int timeStepDuration )
-    : timeFactory_    ( new SimpleTimeFactory() )
+    : joined_         ( false )
+    , timeFactory_    ( new SimpleTimeFactory() )
     , intervalFactory_( new SimpleTimeIntervalFactory() )
     , ambassador_     ( RtiAmbassador_ABC::CreateAmbassador( *timeFactory_, *intervalFactory_ ) )
     , federate_       ( new Federate( *ambassador_, name, SimpleTimeInterval( timeStepDuration ) ) )
@@ -51,15 +52,15 @@ bool FederateFacade::Join( const std::string& name )
     try
     {
         if( ! federate_->Join( name, false, true ) )
-            return false;
+            return joined_ = false;
         for( T_Classes::iterator it = classes_.begin(); it != classes_.end(); ++it )
             (*it)->RegisterTo( *federate_ );
-        return true;
+        return joined_ = true;
     }
     catch( HLAException& e )
     {
         MT_LOG_ERROR_MSG( "Error joining federation '" << name << "' : " << e.what() );
-        return false;
+        return joined_ = false;
     }
 }
 
@@ -69,7 +70,8 @@ bool FederateFacade::Join( const std::string& name )
 // -----------------------------------------------------------------------------
 void FederateFacade::AddClass( ObjectClass_ABC& objectClass )
 {
-    classes_.push_back( &objectClass );
+    if( joined_ )
+        classes_.push_back( &objectClass );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,5 +80,6 @@ void FederateFacade::AddClass( ObjectClass_ABC& objectClass )
 // -----------------------------------------------------------------------------
 void FederateFacade::Step()
 {
-    federate_->Step();
+    if( joined_ )
+        federate_->Step();
 }

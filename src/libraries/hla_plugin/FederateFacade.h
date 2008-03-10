@@ -58,6 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
+    bool joined_;
     std::auto_ptr< TimeFactory_ABC >         timeFactory_;
     std::auto_ptr< TimeIntervalFactory_ABC > intervalFactory_;
     std::auto_ptr< RtiAmbassador_ABC >       ambassador_;
