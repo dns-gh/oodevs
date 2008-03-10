@@ -44,6 +44,17 @@ WorldLocation::~WorldLocation()
 
 // -----------------------------------------------------------------------------
 // Name: VelocityVector::VelocityVector
+// Created: AGE 2008-03-10
+// -----------------------------------------------------------------------------
+VelocityVector::VelocityVector()
+    : xn_( 0 ), yn_( 0 ), zn_( 0 )
+    , xv_( 0 ), yv_( 0 ), zv_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: VelocityVector::VelocityVector
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
 VelocityVector::VelocityVector( const WorldLocation& location, float rSpeed, unsigned short heading )

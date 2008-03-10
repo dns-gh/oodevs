@@ -22,14 +22,14 @@ class WorldLocation
 public:
     //! @name Constructors/Destructor
     //@{
-             WorldLocation( const std::string mgrs, float altitude );
-    virtual ~WorldLocation();
+     WorldLocation( const std::string mgrs, float altitude );
+    ~WorldLocation();
     //@}
 
     //! @name Operations
     //@{
     template< typename Archive >
-    void Serialize( Archive& archive )
+    void Serialize( Archive& archive ) const
     {
         archive << x_ << y_ << z_;
     }
@@ -61,14 +61,15 @@ class VelocityVector
 public:
     //! @name Constructors/Destructor
     //@{
-             VelocityVector( const WorldLocation& location, float speed, unsigned short heading );
-    virtual ~VelocityVector();
+     VelocityVector();
+     VelocityVector( const WorldLocation& location, float speed, unsigned short heading );
+    ~VelocityVector();
     //@}
 
     //! @name Operations
     //@{
     template< typename Archive >
-    void Serialize( Archive& archive )
+    void Serialize( Archive& archive ) const
     {
         archive << xv_ << yv_ << zv_;
     }
@@ -101,14 +102,14 @@ class Orientation
 public:
     //! @name Constructors/Destructor
     //@{
-             Orientation( const WorldLocation& location, const VelocityVector& velocity );
-    virtual ~Orientation();
+     Orientation( const WorldLocation& location, const VelocityVector& velocity );
+    ~Orientation();
     //@}
 
     //! @name Operations
     //@{
     template< typename Archive >
-    void Serialize( Archive& archive )
+    void Serialize( Archive& archive ) const
     {
         archive << psi_ << theta_ << phi_;
     }

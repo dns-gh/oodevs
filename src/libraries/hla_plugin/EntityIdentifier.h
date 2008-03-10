@@ -22,8 +22,8 @@ class EntityIdentifier
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityIdentifier( unsigned short site, unsigned short application, unsigned short number );
-    virtual ~EntityIdentifier();
+     EntityIdentifier( unsigned short site, unsigned short application, unsigned short number );
+    ~EntityIdentifier();
     //@}
 
     //! @name Operations

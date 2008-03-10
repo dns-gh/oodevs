@@ -51,8 +51,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityType();
-    virtual ~EntityType();
+     EntityType();
+    ~EntityType();
     //@}
 
     //! @name Modifiers
@@ -66,7 +66,7 @@ public:
     //! @name Operations
     //@{
     template< typename Archive >
-    void Serialize( Archive& archive )
+    void Serialize( Archive& archive ) const
     {
         archive << entityKind_  << domain_   << countryCode_ << category_ 
                 << subcategory_ << specific_ << extra_;
