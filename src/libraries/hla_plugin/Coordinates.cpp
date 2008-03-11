@@ -97,27 +97,51 @@ VelocityVector::~VelocityVector()
     // NOTHING
 }
 
+// $$$$ AGE 2008-03-11: zxz
+//    if( std::fabs( z.Z() ) < 1 - 1e-6 )
+//    {
+//        beta = std::acos( z.Z() );
+//        const double sinBeta = std::sin( beta );
+//        alpha = std::atan2( z.Y() / sinBeta, z.X() / sinBeta );
+//        gamma = std::atan2( -y.Z() / sinBeta, x.Z() / sinBeta );
+//    }
+//    else
+//    {
+//        beta = 0;
+//        gamma = 0;
+//        alpha = std::acos( x.X() );
+//        if( x.Y() < 0 )
+//            alpha = -alpha;
+//    }
+
+// $$$$ AGE 2008-03-11: zyx
+//    if( std::fabs( x.Z() ) < 1 - 1e-6 )
+//    {
+//        const double cosBeta = std::cos( beta );
+//        alpha = std::atan2( x.X() / cosBeta, -x.Y() / cosBeta );
+//        gamma = std::atan2( z.Z() / cosBeta, -y.Z() / cosBeta );
+//    }
+
 namespace
 {
+    // $$$$ AGE 2008-03-11: zxy...
     geometry::Vector3d ComputeEulerAngles( const geometry::Vector3d& x, const geometry::Vector3d& y, const geometry::Vector3d& z )
     {
-        double psi, theta, phi;
-        if( std::fabs( x.Z() ) < 1 - 1e-6 )
+        double alpha = 0, beta = 0, gamma = 0;
+        if( std::fabs( y.Z() ) < 1 - 1e-6 )
         {
-            theta = std::asin( x.Z() );
-            const double cosTheta = std::cos( theta );
-            phi   = std::atan2( y.Z() / cosTheta, z.Z() / cosTheta );
-            psi   = std::atan2( x.Y() / cosTheta, x.X() / cosTheta );
+            beta = - std::asin( y.Z() );
+            const double cosBeta = std::cos( beta );
+            alpha = std::atan2( y.Y() / cosBeta, y.X() / cosBeta );
+            gamma = std::atan2( z.Z() / cosBeta, x.Z() / cosBeta );
         }
         else
         {
-            psi = 0;
-            phi = std::atan2( y.X(), z.X() );
-            theta = std::acos( -1. ) / 2;
-            if( x.Z() < 0 )
-                theta = -theta;
+            beta = std::acos( 1. ) / 2;
+            alpha = std::atan2( x.X(), y.Y() );
+            gamma = 0;
         }
-        return geometry::Vector3d( psi, theta, phi );
+        return geometry::Vector3d( alpha, beta, gamma );
     }
 }
 
@@ -127,15 +151,17 @@ namespace
 // -----------------------------------------------------------------------------
 Orientation::Orientation( const WorldLocation& location, const VelocityVector& velocity )
 {
-    geometry::Vector3d zAxis( location.X(), location.Y(), location.Z() );
-    zAxis.Normalize();
+    geometry::Vector3d up( location.X(), location.Y(), location.Z() );
+    up.Normalize();
+    geometry::Vector3d forward( velocity.X(), velocity.Y(), velocity.Z() );
+    forward.Normalize();
+    geometry::Vector3d left = up.CrossProduct( forward );
 
-    geometry::Vector3d xAxis( velocity.X(), velocity.Y(), velocity.Z() );
-    xAxis.Normalize();
+    const geometry::Vector3d x = -up;
+    const geometry::Vector3d y = forward;
+    const geometry::Vector3d z = -left;
 
-    geometry::Vector3d yAxis = zAxis.CrossProduct( xAxis );
-
-    geometry::Vector3d euler = ComputeEulerAngles( xAxis, yAxis, zAxis );
+    geometry::Vector3d euler = ComputeEulerAngles( x, y, z );
 
     psi_   = float( euler.X() );
     theta_ = float( euler.Y() );
