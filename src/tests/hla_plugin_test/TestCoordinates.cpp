@@ -47,8 +47,8 @@ BOOST_AUTO_TEST_CASE( Test_CoordinatesOnZero )
         BOOST_CHECK_CLOSE( 1., velocity.Z(), tolerance );
 
         Orientation orientation( location, velocity );
-        BOOST_CHECK( std::fabs( orientation.Psi() ) < 0.0001 );
-        BOOST_CHECK_CLOSE( piOver2, orientation.Theta(), tolerance );
+        BOOST_CHECK_CLOSE( -piOver2, orientation.Psi(), tolerance );
+        BOOST_CHECK( std::fabs( orientation.Theta() ) < 0.0001 );
         BOOST_CHECK( std::fabs( orientation.Phi() ) < 0.0001 );
     }
 
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE( Test_CoordinatesOnZero )
         Orientation orientation( location, velocity );
         BOOST_CHECK_CLOSE( piOver2, orientation.Psi(), tolerance );
         BOOST_CHECK( std::fabs( orientation.Theta() ) < 0.0001 );
-        BOOST_CHECK_CLOSE( piOver2, orientation.Phi(), tolerance );
+        BOOST_CHECK_CLOSE( -piOver2, orientation.Phi(), tolerance );
     }
 
     {
@@ -72,8 +72,8 @@ BOOST_AUTO_TEST_CASE( Test_CoordinatesOnZero )
 
         Orientation orientation( location, velocity );
         BOOST_CHECK_CLOSE(  piOver2, orientation.Psi(), tolerance );
-        BOOST_CHECK_CLOSE( -piOver4, orientation.Theta(), tolerance );
-        BOOST_CHECK_CLOSE(  piOver2, orientation.Phi(), tolerance );
+        BOOST_CHECK_CLOSE(  piOver4, orientation.Theta(), tolerance );
+        BOOST_CHECK_CLOSE( -piOver2, orientation.Phi(), tolerance );
     }
 }
 
@@ -105,9 +105,9 @@ BOOST_AUTO_TEST_CASE( Test_CoordinatesOn90Zero )
         BOOST_CHECK_CLOSE( 1., velocity.Z(), tolerance );
 
         Orientation orientation( location, velocity );
-        BOOST_CHECK( std::fabs( orientation.Psi() ) < 0.0001 );
-        BOOST_CHECK_CLOSE( piOver2, orientation.Theta(), tolerance );
-        BOOST_CHECK_CLOSE( piOver2, orientation.Phi(), tolerance );
+        BOOST_CHECK_CLOSE( -piOver2, orientation.Psi(), tolerance );
+        BOOST_CHECK( std::fabs( orientation.Theta() ) < 0.0001 );
+        BOOST_CHECK( std::fabs( orientation.Phi() ) < 0.0001 );
     }
 
     {
@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_CASE( Test_CoordinatesOn90Zero )
         Orientation orientation( location, velocity );
         BOOST_CHECK_CLOSE( pi, orientation.Psi(), tolerance );
         BOOST_CHECK( std::fabs( orientation.Theta() ) < 0.0001 );
-        BOOST_CHECK_CLOSE( piOver2, orientation.Phi(), tolerance );
+        BOOST_CHECK_CLOSE( -piOver2, orientation.Phi(), tolerance );
     }
 
     {
@@ -130,8 +130,8 @@ BOOST_AUTO_TEST_CASE( Test_CoordinatesOn90Zero )
 
         Orientation orientation( location, velocity );
         BOOST_CHECK_CLOSE(  pi, orientation.Psi(), tolerance );
-        BOOST_CHECK_CLOSE( -piOver4, orientation.Theta(), tolerance );
-        BOOST_CHECK_CLOSE(  piOver2, orientation.Phi(), tolerance );
+        BOOST_CHECK_CLOSE( piOver4, orientation.Theta(), tolerance );
+        BOOST_CHECK_CLOSE( -piOver2, orientation.Phi(), tolerance );
     }
 }
 
@@ -165,8 +165,8 @@ BOOST_AUTO_TEST_CASE( Test_CoordinatesOnZero45 )
 
         Orientation orientation( location, velocity );
         BOOST_CHECK_CLOSE( -pi, orientation.Psi(), tolerance );
-        BOOST_CHECK_CLOSE( piOver4, orientation.Theta(), tolerance );
-        BOOST_CHECK( std::fabs( orientation.Phi() ) < 0.0001 );
+        BOOST_CHECK_CLOSE( -piOver4, orientation.Theta(), tolerance );
+        BOOST_CHECK_CLOSE( pi, orientation.Phi(), tolerance );
     }
 
     {
@@ -178,7 +178,7 @@ BOOST_AUTO_TEST_CASE( Test_CoordinatesOnZero45 )
         Orientation orientation( location, velocity );
         BOOST_CHECK_CLOSE( piOver2, orientation.Psi(), tolerance );
         BOOST_CHECK( std::fabs( orientation.Theta() ) < 0.0001 );
-        BOOST_CHECK_CLOSE( piOver4, orientation.Phi(), tolerance );
+        BOOST_CHECK_CLOSE( -piOver2-piOver4, orientation.Phi(), tolerance );
     }
 
     {
@@ -190,7 +190,7 @@ BOOST_AUTO_TEST_CASE( Test_CoordinatesOnZero45 )
         // whatever
         Orientation orientation( location, velocity );
         BOOST_CHECK_CLOSE(  0.9569, orientation.Psi(), tolerance ); 
-        BOOST_CHECK_CLOSE( -0.5255, orientation.Theta(), tolerance );
-        BOOST_CHECK_CLOSE(  0.6186, orientation.Phi(), tolerance );
+        BOOST_CHECK_CLOSE( 0.5255, orientation.Theta(), tolerance );
+        BOOST_CHECK_CLOSE( -2.522, orientation.Phi(), tolerance );
     }
 }
