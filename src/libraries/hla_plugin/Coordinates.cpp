@@ -81,7 +81,7 @@ VelocityVector::VelocityVector( const WorldLocation& location, float rSpeed, uns
     yn_ = float( speed.Y() );
     zn_ = float( speed.Z() );
 
-    speed *= rSpeed;
+    speed *= rSpeed / 3.6f; // km/h => m/s
 
     xv_ = float( speed.X() );
     yv_ = float( speed.Y() );
@@ -127,10 +127,10 @@ namespace
 // -----------------------------------------------------------------------------
 Orientation::Orientation( const WorldLocation& location, const VelocityVector& velocity )
 {
-    geometry::Vector3d zAxis( location.X(),  location.Y(), location.Z() );
+    geometry::Vector3d zAxis( location.X(), location.Y(), location.Z() );
     zAxis.Normalize();
 
-    geometry::Vector3d xAxis( velocity.X(),  velocity.Y(), velocity.Z() );
+    geometry::Vector3d xAxis( velocity.X(), velocity.Y(), velocity.Z() );
     xAxis.Normalize();
 
     geometry::Vector3d yAxis = zAxis.CrossProduct( xAxis );

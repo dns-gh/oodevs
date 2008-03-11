@@ -90,9 +90,9 @@ unsigned long DisPlugin::GetTime() const
 {
     // 31MSBs are for the 3600s in the hour
     // LSB is to flag absolute time
-    const float seconds = ( time_ % 3600 );
+    const float seconds = float( time_ % 3600 );
     unsigned long timestamp = (unsigned long)( (seconds/3600.0) * 0x7fffffff );
-    timestamp << 1;
+    timestamp <<= 1;
     return timestamp;
 }
 

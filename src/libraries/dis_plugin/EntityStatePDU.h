@@ -56,9 +56,11 @@ public:
         archive << forceID_ << numberOfArticulationParameters_;
         entityType_.Serialize( archive );
         alternativeType_.Serialize( archive );
+
         entityLinearVelocity_.Serialize( archive );
         entityLocation_.Serialize( archive );
         entityOrientation_.Serialize( archive );
+
         archive << appearance_ << deadReckoningAlgorithm_ << otherParameters_;
         DRentityLinearAcceleration_.Serialize( archive );
         DRentityAngularVelocity_.Serialize( archive );
@@ -71,10 +73,10 @@ private:
     //! @name Member data
     //@{
     DisHeader        header_;                          // 12
-    EntityIdentifier id_;                              // 6       
+    EntityIdentifier id_;                              // 6
     unsigned char    forceID_;                         // 1
     unsigned char    numberOfArticulationParameters_;  // 1    20
-    EntityType       entityType_;                      // 8    
+    EntityType       entityType_;                      // 8
     EntityType       alternativeType_;                 // 8    36
     VelocityVector   entityLinearVelocity_;            // 12   48
     WorldLocation    entityLocation_;                  // 24   72

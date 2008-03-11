@@ -80,6 +80,10 @@ public:
     double X() const { return xn_; };
     double Y() const { return yn_; };
     double Z() const { return zn_; };
+
+    double VX() const { return xv_; };
+    double VY() const { return yv_; };
+    double VZ() const { return zv_; };
     //@}
 
 private:

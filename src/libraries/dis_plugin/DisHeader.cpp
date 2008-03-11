@@ -18,7 +18,7 @@ using namespace dis;
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
 DisHeader::DisHeader( unsigned char exercise )
-     : protocolVersion_   ( 5 )
+     : protocolVersion_   ( 6 )
      , exerciseIdentifier_( exercise )
      , PDUType_           ( 0 )
      , protocolFamily_    ( 0 )

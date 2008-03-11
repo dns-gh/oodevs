@@ -44,17 +44,26 @@ Serializer& Serializer::operator<<( const float& r )
     return *this << ( *reinterpret_cast< const long* >( &r ) );
 }
 
+namespace
+{
+    union Converter
+    {
+        double dword;
+        unsigned char byte[8];
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Serializer::operator<<
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
 Serializer& Serializer::operator<<( const double& r )
 {
-    typedef unsigned long uint32;
-    uint32 buff[2];
-    *((uint32*)buff) = htonl(*(((uint32*)&r)+1));
-    *(((uint32*)buff)+1) = htonl(*((uint32*)&r));
-    return *this << buff[0] << buff[1];
+    Converter converter;
+    converter.dword = r;
+    for( unsigned i = 0; i < 4; ++i )
+        std::swap( converter.byte[i], converter.byte[7-i] );
+    return *this << converter.byte;
 }
 
 // -----------------------------------------------------------------------------
