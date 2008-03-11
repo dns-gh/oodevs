@@ -9,21 +9,24 @@
 
 #include "dis_plugin_pch.h"
 #include "UdpNetwork.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace dis;
+
+namespace i = boost::asio::ip;
 
 // -----------------------------------------------------------------------------
 // Name: UdpNetwork constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
 UdpNetwork::UdpNetwork( const std::string& target, unsigned short port )
-    : target_( boost::asio::ip::address::from_string( target ), port )
-    , socket_( service_, boost::asio::ip::udp::v4() )
+    : socket_( service_, boost::asio::ip::udp::v4() )
     , thread_( boost::bind( &UdpNetwork::Start, this ) )
 {
-    // NOTHING
+    const i::udp::resolver::query query( i::udp::v4(), target, boost::lexical_cast< std::string >( port ) );
+    i::udp::resolver resolver( service_ );
+    target_ = *resolver.resolve(query);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UdpNetwork destructor
