@@ -42,7 +42,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     EntityStatePDU( const dispatcher::Agent& agent, const EntityIdentifier& id, unsigned long time );
+     EntityStatePDU( const dispatcher::Agent& agent, const EntityIdentifier& id, unsigned long time, unsigned char exercise );
     ~EntityStatePDU();
     //@}
 

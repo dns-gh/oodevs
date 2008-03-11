@@ -12,6 +12,11 @@
 
 #include "dispatcher/ExtensionFactory_ABC.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace dispatcher
 {
     class Agent;
@@ -34,7 +39,7 @@ class DisExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher:
 public:
     //! @name Constructors/Destructor
     //@{
-             DisExtensionFactory( UdpNetwork& network, const Time_ABC& time );
+             DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, xml::xistream& xis );
     virtual ~DisExtensionFactory();
     //@}
 
@@ -59,6 +64,9 @@ private:
     //@{
     UdpNetwork& network_;
     const Time_ABC& time_;
+    const unsigned short site_;
+    const unsigned short application_;
+    const unsigned char  exercise_;
     unsigned short id_;
     //@}
 };

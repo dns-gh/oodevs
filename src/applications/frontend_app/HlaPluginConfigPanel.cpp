@@ -26,11 +26,11 @@ HlaPluginConfigPanel::HlaPluginConfigPanel( QWidget* parent, const tools::Genera
     box_->setChecked( false );
     {
         new QLabel( tr( "Federation: " ), box_ );
-        federation_ = new QLineEdit( box_, "MyFederation" );
+        federation_ = new QLineEdit( "MyFederation", box_ );
     }
     {
         new QLabel( tr( "Federate name: " ), box_ );
-        name_ = new QLineEdit( box_, "Sword Officer Training" );
+        name_ = new QLineEdit( "Sword Officer Training", box_ );
     }
 }
 

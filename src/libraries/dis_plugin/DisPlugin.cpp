@@ -38,8 +38,8 @@ namespace
 DisPlugin::DisPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis )
     : model_( model )
     , network_( new UdpNetwork( xml::attribute< std::string >( xis, "server" ), xml::attribute< unsigned short >( xis, "port" ) ) )
-    , factory_( new DisExtensionFactory( *network_, *this ) )
-    , timeStep_( ReadTimeStep( config.GetSessionFile()  ) )
+    , factory_( new DisExtensionFactory( *network_, *this, xis ) )
+    , timeStep_( ReadTimeStep( config.GetSessionFile() ) )
     , time_( 0 )
 {
     model_.RegisterFactory( *factory_ );

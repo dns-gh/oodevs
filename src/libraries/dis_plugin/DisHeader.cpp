@@ -17,9 +17,9 @@ using namespace dis;
 // Name: DisHeader constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisHeader::DisHeader()
+DisHeader::DisHeader( unsigned char exercise )
      : protocolVersion_   ( 5 )
-     , exerciseIdentifier_( 1 )
+     , exerciseIdentifier_( exercise )
      , PDUType_           ( 0 )
      , protocolFamily_    ( 0 )
      , timeStamp_         ( 0 )
@@ -42,9 +42,9 @@ DisHeader::~DisHeader()
 // Name: DisHeader::EntityStatePDU
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisHeader DisHeader::EntityStatePDU( unsigned long time )
+DisHeader DisHeader::EntityStatePDU( unsigned long time, unsigned char exercise )
 {
-    DisHeader result;
+    DisHeader result( exercise );
     result.PDUType_ = 1;
     result.protocolFamily_ = 1;
     result.timeStamp_ = time;

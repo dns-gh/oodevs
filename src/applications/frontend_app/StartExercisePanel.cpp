@@ -13,6 +13,7 @@
 #include "InfoBubble.h"
 #include "GameConfigPanel.h"
 #include "HlaPluginConfigPanel.h"
+#include "DisPluginConfigPanel.h"
 #include "resources.h"
 #include "frontend/commands.h"
 #include "frontend/StartExercise.h"
@@ -60,6 +61,9 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
 
     hlaConfigPanel_ = new HlaPluginConfigPanel( tabs, config );
     tabs->addTab( hlaConfigPanel_, tr( "HLA Export" ) );
+
+    disConfigPanel_ = new DisPluginConfigPanel( tabs, config );
+    tabs->addTab( disConfigPanel_, tr( "DIS Export" ) );
 
     {
         QHBox* sessionBox = new QHBox( group );
@@ -119,6 +123,7 @@ void StartExercisePanel::StartExercise()
                               sessionName_->text().ascii(), sessionComment_->text().ascii(), 
                               exerciseNumber_->value() );
         hlaConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
+        disConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
         new ::StartExercise( this, config_, list_->selectedItem()->text(), session_.c_str() );
         Update();
         ShowNext();

@@ -11,6 +11,7 @@
 #include "DisExtensionFactory.h"
 #include "DisExtension.h"
 #include "dispatcher/Agent.h"
+#include <xeumeuleu/xml.h>
 
 using namespace dis;
 
@@ -18,9 +19,12 @@ using namespace dis;
 // Name: DisExtensionFactory constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& time )
+DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, xml::xistream& xis )
     : network_( network )
     , time_( time )
+    , site_( xml::attribute< unsigned short >( xis, "site" ) )
+    , application_( xml::attribute< unsigned short >( xis, "application" ) )
+    , exercise_( (unsigned char)xml::attribute< unsigned short >( xis, "exercise" ) )
     , id_( 1 )
 {
     // NOTHING
@@ -41,8 +45,8 @@ DisExtensionFactory::~DisExtensionFactory()
 // -----------------------------------------------------------------------------
 void DisExtensionFactory::Create( dispatcher::Agent& entity )
 {
-    EntityIdentifier id( 1, 1, id_ ); // site, application, id
-    std::auto_ptr< DisExtension > extension( new DisExtension( time_, network_, entity, id ) );
+    EntityIdentifier id( site_, application_, id_ ); // site, application, id
+    std::auto_ptr< DisExtension > extension( new DisExtension( time_, network_, entity, id, exercise_ ) );
     entity.Attach( *extension.release() );
     ++id_;
 }

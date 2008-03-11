@@ -38,7 +38,7 @@ class DisExtension : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DisExtension( const Time_ABC& time, UdpNetwork& network, dispatcher::Agent& holder, const EntityIdentifier& id );
+             DisExtension( const Time_ABC& time, UdpNetwork& network, dispatcher::Agent& holder, const EntityIdentifier& id, unsigned char exercise );
     virtual ~DisExtension();
     //@}
 
@@ -61,10 +61,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const Time_ABC&    time_;
-    UdpNetwork&        network_;
-    dispatcher::Agent& holder_;
-    EntityIdentifier   id_;
+    const Time_ABC&     time_;
+    UdpNetwork&         network_;
+    dispatcher::Agent&  holder_;
+    const unsigned char exercise_;
+    EntityIdentifier    id_;
     //@}
 };
 

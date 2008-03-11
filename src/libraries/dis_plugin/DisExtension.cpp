@@ -19,10 +19,11 @@ using namespace dis;
 // Name: DisExtension constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtension::DisExtension( const Time_ABC& time, UdpNetwork& network, dispatcher::Agent& holder, const EntityIdentifier& id )
+DisExtension::DisExtension( const Time_ABC& time, UdpNetwork& network, dispatcher::Agent& holder, const EntityIdentifier& id, unsigned char exercise )
     : time_   ( time )
     , network_( network )
     , holder_ ( holder )
+    , exercise_( exercise )
     , id_     ( id )
 {
     // NOTHING
@@ -43,6 +44,6 @@ DisExtension::~DisExtension()
 // -----------------------------------------------------------------------------
 void DisExtension::DoUpdate( const ASN1T_MsgUnitAttributes& )
 {
-    EntityStatePDU pdu( holder_, id_, time_.GetTime() );
+    EntityStatePDU pdu( holder_, id_, time_.GetTime(), exercise_ );
     network_.Send( pdu );
 }

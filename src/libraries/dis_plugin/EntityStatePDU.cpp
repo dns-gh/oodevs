@@ -17,8 +17,8 @@ using namespace dis;
 // Name: EntityStatePDU constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-EntityStatePDU::EntityStatePDU( const dispatcher::Agent& agent, const EntityIdentifier& id, unsigned long time )
-    : header_ ( DisHeader::EntityStatePDU( time ) )
+EntityStatePDU::EntityStatePDU( const dispatcher::Agent& agent, const EntityIdentifier& id, unsigned long time, unsigned char exercise )
+    : header_ ( DisHeader::EntityStatePDU( time, exercise ) )
     , id_     ( id )
     , forceID_( 0 )
     , numberOfArticulationParameters_( 0 )

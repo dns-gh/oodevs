@@ -288,6 +288,10 @@ Description: %3</source>
         <source>HLA Export</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>DIS Export</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TerrainCreationPanel</name>

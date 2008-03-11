@@ -25,13 +25,13 @@ class DisHeader
 public:
     //! @name Constructors/Destructor
     //@{
-     DisHeader();
-    ~DisHeader();
+    explicit DisHeader( unsigned char exercise );
+            ~DisHeader();
     //@}
 
     //! @name Constructions
     //@{
-    static DisHeader EntityStatePDU( unsigned long time );
+    static DisHeader EntityStatePDU( unsigned long time, unsigned char exercise );
     //@}
 
     //! @name Operations
