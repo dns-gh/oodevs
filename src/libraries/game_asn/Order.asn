@@ -34,16 +34,6 @@ EnumOrderErrorCode ::= ENUMERATED
     error-invalid-lima-function             (12)
 }
 
-OrderContext ::= SEQUENCE
-{
-    limite-gauche           Line OPTIONAL,
-    limite-droite           Line OPTIONAL,   
-    limas                   LimasOrder,
-    direction-dangereuse    Heading,
-    intelligences           IntelligenceList
-}
-
-
 -- TEST MISSIONS GENERIQUES
 
 MissionObjective ::= SEQUENCE
@@ -101,7 +91,10 @@ MissionParameter ::= SEQUENCE
         LogMedicalPriorities,
         VisibleString,
         MissionObjective,
-        MissionObjectiveList
+        MissionObjectiveList,
+        Line,
+        LimasOrder,
+        IntelligenceList
     }
 }
 
@@ -113,14 +106,13 @@ MissionParameters ::= SEQUENCE OF MissionParameter
 MsgUnitOrder ::= SEQUENCE
 {
     oid             Unit,
-    order-context   OrderContext,
     mission         OID,
     parametres      MissionParameters
 }
 MsgUnitOrderAck ::= SEQUENCE
 {
     oid         Unit,
-    error-code	EnumOrderErrorCode
+    error-code  EnumOrderErrorCode
 }
 
 --
@@ -134,7 +126,6 @@ EnumAutomatOrderFormation ::= ENUMERATED
 MsgAutomatOrder ::= SEQUENCE
 {
     oid           Automat,
-    order-context OrderContext,
     mission       OID,
     parametres    MissionParameters,
     formation     EnumAutomatOrderFormation
@@ -142,7 +133,7 @@ MsgAutomatOrder ::= SEQUENCE
 MsgAutomatOrderAck ::= SEQUENCE
 {
     oid         Automat,
-    error-code	EnumOrderErrorCode
+    error-code  EnumOrderErrorCode
 }
 
 --
@@ -187,7 +178,7 @@ EnumReportType ::= ENUMERATED
 
 MsgReport ::= SEQUENCE
 {
-    oid        OID, -- Automat, pion ou population    
+    oid        OID, -- Automat, pion ou population
     cr         OID,
     cr-oid     OID,
     type       EnumReportType,
@@ -197,26 +188,26 @@ MsgReport ::= SEQUENCE
 
 MsgInvalidateReport ::= SEQUENCE
 {
-    oid     OID, -- Automat, pion ou population    
+    oid     OID, -- Automat, pion ou population
     cr-oid  OID
 }
 
 MsgTrace ::= SEQUENCE
 {
-    oid     OID, -- Automat, pion ou population 
+    oid     OID, -- Automat, pion ou population
     message VisibleString
 }
 
 MsgDecisionalState ::= SEQUENCE
 {
-    oid    OID, -- Automat, pion ou population 
+    oid    OID, -- Automat, pion ou population
     key    VisibleString,
     value  VisibleString
 }
 
 MsgDebugPoints ::= SEQUENCE
 {
-    oid         OID, -- Automat, pion ou population 
+    oid         OID, -- Automat, pion ou population
     coordinates CoordUTMList
 }
 

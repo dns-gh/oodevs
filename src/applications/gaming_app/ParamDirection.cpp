@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 ParamDirection::ParamDirection( QObject* parent, const kernel::OrderParameter& parameter )
     : QObject( parent )
-    , Param_ABC( parameter.GetName() )
+    , Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
     , value_( 180 )
 {
@@ -67,4 +67,13 @@ void ParamDirection::CommitTo( ActionParameterContainer_ABC& action ) const
 void ParamDirection::OnValueChanged( int value )
 {
     value_ = value + ( value > 180 ? -180 : 180 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDirection::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamDirection::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

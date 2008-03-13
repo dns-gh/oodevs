@@ -65,7 +65,7 @@ bool ParamDateTime::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamDateTime::CommitTo( ActionParameterContainer_ABC& parameter ) const
 {
-    parameter.AddParameter( *new ActionParameterDateTime( OrderParameter( GetName(), "datetime", false ), date_ ) );
+    parameter.AddParameter( *new ActionParameterDateTime( OrderParameter( GetName().ascii(), "datetime", false ), date_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,4 +86,13 @@ void ParamDateTime::Draw( const geometry::Point2f& point, const kernel::Viewport
     if( !date_.isNull() )
         tools.Print( date_.toString( "dd-MM-yy hh:mm:ss" ).ascii(), point
                    , QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDateTime::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamDateTime::IsOptional() const
+{
+    return optional_;
 }

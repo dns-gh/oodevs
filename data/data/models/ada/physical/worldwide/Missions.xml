@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <missions>
   <units>
+    <context>
+      <parameter dia-name="dangerDirection_" name="Danger direction" optional="true" type="DangerDirection"/>
+      <parameter dia-name="phaseLines_" name="Phase lines" optional="true" type="PhaseLineList"/>
+      <parameter dia-name="boundaryLimit1_" name="Boundary limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="intelligences_" name="Intelligences" optional="true" type="IntelligenceList"/>
+    </context>
     <mission dia-behavior="MIS_Pion_SoutenirEnMesureDe" dia-type="T_Mission_Pion_SoutenirEnMesureDe" id="1" name="prepare to">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
@@ -754,6 +761,13 @@
     </mission>
   </units>
   <automats>
+    <context>
+      <parameter dia-name="dangerDirection_" name="Danger direction" optional="false" type="direction"/>
+      <parameter dia-name="phaseLines_" name="Phase lines" optional="true" type="PhaseLineList"/>
+      <parameter dia-name="boundaryLimit1_" name="Boundary limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="intelligences_" name="Intelligences" optional="true" type="IntelligenceList"/>
+    </context>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirEnMesureDe" dia-type="T_Mission_Automate_SoutenirEnMesureDe" id="177" mrt-dia-behavior="MIS_Automate_MRT_SoutenirEnMesureDe" name="prepare to">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>

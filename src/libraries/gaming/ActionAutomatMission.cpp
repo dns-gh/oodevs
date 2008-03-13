@@ -59,9 +59,7 @@ void ActionAutomatMission::Publish( Publisher_ABC& publisher ) const
     asn().oid = GetEntity().GetId();
     asn().mission = GetType().GetId();
     asn().formation = (ASN1T_EnumAutomatOrderFormation)EnumAutomatOrderFormation::deux_echelons; // $$$$ SBO 2007-03-15: move to order.parameters
-    CommitTo( asn().order_context );
     CommitTo( asn().parametres );
     asn.Send( publisher );
-    Clean( asn().order_context );
     Clean( asn().parametres );
 }

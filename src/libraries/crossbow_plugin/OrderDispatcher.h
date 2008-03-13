@@ -14,7 +14,6 @@
 
 namespace kernel
 {
-    class OrderTypes;
     class OrderType;
 }
 
@@ -32,6 +31,7 @@ namespace crossbow
     class OrderParameterSerializer;
     class Table_ABC;
     class Row_ABC;
+    class OrderTypes;
 
 // =============================================================================
 /** @class  OrderDispatcher
@@ -45,7 +45,7 @@ class OrderDispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderDispatcher( Database_ABC& database, const kernel::OrderTypes& types, const dispatcher::Model& model );
+             OrderDispatcher( Database_ABC& database, const OrderTypes& types, const dispatcher::Model& model );
     virtual ~OrderDispatcher();
     //@}
 
@@ -73,16 +73,13 @@ private:
     void SetParameters( ASN1T_MissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type );
     void SetParameter( ASN1T_MissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type );
     void CleanParameters( ASN1T_MissionParameters& parameters );
-    void SetOrderContext( ASN1T_OrderContext& asn, unsigned long orderId );
-    void SetParameter( ASN1T_OrderContext& asn, const Row_ABC& row );
-    void CleanOrderContext( ASN1T_OrderContext& asn );
-    unsigned int GetLimaCount( unsigned long orderId );
+//    unsigned int GetLimaCount( unsigned long orderId );
     //@}
 
 private:
     //! @name Member data
     //@{    
-    const kernel::OrderTypes& types_;
+    const OrderTypes& types_;
     const dispatcher::Model& model_;
     Table_ABC& paramTable_;
     std::auto_ptr< OrderParameterSerializer > serializer_;

@@ -10,18 +10,18 @@
 #include "crossbow_plugin_pch.h"
 #include "OrderDispatcher.h"
 #include "OrderTypes.h"
-#include "OrderType.h"
 #include "OrderParameterSerializer.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
+#include "clients_kernel/OrderType.h"
+#include "clients_kernel/OrderParameter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Network_Def.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 
-using namespace kernel;
 using namespace crossbow;
 
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         return;
     }
 
-    const OrderType* type = GetAgentMission( row );
+    const kernel::OrderType* type = GetAgentMission( row );
     if( !type )
     {
         DispatchFragOrder( publisher, agent.GetID(), row );
@@ -95,10 +95,8 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
     asn().oid = agent.GetID();
     asn().mission = type->GetId();
     SetParameters( asn().parametres, orderId, *type );
-    SetOrderContext( asn().order_context, orderId );
     asn.Send( publisher );
     CleanParameters( asn().parametres );
-    CleanOrderContext( asn().order_context );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +105,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
 // -----------------------------------------------------------------------------
 void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const Row_ABC& row )
 {
-    const OrderType* type = GetAutomatMission( row );
+    const kernel::OrderType* type = GetAutomatMission( row );
     if( !type )
     {
         DispatchFragOrder( publisher, automat.GetID(), row );
@@ -120,11 +118,9 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
     asn().oid = automat.GetID();
     asn().mission = type->GetId();
     SetParameters( asn().parametres, orderId, *type );
-    SetOrderContext( asn().order_context, orderId );
     asn().formation = EnumAutomatOrderFormation::deux_echelons; // $$$$ SBO 2007-06-01:
     asn.Send( publisher );
     CleanParameters( asn().parametres );
-    CleanOrderContext( asn().order_context );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +129,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
 // -----------------------------------------------------------------------------
 void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& publisher, unsigned long targetId, const Row_ABC& row )
 {
-    const OrderType* type = types_.FindFragOrder( GetField< std::string >( row, "OrderName" ) );
+    const kernel::OrderType* type = types_.FindFragOrder( GetField< std::string >( row, "OrderName" ) );
     if( !type )
         return; // $$$$ SBO 2007-06-07:
 
@@ -157,10 +153,10 @@ unsigned long OrderDispatcher::GetTargetId( const Row_ABC& row ) const
 // Name: OrderDispatcher::GetAgentMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-const OrderType* OrderDispatcher::GetAgentMission( const Row_ABC& row ) const
+const kernel::OrderType* OrderDispatcher::GetAgentMission( const Row_ABC& row ) const
 {
-    std::string      name( GetField< std::string >( row, "OrderName" ) );
-    const OrderType* order( types_.FindAgentMission( name ) );
+    const std::string name = GetField< std::string >( row, "OrderName" );
+    const kernel::OrderType* order = types_.FindAgentMission( name );
     if( !order )
         MT_LOG_ERROR_MSG( "Unknown agent mission : " << name );
     return order;
@@ -170,10 +166,10 @@ const OrderType* OrderDispatcher::GetAgentMission( const Row_ABC& row ) const
 // Name: OrderDispatcher::GetAutomatMission
 // Created: SBO 2007-06-01
 // -----------------------------------------------------------------------------
-const OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row ) const
+const kernel::OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row ) const
 {
-    std::string      name( GetField< std::string >( row, "OrderName" ) );
-    const OrderType* order( types_.FindAutomatMission( name ) );
+    const std::string name = GetField< std::string >( row, "OrderName" );
+    const kernel::OrderType* order = types_.FindAutomatMission( name );
     if( !order )
         MT_LOG_ERROR_MSG( "Unknown automat mission : " << name );
     return order;
@@ -183,13 +179,13 @@ const OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row ) const
 // Name: OrderDispatcher::SetParameters
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsigned long orderId, const OrderType& type )
+void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type )
 {
-    parameters.n = type.GetParameterCount();
+    parameters.n = type.Count();
     parameters.elem = new ASN1T_MissionParameter[ parameters.n ];
 
     std::stringstream ss;
-    ss << "order_id=" << orderId << " AND context=0";
+    ss << "order_id=" << orderId;
     Row_ABC* result = paramTable_.Find( ss.str() );
     for( unsigned int i = 0; result != 0 && i < parameters.n; ++i )
     {
@@ -198,14 +194,29 @@ void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsign
     }
 }
 
+namespace
+{
+    const kernel::OrderParameter* GetParameterByName( const kernel::OrderType& type, const std::string& name )
+    {
+        kernel::Iterator< const kernel::OrderParameter& > it( type.CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            const kernel::OrderParameter& parameter = it.NextElement();
+            if( parameter.GetName() == name )
+                return &parameter;
+        }
+        return 0;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher::SetParameter
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::SetParameter( ASN1T_MissionParameter& parameter, const Row_ABC& row, const OrderType& type )
+void OrderDispatcher::SetParameter( ASN1T_MissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type )
 {
     const std::string name = GetField< std::string >( row, "name" );
-    const OrderParameter* param = type.FindParameter( name );
+    const kernel::OrderParameter* param = GetParameterByName( type, name );
     parameter.null_value = param ? 0 : 1;
     if( param )
         serializer_->Serialize( parameter, *param, GetField< std::string >( row, "ParamValue" ) );
@@ -219,70 +230,4 @@ void OrderDispatcher::CleanParameters( ASN1T_MissionParameters& parameters )
 {
     for( unsigned int i = 0; i < parameters.n; ++i )
         serializer_->Clean( parameters.elem[i] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderDispatcher::SetOrderContext
-// Created: SBO 2007-05-31
-// -----------------------------------------------------------------------------
-void OrderDispatcher::SetOrderContext( ASN1T_OrderContext& asn, unsigned long orderId )
-{
-    asn.direction_dangereuse = 0;
-    asn.limas.n = GetLimaCount( orderId );
-    asn.limas.elem = 0;
-    asn.m.limite_droitePresent = 0;
-    asn.m.limite_gauchePresent = 0;
-    asn.intelligences.n = 0;
-    asn.intelligences.elem = 0;
-
-    std::stringstream ss;
-    ss << "order_id=" << orderId << " AND context=-1";
-    Row_ABC* result = paramTable_.Find( ss.str() );
-    while( result )
-    {
-        SetParameter( asn, *result );
-        result = paramTable_.GetNextRow();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderDispatcher::SetParameter
-// Created: SBO 2007-06-01
-// -----------------------------------------------------------------------------
-void OrderDispatcher::SetParameter( ASN1T_OrderContext& asn, const Row_ABC& row )
-{
-    const std::string name = GetField< std::string >( row, "name" );
-    if( name == "limits" )
-        serializer_->SerializeLimits( asn, GetField< std::string >( row, "ParamValue" ) );
-    else if( name == "lima" )
-        serializer_->SerializeLima( asn, GetField< std::string >( row, "ParamValue" ) );
-    else if( name == "direction" )
-        serializer_->SerializeDirection( asn, GetField< std::string >( row, "ParamValue" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderDispatcher::CleanOrderContext
-// Created: SBO 2007-05-31
-// -----------------------------------------------------------------------------
-void OrderDispatcher::CleanOrderContext( ASN1T_OrderContext& asn )
-{
-    serializer_->Clean( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderDispatcher::GetLimaCount
-// Created: SBO 2007-06-06
-// -----------------------------------------------------------------------------
-unsigned int OrderDispatcher::GetLimaCount( unsigned long orderId )
-{
-    std::stringstream ss;
-    ss << "order_id=" << orderId << " AND context=-1 AND name='lima'";
-    Row_ABC* result = paramTable_.Find( ss.str() );
-    unsigned int count = 0;
-    while( result != 0 )
-    {
-        ++count;
-        result = paramTable_.GetNextRow();
-    }
-    return count;
 }

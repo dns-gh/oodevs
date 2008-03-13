@@ -30,7 +30,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ParamPath::ParamPath( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& entity )
     : QObject( parent )
-    , Param_ABC( parameter.GetName() )
+    , Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
     , converter_( converter )
     , layer_( layer )
@@ -139,4 +139,13 @@ void ParamPath::Handle( Location_ABC& location )
         location_.reset( &location );
         pPosLabel_->setText( location.GetName() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamPath::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

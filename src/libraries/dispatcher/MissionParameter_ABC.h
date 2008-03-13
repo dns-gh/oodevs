@@ -14,6 +14,7 @@ struct ASN1T_MissionParameter;
 
 namespace dispatcher
 {
+    class Model;
 
 // =============================================================================
 /** @class  MissionParameter_ABC
@@ -26,7 +27,7 @@ class MissionParameter_ABC
 public:
     //! @name Statics
     //@{
-    static MissionParameter_ABC* Create( const ASN1T_MissionParameter& asn );
+    static MissionParameter_ABC* Create( Model& model, const ASN1T_MissionParameter& asn );
     //@}
 
     //! @name Constructors/Destructor

@@ -44,8 +44,8 @@ public:
 protected:
     //! @name Operations
     //@{
+    void Send( ASN1T_TacticalLine& asn ) const;
     void Update( const ASN1T_TacticalLine& asn );
-    void Send  ( ASN1T_TacticalLine& asn ) const;
     //@}
 
     //! @name Accessors

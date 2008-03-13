@@ -24,7 +24,7 @@ using namespace kernel;
 // Created: SBO 2006-11-14
 // ----------------------------------------------------------------------------
 ParamLimaList::ParamLimaList( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, ActionController& controller, const Simulation& simulation )
-    : ListParameter( parent, parameter.GetName(), controller, parameter.IsOptional() )
+    : ListParameter( parent, parameter.GetName().c_str(), controller, parameter.IsOptional() )
     , parameter_( parameter )
     , converter_( converter )
     , simulation_( simulation )
@@ -144,4 +144,13 @@ void ParamLimaList::NotifyDeleted( const kernel::TacticalLine_ABC& entity )
         Select( *it->second );
         OnDeleteSelectedItem();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLimaList::IsOptional
+// Created: SBO 2008-03-06
+// -----------------------------------------------------------------------------
+bool ParamLimaList::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

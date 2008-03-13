@@ -28,7 +28,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ParamPoint::ParamPoint( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter )
     : QObject   ( parent )
-    , Param_ABC ( parameter.GetName() )
+    , Param_ABC ( parameter.GetName().c_str() )
     , parameter_( parameter )
     , converter_( converter )
     , pLabel_   ( 0 )
@@ -118,4 +118,13 @@ void ParamPoint::AcceptPopupMenuPoint()
     paramPoint_ = popupPoint_;
     pPosLabel_->setText( converter_.ConvertToMgrs( paramPoint_ ).c_str() );
     isSet_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPoint::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamPoint::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

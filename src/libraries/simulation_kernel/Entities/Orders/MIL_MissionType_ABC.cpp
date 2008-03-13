@@ -8,14 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_MissionType_ABC.h"
-
-#include "Decision/DEC_Tools.h"
-#include "Network/NET_AsnException.h"
-#include "xeumeuleu/xml.h"
-
-using namespace xml;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_MissionType_ABC constructor
@@ -24,6 +17,7 @@ using namespace xml;
 MIL_MissionType_ABC::MIL_MissionType_ABC( uint nID, xml::xistream& xis )
     : MIL_OrderType_ABC( nID, xis )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -32,4 +26,5 @@ MIL_MissionType_ABC::MIL_MissionType_ABC( uint nID, xml::xistream& xis )
 //-----------------------------------------------------------------------------
 MIL_MissionType_ABC::~MIL_MissionType_ABC()
 {
+    // NOTHING
 }

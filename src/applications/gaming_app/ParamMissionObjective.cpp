@@ -23,7 +23,7 @@ using namespace gui;
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
 ParamMissionObjective::ParamMissionObjective( const OrderParameter& parameter, gui::ParametersLayer& layer, const Simulation& simulation, const CoordinateConverter_ABC& converter )
-    : Param_ABC( parameter.GetName() )
+    : Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
     , layer_( layer )
     , converter_( converter )
@@ -79,9 +79,9 @@ void ParamMissionObjective::Draw( const geometry::Point2f& point, const Viewport
 void ParamMissionObjective::BuildInterface( QWidget* parent )
 {
     QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, GetName(), parent );
-    location_ = new ParamLocation( OrderParameter( tools::translate( "ParamMissionObjective", "Location" ), "location", false ), layer_, converter_ );
+    location_ = new ParamLocation( OrderParameter( tools::translate( "ParamMissionObjective", "Location" ).ascii(), "location", false ), layer_, converter_ );
     location_->BuildInterface( group );
-    schedule_ = new ParamDateTime( group, tools::translate( "ParamMissionObjective", "Schedule" ), simulation_, true ); // $$$$ SBO 2007-05-14: optional?
+    schedule_ = new ParamDateTime( group, tools::translate( "ParamMissionObjective", "Schedule" ).ascii(), simulation_, true ); // $$$$ SBO 2007-05-14: optional?
     schedule_->BuildInterface( group );
 }
 
@@ -106,3 +106,11 @@ void ParamMissionObjective::CommitTo( ActionParameterContainer_ABC& action ) con
     action.AddParameter( *param.release() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParamMissionObjective::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamMissionObjective::IsOptional() const
+{
+    return parameter_.IsOptional();
+}

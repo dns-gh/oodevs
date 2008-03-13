@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ActionParameterFactory.h"
-#include "ActionParameterLimits.h"
+#include "ActionParameterLimit.h"
 #include "ActionParameterLimaList.h"
 #include "ActionParameterObstacle.h"
 #include "ActionParameterObstacleList.h"
@@ -156,44 +156,14 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         return new ActionParameterMedicalPriorities( parameter, *asn.value.u.logMedicalPriorities );
     case T_MissionParameter_value_tirIndirect: // $$$$ SBO 2007-05-21: reports only, not to be used!
         break;
+    case T_MissionParameter_value_line:
+        return new ActionParameterLimit( parameter, converter_, *asn.value.u.line );
+    case T_MissionParameter_value_limasOrder:
+        return new ActionParameterLimaList( parameter, converter_, *asn.value.u.limasOrder );
+    case T_MissionParameter_value_intelligenceList:
+        return new ActionParameterIntelligenceList( parameter, converter_, *asn.value.u.intelligenceList, model_.teams_, staticModel_.levels_ );
     }
     return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::CreateParameter
-// Created: SBO 2007-04-13
-// -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_Line& line1, const ASN1T_Line& line2 ) const
-{
-    return new ActionParameterLimits( parameter, converter_, line1, line2 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::CreateParameter
-// Created: SBO 2007-04-13
-// -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_LimasOrder& asn ) const
-{
-    return new ActionParameterLimaList( parameter, converter_, asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::CreateParameter
-// Created: SBO 2007-10-23
-// -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_IntelligenceList& asn ) const
-{
-    return new ActionParameterIntelligenceList( parameter, converter_, asn, model_.teams_, staticModel_.levels_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::CreateParameter
-// Created: SBO 2007-04-13
-// -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_Heading& asn ) const
-{
-    return new ActionParameterDirection( parameter, asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,13 +178,13 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         >> optional() >> attribute( "set", isSet );
     std::transform( type.begin(), type.end(), type.begin(), & tolower );
     std::transform( expectedType.begin(), expectedType.end(), expectedType.begin(), & tolower );
-    if( type != expectedType  )
+    if( type != expectedType )
         throw std::runtime_error( tools::translate( "ActionParameter", "Error loading mission parameters. Found type: '%1' expecting: '%2'." )
                                 .arg( type.c_str() ).arg( parameter.GetType().c_str() ).ascii() );
 
     if( !isSet && !parameter.IsOptional() )
         throw std::runtime_error( tools::translate( "ActionParameter", "Error loading mission parameters. Non-optional parameter '%1' is not set." )
-                                .arg( parameter.GetName() ).ascii() );
+                                .arg( parameter.GetName().c_str() ).ascii() );
 
     std::auto_ptr< ActionParameter_ABC > param;
     if( type == "bool" )
@@ -239,12 +209,12 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
         param.reset( new ActionParameterLocationList( parameter, converter_, xis ) );
     else if( type == "direction" || type == "dangerousdirection" )
         param.reset( new ActionParameterDirection( parameter, xis ) );
-    else if( type == "limalist" )
+    else if( type == "phaselinelist" )
         param.reset( new ActionParameterLimaList( parameter, converter_, xis ) );
     else if( type == "intelligencelist" )
         param.reset( new ActionParameterIntelligenceList( parameter, converter_, xis, model_.teams_, staticModel_.levels_ ) );
-    else if( type == "limits" )
-        param.reset( new ActionParameterLimits( parameter, converter_, xis ) );
+    else if( type == "limit" )
+        param.reset( new ActionParameterLimit( parameter, converter_, xis ) );
     else if( type == "enumeration" )
         param.reset( new ActionParameterEnumeration( parameter, xis ) );
     else if( type == "agent" )

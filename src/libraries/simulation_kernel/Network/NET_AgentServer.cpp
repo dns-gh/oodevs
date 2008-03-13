@@ -48,7 +48,14 @@ NET_AgentServer::~NET_AgentServer()
 //-----------------------------------------------------------------------------
 void NET_AgentServer::Update()
 {
-    ServerNetworker::Update();
+    try
+    {
+        ServerNetworker::Update();
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Receiving message : " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +64,7 @@ void NET_AgentServer::Update()
 // -----------------------------------------------------------------------------
 void NET_AgentServer::ConnectionSucceeded( const std::string& endpoint )
 {
+    MT_LOG_INFO_MSG( "Connection received from client '" << endpoint << "'" );
     ServerNetworker::ConnectionSucceeded( endpoint );
     pMsgMgr_->AddClient( endpoint );
 }
@@ -67,6 +75,7 @@ void NET_AgentServer::ConnectionSucceeded( const std::string& endpoint )
 // -----------------------------------------------------------------------------
 void NET_AgentServer::ConnectionFailed( const std::string& address, const std::string& error )
 {
+    MT_LOG_INFO_MSG( "Bad connection received from client '" << address << "' (" << error << ")" );
     ServerNetworker::ConnectionFailed( address, error );
     pMsgMgr_->RemoveClient( address );
 }
@@ -77,7 +86,8 @@ void NET_AgentServer::ConnectionFailed( const std::string& address, const std::s
 // -----------------------------------------------------------------------------
 void NET_AgentServer::ConnectionError( const std::string& address, const std::string& error )
 {
-    ServerNetworker::ConnectionFailed( address, error );
+    MT_LOG_INFO_MSG( "Connection to '" << address << "' lost (" << error << ")" );    
+    ServerNetworker::ConnectionError( address, error );
     pMsgMgr_->RemoveClient( address );
 }
 

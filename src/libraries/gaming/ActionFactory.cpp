@@ -100,7 +100,6 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) con
     action->Polish();
 
     AddParameters( *action, mission, message.parametres );
-    AddOrderContext( *action, mission, message.order_context );
     return action.release();
 }
 
@@ -116,7 +115,6 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& message ) 
     action->Polish();
 
     AddParameters( *action, mission, message.parametres );
-    AddOrderContext( *action, mission, message.order_context );
     return action.release();
 }
 
@@ -165,36 +163,10 @@ void ActionFactory::AddParameters( Action_ABC& action, const OrderType& order, c
     unsigned int i = 0;
     while( it.HasMoreElements() )
     {
-        const OrderParameter& param = it.NextElement();
-        if( param.IsContext() )
-            continue;
         if( i >= asn.n )
             throw std::runtime_error( "Mission parameter count does not match mission definition" );
-        if( ActionParameter_ABC* newParam = factory_.CreateParameter( param, asn.elem[i++], action.GetEntity() ) )
+        if( ActionParameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), asn.elem[i++], action.GetEntity() ) )
             action.AddParameter( *newParam );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionFactory::AddOrderContext
-// Created: SBO 2007-04-19
-// -----------------------------------------------------------------------------
-void ActionFactory::AddOrderContext( Action_ABC& action, const OrderType& order, const ASN1T_OrderContext& asn ) const
-{
-    Iterator< const OrderParameter& > it = order.CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const OrderParameter& param = it.NextElement();
-        if( !param.IsContext() )
-            continue;
-        if( param.GetType() == "limits" && asn.m.limite_droitePresent && asn.m.limite_gauchePresent )
-            action.AddParameter( *factory_.CreateParameter( param, asn.limite_gauche, asn.limite_droite ) );
-        else if( param.GetType() == "limalist" )
-            action.AddParameter( *factory_.CreateParameter( param, asn.limas ) );
-        else if( param.GetType() == "dangerousdirection" )
-            action.AddParameter( *factory_.CreateParameter( param, asn.direction_dangereuse ) );
-        else if( param.GetType() == "intelligencelist" )
-            action.AddParameter( *factory_.CreateParameter( param, asn.intelligences ) );
     }
 }
 
@@ -235,12 +207,7 @@ Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
     action->Polish();
 
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
-    xis >> start( "parameters" )
-            >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target )
-        >> end()
-        >> start( "context" )
-            >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target )
-        >> end();
+    xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
     if( it.HasMoreElements() )
         throw std::runtime_error( tools::translate( "ActionFactory", "Parameter mismatch: too few parameters provided." ).ascii() );
     return action.release();
@@ -267,9 +234,7 @@ Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
     action->Polish();
 
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
-    xis >> start( "parameters" )
-            >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target )
-        >> end();
+    xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
     if( it.HasMoreElements() )
         throw std::runtime_error( tools::translate( "ActionFactory", "Parameter mismatch: too few parameters provided." ).ascii() );
     return action.release();

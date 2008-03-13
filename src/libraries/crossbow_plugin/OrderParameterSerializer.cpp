@@ -9,13 +9,12 @@
 
 #include "crossbow_plugin_pch.h"
 #include "OrderParameterSerializer.h"
-#include "OrderParameter.h"
+#include "clients_kernel/OrderParameter.h"
 #include "dispatcher/Limit.h"
 #include "dispatcher/Lima.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
-//#include <algorithm>
 
 using namespace crossbow;
 
@@ -38,13 +37,43 @@ OrderParameterSerializer::~OrderParameterSerializer()
     // NOTHING
 }
 
+namespace
+{
+    int ResolveType( const std::string& type )
+    {
+        std::string lowerType = type;
+        std::transform( type.begin(), type.end(), lowerType.begin(), &tolower );
+        if( lowerType == "location" )
+            return T_MissionParameter_value_location;
+        else if( lowerType == "point" )
+            return T_MissionParameter_value_point;
+        else if( lowerType == "polygon" )
+            return T_MissionParameter_value_polygon;
+        else if( lowerType == "path" )
+            return T_MissionParameter_value_path;
+        else if( lowerType == "bool" )
+            return T_MissionParameter_value_aBool;
+        else if( lowerType == "automate" ) // $$$$ SBO 2007-07-24: 
+            return T_MissionParameter_value_automat;
+        else if( lowerType == "dangerdirection" )
+            return T_MissionParameter_value_heading;
+        else if( lowerType == "phaselinelist" )
+            return T_MissionParameter_value_limasOrder;
+        else if( lowerType == "limit" )
+            return T_MissionParameter_value_line;
+        else if( lowerType == "intelligencelist" )
+            return T_MissionParameter_value_intelligenceList;
+        throw std::runtime_error( "Unsupported parameter type" );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::Serialize
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
 void OrderParameterSerializer::Serialize( ASN1T_MissionParameter& asn, const kernel::OrderParameter& parameter, const std::string& value ) const
 {
-    asn.value.t = parameter.GetTypeId();
+    asn.value.t = ResolveType( parameter.GetType() );
     switch( asn.value.t )
     {
     case T_MissionParameter_value_point:
@@ -64,6 +93,18 @@ void OrderParameterSerializer::Serialize( ASN1T_MissionParameter& asn, const ker
         break;
     case T_MissionParameter_value_aBool:
         SerializeBool( asn.value.u.aBool, value );
+        break;
+    case T_MissionParameter_value_heading:
+        SerializeDirection( asn.value.u.heading, value );
+        break;
+    case T_MissionParameter_value_limasOrder:
+        SerializePhaseLines( asn.value.u.limasOrder, value );
+        break;
+    case T_MissionParameter_value_line:
+        SerializeLimit( asn.value.u.line, value );
+        break;
+    case T_MissionParameter_value_intelligenceList:
+        SerializeIntelligenceList( asn.value.u.intelligenceList, value );
         break;
     default:
         break;
@@ -90,9 +131,50 @@ void OrderParameterSerializer::Clean( ASN1T_MissionParameter& asn ) const
     case T_MissionParameter_value_path:
         CleanLocation( asn.value.u.path );
         break;
+    case T_MissionParameter_value_line:
+        CleanLocation( asn.value.u.line );
+        break;
+    case T_MissionParameter_value_limasOrder:
+        if( asn.value.u.limasOrder && asn.value.u.limasOrder->elem )
+        {
+            for( unsigned int i = 0; i < asn.value.u.limasOrder->n; ++i )
+            {
+                delete[] asn.value.u.limasOrder->elem[i].fonctions.elem;
+                dispatcher::Localisation::AsnDelete( asn.value.u.limasOrder->elem[i].lima );
+            }
+            delete[] asn.value.u.limasOrder->elem;
+            delete asn.value.u.limasOrder;
+        }
+    case T_MissionParameter_value_intelligenceList:
+        if( asn.value.u.intelligenceList )
+        {
+            delete[] asn.value.u.intelligenceList->elem;
+            delete asn.value.u.intelligenceList;
+        }
+        break;
     default:
         break;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameterSerializer::CleanLocation
+// Created: SBO 2007-05-31
+// -----------------------------------------------------------------------------
+void OrderParameterSerializer::CleanLocation( ASN1T_Location*& asn ) const
+{
+    dispatcher::Localisation::AsnDelete( *asn );
+    delete asn;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameterSerializer::SerializeDirection
+// Created: SBO 2008-03-04
+// -----------------------------------------------------------------------------
+void OrderParameterSerializer::SerializeDirection( ASN1T_Heading& asn, const std::string& value ) const
+{
+    std::stringstream ss( value );
+    ss >> asn;
 }
 
 // -----------------------------------------------------------------------------
@@ -144,46 +226,37 @@ void OrderParameterSerializer::SerializeLocation( ASN1T_Location*& asn, const st
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderParameterSerializer::CleanLocation
-// Created: SBO 2007-05-31
+// Name: OrderParameterSerializer::SerializeLimit
+// Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::CleanLocation( ASN1T_Location*& asn ) const
+void OrderParameterSerializer::SerializeLimit( ASN1T_Line*& asn, const std::string& value ) const
 {
-    dispatcher::Localisation::AsnDelete( *asn );
-    delete asn;
+    unsigned long id = 0;
+    std::stringstream ss( value );
+    ss >> id;
+    if( const dispatcher::Limit* limit = model_.GetLimits().Find( id ) )
+    {
+        asn = new ASN1T_Line();
+        limit->Send( *asn );
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderParameterSerializer::SerializeLimits
-// Created: SBO 2007-06-01
+// Name: OrderParameterSerializer::SerializePhaseLines
+// Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeLimits( ASN1T_OrderContext& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializePhaseLines( ASN1T_LimasOrder*& asn, const std::string& value ) const
 {
-    asn.m.limite_gauchePresent = 0;
-    asn.m.limite_droitePresent = 0;
-
-    // value = id1;id2
+    // $$$$ SBO 2008-03-04: value=id1,func1,func2;id2,func1;...
+    asn = new ASN1T_LimasOrder();
+    asn->n = std::count( value.begin(), value.end(), ';' );
+    if( !asn->n )
+        return;
+    asn->elem = new ASN1T_LimaOrder[asn->n];
     std::stringstream ss( value );
     std::string v;
-    while( std::getline( ss, v, ';' ) )
-    {
-        std::stringstream converter( v );
-        unsigned long id = 0;
-        converter >> id;
-        if( const dispatcher::Limit* limit = model_.GetLimits().Find( id ) )
-        {
-            if( !asn.m.limite_gauchePresent )
-            {
-                limit->Send( asn.limite_gauche );
-                asn.m.limite_gauchePresent = 1;
-            }
-            else
-            {
-                limit->Send( asn.limite_droite );
-                asn.m.limite_droitePresent = 1;
-            }
-        }
-    }
+    for( unsigned int i = 0; std::getline( ss, v, ';' ); ++i )
+        SerializePhaseLine( asn->elem[i], v );
 }
 
 namespace
@@ -199,70 +272,39 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderParameterSerializer::SerializeLima
-// Created: SBO 2007-06-06
+// Name: OrderParameterSerializer::SerializePhaseLine
+// Created: SBO 2008-03-10
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeLima( ASN1T_OrderContext& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializePhaseLine( ASN1T_LimaOrder& asn, const std::string& value ) const
 {
-    if( !asn.limas.n )
-        return; // $$$$ SBO 2007-06-06: should not happend...
-    if( !asn.limas.elem )
-    {
-        asn.limas.elem = new ASN1T_LimaOrder[asn.limas.n];
-        for( unsigned int i = 0; i < asn.limas.n; ++i )
-            asn.limas.elem[i].fonctions.n = 0;
-    }
-    unsigned int current = 0;
-    while( current < asn.limas.n && asn.limas.elem[current].fonctions.n != 0 )
-        ++current;
-    if( current == asn.limas.n )
-        return; // $$$$ SBO 2007-06-06: should not happend either...
-    ASN1T_LimaOrder& order = asn.limas.elem[current];
+    // $$$$ SBO 2008-03-10: value=id,func1,func2
+    asn.fonctions.n = std::count( value.begin(), value.end(), ',' );
+    if( asn.fonctions.n )
+        asn.fonctions.elem = new ASN1T_EnumLimaType[asn.fonctions.n];
 
-    order.fonctions.n = std::count( value.begin(), value.end(), ';' );
-    order.fonctions.elem = new ASN1T_EnumLimaType[order.fonctions.n];
-
-    // value = type;coord1;coord2...
     std::stringstream ss( value );
     std::string v;
-    for( unsigned int i = 0; std::getline( ss, v, ';' ); ++i )
+    for( unsigned int i = 0; std::getline( ss, v, ',' ); ++i )
         if( i == 0 )
         {
             std::stringstream converter( v );
             unsigned int id;
             converter >> id;
             if( const dispatcher::Lima* lima = model_.GetLimas().Find( id ) )
-                lima->Send( order.lima );
+                lima->Send( asn.lima );
         }
         else
-            order.fonctions.elem[i - 1] = ConvertLimaTypeFromString( v );
+            asn.fonctions.elem[i - 1] = ConvertLimaTypeFromString( v );
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderParameterSerializer::SerializeDirection
-// Created: SBO 2007-06-06
+// Name: OrderParameterSerializer::SerializeIntelligenceList
+// Created: SBO 2008-03-10
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeDirection( ASN1T_OrderContext& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializeIntelligenceList( ASN1T_IntelligenceList*& asn, const std::string& /*value*/ ) const
 {
-    std::stringstream ss( value );
-    unsigned int direction = 0;
-    ss >> direction;
-    asn.direction_dangereuse = direction;
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderParameterSerializer::Clean
-// Created: SBO 2007-06-01
-// -----------------------------------------------------------------------------
-void OrderParameterSerializer::Clean( ASN1T_OrderContext& asn ) const
-{
-    if( asn.m.limite_droitePresent )
-        dispatcher::Localisation::AsnDelete( asn.limite_droite );
-    if( asn.m.limite_gauchePresent )
-        dispatcher::Localisation::AsnDelete( asn.limite_gauche );
-    for( unsigned int i = 0; i < asn.limas.n; ++i )
-    {
-        delete[] asn.limas.elem[i].fonctions.elem;
-        dispatcher::Localisation::AsnDelete( asn.limas.elem[i].lima );
-    }
+    // $$$$ SBO 2008-03-10: Not Supported
+    asn = new ASN1T_IntelligenceList();
+    asn->n = 0;
+    asn->elem = 0;
 }

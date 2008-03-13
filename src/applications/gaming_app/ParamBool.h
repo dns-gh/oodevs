@@ -53,6 +53,11 @@ private:
     ParamBool& operator=( const ParamBool& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual bool IsOptional() const;
+    //@}
+
 private:
     //! @name Member data
     //@{

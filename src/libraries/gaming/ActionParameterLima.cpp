@@ -25,7 +25,7 @@ using namespace kernel;
 ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )
     : ActionParameter< QString >( parameter )
 {
-    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, location ) );
+    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ).ascii(), "location", false ), converter, location ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,18 +39,8 @@ ActionParameterLima::ActionParameterLima( const OrderParameter& parameter, const
     for( unsigned int i = 0; i < asn.fonctions.n; ++i )
         functions.append( tools::ToString( (E_FuncLimaType)asn.fonctions.elem[i] ) );
     SetValue( functions.join( ", " ) );
-    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, asn.lima ) );
-    AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), asn.horaire ) );
-}
-
-namespace
-{
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> xml::attribute( "name", name );
-        return name.c_str();
-    }
+    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ).ascii(), "location", false ), converter, asn.lima ) );
+    AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ).ascii(), "datetime", false ), asn.horaire ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +48,7 @@ namespace
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 ActionParameterLima::ActionParameterLima( const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : ActionParameter< QString >( OrderParameter( ReadName( xis ), "lima", false ) )
+    : ActionParameter< QString >( OrderParameter( attribute< std::string >( xis, "name" ), "lima", false ) )
 {
     std::string value;
     xis >> attribute( "value", value )
@@ -117,7 +107,7 @@ void ActionParameterLima::ReadParameter( xml::xistream& xis, const CoordinateCon
     if( type == "location" )
         AddParameter( *new ActionParameterLocation( converter, xis ) );
     else if( type == "datetime" )
-        AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), xis ) );
+        AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ).ascii(), "datetime", false ), xis ) );
 }
 
 // -----------------------------------------------------------------------------

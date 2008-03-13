@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 ParamBool::ParamBool( QObject* parent, const kernel::OrderParameter& parameter, bool defaultValue /*= false*/ )
     : QObject( parent )
-    , Param_ABC( parameter.GetName() )
+    , Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
     , value_( defaultValue )
 {
@@ -63,4 +63,13 @@ void ParamBool::CommitTo( ActionParameterContainer_ABC& action ) const
 void ParamBool::OnClicked()
 {
     value_ = !value_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamBool::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamBool::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

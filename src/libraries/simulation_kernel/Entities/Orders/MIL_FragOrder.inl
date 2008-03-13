@@ -13,8 +13,8 @@
 // Name: MIL_FragOrder::GetType
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-inline
-const MIL_FragOrderType& MIL_FragOrder::GetType() const
-{
-    return type_;
-}
+//inline
+//const MIL_FragOrderType& MIL_FragOrder::GetType() const
+//{
+//    return type_;
+//}

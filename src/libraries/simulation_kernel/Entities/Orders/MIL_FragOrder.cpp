@@ -8,10 +8,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_FragOrder.h"
-
 #include "MIL_FragOrderType.h"
+#include "MIL_OrderContext.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -38,8 +37,8 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DIA_Engine& engine,
 {
     eventParameters_.SetOwnerShip( true );
     eventParameters_.AddParam( new DIA_Variable_Object( this ) );
-
-    type_.Copy( asn.parametres, *this, knowledgeResolver );
+    MIL_OrderContext context;
+    type_.Copy( asn.parametres, *this, knowledgeResolver, context );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +53,6 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DIA_Engine& engine,
 {
     eventParameters_.SetOwnerShip( true );
     eventParameters_.AddParam( new DIA_Variable_Object( this ) );
-
     type_.Copy( rhs, *this, knowledgeResolver );
 }
 
@@ -64,11 +62,8 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DIA_Engine& engine,
 // -----------------------------------------------------------------------------
 MIL_FragOrder::~MIL_FragOrder()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::Launch

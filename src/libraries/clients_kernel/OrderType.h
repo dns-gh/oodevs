@@ -41,6 +41,7 @@ public:
     //@{
     unsigned long GetId() const;
     std::string GetName() const;
+    void AddParameter( const OrderParameter& parameter );
     //@}
 
 private:

@@ -60,3 +60,12 @@ void ParamDotationDType::CommitTo( ActionParameterContainer_ABC& action ) const
 {
     action.AddParameter( *new ActionParameterDotationType( parameter_, GetValue(), resolver_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamDotationDType::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamDotationDType::IsOptional() const
+{
+    return parameter_.IsOptional();
+}

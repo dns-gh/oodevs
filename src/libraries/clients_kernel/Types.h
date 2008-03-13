@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Types_h_
-#define __Types_h_
+#ifndef __Kernel_Types_h_
+#define __Kernel_Types_h_
 
 #include "geometry/Types.h"
 typedef std::vector< geometry::Point2f > T_PointVector;
@@ -77,4 +77,4 @@ enum E_LightingType
 
 }
 
-#endif // __Types_h_
+#endif // __Kernel_Types_h_

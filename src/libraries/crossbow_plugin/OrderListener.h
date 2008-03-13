@@ -12,11 +12,6 @@
 
 #include "Listener_ABC.h"
 
-namespace kernel
-{
-    class OrderTypes;
-}
-
 namespace dispatcher
 {
     class Model;
@@ -29,6 +24,7 @@ namespace crossbow
     class Table_ABC;
     class Row_ABC;
     class OrderDispatcher;
+    class OrderTypes;
 
 // =============================================================================
 /** @class  OrderListener
@@ -42,7 +38,7 @@ class OrderListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( Database_ABC& database, const dispatcher::Model& model, const kernel::OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher );
+             OrderListener( Database_ABC& database, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~OrderListener();
     //@}
 

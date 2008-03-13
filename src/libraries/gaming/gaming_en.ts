@@ -172,17 +172,6 @@
     </message>
 </context>
 <context>
-    <name>ActionParameterLimits</name>
-    <message>
-        <source>Limit 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Limit 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Agent</name>
     <message>
         <source>Info/Identifier</source>

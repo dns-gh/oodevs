@@ -75,6 +75,11 @@ private:
     ParamPath& operator=( const ParamPath& );
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual bool IsOptional() const;
+    //@}
+
 private:
     //! @name Member data
     //@{

@@ -18,11 +18,6 @@ namespace xml
     class xistream;
 }
 
-namespace kernel
-{
-    class OrderTypes;
-}
-
 namespace dispatcher
 {
     class Config;
@@ -39,6 +34,7 @@ namespace crossbow
     class FolkUpdater;
     class Listener_ABC;
     class ExtensionFactory;
+    class OrderTypes;
 
 // =============================================================================
 /** @class  DatabasePublisher
@@ -98,7 +94,7 @@ private:
     std::auto_ptr< Workspace_ABC >      workspace_;
     T_Databases                         databases_;
     std::auto_ptr< ReportFactory >      reportFactory_; // $$$$ SBO 2007-09-27: nothing to do here, maybe create a "PluginModel"
-    std::auto_ptr< kernel::OrderTypes > orderTypes_;    // $$$$ SBO 2007-09-27: to put this stuff
+    std::auto_ptr< OrderTypes >         orderTypes_;    // $$$$ SBO 2007-09-27: to put this stuff
     std::auto_ptr< DatabaseUpdater >    databaseUpdater_;
     std::auto_ptr< FolkUpdater >        folkUpdater_;
     T_Listeners                         listeners_;

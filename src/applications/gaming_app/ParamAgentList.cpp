@@ -57,7 +57,7 @@ void ParamAgentList::AddToMenu( ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< Agent_ABC >* ParamAgentList::CreateElement( const Agent_ABC& potential )
 {
-    return new ParamAgent( this, OrderParameter( tr( "Agent %1:%2" ).arg( ++count_ ).arg( potential.GetName() ), "agent", false ), potential );
+    return new ParamAgent( this, OrderParameter( tr( "Agent %1:%2" ).arg( ++count_ ).arg( potential.GetName() ).ascii(), "agent", false ), potential );
 }
 
 // -----------------------------------------------------------------------------

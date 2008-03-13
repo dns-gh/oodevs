@@ -13,7 +13,7 @@
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter )
-    : EntityParameterBase( parent, parameter.GetName() )
+    : EntityParameterBase( parent, parameter.GetName().c_str() )
     , parameter_         ( parameter )
     , potential_         ( 0 )
     , selected_          ( 0 )
@@ -27,7 +27,7 @@ EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kerne
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, const ConcreteEntity& entity )
-    : EntityParameterBase( parent, parameter.GetName() )
+    : EntityParameterBase( parent, parameter.GetName().c_str() )
     , parameter_         ( parameter )
     , potential_         ( &entity )
     , selected_          ( 0 )
@@ -120,4 +120,14 @@ void EntityParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& ent
         selected_ = 0;
         Display( "---" );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityParameter::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+bool EntityParameter< ConcreteEntity >::IsOptional() const
+{
+    return optional_;
 }

@@ -22,7 +22,7 @@ using namespace crossbow;
 // Name: OrderListener constructor
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-OrderListener::OrderListener( Database_ABC& database, const dispatcher::Model& model, const kernel::OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher )
+OrderListener::OrderListener( Database_ABC& database, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher )
     : publisher_ ( publisher )
     , dispatcher_( new OrderDispatcher( database, types, model ) )
     , table_     ( database.OpenTable( "Orders" ) )

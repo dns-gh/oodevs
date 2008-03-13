@@ -13,10 +13,8 @@ namespace Sword
             public void Serialize(ITable table, int id)
             {
                 IRow row = table.CreateRow();
-
                 Tools.SetValue(row, "order_id", id);
-                Tools.SetValue(row, "name", Name);
-                Tools.SetValue(row, "context", true);
+                Tools.SetValue(row, "name", "Danger direction");
                 Tools.SetValue(row, "ParamValue", m_direction);
                 row.Store();
             }
@@ -40,7 +38,7 @@ namespace Sword
             {
                 get
                 {
-                    return "direction";
+                    return "Danger direction";
                 }
             }
         }

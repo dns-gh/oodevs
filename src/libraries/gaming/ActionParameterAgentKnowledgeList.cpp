@@ -35,7 +35,7 @@ ActionParameterAgentKnowledgeList::ActionParameterAgentKnowledgeList( const Orde
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterAgentKnowledge( OrderParameter( tools::translate( "ActionParameter", "Agent knowledge %1" ).arg( i + 1 ), "agentknowledeg", false ), asn.elem[i], converter, owner ) );
+        AddParameter( *new ActionParameterAgentKnowledge( OrderParameter( tools::translate( "ActionParameter", "Agent knowledge %1" ).arg( i + 1 ).ascii(), "agentknowledeg", false ), asn.elem[i], converter, owner ) );
 }
 
 // -----------------------------------------------------------------------------

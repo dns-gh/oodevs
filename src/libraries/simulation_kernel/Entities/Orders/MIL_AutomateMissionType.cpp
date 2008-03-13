@@ -112,6 +112,7 @@ MIL_AutomateMissionType::MIL_AutomateMissionType( uint nID, xml::xistream& xis )
 //-----------------------------------------------------------------------------
 MIL_AutomateMissionType::~MIL_AutomateMissionType()
 {
+    // NOTHING
 }
 
 // =============================================================================

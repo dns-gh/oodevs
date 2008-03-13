@@ -123,6 +123,7 @@ unsigned long Network::GetSentAmount() const
 // -----------------------------------------------------------------------------
 void Network::ConnectionSucceeded( const std::string& endpoint )
 {
+    ClientNetworker::ConnectionSucceeded( endpoint );
     session_ = endpoint;
     MT_LOG_INFO_MSG( tools::translate( "Network", "Connected to " ) << endpoint );
     manager_->Connect( session_ );
@@ -136,6 +137,7 @@ void Network::ConnectionSucceeded( const std::string& endpoint )
 // -----------------------------------------------------------------------------
 void Network::ConnectionFailed( const std::string& address, const std::string& error )
 {
+    ClientNetworker::ConnectionFailed( address, error );
     session_.clear();
     MT_LOG_WARNING_MSG( tools::translate( "Network", "Not connected to " ) << address << tools::translate( "Network", " (cause :" ) << error << ")" );
     manager_->Disconnect();
@@ -148,6 +150,7 @@ void Network::ConnectionFailed( const std::string& address, const std::string& e
 // -----------------------------------------------------------------------------
 void Network::ConnectionError( const std::string& address, const std::string& error )
 {
+    ClientNetworker::ConnectionError( address, error );
     session_.clear();
     MT_LOG_WARNING_MSG( tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " lost (cause :" ) << error << ")" );
     manager_->Disconnect();

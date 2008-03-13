@@ -33,7 +33,7 @@ DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, dispatch
     : model_           ( model )
     , workspace_       ( new Workspace() )
     , reportFactory_   ( new ReportFactory( config, model ) )
-    , orderTypes_      ( new kernel::OrderTypes( config ) )
+    , orderTypes_      ( new OrderTypes( config ) )
     , modelLoaded_     ( false )
     , factory_         ( new ExtensionFactory() )
 {

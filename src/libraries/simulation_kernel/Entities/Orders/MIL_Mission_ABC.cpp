@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Mission_ABC.h"
-
 #include "MIL_MissionType_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -36,20 +34,20 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     , context_          ()
     , knowledgeResolver_( knowledgeResolver )
 {
-    type_.Copy( parameters, *this, knowledgeResolver_ );
+    type_.Copy( parameters, *this, knowledgeResolver_, context_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters, const ASN1T_OrderContext& context, const MT_Vector2D& refPosition )
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters, const MT_Vector2D& refPosition )
     : DIA_Thing         ( DIA_Thing::ThingType(), type.GetDIAType() )
     , type_             ( type )
-    , context_          ( context, refPosition )
+    , context_          ( parameters, refPosition )
     , knowledgeResolver_( knowledgeResolver )
 {
-    type_.Copy( parameters, *this, knowledgeResolver_ );
+    type_.Copy( parameters, *this, knowledgeResolver_, context_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,6 +82,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const DEC_KnowledgeResolver_ABC& knowledgeReso
 // -----------------------------------------------------------------------------
 MIL_Mission_ABC::~MIL_Mission_ABC()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -99,35 +98,14 @@ const std::string& MIL_Mission_ABC::GetName() const
     return type_.GetName();
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Mission_ABC::Serialize
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-void MIL_Mission_ABC::Serialize( ASN1T_OrderContext& asn ) const
-{
-    context_.Serialize( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Mission_ABC::CleanAfterSerialization
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-void MIL_Mission_ABC::CleanAfterSerialization( ASN1T_OrderContext& asn ) const
-{
-    context_.CleanAfterSerialization( asn );
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::Serialize
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::Serialize( ASN1T_MissionParameters& asn ) const
 {
-    type_.Copy( *this, asn, knowledgeResolver_ );
+    type_.Copy( *this, asn, knowledgeResolver_, context_ );
+    context_.Serialize( asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +114,8 @@ void MIL_Mission_ABC::Serialize( ASN1T_MissionParameters& asn ) const
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::CleanAfterSerialization( ASN1T_MissionParameters& asn ) const
 {
-    type_.CleanAfterSerialization( asn );
+    context_.CleanAfterSerialization( asn );
+    type_.CleanAfterSerialization( asn, context_ );
 }
 
 // -----------------------------------------------------------------------------

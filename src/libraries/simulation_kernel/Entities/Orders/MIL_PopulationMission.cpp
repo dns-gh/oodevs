@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_PopulationMission.h"
-
 #include "MIL_PopulationMissionType.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -40,6 +38,7 @@ MIL_PopulationMission::MIL_PopulationMission( const MIL_PopulationMissionType& t
     , population_           ( population )
     , bDIABehaviorActivated_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,10 +50,6 @@ MIL_PopulationMission::~MIL_PopulationMission()
     Stop();
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationMission::IsFragOrderAvailable
 // Created: NLD 2006-11-21
@@ -63,10 +58,6 @@ bool MIL_PopulationMission::IsFragOrderAvailable( const MIL_FragOrderType& fragO
 {
     return population_.GetType().GetModel().IsFragOrderAvailableForMission( type_, fragOrderType );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationMission::Start
@@ -107,7 +98,6 @@ void MIL_PopulationMission::Stop()
 void MIL_PopulationMission::SendNoMission( const MIL_Population& population )
 {
     NET_ASN_MsgPopulationOrder asn;
-
     asn().oid           = population.GetID();
     asn().mission       = 0;
     asn().parametres.n  = 0;
@@ -121,13 +111,9 @@ void MIL_PopulationMission::SendNoMission( const MIL_Population& population )
 void MIL_PopulationMission::Send() const
 {
     NET_ASN_MsgPopulationOrder asn;
-
     asn().oid     = population_.GetID();
     asn().mission = type_.GetID();
-
-    MIL_Mission_ABC::Serialize( asn().parametres );
-
+    Serialize( asn().parametres );
     asn.Send();
-
-    MIL_Mission_ABC::CleanAfterSerialization( asn().parametres    );
+    CleanAfterSerialization( asn().parametres );
 }

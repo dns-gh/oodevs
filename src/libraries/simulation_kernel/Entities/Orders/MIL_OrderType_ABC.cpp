@@ -8,10 +8,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_OrderType_ABC.h"
-
 #include "MIL_OrderTypeParameter.h"
+#include "MIL_OrderContext.h"
 #include "Decision/DEC_Tools.h"
 #include "Network/NET_AsnException.h"
 #include "xeumeuleu/xml.h"
@@ -24,15 +23,9 @@ using namespace xml;
 //-----------------------------------------------------------------------------
 MIL_OrderType_ABC::MIL_OrderType_ABC( uint nID, xml::xistream& xis )
     : nID_       ( nID )
-    , strName_   ()
-    , pDIAType_  ( 0 )
-    , parameters_()
+    , strName_   ( attribute< std::string >( xis, "name" ) )
+    , pDIAType_  ( &DEC_Tools::GetDIAType( attribute< std::string >( xis, "dia-type" ) ) )
 {
-    xis >> attribute( "name", strName_ );
-
-    std::string strDIAType;
-    xis >> attribute( "dia-type", strDIAType );
-    pDIAType_ = &DEC_Tools::GetDIAType( strDIAType );
     xis >> list( "parameter", *this, &MIL_OrderType_ABC::ReadParameter );
 }
 
@@ -51,6 +44,7 @@ void MIL_OrderType_ABC::ReadParameter( xml::xistream& xis )
 //-----------------------------------------------------------------------------
 MIL_OrderType_ABC::~MIL_OrderType_ABC()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -61,14 +55,14 @@ MIL_OrderType_ABC::~MIL_OrderType_ABC()
 // Name: MIL_OrderType_ABC::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_OrderType_ABC::Copy( const ASN1T_MissionParameters& from, DIA_TypedObject& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
+void MIL_OrderType_ABC::Copy( const ASN1T_MissionParameters& from, DIA_TypedObject& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const
 {
-    if( from.n != parameters_.size() || to.GetType() != *pDIAType_ )
+    unsigned int index = context.Length();
+    if( from.n - index != parameters_.size() || to.GetType() != *pDIAType_ )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    uint i = 0;
-    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++i )
-        (**it).Copy( from.elem[i], to, knowledgeResolver );
+    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index )
+        (**it).Copy( from.elem[index], to, knowledgeResolver );
 }
 
 //-----------------------------------------------------------------------------
@@ -92,19 +86,19 @@ bool MIL_OrderType_ABC::Copy( const DIA_TypedObject& from, DIA_TypedObject& to, 
 // Name: MIL_OrderType_ABC::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_OrderType_ABC::Copy( const DIA_TypedObject& from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
+bool MIL_OrderType_ABC::Copy( const DIA_TypedObject& from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const
 {
     if( from.GetNumberOfFields() < (int)parameters_.size() || from.GetType() != *pDIAType_ )
         return false;
 
-    to.n    = parameters_.size();
-    to.elem = new ASN1T_MissionParameter[ parameters_.size() ];
-    uint i = 0;
-    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++i )
-        if( !(**it).Copy( from, to.elem[i], knowledgeResolver ) )
+    unsigned int index = context.Length();
+    to.n    = parameters_.size() + index;
+    to.elem = new ASN1T_MissionParameter[ parameters_.size() + index ];
+    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index )
+        if( !(**it).Copy( from, to.elem[index], knowledgeResolver ) )
         {   
             assert( false );
-            delete [] to.elem;
+            delete[] to.elem;
             to.n = 0;
             return false;
         }
@@ -115,16 +109,15 @@ bool MIL_OrderType_ABC::Copy( const DIA_TypedObject& from, ASN1T_MissionParamete
 // Name: MIL_OrderType_ABC::CleanAfterSerialization
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_OrderType_ABC::CleanAfterSerialization( ASN1T_MissionParameters& to ) const
+void MIL_OrderType_ABC::CleanAfterSerialization( ASN1T_MissionParameters& to, const MIL_OrderContext& context ) const
 {
-    if( parameters_.size() != to.n )
+    unsigned int index = context.Length();
+    if( index + parameters_.size() != to.n )
         return;
 
-    uint i = 0;
-    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++i )
-        (**it).CleanAfterSerialization( to.elem[i] );
+    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index )
+        (**it).CleanAfterSerialization( to.elem[index] );
 
     if( to.n > 0 )
         delete [] to.elem;
 }
-

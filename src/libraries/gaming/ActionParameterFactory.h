@@ -42,10 +42,6 @@ public:
     //! @name Operations
     //@{
     virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_MissionParameter& asn, const kernel::Entity_ABC& entity ) const;
-    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_Line& line1, const ASN1T_Line& line2 ) const;
-    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_LimasOrder& asn ) const;
-    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_IntelligenceList& asn ) const;
-    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_Heading& asn ) const;
     virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const;
     //@}
 

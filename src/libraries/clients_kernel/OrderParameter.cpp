@@ -21,25 +21,22 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 OrderParameter::OrderParameter( xml::xistream& xis )
     : optional_( false )
-    , context_ ( false )
 {
     std::string name;
-    xis >> attribute( "name", name )
+    xis >> attribute( "name", name_ )
         >> attribute( "type", type_ )
         >> optional() >> attribute( "optional", optional_ )
         >> list( "value", *this, &OrderParameter::ReadValue );
-    name_ = name.c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameter constructor
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-OrderParameter::OrderParameter( const QString& name, const std::string& type, bool optional, bool context /*= false*/ )
+OrderParameter::OrderParameter( const std::string& name, const std::string& type, bool optional )
     : name_    ( name )
     , type_    ( type )
     , optional_( optional )
-    , context_ ( context )
 {
     // NOTHING
 }
@@ -57,7 +54,7 @@ OrderParameter::~OrderParameter()
 // Name: OrderParameter::GetName
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
-QString OrderParameter::GetName() const
+std::string OrderParameter::GetName() const
 {
     return name_;
 }
@@ -78,15 +75,6 @@ std::string OrderParameter::GetType() const
 bool OrderParameter::IsOptional() const
 {
     return optional_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderParameter::IsContext
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-bool OrderParameter::IsContext() const
-{
-    return context_;
 }
 
 // -----------------------------------------------------------------------------

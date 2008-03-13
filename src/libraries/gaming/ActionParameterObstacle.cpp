@@ -40,7 +40,7 @@ ActionParameterObstacle::ActionParameterObstacle( const OrderParameter& paramete
     : ActionParameter< std::string >( parameter )
     , type_( types.Get( asn.type ) )
 {
-    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, asn.position ) );
+    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ).ascii(), "location", false ), converter, asn.position ) );
     SetValue( type_.GetName() );
     SetParameters( asn, automats );
 }
@@ -100,7 +100,7 @@ void ActionParameterObstacle::ReadParameter( xml::xistream& xis, const Coordinat
 // -----------------------------------------------------------------------------
 void ActionParameterObstacle::AddObstacleType( unsigned int type )
 {
-    const OrderParameter orderParameter( tools::translate( "ActionParameter", "Obstacle type" ), "obstacletype", false );
+    const OrderParameter orderParameter( tools::translate( "ActionParameter", "Obstacle type" ).ascii(), "obstacletype", false );
     AddParameter( *new ActionParameterObstacleType( orderParameter, type ) );
 }
 
@@ -135,14 +135,14 @@ void ActionParameterObstacle::SetParameters( const ASN1T_PlannedWork& asn, const
     case EnumObjectType::camp_prisonniers:
     case EnumObjectType::camp_refugies:
         {
-            const OrderParameter param( tools::translate( "ActionParameter", "TC2" ), "tc2", false );
+            const OrderParameter param( tools::translate( "ActionParameter", "TC2" ).ascii(), "tc2", false );
             AddParameter( *new ActionParameterAutomat( param, asn.tc2, automats ) );
             break;
         }
     case EnumObjectType::zone_minee_lineaire:
     case EnumObjectType::zone_minee_par_dispersion:
         {
-            const OrderParameter param( tools::translate( "ActionParameter", "Density" ), "density", false );
+            const OrderParameter param( tools::translate( "ActionParameter", "Density" ).ascii(), "density", false );
             AddParameter( *new ActionParameterNumeric( param, asn.densite ) );
             break;
         }

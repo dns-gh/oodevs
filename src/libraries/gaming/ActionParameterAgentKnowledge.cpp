@@ -16,23 +16,6 @@
 using namespace kernel;
 using namespace xml;
 
-namespace
-{
-    unsigned long ReadId( xml::xistream& xis )
-    {
-        unsigned long id;
-        xis >> xml::attribute( "value", id );
-        return id;
-    }
-
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> xml::attribute( "name", name );
-        return name.c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterAgentKnowledge constructor
 // Created: SBO 2007-05-24
@@ -59,7 +42,7 @@ ActionParameterAgentKnowledge::ActionParameterAgentKnowledge( const OrderParamet
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 ActionParameterAgentKnowledge::ActionParameterAgentKnowledge( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : ActionParameterEntity< AgentKnowledge_ABC >( OrderParameter( ReadName( xis ), "agentknowledge", false ), converter.Find( resolver.Get( ReadId( xis ) ), owner ) )
+    : ActionParameterEntity< AgentKnowledge_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "agentknowledge", false ), converter.Find( resolver.Get( attribute< unsigned long >( xis, "value" ) ), owner ) )
 {
     // NOTHING
 }
@@ -69,7 +52,7 @@ ActionParameterAgentKnowledge::ActionParameterAgentKnowledge( xml::xistream& xis
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 ActionParameterAgentKnowledge::ActionParameterAgentKnowledge( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : ActionParameterEntity< AgentKnowledge_ABC >( parameter, converter.Find( resolver.Get( ReadId( xis ) ), owner ) )
+    : ActionParameterEntity< AgentKnowledge_ABC >( parameter, converter.Find( resolver.Get( attribute< unsigned long >( xis, "value" ) ), owner ) )
 {
     // NOTHING
 }

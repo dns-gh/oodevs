@@ -25,7 +25,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ParamEquipmentList::ParamEquipmentList( QObject* parent, const OrderParameter& parameter, const Resolver< EquipmentType >& resolver )
     : QObject( parent )
-    , Param_ABC( parameter.GetName() )
+    , Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
     , resolver_( resolver )
     , list_( 0 )
@@ -167,4 +167,13 @@ void ParamEquipmentList::Move( QListView* from, QListView* to )
         newItem->SetNamed( *item->GetValue< const EquipmentType >() );
         delete item;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamEquipmentList::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamEquipmentList::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

@@ -23,7 +23,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ParamDotationTypeList::ParamDotationTypeList( QObject* parent, const kernel::OrderParameter& parameter, const Resolver_ABC< DotationType >& resolver )
     : QObject( parent )
-    , Param_ABC( parameter.GetName() )
+    , Param_ABC( parameter.GetName().c_str() )
     , resolver_( resolver )
     , parameter_( parameter )
     , list_( 0 )
@@ -118,4 +118,13 @@ void ParamDotationTypeList::CommitTo( ActionParameterContainer_ABC& action ) con
         ++it;
     }
     action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDotationTypeList::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamDotationTypeList::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

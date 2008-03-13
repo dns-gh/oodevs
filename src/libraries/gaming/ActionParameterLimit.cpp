@@ -9,12 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ActionParameterLimit.h"
-#include "ActionParameterLocation.h"
-#include "ActionParameterVisitor_ABC.h"
-#include "Tools.h"
-#include "xeumeuleu/xml.h"
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -22,10 +17,9 @@ using namespace kernel;
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
 ActionParameterLimit::ActionParameterLimit( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_Line& line )
-    : ActionParameter< QString >( parameter )
-    , location_( new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, (const ASN1T_Location&)line ) )
+    : ActionParameterLocation( parameter, converter, line )
 {
-    AddParameter( *location_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,33 +27,19 @@ ActionParameterLimit::ActionParameterLimit( const OrderParameter& parameter, con
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 ActionParameterLimit::ActionParameterLimit( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )
-    : ActionParameter< QString >( parameter )
-    , location_( new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, location ) )
+    : ActionParameterLocation( parameter, converter, location )
 {
-    AddParameter( *location_ );
-}
-
-namespace
-{
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> xml::attribute( "name", name );
-        return name.c_str();
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLimit constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterLimit::ActionParameterLimit( const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : ActionParameter< QString >( OrderParameter( ReadName( xis ), "limit", false, true ) )
+ActionParameterLimit::ActionParameterLimit( const kernel::OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
+    : ActionParameterLocation( parameter, converter, xis )
 {
-    xis >> start( "parameter" );
-    location_ = new ActionParameterLocation( converter, xis );
-    AddParameter( *location_ );
-    xis >> end();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,36 +55,23 @@ ActionParameterLimit::~ActionParameterLimit()
 // Name: ActionParameterLimit::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void ActionParameterLimit::CommitTo( ASN1T_Line& asn ) const
+void ActionParameterLimit::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    location_->CommitTo( asn );
+    asn.value.t = T_MissionParameter_value_line;
+    asn.value.u.line = new ASN1T_Line();
+    ActionParameterLocation::CommitTo( *asn.value.u.line );
+    asn.null_value = asn.value.u.line->coordinates.n ? 0 : 1;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLimit::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void ActionParameterLimit::Clean( ASN1T_Line& asn ) const
+void ActionParameterLimit::Clean( ASN1T_MissionParameter& asn ) const
 {
-    location_->Clean( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterLimit::Accept
-// Created: SBO 2007-05-22
-// -----------------------------------------------------------------------------
-void ActionParameterLimit::Accept( ActionParameterVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterLimit::GetPosition
-// Created: AGE 2007-07-10
-// -----------------------------------------------------------------------------
-geometry::Point2f ActionParameterLimit::GetPosition() const
-{
-    return location_->GetPosition();
+    if( asn.value.u.line )
+        ActionParameterLocation::Clean( *asn.value.u.line );
+    delete asn.value.u.line;
 }
 
 // -----------------------------------------------------------------------------

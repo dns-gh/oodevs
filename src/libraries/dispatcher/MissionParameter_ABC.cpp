@@ -44,6 +44,9 @@
 #include "MissionParameter_String.h"
 #include "MissionParameter_Objective.h"
 #include "MissionParameter_ObjectiveList.h"
+#include "MissionParameter_Line.h"
+#include "MissionParameter_LimasOrder.h"
+#include "MissionParameter_IntelligenceList.h"
 
 using namespace dispatcher;
 
@@ -56,7 +59,7 @@ using namespace dispatcher;
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 // static
-MissionParameter_ABC* MissionParameter_ABC::Create( const ASN1T_MissionParameter& asn )
+MissionParameter_ABC* MissionParameter_ABC::Create( Model& model, const ASN1T_MissionParameter& asn )
 {
     switch( asn.value.t )
     {
@@ -93,6 +96,9 @@ MissionParameter_ABC* MissionParameter_ABC::Create( const ASN1T_MissionParameter
         case T_MissionParameter_value_aCharStr                  : return new MissionParameter_String                ( asn );
         case T_MissionParameter_value_missionObjective          : return new MissionParameter_Objective             ( asn );
         case T_MissionParameter_value_missionObjectiveList      : return new MissionParameter_ObjectiveList         ( asn );
+        case T_MissionParameter_value_line                      : return new MissionParameter_Line                  ( asn );
+        case T_MissionParameter_value_limasOrder                : return new MissionParameter_LimasOrder            ( model, asn );
+        case T_MissionParameter_value_intelligenceList          : return new MissionParameter_IntelligenceList      ( model, asn );
         default:
             throw std::runtime_error( "Invalid mission parameter type" );
     }

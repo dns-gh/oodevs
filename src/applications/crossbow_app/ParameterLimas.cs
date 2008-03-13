@@ -13,16 +13,16 @@ namespace Sword
 
             public void Serialize(ITable table, int id)
             {
+                string value = "";
                 foreach (System.Collections.Generic.KeyValuePair<int, string> elt in m_limas)
-                    SerializeLima(table, id, elt.Key + ";" + elt.Value);
-            }
-
-            public static void SerializeLima(ITable table, int id, string value)
-            {
+                {
+                    if (value != "")
+                        value += ";";
+                    value += elt.Key + "," + elt.Value;
+                }
                 IRow row = table.CreateRow();
                 Tools.SetValue<int>(row, "order_id", id);
-                Tools.SetValue<string>(row, "name", "lima");
-                Tools.SetValue<bool>(row, "context", true);
+                Tools.SetValue<string>(row, "name", "Phase lines");
                 Tools.SetValue<string>(row, "ParamValue", value);
                 row.Store();
             }
@@ -60,7 +60,7 @@ namespace Sword
             {
                 get
                 {
-                    return "limas";
+                    return "Phase Lines";
                 }
             }
         }

@@ -21,6 +21,7 @@
 #include "KnowledgeGroupType.h"
 #include "MissionType.h"
 #include "FragOrderType.h"
+#include "OrderContext.h"
 #include "ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
@@ -149,28 +150,34 @@ void AgentTypes::ReadComponent( xml::xistream& xis )
 void AgentTypes::ReadOrderTypes( const std::string& missions )
 {
     xifstream xis( missions );
-    xis >> start( "missions" )
-            >> start( "units" )
-                >> list( "mission", *this, &AgentTypes::ReadMissionType, unitMissions_, (const bool&)true )
-            >> end()
-            >> start( "automats" )
-                >> list( "mission", *this, &AgentTypes::ReadMissionType, automatMissions_, (const bool&)true )
-            >> end()
-            >> start( "populations" )
-                >> list( "mission", *this, &AgentTypes::ReadMissionType, populationMissions_, (const bool&)false )
-            >> end()
-            >> start( "fragorders" )
+    xis >> start( "missions" );
+    ReadMissions( xis, "units"      , unitMissions_ );
+    ReadMissions( xis, "automats"   , automatMissions_ );
+    ReadMissions( xis, "populations", populationMissions_ );
+    xis     >> start( "fragorders" )
                 >> list( "fragorder", *this, &AgentTypes::ReadFragOrderType )
             >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::ReadMissions
+// Created: SBO 2008-03-05
+// -----------------------------------------------------------------------------
+void AgentTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_MissionResolver& missions )
+{
+    xis >> start( name );
+    OrderContext context( xis );
+    xis     >> list( "mission", *this, &AgentTypes::ReadMissionType, missions, context )
+        >> end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentTypes::ReadMissionType
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentTypes::ReadMissionType( xml::xistream& xis, T_MissionResolver& missions, const bool& addContext )
+void AgentTypes::ReadMissionType( xml::xistream& xis, T_MissionResolver& missions, const OrderContext& context )
 {
-    MissionType* mission = new MissionType( xis, addContext );
+    MissionType* mission = new MissionType( xis, context );
     Resolver< MissionType >::Register( mission->GetId(), *mission );
     missions.Register( mission->GetName(), *mission );
 }

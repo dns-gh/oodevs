@@ -22,7 +22,7 @@ using namespace gui;
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
 ParamMissionObjectiveList::ParamMissionObjectiveList( QObject* parent, const kernel::OrderParameter& parameter, gui::ParametersLayer& layer, const Simulation& simulation, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller )
-    : ListParameter( parent, parameter.GetName(), controller, parameter.IsOptional() )
+    : ListParameter( parent, parameter.GetName().c_str(), controller, parameter.IsOptional() )
     , parameter_( parameter )
     , converter_( converter )
     , simulation_( simulation )
@@ -58,5 +58,14 @@ void ParamMissionObjectiveList::CommitTo( ActionParameterContainer_ABC& action )
 // -----------------------------------------------------------------------------
 Param_ABC* ParamMissionObjectiveList::CreateElement()
 {
-    return new ParamMissionObjective( OrderParameter( QObject::tr( "Objective %1" ).arg( ++count_ ), "objective", false ), layer_, simulation_, converter_ );
+    return new ParamMissionObjective( OrderParameter( QObject::tr( "Objective %1" ).arg( ++count_ ).ascii(), "objective", false ), layer_, simulation_, converter_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamMissionObjectiveList::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamMissionObjectiveList::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

@@ -68,9 +68,7 @@ protected:
     //! @name Helpers
     //@{
     void CommitTo( ASN1T_MissionParameters& asn ) const;
-    void CommitTo( ASN1T_OrderContext& asn ) const;
     void Clean( ASN1T_MissionParameters& asn ) const;
-    void Clean( ASN1T_OrderContext& asn ) const;
     //@}
 
 private:

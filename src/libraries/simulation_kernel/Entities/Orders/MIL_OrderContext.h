@@ -11,7 +11,6 @@
 #define __MIL_OrderContext_h_
 
 #include "MIL.h"
-
 #include "MIL_Fuseau.h"
 #include "MIL_LimaOrder.h"
 
@@ -32,13 +31,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_OrderContext();
-             MIL_OrderContext( const ASN1T_OrderContext& asn, const MT_Vector2D& vOrientationRefPos );
+             MIL_OrderContext( const ASN1T_MissionParameters& asn, const MT_Vector2D& orientationReference );
              MIL_OrderContext( const MIL_OrderContext& rhs );
     virtual ~MIL_OrderContext();
     //@}
 
     //! @name Accessors
     //@{
+          unsigned int   Length               () const;
     const MT_Vector2D&   GetDirDanger         () const;
     const MIL_Fuseau&    GetFuseau            () const;
     const T_LimaVector&  GetLimas             () const;
@@ -52,8 +52,8 @@ public:
 
     //! @name Network
     //@{
-    void Serialize              ( ASN1T_OrderContext& asn ) const;
-    void CleanAfterSerialization( ASN1T_OrderContext& asn ) const;
+    void Serialize              ( ASN1T_MissionParameters& asn ) const;
+    void CleanAfterSerialization( ASN1T_MissionParameters& asn ) const;
     //@}
  
 private:
@@ -64,11 +64,25 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadDirection( const ASN1T_MissionParameter& asn );
+    void ReadPhaseLines( const ASN1T_MissionParameter& asn );
+    void ReadLimits( const ASN1T_MissionParameter& limit1, const ASN1T_MissionParameter& limit2, const MT_Vector2D& orientationReference );
+    void ReadIntelligences( const ASN1T_MissionParameter& asn );
+
+    void WriteDirection( ASN1T_MissionParameter& asn ) const;
+    void WritePhaseLines( ASN1T_MissionParameter& asn ) const;
+    void WriteLimits( ASN1T_MissionParameter& limit1, ASN1T_MissionParameter& limit2 ) const;
+    void WriteIntelligences( ASN1T_MissionParameter& asn ) const;
+    //@}
+
+    //! @name Helpers
+    //@{
     typedef std::vector< MIL_IntelligenceOrder* >   T_IntelligenceOrders;
     typedef T_IntelligenceOrders::const_iterator  CIT_IntelligenceOrders;
     //@}
 
 private:
+    bool                 hasContext_;
     T_LimaVector         limas_;
     T_IntelligenceOrders intelligences_;
     MIL_Fuseau           fuseau_;

@@ -10,9 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_OrderContext.h"
-
 #include "MIL_LimaFunction.h"
 #include "TER_LimitData.h"
 #include "MIL_AgentServer.h"
@@ -24,10 +22,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext constructor
-// Created: NLD 2006-11-21
+// Created: SBO 2008-03-03
 // -----------------------------------------------------------------------------
 MIL_OrderContext::MIL_OrderContext()
-    : limas_        ()
+    : hasContext_   ( false )
+    , limas_        ()
     , intelligences_()
     , fuseau_       ()
     , dirDanger_    ( 0., 1. )
@@ -37,43 +36,17 @@ MIL_OrderContext::MIL_OrderContext()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext constructor
-// Created: NLD 2006-11-14
+// Created: SBO 2008-03-03
 // -----------------------------------------------------------------------------
-MIL_OrderContext::MIL_OrderContext( const ASN1T_OrderContext& asn, const MT_Vector2D& vOrientationRefPos )
-    : limas_        ()
-    , intelligences_()
-    , fuseau_       ()
-    , dirDanger_    ()
+MIL_OrderContext::MIL_OrderContext( const ASN1T_MissionParameters& asn, const MT_Vector2D& orientationReference )
+    : hasContext_( true )
 {
-    // Dir danger
-    NET_ASN_Tools::ReadDirection( asn.direction_dangereuse, dirDanger_ );
-
-    // Limas
-    limas_.clear();
-    for( uint i = 0; i < asn.limas.n; ++i )
-        limas_.push_back( MIL_LimaOrder( asn.limas.elem[ i ] ) );
-
-    // Limites
-    T_PointVector leftLimitData;
-    T_PointVector rightLimitData;
-
-    if( asn.m.limite_gauchePresent && !NET_ASN_Tools::ReadLine( asn.limite_gauche, leftLimitData ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
-
-    if( asn.m.limite_droitePresent && !NET_ASN_Tools::ReadLine( asn.limite_droite, rightLimitData ))
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
-
-    if( !leftLimitData.empty() && !rightLimitData.empty() && leftLimitData == rightLimitData )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
-
-    if( leftLimitData.empty() || rightLimitData.empty() )
-        fuseau_.Reset();
-    else
-        fuseau_.Reset( vOrientationRefPos, leftLimitData, rightLimitData, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
-
-    // Intelligences
-    for( unsigned int i = 0; i < asn.intelligences.n; ++i )
-        intelligences_.push_back( new MIL_IntelligenceOrder( asn.intelligences.elem[i] ) );
+    if( asn.n < Length() )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
+    ReadDirection( asn.elem[0] );
+    ReadPhaseLines( asn.elem[1] );
+    ReadLimits( asn.elem[2], asn.elem[3], orientationReference );
+    ReadIntelligences( asn.elem[4] );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,12 +54,13 @@ MIL_OrderContext::MIL_OrderContext( const ASN1T_OrderContext& asn, const MT_Vect
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_OrderContext::MIL_OrderContext( const MIL_OrderContext& rhs )
-    : limas_        ( rhs.limas_     )
+    : hasContext_   ( rhs.hasContext_ )
+    , limas_        ( rhs.limas_  )
     , intelligences_()
-    , fuseau_       () //$$$
+    , fuseau_       ()
     , dirDanger_    ( rhs.dirDanger_ )
 {
-    fuseau_ = rhs.fuseau_;
+    fuseau_ = rhs.fuseau_; // $$$$ SBO 2008-03-04: ...
     for( CIT_IntelligenceOrders it = rhs.intelligences_.begin(); it != rhs.intelligences_.end(); ++it )
         intelligences_.push_back( new MIL_IntelligenceOrder( **it ) );
 }
@@ -97,52 +71,56 @@ MIL_OrderContext::MIL_OrderContext( const MIL_OrderContext& rhs )
 //-----------------------------------------------------------------------------
 MIL_OrderContext::~MIL_OrderContext()
 {
-    fuseau_.Reset();
     for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
         delete *it;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::Serialize
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::Serialize( ASN1T_OrderContext& asn ) const
+void MIL_OrderContext::Serialize( ASN1T_MissionParameters& asn ) const
 {
-    NET_ASN_Tools::WriteDirection( dirDanger_, asn.direction_dangereuse );
-
-    // Limites
-    if( fuseau_.GetLeftLimit() )
+    if( hasContext_ )
     {
-        asn.m.limite_gauchePresent = 1;
-        NET_ASN_Tools::WriteLine( fuseau_.GetLeftLimit()->GetPoints(), asn.limite_gauche );
+        if( asn.n < Length() )
+            throw std::runtime_error( __FUNCTION__ );
+        WriteDirection( asn.elem[0] );
+        WritePhaseLines( asn.elem[1] );
+        WriteLimits( asn.elem[2], asn.elem[3] );
+        WriteIntelligences( asn.elem[4] );
     }
-    if( fuseau_.GetRightLimit() )
+}
+
+namespace
+{
+    void CleanPhaseLines( ASN1T_MissionParameter& asn )
     {
-        asn.m.limite_droitePresent = 1;
-        NET_ASN_Tools::WriteLine( fuseau_.GetRightLimit()->GetPoints(), asn.limite_droite );
+        if( asn.value.u.limasOrder )
+        {
+            for( unsigned int i = 0; i < asn.value.u.limasOrder->n; ++i )
+            {
+                NET_ASN_Tools::Delete( asn.value.u.limasOrder->elem[ i ].lima );
+                if( asn.value.u.limasOrder->elem[ i ].fonctions.n > 0 )
+                    delete [] asn.value.u.limasOrder->elem[ i ].fonctions.elem;
+            }
+            delete [] asn.value.u.limasOrder->elem;
+        }
+        delete asn.value.u.limasOrder;
     }
 
-    // Limas
-    asn.limas.n = limas_.size();
-    if( !limas_.empty() )
+    void CleanLimit( ASN1T_MissionParameter& asn )
     {
-        asn.limas.elem = new ASN1T_LimaOrder[ limas_.size() ];
-        uint i = 0;
-        for( CIT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
-            it->Serialize( asn.limas.elem[i++] );
+        if( asn.value.u.line )
+            NET_ASN_Tools::Delete( asn.value.u.line->coordinates );
+        delete asn.value.u.line;
     }
 
-    asn.intelligences.n = intelligences_.size();
-    if( !intelligences_.empty() )
+    void CleanIntelligences( ASN1T_MissionParameter& asn )
     {
-        asn.intelligences.elem = new ASN1T_Intelligence[ asn.intelligences.n ];
-        unsigned int i = 0;
-        for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
-            (*it)->Serialize( asn.intelligences.elem[i++] );
+        if( asn.value.u.intelligenceList )
+            delete[] asn.value.u.intelligenceList->elem;
+        delete asn.value.u.intelligenceList;
     }
 }
 
@@ -150,25 +128,17 @@ void MIL_OrderContext::Serialize( ASN1T_OrderContext& asn ) const
 // Name: MIL_OrderContext::CleanAfterSerialization
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::CleanAfterSerialization( ASN1T_OrderContext& asn ) const
+void MIL_OrderContext::CleanAfterSerialization( ASN1T_MissionParameters& asn ) const
 {
-    if( asn.m.limite_gauchePresent )
-        NET_ASN_Tools::Delete( asn.limite_gauche );
-    if( asn.m.limite_droitePresent )
-        NET_ASN_Tools::Delete( asn.limite_droite );
-
-    if( asn.limas.n > 0 )
+    if( hasContext_ )
     {
-        for( uint i = 0; i < asn.limas.n; ++i )
-        {
-            NET_ASN_Tools::Delete( asn.limas.elem[ i ].lima );
-            if( asn.limas.elem[ i ].fonctions.n > 0 )
-                delete [] asn.limas.elem[ i ].fonctions.elem;
-        }
-        delete [] asn.limas.elem;
+        if( asn.n < Length() )
+            throw std::runtime_error( __FUNCTION__ );
+        CleanPhaseLines( asn.elem[1] );
+        CleanLimit( asn.elem[2] );
+        CleanLimit( asn.elem[3] );
+        CleanIntelligences( asn.elem[4] );
     }
-    if( asn.intelligences.n )
-        delete[] asn.intelligences.elem;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,4 +149,146 @@ void MIL_OrderContext::Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) cons
 {
     for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
         visitor.Visit( **it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::ReadLimits
+// Created: SBO 2008-03-04
+// -----------------------------------------------------------------------------
+void MIL_OrderContext::ReadLimits( const ASN1T_MissionParameter& limit1, const ASN1T_MissionParameter& limit2, const MT_Vector2D& orientationReference )
+{
+    if( limit1.value.t != T_MissionParameter_value_line || limit2.value.t != T_MissionParameter_value_line )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
+    if( limit1.null_value != limit2.null_value )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
+    if( limit1.null_value )
+        return;
+    
+    T_PointVector limit1Data, limit2Data;
+    if(    !NET_ASN_Tools::ReadLine( *limit1.value.u.line, limit1Data )
+        || !NET_ASN_Tools::ReadLine( *limit2.value.u.line, limit2Data ) )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
+
+    const bool equal  = limit1Data == limit2Data;
+    const bool empty1 = limit1Data.empty();
+    const bool empty2 = limit1Data.empty();
+    if( ( empty1 || empty2 ) && !equal )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
+    if( !empty1 && equal )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
+    if( !empty1 && !empty2 )
+        fuseau_.Reset( orientationReference, limit1Data, limit2Data, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::ReadPhaseLines
+// Created: SBO 2008-03-04
+// -----------------------------------------------------------------------------
+void MIL_OrderContext::ReadPhaseLines( const ASN1T_MissionParameter& asn )
+{
+    if( asn.value.t != T_MissionParameter_value_limasOrder )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
+    if( !asn.null_value )
+        for( unsigned int i = 0; i < asn.value.u.limasOrder->n; ++i )
+            limas_.push_back( MIL_LimaOrder( asn.value.u.limasOrder->elem[i] ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::ReadDirection
+// Created: SBO 2008-03-04
+// -----------------------------------------------------------------------------
+void MIL_OrderContext::ReadDirection( const ASN1T_MissionParameter& asn )
+{
+    if( asn.value.t != T_MissionParameter_value_heading )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
+    if( !asn.null_value )
+        NET_ASN_Tools::ReadDirection( asn.value.u.heading, dirDanger_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::ReadIntelligences
+// Created: SBO 2008-03-04
+// -----------------------------------------------------------------------------
+void MIL_OrderContext::ReadIntelligences( const ASN1T_MissionParameter& asn )
+{
+    if( asn.value.t != T_MissionParameter_value_intelligenceList )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
+    if( !asn.null_value )
+        for( unsigned int i = 0; i < asn.value.u.intelligenceList->n; ++i )
+            intelligences_.push_back( new MIL_IntelligenceOrder( asn.value.u.intelligenceList->elem[i] ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::WritePhaseLines
+// Created: SBO 2008-03-04
+// -----------------------------------------------------------------------------
+void MIL_OrderContext::WritePhaseLines( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_limasOrder;
+    asn.value.u.limasOrder = new ASN1T_LimasOrder();
+    asn.value.u.limasOrder->n = limas_.size();
+    if( !limas_.empty() )
+    {
+        asn.value.u.limasOrder->elem = new ASN1T_LimaOrder[ limas_.size() ];
+        unsigned int i = 0;
+        for( CIT_LimaVector it = limas_.begin(); it != limas_.end(); ++it, ++i )
+            it->Serialize( asn.value.u.limasOrder->elem[i] );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::WriteLimits
+// Created: SBO 2008-03-04
+// -----------------------------------------------------------------------------
+void MIL_OrderContext::WriteLimits( ASN1T_MissionParameter& limit1, ASN1T_MissionParameter& limit2 ) const
+{
+    limit1.null_value = limit2.null_value = !fuseau_.GetLeftLimit() || !fuseau_.GetRightLimit();
+    limit1.value.t = limit2.value.t = T_MissionParameter_value_line;
+    limit1.value.u.line = new ASN1T_Line();
+    limit2.value.u.line = new ASN1T_Line();
+    if( !limit1.null_value )
+    {
+        NET_ASN_Tools::WriteLine( fuseau_.GetLeftLimit ()->GetPoints(), *limit1.value.u.line );
+        NET_ASN_Tools::WriteLine( fuseau_.GetRightLimit()->GetPoints(), *limit2.value.u.line );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::WriteDirection
+// Created: SBO 2008-03-04
+// -----------------------------------------------------------------------------
+void MIL_OrderContext::WriteDirection( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_heading;
+    NET_ASN_Tools::WriteDirection( dirDanger_, asn.value.u.heading );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::WriteIntelligences
+// Created: SBO 2008-03-04
+// -----------------------------------------------------------------------------
+void MIL_OrderContext::WriteIntelligences( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = 0;
+    asn.value.t = T_MissionParameter_value_intelligenceList;
+    asn.value.u.intelligenceList = new ASN1T_IntelligenceList();
+    asn.value.u.intelligenceList->n = intelligences_.size();
+    if( !intelligences_.empty() )
+    {
+        asn.value.u.intelligenceList->elem = new ASN1T_Intelligence[ asn.value.u.intelligenceList->n ];
+        unsigned int i = 0;
+        for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it, ++i )
+            (*it)->Serialize( asn.value.u.intelligenceList->elem[i] );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::Length
+// Created: SBO 2008-03-04
+// -----------------------------------------------------------------------------
+unsigned int MIL_OrderContext::Length() const
+{
+    return hasContext_ ? 5 : 0;
 }

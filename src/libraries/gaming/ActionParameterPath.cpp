@@ -51,22 +51,12 @@ ActionParameterPath::ActionParameterPath( const kernel::OrderParameter& paramete
     xis >> list( "parameter", *this, &ActionParameterPath::ReadPoint );
 }
 
-namespace
-{
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> attribute( "name", name );
-        return name.c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterPath constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterPath::ActionParameterPath( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : ActionParameter< QString >( OrderParameter( ReadName( xis ), "path", false ) )
+: ActionParameter< QString >( OrderParameter( attribute< std::string >( xis, "name" ), "path", false ) )
     , converter_( converter )
 {
     xis >> list( "parameter", *this, &ActionParameterPath::ReadPoint );
@@ -114,7 +104,7 @@ void ActionParameterPath::AddPoint( const geometry::Point2f& p, unsigned i, unsi
         label = tools::translate( "ActionParameter", "Destination" );
     else
         label = tools::translate( "ActionParameter", "Way point %1" ).arg( i + 1 );
-    AddParameter( *new ActionParameterPathPoint( OrderParameter( label, "pathpoint", false ), converter_, pt ) );
+    AddParameter( *new ActionParameterPathPoint( OrderParameter( label.ascii(), "pathpoint", false ), converter_, pt ) );
 }
 
 // -----------------------------------------------------------------------------

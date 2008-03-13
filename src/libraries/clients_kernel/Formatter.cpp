@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "Formatter.h"
 #include "Tools.h"
-#include "Tools.h"
 
 using namespace kernel;
 

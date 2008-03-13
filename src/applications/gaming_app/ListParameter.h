@@ -69,6 +69,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual bool IsOptional() const;
     virtual Param_ABC* CreateElement() = 0;
     void DeleteItem( QListViewItem* item );
     void Clear();

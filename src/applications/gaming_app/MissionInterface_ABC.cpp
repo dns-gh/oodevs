@@ -29,13 +29,27 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const QString& titl
 {
     setMinimumSize( 250, 250 ); // $$$$ SBO 2007-04-27: 
     CreateTitle( title );
-    QScrollView* sc = new QScrollView( this );
-    sc->setVScrollBarMode( QScrollView::AlwaysOn );
-    sc->setResizePolicy( QScrollView::AutoOneFit );
-    mainWidget_ = new QVBox( sc->viewport() );
-    mainWidget_->setMargin( 5 );
-    mainWidget_->setSpacing( 5 );
-    sc->addChild( mainWidget_ );
+    QTabWidget* tabs = new QTabWidget( this );
+    {
+        QScrollView* sc = new QScrollView( tabs );
+        sc->setVScrollBarMode( QScrollView::AlwaysOn );
+        sc->setResizePolicy( QScrollView::AutoOneFit );
+        mainTab_ = new QVBox( sc->viewport() );
+        mainTab_->setMargin( 5 );
+        mainTab_->setSpacing( 5 );
+        sc->addChild( mainTab_ );
+        tabs->addTab( sc, tr( "Mandatory" ) );
+    }
+    {
+        QScrollView* sc = new QScrollView( tabs );
+        sc->setVScrollBarMode( QScrollView::AlwaysOn );
+        sc->setResizePolicy( QScrollView::AutoOneFit );
+        optionalTab_ = new QVBox( sc->viewport() );
+        optionalTab_->setMargin( 5 );
+        optionalTab_->setSpacing( 5 );
+        sc->addChild( optionalTab_ );
+        tabs->addTab( sc, tr( "Optional" ) );
+    }
     CreateOkCancelButtons();
 }
 
@@ -47,11 +61,7 @@ MissionInterface_ABC::~MissionInterface_ABC()
 {
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         (*it)->RemoveFromController();
-    for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
-        (*it)->RemoveFromController();
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-        delete *it;
-    for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
         delete *it;
 }
 
@@ -64,8 +74,6 @@ bool MissionInterface_ABC::CheckValidity()
     bool b = true;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         b = (*it)->CheckValidity() && b;
-    for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
-        b = (*it)->CheckValidity() && b;
     return b;
 }
 
@@ -75,7 +83,7 @@ bool MissionInterface_ABC::CheckValidity()
 // -----------------------------------------------------------------------------
 bool MissionInterface_ABC::IsEmpty() const
 {
-    return parameters_.empty() && orderContext_.empty();
+    return parameters_.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -132,18 +140,7 @@ void MissionInterface_ABC::CreateOkCancelButtons()
 void MissionInterface_ABC::AddParameter( Param_ABC& parameter )
 {
     parameters_.push_back( &parameter );
-    parameter.BuildInterface( mainWidget_ );
-    parameter.RegisterIn( controller_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::AddOrderContext
-// Created: SBO 2007-03-14
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::AddOrderContext( Param_ABC& parameter )
-{
-    orderContext_.push_back( &parameter );
-    parameter.BuildInterface( mainWidget_ );
+    parameter.BuildInterface( parameter.IsOptional() ? optionalTab_ : mainTab_ );
     parameter.RegisterIn( controller_ );
 }
 
@@ -155,8 +152,6 @@ void MissionInterface_ABC::CommitTo( Action_ABC& action ) const
 {
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         (*it)->CommitTo( action );
-    for( CIT_Parameters it = orderContext_.begin(); it != orderContext_.end(); ++it )
-        (*it)->CommitTo( action );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,12 +161,6 @@ void MissionInterface_ABC::CommitTo( Action_ABC& action ) const
 void MissionInterface_ABC::Draw( const GlTools_ABC& tools, Viewport_ABC& extent ) const
 {
     for( CIT_Parameters it = parameters_.begin() ; it != parameters_.end() ; ++it )
-    {
-        const geometry::Point2f p = entity_.Get< Positions >().GetPosition();
-        extent.SetHotpoint( p );
-        (*it)->Draw( p, extent, tools );
-    }
-    for( CIT_Parameters it = orderContext_.begin() ; it != orderContext_.end() ; ++it )
     {
         const geometry::Point2f p = entity_.Get< Positions >().GetPosition();
         extent.SetHotpoint( p );

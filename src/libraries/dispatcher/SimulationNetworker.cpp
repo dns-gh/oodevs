@@ -52,6 +52,7 @@ SimulationNetworker::~SimulationNetworker()
 // -----------------------------------------------------------------------------
 void SimulationNetworker::ConnectionSucceeded( const std::string& endpoint )
 {
+    MT_LOG_INFO_MSG( "Connected to '" << endpoint << "'" );
     ClientNetworker::ConnectionSucceeded( endpoint );
     assert( !simulation_.get() );
     simulation_.reset( new Simulation( handler_, *this, endpoint ) );
@@ -63,6 +64,7 @@ void SimulationNetworker::ConnectionSucceeded( const std::string& endpoint )
 // -----------------------------------------------------------------------------
 void SimulationNetworker::ConnectionFailed( const std::string& address, const std::string& error )
 {
+    MT_LOG_INFO_MSG( "Connection to '" << address << "' failed (" << error << ")" );
     ClientNetworker::ConnectionFailed( address, error );
     model_.Reset();
     clients_.DenyConnections();
@@ -74,6 +76,7 @@ void SimulationNetworker::ConnectionFailed( const std::string& address, const st
 // -----------------------------------------------------------------------------
 void SimulationNetworker::ConnectionError( const std::string& address, const std::string& error )
 {
+    MT_LOG_INFO_MSG( "Connection to '" << address << "' lost (" << error << ")" );    
     ClientNetworker::ConnectionError( address, error );
     simulation_.reset();
     model_.Reset();

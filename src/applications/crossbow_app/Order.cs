@@ -23,6 +23,7 @@ namespace Sword
             private ParameterLimits m_limits = new ParameterLimits();
             private ParameterLimas m_limas = new ParameterLimas();
             private ParameterDirection m_direction = new ParameterDirection();
+            private ParameterIntelligences m_intelligences = new ParameterIntelligences();
             private Dictionary<string, IOrderParameter> m_parameters = new Dictionary<string, IOrderParameter>();
             private int m_Id;
             private string m_name;
@@ -127,9 +128,10 @@ namespace Sword
             {
                 ITable table = featureWorkspace.OpenTable("OrdersParameters"); // $$$$ SBO 2007-07-20: keep it maybe...
 
-                m_limits.Serialize(table, orderId);
-                m_limas.Serialize(table, orderId);
                 m_direction.Serialize(table, orderId);
+                m_limas.Serialize(table, orderId);
+                m_limits.Serialize(table, orderId);
+                m_intelligences.Serialize(table, orderId);
                 foreach (KeyValuePair<string, IOrderParameter> param in m_parameters)
                     param.Value.Serialize(table, orderId);
             }

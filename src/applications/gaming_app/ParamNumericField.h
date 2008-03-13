@@ -55,6 +55,11 @@ private:
     ParamNumericField& operator=( const ParamNumericField& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual bool IsOptional() const;
+    //@}
+
 private:
     //! @name Member data
     //@{

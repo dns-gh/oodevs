@@ -53,6 +53,11 @@ private:
     ParamDirection& operator=( const ParamDirection& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual bool IsOptional() const;
+    //@}
+
 private:
     //! @name Member data
     //@{

@@ -74,8 +74,8 @@ private:
 
 private:
     const MIL_PionMissionType& type_;
-          MIL_AgentPion&        pion_;
-          bool                  bDIABehaviorActivated_;
+          MIL_AgentPion&       pion_;
+          bool                 bDIABehaviorActivated_;
 
 private:
     static int nDIADirectionDanger_;

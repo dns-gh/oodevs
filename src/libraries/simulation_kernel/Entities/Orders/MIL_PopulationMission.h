@@ -40,7 +40,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const MIL_PopulationMissionType& GetType() const;
+    const MIL_PopulationMissionType& GetType() const;
     //@}
 
     //! @name Operations

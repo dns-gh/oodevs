@@ -48,6 +48,11 @@ private:
     ParamComboBox& operator=( const ParamComboBox& );
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual bool IsOptional() const;
+    //@}
+
     //! @name Types
     //@{
     typedef std::vector< std::pair< QString, T > > T_Values;
@@ -68,7 +73,7 @@ private:
 // -----------------------------------------------------------------------------
 template< typename T >
 ParamComboBox<T>::ParamComboBox( const kernel::OrderParameter& parameter )
-    : Param_ABC( parameter.GetName() )
+    : Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
     , comboBox_( 0 )
 {
@@ -130,6 +135,16 @@ template< typename T >
 T ParamComboBox<T>::GetValue() const
 {
     return ( comboBox_ && comboBox_->count() ) ? comboBox_->GetValue() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamComboBox::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+template< typename T >
+bool ParamComboBox<T>::IsOptional() const
+{
+    return parameter_.IsOptional();
 }
 
 #endif // __ParamComboBox_h_

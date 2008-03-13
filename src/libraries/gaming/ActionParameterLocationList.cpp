@@ -33,7 +33,7 @@ ActionParameterLocationList::ActionParameterLocationList( const OrderParameter& 
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location %1" ).arg( i ), "location", false ), converter, asn.elem[i] ) );
+        AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location %1" ).arg( i ).ascii(), "location", false ), converter, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------

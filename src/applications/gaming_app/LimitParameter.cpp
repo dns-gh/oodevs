@@ -22,14 +22,14 @@ using namespace kernel;
 // Name: LimitParameter constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-LimitParameter::LimitParameter( QObject* parent, const QString& name, const CoordinateConverter_ABC& converter, bool optional )
+LimitParameter::LimitParameter( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter )
     : QObject   ( parent )
-    , Param_ABC ( name )
+    , Param_ABC ( parameter.GetName().c_str() )
+    , parameter_( parameter )
     , converter_( converter )
     , pLabel_   ( 0 )
     , potential_( 0 )
     , selected_ ( 0 )
-    , optional_ ( optional )
 {
     // NOTHING
 }
@@ -63,21 +63,12 @@ void LimitParameter::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool LimitParameter::CheckValidity()
 {
-    if( ! optional_ && ! selected_ )
+    if( ! parameter_.IsOptional() && ! selected_ )
     {
         pLabel_->Warn( 3000 );
         return false;
     }
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitParameter::IsSet
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-bool LimitParameter::IsSet() const
-{
-    return selected_;
 }
 
 // -----------------------------------------------------------------------------
@@ -148,10 +139,18 @@ void LimitParameter::Draw( const geometry::Point2f& point, const Viewport_ABC& v
 // -----------------------------------------------------------------------------
 void LimitParameter::CommitTo( ActionParameterContainer_ABC& parameter ) const
 {
-    if( !selected_ )
-        return;
     Lines lines;
-    selected_->CopyTo( lines );
-    std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit( OrderParameter( GetName(), "limit", false, true ), converter_, lines ) );
+    if( selected_ )
+        selected_->CopyTo( lines );
+    std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit( parameter_, converter_, lines ) );
     parameter.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitParameter::IsOptional
+// Created: SBO 2008-03-06
+// -----------------------------------------------------------------------------
+bool LimitParameter::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

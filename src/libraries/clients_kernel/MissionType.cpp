@@ -10,25 +10,31 @@
 #include "clients_kernel_pch.h"
 #include "MissionType.h"
 #include "OrderParameter.h"
+#include "OrderContext.h"
 #include "xeumeuleu/xml.h"
-#include "Tools.h"
 
 using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: MissionType constructor
-// Created: SBO 2007-04-23
+// Created: SBO 2008-03-05
 // -----------------------------------------------------------------------------
-MissionType::MissionType( xml::xistream& xis, bool context )
+MissionType::MissionType( xml::xistream& xis )
     : OrderType( xis )
 {
-    std::string mrt;
-    xis >> optional() >> attribute( "mrt-dia-behavior", mrt )
-        >> list( "parameter", *this, &MissionType::ReadParameter );
-    automat_ = !mrt.empty();
-    if( context )
-        AddContextParameters();
+    xis >> list( "parameter", *this, &MissionType::ReadParameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionType constructor
+// Created: SBO 2007-04-23
+// -----------------------------------------------------------------------------
+MissionType::MissionType( xml::xistream& xis, const OrderContext& context )
+    : OrderType( xis )
+{
+    context.AddParameters( *this );
+    xis >> list( "parameter", *this, &MissionType::ReadParameter );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,15 +47,6 @@ MissionType::~MissionType()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionType::IsAutomat
-// Created: SBO 2007-04-23
-// -----------------------------------------------------------------------------
-bool MissionType::IsAutomat() const
-{
-    return automat_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MissionType::ReadParameter
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
@@ -57,16 +54,4 @@ void MissionType::ReadParameter( xml::xistream& xis )
 {
     OrderParameter* param = new OrderParameter( xis );
     Register( Count(), *param );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionType::AddContextParameters
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-void MissionType::AddContextParameters()
-{
-    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Limits" ), "limits", !automat_, true ) );
-    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Phase lines" ) , "limalist", true, true ) );
-    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Dangerous Direction" ), "dangerousdirection", !automat_, true ) );
-    Register( Count(), *new OrderParameter( tools::translate( "MissionType", "Intelligences" ) , "intelligencelist", true, true ) );
 }

@@ -51,9 +51,9 @@ namespace Sword
                 string sessionDir = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/sessions/" + item;
                 XmlDocument doc = new XmlDocument();
                 doc.Load(sessionDir + "/session.xml");
-                string workspace = doc.SelectSingleNode("/session/config/dispatcher/plugins/plugin[@name='crossbow']/parameter[@name=\"geodatabase\"]/@value").Value;
+                string workspace = doc.SelectSingleNode("/session/config/dispatcher/plugins/crossbow/@geodatabase").Value;
                 LookupLayer(System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/" + workspace);
-                string shared = doc.SelectSingleNode("/session/config/dispatcher/plugins/plugin[@name='crossbow']/parameter[@name=\"geodatabase-shared\"]/@value").Value;
+                string shared = doc.SelectSingleNode("/session/config/dispatcher/plugins/crossbow/@geodatabase-shared").Value;
                 m_workspace.SharedFile = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/" + shared;
             }
 

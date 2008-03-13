@@ -46,7 +46,7 @@ ActionParameterIntelligenceList::ActionParameterIntelligenceList( const OrderPar
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterIntelligence( OrderParameter( tools::translate( "ActionParameter", "Intelligence %1" ).arg( i ), "intelligence", true ), converter, resolver, levels, asn.elem[i] ) );
+        AddParameter( *new ActionParameterIntelligence( OrderParameter( tools::translate( "ActionParameter", "Intelligence %1" ).arg( i ).ascii(), "intelligence", true ), converter, resolver, levels, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,13 +86,15 @@ namespace
 // Name: ActionParameterIntelligenceList::CommitTo
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void ActionParameterIntelligenceList::CommitTo( ASN1T_OrderContext& asn ) const
+void ActionParameterIntelligenceList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.intelligences.n = Count();;
-    if( !asn.intelligences.n )
+    asn.value.t = T_MissionParameter_value_intelligenceList;
+    ASN1T_IntelligenceList*& list = asn.value.u.intelligenceList = new ASN1T_IntelligenceList();
+    asn.null_value = ( list->n = Count() ) ? 0 : 1;
+    if( asn.null_value )
         return;
-    asn.intelligences.elem = new ASN1T_Intelligence[asn.intelligences.n];
-    AsnSerializer serializer( asn.intelligences );
+    list->elem = new ASN1T_Intelligence[list->n];
+    AsnSerializer serializer( *list );
     Accept( serializer );
 }
 
@@ -114,12 +116,12 @@ namespace
 // Name: ActionParameterIntelligenceList::Clean
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void ActionParameterIntelligenceList::Clean( ASN1T_OrderContext& asn ) const
+void ActionParameterIntelligenceList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.intelligences.n )
+    if( asn.value.u.intelligenceList )
     {
-        AsnCleaner cleaner( asn.intelligences );
+        AsnCleaner cleaner( *asn.value.u.intelligenceList );
         Accept( cleaner );
-        delete[] asn.intelligences.elem;
+        delete[] asn.value.u.intelligenceList;
     }
 }

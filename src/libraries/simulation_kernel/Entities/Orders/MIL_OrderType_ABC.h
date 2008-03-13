@@ -20,6 +20,7 @@ namespace xml
 class MIL_OrderTypeParameter;
 class DEC_KnowledgeResolver_ABC;
 class DIA_Model;
+class MIL_OrderContext;
 
 // =============================================================================
 /** @class  MIL_OrderType_ABC
@@ -32,7 +33,7 @@ class MIL_OrderType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_OrderType_ABC( uint nID, xml::xistream& xis );
+             MIL_OrderType_ABC( uint nID, xml::xistream& xis );
     virtual ~MIL_OrderType_ABC();
     //@}
 
@@ -45,15 +46,10 @@ public:
 
     //! @name Copy operations
     //@{
-    void Copy                   ( const ASN1T_MissionParameters& from, DIA_TypedObject&         to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
+    void Copy                   ( const ASN1T_MissionParameters& from, DIA_TypedObject&         to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const;
     bool Copy                   ( const DIA_TypedObject&         from, DIA_TypedObject&         to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
-    bool Copy                   ( const DIA_TypedObject&         from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
-    void CleanAfterSerialization( ASN1T_MissionParameters& to ) const;
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadParameter( xml::xistream& xis );
+    bool Copy                   ( const DIA_TypedObject&         from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const;
+    void CleanAfterSerialization( ASN1T_MissionParameters& to, const MIL_OrderContext& context ) const;
     //@}
 
 private:
@@ -61,6 +57,11 @@ private:
     //@{
     typedef std::vector< const MIL_OrderTypeParameter* > T_MissionParameterVector;
     typedef T_MissionParameterVector::const_iterator     CIT_MissionParameterVector;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadParameter( xml::xistream& xis );
     //@}
 
 private:

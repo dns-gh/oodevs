@@ -23,6 +23,11 @@ namespace dispatcher
 namespace kernel
 {
     class OrderType;
+    class OrderContext;
+}
+
+namespace crossbow
+{
 
 // =============================================================================
 /** @class  OrderTypes
@@ -42,9 +47,9 @@ public:
 
     //! @name Operations
     //@{
-    const OrderType* FindAgentMission  ( const std::string& name ) const;
-    const OrderType* FindAutomatMission( const std::string& name ) const;
-    const OrderType* FindFragOrder     ( const std::string& name ) const;
+    const kernel::OrderType* FindAgentMission  ( const std::string& name ) const;
+    const kernel::OrderType* FindAutomatMission( const std::string& name ) const;
+    const kernel::OrderType* FindFragOrder     ( const std::string& name ) const;
     //@}
 
 private:
@@ -56,14 +61,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, const OrderType* > T_OrderTypes;
-    typedef T_OrderTypes::const_iterator            CIT_OrderTypes;
+    typedef std::map< std::string, const kernel::OrderType* > T_OrderTypes;
+    typedef T_OrderTypes::const_iterator                    CIT_OrderTypes;
     //@}
 
     //! @name Helpers
     //@{
     void Load( const std::string& filename );
-    void ReadOrderType( xml::xistream& xis, T_OrderTypes& resolver );
+    void ReadMissions( xml::xistream& xis, const std::string& name, T_OrderTypes& missions );
+    void ReadMissionType( xml::xistream& xis, T_OrderTypes& missions, const kernel::OrderContext& context );
+    void ReadFragOrderType( xml::xistream& xis );
     //@}
 
 private:

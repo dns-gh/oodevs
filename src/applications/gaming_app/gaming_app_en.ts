@@ -1179,6 +1179,14 @@
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mandatory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionPanel</name>
@@ -1521,17 +1529,6 @@
     </message>
     <message>
         <source>Phase line %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ParamLimits</name>
-    <message>
-        <source>Limit 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Limit 2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

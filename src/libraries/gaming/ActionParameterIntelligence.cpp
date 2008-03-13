@@ -66,13 +66,13 @@ ActionParameterIntelligence::ActionParameterIntelligence( const OrderParameter& 
     : ActionParameterEntity< Intelligence_ABC >( parameter, 0 )
     , converter_( converter )
 {
-    AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Name" )     , "name"     , false ), asn.name ) );
-    AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Nature" )   , "nature"   , false ), asn.nature ) );
-    AddParameter( *new ActionParameterKarma    ( OrderParameter( tools::translate( "ActionParameter", "Karma" )    , "karma"    , false ), asn.diplomacy ) );
-    AddParameter( *new ActionParameterLevel    ( OrderParameter( tools::translate( "ActionParameter", "Level" )    , "level"    , false ), asn.level, levels ) );
-    AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Mounted" )  , "bool"     , false ), asn.embarked ) );
-    AddParameter( *new ActionParameterFormation( OrderParameter( tools::translate( "ActionParameter", "Formation" ), "formation", false ), asn.formation, resolver ) );
-    AddParameter( *new ActionParameterPoint    ( OrderParameter( tools::translate( "ActionParameter", "Point" )    , "point"    , false ), converter, MakePoint( converter, asn.location ) ) );
+    AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Name" ).ascii()     , "name"     , false ), asn.name ) );
+    AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Nature" ).ascii()   , "nature"   , false ), asn.nature ) );
+    AddParameter( *new ActionParameterKarma    ( OrderParameter( tools::translate( "ActionParameter", "Karma" ).ascii()    , "karma"    , false ), asn.diplomacy ) );
+    AddParameter( *new ActionParameterLevel    ( OrderParameter( tools::translate( "ActionParameter", "Level" ).ascii()    , "level"    , false ), asn.level, levels ) );
+    AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Mounted" ).ascii()  , "bool"     , false ), asn.embarked ) );
+    AddParameter( *new ActionParameterFormation( OrderParameter( tools::translate( "ActionParameter", "Formation" ).ascii(), "formation", false ), asn.formation, resolver ) );
+    AddParameter( *new ActionParameterPoint    ( OrderParameter( tools::translate( "ActionParameter", "Point" ).ascii()    , "point"    , false ), converter, MakePoint( converter, asn.location ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,17 +94,17 @@ void ActionParameterIntelligence::ReadParameter( xml::xistream& xis, const Resol
     const std::string type = attribute< std::string >( xis, "type" );
 
     if( type == "name" || type == "nature" )
-        AddParameter( *new ActionParameterString( OrderParameter( name, type, false ), xis ) );
+        AddParameter( *new ActionParameterString( OrderParameter( name.ascii(), type, false ), xis ) );
     else if( type == "karma" )
-        AddParameter( *new ActionParameterKarma( OrderParameter( name, type, false ), xis ) );
+        AddParameter( *new ActionParameterKarma( OrderParameter( name.ascii(), type, false ), xis ) );
     else if( type == "level" )
-        AddParameter( *new ActionParameterLevel( OrderParameter( name, type, false ), xis, levels ) );
+        AddParameter( *new ActionParameterLevel( OrderParameter( name.ascii(), type, false ), xis, levels ) );
     else if( type == "bool" )
-        AddParameter( *new ActionParameterBool( OrderParameter( name, type, false ), xis ) );
+        AddParameter( *new ActionParameterBool( OrderParameter( name.ascii(), type, false ), xis ) );
     else if( type == "formation" )
-        AddParameter( *new ActionParameterFormation( OrderParameter( name, type, false ), xis, resolver ) );
+        AddParameter( *new ActionParameterFormation( OrderParameter( name.ascii(), type, false ), xis, resolver ) );
     else if( type == "point" )
-        AddParameter( *new ActionParameterPoint( OrderParameter( name, type, false ), converter_, xis ) );
+        AddParameter( *new ActionParameterPoint( OrderParameter( name.ascii(), type, false ), converter_, xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,13 +162,13 @@ void ActionParameterIntelligence::CommitToChildren()
     kernel::Point position;
     position.AddPoint( entity.Get< kernel::Positions >().GetPosition() );
 
-    AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Name" )     , "name"     , false ), entity.GetName() ) );
-    AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Nature" )   , "nature"   , false ), entity.GetSymbol() ) );
-    AddParameter( *new ActionParameterKarma    ( OrderParameter( tools::translate( "ActionParameter", "Karma" )    , "karma"    , false ), entity.GetKarma(), *formation ) );
-    AddParameter( *new ActionParameterLevel    ( OrderParameter( tools::translate( "ActionParameter", "Level" )    , "level"    , false ), entity.GetLevel() ) );
-    AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Mounted" )  , "bool"     , false ), entity.IsMounted() ) );
-    AddParameter( *new ActionParameterFormation( OrderParameter( tools::translate( "ActionParameter", "Formation" ), "formation", false ), *formation ) );
-    AddParameter( *new ActionParameterPoint    ( OrderParameter( tools::translate( "ActionParameter", "Point" )    , "point"    , false ), converter_, position ) );
+    AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Name" ).ascii()     , "name"     , false ), entity.GetName() ) );
+    AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Nature" ).ascii()   , "nature"   , false ), entity.GetSymbol() ) );
+    AddParameter( *new ActionParameterKarma    ( OrderParameter( tools::translate( "ActionParameter", "Karma" ).ascii()    , "karma"    , false ), entity.GetKarma(), *formation ) );
+    AddParameter( *new ActionParameterLevel    ( OrderParameter( tools::translate( "ActionParameter", "Level" ).ascii()    , "level"    , false ), entity.GetLevel() ) );
+    AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Mounted" ).ascii()  , "bool"     , false ), entity.IsMounted() ) );
+    AddParameter( *new ActionParameterFormation( OrderParameter( tools::translate( "ActionParameter", "Formation" ).ascii(), "formation", false ), *formation ) );
+    AddParameter( *new ActionParameterPoint    ( OrderParameter( tools::translate( "ActionParameter", "Point" ).ascii()    , "point"    , false ), converter_, position ) );
 }
 
 // -----------------------------------------------------------------------------

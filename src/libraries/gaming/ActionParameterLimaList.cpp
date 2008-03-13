@@ -29,11 +29,11 @@ ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& paramete
 // Name: ActionParameterLimaList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas )
+ActionParameterLimaList::ActionParameterLimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& asn )
     : ActionParameter< QString >( parameter )
 {
-    for( unsigned int i = 0; i < limas.n; ++i )
-        AddParameter( *new ActionParameterLima( OrderParameter( tools::translate( "ActionParameter", "Phase line %1" ).arg( i ), "lima", true ), converter, limas.elem[i] ) );
+    for( unsigned int i = 0; i < asn.n; ++i )
+        AddParameter( *new ActionParameterLima( OrderParameter( tools::translate( "ActionParameter", "Phase line %1" ).arg( i ).ascii(), "lima", true ), converter, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,13 +82,15 @@ namespace
 // Name: ActionParameterLimaList::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ActionParameterLimaList::CommitTo( ASN1T_OrderContext& asn ) const
+void ActionParameterLimaList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
-    asn.limas.n = Count();;
-    if( !asn.limas.n )
+    asn.value.t = T_MissionParameter_value_limasOrder;
+    ASN1T_LimasOrder*& list = asn.value.u.limasOrder = new ASN1T_LimasOrder();
+    asn.null_value = ( list->n = Count() ) ? 0 : 1;
+    if( asn.null_value )
         return;
-    asn.limas.elem = new ASN1T_LimaOrder[asn.limas.n];
-    AsnSerializer serializer( asn.limas );
+    list->elem = new ASN1T_LimaOrder[list->n];
+    AsnSerializer serializer( *list );
     Accept( serializer );
 }
 
@@ -110,13 +112,13 @@ namespace
 // Name: ActionParameterLimaList::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ActionParameterLimaList::Clean( ASN1T_OrderContext& asn ) const
+void ActionParameterLimaList::Clean( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.limas.n )
+    if( asn.value.u.limasOrder )
     {
-        AsnCleaner cleaner( asn.limas );
+        AsnCleaner cleaner( *asn.value.u.limasOrder );
         Accept( cleaner );
-        delete[] asn.limas.elem;
+        delete[] asn.value.u.limasOrder;
     }
 }
 

@@ -121,25 +121,12 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
     xos << attribute( "id", type_.GetId() )
         << attribute( "name", type_.GetName() ) // $$$$ SBO 2007-04-24: not required
         << attribute( "target", target_.GetId() );
-    xos << start( "parameters" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        if( !it->second->IsContext() )
-        {
-            xos << start( "parameter" );
-            it->second->Serialize( xos );
-            xos << end();
-        }
-    xos << end();
-    xos << start( "context" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        if( it->second->IsContext() )
-        {
-            xos << start( "parameter" );
-            it->second->Serialize( xos );
-            xos << end();
-        }
-    xos << end();
-
+    {
+        xos << start( "parameter" );
+        it->second->Serialize( xos );
+        xos << end();
+    }
     if( const ActionTiming* extension = Retrieve< ActionTiming >() ) // $$$$ SBO 2007-07-13: Serializable_ABC ? might be overkill...
         extension->Serialize( xos );
 }
@@ -150,29 +137,13 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Action_ABC::CommitTo( ASN1T_MissionParameters& asn ) const
 {
-    // $$$$ SBO 2007-05-21: distinction between parameters and "context" parmaters sucks; find something better! (gather if possible)
-    asn.n = 0;
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        if( !it->second->IsContext() )
-            ++asn.n;
+    asn.n = Count();
     if( !asn.n )
         return;
     asn.elem = new ASN1T_MissionParameter[asn.n];
     unsigned int i = 0;
     for( CIT_Elements it = elements_.begin(); it != elements_.end() && i < asn.n; ++it )
-        if( !it->second->IsContext() )
-            it->second->CommitTo( asn.elem[i++] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Action_ABC::CommitTo
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-void Action_ABC::CommitTo( ASN1T_OrderContext& asn ) const
-{
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        if( it->second->IsContext() )
-            it->second->CommitTo( asn ); // $$$$ SBO 2007-05-21: find a better way to handle context parameters
+        it->second->CommitTo( asn.elem[i++] );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,17 +154,5 @@ void Action_ABC::Clean( ASN1T_MissionParameters& asn ) const
 {
     unsigned int i = 0;
     for( CIT_Elements it = elements_.begin(); it != elements_.end() && i < asn.n; ++it )
-        if( !it->second->IsContext() )
-            it->second->Clean( asn.elem[i++] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Action_ABC::Clean
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-void Action_ABC::Clean( ASN1T_OrderContext& asn ) const
-{
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        if( it->second->IsContext() )
-            it->second->Clean( asn ); // $$$$ SBO 2007-05-21: 
+        it->second->Clean( asn.elem[i++] );
 }

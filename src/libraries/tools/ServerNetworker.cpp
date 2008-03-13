@@ -15,7 +15,6 @@
 #include "SocketManager.h"
 #include "Acceptor.h"
 #include "asio.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace tools;
 
@@ -86,15 +85,8 @@ void ServerNetworker::AllowConnections()
 // -----------------------------------------------------------------------------
 void ServerNetworker::Update()
 {
-    try
-    {
-        connectionBuffer_->Commit( *this );
-        messageBuffer_->Commit( *messageService_ );
-    }
-    catch( std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "Receiving message : " << e.what() );
-    }
+    connectionBuffer_->Commit( *this );
+    messageBuffer_->Commit( *messageService_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,26 +146,25 @@ void ServerNetworker::Send( const std::string& endpoint, unsigned long tag, cons
 // Name: ServerNetworker::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ServerNetworker::ConnectionSucceeded( const std::string& endpoint )
+void ServerNetworker::ConnectionSucceeded( const std::string& )
 {
-    MT_LOG_INFO_MSG( "Connection received from client '" << endpoint << "'" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ServerNetworker::ConnectionFailed
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ServerNetworker::ConnectionFailed( const std::string& endpoint, const std::string& error )
+void ServerNetworker::ConnectionFailed( const std::string& , const std::string& )
 {
-    MT_LOG_INFO_MSG( "Bad connection received from client '" << endpoint << "' (" << error << ")" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ServerNetworker::ConnectionError
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ServerNetworker::ConnectionError( const std::string& endpoint, const std::string& error )
+void ServerNetworker::ConnectionError( const std::string& endpoint, const std::string& )
 {
     sockets_->Disconnect( endpoint );
-    MT_LOG_INFO_MSG( "Connection to '" << endpoint << "' lost (" << error << ")" );    
 }

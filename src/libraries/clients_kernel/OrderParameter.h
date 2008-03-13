@@ -43,16 +43,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit OrderParameter( xml::xistream& xis );
-             OrderParameter( const QString& name, const std::string& type, bool optional, bool context = false );
+             OrderParameter( const std::string& name, const std::string& type, bool optional );
     virtual ~OrderParameter();
     //@}
 
     //! @name Operations
     //@{
-    QString GetName() const;
+    std::string GetName() const;
     std::string GetType() const;
     bool IsOptional() const;
-    bool IsContext() const;
     const OrderParameterValue& GetValue( unsigned int id ) const;
     virtual void Accept( OrderParameterValueVisitor_ABC& visitor ) const;
     //@}
@@ -72,10 +71,9 @@ private:
 private:
     //! @name Member data
     //@{
-    QString name_;
+    std::string name_;
     std::string type_;
     bool optional_;
-    bool context_;
     T_OrderParameterValues values_;
     //@}
 };

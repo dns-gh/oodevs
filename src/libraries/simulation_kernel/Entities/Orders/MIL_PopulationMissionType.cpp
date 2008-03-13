@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_PopulationMissionType.h"
 #include "xeumeuleu/xml.h"
 
@@ -66,19 +65,15 @@ void MIL_PopulationMissionType::ReadMission( xml::xistream& xis )
     pMissionName = pMission;
 }
 
-// =============================================================================
-// INSTANCE
-// =============================================================================    
-
 //-----------------------------------------------------------------------------
 // Name: MIL_PopulationMissionType constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
 MIL_PopulationMissionType::MIL_PopulationMissionType( uint nID, xml::xistream& xis )
     : MIL_MissionType_ABC( nID, xis )
-    , strDIABehavior_    ()
+    , strDIABehavior_    ( attribute< std::string >( xis, "dia-behavior" ) )
 {
-    xis >> attribute( "dia-behavior", strDIABehavior_ );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -87,6 +82,7 @@ MIL_PopulationMissionType::MIL_PopulationMissionType( uint nID, xml::xistream& x
 //-----------------------------------------------------------------------------
 MIL_PopulationMissionType::~MIL_PopulationMissionType()
 {
+    // NOTHING
 }
 
 // =============================================================================

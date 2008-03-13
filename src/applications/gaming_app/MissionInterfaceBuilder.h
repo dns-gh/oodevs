@@ -103,9 +103,8 @@ private:
     Param_ABC* BuildMedicalPriorities    ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildEnumeration          ( const kernel::OrderParameter& parameter ) const;
 
-    Param_ABC* BuildLimits               ( const kernel::OrderParameter& parameter ) const;
+    Param_ABC* BuildLimit                ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildLimaList             ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildDangerousDirection   ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildDotationTypeList     ( const kernel::OrderParameter& parameter ) const;
     Param_ABC* BuildIntelligenceList     ( const kernel::OrderParameter& parameter ) const;
 

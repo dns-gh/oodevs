@@ -54,6 +54,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    virtual bool IsOptional() const;
     void Move( QListView* from, QListView* to );
     //@}
 

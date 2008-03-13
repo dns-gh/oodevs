@@ -12,23 +12,7 @@
 #include "ActionParameterVisitor_ABC.h"
 
 using namespace kernel;
-
-namespace
-{
-    unsigned long ReadId( xml::xistream& xis )
-    {
-        unsigned long id;
-        xis >> xml::attribute( "value", id );
-        return id;
-    }
-
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> xml::attribute( "name", name );
-        return name.c_str();
-    }
-}
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterAutomat constructor
@@ -55,7 +39,7 @@ ActionParameterAutomat::ActionParameterAutomat( const kernel::OrderParameter& pa
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
 ActionParameterAutomat::ActionParameterAutomat( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Automat_ABC >& resolver )
-    : ActionParameterEntity< Automat_ABC >( parameter, &resolver.Get( ReadId( xis ) ) )
+    : ActionParameterEntity< Automat_ABC >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ) )
 {
     // NOTHING
 }
@@ -65,7 +49,7 @@ ActionParameterAutomat::ActionParameterAutomat( const OrderParameter& parameter,
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 ActionParameterAutomat::ActionParameterAutomat( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver )
-    : ActionParameterEntity< Automat_ABC >( OrderParameter( ReadName( xis ), "automat", false ), &resolver.Get( ReadId( xis ) ) )
+    : ActionParameterEntity< Automat_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "automat", false ), &resolver.Get( attribute< unsigned long >( xis, "value" ) ) )
 {
     // NOTHING
 }

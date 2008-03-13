@@ -78,6 +78,11 @@ private:
     ParamObstacle& operator=( const ParamObstacle& );
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual bool IsOptional() const;
+    //@}
+
 private:
     //! @name Member data
     //@{

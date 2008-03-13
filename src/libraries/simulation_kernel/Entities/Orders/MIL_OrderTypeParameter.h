@@ -32,28 +32,23 @@ class MIL_OrderTypeParameter
 public:   
     //! @name Constructors/Destructor
     //@{
+    explicit MIL_OrderTypeParameter( xml::xistream& xis );
              MIL_OrderTypeParameter( const MIL_OrderType_ABC& orderType, xml::xistream& xis );
     virtual ~MIL_OrderTypeParameter();
     //@}
 
     //! @name Operations
     //@{
-    void Copy                   ( const ASN1T_MissionParameter& from, DIA_TypedObject&        to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
-    bool Copy                   ( const DIA_TypedObject&        from, DIA_TypedObject&        to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
-    bool Copy                   ( const DIA_TypedObject&        from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
+    void Copy( const ASN1T_MissionParameter& from, DIA_TypedObject&        to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
+    bool Copy( const DIA_TypedObject&        from, DIA_TypedObject&        to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
+    bool Copy( const DIA_TypedObject&        from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
     void CleanAfterSerialization( ASN1T_MissionParameter& to ) const;
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    int nDIAParameter_;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const MIL_OrderType_ABC&     orderType_;
+          int                    nDIAParameter_;
           std::string            strName_;
           bool                   bIsOptional_;
     const MIL_ParameterType_ABC* pParameter_;

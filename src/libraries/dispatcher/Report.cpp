@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: Report constructor
 // Created: AGE 2007-10-19
 // -----------------------------------------------------------------------------
-Report::Report( const Model&, const ASN1T_MsgReport& report )
+Report::Report( Model& model, const ASN1T_MsgReport& report )
     : id_     ( report.cr_oid )
     , emitter_( report.oid )
     , report_ ( report.cr )
@@ -27,7 +27,7 @@ Report::Report( const Model&, const ASN1T_MsgReport& report )
 {
     parameters_.resize( report.parametres.n );
     for( unsigned i = 0; i < report.parametres.n; ++i )
-        parameters_[i] = MissionParameter_ABC::Create( report.parametres.elem[i] );
+        parameters_[i] = MissionParameter_ABC::Create( model, report.parametres.elem[i] );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,7 +11,6 @@
 #define __MIL_Mission_ABC_h_
 
 #include "MIL.h"
-
 #include "MIL_OrderContext.h"
 
 class MIL_MissionType_ABC;
@@ -57,18 +56,16 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters );
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters, const ASN1T_OrderContext& context, const MT_Vector2D& refPosition );
     MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver );
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters );
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters, const MT_Vector2D& refPosition );
     MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_Mission_ABC& parent );
     MIL_Mission_ABC( const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_Mission_ABC& rhs );
     //@}
 
     //! @name Network
     //@{
-    void Serialize              ( ASN1T_OrderContext&      asn ) const;
     void Serialize              ( ASN1T_MissionParameters& asn ) const;
-    void CleanAfterSerialization( ASN1T_OrderContext&      asn ) const;
     void CleanAfterSerialization( ASN1T_MissionParameters& asn ) const;
     //@}
 

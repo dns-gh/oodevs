@@ -74,6 +74,11 @@ private:
     ParamLocation& operator=( const ParamLocation& );
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual bool IsOptional() const;
+    //@}
+
     //! @name Types
     //@{
     struct ShapeFilter

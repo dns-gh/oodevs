@@ -13,6 +13,7 @@
 #include "Client.h"
 #include "Config.h"
 #include "Plugin_ABC.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace dispatcher;
 
@@ -61,8 +62,19 @@ void ClientsNetworker::Receive( const ASN1T_MsgsSimToClient& message )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::ConnectionSucceeded( const std::string& link  )
 {
+    MT_LOG_INFO_MSG( "Connection received from client '" << link << "'" );
     ServerNetworker::ConnectionSucceeded( link  );
     clients_[link] = new Client( *this, link  );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::ConnectionFailed
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+void ClientsNetworker::ConnectionFailed( const std::string& address, const std::string& error )
+{
+    MT_LOG_INFO_MSG( "Bad connection received from client '" << address << "' (" << error << ")" );
+    ServerNetworker::ConnectionFailed( address, error );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,6 +83,7 @@ void ClientsNetworker::ConnectionSucceeded( const std::string& link  )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::ConnectionError( const std::string& link , const std::string& reason )
 {
+    MT_LOG_INFO_MSG( "Connection to '" << link << "' lost (" << reason << ")" );    
     ServerNetworker::ConnectionError( link, reason );
     T_Clients::iterator it = clients_.find( link );
     if( it != clients_.end() && it->second )

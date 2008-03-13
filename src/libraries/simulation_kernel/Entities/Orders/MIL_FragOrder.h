@@ -12,10 +12,6 @@
 
 #include "MIL.h"
 
-#include "MIL_Mission_ABC.h"
-
-#include "MIL_PionMissionType.h"
-
 class MIL_FragOrderType;
 class DEC_KnowledgeResolver_ABC;
 
@@ -42,7 +38,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const MIL_FragOrderType& GetType() const;
+//    const MIL_FragOrderType& GetType() const;
     //@}
 
     //! @name Operations

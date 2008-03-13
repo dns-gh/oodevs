@@ -41,22 +41,12 @@ ActionParameterLocation::ActionParameterLocation( const OrderParameter& paramete
     // NOTHING
 }
 
-namespace
-{
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> attribute( "name", name );
-        return name.c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterLocation constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 ActionParameterLocation::ActionParameterLocation( const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : ActionParameter< QString >( OrderParameter( ReadName( xis ), "location", false ) )
+    : ActionParameter< QString >( OrderParameter( attribute< std::string >( xis, "name" ), "location", false ) )
     , Location( converter, xis )
 {
     // NOTHING

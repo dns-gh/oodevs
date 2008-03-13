@@ -35,7 +35,7 @@ ActionParameterAutomatList::ActionParameterAutomatList( const OrderParameter& pa
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterAutomat( OrderParameter( tools::translate( "ActionParameter", "Automat %1" ).arg( i + 1 ), "automat", false ), asn.elem[i], resolver ) );
+        AddParameter( *new ActionParameterAutomat( OrderParameter( tools::translate( "ActionParameter", "Automat %1" ).arg( i + 1 ).ascii(), "automat", false ), asn.elem[i], resolver ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -18,21 +18,9 @@ using namespace dispatcher;
 // Name: Order_ABC constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-Order_ABC::Order_ABC( Model& /*model*/, unsigned int missionID, const ASN1T_MissionParameters& parameters )
-    : missionID_ ( missionID )
-    , context_   ()
-    , parameters_()
-{
-    InitializeParameters( parameters );   
-}
-
-// -----------------------------------------------------------------------------
-// Name: Order_ABC constructor
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-Order_ABC::Order_ABC( Model& model, unsigned int missionID, const ASN1T_MissionParameters& parameters, const ASN1T_OrderContext& context )
-    : missionID_ ( missionID )
-    , context_   ( model, context )
+Order_ABC::Order_ABC( Model& model, unsigned int missionID, const ASN1T_MissionParameters& parameters )
+    : model_( model )
+    , missionID_ ( missionID )
     , parameters_()
 {
     InitializeParameters( parameters );   
@@ -48,10 +36,6 @@ Order_ABC::~Order_ABC()
         delete *it;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: Order_ABC::InitializeParameters
 // Created: NLD 2007-04-20
@@ -59,16 +43,7 @@ Order_ABC::~Order_ABC()
 void Order_ABC::InitializeParameters( const ASN1T_MissionParameters& parameters )
 {
     for( unsigned i = 0; i < parameters.n; ++i )
-        parameters_.push_back( MissionParameter_ABC::Create( parameters.elem[ i ] ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Order_ABC::Send
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void Order_ABC::Send( ASN1T_OrderContext& asn ) const
-{
-    context_.Send( asn );
+        parameters_.push_back( MissionParameter_ABC::Create( model_, parameters.elem[ i ] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,15 +57,6 @@ void Order_ABC::Send( ASN1T_MissionParameters& asn ) const
     unsigned i = 0;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         (**it).Send( asn.elem[i++] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Order_ABC::AsnDelete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void Order_ABC::AsnDelete( ASN1T_OrderContext& asn ) const
-{
-    context_.AsnDelete( asn );
 }
 
 // -----------------------------------------------------------------------------

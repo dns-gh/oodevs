@@ -39,7 +39,7 @@ void MIL_PionMission::InitializeDIA()
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn )
-    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parametres, asn.order_context, pion.GetRole< PHY_RolePion_Location >().GetPosition() )
+    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parametres, pion.GetRole< PHY_RolePion_Location >().GetPosition() )
     , type_                 ( type )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
@@ -160,13 +160,9 @@ void MIL_PionMission::Stop()
 void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 {
     NET_ASN_MsgUnitOrder asn;
-
-    asn().oid                                = pion.GetID();
-    asn().mission                            = 0;
-    asn().parametres.n                       = 0;
-    asn().order_context.direction_dangereuse = 0;
-    asn().order_context.limas.n              = 0;
-    asn().order_context.intelligences.n      = 0;
+    asn().oid          = pion.GetID();
+    asn().mission      = 0;
+    asn().parametres.n = 0;
     asn.Send();
 }
 
@@ -177,17 +173,11 @@ void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 void MIL_PionMission::Send() const
 {
     NET_ASN_MsgUnitOrder asn;
-
     asn().oid       = pion_.GetID();
     asn().mission   = type_.GetID();
-
-    MIL_Mission_ABC::Serialize( asn().order_context );
-    MIL_Mission_ABC::Serialize( asn().parametres    );
-
+    Serialize( asn().parametres );
     asn.Send();
-
-    MIL_Mission_ABC::CleanAfterSerialization( asn().parametres    );
-    MIL_Mission_ABC::CleanAfterSerialization( asn().order_context );
+    CleanAfterSerialization( asn().parametres );
 }
 
 // -----------------------------------------------------------------------------

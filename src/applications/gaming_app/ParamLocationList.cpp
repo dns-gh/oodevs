@@ -23,7 +23,7 @@ using namespace gui;
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
 ParamLocationList::ParamLocationList( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
-    : ListParameter( parent, parameter.GetName(), controller, parameter.IsOptional() )
+    : ListParameter( parent, parameter.GetName().c_str(), controller, parameter.IsOptional() )
     , converter_( converter )
     , parameter_( parameter )
     , layer_( layer )
@@ -58,5 +58,5 @@ void ParamLocationList::CommitTo( ActionParameterContainer_ABC& action ) const
 // -----------------------------------------------------------------------------
 Param_ABC* ParamLocationList::CreateElement()
 {
-    return new ParamLocation( OrderParameter( QObject::tr( "Location %1" ).arg( ++count_ ), "location", false ), layer_, converter_ );
+    return new ParamLocation( OrderParameter( QObject::tr( "Location %1" ).arg( ++count_ ).ascii(), "location", false ), layer_, converter_ );
 }

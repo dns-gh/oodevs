@@ -24,7 +24,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ParamAtlasNature::ParamAtlasNature( QObject* parent, const OrderParameter& parameter, const AtlasNatures& natures )
     : QObject( parent )
-    , Param_ABC( parameter.GetName() )
+    , Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
     , natures_( natures )
 {
@@ -73,4 +73,13 @@ void ParamAtlasNature::CommitTo( ActionParameterContainer_ABC& action ) const
 void ParamAtlasNature::OnClicked( int id )
 {
     nature_.Toggle( *fields_[id] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAtlasNature::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamAtlasNature::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

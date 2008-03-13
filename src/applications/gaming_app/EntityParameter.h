@@ -107,6 +107,7 @@ private:
 protected:
     //! @name Helpers
     //@{
+    virtual bool IsOptional() const;
     virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );

@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 AutomatOrder::AutomatOrder( Model& model, Automat& automat, const ASN1T_MsgAutomatOrder& asn )
-    : Order_ABC ( model, asn.mission, asn.parametres, asn.order_context )
+    : Order_ABC ( model, asn.mission, asn.parametres )
     , automat_  ( automat )
     , formation_( asn.formation )
 {
@@ -35,10 +35,6 @@ AutomatOrder::~AutomatOrder()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: AutomatOrder::Send
 // Created: NLD 2007-04-20
@@ -49,12 +45,8 @@ void AutomatOrder::Send( ClientPublisher_ABC& publisher )
     asn().oid       = automat_.GetID();
     asn().mission   = missionID_;
     asn().formation = formation_;       
-    Order_ABC::Send( asn().order_context );
     Order_ABC::Send( asn().parametres );
-
     asn.Send( publisher );
-
-    AsnDelete( asn().order_context );
     AsnDelete( asn().parametres );    
 }
 
@@ -66,13 +58,9 @@ void AutomatOrder::Send( ClientPublisher_ABC& publisher )
 void AutomatOrder::SendNoMission( const Automat& automat, ClientPublisher_ABC& publisher )
 {
     AsnMsgSimToClientAutomatOrder asn;
-
-    asn().oid                                = automat.GetID();
-    asn().mission                            = 0;
-    asn().formation                          = EnumAutomatOrderFormation::un_echelon;
-    asn().parametres.n                       = 0;
-    asn().order_context.direction_dangereuse = 0;
-    asn().order_context.limas.n              = 0;
-    asn().order_context.intelligences.n      = 0;
+    asn().oid          = automat.GetID();
+    asn().mission      = 0;
+    asn().formation    = EnumAutomatOrderFormation::un_echelon;
+    asn().parametres.n = 0;
     asn.Send( publisher );
 }

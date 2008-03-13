@@ -55,7 +55,7 @@ void ParamAgentKnowledgeList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< AgentKnowledge_ABC >* ParamAgentKnowledgeList::CreateElement( const AgentKnowledge_ABC& potential )
 {
-    return new ParamAgentKnowledge( this, OrderParameter( tr( "Agent knowledge %1" ).arg( ++count_ ), "agentknowledge", false ), converter_, agent_, potential );
+    return new ParamAgentKnowledge( this, OrderParameter( tr( "Agent knowledge %1" ).arg( ++count_ ).ascii(), "agentknowledge", false ), converter_, agent_, potential );
 }
 
 // -----------------------------------------------------------------------------

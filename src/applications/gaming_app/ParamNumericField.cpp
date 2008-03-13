@@ -19,7 +19,7 @@
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamNumericField::ParamNumericField( const kernel::OrderParameter& parameter, bool isReal )
-    : Param_ABC( parameter.GetName() )
+    : Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
     , isReal_( isReal )
     , pLabel_( 0 )
@@ -114,4 +114,13 @@ void ParamNumericField::Hide()
         pLabel_->hide();
         pEdit_->hide();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamNumericField::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

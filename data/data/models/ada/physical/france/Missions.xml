@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <missions>
   <units>
+    <context>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="true" type="DangerDirection"/>
+      <parameter dia-name="phaseLines_" name="Limas" optional="true" type="PhaseLineList"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="intelligences_" name="Renseignements" optional="true" type="IntelligenceList"/>
+    </context>
     <mission dia-behavior="MIS_Pion_ALAT_AllerSeRecompleter" dia-type="T_Mission_Pion_ALAT_AllerSeRecompleter" id="1" name="ALAT Aller Se Recompleter">
       <parameter dia-name="plotsRavitaillement_" name="Plots ravitaillement" optional="false" type="ObjectKnowledgeList"/>
     </mission>
@@ -754,6 +761,13 @@
     </mission>
   </units>
   <automats>
+    <context>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="true" type="DangerDirection"/>
+      <parameter dia-name="phaseLines_" name="Limas" optional="true" type="PhaseLineList"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="intelligences_" name="Renseignements" optional="true" type="IntelligenceList"/>
+    </context>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="ALAT Aller Se Recompleter">
       <parameter dia-name="plotsRavitaillement_" name="Plots ravitaillement" optional="false" type="ObjectKnowledgeList"/>
     </mission>

@@ -11,6 +11,7 @@
 #define __AutomatOrder_h_
 
 #include "Order_ABC.h"
+#include "game_asn/Simulation.h"
 
 struct ASN1T_MsgAutomatOrder;
 
@@ -51,8 +52,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Automat&                            automat_;
-    ASN1T_EnumAutomatOrderFormation    formation_;
+    Automat&                        automat_;
+    ASN1T_EnumAutomatOrderFormation formation_;
     //@}
 };
 

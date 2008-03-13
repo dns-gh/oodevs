@@ -64,6 +64,11 @@ private:
     ParamPoint& operator=( const ParamPoint& );
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual bool IsOptional() const;
+    //@}
+
 private:
     //! @name Member data
     //@{

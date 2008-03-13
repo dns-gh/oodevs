@@ -54,8 +54,8 @@ ActionParameterObjective::ActionParameterObjective( const OrderParameter& parame
 ActionParameterObjective::ActionParameterObjective( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_MissionObjective& asn )
     : ActionParameter< QString >( parameter )
 {
-    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, asn.localisation ) );
-    AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), asn.horaire ) );
+    AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ).ascii(), "location", false ), converter, asn.localisation ) );
+    AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ).ascii(), "datetime", false ), asn.horaire ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,9 +76,9 @@ void ActionParameterObjective::ReadParameter( xml::xistream& xis, const Coordina
     std::string type;
     xis >> attribute( "type", type );
     if( type == "location" )
-        AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ), "location", false ), converter, xis ) );
+        AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "datetime" )
-        AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ), "datetime", false ), xis ) );
+        AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ).ascii(), "datetime", false ), xis ) );
 }
 
 // -----------------------------------------------------------------------------

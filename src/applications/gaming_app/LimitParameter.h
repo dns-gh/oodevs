@@ -18,6 +18,7 @@ namespace kernel
 {
     class TacticalLine_ABC;
     class CoordinateConverter_ABC;
+    class OrderParameter;
 }
 
 namespace gui
@@ -45,7 +46,7 @@ class LimitParameter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitParameter( QObject* pParent, const QString& name, const kernel::CoordinateConverter_ABC& converter, bool optional );
+             LimitParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
     virtual ~LimitParameter();
     //@}
 
@@ -54,7 +55,6 @@ public:
     virtual bool CheckValidity();
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
-    bool IsSet() const;
     virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
     //@}
 
@@ -73,6 +73,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual bool IsOptional() const;
     void Display( const QString& what );
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const Limit& ) {};
@@ -82,12 +83,12 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::OrderParameter& parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     gui::RichLabel* pLabel_;
     QLabel*         entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
     const Limit*    potential_;
     const Limit*    selected_;
-    bool            optional_;
     //@}
 };
 

@@ -36,7 +36,7 @@
 #include "ParamEquipmentList.h"
 #include "ParamHumanWoundList.h"
 #include "ParamDotationDType.h"
-#include "ParamLimits.h"
+#include "LimitParameter.h"
 #include "ParamLimaList.h"
 #include "ParamMissionObjective.h"
 #include "ParamMissionObjectiveList.h"
@@ -106,9 +106,8 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( ActionController& controller, 
     builderFunctors_["medicalpriorities"]     = &MissionInterfaceBuilder::BuildMedicalPriorities;
     builderFunctors_["enumeration"]           = &MissionInterfaceBuilder::BuildEnumeration;
 
-    builderFunctors_["limits"]                = &MissionInterfaceBuilder::BuildLimits;
-    builderFunctors_["limalist"]              = &MissionInterfaceBuilder::BuildLimaList;
-    builderFunctors_["dangerousdirection"]    = &MissionInterfaceBuilder::BuildDangerousDirection;
+    builderFunctors_["limit"]                 = &MissionInterfaceBuilder::BuildLimit;
+    builderFunctors_["phaselinelist"]         = &MissionInterfaceBuilder::BuildLimaList;
 
     builderFunctors_["dotationlist"]          = &MissionInterfaceBuilder::BuildDotationTypeList;
     builderFunctors_["intelligencelist"]      = &MissionInterfaceBuilder::BuildIntelligenceList;
@@ -147,10 +146,7 @@ void MissionInterfaceBuilder::Build( const OrderParameter& parameter )
     {
         T_BuilderFunctor functor = it->second;
         if( Param_ABC* param = (this->*functor)( parameter ) )
-            if( parameter.IsContext() )
-                missionInterface_->AddOrderContext( *param );
-            else
-                missionInterface_->AddParameter( *param );
+            missionInterface_->AddParameter( *param );
     }
     else
         throw std::runtime_error( tools::translate( "MissionInterfaceBuilder", "Unknown mission parameter: %1" ).arg( parameter.GetType().c_str() ).ascii() );
@@ -437,9 +433,9 @@ Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const OrderParameter& para
 // Name: MissionInterfaceBuilder::BuildLimit
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildLimits( const OrderParameter& parameter ) const
+Param_ABC* MissionInterfaceBuilder::BuildLimit( const OrderParameter& parameter ) const
 {
-    return new ParamLimits( missionInterface_, parameter, converter_ );
+    return new LimitParameter( missionInterface_, parameter, converter_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -449,15 +445,6 @@ Param_ABC* MissionInterfaceBuilder::BuildLimits( const OrderParameter& parameter
 Param_ABC* MissionInterfaceBuilder::BuildLimaList( const OrderParameter& parameter ) const
 {
     return new ParamLimaList( missionInterface_, parameter, converter_, controller_, simulation_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::BuildDangerousDirection
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildDangerousDirection( const OrderParameter& parameter ) const
-{
-    return new ParamDirection( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------

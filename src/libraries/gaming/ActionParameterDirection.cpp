@@ -89,12 +89,3 @@ void ActionParameterDirection::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.value.t = T_MissionParameter_value_heading;
     asn.value.u.heading = GetValue();
 }
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterDirection::CommitTo
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-void ActionParameterDirection::CommitTo( ASN1T_OrderContext& asn ) const
-{
-    asn.direction_dangereuse = GetValue();
-}

@@ -80,3 +80,12 @@ QString Param_ABC::GetName() const
 {
     return name_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::IsOptional
+// Created: SBO 2008-03-06
+// -----------------------------------------------------------------------------
+bool Param_ABC::IsOptional() const
+{
+    return false;
+}

@@ -236,10 +236,8 @@ namespace Sword
             public void Serialize(ITable table, int id)
             {
                 IRow row = table.CreateRow();
-
                 Tools.SetValue(row, "order_id", id);
                 Tools.SetValue(row, "name", m_name);
-                Tools.SetValue(row, "context", false);
                 Tools.SetValue(row, "ParamValue", m_type.GetValue());
                 row.Store();
             }

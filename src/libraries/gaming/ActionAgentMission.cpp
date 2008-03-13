@@ -64,8 +64,6 @@ void ActionAgentMission::Publish( Publisher_ABC& publisher ) const
     asn().oid = GetEntity().GetId();
     asn().mission = GetType().GetId();
     CommitTo( asn().parametres );
-    CommitTo( asn().order_context );
     asn.Send( publisher );
     Clean( asn().parametres );
-    Clean( asn().order_context );
 }

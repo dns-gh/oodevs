@@ -58,6 +58,6 @@ namespace tools
     E_NatureLevel      NatureLevelFromString   ( const std::string& type );
 
     QString TranslateObjectType( const std::string& xmlType );
-};
+}
 
 #endif // __Kernel_Tools_h_

@@ -205,25 +205,6 @@
     </message>
 </context>
 <context>
-    <name>MissionType</name>
-    <message>
-        <source>Limits</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dangerous Direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Intelligences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Phase lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Tristate</name>
     <message>
         <source>Off</source>

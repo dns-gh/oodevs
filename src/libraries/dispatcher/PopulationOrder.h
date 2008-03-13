@@ -13,6 +13,7 @@
 #include "Order_ABC.h"
 
 struct ASN1T_MsgUnitOrder;
+struct ASN1T_MsgPopulationOrder;
 
 namespace dispatcher
 {

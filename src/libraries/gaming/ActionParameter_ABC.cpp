@@ -9,11 +9,11 @@
 
 #include "gaming_pch.h"
 #include "ActionParameter_ABC.h"
-#include "xeumeuleu/xml.h"
 #include "Tools.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include <xeumeuleu/xml.h>
 
 using namespace xml;
 using namespace kernel;
@@ -130,15 +130,6 @@ void ActionParameter_ABC::AddParameter( ActionParameter_ABC& parameter )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameter_ABC::IsContext
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-bool ActionParameter_ABC::IsContext() const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionParameter_ABC::Display
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
@@ -187,30 +178,10 @@ void ActionParameter_ABC::CommitTo( ASN1T_MissionParameter& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameter_ABC::CommitTo
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-void ActionParameter_ABC::CommitTo( ASN1T_OrderContext& asn ) const
-{
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->CommitTo( asn );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionParameter_ABC::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 void ActionParameter_ABC::Clean( ASN1T_MissionParameter& asn ) const
-{
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->Clean( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameter_ABC::Clean
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-void ActionParameter_ABC::Clean( ASN1T_OrderContext& asn ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Clean( asn );

@@ -26,11 +26,11 @@ namespace
         return id;
     }
 
-    QString ReadName( xml::xistream& xis )
+    std::string ReadName( xml::xistream& xis )
     {
         std::string name;
         xis >> xml::attribute( "name", name );
-        return name.c_str();
+        return name;
     }
 }
 

@@ -10,14 +10,12 @@
 #ifndef __Order_ABC_h_
 #define __Order_ABC_h_
 
-#include "OrderContext.h"
-
 struct ASN1T_MissionParameters;
-struct ASN1T_OrderContext;
 
 namespace dispatcher
 {
     class MissionParameter_ABC;
+    class Model;
 
 // =============================================================================
 /** @class  Order_ABC
@@ -31,15 +29,12 @@ protected:
     //! @name Constructors/Destructor
     //@{
              Order_ABC( Model& model, unsigned int missionID, const ASN1T_MissionParameters& parameters );
-             Order_ABC( Model& model, unsigned int missionID, const ASN1T_MissionParameters& parameters, const ASN1T_OrderContext& context );
     virtual ~Order_ABC();
     //@}
 
     //! @name Operations
     //@{
-    void Send     ( ASN1T_OrderContext&      asn ) const;
     void Send     ( ASN1T_MissionParameters& asn ) const;
-    void AsnDelete( ASN1T_OrderContext&      asn ) const;
     void AsnDelete( ASN1T_MissionParameters& asn ) const;
     //@}
 
@@ -65,8 +60,8 @@ private:
 protected:
     //! @name Member data
     //@{
+    Model& model_;
     unsigned int missionID_;
-    OrderContext context_;    
     T_Parameters parameters_;
     //@}
 };

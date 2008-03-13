@@ -66,6 +66,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual bool IsOptional() const;
     virtual Param_ABC* CreateElement();
     virtual void DeleteElement( Param_ABC& param );
 

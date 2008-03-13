@@ -45,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_OrderContext& asn ) const;
-    virtual void Clean( ASN1T_OrderContext& asn ) const;
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private:

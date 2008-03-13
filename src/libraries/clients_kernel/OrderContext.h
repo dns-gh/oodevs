@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __OrderType_h_
-#define __OrderType_h_
+#ifndef __OrderContext_h_
+#define __OrderContext_h_
 
 namespace xml
 {
@@ -17,37 +17,35 @@ namespace xml
 
 namespace kernel
 {
+    class OrderType;
     class OrderParameter;
 
 // =============================================================================
-/** @class  OrderType
-    @brief  OrderType
+/** @class  OrderContext
+    @brief  OrderContext
 */
-// Created: SBO 2007-05-31
+// Created: SBO 2008-03-05
 // =============================================================================
-class OrderType
+class OrderContext
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit OrderType( xml::xistream& xis );
-    virtual ~OrderType();
+    explicit OrderContext( xml::xistream& xis );
+    virtual ~OrderContext();
     //@}
 
     //! @name Operations
     //@{
-    unsigned long GetId() const;
-    std::string GetName() const;
-    unsigned int GetParameterCount() const;
-    const OrderParameter* FindParameter( const std::string& name ) const;
+    void AddParameters( OrderType& type ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    OrderType( const OrderType& );            //!< Copy constructor
-    OrderType& operator=( const OrderType& ); //!< Assignment operator
+    OrderContext( const OrderContext& );            //!< Copy constructor
+    OrderContext& operator=( const OrderContext& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -57,19 +55,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, const OrderParameter* > T_Parameters;
-    typedef T_Parameters::const_iterator                 CIT_Parameters;
+    typedef std::vector< const OrderParameter* > T_Parameters;
     //@}
 
 private:
     //! @name Member data
     //@{
-    unsigned long id_;
-    std::string name_;
     T_Parameters parameters_;
     //@}
 };
 
 }
 
-#endif // __OrderType_h_
+#endif // __OrderContext_h_

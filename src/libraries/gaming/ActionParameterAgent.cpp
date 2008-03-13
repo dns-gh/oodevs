@@ -13,23 +13,7 @@
 #include "clients_kernel/Agent_ABC.h"
 
 using namespace kernel;
-
-namespace
-{
-    unsigned long ReadId( xml::xistream& xis )
-    {
-        unsigned long id;
-        xis >> xml::attribute( "value", id );
-        return id;
-    }
-
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> xml::attribute( "name", name );
-        return name.c_str();
-    }
-}
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterAgent constructor
@@ -46,7 +30,7 @@ ActionParameterAgent::ActionParameterAgent( const OrderParameter& parameter )
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
 ActionParameterAgent::ActionParameterAgent( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver )
-    : ActionParameterEntity< Agent_ABC >( parameter, &resolver.Get( ReadId( xis ) ) )
+    : ActionParameterEntity< Agent_ABC >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ) )
 {
     // NOTHING
 }
@@ -66,7 +50,7 @@ ActionParameterAgent::ActionParameterAgent( const OrderParameter& parameter, uns
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 ActionParameterAgent::ActionParameterAgent( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver )
-    : ActionParameterEntity< Agent_ABC >( OrderParameter( ReadName( xis ), "agent", false ), &resolver.Get( ReadId( xis ) ) )
+    : ActionParameterEntity< Agent_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "agent", false ), &resolver.Get( attribute< unsigned long >( xis, "value" ) ) )
 {
     // NOTHING
 }

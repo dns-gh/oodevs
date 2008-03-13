@@ -35,7 +35,7 @@ ActionParameterPathList::ActionParameterPathList( const OrderParameter& paramete
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterPath( OrderParameter( tools::translate( "ActionParameter", "Route %1" ).arg( i ), "path", false ), converter, asn.elem[i] ) );
+        AddParameter( *new ActionParameterPath( OrderParameter( tools::translate( "ActionParameter", "Route %1" ).arg( i ).ascii(), "path", false ), converter, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,8 +124,8 @@ void ActionParameterPathList::Clean( ASN1T_MissionParameter& asn ) const
     {
         AsnCleaner cleaner( *asn.value.u.pathList );
         Accept( cleaner );
+        delete[] asn.value.u.pathList;
     }
-    delete[] asn.value.u.pathList;
 }
 
 // -----------------------------------------------------------------------------

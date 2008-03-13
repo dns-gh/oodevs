@@ -208,7 +208,7 @@
     <name>MissionType</name>
     <message>
         <source>Limits</source>
-        <translation>Limites</translation>
+        <translation type="obsolete">Limites</translation>
     </message>
     <message>
         <source>Limas</source>
@@ -216,15 +216,15 @@
     </message>
     <message>
         <source>Dangerous Direction</source>
-        <translation>Direction dangereuse</translation>
+        <translation type="obsolete">Direction dangereuse</translation>
     </message>
     <message>
         <source>Intelligences</source>
-        <translation>Renseignement</translation>
+        <translation type="obsolete">Renseignement</translation>
     </message>
     <message>
         <source>Phase lines</source>
-        <translation>Limas</translation>
+        <translation type="obsolete">Limas</translation>
     </message>
 </context>
 <context>

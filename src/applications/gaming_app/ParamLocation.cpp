@@ -28,7 +28,7 @@ using namespace gui;
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
 ParamLocation::ParamLocation( const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : Param_ABC  ( parameter.GetName() )
+    : Param_ABC  ( parameter.GetName().c_str() )
     , parameter_ ( parameter )
     , converter_ ( converter )
     , layer_     ( layer )
@@ -156,4 +156,13 @@ void ParamLocation::Draw( const geometry::Point2f& , const Viewport_ABC& , const
 {
     if( location_.get() )
         location_->Draw( tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamLocation::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

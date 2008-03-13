@@ -30,7 +30,7 @@ class Report : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Report( const Model&, const ASN1T_MsgReport& report );
+             Report( Model&, const ASN1T_MsgReport& report );
     virtual ~Report();
     //@}
 

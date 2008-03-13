@@ -34,7 +34,7 @@ ActionParameterObstacleList::ActionParameterObstacleList( const OrderParameter& 
     : ActionParameter< std::string >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterObstacle( OrderParameter( tools::translate( "ActionParameter", "Obstacle %1" ).arg( i + 1 ), "obstacle", false ), converter, resolver, automats, asn.elem[i] ) );
+        AddParameter( *new ActionParameterObstacle( OrderParameter( tools::translate( "ActionParameter", "Obstacle %1" ).arg( i + 1 ).ascii(), "obstacle", false ), converter, resolver, automats, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------

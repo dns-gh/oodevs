@@ -51,3 +51,13 @@ std::string OrderType::GetName() const
 {
     return name_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: OrderType::AddParameter
+// Created: SBO 2008-03-05
+// -----------------------------------------------------------------------------
+void OrderType::AddParameter( const OrderParameter& parameter )
+{
+    OrderParameter* copy = new OrderParameter( parameter );
+    Register( Count(), *copy );
+}

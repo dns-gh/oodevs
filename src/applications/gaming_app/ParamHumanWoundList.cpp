@@ -25,7 +25,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ParamHumanWoundList::ParamHumanWoundList( QObject* parent, const kernel::OrderParameter& parameter )
     : QObject( parent )
-    , Param_ABC( parameter.GetName() )
+    , Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
     , list_( 0 )
 {
@@ -144,4 +144,13 @@ void ParamHumanWoundList::OnContextMenu( QListViewItem* item, const QPoint& poin
     if( item )
         menu->insertItem( tr( "Remove" ), this, SLOT( OnRemove() ) );
     menu->popup( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamHumanWoundList::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamHumanWoundList::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

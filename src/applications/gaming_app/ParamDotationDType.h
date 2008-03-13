@@ -50,6 +50,11 @@ private:
     ParamDotationDType& operator=( const ParamDotationDType& );
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual bool IsOptional() const;
+    //@}
+
 private:
     //! @name Member data
     //@{

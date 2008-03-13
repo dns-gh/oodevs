@@ -41,7 +41,7 @@ void MIL_AutomateMission::InitializeDIA()
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn )
-    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres, asn.order_context, automate.GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() )
+    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres, automate.GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() )
     , type_                    ( type )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
@@ -190,13 +190,10 @@ void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 {
     NET_ASN_MsgAutomatOrder asn;
 
-    asn().oid                                = automate.GetID();
-    asn().mission                            = 0;
-    asn().formation                          = EnumAutomatOrderFormation::un_echelon;
-    asn().parametres.n                       = 0;
-    asn().order_context.direction_dangereuse = 0;
-    asn().order_context.limas.n              = 0;
-    asn().order_context.intelligences.n      = 0;
+    asn().oid          = automate.GetID();
+    asn().mission      = 0;
+    asn().formation    = EnumAutomatOrderFormation::un_echelon;
+    asn().parametres.n = 0;
     asn.Send();
 }
 
@@ -213,13 +210,11 @@ void MIL_AutomateMission::Send() const
 
     NET_ASN_Tools::CopyEnumeration( const_cast< MIL_AutomateMission* >( this )->GetVariable( nDIAFormation_ ), asn().formation );
 
-    MIL_Mission_ABC::Serialize( asn().order_context );
-    MIL_Mission_ABC::Serialize( asn().parametres    );
+    MIL_Mission_ABC::Serialize( asn().parametres );
 
     asn.Send();
 
-    MIL_Mission_ABC::CleanAfterSerialization( asn().parametres    );
-    MIL_Mission_ABC::CleanAfterSerialization( asn().order_context );
+    MIL_Mission_ABC::CleanAfterSerialization( asn().parametres );
 }
 
 // -----------------------------------------------------------------------------

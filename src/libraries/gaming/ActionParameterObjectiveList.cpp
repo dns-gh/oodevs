@@ -44,7 +44,7 @@ ActionParameterObjectiveList::ActionParameterObjectiveList( const OrderParameter
     : ActionParameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ActionParameterObjective( OrderParameter( tools::translate( "ActionParameter", "Objective %1" ).arg( i + 1 ), "objective", false ), converter, asn.elem[i] ) );
+        AddParameter( *new ActionParameterObjective( OrderParameter( tools::translate( "ActionParameter", "Objective %1" ).arg( i + 1 ).ascii(), "objective", false ), converter, asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -135,7 +135,7 @@ void LimaParameter::CommitTo( ActionParameterContainer_ABC& parameter ) const
 {
     kernel::Lines lines;
     lima_->CopyTo( lines );
-    std::auto_ptr< ActionParameterLima > param( new ActionParameterLima( OrderParameter( GetName(), "lima", false, true ), converter_, lines ) );
+    std::auto_ptr< ActionParameterLima > param( new ActionParameterLima( OrderParameter( GetName().ascii(), "lima", false ), converter_, lines ) );
     for( unsigned int i = 0; i < functions_->count(); ++i )
         if( functions_->isSelected( i ) )
             param->AddFunction( i );

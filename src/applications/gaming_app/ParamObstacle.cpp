@@ -31,7 +31,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ParamObstacle::ParamObstacle( QObject* parent, const kernel::OrderParameter& parameter, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QObject     ( parent )
-    , Param_ABC   ( parameter.GetName() )
+    , Param_ABC   ( parameter.GetName().c_str() )
     , parameter_  ( parameter )
     , objectTypes_( objectTypes )
     , layer_      ( layer )
@@ -88,14 +88,14 @@ void ParamObstacle::BuildInterface( QWidget* parent )
         connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypeCombo_, SLOT( setShown( bool ) ) );
     }
 
-    density_ = new ParamNumericField( OrderParameter( tr( "Density" ), "density", false ), true );
+    density_ = new ParamNumericField( OrderParameter( tr( "Density" ).ascii(), "density", false ), true );
     density_->BuildInterface( group );
     density_->SetLimits( 0.f, 5.f );
 
-    tc2_ = new ParamAutomat( this, OrderParameter( tr( "TC2" ), "tc2", false ) );
+    tc2_ = new ParamAutomat( this, OrderParameter( tr( "TC2" ).ascii(), "tc2", false ) );
     tc2_->BuildInterface( group );
 
-    location_ = new ParamLocation( OrderParameter( tr( "Location" ), "location", false ), layer_, converter_ );
+    location_ = new ParamLocation( OrderParameter( tr( "Location" ).ascii(), "location", false ), layer_, converter_ );
     location_->BuildInterface( group );
 
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
@@ -171,7 +171,7 @@ void ParamObstacle::CommitTo( ActionParameterContainer_ABC& action ) const
         break;
     };
     if( type->CanBeReservedObstacle() )
-        param->AddParameter( *new ActionParameterObstacleType( OrderParameter( tr( "Obstacle type" ), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
+        param->AddParameter( *new ActionParameterObstacleType( OrderParameter( tr( "Obstacle type" ).ascii(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
     location_->CommitTo( *param );
     action.AddParameter( *param.release() );
 }
@@ -210,4 +210,13 @@ void ParamObstacle::OnTypeChanged()
         break;
     };
     emit ToggleReservable( type->CanBeReservedObstacle() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ParamObstacle::IsOptional() const
+{
+    return parameter_.IsOptional();
 }

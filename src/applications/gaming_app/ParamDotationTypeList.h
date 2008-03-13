@@ -58,6 +58,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual bool IsOptional() const;
     void AddItem( const QString& parent, const QString& child, unsigned id );
     //@}
 

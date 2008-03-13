@@ -16,7 +16,6 @@
 #include "ObjectMessageService.h"
 #include <boost/bind.hpp>
 #include "asio.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace tools;
 
@@ -91,18 +90,17 @@ void ClientNetworker::Update()
 // Name: ClientNetworker::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ClientNetworker::ConnectionSucceeded( const std::string& endpoint )
+void ClientNetworker::ConnectionSucceeded( const std::string& )
 {
-    MT_LOG_INFO_MSG( "Connected to '" << endpoint << "'" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ClientNetworker::ConnectionFailed
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ClientNetworker::ConnectionFailed( const std::string& endpoint, const std::string& error )
+void ClientNetworker::ConnectionFailed( const std::string& , const std::string& )
 {
-    MT_LOG_INFO_MSG( "Connection to '" << endpoint << "' failed (" << error << ")" );
     if( retry_ )
         connector_->Connect( host_ );
 }
@@ -114,7 +112,6 @@ void ClientNetworker::ConnectionFailed( const std::string& endpoint, const std::
 void ClientNetworker::ConnectionError( const std::string& endpoint, const std::string& error )
 {
     sockets_->Disconnect( endpoint );
-    MT_LOG_INFO_MSG( "Connection to '" << endpoint << "' lost (" << error << ")" );    
     if( retry_ )
         connector_->Connect( host_ );
 }

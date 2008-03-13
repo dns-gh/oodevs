@@ -9,12 +9,14 @@
 
 #include "crossbow_plugin_pch.h"
 #include "OrderTypes.h"
-#include "OrderType.h"
+#include "clients_kernel/MissionType.h"
+#include "clients_kernel/FragOrderType.h"
+#include "clients_kernel/OrderContext.h"
 #include "dispatcher/Config.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
-using namespace kernel;
+using namespace crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: OrderTypes constructor
@@ -46,39 +48,56 @@ OrderTypes::~OrderTypes()
 
 // -----------------------------------------------------------------------------
 // Name: OrderTypes::Load
-// Created: SBO 2007-05-31
+// Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void OrderTypes::Load( const std::string& filename )
+void OrderTypes::Load( const std::string& missions )
 {
-    xml::xifstream xis( filename );
-    xis >> start( "missions" )
-            >> start( "units" )
-                >> list( "mission", *this, &OrderTypes::ReadOrderType, unitMissions_ )
-            >> end()
-            >> start( "automats" )
-                >> list( "mission", *this, &OrderTypes::ReadOrderType, automatMissions_ )
-            >> end()
-            >> start( "fragorders" )
-                >> list( "fragorder", *this, &OrderTypes::ReadOrderType, fragOrders_ )
-            >> end()
+    xifstream xis( missions );
+    xis >> start( "missions" );
+    ReadMissions( xis, "units"      , unitMissions_ );
+    ReadMissions( xis, "automats"   , automatMissions_ );
+    xis     >> start( "fragorders" )
+                >> list( "fragorder", *this, &OrderTypes::ReadFragOrderType )
+            >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderTypes::ReadMissions
+// Created: SBO 2008-03-05
+// -----------------------------------------------------------------------------
+void OrderTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_OrderTypes& missions )
+{
+    xis >> start( name );
+    kernel::OrderContext context( xis );
+    xis     >> list( "mission", *this, &OrderTypes::ReadMissionType, missions, context )
         >> end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderTypes::ReadOrderType
-// Created: SBO 2007-05-31
+// Name: OrderTypes::ReadMissionType
+// Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void OrderTypes::ReadOrderType( xml::xistream& xis, T_OrderTypes& resolver )
+void OrderTypes::ReadMissionType( xml::xistream& xis, T_OrderTypes& missions, const kernel::OrderContext& context )
 {
-    const OrderType* type = new OrderType( xis );
-    resolver[type->GetName()] = type;
+    kernel::MissionType* mission = new kernel::MissionType( xis, context );
+    missions[mission->GetName()] = mission;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: OrderTypes::ReadFragOrderType
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+void OrderTypes::ReadFragOrderType( xml::xistream& xis )
+{
+    kernel::FragOrderType* order = new kernel::FragOrderType( xis );
+    fragOrders_[order->GetName()] = order;
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderTypes::FindAgentMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-const OrderType* OrderTypes::FindAgentMission( const std::string& name ) const
+const kernel::OrderType* OrderTypes::FindAgentMission( const std::string& name ) const
 {
     CIT_OrderTypes it = unitMissions_.find( name );
     if( it != unitMissions_.end() )
@@ -90,7 +109,7 @@ const OrderType* OrderTypes::FindAgentMission( const std::string& name ) const
 // Name: OrderTypes::FindAutomatMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-const OrderType* OrderTypes::FindAutomatMission( const std::string& name ) const
+const kernel::OrderType* OrderTypes::FindAutomatMission( const std::string& name ) const
 {
     CIT_OrderTypes it = automatMissions_.find( name );
     if( it != automatMissions_.end() )
@@ -102,7 +121,7 @@ const OrderType* OrderTypes::FindAutomatMission( const std::string& name ) const
 // Name: OrderTypes::FindFragOrder
 // Created: SBO 2007-06-07
 // -----------------------------------------------------------------------------
-const OrderType* OrderTypes::FindFragOrder( const std::string& name ) const
+const kernel::OrderType* OrderTypes::FindFragOrder( const std::string& name ) const
 {
     CIT_OrderTypes it = fragOrders_.find( name );
     if( it != fragOrders_.end() )

@@ -52,6 +52,7 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
+    virtual bool IsOptional() const;
     //@}
 
 private:

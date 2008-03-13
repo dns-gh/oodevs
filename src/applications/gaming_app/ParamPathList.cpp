@@ -23,7 +23,7 @@ using namespace gui;
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
 ParamPathList::ParamPathList( QObject* parent, const OrderParameter& parameter, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& entity, ActionController& controller )
-    : ListParameter( parent, parameter.GetName(), controller, parameter.IsOptional() )
+    : ListParameter( parent, parameter.GetName().c_str(), controller, parameter.IsOptional() )
     , converter_( converter )
     , parameter_( parameter )
     , layer_( layer )
@@ -59,5 +59,5 @@ void ParamPathList::CommitTo( ActionParameterContainer_ABC& action ) const
 // -----------------------------------------------------------------------------
 Param_ABC* ParamPathList::CreateElement()
 {
-    return new ParamPath( this, OrderParameter( QObject::tr( "Route %1" ).arg( ++count_ ), "path", false ), layer_, converter_, entity_ );
+    return new ParamPath( this, OrderParameter( QObject::tr( "Route %1" ).arg( ++count_ ).ascii(), "path", false ), layer_, converter_, entity_ );
 }

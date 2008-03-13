@@ -42,7 +42,6 @@ public:
     void Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter );
-    void AddOrderContext( Param_ABC& parameter );
     //@}
 
 public slots:
@@ -86,8 +85,8 @@ private:
     kernel::ActionController& controller_;
     kernel::Entity_ABC& entity_;
     T_Parameters parameters_;
-    T_Parameters orderContext_;
-    QVBox* mainWidget_;
+    QVBox* mainTab_;
+    QVBox* optionalTab_;
     //@}
 };
 

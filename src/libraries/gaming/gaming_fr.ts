@@ -179,11 +179,11 @@
     <name>ActionParameterLimits</name>
     <message>
         <source>Limit 1</source>
-        <translation>Limite 1</translation>
+        <translation type="obsolete">Limite 1</translation>
     </message>
     <message>
         <source>Limit 2</source>
-        <translation>Limite 2</translation>
+        <translation type="obsolete">Limite 2</translation>
     </message>
 </context>
 <context>

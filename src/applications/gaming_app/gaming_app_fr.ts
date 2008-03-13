@@ -1501,6 +1501,14 @@
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Mandatory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionPanel</name>
@@ -1854,11 +1862,11 @@
     <name>ParamLimits</name>
     <message>
         <source>Limit 1</source>
-        <translation>Limite 1</translation>
+        <translation type="obsolete">Limite 1</translation>
     </message>
     <message>
         <source>Limit 2</source>
-        <translation>Limite 2</translation>
+        <translation type="obsolete">Limite 2</translation>
     </message>
 </context>
 <context>

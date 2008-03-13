@@ -46,7 +46,6 @@ public:
     //@{
     virtual QString GetName() const;
     virtual std::string GetType() const;
-    virtual bool IsContext() const;
     virtual geometry::Point2f GetPosition() const;
     //@}
 
@@ -61,9 +60,7 @@ public:
     virtual void AddParameter( ActionParameter_ABC& parameter );
     virtual void CommitTo( std::string& content ) const;
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void CommitTo( ASN1T_OrderContext& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_OrderContext& asn ) const;
 
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     void Set( bool isSet );

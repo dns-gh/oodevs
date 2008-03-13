@@ -277,3 +277,12 @@ void ListParameter::TurnHeaderBlack()
     if( list_ )
         list_->header()->setPaletteForegroundColor( Qt::black );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::IsOptional
+// Created: SBO 2008-03-10
+// -----------------------------------------------------------------------------
+bool ListParameter::IsOptional() const
+{
+    return optional_;
+}

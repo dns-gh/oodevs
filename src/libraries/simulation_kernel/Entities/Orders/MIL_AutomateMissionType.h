@@ -50,7 +50,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    MIL_AutomateMissionType( uint nID, xml::xistream& xis );
+             MIL_AutomateMissionType( uint nID, xml::xistream& xis );
     virtual ~MIL_AutomateMissionType();
     //@}
 
@@ -82,7 +82,7 @@ private:
 private:
     static T_MissionIDMap   missionIDs_;
     static T_MissionIDMap   missionDiaIDs_;
-    static T_MissionNameMap missionNames_;    
+    static T_MissionNameMap missionNames_;
 };
 
 #include "MIL_AutomateMissionType.inl"

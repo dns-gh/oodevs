@@ -17,14 +17,19 @@ namespace Sword
             IFeature m_potential;
             Boundaries m_limits;
 
-            public void Serialize(ITable table, int id)
+            private void SerializeLimit(ITable table, int order, string name, int limit)
             {
                 IRow row = table.CreateRow();
-                Tools.SetValue<int>(row, "order_id", id);
-                Tools.SetValue<string>(row, "name", "limits");
-                Tools.SetValue<bool>(row, "context", true);
-                Tools.SetValue<string>(row, "ParamValue", m_limits.first + ";" + m_limits.second);
+                Tools.SetValue<int>(row, "order_id", order);
+                Tools.SetValue<string>(row, "name", name);
+                Tools.SetValue<string>(row, "ParamValue", limit.ToString());
                 row.Store();
+            }
+
+            public void Serialize(ITable table, int id)
+            {
+                SerializeLimit(table, id, "Boundary limit 1", m_limits.first);
+                SerializeLimit(table, id, "Boundary limit 2", m_limits.second);
             }
 
             public void OnContextMenu(MultiItemContextMenu menu, int x, int y, IFeature selected)
@@ -56,7 +61,7 @@ namespace Sword
             {
                 get
                 {
-                    return "limits";
+                    return "Boundary limits";
                 }
             }
         }

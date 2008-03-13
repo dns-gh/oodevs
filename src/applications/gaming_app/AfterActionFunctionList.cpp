@@ -160,7 +160,7 @@ void AfterActionFunctionList::Request()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Param_ABC > AfterActionFunctionList::CreateParameter( const std::string& type, const QString& name )
 {
-    const OrderParameter parameter( name, type.c_str(), false );
+    const OrderParameter parameter( name.ascii(), type.c_str(), false );
     boost::shared_ptr< Param_ABC > result;
 
     if( type == "unit" )

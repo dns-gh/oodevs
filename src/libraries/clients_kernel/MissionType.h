@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class OrderContext;
 
 // =============================================================================
 /** @class  MissionType
@@ -27,13 +28,9 @@ class MissionType : public OrderType
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionType( xml::xistream& xis, bool context );
+    explicit MissionType( xml::xistream& xis );
+             MissionType( xml::xistream& xis, const OrderContext& context );
     virtual ~MissionType();
-    //@}
-
-    //! @name Operations
-    //@{
-    bool IsAutomat() const;
     //@}
 
 private:
@@ -46,13 +43,6 @@ private:
     //! @name Helpers
     //@{
     void ReadParameter( xml::xistream& xis );
-    void AddContextParameters();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    bool automat_;
     //@}
 };
 

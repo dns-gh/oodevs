@@ -13,7 +13,7 @@
 // -----------------------------------------------------------------------------
 template< typename T >
 ActionParameter< T >::ActionParameter( const kernel::OrderParameter& parameter )
-    : ActionParameter_ABC( parameter.GetName() )
+    : ActionParameter_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
 {
     // NOTHING
@@ -25,7 +25,7 @@ ActionParameter< T >::ActionParameter( const kernel::OrderParameter& parameter )
 // -----------------------------------------------------------------------------
 template< typename T >
 ActionParameter< T >::ActionParameter( const kernel::OrderParameter& parameter, const T& value )
-    : ActionParameter_ABC( parameter.GetName() )
+    : ActionParameter_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
 {
     SetValue( value );
@@ -49,16 +49,6 @@ template< typename T >
 std::string ActionParameter< T >::GetType() const
 {
     return parameter_.GetType();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameter::IsContext
-// Created: SBO 2007-04-25
-// -----------------------------------------------------------------------------
-template< typename T >
-bool ActionParameter< T >::IsContext() const
-{
-    return parameter_.IsContext();
 }
 
 // -----------------------------------------------------------------------------

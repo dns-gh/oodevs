@@ -59,6 +59,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual bool IsOptional() const;
     void AddField( const QString& name, unsigned char byte, unsigned char mask );
     //@}
 

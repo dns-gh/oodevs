@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 AgentOrder::AgentOrder( Model& model, Agent& agent, const ASN1T_MsgUnitOrder& asn )
-    : Order_ABC( model, asn.mission, asn.parametres, asn.order_context )
+    : Order_ABC( model, asn.mission, asn.parametres )
     , agent_   ( agent )
 {
     // NOTHING
@@ -47,12 +47,8 @@ void AgentOrder::Send( ClientPublisher_ABC& publisher )
     AsnMsgSimToClientUnitOrder asn;
     asn().oid     = agent_.GetID();
     asn().mission = missionID_;
-    Order_ABC::Send( asn().order_context );
     Order_ABC::Send( asn().parametres );
-
     asn.Send( publisher );
-
-    AsnDelete( asn().order_context );
     AsnDelete( asn().parametres );
 }
 
@@ -63,12 +59,8 @@ void AgentOrder::Send( ClientPublisher_ABC& publisher )
 void AgentOrder::SendNoMission( const Agent& agent, ClientPublisher_ABC& publisher )
 {
     AsnMsgSimToClientUnitOrder asn;
-
-    asn().oid                                = agent.GetID();
-    asn().mission                            = 0;
-    asn().parametres.n                       = 0;
-    asn().order_context.direction_dangereuse = 0;
-    asn().order_context.limas.n              = 0;
-    asn().order_context.intelligences.n      = 0;
+    asn().oid          = agent.GetID();
+    asn().mission      = 0;
+    asn().parametres.n = 0;
     asn.Send( publisher );
 }

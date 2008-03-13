@@ -64,5 +64,5 @@ void ParamIntelligenceList::AddToMenu( ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< Intelligence_ABC >* ParamIntelligenceList::CreateElement( const Intelligence_ABC& potential )
 {
-    return new ParamIntelligence( this, OrderParameter( tr( "Intelligence %1" ).arg( ++count_ ), "intelligence", false ), converter_, potential );
+    return new ParamIntelligence( this, OrderParameter( tr( "Intelligence %1" ).arg( ++count_ ).ascii(), "intelligence", false ), converter_, potential );
 }

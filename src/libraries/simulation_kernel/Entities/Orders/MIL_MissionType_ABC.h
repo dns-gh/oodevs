@@ -10,14 +10,7 @@
 #ifndef __MIL_MissionType_ABC_h_
 #define __MIL_MissionType_ABC_h_
 
-#include "MIL.h"
-
 #include "MIL_OrderType_ABC.h"
-
-namespace xml
-{
-    class xistream;
-}
 
 // =============================================================================
 /** @class  MIL_MissionType_ABC
@@ -30,7 +23,7 @@ class MIL_MissionType_ABC : public MIL_OrderType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_MissionType_ABC( uint nID, xml::xistream& xis );
+             MIL_MissionType_ABC( uint nID, xml::xistream& xis );
     virtual ~MIL_MissionType_ABC();
     //@}
 
@@ -39,7 +32,5 @@ public:
     virtual bool IsAvailableForModel( const DIA_Model& model ) const = 0;
     //@}
 };
-
-#include "MIL_MissionType_ABC.inl"
 
 #endif // __MIL_MissionType_ABC_h_
