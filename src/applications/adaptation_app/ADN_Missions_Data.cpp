@@ -520,6 +520,15 @@ void ADN_Missions_Data::ReadMission( xml::xistream& input, T_Mission_Vector& mis
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadContext( xml::xistream& input, T_MissionParameter_Vector& context )
 {
+    input >> xml::list( "parameter", *this, &ADN_Missions_Data::ReadContextParameter, context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::ReadContextParameter
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::ReadContextParameter( xml::xistream& input, T_MissionParameter_Vector& context )
+{
     std::auto_ptr< ADN_Missions_Data::MissionParameter > spNew( new MissionParameter() );
     spNew->ReadArchive( input );
     context.AddItem( spNew.release() );
