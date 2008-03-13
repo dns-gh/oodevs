@@ -13,7 +13,10 @@
 #include "Resolver.h"
 
 namespace xml { class xistream; };
-
+namespace tools
+{
+    class ExerciseConfig;
+}
 namespace kernel
 {
     class AgentType;
@@ -29,7 +32,6 @@ namespace kernel
     class FragOrderType;
     class SymbolFactory;
     class KnowledgeGroupType;
-    class ExerciseConfig;
 
 // =============================================================================
 /** @class  AgentTypes
@@ -61,7 +63,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const ExerciseConfig& config );
+    void Load( const tools::ExerciseConfig& config );
     void Purge();
     //@}
 

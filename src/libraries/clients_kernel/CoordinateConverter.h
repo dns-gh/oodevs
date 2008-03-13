@@ -17,9 +17,13 @@
 #include "geocoord/MGRS.h"
 #include "geocoord/Geodetic.h"
 
-namespace kernel
+namespace tools
 {
     class ExerciseConfig;
+}
+
+namespace kernel
+{
 
 // =============================================================================
 // Created: APE 2004-07-19
@@ -36,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const ExerciseConfig& config );
+    void Load( const tools::ExerciseConfig& config );
 
     virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
 

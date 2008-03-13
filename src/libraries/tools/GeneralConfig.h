@@ -17,7 +17,7 @@ namespace tools
 
 // =============================================================================
 /** @class  GeneralConfig
-    @brief  GeneralConfig
+    @brief  General configuration
 */
 // Created: NLD 2007-01-10
 // =============================================================================
@@ -33,19 +33,19 @@ public:
     //! @name Operations
     //@{
     static std::string BuildChildPath( const std::string& parent, const std::string& child );
+    static std::string BuildDirectoryFile( const std::string& directory, const std::string& file );
     static std::string BuildWorkingDirectoryChildFile( const std::string& file );
 
     std::string GetRootDir() const;
 
     std::string GetExercisesDir() const;
-    std::string GetExerciseFile() const;
     std::string GetExerciseDir( const std::string& exercice ) const;
     std::string GetExerciseFile( const std::string& exercise ) const;
-    std::string BuildExerciseChildFile( const std::string& file ) const;
+
+    std::string GetModelsDir() const;
 
     std::string GetPhysicalsDir( const std::string& dataset ) const;
     std::string GetPhysicalFile( const std::string& dataset, const std::string& physical ) const;
-    std::string BuildPhysicalChildFile( const std::string& dataset, const std::string& physical, const std::string& file ) const;
 
     std::string GetDecisionalFile( const std::string& dataset ) const;
     std::string BuildDecisionalChildFile( const std::string& dataset, const std::string& file ) const;
@@ -53,20 +53,20 @@ public:
     std::string GetTerrainsDir() const;
     std::string GetTerrainDir( const std::string& terrain ) const;
     std::string GetTerrainFile( const std::string& terrain ) const;
-    std::string BuildTerrainChildFile( const std::string& terrain, const std::string& file ) const;
 
     std::string GetSessionsDir( const std::string& exercise ) const;
-    std::string GetSessionFile() const;
-    std::string BuildSessionChildFile( const std::string& file ) const;
     std::string BuildSessionDir( const std::string& exercise, const std::string& session ) const;
+    std::string GetCheckpointsDir( const std::string& exercise, const std::string& session ) const;
 
     std::string BuildPopulationChildFile( const std::string& file ) const;
 
-    std::string GetCheckpointsDir( const std::string& exercise, const std::string& session ) const;
-
-    std::string GetModelsDir() const;
-
     virtual void Parse( int argc, char** argv );
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
+    static void ResolveRelativePath( const std::string& root, std::string& path );
     //@}
 
 private:
@@ -88,9 +88,6 @@ private:
     std::string terrainsDir_;
     std::string modelsDir_;
     std::string exercisesDir_;
-    std::string sessionsDir_;
-    std::string exerciseName_;
-    std::string sessionName_;
     std::string populationDir_;
 
     const std::string terrainConfigFile_;

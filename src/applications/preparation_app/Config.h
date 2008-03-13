@@ -10,15 +10,16 @@
 #ifndef __Config_h_
 #define __Config_h_
 
-#include "clients_kernel/ExerciseConfig.h"
+#include "tools/ExerciseConfig.h"
 
 // =============================================================================
 /** @class  Config
     @brief  Config
+    // $$$$ AGE 2008-03-13:  huh  ?
 */
 // Created: NLD 2007-01-12
 // =============================================================================
-class Config : public kernel::ExerciseConfig
+class Config : public tools::ExerciseConfig
 {
 
 public:

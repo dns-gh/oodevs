@@ -12,9 +12,13 @@
 
 #include "graphics/ElevationMap.h"
 
-namespace kernel
+namespace tools
 {
     class ExerciseConfig;
+}
+
+namespace kernel
+{
 
 // =============================================================================
 /** @class  DetectionMap
@@ -51,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const ExerciseConfig& config );
+    void Load( const tools::ExerciseConfig& config );
 
     const Environment* EnvironmentData( unsigned x, unsigned y ) const;
     Environment        EnvironmentAt( const geometry::Point2f& point ) const;

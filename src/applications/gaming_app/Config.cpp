@@ -23,7 +23,6 @@ namespace po  = boost::program_options;
 // Created: NLD 2007-01-12
 // -----------------------------------------------------------------------------
 Config::Config( int argc, char** argv )
-    : kernel::ExerciseConfig()
 {
     po::options_description desc( "Replayer options" );
     desc.add_options()

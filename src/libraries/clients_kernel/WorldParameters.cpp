@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "WorldParameters.h"
-#include "ExerciseConfig.h"
+#include "tools/ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -32,7 +32,7 @@ WorldParameters::WorldParameters()
 // Name: WorldParameters constructor
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-WorldParameters::WorldParameters( const ExerciseConfig& config )
+WorldParameters::WorldParameters( const tools::ExerciseConfig& config )
 {
     Load( config );
 }
@@ -50,7 +50,7 @@ WorldParameters::~WorldParameters()
 // Name: WorldParameters::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void WorldParameters::Load( const ExerciseConfig& config )
+void WorldParameters::Load( const tools::ExerciseConfig& config )
 {
     xifstream xis( config.GetTerrainFile() );
     std::string world, graphics, detection;

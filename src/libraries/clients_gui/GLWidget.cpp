@@ -44,7 +44,7 @@ namespace
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const ExerciseConfig& config, IconLayout& iconLayout )
+GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const tools::ExerciseConfig& config, IconLayout& iconLayout )
     : WorldParameters( config )
     , SetGlOptions()
     , MapWidget( context_, pParent, width_, height_ )

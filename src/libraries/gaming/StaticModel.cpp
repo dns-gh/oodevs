@@ -61,7 +61,7 @@ StaticModel::~StaticModel()
 // Name: StaticModel::Load
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-void StaticModel::Load( const kernel::ExerciseConfig& config )
+void StaticModel::Load( const tools::ExerciseConfig& config )
 {
     Purge();
     types_.Load( config );

@@ -10,9 +10,13 @@
 #ifndef __WorldParameters_h_
 #define __WorldParameters_h_
 
-namespace kernel
+namespace tools
 {
     class ExerciseConfig;
+}
+
+namespace kernel
+{
 
 // =============================================================================
 /** @class  WorldParameters
@@ -27,13 +31,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              WorldParameters();
-    explicit WorldParameters( const ExerciseConfig& config ); 
+    explicit WorldParameters( const tools::ExerciseConfig& config ); 
     virtual ~WorldParameters();
     //@}
 
     //! @name Operations
     //@{
-    void Load( const ExerciseConfig& config );
+    void Load( const tools::ExerciseConfig& config );
 
     geometry::Point2f Clip( const geometry::Point2f& point ) const;
     //@}

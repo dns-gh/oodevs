@@ -10,7 +10,7 @@
 #ifndef __Config_h_
 #define __Config_h_
 
-#include "clients_kernel/ExerciseConfig.h"
+#include "tools/SessionConfig.h"
 class Network;
 
 // =============================================================================
@@ -19,7 +19,7 @@ class Network;
 */
 // Created: NLD 2007-01-12
 // =============================================================================
-class Config : public kernel::ExerciseConfig
+class Config : public tools::SessionConfig
 {
 
 public:

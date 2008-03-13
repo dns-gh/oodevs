@@ -16,7 +16,7 @@ using namespace kernel;
 // Name: ModelLoaded constructor
 // Created: SBO 2006-05-24
 // -----------------------------------------------------------------------------
-ModelLoaded::ModelLoaded( const ExerciseConfig& config )
+ModelLoaded::ModelLoaded( const tools::ExerciseConfig& config )
     : config_( config )
 {
     // NOTHING

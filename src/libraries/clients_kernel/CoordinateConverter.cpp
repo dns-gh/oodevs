@@ -27,7 +27,7 @@ CoordinateConverter::CoordinateConverter()
 // Name: CoordinateConverter::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void CoordinateConverter::Load( const ExerciseConfig& config )
+void CoordinateConverter::Load( const tools::ExerciseConfig& config )
 {
     world_.Load( config );
     extent_ = geometry::Rectangle2f( 0, 0, world_.width_, world_.height_ );

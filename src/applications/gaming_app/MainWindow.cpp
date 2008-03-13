@@ -57,7 +57,6 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/ExerciseConfig.h"
 
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/Model.h"
@@ -106,6 +105,8 @@
 #include "clients_gui/FormationLayer.h"
 #include "clients_gui/IntelligenceList.h"
 
+#include "tools/ExerciseConfig.h"
+
 #include "xeumeuleu/xml.h"
 
 #pragma warning( push )
@@ -123,7 +124,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, kernel::ExerciseConfig& config, const FlexLmLicense* license )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, tools::ExerciseConfig& config, const FlexLmLicense* license )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )

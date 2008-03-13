@@ -19,7 +19,7 @@
 #include "Tools.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/ExerciseConfig.h"
+#include "tools/ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -54,7 +54,7 @@ ReportFactory::~ReportFactory()
 // Name: ReportFactory::Load
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-void ReportFactory::Load( const kernel::ExerciseConfig& config  )
+void ReportFactory::Load( const tools::ExerciseConfig& config  )
 {
     xml::xifstream scipio( config.GetPhysicalFile() );
     std::string reports;

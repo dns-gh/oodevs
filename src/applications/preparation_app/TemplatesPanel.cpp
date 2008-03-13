@@ -14,7 +14,7 @@
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/ExerciseConfig.h"
+#include "tools/ExerciseConfig.h"
 
 // -----------------------------------------------------------------------------
 // Name: TemplatesPanel constructor

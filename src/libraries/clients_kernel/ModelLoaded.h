@@ -10,9 +10,13 @@
 #ifndef __ModelLoaded_h_
 #define __ModelLoaded_h_
 
-namespace kernel
+namespace tools
 {
     class ExerciseConfig;
+}
+
+namespace kernel
+{
 
 // =============================================================================
 /** @class  ModelLoaded
@@ -26,13 +30,13 @@ class ModelLoaded
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ModelLoaded( const ExerciseConfig& config );
+    explicit ModelLoaded( const tools::ExerciseConfig& config );
     virtual ~ModelLoaded();
     //@}
 
     //! @name Member data
     //@{
-    const ExerciseConfig& config_;
+    const tools::ExerciseConfig& config_;
     //@}
 
 private:

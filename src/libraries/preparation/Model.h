@@ -16,6 +16,10 @@ namespace kernel
 {
     class Controllers;
     class ActionController;
+}
+
+namespace tools
+{
     class ExerciseConfig;
 }
 
@@ -58,8 +62,8 @@ public:
 
     //! @name Operations
     //@
-    void Load( const kernel::ExerciseConfig& config );
-    bool Save( const kernel::ExerciseConfig& config, ModelChecker_ABC& checker );
+    void Load( const tools::ExerciseConfig& config );
+    bool Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker );
     void Purge();
     QString GetName() const;
     //@}

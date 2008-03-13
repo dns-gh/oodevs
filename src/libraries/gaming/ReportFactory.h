@@ -13,6 +13,11 @@
 #include "clients_kernel/Resolver.h"
 #include "game_asn/Simulation.h"
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace xml
 {
     class xistream;
@@ -23,7 +28,6 @@ namespace kernel
     class Entity_ABC;
     class DotationType;
     class EquipmentType;
-    class ExerciseConfig;
 }
 
 class Simulation;
@@ -52,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const kernel::ExerciseConfig& config );
+    void Load( const tools::ExerciseConfig& config );
     void Purge();
 
     Report* CreateReport( const kernel::Entity_ABC& agent, const ASN1T_MsgReport&  asnMsg ) const;

@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "tools/GeneralConfig.h"
+#include "tools/SessionConfig.h"
 
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )
@@ -29,7 +29,7 @@ namespace xml
 // =============================================================================
 // Created: NLD 2003-11-21
 // =============================================================================
-class MIL_Config : public virtual tools::GeneralConfig
+class MIL_Config : public virtual tools::SessionConfig
 {
 public:
      MIL_Config();
@@ -69,22 +69,13 @@ public:
     //@{
     virtual void Parse( int argc, char** argv );
 
-    std::string GetPhysicalFile() const;
-    std::string BuildPhysicalChildFile( const std::string& file ) const;
-
-    std::string GetDecisionalFile();
-    std::string BuildDecisionalChildFile( const std::string& file ) const;
-
-    std::string GetTerrainFile() const;
-    std::string BuildTerrainChildFile( const std::string& file ) const;
-
-    std::string GetWeatherFile() const;
-    std::string GetOrbatFile  () const;
-
     std::string BuildCheckpointChildFile( const std::string& file, std::string name = "" ) const;
 
     bool IsPopulationEnabled() const;
     std::string GetPopulationDir() const;
+
+    virtual std::string GetCheckpointDirectory() const;
+    virtual std::string GetOrbatFile   () const;
     //@}
 
     //! @name CheckPoints
@@ -105,7 +96,6 @@ private:
     void ReadSessionFile            ( const std::string& file );
     void ReadCheckPointConfiguration( xml::xistream& xis );
     void ReadDebugConfiguration     ( xml::xistream& xis );
-    void ReadExerciseFile           ();
     //@}
 
     //! @name Types
@@ -143,13 +133,6 @@ private:
     std::string                hlaFederation_;
     std::string                hlaFederate_;
     T_CRCMap                   CRCMap_;
-
-    std::string                dataset_;
-    std::string                physical_;
-    std::string                terrain_;
-    std::string                weather_;
-    std::string                orbat_;
-    std::string                population_;
     //@}
 };
 

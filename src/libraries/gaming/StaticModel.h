@@ -18,6 +18,10 @@ namespace kernel
     class Controllers;
     class CoordinateConverter_ABC;
     class FormationLevels;
+}
+
+namespace tools
+{
     class ExerciseConfig;
 }
 
@@ -45,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const kernel::ExerciseConfig& config );
+    void Load( const tools::ExerciseConfig& config );
     void Purge();
     //@}
 

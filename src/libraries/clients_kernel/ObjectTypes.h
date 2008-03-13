@@ -14,15 +14,18 @@
 #include "Resolver2.h"
 
 namespace xml { class xistream; };
+namespace tools
+{
+    class ExerciseConfig;
+}
 
 namespace kernel
 {
+    class BreakdownType;
     class ObjectType;
     class DotationType;
     class EquipmentType;
     class NBCAgent;
-    class BreakdownType;
-    class ExerciseConfig;
 
 // =============================================================================
 /** @class  ObjectTypes
@@ -47,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const ExerciseConfig& config );
+    void Load( const tools::ExerciseConfig& config );
     void Purge();
     //@}
 

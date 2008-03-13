@@ -18,6 +18,10 @@ namespace kernel
     class Options;
     class Controllers;
     class Profile_ABC;
+}
+
+namespace tools
+{
     class ExerciseConfig;
 }
 
@@ -70,7 +74,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, kernel::ExerciseConfig& config, const FlexLmLicense* license );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, tools::ExerciseConfig& config, const FlexLmLicense* license );
     virtual ~MainWindow();
     //@}
 
@@ -118,7 +122,7 @@ private:
     StaticModel& staticModel_;
     Model& model_;
     ModelBuilder* modelBuilder_;
-    kernel::ExerciseConfig& config_;
+    tools::ExerciseConfig& config_;
 
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;

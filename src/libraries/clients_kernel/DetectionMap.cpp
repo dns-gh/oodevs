@@ -55,7 +55,7 @@ DetectionMap::~DetectionMap()
 // Name: DetectionMap::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void DetectionMap::Load( const ExerciseConfig& config  )
+void DetectionMap::Load( const tools::ExerciseConfig& config  )
 {
     delete map_;
     delete[] environment_;

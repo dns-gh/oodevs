@@ -12,10 +12,14 @@
 
 #include "clients_kernel/OptionsObserver_ABC.h"
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace kernel
 {
     class Controllers;
-    class ExerciseConfig;
     class DetectionMap;
 }
 
@@ -47,7 +51,7 @@ class GlSelector : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             GlSelector( QMainWindow* parent, GlProxy& proxy, kernel::Controllers& controllers, const kernel::ExerciseConfig& config, kernel::DetectionMap& map, EventStrategy_ABC& strategy );
+             GlSelector( QMainWindow* parent, GlProxy& proxy, kernel::Controllers& controllers, const tools::ExerciseConfig& config, kernel::DetectionMap& map, EventStrategy_ABC& strategy );
     virtual ~GlSelector();
     //@}
 
@@ -92,7 +96,7 @@ private:
     QMainWindow* parent_;
     GlProxy& proxy_;
     kernel::Controllers& controllers_;
-    const kernel::ExerciseConfig& config_;
+    const tools::ExerciseConfig& config_;
     kernel::DetectionMap& map_;
     EventStrategy_ABC& strategy_;
 

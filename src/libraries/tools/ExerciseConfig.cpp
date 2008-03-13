@@ -3,33 +3,42 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "tools_pch.h"
 #include "ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
-#pragma warning( disable : 4245 )
-#include <boost/filesystem.hpp>
 
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 4511 )
+#include <boost/program_options.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#pragma warning( pop )
+
+namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
-using namespace kernel;
+using namespace tools;
 using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig constructor
-// Created: NLD 2007-01-12
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 ExerciseConfig::ExerciseConfig()
-    : tools::GeneralConfig()
 {
-    // NOTHING
+    po::options_description desc( "Exercise options" );
+    desc.add_options()
+        ( "exercise", po::value< std::string >( &exerciseName_ ), "specify exercise name" )
+    ;
+    AddOptions( desc );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig destructor
-// Created: NLD 2007-01-12
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 ExerciseConfig::~ExerciseConfig()
 {
@@ -38,17 +47,17 @@ ExerciseConfig::~ExerciseConfig()
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::Parse
-// Created: NLD 2007-01-12
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 void ExerciseConfig::Parse( int argc, char** argv )
 {
     tools::GeneralConfig::Parse( argc, argv );
-    LoadExercise( GetExerciseFile() ); // $$$$ NLD 2007-01-12: exercise always present ? what about "File/Open" ?
+    LoadExercise( GetExerciseFile() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::LoadExercise
-// Created: NLD 2007-01-10
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 void ExerciseConfig::LoadExercise( const std::string& file )
 {
@@ -76,44 +85,99 @@ void ExerciseConfig::LoadExercise( const std::string& file )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetExerciseFile
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetExerciseFile() const
+{
+    return GeneralConfig::GetExerciseFile( exerciseName_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::BuildExerciseChildFile
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::BuildExerciseChildFile( const std::string& file ) const
+{
+    return BuildChildPath( GetExerciseFile(), file );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetPhysicalFile
-// Created: NLD 2007-01-12
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 std::string ExerciseConfig::GetPhysicalFile() const
 {
-    return tools::GeneralConfig::GetPhysicalFile( dataset_, physical_ );
+    return GeneralConfig::GetPhysicalFile( dataset_, physical_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::BuildPhysicalChildFile
-// Created: NLD 2007-01-12
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 std::string ExerciseConfig::BuildPhysicalChildFile( const std::string& file ) const
 {
-    return tools::GeneralConfig::BuildPhysicalChildFile( dataset_, physical_, file );
+    return BuildChildPath( GetPhysicalFile(), file );
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDecisionalFile
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetDecisionalFile() const
+{
+    return GeneralConfig::GetDecisionalFile( dataset_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::BuildDecisionalChildFile
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::BuildDecisionalChildFile( const std::string& file ) const
+{
+    return BuildChildPath( GetDecisionalFile(), file );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetTerrainFile
-// Created: NLD 2007-01-12
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 std::string ExerciseConfig::GetTerrainFile() const
 {
-    return tools::GeneralConfig::GetTerrainFile( terrain_ );
+    return GeneralConfig::GetTerrainFile( terrain_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::BuildTerrainChildFile
-// Created: NLD 2007-01-12
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 std::string ExerciseConfig::BuildTerrainChildFile( const std::string& file ) const
 {
-    return tools::GeneralConfig::BuildTerrainChildFile( terrain_, file );
+    return BuildChildPath( GetTerrainFile(), file );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetSessionsDir
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetSessionsDir() const
+{
+    return GeneralConfig::GetSessionsDir( exerciseName_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetSessionDir
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetSessionDir( const std::string& session ) const
+{
+    return BuildDirectoryFile( GetSessionsDir(), session );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetWeatherFile
-// Created: NLD 2007-01-12
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 std::string ExerciseConfig::GetWeatherFile() const
 {
@@ -122,7 +186,7 @@ std::string ExerciseConfig::GetWeatherFile() const
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetOrbatFile
-// Created: NLD 2007-01-12
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 std::string ExerciseConfig::GetOrbatFile() const
 {
@@ -131,7 +195,7 @@ std::string ExerciseConfig::GetOrbatFile() const
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetProfilesFile
-// Created: NLD 2007-01-23
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 std::string ExerciseConfig::GetProfilesFile() const
 {
@@ -140,10 +204,12 @@ std::string ExerciseConfig::GetProfilesFile() const
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetPopulationFile
-// Created: AGE 2007-09-04
+// Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 std::string ExerciseConfig::GetPopulationFile() const
 {
-    const std::string realPopulationFile = ( bfs::path( population_, bfs::native ) / "model" / "population.xml" ).native_file_string();
-    return population_.empty() ? population_ : BuildPopulationChildFile( realPopulationFile );
+    // $$$$ AGE 2008-03-13: JJJJJJCCCCCCRRRRRRR
+    if( population_.empty() )
+        return population_;
+    return BuildPopulationChildFile( ( bfs::path( population_, bfs::native ) / "model" / "population.xml" ).native_file_string() );
 }

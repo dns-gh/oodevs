@@ -31,9 +31,7 @@ using namespace xml;
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
 MIL_Config::MIL_Config()
-    : tools::GeneralConfig      ()
-    , strCheckPointName_        ()
-    , bCheckPointOrbat_         ( false )
+    : bCheckPointOrbat_         ( false )
     , bCheckPoint_              ( false )
     , bUseCheckPointCRC_        ( true )
     , bUseOnlyDIAArchive_       ( false )
@@ -47,12 +45,11 @@ MIL_Config::MIL_Config()
     , bProfilingEnabled_        ( false )
     , bDataTestMode_            ( false )
     , bEmbeddedDispatcher_      ( false )
-    , CRCMap_                   ()
 {
     po::options_description desc( "Simulation options" );
     desc.add_options()
         ( "checkpoint"     , po::value< std::string >( &strCheckPointName_ ), "specify checkpoint to load"               )
-        ( "checkpointorbat", po::value< std::string >( &strCheckPointName_ ), "use backup orbat with checkpoint"         )
+        ( "checkpointorbat",                                                  "use backup orbat with checkpoint"         )
         ( "test"           ,                                                  "test mode: loading + first tick"          )
         ( "testdata"       ,                                                  "test mode: load models only (no terrain)" )
     ;
@@ -66,6 +63,20 @@ MIL_Config::MIL_Config()
 MIL_Config::~MIL_Config()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::Parse
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+void MIL_Config::Parse( int argc, char** argv )
+{
+    tools::SessionConfig::Parse( argc, argv );
+    bDataTestMode_    = IsSet( "testdata" );
+    bTestMode_        = bDataTestMode_ || IsSet( "test" );
+    bCheckPoint_      = IsSet( "checkpoint" );
+    bCheckPointOrbat_ = IsSet( "checkpointorbat" );
+    ReadSessionFile( GetSessionFile() );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,38 +158,12 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::ReadExerciseFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-void MIL_Config::ReadExerciseFile()
-{
-    xml::xifstream xis( GetExerciseFile() );
-    xis >> start( "exercise" )
-            >> start( "terrain" )
-                >> attribute( "name", terrain_ )
-            >> end()
-            >> optional() >> start( "population" )
-                >> attribute( "name", population_ )
-            >> end()
-            >> start( "model" )
-                >> attribute( "dataset", dataset_ )
-                >> attribute( "physical", physical_ )
-            >> end()
-            >> start( "weather" )
-                >> attribute( "file", weather_ )
-            >> end()
-            >> start( "orbat" )
-                >> attribute( "file", orbat_ )
-            >> end();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::AddFileToCRC
 // Created: JVT 2005-04-07
 // -----------------------------------------------------------------------------
 void MIL_Config::AddFileToCRC( const std::string& fileName )
 {
-    if ( CRCMap_.find( fileName ) == CRCMap_.end() )
+    if( CRCMap_.find( fileName ) == CRCMap_.end() )
         CRCMap_[ fileName ] = MIL_Tools::ComputeCRC( fileName );
 }
 
@@ -191,9 +176,9 @@ boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFile
     try
     {
         xml::xofstream xos( strFileName );
-    
+
         xos << start( "files" );
-        for ( CIT_CRCMap it = CRCMap_.begin(); it != CRCMap_.end(); ++it )
+        for( CIT_CRCMap it = CRCMap_.begin(); it != CRCMap_.end(); ++it )
             xos << start( "file" )
                     << attribute( "name", it->first )
                     << attribute( "crc", it->second )
@@ -208,84 +193,6 @@ boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFile
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::Parse
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-void MIL_Config::Parse( int argc, char** argv )
-{
-    tools::GeneralConfig::Parse( argc, argv );
-    bDataTestMode_    = IsSet( "testdata" );
-    bTestMode_        = bDataTestMode_ || IsSet( "test" );
-    bCheckPoint_      = IsSet( "checkpoint" );
-    bCheckPointOrbat_ = IsSet( "checkpointorbat" );
-    ReadSessionFile( GetSessionFile() );
-    ReadExerciseFile();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetPhysicalFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-std::string MIL_Config::GetPhysicalFile() const
-{
-    return tools::GeneralConfig::GetPhysicalFile( dataset_, physical_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::BuildPhysicalChildFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-std::string MIL_Config::BuildPhysicalChildFile( const std::string& file ) const
-{
-    return tools::GeneralConfig::BuildPhysicalChildFile( dataset_, physical_, file );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetDecisionalFile
-// Created: NLD 2007-01-11
-// -----------------------------------------------------------------------------
-std::string MIL_Config::GetDecisionalFile()
-{
-    return tools::GeneralConfig::GetDecisionalFile( dataset_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::BuildDecisionalChildFile
-// Created: NLD 2007-01-11
-// -----------------------------------------------------------------------------
-std::string MIL_Config::BuildDecisionalChildFile( const std::string& file ) const
-{
-    return tools::GeneralConfig::BuildDecisionalChildFile( dataset_, file );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetTerrainFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-std::string MIL_Config::GetTerrainFile() const
-{
-    return tools::GeneralConfig::GetTerrainFile( terrain_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::BuildTerrainChildFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-std::string MIL_Config::BuildTerrainChildFile( const std::string& file ) const
-{
-    return tools::GeneralConfig::BuildTerrainChildFile( terrain_, file );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetWeatherFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-std::string MIL_Config::GetWeatherFile() const
-{
-    return BuildExerciseChildFile( weather_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::GetOrbatFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
@@ -293,7 +200,16 @@ std::string MIL_Config::GetOrbatFile() const
 {
     if( bCheckPointOrbat_ )
         return BuildCheckpointChildFile( "orbat.xml" );
-    return BuildExerciseChildFile( orbat_ );
+    return tools::SessionConfig::GetOrbatFile();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetCheckpointDirectory
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+std::string MIL_Config::GetCheckpointDirectory() const
+{
+    return tools::SessionConfig::GetCheckpointDirectory( strCheckPointName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,7 +218,9 @@ std::string MIL_Config::GetOrbatFile() const
 // -----------------------------------------------------------------------------
 std::string MIL_Config::BuildCheckpointChildFile( const std::string& file, std::string name /*= ""*/ ) const
 {
-    return BuildSessionChildFile( ( bfs::path( "checkpoints", bfs::native ) / bfs::path( name.empty() ?  strCheckPointName_ : name, bfs::native ) / file ).native_file_string() );
+    if( name.empty() )
+        return BuildDirectoryFile( GetCheckpointDirectory(), file );
+    return BuildDirectoryFile( tools::SessionConfig::GetCheckpointDirectory( name ), file );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,7 +229,7 @@ std::string MIL_Config::BuildCheckpointChildFile( const std::string& file, std::
 // -----------------------------------------------------------------------------
 bool MIL_Config::IsPopulationEnabled() const
 {
-    return ! population_.empty();
+    return ! GetPopulationFile().empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -320,7 +238,7 @@ bool MIL_Config::IsPopulationEnabled() const
 // -----------------------------------------------------------------------------
 std::string MIL_Config::GetPopulationDir() const
 {
-    const std::string realPopulationDir = ( bfs::path( population_, bfs::native ) / "model" ).native_directory_string();
-    return population_.empty() ? population_ : BuildPopulationChildFile( realPopulationDir );
+    if( IsPopulationEnabled() )
+        return BuildChildPath( GetPopulationFile(), "." );
+    return "";
 }
-

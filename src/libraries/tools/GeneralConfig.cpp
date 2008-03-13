@@ -9,7 +9,6 @@
 
 #include "tools_pch.h"
 #include "GeneralConfig.h"
-#include "xeumeuleu/xml.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -22,7 +21,6 @@ namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
 
 using namespace tools;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig constructor
@@ -41,9 +39,6 @@ GeneralConfig::GeneralConfig()
         ( "models-dir"    , po::value< std::string >( &modelsDir_    )->default_value( "data/models/"    ), "specify models root directory"    )
         ( "population-dir", po::value< std::string >( &populationDir_)->default_value( "data/population/"), "specify population root directory")
         ( "exercises-dir" , po::value< std::string >( &exercisesDir_ )->default_value( "exercises/"      ), "specify exercises root directory" )
-        ( "sessions-dir"  , po::value< std::string >( &sessionsDir_  )                                    , "specify sessions root directory"  )
-        ( "session"       , po::value< std::string >( &sessionName_  )                                    , "specify session name"             )
-        ( "exercise"      , po::value< std::string >( &exerciseName_ )                                    , "specify exercise name"            )
     ;
     AddOptions( desc );
 }
@@ -57,14 +52,16 @@ GeneralConfig::~GeneralConfig()
     // NOTHING
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::ResolveRelativePath
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+void GeneralConfig::ResolveRelativePath( const std::string& root, std::string& path )
 {
-    void ResolveRelativePath( const bfs::path& root, std::string& path )
-    {
-        const bfs::path p( path, bfs::native );
-        if( !p.has_root_directory() )
-            path = ( root / p ).native_file_string();
-    }
+    const bfs::path r( root, bfs::native );
+    const bfs::path p( path, bfs::native );
+    if( !p.has_root_directory() )
+        path = ( r / p ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,18 +72,11 @@ void GeneralConfig::Parse( int argc, char** argv )
 {
     CommandLineConfig_ABC::Parse( argc, argv );
 
-    if( !IsSet( "sessions-dir" ) )
-        sessionsDir_ = ( bfs::path( exercisesDir_, bfs::native )
-                       / bfs::path( exerciseName_, bfs::native )
-                       / "sessions" ).native_file_string();
     // $$$$ NLD 2007-01-10: gerer exerciseName_ = poseidon/exercise.xml
-
-    const bfs::path root( rootDir_, bfs::native );
-    ResolveRelativePath( root, terrainsDir_ );
-    ResolveRelativePath( root, modelsDir_ );
-    ResolveRelativePath( root, exercisesDir_ );
-    ResolveRelativePath( root, sessionsDir_ );
-    ResolveRelativePath( root, populationDir_ );
+    ResolveRelativePath( rootDir_, terrainsDir_ );
+    ResolveRelativePath( rootDir_, modelsDir_ );
+    ResolveRelativePath( rootDir_, exercisesDir_ );
+    ResolveRelativePath( rootDir_, populationDir_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,6 +86,25 @@ void GeneralConfig::Parse( int argc, char** argv )
 std::string GeneralConfig::BuildChildPath( const std::string& parent, const std::string& child )
 {
     return ( bfs::path( parent, bfs::native ).branch_path() / bfs::path( child, bfs::native ) ).native_file_string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::BuildDirectoryFile
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::BuildDirectoryFile( const std::string& directory, const std::string& file )
+{
+    return ( bfs::path( directory, bfs::native ) / bfs::path( file, bfs::native ) ).native_file_string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::BuildWorkingDirectoryChildFile
+// Created: NLD 2007-05-21
+// -----------------------------------------------------------------------------
+// static
+std::string GeneralConfig::BuildWorkingDirectoryChildFile( const std::string& file )
+{
+    return BuildDirectoryFile( ".", file );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,25 +144,6 @@ std::string GeneralConfig::GetExerciseFile( const std::string& exercise ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GeneralConfig::GetExerciseFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-std::string GeneralConfig::GetExerciseFile() const
-{
-    // $$$$ NLD 2007-01-10: exerciseName_
-    return GetExerciseFile( exerciseName_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeneralConfig::BuildExerciseChildFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildExerciseChildFile( const std::string& file ) const
-{
-    return BuildChildPath( GetExerciseFile(), file );
-}
-
-// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetPhysicalsDir
 // Created: NLD 2007-01-29
 // -----------------------------------------------------------------------------
@@ -170,15 +160,6 @@ std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset ) const
 std::string GeneralConfig::GetPhysicalFile( const std::string& dataset, const std::string& physical ) const
 {
     return ( bfs::path( GetPhysicalsDir( dataset ), bfs::native ) / bfs::path( physical, bfs::native ) / "physical.xml" ).native_file_string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeneralConfig::BuildPhysicalChildFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildPhysicalChildFile( const std::string& dataset, const std::string& physical, const std::string& file ) const
-{
-    return BuildChildPath( GetPhysicalFile( dataset, physical ), file );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,41 +209,12 @@ std::string GeneralConfig::GetTerrainFile( const std::string& terrain ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GeneralConfig::BuildTerrainChildFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildTerrainChildFile( const std::string& terrain, const std::string& file ) const
-{
-    return BuildChildPath( GetTerrainFile( terrain ), file );
-}
-
-// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetSessionsDir
 // Created: AGE 2008-01-04
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetSessionsDir( const std::string& exercise ) const
 {
     return ( bfs::path( GetExerciseDir( exercise ), bfs::native ) / "sessions" ).native_directory_string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeneralConfig::GetSessionFile
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-std::string GeneralConfig::GetSessionFile() const
-{
-    if( !sessionName_.empty() )
-        return ( bfs::path( sessionsDir_, bfs::native ) / bfs::path( sessionName_, bfs::native ) / sessionConfigFile_ ).native_file_string();
-    return sessionName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeneralConfig::BuildSessionChildFile
-// Created: NLD 2007-01-11
-// -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildSessionChildFile( const std::string& file ) const
-{
-    return BuildChildPath( GetSessionFile(), file );
 }
 
 // -----------------------------------------------------------------------------
@@ -283,15 +235,6 @@ std::string GeneralConfig::GetModelsDir() const
     return modelsDir_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: GeneralConfig::BuildWorkingDirectoryChildFile
-// Created: NLD 2007-05-21
-// -----------------------------------------------------------------------------
-// static
-std::string GeneralConfig::BuildWorkingDirectoryChildFile( const std::string& file )
-{
-    return BuildChildPath( ".", file );
-}
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::BuildPopulationChildFile

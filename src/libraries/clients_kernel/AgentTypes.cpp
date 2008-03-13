@@ -22,7 +22,7 @@
 #include "MissionType.h"
 #include "FragOrderType.h"
 #include "OrderContext.h"
-#include "ExerciseConfig.h"
+#include "tools/ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -55,7 +55,7 @@ namespace
 // Name: AgentTypes::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void AgentTypes::Load( const ExerciseConfig& config )
+void AgentTypes::Load( const tools::ExerciseConfig& config )
 {
     Purge();
 

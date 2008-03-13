@@ -18,8 +18,8 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelLoaded.h"
-#include "clients_kernel/ExerciseConfig.h"
 #include "clients_kernel/FormationLevels.h"
+#include "tools/ExerciseConfig.h"
 
 using namespace kernel;
 
@@ -59,7 +59,7 @@ StaticModel::~StaticModel()
 // Name: StaticModel::Load
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-void StaticModel::Load( const kernel::ExerciseConfig& config )
+void StaticModel::Load( const tools::ExerciseConfig& config )
 {
     Purge();
     types_.Load( config );

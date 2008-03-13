@@ -47,7 +47,6 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FormationLevels.h"
-#include "clients_kernel/ExerciseConfig.h"
 
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GraphicPreferences.h"
@@ -84,6 +83,8 @@
 #include "clients_gui/IntelligenceList.h"
 #include "graphics/DragMovementLayer.h"
 
+#include "tools/ExerciseConfig.h"
+
 #include "xeumeuleu/xml.h"
 
 #pragma warning( push )
@@ -101,7 +102,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, ExerciseConfig& config, const FlexLmLicense* license )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, tools::ExerciseConfig& config, const FlexLmLicense* license )
     : QMainWindow   ( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )

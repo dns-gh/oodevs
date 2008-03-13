@@ -27,7 +27,7 @@ using namespace kernel;
 // Name: GlSelector constructor
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
-GlSelector::GlSelector( QMainWindow* parent, GlProxy& proxy, Controllers& controllers, const ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy )
+GlSelector::GlSelector( QMainWindow* parent, GlProxy& proxy, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy )
     : QObject       ( parent )
     , parent_       ( parent )
     , proxy_        ( proxy )

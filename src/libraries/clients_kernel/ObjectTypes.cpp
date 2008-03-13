@@ -14,9 +14,9 @@
 #include "EquipmentType.h"
 #include "NBCAgent.h"
 #include "BreakdownType.h"
-#include "ExerciseConfig.h"
-#include "xeumeuleu/xml.h"
 #include "tools.h"
+#include "tools/ExerciseConfig.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
 using namespace xml;
@@ -48,7 +48,7 @@ namespace
 // Name: ObjectTypes::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void ObjectTypes::Load( const ExerciseConfig& config )
+void ObjectTypes::Load( const tools::ExerciseConfig& config )
 {
     Purge();
 

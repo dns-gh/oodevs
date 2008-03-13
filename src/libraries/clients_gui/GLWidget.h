@@ -17,10 +17,14 @@
 #include "GlToolsBase.h"
 #include "SymbolIcon.h"
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace kernel
 {
     class Controllers;
-    class ExerciseConfig;
 }
 
 namespace gui
@@ -45,7 +49,7 @@ class GlWidget : private kernel::WorldParameters
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, kernel::Controllers& controllers, const kernel::ExerciseConfig& config, IconLayout& iconLayout );
+             GlWidget( QWidget* pParent, kernel::Controllers& controllers, const tools::ExerciseConfig& config, IconLayout& iconLayout );
     virtual ~GlWidget();
     //@}
 

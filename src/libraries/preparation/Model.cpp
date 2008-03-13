@@ -25,7 +25,7 @@
 #include "IntelligencesModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/ExerciseConfig.h"
+#include "tools/ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
 #pragma warning( push )
@@ -105,7 +105,7 @@ void Model::Purge()
 // Name: Model::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void Model::Load( const ExerciseConfig& config )
+void Model::Load( const tools::ExerciseConfig& config )
 {
     UpdateName( config.GetOrbatFile() );
     teams_.Load( config.GetOrbatFile(), *this );
@@ -117,7 +117,7 @@ void Model::Load( const ExerciseConfig& config )
 // Name: Model::Save
 // Created: SBO 2006-11-21
 // -----------------------------------------------------------------------------
-bool Model::Save( const ExerciseConfig& config, ModelChecker_ABC& checker )
+bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker )
 {
     const bool valid = teams_.CheckValidity( checker )
                     && agents_.CheckValidity( checker )

@@ -10,13 +10,7 @@
 #ifndef __Config_h_
 #define __Config_h_
 
-#include "tools/GeneralConfig.h"
-#include <map>
-
-namespace xml
-{
-    class xistream;
-}
+#include "tools/SessionConfig.h"
 
 namespace dispatcher
 {
@@ -27,7 +21,7 @@ namespace dispatcher
 */
 // Created: NLD 2007-01-10
 // =============================================================================
-class Config : public virtual tools::GeneralConfig
+class Config : public virtual tools::SessionConfig
 {
 public:
     //! @name Constructors/Destructor
@@ -43,21 +37,15 @@ public:
 
     //! @name Accessors
     //@{
-          std::string    GetProfilesFile               () const;
-    const std::string&   GetNetworkSimulationParameters() const;
-          unsigned short GetNetworkClientsParameters   () const;
-    const std::string&   GetPhysicalFile() const;
-          std::string    BuildPhysicalChildFile( const std::string& file ) const;
-          std::string    GetRecordDirectory() const;
+    const std::string& GetNetworkSimulationParameters() const;
+    unsigned short     GetNetworkClientsParameters   () const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string    profiles_;
     std::string    networkSimulationParameters_;
     unsigned short networkClientsParameters_;
-    std::string    physical_;
     //@}
 };
 

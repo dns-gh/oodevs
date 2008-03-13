@@ -15,7 +15,6 @@
 // Created: NLD 2007-01-12
 // -----------------------------------------------------------------------------
 Config::Config( int argc, char** argv )
-    : kernel::ExerciseConfig()
 {
     Parse( argc, argv );
 }

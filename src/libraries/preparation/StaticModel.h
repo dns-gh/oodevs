@@ -17,8 +17,12 @@ namespace kernel
     class DetectionMap;
     class Controllers;
     class CoordinateConverter_ABC;
-    class ExerciseConfig;
     class FormationLevels;
+}
+
+namespace tools
+{
+    class ExerciseConfig;
 }
 
 class TeamKarmas;
@@ -42,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const kernel::ExerciseConfig& config );
+    void Load( const tools::ExerciseConfig& config );
     void Purge();
     //@}
 

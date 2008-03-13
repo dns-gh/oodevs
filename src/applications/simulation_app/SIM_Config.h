@@ -19,8 +19,8 @@
 */
 // Created: NLD 2007-01-15
 // =============================================================================
-class SIM_Config : public MIL_Config
-                 , public dispatcher::Config
+class SIM_Config : public virtual MIL_Config
+                 , public virtual dispatcher::Config
 {
 public:
     //! @name Constructors/Destructor
