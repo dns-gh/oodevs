@@ -170,12 +170,16 @@ private:
     void ReadArchive( xml::xistream& input );
     void ReadFragOrder( xml::xistream& input );
     void ReadMission( xml::xistream& input, T_Mission_Vector& missions, const bool& automat );
+    void ReadContext( xml::xistream& input, T_MissionParameter_Vector& context );
     void WriteArchive( xml::xostream& output );
 
 public:
-    T_Mission_Vector   unitMissions_;
-    T_Mission_Vector   automatMissions_;
-    T_Mission_Vector   populationMissions_;
+    T_MissionParameter_Vector   unitContext_;
+    T_Mission_Vector            unitMissions_;
+    T_MissionParameter_Vector   automatContext_;
+    T_Mission_Vector            automatMissions_;
+    T_MissionParameter_Vector   populationContext_;
+    T_Mission_Vector            populationMissions_;
     T_FragOrder_Vector fragOrders_;
 
 };

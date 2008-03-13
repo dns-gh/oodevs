@@ -90,7 +90,7 @@ ADN_Missions_Data::MissionParameter::MissionParameter()
 {
     ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType >::SetConverter( &ADN_Tr::ConvertFromMissionParameterType );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::MissionParameter::~MissionParameter
 // Created: SBO 2006-12-04
@@ -475,12 +475,15 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "missions" )
             >> xml::start( "units" )
+                >> xml::list( "context", *this, &ADN_Missions_Data::ReadContext, unitContext_ )
                 >> xml::list( "mission", *this, &ADN_Missions_Data::ReadMission, unitMissions_, (const bool&)false )
             >> xml::end()
             >> xml::start( "automats" )
+                >> xml::list( "context", *this, &ADN_Missions_Data::ReadContext, automatContext_ )
                 >> xml::list( "mission", *this, &ADN_Missions_Data::ReadMission, automatMissions_, (const bool&)true )
             >> xml::end()
             >> xml::start( "populations" )
+                >> xml::list( "context", *this, &ADN_Missions_Data::ReadContext, populationContext_ )
                 >> xml::list( "mission", *this, &ADN_Missions_Data::ReadMission, populationMissions_, (const bool&)false )
             >> xml::end()
             >> xml::start( "fragorders" )
@@ -511,11 +514,30 @@ void ADN_Missions_Data::ReadMission( xml::xistream& input, T_Mission_Vector& mis
     missions.AddItem( spNew.release() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::ReadContext
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::ReadContext( xml::xistream& input, T_MissionParameter_Vector& context )
+{
+    std::auto_ptr< ADN_Missions_Data::MissionParameter > spNew( new MissionParameter() );
+    spNew->ReadArchive( input );
+    context.AddItem( spNew.release() );
+}
+
+
 namespace
 {
-    void WriteMissions( xml::xostream& output, const std::string& name, const ADN_Missions_Data::T_Mission_Vector& missions, unsigned long& id )
+    void WriteMissions( xml::xostream& output, const std::string& name, const ADN_Missions_Data::T_MissionParameter_Vector& context, const ADN_Missions_Data::T_Mission_Vector& missions, unsigned long& id )
     {
         output << xml::start( name );
+        if( ! context.empty() )
+        {
+            output << xml::start( "context" );
+            for( unsigned i = 0; i < context.size(); ++i )
+                context[i]->WriteArchive( output );
+            output << xml::end();
+        }
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->WriteArchive( output, name, id++ );
         output << xml::end();
@@ -530,10 +552,10 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "missions" );
     unsigned long id = 1;
-    WriteMissions( output, "units"      , unitMissions_, id );
-    WriteMissions( output, "automats"   , automatMissions_, id );
-    WriteMissions( output, "populations", populationMissions_, id );
-    
+    WriteMissions( output, "units"      , unitContext_,       unitMissions_, id );
+    WriteMissions( output, "automats"   , automatContext_,    automatMissions_, id );
+    WriteMissions( output, "populations", populationContext_, populationMissions_, id );
+
     output << xml::start( "fragorders" );
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
         fragOrders_[i]->WriteArchive( output, id++ );
@@ -549,7 +571,7 @@ ADN_Missions_Data::T_FragOrder_Vector& ADN_Missions_Data::GetFragOrders()
 {
     return fragOrders_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::GetUnitMissions
 // Created: SBO 2006-12-04
@@ -558,7 +580,7 @@ ADN_Missions_Data::T_Mission_Vector& ADN_Missions_Data::GetUnitMissions()
 {
     return unitMissions_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::GetAutomatMissions
 // Created: SBO 2006-12-04
@@ -567,7 +589,7 @@ ADN_Missions_Data::T_Mission_Vector& ADN_Missions_Data::GetAutomatMissions()
 {
     return automatMissions_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::GetPopulationMissions
 // Created: SBO 2006-12-04
