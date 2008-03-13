@@ -68,6 +68,7 @@ protected:
     boost::asio::io_service service_;
     boost::asio::ip::udp::socket socket_;
 
+    bool terminated_;
     boost::thread thread_;
     //@}
 };
