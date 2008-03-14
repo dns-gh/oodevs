@@ -2,7 +2,7 @@
 <missions>
   <units>
     <context>
-      <parameter dia-name="dangerDirection_" name="Danger direction" optional="true" type="DangerDirection"/>
+      <parameter dia-name="dangerDirection_" name="Danger direction" optional="true" type="Direction"/>
       <parameter dia-name="phaseLines_" name="Phase lines" optional="true" type="PhaseLineList"/>
       <parameter dia-name="boundaryLimit1_" name="Boundary limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="true" type="Limit"/>

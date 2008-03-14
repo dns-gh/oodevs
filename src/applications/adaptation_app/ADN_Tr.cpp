@@ -420,6 +420,9 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "MaintenancePriorities", QT_TRANSLATE_NOOP("ADN_Tr", "MaintenancePriorities" ), eMissionParameterTypeMaintenancePriorities ),
     T_ConverterMissionParameterType( "MedicalPriorities", QT_TRANSLATE_NOOP("ADN_Tr", "MedicalPriorities" ), eMissionParameterTypeMedicalPriorities ),
     T_ConverterMissionParameterType( "IndirectFire", QT_TRANSLATE_NOOP("ADN_Tr", "IndirectFire" ), eMissionParameterTypeIndirectFire ),
+    T_ConverterMissionParameterType( "Limit", QT_TRANSLATE_NOOP("ADN_Tr", "Limit" ), eMissionParameterTypeLimit ),
+    T_ConverterMissionParameterType( "PhaseLineList", QT_TRANSLATE_NOOP("ADN_Tr", "PhaseLineList" ), eMissionParameterTypePhaseLineList ),
+    T_ConverterMissionParameterType( "IntelligenceList", QT_TRANSLATE_NOOP("ADN_Tr", "IntelligenceList" ), eMissionParameterTypeIntelligenceList ),
     T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
 };
 

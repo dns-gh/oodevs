@@ -423,6 +423,10 @@ enum E_MissionParameterType
     eMissionParameterTypeMaintenancePriorities,
     eMissionParameterTypeMedicalPriorities,
     eMissionParameterTypeIndirectFire,
+    eMissionParameterTypeLimit,
+    eMissionParameterTypePhaseLineList,
+    eMissionParameterTypeIntelligenceList,
+
     eNbrMissionParameterType
 };
 
