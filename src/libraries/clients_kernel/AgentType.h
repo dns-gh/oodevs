@@ -20,8 +20,6 @@ namespace kernel
     class AgentNature;
     class DecisionalModel;
     class SymbolFactory;
-    class GlTools_ABC;
-    class Viewport_ABC;
     template< typename Container > class Iterator;
 
 // =============================================================================
@@ -58,8 +56,6 @@ public:
     bool IsLogisticSupply() const;
     bool IsLogisticMaintenance() const;
     bool IsLogisticMedical() const;
-
-    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools, bool pc ) const;
     //@}
 
 private:

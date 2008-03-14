@@ -211,8 +211,9 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewpor
         tools.DrawApp6Symbol( currentSymbol_, where );
         if( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         {
-            const bool bPc = bIsPC_.IsSet() ? bIsPC_ : false;
-            realAgent_.GetType().Draw( where, viewport, tools, bPc );
+            tools.DrawApp6Symbol( realAgent_.GetType().GetLevelSymbol(), where );
+            if( bIsPC_.IsSet() && bIsPC_ )
+                tools.DrawApp6Symbol( realAgent_.GetType().GetHQSymbol(), where );
         }
         tools.Select( backupState.first, backupState.second );
     }

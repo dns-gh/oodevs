@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ActionParameterObstacle.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/ObjectIcons.h"
 #include "ActionParameterLocation.h"
 #include "ActionParameterAutomat.h"
 #include "ActionParameterNumeric.h"
@@ -111,7 +112,7 @@ void ActionParameterObstacle::AddObstacleType( unsigned int type )
 void ActionParameterObstacle::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     ActionParameter< std::string >::Draw( where, viewport, tools );
-    type_.Draw( GetPosition(), viewport, tools );
+    ObjectIcons::Draw( type_.GetId(), GetPosition(), viewport, tools );
 }
 
 // -----------------------------------------------------------------------------

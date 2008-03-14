@@ -181,14 +181,4 @@ const ModelsContainer< Lima >& Model::GetLimas() const
     return limas_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: Model::GetAgentTypes
-// Created: SBO 2007-08-22
-// -----------------------------------------------------------------------------
-inline
-const kernel::AgentTypes& Model::GetAgentTypes() const
-{
-    return *agentTypes_;
-}
-
 }

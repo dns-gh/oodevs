@@ -21,8 +21,7 @@
 #include "AgentLogSupply.h"
 #include "AgentOrder.h"
 #include "Network_Def.h"
-#include "AgentTypes.h"
-#include "AgentType.h"
+#include "clients_kernel/AgentType.h"
 
 using namespace dispatcher;
 

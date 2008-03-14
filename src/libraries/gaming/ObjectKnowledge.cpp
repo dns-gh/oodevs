@@ -20,6 +20,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/ObjectIcons.h"
 #include "Tools.h"
 #include "statusicons.h"
 
@@ -195,7 +196,7 @@ const Team_ABC& ObjectKnowledge::GetOwner() const
 void ObjectKnowledge::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( type_ )
-        type_->Draw( where, viewport, tools );
+        ObjectIcons::Draw( type_->GetId(), where, viewport, tools );
     if( viewport.IsVisible( where ) )
     {
         // $$$$ SBO 2007-05-04: hard coded icon positions

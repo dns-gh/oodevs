@@ -13,6 +13,7 @@
 #include "SimulationNetworker.h"
 #include "ClientsNetworker.h"
 #include "PluginFactory.h"
+#include "Config.h"
 
 using namespace dispatcher;
 

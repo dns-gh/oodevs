@@ -59,7 +59,9 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
         if( symbol_.empty() )
             InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where );
-        type_.Draw( where, viewport, tools, isPc_ );
+        tools.DrawApp6Symbol( type_.GetLevelSymbol(), where );
+        if( isPc_ )
+            tools.DrawApp6Symbol( type_.GetHQSymbol(), where );
     }
 }
 

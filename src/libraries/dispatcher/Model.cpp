@@ -33,13 +33,12 @@
 #include "PopulationFire.h"
 #include "FireEffect.h"
 #include "Synchroniser.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
-#include "AgentTypes.h"
 #include "FolkModel.h"
 #include "Intelligence.h"
 #include "Report.h"
-
 #include "SimulationModel.h"
+#include "clients_kernel/AgentTypes.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace dispatcher;
 
@@ -47,7 +46,7 @@ using namespace dispatcher;
 // Name: Model constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-Model::Model( const Config& config )
+Model::Model( const tools::ExerciseConfig& config )
     : pSimulationModel_( new SimulationModel() )
     , folkModel_( new FolkModel() )
     , compositeFactory_( new CompositeFactory() )
@@ -344,4 +343,13 @@ void Model::Accept( ModelVisitor_ABC& visitor ) const
     fireEffects_           .Apply( std::mem_fun_ref( &FireEffect           ::Accept ), visitor );
     intelligences_         .Apply( std::mem_fun_ref( &Intelligence         ::Accept ), visitor );
     reports_               .Apply( std::mem_fun_ref( &Report               ::Accept ), visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: kernel::Resolver_ABC< kernel::AgentType >& Model::GetAgentTypes
+// Created: AGE 2008-03-14
+// -----------------------------------------------------------------------------
+const kernel::Resolver_ABC< kernel::AgentType >& Model::GetAgentTypes() const
+{
+    return *agentTypes_;
 }

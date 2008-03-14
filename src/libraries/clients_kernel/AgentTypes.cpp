@@ -37,6 +37,15 @@ AgentTypes::AgentTypes()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentTypes constructor
+// Created: AGE 2008-03-14
+// -----------------------------------------------------------------------------
+AgentTypes::AgentTypes( const tools::ExerciseConfig& config )
+{
+    Load( config );
+}
+
 namespace
 {
     struct FileReader

@@ -10,8 +10,6 @@
 #ifndef __ObjectType_h_
 #define __ObjectType_h_
 
-#include "Drawable_ABC.h"
-
 namespace xml { class xistream; };
 
 namespace kernel
@@ -22,7 +20,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-16
 // =============================================================================
-class ObjectType : public Drawable_ABC
+class ObjectType
 {
 
 public:
@@ -35,11 +33,12 @@ public:
     //! @name Operations
     //@{
     std::string GetName() const;
-    virtual void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
 
     bool CanBeReservedObstacle() const;
     bool CanBeValorized() const;
     bool CanBeBypassed() const;
+
+    unsigned long GetId() const;
     //@}
 
 private:
@@ -49,17 +48,11 @@ private:
     ObjectType& operator=( const ObjectType& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    const char** TypeIcon();
-    //@}
-
 public:
     //! @name Static members
     //@{
     unsigned long id_;
     std::string name_;
-    const char** xpm_;
 
     bool canBeReservedObstacle_;
     bool canBeValorized_;

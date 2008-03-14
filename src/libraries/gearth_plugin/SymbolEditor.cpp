@@ -22,8 +22,7 @@
 #include "dispatcher/Lima.h"
 #include "dispatcher/EntitySymbols_ABC.h"
 
-#include "dispatcher/AgentTypes.h"
-#include "dispatcher/AgentType.h"
+#include "clients_kernel/AgentType.h"
 
 using namespace gearth;
 

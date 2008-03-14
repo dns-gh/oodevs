@@ -23,6 +23,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/ObjectIcons.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -210,7 +211,7 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Object::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    type_.Draw( where, viewport, tools );
+    ObjectIcons::Draw( type_.GetId(), where, viewport, tools );
 }
 
 // -----------------------------------------------------------------------------

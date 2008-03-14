@@ -20,6 +20,7 @@
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/ObjectIcons.h"
 #include "statusicons.h"
 
 using namespace kernel;
@@ -158,7 +159,7 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    type_.Draw( where, viewport, tools );
+    ObjectIcons::Draw( type_.GetId(), where, viewport, tools );
     if( viewport.IsVisible( where ) )
     {
         // $$$$ SBO 2007-05-04: hard coded icon positions

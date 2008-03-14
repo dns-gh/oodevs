@@ -19,11 +19,6 @@ namespace xml
     class xistream;
 }
 
-namespace kernel
-{
-    class OrderTypes;
-}
-
 namespace dispatcher
 {
     class Model;

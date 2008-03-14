@@ -133,20 +133,6 @@ const std::string& AgentType::GetHQSymbol() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentType::Draw
-// Created: SBO 2006-03-21
-// -----------------------------------------------------------------------------
-void AgentType::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools, bool pc ) const
-{
-    if( viewport.IsHotpointVisible() )
-    {
-        tools.DrawApp6Symbol( levelSymbol_, where );
-        if( pc )
-            tools.DrawApp6Symbol( hqSymbol_, where );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentType::IsTC2
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------

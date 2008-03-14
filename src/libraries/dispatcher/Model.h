@@ -14,16 +14,22 @@
 #include "ModelsContainer.h"
 #include "MessageHandler_ABC.h"
 #include "CompositeFactory.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
 {
     class AgentTypes;
+    class AgentType;
+}
+
+namespace tools
+{
+    class ExerciseConfig;
 }
 
 namespace dispatcher
 {
 
-class Config;
 class ModelVisitor_ABC;
 class Side;
 class KnowledgeGroup;
@@ -63,7 +69,7 @@ class Model : public MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Model( const Config& config );
+    explicit Model( const tools::ExerciseConfig& config );
     virtual ~Model();
     //@}
 
@@ -104,7 +110,7 @@ public:
     const ModelsContainer< Limit          >& GetLimits         () const;
     const ModelsContainer< Lima           >& GetLimas          () const;
 
-    const kernel::AgentTypes& GetAgentTypes() const;
+    const kernel::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
 
     void RegisterFactory( Factory_ABC& factory )
     {

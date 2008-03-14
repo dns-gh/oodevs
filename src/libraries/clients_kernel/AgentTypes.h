@@ -58,6 +58,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentTypes();
+    explicit AgentTypes( const tools::ExerciseConfig& config );
     virtual ~AgentTypes();
     //@}
 

@@ -10,7 +10,6 @@
 #ifndef __icons_h_
 #define __icons_h_
 
-#include "clients_kernel/objecticons.h"
 #include "clients_gui/resources.h"
 
 #endif // __icons_h_

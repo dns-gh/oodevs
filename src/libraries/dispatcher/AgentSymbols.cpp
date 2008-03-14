@@ -11,7 +11,7 @@
 #include "AgentSymbols.h"
 #include "Agent.h"
 #include "Automat.h"
-#include "AgentType.h"
+#include "clients_kernel/AgentType.h"
 #include "tools/App6Symbol.h"
 
 using namespace dispatcher;

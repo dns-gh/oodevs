@@ -18,7 +18,6 @@
 #include "DotationQuota.h"
 #include "ModelVisitor_ABC.h"
 #include "AutomatOrder.h"
-#include "AgentTypes.h"
 #include "Report.h"
 
 using namespace dispatcher;

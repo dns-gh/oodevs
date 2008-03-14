@@ -99,7 +99,9 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 //        if( symbol_.empty() ) // $$$$ SBO 2007-03-08: allow symbol update on team karma change... to avoid observation of team update
             InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where );
-        type_->Draw( where, viewport, tools, commandPost_ );
+        tools.DrawApp6Symbol( type_->GetLevelSymbol(), where );
+        if( commandPost_ )
+            tools.DrawApp6Symbol( type_->GetHQSymbol(), where );
     }
 }
 
