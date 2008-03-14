@@ -54,6 +54,9 @@
 !insertmacro FileJoin
 !insertmacro TrimNewLines
 !insertmacro un.TrimNewLines
+!insertmacro FileReadFromEnd
+!insertmacro un.FileReadFromEnd
+!insertmacro un.GetParent
 
 ;.............................. Uninstaller Macros ..............................
 
@@ -166,6 +169,15 @@
         !define UnLog_Uninstall_CallBackFunc "un._LocateCallBack_Function_Interactive"
      !endif
 
+     !ifdef UnLog_Uninstall_FileReadFromEndCallBackFunc
+        !undef UnLog_Uninstall_FileReadFromEndCallBackFunc
+     !endif
+
+     !ifndef UnLog_Uninstall_FileReadFromEndCallBackFunc
+        !insertmacro UNINSTALL.LOG_UNINSTALL_ALL_CALLBACK
+        !define UnLog_Uninstall_FileReadFromEndCallBackFunc "un._FileReadFromEndCallback_Function"
+     !endif
+
   !verbose pop
 !macroend
 
@@ -192,10 +204,58 @@
         !insertmacro UNINSTALL.LOG_UNINSTALL_UNATTENDED
         !define UnLog_Uninstall_CallBackFunc "un._LocateCallBack_Function_Unattended"
      !endif
-
+     
+     !ifdef UnLog_Uninstall_FileReadFromEndCallBackFunc
+        !undef UnLog_Uninstall_FileReadFromEndCallBackFunc
+     !endif
+     
+     !ifndef UnLog_Uninstall_FileReadFromEndCallBackFunc
+        !insertmacro UNINSTALL.LOG_UNINSTALL_ALL_CALLBACK
+        !define UnLog_Uninstall_FileReadFromEndCallBackFunc "un._FileReadFromEndCallback_Function"
+     !endif
+     
   !verbose pop
 !macroend
 
+; -----------------------------------------------------------------------------------------------
+; $$$ SBO 2008-03-10: Simple macro to delete all files and directories logged during installation
+;                     and delete remaining empty directories
+; -----------------------------------------------------------------------------------------------
+!include "Locate.nsh"
+
+!macro UNINSTALL.LOG_UNINSTALL_ALL
+  !verbose push
+     !verbose ${UNINST_LOG_VERBOSE}
+
+     ${un.FileReadFromEnd} "${UNLOG_TEMP}" "${UnLog_Uninstall_FileReadFromEndCallBackFunc}"
+     ; Remove empty directories
+     ${locate::RMDirEmpty} "$INSTDIR" "/M=*.* /G=1 /B=1" $R1
+     ${locate::Unload}
+    
+  !verbose pop
+!macroend
+
+!macro UNINSTALL.LOG_UNINSTALL_ALL_CALLBACK
+
+    Function un._FileReadFromEndCallback_Function
+        ${un.TrimNewLines} "$9" "$9"
+        IfFileExists "$9\*.*" isdir
+        IfFileExists "$9" isfile end
+        
+      isfile:
+        Delete "$9"
+        goto end
+      
+      isdir:
+        RmDir "$9"
+        
+      end:
+        ClearErrors
+        Push $0
+    FunctionEnd
+
+!macroend
+; -----------------------------------------------------------------------------------------------
 
 !macro UNINSTALL.LOG_UNINSTALL_UNATTENDED
 
@@ -291,19 +351,22 @@
 !macro UNINSTALL.LOG_INSTALL_UNATTENDED
 
   Function _LocateCallBack_Function_Install
-    loop:
-        FileRead $unlog_tmp_2 "$unlog_tmp_3" ${NSIS_MAX_STRLEN}
-        ${TrimNewLines} "$unlog_tmp_3" "$unlog_tmp_3"
-        IfErrors 0 +4
-        ClearErrors
-        FileSeek $unlog_tmp_2 0 SET
-        goto next
-        StrCmp "$R9" "$unlog_tmp_3" end
-        goto loop
-    next:
-	FileWrite $unlog_tmp_1 "$R9$\r$\n"
-    end:
-	Push $unlog_tmp_0
+
+; $$$ SBO 2008-03-10: Disable check for file already logged
+;
+;    loop:
+;        FileRead $unlog_tmp_2 "$unlog_tmp_3" ${NSIS_MAX_STRLEN}
+;        ${TrimNewLines} "$unlog_tmp_3" "$unlog_tmp_3"
+;        IfErrors 0 +4
+;        ClearErrors
+;        FileSeek $unlog_tmp_2 0 SET
+;        goto next
+;        StrCmp "$R9" "$unlog_tmp_3" end
+;        goto loop
+;    next:
+    FileWrite $unlog_tmp_1 "$R9$\r$\n"
+;    end:
+    Push $unlog_tmp_0
   FunctionEnd
 
 !macroend

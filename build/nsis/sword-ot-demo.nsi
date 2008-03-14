@@ -8,7 +8,7 @@
 ; ------------------------------------------------------------------------------
 
 ;..................................................................................................
-!define APP_NAME "SWORD Officer Training"
+!define APP_NAME "SWORD Officer Training - Demo"
 
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
@@ -42,7 +42,7 @@
 !endif
 
 Name "${APP_NAME}"
-OutFile "${DISTDIR}\${APP_NAME} - Demo.exe"
+OutFile "${DISTDIR}\${APP_NAME}.exe"
 InstallDir "$PROGRAMFILES\${APP_NAME}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
@@ -180,23 +180,10 @@ SectionEnd
 ;--------------------------------
 Section UnInstall
     !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
-    !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\applications"
-    !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\data\terrains"
-    !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\data\models\ada\decisional"
-    !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\data\models\ada\physical"
-    !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\exercises"
-    !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR\doc"
-
-    ;end uninstall, after uninstall from all logged paths has been performed
+    !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
     !insertmacro UNINSTALL.LOG_END_UNINSTALL
-
     Delete "${UNINST_DAT}"
     Delete "${UNINST_EXE}"
-    RmDir $INSTDIR\data\models\ada
-    RmDir $INSTDIR\data\models
-    RmDir $INSTDIR\data
-    RmDir $INSTDIR
     RmDir /r "$SMPROGRAMS\${APP_NAME}"
-
     DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
 SectionEnd
