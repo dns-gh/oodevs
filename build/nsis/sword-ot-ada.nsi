@@ -7,6 +7,15 @@
 ;
 ; ------------------------------------------------------------------------------
 
+;..................................................................................................
+!define APP_NAME "SWORD Officer Training - ADA"
+
+!define INSTDIR_REG_ROOT "HKLM"
+!define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
+
+!include AdvUninstLog.nsh
+;..................................................................................................
+
 !ifndef RUNDIR
     !define RUNDIR "..\..\run\vc71"
 !endif
@@ -32,10 +41,15 @@
     !define APPLICATIONSDIR "..\..\src\applications"
 !endif
 
-Name "SWORD Officer Training - ADA version"
-OutFile "${DISTDIR}\SWORD Officer Training ADA.exe"
-InstallDir "$PROGRAMFILES\SWORD Officer Training ADA"
-InstallDirRegKey HKLM "Software\Masa\Sword-OT-ADA" "Install_Dir"
+Name "${APP_NAME}"
+OutFile "${DISTDIR}\${APP_NAME}.exe"
+InstallDir "$PROGRAMFILES\${APP_NAME}"
+InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
+
+!insertmacro UNATTENDED_UNINSTALL
+
+LicenseLangString LICENSE ${LANG_ENGLISH} "license-english.txt"
+LicenseLangString LICENSE ${LANG_FRENCH} "license-english.txt"
 
 ;--------------------------------
 Function .onInit
@@ -44,13 +58,19 @@ Function .onInit
     StrCmp $R0 0 +3
         MessageBox MB_OK|MB_ICONEXCLAMATION "Installer already running"
         Abort
+    !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
+FunctionEnd
+
+Function .onInstSuccess
+    ;create/update log always within .onInstSuccess function
+    !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 FunctionEnd
 
 ;--------------------------------
 Section "!Basic"
     SectionIn RO
-    
     SetOutPath "$INSTDIR\applications"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"
     File "${OUTDIR}\release\applications\gaming_app\*.exe"
     File "${OUTDIR}\release\applications\preparation_app\*.exe"
@@ -89,77 +109,84 @@ Section "!Basic"
     File "${RUNDIR}\population-vc71-mt.dll"
     File "${RUNDIR}\shapelib.dll"
     File "${OUTDIR}\generation_app\*.exe"
+    File "*.ico"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
+    CreateDirectory "$SMPROGRAMS\${APP_NAME}"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
+    CreateShortcut "$SMPROGRAMS\${APP_NAME}\uninstall.lnk" "${UNINST_EXE}"
+
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${APP_NAME}"
+    ;Same as create shortcut you need to use ${UNINST_EXE} instead of anything else.
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
+SectionEnd
+
+Section "Terrains"
+    SectionIn RO
     SetOutPath "$INSTDIR\data\terrains"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\terrains\Angers"
     File /r /x ".svn" "${DATADIR}\data\terrains\Mailly"
     File /r /x ".svn" "${DATADIR}\data\terrains\Paris_Est"
     File /r /x ".svn" "${DATADIR}\data\terrains\main"
-       
-    SetOutPath "$INSTDIR\applications"
-    WriteRegStr HKLM "Software\Masa\Sword-OT-ADA" "Install_Dir" "$INSTDIR"
-    CreateDirectory "$SMPROGRAMS\SWORD Officer Training ADA"
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training ADA\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training ADA\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section "Decisional models"
     SectionIn RO
     SetOutPath "$INSTDIR\data\models\ada\decisional"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\*.xml"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd    
 
 ;Section "Decisional models sources"
 ;    SectionIn RO
 ;    SetOutPath "$INSTDIR\data\models\main\decisional"
+;    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
 ;    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Sources"
+;    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 ;SectionEnd
 
 Section "Physical models"
     SectionIn RO
     SetOutPath "$INSTDIR\data\models\ada\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\france"    
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\france"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section "Exercises"
     SectionIn RO
     SetOutPath "$INSTDIR\exercises"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\exercises\ADA - Attaquer"
     File /r /x ".svn" "${DATADIR}\exercises\ADA - Donner_coup_arret"
     File /r /x ".svn" "${DATADIR}\exercises\ADA - Freiner"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section "Documentation"
     SectionIn RO
     SetOutPath "$INSTDIR\doc"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DOCDIR}\*.pdf"
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training ADA\User Guide.lnk" "$INSTDIR\doc\User Guide.pdf"
-SectionEnd
-
-;--------------------------------
-Section "Uninstaller files"
-    SectionIn RO
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "DisplayName" "SWORD Officer Training ADA"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "UninstallString" '"$INSTDIR\uninstall.exe"'
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "NoModify" 1
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa" "NoRepair" 1
-    WriteUninstaller "uninstall.exe"
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training ADA\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+    File /r /x ".svn" "third party"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\User Guide.lnk" "$INSTDIR\doc\User Guide.pdf"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 ;--------------------------------
 Section "Uninstall"
-    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-ADA-Masa"
-    DeleteRegKey HKLM "Software\Masa\Sword-OT-ADA"
-    Delete "$INSTDIR\uninstall.exe"
-    RmDir /r "$INSTDIR\applications"
-    RmDir /r "$INSTDIR\data"
-    RmDir /r "$INSTDIR\exercises"
-    RmDir "$INSTDIR"
-    Delete "$SMPROGRAMS\SWORD Officer Training ADA\Adaptation.lnk"
-    Delete "$SMPROGRAMS\SWORD Officer Training ADA\Frontend.lnk"
-    Delete "$SMPROGRAMS\SWORD Officer Training ADA\User Guide.lnk"    
-    Delete "$SMPROGRAMS\SWORD Officer Training ADA\uninstall.lnk"
-    RmDir "$SMPROGRAMS\SWORD Officer Training ADA"
+    !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
+    !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
+    !insertmacro UNINSTALL.LOG_END_UNINSTALL
+    Delete "${UNINST_DAT}"
+    Delete "${UNINST_EXE}"
+    RmDir /r "$SMPROGRAMS\${APP_NAME}"
+    DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
 SectionEnd

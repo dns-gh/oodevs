@@ -7,6 +7,15 @@
 ;
 ; ------------------------------------------------------------------------------
 
+;..................................................................................................
+!define APP_NAME "SWORD Officer Training"
+
+!define INSTDIR_REG_ROOT "HKLM"
+!define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
+
+!include AdvUninstLog.nsh
+;..................................................................................................
+
 !ifndef RUNDIR
     !define RUNDIR "..\..\run\vc71"
 !endif
@@ -32,10 +41,15 @@
     !define APPLICATIONSDIR "..\..\src\applications"
 !endif
 
-Name "SWORD Officer Training"
-OutFile "${DISTDIR}\SWORD Officer Training.exe"
-InstallDir "$PROGRAMFILES\SWORD Officer Training"
-InstallDirRegKey HKLM "Software\Masa\Sword-OT" "Install_Dir"
+Name "${APP_NAME}"
+OutFile "${DISTDIR}\${APP_NAME}.exe"
+InstallDir "$PROGRAMFILES\${APP_NAME}"
+InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
+
+!insertmacro UNATTENDED_UNINSTALL
+
+LicenseLangString LICENSE ${LANG_ENGLISH} "license-english.txt"
+LicenseLangString LICENSE ${LANG_FRENCH} "license-english.txt"
 
 ;--------------------------------
 Function .onInit
@@ -44,13 +58,19 @@ Function .onInit
     StrCmp $R0 0 +3
         MessageBox MB_OK|MB_ICONEXCLAMATION "Installer already running"
         Abort
+    !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
+FunctionEnd
+
+Function .onInstSuccess
+    ;create/update log always within .onInstSuccess function
+    !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 FunctionEnd
 
 ;--------------------------------
 Section "!Basic"
     SectionIn RO
-    
     SetOutPath "$INSTDIR\applications"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"
     File "${OUTDIR}\release\applications\gaming_app\*.exe"
     File "${OUTDIR}\release\applications\preparation_app\*.exe"
@@ -89,15 +109,27 @@ Section "!Basic"
     File "${RUNDIR}\population-vc71-mt.dll"
     File "${RUNDIR}\shapelib.dll"
     File "${OUTDIR}\generation_app\*.exe"
+    File "*.ico"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
+    CreateDirectory "$SMPROGRAMS\${APP_NAME}"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
+    CreateShortcut "$SMPROGRAMS\${APP_NAME}\uninstall.lnk" "${UNINST_EXE}"
+
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${APP_NAME}"
+    ;Same as create shortcut you need to use ${UNINST_EXE} instead of anything else.
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
+SectionEnd
+
+Section "Terrains"
+    SectionIn RO
     SetOutPath "$INSTDIR\data"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\terrains"
-       
-    SetOutPath "$INSTDIR\applications"
-    WriteRegStr HKLM "Software\Masa\Sword-OT" "Install_Dir" "$INSTDIR"
-    CreateDirectory "$SMPROGRAMS\SWORD Officer Training"
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 ;--------------------------------
@@ -105,23 +137,31 @@ SectionGroup "Main models"
 
 Section "Decisional models"
     SetOutPath "$INSTDIR\data\models\main\decisional"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\*.xml"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd    
 
 Section "Decisional models sources"
     SetOutPath "$INSTDIR\data\models\main\decisional"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Sources"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section "France Physical models"
     SetOutPath "$INSTDIR\data\models\main\physical"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\models\main\physical\france"    
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section "Worldwide Physical models"
     SetOutPath "$INSTDIR\data\models\main\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\main\physical\worldwide"    
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x ".svn" "${DATADIR}\data\models\main\physical\worldwide"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 SectionGroupEnd
@@ -131,31 +171,41 @@ SectionGroup "ADA models"
 
 Section "Decisional models"
     SetOutPath "$INSTDIR\data\models\ada\decisional"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\*.xml"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd    
 
 Section "Decisional models sources"
     SetOutPath "$INSTDIR\data\models\ada\decisional"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Sources"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section "France Physical models"
     SetOutPath "$INSTDIR\data\models\ada\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\france"    
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\france"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section "Worldwide Physical models"
     SetOutPath "$INSTDIR\data\models\ada\physical"
-    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\worldwide"    
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\worldwide"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section "Sample exercises"
     SetOutPath "$INSTDIR\exercises"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\exercises\ADA - Attaquer"
     File /r /x ".svn" "${DATADIR}\exercises\ADA - Donner_coup_arret"
     File /r /x ".svn" "${DATADIR}\exercises\ADA - Freiner"
     File /r /x ".svn" "${DATADIR}\exercises\BAE"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 SectionGroupEnd
@@ -165,26 +215,35 @@ SectionGroup "Civilian models"
 
 Section /o "Decisional models"
     SetOutPath "$INSTDIR\data\models\civilian\decisional"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /nonfatal /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Binaires"
     File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\*.xml"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd    
 
 Section /o "Decisional models sources"
     SetOutPath "$INSTDIR\data\models\civilian\decisional"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Sources"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section /o "Physical models"
     SetOutPath "$INSTDIR\data\models\civilian\physical"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\models\civilian\physical"
-    
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SetOutPath "$INSTDIR\data\population"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\data\population"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 Section /o "Sample exercises"
     SetOutPath "$INSTDIR\exercises"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DATADIR}\exercises\bruxelles"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 SectionGroupEnd
@@ -192,33 +251,20 @@ SectionGroupEnd
 Section "Documentation"
     SectionIn RO
     SetOutPath "$INSTDIR\doc"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DOCDIR}\*.pdf"
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\User Guide.lnk" "$INSTDIR\doc\User Guide.pdf"
-SectionEnd
-
-;--------------------------------
-Section "Uninstaller files"
-    SectionIn RO
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-Masa" "DisplayName" "SWORD Officer Training"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-Masa" "UninstallString" '"$INSTDIR\uninstall.exe"'
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-Masa" "NoModify" 1
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-Masa" "NoRepair" 1
-    WriteUninstaller "uninstall.exe"
-    CreateShortCut "$SMPROGRAMS\SWORD Officer Training\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+    File /r /x ".svn" "third party"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\User Guide.lnk" "$INSTDIR\doc\User Guide.pdf"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 ;--------------------------------
 Section "Uninstall"
-    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sword-OT-Masa"
-    DeleteRegKey HKLM "Software\Masa\Sword-OT"
-    Delete "$INSTDIR\uninstall.exe"
-    RmDir /r "$INSTDIR\applications"
-    RmDir /r "$INSTDIR\data"
-    RmDir /r "$INSTDIR\exercises"
-    RmDir "$INSTDIR"
-    Delete "$SMPROGRAMS\SWORD Officer Training\Adaptation.lnk"
-    Delete "$SMPROGRAMS\SWORD Officer Training\Frontend.lnk"
-    Delete "$SMPROGRAMS\SWORD Officer Training\User Guide.lnk"    
-    Delete "$SMPROGRAMS\SWORD Officer Training\uninstall.lnk"
-    RmDir "$SMPROGRAMS\SWORD Officer Training"
+    !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
+    !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
+    !insertmacro UNINSTALL.LOG_END_UNINSTALL
+    Delete "${UNINST_DAT}"
+    Delete "${UNINST_EXE}"
+    RmDir /r "$SMPROGRAMS\${APP_NAME}"
+    DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
 SectionEnd
