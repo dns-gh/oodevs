@@ -26,10 +26,12 @@ using namespace tools;
 // -----------------------------------------------------------------------------
 SessionConfig::SessionConfig()
     : sessionConfigFile_( "session.xml" )
+    , hasCheckPoint_( false )
 {
     po::options_description desc( "Exercise options" );
     desc.add_options()
-        ( "session", po::value< std::string >( &sessionName_ ), "specify session name" )
+        ( "session",    po::value< std::string >( &sessionName_ ), "specify session name" )
+        ( "checkpoint", po::value< std::string >( &strCheckPointName_ ), "specify checkpoint to load"               )
     ;
     AddOptions( desc );
 }
@@ -41,6 +43,16 @@ SessionConfig::SessionConfig()
 SessionConfig::~SessionConfig()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionConfig::Parse
+// Created: AGE 2008-03-14
+// -----------------------------------------------------------------------------
+void SessionConfig::Parse( int argc, char** argv )
+{
+    ExerciseConfig::Parse( argc, argv );
+    hasCheckPoint_ = IsSet( "checkpoint" );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,5 +109,29 @@ std::string SessionConfig::GetCheckpointDirectory( const std::string& checkpoint
     return BuildDirectoryFile( GetCheckpointsDirectory(), checkpoint );
 }
 
+// -----------------------------------------------------------------------------
+// Name: SessionConfig::HasCheckpoint
+// Created: AGE 2008-03-14
+// -----------------------------------------------------------------------------
+bool SessionConfig::HasCheckpoint() const
+{
+    return hasCheckPoint_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: SessionConfig::GetCheckpointName
+// Created: AGE 2008-03-14
+// -----------------------------------------------------------------------------
+std::string SessionConfig::GetCheckpointName() const
+{
+    return strCheckPointName_;
+}
 
-
+// -----------------------------------------------------------------------------
+// Name: SessionConfig::GetCheckpointDirectory
+// Created: AGE 2008-03-14
+// -----------------------------------------------------------------------------
+std::string SessionConfig::GetCheckpointDirectory() const
+{
+    return GetCheckpointDirectory( strCheckPointName_ );
+}

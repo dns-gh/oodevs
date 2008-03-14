@@ -109,7 +109,7 @@ void ClientNetworker::ConnectionFailed( const std::string& , const std::string& 
 // Name: ClientNetworker::ConnectionError
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ClientNetworker::ConnectionError( const std::string& endpoint, const std::string& error )
+void ClientNetworker::ConnectionError( const std::string& endpoint, const std::string& )
 {
     sockets_->Disconnect( endpoint );
     if( retry_ )

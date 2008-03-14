@@ -74,7 +74,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     
     ReadStaticData();
     
-    if( config_.UseCheckPoint() )
+    if( config_.HasCheckpoint() )
         pCheckPointManager_->LoadCheckPoint( config_ );
     else
     {

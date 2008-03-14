@@ -40,26 +40,6 @@ bool MIL_Config::CheckAutomateComposition() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::GetCheckPointName
-// Created: NLD 2003-12-04
-// -----------------------------------------------------------------------------
-inline
-const std::string& MIL_Config::GetCheckPointName() const
-{
-    return strCheckPointName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::UseCheckPoint
-// Created: NLD 2003-12-04
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Config::UseCheckPoint() const
-{
-    return bCheckPoint_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::UseDiaDebugger
 // Created: AGN 2004-03-23
 // -----------------------------------------------------------------------------

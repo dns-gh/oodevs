@@ -40,6 +40,12 @@ public:
     virtual std::string GetRecordDirectory() const;
     virtual std::string GetCheckpointsDirectory() const;
     virtual std::string GetCheckpointDirectory( const std::string& checkpoint ) const;
+
+    virtual bool HasCheckpoint() const;
+    virtual std::string GetCheckpointName() const;
+    virtual std::string GetCheckpointDirectory() const;
+
+    virtual void Parse( int argc, char** argv );
     //@}
 
 private:
@@ -54,6 +60,8 @@ private:
     //@{
     const std::string sessionConfigFile_;
     std::string sessionName_;
+    bool hasCheckPoint_;
+    std::string strCheckPointName_;
     //@}
 };
 

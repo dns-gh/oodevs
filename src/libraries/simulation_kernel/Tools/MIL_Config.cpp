@@ -32,7 +32,6 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 MIL_Config::MIL_Config()
     : bCheckPointOrbat_         ( false )
-    , bCheckPoint_              ( false )
     , bUseCheckPointCRC_        ( true )
     , bUseOnlyDIAArchive_       ( false )
     , bCheckAutomateComposition_( false )
@@ -48,7 +47,6 @@ MIL_Config::MIL_Config()
 {
     po::options_description desc( "Simulation options" );
     desc.add_options()
-        ( "checkpoint"     , po::value< std::string >( &strCheckPointName_ ), "specify checkpoint to load"               )
         ( "checkpointorbat",                                                  "use backup orbat with checkpoint"         )
         ( "test"           ,                                                  "test mode: loading + first tick"          )
         ( "testdata"       ,                                                  "test mode: load models only (no terrain)" )
@@ -74,7 +72,6 @@ void MIL_Config::Parse( int argc, char** argv )
     tools::SessionConfig::Parse( argc, argv );
     bDataTestMode_    = IsSet( "testdata" );
     bTestMode_        = bDataTestMode_ || IsSet( "test" );
-    bCheckPoint_      = IsSet( "checkpoint" );
     bCheckPointOrbat_ = IsSet( "checkpointorbat" );
     ReadSessionFile( GetSessionFile() );
 }
@@ -201,15 +198,6 @@ std::string MIL_Config::GetOrbatFile() const
     if( bCheckPointOrbat_ )
         return BuildCheckpointChildFile( "orbat.xml" );
     return tools::SessionConfig::GetOrbatFile();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetCheckpointDirectory
-// Created: AGE 2008-03-13
-// -----------------------------------------------------------------------------
-std::string MIL_Config::GetCheckpointDirectory() const
-{
-    return tools::SessionConfig::GetCheckpointDirectory( strCheckPointName_ );
 }
 
 // -----------------------------------------------------------------------------

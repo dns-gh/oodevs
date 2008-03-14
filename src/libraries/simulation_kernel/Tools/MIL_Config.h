@@ -36,20 +36,18 @@ public:
     ~MIL_Config();
 
     //! @name Accessors
-    //@{  
+    //@{
           bool         UseOnlyDIAArchive          () const;
           bool         CheckAutomateComposition   () const;
           bool         UseDecDebug                () const;
           bool         UsePathDebug               () const;
           bool         IsProfilingEnabled         () const;
-    const std::string& GetCheckPointName          () const;
           bool         IsDataTestMode             () const;
           bool         IsTestMode                 () const;
           bool         IsDispatcherEmbedded       () const;
           uint16       GetNetworkPort             () const;
           bool         IsThreadedNetwork          () const;
 
-          bool         UseCheckPoint          () const;  
           bool         UseCheckPointCRC       () const;
           bool         UseDiaDebugger         () const;
           uint16       GetDiaDebuggerPort     () const;
@@ -74,8 +72,7 @@ public:
     bool IsPopulationEnabled() const;
     std::string GetPopulationDir() const;
 
-    virtual std::string GetCheckpointDirectory() const;
-    virtual std::string GetOrbatFile   () const;
+    virtual std::string GetOrbatFile() const;
     //@}
 
     //! @name CheckPoints
@@ -107,9 +104,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string                strCheckPointName_;
     bool                       bCheckPointOrbat_;
-    bool                       bCheckPoint_;
     bool                       bUseCheckPointCRC_;
     unsigned int               checkPointsKept_;
     unsigned int               checkPointsFrequency_;
