@@ -122,6 +122,12 @@ Section "!Basic"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${APP_NAME}"
     ;Same as create shortcut you need to use ${UNINST_EXE} instead of anything else.
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
+    
+    ; register .otpak extension association
+    WriteRegStr HKCR ".otpak" "" "Officer Training Package"
+	WriteRegStr HKCR ".otpak\shell" "" "open"
+	WriteRegStr HKCR ".otpak\DefaultIcon" "" "$INSTDIR\applications\frontend_app.exe,0"
+	WriteRegStr HKCR ".otpak\shell\open\command" "" '$INSTDIR\applications\frontend_app.exe --install="%1"'
 SectionEnd
 
 Section "Terrains"
@@ -189,4 +195,7 @@ Section "Uninstall"
     Delete "${UNINST_EXE}"
     RmDir /r "$SMPROGRAMS\${APP_NAME}"
     DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
+    
+    ; unregister .otpak extension association
+    DeleteRegKey HKCR ".otpak"
 SectionEnd
