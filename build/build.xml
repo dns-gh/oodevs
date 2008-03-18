@@ -308,7 +308,7 @@
 
     <target name="application.frontend_app" description="build CSword Frontend executable" depends="library.frontend">
         <build-app name="frontend_app" depends="mt,qt,boost,asio,xeumeuleu,flexlm"
-                   libs="bugtrap,tools
+                   libs="bugtrap,zipstream,tools
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
                          lib${ant.project.name}_frontend-${platform}-mt
