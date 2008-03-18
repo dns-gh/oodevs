@@ -125,9 +125,9 @@ Section "!Basic"
     
     ; register .otpak extension association
     WriteRegStr HKCR ".otpak" "" "Officer Training Package"
-	WriteRegStr HKCR ".otpak\shell" "" "open"
-	WriteRegStr HKCR ".otpak\DefaultIcon" "" "$INSTDIR\applications\frontend_app.exe,0"
-	WriteRegStr HKCR ".otpak\shell\open\command" "" '$INSTDIR\applications\frontend_app.exe --install="%1"'
+	WriteRegStr HKCR "Officer Training Package\shell" "" "open"
+	WriteRegStr HKCR "Officer Training Package\DefaultIcon" "" "$INSTDIR\applications\sword-ot.ico"
+	WriteRegStr HKCR "Officer Training Package\shell\open\command" "" '$INSTDIR\applications\frontend_app.exe --install="%1"'
 SectionEnd
 
 Section "Terrains"

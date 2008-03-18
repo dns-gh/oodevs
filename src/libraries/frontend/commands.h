@@ -22,6 +22,8 @@ namespace zip
 
 namespace frontend
 {
+    class Config;
+
     namespace commands
     {
         QStringList ListTerrains      ( const tools::GeneralConfig& config );
@@ -31,7 +33,7 @@ namespace frontend
         QStringList ListModels        ( const tools::GeneralConfig& config );
         QStringList ListPhysicalModels( const tools::GeneralConfig& config, const std::string& model );
         QStringList ListPackageFiles  ( const std::string& filename );
-        void        InstallPackageFile( const tools::GeneralConfig& config, zip::izipfile& archive, const std::string& filename );
+        void        InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination );
     }
 }
 

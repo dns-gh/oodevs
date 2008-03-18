@@ -131,19 +131,31 @@ namespace frontend
             return list;
         }
 
-        void InstallPackageFile( const tools::GeneralConfig& config, zip::izipfile& archive, const std::string& filename )
+        bfs::path Normalize( bfs::path& p )
         {
-            if( bfs::is_directory( filename ) )
+            bfs::path result;
+            for( bfs::path::iterator it = p.begin(); it != p.end(); ++it )
+                if( *it == ".." ) // $$$$ SBO 2008-03-18: && !result.is_root()
+                    result.remove_leaf();
+                else
+                    result /= *it;
+            return result;
+        }
+
+        void InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination )
+        {
+            bfs::path p = bfs::path( destination, bfs::native ) / filename;
+            p = Normalize( p );
+            if( p.leaf() == "." )
                 return;
             zip::izipstream file( archive, filename.c_str() );
             if( file.good() )
             {
-                bfs::path p( bfs::path( config.GetRootDir(), bfs::native ) / filename );
                 bfs::create_directories( p.branch_path() );
-                std::ofstream destination( p.native_file_string().c_str() );
+                std::ofstream output( p.native_file_string().c_str() );
                 std::istreambuf_iterator< char > it( file );
                 std::istreambuf_iterator< char > end;
-                std::ostreambuf_iterator< char > out( destination );
+                std::ostreambuf_iterator< char > out( output );
                 std::copy( it, end, out );
             }
         }

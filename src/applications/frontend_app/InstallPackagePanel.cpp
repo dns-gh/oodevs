@@ -26,6 +26,12 @@
 #include <qprogressbar.h>
 #include <qcursor.h>
 
+#pragma warning( disable: 4127 4244 4245 )
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/convenience.hpp>
+
+namespace bfs = boost::filesystem;
+
 // -----------------------------------------------------------------------------
 // Name: InstallPackagePanel constructor
 // Created: SBO 2008-03-14
@@ -95,6 +101,32 @@ void InstallPackagePanel::BrowseClicked()
     Update();
 }
 
+namespace
+{
+    bfs::path Normalize( bfs::path& p )
+    {
+        bfs::path result;
+        for( bfs::path::iterator it = p.begin(); it != p.end(); ++it )
+            if( *it == ".." ) // $$$$ SBO 2008-03-18: && !result.is_root()
+                result.remove_leaf();
+            else if( *it != "." )
+                result /= *it;
+        return result;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InstallPackagePanel::GetDestinationDirectory
+// Created: SBO 2008-03-18
+// -----------------------------------------------------------------------------
+std::string InstallPackagePanel::GetDestinationDirectory() const
+{
+    bfs::path p( config_.GetRootDir(), bfs::native );
+    if( !p.has_root_name() )
+        p = Normalize( bfs::path( qApp->applicationDirPath().ascii(), bfs::native ) / p );
+    return p.native_file_string();
+}
+
 // -----------------------------------------------------------------------------
 // Name: InstallPackagePanel::InstallPackage
 // Created: SBO 2008-03-14
@@ -112,7 +144,7 @@ void InstallPackagePanel::InstallPackage()
             okay_->setDisabled( true );
             for( unsigned int i = 0; i < content_->count(); ++i )
             {
-                frontend::commands::InstallPackageFile( config_, archive, content_->item( i )->text().ascii() );
+                frontend::commands::InstallPackageFile( archive, content_->item( i )->text().ascii(), GetDestinationDirectory() );
                 progress_->setProgress( i + 1 );
                 qApp->processEvents();
             }
@@ -134,7 +166,7 @@ void InstallPackagePanel::Update()
     if( ReadContentFile() )
     {
         okay_->setDisabled( false );
-        bubble_->ShowInfo( tr( "Click \"Install package\" button to install the content of the package." ) );
+        bubble_->ShowInfo( tr( "Click \"Install package\" button to install the content of the package.\nPackage will be installed to: %1" ).arg( GetDestinationDirectory().c_str() ) );
         content_->insertStringList( frontend::commands::ListPackageFiles( package_->text().ascii() ) );
     }
     else

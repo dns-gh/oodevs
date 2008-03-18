@@ -63,6 +63,7 @@ private:
     //@{
     virtual void Update();
     bool ReadContentFile();
+    std::string GetDestinationDirectory() const;
     //@}
 
 private:
