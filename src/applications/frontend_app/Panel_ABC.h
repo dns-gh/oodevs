@@ -44,6 +44,7 @@ private:
 protected:
     //! @name Helpers
     //@{
+    virtual void setShown( bool show );
     virtual void showEvent( QShowEvent* event );
     virtual void Update();
     void ShowNext();

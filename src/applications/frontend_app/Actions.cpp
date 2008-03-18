@@ -140,3 +140,15 @@ QAction& Actions::JoinAnalysis()
     result.setToolTip( tr( "Join an analysis session" ) );
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Actions::InstallPackage
+// Created: SBO 2008-03-14
+// -----------------------------------------------------------------------------
+QAction& Actions::InstallPackage()
+{
+    QAction& result = CreateAction( tr( "Install package" ), "Install package" );
+    result.setIconSet( MAKE_PIXMAP( exercise_create ) );
+    result.setToolTip( tr( "Install a data package" ) );
+    return result;
+}

@@ -19,9 +19,9 @@ class QWidgetStack;
 class MainMenu;
 class ActionList;
 
-namespace tools
+namespace frontend
 {
-    class GeneralConfig;
+    class Config;
 }
 
 // =============================================================================
@@ -58,21 +58,14 @@ private:
     void AddAction( const QString& category, QAction& action );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< std::pair< QString, QAction* > > T_Actions;
-    typedef T_Actions::const_iterator                   CIT_Actions;
-    //@}
-
 private:
     //! @name Member data
     //@{
     ActionLinker linker_;
-    T_Actions actions_;
     ActionList* list_;
     MainMenu*   menu_;
     QWidgetStack* pages_;
-    std::auto_ptr< tools::GeneralConfig > config_;
+    std::auto_ptr< frontend::Config > config_;
     //@}
 };
 

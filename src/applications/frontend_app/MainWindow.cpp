@@ -19,13 +19,15 @@
 #include "RestartExercisePanel.h"
 #include "JoinExercisePanel.h"
 #include "JoinAnalysisPanel.h"
+#include "InstallPackagePanel.h"
 #include "Actions.h"
-#include "tools/GeneralConfig.h"
+#include "frontend/Config.h"
 #include "clients_gui/resources.h"
 
 #include <qapplication.h>
 #include <qaction.h>
 #include <qwidgetstack.h>
+#include <qtimer.h>
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -33,7 +35,7 @@
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow()
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
-    , config_( new tools::GeneralConfig() )
+    , config_( new frontend::Config() )
 {
     config_->Parse( qApp->argc(), qApp->argv() );
     setCaption( APP_NAME );
@@ -63,6 +65,9 @@ MainWindow::MainWindow()
     AddAction< StartAnalysisPanel >( tr( "Analyse" ), actions.StartAnalysis() );
     AddAction< JoinAnalysisPanel >( tr( "Analyse" ), actions.JoinAnalysis() );
 
+    QAction& installAction = actions.InstallPackage();
+    AddAction< InstallPackagePanel >( tr( "Manage" ), installAction );
+
     linker_, "Create exercise", "Edit exercise", "Start exercise", "Join exercise";
     linker_, "Start analysis", "Join analysis";
 
@@ -70,6 +75,9 @@ MainWindow::MainWindow()
 
     setCentralWidget( box );
     CenterWindow();
+
+    if( !config_->GetPackageFile().empty() )
+        QTimer::singleShot( 0, &installAction, SLOT( toggle() ) );
 }
 
 // -----------------------------------------------------------------------------

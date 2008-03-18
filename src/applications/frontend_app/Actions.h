@@ -48,6 +48,11 @@ public:
     QAction& JoinAnalysis();
     //@}
 
+    //! @name Administration
+    //@{
+    QAction& InstallPackage();
+    //@}
+
 private:
     //! @name Helpers
     //@{

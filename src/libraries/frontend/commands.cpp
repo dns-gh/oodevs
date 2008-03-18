@@ -15,6 +15,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.h>
+#include <zipstream/zipstream.h>
 
 namespace bfs = boost::filesystem;
 
@@ -113,6 +114,38 @@ namespace frontend
         QStringList ListPhysicalModels( const tools::GeneralConfig& config, const std::string& model )
         {
             return ListDirectories( config.GetPhysicalsDir( model ), &IsValidPhysicalModel );
+        }
+
+        QStringList ListPackageFiles( const std::string& filename )
+        {
+            QStringList list;
+            zip::izipfile archive( filename );
+            if( archive.isOk() )
+                while( archive.browse() )
+                {
+                    const QString name = archive.getCurrentFileName().c_str();
+                    if( name != "content.xml" ) // $$$$ SBO 2008-03-17: hard coded!
+                        list.append( name );
+                }
+            archive.close();
+            return list;
+        }
+
+        void InstallPackageFile( const tools::GeneralConfig& config, zip::izipfile& archive, const std::string& filename )
+        {
+            if( bfs::is_directory( filename ) )
+                return;
+            zip::izipstream file( archive, filename.c_str() );
+            if( file.good() )
+            {
+                bfs::path p( bfs::path( config.GetRootDir(), bfs::native ) / filename );
+                bfs::create_directories( p.branch_path() );
+                std::ofstream destination( p.native_file_string().c_str() );
+                std::istreambuf_iterator< char > it( file );
+                std::istreambuf_iterator< char > end;
+                std::ostreambuf_iterator< char > out( destination );
+                std::copy( it, end, out );
+            }
         }
     }
 

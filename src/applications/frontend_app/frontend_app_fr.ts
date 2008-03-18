@@ -65,6 +65,14 @@
         <source>Join an analysis session</source>
         <translation>Rejoint une session d&apos;analyse</translation>
     </message>
+    <message>
+        <source>Install package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install a data package</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateExercisePanel</name>
@@ -213,6 +221,10 @@
     <message>
         <source>Analyse</source>
         <translation>Analyser</translation>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
