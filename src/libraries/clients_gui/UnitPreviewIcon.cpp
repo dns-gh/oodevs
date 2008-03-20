@@ -18,6 +18,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "tools/App6Symbol.h"
 
 using namespace kernel;
 using namespace gui;
@@ -118,8 +119,10 @@ void UnitPreviewIcon::UpdateSymbol()
 {
     if( selectedParent_ )
     {
+        std::string symbol = selectedParent_->Get< TacticalHierarchies >().GetSymbol();
+        symbol = tools::app6::MergeSymbol( symbol_, symbol );
         QImage img;
-        SymbolIcon icon( symbol_, level_ );
+        SymbolIcon icon( symbol, level_ );
         icon.SetColor( colorStrategy_.FindColor( *selectedParent_ ) );
         icon.SetSize( 128 );
         img = icons_.GetSymbol( icon );

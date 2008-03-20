@@ -221,7 +221,7 @@ void Object::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& v
 void Object::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
-        << attribute( "type", type_.GetName() )
+        << attribute( "type", type_.GetType() )
         << attribute( "name", name_ );
     
     if( type_.CanBeReservedObstacle() )

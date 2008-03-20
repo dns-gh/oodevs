@@ -22,12 +22,11 @@ using namespace xml;
 ObjectType::ObjectType( xistream& xis, unsigned long id )
     : id_( id )
 {
-    std::string xmlType;
-    xis >> attribute( "type", xmlType )
+    xis >> attribute( "type", type_ )
         >> attribute( "can-be-maneuver-obstacle", canBeReservedObstacle_ )
         >> attribute( "can-be-developed", canBeValorized_ )
         >> attribute( "can-be-bypassed", canBeBypassed_ );
-    name_ = tools::TranslateObjectType( xmlType );
+    name_ = tools::TranslateObjectType( type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +45,15 @@ ObjectType::~ObjectType()
 std::string ObjectType::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::GetType
+// Created: SBO 2008-03-20
+// -----------------------------------------------------------------------------
+std::string ObjectType::GetType() const
+{
+    return type_;
 }
 
 // -----------------------------------------------------------------------------

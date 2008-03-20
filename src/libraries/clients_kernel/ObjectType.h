@@ -33,6 +33,7 @@ public:
     //! @name Operations
     //@{
     std::string GetName() const;
+    std::string GetType() const;
 
     bool CanBeReservedObstacle() const;
     bool CanBeValorized() const;
@@ -53,6 +54,7 @@ public:
     //@{
     unsigned long id_;
     std::string name_;
+    std::string type_;
 
     bool canBeReservedObstacle_;
     bool canBeValorized_;
