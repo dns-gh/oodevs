@@ -98,9 +98,10 @@ ActionParameterObjectKnowledge::~ActionParameterObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ActionParameterObjectKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_objectKnowledge;
-    ActionParameterEntity< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.objectKnowledge );
-    asn.null_value = asn.value.u.objectKnowledge ? 0 : 1;
+    if( IsSet() )
+        ActionParameterEntity< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.objectKnowledge );
 }
 
 // -----------------------------------------------------------------------------

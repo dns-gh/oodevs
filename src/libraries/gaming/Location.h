@@ -60,6 +60,7 @@ protected:
     //@{
     void PushFront( const geometry::Point2f& point );
     void PushBack( const geometry::Point2f& point );
+    bool IsValid() const;
     //@}
 
 private:

@@ -28,7 +28,6 @@ public:
     //@{
              ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn );
-             ActionParameterLocation( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
              ActionParameterLocation( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~ActionParameterLocation();
     //@}
@@ -50,6 +49,7 @@ public:
     void Clean( ASN1T_Location& asn ) const;
 
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
+    virtual bool IsSet() const;
     //@}
 
 private:

@@ -69,9 +69,10 @@ ActionParameterAutomat::~ActionParameterAutomat()
 // -----------------------------------------------------------------------------
 void ActionParameterAutomat::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_automat;
-    ActionParameterEntity< Automat_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.automat );
-    asn.null_value = asn.value.u.automat ? 0 : 1;
+    if( IsSet() )
+        ActionParameterEntity< Automat_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.automat );
 }
 
 // -----------------------------------------------------------------------------

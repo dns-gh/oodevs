@@ -41,6 +41,7 @@ public:
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual bool IsSet() const;
     //@}
 
 protected:

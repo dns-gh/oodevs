@@ -61,7 +61,7 @@ ActionParameterLocationList::~ActionParameterLocationList()
 // -----------------------------------------------------------------------------
 void ActionParameterLocationList::ReadLocation( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
-    AddParameter( *new ActionParameterLocation( converter, xis ) );
+    AddParameter( *new ActionParameterLocation( OrderParameter( xml::attribute< std::string >( xis, "name" ), "location", false ), converter, xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,13 +70,15 @@ void ActionParameterLocationList::ReadLocation( xml::xistream& xis, const Coordi
 // -----------------------------------------------------------------------------
 void ActionParameterLocationList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_locationList;
     ASN1T_LocationList*& list = asn.value.u.locationList = new ASN1T_LocationList();
-    asn.null_value = ( list->n = Count() ) ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_Location[list->n];
-    CommitTo( *list );
+    list->n = Count();
+    if( IsSet() )
+    {
+        list->elem = new ASN1T_Location[list->n];
+        CommitTo( *list );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -157,4 +159,13 @@ void ActionParameterLocationList::DisplayTooltip( const kernel::Viewport_ABC& vi
     ActionParameter< QString >::DisplayTooltip( viewport, tools );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocationList::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterLocationList::IsSet() const
+{
+    return !elements_.empty(); // $$$$ SBO 2008-03-19: each element must be set as well...
 }

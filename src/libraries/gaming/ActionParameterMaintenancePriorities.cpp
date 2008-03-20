@@ -82,15 +82,16 @@ void ActionParameterMaintenancePriorities::AddPriority( const EquipmentType& val
 // -----------------------------------------------------------------------------
 void ActionParameterMaintenancePriorities::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_logMaintenancePriorities;
     ASN1T_LogMaintenancePriorities*& list = asn.value.u.logMaintenancePriorities = new ASN1T_LogMaintenancePriorities();
     list->n = priorities_.size();
-    asn.null_value = list->n ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_EquipmentType[ list->n ];
-    for( unsigned int i = 0; i < priorities_.size(); ++i )
-        list->elem[i] = priorities_.at( i )->GetId();
+    if( IsSet() )
+    {
+        list->elem = new ASN1T_EquipmentType[ list->n ];
+        for( unsigned int i = 0; i < priorities_.size(); ++i )
+            list->elem[i] = priorities_.at( i )->GetId();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -129,4 +130,13 @@ void ActionParameterMaintenancePriorities::Serialize( xml::xostream& xos ) const
     for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
         value += ( !value.isEmpty() ? ";" : "" ) + QString::number( (*it)->GetId() );
     xos << attribute( "value", value.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterMaintenancePriorities::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterMaintenancePriorities::IsSet() const
+{
+    return !priorities_.empty();
 }

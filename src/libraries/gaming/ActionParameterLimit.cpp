@@ -57,10 +57,11 @@ ActionParameterLimit::~ActionParameterLimit()
 // -----------------------------------------------------------------------------
 void ActionParameterLimit::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_line;
     asn.value.u.line = new ASN1T_Line();
-    ActionParameterLocation::CommitTo( *asn.value.u.line );
-    asn.null_value = asn.value.u.line->coordinates.n ? 0 : 1;
+    if( IsSet() )
+        ActionParameterLocation::CommitTo( *asn.value.u.line );
 }
 
 // -----------------------------------------------------------------------------

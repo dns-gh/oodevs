@@ -27,28 +27,30 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const QString& titl
     , controller_( controller )
     , entity_    ( entity )
 {
-    setMinimumSize( 250, 250 ); // $$$$ SBO 2007-04-27: 
+    setMinimumSize( 280, 250 ); // $$$$ SBO 2007-04-27: 
     CreateTitle( title );
-    QTabWidget* tabs = new QTabWidget( this );
+    tabs_ = new QTabWidget( this );
     {
-        QScrollView* sc = new QScrollView( tabs );
-        sc->setVScrollBarMode( QScrollView::AlwaysOn );
+        QScrollView* sc = new QScrollView( tabs_ );
         sc->setResizePolicy( QScrollView::AutoOneFit );
-        mainTab_ = new QVBox( sc->viewport() );
+        sc->setFrameStyle( QFrame::NoFrame );
+        mainTab_ = new QVBox( sc );
         mainTab_->setMargin( 5 );
         mainTab_->setSpacing( 5 );
         sc->addChild( mainTab_ );
-        tabs->addTab( sc, tr( "Mandatory" ) );
+        mainTab_->layout()->setAlignment( Qt::AlignTop );
+        tabs_->addTab( sc, tr( "Mandatory" ) );
     }
     {
-        QScrollView* sc = new QScrollView( tabs );
-        sc->setVScrollBarMode( QScrollView::AlwaysOn );
+        QScrollView* sc = new QScrollView( tabs_ );
         sc->setResizePolicy( QScrollView::AutoOneFit );
-        optionalTab_ = new QVBox( sc->viewport() );
+        sc->setFrameStyle( QFrame::NoFrame );
+        optionalTab_ = new QVBox( sc );
         optionalTab_->setMargin( 5 );
         optionalTab_->setSpacing( 5 );
         sc->addChild( optionalTab_ );
-        tabs->addTab( sc, tr( "Optional" ) );
+        optionalTab_->layout()->setAlignment( Qt::AlignTop );
+        tabs_->addTab( sc, tr( "Optional" ) );
     }
     CreateOkCancelButtons();
 }

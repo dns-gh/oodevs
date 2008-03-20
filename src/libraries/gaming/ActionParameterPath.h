@@ -48,6 +48,7 @@ public:
     void CommitTo( ASN1T_Path& asn ) const;
     void Clean( ASN1T_Path& asn ) const;
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
+    virtual bool IsSet() const;
     //@}
 
 protected:

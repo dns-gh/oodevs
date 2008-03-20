@@ -16,23 +16,6 @@
 using namespace kernel;
 using namespace xml;
 
-namespace
-{
-    unsigned long ReadId( xml::xistream& xis )
-    {
-        unsigned long id;
-        xis >> xml::attribute( "value", id );
-        return id;
-    }
-
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> xml::attribute( "name", name );
-        return name.c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterPopulationKnowledge constructor
 // Created: SBO 2007-05-24
@@ -59,7 +42,7 @@ ActionParameterPopulationKnowledge::ActionParameterPopulationKnowledge( const Or
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 ActionParameterPopulationKnowledge::ActionParameterPopulationKnowledge( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Population_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : ActionParameterEntity< PopulationKnowledge_ABC >( parameter, converter.Find( resolver.Get( ReadId( xis ) ), owner ) )
+    : ActionParameterEntity< PopulationKnowledge_ABC >( parameter, converter.Find( resolver.Get( attribute< unsigned long >( xis, "value" ) ), owner ) )
 {
     // NOTHING
 }
@@ -79,9 +62,10 @@ ActionParameterPopulationKnowledge::~ActionParameterPopulationKnowledge()
 // -----------------------------------------------------------------------------
 void ActionParameterPopulationKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_populationKnowledge;
-    ActionParameterEntity< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.populationKnowledge );
-    asn.null_value = asn.value.u.populationKnowledge ? 0 : 1;
+    if( IsSet() )
+        ActionParameterEntity< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.populationKnowledge );
 }
 
 // -----------------------------------------------------------------------------

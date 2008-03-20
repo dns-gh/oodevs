@@ -50,6 +50,7 @@ LimitParameter::~LimitParameter()
 void LimitParameter::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent );
+    box->setSpacing( 5 );
     pLabel_ = new gui::RichLabel( GetName(), false, box );
     entityLabel_ = new QLabel( "---", box );
     entityLabel_->setMinimumWidth( 100 );

@@ -61,7 +61,8 @@ void ActionParameterPolygon::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_polygon;
     asn.value.u.polygon = new ASN1T_Polygon();
-    ActionParameterLocation::CommitTo( *asn.value.u.polygon );
+    if( IsSet() )
+        ActionParameterLocation::CommitTo( *asn.value.u.polygon );
 }
 
 // -----------------------------------------------------------------------------

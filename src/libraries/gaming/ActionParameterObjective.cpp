@@ -90,7 +90,8 @@ void ActionParameterObjective::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_missionObjective;
     asn.value.u.missionObjective = new ASN1T_MissionObjective();
-    CommitTo( *asn.value.u.missionObjective );
+    if( IsSet() )
+        CommitTo( *asn.value.u.missionObjective );
 }
 
 // -----------------------------------------------------------------------------

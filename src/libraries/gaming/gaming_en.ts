@@ -52,10 +52,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error loading mission parameters. Found type: &apos;%1&apos; expecting: &apos;%2&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>TC2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -69,10 +65,6 @@
     </message>
     <message>
         <source>Schedule</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error loading mission parameters. Non-optional parameter &apos;%1&apos; is not set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

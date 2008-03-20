@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>Error loading mission parameters. Found type: &apos;%1&apos; expecting: &apos;%2&apos;.</source>
-        <translation>Erreur lors du chargement des paramètres de mission: type &apos;%1&apos; rencontré, type &apos;%2&apos; attendu.</translation>
+        <translation type="obsolete">Erreur lors du chargement des paramètres de mission: type &apos;%1&apos; rencontré, type &apos;%2&apos; attendu.</translation>
     </message>
     <message>
         <source>TC2</source>
@@ -77,7 +77,7 @@
     </message>
     <message>
         <source>Error loading mission parameters. Non-optional parameter &apos;%1&apos; is not set.</source>
-        <translation>Erreur lors du chargement des paramètres de mission: le paramtype &apos;%1&apos; n&apos;est pas défini.</translation>
+        <translation type="obsolete">Erreur lors du chargement des paramètres de mission: le paramtype &apos;%1&apos; n&apos;est pas défini.</translation>
     </message>
     <message>
         <source>Agent knowledge not found.</source>

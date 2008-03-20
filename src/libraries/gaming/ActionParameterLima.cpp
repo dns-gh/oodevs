@@ -66,15 +66,6 @@ ActionParameterLima::~ActionParameterLima()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionParameterLima::IsContext
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-bool ActionParameterLima::IsContext() const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionParameterLima::AddFunction
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
@@ -105,7 +96,7 @@ void ActionParameterLima::ReadParameter( xml::xistream& xis, const CoordinateCon
     std::string type;
     xis >> attribute( "type", type );
     if( type == "location" )
-        AddParameter( *new ActionParameterLocation( converter, xis ) );
+        AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "datetime" )
         AddParameter( *new ActionParameterDateTime( OrderParameter( tools::translate( "ActionParameter", "Schedule" ).ascii(), "datetime", false ), xis ) );
 }

@@ -72,7 +72,6 @@ ParamAutomatList.h \
 ParamHumanWoundList.h \
 ParamIntelligenceList.h \
 ParamLimaList.h \
-ParamLimits.h \
 ParamLocationList.h \
 ParamMissionObjective.h \
 ParamMissionObjectiveList.h \

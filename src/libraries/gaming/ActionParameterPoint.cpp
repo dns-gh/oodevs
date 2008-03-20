@@ -61,7 +61,8 @@ void ActionParameterPoint::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_point;
     asn.value.u.point = new ASN1T_Point();
-    ActionParameterLocation::CommitTo( *asn.value.u.point );
+    if( IsSet() )
+        ActionParameterLocation::CommitTo( *asn.value.u.point );
 }
 
 // -----------------------------------------------------------------------------

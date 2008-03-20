@@ -77,15 +77,16 @@ void ActionParameterMedicalPriorities::AddMedicalPriority( E_HumanWound value )
 // -----------------------------------------------------------------------------
 void ActionParameterMedicalPriorities::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_logMedicalPriorities;
     ASN1T_LogMedicalPriorities*& list = asn.value.u.logMedicalPriorities = new ASN1T_LogMedicalPriorities();
     list->n = priorities_.size();
-    asn.null_value = list->n ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_EnumHumanWound[ list->n ];
-    for( unsigned int i = 0; i < priorities_.size(); ++i )
-        list->elem[i] = ASN1T_EnumHumanWound( priorities_.at( i ) );
+    if( IsSet() )
+    {
+        list->elem = new ASN1T_EnumHumanWound[ list->n ];
+        for( unsigned int i = 0; i < priorities_.size(); ++i )
+            list->elem[i] = ASN1T_EnumHumanWound( priorities_.at( i ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -110,4 +111,13 @@ void ActionParameterMedicalPriorities::Serialize( xml::xostream& xos ) const
     for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
         value += ( !value.isEmpty() ? ";" : "" ) + QString::number( *it );
     xos << attribute( "value", value.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterMedicalPriorities::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterMedicalPriorities::IsSet() const
+{
+    return !priorities_.empty();
 }

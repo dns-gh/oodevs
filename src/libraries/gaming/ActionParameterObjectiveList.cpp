@@ -90,14 +90,16 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterObjectiveList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     ASN1T_MissionObjectiveList*& list = asn.value.u.missionObjectiveList = new ASN1T_MissionObjectiveList();
     asn.value.t = T_MissionParameter_value_missionObjectiveList;
-    asn.null_value = ( list->n = Count() ) ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_MissionObjective[list->n];
-    AsnSerializer serializer( *list );
-    Accept( serializer );
+    list->n = Count();
+    if( IsSet() )
+    {
+        list->elem = new ASN1T_MissionObjective[list->n];
+        AsnSerializer serializer( *list );
+        Accept( serializer );
+    }
 }
 
 namespace
@@ -128,4 +130,13 @@ void ActionParameterObjectiveList::Clean( ASN1T_MissionParameter& asn ) const
         delete[] asn.value.u.missionObjectiveList->elem;
     }
     delete asn.value.u.missionObjectiveList;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObjectiveList::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterObjectiveList::IsSet() const
+{
+    return !elements_.empty(); // $$$$ SBO 2008-03-19: each element must be set as well...
 }

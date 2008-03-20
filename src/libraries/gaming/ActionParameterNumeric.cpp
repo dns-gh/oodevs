@@ -24,22 +24,12 @@ ActionParameterNumeric::ActionParameterNumeric( const kernel::OrderParameter& pa
     // NOTHING
 }
 
-namespace
-{
-    float ReadValue( xml::xistream& xis )
-    {
-        float value;
-        xis >> attribute( "value", value );
-        return value;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterNumeric constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterNumeric::ActionParameterNumeric( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : ActionParameter< float >( parameter, ReadValue( xis ) )
+: ActionParameter< float >( parameter, xml::attribute< float >( xis, "value" ) )
 {
     // NOTHING
 }
@@ -71,7 +61,8 @@ void ActionParameterNumeric::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_aReal;
-    asn.value.u.aReal = GetValue();
+    if( IsSet() )
+        asn.value.u.aReal = GetValue();
 }
 
 // -----------------------------------------------------------------------------

@@ -35,22 +35,12 @@ ActionParameterAtlasNature::ActionParameterAtlasNature( const OrderParameter& pa
     // NOTHING
 }
 
-namespace
-{
-    unsigned short ReadValue( xml::xistream& xis )
-    {
-        unsigned short value;
-        xis >> attribute( "value", value );
-        return value;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterAtlasNature constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 ActionParameterAtlasNature::ActionParameterAtlasNature( const OrderParameter& parameter, xml::xistream& xis, const AtlasNatures& natures )
-    : ActionParameter< AtlasNature >( parameter, natures.MakeNature( ReadValue( xis ) ) )
+: ActionParameter< AtlasNature >( parameter, natures.MakeNature( attribute< unsigned short >( xis, "value" ) ) )
 {
     // NOTHING
 }

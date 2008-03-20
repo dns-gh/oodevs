@@ -88,14 +88,16 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterPathList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_pathList;
     ASN1T_PathList*& list = asn.value.u.pathList = new ASN1T_PathList();
-    asn.null_value = ( list->n = Count() ) ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_Path[list->n];
-    AsnSerializer serializer( *list );
-    Accept( serializer );
+    list->n = Count();
+    if( IsSet() )
+    {
+        list->elem = new ASN1T_Path[list->n];
+        AsnSerializer serializer( *list );
+        Accept( serializer );
+    }
 }
 
 namespace
@@ -137,4 +139,13 @@ void ActionParameterPathList::DisplayTooltip( const kernel::Viewport_ABC& viewpo
     ActionParameter< QString >::DisplayTooltip( viewport, tools );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPathList::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterPathList::IsSet() const
+{
+    return !elements_.empty(); // $$$$ SBO 2008-03-19: each element must be set as well...
 }

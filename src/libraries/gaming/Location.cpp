@@ -54,10 +54,11 @@ Location::Location( const kernel::CoordinateConverter_ABC& converter, xml::xistr
     : converter_( converter )
 {
     std::string type;
-    xis >> start( "location" )
-            >> attribute( "type", type )
-            >> list( "point", *this, &Location::ReadPoint )
-        >> end();
+    xis >> optional()
+            >> start( "location" )
+                >> attribute( "type", type )
+                >> list( "point", *this, &Location::ReadPoint )
+            >> end();
     type_ = ASN1T_EnumLocationType( tools::LocationFromString( type.c_str() ) );
     valid_ = CheckValidity();
 }
@@ -151,12 +152,14 @@ void Location::PushBack( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void Location::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "location" )
-        << attribute( "type", tools::ToString( type_ ) );
-    if( valid_ )
+    if( IsValid() )
+    {
+        xos << start( "location" )
+            << attribute( "type", tools::ToString( type_ ) );
         for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
             xos << start( "point" ) << attribute( "coordinates", converter_.ConvertToMgrs( *it ) ) << end();
-    xos << end();
+        xos << end();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -271,4 +274,13 @@ bool Location::CheckValidity() const
         return points_.size() == 1;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Location::IsValid
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool Location::IsValid() const
+{
+    return valid_;
 }

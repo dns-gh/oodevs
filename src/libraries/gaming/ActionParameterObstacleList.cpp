@@ -86,14 +86,16 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterObstacleList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     ASN1T_PlannedWorkList*& list = asn.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
     asn.value.t = T_MissionParameter_value_plannedWorkList;
-    asn.null_value = ( list->n = Count() ) ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_PlannedWork[list->n];
-    AsnSerializer serializer( *list );
-    Accept( serializer );
+    list->n = Count();
+    if( IsSet() )
+    {
+        list->elem = new ASN1T_PlannedWork[list->n];
+        AsnSerializer serializer( *list );
+        Accept( serializer );
+    }
 }
 
 namespace
@@ -135,4 +137,13 @@ void ActionParameterObstacleList::DisplayTooltip( const kernel::Viewport_ABC& vi
     ActionParameter< std::string >::DisplayTooltip( viewport, tools );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterObstacleList::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterObstacleList::IsSet() const
+{
+    return !elements_.empty(); // $$$$ SBO 2008-03-19: each element must be set as well...
 }

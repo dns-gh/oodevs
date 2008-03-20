@@ -112,14 +112,16 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterAgentList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_unitList;
     ASN1T_UnitList*& list = asn.value.u.unitList = new ASN1T_UnitList();
-    asn.null_value = ( list->n = Count() ) ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_Unit[list->n];
-    AsnSerializer serializer( *list );
-    Accept( serializer );
+    list->n = Count();
+    if( IsSet() )
+    {
+        list->elem = new ASN1T_Unit[list->n];
+        AsnSerializer serializer( *list );
+        Accept( serializer );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -142,4 +144,13 @@ void ActionParameterAgentList::DisplayTooltip( const kernel::Viewport_ABC& viewp
     ActionParameter< QString >::DisplayTooltip( viewport, tools );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterAgentList::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterAgentList::IsSet() const
+{
+    return !elements_.empty(); // $$$$ SBO 2008-03-19: each element must be set as well...
 }

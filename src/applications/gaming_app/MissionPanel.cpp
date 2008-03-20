@@ -263,7 +263,7 @@ void MissionPanel::hideEvent( QHideEvent* pEvent )
 // -----------------------------------------------------------------------------
 void MissionPanel::Draw( Viewport_ABC& viewport )
 {
-    if( pMissionInterface_  && isVisible() )
+    if( pMissionInterface_ && isVisible() )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 2.f );
@@ -313,7 +313,6 @@ void MissionPanel::SetInterface( MissionInterface_ABC* missionInterface )
         else
         {
             setWidget( pMissionInterface_ );
-            resize( 10, 10 );
             show();
         }
     }

@@ -42,6 +42,7 @@ public:
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
     void CommitTo( ASN1T_LocationList& asn ) const;
     void Clean( ASN1T_LocationList& asn ) const;
+    virtual bool IsSet() const;
     //@}
 
 protected:

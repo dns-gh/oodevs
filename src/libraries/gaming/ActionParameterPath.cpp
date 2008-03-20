@@ -122,10 +122,11 @@ void ActionParameterPath::ReadPoint( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ActionParameterPath::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_path;
     ASN1T_Path*& path = asn.value.u.path = new ASN1T_Path();
-    CommitTo( *path );
-    asn.null_value = path->coordinates.n ? 0 : 1;
+    if( IsSet() )
+        CommitTo( *path );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,4 +197,13 @@ void ActionParameterPath::DisplayTooltip( const kernel::Viewport_ABC& viewport, 
     ActionParameter< QString >::DisplayTooltip( viewport, tools );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterPath::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterPath::IsSet() const
+{
+    return !elements_.empty();
 }

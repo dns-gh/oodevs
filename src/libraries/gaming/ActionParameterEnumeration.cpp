@@ -65,5 +65,6 @@ void ActionParameterEnumeration::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_enumeration;
-    asn.value.u.enumeration = value_.GetId();
+    if( IsSet() )
+        asn.value.u.enumeration = value_.GetId();
 }

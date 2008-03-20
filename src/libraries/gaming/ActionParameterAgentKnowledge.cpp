@@ -72,9 +72,10 @@ ActionParameterAgentKnowledge::~ActionParameterAgentKnowledge()
 // -----------------------------------------------------------------------------
 void ActionParameterAgentKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_unitKnowledge;
-    ActionParameterEntity< AgentKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.unitKnowledge );
-    asn.null_value = asn.value.u.unitKnowledge ? 0 : 1;
+    if( IsSet() )
+        ActionParameterEntity< AgentKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.unitKnowledge );
 }
 
 // -----------------------------------------------------------------------------

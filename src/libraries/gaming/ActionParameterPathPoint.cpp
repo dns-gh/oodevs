@@ -29,7 +29,7 @@ ActionParameterPathPoint::ActionParameterPathPoint( const kernel::OrderParameter
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 ActionParameterPathPoint::ActionParameterPathPoint( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
-    : ActionParameterLocation( converter, xis )
+: ActionParameterLocation( kernel::OrderParameter( attribute< std::string >( xis, "name" ), "pathpoint", false ), converter, xis )
 {
     // NOTHING
 }

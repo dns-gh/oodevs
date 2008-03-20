@@ -13,22 +13,12 @@
 
 using namespace xml;
 
-namespace
-{
-    bool ReadBool( xml::xistream& xis )
-    {
-        bool value;
-        xis >> attribute( "value", value );
-        return value;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterBool constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 ActionParameterBool::ActionParameterBool( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : ActionParameter< bool >( parameter, ReadBool( xis ) )
+    : ActionParameter< bool >( parameter, xml::attribute< bool >( xis, "value" ) )
 {
     // NOTHING
 }
@@ -70,7 +60,8 @@ void ActionParameterBool::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_aBool;
-    asn.value.u.aBool = GetValue();
+    if( IsSet() )
+        asn.value.u.aBool = GetValue();
 }
 
 // -----------------------------------------------------------------------------

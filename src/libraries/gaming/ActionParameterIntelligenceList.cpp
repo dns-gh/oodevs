@@ -88,14 +88,16 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterIntelligenceList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_intelligenceList;
     ASN1T_IntelligenceList*& list = asn.value.u.intelligenceList = new ASN1T_IntelligenceList();
-    asn.null_value = ( list->n = Count() ) ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_Intelligence[list->n];
-    AsnSerializer serializer( *list );
-    Accept( serializer );
+    list->n = Count();
+    if( IsSet() )
+    {
+        list->elem = new ASN1T_Intelligence[list->n];
+        AsnSerializer serializer( *list );
+        Accept( serializer );
+    }
 }
 
 namespace
@@ -124,4 +126,13 @@ void ActionParameterIntelligenceList::Clean( ASN1T_MissionParameter& asn ) const
         Accept( cleaner );
         delete[] asn.value.u.intelligenceList;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterIntelligenceList::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterIntelligenceList::IsSet() const
+{
+    return !elements_.empty(); // $$$$ SBO 2008-03-19: each element must be set as well...
 }

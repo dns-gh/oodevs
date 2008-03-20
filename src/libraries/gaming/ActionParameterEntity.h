@@ -39,6 +39,7 @@ public:
     //@{
     virtual void CommitTo( std::string& content ) const;
     virtual void CommitTo( ASN1T_OID& oid ) const;
+    virtual bool IsSet() const;
     //@}
 
 private:
@@ -117,6 +118,16 @@ void ActionParameterEntity< ConcreteEntity >::Serialize( xml::xostream& xos ) co
 {
     ActionParameter< const ConcreteEntity* >::Serialize( xos );
     xos << xml::attribute( "value", GetValue()->GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterEntity::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+bool ActionParameterEntity< ConcreteEntity >::IsSet() const
+{
+    return GetValue() != 0;
 }
 
 #endif // __ActionParameterEntity_h_

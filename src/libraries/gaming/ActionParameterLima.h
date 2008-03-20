@@ -41,7 +41,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsContext() const;
     void AddFunction( unsigned int i );
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 

@@ -13,24 +13,12 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
 
-// -----------------------------------------------------------------------------
-// Name: ActionParameterDirection constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, int value )
-    : ActionParameter< int >( parameter, value )
-{
-    const float angle = GetValue() * 3.14f / 180.f;
-    direction_ = geometry::Vector2f( sin( angle ), cos( angle ) );
-}
-
 namespace
 {
-    int ReadValue( xml::xistream& xis )
+    geometry::Vector2f ComputeDirection( int value )
     {
-        int value;
-        xis >> xml::attribute( "value", value );
-        return value;
+        const float angle = value * 3.14f / 180.f;
+        return geometry::Vector2f( sin( angle ), cos( angle ) );
     }
 }
 
@@ -38,11 +26,20 @@ namespace
 // Name: ActionParameterDirection constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : ActionParameter< int >( parameter, ReadValue( xis ) )
+ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, int value )
+    : ActionParameter< int >( parameter, value )
 {
-    const float angle = GetValue() * 3.14f / 180.f;
-    direction_ = geometry::Vector2f( sin( angle ), cos( angle ) );
+    direction_ = ComputeDirection( GetValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterDirection constructor
+// Created: SBO 2007-05-16
+// -----------------------------------------------------------------------------
+ActionParameterDirection::ActionParameterDirection( const kernel::OrderParameter& parameter, xml::xistream& xis )
+    : ActionParameter< int >( parameter, xml::attribute< int >( xis, "value" ) )
+{
+    direction_ = ComputeDirection( GetValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,5 +84,15 @@ void ActionParameterDirection::CommitTo( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_heading;
-    asn.value.u.heading = GetValue();
+    if( IsSet() )
+        asn.value.u.heading = GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterDirection::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterDirection::IsSet() const
+{
+    return !direction_.IsNull();
 }

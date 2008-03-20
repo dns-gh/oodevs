@@ -90,7 +90,7 @@ void ActionParameterObstacle::ReadParameter( xml::xistream& xis, const Coordinat
     if( type == "obstacletype" && type_.CanBeReservedObstacle() )
         AddParameter( *new ActionParameterObstacleType( xis ) );
     else if( type == "location" )
-        AddParameter( *new ActionParameterLocation( converter, xis ) );
+        AddParameter( *new ActionParameterLocation( OrderParameter( tools::translate( "ActionParameter", "Location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "tc2" )
         AddParameter( *new ActionParameterAutomat( xis, automats ) );
 }

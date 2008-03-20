@@ -60,8 +60,8 @@ bool ListParameter::CheckValidity()
 // -----------------------------------------------------------------------------
 void ListParameter::BuildInterface( QWidget* parent )
 {
-    QVBox* box = new QVBox( parent );
-    list_ = new QListView( box );
+    list_ = new QListView( parent );
+    list_->setMaximumHeight( 100 );
     list_->addColumn( GetName() );
     list_->setResizeMode( QListView::LastColumn );
     connect( list_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );

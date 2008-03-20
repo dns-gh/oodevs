@@ -70,9 +70,10 @@ ActionParameterAgent::~ActionParameterAgent()
 // -----------------------------------------------------------------------------
 void ActionParameterAgent::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_unit;
-    ActionParameterEntity< Agent_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.unit );
-    asn.null_value = asn.value.u.unit ? 0 : 1;
+    if( IsSet() )
+        ActionParameterEntity< Agent_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.unit );
 }
 
 // -----------------------------------------------------------------------------

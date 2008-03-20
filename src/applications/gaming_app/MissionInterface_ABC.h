@@ -20,6 +20,7 @@ namespace kernel
 
 class Param_ABC;
 class Action_ABC;
+class QTabWidget;
 
 // =============================================================================
 /** @class  MissionInterface_ABC
@@ -85,8 +86,10 @@ private:
     kernel::ActionController& controller_;
     kernel::Entity_ABC& entity_;
     T_Parameters parameters_;
+    QTabWidget* tabs_;
     QVBox* mainTab_;
     QVBox* optionalTab_;
+    QScrollView* sc1_;
     //@}
 };
 

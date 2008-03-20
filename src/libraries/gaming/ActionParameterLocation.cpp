@@ -45,17 +45,6 @@ ActionParameterLocation::ActionParameterLocation( const OrderParameter& paramete
 // Name: ActionParameterLocation constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameterLocation::ActionParameterLocation( const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : ActionParameter< QString >( OrderParameter( attribute< std::string >( xis, "name" ), "location", false ) )
-    , Location( converter, xis )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterLocation constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
 ActionParameterLocation::ActionParameterLocation( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
     : ActionParameter< QString >( parameter )
     , Location( converter, xis )
@@ -119,7 +108,8 @@ void ActionParameterLocation::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_location;
     asn.value.u.location = new ASN1T_Location();
-    Location::CommitTo( *asn.value.u.location );
+    if( IsSet() )
+        Location::CommitTo( *asn.value.u.location );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,4 +157,13 @@ void ActionParameterLocation::Clean( ASN1T_Location& asn ) const
 void ActionParameterLocation::Accept( ActionParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLocation::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterLocation::IsSet() const
+{
+    return IsValid();
 }

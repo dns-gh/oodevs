@@ -84,14 +84,16 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionParameterLimaList::CommitTo( ASN1T_MissionParameter& asn ) const
 {
+    asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_limasOrder;
     ASN1T_LimasOrder*& list = asn.value.u.limasOrder = new ASN1T_LimasOrder();
-    asn.null_value = ( list->n = Count() ) ? 0 : 1;
-    if( asn.null_value )
-        return;
-    list->elem = new ASN1T_LimaOrder[list->n];
-    AsnSerializer serializer( *list );
-    Accept( serializer );
+    list->n = Count();
+    if( IsSet() )
+    {
+        list->elem = new ASN1T_LimaOrder[list->n];
+        AsnSerializer serializer( *list );
+        Accept( serializer );
+    }
 }
 
 namespace
@@ -131,4 +133,13 @@ void ActionParameterLimaList::DisplayTooltip( const kernel::Viewport_ABC& viewpo
     ActionParameter< QString >::DisplayTooltip( viewport, tools );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterLimaList::IsSet
+// Created: SBO 2008-03-19
+// -----------------------------------------------------------------------------
+bool ActionParameterLimaList::IsSet() const
+{
+    return !elements_.empty(); // $$$$ SBO 2008-03-19: each element must be set as well...
 }
