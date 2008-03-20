@@ -15,6 +15,7 @@
 namespace kernel
 {
     class GlTools_ABC;
+    class GlTooltip_ABC;
 }
 
 namespace gui
@@ -54,6 +55,7 @@ private:
     //! @name Member data
     //@{
     kernel::GlTools_ABC& tools_;
+    std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
     bool ruling_;
     geometry::Point2f start_;
     geometry::Point2f end_;

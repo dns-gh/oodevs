@@ -221,11 +221,11 @@
     </message>
     <message>
         <source>Logistic links</source>
-        <translation>Liens logistiques</translation>
+        <translation type="obsolete">Liens logistiques</translation>
     </message>
     <message>
         <source>Missing logistic links</source>
-        <translation>Liens logistiques manquants</translation>
+        <translation type="obsolete">Liens logistiques manquants</translation>
     </message>
     <message>
         <source>Logistic...</source>
@@ -310,6 +310,26 @@
     <message>
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
+    </message>
+    <message>
+        <source>2D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing links</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

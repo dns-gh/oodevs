@@ -77,8 +77,8 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
 
     menu = new QPopupMenu( this );
     QPopupMenu* subMenu = new QPopupMenu( menu );
-    AddSubMenu4( subMenu, tr( "Logistic links" )        , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
-    AddSubMenu4( subMenu, tr( "Missing logistic links" ), MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
+    AddSubMenu4( subMenu, tr( "Links" )            , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
+    AddSubMenu4( subMenu, tr( "Missing links" )    , MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
     menu->insertItem( tr( "Logistic..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );
@@ -102,6 +102,12 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( tr( "Terrain..." ), subMenu );
     menu->insertSeparator();
 
+    OptionMenu< bool >* boolMenu = new OptionMenu< bool >( menu, controllers.options_, "3D" );
+    boolMenu->AddItem( tr( "2D" ), false );
+    boolMenu->AddItem( tr( "3D" ), true );
+    menu->insertItem( MAKE_ICON( threed ), tr( "Display mode" ), boolMenu );
+
+    menu->insertSeparator();
     menu->insertItem( tr( "&Preferences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
     insertItem( tr( "&Display" ), menu );
 

@@ -10,7 +10,11 @@
 #include "clients_gui_pch.h"
 #include "MetricsLayer.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTooltip_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Styles.h"
 #include "Tools.h"
+#include <qfont.h>
 
 using namespace kernel;
 using namespace gui;
@@ -44,12 +48,22 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
     if( ruling_ )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+        glLineWidth( 4 );
+        glColor4f( COLOR_WHITE );
+        tools_.DrawLine( start_, end_ );
         glLineWidth( 2 );
         glColor4f( COLOR_BLACK );
         tools_.DrawLine( start_, end_ );
         const geometry::Point2f middle( 0.5f*( start_.X() + end_.X() ), 0.5*(start_.Y() + end_.Y() ) );
         const QString message = tools::translate( "Règle GL", " %1m" ).arg( start_.Distance( end_ ), 0, 'f', 1 );
-        tools_.Print( message.ascii(), middle );
+        if( !tooltip_.get() )
+        {
+            std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools_.CreateTooltip() );
+            tooltip_ = tooltip;
+        }
+        // $$$$ SBO 2008-03-19: GlTooltip_ABC maybe should be a Displayer_ABC...
+        static_cast< kernel::Displayer_ABC& >( *tooltip_ ).Start( Styles::bold ).Add( message.ascii() ).End();
+        tooltip_->Draw( middle );
         glPopAttrib();
     }
 }

@@ -195,14 +195,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Missing logistic links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Logistic...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -284,6 +276,26 @@
     </message>
     <message>
         <source>&amp;Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing links</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
