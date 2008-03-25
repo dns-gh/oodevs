@@ -345,6 +345,19 @@ Please check access permissions or write protection.</source>
         <source> is not a valid coordinate.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The bookmark location is not valid.
+Do you want to remove it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter text to name the bookmark: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Logger</name>

@@ -114,7 +114,8 @@ bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::
         || ( gui::ValuedDragObject::Provides< const AgentType >        ( event ) && selectedAutomat_ )
         || ( gui::ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ ) )
         || ( gui::ValuedDragObject::Provides< const HierarchyTemplate >( event ) && IsValidTemplate( event ) )
-        || ( gui::ValuedDragObject::Provides< const Entity_ABC >       ( event ) && selectedAutomat_ );
+        || ( gui::ValuedDragObject::Provides< const Entity_ABC >       ( event ) && selectedAutomat_ )
+        || ( gui::ValuedDragObject::Provides< const Entity_ABC >       ( event ) && selectedAgent_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,12 +175,23 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     }
     if( const Entity_ABC* droppedItem = gui::ValuedDragObject::GetValue< const Entity_ABC >( event ) )
     {
-        if( !selectedAutomat_ )
-            return false;
-        const AutomatPositions* pos = static_cast< const AutomatPositions* >( selectedAutomat_->Retrieve< Positions >() );
-        if( pos )
-            const_cast< AutomatPositions* >( pos )->Set( point );
-        return true;
+        if( selectedAutomat_ )
+        {
+            if( const AutomatPositions* pos = static_cast< const AutomatPositions* >( selectedAutomat_->Retrieve< Positions >() ) )
+            {
+                const_cast< AutomatPositions* >( pos )->Set( point );
+                return true;
+            }
+        }
+        else if( selectedAgent_ )
+        {
+            if( const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() ) )
+            {
+                const_cast< AgentPositions* >( pos )->Set( point );
+                return true;
+            }
+        }
+        return false;
     }
     return false;
 }

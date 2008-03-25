@@ -17,6 +17,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "resources.h"
+#include <qinputdialog.h>
 
 using namespace gui;
 
@@ -145,20 +146,24 @@ void LocationEditorToolbar::AddParamPoint()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationEditorToolbar::Bookmark
+// Name: LocationEditorToolbar::CreateBookmark
 // Created: SBO 2007-03-26
 // -----------------------------------------------------------------------------
-void LocationEditorToolbar::Bookmark()
+void LocationEditorToolbar::CreateBookmark()
 {
     try
     {
-        std::string utm = converter_.ConvertToMgrs( menuPoint_ );
+        const std::string utm = converter_.ConvertToMgrs( menuPoint_ );
+        bool ok = false;
+        const QString name = QInputDialog::getText( tr( "Create bookmark" ), tr( "Enter text to name the bookmark: " ), QLineEdit::Normal, utm.c_str(), &ok, topLevelWidget() );
+        if( !ok || name.isEmpty() )
+            return;
         bookmarksMenu_->clear();
-        bookmarks_.push_back( utm );
+        bookmarks_.push_back( Bookmark( name.ascii(), utm ) );
         layer_.AddLocation( menuPoint_ );
         unsigned int i = 0;
         for( CIT_Bookmarks it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )
-            bookmarksMenu_->insertItem( it->c_str(), this, SLOT( GotoBookmark( int ) ), 0, i );
+            bookmarksMenu_->insertItem( it->name_.c_str(), this, SLOT( GotoBookmark( int ) ), 0, i );
         bookmarksMenu_->insertSeparator();
         bookmarksMenu_->insertItem( tr( "Clear bookmarks" ), this, SLOT( ClearBookmarks() ) );
     }
@@ -176,11 +181,13 @@ void LocationEditorToolbar::GotoBookmark( int index )
     if( index >= 0 && index < int( bookmarks_.size() ) )
         try
         {
-            view_.CenterOn( converter_.ConvertToXY( bookmarks_[index] ) );
+            view_.CenterOn( converter_.ConvertToXY( bookmarks_.at( index ).position_ ) );
         }
         catch( ... )
         {
-            // $$$$ SBO 2007-03-28: remove invalid location from list?
+            const int result = QMessageBox::critical( topLevelWidget(), tr( "Error" ), tr( "The bookmark location is not valid.\nDo you want to remove it?" ), QMessageBox::Yes, QMessageBox::No );
+            if( result == QMessageBox::Yes )
+                bookmarks_.erase( bookmarks_.begin() + index );
         }
 }
 
@@ -243,5 +250,5 @@ geometry::Point2f LocationEditorToolbar::GetPosition() const
 void LocationEditorToolbar::NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu )
 {
     menuPoint_ = point;
-    menu.InsertItem( "Helpers", tr( "Bookmark location" ), this, SLOT( Bookmark() ) );
+    menu.InsertItem( "Helpers", tr( "Bookmark location" ), this, SLOT( CreateBookmark() ) );
 }

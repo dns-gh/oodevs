@@ -58,7 +58,7 @@ private slots:
     void AddPoint();
     void AddParamPoint();
 
-    void Bookmark();
+    void CreateBookmark();
     void GotoBookmark( int index );
     void ClearBookmarks();
     //@}
@@ -78,7 +78,17 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< std::string >    T_Bookmarks;
+    struct Bookmark
+    {
+        Bookmark() {}
+        explicit Bookmark( const std::string& name, const std::string& position )
+            : name_( name ), position_( position )
+        {}
+        std::string name_;
+        std::string position_;
+    };
+
+    typedef std::vector< Bookmark >       T_Bookmarks;
     typedef T_Bookmarks::const_iterator CIT_Bookmarks;
     //@}
 
