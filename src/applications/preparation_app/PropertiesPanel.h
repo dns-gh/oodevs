@@ -20,6 +20,7 @@ namespace kernel
     class Entity_ABC;
     class Controllers;
     class EditorFactory_ABC;
+    class CoordinateConverter_ABC;
 }
 
 namespace gui
@@ -43,7 +44,7 @@ class PropertiesPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, kernel::EditorFactory_ABC& editorFactory );
+             PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, kernel::EditorFactory_ABC& editorFactory );
     virtual ~PropertiesPanel();
     //@}
 

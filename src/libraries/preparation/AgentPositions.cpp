@@ -16,6 +16,10 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/DictionaryUpdated.h"
+#include "Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace geometry;
@@ -26,26 +30,29 @@ using namespace xml;
 // Name: AgentPositions constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentPositions::AgentPositions( const Agent_ABC& agent, const CoordinateConverter_ABC& converter, const Point2f& position )
+AgentPositions::AgentPositions( const Agent_ABC& agent, const CoordinateConverter_ABC& converter, Controller& controller, const Point2f& position, PropertiesDictionary& dico )
     : agent_( agent )
     , converter_( converter )
-    , aggregated_( false )
+    , controller_( controller )
     , position_( position )
     , height_( 0 )
+    , aggregated_( false )
 {
-    // NOTHING
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-AgentPositions::AgentPositions( xml::xistream& xis, const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter )
+AgentPositions::AgentPositions( xml::xistream& xis, const Agent_ABC& agent, const CoordinateConverter_ABC& converter, Controller& controller, PropertiesDictionary& dico )
     : agent_( agent )
     , converter_( converter )
-    , aggregated_( false )
+    , controller_( controller )
     , height_( 0 )
+    , aggregated_( false )
 {
+    CreateDictionary( dico );
     std::string position;
     xis >> attribute( "position", position );
     position_ = converter_.ConvertToXY( position );
@@ -150,4 +157,14 @@ void AgentPositions::SerializeAttributes( xml::xostream& xos ) const
 void AgentPositions::Set( const geometry::Point2f& point )
 {
     position_ = point;
+    // $$$$ SBO 2008-03-25: somehow trigger dictionary update
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::CreateDictionary
+// Created: SBO 2008-03-25
+// -----------------------------------------------------------------------------
+void AgentPositions::CreateDictionary( kernel::PropertiesDictionary& dico )
+{
+    dico.Register( *(const AgentPositions*)this, tools::translate( "AgentPositions", "Info/Position" ), position_, *this, &AgentPositions::Set );
 }

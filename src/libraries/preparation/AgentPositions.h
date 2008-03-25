@@ -19,6 +19,8 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class Agent_ABC;
+    class PropertiesDictionary;
+    class Controller;
 }
 
 namespace xml
@@ -41,8 +43,8 @@ class AgentPositions : public kernel::Positions
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentPositions( const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter, const geometry::Point2f& position );
-             AgentPositions( xml::xistream& xis, const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter );
+             AgentPositions( const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, const geometry::Point2f& position, kernel::PropertiesDictionary& dico );
+             AgentPositions( xml::xistream& xis, const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, kernel::PropertiesDictionary& dico );
     virtual ~AgentPositions();
     //@}
 
@@ -71,6 +73,7 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico );
     virtual void Aggregate( const bool& );
     //@}
 
@@ -80,6 +83,7 @@ private:
     //@{
     const kernel::Agent_ABC& agent_;
     const kernel::CoordinateConverter_ABC& converter_;
+    kernel::Controller& controller_;
     geometry::Point2f position_;
     float height_;
     bool aggregated_;

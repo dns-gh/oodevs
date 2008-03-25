@@ -24,6 +24,8 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include <qvalidator.h>
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory constructor
@@ -298,4 +300,56 @@ void EditorFactory::Call( DotationsItem** const& value )
     DotationsEditor* editor = new DotationsEditor( parent_, staticModel_.objectTypes_, *value );
     editor->SetCurrentItem( *value );
     result_ = 0;
+}
+
+// =============================================================================
+// QString
+// =============================================================================
+namespace 
+{
+    class PositionEditor : public QLineEdit
+                         , public kernel::ValueEditor< geometry::Point2f >
+    {
+    public:
+                 PositionEditor( QWidget* parent, const kernel::CoordinateConverter_ABC& converter )
+                     : QLineEdit( parent ), converter_( converter ) {}
+        virtual ~PositionEditor() {}
+
+        void SetValue( const geometry::Point2f& point )
+        {
+            setText( converter_.ConvertToMgrs( point ).c_str() );
+            lastValid_ = point;
+        }
+
+        virtual geometry::Point2f GetValue()
+        {
+            try
+            {
+                const geometry::Point2f coordinate = converter_.ConvertToXY( std::string( text().ascii() ) );
+                lastValid_ = coordinate;
+                return coordinate;
+            }
+            catch( ... ) {}
+            return lastValid_;
+        }
+
+    private:
+        PositionEditor( const PositionEditor& );
+        PositionEditor& operator=( const PositionEditor& );
+
+        const kernel::CoordinateConverter_ABC& converter_;
+        geometry::Point2f lastValid_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2008-03-25
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( geometry::Point2f* const& value )
+{
+    PositionEditor* editor = new PositionEditor( parent_, staticModel_.coordinateConverter_ );
+    editor->setValidator( new QRegExpValidator( QRegExp( "^[0-9]{2}[a-zA-Z]{3}[0-9]{10}$" ), editor ) );
+    editor->SetValue( *value );
+    result_ = editor;
 }

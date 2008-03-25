@@ -13,7 +13,6 @@
 #include "clients_kernel/Units.h"
 #include "ValuedComboBox.h"
 #include "Tools.h"
-#include <qvalidator.h>
 
 using namespace gui;
 using namespace kernel;

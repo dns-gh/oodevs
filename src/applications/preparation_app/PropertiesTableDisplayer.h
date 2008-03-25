@@ -25,12 +25,13 @@ class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public tools::Caller< Enum_PopulationAttitude >
                                , public tools::Caller< Enum_ObstacleType >
                                , public tools::Caller< DotationsItem >
+                               , public tools::Caller< geometry::Point2f >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesTableDisplayer();
+    explicit PropertiesTableDisplayer( const kernel::CoordinateConverter_ABC& converter );
     virtual ~PropertiesTableDisplayer();
     //@}
 
@@ -39,6 +40,7 @@ public:
     virtual void Call( const Enum_PopulationAttitude& value );
     virtual void Call( const Enum_ObstacleType & value );
     virtual void Call( const DotationsItem& value );
+    virtual void Call( const geometry::Point2f& value );
     //@}
 
 private:
@@ -46,6 +48,12 @@ private:
     //@{
     PropertiesTableDisplayer( const PropertiesTableDisplayer& );            //!< Copy constructor
     PropertiesTableDisplayer& operator=( const PropertiesTableDisplayer& ); //!< Assignement operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     //@}
 };
 

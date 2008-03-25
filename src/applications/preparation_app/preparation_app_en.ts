@@ -421,6 +421,14 @@
         <source>&lt;Edit Property Group...&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>not set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TacticalListView</name>

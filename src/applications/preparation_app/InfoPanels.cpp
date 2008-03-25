@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "InfoPanels.h"
 #include "preparation/Model.h"
+#include "preparation/StaticModel.h"
 #include "AgentResourcesPanel.h"
 #include "PropertiesPanel.h"
 #include "EditorFactory.h"
@@ -24,7 +25,7 @@ InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, Model& model,
     : Panels( parent )
     , editorFactory_( *new EditorFactory( controllers, model, staticModel ) )
 {
-    AddPanel( new PropertiesPanel( this, *this, controllers, editorFactory_ ) );
+    AddPanel( new PropertiesPanel( this, *this, controllers, staticModel.coordinateConverter_, editorFactory_ ) );
     AddPanel( new AgentResourcesPanel( this, *this, controllers, factory ) );
 }
 

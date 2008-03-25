@@ -22,11 +22,11 @@ using namespace gui;
 // Name: PropertiesPanel constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-PropertiesPanel::PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, kernel::EditorFactory_ABC& editorFactory )
+PropertiesPanel::PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, kernel::EditorFactory_ABC& editorFactory )
     : InfoPanel_ABC( parent, panel, tr( "Properties" ) )
     , controllers_( controllers )
     , selected_( controllers )
-    , tableItemDisplayer_( *new PropertiesTableDisplayer() )
+    , tableItemDisplayer_( *new PropertiesTableDisplayer( converter ) )
 {
     properties_ = new PropertiesWidget( controllers_.controller_, this, "Properties", editorFactory, tableItemDisplayer_ );
     controllers_.Register( *this );
