@@ -119,7 +119,6 @@ private:
     kernel::OrderParameter parameter_;
     const ConcreteEntity* potential_;
     const ConcreteEntity* selected_;
-    bool optional_;
     //@}
 };
 

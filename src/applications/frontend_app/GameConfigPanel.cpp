@@ -105,7 +105,7 @@ QWidget* GameConfigPanel::CreateDebugPanel( QWidget* parent )
     QHBox* box = new QVBox( parent );
     box->setSpacing( 5 );
     {
-        QGroupBox* logs = new QGroupBox( 2, Vertical, tr( "Logs" ), box );
+        QGroupBox* logs = new QGroupBox( 4, Horizontal, tr( "Logs" ), box );
         decisionalLogs_ = new QCheckBox( tr( "Decisional" ), logs );
         pathfindLogs_   = new QCheckBox( tr( "Pathfind" ), logs );
     }

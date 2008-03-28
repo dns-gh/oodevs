@@ -63,7 +63,7 @@ void EntityParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity&
 template< typename ConcreteEntity >
 bool EntityParameter< ConcreteEntity >::CheckValidity()
 {
-    if( ! parameter_.IsOptional() && ! selected_ )
+    if( ! IsOptional() && ! selected_ )
         return Invalid();
     return true;
 }
@@ -78,7 +78,7 @@ void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn ) const
     asn = 0;
     if( ! selected_ )
     {
-        if( optional_ )
+        if( IsOptional() )
             return;
         throw std::runtime_error( "Entity not set!" );
     }
@@ -129,5 +129,5 @@ void EntityParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& ent
 template< typename ConcreteEntity >
 bool EntityParameter< ConcreteEntity >::IsOptional() const
 {
-    return optional_;
+    return parameter_.IsOptional();
 }

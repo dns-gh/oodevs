@@ -176,7 +176,6 @@ ParamAutomatList.cpp \
 ParamHumanWoundList.cpp \
 ParamIntelligenceList.cpp \
 ParamLimaList.cpp \
-ParamLimits.cpp \
 ParamLocationList.cpp \
 ParamMissionObjective.cpp \
 ParamMissionObjectiveList.cpp \
