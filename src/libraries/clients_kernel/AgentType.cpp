@@ -57,7 +57,8 @@ AgentType::~AgentType()
 // -----------------------------------------------------------------------------
 void AgentType::ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& resolver )
 {
-    equipments_.push_back( & resolver.Get( xml::attribute< std::string >( xis, "type" ) ) );
+    equipments_[ & resolver.Get( xml::attribute< std::string >( xis, "type" ) ) ]
+              += xml::attribute< unsigned int >( xis, "count" );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +103,7 @@ const AgentNature& AgentType::GetNature() const
 // -----------------------------------------------------------------------------
 Iterator< const ComponentType& > AgentType::CreateIterator() const
 {
-    return new SimpleIterator< const ComponentType&, T_Components >( equipments_ );
+    return new KeyIterator< const ComponentType&, T_Components >( equipments_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,4 +173,16 @@ bool AgentType::IsLogisticMedical() const
     return type_ == "Pion LOG BLD Sante"
         || type_ == "Pion LOG BLT Sante"
         || IsTC2();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetComponentCount
+// Created: AGE 2008-03-31
+// -----------------------------------------------------------------------------
+unsigned int AgentType::GetComponentCount( const ComponentType& type ) const
+{
+    T_Components::const_iterator it = equipments_.find( &type );
+    if( it != equipments_.end() )
+        return it->second;
+    return 0;
 }

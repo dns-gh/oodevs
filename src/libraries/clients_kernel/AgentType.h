@@ -47,6 +47,7 @@ public:
     const DecisionalModel& GetDecisionalModel() const;
     const AgentNature& GetNature() const;
     Iterator< const ComponentType& > CreateIterator() const;
+    unsigned int GetComponentCount( const ComponentType& ) const;
 
     const std::string& GetSymbol() const;
     const std::string& GetLevelSymbol() const;
@@ -67,7 +68,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const ComponentType* > T_Components;
+    typedef std::map< const ComponentType*, unsigned int > T_Components;
     //@}
 
     //! @name Helpers
