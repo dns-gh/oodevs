@@ -528,8 +528,12 @@
 
     <target name="installer" description="create the installer">
         <!-- <nsis todir="${dist.dir}/current" name="sword-ot"      script="sword-ot.nsi"/> -->
-        <nsis todir="${dist.dir}/current" name="sword-ot-ada"  script="sword-ot-ada.nsi"/>
-        <nsis todir="${dist.dir}/current" name="sword-ot-demo" script="sword-ot-demo.nsi" license="true"/>
+        <nsis todir="${dist.dir}/current" name="sword-ot-ada"  script="sword-ot-ada.nsi">
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+        <nsis todir="${dist.dir}/current" name="sword-ot-demo" script="sword-ot-demo.nsi" license="true">
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
     </target>
 
     <target name="crossbow-installer" description="create the crossbow installer">
