@@ -10,6 +10,7 @@
 #include "Application.h"
 #include "dispatcher/Dispatcher.h"
 #include "hla_plugin/HlaPluginFactory.h"
+#include "dis_plugin/DisPluginFactory.h"
 #include "tic_plugin/TicPluginFactory.h"
 #ifdef CROSSBOW_PLUGIN
 #   include "gearth_plugin/GearthPluginFactory.h"
