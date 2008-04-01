@@ -12,6 +12,7 @@
 
 #include "dispatcher/Entity_ABC.h"
 #include "game_asn/Simulation.h"
+#include "Movable_ABC.h"
 
 namespace kernel
 {
@@ -21,6 +22,8 @@ namespace kernel
 namespace tic
 {
 
+    class PlatformVisitor_ABC;
+
 // =============================================================================
 /** @class  Platform
     @brief  Platform
@@ -28,12 +31,13 @@ namespace tic
 // Created: AGE 2008-03-31
 // =============================================================================
 class Platform : public dispatcher::Entity_ABC
+               , public Movable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Platform( const kernel::ComponentType& type );
+             Platform( const kernel::ComponentType& type, float timeStep );
     virtual ~Platform();
     //@}
 
@@ -41,6 +45,9 @@ public:
     //@{
     void Update( const ASN1T_MsgUnitAttributes& updateMessage );
     void Spread( ASN1T_EquipmentDotations& updateMessage );
+    virtual void Move( const geometry::Point2f& to );
+
+    void Accept( PlatformVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -72,11 +79,14 @@ private:
     //! @name Member data
     //@{
     const kernel::ComponentType& type_;
+    const float timeStep_;
     E_State state_;
 
-    unsigned int nSpeed_;
-    unsigned int nDirection_;
-    unsigned int nHeight_;
+    float speed_;
+    unsigned int heading_;
+    unsigned int altitude_;
+
+    geometry::Point2f position_;
     //@}
 };
 

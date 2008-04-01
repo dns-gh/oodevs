@@ -13,6 +13,7 @@
 #include "SIM_Config.h"
 #include "hla_plugin/HlaPluginFactory.h"
 #include "dis_plugin/DisPluginFactory.h"
+#include "tic_plugin/TicPluginFactory.h"
 #ifdef CROSSBOW_PLUGIN
 #   include "gearth_plugin/GearthPluginFactory.h"
 #   include "crossbow_plugin/CrossbowPluginFactory.h"
@@ -29,6 +30,7 @@ SIM_Dispatcher::SIM_Dispatcher( SIM_Config& config )
 {
     dispatcher_.RegisterPluginFactory( *new hla::HlaPluginFactory() );
     dispatcher_.RegisterPluginFactory( *new dis::DisPluginFactory() );
+    dispatcher_.RegisterPluginFactory( *new tic::TicPluginFactory() );
 #ifdef CROSSBOW_PLUGIN
     dispatcher_.RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
     dispatcher_.RegisterPluginFactory( *new gearth::GearthPluginFactory() );

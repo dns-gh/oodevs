@@ -10,5 +10,8 @@
 #ifndef __tic_pch_h_
 #define __tic_pch_h_
 
+#include <string>
+#include <vector>
+#include <memory>
 
 #endif // __tic_pch_h_

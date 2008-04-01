@@ -12,6 +12,11 @@
 
 #include "dispatcher/ExtensionFactory_ABC.h"
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 namespace dispatcher
 {
     class Agent;
@@ -32,7 +37,7 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory();
+             ExtensionFactory( const kernel::CoordinateConverter_ABC& converter, float timeStep );
     virtual ~ExtensionFactory();
     //@}
 
@@ -46,6 +51,12 @@ private:
     //@{
     ExtensionFactory( const ExtensionFactory& );            //!< Copy constructor
     ExtensionFactory& operator=( const ExtensionFactory& ); //!< Assignment operator
+    //@}
+
+    //! @name Member data
+    //@{
+    const kernel::CoordinateConverter_ABC& converter_;
+    float timeStep_;
     //@}
 };
 

@@ -431,6 +431,11 @@ void PHY_RolePion_Location::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) c
         msg().m.hauteurPresent = 1;
         msg().hauteur          = (uint)rHeight_;
     }
+    if( bHeightHasChanged_ || bPositionHasChanged_ )
+    {
+        msg().m.altitudePresent = 1;
+        msg().altitude          = (uint)( rHeight_ + MIL_Tools::GetAltitude( vPosition_ ) );
+    }
 
     if( bCurrentSpeedHasChanged_ )
     {

@@ -24,6 +24,16 @@ CoordinateConverter::CoordinateConverter()
 }
 
 // -----------------------------------------------------------------------------
+// Name: CoordinateConverter constructor
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+CoordinateConverter::CoordinateConverter( const tools::ExerciseConfig& config )
+    : planar_( parameters_ )
+{
+    Load( config );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CoordinateConverter::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------

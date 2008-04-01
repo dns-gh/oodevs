@@ -35,6 +35,7 @@ public:
     //! @name Constructor / Destructor
     //@{
              CoordinateConverter();
+    explicit CoordinateConverter( const tools::ExerciseConfig& config );
     virtual ~CoordinateConverter();
     //@}
 

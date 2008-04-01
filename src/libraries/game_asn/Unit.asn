@@ -162,6 +162,7 @@ MsgUnitAttributes ::= SEQUENCE
     position                      CoordUTM                        OPTIONAL,
     direction                     Heading                         OPTIONAL, -- en degrés
     hauteur                       Height                          OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
+    altitude                      Height                          OPTIONAL, -- altitude d'un pion 3D par rapport au niveau de la mer
     vitesse                       Speed                           OPTIONAL, -- en km/h
     etat-operationnel-brut        FreePercentage                  OPTIONAL,
     pions-renforcant              UnitList                        OPTIONAL,

@@ -8,37 +8,38 @@
 // *****************************************************************************
 
 #include "tic_plugin_pch.h"
-#include "ExtensionFactory.h"
-#include "TicExtension.h"
-#include "dispatcher/Agent.h"
+#include "TicPluginFactory.h"
+#include "TicPlugin.h"
 
 using namespace tic;
+using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory constructor
-// Created: AGE 2008-03-31
+// Name: TicPluginFactory constructor
+// Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( const kernel::CoordinateConverter_ABC& converter, float timeStep )
-    : converter_( converter )
-    , timeStep_ ( timeStep )
+TicPluginFactory::TicPluginFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory destructor
-// Created: AGE 2008-03-31
+// Name: TicPluginFactory destructor
+// Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-ExtensionFactory::~ExtensionFactory()
+TicPluginFactory::~TicPluginFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: AGE 2008-03-31
+// Name: std::auto_ptr< Plugin_ABC > TicPluginFactory::Create
+// Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Agent& entity )
+std::auto_ptr< Plugin_ABC > TicPluginFactory::Create( const std::string& name, xml::xistream& , const Config& config, Model& model, SimulationPublisher_ABC& , ClientPublisher_ABC& , tools::MessageDispatcher_ABC& ) const
 {
-    entity.Attach< TicExtension_ABC >( *new TicExtension( entity, converter_, timeStep_ ) );
+    std::auto_ptr< dispatcher::Plugin_ABC > result;
+    if( name == "tic" )
+        result.reset( new TicPlugin( model, config ) );
+    return result;
 }
