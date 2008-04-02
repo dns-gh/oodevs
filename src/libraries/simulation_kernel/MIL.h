@@ -6,6 +6,9 @@
 #include "MT/MT_Tools/MT_Types.h"
 #include "simulation_terrain/TER.h"
 
+#include "CheckPoints/MIL_CheckPointInArchive.h"
+#include "CheckPoints/MIL_CheckPointOutArchive.h"
+
 enum E_Tristate
 {
     eTristate_True = 0,
@@ -53,9 +56,6 @@ namespace boost
         class binary_iarchive;
     };
 };
-
-typedef boost::archive::binary_iarchive MIL_CheckPointInArchive;
-typedef boost::archive::binary_oarchive MIL_CheckPointOutArchive;
 
 #include <boost/serialization/split_member.hpp>
 
