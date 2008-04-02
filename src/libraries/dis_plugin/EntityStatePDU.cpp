@@ -9,25 +9,20 @@
 
 #include "dis_plugin_pch.h"
 #include "EntityStatePDU.h"
-#include "dispatcher/Agent.h"
 
 using namespace dis;
 
 // -----------------------------------------------------------------------------
 // Name: EntityStatePDU constructor
-// Created: AGE 2008-03-10
+// Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-EntityStatePDU::EntityStatePDU( const dispatcher::Agent& agent, const EntityIdentifier& id, unsigned long time, unsigned char exercise )
+EntityStatePDU::EntityStatePDU( unsigned long time, unsigned char exercise, const EntityIdentifier& id )
     : header_ ( DisHeader::EntityStatePDU( time, exercise ) )
     , id_     ( id )
     , forceID_( 0 )
     , numberOfArticulationParameters_( 0 )
-    , entityLinearVelocity_( WorldLocation( agent.position_.strPosition_, (float)agent.nHeight_ ), (float)agent.nSpeed_, (unsigned short)agent.nDirection_  )
-    , entityLocation_( agent.position_.strPosition_, (float)agent.nHeight_ )
-    , entityOrientation_( entityLocation_, entityLinearVelocity_ )
     , appearance_( 0 )
     , deadReckoningAlgorithm_( 2 )
-    , entityMarking_( agent.strName_ )
     , capabilities_( 0 )
 {
     entityType_.SetKind( EntityType::platform );
@@ -45,4 +40,24 @@ EntityStatePDU::EntityStatePDU( const dispatcher::Agent& agent, const EntityIden
 EntityStatePDU::~EntityStatePDU()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityStatePDU::SetEntityName
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+void EntityStatePDU::SetEntityName( const std::string& name )
+{
+    entityMarking_ = EntityMarking( name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityStatePDU::SetPosition
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+void EntityStatePDU::SetPosition( double latitude, double longitude, float altitude, float speed, float heading )
+{
+    entityLocation_       = WorldLocation( latitude, longitude, altitude );
+    entityLinearVelocity_ = VelocityVector( entityLocation_, speed, heading );
+    entityOrientation_    = Orientation( entityLocation_, entityLinearVelocity_ );
 }

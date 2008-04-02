@@ -11,6 +11,12 @@
 #define __DisExtensionFactory_h_
 
 #include "dispatcher/ExtensionFactory_ABC.h"
+#include "IdentifierFactory_ABC.h"
+
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
 
 namespace xml
 {
@@ -34,18 +40,20 @@ namespace dis
 // Created: AGE 2008-03-10
 // =============================================================================
 class DisExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
+                          , private IdentifierFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, xml::xistream& xis );
+             DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~DisExtensionFactory();
     //@}
 
     //! @name Operations
     //@{
     virtual void Create( dispatcher::Agent& entity );
+    virtual EntityIdentifier CreateNewIdentifier();
     //@}
 
 private:
@@ -64,6 +72,7 @@ private:
     //@{
     UdpNetwork& network_;
     const Time_ABC& time_;
+    const kernel::CoordinateConverter_ABC& converter_;
     const unsigned short site_;
     const unsigned short application_;
     const unsigned char  exercise_;

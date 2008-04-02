@@ -38,14 +38,11 @@ DiamondFormation::~DiamondFormation()
 void DiamondFormation::Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned count )
 {
     points_.resize( 0 );
-    const float baseAngle = std::atan2( towards.X(), towards.Y() );
+    const float baseAngle = std::atan2( towards.Y(), towards.X() );
     unsigned level = 0;
     unsigned platformCount = 0;
     while( count-- )
-    {
         AddPlatform( at, baseAngle, level, platformCount );
-        --count;
-    }
     Sort( points_, at, towards );
 }
 
@@ -69,7 +66,7 @@ namespace
 void DiamondFormation::AddPlatform( const geometry::Point2f& center, float baseAngle, unsigned& level, unsigned& platformCount )
 {
     const float radius = level ? std::pow( 1.414f, int( level ) ) : 0;
-    const float angle  = level ? baseAngle + 2 * std::acos( -1.f ) / float( 4 * level ) : 0;
+    const float angle  = level ? baseAngle + 2 * std::acos( -1.f ) * float( platformCount ) / float( 4 * level ) : 0;
     const float distanceBetweenPlatforms = 20.f;
 
     const geometry::Vector2f direction( std::cos( angle ), std::sin( angle ) );

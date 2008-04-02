@@ -19,6 +19,18 @@
 
 // -----------------------------------------------------------------------------
 // Name: WorldLocation::WorldLocation
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+WorldLocation::WorldLocation()
+    : x_( 0 )
+    , y_( 0 )
+    , z_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldLocation::WorldLocation
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
 WorldLocation::WorldLocation( const std::string mgrs, float altitude )
@@ -26,6 +38,20 @@ WorldLocation::WorldLocation( const std::string mgrs, float altitude )
     geocoord::MGRS base( mgrs );
     geocoord::Geodetic geodetic( base );
     geodetic.SetHeight( altitude );
+    geocoord::Geocentric centric( geodetic );
+
+    x_ = centric.GetX();
+    y_ = centric.GetY();
+    z_ = centric.GetZ();
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldLocation::WorldLocation
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+WorldLocation::WorldLocation( double latitude, double longitude, float altitude )
+{
+    geocoord::Geodetic geodetic( latitude, longitude, altitude );
     geocoord::Geocentric centric( geodetic );
 
     x_ = centric.GetX();
@@ -57,7 +83,7 @@ VelocityVector::VelocityVector()
 // Name: VelocityVector::VelocityVector
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
-VelocityVector::VelocityVector( const WorldLocation& location, float rSpeed, unsigned short heading )
+VelocityVector::VelocityVector( const WorldLocation& location, float rSpeed, float heading )
 {
     static const double pi = std::acos( -1. );
     geometry::Vector3d base( location.X(), location.Y(), location.Z() );
@@ -143,6 +169,18 @@ namespace
         }
         return geometry::Vector3d( alpha, beta, gamma );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Orientation::Orientation
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+Orientation::Orientation()
+    : psi_( 0 )
+    , theta_( 0 )
+    , phi_( 0 )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

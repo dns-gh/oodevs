@@ -13,6 +13,7 @@
 #include "dispatcher/Entity_ABC.h"
 #include "game_asn/Simulation.h"
 #include "Movable_ABC.h"
+#include "Platform_ABC.h"
 
 namespace kernel
 {
@@ -32,6 +33,7 @@ namespace tic
 // =============================================================================
 class Platform : public dispatcher::Entity_ABC
                , public Movable_ABC
+               , public Platform_ABC
 {
 
 public:
@@ -48,6 +50,15 @@ public:
     virtual void Move( const geometry::Point2f& to );
 
     void Accept( PlatformVisitor_ABC& visitor ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const kernel::ComponentType& GetType() const;
+    virtual geometry::Point2f GetPosition() const;
+    virtual float GetAltitude() const;
+    virtual float GetSpeed() const;
+    virtual float GetHeading() const;
     //@}
 
 private:
@@ -73,6 +84,7 @@ private:
     virtual void SendCreation  ( dispatcher::ClientPublisher_ABC& ) const {};
     void Apply( ASN1T_EquipmentDotations& updateMessage );
     bool SetStatus( int& number, E_State state );
+    void ComputeHeading( const geometry::Point2f& from, const geometry::Point2f& to ); 
     //@}
 
 private:
@@ -83,8 +95,8 @@ private:
     E_State state_;
 
     float speed_;
-    unsigned int heading_;
-    unsigned int altitude_;
+    float heading_;
+    float altitude_;
 
     geometry::Point2f position_;
     //@}

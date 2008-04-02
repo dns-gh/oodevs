@@ -7,45 +7,45 @@
 //
 // *****************************************************************************
 
-#ifndef __EntityMarking_h_
-#define __EntityMarking_h_
+#ifndef __Platform_ABC_h_
+#define __Platform_ABC_h_
 
-namespace dis
+#include <geometry/Types.h>
+
+namespace kernel
+{
+    class ComponentType;
+}
+
+namespace tic
 {
 
 // =============================================================================
-/** @class  EntityMarking
-    @brief  EntityMarking
+/** @class  Platform_ABC
+    @brief  Platform definition
 */
-// Created: AGE 2008-03-10
+// Created: AGE 2008-04-01
 // =============================================================================
-class EntityMarking
+class Platform_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EntityMarking( const std::string& name = std::string() );
-            ~EntityMarking();
+             Platform_ABC() {};
+    virtual ~Platform_ABC() {};
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
-    template< typename Archive >
-    void Serialize( Archive& archive ) const
-    {
-        archive << characterSet_ << marking_;
-    }
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    unsigned char characterSet_;
-    unsigned char marking_[11];
+    virtual const kernel::ComponentType& GetType() const = 0;
+    virtual geometry::Point2f GetPosition() const = 0;
+    virtual float GetAltitude() const = 0;
+    virtual float GetSpeed() const = 0;
+    virtual float GetHeading() const = 0;
     //@}
 };
 
 }
 
-#endif // __EntityMarking_h_
+#endif // __Platform_ABC_h_

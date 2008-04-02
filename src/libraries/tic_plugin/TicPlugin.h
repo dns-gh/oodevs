@@ -64,6 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
+    dispatcher::Model& model_;
     std::auto_ptr< kernel::CoordinateConverter > converter_;
     std::auto_ptr< ExtensionFactory > factory_;
     //@}

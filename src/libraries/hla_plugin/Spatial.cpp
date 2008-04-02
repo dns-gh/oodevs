@@ -15,7 +15,7 @@
 // Name: Spatial constructor
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
-Spatial::Spatial( const dispatcher::Position& mgrs, float altitude, float speed, unsigned short heading )
+Spatial::Spatial( const dispatcher::Position& mgrs, float altitude, float speed, float heading )
     : deadReckoningAlgorithm_( 2 ) // FPW
     , fpw_( mgrs.strPosition_, altitude, speed, heading )
 {
@@ -35,7 +35,7 @@ Spatial::~Spatial()
 // Name: Spatial::SpatialFPW::SpatialFPW
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
-Spatial::SpatialFPW::SpatialFPW( const std::string mgrs, float altitude, float speed, unsigned short heading )
+Spatial::SpatialFPW::SpatialFPW( const std::string mgrs, float altitude, float speed, float heading )
     : worldLocation_ ( mgrs, altitude )
     , isFrozen_      ( false )
     , velocityVector_( worldLocation_, speed, heading )

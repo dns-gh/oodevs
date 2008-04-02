@@ -52,7 +52,7 @@ void TicExtension::DoUpdate( const ASN1T_MsgUnitAttributes& asnMsg )
     if( asnMsg.m.dotation_eff_materielPresent )
         UpdatePlatforms( asnMsg );
 
-    if( asnMsg.m.vitessePresent || asnMsg.m.directionPresent || asnMsg.m.altitudePresent )
+    if( asnMsg.m.altitudePresent )
         std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &Platform::Update, _1, asnMsg ) );
 
     if( asnMsg.m.directionPresent )

@@ -44,12 +44,8 @@ Platform::~Platform()
 // -----------------------------------------------------------------------------
 void Platform::Update( const ASN1T_MsgUnitAttributes& asnMsg )
 {
-    if( asnMsg.m.vitessePresent )
-        speed_ = float( asnMsg.vitesse );
-    if( asnMsg.m.directionPresent )
-        heading_ = asnMsg.direction;
     if( asnMsg.m.altitudePresent )
-        altitude_ = asnMsg.altitude;
+        altitude_ = float( asnMsg.altitude );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,18 +103,44 @@ void Platform::Move( const geometry::Point2f& to )
     const float requiredSpeed = distance / timeStep_;
 
     if( distance > teleportThreshold )
+    {
+        heading_ = 0;
+        speed_ = 0;
         position_ = to;
+    }
+    else if( requiredSpeed <= speed_ )
+    {
+        ComputeHeading( position_, to );
+        speed_ = requiredSpeed;
+        position_ = to;
+    }
     else
     {
         float acceleration = ( requiredSpeed - speed_ ) / timeStep_;
         acceleration = std::min( acceleration, maxAcceleration );
         speed_ += acceleration * timeStep_;
-//        speed_ = std::min( speed_, maxSpeed_ );
-
         const float ratio = speed_ / requiredSpeed;
-        position_ += ratio * geometry::Vector2f( position_, to );
-        // $$$$ AGE 2008-04-01: direction_;
+        const geometry::Point2f target = position_ + ratio * geometry::Vector2f( position_, to );
+        ComputeHeading( position_, target );
+        position_ = target;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Platform::ComputeHeading
+// Created: AGE 2008-04-02
+// -----------------------------------------------------------------------------
+void Platform::ComputeHeading( const geometry::Point2f& from, const geometry::Point2f& to )
+{
+    geometry::Vector2f direction( from, to );
+    direction.Normalize();
+    const float angle = std::atan2( direction.Y(), direction.X() );
+    static const float iPiOver180 = 180.f / std::acos( -1.f );
+    heading_ = - angle * iPiOver180 + 90;
+    while( heading_ < 0 )
+           heading_ += 360;
+    while( heading_ >= 360 )
+           heading_ -= 360;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,5 +149,50 @@ void Platform::Move( const geometry::Point2f& to )
 // -----------------------------------------------------------------------------
 void Platform::Accept( PlatformVisitor_ABC& visitor ) const
 {
-    visitor.AddPlatform( type_, position_, altitude_, speed_, heading_ );
+    visitor.AddPlatform( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Platform::GetType
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+const kernel::ComponentType& Platform::GetType() const
+{
+    return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Platform::GetPosition
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+geometry::Point2f Platform::GetPosition() const
+{
+    return position_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Platform::GetAltitude
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+float Platform::GetAltitude() const
+{
+    return altitude_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Platform::GetSpeed
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+float Platform::GetSpeed() const
+{
+    return speed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Platform::GetHeading
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+float Platform::GetHeading() const
+{
+    return heading_;
 }

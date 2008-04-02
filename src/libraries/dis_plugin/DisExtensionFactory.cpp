@@ -19,9 +19,10 @@ using namespace dis;
 // Name: DisExtensionFactory constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, xml::xistream& xis )
+DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
     : network_( network )
     , time_( time )
+    , converter_( converter )
     , site_( xml::attribute< unsigned short >( xis, "site" ) )
     , application_( xml::attribute< unsigned short >( xis, "application" ) )
     , exercise_( (unsigned char)xml::attribute< unsigned short >( xis, "exercise" ) )
@@ -45,8 +46,17 @@ DisExtensionFactory::~DisExtensionFactory()
 // -----------------------------------------------------------------------------
 void DisExtensionFactory::Create( dispatcher::Agent& entity )
 {
-    EntityIdentifier id( site_, application_, id_ ); // site, application, id
-    std::auto_ptr< DisExtension > extension( new DisExtension( time_, network_, entity, id, exercise_ ) );
+    std::auto_ptr< DisExtension > extension( new DisExtension( time_, *this, converter_, network_, entity, exercise_ ) );
     entity.Attach( *extension.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisExtensionFactory::CreateNewIdentifier
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+EntityIdentifier DisExtensionFactory::CreateNewIdentifier()
+{
+    EntityIdentifier id( site_, application_, id_ ); // site, application, id
     ++id_;
+    return id;
 }

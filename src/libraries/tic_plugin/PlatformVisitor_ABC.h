@@ -10,15 +10,9 @@
 #ifndef __PlatformVisitor_ABC_h_
 #define __PlatformVisitor_ABC_h_
 
-#include <geometry/Types.h>
-
-namespace kernel
-{
-    class ComponentType;
-}
-
 namespace tic
 {
+    class Platform_ABC;
 
 // =============================================================================
 /** @class  PlatformVisitor_ABC
@@ -38,8 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void AddPlatform( const kernel::ComponentType& type, const geometry::Point2f& position,
-                              unsigned int altitude, float speed, unsigned int heading ) = 0;
+    virtual void AddPlatform( const Platform_ABC& platform ) = 0;
     //@}
 };
 

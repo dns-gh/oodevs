@@ -29,7 +29,7 @@ class Spatial
 public:
     //! @name Constructors/Destructor
     //@{
-             Spatial( const dispatcher::Position& mgrs, float altitude, float speed, unsigned short heading );
+             Spatial( const dispatcher::Position& mgrs, float altitude, float speed, float heading );
     virtual ~Spatial();
     //@}
 
@@ -49,7 +49,7 @@ private:
     //@{
     struct SpatialFPW
     {
-        SpatialFPW( const std::string mgrs, float altitude, float speed, unsigned short heading );
+        SpatialFPW( const std::string mgrs, float altitude, float speed, float heading );
         template< typename Archive >
         void Serialize( Archive& archive )
         {

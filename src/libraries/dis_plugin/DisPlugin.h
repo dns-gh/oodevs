@@ -13,6 +13,11 @@
 #include "dispatcher/Plugin_ABC.h"
 #include "Time_ABC.h"
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 namespace xml
 {
     class xistream;
@@ -69,6 +74,7 @@ private:
     //@{
     dispatcher::Model& model_;
     std::auto_ptr< UdpNetwork > network_;
+    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     std::auto_ptr< DisExtensionFactory > factory_;
     unsigned long timeStep_;
     unsigned long time_;

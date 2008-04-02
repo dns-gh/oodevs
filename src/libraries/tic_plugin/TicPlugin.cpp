@@ -35,10 +35,11 @@ namespace
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
 TicPlugin::TicPlugin( dispatcher::Model& model, const dispatcher::Config& config )
-    : converter_( new kernel::CoordinateConverter( config ) )
+    : model_    ( model )
+    , converter_( new kernel::CoordinateConverter( config ) )
     , factory_  ( new ExtensionFactory( *converter_, (float)ReadTimeStep( config.GetSessionFile() ) ) )
 {
-    model.RegisterFactory( *factory_ );
+    model_.RegisterFactory( *factory_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +48,7 @@ TicPlugin::TicPlugin( dispatcher::Model& model, const dispatcher::Config& config
 // -----------------------------------------------------------------------------
 TicPlugin::~TicPlugin()
 {
-    // NOTHING
+    model_.UnregisterFactory( *factory_ );
 }
 
 // -----------------------------------------------------------------------------

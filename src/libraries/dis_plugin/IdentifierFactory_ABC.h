@@ -7,45 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __EntityMarking_h_
-#define __EntityMarking_h_
+#ifndef __IdentifierFactory_ABC_h_
+#define __IdentifierFactory_ABC_h_
+
+#include "hla_plugin/EntityIdentifier.h"
 
 namespace dis
 {
 
 // =============================================================================
-/** @class  EntityMarking
-    @brief  EntityMarking
+/** @class  IdentifierFactory_ABC
+    @brief  Identifier factory definition
 */
-// Created: AGE 2008-03-10
+// Created: AGE 2008-04-01
 // =============================================================================
-class EntityMarking
+class IdentifierFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EntityMarking( const std::string& name = std::string() );
-            ~EntityMarking();
+             IdentifierFactory_ABC() {};
+    virtual ~IdentifierFactory_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    template< typename Archive >
-    void Serialize( Archive& archive ) const
-    {
-        archive << characterSet_ << marking_;
-    }
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    unsigned char characterSet_;
-    unsigned char marking_[11];
+    virtual EntityIdentifier CreateNewIdentifier() = 0;
     //@}
 };
 
 }
 
-#endif // __EntityMarking_h_
+#endif // __IdentifierFactory_ABC_h_

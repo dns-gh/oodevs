@@ -16,11 +16,6 @@
 #include "hla_plugin/EntityType.h"
 #include "hla_plugin/Coordinates.h"
 
-namespace dispatcher
-{
-    class Agent;
-}
-
 namespace dis
 {
 
@@ -42,8 +37,14 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     EntityStatePDU( const dispatcher::Agent& agent, const EntityIdentifier& id, unsigned long time, unsigned char exercise );
+     EntityStatePDU( unsigned long time, unsigned char exercise, const EntityIdentifier& id );
     ~EntityStatePDU();
+    //@}
+
+    //! @name Modifiers
+    //@{
+    void SetEntityName( const std::string& name );
+    void SetPosition( double latitude, double longitude, float altitude, float speed, float heading );
     //@}
 
     //! @name Operations

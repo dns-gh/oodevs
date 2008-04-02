@@ -95,6 +95,19 @@ geometry::Point2f CoordinateConverter::ConvertToGeo( const geometry::Point2f& po
 }
 
 // -----------------------------------------------------------------------------
+// Name: CoordinateConverter::ConvertToGeo
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+geometry::Point2d CoordinateConverter::ConvertToGeo( const geometry::Point2d& pos ) const
+{
+    static const double r180OverPi = 180. / std::acos( -1. );
+    const geometry::Point2d translated = pos - geometry::Vector2d( translation_.X(), translation_.Y() );
+    planar_.Set( translated.X(), translated.Y() );
+    geodetic_.SetCoordinates( planar_ );
+    return geometry::Point2d( geodetic_.GetLongitude() * r180OverPi, geodetic_.GetLatitude() * r180OverPi );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CoordinateConverter::ConvertFromGeo
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------

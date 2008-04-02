@@ -10,8 +10,15 @@
 #include "dis_plugin_pch.h"
 #include "DisExtension.h"
 #include "EntityStatePDU.h"
-#include "UdpNetwork.h"
 #include "Time_ABC.h"
+#include "IdentifierFactory_ABC.h"
+#include "tic_plugin/TicExtension_ABC.h"
+#include "tic_plugin/Platform_ABC.h"
+#include "dispatcher/Agent.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "UdpNetwork.h"
+#include <geocoord/MGRS.h>
+#include <geocoord/Geodetic.h>
 
 using namespace dis;
 
@@ -19,12 +26,14 @@ using namespace dis;
 // Name: DisExtension constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtension::DisExtension( const Time_ABC& time, UdpNetwork& network, dispatcher::Agent& holder, const EntityIdentifier& id, unsigned char exercise )
-    : time_   ( time )
-    , network_( network )
-    , holder_ ( holder )
-    , exercise_( exercise )
-    , id_     ( id )
+DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, dispatcher::Agent& holder, unsigned char exercise )
+    : time_     ( time )
+    , id_       ( id )
+    , myId_     ( id_.CreateNewIdentifier() )
+    , converter_( converter )
+    , network_  ( network )
+    , holder_   ( holder )
+    , exercise_ ( exercise )
 {
     // NOTHING
 }
@@ -44,6 +53,47 @@ DisExtension::~DisExtension()
 // -----------------------------------------------------------------------------
 void DisExtension::DoUpdate( const ASN1T_MsgUnitAttributes& )
 {
-    EntityStatePDU pdu( holder_, id_, time_.GetTime(), exercise_ );
+    if( tic::TicExtension_ABC* extension = holder_.Retrieve< tic::TicExtension_ABC >() )
+        extension->Accept( *this );
+    else
+        SendUnitState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisExtension::AddPlatform
+// Created: AGE 2008-04-01
+// -----------------------------------------------------------------------------
+void DisExtension::AddPlatform( const tic::Platform_ABC& platform )
+{
+    IT_Identifiers it = ids_.find( &platform );
+    if( it == ids_.end() )
+        it = ids_.insert( std::make_pair( &platform, id_.CreateNewIdentifier() ) ).first;
+
+    EntityStatePDU pdu( time_.GetTime(), exercise_, it->second );
+    pdu.SetEntityName( holder_.GetName() );
+
+    const geometry::Point2d position( platform.GetPosition().X(), platform.GetPosition().Y() );
+    const geometry::Point2d geocoord = converter_.ConvertToGeo( position );
+    static const double rPiOver180 = std::acos( -1. ) / 180.;
+    pdu.SetPosition( geocoord.Y() * rPiOver180, geocoord.X()* rPiOver180, platform.GetAltitude(), platform.GetSpeed(), platform.GetHeading() );
+
+    network_.Send( pdu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisExtension::SendUnitState
+// Created: AGE 2008-04-02
+// -----------------------------------------------------------------------------
+void DisExtension::SendUnitState() const
+{
+    EntityStatePDU pdu( time_.GetTime(), exercise_, myId_ );
+    pdu.SetEntityName( holder_.GetName() );
+
+    geocoord::MGRS mgrs( holder_.position_.strPosition_ );
+    geocoord::Geodetic geodetic( mgrs );
+
+    pdu.SetPosition( geodetic.GetLatitude(), geodetic.GetLongitude(),
+        (float)holder_.nHeight_, (float)holder_.nSpeed_, (float)holder_.nDirection_ );
+
     network_.Send( pdu );
 }

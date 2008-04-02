@@ -22,7 +22,9 @@ class WorldLocation
 public:
     //! @name Constructors/Destructor
     //@{
+     WorldLocation();
      WorldLocation( const std::string mgrs, float altitude );
+     WorldLocation( double latitude, double longitude, float altitude );
     ~WorldLocation();
     //@}
 
@@ -62,7 +64,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      VelocityVector();
-     VelocityVector( const WorldLocation& location, float speed, unsigned short heading );
+     VelocityVector( const WorldLocation& location, float speed, float heading );
     ~VelocityVector();
     //@}
 
@@ -106,6 +108,7 @@ class Orientation
 public:
     //! @name Constructors/Destructor
     //@{
+     Orientation();
      Orientation( const WorldLocation& location, const VelocityVector& velocity );
     ~Orientation();
     //@}

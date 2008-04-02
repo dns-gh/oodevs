@@ -9,11 +9,12 @@
 
 #include "dis_plugin_pch.h"
 #include "DisPlugin.h"
-#include "UdpNetwork.h"
 #include "DisExtensionFactory.h"
+#include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model.h"
 #include <xeumeuleu/xml.h>
+#include "UdpNetwork.h"
 
 using namespace dis;
 using namespace dispatcher;
@@ -38,7 +39,8 @@ namespace
 DisPlugin::DisPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis )
     : model_( model )
     , network_( new UdpNetwork( xml::attribute< std::string >( xis, "server" ), xml::attribute< unsigned short >( xis, "port" ) ) )
-    , factory_( new DisExtensionFactory( *network_, *this, xis ) )
+    , converter_( new kernel::CoordinateConverter( config ) )
+    , factory_( new DisExtensionFactory( *network_, *this, *converter_, xis ) )
     , timeStep_( ReadTimeStep( config.GetSessionFile() ) )
     , time_( 0 )
 {
