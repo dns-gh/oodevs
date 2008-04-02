@@ -36,24 +36,6 @@ TER_Object_ABC::~TER_Object_ABC()
 }
 
 
-// -----------------------------------------------------------------------------
-// Name: TER_Object_ABC::load
-// Created: JVT 2005-03-23
-// -----------------------------------------------------------------------------
-void TER_Object_ABC::load( boost::archive::binary_iarchive& file, const uint )
-{
-    file >> location_;
-    InsertInWorld();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_Object_ABC::save
-// Created: JVT 2005-03-23
-// -----------------------------------------------------------------------------
-void TER_Object_ABC::save( boost::archive::binary_oarchive& file, const uint ) const
-{
-    file << location_;
-}
 
 // -----------------------------------------------------------------------------
 // Name: TER_Object_ABC::Initialize

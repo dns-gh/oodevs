@@ -24,8 +24,6 @@ using namespace xml;
 
 const MT_Float TER_Localisation::rPrecision_ = 2.1242;
 
-#include "TER_Localisation.inl"
-
 //MT_BOOSTPOOLING_FUNCTIONS( TER_Localisation )
 
 //-----------------------------------------------------------------------------
@@ -119,33 +117,6 @@ TER_Localisation::~TER_Localisation()
 
 }
 
-// -----------------------------------------------------------------------------
-// Name: TER_Localisation::load
-// Created: JVT 2005-03-23
-// -----------------------------------------------------------------------------
-void TER_Localisation::load( boost::archive::binary_iarchive& file, const uint )
-{
-    file >> nType_
-         >> pointVector_
-         >> bWasCircle_
-         >> vCircleCenter_
-         >> rCircleRadius_;
-
-    Initialize();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_Localisation::save
-// Created: JVT 2005-03-23
-// -----------------------------------------------------------------------------
-void TER_Localisation::save( boost::archive::binary_oarchive& file, const uint ) const
-{
-    file << nType_
-         << pointVector_
-         << bWasCircle_
-         << vCircleCenter_
-         << rCircleRadius_;
-}
 
 //=============================================================================
 // MAIN

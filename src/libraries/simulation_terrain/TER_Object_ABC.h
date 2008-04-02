@@ -54,9 +54,10 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
-    void load( boost::archive::binary_iarchive&, const uint );
-    void save( boost::archive::binary_oarchive&, const uint ) const;
+    template<class Archive>
+    void load( Archive&, const uint );
+    template<class Archive>
+    void save( Archive&, const uint ) const;
     //@}
 
     //! @name Operations
@@ -100,5 +101,7 @@ private:
     T_Hint           hint_;
     //@}
 };
+
+#include "TER_Object_ABC.inl"
 
 #endif // __TER_Object_ABC_h_

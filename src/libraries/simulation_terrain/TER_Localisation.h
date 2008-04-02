@@ -14,6 +14,7 @@
 
 #include "TER.h"
 #include "TER_Polygon.h"
+#include "MT/MT_IO/MT_FormatString.h"
 #include "MT_Tools/MT_Polyline.h"
 
 namespace xml
@@ -62,8 +63,10 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( boost::archive::binary_iarchive&, const uint );
-    void save( boost::archive::binary_oarchive&, const uint ) const;
+    template<class Archive>
+    void load( Archive&, const uint );
+    template<class Archive>
+    void save( Archive&, const uint ) const;
     //@}
 
     //-------------------------------------------------------------------------
@@ -183,5 +186,7 @@ protected:
 private:
     static const MT_Float rPrecision_;
 };
+
+#include "TER_Localisation.inl"
 
 #endif // __TER_Localisation_h_
