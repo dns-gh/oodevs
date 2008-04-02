@@ -75,7 +75,7 @@ void MIL_IDManager::Initialize( MIL_Config& config )
     LoadingWrapper loader;
 
     xisClasse >> start( "Classes" )
-                  >> list( "Classe", loader, &LoadingWrapper::ReadClasse )
+                  >> xml::list( "Classe", loader, &LoadingWrapper::ReadClasse )
               >> end();
 }
 
