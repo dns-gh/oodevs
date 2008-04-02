@@ -98,7 +98,7 @@ void MIL_TacticalLine_ABC::Initialize( xml::xistream& xis )
 {
     T_PointVector points;
     xis >> attribute( "name", strName_ )
-        >> list( "point", *this, &MIL_TacticalLine_ABC::ReadPoint, points );
+        >> xml::list( "point", *this, &MIL_TacticalLine_ABC::ReadPoint, points );
     if( points.size() < 2 )
         xis.error( "Invalid tactical line geometry" );
     line_.Reset( TER_Localisation::eLine, points );

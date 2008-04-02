@@ -95,7 +95,7 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis >> start( "automats" )
-            >> list( "automat", loader, &LoadingWrapper::ReadAutomat )
+            >> xml::list( "automat", loader, &LoadingWrapper::ReadAutomat )
         >> end();
 }
 
@@ -154,7 +154,7 @@ MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& x
     , rRapForIncreasePerTimeStepValue_( DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue() )
 {
     xis >> attribute( "id", nID_ )
-        >> list( "unit", *this, &MIL_AutomateType::ReadUnit );
+        >> xml::list( "unit", *this, &MIL_AutomateType::ReadUnit );
     if( !pTypePC_ )
         xis.error( "No command-post defined for automat type: " + strName_ );
 

@@ -199,7 +199,7 @@ void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream
     {
         pSupplySuperior_ = &superior;
         xis >> start( "quotas" )
-                >> list( "dotation", *this, &MIL_AutomateLOG::ReadDotation )
+                >> xml::list( "dotation", *this, &MIL_AutomateLOG::ReadDotation )
             >> end();
     }
 

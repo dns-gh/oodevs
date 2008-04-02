@@ -157,7 +157,7 @@ void MIL_Rota::Initialize( xml::xistream& xis )
     
     nbcAgents_.clear();
     xis >> start( "nbc-agents" )
-            >> list( "nbc-agent", *this, &MIL_Rota::ReadNbcAgent )
+            >> xml::list( "nbc-agent", *this, &MIL_Rota::ReadNbcAgent )
         >> end();
 
     xis >> end(); // specific-attributes

@@ -110,7 +110,7 @@ void PHY_RolePion_HumanFactors::save( MIL_CheckPointOutArchive& file, const uint
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::ReadOverloading( xml::xistream& xis )
 {
-    xis >> list( "FacteursHumains", *this, &PHY_RolePion_HumanFactors::ReadFacteursHumains );
+    xis >> xml::list( "FacteursHumains", *this, &PHY_RolePion_HumanFactors::ReadFacteursHumains );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,9 +120,9 @@ void PHY_RolePion_HumanFactors::ReadOverloading( xml::xistream& xis )
 void PHY_RolePion_HumanFactors::ReadFacteursHumains( xml::xistream& xis )
 {
 
-    xis >> list( "Fatigue", *this, &PHY_RolePion_HumanFactors::ReadFatigue )
-        >> list( "Moral", *this, &PHY_RolePion_HumanFactors::ReadMoral )
-        >> list( "Experience", *this, &PHY_RolePion_HumanFactors::ReadExperience );
+    xis >> xml::list( "Fatigue", *this, &PHY_RolePion_HumanFactors::ReadFatigue )
+        >> xml::list( "Moral", *this, &PHY_RolePion_HumanFactors::ReadMoral )
+        >> xml::list( "Experience", *this, &PHY_RolePion_HumanFactors::ReadExperience );
 }
 
 // -----------------------------------------------------------------------------

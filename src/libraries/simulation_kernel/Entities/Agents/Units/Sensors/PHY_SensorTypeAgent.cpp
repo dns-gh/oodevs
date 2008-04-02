@@ -102,7 +102,7 @@ namespace
         typedef typename Loader< C > T_Loader;
         T_Loader loader( container );
         xis >> start( strTagName )
-                >> list( "distance-modifier", loader, &T_Loader::ReadFactor, factors )
+                >> xml::list( "distance-modifier", loader, &T_Loader::ReadFactor, factors )
             >> end();
     }
 }
@@ -172,7 +172,7 @@ void PHY_SensorTypeAgent::InitializeDistances( xml::xistream& xis )
     rSquareProximityDist_ = MIL_Tools::ConvertMeterToSim( rSquareProximityDist_ );
     rSquareProximityDist_ *= rSquareProximityDist_;
 
-    xis     >> list( "base-distance", *this, &PHY_SensorTypeAgent::ReadDistance )
+    xis     >> xml::list( "base-distance", *this, &PHY_SensorTypeAgent::ReadDistance )
         >> end();
 }
 
@@ -217,7 +217,7 @@ void PHY_SensorTypeAgent::InitializeEnvironmentFactors( xml::xistream& xis )
 {
     unsigned int visionObject = 0;
     xis >> start( "terrain-modifiers" )
-            >> list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadTerrainModifier, visionObject )
+            >> xml::list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadTerrainModifier, visionObject )
         >> end();
 }
 

@@ -26,7 +26,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 PHY_DotationConsumptions::PHY_DotationConsumptions( const std::string& strParentTagName, xml::xistream& xis )
 {
-    xis >> list( "dotation", *this, &PHY_DotationConsumptions::ReadDotation );
+    xis >> xml::list( "dotation", *this, &PHY_DotationConsumptions::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------

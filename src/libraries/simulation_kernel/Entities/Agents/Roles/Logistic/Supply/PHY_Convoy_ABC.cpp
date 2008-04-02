@@ -117,7 +117,7 @@ void PHY_Convoy_ABC::InitializeInterpolatedTime( xml::xistream& xis, const std::
 
     std::pair< uint, MT_Float > upperBound( 0, 0.f );
     xis >> start( strTagName )
-            >> list( "unit-time", loader, &LoadingWrapper::ReadInterpolatedTime, data, upperBound )
+            >> xml::list( "unit-time", loader, &LoadingWrapper::ReadInterpolatedTime, data, upperBound )
         >> end();
 
     data.SetAfterValue( upperBound.second );
@@ -162,7 +162,7 @@ void PHY_Convoy_ABC::InitializeSpeedModificators( xml::xistream& xis )
     std::pair< uint, MT_Float > upperBound( 0, 0.f );
 
     xis >> start( "speed-modifiers" )
-            >> list( "speed-modifier", loader, &LoadingWrapper::ReadSpeedModifier, upperBound )
+            >> xml::list( "speed-modifier", loader, &LoadingWrapper::ReadSpeedModifier, upperBound )
         >> end();
 
     coefSpeedModificator_.SetAfterValue( upperBound.second );

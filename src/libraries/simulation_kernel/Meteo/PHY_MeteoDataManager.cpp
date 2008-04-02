@@ -82,7 +82,7 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 {
     xis >> optional() >> start( "local-weather" )
-                          >> list( "local", *this, &PHY_MeteoDataManager::ReadPatchLocal )
+                          >> xml::list( "local", *this, &PHY_MeteoDataManager::ReadPatchLocal )
                       >> end();
 }
 

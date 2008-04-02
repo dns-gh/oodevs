@@ -88,7 +88,7 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
     MT_Float rFactorSum = 0.;
     LoadingWrapper loader;
     xis >> start( "injuries" )
-            >> list( "injury", loader, &LoadingWrapper::ReadInjury, rFactorSum )
+            >> xml::list( "injury", loader, &LoadingWrapper::ReadInjury, rFactorSum )
         >> end();
 
     if( std::fabs( 1. - rFactorSum ) > 0.01 )

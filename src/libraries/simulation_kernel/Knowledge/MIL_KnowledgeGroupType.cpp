@@ -40,7 +40,7 @@ void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis >> start( "knowledge-groups" )
-            >> list( "knowledge-group", loader, &LoadingWrapper::ReadKnowledgeGroup )
+            >> xml::list( "knowledge-group", loader, &LoadingWrapper::ReadKnowledgeGroup )
         >> end();
 }
 

@@ -46,7 +46,7 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis )
     std::fill( rLinearSpeeds_, rLinearSpeeds_ + 11, -1. );
 
     xis >> optional()
-        >> list( "speeds", *this, &PHY_Speeds::ReadSpeed );
+        >> xml::list( "speeds", *this, &PHY_Speeds::ReadSpeed );
 
     CheckInitialization( xis );
     GenerateMasks();
@@ -110,7 +110,7 @@ void PHY_Speeds::ReadSpeed( xml::xistream& xis )
         xis.error( "speeds: max <= 0" );
 
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
-    xis >> list( "speed", *this, &PHY_Speeds::ReadTerrain );
+    xis >> xml::list( "speed", *this, &PHY_Speeds::ReadTerrain );
 }
 
 // -----------------------------------------------------------------------------

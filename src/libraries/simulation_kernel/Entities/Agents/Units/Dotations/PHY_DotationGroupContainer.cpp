@@ -149,7 +149,7 @@ void PHY_DotationGroupContainer::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ReadValues( xml::xistream& xis )
 {
-    xis >> list( "dotations", *this, &PHY_DotationGroupContainer::ReadDotations );
+    xis >> xml::list( "dotations", *this, &PHY_DotationGroupContainer::ReadDotations );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ void PHY_DotationGroupContainer::ReadValues( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis )
 {
-    xis >> list( "dotation", *this, &PHY_DotationGroupContainer::ReadDotation );
+    xis >> xml::list( "dotation", *this, &PHY_DotationGroupContainer::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------

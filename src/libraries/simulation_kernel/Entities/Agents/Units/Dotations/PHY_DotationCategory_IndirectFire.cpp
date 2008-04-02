@@ -58,7 +58,7 @@ PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_
     if( !dotationCategory.HasAttritions() )
         xis.error( "Dotation has no attritions defined" );
 
-    xis >> list( "ph", *this, &PHY_DotationCategory_IndirectFire::ReadPh );
+    xis >> xml::list( "ph", *this, &PHY_DotationCategory_IndirectFire::ReadPh );
 }
 
 // -----------------------------------------------------------------------------

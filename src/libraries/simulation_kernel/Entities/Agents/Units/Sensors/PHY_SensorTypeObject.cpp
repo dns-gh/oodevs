@@ -31,7 +31,7 @@ PHY_SensorTypeObject::PHY_SensorTypeObject( const PHY_SensorType& type, xml::xis
     , objectData_  ( MIL_RealObjectType::GetObjectTypes().size() )
     , rMaxDistance_( 0. )
 {
-    xis >> list( "object", *this, &PHY_SensorTypeObject::ReadObject );
+    xis >> xml::list( "object", *this, &PHY_SensorTypeObject::ReadObject );
 }
 
 // -----------------------------------------------------------------------------

@@ -86,7 +86,7 @@ void PHY_UnitType::InitializeStockLogisticThresholdRatios( xml::xistream& xis )
 {
     xis >> optional()
             >> start( "stocks" )
-                >> list( "stock", *this, &PHY_UnitType::ReadStock )
+                >> xml::list( "stock", *this, &PHY_UnitType::ReadStock )
             >> end();
 }
 
@@ -137,7 +137,7 @@ void PHY_UnitType::InitializeNBC( xml::xistream& xis )
 void PHY_UnitType::InitializeComposantes( xml::xistream& xis )
 {
     xis >> start( "equipments" )
-            >> list( "equipment", *this, &PHY_UnitType::ReadEquipment )
+            >> xml::list( "equipment", *this, &PHY_UnitType::ReadEquipment )
         >> end();
 }
 
@@ -187,7 +187,7 @@ void PHY_UnitType::ReadEquipment( xml::xistream& xis )
 void PHY_UnitType::InitializeCommanderRepartition( xml::xistream& xis )
 {
     xis >> start( "crew-ranks" )
-            >> list( "crew-rank", *this, &PHY_UnitType::ReadCrewRank )
+            >> xml::list( "crew-rank", *this, &PHY_UnitType::ReadCrewRank )
         >> end();
 }
 
@@ -223,7 +223,7 @@ void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
 void PHY_UnitType::InitializePostureTimes( xml::xistream& xis )
 {
     xis >> start( "postures" )
-            >> list( "posture", *this, &PHY_UnitType::ReadPosture )
+            >> xml::list( "posture", *this, &PHY_UnitType::ReadPosture )
         >> end();
 }
 
@@ -253,7 +253,7 @@ void PHY_UnitType::ReadPosture( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::InitializeInstallationTimes( xml::xistream& xis )
 {
-    xis >> list( "setup", *this, &PHY_UnitType::ReadSetup );
+    xis >> xml::list( "setup", *this, &PHY_UnitType::ReadSetup );
 }
 
 // -----------------------------------------------------------------------------
@@ -282,7 +282,7 @@ void PHY_UnitType::InitializeCoupDeSonde( xml::xistream& xis )
 {
     rCoupDeSondeLength_ = 0.;
     rCoupDeSondeWidth_  = 0.;
-    xis >> list( "drill-blow", *this, &PHY_UnitType::ReadDrill );
+    xis >> xml::list( "drill-blow", *this, &PHY_UnitType::ReadDrill );
 }
 
 // -----------------------------------------------------------------------------

@@ -69,7 +69,7 @@ void PHY_RadarType::Initialize( xml::xistream& xis, const MIL_Time_ABC& time )
     LoadingWrapper loader;
 
     xis >> start( "radars" )
-            >> list( "radar", loader, &LoadingWrapper::ReadRadar, time )
+            >> xml::list( "radar", loader, &LoadingWrapper::ReadRadar, time )
         >> end();
 }
 
@@ -168,7 +168,7 @@ void PHY_RadarType::InitializeRange( xml::xistream& xis )
 void PHY_RadarType::InitializeActivities( xml::xistream& xis )
 {
     bool bIsActivity = false;
-    xis >> list( "detectable-activities", *this, &PHY_RadarType::ReadDetectableActivity, bIsActivity );
+    xis >> xml::list( "detectable-activities", *this, &PHY_RadarType::ReadDetectableActivity, bIsActivity );
     if( !bIsActivity )
     {
         std::fill( detectableActivities_.begin(), detectableActivities_.end(), true );
@@ -185,7 +185,7 @@ void PHY_RadarType::ReadDetectableActivity( xml::xistream& xis, bool& bIsActivit
     bIsActivity = true;
     std::fill( detectableActivities_.begin(), detectableActivities_.end(), false );
 
-    xis >> list( "detectable-activity", *this, &PHY_RadarType::ReadActivity );
+    xis >> xml::list( "detectable-activity", *this, &PHY_RadarType::ReadActivity );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,7 +216,7 @@ void PHY_RadarType::ReadActivity( xml::xistream& xis )
 void PHY_RadarType::InitializeAcquisitionTimes( xml::xistream& xis )
 {
     bool bIsTime = false;
-    xis >> list( "acquisition-times", *this, &PHY_RadarType::ReadAcquisitionTime, bIsTime );
+    xis >> xml::list( "acquisition-times", *this, &PHY_RadarType::ReadAcquisitionTime, bIsTime );
 
     if( !bIsTime )
     {
@@ -235,7 +235,7 @@ void PHY_RadarType::ReadAcquisitionTime( xml::xistream& xis, bool& bIsTime )
 {
     bIsTime = true;
     bool bIsPCTime = false;
-    xis >> list( "acquisition-time", *this, &PHY_RadarType::ReadTime, bIsPCTime );
+    xis >> xml::list( "acquisition-time", *this, &PHY_RadarType::ReadTime, bIsPCTime );
 
     if( !bIsPCTime )
     {

@@ -62,7 +62,7 @@ MIL_PopulationPionAttritionData::~MIL_PopulationPionAttritionData()
 // -----------------------------------------------------------------------------
 void MIL_PopulationPionAttritionData::Initialize( xml::xistream& xis )
 {
-    xis >> list( "attrition-effect", *this, &MIL_PopulationPionAttritionData::ReadAttritionEffect );
+    xis >> xml::list( "attrition-effect", *this, &MIL_PopulationPionAttritionData::ReadAttritionEffect );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAtti
     if( attitudeData.rIntensity_ < 0 || attitudeData.rIntensity_ > 1 )
         xis.error( "attrition-effetc: intensity not in [0..1]" );
 
-    xis >> list( "unit", *this, &MIL_PopulationPionAttritionData::ReadAttritionUnitEffect, attitudeData );
+    xis >> xml::list( "unit", *this, &MIL_PopulationPionAttritionData::ReadAttritionUnitEffect, attitudeData );
 }
 
 // -----------------------------------------------------------------------------

@@ -62,7 +62,7 @@ void DEC_Agent_PathClass::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis >> start( "unit-rules" )
-            >> list( "rule", loader, &LoadingWrapper::ReadUnitRule )
+            >> xml::list( "rule", loader, &LoadingWrapper::ReadUnitRule )
         >> end();
 
     CheckRulesExistence();
@@ -147,29 +147,29 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_Pa
 
         >> optional() >> start( "preferred-terrains" )
                           >> optional() >> attribute( "strength", rPreferedTerrainCost_ )
-                          >> list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadPrefferedTerrains, preferedTerrain_ )
+                          >> xml::list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadPrefferedTerrains, preferedTerrain_ )
                       >> end()
 
         >> optional() >> start( "avoided-terrains" )
                           >> optional() >> attribute( "strength", rAvoidedTerrainCost_ )
-                          >> list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadAvoidedTerrain, avoidedTerrain_ )
+                          >> xml::list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadAvoidedTerrain, avoidedTerrain_ )
                       >> end()
 
         >> optional() >> start( "preferred-altitude" )
                           >> attribute( "value", rAltitudePreference_ )
                       >> end()
 
-        >> list( "zone", *this, &DEC_Agent_PathClass::ReadFuseau )
+        >> xml::list( "zone", *this, &DEC_Agent_PathClass::ReadFuseau )
 
-        >> list( "automat-zone", *this, &DEC_Agent_PathClass::ReadAutomataFuseau )
+        >> xml::list( "automat-zone", *this, &DEC_Agent_PathClass::ReadAutomataFuseau )
 
-        >> list( "danger-direction", *this, &DEC_Agent_PathClass::ReadDangerDirection )
+        >> xml::list( "danger-direction", *this, &DEC_Agent_PathClass::ReadDangerDirection )
 
-        >> list( "enemies", *this, &DEC_Agent_PathClass::ReadEnemiesCost )
+        >> xml::list( "enemies", *this, &DEC_Agent_PathClass::ReadEnemiesCost )
 
-        >> list( "object-costs", *this, &DEC_Agent_PathClass::ReadObjectsCost )
+        >> xml::list( "object-costs", *this, &DEC_Agent_PathClass::ReadObjectsCost )
 
-        >> list( "population-costs", *this, &DEC_Agent_PathClass::ReadPopulationsCost );
+        >> xml::list( "population-costs", *this, &DEC_Agent_PathClass::ReadPopulationsCost );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +192,7 @@ DEC_Agent_PathClass::~DEC_Agent_PathClass()
 void DEC_Agent_PathClass::ReadObjectsCost( xml::xistream& xis )
 {
     xis >> attribute( "avoid", bAvoidObjects_ )
-        >> list( "object-cost", *this, &DEC_Agent_PathClass::ReadObject );
+        >> xml::list( "object-cost", *this, &DEC_Agent_PathClass::ReadObject );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,7 +218,7 @@ void DEC_Agent_PathClass::ReadObject( xml::xistream& xis )
 void DEC_Agent_PathClass::ReadPrefferedTerrains( xml::xistream& xis, TerrainData& destinationData )
 {
     destinationData = TerrainData();
-    xis >> list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadTerrain, destinationData );
+    xis >> xml::list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadTerrain, destinationData );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +228,7 @@ void DEC_Agent_PathClass::ReadPrefferedTerrains( xml::xistream& xis, TerrainData
 void DEC_Agent_PathClass::ReadAvoidedTerrain( xml::xistream& xis, TerrainData& destinationData )
 {
     destinationData = TerrainData();
-    xis >> list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadTerrain, destinationData );
+    xis >> xml::list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadTerrain, destinationData );
 }
 
 // -----------------------------------------------------------------------------
@@ -308,7 +308,7 @@ void DEC_Agent_PathClass::ReadPopulationsCost( xml::xistream& xis )
     xis >> optional() >> attribute( "security-range", rPopulationSecurityRange_ )
         >> optional() >> attribute( "maximum", rPopulationMaximumCost_ )
         >> optional() >> attribute( "outside-of-population", rCostOutsideOfPopulation_ )
-            >> list( "population-cost", *this, &DEC_Agent_PathClass::ReadPopulation );
+            >> xml::list( "population-cost", *this, &DEC_Agent_PathClass::ReadPopulation );
 }
 
 // -----------------------------------------------------------------------------

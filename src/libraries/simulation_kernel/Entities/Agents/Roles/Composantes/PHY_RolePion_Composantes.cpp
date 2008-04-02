@@ -348,7 +348,7 @@ void PHY_RolePion_Composantes::DistributeHumanWounds( const PHY_HumanRank& rank,
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ReadComposantesOverloading( xml::xistream& xis )
 {
-    xis >> list( "Equipements", *this, &PHY_RolePion_Composantes::ReadEquipements );
+    xis >> xml::list( "Equipements", *this, &PHY_RolePion_Composantes::ReadEquipements );
 }
 
 // -----------------------------------------------------------------------------
@@ -357,7 +357,7 @@ void PHY_RolePion_Composantes::ReadComposantesOverloading( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ReadEquipements( xml::xistream& xis )
 {
-    xis >> list( "Equipement", *this, &PHY_RolePion_Composantes::ReadEquipement );
+    xis >> xml::list( "Equipement", *this, &PHY_RolePion_Composantes::ReadEquipement );
 }
 
 // -----------------------------------------------------------------------------
@@ -408,7 +408,7 @@ void PHY_RolePion_Composantes::ReadEquipement( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ReadHumansOverloading( xml::xistream& xis )
 {
-    xis >> list( "Personnels", *this, &PHY_RolePion_Composantes::ReadPersonnels );
+    xis >> xml::list( "Personnels", *this, &PHY_RolePion_Composantes::ReadPersonnels );
 }
 
 // -----------------------------------------------------------------------------
@@ -417,7 +417,7 @@ void PHY_RolePion_Composantes::ReadHumansOverloading( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ReadPersonnels( xml::xistream& xis )
 {
-    xis >> list( "Personnel", *this, &PHY_RolePion_Composantes::ReadPersonnel );
+    xis >> xml::list( "Personnel", *this, &PHY_RolePion_Composantes::ReadPersonnel );
 }
 
 // -----------------------------------------------------------------------------

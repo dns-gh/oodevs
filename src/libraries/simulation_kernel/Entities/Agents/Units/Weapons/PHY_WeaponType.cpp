@@ -60,7 +60,7 @@ void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC&
 
     // Initialisation des composantes
     xis >> start( "weapons" )
-            >> list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, manager, time )
+            >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, manager, time )
         >> end();
 }
 
@@ -168,7 +168,7 @@ PHY_WeaponType::~PHY_WeaponType()
 void PHY_WeaponType::InitializeDirectFireData( MIL_EffectManager& manager, xml::xistream& xis )
 {
     pDirectFireData_ = 0;
-    xis >> list( "direct-fire", *this, &PHY_WeaponType::ReadDirect, manager );
+    xis >> xml::list( "direct-fire", *this, &PHY_WeaponType::ReadDirect, manager );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +195,7 @@ void PHY_WeaponType::ReadDirect( xml::xistream& xis, MIL_EffectManager& manager 
 void PHY_WeaponType::InitializeIndirectFireData( xml::xistream& xis )
 {
     pIndirectFireData_ = 0;
-    xis >> list( "indirect-fire", *this, &PHY_WeaponType::ReadIndirect );
+    xis >> xml::list( "indirect-fire", *this, &PHY_WeaponType::ReadIndirect );
 }
 
 // -----------------------------------------------------------------------------

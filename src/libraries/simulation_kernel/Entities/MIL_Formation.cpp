@@ -88,11 +88,11 @@ MIL_Formation::~MIL_Formation()
 void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, xml::xistream& xis )
 {
     assert( pArmy_ );
-    xis >> list( "formation"   , manager, &MIL_EntityManager::CreateFormation, *pArmy_, this )
-        >> list( "automat"     , *this,   &MIL_Formation::CreateAutomat, manager, *this )
-        >> list( "limit"       , *this,   &MIL_Formation::CreateLimit, tacticalLines )
-        >> list( "lima"        , *this,   &MIL_Formation::CreateLima,  tacticalLines )
-        >> list( "intelligence", manager, &MIL_EntityManager::CreateIntelligence, *this );
+    xis >> xml::list( "formation"   , manager, &MIL_EntityManager::CreateFormation, *pArmy_, this )
+        >> xml::list( "automat"     , *this,   &MIL_Formation::CreateAutomat, manager, *this )
+        >> xml::list( "limit"       , *this,   &MIL_Formation::CreateLimit, tacticalLines )
+        >> xml::list( "lima"        , *this,   &MIL_Formation::CreateLima,  tacticalLines )
+        >> xml::list( "intelligence", manager, &MIL_EntityManager::CreateIntelligence, *this );
 }
 
 // -----------------------------------------------------------------------------

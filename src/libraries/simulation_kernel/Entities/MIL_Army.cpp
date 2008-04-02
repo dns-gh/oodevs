@@ -88,19 +88,19 @@ MIL_Army::MIL_Army( MIL_EntityManager& manager, uint id, xml::xistream& xis )
 
     MIL_Formation* formation = 0;
     xis >> start( "communication" )
-            >> list( "knowledge-group", *this, &MIL_Army::ReadLogistic )
+            >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic )
         >> end()
         >> start( "tactical" )
-            >> list( "formation", manager_, &MIL_EntityManager::CreateFormation, *this, formation )
+            >> xml::list( "formation", manager_, &MIL_EntityManager::CreateFormation, *this, formation )
         >> end()
         >> start( "objects" )
-            >> list( "object", manager_, &MIL_EntityManager::CreateObject, *this )
+            >> xml::list( "object", manager_, &MIL_EntityManager::CreateObject, *this )
         >> end()
         >> start( "logistic" )
-            >> list( "automat", *this, &MIL_Army::ReadAutomat  )
+            >> xml::list( "automat", *this, &MIL_Army::ReadAutomat  )
         >> end()
         >> start( "populations" )
-            >> list( "population", manager_, &MIL_EntityManager::CreatePopulation, *this )
+            >> xml::list( "population", manager_, &MIL_EntityManager::CreatePopulation, *this )
         >> end();
 }
 
@@ -254,7 +254,7 @@ void MIL_Army::WriteDiplomacyODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_Army::InitializeDiplomacy( xml::xistream& xis )
 {
-    xis >> list( "relationship", *this, &MIL_Army::ReadDiplomacy );
+    xis >> xml::list( "relationship", *this, &MIL_Army::ReadDiplomacy );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,7 +322,7 @@ void MIL_Army::ReadAutomat( xml::xistream& xis )
     if( !pSuperior->GetType().IsLogistic() )
         xis.error( "Automat isn't a logistic automat" );
 
-    xis >> list( "subordinate" , *this, &MIL_Army::ReadSubordinate, pSuperior );
+    xis >> xml::list( "subordinate" , *this, &MIL_Army::ReadSubordinate, pSuperior );
 }
 
 // -----------------------------------------------------------------------------

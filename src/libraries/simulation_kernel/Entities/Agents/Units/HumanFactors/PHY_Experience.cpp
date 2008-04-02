@@ -45,7 +45,7 @@ void PHY_Experience::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
     xis >> start( "humans-factors" )
             >> start( "experience-factor" )
-                >> list( "modifier", loader, &LoadingWrapper::ReadExperience )
+                >> xml::list( "modifier", loader, &LoadingWrapper::ReadExperience )
             >> end()
         >> end();
 }

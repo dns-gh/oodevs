@@ -41,7 +41,7 @@ void PHY_DotationNature::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis >> start( "natures" )
-            >> list( "nature", loader, &LoadingWrapper::ReadNature )
+            >> xml::list( "nature", loader, &LoadingWrapper::ReadNature )
         >> end();
 }
 

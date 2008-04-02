@@ -288,10 +288,10 @@ void MIL_Automate::Initialize( xml::xistream& xis )
       
     pDecision_ = new DEC_AutomateDecision( *this ); //$$$ BULLSHIT : strName_ must be initialized ...
     
-    xis >> list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
-        >> list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate )
-        >> list( "limit"   , *this, &MIL_Automate::CreateLimit            )
-        >> list( "lima"    , *this, &MIL_Automate::CreateLima             );
+    xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
+        >> xml::list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate )
+        >> xml::list( "limit"   , *this, &MIL_Automate::CreateLimit            )
+        >> xml::list( "lima"    , *this, &MIL_Automate::CreateLima             );
         
     if( !pPionPC_ )
         xis.error( "Automat's command post is not defined" );

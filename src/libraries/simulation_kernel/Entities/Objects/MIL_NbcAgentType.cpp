@@ -66,7 +66,7 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis >> start( "agents" )
-            >> list( "agent", loader, &LoadingWrapper::ReadAgent )
+            >> xml::list( "agent", loader, &LoadingWrapper::ReadAgent )
         >> end()
     >> end();
 }
@@ -124,7 +124,7 @@ MIL_NbcAgentType::MIL_NbcAgentType( const std::string& strName, xml::xistream& x
     , rGasPropagationAngle_( 0. )
 {
     xis >> attribute( "id", nID_ )
-        >> list( "effects", *this, &MIL_NbcAgentType::SortEffectType );
+        >> xml::list( "effects", *this, &MIL_NbcAgentType::SortEffectType );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ bool MIL_NbcAgentType::ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVe
     xis >> optional() >> attribute( "affliction", affliction );
     if( affliction != "intoxication" )
         return false;
-    xis >> list( "effect", *this, &MIL_NbcAgentType::ReadEffect, data );
+    xis >> xml::list( "effect", *this, &MIL_NbcAgentType::ReadEffect, data );
 
     const MT_Float total = std::accumulate( data.begin(), data.end(), 0. );
     if( std::fabs( 1. - total ) > 0.01 )

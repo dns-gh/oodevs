@@ -178,7 +178,7 @@ void MIL_RealObjectType::Initialize( xml::xistream& xis )
 
     xis >> start( "objects" )
             >> start( "real-objects" )
-            >> list( "object", loader, &LoadingWrapper::ReadObject )
+            >> xml::list( "object", loader, &LoadingWrapper::ReadObject )
             >> end()
         >> end();
 
@@ -261,7 +261,7 @@ MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::InitializePionAttritionData( xml::xistream& xis )
 {
-    xis >> list( "unit-attritions", *this, &MIL_RealObjectType::ListAttrition );
+    xis >> xml::list( "unit-attritions", *this, &MIL_RealObjectType::ListAttrition );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,7 +270,7 @@ void MIL_RealObjectType::InitializePionAttritionData( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::ListAttrition( xml::xistream& xis )
 {
-    xis >> list( "unit-attrition", *this, &MIL_RealObjectType::ReadAttrition );
+    xis >> xml::list( "unit-attrition", *this, &MIL_RealObjectType::ReadAttrition );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,7 +302,7 @@ void MIL_RealObjectType::ReadAttrition( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::InitializePopulationAttritionData( xml::xistream& xis )
 {
-    xis >> list( "population-attrition", *this, &MIL_RealObjectType::ReadPopulation );
+    xis >> xml::list( "population-attrition", *this, &MIL_RealObjectType::ReadPopulation );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,7 +329,7 @@ void MIL_RealObjectType::ReadPopulation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::InitializeDotation( xml::xistream& xis, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory, uint& nDotationValue ) const
 {
-    xis >> list( strSection, *this, &MIL_RealObjectType::ReadValorizationOrConstruction, nDotationValue, pDotationCategory );
+    xis >> xml::list( strSection, *this, &MIL_RealObjectType::ReadValorizationOrConstruction, nDotationValue, pDotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -363,7 +363,7 @@ void MIL_RealObjectType::ReadValorizationOrConstruction( xml::xistream& xis, uin
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::InitializeDotations( xml::xistream& xis )
 {
-    xis >> list( "dotations", *this, MIL_RealObjectType::ReadInitializeDotation );
+    xis >> xml::list( "dotations", *this, MIL_RealObjectType::ReadInitializeDotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,7 +385,7 @@ void MIL_RealObjectType::InitializePlacementScores( xml::xistream& xis )
      // Placement scores
     xis >> optional()
             >> start( "sensible-positions" )
-                >> list( "terrain", *this, MIL_RealObjectType::ReadTerrain )
+                >> xml::list( "terrain", *this, MIL_RealObjectType::ReadTerrain )
             >> end();
 }
 

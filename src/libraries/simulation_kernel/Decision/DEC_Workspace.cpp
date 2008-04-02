@@ -481,19 +481,19 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
     // Pions
     MT_LOG_INFO_MSG( "Initializing unit DIA models" );
     xisModels >> start( "units" )
-                  >> list( "unit", *this, &DEC_Workspace::ReadUnit, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
+                  >> xml::list( "unit", *this, &DEC_Workspace::ReadUnit, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
               >> end();
 
     // Automates
     MT_LOG_INFO_MSG( "Initializing automat DIA models" );
     xisModels >> start( "automats" )
-                  >> list( "automat", *this, &DEC_Workspace::ReadAutomat, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
+                  >> xml::list( "automat", *this, &DEC_Workspace::ReadAutomat, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
               >> end();
 
     // Populations
     MT_LOG_INFO_MSG( "Initializing population DIA models" );
     xisModels >> start( "populations" )
-                  >> list( "population", *this, &DEC_Workspace::ReadPopulation, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
+                  >> xml::list( "population", *this, &DEC_Workspace::ReadPopulation, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
               >> end();
 
     xisModels >> end(); // models

@@ -71,7 +71,7 @@ void PHY_BreakdownType::Initialize( xml::xistream& xis )
     if( ! tools::DecodeTime( timeVal, rTimeVal ) || rTimeVal < 0 )
         xis.error( "diagnosis: time < 0" );
     nDiagnosticTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTimeVal );
-    xis >> list( "category", loader, &LoadingWrapper::ReadCategory )
+    xis >> xml::list( "category", loader, &LoadingWrapper::ReadCategory )
         >> end();
 }
 
@@ -89,7 +89,7 @@ void PHY_BreakdownType::ReadCategory( xml::xistream& xis )
     const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
 
     LoadingWrapper loader;
-    xis >> list( "breakdown", loader, &LoadingWrapper::ReadBreakdown, maintenanceLevel );
+    xis >> xml::list( "breakdown", loader, &LoadingWrapper::ReadBreakdown, maintenanceLevel );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_Main
     repairTime_ = MT_GaussianRandom( nTheoricRepairTime_, rVariance );
 
     // Parts
-    xis >> list( "part", *this, &PHY_BreakdownType::ReadPart );
+    xis >> xml::list( "part", *this, &PHY_BreakdownType::ReadPart );
 }
 
 // -----------------------------------------------------------------------------

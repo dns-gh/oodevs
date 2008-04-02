@@ -419,7 +419,7 @@ void MIL_EntityManager::InitializeDiplomacy( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing diplomacy" );
 
     xis >> start( "diplomacies" )
-            >> list( "side", *this, MIL_EntityManager::ReadDiplomacy )
+            >> xml::list( "side", *this, MIL_EntityManager::ReadDiplomacy )
         >> end();
 }
 
@@ -449,7 +449,7 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
     assert( armies_.empty() );
 
     xis >> start( "sides" )
-            >> list( "side", *this, &MIL_EntityManager::ReadArmy )
+            >> xml::list( "side", *this, &MIL_EntityManager::ReadArmy )
         >> end();
 }
 

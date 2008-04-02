@@ -41,7 +41,7 @@ void MIL_FragOrderType::Initialize( xml::xistream& xis )
     
     xis >> start( "missions" )
             >> start( "fragorders" )
-                >> list( "fragorder", loader, &LoadingWrapper::ReadFragorder )
+                >> xml::list( "fragorder", loader, &LoadingWrapper::ReadFragorder )
             >> end()
         >> end();
 }

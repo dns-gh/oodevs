@@ -69,7 +69,7 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
 
-    xis     >> list( "population", loader, &LoadingWrapper::ReadPopulation )
+    xis     >> xml::list( "population", loader, &LoadingWrapper::ReadPopulation )
         >> end();
 }
 
@@ -161,7 +161,7 @@ MIL_PopulationType::~MIL_PopulationType()
 void MIL_PopulationType::InitializeSlowDownData( xml::xistream& xis )
 {
     xis >> start( "slowing-effects" )
-            >> list( "slowing-effect", *this, &MIL_PopulationType::ReadSlowingEffect )
+            >> xml::list( "slowing-effect", *this, &MIL_PopulationType::ReadSlowingEffect )
         >> end();
 }
 
@@ -181,7 +181,7 @@ void MIL_PopulationType::ReadSlowingEffect( xml::xistream& xis )
     assert( slowDownData_.size() > pAttitude->GetID() );
     T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ pAttitude->GetID() ];
 
-    xis >> list( "unit", *this, &MIL_PopulationType::ReadSlowingUnitEffect, volumeSlowDownData );
+    xis >> xml::list( "unit", *this, &MIL_PopulationType::ReadSlowingUnitEffect, volumeSlowDownData );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +224,7 @@ void MIL_PopulationType::InitializeFireData( xml::xistream& xis )
     xis >> end();
 
     xis >> start( "unit-fire-effects" )
-            >> list( "unit", *this, &MIL_PopulationType::ReadUnitFireEffect )
+            >> xml::list( "unit", *this, &MIL_PopulationType::ReadUnitFireEffect )
         >> end();
 }
 

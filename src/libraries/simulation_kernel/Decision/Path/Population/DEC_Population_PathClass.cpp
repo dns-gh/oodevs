@@ -33,7 +33,7 @@ void DEC_Population_PathClass::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis >> start( "population-rules" )
-            >> list( "rule", loader, &LoadingWrapper::ReadPopulationRule )
+            >> xml::list( "rule", loader, &LoadingWrapper::ReadPopulationRule )
         >> end();
 }
 

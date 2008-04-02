@@ -40,7 +40,7 @@ void MIL_PopulationMissionType::Initialize( xml::xistream& xis )
 
     xis >> start( "missions" )
             >> start( "populations" )
-                >> list( "mission", loader, &LoadingWrapper::ReadMission )
+                >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
             >> end()
         >> end();
 }

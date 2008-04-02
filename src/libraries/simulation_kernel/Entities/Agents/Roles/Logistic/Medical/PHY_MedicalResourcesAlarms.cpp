@@ -37,7 +37,7 @@ void PHY_MedicalResourcesAlarms::Initialize( xml::xistream& xis )
 
     xis >> start( "health" )
             >> start( "resource-availability-alerts" )
-                >> list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceLevel )
+                >> xml::list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceLevel )
             >> end()
         >> end();
 }

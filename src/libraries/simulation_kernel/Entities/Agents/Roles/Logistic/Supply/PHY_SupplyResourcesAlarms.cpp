@@ -34,7 +34,7 @@ void PHY_SupplyResourcesAlarms::Initialize( xml::xistream& xis )
 
     xis >> start( "supply" )
             >> start( "resource-availability-alerts" )
-                >> list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceAvailabilityAlert )
+                >> xml::list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceAvailabilityAlert )
             >> end()
         >> end();
 }

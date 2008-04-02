@@ -26,7 +26,7 @@ MIL_OrderType_ABC::MIL_OrderType_ABC( uint nID, xml::xistream& xis )
     , strName_   ( attribute< std::string >( xis, "name" ) )
     , pDIAType_  ( &DEC_Tools::GetDIAType( attribute< std::string >( xis, "dia-type" ) ) )
 {
-    xis >> list( "parameter", *this, &MIL_OrderType_ABC::ReadParameter );
+    xis >> xml::list( "parameter", *this, &MIL_OrderType_ABC::ReadParameter );
 }
 
 // -----------------------------------------------------------------------------

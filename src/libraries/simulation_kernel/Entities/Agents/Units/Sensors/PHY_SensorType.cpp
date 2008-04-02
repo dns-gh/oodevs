@@ -44,7 +44,7 @@ void PHY_SensorType::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis >> start( "sensors" )
-            >> list( "sensor", loader, &LoadingWrapper::ReadSensor )
+            >> xml::list( "sensor", loader, &LoadingWrapper::ReadSensor )
         >> end();
 }
 
@@ -87,8 +87,8 @@ PHY_SensorType::PHY_SensorType( const std::string& strName, xml::xistream& xis )
     , pTypeObject_( 0 )
     , pTypeAgent_ ( 0 )
 {
-    xis >> list( "unit-detection", *this, &PHY_SensorType::newSensorTypeAgent )
-        >> list( "object-detection", *this, &PHY_SensorType::newSensorTypeObject );
+    xis >> xml::list( "unit-detection", *this, &PHY_SensorType::newSensorTypeAgent )
+        >> xml::list( "object-detection", *this, &PHY_SensorType::newSensorTypeObject );
 }
 
 // -----------------------------------------------------------------------------

@@ -48,7 +48,7 @@ void MIL_VirtualObjectType_ControlZone::Read( xml::xistream& xis )
     vUnitDensityFirePercentage_.clear();
     vUnitDensityFirePercentage_.resize( PHY_Volume::GetVolumes().size(), 0. );
 
-    xis >> list( "shot-percentage-per-human-per-hectare", *this, &MIL_VirtualObjectType_ControlZone::ReadPercentage );
+    xis >> xml::list( "shot-percentage-per-human-per-hectare", *this, &MIL_VirtualObjectType_ControlZone::ReadPercentage );
     bInitialized_ = true;
 }
 

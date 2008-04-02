@@ -52,7 +52,7 @@ PHY_WeaponDataType_DirectFire::PHY_WeaponDataType_DirectFire( MIL_EffectManager&
     , weaponType_( weaponType )
     , phs_       ( PHY_Volume::GetVolumes().size(), MT_InterpolatedFunction< MT_Float >( 0., 0. ) )
 {
-    xis >> list( "hit-probabilities", *this, &PHY_WeaponDataType_DirectFire::InitializePH );
+    xis >> xml::list( "hit-probabilities", *this, &PHY_WeaponDataType_DirectFire::InitializePH );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void PHY_WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
 
     MT_InterpolatedFunction< MT_Float >& phFunction = phs_[ volume.GetID() ];
 
-    xis >> list( "hit-probability", *this, PHY_WeaponDataType_DirectFire::ReadHitProbability, phFunction );
+    xis >> xml::list( "hit-probability", *this, PHY_WeaponDataType_DirectFire::ReadHitProbability, phFunction );
 }
 
 // -----------------------------------------------------------------------------

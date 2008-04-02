@@ -201,9 +201,9 @@ void DEC_Model_ABC< T >::InitializeMissions( xml::xistream& xis )
     missionBitset_.clear();
     fragOrdersPerMission_.clear();
 
-    xis >> optional() >> start( "missions" )
-                          >> list( "mission", *this, &DEC_Model_ABC::ReadMission )
-                      >> end();
+    xis >> optional() >> xml::start( "missions" )
+                           >> xml::list( "mission", *this, &DEC_Model_ABC::ReadMission )
+                      >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -238,7 +238,7 @@ void DEC_Model_ABC< T >::ReadMission( xml::xistream& xis )
 template< typename T >
 void DEC_Model_ABC< T >::InitializeMissionFragOrders( xml::xistream& xis, const T& missionType )
 {
-    xis >> list( "fragorder", *this, &DEC_Model_ABC::ReadFragorder, missionType );
+    xis >> xml::list( "fragorder", *this, &DEC_Model_ABC::ReadFragorder, missionType );
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC::ReadFragorder

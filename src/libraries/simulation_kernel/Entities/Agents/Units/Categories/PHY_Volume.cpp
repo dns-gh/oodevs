@@ -43,7 +43,7 @@ void PHY_Volume::Initialize( xml::xistream& xis )
 
     // Initialisation des composantes
     xis >> start( "volumes" )
-            >> list( "volume", loader, &LoadingWrapper::ReadVolume )
+            >> xml::list( "volume", loader, &LoadingWrapper::ReadVolume )
         >> end();
 }
 

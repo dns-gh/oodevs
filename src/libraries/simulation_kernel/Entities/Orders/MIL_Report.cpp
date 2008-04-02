@@ -48,7 +48,7 @@ void MIL_Report::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
     xis >> start( "reports" )
-            >> list( "report", loader, &LoadingWrapper::ReadReport )
+            >> xml::list( "report", loader, &LoadingWrapper::ReadReport )
         >> end();
 
     diaEvents_[ eReport_ReAvailableAfterRepairation                 ] = "EVT_RC_ANouveauDisponibleApresReparation";                
@@ -140,7 +140,7 @@ MIL_Report::MIL_Report( uint id, xml::xistream& xis )
     , strMessage_()
 {
     xis >> attribute( "message", strMessage_ );
-    xis >> list( "parameter", *this, &MIL_Report::ReadParameter );
+    xis >> xml::list( "parameter", *this, &MIL_Report::ReadParameter );
 }
 
 // -----------------------------------------------------------------------------

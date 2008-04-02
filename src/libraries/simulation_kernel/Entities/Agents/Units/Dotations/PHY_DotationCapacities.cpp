@@ -29,7 +29,7 @@ PHY_DotationCapacities::PHY_DotationCapacities( const std::string& strParentTagN
 {
     xis >> optional()
         >> start( strParentTagName )
-            >> list( "category", *this, &PHY_DotationCapacities::ReadCategory )
+            >> xml::list( "category", *this, &PHY_DotationCapacities::ReadCategory )
         >> end();
 }
 
@@ -55,7 +55,7 @@ void PHY_DotationCapacities::ReadCategory( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCapacities::ReadDotationCategories( xml::xistream& xis, const PHY_DotationType& dotationType )
 {
-    xis >> list( "dotation", *this, &PHY_DotationCapacities::ReadDotation, dotationType );
+    xis >> xml::list( "dotation", *this, &PHY_DotationCapacities::ReadDotation, dotationType );
 }
 
 // -----------------------------------------------------------------------------

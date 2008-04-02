@@ -142,7 +142,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
     
     xis >> start( "units" )
-            >> list( "unit", loader, &LoadingWrapper::ReadUnit )
+            >> xml::list( "unit", loader, &LoadingWrapper::ReadUnit )
         >> end();
 }
 
@@ -224,7 +224,7 @@ void MIL_AgentTypePion::InitializeDistancesAvantPoints( xml::xistream& xis )
 {
     xis >> optional()
             >> start( "distance-before-points" )
-                >> list( "distance-before-point", *this, &MIL_AgentTypePion::ReadPoint )
+                >> xml::list( "distance-before-point", *this, &MIL_AgentTypePion::ReadPoint )
             >> end();
 }
 
@@ -265,7 +265,7 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AgentTypePion::InitializeRapFor( xml::xistream& xis )
 {
-    xis >> list( "force-ratio", *this, &MIL_AgentTypePion::ReadFeedback );
+    xis >> xml::list( "force-ratio", *this, &MIL_AgentTypePion::ReadFeedback );
 }
 
 // -----------------------------------------------------------------------------

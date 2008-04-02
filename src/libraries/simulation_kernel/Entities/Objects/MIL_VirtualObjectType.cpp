@@ -46,7 +46,7 @@ void MIL_VirtualObjectType::Initialize( xml::xistream& xis )
 
     xis >> start( "objects" )
             >> start( "virtual-objects" )
-                >> list( "object", loader, &LoadingWrapper::ReadObject )
+                >> xml::list( "object", loader, &LoadingWrapper::ReadObject )
             >> end()
         >> end();
 

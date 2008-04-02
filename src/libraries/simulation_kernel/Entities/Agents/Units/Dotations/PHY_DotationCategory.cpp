@@ -104,7 +104,7 @@ void PHY_DotationCategory::InitializePackagingData( xml::xistream& xis )
 void PHY_DotationCategory::InitializeAttritions( xml::xistream& xis )
 {
     attritions_.clear();
-    xis >> list( "attritions", *this, &PHY_DotationCategory::ListAttrition );
+    xis >> xml::list( "attritions", *this, &PHY_DotationCategory::ListAttrition );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +113,7 @@ void PHY_DotationCategory::InitializeAttritions( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::ListAttrition( xml::xistream& xis )
 {
-    xis >> list( "attrition", *this, &PHY_DotationCategory::ReadAttrition );
+    xis >> xml::list( "attrition", *this, &PHY_DotationCategory::ReadAttrition );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +142,7 @@ void PHY_DotationCategory::ReadAttrition( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::InitializeIndirectFireData( xml::xistream& xis )
 {
-    xis >> list( "indirect-fire", *this, &PHY_DotationCategory::ReadIndirectFire );
+    xis >> xml::list( "indirect-fire", *this, &PHY_DotationCategory::ReadIndirectFire );
 }
 
 // -----------------------------------------------------------------------------

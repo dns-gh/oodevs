@@ -44,7 +44,7 @@ void PHY_LauncherType::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis >> start( "launchers" )
-            >> list( "launcher", loader, &LoadingWrapper::ReadLauncher )
+            >> xml::list( "launcher", loader, &LoadingWrapper::ReadLauncher )
         >> end();
 }
 
@@ -119,7 +119,7 @@ void PHY_LauncherType::InitializeForIndirectFire( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_LauncherType::InitializeForDirectFire( xml::xistream& xis )
 {
-    xis >> list( "ph-modifiers", *this, &PHY_LauncherType::ReadDirect );
+    xis >> xml::list( "ph-modifiers", *this, &PHY_LauncherType::ReadDirect );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ void PHY_LauncherType::ReadDirect( xml::xistream& xis )
     if( !postureSource.CanModifyPH() )
         return;
 
-    xis >> list( "ph-modifier", *this, &PHY_LauncherType::ReadModifier, postureSource );
+    xis >> xml::list( "ph-modifier", *this, &PHY_LauncherType::ReadModifier, postureSource );
 }
 
 // -----------------------------------------------------------------------------

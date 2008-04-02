@@ -56,7 +56,7 @@ void PHY_Protection::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
     xis >> start( "protections" )
-            >> list( "protection", loader, &LoadingWrapper::ReadProtection )
+            >> xml::list( "protection", loader, &LoadingWrapper::ReadProtection )
         >> end();
 }
 
@@ -147,7 +147,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
         rBreakdownProbabilityNeva_ /= 100.;
 
         xis >> start( "attrition-effects" )
-                >> list( "attrition-effect", *this, &PHY_Protection::ReadAttrition )
+                >> xml::list( "attrition-effect", *this, &PHY_Protection::ReadAttrition )
             >> end();
     }
 }

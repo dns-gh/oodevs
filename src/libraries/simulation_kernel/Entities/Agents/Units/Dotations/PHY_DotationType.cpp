@@ -61,7 +61,7 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis >> start( "dotations" )
-            >> list( "dotation", loader, &LoadingWrapper::ReadDotation )
+            >> xml::list( "dotation", loader, &LoadingWrapper::ReadDotation )
         >> end();
 }
 
