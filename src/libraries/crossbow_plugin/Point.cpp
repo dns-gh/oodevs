@@ -53,19 +53,6 @@ crossbow::Point::~Point()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Point::SetFromUTM
-// Created: SBO 2007-08-30
-// -----------------------------------------------------------------------------
-void crossbow::Point::SetFromUTM( const std::string& input )
-{
-    IPointPtr   pointWGS, point;
-    BSTR        dms, utm, mgrs;
-    ICoordinateToolPtr converter( CLSID_CoordinateTool );
-    if( !FAILED( converter->ConvertLocation( CComVariant( input.c_str() ), 4, CComVariant( L"WGS 1984 (WGS84)" ), CComVariant( L"WGS 1984 (WGS84)" ), &pointWGS, &point, &dms, &utm, &mgrs ) ) )
-        point->QueryCoords( &x_, &y_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Point::Accept
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
@@ -94,22 +81,6 @@ void crossbow::Point::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePt
     point->put_Z( 0 );
 }
 
-namespace
-{
-    std::string ToMgrs( double x, double y )
-    {
-        IPointPtr point( CLSID_Point );
-        point->PutCoords( x, y );
-
-        IPointPtr   wgs, datum;
-        BSTR        dms, utm, mgrs;
-        ICoordinateToolPtr converter( CLSID_CoordinateTool ); //WGS 1984 (WGS84)
-        if ( FAILED( converter->ConvertLocation( CComVariant( (IPoint*)point ), 1, CComVariant( L"WGS 1984 (WGS84)" ), CComVariant( L"WGS 1984 (WGS84)" ), &wgs, &datum, &dms, &utm, &mgrs ) ) )
-            throw std::runtime_error( "Conversion failed" );
-        return _com_util::ConvertBSTRToString( mgrs );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Point::Serialize
 // Created: SBO 2007-09-26
@@ -119,5 +90,6 @@ void crossbow::Point::Serialize( ASN1T_Location& asn ) const
     asn.type = EnumLocationType::point;
     asn.coordinates.n = 1;
     asn.coordinates.elem = new ASN1T_CoordLatLong[1];
-    asn.coordinates.elem[0] = ToMgrs( x_, y_ ).c_str();
+    asn.coordinates.elem[0].latitude = y_;
+    asn.coordinates.elem[0].longitude = x_;
 }
