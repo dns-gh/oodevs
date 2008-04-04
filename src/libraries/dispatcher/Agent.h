@@ -99,6 +99,7 @@ public:
     ASN1T_CoordLatLong            position_;
     unsigned int                  nDirection_;
     unsigned int                  nHeight_;
+    unsigned int                  nAltitude_;
     unsigned int                  nSpeed_;
     unsigned int                  nOperationalStateValue_;
     ModelRefsContainer< Agent >   reinforcements_;

@@ -40,6 +40,7 @@ Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     , position_                     ()
     , nDirection_                   ( 0 )
     , nHeight_                      ( 0 )
+    , nAltitude_                    ( 0 )
     , nSpeed_                       ( 0 )
     , nOperationalStateValue_       ( 100 )
     , reinforcements_               ( )
@@ -124,6 +125,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     UPDATE_ASN_ATTRIBUTE( position , position_   );
     UPDATE_ASN_ATTRIBUTE( direction, nDirection_ );
     UPDATE_ASN_ATTRIBUTE( hauteur  , nHeight_    );
+    UPDATE_ASN_ATTRIBUTE( altitude , nAltitude_  );
     UPDATE_ASN_ATTRIBUTE( vitesse  , nSpeed_     );
     UPDATE_ASN_ATTRIBUTE( etat_operationnel_brut, nOperationalStateValue_ );
 
@@ -344,6 +346,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().m.positionPresent = 1;
         asn().m.directionPresent = 1;
         asn().m.hauteurPresent = 1;
+        asn().m.altitudePresent = 1;
         asn().m.vitessePresent = 1;
         asn().m.etat_operationnel_brutPresent = 1;
         asn().m.pions_renforcantPresent = 1;
@@ -382,6 +385,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 
         asn().direction = nDirection_;
         asn().hauteur = nHeight_;
+        asn().altitude = nAltitude_;
         asn().vitesse = nSpeed_;
         asn().etat_operationnel_brut = nOperationalStateValue_;
 
