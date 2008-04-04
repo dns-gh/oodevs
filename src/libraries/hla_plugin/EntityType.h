@@ -18,49 +18,13 @@
 // =============================================================================
 class EntityType
 {
-public:
-    //! @name Types
-    //@{
-    static const int other = 0;
-    enum E_Kind
-    {
-        platform        = 1,
-        lifeForm        = 3,
-    };
-    enum E_Domain
-    {
-        land    = 1,
-        air     = 2,
-    };
-    enum E_Country
-    {
-        australia = 13,
-        france    = 71,
-        us        = 225
-    };
-    enum E_Category
-    {
-        tank                    = 1, airDefenseFighter   = 1, dismountedInfantry = 1,
-        armoredFightingVehicle  = 2, attackStrikeFighter = 2,
-        armoredUtilityVehicle   = 3, bomber              = 3, civilian           = 3,
-        artillery               = 4,
-                                     attackHelicopter    = 20,
-    };
-    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-     EntityType();
-    ~EntityType();
-    //@}
-
-    //! @name Modifiers
-    //@{
-    void SetKind    ( E_Kind kind );
-    void SetDomain  ( E_Domain domain );
-    void SetCountry ( E_Country country );
-    void SetCategory( E_Category category );
+             EntityType();
+    explicit EntityType( const std::string& value);
+            ~EntityType();
     //@}
 
     //! @name Operations
@@ -71,6 +35,11 @@ public:
         archive << entityKind_  << domain_   << countryCode_ << category_ 
                 << subcategory_ << specific_ << extra_;
     }
+    //@}
+
+    //! @name Operators
+    //@{
+    bool operator==( const EntityType& rhs ) const;
     //@}
 
 private:

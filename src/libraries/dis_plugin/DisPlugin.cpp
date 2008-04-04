@@ -10,6 +10,7 @@
 #include "dis_plugin_pch.h"
 #include "DisPlugin.h"
 #include "DisExtensionFactory.h"
+#include "DisTypeResolver.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model.h"
@@ -40,7 +41,8 @@ DisPlugin::DisPlugin( dispatcher::Model& model, const dispatcher::Config& config
     : model_( model )
     , network_( new UdpNetwork( xml::attribute< std::string >( xis, "server" ), xml::attribute< unsigned short >( xis, "port" ) ) )
     , converter_( new kernel::CoordinateConverter( config ) )
-    , factory_( new DisExtensionFactory( *network_, *this, *converter_, xis ) )
+    , resolver_( new DisTypeResolver( config.BuildPhysicalChildFile( "dis.xml" ) ) )
+    , factory_( new DisExtensionFactory( *network_, *this, *converter_, *resolver_, xis ) )
     , timeStep_( ReadTimeStep( config.GetSessionFile() ) )
     , time_( 0 )
 {

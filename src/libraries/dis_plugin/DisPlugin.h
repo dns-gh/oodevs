@@ -33,6 +33,7 @@ namespace dis
 {
     class UdpNetwork;
     class DisExtensionFactory;
+    class DisTypeResolver;
 
 // =============================================================================
 /** @class  DisPlugin
@@ -75,6 +76,7 @@ private:
     dispatcher::Model& model_;
     std::auto_ptr< UdpNetwork > network_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    std::auto_ptr< DisTypeResolver > resolver_;
     std::auto_ptr< DisExtensionFactory > factory_;
     unsigned long timeStep_;
     unsigned long time_;

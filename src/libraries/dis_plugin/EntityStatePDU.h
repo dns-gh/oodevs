@@ -44,6 +44,7 @@ public:
     //! @name Modifiers
     //@{
     void SetEntityName( const std::string& name );
+    void SetEntityType( const EntityType& type );
     void SetPosition( double latitude, double longitude, float altitude, float speed, float heading );
     //@}
 

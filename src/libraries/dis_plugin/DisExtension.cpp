@@ -12,10 +12,12 @@
 #include "EntityStatePDU.h"
 #include "Time_ABC.h"
 #include "IdentifierFactory_ABC.h"
+#include "DisTypeResolver.h"
 #include "tic_plugin/TicExtension_ABC.h"
 #include "tic_plugin/Platform_ABC.h"
 #include "dispatcher/Agent.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/ComponentType.h"
 #include "UdpNetwork.h"
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
@@ -26,13 +28,14 @@ using namespace dis;
 // Name: DisExtension constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, dispatcher::Agent& holder, unsigned char exercise )
+DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const DisTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise )
     : time_     ( time )
     , id_       ( id )
-    , myId_     ( id_.CreateNewIdentifier() )
     , converter_( converter )
     , network_  ( network )
+    , resolver_ ( resolver )
     , holder_   ( holder )
+    , myId_     ( id_.CreateNewIdentifier() )
     , exercise_ ( exercise )
 {
     // NOTHING
@@ -71,6 +74,7 @@ void DisExtension::AddPlatform( const tic::Platform_ABC& platform )
 
     EntityStatePDU pdu( time_.GetTime(), exercise_, it->second );
     pdu.SetEntityName( holder_.GetName() );
+    pdu.SetEntityType( resolver_.Find( platform.GetType() ) );
 
     const geometry::Point2d position( platform.GetPosition().X(), platform.GetPosition().Y() );
     const geometry::Point2d geocoord = converter_.ConvertToGeo( position );

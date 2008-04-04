@@ -31,6 +31,7 @@ namespace dis
     class UdpNetwork;
     class Time_ABC;
     class IdentifierFactory_ABC;
+    class DisTypeResolver;
 
 // =============================================================================
 /** @class  DisExtension
@@ -46,7 +47,7 @@ class DisExtension : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, dispatcher::Agent& holder, unsigned char exercise );
+             DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const DisTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise );
     virtual ~DisExtension();
     //@}
 
@@ -79,10 +80,11 @@ private:
     //@{
     const Time_ABC&        time_;
     IdentifierFactory_ABC& id_;
-    EntityIdentifier myId_;
     const kernel::CoordinateConverter_ABC& converter_;
     UdpNetwork&            network_;
+    const DisTypeResolver& resolver_;
     dispatcher::Agent&     holder_;
+    EntityIdentifier       myId_;
     const unsigned char    exercise_;
     T_Identifiers          ids_;
     //@}

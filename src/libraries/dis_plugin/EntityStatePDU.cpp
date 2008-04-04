@@ -25,11 +25,6 @@ EntityStatePDU::EntityStatePDU( unsigned long time, unsigned char exercise, cons
     , deadReckoningAlgorithm_( 2 )
     , capabilities_( 0 )
 {
-    entityType_.SetKind( EntityType::platform );
-    entityType_.SetDomain( EntityType::land );
-    entityType_.SetCountry( EntityType::us );
-    entityType_.SetCategory( EntityType::tank );
-    alternativeType_ = entityType_;
     ::memset( otherParameters_, 0, 15 );
 }
 
@@ -49,6 +44,15 @@ EntityStatePDU::~EntityStatePDU()
 void EntityStatePDU::SetEntityName( const std::string& name )
 {
     entityMarking_ = EntityMarking( name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityStatePDU::SetEntityType
+// Created: AGE 2008-04-04
+// -----------------------------------------------------------------------------
+void EntityStatePDU::SetEntityType( const EntityType& type )
+{
+    entityType_ = alternativeType_ = type;
 }
 
 // -----------------------------------------------------------------------------

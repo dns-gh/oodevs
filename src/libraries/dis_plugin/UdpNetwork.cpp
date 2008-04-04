@@ -53,6 +53,7 @@ UdpNetwork::~UdpNetwork()
 // -----------------------------------------------------------------------------
 void UdpNetwork::Start()
 {
+    ::SetThreadPriority( ::GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL );
     while( !terminated_ )
     {
         service_.run();

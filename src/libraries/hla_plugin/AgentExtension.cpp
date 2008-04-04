@@ -96,11 +96,7 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitEnvironmentType& attributes )
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateEntityType( UpdateFunctor_ABC& functor ) const
 {
-    EntityType type;
-    type.SetKind( EntityType::platform );
-    type.SetDomain( EntityType::land );
-    type.SetCountry( EntityType::france );
-    type.SetCategory( EntityType::tank ); // $$$$ AGE 2008-02-25: 
+    EntityType type( "1 1 225 1" );
 
     Serializer serializer;
     type.Serialize( serializer );
@@ -183,11 +179,7 @@ namespace
         void operator()( const dispatcher::Equipment& e )
         {
             ++count_;
-            EntityType type;
-            type.SetKind( EntityType::platform );
-            type.SetDomain( EntityType::land );
-            type.SetCountry( EntityType::france );
-            type.SetCategory( EntityType::tank ); // $$$$ AGE 2008-02-25: 
+            EntityType type( "1 1 225 1" );
 
             SilentEntity entity( type, (unsigned short)e.nNbrAvailable_ );
             entity.Serialize( serializer_ );
