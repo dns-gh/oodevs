@@ -35,7 +35,7 @@ class AgentExtension : public BmlExtension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentExtension( dispatcher::Agent& holder );
+             AgentExtension( dispatcher::Agent& holder );
     virtual ~AgentExtension();
     //@}
 

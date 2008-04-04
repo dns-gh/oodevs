@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Line();
-    explicit Line( const ASN1T_CoordUTMList& asn );
+    explicit Line( const ASN1T_CoordLatLongList& asn );
     explicit Line( IGeometryPtr geometry );
     virtual ~Line();
     //@}

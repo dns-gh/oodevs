@@ -102,7 +102,7 @@ void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publis
     asn().oid_connaissance_population    = populationKnowledge_.GetID();
     asn().oid_concentration_reelle       = pConcentration_ ? pConcentration_->GetID() : 0;
     asn().oid_groupe_possesseur          = populationKnowledge_.GetKnowledgeGroup().GetID();
-    position_.Send( asn().position );
+    asn().position = position_;
 
     asn.Send( publisher );
 }

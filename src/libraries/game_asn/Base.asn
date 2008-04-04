@@ -26,13 +26,18 @@ EnumLocationType ::= ENUMERATED
     sector   (5)  -- Sector
 }
 
-CoordUTM ::= OCTET STRING (SIZE(15))
-CoordUTMList ::= SEQUENCE OF CoordUTM
+CoordLatLong ::= SEQUENCE
+{
+    latitude  REAL,
+    longitude REAL
+}
+
+CoordLatLongList ::= SEQUENCE OF CoordLatLong
 
 Location ::= SEQUENCE 
 {
     type          EnumLocationType,
-    coordinates   CoordUTMList
+    coordinates   CoordLatLongList
 }
 
 Point      ::= Location (WITH COMPONENTS {...,type(point)})

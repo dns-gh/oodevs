@@ -89,7 +89,7 @@ Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::
     asn().intelligence.level = (ASN1T_EnumNatureLevel)level.GetId();
     asn().intelligence.diplomacy = ConvertToDiplomacy( karma );
     asn().intelligence.embarked = mounted;
-    asn().intelligence.location = converter_.ConvertToMgrs( position ).c_str();
+    converter_.ConvertToGeo( position, asn().intelligence.location );
     asn().intelligence.formation = superior.GetId();
     asn.Send( publisher_ );
     return 0;

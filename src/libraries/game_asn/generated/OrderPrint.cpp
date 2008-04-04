@@ -676,7 +676,7 @@ void asn1Print_MsgDebugPoints (ASN1ConstCharPtr name, ASN1T_MsgDebugPoints* pval
    asn1Print_OID (namebuf, &pvalue->oid);
 
    sprintf (namebuf, "%s.coordinates", name);
-   asn1Print_CoordUTMList (namebuf, &pvalue->coordinates);
+   asn1Print_CoordLatLongList (namebuf, &pvalue->coordinates);
 
 }
 
@@ -685,4 +685,5 @@ void ASN1C_MsgDebugPoints::Print (ASN1ConstCharPtr name)
 {
    asn1Print_MsgDebugPoints (name, &msgData);
 }
+
 

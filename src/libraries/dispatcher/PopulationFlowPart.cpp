@@ -41,12 +41,3 @@ void PopulationFlowPart::Send( ASN1T_FlowPart& asn ) const
     asn.pertinence = nRelevance_;
     localisation_.Send( asn.forme );
 }
-
-// -----------------------------------------------------------------------------
-// Name: PopulationFlowPart::AsnDelete
-// Created: NLD 2006-10-03
-// -----------------------------------------------------------------------------
-void PopulationFlowPart::AsnDelete( ASN1T_FlowPart& asn )
-{
-    Localisation::AsnDelete( asn.forme );
-}

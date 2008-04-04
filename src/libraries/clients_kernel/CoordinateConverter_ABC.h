@@ -39,9 +39,17 @@ public:
     virtual geometry::Point2f ConvertToXY   ( const std::string& mgrs ) const = 0;
 
     template< typename T >
-    geometry::Point2f ConvertToXY( const T& mgrs ) const
+    geometry::Point2f ConvertToXY( const T& latlong ) const
     {
-        return ConvertToXY( std::string( (const char*)( mgrs.data ), 15 ) );
+        return ConvertFromGeo( geometry::Point2f( float( latlong.longitude ), float( latlong.latitude ) ) );
+    }
+
+    template< typename T >
+    void ConvertToGeo( const geometry::Point2f& pos, T& latlong ) const
+    {
+        const geometry::Point2d geo = ConvertToGeo( geometry::Point2d( pos.X(), pos.Y() ) );
+        latlong.longitude = geo.X();
+        latlong.latitude  = geo.Y();
     }
     //@}
 

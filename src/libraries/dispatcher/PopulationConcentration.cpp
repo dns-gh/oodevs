@@ -66,7 +66,7 @@ void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) con
 
     asn().oid = nID_;
     asn().oid_population    = population_.GetID();
-    position_.Send( asn().position );
+    asn().position = position_;
 
     asn.Send( publisher );
 }
@@ -103,4 +103,5 @@ void PopulationConcentration::SendDestruction( ClientPublisher_ABC& publisher ) 
     destruction().oid               = nID_;
     destruction.Send( publisher );
 }
+
 

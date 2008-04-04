@@ -84,14 +84,11 @@ void LocationSerializer::SetPoints( const T_PointVector& points )
     {
         if( ownsCoords_ )
             delete[] pCoords_;
-        pCoords_ = new ASN1T_CoordUTM[ nNbrPoints ];
+        pCoords_ = new ASN1T_CoordLatLong[ nNbrPoints ];
         localisation_->coordinates.elem = pCoords_;
 
         for( unsigned i = 0; i < nNbrPoints; ++i )
-        {
-            const std::string coord = converter_.ConvertToMgrs( points[i] );
-            localisation_->coordinates.elem[i] = coord.c_str();
-        }
+            converter_.ConvertToGeo( points[i], localisation_->coordinates.elem[i] );
     }
 }
 

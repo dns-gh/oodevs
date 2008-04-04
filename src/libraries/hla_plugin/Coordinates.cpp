@@ -51,7 +51,8 @@ WorldLocation::WorldLocation( const std::string mgrs, float altitude )
 // -----------------------------------------------------------------------------
 WorldLocation::WorldLocation( double latitude, double longitude, float altitude )
 {
-    geocoord::Geodetic geodetic( latitude, longitude, altitude );
+    static const double rPiOver180 = std::acos( -1. ) / 180.;
+    geocoord::Geodetic geodetic( latitude * rPiOver180, longitude * rPiOver180, altitude );
     geocoord::Geocentric centric( geodetic );
 
     x_ = centric.GetX();
@@ -107,7 +108,7 @@ VelocityVector::VelocityVector( const WorldLocation& location, float rSpeed, flo
     yn_ = float( speed.Y() );
     zn_ = float( speed.Z() );
 
-    speed *= rSpeed / 3.6f; // km/h => m/s
+    speed *= rSpeed; // * 3.6f; // km/h => m/s // $$$$ AGE 2008-04-02: marche mieux....
 
     xv_ = float( speed.X() );
     yv_ = float( speed.Y() );

@@ -132,7 +132,6 @@ void IntelligencePositions::Set( const geometry::Point2f& point )
     ASN_MsgIntelligenceUpdateRequest message;
     message().oid = holder_.GetId();
     message().m.locationPresent = 1;
-    const std::string mgrs = converter_.ConvertToMgrs( point );
-    message().location = mgrs.c_str();
+    converter_.ConvertToGeo( point, message().location );
     message.Send( publisher_ );
 }

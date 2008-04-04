@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( ASN1T_CoordUTM& asn ) const;
+    void CommitTo( ASN1T_CoordLatLong& asn ) const;
     virtual void Accept( ActionParameterVisitor_ABC& visitor ) const;
     //@}
 
@@ -44,4 +44,5 @@ private:
 };
 
 #endif // __ActionParameterPathPoint_h_
+
 

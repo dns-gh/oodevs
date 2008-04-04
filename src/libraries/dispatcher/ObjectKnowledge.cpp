@@ -256,9 +256,6 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( asn().m.specific_attributesPresent && pAttributes_ )
         pAttributes_->AsnDelete( asn().specific_attributes );
 
-    if( asn().m.locationPresent )
-        Localisation::AsnDelete( asn().location );
-
     if( asn().m.automat_perceptionPresent && asn().automat_perception.n > 0 )
         delete [] asn().automat_perception.elem;
 }

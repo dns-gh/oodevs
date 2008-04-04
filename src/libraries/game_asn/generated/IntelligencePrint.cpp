@@ -45,7 +45,7 @@ void asn1Print_Intelligence (ASN1ConstCharPtr name, ASN1T_Intelligence* pvalue)
    rtPrintBoolean (namebuf, pvalue->embarked);
 
    sprintf (namebuf, "%s.location", name);
-   asn1Print_CoordUTM (namebuf, &pvalue->location);
+   asn1Print_CoordLatLong (namebuf, &pvalue->location);
 
    sprintf (namebuf, "%s.diplomacy", name);
    asn1Print_EnumDiplomacy (namebuf, &pvalue->diplomacy);
@@ -141,7 +141,7 @@ void asn1Print_MsgIntelligenceUpdate (ASN1ConstCharPtr name, ASN1T_MsgIntelligen
 
    if (pvalue->m.locationPresent) {
       sprintf (namebuf, "%s.location", name);
-      asn1Print_CoordUTM (namebuf, &pvalue->location);
+      asn1Print_CoordLatLong (namebuf, &pvalue->location);
    }
 
    if (pvalue->m.diplomacyPresent) {
@@ -228,7 +228,7 @@ void asn1Print_MsgIntelligenceUpdateRequest (ASN1ConstCharPtr name, ASN1T_MsgInt
 
    if (pvalue->m.locationPresent) {
       sprintf (namebuf, "%s.location", name);
-      asn1Print_CoordUTM (namebuf, &pvalue->location);
+      asn1Print_CoordLatLong (namebuf, &pvalue->location);
    }
 
    if (pvalue->m.diplomacyPresent) {
@@ -321,4 +321,5 @@ void ASN1C_MsgIntelligenceDestructionRequestAck::Print (ASN1ConstCharPtr name)
 {
    asn1Print_MsgIntelligenceDestructionRequestAck (name, &msgData);
 }
+
 

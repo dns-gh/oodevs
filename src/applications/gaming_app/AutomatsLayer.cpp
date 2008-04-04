@@ -105,7 +105,7 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
 {
     ASN_MsgUnitCreationRequest asn;
     asn().oid_automate = selected_->GetId();
-    asn().position = converter_.ConvertToMgrs( point ).c_str();
+    converter_.ConvertToGeo( point, asn().position );
     asn().type_pion = type.GetId();
     asn.Send( publisher_ );
 }

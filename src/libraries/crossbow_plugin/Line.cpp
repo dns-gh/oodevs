@@ -24,7 +24,7 @@ crossbow::Line::Line()
 // Name: Line constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Line::Line( const ASN1T_CoordUTMList& asn )
+crossbow::Line::Line( const ASN1T_CoordLatLongList& asn )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
         points_.push_back( crossbow::Point( asn.elem[i] ) );

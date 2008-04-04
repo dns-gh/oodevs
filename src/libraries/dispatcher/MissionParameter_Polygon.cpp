@@ -55,6 +55,5 @@ void MissionParameter_Polygon::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_Polygon::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    Localisation::AsnDelete( *asn.value.u.polygon );
     delete asn.value.u.polygon;
 }

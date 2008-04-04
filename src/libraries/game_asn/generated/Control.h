@@ -883,8 +883,8 @@ EXTERN void asn1Print_MsgControlLocalMeteo_meteo (ASN1ConstCharPtr name, ASN1T_M
 /**************************************************************/
 
 typedef struct EXTERN ASN1T_MsgControlLocalMeteo {
-   ASN1T_CoordUTM  top_left_coordinate;
-   ASN1T_CoordUTM  bottom_right_coordinate;
+   ASN1T_CoordLatLong  top_left_coordinate;
+   ASN1T_CoordLatLong  bottom_right_coordinate;
    ASN1T_MsgControlLocalMeteo_meteo  meteo;
 } ASN1T_MsgControlLocalMeteo;
 

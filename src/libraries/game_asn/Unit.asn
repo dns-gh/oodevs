@@ -159,7 +159,7 @@ MsgUnitAttributes ::= SEQUENCE
     equipements-pretes            SEQUENCE OF LentEquipment       OPTIONAL, -- FULL
     equipements-empruntes         SEQUENCE OF BorrowedEquipment   OPTIONAL, -- FULL
 
-    position                      CoordUTM                        OPTIONAL,
+    position                      CoordLatLong                        OPTIONAL,
     direction                     Heading                         OPTIONAL, -- en degrés
     hauteur                       Height                          OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
     altitude                      Height                          OPTIONAL, -- altitude d'un pion 3D par rapport au niveau de la mer
@@ -222,7 +222,7 @@ MsgUnitDestruction ::= OID
 MagicActionRecoverTransporters      ::= NULL
 MagicActionSurrender                ::= Team
 MagicActionCancelRendition          ::= NULL
-MagicActionMoveTo                   ::= CoordUTM    -- Position
+MagicActionMoveTo                   ::= CoordLatLong    -- Position
 MagicActionTotalDestruction         ::= NULL
 MagicActionComponentDestruction     ::= NULL
 MagicActionTotalRecovery            ::= NULL
@@ -314,7 +314,7 @@ MsgUnitCreationRequest ::= SEQUENCE
 {
     type-pion       UnitType,
     oid-automate    Automat,
-    position        CoordUTM
+    position        CoordLatLong
 }
 MsgUnitCreationRequestAck ::= EnumUnitErrorCode
 MsgUnitChangeSuperiorAck  ::= EnumChangeHierarchyErrorCode
@@ -333,7 +333,7 @@ MsgUnitChangeSuperior ::= SEQUENCE
 
 VisionCone ::= SEQUENCE
 {
-    origin       CoordUTM,
+    origin       CoordLatLong,
     height       Height,
     sensor       VisibleString,
     directions   SEQUENCE OF Heading

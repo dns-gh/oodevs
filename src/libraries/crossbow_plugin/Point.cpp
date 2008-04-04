@@ -25,7 +25,7 @@ crossbow::Point::Point()
 // Name: Point constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Point::Point( const ASN1T_CoordUTM& coord )
+crossbow::Point::Point( const ASN1T_CoordLatLong& coord )
     : x_( 0 )
     , y_( 0 )
 {
@@ -118,6 +118,6 @@ void crossbow::Point::Serialize( ASN1T_Location& asn ) const
 {
     asn.type = EnumLocationType::point;
     asn.coordinates.n = 1;
-    asn.coordinates.elem = new ASN1T_CoordUTM[1];
+    asn.coordinates.elem = new ASN1T_CoordLatLong[1];
     asn.coordinates.elem[0] = ToMgrs( x_, y_ ).c_str();
 }

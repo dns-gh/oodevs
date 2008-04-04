@@ -30,7 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Point();
-    explicit Point( const ASN1T_CoordUTM& coord );
+    explicit Point( const ASN1T_CoordLatLong& coord );
     explicit Point( IGeometryPtr geometry );
     virtual ~Point();
     //@}

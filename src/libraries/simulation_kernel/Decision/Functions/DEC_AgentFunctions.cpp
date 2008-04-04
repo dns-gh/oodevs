@@ -441,7 +441,7 @@ void DEC_AgentFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_AgentPion
     NET_ASN_MsgDebugPoints asn;
     asn().oid = callerAgent.GetID();
     asn().coordinates.n = 1;
-    ASN1T_CoordUTM coord;
+    ASN1T_CoordLatLong coord;
     NET_ASN_Tools::WritePoint( *pPoint, coord );
     asn().coordinates.elem = &coord;
     asn.Send();
@@ -923,4 +923,5 @@ void DEC_AgentFunctions::Install( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerA
 {
     callerAgent.GetRole< PHY_RolePion_Posture >().Install();
 }
+
 

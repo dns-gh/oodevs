@@ -65,10 +65,6 @@ void MissionParameter_LocationList::Send( ASN1T_MissionParameter& asn ) const
 void MissionParameter_LocationList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
     if( asn.value.u.locationList->n > 0 )
-    {
-        for( unsigned i = 0; i != asn.value.u.locationList->n; ++i )
-            Localisation::AsnDelete( asn.value.u.locationList->elem[i] );
         delete [] asn.value.u.locationList->elem;
-    }
     delete asn.value.u.locationList;
 }

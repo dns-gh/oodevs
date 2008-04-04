@@ -139,6 +139,24 @@ void TER_World::SimToMosMgrsCoord( const MT_Vector2D& pos, std::string& strMgrs 
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_World::MosToSimMgrsCoord
+// Created: AGE 2008-04-02
+// -----------------------------------------------------------------------------
+void TER_World::MosToSimMgrsCoord( double latitude, double longitude, MT_Vector2D& pos ) const
+{
+    pCoordinateManager_->MosToSimMgrsCoord( latitude, longitude, pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_World::SimToMosMgrsCoord
+// Created: AGE 2008-04-02
+// -----------------------------------------------------------------------------
+void TER_World::SimToMosMgrsCoord( const MT_Vector2D& pos, double& latitude, double& longitude ) const
+{
+    pCoordinateManager_->SimToMosMgrsCoord( pos, latitude, longitude );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_World::IsValidPosition
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
@@ -184,4 +202,5 @@ MT_Vector2D TER_World::ClipPointInsideWorld( const MT_Vector2D& pos ) const
     ClipPointInsideWorld( v );
     return v;
 }
+
 

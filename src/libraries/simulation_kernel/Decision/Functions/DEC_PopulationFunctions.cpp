@@ -103,7 +103,7 @@ void DEC_PopulationFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_Popu
     NET_ASN_MsgDebugPoints asn;
     asn().oid = callerPopulation.GetID();
     asn().coordinates.n = 1;
-    ASN1T_CoordUTM coord;
+    ASN1T_CoordLatLong coord;
     NET_ASN_Tools::WritePoint( *pPoint, coord );
     asn().coordinates.elem = &coord;
     asn.Send();

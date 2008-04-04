@@ -47,7 +47,7 @@ void IntelligenceOrder::Send( ASN1T_Intelligence& asn ) const
     asn.nature    = nature_.c_str();
     asn.level     = level_;
     asn.embarked  = embarked_ ? 1 : 0;
-    position_.Send( asn.location );
+    asn.location  = position_;
     asn.diplomacy = diplomacy_;
     asn.formation = formation_;
 }

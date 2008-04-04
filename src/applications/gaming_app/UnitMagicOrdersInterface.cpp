@@ -302,8 +302,8 @@ void UnitMagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
 {
     if( selectedEntity_ )
     {
-        ASN1T_CoordUTM utm;
-        utm = static_.coordinateConverter_.ConvertToMgrs( point ).c_str();
+        ASN1T_CoordLatLong utm;
+        static_.coordinateConverter_.ConvertToGeo( point, utm );
         ASN_MsgUnitMagicAction message;
         message().oid = selectedEntity_->GetId();
         message().action.t = T_MsgUnitMagicAction_action_move_to;

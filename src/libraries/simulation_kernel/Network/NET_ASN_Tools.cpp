@@ -101,7 +101,7 @@ bool NET_ASN_Tools::ReadLocation( const ASN1T_Location& asnLocalisation, TER_Loc
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::ReadPoint( const ASN1T_CoordUTM& asnPoint, MT_Vector2D& vect )
+void NET_ASN_Tools::ReadPoint( const ASN1T_CoordLatLong& asnPoint, MT_Vector2D& vect )
 {
     MIL_Tools::ConvertCoordMosToSim( asnPoint, vect );
 }
@@ -462,7 +462,7 @@ void NET_ASN_Tools::WriteLocation( const TER_Localisation& localisation, ASN1T_L
     if( localisation.GetPoints().empty() )
         return;
 
-    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ localisation.GetPoints().size() ]; //$$$ RAM
+    ASN1T_CoordLatLong* pCoord = new ASN1T_CoordLatLong[ localisation.GetPoints().size() ]; //$$$ RAM
     asnLocalisation.coordinates.elem = pCoord;
     uint i = 0;
     for( CIT_PointVector itPoint = localisation.GetPoints().begin(); itPoint != localisation.GetPoints().end(); ++itPoint )
@@ -474,9 +474,9 @@ void NET_ASN_Tools::WriteLocation( const TER_Localisation& localisation, ASN1T_L
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, ASN1T_CoordUTM& asnCoordUTM )
+void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, ASN1T_CoordLatLong& asnCoordUTM )
 {
-    asnCoordUTM = MIL_Tools::ConvertCoordSimToMos( vPos ).c_str();
+    MIL_Tools::ConvertCoordSimToMos( vPos, asnCoordUTM );
 }
 
 //-----------------------------------------------------------------------------
@@ -486,7 +486,7 @@ void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, ASN1T_CoordUTM& asnCoor
 // static
 void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, ASN1T_Point& asnLocalisation )
 {
-    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[1]; //$$$ RAM
+    ASN1T_CoordLatLong* pCoord = new ASN1T_CoordLatLong[1]; //$$$ RAM
 
     WritePoint( vPos, *pCoord );
 
@@ -509,10 +509,10 @@ void NET_ASN_Tools::WriteLine( const TER_Localisation& localisation, ASN1T_Line&
 // Name: NET_ASN_Tools::WriteCoordinates
 // Created: AGE 2007-07-06
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::WriteCoordinates( const T_PointVector& points , ASN1T_CoordUTMList& asn )
+bool NET_ASN_Tools::WriteCoordinates( const T_PointVector& points , ASN1T_CoordLatLongList& asn )
 {
     asn.n    = points.size();
-    asn.elem = asn.n ? new ASN1T_CoordUTM[ asn.n ] : 0;
+    asn.elem = asn.n ? new ASN1T_CoordLatLong[ asn.n ] : 0;
     uint i = 0;
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
         WritePoint( *it, asn.elem[i++] );
@@ -558,7 +558,7 @@ void NET_ASN_Tools::WritePath( const T_PointList& points, ASN1T_Path& asn )
     if( points.empty() )
         return;
 
-    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ points.size() ]; //$$$ RAM
+    ASN1T_CoordLatLong* pCoord = new ASN1T_CoordLatLong[ points.size() ]; //$$$ RAM
     asn.coordinates.elem = pCoord;
     uint i = 0;
     for( CIT_PointList itPoint = points.begin(); itPoint != points.end(); ++itPoint )
@@ -582,7 +582,7 @@ void NET_ASN_Tools::WriteEllipse( const MT_Ellipse& ellipse, ASN1T_Location& asn
 {
     asnLocalisation.type = EnumLocationType::ellipse;
     asnLocalisation.coordinates.n = 3;
-    asnLocalisation.coordinates.elem = new ASN1T_CoordUTM[3];
+    asnLocalisation.coordinates.elem = new ASN1T_CoordLatLong[3];
     WritePoint( ellipse.GetCenter(), asnLocalisation.coordinates.elem[0] );
     WritePoint( ellipse.GetMajorAxisHighPoint(), asnLocalisation.coordinates.elem[1] );
     WritePoint( ellipse.GetMinorAxisHighPoint(), asnLocalisation.coordinates.elem[2] );
@@ -909,7 +909,7 @@ void NET_ASN_Tools::Delete( ASN1T_AutomatList& asn )
 // Name: NET_ASN_Tools::Delete
 // Created: AGE 2007-07-06
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_CoordUTMList& asn )
+void NET_ASN_Tools::Delete( ASN1T_CoordLatLongList& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
@@ -1980,7 +1980,7 @@ bool NET_ASN_Tools::CopyPoint( const DIA_Variable_ABC& dia, ASN1T_Point& asn )
 // Name: NET_ASN_Tools::CopyPoint
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPoint( const DIA_Variable_ABC& dia, ASN1T_CoordUTM& asn )
+bool NET_ASN_Tools::CopyPoint( const DIA_Variable_ABC& dia, ASN1T_CoordLatLong& asn )
 {
     assert( DEC_Tools::CheckTypePoint( dia ) );
 

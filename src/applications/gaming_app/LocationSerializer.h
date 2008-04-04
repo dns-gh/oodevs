@@ -12,7 +12,7 @@
 
 #include "clients_kernel/LocationVisitor_ABC.h"
 
-struct ASN1T_CoordUTM;
+struct ASN1T_CoordLatLong;
 struct ASN1T_Location;
 
 namespace kernel
@@ -69,7 +69,7 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     ASN1T_Location* localisation_;
-    ASN1T_CoordUTM* pCoords_;
+    ASN1T_CoordLatLong* pCoords_;
     bool ownsCoords_;
     //@}
 };

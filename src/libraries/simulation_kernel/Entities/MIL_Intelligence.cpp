@@ -49,7 +49,7 @@ namespace
         return pos;
     }
 
-    MT_Vector2D ConvertPosition( const ASN1T_CoordUTM& mgrs )
+    MT_Vector2D ConvertPosition( const ASN1T_CoordLatLong& mgrs )
     {
         MT_Vector2D pos;
         MIL_Tools::ConvertCoordMosToSim( mgrs, pos );
@@ -189,8 +189,7 @@ void MIL_Intelligence::SendCreation() const
     message().intelligence.level = level_;
     message().intelligence.diplomacy = diplomacy_;
     message().intelligence.formation = formation_->GetID();
-    const std::string mgrs = MIL_Tools::ConvertCoordSimToMos( position_ );
-    message().intelligence.location = mgrs.c_str();
+    MIL_Tools::ConvertCoordSimToMos( position_, message().intelligence.location );
     message.Send();
 }
 
@@ -208,8 +207,8 @@ void MIL_Intelligence::SendFullState() const
     message().m.embarkedPresent  = 1; message().embarked = embarked_ ? 1 : 0;
     message().m.levelPresent     = 1; message().level = level_;
     message().m.diplomacyPresent = 1; message().diplomacy = diplomacy_;
-    const std::string mgrs = MIL_Tools::ConvertCoordSimToMos( position_ );
-    message().m.locationPresent  = 1; message().location = mgrs.c_str();
+    message().m.locationPresent  = 1;
+    MIL_Tools::ConvertCoordSimToMos( position_, message().location );
     message.Send();
 }
 

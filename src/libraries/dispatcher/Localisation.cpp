@@ -32,8 +32,8 @@ Localisation::Localisation( const ASN1T_Location& asn )
     : nType_ ( asn.type )
     , points_( )
 {
-    for( unsigned int i = 0; i < asn.coordinates.n; ++i )
-        points_.push_back( Position( asn.coordinates.elem[ i ] ) );
+    points_.reserve( asn.coordinates.n );
+    std::copy( asn.coordinates.elem, asn.coordinates.elem + asn.coordinates.n, std::back_inserter( points_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,9 +56,8 @@ Localisation::~Localisation()
 void Localisation::Update( const ASN1T_Location& asn )
 {
     nType_ = asn.type;
-    points_.clear();
-    for( unsigned int i = 0; i < asn.coordinates.n; ++i )
-        points_.push_back( Position( asn.coordinates.elem[ i ] ) );
+    points_.resize( 0 );
+    std::copy( asn.coordinates.elem, asn.coordinates.elem + asn.coordinates.n, std::back_inserter( points_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,22 +66,7 @@ void Localisation::Update( const ASN1T_Location& asn )
 // -----------------------------------------------------------------------------
 void Localisation::Send( ASN1T_Location& asn ) const
 {
-    asn.type               = nType_;
+    asn.type              = nType_;
     asn.coordinates.n    = points_.size();
-    asn.coordinates.elem = new ASN1T_CoordUTM[ points_.size() ];
-    for( unsigned int i = 0; i < points_.size(); ++i )
-        points_[ i ].Send( asn.coordinates.elem[ i ] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Localisation::AsnDelete
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void Localisation::AsnDelete( ASN1T_Location& asn, bool bOptionalValue /*= true*/ )
-{
-    if( !bOptionalValue )
-        return;
-
-    if( asn.coordinates.n > 0 )
-        delete [] asn.coordinates.elem;
+    asn.coordinates.elem = points_.size() ? const_cast< ASN1T_CoordLatLong* >( & points_.front() ) : 0;
 }

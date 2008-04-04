@@ -39,19 +39,13 @@ LocationEditor::~LocationEditor()
 // -----------------------------------------------------------------------------
 void LocationEditor::Write( const ASN1T_Location& asn )
 {
-    std::stringstream ss;    
-    
-    ss.precision( 14 );    
+    std::stringstream ss;
+
+    ss.precision( 14 );
     for( unsigned i = 0; i < asn.coordinates.n; ++i )
-    {
-        geometry::Point2d position( editor_.ConvertPosition( std::string( (char*)asn.coordinates.elem[i].data, 15 ) ) );
-        ss << position.X() << "," << position.Y() << "," << 0. << std::endl;
-    }
-    if ( asn.coordinates.n > 2 )
-    {
-        geometry::Point2d position( editor_.ConvertPosition( std::string( (char*)asn.coordinates.elem[0].data, 15 ) ) );
-        ss << position.X() << "," << position.Y() << "," << 0. << std::endl;
-    }
+        ss << asn.coordinates.elem[i].longitude << "," << asn.coordinates.elem[i].latitude << "," << 0. << std::endl;
+    if( asn.coordinates.n > 2 )
+        ss << asn.coordinates.elem[0].longitude << "," << asn.coordinates.elem[0].latitude << "," << 0. << std::endl;
     xobs_ << xml::start( "Point" )
             << xml::content( "coordinates", ss.str() )
           << xml::end();

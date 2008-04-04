@@ -56,7 +56,7 @@ private:
     const std::string nature_;
     const ASN1T_EnumNatureLevel level_;
     const bool embarked_;
-    const ASN1T_CoordUTM position_;
+    const ASN1T_CoordLatLong position_;
     const ASN1T_EnumDiplomacy diplomacy_;
     const unsigned int formation_;
     //@}

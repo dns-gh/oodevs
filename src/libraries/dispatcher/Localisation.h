@@ -11,7 +11,6 @@
 #define __Localisation_h_
 
 #include "game_asn/Simulation.h"
-#include "Position.h"
 
 namespace dispatcher
 {
@@ -29,23 +28,21 @@ class Localisation
 public:
     //! @name Constructors/Destructor
     //@{
-     Localisation( const ASN1T_Location& asn ); 
-     Localisation(); 
-    ~Localisation();
+             Localisation(); 
+    explicit Localisation( const ASN1T_Location& asn ); 
+    virtual ~Localisation();
     //@}
 
     //! @name Main
     //@{
     void Update( const ASN1T_Location& asn );
     void Send  ( ASN1T_Location& asn ) const;
-
-    static void AsnDelete( ASN1T_Location& asn, bool bOptionalValue = true );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< Position > T_PositionVector;
+    typedef std::vector< ASN1T_CoordLatLong > T_PositionVector;
     //@}
 
 private:

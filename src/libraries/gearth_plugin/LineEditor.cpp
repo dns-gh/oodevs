@@ -46,16 +46,13 @@ void LineEditor::Write( const ASN1T_Line& asnLine )
 // Name: LineEditor::CreateGeometry
 // Created: JCR 2007-05-23
 // -----------------------------------------------------------------------------
-void LineEditor::Write( const ASN1T_CoordUTMList& asnCoords )
+void LineEditor::Write( const ASN1T_CoordLatLongList& asn )
 {
     std::stringstream ss;    
     
     ss.precision( 14 );
-    for( unsigned i = 0; i < asnCoords.n; ++i )
-    {
-        geometry::Point2d position( editor_.ConvertPosition( std::string( (char*)asnCoords.elem[i].data, 15 ) ) );
-        ss << position.X() << "," << position.Y() << "," << 0. << std::endl;
-    }
+    for( unsigned i = 0; i < asn.n; ++i )
+        ss << asn.elem[i].longitude << "," << asn.elem[i].latitude << "," << 0. << std::endl;
     xobs_ << xml::start( "Point" )
             << xml::content( "coordinates", ss.str() )
           << xml::end();

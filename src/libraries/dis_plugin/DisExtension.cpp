@@ -74,8 +74,7 @@ void DisExtension::AddPlatform( const tic::Platform_ABC& platform )
 
     const geometry::Point2d position( platform.GetPosition().X(), platform.GetPosition().Y() );
     const geometry::Point2d geocoord = converter_.ConvertToGeo( position );
-    static const double rPiOver180 = std::acos( -1. ) / 180.;
-    pdu.SetPosition( geocoord.Y() * rPiOver180, geocoord.X()* rPiOver180, platform.GetAltitude(), platform.GetSpeed(), platform.GetHeading() );
+    pdu.SetPosition( geocoord.Y(), geocoord.X(), platform.GetAltitude(), platform.GetSpeed(), platform.GetHeading() );
 
     network_.Send( pdu );
 }
@@ -89,10 +88,7 @@ void DisExtension::SendUnitState() const
     EntityStatePDU pdu( time_.GetTime(), exercise_, myId_ );
     pdu.SetEntityName( holder_.GetName() );
 
-    geocoord::MGRS mgrs( holder_.position_.strPosition_ );
-    geocoord::Geodetic geodetic( mgrs );
-
-    pdu.SetPosition( geodetic.GetLatitude(), geodetic.GetLongitude(),
+    pdu.SetPosition( holder_.position_.latitude, holder_.position_.longitude,
         (float)holder_.nHeight_, (float)holder_.nSpeed_, (float)holder_.nDirection_ );
 
     network_.Send( pdu );

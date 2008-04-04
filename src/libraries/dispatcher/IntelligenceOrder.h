@@ -10,12 +10,11 @@
 #ifndef __IntelligenceOrder_h_
 #define __IntelligenceOrder_h_
 
-#include "Position.h"
-
-struct ASN1T_Intelligence;
+#include "game_asn/simulation.h"
 
 namespace dispatcher
 {
+    class Model;
 
 // =============================================================================
 /** @class  IntelligenceOrder
@@ -52,7 +51,7 @@ private:
     const std::string nature_;
     const ASN1T_EnumNatureLevel level_;
     const bool embarked_;
-    const Position position_;
+    const ASN1T_CoordLatLong position_;
     const ASN1T_EnumDiplomacy diplomacy_;
     const unsigned int formation_;
     //@}

@@ -11,7 +11,6 @@
 #define __AgentKnowledge_h_
 
 #include "game_asn/Simulation.h"
-#include "Position.h"
 #include "Entity_ABC.h"
 
 namespace dispatcher
@@ -88,7 +87,7 @@ public:
     ASN1T_EnumUnitIdentificationLevel   nMaxPerceptionLevel_;
     unsigned int                        nOperationalState_;
     bool                                bDead_;
-    Position                            position_;
+    ASN1T_CoordLatLong                  position_;
     unsigned int                        nDirection_;
     unsigned int                        nSpeed_;
     Side*                               pSide_;

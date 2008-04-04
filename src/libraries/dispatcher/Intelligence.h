@@ -60,7 +60,7 @@ private:
     bool embarked_;
     ASN1T_EnumNatureLevel level_;
     ASN1T_EnumDiplomacy diplomacy_;
-    std::string position_;
+    ASN1T_CoordLatLong position_;
     //@}
 };
 

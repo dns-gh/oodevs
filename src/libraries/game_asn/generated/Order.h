@@ -802,7 +802,7 @@ EXTERN void asn1Print_MsgDecisionalState (ASN1ConstCharPtr name, ASN1T_MsgDecisi
 
 typedef struct EXTERN ASN1T_MsgDebugPoints {
    ASN1T_OID  oid;
-   ASN1T_CoordUTMList  coordinates;
+   ASN1T_CoordLatLongList  coordinates;
 } ASN1T_MsgDebugPoints;
 
 class EXTERN ASN1C_MsgDebugPoints : public ASN1CType {

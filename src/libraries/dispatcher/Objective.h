@@ -35,8 +35,6 @@ public:
     //! @name Operations
     //@{
     void Send( ASN1T_MissionObjective& asn ) const;
-
-    static void AsnDelete( ASN1T_MissionObjective& asn );
     //@}
 
 private:

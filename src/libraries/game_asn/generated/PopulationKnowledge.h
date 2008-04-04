@@ -155,7 +155,7 @@ typedef struct EXTERN ASN1T_MsgPopulationConcentrationKnowledgeCreation {
    ASN1T_OID  oid_connaissance_population;
    ASN1T_OID  oid_groupe_possesseur;
    ASN1T_OID  oid_concentration_reelle;
-   ASN1T_CoordUTM  position;
+   ASN1T_CoordLatLong  position;
 } ASN1T_MsgPopulationConcentrationKnowledgeCreation;
 
 class EXTERN ASN1C_MsgPopulationConcentrationKnowledgeCreation : public ASN1CType {

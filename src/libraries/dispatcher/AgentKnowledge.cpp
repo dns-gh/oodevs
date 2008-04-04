@@ -154,7 +154,7 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.positionPresent )
     {
         asn().m.positionPresent = 1;
-        position_.Send( asn().position );
+        asn().position = position_;
     }
 
     SEND_ASN_ATTRIBUTE( direction, nDirection_ );

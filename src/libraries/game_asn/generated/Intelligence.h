@@ -67,7 +67,7 @@ typedef struct EXTERN ASN1T_Intelligence {
    ASN1VisibleString  nature;
    ASN1T_EnumNatureLevel  level;
    ASN1BOOL  embarked;
-   ASN1T_CoordUTM  location;
+   ASN1T_CoordLatLong  location;
    ASN1T_EnumDiplomacy  diplomacy;
    ASN1T_Formation  formation;
 } ASN1T_Intelligence;
@@ -161,7 +161,7 @@ typedef struct EXTERN ASN1T_MsgIntelligenceUpdate {
    ASN1VisibleString  nature;
    ASN1T_EnumNatureLevel  level;
    ASN1BOOL  embarked;
-   ASN1T_CoordUTM  location;
+   ASN1T_CoordLatLong  location;
    ASN1T_EnumDiplomacy  diplomacy;
 
    ASN1T_MsgIntelligenceUpdate () {
@@ -262,7 +262,7 @@ typedef struct EXTERN ASN1T_MsgIntelligenceUpdateRequest {
    ASN1VisibleString  nature;
    ASN1T_EnumNatureLevel  level;
    ASN1BOOL  embarked;
-   ASN1T_CoordUTM  location;
+   ASN1T_CoordLatLong  location;
    ASN1T_EnumDiplomacy  diplomacy;
 
    ASN1T_MsgIntelligenceUpdateRequest () {

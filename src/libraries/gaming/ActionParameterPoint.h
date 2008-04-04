@@ -34,7 +34,7 @@ public:
     //@{
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    void CommitTo( ASN1T_CoordUTM& asn ) const;
+    void CommitTo( ASN1T_CoordLatLong& asn ) const;
     //@}
 
 private:

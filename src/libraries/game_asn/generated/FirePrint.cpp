@@ -224,7 +224,7 @@ void asn1Print_MsgStartUnitFire_target (ASN1ConstCharPtr name, ASN1T_MsgStartUni
 
       case 3:
          sprintf (namebuf, "%s.u.position", name);
-         asn1Print_CoordUTM (namebuf, pvalue->u.position);
+         asn1Print_CoordLatLong (namebuf, pvalue->u.position);
          break;
 
       default:;
@@ -408,4 +408,5 @@ void ASN1C_MsgStopFireEffect::Print (ASN1ConstCharPtr name)
 {
    asn1Print_MsgStopFireEffect (name, &msgData);
 }
+
 

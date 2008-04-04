@@ -111,7 +111,7 @@ void asn1Print_MsgPopulationConcentrationKnowledgeCreation (ASN1ConstCharPtr nam
    asn1Print_OID (namebuf, &pvalue->oid_concentration_reelle);
 
    sprintf (namebuf, "%s.position", name);
-   asn1Print_CoordUTM (namebuf, &pvalue->position);
+   asn1Print_CoordLatLong (namebuf, &pvalue->position);
 
 }
 
@@ -351,4 +351,5 @@ void ASN1C_MsgPopulationFlowKnowledgeDestruction::Print (ASN1ConstCharPtr name)
 {
    asn1Print_MsgPopulationFlowKnowledgeDestruction (name, &msgData);
 }
+
 

@@ -55,6 +55,5 @@ void MissionParameter_GenObject::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_GenObject::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    GenObject::AsnDelete( *asn.value.u.plannedWork );
     delete asn.value.u.plannedWork;
 }

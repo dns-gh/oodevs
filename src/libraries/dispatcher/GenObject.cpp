@@ -65,13 +65,3 @@ void GenObject::Send( ASN1T_PlannedWork& asn ) const
     asn.activity_time = delaiActiviteMines_;
     location_.Send( asn.position );
 }
-
-// -----------------------------------------------------------------------------
-// Name: GenObject::AsnDelete
-// Created: NLD 2007-04-23
-// -----------------------------------------------------------------------------
-// static
-void GenObject::AsnDelete( ASN1T_PlannedWork& asn )
-{
-    Localisation::AsnDelete( asn.position );
-}

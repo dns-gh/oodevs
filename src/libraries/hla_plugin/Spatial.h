@@ -12,11 +12,6 @@
 
 #include "Coordinates.h"
 
-namespace dispatcher
-{
-    class Position;
-}
-
 // =============================================================================
 /** @class  Spatial
     @brief  Spatial
@@ -29,7 +24,7 @@ class Spatial
 public:
     //! @name Constructors/Destructor
     //@{
-             Spatial( const dispatcher::Position& mgrs, float altitude, float speed, float heading );
+             Spatial( double latitude, double longitude, float altitude, float speed, float heading );
     virtual ~Spatial();
     //@}
 
@@ -49,7 +44,7 @@ private:
     //@{
     struct SpatialFPW
     {
-        SpatialFPW( const std::string mgrs, float altitude, float speed, float heading );
+        SpatialFPW( double latitude, double longitude, float altitude, float speed, float heading );
         template< typename Archive >
         void Serialize( Archive& archive )
         {

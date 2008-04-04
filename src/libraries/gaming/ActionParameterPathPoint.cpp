@@ -47,7 +47,7 @@ ActionParameterPathPoint::~ActionParameterPathPoint()
 // Name: ActionParameterPathPoint::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void ActionParameterPathPoint::CommitTo( ASN1T_CoordUTM& asn ) const
+void ActionParameterPathPoint::CommitTo( ASN1T_CoordLatLong& asn ) const
 {
     ASN1T_Location loc;
     ActionParameterLocation::CommitTo( loc );

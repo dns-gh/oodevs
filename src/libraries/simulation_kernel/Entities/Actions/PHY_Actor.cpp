@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Actor.h"
-
 #include "PHY_Action_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -45,4 +43,25 @@ void PHY_Actor::UpdateActions()
 {
     for( CIT_ActionSet itAction = actions_.begin(); itAction != actions_.end(); ++itAction )
         (**itAction).Update();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Actor::RegisterAction
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+void PHY_Actor::RegisterAction( PHY_Action_ABC& action )
+{
+    bool bOut = actions_.insert( &action ).second;
+    assert( bOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Actor::UnregisterAction
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+void PHY_Actor::UnregisterAction( PHY_Action_ABC& action )
+{
+    int nOut = actions_.erase( &action );
+    assert( nOut == 1 );
 }

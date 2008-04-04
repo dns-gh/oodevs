@@ -40,7 +40,7 @@ AgentExtension::~AgentExtension()
 // -----------------------------------------------------------------------------
 void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 {
-    if( attributes.m.positionPresent || attributes.m.hauteurPresent || attributes.m.vitessePresent )
+    if( attributes.m.positionPresent || attributes.m.hauteurPresent )
         UpdateWhere( attributes );
 }
 
@@ -48,7 +48,7 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 // Name: AgentExtension::UpdateWhere
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateWhere( const ASN1T_MsgUnitAttributes& attributes )
+void AgentExtension::UpdateWhere( const ASN1T_MsgUnitAttributes& )
 {
     xml::xostringstream xos;
     xos << xml::start( "NewWherePush" )
@@ -63,7 +63,7 @@ void AgentExtension::UpdateWhere( const ASN1T_MsgUnitAttributes& attributes )
                     << xml::content( "bml:WhereClass", "POINT" )
                     << xml::start( "bml:WhereValue" )
                         << xml::start( "bml:WhereLocation" )
-                            << bml::UtmLocation( (const char*)attributes.position.data, attributes.hauteur )
+                            << bml::UtmLocation( holder_.position_.latitude, holder_.position_.longitude, holder_.nHeight_ )
                         << xml::end()
                     << xml::end()
                     << xml::content( "WhereQualifier", "AT" )

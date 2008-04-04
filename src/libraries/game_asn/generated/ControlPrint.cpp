@@ -550,10 +550,10 @@ void asn1Print_MsgControlLocalMeteo (ASN1ConstCharPtr name, ASN1T_MsgControlLoca
    char namebuf[512];
 
    sprintf (namebuf, "%s.top_left_coordinate", name);
-   asn1Print_CoordUTM (namebuf, &pvalue->top_left_coordinate);
+   asn1Print_CoordLatLong (namebuf, &pvalue->top_left_coordinate);
 
    sprintf (namebuf, "%s.bottom_right_coordinate", name);
-   asn1Print_CoordUTM (namebuf, &pvalue->bottom_right_coordinate);
+   asn1Print_CoordLatLong (namebuf, &pvalue->bottom_right_coordinate);
 
    sprintf (namebuf, "%s.meteo", name);
    asn1Print_MsgControlLocalMeteo_meteo (namebuf, &pvalue->meteo);
@@ -585,4 +585,5 @@ void ASN1C_MsgControlLocalMeteoAck::Print (ASN1ConstCharPtr name)
 {
    asn1Print_MsgControlLocalMeteoAck (name);
 }
+
 

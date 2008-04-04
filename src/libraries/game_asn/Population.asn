@@ -46,7 +46,7 @@ MsgPopulationConcentrationCreation ::= SEQUENCE
 {
     oid               OID,
     oid-population    OID,
-    position          CoordUTM
+    position          CoordLatLong
 }
 
 MsgPopulationConcentrationUpdate ::= SEQUENCE
@@ -109,7 +109,7 @@ MagicActionPopulationChangeAttitude ::= SEQUENCE
     }
 }
 
-MagicActionPopulationMoveTo				::= CoordUTM    -- Position
+MagicActionPopulationMoveTo				::= CoordLatLong    -- Position
 MagicActionPopulationTotalDestruction	::= NULL
 MagicActionPopulationKill               ::= INTEGER     -- nombre de personne tuées
 MagicActionPopulationResurrect          ::= INTEGER     -- nombre de personne ressuscitées

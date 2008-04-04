@@ -109,9 +109,6 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     flow_.Send( asn().flux );
    
     asn.Send( publisher );
-
-    Localisation::AsnDelete( asn().itineraire );
-    Localisation::AsnDelete( asn().flux       );
 }
 
 // -----------------------------------------------------------------------------

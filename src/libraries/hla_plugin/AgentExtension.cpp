@@ -124,7 +124,7 @@ void AgentExtension::UpdateEntityIdentifier( UpdateFunctor_ABC& functor ) const
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateSpatial( UpdateFunctor_ABC& functor ) const
 {
-    Spatial spatial( holder_.position_, (float)holder_.nHeight_, (float)holder_.nSpeed_, (unsigned short)holder_.nDirection_ );
+    Spatial spatial( holder_.position_.latitude, holder_.position_.longitude, (float)holder_.nHeight_, (float)holder_.nSpeed_, (unsigned short)holder_.nDirection_ );
     Serializer archive;
     spatial.Serialize( archive );
     functor.Visit( AttributeIdentifier( "Spatial" ), archive );

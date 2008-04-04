@@ -13,6 +13,52 @@
 #include <geocoord/Geodetic.h>
 #include <boost/bind.hpp>
 
+namespace
+{
+    bool Initialize( geocoord::PlanarCartesian::Parameters& parameters, const ASN1T_CoordLatLong& coord  )
+    {
+        const double rPiOver180 = std::acos( -1. ) / 180.;
+        parameters.SetOrigin( coord.latitude * rPiOver180, coord.longitude * rPiOver180);
+        return true;
+    }
+    geometry::Point2f ToPoint( const ASN1T_CoordLatLong& coord )
+    {
+        static geocoord::Geodetic geo_;
+        static geocoord::PlanarCartesian::Parameters parameters_;
+        static bool bInit = Initialize( parameters_, coord );
+        static geocoord::PlanarCartesian planar_( parameters_ ) ;
+        static const double rPiOver180 = std::acos( -1. ) / 180.;
+
+        geo_.Set( coord.latitude * rPiOver180, coord.longitude * rPiOver180 );
+        planar_.SetCoordinates( geo_ );
+        return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) );
+    }
+    std::string ToMgrs( const ASN1T_CoordLatLong& coord )
+    {
+        static geocoord::Geodetic geo_;
+        static geocoord::MGRS mgrs_;
+        static const double rPiOver180 = std::acos( -1. ) / 180.;
+
+        geo_.Set( coord.latitude * rPiOver180, coord.longitude * rPiOver180 );
+        mgrs_.SetCoordinates( geo_ );
+        return mgrs_.GetString();
+    }
+
+    ASN1T_CoordLatLong ToCoord( const std::string& mgrs )
+    {
+        static geocoord::Geodetic geo_;
+        static geocoord::MGRS mgrs_;
+        static const double rPiOver180 = std::acos( -1. ) / 180.;
+
+        mgrs_.SetString( mgrs );
+        geo_.SetCoordinates( mgrs_ );
+        ASN1T_CoordLatLong result;
+        result.latitude = geo_.GetLatitude() / rPiOver180;
+        result.longitude = geo_.GetLongitude() / rPiOver180;
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Position constructor
 // Created: AGE 2007-09-12
@@ -27,12 +73,24 @@ Position::Position()
 // Name: Position constructor
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-Position::Position( const ASN1T_CoordUTM& coord )
-    : mgrs_( (const char*)coord.data, 15 )
+Position::Position( const ASN1T_CoordLatLong& coord )
+    : coord_( coord )
     , init_( false )
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: Position constructor
+// Created: AGE 2008-04-03
+// -----------------------------------------------------------------------------
+Position::Position( const std::string& coord )
+    : coord_( ToCoord( coord ) )
+    , init_( false )
+{
+    // NOTHING
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: Position destructor
@@ -41,28 +99,6 @@ Position::Position( const ASN1T_CoordUTM& coord )
 Position::~Position()
 {
     // NOTHING
-}
-
-namespace 
-{
-    bool Initialize( geocoord::PlanarCartesian::Parameters& parameters, const std::string& base )
-    {
-        geocoord::MGRS mgrs( base );
-        geocoord::Geodetic geodetic( mgrs );
-        parameters.SetOrigin( geodetic.GetLatitude(), geodetic.GetLongitude() );
-        return true;
-    }
-    geometry::Point2f ToPoint( const std::string& mgrs )
-    {
-        static geocoord::MGRS mgrs_;
-        static geocoord::PlanarCartesian::Parameters parameters_;
-        static bool bInit = Initialize( parameters_, mgrs );
-        static geocoord::PlanarCartesian planar_( parameters_ );
-
-        mgrs_.SetString( mgrs );
-        planar_.SetCoordinates( mgrs_ );
-        return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +116,8 @@ float Position::Distance( const Position& rhs ) const
 // -----------------------------------------------------------------------------
 bool Position::operator<( const Position& rhs ) const
 {
-    return mgrs_ < rhs.mgrs_;
+    return coord_.latitude < rhs.coord_.latitude
+        || ( coord_.latitude == rhs.coord_.latitude && coord_.longitude < rhs.coord_.longitude );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +126,8 @@ bool Position::operator<( const Position& rhs ) const
 // -----------------------------------------------------------------------------
 bool Position::operator>( const Position& rhs ) const
 {
-    return mgrs_ > rhs.mgrs_;
+    return coord_.latitude > rhs.coord_.latitude
+        || ( coord_.latitude == rhs.coord_.latitude && coord_.longitude > rhs.coord_.longitude );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +136,8 @@ bool Position::operator>( const Position& rhs ) const
 // -----------------------------------------------------------------------------
 bool Position::operator==( const Position& rhs ) const
 {
-    return mgrs_ == rhs.mgrs_;
+    return coord_.latitude == rhs.coord_.latitude
+        && coord_.longitude == rhs.coord_.longitude;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +146,8 @@ bool Position::operator==( const Position& rhs ) const
 // -----------------------------------------------------------------------------
 bool Position::operator!=( const Position& rhs ) const
 {
-    return mgrs_ != rhs.mgrs_;
+    return coord_.latitude != rhs.coord_.latitude
+        || coord_.longitude != rhs.coord_.longitude;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +167,7 @@ const geometry::Point2f& Position::Point() const
 {
     if( ! init_ )
     {
-        point_ = ToPoint( mgrs_ );
+        point_ = ToPoint( coord_ );
         init_ = true;
     }
     return point_;
@@ -152,4 +192,18 @@ geometry::Polygon2f Position::ToPolygon( const std::vector< Position >& position
 bool Position::IsInside( const geometry::Polygon2f& polygon ) const
 {
     return polygon.IsInside( Point() );
+}
+
+std::ostream& operator<<( std::ostream& os, const Position& position )
+{
+    return os << ToMgrs( position.coord_ );
+}
+
+std::istream& operator>>( std::istream& is, Position& position )
+{
+    position.init_ = false;
+    std::string mgrs;
+    is >> mgrs;
+    position.coord_ = ToCoord( mgrs );
+    return is;
 }

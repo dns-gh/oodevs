@@ -165,7 +165,7 @@ typedef struct EXTERN ASN1T_MsgUnitKnowledgeUpdate {
    ASN1T_EnumUnitIdentificationLevel  max_identification_level;
    ASN1T_FreePercentage  etat_op;
    ASN1BOOL  mort;
-   ASN1T_CoordUTM  position;
+   ASN1T_CoordLatLong  position;
    ASN1T_Heading  direction;
    ASN1T_Speed  speed;
    ASN1T_OID  camp;

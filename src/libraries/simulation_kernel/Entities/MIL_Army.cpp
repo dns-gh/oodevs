@@ -587,3 +587,64 @@ void MIL_Army::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& asnM
     }
     diplomacies_[ pArmy2 ] = nDiplomacy;
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::RegisterObject
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+void MIL_Army::RegisterObject( MIL_RealObject_ABC& object )
+{
+    bool bOut = objects_.insert( &object ).second;
+    assert( bOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::UnregisterObject
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+void MIL_Army::UnregisterObject( MIL_RealObject_ABC& object )
+{
+    int nOut = objects_.erase( &object );
+    assert( nOut == 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::RegisterFormation
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+void MIL_Army::RegisterFormation( MIL_Formation& formation )
+{
+    bool bOut = formations_.insert( &formation ).second;
+    assert( bOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::UnregisterFormation
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+void MIL_Army::UnregisterFormation( MIL_Formation& formation )
+{
+    int nOut = formations_.erase( &formation );
+    assert( nOut == 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::RegisterPopulation
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+void MIL_Army::RegisterPopulation( MIL_Population& population )
+{
+    bool bOut = populations_.insert( &population ).second;
+    assert( bOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::UnregisterPopulation
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+void MIL_Army::UnregisterPopulation( MIL_Population& population )
+{
+    int nOut = populations_.erase( &population );
+    assert( nOut == 1 );
+}

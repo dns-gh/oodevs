@@ -11,7 +11,6 @@
 #define __PopulationConcentration_h_
 
 #include "game_asn/Simulation.h"
-#include "Position.h"
 #include "Entity_ABC.h"
 
 namespace dispatcher
@@ -57,7 +56,7 @@ private:
 private:
           Population&   population_;
     const unsigned long nID_;
-    const Position      position_;
+    const ASN1T_CoordLatLong position_;
 
     unsigned long                nNbrAliveHumans_;
     unsigned long                nNbrDeadHumans_;

@@ -50,7 +50,7 @@ ActionParameterIntelligence::ActionParameterIntelligence( const CoordinateConver
 
 namespace
 {
-    kernel::Point MakePoint( const CoordinateConverter_ABC& converter, const ASN1T_CoordUTM& asn )
+    kernel::Point MakePoint( const CoordinateConverter_ABC& converter, const ASN1T_CoordLatLong& asn )
     {
         kernel::Point point;
         point.AddPoint( converter.ConvertToXY( asn ) );

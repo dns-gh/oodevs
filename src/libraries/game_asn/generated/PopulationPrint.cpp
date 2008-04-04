@@ -100,7 +100,7 @@ void asn1Print_MsgPopulationConcentrationCreation (ASN1ConstCharPtr name, ASN1T_
    asn1Print_OID (namebuf, &pvalue->oid_population);
 
    sprintf (namebuf, "%s.position", name);
-   asn1Print_CoordUTM (namebuf, &pvalue->position);
+   asn1Print_CoordLatLong (namebuf, &pvalue->position);
 
 }
 
@@ -310,7 +310,7 @@ void ASN1C_MagicActionPopulationChangeAttitude::Print (ASN1ConstCharPtr name)
 
 void asn1Print_MagicActionPopulationMoveTo (ASN1ConstCharPtr name, ASN1T_MagicActionPopulationMoveTo* pvalue)
 {
-   asn1Print_CoordUTM (name, pvalue);
+   asn1Print_CoordLatLong (name, pvalue);
 }
 
 void ASN1C_MagicActionPopulationMoveTo::Print (ASN1ConstCharPtr name)
@@ -443,4 +443,5 @@ void ASN1C_MsgPopulationMagicActionAck::Print (ASN1ConstCharPtr name)
 {
    asn1Print_MsgPopulationMagicActionAck (name, &msgData);
 }
+
 

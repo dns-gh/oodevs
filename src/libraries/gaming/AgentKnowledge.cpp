@@ -73,8 +73,9 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
     if( message.m.etat_opPresent )
         nEtatOps_ = message.etat_op;
 
-    if( message.m.positionPresent )
-        strPosition_ = std::string( (const char*)message.position.data, 15 );
+    // $$$$ AGE 2008-04-03: 
+//    if( message.m.positionPresent )
+//        strPosition_ = std::string( (const char*)message.position.data, 15 );
 
     if( message.m.directionPresent )
         nDirection_ = message.direction;

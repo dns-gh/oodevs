@@ -145,13 +145,12 @@ void TacticalLinePositions::WriteGeometry( ASN1T_Line& line ) const
         line.coordinates.elem = 0;
         return;
     }
-    line.coordinates.elem = new ASN1T_CoordUTM[ pointList_.size() ];
+    line.coordinates.elem = new ASN1T_CoordLatLong[ pointList_.size() ];
 
     unsigned int i = 0;
     for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
     {
-        const std::string strMGRS = converter_.ConvertToMgrs( *itPoint );
-        line.coordinates.elem[i] = strMGRS.c_str();
+        converter_.ConvertToGeo( *itPoint, line.coordinates.elem[i] );
         ++i;
     }
 }

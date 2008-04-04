@@ -64,11 +64,7 @@ void MissionParameter_PolygonList::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_PolygonList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.polygonList->n > 0 )
-    {
-        for( unsigned i = 0; i != asn.value.u.polygonList->n; ++i )
-            Localisation::AsnDelete( asn.value.u.polygonList->elem[i] );
+    if( asn.value.u.polygonList->n )
         delete [] asn.value.u.polygonList->elem;
-    }
     delete asn.value.u.polygonList;
 }

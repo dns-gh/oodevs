@@ -57,7 +57,6 @@ void LimaOrder::Send( ASN1T_LimaOrder& asn ) const
 // -----------------------------------------------------------------------------
 void LimaOrder::AsnDelete( ASN1T_LimaOrder& asn )
 {
-    Localisation::AsnDelete( asn.lima );
     if( asn.fonctions.n )
         delete [] asn.fonctions.elem;
 }

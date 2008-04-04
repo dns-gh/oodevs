@@ -168,7 +168,6 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
 
     asn.Send( publisher );
 
-    Localisation::AsnDelete( asn().location );
     if( pAttributes_ )
         pAttributes_->AsnDelete( asn().specific_attributes );
 }

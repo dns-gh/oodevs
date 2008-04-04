@@ -20,6 +20,7 @@ namespace bml
     struct UtmLocation
     {
         UtmLocation( const char* utm, int height );
+        UtmLocation( double latitude, double longitude, int height );
         std::string gridZone_, easting_, northing_;
         int height_;
     };

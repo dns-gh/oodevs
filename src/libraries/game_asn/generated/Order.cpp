@@ -2202,7 +2202,7 @@ EXTERN int asn1PE_MsgDebugPoints (ASN1CTXT* ctxt_p, ASN1T_MsgDebugPoints* pvalue
 
    /* encode coordinates */
 
-   stat = asn1PE_CoordUTMList (ctxt_p, &pvalue->coordinates);
+   stat = asn1PE_CoordLatLongList (ctxt_p, &pvalue->coordinates);
    if (stat != ASN_OK) return stat;
 
    return (stat);
@@ -2226,7 +2226,7 @@ EXTERN int asn1PD_MsgDebugPoints (ASN1CTXT* ctxt_p, ASN1T_MsgDebugPoints* pvalue
 
    /* decode coordinates */
 
-   stat = asn1PD_CoordUTMList (ctxt_p, &pvalue->coordinates);
+   stat = asn1PD_CoordLatLongList (ctxt_p, &pvalue->coordinates);
    if (stat != ASN_OK) return stat;
 
 
@@ -2237,4 +2237,5 @@ int ASN1C_MsgDebugPoints::Decode ()
 {
    return asn1PD_MsgDebugPoints (mpContext->GetPtr(), &msgData);
 }
+
 

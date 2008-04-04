@@ -15,6 +15,9 @@
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
+#include <geocoord/Geodetic.h>
+#include <geocoord/MGRS.h>
+#include <cmath>
 
 using namespace crossbow;
 
@@ -138,10 +141,7 @@ void OrderParameterSerializer::Clean( ASN1T_MissionParameter& asn ) const
         if( asn.value.u.limasOrder && asn.value.u.limasOrder->elem )
         {
             for( unsigned int i = 0; i < asn.value.u.limasOrder->n; ++i )
-            {
                 delete[] asn.value.u.limasOrder->elem[i].fonctions.elem;
-                dispatcher::Localisation::AsnDelete( asn.value.u.limasOrder->elem[i].lima );
-            }
             delete[] asn.value.u.limasOrder->elem;
             delete asn.value.u.limasOrder;
         }
@@ -163,7 +163,6 @@ void OrderParameterSerializer::Clean( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void OrderParameterSerializer::CleanLocation( ASN1T_Location*& asn ) const
 {
-    dispatcher::Localisation::AsnDelete( *asn );
     delete asn;
 }
 
@@ -208,7 +207,7 @@ void OrderParameterSerializer::SerializeLocation( ASN1T_Location*& asn, const st
 {
     asn = new ASN1T_Location();
     asn->coordinates.n = std::count( value.begin(), value.end(), ';' );
-    asn->coordinates.elem = new ASN1T_CoordUTM[asn->coordinates.n];
+    asn->coordinates.elem = new ASN1T_CoordLatLong[asn->coordinates.n];
 
     // value = type;coord1;coord2...
     std::stringstream ss( value );
@@ -222,7 +221,12 @@ void OrderParameterSerializer::SerializeLocation( ASN1T_Location*& asn, const st
             asn->type = ASN1T_EnumLocationType( type );
         }
         else
-            asn->coordinates.elem[i - 1] = v.c_str();
+        {
+            geocoord::MGRS mgrs( v );
+            geocoord::Geodetic geodetic( mgrs );
+            asn->coordinates.elem[i - 1].latitude  = geodetic.GetLatitude() * std::acos( -1. ) / 180;
+            asn->coordinates.elem[i - 1].longitude = geodetic.GetLongitude() * std::acos( -1. ) / 180;
+        }
 }
 
 // -----------------------------------------------------------------------------

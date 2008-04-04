@@ -19,7 +19,7 @@ Intelligence ::= SEQUENCE
     nature      VisibleString,
     level       EnumNatureLevel,
     embarked    BOOLEAN,
-    location    CoordUTM,
+    location    CoordLatLong,
     diplomacy   EnumDiplomacy,
     formation   Formation
 }
@@ -40,7 +40,7 @@ MsgIntelligenceUpdate ::= SEQUENCE
     nature       VisibleString      OPTIONAL,
     level        EnumNatureLevel    OPTIONAL,
     embarked     BOOLEAN            OPTIONAL,
-    location     CoordUTM           OPTIONAL,
+    location     CoordLatLong           OPTIONAL,
     diplomacy    EnumDiplomacy      OPTIONAL
 }
 
@@ -62,7 +62,7 @@ MsgIntelligenceUpdateRequest ::= SEQUENCE
     nature       VisibleString      OPTIONAL,
     level        EnumNatureLevel    OPTIONAL,
     embarked     BOOLEAN            OPTIONAL,
-    location     CoordUTM           OPTIONAL,
+    location     CoordLatLong           OPTIONAL,
     diplomacy    EnumDiplomacy      OPTIONAL
 }
 

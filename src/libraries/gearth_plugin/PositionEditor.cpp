@@ -37,13 +37,11 @@ PositionEditor::~PositionEditor()
 // Name: PositionEditor::Write
 // Created: JCR 2007-09-04
 // -----------------------------------------------------------------------------
-void PositionEditor::Write( const ASN1T_CoordUTM& asnUTM )
+void PositionEditor::Write( const ASN1T_CoordLatLong& asn )
 {
     std::stringstream ss;        
-    geometry::Point2d position( editor_.ConvertPosition( std::string( (char*)asnUTM.data, 15 ) ) );
-
     ss.precision( 14 );
-    ss << position.X() << "," << position.Y() << "," << 0.;    
+    ss << asn.longitude << "," << asn.latitude << "," << 0.;    
     xobs_ << xml::start( "Point" )
             << xml::content( "coordinates", ss.str() )
           << xml::end();

@@ -27,7 +27,7 @@ Intelligence::Intelligence( Model& model, const ASN1T_MsgIntelligenceCreation& m
     , embarked_ ( message.intelligence.embarked ? true : false )
     , level_    ( message.intelligence.level )
     , diplomacy_( message.intelligence.diplomacy )
-    , position_ ( (const char*)message.intelligence.location.data, 15 )
+    , position_ ( message.intelligence.location )
 {
     // NOTHING
 }
@@ -58,7 +58,7 @@ void Intelligence::Update( const ASN1T_MsgIntelligenceUpdate& message )
     if( message.m.diplomacyPresent )
         diplomacy_ = message.diplomacy;
     if( message.m.locationPresent )
-        position_ = std::string( (const char*)message.location.data, 15 );
+        position_ = message.location;
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void Intelligence::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     message().m.embarkedPresent  = 1; message().embarked  = embarked_ ? 1 : 0;
     message().m.levelPresent     = 1; message().level     = level_;
     message().m.diplomacyPresent = 1; message().diplomacy = diplomacy_;
-    message().m.locationPresent  = 1; message().location  = position_.c_str();
+    message().m.locationPresent  = 1; message().location  = position_;
     message.Send( publisher );
 }
 
@@ -93,7 +93,7 @@ void Intelligence::SendCreation( ClientPublisher_ABC& publisher ) const
     message().intelligence.level     = level_;
     message().intelligence.diplomacy = diplomacy_;
     message().intelligence.formation = formation_.GetID();
-    message().intelligence.location  = position_.c_str();
+    message().intelligence.location  = position_;
     message.Send( publisher );
 }
 

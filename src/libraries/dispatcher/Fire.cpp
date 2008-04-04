@@ -26,7 +26,7 @@ Fire::Fire( Model& , const ASN1T_MsgStartUnitFire& msg )
     , typeCible_      ( msg.target.t )
 {
     if( typeCible_ == T_MsgStartUnitFire_target_position )
-        positionCible_ = Position( *msg.target.u.position );
+        positionCible_ = *msg.target.u.position;
     else
         oid_cible_ = msg.target.u.unit;
 }
@@ -62,11 +62,11 @@ void Fire::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().m.ammunitionPresent = munitionPresent_ ? 1 : 0;
     asn().ammunition = munition;
     asn().target.t = typeCible_;
-    ASN1T_CoordUTM coord;
+    ASN1T_CoordLatLong coord;
     if( typeCible_ == T_MsgStartUnitFire_target_position )
     {
         asn().target.u.position = &coord;
-        positionCible_.Send( coord );
+        coord = positionCible_;
     }
     else
         asn().target.u.unit = oid_cible_;

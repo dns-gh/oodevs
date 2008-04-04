@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{    
-    void Write( const ASN1T_CoordUTM& asnUTM );
+    void Write( const ASN1T_CoordLatLong& asnUTM );
     //@}
 
 private:

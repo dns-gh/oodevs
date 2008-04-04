@@ -163,7 +163,7 @@ void ActionParameterPath::CommitTo( ASN1T_Path& asn ) const
 {
     asn.type = EnumLocationType::line;
     asn.coordinates.n = Count();
-    asn.coordinates.elem = new ASN1T_CoordUTM[asn.coordinates.n];
+    asn.coordinates.elem = new ASN1T_CoordLatLong[asn.coordinates.n];
     AsnSerializer serializer( asn );
     Accept( serializer );
 }

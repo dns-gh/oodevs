@@ -543,7 +543,7 @@ void asn1Print_MsgUnitAttributes (ASN1ConstCharPtr name, ASN1T_MsgUnitAttributes
 
    if (pvalue->m.positionPresent) {
       sprintf (namebuf, "%s.position", name);
-      asn1Print_CoordUTM (namebuf, &pvalue->position);
+      asn1Print_CoordLatLong (namebuf, &pvalue->position);
    }
 
    if (pvalue->m.directionPresent) {
@@ -805,7 +805,7 @@ void ASN1C_MagicActionCancelRendition::Print (ASN1ConstCharPtr name)
 
 void asn1Print_MagicActionMoveTo (ASN1ConstCharPtr name, ASN1T_MagicActionMoveTo* pvalue)
 {
-   asn1Print_CoordUTM (name, pvalue);
+   asn1Print_CoordLatLong (name, pvalue);
 }
 
 void ASN1C_MagicActionMoveTo::Print (ASN1ConstCharPtr name)
@@ -1275,7 +1275,7 @@ void asn1Print_MsgUnitCreationRequest (ASN1ConstCharPtr name, ASN1T_MsgUnitCreat
    asn1Print_Automat (namebuf, &pvalue->oid_automate);
 
    sprintf (namebuf, "%s.position", name);
-   asn1Print_CoordUTM (namebuf, &pvalue->position);
+   asn1Print_CoordLatLong (namebuf, &pvalue->position);
 
 }
 
@@ -1369,7 +1369,7 @@ void asn1Print_VisionCone (ASN1ConstCharPtr name, ASN1T_VisionCone* pvalue)
    char namebuf[512];
 
    sprintf (namebuf, "%s.origin", name);
-   asn1Print_CoordUTM (namebuf, &pvalue->origin);
+   asn1Print_CoordLatLong (namebuf, &pvalue->origin);
 
    sprintf (namebuf, "%s.height", name);
    asn1Print_Height (namebuf, &pvalue->height);
@@ -1522,4 +1522,5 @@ void ASN1C_MsgPopulationFlowDetection::Print (ASN1ConstCharPtr name)
 {
    asn1Print_MsgPopulationFlowDetection (name, &msgData);
 }
+
 

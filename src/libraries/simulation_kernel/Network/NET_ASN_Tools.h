@@ -143,7 +143,7 @@ public:
     static void CopyPolygonList  ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
     static bool CopyPoint ( const ASN1T_Point& asn, DIA_Variable_ABC& dia, bool bNullValue = false );
-    static bool CopyPoint ( const DIA_Variable_ABC& dia, ASN1T_CoordUTM& asn );
+    static bool CopyPoint ( const DIA_Variable_ABC& dia, ASN1T_CoordLatLong& asn );
     static bool CopyPoint ( const DIA_Variable_ABC& dia, ASN1T_Point& asn );
     static bool CopyPoint ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );    
     
@@ -231,7 +231,7 @@ public:
     static void Delete( ASN1T_ObjectKnowledgeList&      asn );
     static void Delete( ASN1T_LogMedicalPriorities&     asn );
     static void Delete( ASN1T_LogMaintenancePriorities& asn );
-    static void Delete( ASN1T_CoordUTMList& asn );
+    static void Delete( ASN1T_CoordLatLongList& asn );
     //@}
 
     //! @name Decoding tools
@@ -239,7 +239,7 @@ public:
     static bool ReadLine      ( const ASN1T_Line&         asn, TER_Localisation& localisation );
     static bool ReadLine      ( const ASN1T_Line&         asn, T_PointVector& pointVector );
     static bool ReadPoint     ( const ASN1T_Point&        asn, MT_Vector2D& vPoint );
-    static void ReadPoint     ( const ASN1T_CoordUTM&     asn, MT_Vector2D& vPoint );
+    static void ReadPoint     ( const ASN1T_CoordLatLong&     asn, MT_Vector2D& vPoint );
     static bool ReadPointList ( const ASN1T_PointList&    asn, T_PointVector& pointVector );
     static bool ReadLocation  ( const ASN1T_Location&     asn, TER_Localisation& localisation );
     static void ReadDirection ( const ASN1T_Heading&      asn, MT_Vector2D& vDir );
@@ -248,13 +248,13 @@ public:
 
     //! @name Encoding tools
     //@{
-    static bool WriteCoordinates( const T_PointVector&    points      , ASN1T_CoordUTMList& asn );
+    static bool WriteCoordinates( const T_PointVector&    points      , ASN1T_CoordLatLongList& asn );
     static bool WriteLine       ( const T_PointVector&    points      , ASN1T_Line&         asn );
     static void WriteLine       ( const TER_Localisation& localisation, ASN1T_Line&         asn );
     static void WriteDirection  ( const MT_Vector2D&      vDir        , ASN1T_Heading&      asn );
     static void WriteLocation   ( const TER_Localisation& localisation, ASN1T_Location&     asn );
     static void WritePoint      ( const MT_Vector2D&      vPoint      , ASN1T_Point&        asn );
-    static void WritePoint      ( const MT_Vector2D&      vPoint      , ASN1T_CoordUTM&     asn );
+    static void WritePoint      ( const MT_Vector2D&      vPoint      , ASN1T_CoordLatLong&     asn );
     static void WritePointList  ( const T_PointList&      points      , ASN1T_PointList&    asn );
     static void WriteEllipse    ( const MT_Ellipse&       ellipse     , ASN1T_Location&     asn );
     static void WritePath       ( const T_PointList&      points      , ASN1T_Path&         asn );

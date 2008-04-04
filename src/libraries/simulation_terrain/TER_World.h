@@ -73,6 +73,9 @@ public:
     void MosToSimMgrsCoord( const std::string& strMgrs, MT_Vector2D& pos ) const;
     void SimToMosMgrsCoord( const MT_Vector2D& pos, std::string& strMgrs ) const;
 
+    void MosToSimMgrsCoord( double latitude, double longitude, MT_Vector2D& pos ) const;
+    void SimToMosMgrsCoord( const MT_Vector2D& pos, double& latitude, double& longitude ) const;
+
     MT_Float GetWeldValue() const;
     MT_Float GetWidth    () const;
     MT_Float GetHeight   () const;

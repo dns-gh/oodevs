@@ -9,15 +9,14 @@
 
 #include "hla_plugin_pch.h"
 #include "Spatial.h"
-#include "dispatcher/Position.h"
 
 // -----------------------------------------------------------------------------
 // Name: Spatial constructor
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
-Spatial::Spatial( const dispatcher::Position& mgrs, float altitude, float speed, float heading )
+Spatial::Spatial( double latitude, double longitude, float altitude, float speed, float heading )
     : deadReckoningAlgorithm_( 2 ) // FPW
-    , fpw_( mgrs.strPosition_, altitude, speed, heading )
+    , fpw_( latitude, longitude, altitude, speed, heading )
 {
     // NOTHING
 }
@@ -35,8 +34,8 @@ Spatial::~Spatial()
 // Name: Spatial::SpatialFPW::SpatialFPW
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
-Spatial::SpatialFPW::SpatialFPW( const std::string mgrs, float altitude, float speed, float heading )
-    : worldLocation_ ( mgrs, altitude )
+Spatial::SpatialFPW::SpatialFPW( double latitude, double longitude, float altitude, float speed, float heading )
+    : worldLocation_ ( latitude, longitude, altitude )
     , isFrozen_      ( false )
     , velocityVector_( worldLocation_, speed, heading )
     , orientation_   ( worldLocation_, velocityVector_ )

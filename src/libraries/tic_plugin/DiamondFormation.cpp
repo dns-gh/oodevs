@@ -43,7 +43,8 @@ void DiamondFormation::Start( const geometry::Point2f& at, const geometry::Vecto
     unsigned platformCount = 0;
     while( count-- )
         AddPlatform( at, baseAngle, level, platformCount );
-    Sort( points_, at, towards );
+//    Sort( points_, at, towards );
+    Sort( points_, at, geometry::Vector2f( 1, 0 ) );
 }
 
 namespace
@@ -87,4 +88,5 @@ void DiamondFormation::Apply( Movable_ABC& movable )
         points_.pop_back();
     }
 }
+
 

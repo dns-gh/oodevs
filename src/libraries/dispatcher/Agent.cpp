@@ -378,7 +378,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().m.prisonnierPresent = 1;
         asn().m.refugie_pris_en_comptePresent = 1;
 
-        position_.Send( asn().position );
+        asn().position = position_;
 
         asn().direction = nDirection_;
         asn().hauteur = nHeight_;

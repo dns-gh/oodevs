@@ -76,7 +76,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT
     asnMsg().firer_oid           = firer.GetID();
     asnMsg().type                = MsgStartUnitFire_type::indirect;
     asnMsg().target.t            = T_MsgStartUnitFire_target_position;
-    asnMsg().target.u.position   = new ASN1T_CoordUTM();
+    asnMsg().target.u.position   = new ASN1T_CoordLatLong();
     asnMsg().ammunition          = dotationCategory.GetMosID();
     NET_ASN_Tools::WritePoint( targetPosition, *asnMsg().target.u.position );
 
@@ -116,4 +116,5 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
         MIL_Report::PostEvent( firer_    , MIL_Report::eReport_ConfrontationWithPopulation, damages.GetNbrKilledHumans(), rNbrWounded );
     }
 }
+
 

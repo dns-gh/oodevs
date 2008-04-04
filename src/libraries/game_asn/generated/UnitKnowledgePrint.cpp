@@ -140,7 +140,7 @@ void asn1Print_MsgUnitKnowledgeUpdate (ASN1ConstCharPtr name, ASN1T_MsgUnitKnowl
 
    if (pvalue->m.positionPresent) {
       sprintf (namebuf, "%s.position", name);
-      asn1Print_CoordUTM (namebuf, &pvalue->position);
+      asn1Print_CoordLatLong (namebuf, &pvalue->position);
    }
 
    if (pvalue->m.directionPresent) {
@@ -208,4 +208,5 @@ void ASN1C_MsgUnitKnowledgeDestruction::Print (ASN1ConstCharPtr name)
 {
    asn1Print_MsgUnitKnowledgeDestruction (name, &msgData);
 }
+
 

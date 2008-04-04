@@ -291,7 +291,7 @@ typedef struct EXTERN ASN1T_MsgStartUnitFire_target {
       /* t = 2 */
       ASN1T_Population  population;
       /* t = 3 */
-      ASN1T_CoordUTM *position;
+      ASN1T_CoordLatLong *position;
    } u;
 } ASN1T_MsgStartUnitFire_target;
 

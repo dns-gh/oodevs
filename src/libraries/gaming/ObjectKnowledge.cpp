@@ -69,8 +69,9 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
     if( message.m.relevancePresent )
         nRelevance_ = message.relevance;
 
-    if( message.m.locationPresent && message.location.coordinates.n )
-        position_ = std::string( (const char*)( message.location.coordinates.elem[0].data ), 15 );
+    // $$$$ AGE 2008-04-03: 
+//    if( message.m.locationPresent && message.location.coordinates.n )
+//        position_ = std::string( (const char*)( message.location.coordinates.elem[0].data ), 15 );
 
     if( message.m.construction_percentagePresent )
         nConstructionPercentage_ = message.construction_percentage;

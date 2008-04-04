@@ -36,8 +36,6 @@ public:
     //! @name Operations
     //@{
     void Send( ASN1T_PlannedWork& asn ) const;
-
-    static void AsnDelete( ASN1T_PlannedWork& asn );
     //@}
 
 private:

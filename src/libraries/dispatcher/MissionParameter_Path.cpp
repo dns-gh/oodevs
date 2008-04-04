@@ -55,6 +55,5 @@ void MissionParameter_Path::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_Path::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    Localisation::AsnDelete( *asn.value.u.path );
     delete asn.value.u.path;
 }

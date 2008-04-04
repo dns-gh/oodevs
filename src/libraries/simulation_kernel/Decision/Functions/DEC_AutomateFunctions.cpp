@@ -225,7 +225,7 @@ void DEC_AutomateFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_Automa
     NET_ASN_MsgDebugPoints asn;
     asn().oid = callerAutomate.GetID();
     asn().coordinates.n = 1;
-    ASN1T_CoordUTM coord;
+    ASN1T_CoordLatLong coord;
     NET_ASN_Tools::WritePoint( *pPoint, coord );
     asn().coordinates.elem = &coord;
     asn.Send();
@@ -729,4 +729,5 @@ void DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau( DIA_Cal
     
     DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( call, pPion->GetPion() );
 }
+
 

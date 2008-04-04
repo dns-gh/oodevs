@@ -11,47 +11,6 @@
 
 #include "MIL_AgentServer.h"
 
-#include "simulation_terrain/TER_World.h"
-               
-//-----------------------------------------------------------------------------
-// Name: MIL_Tools::ConvertCoordMosToSim
-// Created: NLD 2002-08-06
-//-----------------------------------------------------------------------------
-inline
-void MIL_Tools::ConvertCoordMosToSim( const std::string& strMosPos, MT_Vector2D& vSimPos )
-{
-    assert( strMosPos.size() == 15 );
-
-    TER_World::GetWorld().MosToSimMgrsCoord( strMosPos, vSimPos );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_Tools::ConvertCoordMosToSim
-// Created: NLD 2003-03-31
-//-----------------------------------------------------------------------------
-inline
-void MIL_Tools::ConvertCoordMosToSim( const ASN1T_CoordUTM& asnCoordUTM, MT_Vector2D& vSimPos )
-{
-    assert( asnCoordUTM.numocts == 15 );
-
-    std::string strMgrs( (const char*)asnCoordUTM.data, 15 );
-    TER_World::GetWorld().MosToSimMgrsCoord( strMgrs, vSimPos );   
-}
-
-//-----------------------------------------------------------------------------
-// Name: std::string
-// Created: NLD 2002-08-06
-// Last modified: JVT 02-08-08
-//-----------------------------------------------------------------------------
-inline
-std::string MIL_Tools::ConvertCoordSimToMos( const MT_Vector2D& vSimPos )
-{
-    std::string strMosPos;
-    TER_World::GetWorld().SimToMosMgrsCoord( vSimPos, strMosPos );
-    return strMosPos;
-}
-
-
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertSpeedMosToSim

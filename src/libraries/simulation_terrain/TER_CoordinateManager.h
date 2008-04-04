@@ -21,6 +21,7 @@
 
 #include "geocoord/PlanarCartesian.h"
 #include "geocoord/MGRS.h"
+#include "geocoord/Geodetic.h"
 #include "MT_Tools/MT_Rect.h"
 
 // =============================================================================
@@ -43,6 +44,8 @@ public:
     //@{
     void MosToSimMgrsCoord( const std::string& strMgrs, MT_Vector2D& pos ) const;
     void SimToMosMgrsCoord( const MT_Vector2D& pos, std::string& strMgrs ) const;
+    void MosToSimMgrsCoord( double latitude, double longitude, MT_Vector2D& pos ) const;
+    void SimToMosMgrsCoord( const MT_Vector2D& pos, double& latitude, double& longitude ) const;
 
     MT_Float GetWeldValue() const;
     MT_Float GetWidth    () const;
@@ -65,6 +68,7 @@ private:
     const   geocoord::PlanarCartesian::Parameters parameters_;
     mutable geocoord::PlanarCartesian             planar_;
     mutable geocoord::MGRS                        mgrs_;
+    mutable geocoord::Geodetic                    geodetic_;
     
     const MT_Rect     extent_;
     const MT_Vector2D translation_;

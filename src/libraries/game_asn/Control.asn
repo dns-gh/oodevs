@@ -158,8 +158,8 @@ MsgControlGlobalMeteo ::= SEQUENCE
 
 MsgControlLocalMeteo ::= SEQUENCE
 {
-    top-left-coordinate      CoordUTM,
-    bottom-right-coordinate  CoordUTM,
+    top-left-coordinate      CoordLatLong,
+    bottom-right-coordinate  CoordLatLong,
     meteo CHOICE
     {
         attributes MeteoAttributes,

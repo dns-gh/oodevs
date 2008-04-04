@@ -65,10 +65,6 @@ void MissionParameter_GenObjectList::Send( ASN1T_MissionParameter& asn ) const
 void MissionParameter_GenObjectList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
     if( asn.value.u.plannedWorkList->n > 0 )
-    {
-        for( unsigned i = 0; i != asn.value.u.plannedWorkList->n; ++i )
-            GenObject::AsnDelete( asn.value.u.plannedWorkList->elem[i] );
         delete [] asn.value.u.plannedWorkList->elem;
-    }
     delete asn.value.u.plannedWorkList;
 }

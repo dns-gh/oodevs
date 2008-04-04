@@ -208,7 +208,7 @@ MsgDecisionalState ::= SEQUENCE
 MsgDebugPoints ::= SEQUENCE
 {
     oid         OID, -- Automat, pion ou population
-    coordinates CoordUTMList
+    coordinates CoordLatLongList
 }
 
 END -- Order

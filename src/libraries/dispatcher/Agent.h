@@ -11,7 +11,6 @@
 #define __Agent_h_
 
 #include "game_asn/Simulation.h"
-#include "Position.h"
 #include "ModelRefsContainer.h"
 #include "ModelsContainer.h"
 #include "Entity_ABC.h"
@@ -97,7 +96,7 @@ public:
           Automat*       pAutomat_;
     const bool           bPC_;
 
-    Position                      position_;
+    ASN1T_CoordLatLong            position_;
     unsigned int                  nDirection_;
     unsigned int                  nHeight_;
     unsigned int                  nSpeed_;

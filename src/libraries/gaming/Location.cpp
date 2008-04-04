@@ -222,9 +222,9 @@ void Location::CommitTo( ASN1T_Location& asn ) const
     asn.coordinates.n = valid_ ? points_.size() : 0;
     if( !asn.coordinates.n )
         return;
-    asn.coordinates.elem = new ASN1T_CoordUTM[asn.coordinates.n];
+    asn.coordinates.elem = new ASN1T_CoordLatLong[asn.coordinates.n];
     for( unsigned int i = 0; i < asn.coordinates.n; ++i )
-        asn.coordinates.elem[i] = converter_.ConvertToMgrs( points_[i] ).c_str();
+        converter_.ConvertToGeo( points_[i], asn.coordinates.elem[i] );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,6 +16,8 @@
 #include "dispatcher/ClientPublisher_ABC.h"
 #include "xeumeuleu/xml.h"
 #include "game_asn/Simulation.h"
+#include <geocoord/geodetic.h>
+#include <geocoord/mgrs.h>
 
 using namespace mockpp;
 
@@ -119,7 +121,11 @@ namespace
     {
         static ASN1T_MsgUnitAttributes attributes;
         attributes.m.positionPresent = 1;
-        attributes.position = position;
+        geocoord::MGRS mgrs( position );
+        geocoord::Geodetic geodetic( mgrs );
+
+        attributes.position.latitude = geodetic.GetLatitude() * 180 / std::acos( -1. );
+        attributes.position.longitude = geodetic.GetLongitude() * 180 / std::acos( -1. );
         attributes.oid = id;
         ASN1T_MsgsSimToClient result;
         result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;

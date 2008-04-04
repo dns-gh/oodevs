@@ -55,6 +55,5 @@ void MissionParameter_Objective::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_Objective::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    Objective::AsnDelete( *asn.value.u.missionObjective );
     delete asn.value.u.missionObjective;
 }

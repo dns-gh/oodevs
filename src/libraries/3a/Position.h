@@ -30,7 +30,8 @@ public:
     //! @name Constructors/Destructor
     //@{     
              Position();
-    explicit Position( const ASN1T_CoordUTM& coord );
+    explicit Position( const std::string& coord );
+    explicit Position( const ASN1T_CoordLatLong& coord );
             ~Position();
     //@}
 
@@ -77,23 +78,10 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string mgrs_;
+    ASN1T_CoordLatLong coord_;
     mutable bool init_;
     mutable geometry::Point2f point_;
     //@}
 };
-
-inline
-std::ostream& operator<<( std::ostream& os, const Position& position )
-{
-    return os << position.mgrs_;
-}
-    
-inline
-std::istream& operator>>( std::istream& is, Position& position )
-{
-    position.init_ = false;
-    return is >> position.mgrs_;
-}
 
 #endif // __Position_h_

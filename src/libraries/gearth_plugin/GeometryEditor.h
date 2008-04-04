@@ -38,7 +38,7 @@ public:
 //    void Create     ( ILinePtr& spLine );
 //    void Create     ( IPolylinePtr& spPolyline );
 //    void Validate   ( IFeaturePtr spFeature, IPointPtr& spPoint );
-//    bool UpdateCoord( IPointPtr spPoint, const ASN1T_CoordUTM& asnUTM );
+//    bool UpdateCoord( IPointPtr spPoint, const ASN1T_CoordLatLong& asnUTM );
     //@}
 
 private:

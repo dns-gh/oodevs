@@ -56,7 +56,7 @@ MsgStartUnitFire ::= SEQUENCE
     {
         unit       Unit,
         population Population,
-        position   CoordUTM
+        position   CoordLatLong
     },
     type        ENUMERATED
     {

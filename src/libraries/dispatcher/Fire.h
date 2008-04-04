@@ -11,7 +11,6 @@
 #define __Fire_h_
 
 #include "game_asn/Simulation.h"
-#include "Position.h"
 #include "Entity_ABC.h"
 
 namespace dispatcher
@@ -58,7 +57,7 @@ private:
     ASN1T_DotationType          munition;
     int                         typeCible_;
     ASN1T_OID                   oid_cible_;
-    Position                    positionCible_;
+    ASN1T_CoordLatLong          positionCible_;
     //@}
 };
 

@@ -54,7 +54,6 @@ void FireEffect::SendCreation( ClientPublisher_ABC& publisher ) const
     localisation_.Send( asn().location );
     asn().type = type_;
     asn.Send( publisher );
-    localisation_.AsnDelete( asn().location );
 }
 
 // -----------------------------------------------------------------------------

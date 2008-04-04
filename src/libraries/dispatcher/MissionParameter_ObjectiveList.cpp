@@ -65,10 +65,6 @@ void MissionParameter_ObjectiveList::Send( ASN1T_MissionParameter& asn ) const
 void MissionParameter_ObjectiveList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
     if( asn.value.u.missionObjectiveList->n > 0 )
-    {
-        for( unsigned i = 0; i != asn.value.u.missionObjectiveList->n; ++i )
-            Objective::AsnDelete( asn.value.u.missionObjectiveList->elem[i] );
         delete [] asn.value.u.missionObjectiveList->elem;
-    }
     delete asn.value.u.missionObjectiveList;
 }

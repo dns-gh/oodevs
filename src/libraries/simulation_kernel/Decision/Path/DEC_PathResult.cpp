@@ -235,7 +235,7 @@ void DEC_PathResult::Serialize( ASN1T_Path& asn ) const
 {
     assert( !resultList_.empty() );
 
-    ASN1T_CoordUTM* pASNCoordUTMSeq = new ASN1T_CoordUTM[ resultList_.size() ]; //$$ RAM
+    ASN1T_CoordLatLong* pASNCoordUTMSeq = new ASN1T_CoordLatLong[ resultList_.size() ]; //$$ RAM
 
     asn.type             = EnumLocationType::line;
     asn.coordinates.n    = resultList_.size();
@@ -276,4 +276,5 @@ void DEC_PathResult::NotifySectionEnded()
 {
     bSectionJustEnded_ = true;
 }
+
 
