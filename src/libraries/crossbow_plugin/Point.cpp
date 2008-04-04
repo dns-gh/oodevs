@@ -26,10 +26,10 @@ crossbow::Point::Point()
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
 crossbow::Point::Point( const ASN1T_CoordLatLong& coord )
-    : x_( 0 )
-    , y_( 0 )
+    : x_( coord.longitude )
+    , y_( coord.latitude )
 {
-    SetFromUTM( std::string( (const char*)coord.data, 15 ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

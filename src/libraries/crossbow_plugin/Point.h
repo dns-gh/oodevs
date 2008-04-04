@@ -43,12 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void SetFromUTM( const std::string& utm );
-    //@}
-
-private:
     //! @name Member data
     //@{
     double x_;
