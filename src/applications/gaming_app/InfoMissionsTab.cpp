@@ -86,14 +86,11 @@ void InfoMissionsTab::NotifySelected( const kernel::Entity_ABC* entity )
     if( selected_ != entity )
     {
         selected_ = entity;
-        if( !selected_ )
-        {
-            parent_->setTabEnabled( this, false );
-            return;
-        }
-        const MissionParameters* extension = selected_->Retrieve< MissionParameters >();
+        const MissionParameters* extension = selected_ ? selected_->Retrieve< MissionParameters >() : 0;
         if( extension )
             NotifyUpdated( *extension );
+        else
+            clear();
         parent_->setTabEnabled( this, extension );
     }
 }

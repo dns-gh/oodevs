@@ -134,10 +134,11 @@ void FireResultListView::NotifySelected( const kernel::Entity_ABC* element )
     if( element != selected_ )
     {
         selected_ = element;
-        if( !selected_ )
-            clear();
-        else if( const Explosions* results = selected_->Retrieve< Explosions >() )
+        const Explosions* results = selected_ ? selected_->Retrieve< Explosions >() : 0;
+        if( results )
             NotifyUpdated( *results );
+        else
+            clear();
     }
 }
 
