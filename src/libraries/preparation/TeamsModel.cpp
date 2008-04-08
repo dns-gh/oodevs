@@ -167,11 +167,8 @@ Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
 // Name: TeamsModel::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void TeamsModel::Load( const std::string& filename, Model& model )
+void TeamsModel::Load( xml::xistream& xis, Model& model )
 {
-    Purge();
-
-    xifstream xis( filename );
     xis >> start( "orbat" )
             >> start( "sides" )
                 >> list( "side", *this, &TeamsModel::ReadTeam, model )

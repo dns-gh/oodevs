@@ -43,6 +43,7 @@ class ProfilesModel;
 class ProfileFactory_ABC;
 class IntelligencesModel;
 class ModelChecker_ABC;
+class OrbatImportFilter;
 
 // =============================================================================
 /** @class  Model
@@ -63,6 +64,7 @@ public:
     //! @name Operations
     //@
     void Load( const tools::ExerciseConfig& config );
+    void Import( const std::string& orbat, const OrbatImportFilter& filter );
     bool Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker );
     void Purge();
     QString GetName() const;

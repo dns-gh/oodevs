@@ -55,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& filename, Model& model );
+    void Load( xml::xistream& xis, Model& model );
     void Purge();
     void CreateTeam();
     void CreateKnowledgeGroup( const kernel::Team_ABC& team );

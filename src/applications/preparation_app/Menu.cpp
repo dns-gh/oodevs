@@ -56,13 +56,15 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, gui::ItemFactory_ABC& factory, const FlexLmLicense* license )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, gui::ItemFactory_ABC& factory, const FlexLmLicense* license )
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
     menu->insertItem( MAKE_ICON( new ) , tr( "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
     menu->insertItem( MAKE_ICON( open ), tr( "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
     menu->insertItem( tr( "Close" ), parent(), SLOT( Close() ) );
+    menu->insertSeparator();
+    menu->insertItem( tr( "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I );
     menu->insertSeparator();
     menu->insertItem( MAKE_ICON( save )  , tr( "&Save" )      , parent(), SLOT( Save() ), CTRL + Key_S );
     menu->insertSeparator();

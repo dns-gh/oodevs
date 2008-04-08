@@ -33,6 +33,7 @@
 #include "ProfileWizardDialog.h"
 #include "TemplatesPanel.h"
 #include "IntelligencesLayer.h"
+#include "ImportOrbatDialog.h"
 
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
@@ -202,6 +203,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     TemplatesPanel* templates = new TemplatesPanel( pCreationDockWnd, *pCreationPanel, controllers, model.agents_, model.formations_, staticModel.types_ );
     pCreationPanel->AddPanel( templates );
 
+    QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
     new FileToolbar( this );
     new DisplayToolbar( this, controllers );
 
@@ -209,7 +211,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
 
-    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *factory, license );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *factory, license );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );

@@ -23,6 +23,7 @@
 #include "ProfilesModel.h"
 #include "ProfileFactory.h"
 #include "IntelligencesModel.h"
+#include "OrbatReIndexer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "tools/ExerciseConfig.h"
@@ -108,9 +109,23 @@ void Model::Purge()
 void Model::Load( const tools::ExerciseConfig& config )
 {
     UpdateName( config.GetOrbatFile() );
-    teams_.Load( config.GetOrbatFile(), *this );
+    xml::xifstream xis( config.GetOrbatFile() );
+    teams_.Load( xis, *this );
     weather_.Load( config.GetWeatherFile() );
     profiles_.Load( config.GetProfilesFile() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::Import
+// Created: SBO 2008-04-07
+// -----------------------------------------------------------------------------
+void Model::Import( const std::string& orbat, const OrbatImportFilter& filter )
+{
+    xml::xifstream xis( orbat );
+    xml::xostringstream xos;
+    OrbatReIndexer reindexer( xis, xos, idManager_, filter );
+    xml::xistringstream newXis( xos.str() );
+    teams_.Load( newXis, *this );
 }
 
 // -----------------------------------------------------------------------------
