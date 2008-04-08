@@ -9,27 +9,39 @@
 
 #include "preparation_app_pch.h"
 #include "PropertiesPanel.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_gui/PropertiesWidget.h"
 #include "PropertiesTableDisplayer.h"
+#include "EditorFactory.h"
+#include "preparation/StaticModel.h"
 
-using namespace kernel;
-using namespace gui;
+// -----------------------------------------------------------------------------
+// Name: PropertiesPanelBase::PropertiesPanelBase
+// Created: SBO 2008-04-08
+// -----------------------------------------------------------------------------
+PropertiesPanelBase::PropertiesPanelBase( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
+    : editorFactory_( new EditorFactory( controllers, model, staticModel ) )
+    , tableItemDisplayer_( new PropertiesTableDisplayer( staticModel.coordinateConverter_ ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesPanelBase::~PropertiesPanelBase
+// Created: SBO 2008-04-08
+// -----------------------------------------------------------------------------
+PropertiesPanelBase::~PropertiesPanelBase()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesPanel constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-PropertiesPanel::PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, kernel::EditorFactory_ABC& editorFactory )
-    : InfoPanel_ABC( parent, panel, tr( "Properties" ) )
-    , controllers_( controllers )
-    , selected_( controllers )
-    , tableItemDisplayer_( *new PropertiesTableDisplayer( converter ) )
+PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
+    : PropertiesPanelBase( controllers, model, staticModel )
+    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *tableItemDisplayer_ )
 {
-    properties_ = new PropertiesWidget( controllers_.controller_, this, "Properties", editorFactory, tableItemDisplayer_ );
-    controllers_.Register( *this );
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -38,48 +50,5 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, k
 // -----------------------------------------------------------------------------
 PropertiesPanel::~PropertiesPanel()
 {
-    controllers_.Unregister( *this );
-    delete &tableItemDisplayer_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PropertiesPanel::showEvent
-// Created: SBO 2006-10-27
-// -----------------------------------------------------------------------------
-void PropertiesPanel::showEvent( QShowEvent* )
-{
-    const Entity_ABC* selected = selected_;
-    selected_ = 0;
-    NotifySelected( selected );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PropertiesPanel::NotifySelected
-// Created: SBO 2006-10-27
-// -----------------------------------------------------------------------------
-void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
-{
-    if( !element || selected_ != element )
-    {
-        properties_->Clear();
-        selected_ = element;
-        if( selected_ )
-            if( PropertiesDictionary* dico = const_cast< kernel::Entity_ABC* >( element )->Retrieve< PropertiesDictionary >() )
-            {
-                Show();
-                dico->Display( *properties_ );
-                return;
-            }
-        Hide();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertiesPanel::NotifyDeleted
-// Created: SBO 2006-10-27
-// -----------------------------------------------------------------------------
-void PropertiesPanel::NotifyDeleted( const kernel::Entity_ABC& element )
-{
-    if( selected_ = &element )
-        NotifySelected( 0 );
+    // NOTHING
 }

@@ -11,7 +11,7 @@
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
 
-#include "InfoPanels.h"
+#include "PropertiesPanel.h"
 #include "CreationPanels.h"
 #include "Menu.h"
 #include "ObjectCreationPanel.h"
@@ -177,15 +177,17 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pCreationDockWnd->setCaption( tr( "Creation" ) );
     setDockEnabled( pCreationDockWnd, Qt::DockTop, false );
 
-    // Info panel
-    QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
-    moveDockWindow( pInfoDockWnd_, Qt::DockRight );
-    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, model_, staticModel_, *factory );
-    pInfoDockWnd_->setWidget( pInfoPanel_ );
-    pInfoDockWnd_->setResizeEnabled( true );
-    pInfoDockWnd_->setCloseMode( QDockWindow::Always );
-    pInfoDockWnd_->setCaption( tr( "Information" ) );
-    setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
+    // Properties panel
+    {
+        QDockWindow* pPropertiesDockWnd = new QDockWindow( this );
+        moveDockWindow( pPropertiesDockWnd, Qt::DockRight );
+        ::PropertiesPanel* propertiesPanel = new ::PropertiesPanel( pPropertiesDockWnd, controllers, model_, staticModel_ );
+        pPropertiesDockWnd->setWidget( propertiesPanel );
+        pPropertiesDockWnd->setResizeEnabled( true );
+        pPropertiesDockWnd->setCloseMode( QDockWindow::Always );
+        pPropertiesDockWnd->setCaption( tr( "Properties" ) );
+        setDockEnabled( pPropertiesDockWnd, Qt::DockTop, false );
+    }
 
     // A few layers
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );

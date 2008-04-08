@@ -10,24 +10,51 @@
 #ifndef __PropertiesPanel_h_
 #define __PropertiesPanel_h_
 
-#include "clients_gui/InfoPanel_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
-#include "clients_kernel/SafePointer.h"
+#include "clients_gui/PropertiesPanel.h"
 
 namespace kernel
 {
-    class Entity_ABC;
     class Controllers;
     class EditorFactory_ABC;
-    class CoordinateConverter_ABC;
 }
 
 namespace gui
 {
-    class PropertiesWidget;
     class TableItemDisplayer;
 }
+
+class Model;
+class StaticModel;
+
+// =============================================================================
+/** @class  PropertiesPanelBase
+    @brief  Properties panel base member class
+*/
+// Created: SBO 2008-04-08
+// =============================================================================
+class PropertiesPanelBase
+{
+public:
+    //! @name Constructors/Destructors
+    //@{
+             PropertiesPanelBase( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
+    virtual ~PropertiesPanelBase();
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    PropertiesPanelBase( const PropertiesPanelBase& );            //!< Copy constructor
+    PropertiesPanelBase& operator=( const PropertiesPanelBase& ); //!< Assignement operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    std::auto_ptr< kernel::EditorFactory_ABC > editorFactory_;
+    std::auto_ptr< gui::TableItemDisplayer > tableItemDisplayer_;
+    //@}
+};
 
 // =============================================================================
 /** @class  PropertiesPanel
@@ -35,16 +62,14 @@ namespace gui
 */
 // Created: SBO 2006-10-27
 // =============================================================================
-class PropertiesPanel : public gui::InfoPanel_ABC
-                      , public kernel::Observer_ABC
-                      , public kernel::SelectionObserver< kernel::Entity_ABC >
-                      , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+class PropertiesPanel : private PropertiesPanelBase
+                      , public gui::PropertiesPanel
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, kernel::EditorFactory_ABC& editorFactory );
+             PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
     virtual ~PropertiesPanel();
     //@}
 
@@ -53,22 +78,6 @@ private:
     //@{
     PropertiesPanel( const PropertiesPanel& );            //!< Copy constructor
     PropertiesPanel& operator=( const PropertiesPanel& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void showEvent( QShowEvent* );
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
-    virtual void NotifyDeleted( const kernel::Entity_ABC& element );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    gui::PropertiesWidget* properties_;
-    kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
-    gui::TableItemDisplayer& tableItemDisplayer_;
     //@}
 };
 

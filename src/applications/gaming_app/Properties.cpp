@@ -9,81 +9,45 @@
 
 #include "gaming_app_pch.h"
 #include "Properties.h"
-#include "clients_gui/PropertiesWidget.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_gui/EditorFactory.h"
 #include "clients_gui/TableItemDisplayer.h"
-#include "gaming/Tools.h"
 
-using namespace kernel;
+// -----------------------------------------------------------------------------
+// Name: PropertiesBase::PropertiesBase
+// Created: SBO 2008-04-08
+// -----------------------------------------------------------------------------
+PropertiesBase::PropertiesBase()
+    : editorFactory_( new gui::EditorFactory() )
+    , tableItemDisplayer_( new gui::TableItemDisplayer() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesBase::~PropertiesPanelBase
+// Created: SBO 2008-04-08
+// -----------------------------------------------------------------------------
+PropertiesBase::~PropertiesBase()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: Properties constructor
-// Created: SBO 2006-10-19
+// Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-Properties::Properties( QWidget* parent, Controllers& controllers )
-    : QScrollView( parent )
-    , pBox_( new QVBox( viewport() ) )
-    , controllers_( controllers )
-    , factory_( *new gui::EditorFactory() )
-    , tableItemDisplayer_( *new gui::TableItemDisplayer() )
-    , selected_( controllers )
+Properties::Properties( QWidget* parent, kernel::Controllers& controllers )
+    : PropertiesBase()
+    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *tableItemDisplayer_ )
 {
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-    setResizePolicy( AutoOneFit );
-    setFrameStyle( QFrame::Box | QFrame::Sunken );
-
-    addChild( pBox_ );
-    pBox_->setMargin( 5 );
-    pBox_->setSpacing( 5 );
-
-    table_ = new gui::PropertiesWidget( controllers_.controller_, pBox_, tr( "Properties" ), factory_, tableItemDisplayer_ );
-
-    controllers_.Register( *this );
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
 // Name: Properties destructor
-// Created: SBO 2006-10-19
+// Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
 Properties::~Properties()
 {
-    controllers_.Unregister( *this );
-    delete &factory_;
-    delete &tableItemDisplayer_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Properties::showEvent
-// Created: AGE 2006-11-17
-// -----------------------------------------------------------------------------
-void Properties::showEvent( QShowEvent* )
-{
-    const Entity_ABC* element = selected_;
-    selected_ = 0;
-    NotifySelected( element );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Properties::NotifySelected
-// Created: SBO 2006-10-19
-// -----------------------------------------------------------------------------
-void Properties::NotifySelected( const Entity_ABC* element )
-{
-    if( isVisible() && selected_ != element )
-    {
-        selected_ = element;
-        if( selected_ )
-        {
-            PropertiesDictionary* dico = const_cast< Entity_ABC* >( element )->Retrieve< PropertiesDictionary >();
-            if( dico )
-            {
-                table_->Clear(); // $$$$ AGE 2006-10-26: 
-                dico->Display( *table_ );
-            }
-        }
-    }
+    // NOTHING
 }

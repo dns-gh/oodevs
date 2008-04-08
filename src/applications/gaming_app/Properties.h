@@ -10,21 +10,48 @@
 #ifndef __Properties_h_
 #define __Properties_h_
 
-#include "clients_kernel/SelectionObserver_ABC.h"
-#include "clients_kernel/SafePointer.h"
+#include "clients_gui/PropertiesPanel.h"
 
 namespace kernel
 {
     class Controllers;
-    class Entity_ABC;
     class EditorFactory_ABC;
 }
 
 namespace gui
 {
-    class PropertiesWidget;
     class TableItemDisplayer;
 }
+
+// =============================================================================
+/** @class  PropertiesBase
+    @brief  Properties panel base member class
+*/
+// Created: SBO 2008-04-08
+// =============================================================================
+class PropertiesBase
+{
+public:
+    //! @name Constructors/Destructors
+    //@{
+             PropertiesBase();
+    virtual ~PropertiesBase();
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    PropertiesBase( const PropertiesBase& );            //!< Copy constructor
+    PropertiesBase& operator=( const PropertiesBase& ); //!< Assignement operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    std::auto_ptr< kernel::EditorFactory_ABC > editorFactory_;
+    std::auto_ptr< gui::TableItemDisplayer > tableItemDisplayer_;
+    //@}
+};
 
 // =============================================================================
 /** @class  Properties
@@ -32,9 +59,8 @@ namespace gui
 */
 // Created: SBO 2006-10-19
 // =============================================================================
-class Properties : public QScrollView
-                 , public kernel::Observer_ABC
-                 , public kernel::SelectionObserver< kernel::Entity_ABC >
+class Properties : private PropertiesBase
+                 , public gui::PropertiesPanel
 {
 
 public:
@@ -49,23 +75,6 @@ private:
     //@{
     Properties( const Properties& );            //!< Copy constructor
     Properties& operator=( const Properties& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void showEvent( QShowEvent* );
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    QVBox* pBox_;
-    kernel::Controllers& controllers_;
-    gui::PropertiesWidget* table_;
-    kernel::EditorFactory_ABC& factory_;
-    gui::TableItemDisplayer& tableItemDisplayer_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 
