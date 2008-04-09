@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "hla_plugin_test_pch.h"
+#include "plugins_test_pch.h"
 #include "hla_plugin/Coordinates.h"
 
 namespace

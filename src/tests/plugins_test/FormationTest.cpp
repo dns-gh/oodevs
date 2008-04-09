@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "hla_plugin_test_pch.h"
+#include "plugins_test_pch.h"
 #include "tic_plugin/RoadFormation.h"
 #include "tic_plugin/Movable_ABC.h"
 
@@ -30,6 +30,7 @@ namespace
         {
             Move_mocker.forward( to );
         }
+        virtual void Stop() {};
         mockpp::ChainableMockMethod< void, Point2f > Move_mocker;
     };
 

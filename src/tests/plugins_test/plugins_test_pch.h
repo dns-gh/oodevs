@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __hla_plugin_test_pch_h_
-#define __hla_plugin_test_pch_h_
+#ifndef __plugins_test_pch_h_
+#define __plugins_test_pch_h_
 
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
@@ -24,4 +24,4 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
-#endif // __hla_plugin_test_pch_h_
+#endif // __plugins_test_pch_h_
