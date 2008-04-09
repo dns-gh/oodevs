@@ -369,7 +369,7 @@
     </target>
     
     <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin">
-        <build-test name="plugins_test" depends="terrain,boost" 
+        <build-test name="plugins" depends="terrain,boost" 
             libs="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}
                   lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}"/>
     </target>
