@@ -185,8 +185,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_automat_creation :                    CreateUpdate( automats_       , asnMsg.msg.u.msg_automat_creation->oid, *asnMsg.msg.u.msg_automat_creation ); break;
         case T_MsgsSimToClient_msg_msg_unit_attributes:                      agents_.Get( asnMsg.msg.u.msg_unit_attributes->oid).Update( *asnMsg.msg.u.msg_unit_attributes ); break;
         case T_MsgsSimToClient_msg_msg_automat_attributes:                   automats_.Get( asnMsg.msg.u.msg_automat_attributes->oid).Update( *asnMsg.msg.u.msg_automat_attributes  ); break;
-        case T_MsgsSimToClient_msg_msg_unit_pathfind:
-            break; // $$$$ AGE 2007-04-18:
+        case T_MsgsSimToClient_msg_msg_unit_pathfind:                        agents_.Get( asnMsg.msg.u.msg_unit_pathfind->oid).Update( *asnMsg.msg.u.msg_unit_pathfind ); break;
         case T_MsgsSimToClient_msg_msg_start_unit_fire:                      CreateUpdate( fires_, asnMsg.msg.u.msg_start_unit_fire->fire_oid, *asnMsg.msg.u.msg_start_unit_fire ); break;
         case T_MsgsSimToClient_msg_msg_stop_unit_fire:                       fires_.Destroy( asnMsg.msg.u.msg_stop_unit_fire->fire_oid ); break;
         case T_MsgsSimToClient_msg_msg_start_population_fire:                CreateUpdate( populationFires_, asnMsg.msg.u.msg_start_population_fire->fire_oid, *asnMsg.msg.u.msg_start_population_fire ); break;

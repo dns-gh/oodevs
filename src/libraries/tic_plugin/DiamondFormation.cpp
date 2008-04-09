@@ -87,6 +87,8 @@ void DiamondFormation::Apply( Movable_ABC& movable )
         movable.Move( points_.back() );
         points_.pop_back();
     }
+    else 
+        movable.Stop();
 }
 
 
