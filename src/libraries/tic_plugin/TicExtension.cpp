@@ -12,6 +12,7 @@
 #include "Platform.h"
 #include "RoadFormation.h"
 #include "DiamondFormation.h"
+#include "PlatformVisitor_ABC.h"
 #include "dispatcher/Agent.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/ComponentType.h"
@@ -146,5 +147,5 @@ void TicExtension::UpdateFormation()
 // -----------------------------------------------------------------------------
 void TicExtension::Accept( PlatformVisitor_ABC& visitor ) const
 {
-    std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &Platform::Accept, _1, boost::ref( visitor ) ) );
+    std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &PlatformVisitor_ABC::AddPlatform, &visitor, _1 ) );
 }

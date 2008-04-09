@@ -64,4 +64,22 @@ void EntityStatePDU::SetPosition( double latitude, double longitude, float altit
     entityLocation_       = WorldLocation( latitude, longitude, altitude );
     entityLinearVelocity_ = VelocityVector( entityLocation_, speed, heading );
     entityOrientation_    = Orientation( entityLocation_, entityLinearVelocity_ );
+    if( speed > 0 )
+        appearance_ |= 1 << 6; // engine smoke
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityStatePDU::SetAppearance
+// Created: AGE 2008-04-04
+// -----------------------------------------------------------------------------
+void EntityStatePDU::SetAppearance( unsigned damageLevel, bool smoking, bool flaming )
+{
+    if( damageLevel > 3 )
+        damageLevel = 3;
+    appearance_ |= ( damageLevel & 0x03 ) << 3;
+    if( smoking )
+        appearance_ |= 1 << 5;
+    if( flaming )
+        appearance_ |= 1 << 15;
+}
+

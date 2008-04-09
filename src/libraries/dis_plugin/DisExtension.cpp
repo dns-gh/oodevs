@@ -75,7 +75,13 @@ void DisExtension::AddPlatform( const tic::Platform_ABC& platform )
     EntityStatePDU pdu( time_.GetTime(), exercise_, it->second );
     pdu.SetEntityName( holder_.GetName() );
     pdu.SetEntityType( resolver_.Find( platform.GetType() ) );
-
+    switch( platform.GetState() )
+    {
+    default:
+    case tic::Platform_ABC::okay:       pdu.SetAppearance( 0, false, false ); break;
+    case tic::Platform_ABC::broken:     pdu.SetAppearance( 1, false, true ); break;
+    case tic::Platform_ABC::destroyed:  pdu.SetAppearance( 3, true, true ); break;
+    }
     const geometry::Point2d position( platform.GetPosition().X(), platform.GetPosition().Y() );
     const geometry::Point2d geocoord = converter_.ConvertToGeo( position );
     pdu.SetPosition( geocoord.Y(), geocoord.X(), platform.GetAltitude(), platform.GetSpeed(), platform.GetHeading() );

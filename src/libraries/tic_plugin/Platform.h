@@ -48,8 +48,7 @@ public:
     void Update( const ASN1T_MsgUnitAttributes& updateMessage );
     void Spread( ASN1T_EquipmentDotations& updateMessage );
     virtual void Move( const geometry::Point2f& to );
-
-    void Accept( PlatformVisitor_ABC& visitor ) const;
+    virtual void Stop();
     //@}
 
     //! @name Accessors
@@ -59,6 +58,7 @@ public:
     virtual float GetAltitude() const;
     virtual float GetSpeed() const;
     virtual float GetHeading() const;
+    virtual E_State GetState() const;
     //@}
 
 private:
@@ -66,16 +66,6 @@ private:
     //@{
     Platform( const Platform& );            //!< Copy constructor
     Platform& operator=( const Platform& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    enum E_State
-    {
-        okay,
-        broken,
-        destroyed
-    };
     //@}
 
     //! @name Helpers

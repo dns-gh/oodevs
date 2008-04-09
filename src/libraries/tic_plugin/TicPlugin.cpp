@@ -12,6 +12,7 @@
 #include "ExtensionFactory.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model.h"
+#include "dispatcher/Agent.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include <xeumeuleu/xml.h>
 
@@ -23,7 +24,7 @@ namespace
     {
         xml::xifstream xis( session );
         unsigned step;
-        xis >> xml::start( "session" ) >> xml::start( "config" ) 
+        xis >> xml::start( "session" ) >> xml::start( "config" )
                 >> xml::start( "simulation" ) >> xml::start( "time" )
                     >> xml::attribute( "step", step );
         return step;
@@ -55,7 +56,7 @@ TicPlugin::~TicPlugin()
 // Name: TicPlugin::Receive
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicPlugin::Receive( const ASN1T_MsgsSimToClient&  )
+void TicPlugin::Receive( const ASN1T_MsgsSimToClient& )
 {
     // NOTHING
 }

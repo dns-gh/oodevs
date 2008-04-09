@@ -9,7 +9,6 @@
 
 #include "tic_plugin_pch.h"
 #include "Platform.h"
-#include "PlatformVisitor_ABC.h"
 #include "clients_kernel/ComponentType.h"
 
 using namespace tic;
@@ -94,7 +93,10 @@ bool Platform::SetStatus( int& number, E_State state )
 void Platform::Move( const geometry::Point2f& to )
 {
     if( state_ == destroyed )
+    {
+        speed_ = 0;
         return;
+    }
 
     const float teleportThreshold = 3000.f;
     const float maxAcceleration = 1.f;
@@ -127,6 +129,15 @@ void Platform::Move( const geometry::Point2f& to )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Platform::Stop
+// Created: AGE 2008-04-09
+// -----------------------------------------------------------------------------
+void Platform::Stop()
+{
+    speed_ = 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Platform::ComputeHeading
 // Created: AGE 2008-04-02
 // -----------------------------------------------------------------------------
@@ -141,15 +152,6 @@ void Platform::ComputeHeading( const geometry::Point2f& from, const geometry::Po
            heading_ += 360;
     while( heading_ >= 360 )
            heading_ -= 360;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Platform::Accept
-// Created: AGE 2008-04-01
-// -----------------------------------------------------------------------------
-void Platform::Accept( PlatformVisitor_ABC& visitor ) const
-{
-    visitor.AddPlatform( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,4 +197,13 @@ float Platform::GetSpeed() const
 float Platform::GetHeading() const
 {
     return heading_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Platform::GetState
+// Created: AGE 2008-04-04
+// -----------------------------------------------------------------------------
+Platform::E_State Platform::GetState() const
+{
+    return state_;
 }

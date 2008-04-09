@@ -10,6 +10,7 @@
 #include "dis_plugin_pch.h"
 #include "DisHeader.h"
 #include "EntityStatePDU.h"
+#include "DetonationPDU.h"
 
 using namespace dis;
 
@@ -48,6 +49,20 @@ DisHeader DisHeader::EntityStatePDU( unsigned long time, unsigned char exercise 
     result.PDUType_ = 1;
     result.protocolFamily_ = 1;
     result.timeStamp_ = time;
-    result.length_ = sizeof( class EntityStatePDU );
+    result.length_ = EntityStatePDU::size;
     return result;
 };
+
+// -----------------------------------------------------------------------------
+// Name: DisHeader::DetonationPDU
+// Created: AGE 2008-04-08
+// -----------------------------------------------------------------------------
+DisHeader DisHeader::DetonationPDU( unsigned long time, unsigned char exercise )
+{
+    DisHeader result( exercise );
+    result.PDUType_ = 1;
+    result.protocolFamily_ = 3;
+    result.timeStamp_ = time;
+    result.length_ = DetonationPDU::size;
+    return result;
+}

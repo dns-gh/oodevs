@@ -28,6 +28,16 @@ namespace tic
 // =============================================================================
 class Platform_ABC
 {
+public:
+    //! @name Types
+    //@{
+    enum E_State
+    {
+        okay,
+        broken,
+        destroyed
+    };
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -43,6 +53,7 @@ public:
     virtual float GetAltitude() const = 0;
     virtual float GetSpeed() const = 0;
     virtual float GetHeading() const = 0;
+    virtual E_State GetState() const = 0;
     //@}
 };
 

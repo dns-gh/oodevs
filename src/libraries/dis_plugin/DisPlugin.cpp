@@ -11,6 +11,7 @@
 #include "DisPlugin.h"
 #include "DisExtensionFactory.h"
 #include "DisTypeResolver.h"
+#include "FireManager.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model.h"
@@ -66,6 +67,7 @@ void DisPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 {
     if( message.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
         time_ += timeStep_;
+    fires_->Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,9 +96,10 @@ unsigned long DisPlugin::GetTime() const
 {
     // 31MSBs are for the 3600s in the hour
     // LSB is to flag absolute time
-    const float seconds = float( time_ % 3600 );
-    unsigned long timestamp = (unsigned long)( (seconds/3600.0) * 0x7fffffff );
-    timestamp <<= 1;
-    return timestamp;
+//    const float seconds = float( time_ % 3600 );
+//    unsigned long timestamp = (unsigned long)( (seconds/3600.0) * 0x7fffffff );
+//    timestamp <<= 1;
+//    return timestamp;
+    return time_ % 3600;
 }
 

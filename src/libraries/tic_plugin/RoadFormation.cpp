@@ -10,6 +10,7 @@
 #include "tic_plugin_pch.h"
 #include "RoadFormation.h"
 #include "Movable_ABC.h"
+#include <algorithm>
 
 using namespace tic;
 
@@ -40,7 +41,7 @@ void RoadFormation::Start( const geometry::Point2f& at, const geometry::Vector2f
 {
     const float distanceBetweenPlatforms = 20.f;
     Fill( at, count, distanceBetweenPlatforms );
-    Sort( result_, at, towards );
+    std::reverse( result_.begin(), result_.end() );
 }
 
 namespace

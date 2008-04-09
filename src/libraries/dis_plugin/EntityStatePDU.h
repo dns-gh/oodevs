@@ -46,6 +46,8 @@ public:
     void SetEntityName( const std::string& name );
     void SetEntityType( const EntityType& type );
     void SetPosition( double latitude, double longitude, float altitude, float speed, float heading );
+
+    void SetAppearance( unsigned damageLevel, bool smoking, bool flaming );
     //@}
 
     //! @name Operations

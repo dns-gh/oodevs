@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual void Move( const geometry::Point2f& to ) = 0;
+    virtual void Stop() = 0;
     //@}
 };
 

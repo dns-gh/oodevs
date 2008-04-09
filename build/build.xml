@@ -360,7 +360,7 @@
       tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,hla_plugin_test" description="run all tests"/>
+    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xeumeuleu,terrain,boost" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
@@ -368,8 +368,10 @@
         </build-test>
     </target>
     
-    <target name="hla_plugin_test" depends="library.hla_plugin">
-        <build-test name="hla_plugin" depends="terrain,boost" libs="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}"/>
+    <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin">
+        <build-test name="plugins_test" depends="terrain,boost" 
+            libs="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}
+                  lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}"/>
     </target>
 
     <target name="generate-license" description="generate license file in run directory">

@@ -32,6 +32,7 @@ public:
     //! @name Constructions
     //@{
     static DisHeader EntityStatePDU( unsigned long time, unsigned char exercise );
+    static DisHeader DetonationPDU( unsigned long time, unsigned char exercise );
     //@}
 
     //! @name Operations

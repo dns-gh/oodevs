@@ -34,6 +34,7 @@ namespace dis
     class UdpNetwork;
     class DisExtensionFactory;
     class DisTypeResolver;
+    class FireManager;
 
 // =============================================================================
 /** @class  DisPlugin
@@ -78,6 +79,7 @@ private:
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     std::auto_ptr< DisTypeResolver > resolver_;
     std::auto_ptr< DisExtensionFactory > factory_;
+    std::auto_ptr< FireManager > fires_;
     unsigned long timeStep_;
     unsigned long time_;
     //@}
