@@ -427,67 +427,67 @@
     </message>
     <message>
         <source>Setup state:</source>
-        <translation type="unfinished"></translation>
+        <translation>Installation:</translation>
     </message>
     <message>
         <source>Communications</source>
-        <translation type="unfinished"></translation>
+        <translation>Communications</translation>
     </message>
     <message>
         <source>Jammed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Brouillé:</translation>
     </message>
     <message>
         <source>Radio silence:</source>
-        <translation type="unfinished"></translation>
+        <translation>Silence radio:</translation>
     </message>
     <message>
         <source>Decisional state</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat décisionnel</translation>
     </message>
     <message>
         <source>Rules of engagement:</source>
-        <translation type="unfinished"></translation>
+        <translation>Règles d&apos;engagement:</translation>
     </message>
     <message>
         <source>Population RoE:</source>
-        <translation type="unfinished"></translation>
+        <translation>RoE population:</translation>
     </message>
     <message>
         <source>Force ratio:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rapport de force:</translation>
     </message>
     <message>
         <source>Indirect fire availability:</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité de tir indirect:</translation>
     </message>
     <message>
         <source>Intention:</source>
-        <translation type="unfinished"></translation>
+        <translation>Intention:</translation>
     </message>
     <message>
         <source>Military state</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat martial</translation>
     </message>
     <message>
         <source>Prisoner:</source>
-        <translation type="unfinished">Prisionnier:</translation>
+        <translation>Prisonnier:</translation>
     </message>
     <message>
         <source>Surrender:</source>
-        <translation type="unfinished">Rendu:</translation>
+        <translation>Rendu:</translation>
     </message>
     <message>
         <source>Refugees picked up:</source>
-        <translation type="unfinished">Réfugiés pris en compte:</translation>
+        <translation>Réfugiés pris en compte:</translation>
     </message>
     <message>
         <source>Info/Heading</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Direction</translation>
     </message>
     <message>
         <source>Heading:</source>
-        <translation type="unfinished">Direction:</translation>
+        <translation>Direction:</translation>
     </message>
 </context>
 <context>
@@ -534,43 +534,43 @@
     <name>E_FuncLimaType</name>
     <message>
         <source>LD</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne de débouché (LD)</translation>
     </message>
     <message>
         <source>LCA</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne de changement d&apos;attitude (LCA)</translation>
     </message>
     <message>
         <source>LC</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne de coordination (LC)</translation>
     </message>
     <message>
         <source>LI</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne interdire (LI)</translation>
     </message>
     <message>
         <source>LO</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne d&apos;objectif (LO)</translation>
     </message>
     <message>
         <source>LCAR</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne de coup d&apos;arrêt (LCAR)</translation>
     </message>
     <message>
         <source>LR</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne de recueil (LR)</translation>
     </message>
     <message>
         <source>LDM</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne de début de mission (LDM)</translation>
     </message>
     <message>
         <source>LFM</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne de fin de mission (LFM)</translation>
     </message>
     <message>
         <source>LIA</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne d&apos;identification accueil (LIA)</translation>
     </message>
 </context>
 <context>
@@ -674,15 +674,15 @@
     </message>
     <message>
         <source>Level:</source>
-        <translation type="unfinished">Niveau:</translation>
+        <translation>Niveau:</translation>
     </message>
     <message>
         <source>Mounted:</source>
-        <translation type="unfinished"></translation>
+        <translation>Combat embarqué:</translation>
     </message>
     <message>
         <source>Karma:</source>
-        <translation type="unfinished"></translation>
+        <translation>Karma:</translation>
     </message>
 </context>
 <context>
@@ -1017,7 +1017,7 @@
     </message>
     <message>
         <source>Build river banks:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aménagement des rives:</translation>
     </message>
     <message>
         <source>Logistic route</source>
@@ -1219,7 +1219,7 @@
     <name>Profile</name>
     <message>
         <source>login</source>
-        <translation type="unfinished">login</translation>
+        <translation>login</translation>
     </message>
 </context>
 <context>

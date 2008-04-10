@@ -23,6 +23,7 @@
 #include "Actions.h"
 #include "frontend/Config.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/Tools.h"
 
 #include <qapplication.h>
 #include <qaction.h>
@@ -54,19 +55,19 @@ MainWindow::MainWindow()
 
     Actions& actions = *new Actions( this );
 
-    AddAction< TerrainCreationPanel >( tr( "Prepare" ), actions.CreateTerrain() );
-    AddAction< CreateExercisePanel >( tr( "Prepare" ), actions.CreateExercise() );
-    AddAction< EditExercisePanel >( tr( "Prepare" ), actions.EditExercise() );
+    AddAction< TerrainCreationPanel >( tools::translate( "MainWindow", "Prepare" ), actions.CreateTerrain() );
+    AddAction< CreateExercisePanel >( tools::translate( "MainWindow", "Prepare" ), actions.CreateExercise() );
+    AddAction< EditExercisePanel >( tools::translate( "MainWindow", "Prepare" ), actions.EditExercise() );
 
-    AddAction< StartExercisePanel >( tr( "Play" ), actions.StartExercise() );
-    AddAction< RestartExercisePanel >( tr( "Play" ), actions.RestartExercise() );
-    AddAction< JoinExercisePanel >( tr( "Play" ), actions.JoinExercise() );
+    AddAction< StartExercisePanel >( tools::translate( "MainWindow", "Play" ), actions.StartExercise() );
+    AddAction< RestartExercisePanel >( tools::translate( "MainWindow", "Play" ), actions.RestartExercise() );
+    AddAction< JoinExercisePanel >( tools::translate( "MainWindow", "Play" ), actions.JoinExercise() );
 
-    AddAction< StartAnalysisPanel >( tr( "Analyse" ), actions.StartAnalysis() );
-    AddAction< JoinAnalysisPanel >( tr( "Analyse" ), actions.JoinAnalysis() );
+    AddAction< StartAnalysisPanel >( tools::translate( "MainWindow", "Analyse" ), actions.StartAnalysis() );
+    AddAction< JoinAnalysisPanel >( tools::translate( "MainWindow", "Analyse" ), actions.JoinAnalysis() );
 
     QAction& installAction = actions.InstallPackage();
-    AddAction< InstallPackagePanel >( tr( "Manage" ), installAction );
+    AddAction< InstallPackagePanel >( tools::translate( "MainWindow", "Manage" ), installAction );
 
     linker_, "Create exercise", "Edit exercise", "Start exercise", "Join exercise";
     linker_, "Start analysis", "Join analysis";

@@ -1,6 +1,4 @@
-SOURCES = CreateTerrain.cpp \
-JoinExercise.cpp \
-SpawnCommand.cpp \
-commands.cpp \
+HEADERS = 
 
+SOURCES = 
 TRANSLATIONS = frontend_fr.ts frontend_en.ts

@@ -16,6 +16,7 @@
 #include "gaming/ActionParameterObjectKnowledgeList.h"
 #include "gaming/ObjectKnowledge_ABC.h"
 #include "gaming/ObjectKnowledgeConverter_ABC.h"
+#include "gaming/Tools.h"
 
 using namespace kernel;
 
@@ -48,7 +49,7 @@ ParamObjectKnowledgeList::~ParamObjectKnowledgeList()
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledgeList::AddToMenu( kernel::ContextMenu& menu )
 {
-    MakeMenu( tr( "Add object knowledge" ), menu );
+    MakeMenu( tools::translate( "ParamObjectKnowledgeList", "Add object knowledge" ), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +58,7 @@ void ParamObjectKnowledgeList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< ObjectKnowledge_ABC >* ParamObjectKnowledgeList::CreateElement( const ObjectKnowledge_ABC& potential )
 {
-    return new ParamObjectKnowledge( this, OrderParameter( tr( "Object knowledge %1" ).arg( ++count_ ).ascii(), "objectknowledge", false ), converter_, agent_, potential );
+    return new ParamObjectKnowledge( this, OrderParameter( tools::translate( "ParamObjectKnowledgeList", "Object knowledge %1" ).arg( ++count_ ).ascii(), "objectknowledge", false ), converter_, agent_, potential );
 }
 
 // -----------------------------------------------------------------------------

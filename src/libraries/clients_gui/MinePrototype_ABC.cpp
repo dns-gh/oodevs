@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "MinePrototype_ABC.h"
 #include "clients_kernel/Units.h"
+#include "Tools.h"
 #include <qvalidator.h>
 
 using namespace kernel;
@@ -20,13 +21,13 @@ using namespace gui;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "Mine parameters" ) )
+    : ObjectPrototypeAttributes_ABC( parent, tools::translate( "MinePrototype_ABC", "Mine parameters" ) )
 {
-    new QLabel( tr( "Activity time:" ), this );
+    new QLabel( tools::translate( "MinePrototype_ABC", "Activity time:" ), this );
     activityTime_ = new QSpinBox( 0, 10000, 1, this );
     activityTime_->setSuffix( Units::hours );
 
-    densityLabel_ = new QLabel( tr( "Density:" ), this );
+    densityLabel_ = new QLabel( tools::translate( "MinePrototype_ABC", "Density:" ), this );
     densityBox_ = new QHBox( this );
     density_ = new QLineEdit( QString::number( 0. ), densityBox_ );
     density_->setValidator( new QDoubleValidator( 0, 5, 3, density_ ) );

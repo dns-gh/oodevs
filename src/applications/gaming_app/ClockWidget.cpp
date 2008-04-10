@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ClockWidget.h"
 #include "AlarmsWidget.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "icons.h"
 
@@ -41,7 +42,7 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
     day_ = new QLabel( vBox );
     day_->setFixedHeight( 25 );
     day_->setPaletteForegroundColor( Qt::green );
-    day_->setText( tr( "Day 1" ) );
+    day_->setText( tools::translate( "ClockWidget", "Day 1" ) );
     day_->setAlignment( Qt::AlignCenter );
 
     AlarmsWidget* alarms = new AlarmsWidget( this, controllers, simulation );
@@ -55,7 +56,7 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
     alarmButton->setFlat( true );
     alarmButton->setPaletteBackgroundColor( Qt::black );
     alarmButton->setFixedSize( 22, 22 );
-    QToolTip::add( alarmButton, tr( "Configure alarms" ) );
+    QToolTip::add( alarmButton, tools::translate( "ClockWidget", "Configure alarms" ) );
     connect( alarmButton, SIGNAL( clicked() ), alarms, SLOT( show() ) );
 
     controllers_.Register( *this );

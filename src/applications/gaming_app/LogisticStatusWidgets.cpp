@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "LogisticStatusWidgets.h"
+#include "gaming/tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceStatusWidget constructor
@@ -17,11 +18,11 @@
 MaintenanceStatusWidget::MaintenanceStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticStatusWidget_ABC< MaintenanceStates >( parent, controllers, factory )
 {
-    display_->AddGroup( QVBox::tr( "Maintenance system state" ) )
-                .AddLabel( QVBox::tr( "System status" ) )
-                .AddLabel( QVBox::tr( "Working scheme" ) )
-                .AddLabel( QVBox::tr( "Priorities" ) )
-                .AddLabel( QVBox::tr( "Tactical priorities" ) );
+    display_->AddGroup( tools::translate( "LogisticStatusWidget", "Maintenance system state" ) )
+                .AddLabel( tools::translate( "LogisticStatusWidget", "System status" ) )
+                .AddLabel( tools::translate( "LogisticStatusWidget", "Working scheme" ) )
+                .AddLabel( tools::translate( "LogisticStatusWidget", "Priorities" ) )
+                .AddLabel( tools::translate( "LogisticStatusWidget", "Tactical priorities" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,10 +41,10 @@ MaintenanceStatusWidget::~MaintenanceStatusWidget()
 MedicalStatusWidget::MedicalStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticStatusWidget_ABC< MedicalStates >( parent, controllers, factory )
 {
-    display_->AddGroup( QVBox::tr( "Medical system state" ) )
-                .AddLabel( QVBox::tr( "System status" ) )
-                .AddLabel( QVBox::tr( "Priorities" ) )
-                .AddLabel( QVBox::tr( "Tactical priorities" ) );
+    display_->AddGroup( tools::translate( "LogisticStatusWidget", "Medical system state" ) )
+                .AddLabel( tools::translate( "LogisticStatusWidget", "System status" ) )
+                .AddLabel( tools::translate( "LogisticStatusWidget", "Priorities" ) )
+                .AddLabel( tools::translate( "LogisticStatusWidget", "Tactical priorities" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,8 +63,8 @@ MedicalStatusWidget::~MedicalStatusWidget()
 SupplyStatusWidget::SupplyStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticStatusWidget_ABC< SupplyStates >( parent, controllers, factory )
 {
-    display_->AddGroup( QVBox::tr( "Supply system state" ) )
-                .AddLabel( QVBox::tr( "System status" ) );
+    display_->AddGroup( tools::translate( "LogisticStatusWidget", "Supply system state" ) )
+                .AddLabel( tools::translate( "LogisticStatusWidget", "System status" ) );
 }
 
 // -----------------------------------------------------------------------------

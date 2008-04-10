@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "MedicalReliefAmbulancesListView.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalReliefAmbulancesListView constructor
@@ -17,11 +18,11 @@
 MedicalReliefAmbulancesListView::MedicalReliefAmbulancesListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : MedicalAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( QListView::tr( "Relief ambulances" ) )
-    .AddColumn( QListView::tr( "Total" ) )
-    .AddColumn( QListView::tr( "Available" ) )
-    .AddColumn( QListView::tr( "Working" ) )
-    .AddColumn( QListView::tr( "Resting" ) );
+    AddColumn( tools::translate( "MedicalReliefAmbulancesListView", "Relief ambulances" ) )
+    .AddColumn( tools::translate( "MedicalReliefAmbulancesListView", "Total" ) )
+    .AddColumn( tools::translate( "MedicalReliefAmbulancesListView", "Available" ) )
+    .AddColumn( tools::translate( "MedicalReliefAmbulancesListView", "Working" ) )
+    .AddColumn( tools::translate( "MedicalReliefAmbulancesListView", "Resting" ) );
 }
 
 // -----------------------------------------------------------------------------

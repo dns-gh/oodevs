@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::IntelligencesPanel */
+
 #include "clients_gui_pch.h"
 #include "IntelligencesPanel.h"
 #include "moc_IntelligencesPanel.cpp"

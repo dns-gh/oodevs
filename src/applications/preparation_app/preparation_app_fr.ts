@@ -28,15 +28,15 @@
     <name>AgentResourcesPanel</name>
     <message>
         <source>Resources</source>
-        <translation>Ressources</translation>
+        <translation type="obsolete">Ressources</translation>
     </message>
     <message>
         <source>Dotation</source>
-        <translation>Dotations</translation>
+        <translation type="obsolete">Dotations</translation>
     </message>
     <message>
         <source>Quantity</source>
-        <translation>Quantité</translation>
+        <translation type="obsolete">Quantité</translation>
     </message>
 </context>
 <context>
@@ -104,6 +104,63 @@
     </message>
 </context>
 <context>
+    <name>ImportOrbatDialog</name>
+    <message>
+        <source>Import order of battle</source>
+        <translation>Importer un ordre de bataille</translation>
+    </message>
+    <message>
+        <source>Select file to import:</source>
+        <translation>Sélectionnez le fichier à importer:</translation>
+    </message>
+    <message>
+        <source>Order of battle: </source>
+        <translation>Ordre de bataille: </translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
+    </message>
+    <message>
+        <source>Sides:</source>
+        <translation>Camps:</translation>
+    </message>
+    <message>
+        <source>Import options:</source>
+        <translation>Options d&apos;import:</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Load orbat file</source>
+        <translation>Charger un fichier d&apos;ordre de bataille</translation>
+    </message>
+    <message>
+        <source>Error loading file</source>
+        <translation>Erreur à la lecture du fichier</translation>
+    </message>
+    <message>
+        <source>File does not appear to be a valid orbat file.
+Please select an other orbat file to import.</source>
+        <translation>Le fichier sélectionné n&apos;est pas un fichier d&apos;ordre de bataille valide.
+Merci de sélectionner un autre fichier à importer.</translation>
+    </message>
+</context>
+<context>
     <name>LocalWeathersList</name>
     <message>
         <source>Local patch</source>
@@ -146,7 +203,7 @@
     </message>
     <message>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation type="obsolete">Information</translation>
     </message>
     <message>
         <source>Terrain</source>
@@ -187,6 +244,10 @@
     <message>
         <source>Intelligence</source>
         <translation>Renseignement</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation>Propriétés</translation>
     </message>
 </context>
 <context>
@@ -313,23 +374,27 @@
     </message>
     <message>
         <source>2D</source>
-        <translation type="unfinished"></translation>
+        <translation>2D</translation>
     </message>
     <message>
         <source>3D</source>
-        <translation type="unfinished"></translation>
+        <translation>3D</translation>
     </message>
     <message>
         <source>Display mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode d&apos;affichage</translation>
     </message>
     <message>
         <source>Links</source>
-        <translation type="unfinished"></translation>
+        <translation>Liens</translation>
     </message>
     <message>
         <source>Missing links</source>
-        <translation type="unfinished"></translation>
+        <translation>Liens manquants</translation>
+    </message>
+    <message>
+        <source>&amp;Import...</source>
+        <translation>&amp;Importer...</translation>
     </message>
 </context>
 <context>
@@ -343,7 +408,7 @@
     <name>None</name>
     <message>
         <source>LogisticSuperiorEditor</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur logistique</translation>
     </message>
 </context>
 <context>
@@ -362,6 +427,20 @@
     <message>
         <source>Create side</source>
         <translation>Créer un camp</translation>
+    </message>
+</context>
+<context>
+    <name>PopulationTypesListView</name>
+    <message>
+        <source>Population type</source>
+        <translation>Type de population</translation>
+    </message>
+</context>
+<context>
+    <name>PopulationsPanel</name>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
     </message>
 </context>
 <context>
@@ -445,7 +524,7 @@
     <name>PropertiesPanel</name>
     <message>
         <source>Properties</source>
-        <translation>Propriétés</translation>
+        <translation type="obsolete">Propriétés</translation>
     </message>
 </context>
 <context>
@@ -456,11 +535,11 @@
     </message>
     <message>
         <source>not set</source>
-        <translation type="unfinished"></translation>
+        <translation>non défini</translation>
     </message>
     <message>
         <source>invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>invalide</translation>
     </message>
 </context>
 <context>
@@ -592,11 +671,11 @@
     <name>gui</name>
     <message>
         <source>Population type</source>
-        <translation>Type de population</translation>
+        <translation type="obsolete">Type de population</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation>Populations</translation>
+        <translation type="obsolete">Populations</translation>
     </message>
     <message>
         <source>Weather</source>

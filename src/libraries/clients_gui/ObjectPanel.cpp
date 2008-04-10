@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectPanel.h"
-
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Controllers.h"
@@ -18,6 +17,7 @@
 #include "clients_kernel/Units.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "DisplayBuilder.h"
+#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -27,7 +27,7 @@ using namespace gui;
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
 ObjectPanel::ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tr( "Object state" ) )
+    : InfoPanel_ABC( parent, panel, tools::translate( "ObjectPanel", "Object state" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {

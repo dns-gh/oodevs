@@ -37,10 +37,6 @@ public:
     virtual ~ObjectPanel();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private slots:
     //! @name Slots
     //@{
@@ -59,9 +55,9 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    gui::SpinBoxDisplayer*  construction_;
-    gui::SpinBoxDisplayer*  valorisation_;     
-    gui::SpinBoxDisplayer*  contournement_;
+    gui::SpinBoxDisplayer* construction_;
+    gui::SpinBoxDisplayer* valorisation_;     
+    gui::SpinBoxDisplayer* contournement_;
     //@}
 }; 
 

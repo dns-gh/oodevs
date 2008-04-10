@@ -11,29 +11,17 @@
 #include "Application.h"
 #include "tools/win32/FlexLm.h"
 #include "tools/Win32/BugTrap.h"
-#include "ENT/ENT_Tr.h"
 
 namespace
 {
     ////
-    static const QString locale = "_en";
+//    static const QString locale = "_en";
+    static const QString locale = "_fr";
     ////
-
-    void AddTranslator( const char* t )
-    {
-        QTranslator* trans = new QTranslator( qApp );
-        trans->load( t + locale, "." );
-        qApp->installTranslator( trans );
-    }
 
     void Run( int argc, char** argv )
     {
-        Application app( argc, argv );
-        AddTranslator( "qt_" );
-        AddTranslator( "ENT" );
-        AddTranslator( "clients_kernel" );
-        AddTranslator( "clients_gui" );
-        ENT_Tr::InitTranslations();
+        Application app( argc, argv, locale );
         app.exec();
     }
 }

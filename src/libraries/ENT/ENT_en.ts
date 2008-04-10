@@ -786,111 +786,111 @@
     <name>ENT_Tr</name>
     <message>
         <source>identifiee</source>
-        <translation>identified</translation>
+        <translation type="unfinished">identified</translation>
     </message>
     <message>
         <source>reconnue</source>
-        <translation>recognized</translation>
+        <translation type="unfinished">recognized</translation>
     </message>
     <message>
         <source>detectee</source>
-        <translation>detected</translation>
+        <translation type="unfinished">detected</translation>
     </message>
     <message>
         <source>signale</source>
-        <translation>reported</translation>
+        <translation type="unfinished">reported</translation>
     </message>
     <message>
         <source>munition</source>
-        <translation>ammunition</translation>
+        <translation type="unfinished">ammunition</translation>
     </message>
     <message>
         <source>carburant</source>
-        <translation>fuel</translation>
+        <translation type="unfinished">fuel</translation>
     </message>
     <message>
         <source>explosif</source>
-        <translation>explosive</translation>
+        <translation type="unfinished">explosive</translation>
     </message>
     <message>
         <source>mine</source>
-        <translation>mine</translation>
+        <translation type="unfinished">mine</translation>
     </message>
     <message>
         <source>barbele</source>
-        <translation>barbed wire</translation>
+        <translation type="unfinished">barbed wire</translation>
     </message>
     <message>
         <source>piece</source>
-        <translation>patch</translation>
+        <translation type="unfinished">patch</translation>
     </message>
     <message>
         <source>ration</source>
-        <translation>daily food ration</translation>
+        <translation type="unfinished">daily food ration</translation>
     </message>
     <message>
         <source>obus</source>
-        <translation>shell</translation>
+        <translation type="unfinished">shell</translation>
     </message>
     <message>
         <source>missile air</source>
-        <translation>air missile</translation>
+        <translation type="unfinished">air missile</translation>
     </message>
     <message>
         <source>missile sol</source>
-        <translation>ground missile</translation>
+        <translation type="unfinished">ground missile</translation>
     </message>
     <message>
         <source>mitraille</source>
-        <translation>hail of bullets</translation>
+        <translation type="unfinished">hail of bullets</translation>
     </message>
     <message>
         <source>reparation</source>
-        <translation>repair work</translation>
+        <translation type="unfinished">repair work</translation>
     </message>
     <message>
         <source>moyen</source>
-        <translation>so so</translation>
+        <translation type="unfinished">so so</translation>
     </message>
     <message>
         <source>inconnu</source>
-        <translation>unknown</translation>
+        <translation type="unfinished">unknown</translation>
     </message>
     <message>
         <source>non blesse</source>
-        <translation>uninjured</translation>
+        <translation type="unfinished">uninjured</translation>
     </message>
     <message>
         <source>mort</source>
-        <translation>dead</translation>
+        <translation type="unfinished">dead</translation>
     </message>
     <message>
         <source>blesse urgence 1</source>
-        <translation>wounded (1)</translation>
+        <translation type="unfinished">wounded (1)</translation>
     </message>
     <message>
         <source>blesse urgence 2</source>
-        <translation>wounded (2)</translation>
+        <translation type="unfinished">wounded (2)</translation>
     </message>
     <message>
         <source>blesse urgence 3</source>
-        <translation>wounded (3)</translation>
+        <translation type="unfinished">wounded (3)</translation>
     </message>
     <message>
         <source>blesse urgence extreme</source>
-        <translation>seriously wounded</translation>
+        <translation type="unfinished">seriously wounded</translation>
     </message>
     <message>
         <source>officier</source>
-        <translation>officer</translation>
+        <translation type="unfinished">officer</translation>
     </message>
     <message>
         <source>sous officer</source>
-        <translation>under officer</translation>
+        <translation type="unfinished">under officer</translation>
     </message>
     <message>
         <source>mdr</source>
-        <translation>private</translation>
+        <translation type="unfinished">private</translation>
     </message>
     <message>
         <source>courte portee</source>
@@ -922,175 +922,175 @@
     </message>
     <message>
         <source>error invalid order conduite</source>
-        <translation>error invalid frag order</translation>
+        <translation type="unfinished">error invalid frag order</translation>
     </message>
     <message>
         <source>error invalid order mission</source>
-        <translation>error invalid mission</translation>
+        <translation type="unfinished">error invalid mission</translation>
     </message>
     <message>
         <source>error invalid order initial</source>
-        <translation>error invalid initial order</translation>
+        <translation type="unfinished">error invalid initial order</translation>
     </message>
     <message>
         <source>error invalid order conduite parameters</source>
-        <translation>error invalid frag order parameters</translation>
+        <translation type="unfinished">error invalid frag order parameters</translation>
     </message>
     <message>
         <source>bouchon mines</source>
-        <translation>mines</translation>
+        <translation type="unfinished">mines</translation>
     </message>
     <message>
         <source>zone minee lineaire</source>
-        <translation>mined area</translation>
+        <translation type="unfinished">mined area</translation>
     </message>
     <message>
         <source>zone minee par dispersion</source>
-        <translation>mined area (scattered)</translation>
+        <translation type="unfinished">mined area (scattered)</translation>
     </message>
     <message>
         <source>fosse anti char</source>
-        <translation>anti tank obstacle</translation>
+        <translation type="unfinished">anti tank obstacle</translation>
     </message>
     <message>
         <source>abattis</source>
-        <translation>abatis</translation>
+        <translation type="unfinished">abatis</translation>
     </message>
     <message>
         <source>barricade</source>
-        <translation>barricade</translation>
+        <translation type="unfinished">barricade</translation>
     </message>
     <message>
         <source>eboulement</source>
-        <translation>collapse</translation>
+        <translation type="unfinished">collapse</translation>
     </message>
     <message>
         <source>destruction route</source>
-        <translation>road destruction</translation>
+        <translation type="unfinished">road destruction</translation>
     </message>
     <message>
         <source>destruction pont</source>
-        <translation>bridge destruction</translation>
+        <translation type="unfinished">bridge destruction</translation>
     </message>
     <message>
         <source>pont flottant continu</source>
-        <translation>Eng bridge</translation>
+        <translation type="unfinished">Eng bridge</translation>
     </message>
     <message>
         <source>poste tir</source>
-        <translation>firing post</translation>
+        <translation type="unfinished">firing post</translation>
     </message>
     <message>
         <source>zone protegee</source>
-        <translation>protected area</translation>
+        <translation type="unfinished">protected area</translation>
     </message>
     <message>
         <source>zone implantation canon</source>
-        <translation>gun artillery deployment area</translation>
+        <translation type="unfinished">gun artillery deployment area</translation>
     </message>
     <message>
         <source>zone implantation cobra</source>
-        <translation>counter battery radar deployment area</translation>
+        <translation type="unfinished">counter battery radar deployment area</translation>
     </message>
     <message>
         <source>zone implantation lrm</source>
-        <translation>mlrs deployment area</translation>
+        <translation type="unfinished">mlrs deployment area</translation>
     </message>
     <message>
         <source>site franchissement</source>
-        <translation>crossing site</translation>
+        <translation type="unfinished">crossing site</translation>
     </message>
     <message>
         <source>nuage nbc</source>
-        <translation>NBC cloud</translation>
+        <translation type="unfinished">NBC cloud</translation>
     </message>
     <message>
         <source>plot ravitaillement</source>
-        <translation>FARP</translation>
+        <translation type="unfinished">FARP</translation>
     </message>
     <message>
         <source>site decontamination</source>
-        <translation>decontamination site</translation>
+        <translation type="unfinished">decontamination site</translation>
     </message>
     <message>
         <source>zone brouillage brod</source>
-        <translation>jamming area</translation>
+        <translation type="unfinished">jamming area</translation>
     </message>
     <message>
         <source>rota</source>
-        <translation>ROTA zone</translation>
+        <translation type="unfinished">ROTA zone</translation>
     </message>
     <message>
         <source>zone nbc</source>
-        <translation>NBC zone</translation>
+        <translation type="unfinished">NBC zone</translation>
     </message>
     <message>
         <source>zone brouillage bromure</source>
-        <translation>jamming area (type 2)</translation>
+        <translation type="unfinished">jamming area (type 2)</translation>
     </message>
     <message>
         <source>aire poser</source>
-        <translation>landing area</translation>
+        <translation type="unfinished">landing area</translation>
     </message>
     <message>
         <source>piste</source>
-        <translation>slope</translation>
+        <translation type="unfinished">slope</translation>
     </message>
     <message>
         <source>plateforme</source>
-        <translation>platform</translation>
+        <translation type="unfinished">platform</translation>
     </message>
     <message>
         <source>zone mobilite amelioree</source>
-        <translation>mobility enhanced area</translation>
+        <translation type="unfinished">mobility enhanced area</translation>
     </message>
     <message>
         <source>zone poser helicoptere</source>
-        <translation>landing area (helicopters)</translation>
+        <translation type="unfinished">landing area (helicopters)</translation>
     </message>
     <message>
         <source>aire logistique</source>
-        <translation>logistics support area</translation>
+        <translation type="unfinished">logistics support area</translation>
     </message>
     <message>
         <source>itineraire logistique</source>
-        <translation>logistics support route</translation>
+        <translation type="unfinished">logistics support route</translation>
     </message>
     <message>
         <source>camp prisonniers</source>
-        <translation>prisoners camp</translation>
+        <translation type="unfinished">prisoners camp</translation>
     </message>
     <message>
         <source>camp refugies</source>
-        <translation>refugees camp</translation>
+        <translation type="unfinished">refugees camp</translation>
     </message>
     <message>
         <source>poste controle</source>
-        <translation>checkpoint</translation>
+        <translation type="unfinished">checkpoint</translation>
     </message>
     <message>
         <source>terrain largage</source>
-        <translation>dropping zone</translation>
+        <translation type="unfinished">dropping zone</translation>
     </message>
     <message>
         <source>zone interdite mouvement</source>
-        <translation>keep out zone</translation>
+        <translation type="unfinished">keep out zone</translation>
     </message>
     <message>
         <source>zone interdite tir</source>
-        <translation>fire forbidden zone</translation>
+        <translation type="unfinished">fire forbidden zone</translation>
     </message>
     <message>
         <source>zone implantation mortier</source>
-        <translation>mortar deployment area</translation>
+        <translation type="unfinished">mortar deployment area</translation>
     </message>
     <message>
         <source>pont flottant discontinu</source>
-        <translation>Eng bridge (type2)</translation>
+        <translation type="unfinished">Eng bridge (type2)</translation>
     </message>
     <message>
         <source>installation</source>
-        <translation>facility</translation>
+        <translation type="unfinished">facility</translation>
     </message>
     <message>
         <source>preliminaire</source>
@@ -1102,11 +1102,11 @@
     </message>
     <message>
         <source>error invalid localisation</source>
-        <translation>error invalid location</translation>
+        <translation type="unfinished">error invalid location</translation>
     </message>
     <message>
         <source>normal</source>
-        <translation>regular</translation>
+        <translation type="unfinished">regular</translation>
     </message>
     <message>
         <source>elements terrain</source>
@@ -1118,435 +1118,435 @@
     </message>
     <message>
         <source>attente disponibilite ambulance releve</source>
-        <translation>waiting for evacuation ambulance</translation>
+        <translation type="unfinished">waiting for evacuation ambulance</translation>
     </message>
     <message>
         <source>ambulance releve deplacement aller</source>
-        <translation>evacuation ambulance coming</translation>
+        <translation type="unfinished">evacuation ambulance coming</translation>
     </message>
     <message>
         <source>ambulance releve chargement</source>
-        <translation>evacuation ambulance loading</translation>
+        <translation type="unfinished">evacuation ambulance loading</translation>
     </message>
     <message>
         <source>attente chargement complet ambulance releve</source>
-        <translation>waiting for evacuation ambulance loading</translation>
+        <translation type="unfinished">waiting for evacuation ambulance loading</translation>
     </message>
     <message>
         <source>ambulance releve deplacement retour</source>
-        <translation>evacuation ambulance going back</translation>
+        <translation type="unfinished">evacuation ambulance going back</translation>
     </message>
     <message>
         <source>ambulance releve dechargement</source>
-        <translation>evacuation ambulance unloading</translation>
+        <translation type="unfinished">evacuation ambulance unloading</translation>
     </message>
     <message>
         <source>attente disponibilite medecin pour diagnostique</source>
-        <translation>waiting for doctor</translation>
+        <translation type="unfinished">waiting for doctor</translation>
     </message>
     <message>
         <source>diagnostique</source>
-        <translation>diagnostic</translation>
+        <translation type="unfinished">diagnostic</translation>
     </message>
     <message>
         <source>recherche secteur tri</source>
-        <translation>looking for sorting area</translation>
+        <translation type="unfinished">looking for sorting area</translation>
     </message>
     <message>
         <source>attente disponibilite medecin pour tri</source>
-        <translation>waiting for sorting doctor</translation>
+        <translation type="unfinished">waiting for sorting doctor</translation>
     </message>
     <message>
         <source>tri</source>
-        <translation>sorting</translation>
+        <translation type="unfinished">sorting</translation>
     </message>
     <message>
         <source>recherche secteur soin</source>
-        <translation>looking for treatment area</translation>
+        <translation type="unfinished">looking for treatment area</translation>
     </message>
     <message>
         <source>attente disponibilite medecin pour soin</source>
-        <translation>waiting for doctor (treatment)</translation>
+        <translation type="unfinished">waiting for doctor (treatment)</translation>
     </message>
     <message>
         <source>soin</source>
-        <translation>treatment</translation>
+        <translation type="unfinished">treatment</translation>
     </message>
     <message>
         <source>hospitalisation</source>
-        <translation>hospitalization</translation>
+        <translation type="unfinished">hospitalization</translation>
     </message>
     <message>
         <source>attente disponibilite ambulance ramassage</source>
-        <translation>waiting for collection ambulance</translation>
+        <translation type="unfinished">waiting for collection ambulance</translation>
     </message>
     <message>
         <source>ambulance ramassage chargement</source>
-        <translation>collection ambulance loading</translation>
+        <translation type="unfinished">collection ambulance loading</translation>
     </message>
     <message>
         <source>attente chargement complet ambulance ramassage</source>
-        <translation>waiting for collection ambulance loading</translation>
+        <translation type="unfinished">waiting for collection ambulance loading</translation>
     </message>
     <message>
         <source>ambulance ramassage deplacement aller</source>
-        <translation>collection ambulance coming</translation>
+        <translation type="unfinished">collection ambulance coming</translation>
     </message>
     <message>
         <source>ambulance ramassage dechargement</source>
-        <translation>collection ambulance unloading</translation>
+        <translation type="unfinished">collection ambulance unloading</translation>
     </message>
     <message>
         <source>termine</source>
-        <translation>finished</translation>
+        <translation type="unfinished">finished</translation>
     </message>
     <message>
         <source>un echelon</source>
-        <translation>1 echelon formation</translation>
+        <translation type="unfinished">1 echelon formation</translation>
     </message>
     <message>
         <source>deux echelons</source>
-        <translation>2 echelons formation</translation>
+        <translation type="unfinished">2 echelons formation</translation>
     </message>
     <message>
         <source>pas de precipitation</source>
-        <translation>no rainfall</translation>
+        <translation type="unfinished">no rainfall</translation>
     </message>
     <message>
         <source>tempete sable</source>
-        <translation>sand storm</translation>
+        <translation type="unfinished">sand storm</translation>
     </message>
     <message>
         <source>brouillard</source>
-        <translation>fog</translation>
+        <translation type="unfinished">fog</translation>
     </message>
     <message>
         <source>crachin</source>
-        <translation>drizzle</translation>
+        <translation type="unfinished">drizzle</translation>
     </message>
     <message>
         <source>pluie</source>
-        <translation>rain</translation>
+        <translation type="unfinished">rain</translation>
     </message>
     <message>
         <source>neige</source>
-        <translation>snowfall</translation>
+        <translation type="unfinished">snowfall</translation>
     </message>
     <message>
         <source>ligne debouche</source>
-        <translation>line of departure</translation>
+        <translation type="unfinished">line of departure</translation>
     </message>
     <message>
         <source>ligne changement attitude</source>
-        <translation>posture switching line</translation>
+        <translation type="unfinished">posture switching line</translation>
     </message>
     <message>
         <source>ligne coordination</source>
-        <translation>coordination line</translation>
+        <translation type="unfinished">coordination line</translation>
     </message>
     <message>
         <source>ligne interdire</source>
-        <translation>deny line</translation>
+        <translation type="unfinished">deny line</translation>
     </message>
     <message>
         <source>ligne objectif</source>
-        <translation>line of objectives</translation>
+        <translation type="unfinished">line of objectives</translation>
     </message>
     <message>
         <source>ligne coup arret</source>
-        <translation>block line</translation>
+        <translation type="unfinished">block line</translation>
     </message>
     <message>
         <source>ligne recueil</source>
-        <translation>rearward line</translation>
+        <translation type="unfinished">rearward line</translation>
     </message>
     <message>
         <source>ligne debut mission</source>
-        <translation>starting line</translation>
+        <translation type="unfinished">starting line</translation>
     </message>
     <message>
         <source>ligne fin mission</source>
-        <translation>finish line</translation>
+        <translation type="unfinished">finish line</translation>
     </message>
     <message>
         <source>ligne identification accueil</source>
-        <translation>recognition and reception line</translation>
+        <translation type="unfinished">recognition and reception line</translation>
     </message>
     <message>
         <source>error invalid lima function</source>
-        <translation>error invalid phase line function</translation>
+        <translation type="unfinished">error invalid phase line function</translation>
     </message>
     <message>
         <source>calme</source>
-        <translation>quiet</translation>
+        <translation type="unfinished">quiet</translation>
     </message>
     <message>
         <source>agitee</source>
-        <translation>agitated</translation>
+        <translation type="unfinished">agitated</translation>
     </message>
     <message>
         <source>excitee</source>
-        <translation>nervous</translation>
+        <translation type="unfinished">nervous</translation>
     </message>
     <message>
         <source>agressive</source>
-        <translation>agressive</translation>
+        <translation type="unfinished">agressive</translation>
     </message>
     <message>
         <source>operationel</source>
-        <translation>operational</translation>
+        <translation type="unfinished">operational</translation>
     </message>
     <message>
         <source>evenement exceptionnel</source>
-        <translation>special event</translation>
+        <translation type="unfinished">special event</translation>
     </message>
     <message>
         <source>fumigene</source>
-        <translation>smoke</translation>
+        <translation type="unfinished">smoke</translation>
     </message>
     <message>
         <source>eclairant</source>
-        <translation>illumination shell</translation>
+        <translation type="unfinished">illumination shell</translation>
     </message>
     <message>
         <source>ami</source>
-        <translation>friendly</translation>
+        <translation type="unfinished">friendly</translation>
     </message>
     <message>
         <source>ennemi</source>
-        <translation>enemy</translation>
+        <translation type="unfinished">enemy</translation>
     </message>
     <message>
         <source>neutre</source>
-        <translation>neutral</translation>
+        <translation type="unfinished">neutral</translation>
     </message>
     <message>
         <source>regime 1</source>
-        <translation>system 1</translation>
+        <translation type="unfinished">system 1</translation>
     </message>
     <message>
         <source>regime 2</source>
-        <translation>system 2</translation>
+        <translation type="unfinished">system 2</translation>
     </message>
     <message>
         <source>regime 3</source>
-        <translation>system 3</translation>
+        <translation type="unfinished">system 3</translation>
     </message>
     <message>
         <source>regime 4</source>
-        <translation>system 4</translation>
+        <translation type="unfinished">system 4</translation>
     </message>
     <message>
         <source>deplacement vers chaine</source>
-        <translation>moving toward logistic system</translation>
+        <translation type="unfinished">moving toward logistic system</translation>
     </message>
     <message>
         <source>attente disponibilite remorqueur</source>
-        <translation>waiting for available tow-truck</translation>
+        <translation type="unfinished">waiting for available tow-truck</translation>
     </message>
     <message>
         <source>remorqueur deplacement aller</source>
-        <translation>tow-truck moving to target</translation>
+        <translation type="unfinished">tow-truck moving to target</translation>
     </message>
     <message>
         <source>remorqueur chargement</source>
-        <translation>tow-truck loading</translation>
+        <translation type="unfinished">tow-truck loading</translation>
     </message>
     <message>
         <source>remorqueur deplacement retour</source>
-        <translation>tow-truck moving from target</translation>
+        <translation type="unfinished">tow-truck moving from target</translation>
     </message>
     <message>
         <source>remorqueur dechargement</source>
-        <translation>tow-truck unloading</translation>
+        <translation type="unfinished">tow-truck unloading</translation>
     </message>
     <message>
         <source>attente prise en charge par niveau superieur</source>
-        <translation>waiting to be handled by higher level</translation>
+        <translation type="unfinished">waiting to be handled by higher level</translation>
     </message>
     <message>
         <source>attente disponibilite pieces</source>
-        <translation>waiting for available parts</translation>
+        <translation type="unfinished">waiting for available parts</translation>
     </message>
     <message>
         <source>attente disponibilite reparateur</source>
-        <translation>waiting for available repairer</translation>
+        <translation type="unfinished">waiting for available repairer</translation>
     </message>
     <message>
         <source>retour pion</source>
-        <translation>unit returning</translation>
+        <translation type="unfinished">unit returning</translation>
     </message>
     <message>
         <source>convoi en attente camions</source>
-        <translation>convoy waiting for trucks</translation>
+        <translation type="unfinished">convoy waiting for trucks</translation>
     </message>
     <message>
         <source>convoi constitution</source>
-        <translation>convoy setting up</translation>
+        <translation type="unfinished">convoy setting up</translation>
     </message>
     <message>
         <source>convoi deplacement vers point chargement</source>
-        <translation>convoy moving to loading point</translation>
+        <translation type="unfinished">convoy moving to loading point</translation>
     </message>
     <message>
         <source>convoi chargement</source>
-        <translation>convoy loading</translation>
+        <translation type="unfinished">convoy loading</translation>
     </message>
     <message>
         <source>convoi deplacement vers point dechargement</source>
-        <translation>convoy moving to unloading point</translation>
+        <translation type="unfinished">convoy moving to unloading point</translation>
     </message>
     <message>
         <source>convoi dechargement</source>
-        <translation>convoy unloading</translation>
+        <translation type="unfinished">convoy unloading</translation>
     </message>
     <message>
         <source>convoi deplacement retour</source>
-        <translation>convoy moving back</translation>
+        <translation type="unfinished">convoy moving back</translation>
     </message>
     <message>
         <source>error invalid donneur</source>
-        <translation>error invalid supplier</translation>
+        <translation type="unfinished">error invalid supplier</translation>
     </message>
     <message>
         <source>error invalid receveur</source>
-        <translation>error invalid receiver</translation>
+        <translation type="unfinished">error invalid receiver</translation>
     </message>
     <message>
         <source>embraye</source>
-        <translation>engaged</translation>
+        <translation type="unfinished">engaged</translation>
     </message>
     <message>
         <source>debraye</source>
-        <translation>disengaged</translation>
+        <translation type="unfinished">disengaged</translation>
     </message>
     <message>
         <source>posture mouvement</source>
-        <translation>standard posture</translation>
+        <translation type="unfinished">standard posture</translation>
     </message>
     <message>
         <source>posture mouvement discret</source>
-        <translation>infiltration posture</translation>
+        <translation type="unfinished">infiltration posture</translation>
     </message>
     <message>
         <source>posture arret</source>
-        <translation>stopping posture</translation>
+        <translation type="unfinished">stopping posture</translation>
     </message>
     <message>
         <source>posture poste reflexe</source>
-        <translation>short stopping posture</translation>
+        <translation type="unfinished">short stopping posture</translation>
     </message>
     <message>
         <source>posture poste</source>
-        <translation>parking posture</translation>
+        <translation type="unfinished">parking posture</translation>
     </message>
     <message>
         <source>posture poste amenage</source>
-        <translation>prepared parking posture</translation>
+        <translation type="unfinished">prepared parking posture</translation>
     </message>
     <message>
         <source>posture poste prepare genie</source>
-        <translation>Eng prepared parking posture</translation>
+        <translation type="unfinished">Eng prepared parking posture</translation>
     </message>
     <message>
         <source>favorable</source>
-        <translation>high</translation>
+        <translation type="unfinished">high</translation>
     </message>
     <message>
         <source>defavorable</source>
-        <translation>low</translation>
+        <translation type="unfinished">low</translation>
     </message>
     <message>
         <source>etat esquive</source>
-        <translation>withdrawing</translation>
+        <translation type="unfinished">withdrawing</translation>
     </message>
     <message>
         <source>etat fixe</source>
-        <translation>fixing</translation>
+        <translation type="unfinished">fixing</translation>
     </message>
     <message>
         <source>etat poursuite mission</source>
-        <translation>NTR</translation>
+        <translation type="unfinished">NTR</translation>
     </message>
     <message>
         <source>detruit totalement</source>
-        <translation>destroyed</translation>
+        <translation type="unfinished">destroyed</translation>
     </message>
     <message>
         <source>detruit tactiquement</source>
-        <translation>non operational</translation>
+        <translation type="unfinished">non operational</translation>
     </message>
     <message>
         <source>operationnel</source>
-        <translation>operational</translation>
+        <translation type="unfinished">operational</translation>
     </message>
     <message>
         <source>pret au tir</source>
-        <translation>ready to fire</translation>
+        <translation type="unfinished">ready to fire</translation>
     </message>
     <message>
         <source>indisponible</source>
-        <translation>unavailable</translation>
+        <translation type="unfinished">unavailable</translation>
     </message>
     <message>
         <source>tir libre</source>
-        <translation>free fire</translation>
+        <translation type="unfinished">free fire</translation>
     </message>
     <message>
         <source>tir sur riposte</source>
-        <translation>fire back only</translation>
+        <translation type="unfinished">fire back only</translation>
     </message>
     <message>
         <source>tir interdit</source>
-        <translation>fire not allowed</translation>
+        <translation type="unfinished">fire not allowed</translation>
     </message>
     <message>
         <source>emploi force interdit</source>
-        <translation>force shall not be used</translation>
+        <translation type="unfinished">force shall not be used</translation>
     </message>
     <message>
         <source>maintien a distance par moyens non letaux</source>
-        <translation>non letal weapons use allowed</translation>
+        <translation type="unfinished">non letal weapons use allowed</translation>
     </message>
     <message>
         <source>dispersion par moyens de defense actifs</source>
-        <translation>active defense allowed</translation>
+        <translation type="unfinished">active defense allowed</translation>
     </message>
     <message>
         <source>armes letales autorisees</source>
-        <translation>letal weapon use allowed</translation>
+        <translation type="unfinished">letal weapon use allowed</translation>
     </message>
     <message>
         <source>fatigue</source>
-        <translation>tired</translation>
+        <translation type="unfinished">tired</translation>
     </message>
     <message>
         <source>epuise</source>
-        <translation>exhausted</translation>
+        <translation type="unfinished">exhausted</translation>
     </message>
     <message>
         <source>fanatique</source>
-        <translation>fanatic</translation>
+        <translation type="unfinished">fanatic</translation>
     </message>
     <message>
         <source>bon</source>
-        <translation>good</translation>
+        <translation type="unfinished">good</translation>
     </message>
     <message>
         <source>mauvais</source>
-        <translation>bad</translation>
+        <translation type="unfinished">bad</translation>
     </message>
     <message>
         <source>veteran</source>
-        <translation>veteran</translation>
+        <translation type="unfinished">veteran</translation>
     </message>
     <message>
         <source>experimente</source>
-        <translation>experienced</translation>
+        <translation type="unfinished">experienced</translation>
     </message>
     <message>
         <source>conscrit</source>
-        <translation>conscript</translation>
+        <translation type="unfinished">conscript</translation>
     </message>
     <message>
         <source>error unit not automate</source>
@@ -1562,7 +1562,7 @@
     </message>
     <message>
         <source>error automate embraye</source>
-        <translation>error automat engaged</translation>
+        <translation type="unfinished">error automat engaged</translation>
     </message>
     <message>
         <source>surete</source>
@@ -1573,232 +1573,232 @@
         <translation type="obsolete">maximum speed posture</translation>
     </message>
     <message>
-        <source>no error</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>error invalid pion</source>
-        <translation>error invalid unit</translation>
+        <translation type="unfinished">error invalid unit</translation>
     </message>
     <message>
         <source>error invalid automate</source>
-        <translation>error invalid automat</translation>
+        <translation type="unfinished">error invalid automat</translation>
     </message>
     <message>
         <source>error invalid automate tc2</source>
-        <translation>error invalid tc2 automat </translation>
+        <translation type="unfinished">error invalid tc2 automat </translation>
     </message>
     <message>
         <source>error invalid automate maintenance</source>
-        <translation>error invalid maintenance superior</translation>
+        <translation type="unfinished">error invalid maintenance superior</translation>
     </message>
     <message>
         <source>error invalid automate sante</source>
-        <translation>error invalid medical superior</translation>
+        <translation type="unfinished">error invalid medical superior</translation>
     </message>
     <message>
         <source>error invalid automate ravitaillement</source>
-        <translation>error invalid supply automat</translation>
-    </message>
-    <message>
-        <source>error unit surrendered</source>
-        <translation></translation>
+        <translation type="unfinished">error invalid supply automat</translation>
     </message>
     <message>
         <source>error invalid camp</source>
-        <translation>error invalid team</translation>
+        <translation type="unfinished">error invalid team</translation>
     </message>
     <message>
         <source>error invalid groupe connaissance</source>
-        <translation>error invalid knowledge group</translation>
+        <translation type="unfinished">error invalid knowledge group</translation>
     </message>
     <message>
         <source>error camps incompatibles</source>
-        <translation>errors incompatible teams</translation>
+        <translation type="unfinished">errors incompatible teams</translation>
+    </message>
+    <message>
+        <source>no error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error unit surrendered</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>circle</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ellipse</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>line</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>polygon</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>point</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sector</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>none</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>o</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>oo</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ooo</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>i</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ii</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iii</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>x</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xx</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xxx</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xxxx</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xxxxx</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid unit</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid attribute</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error not allowed</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error already started</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error not started</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error not paused</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error already paused</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid time factor</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>running</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>paused</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>stopped</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid id</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid geometry</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid diffusion</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid object</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error missing specific attributes</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid specific attributes</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>fire</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>emergency shelter</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>initial</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>reserved</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid limit</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid lima</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid mission</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid mission parameters</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error unit cannot receive order</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>message</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>warning</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

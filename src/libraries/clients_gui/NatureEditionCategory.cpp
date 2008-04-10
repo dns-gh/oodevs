@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::NatureEditionCategory */
+
 #include "clients_gui_pch.h"
 #include "NatureEditionCategory.h"
 #include "moc_NatureEditionCategory.cpp"

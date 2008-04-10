@@ -13,6 +13,7 @@
 #include "gaming/ActionParameterAgentKnowledgeList.h"
 #include "gaming/AgentKnowledge_ABC.h"
 #include "gaming/AgentKnowledgeConverter_ABC.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Agent_ABC.h"
 
 using namespace kernel;
@@ -46,7 +47,7 @@ ParamAgentKnowledgeList::~ParamAgentKnowledgeList()
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledgeList::AddToMenu( kernel::ContextMenu& menu )
 {
-    MakeMenu( tr( "Add agent knowledge" ), menu );
+    MakeMenu( tools::translate( "ParamAgentKnowledgeList", "Add agent knowledge" ), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +56,7 @@ void ParamAgentKnowledgeList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< AgentKnowledge_ABC >* ParamAgentKnowledgeList::CreateElement( const AgentKnowledge_ABC& potential )
 {
-    return new ParamAgentKnowledge( this, OrderParameter( tr( "Agent knowledge %1" ).arg( ++count_ ).ascii(), "agentknowledge", false ), converter_, agent_, potential );
+    return new ParamAgentKnowledge( this, OrderParameter( tools::translate( "ParamAgentKnowledgeList", "Agent knowledge %1" ).arg( ++count_ ).ascii(), "agentknowledge", false ), converter_, agent_, potential );
 }
 
 // -----------------------------------------------------------------------------

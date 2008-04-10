@@ -11,6 +11,7 @@
 #include "NBCPrototype_ABC.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/Iterator.h"
+#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -20,10 +21,10 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "NBC parameters" ) )
+    : ObjectPrototypeAttributes_ABC( parent, tools::translate( "NBCPrototype_ABC", "NBC parameters" ) )
     , resolver_( resolver )
 {
-    new QLabel( tr( "NBC Agent:" ), this );
+    new QLabel( tools::translate( "NBCPrototype_ABC", "NBC Agent:" ), this );
     nbcAgents_ = new ValuedComboBox< const NBCAgent* >( this );
     FillTypes();
 }

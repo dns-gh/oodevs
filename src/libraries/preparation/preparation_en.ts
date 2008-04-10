@@ -15,6 +15,13 @@
     </message>
 </context>
 <context>
+    <name>AgentPositions</name>
+    <message>
+        <source>Info/Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AgentsModelChecker</name>
     <message>
         <source>Units model</source>

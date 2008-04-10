@@ -14,6 +14,7 @@
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterLocation.h"
 #include "gaming/ActionParameterLocationList.h"
+#include "gaming/Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -58,5 +59,5 @@ void ParamLocationList::CommitTo( ActionParameterContainer_ABC& action ) const
 // -----------------------------------------------------------------------------
 Param_ABC* ParamLocationList::CreateElement()
 {
-    return new ParamLocation( OrderParameter( QObject::tr( "Location %1" ).arg( ++count_ ).ascii(), "location", false ), layer_, converter_ );
+    return new ParamLocation( OrderParameter( tools::translate( "ParamLocationList", "Location %1" ).arg( ++count_ ).ascii(), "location", false ), layer_, converter_ );
 }

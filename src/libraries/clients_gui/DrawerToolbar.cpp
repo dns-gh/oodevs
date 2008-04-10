@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::DrawerToolbar */
+
 #include "clients_gui_pch.h"
 #include "DrawerToolbar.h"
 #include "moc_DrawerToolbar.cpp"

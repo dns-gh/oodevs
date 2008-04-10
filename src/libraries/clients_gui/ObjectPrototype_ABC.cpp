@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::ObjectPrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "ObjectPrototype_ABC.h"
 #include "moc_ObjectPrototype_ABC.cpp"
@@ -213,6 +215,17 @@ void ObjectPrototype_ABC::NotifyCreated( const Team_ABC& team )
     if( teams_->GetItemIndex( &team ) != -1 )
         return;
     teams_->AddItem( team.GetName(), &team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::NotifyUpdated
+// Created: SBO 2008-03-28
+// -----------------------------------------------------------------------------
+void ObjectPrototype_ABC::NotifyUpdated( const kernel::Team_ABC& team )
+{
+    const int index = teams_->GetItemIndex( &team );
+    if( index != -1 )
+        teams_->changeItem( team.GetName(), index );
 }
 
 // -----------------------------------------------------------------------------

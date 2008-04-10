@@ -11,6 +11,7 @@
 #include "TerrainPreference.h"
 #include "ColorButton.h"
 #include "SizeButton.h"
+#include "Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -46,8 +47,8 @@ void TerrainPreference::Display( QWidget* parent )
 {
     QHBox* pBox = new QHBox( parent );
     new QLabel( name_.c_str(), pBox );
-    sizeButton_  = new SizeButton ( pBox, tr( "Line thickness: ", "TerrainPreference" ), lineWidth_ );
-    sizeButton_->EnableValueLabel( tr( " px", "TerrainPreference" ) );
+    sizeButton_  = new SizeButton ( pBox, tools::translate( "TerrainPreference", "Line thickness: " ), lineWidth_ );
+    sizeButton_->EnableValueLabel( tools::translate( "TerrainPreference", " px" ) );
     colorButton_ = new ColorButton( pBox, "", color_ );
 }
 
@@ -68,7 +69,7 @@ void TerrainPreference::SetLineWidth() const
 void TerrainPreference::SetColor( float alpha ) const
 {
     const QColor color = colorButton_->GetColor();
-    glColor4f( color.red()/255.f, color.green()/255.f, color.blue()/255.f, alpha );
+    glColor4f( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f, alpha );
 }
 
 // -----------------------------------------------------------------------------

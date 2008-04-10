@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::AboutDialog */
+
 #include "clients_gui_pch.h"
 #include "AboutDialog.h"
 #include "moc_AboutDialog.cpp"

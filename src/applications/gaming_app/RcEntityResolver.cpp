@@ -13,6 +13,7 @@
 #include "gaming/ObjectKnowledge_ABC.h"
 #include "gaming/AgentKnowledge_ABC.h"
 #include "gaming/PopulationKnowledge_ABC.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/InternalLinks.h"
 
@@ -138,5 +139,5 @@ QString RcEntityResolver::CreateLink( unsigned long id ) const
     const T* element = Resolver< T >::Find( id );
     if( element )
         return InternalLinks::CreateLink( *element, element->GetName() );
-    return tr( "[Unknown]" ); // can now happen with the replayer
+    return tools::translate( "RcEntityResolver", "[Unknown]" ); // can now happen with the replayer
 }

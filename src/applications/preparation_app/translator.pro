@@ -1,8 +1,10 @@
-SOURCES = AgentResourcesPanel.cpp \
-ChangeDiplomacyDialog.cpp \
+HEADERS = 
+
+SOURCES = ChangeDiplomacyDialog.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
 FileToolbar.cpp \
+ImportOrbatDialog.cpp \
 LocalWeathersList.cpp \
 LogisticSuperiorEditor.inl \
 MainWindow.cpp \
@@ -15,7 +17,6 @@ PopulationsPanel.cpp \
 ProfileDialog.cpp \
 ProfileEditor.cpp \
 ProfileWizardDialog.cpp \
-PropertiesPanel.cpp \
 PropertiesTableDisplayer.cpp \
 TacticalListView.cpp \
 TemplateListView.cpp \

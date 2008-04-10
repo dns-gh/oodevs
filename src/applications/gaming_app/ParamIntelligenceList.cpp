@@ -11,6 +11,7 @@
 #include "ParamIntelligenceList.h"
 #include "ParamIntelligence.h"
 #include "gaming/ActionParameterIntelligenceList.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
@@ -55,7 +56,7 @@ void ParamIntelligenceList::CommitTo( ActionParameterContainer_ABC& action ) con
 // -----------------------------------------------------------------------------
 void ParamIntelligenceList::AddToMenu( ContextMenu& menu )
 {
-    MakeMenu( tr( "Add intelligence" ), menu );
+    MakeMenu( tools::translate( "ParamIntelligenceList", "Add intelligence" ), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,5 +65,5 @@ void ParamIntelligenceList::AddToMenu( ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< Intelligence_ABC >* ParamIntelligenceList::CreateElement( const Intelligence_ABC& potential )
 {
-    return new ParamIntelligence( this, OrderParameter( tr( "Intelligence %1" ).arg( ++count_ ).ascii(), "intelligence", false ), converter_, potential );
+    return new ParamIntelligence( this, OrderParameter( tools::translate( "ParamIntelligenceList", "Intelligence %1" ).arg( ++count_ ).ascii(), "intelligence", false ), converter_, potential );
 }

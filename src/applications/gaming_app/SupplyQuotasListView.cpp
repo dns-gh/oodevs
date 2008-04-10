@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "SupplyQuotasListView.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: SupplyQuotasListView constructor
@@ -17,8 +18,8 @@
 SupplyQuotasListView::SupplyQuotasListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : QuotasAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( QListView::tr( "Type" ) )
-    .AddColumn( QListView::tr( "Quota" ) );
+    AddColumn( tools::translate( "SupplyQuotasListView", "Type" ) )
+    .AddColumn( tools::translate( "SupplyQuotasListView", "Quota" ) );
 }
 
 // -----------------------------------------------------------------------------

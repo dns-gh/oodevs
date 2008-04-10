@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::UnitListView */
+
 #include "clients_gui_pch.h"
 #include "UnitListView.h"
 #include "clients_kernel/AgentTypes.h"
@@ -17,6 +19,7 @@
 #include "clients_kernel/ComponentType.h"
 #include "ValuedDragObject.h"
 #include "resources.h"
+#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -31,8 +34,8 @@ UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const Age
     , types_( list )
 {
     setMinimumSize( 1, 1 );
-    addColumn( tr( "Unit type" ) );
-    addColumn( tr( "Count" ) );
+    addColumn( tools::translate( "UnitListView", "Unit type" ) );
+    addColumn( tools::translate( "UnitListView", "Count" ) );
     setRootIsDecorated( true );
     header()->hide();
     setSorting( 0 );

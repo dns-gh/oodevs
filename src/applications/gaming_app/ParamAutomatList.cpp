@@ -11,6 +11,7 @@
 #include "ParamAutomatList.h"
 #include "ParamAutomat.h"
 #include "gaming/ActionParameterAutomatList.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
@@ -43,7 +44,7 @@ ParamAutomatList::~ParamAutomatList()
 // -----------------------------------------------------------------------------
 void ParamAutomatList::AddToMenu( kernel::ContextMenu& menu )
 {
-    MakeMenu( tr( "Add automat" ), menu );
+    MakeMenu( tools::translate( "ParamAutomatList", "Add automat" ), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +53,7 @@ void ParamAutomatList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< kernel::Automat_ABC >* ParamAutomatList::CreateElement( const kernel::Automat_ABC& potential )
 {
-    return new ParamAutomat( this, OrderParameter( tr( "Automat %1" ).arg( ++count_ ).ascii(), "automat", false ), potential );
+    return new ParamAutomat( this, OrderParameter( tools::translate( "ParamAutomatList", "Automat %1" ).arg( ++count_ ).ascii(), "automat", false ), potential );
 }
 
 // -----------------------------------------------------------------------------

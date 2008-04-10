@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "LogisticRoutePrototype_ABC.h"
 #include "clients_kernel/Units.h"
+#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -19,25 +20,25 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 LogisticRoutePrototype_ABC::LogisticRoutePrototype_ABC( QWidget* parent )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "Logistic route" ) )
+    : ObjectPrototypeAttributes_ABC( parent, tools::translate( "LogisticRoutePrototype_ABC", "Logistic route" ) )
 {
-    new QLabel( tr( "Flow:" ), this );
+    new QLabel( tools::translate( "LogisticRoutePrototype_ABC", "Flow:" ), this );
     flow_ = new QSpinBox( 0, 10000, 1, this );
     flow_->setSuffix( Units::vehiclesPerHour );
 
-    new QLabel( tr( "Width:" ), this );
+    new QLabel( tools::translate( "LogisticRoutePrototype_ABC", "Width:" ), this );
     width_ = new QSpinBox( 0, 10000, 1, this );
     width_->setSuffix( Units::meters );
 
-    new QLabel( tr( "Length:" ), this );
+    new QLabel( tools::translate( "LogisticRoutePrototype_ABC", "Length:" ), this );
     length_ = new QSpinBox( 0, 10000, 1, this );
     length_->setSuffix( Units::meters );
 
-    new QLabel( tr( "Maximum weight:" ), this );
+    new QLabel( tools::translate( "LogisticRoutePrototype_ABC", "Maximum weight:" ), this );
     maxWeight_ = new QSpinBox( 0, 10000, 1, this );
     maxWeight_->setSuffix( Units::tons );
 
-    equipped_ = new QCheckBox( tr( "Equipped:" ), this );
+    equipped_ = new QCheckBox( tools::translate( "LogisticRoutePrototype_ABC", "Equipped:" ), this );
 }
 
 // -----------------------------------------------------------------------------

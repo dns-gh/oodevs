@@ -11,16 +11,17 @@
 #include "InfoLendingsDialog.h"
 #include "LendingsListView.h"
 #include "BorrowingsListView.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoLendingsDialog constructor
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 InfoLendingsDialog::InfoLendingsDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : InfoDialog< Lendings >( parent, controllers, QDialog::tr( "Lendings" ) )
+    : InfoDialog< Lendings >( parent, controllers, tools::translate( "InfoLendingsDialog", "Lendings" ) )
 {
-    new LendingsListView( new QHGroupBox( QDialog::tr( "Lent equipment(s)" ), RootWidget() ), controllers, factory );
-    new BorrowingsListView( new QHGroupBox( QDialog::tr( "Borrowed equipment(s)" ), RootWidget() ), controllers, factory );
+    new LendingsListView( new QHGroupBox( tools::translate( "InfoLendingsDialog", "Lent equipment(s)" ), RootWidget() ), controllers, factory );
+    new BorrowingsListView( new QHGroupBox( tools::translate( "InfoLendingsDialog", "Borrowed equipment(s)" ), RootWidget() ), controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

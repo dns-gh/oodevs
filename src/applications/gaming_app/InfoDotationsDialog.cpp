@@ -10,15 +10,16 @@
 #include "gaming_app_pch.h"
 #include "InfoDotationsDialog.h"
 #include "DotationsListView.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoDotationsDialog constructor
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 InfoDotationsDialog::InfoDotationsDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : InfoDialog< Dotations >( parent, controllers, QDialog::tr( "Dotations" ) )
+    : InfoDialog< Dotations >( parent, controllers, tools::translate( "InfoDotationsDialog", "Dotations" ) )
 {
-    new DotationsListView( new QHGroupBox( QDialog::tr( "Dotations" ), RootWidget() ), controllers, factory );
+    new DotationsListView( new QHGroupBox( tools::translate( "InfoDotationsDialog", "Dotations" ), RootWidget() ), controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

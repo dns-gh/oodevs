@@ -20,6 +20,22 @@
         <source>Target: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionsPanel</name>
@@ -350,6 +366,13 @@
     </message>
 </context>
 <context>
+    <name>ClockDock</name>
+    <message>
+        <source>Clock</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ClockWidget</name>
     <message>
         <source>Day 1</source>
@@ -456,33 +479,6 @@
     </message>
 </context>
 <context>
-    <name>Extension</name>
-    <message>
-        <source>Logistic requests</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Processing consigns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Consign:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Instruction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Consumer:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Handler:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FireResultListView</name>
     <message>
         <source>Equipments</source>
@@ -529,17 +525,6 @@
     </message>
 </context>
 <context>
-    <name>GQ_Plot</name>
-    <message>
-        <source>Rate (B)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time (Tick)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>HumansListView</name>
     <message>
         <source>Rank</source>
@@ -559,9 +544,31 @@
     </message>
 </context>
 <context>
+    <name>InfoCompositionDialog</name>
+    <message>
+        <source>Composition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Humans</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InfoDock</name>
     <message>
         <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoDotationsDialog</name>
+    <message>
+        <source>Dotations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -593,6 +600,62 @@
     </message>
     <message>
         <source>NBC: contamination of type &apos;%1&apos; level &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoLendingsDialog</name>
+    <message>
+        <source>Lendings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lent equipment(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Borrowed equipment(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoMaintenanceDialog</name>
+    <message>
+        <source>Maintenance system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment availabilities</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoMedicalDialog</name>
+    <message>
+        <source>Medical system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment availabilities</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoMissionsTab</name>
+    <message>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -638,6 +701,25 @@
     <name>InfoStatusWidget</name>
     <message>
         <source>Goto parent unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoSupplyDialog</name>
+    <message>
+        <source>Supply system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stocks &amp;&amp; Quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transporters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -732,6 +814,64 @@
     </message>
     <message>
         <source>Disconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticConsignsWidget_ABC</name>
+    <message>
+        <source>Logistic requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Processing consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consign:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Instruction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumer:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Handler:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticStatusWidget</name>
+    <message>
+        <source>Maintenance system state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working scheme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical system state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply system state</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -972,6 +1112,155 @@
     </message>
     <message>
         <source>Intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MaintenanceConsignsWidget</name>
+    <message>
+        <source>Equipment:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdown:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MaintenanceHaulersListView</name>
+    <message>
+        <source>Tow trucks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MaintenanceRepairersListView</name>
+    <message>
+        <source>Repairers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalCollectAmbulancesListView</name>
+    <message>
+        <source>Collect ambulances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalConsignsWidget</name>
+    <message>
+        <source>Injury:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mentally injured:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC contaminated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalDoctorsListView</name>
+    <message>
+        <source>Doctors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalReliefAmbulancesListView</name>
+    <message>
+        <source>Relief ambulances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1409,6 +1698,145 @@
     </message>
 </context>
 <context>
+    <name>ObjectPanel</name>
+    <message>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mining:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bypass:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction dotation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Development dotation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossing site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Depth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stream speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build river banks:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC cloud/zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ROTA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent(s):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipped:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flow:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum weight:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OrbatToolbar</name>
     <message>
         <source>Aggregate all automats</source>
@@ -1533,6 +1961,13 @@
     </message>
 </context>
 <context>
+    <name>ParamLocationList</name>
+    <message>
+        <source>Location %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ParamMissionObjective</name>
     <message>
         <source>Location</source>
@@ -1540,6 +1975,13 @@
     </message>
     <message>
         <source>Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamMissionObjectiveList</name>
+    <message>
+        <source>Objective %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1578,6 +2020,20 @@
     </message>
     <message>
         <source>Obstacle type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamObstacleList</name>
+    <message>
+        <source>Obstacle %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ParamPathList</name>
+    <message>
+        <source>Route %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1743,228 +2199,6 @@
     </message>
 </context>
 <context>
-    <name>Properties</name>
-    <message>
-        <source>Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QDialog</name>
-    <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Humans</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Composition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lendings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lent equipment(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Borrowed equipment(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintenance system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Consigns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment availabilities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Medical system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supply system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stocks &amp;&amp; Quotas</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transporters</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QDockWindow</name>
-    <message>
-        <source>Clock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Actions timeline</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QListView</name>
-    <message>
-        <source>Tow trucks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Working</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repairers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Collect ambulances</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Relief ambulances</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quota</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transporters</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <source>Location %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objective %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Obstacle %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Route %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QVBox</name>
-    <message>
-        <source>Maintenance system state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Working scheme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Priorities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tactical priorities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Medical system state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supply system state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Breakdown:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Injury:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mentally injured:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC contaminated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supplier:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convoyer:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotations requested/granted/convoyed</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>RcEntityResolver</name>
     <message>
         <source>[Unknown]</source>
@@ -2088,9 +2322,91 @@
     </message>
 </context>
 <context>
+    <name>StatisticsWidget</name>
+    <message>
+        <source>Rate (B)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time (Tick)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>StatusBar</name>
     <message>
         <source>Saving checkpoint...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyConsignsWidget</name>
+    <message>
+        <source>Supplier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoyer:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotations requested/granted/convoyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyQuotasListView</name>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quota</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyStocksListView</name>
+    <message>
+        <source>Stock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyTransportersListView</name>
+    <message>
+        <source>Transporters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TimelinePanel</name>
+    <message>
+        <source>Actions timeline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2222,161 +2538,6 @@
     </message>
     <message>
         <source>Permissions</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui</name>
-    <message>
-        <source>Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Identifier:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bypass:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction dotation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Development dotation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crossing site</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Depth:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stream speed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Build river banks:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC cloud/zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC agent:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC agent(s):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic route</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipped:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flow:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maximum weight:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mine parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activity time:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Density:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mining:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -11,6 +11,7 @@
 #include "InfoDock.h"
 #include "InfoWidget.h"
 #include "clients_kernel/Controllers.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoDock constructor
@@ -24,7 +25,7 @@ InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const ker
     setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory ) );
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
-    setCaption( tr( "Info" ) );
+    setCaption( tools::translate( "InfoDock", "Info" ) );
     controllers_.Register( *this );
     hide();
 }

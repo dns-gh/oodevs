@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::UnitsPanel */
+
 #include "clients_gui_pch.h"
 #include "UnitsPanel.h"
 #include "moc_UnitsPanel.cpp"

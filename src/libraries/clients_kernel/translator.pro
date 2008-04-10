@@ -1,37 +1,14 @@
-SOURCES = AgentType.cpp \
-AgentTypes.cpp \
-App6Symbol.cpp \
-AutomatComposition.cpp \
-AutomatType.cpp \
-BreakdownType.cpp \
-Circle.cpp \
-ComponentType.cpp \
-DecisionalModel.cpp \
-DotationType.cpp \
-Drawer.cpp \
+HEADERS = 
+
+SOURCES = Circle.cpp \
 EntityHierarchies.inl \
-EquipmentType.cpp \
 Formatter.cpp \
 FourStateOption.cpp \
 Karma.cpp \
-KnowledgeGroupType.cpp \
 Lines.cpp \
-MissionFactory.cpp \
-MissionType.cpp \
-NBCAgent.cpp \
-ObjectType.cpp \
-ObjectTypes.cpp \
-Options.cpp \
-OrderParameter.cpp \
-OrderParameterValue.cpp \
-OrderType.cpp \
 Path.cpp \
 Point.cpp \
 Polygon.cpp \
-PopulationType.cpp \
-Resolver.h \
-Resolver2.h \
-SymbolRule.cpp \
 Tools.cpp \
 TristateOption.cpp \
 Units.cpp \

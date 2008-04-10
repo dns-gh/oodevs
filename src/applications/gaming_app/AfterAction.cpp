@@ -14,6 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "gaming/AfterActionModel.h"
 #include "gaming/Simulation.h"
+#include "gaming/Tools.h"
 #include "icons.h"
 
 using namespace gui;
@@ -55,15 +56,15 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& contr
     functionsTab_ = new QTabWidget( box );
 
     AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory, model_, layer, staticModel );
-    functionsTab_->addTab( list, tr( "Functions" ) );
+    functionsTab_->addTab( list, tools::translate( "AfterAction", "Functions" ) );
 
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, window, controllers, factory, publisher );
-    functionsTab_->addTab( requests, tr( "Requests" ) );
+    functionsTab_->addTab( requests, tools::translate( "AfterAction", "Requests" ) );
 
     aarDock_->setResizeEnabled( true );
     aarDock_->setWidget( box );
     aarDock_->setCloseMode( QDockWindow::Always );
-    aarDock_->setCaption( tr( "After action review" ) );
+    aarDock_->setCaption( tools::translate( "AfterAction", "After action review" ) );
     aarDock_->hide();
     window_->setAppropriate( aarDock_, false );
 }

@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "MaintenanceRepairersListView.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceRepairersListView constructor
@@ -17,11 +18,11 @@
 MaintenanceRepairersListView::MaintenanceRepairersListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : MaintenanceAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( QListView::tr( "Repairers" ) )
-    .AddColumn( QListView::tr( "Total" ) )
-    .AddColumn( QListView::tr( "Available" ) )
-    .AddColumn( QListView::tr( "Working" ) )
-    .AddColumn( QListView::tr( "Resting" ) );
+    AddColumn( tools::translate( "MaintenanceRepairersListView", "Repairers" ) )
+    .AddColumn( tools::translate( "MaintenanceRepairersListView", "Total" ) )
+    .AddColumn( tools::translate( "MaintenanceRepairersListView", "Available" ) )
+    .AddColumn( tools::translate( "MaintenanceRepairersListView", "Working" ) )
+    .AddColumn( tools::translate( "MaintenanceRepairersListView", "Resting" ) );
 }
 
 // -----------------------------------------------------------------------------

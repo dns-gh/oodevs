@@ -13,6 +13,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterObjectiveList.h"
+#include "gaming/Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -58,7 +59,7 @@ void ParamMissionObjectiveList::CommitTo( ActionParameterContainer_ABC& action )
 // -----------------------------------------------------------------------------
 Param_ABC* ParamMissionObjectiveList::CreateElement()
 {
-    return new ParamMissionObjective( OrderParameter( QObject::tr( "Objective %1" ).arg( ++count_ ).ascii(), "objective", false ), layer_, simulation_, converter_ );
+    return new ParamMissionObjective( OrderParameter( tools::translate( "ParamMissionObjectiveList", "Objective %1" ).arg( ++count_ ).ascii(), "objective", false ), layer_, simulation_, converter_ );
 }
 
 // -----------------------------------------------------------------------------

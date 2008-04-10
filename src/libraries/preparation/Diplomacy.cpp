@@ -11,9 +11,9 @@
 #include "Diplomacy.h"
 #include "Tools.h"
 
-Diplomacy Diplomacy::friend_ ( "friend" , tools::translate( "Preparation", "friend"     ) );
-Diplomacy Diplomacy::enemy_  ( "enemy"  , tools::translate( "Preparation", "enemy"  ) );
-Diplomacy Diplomacy::neutral_( "neutral", tools::translate( "Preparation", "neutral"  ) );
+Diplomacy Diplomacy::friend_ ( "friend" , tools::translate( "Preparation", "friend"  ) );
+Diplomacy Diplomacy::enemy_  ( "enemy"  , tools::translate( "Preparation", "enemy"   ) );
+Diplomacy Diplomacy::neutral_( "neutral", tools::translate( "Preparation", "neutral" ) );
 
 // -----------------------------------------------------------------------------
 // Name: Diplomacy constructor

@@ -1,20 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>AgentResourcesPanel</name>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChangeDiplomacyDialog</name>
     <message>
         <source>Diplomacy</source>
@@ -79,6 +64,62 @@
     </message>
 </context>
 <context>
+    <name>ImportOrbatDialog</name>
+    <message>
+        <source>Import order of battle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select file to import:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order of battle: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sides:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import options:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load orbat file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File does not appear to be a valid orbat file.
+Please select an other orbat file to import.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LocalWeathersList</name>
     <message>
         <source>Local patch</source>
@@ -120,10 +161,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Terrain</source>
         <translation type="unfinished"></translation>
     </message>
@@ -161,6 +198,10 @@
     </message>
     <message>
         <source>Intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -298,6 +339,10 @@
         <source>Missing links</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Import...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>
@@ -328,6 +373,20 @@
     <name>PopulationListView</name>
     <message>
         <source>Create side</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PopulationTypesListView</name>
+    <message>
+        <source>Population type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PopulationsPanel</name>
+    <message>
+        <source>Populations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -405,13 +464,6 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PropertiesPanel</name>
-    <message>
-        <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -553,14 +605,6 @@
 </context>
 <context>
     <name>gui</name>
-    <message>
-        <source>Population type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Weather</source>
         <translation type="unfinished"></translation>

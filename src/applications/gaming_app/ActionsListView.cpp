@@ -22,7 +22,7 @@
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : gui::ListView< ActionsListView >( parent, *this, factory )
+    : ActionsListViewBase( parent, *this, factory )
     , controllers_( controllers )
     , factory_    ( factory )
     , mission_    ( MAKE_PIXMAP( mission ) )

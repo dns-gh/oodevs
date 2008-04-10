@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::HierarchyListView_ABC */
+
 #include "clients_gui_pch.h"
 #include "HierarchyListView_ABC.h"
 #include "moc_HierarchyListView_ABC.cpp"

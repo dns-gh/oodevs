@@ -19,75 +19,75 @@
     </message>
     <message>
         <source>JourSansNuage</source>
-        <translation type="unfinished"></translation>
+        <translation>Jour sans nuage</translation>
     </message>
     <message>
         <source>JourPeuNuageux</source>
-        <translation type="unfinished"></translation>
+        <translation>Jour peu nuageux</translation>
     </message>
     <message>
         <source>JourMoyennementNuageux</source>
-        <translation type="unfinished"></translation>
+        <translation>Jour moyennement nuageux</translation>
     </message>
     <message>
         <source>JourAssezNuageux</source>
-        <translation type="unfinished"></translation>
+        <translation>Jour assez nuageux</translation>
     </message>
     <message>
         <source>JourTresNuageux</source>
-        <translation type="unfinished"></translation>
+        <translation>Jour très nuageux</translation>
     </message>
     <message>
         <source>NuitPleineLune</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuit pleine lune</translation>
     </message>
     <message>
         <source>NuitTroisQuartDeLune</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuit trois quart de lune</translation>
     </message>
     <message>
         <source>NuitDemiLune</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuit demi-lune</translation>
     </message>
     <message>
         <source>NuitQuartDeLune</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuit quart de lune</translation>
     </message>
     <message>
         <source>NuitNouvelleLune</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuit nouvelle lune</translation>
     </message>
     <message>
         <source>Eclairant</source>
-        <translation type="unfinished"></translation>
+        <translation>Eclairant</translation>
     </message>
     <message>
         <source>PasDePrecipitation</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de précipitation</translation>
     </message>
     <message>
         <source>TempeteDeSable</source>
-        <translation type="unfinished"></translation>
+        <translation>Tempête de sable</translation>
     </message>
     <message>
         <source>Brouillard</source>
-        <translation type="unfinished"></translation>
+        <translation>Brouillard</translation>
     </message>
     <message>
         <source>Crachin</source>
-        <translation type="unfinished"></translation>
+        <translation>Crachin</translation>
     </message>
     <message>
         <source>Pluie</source>
-        <translation type="unfinished"></translation>
+        <translation>Pluie</translation>
     </message>
     <message>
         <source>Neige</source>
-        <translation type="unfinished"></translation>
+        <translation>Neige</translation>
     </message>
     <message>
         <source>Fumigene</source>
-        <translation type="unfinished"></translation>
+        <translation>Fumigène</translation>
     </message>
 </context>
 <context>

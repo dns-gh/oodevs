@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "StatisticsWidget.h"
 #include "GQ_PlotData.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: StatisticsWidget constructor
@@ -26,7 +27,7 @@ StatisticsWidget::StatisticsWidget( QWidget* parent )
     YAxis().SetAxisRange( 0, 1, true );
     YAxis().ShowTicks( 10 );
     YAxis().ShowTicksValue( true );
-    YAxis().SetAxisCaption( GQ_Plot::tr( "Rate (B)" ).ascii() );
+    YAxis().SetAxisCaption( tools::translate( "StatisticsWidget", "Rate (B)" ).ascii() );
     YAxis().SetCaptionMargin( 8 );
 
     XAxis().ShowAxis( true );
@@ -34,7 +35,7 @@ StatisticsWidget::StatisticsWidget( QWidget* parent )
     XAxis().SetAxisRange( 0, 1, false );
     XAxis().ShowTicks( 1 );
     XAxis().ShowTicksValue( true );
-    XAxis().SetAxisCaption( GQ_Plot::tr( "Time (Tick)" ).ascii() );
+    XAxis().SetAxisCaption( tools::translate( "StatisticsWidget", "Time (Tick)" ).ascii() );
 
     SetBackgroundColor( Qt::white );
     setMinimumHeight( 130 );

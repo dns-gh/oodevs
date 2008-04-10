@@ -12,8 +12,6 @@
 
 #include <qapplication.h>
 
-class QMainWindow;
-
 // =============================================================================
 /** @class  Application
     @brief  Application
@@ -25,7 +23,7 @@ class Application : public QApplication
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int argc, char** argv );
+             Application( int argc, char** argv, const QString& locale );
     virtual ~Application();
     //@}
 
@@ -38,12 +36,7 @@ private:
 
     //! @name Helpers
     //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    QMainWindow* mainWindow_;
+    void AddTranslator( const char* t, const QString& locale );
     //@}
 };
 

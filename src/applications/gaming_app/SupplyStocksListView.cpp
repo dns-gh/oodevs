@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "SupplyStocksListView.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: SupplyStocksListView constructor
@@ -17,8 +18,8 @@
 SupplyStocksListView::SupplyStocksListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : SupplyAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( QListView::tr( "Stock" ) )
-    .AddColumn( QListView::tr( "Quantity" ) );
+    AddColumn( tools::translate( "SupplyStocksListView", "Stock" ) )
+    .AddColumn( tools::translate( "SupplyStocksListView", "Quantity" ) );
 }
 
 // -----------------------------------------------------------------------------

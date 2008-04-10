@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::ObjectListView */
+
 #include "clients_gui_pch.h"
 #include "ObjectListView.h"
 #include "moc_ObjectListView.cpp"

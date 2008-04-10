@@ -13,20 +13,21 @@
 #include "MaintenanceConsignsWidget.h"
 #include "MaintenanceHaulersListView.h"
 #include "MaintenanceRepairersListView.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoMaintenanceDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : InfoDialog< MaintenanceStates >( parent, controllers, QDialog::tr( "Maintenance system" ) )
+    : InfoDialog< MaintenanceStates >( parent, controllers, tools::translate( "InfoMaintenanceDialog", "Maintenance system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
-    tabs->addTab( new MaintenanceConsignsWidget( tabs, controllers, factory ), QDialog::tr( "Consigns" ) );
+    tabs->addTab( new MaintenanceConsignsWidget( tabs, controllers, factory ), tools::translate( "InfoMaintenanceDialog", "Consigns" ) );
     QVBox* box = new QVBox( tabs );
     new MaintenanceHaulersListView( box, controllers, factory );
     new MaintenanceRepairersListView( box, controllers, factory );
-    tabs->addTab( box, QDialog::tr( "Equipment availabilities" ) );
+    tabs->addTab( box, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );
     new MaintenanceStatusWidget( RootWidget(), controllers, factory );
 }
 

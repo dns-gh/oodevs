@@ -11,6 +11,7 @@
 #include "MedicalConsignsWidget.h"
 #include "gaming/LogMedicalConsign.h"
 #include "gaming/MedicalStates.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalConsignsWidget constructor
@@ -19,10 +20,10 @@
 MedicalConsignsWidget::MedicalConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticConsignsWidget_ABC< MedicalConsignsWidget, LogMedicalConsign, LogMedicalConsigns >( parent, controllers, factory )
 {
-    AddConsignColumn( QVBox::tr( "Injury:" ) );
-    AddConsignColumn( QVBox::tr( "Mentally injured:" ) );
-    AddConsignColumn( QVBox::tr( "NBC contaminated:" ) );
-    AddConsignColumn( QVBox::tr( "State:" ) );
+    AddConsignColumn( tools::translate( "MedicalConsignsWidget", "Injury:" ) );
+    AddConsignColumn( tools::translate( "MedicalConsignsWidget", "Mentally injured:" ) );
+    AddConsignColumn( tools::translate( "MedicalConsignsWidget", "NBC contaminated:" ) );
+    AddConsignColumn( tools::translate( "MedicalConsignsWidget", "State:" ) );
 }
 
 // -----------------------------------------------------------------------------

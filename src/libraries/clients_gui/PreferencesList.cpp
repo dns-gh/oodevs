@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "PreferencesList.h"
+#include "Tools.h"
 
 using namespace gui;
 
@@ -20,7 +21,7 @@ PreferencesList::PreferencesList( QWidget* parent, QWidgetStack& pages )
     : QListView( parent )
     , pages_( pages )
 {
-    addColumn( tr( "Category" ) );
+    addColumn( tools::translate( "PreferencesList", "Category" ) );
     setColumnWidthMode( 0, QListView::Maximum );
     header()->hide();
     setRootIsDecorated( true );

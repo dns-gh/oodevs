@@ -11,6 +11,7 @@
 #include "InfoEventsWidget.h"
 #include "gaming/Attributes.h"
 #include "gaming/Contaminations.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Units.h"
@@ -136,13 +137,13 @@ InfoEventsWidget::~InfoEventsWidget()
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::InitializeEventButtons( QWidget* parent )
 {
-    eventButtons_["jammed"]        = MakeButton( parent, MAKE_PIXMAP( brouillage )     , tr( "Communication: jammed" ) );
-    eventButtons_["silence"]       = MakeButton( parent, MAKE_PIXMAP( talkie_interdit ), tr( "Communication: radio silence" ) );
-    eventButtons_["radar"]         = MakeButton( parent, MAKE_PIXMAP( radars_on )      , tr( "Communication: radar enabled" ) );
-    eventButtons_["stealth"]       = MakeButton( parent, MAKE_PIXMAP( csword )         , tr( "Communication: stealth mode" ) );
-    eventButtons_["nbc suit"]      = MakeButton( parent, MAKE_PIXMAP( nbc )            , tr( "NBC: suit on" ) );
+    eventButtons_["jammed"]        = MakeButton( parent, MAKE_PIXMAP( brouillage )     , tools::translate( "InfoEventsWidget", "Communication: jammed" ) );
+    eventButtons_["silence"]       = MakeButton( parent, MAKE_PIXMAP( talkie_interdit ), tools::translate( "InfoEventsWidget", "Communication: radio silence" ) );
+    eventButtons_["radar"]         = MakeButton( parent, MAKE_PIXMAP( radars_on )      , tools::translate( "InfoEventsWidget", "Communication: radar enabled" ) );
+    eventButtons_["stealth"]       = MakeButton( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Communication: stealth mode" ) );
+    eventButtons_["nbc suit"]      = MakeButton( parent, MAKE_PIXMAP( nbc )            , tools::translate( "InfoEventsWidget", "NBC: suit on" ) );
     eventButtons_["contamination"] = MakeButton( parent, MAKE_PIXMAP( nbc )            , "" );
-    eventButtons_["refugees"]      = MakeButton( parent, MAKE_PIXMAP( csword )         , tr( "Refugees handled" ) );
+    eventButtons_["refugees"]      = MakeButton( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Refugees handled" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +193,7 @@ void InfoEventsWidget::SetContaminations( const Contaminations& attributes )
         for( unsigned int i = 0; i < attributes.contaminatingNbcAgents_.size(); ++i )
             agents.append( attributes.contaminatingNbcAgents_[i]->GetName().c_str() );
         btn->setText( QString::number( attributes.nContamination_ ) );
-        QToolTip::add( btn, tr( "NBC: contamination of type '%1' level '%2'" ).arg( agents.join( ", " ) ).arg( attributes.nContamination_ ) );
+        QToolTip::add( btn, tools::translate( "InfoEventsWidget", "NBC: contamination of type '%1' level '%2'" ).arg( agents.join( ", " ) ).arg( attributes.nContamination_ ) );
     }
     SetShown();
 }

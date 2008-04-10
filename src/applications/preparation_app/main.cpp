@@ -15,8 +15,8 @@
 namespace
 {
     ////
-    static const QString locale = "_en";
-//    static const QString locale = "_fr";
+//    static const QString locale = "_en";
+    static const QString locale = "_fr";
     ////
 
     void PureHandler()

@@ -15,6 +15,13 @@
     </message>
 </context>
 <context>
+    <name>AgentPositions</name>
+    <message>
+        <source>Info/Position</source>
+        <translation>Info/Position</translation>
+    </message>
+</context>
+<context>
     <name>AgentsModelChecker</name>
     <message>
         <source>Units model</source>
@@ -63,7 +70,7 @@
     </message>
     <message>
         <source>Info/Crossing site attributes/Build river banks</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de site de franchissement/Aménagement des rives</translation>
     </message>
 </context>
 <context>
@@ -253,11 +260,11 @@
     <name>MineAttributes</name>
     <message>
         <source>Info/Mine parameters/Activity time</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Paramètres des mines/Durée d&apos;activité</translation>
     </message>
     <message>
         <source>Info/Mine parameters/Density</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Paramètres des mines/Densité</translation>
     </message>
 </context>
 <context>
@@ -287,7 +294,7 @@
     <name>NBCAttributes</name>
     <message>
         <source>Info/NBC attributes/NBC agent</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs NBC/Agent NBC</translation>
     </message>
 </context>
 <context>
@@ -318,7 +325,7 @@
     </message>
     <message>
         <source>Build river banks:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aménagement des rives:</translation>
     </message>
     <message>
         <source>Logistic route</source>
@@ -346,7 +353,7 @@
     </message>
     <message>
         <source>Activity time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée d&apos;activité:</translation>
     </message>
     <message>
         <source>Density:</source>
@@ -414,7 +421,7 @@
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Obstacle de manoeuvre activé:</translation>
     </message>
     <message>
         <source>Info/Obstacle type</source>
@@ -422,7 +429,7 @@
     </message>
     <message>
         <source>Info/Reserved obstacle activated</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Obstacle de manoeuvre activé</translation>
     </message>
 </context>
 <context>
@@ -445,7 +452,7 @@
     </message>
     <message>
         <source>Info/Mood</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Moral</translation>
     </message>
 </context>
 <context>
@@ -506,11 +513,11 @@ Vous ne pourrez pas donner d&apos;ordres à ces unités lors de la simulation.
     <name>RotaAttributes</name>
     <message>
         <source>Info/ROTA attributes/Danger level</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs ROTA/Niveau de danger</translation>
     </message>
     <message>
         <source>Info/ROTA attributes/Agents</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs ROTA/Agents</translation>
     </message>
 </context>
 <context>
@@ -528,15 +535,15 @@ Vous ne pourrez pas donner d&apos;ordres à ces unités lors de la simulation.
     <name>SupplyStates</name>
     <message>
         <source>Logistic/Supply/Quotas</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique/Ravitaillement/Quotas</translation>
     </message>
     <message>
         <source>/&lt;Dotations&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>/&lt;Dotations&gt;</translation>
     </message>
     <message>
         <source>Logistic/Supply/Superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique/Ravitaillement/Supérieur</translation>
     </message>
 </context>
 <context>

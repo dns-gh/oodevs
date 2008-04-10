@@ -67,11 +67,22 @@
     </message>
     <message>
         <source>Install package</source>
-        <translation type="unfinished"></translation>
+        <translation>Installer un package</translation>
     </message>
     <message>
         <source>Install a data package</source>
-        <translation type="unfinished"></translation>
+        <translation>Installe un package de données</translation>
+    </message>
+</context>
+<context>
+    <name>AdvancedButton</name>
+    <message>
+        <source>Advanced view &gt;&gt;</source>
+        <translation>Vue avancée &gt;&gt;</translation>
+    </message>
+    <message>
+        <source>Simple view &lt;&lt;</source>
+        <translation>Vus simple &lt;&lt;</translation>
     </message>
 </context>
 <context>
@@ -109,6 +120,29 @@
 %1</source>
         <translation>Le nouvel exercice sera crée dans:
 %1</translation>
+    </message>
+</context>
+<context>
+    <name>DisPluginConfigPanel</name>
+    <message>
+        <source>Enable DIS export</source>
+        <translation>Activer l&apos;export DIS</translation>
+    </message>
+    <message>
+        <source>Host: </source>
+        <translation>Hôte: </translation>
+    </message>
+    <message>
+        <source>Site Id: </source>
+        <translation>Id site: </translation>
+    </message>
+    <message>
+        <source>Application Id: </source>
+        <translation>Id application: </translation>
+    </message>
+    <message>
+        <source>Exercise Id: </source>
+        <translation>Id exercice: </translation>
     </message>
 </context>
 <context>
@@ -194,10 +228,65 @@
     </message>
 </context>
 <context>
+    <name>HlaPluginConfigPanel</name>
+    <message>
+        <source>Enable HLA RPR-FOM export</source>
+        <translation>Activer l&apos;export HLA RPR-FOM</translation>
+    </message>
+    <message>
+        <source>Federation: </source>
+        <translation>Fédération: </translation>
+    </message>
+    <message>
+        <source>Federate name: </source>
+        <translation>Nom du fédéré: </translation>
+    </message>
+</context>
+<context>
+    <name>InstallPackagePanel</name>
+    <message>
+        <source>Package to be installed:</source>
+        <translation>Package à installer:</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
+    </message>
+    <message>
+        <source>Package content:</source>
+        <translation>Contenu du package:</translation>
+    </message>
+    <message>
+        <source>Select a package</source>
+        <translation>Sélectionnez un package</translation>
+    </message>
+    <message>
+        <source>Click &quot;Install package&quot; button to install the content of the package.
+Package will be installed to: %1</source>
+        <translation>Cliquez sur le bouton &quot;Install package&quot; pour installer le contenu du package.
+Le package sera installé dans: %1</translation>
+    </message>
+    <message>
+        <source>Selected file is not a valid SWORD Officer Training package.</source>
+        <translation>Le fichier sélectionné n&apos;est pas un package SWORD Officer Training valide.</translation>
+    </message>
+</context>
+<context>
+    <name>JoinAnalysisPanel</name>
+    <message>
+        <source>Choose the analysis to join:</source>
+        <translation>Choisissez l&apos;analyse à rejoindre:</translation>
+    </message>
+    <message>
+        <source>Exercise number:</source>
+        <translation>Numéro de l&apos;exercice:</translation>
+    </message>
+</context>
+<context>
     <name>JoinExercisePanel</name>
     <message>
         <source>Choose the exercise to join:</source>
-        <translation>Choissisez l&apos;exercice à rejoindre:</translation>
+        <translation>Choisissez l&apos;exercice à rejoindre:</translation>
     </message>
     <message>
         <source>Exercise number:</source>
@@ -205,7 +294,7 @@
     </message>
     <message>
         <source>Choose the session to join:</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez la session à rejoindre:</translation>
     </message>
 </context>
 <context>
@@ -224,7 +313,7 @@
     </message>
     <message>
         <source>Manage</source>
-        <translation type="unfinished"></translation>
+        <translation>Administrer</translation>
     </message>
 </context>
 <context>
@@ -251,7 +340,7 @@
     </message>
     <message>
         <source>Choose the session to restart:</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez la session à redémarrer:</translation>
     </message>
     <message>
         <source>Exercise number:</source>
@@ -286,21 +375,21 @@
     </message>
     <message>
         <source>Choose the session to analyse:</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez la session à analyser:</translation>
     </message>
     <message>
         <source>Start replay session</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer une session de rejeu</translation>
     </message>
     <message>
         <source>The selected exercise has no session to replay.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;exercice sélectionné n&apos;a pas de session à rejouer.</translation>
     </message>
     <message>
         <source>Replay session: %1
 Name: %2
 Description: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejeu de la session: %1 Nom: %2 Description: %3</translation>
     </message>
 </context>
 <context>
@@ -323,27 +412,27 @@ Description: %3</source>
     </message>
     <message>
         <source>Session name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de la session:</translation>
     </message>
     <message>
         <source>Session comments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Commentaires de la session:</translation>
     </message>
     <message>
         <source>The session will be created in directory &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>La session sera créée dans le répertoire &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Select an exercise to start</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez un exercice à démarrer</translation>
     </message>
     <message>
         <source>HLA Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Export HLA</translation>
     </message>
     <message>
         <source>DIS Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Export DIS</translation>
     </message>
 </context>
 <context>

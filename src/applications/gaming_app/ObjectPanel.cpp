@@ -18,15 +18,16 @@
 #include "gaming/ASN_Messages.h"
 #include "clients_kernel/Object_ABC.h"
 
-using namespace gui;
 using namespace kernel;
+
+typedef gui::ObjectPanel MyParent;
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel constructor
 // Created: AGE 2006-09-08
 // -----------------------------------------------------------------------------
-::ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher )
-    : gui::ObjectPanel( parent, panel, controllers, factory )
+ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher )
+    : MyParent( parent, panel, controllers, factory )
     , publisher_( publisher )
 {
     // $$$$ AGE 2006-08-23: tous ces trucs doivent etre identiques au labels utilisés
@@ -75,9 +76,9 @@ using namespace kernel;
                 .AddLabel( tr( "Density:" ) );
 
     Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
-    construction_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
-    valorisation_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Mining:" ) ) );
-    contournement_ = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Bypass:" ) ) );
+    construction_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
+    valorisation_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tr( "Mining:" ) ) );
+    contournement_ = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tr( "Bypass:" ) ) );
 //    prepared_      = dynamic_cast< CheckBoxDisplayer* >( & infos.Item( tr( "Prepared:" ) ) );
 
     QWidget* pSpacer = new QWidget( this );
@@ -95,7 +96,7 @@ using namespace kernel;
 // Name: ObjectPanel destructor
 // Created: AGE 2006-09-08
 // -----------------------------------------------------------------------------
-::ObjectPanel::~ObjectPanel()
+ObjectPanel::~ObjectPanel()
 {
     // NOTHING
 }
@@ -105,7 +106,7 @@ using namespace kernel;
 // Name: ObjectPanel::OnApply
 // Created: AGE 2006-09-08
 // -----------------------------------------------------------------------------
-void ::ObjectPanel::OnApply()
+void ObjectPanel::OnApply()
 {
     const kernel::Object_ABC* object = GetSelected();
     if( object )
@@ -134,7 +135,7 @@ void ::ObjectPanel::OnApply()
 // Name: ObjectPanel::OnCancel
 // Created: AGE 2006-09-08
 // -----------------------------------------------------------------------------
-void ::ObjectPanel::OnCancel()
+void ObjectPanel::OnCancel()
 {
     Update();
 }

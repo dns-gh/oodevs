@@ -19,7 +19,7 @@
 namespace kernel
 {
     class Controller;
-    class Agent_ABC;
+    class Automat_ABC;
     class Displayer_ABC;
 }
 
@@ -38,7 +38,7 @@ class CampAttributes : public kernel::CampAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CampAttributes( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
+             CampAttributes( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
     virtual ~CampAttributes();
     //@}
 
@@ -73,8 +73,8 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
-    kernel::Agent_ABC* tc2_;
+    const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver_;
+    kernel::Automat_ABC* tc2_;
     //@}
 };
 

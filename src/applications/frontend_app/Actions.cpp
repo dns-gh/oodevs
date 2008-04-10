@@ -10,6 +10,7 @@
 #include "frontend_app_pch.h"
 #include "Actions.h"
 #include "resources.h"
+#include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: Actions constructor
@@ -51,9 +52,9 @@ QAction& Actions::CreateAction( const QString& name, const char* cname )
 // -----------------------------------------------------------------------------
 QAction& Actions::CreateTerrain()
 {
-    QAction& result = CreateAction( tr( "Create terrain" ), "Create terrain" );
+    QAction& result = CreateAction( tools::translate( "Actions", "Create terrain" ), "Create terrain" );
     result.setIconSet( MAKE_PIXMAP( terrain_create ) );
-    result.setToolTip( tr( "Import new terrain from VMap, DTED and USRP bases" ) );
+    result.setToolTip( tools::translate( "Actions", "Import new terrain from VMap, DTED and USRP bases" ) );
     return result;
 }
 
@@ -63,9 +64,9 @@ QAction& Actions::CreateTerrain()
 // -----------------------------------------------------------------------------
 QAction& Actions::CreateExercise()
 {
-    QAction& result = CreateAction( tr( "Create exercise" ), "Create exercise" );
+    QAction& result = CreateAction( tools::translate( "Actions", "Create exercise" ), "Create exercise" );
     result.setIconSet( MAKE_PIXMAP( exercise_create ) );
-    result.setToolTip( tr( "Create new exercise using an existing terrain and an existing physical/decisional data set" ) );
+    result.setToolTip( tools::translate( "Actions", "Create new exercise using an existing terrain and an existing physical/decisional data set" ) );
     return result;
 }
 
@@ -75,9 +76,9 @@ QAction& Actions::CreateExercise()
 // -----------------------------------------------------------------------------
 QAction& Actions::EditExercise()
 {
-    QAction& result = CreateAction( tr( "Edit exercise" ), "Edit exercise" );
+    QAction& result = CreateAction( tools::translate( "Actions", "Edit exercise" ), "Edit exercise" );
     result.setIconSet( MAKE_PIXMAP( exercise_edit ) );
-    result.setToolTip( tr( "Change exercise Order of Battle, User Profiles and Weather settings" ) );
+    result.setToolTip( tools::translate( "Actions", "Change exercise Order of Battle, User Profiles and Weather settings" ) );
     return result;
 }
 
@@ -87,9 +88,9 @@ QAction& Actions::EditExercise()
 // -----------------------------------------------------------------------------
 QAction& Actions::StartExercise()
 {
-    QAction& result = CreateAction( tr( "Start exercise" ), "Start exercise" );
+    QAction& result = CreateAction( tools::translate( "Actions", "Start exercise" ), "Start exercise" );
     result.setIconSet( MAKE_PIXMAP( exercise_start ) );
-    result.setToolTip( tr( "Start a new simulation session using an existing exercise" ) );
+    result.setToolTip( tools::translate( "Actions", "Start a new simulation session using an existing exercise" ) );
     return result;
 }
 
@@ -99,9 +100,9 @@ QAction& Actions::StartExercise()
 // -----------------------------------------------------------------------------
 QAction& Actions::RestartExercise()
 {
-    QAction& result = CreateAction( tr( "Restart exercise" ), "Restart exercise" );
+    QAction& result = CreateAction( tools::translate( "Actions", "Restart exercise" ), "Restart exercise" );
     result.setIconSet( MAKE_PIXMAP( exercise_restart ) );
-    result.setToolTip( tr( "Restart a simulation session using an existing checkpoint" ) );
+    result.setToolTip( tools::translate( "Actions", "Restart a simulation session using an existing checkpoint" ) );
     return result;
 }
 
@@ -111,9 +112,9 @@ QAction& Actions::RestartExercise()
 // -----------------------------------------------------------------------------
 QAction& Actions::JoinExercise()
 {
-    QAction& result = CreateAction( tr( "Join exercise" ), "Join exercise" );
+    QAction& result = CreateAction( tools::translate( "Actions", "Join exercise" ), "Join exercise" );
     result.setIconSet( MAKE_PIXMAP( exercise_join ) );
-    result.setToolTip( tr( "Join a simulation session" ) );
+    result.setToolTip( tools::translate( "Actions", "Join a simulation session" ) );
     return result;
 }
 
@@ -123,9 +124,9 @@ QAction& Actions::JoinExercise()
 // -----------------------------------------------------------------------------
 QAction& Actions::StartAnalysis()
 {
-    QAction& result = CreateAction( tr( "Start analysis" ), "Start analysis" );
+    QAction& result = CreateAction( tools::translate( "Actions", "Start analysis" ), "Start analysis" );
     result.setIconSet( MAKE_PIXMAP( analyse_create ) );
-    result.setToolTip( tr( "Start the analysis of a previous simulation session" ) );
+    result.setToolTip( tools::translate( "Actions", "Start the analysis of a previous simulation session" ) );
     return result;
 }
 
@@ -135,9 +136,9 @@ QAction& Actions::StartAnalysis()
 // -----------------------------------------------------------------------------
 QAction& Actions::JoinAnalysis()
 {
-    QAction& result = CreateAction( tr( "Join analysis" ), "Join analysis" );
+    QAction& result = CreateAction( tools::translate( "Actions", "Join analysis" ), "Join analysis" );
     result.setIconSet( MAKE_PIXMAP( analyse_join ) );
-    result.setToolTip( tr( "Join an analysis session" ) );
+    result.setToolTip( tools::translate( "Actions", "Join an analysis session" ) );
     return result;
 }
 
@@ -147,8 +148,8 @@ QAction& Actions::JoinAnalysis()
 // -----------------------------------------------------------------------------
 QAction& Actions::InstallPackage()
 {
-    QAction& result = CreateAction( tr( "Install package" ), "Install package" );
+    QAction& result = CreateAction( tools::translate( "Actions", "Install package" ), "Install package" );
     result.setIconSet( MAKE_PIXMAP( exercise_create ) );
-    result.setToolTip( tr( "Install a data package" ) );
+    result.setToolTip( tools::translate( "Actions", "Install a data package" ) );
     return result;
 }

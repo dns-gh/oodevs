@@ -9,11 +9,11 @@
 
 #include "clients_gui_pch.h"
 #include "RotaPrototype_ABC.h"
-
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/Iterator.h"
 #include "RichLabel.h"
 #include "ValuedListItem.h"
+#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -23,17 +23,17 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 RotaPrototype_ABC::RotaPrototype_ABC( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "ROTA" ) )
+    : ObjectPrototypeAttributes_ABC( parent, tools::translate( "RotaPrototype_ABC", "ROTA" ) )
     , resolver_( resolver )
 {
-    new QLabel( tr( "Danger level:" ), this );
+    new QLabel( tools::translate( "RotaPrototype_ABC", "Danger level:" ), this );
     danger_ = new QSpinBox( 0, 100, 1, this );
 
-    nbcAgentsLabel_ = new RichLabel( tr( "NBC agents:" ), this );
+    nbcAgentsLabel_ = new RichLabel( tools::translate( "RotaPrototype_ABC", "NBC agents:" ), this );
     nbcAgents_ = new QListView( this );
     nbcAgents_->setSelectionMode( QListView::Multi );
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
-    nbcAgents_->addColumn( tr( "Type" ) );
+    nbcAgents_->addColumn( tools::translate( "RotaPrototype_ABC", "Type" ) );
 
     FillTypes();
 }

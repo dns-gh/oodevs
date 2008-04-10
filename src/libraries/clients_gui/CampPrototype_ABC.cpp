@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::CampPrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "CampPrototype_ABC.h"
 #include "moc_CampPrototype_ABC.cpp"

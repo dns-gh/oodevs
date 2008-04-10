@@ -134,11 +134,11 @@ void InfoStatusBar::SetHumanFactors( const HumanFactors& humans )
 {
     show();
     mood_->setPixmap( moodIcons_.at( humans.GetMorale() ) );
-    QToolTip::add( mood_, tr( "Morale: " ) + tools::ToString( humans.GetMorale() ) );
+    QToolTip::add( mood_, tools::translate( "InfoStatusBar", "Morale: " ) + tools::ToString( humans.GetMorale() ) );
     experience_->setPixmap( experienceIcons_.at( humans.GetExperience() ) );
-    QToolTip::add( experience_, tr( "Experience: " ) + tools::ToString( humans.GetExperience() ) );
+    QToolTip::add( experience_, tools::translate( "InfoStatusBar", "Experience: " ) + tools::ToString( humans.GetExperience() ) );
     tiredness_->setPixmap( tirednessIcons_.at( humans.GetTiredness() ) );
-    QToolTip::add( tiredness_, tr( "Tiredness: " ) + tools::ToString( humans.GetTiredness() ) );
+    QToolTip::add( tiredness_, tools::translate( "InfoStatusBar", "Tiredness: " ) + tools::ToString( humans.GetTiredness() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ void InfoStatusBar::SetReinforcements( const Reinforcements& reinforcements )
     if( reinforcements.reinforced_ )
     {
         reinforcing_->setPixmap( reinforcingPixmap_ );    
-        const QString tip = tr( "Reinforcing unit '%1'." ).arg( reinforcements.reinforced_->GetName() );
+        const QString tip = tools::translate( "InfoStatusBar", "Reinforcing unit '%1'." ).arg( reinforcements.reinforced_->GetName() );
         QToolTip::add( reinforcing_, tip );
     }
     else
@@ -162,7 +162,7 @@ void InfoStatusBar::SetReinforcements( const Reinforcements& reinforcements )
     if( !reinforcements.reinforcements_.empty() )
     {
         reinforced_->setPixmap( reinforcedPixmap_ );
-        QString tip = tr( "Reinforced by: " );
+        QString tip = tools::translate( "InfoStatusBar", "Reinforced by: " );
         for( unsigned int i = 0; i < reinforcements.reinforcements_.size(); ++i )
             tip += "\n" + reinforcements.reinforcements_[i]->GetName();
         QToolTip::add( reinforced_, tip );

@@ -13,8 +13,9 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_gui/PropertiesWidget.h"
-#include "clients_gui/TableItemDisplayer.h"
+#include "PropertiesWidget.h"
+#include "TableItemDisplayer.h"
+#include "Tools.h"
 
 using namespace gui;
 
@@ -38,7 +39,7 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controll
     box->setMargin( 5 );
     box->setSpacing( 5 );
 
-    table_ = new gui::PropertiesWidget( controllers_.controller_, box, tr( "Properties" ), factory, displayer_ );
+    table_ = new gui::PropertiesWidget( controllers_.controller_, box, tools::translate( "PropertiesPanel", "Properties" ), factory, displayer_ );
     controllers_.Register( *this );
 }
 

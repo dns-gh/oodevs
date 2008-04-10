@@ -14,23 +14,24 @@
 #include "SupplyStocksListView.h"
 #include "SupplyQuotasListView.h"
 #include "SupplyTransportersListView.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoSupplyDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : InfoDialog< SupplyStates >( parent, controllers, QDialog::tr( "Supply system" ) )
+    : InfoDialog< SupplyStates >( parent, controllers, tools::translate( "InfoSupplyDialog", "Supply system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
-    tabs->addTab( new SupplyConsignsWidget( tabs, controllers, factory ), QDialog::tr( "Consigns" ) );
+    tabs->addTab( new SupplyConsignsWidget( tabs, controllers, factory ), tools::translate( "InfoSupplyDialog", "Consigns" ) );
     QVBox* sqbox = new QVBox( tabs );
     new SupplyStocksListView( sqbox, controllers, factory );
     new SupplyQuotasListView( sqbox, controllers, factory );
-    tabs->addTab( sqbox, QDialog::tr( "Stocks && Quotas" ) );
+    tabs->addTab( sqbox, tools::translate( "InfoSupplyDialog", "Stocks && Quotas" ) );
     QVBox* tbox = new QVBox( tabs );
     new SupplyTransportersListView( tbox, controllers, factory );
-    tabs->addTab( tbox, QDialog::tr( "Transporters" ) );
+    tabs->addTab( tbox, tools::translate( "InfoSupplyDialog", "Transporters" ) );
     new SupplyStatusWidget( RootWidget(), controllers, factory );
 }
 

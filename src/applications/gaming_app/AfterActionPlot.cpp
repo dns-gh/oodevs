@@ -12,6 +12,7 @@
 #include "gaming/AfterActionRequest.h"
 #include "gaming/ASN_Messages.h"
 #include "gaming/Simulation.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ValuedDragObject.h"
 
@@ -33,7 +34,7 @@ AfterActionPlot::AfterActionPlot( QWidget* parent, Controllers& controllers, Pub
     setAcceptDrops( true );
     YAxis().ShowAxis( true );
     YAxis().ShowGrid( true );
-    YAxis().SetAxisCaption( tr( "Value" ).ascii() );
+    YAxis().SetAxisCaption( tools::translate( "AfterActionPlot", "Value" ).ascii() );
     YAxis().ShowTicks( 25 );
     YAxis().ShowTicksValue( true );
     YAxis().SetCaptionMargin( 8 );
@@ -42,7 +43,7 @@ AfterActionPlot::AfterActionPlot( QWidget* parent, Controllers& controllers, Pub
     XAxis().ShowGrid( true );
     XAxis().ShowTicks( 25 );
     XAxis().ShowTicksValue( true );
-    XAxis().SetAxisCaption( tr( "Time (Tick)" ).ascii() );
+    XAxis().SetAxisCaption( tools::translate( "AfterActionPlot","Time (Tick)" ).ascii() );
 
     SetBackgroundColor( Qt::white );
     setMinimumWidth( 320 );

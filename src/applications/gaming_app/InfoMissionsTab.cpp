@@ -14,6 +14,7 @@
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameter_ABC.h"
 #include "gaming/MissionParameters.h"
+#include "gaming/Tools.h"
 #include "icons.h"
 
 // -----------------------------------------------------------------------------
@@ -29,8 +30,8 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
 {
     setMargin( 2 );
     setFrameStyle( QFrame::Plain );
-    AddColumn( tr( "Action" ) );
-    AddColumn( tr( "Value" ) );
+    AddColumn( tools::translate( "InfoMissionsTab", "Action" ) );
+    AddColumn( tools::translate( "InfoMissionsTab", "Value" ) );
     header()->hide();
     controllers_.Register( *this );
 }

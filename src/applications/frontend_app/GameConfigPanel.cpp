@@ -14,6 +14,7 @@
 #include "frontend/CreateSession.h"
 #include "tools/GeneralConfig.h"
 #include "tools/xmlcodecs.h"
+#include "clients_gui/Tools.h"
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qdatetimeedit.h>
@@ -33,10 +34,10 @@ GameConfigPanel::GameConfigPanel( QWidget* parent, const tools::GeneralConfig& c
     setSpacing( 5 );
     QHBox* box = new QHBox( this );
     box->setSpacing( 5 );
-    CreateSimulationPanel( new QGroupBox( 1, Horizontal, tr( "Simulation" ), box ) );
-    QWidget* debugPanel = new QGroupBox( 1, Horizontal, tr( "Debug" ), box );
+    CreateSimulationPanel( new QGroupBox( 1, Horizontal, tools::translate( "GameConfigPanel", "Simulation" ), box ) );
+    QWidget* debugPanel = new QGroupBox( 1, Horizontal, tools::translate( "GameConfigPanel", "Debug" ), box );
     CreateDebugPanel( debugPanel );
-    QWidget* systemPanel = new QGroupBox( 1, Horizontal, tr( "System" ), box );
+    QWidget* systemPanel = new QGroupBox( 1, Horizontal, tools::translate( "GameConfigPanel", "System" ), box );
     CreateSystemPanel( systemPanel );
     {
         box = new QHBox( this );
@@ -65,31 +66,31 @@ QWidget* GameConfigPanel::CreateSimulationPanel( QWidget* parent )
     QHBox* box = new QVBox( parent );
     box->setSpacing( 5 );
     {
-        QGroupBox* time = new QGroupBox( 2, Vertical, tr( "Time" ), box );
+        QGroupBox* time = new QGroupBox( 2, Vertical, tools::translate( "GameConfigPanel", "Time" ), box );
         {
             QHBox* stepBox = new QHBox( time );
-            new QLabel( tr( "Time step:" ), stepBox );
+            new QLabel( tools::translate( "GameConfigPanel", "Time step:" ), stepBox );
             stepSpin_ = new QSpinBox( 1, 100, 1, stepBox );
             stepSpin_->setValue( 10 );
         }
         {
             QHBox* factorBox = new QHBox( time );
-            new QLabel( tr( "Time factor:" ), factorBox );
+            new QLabel( tools::translate( "GameConfigPanel", "Time factor:" ), factorBox );
             factorSpin_ = new QSpinBox( 1, 100, 1, factorBox );
             factorSpin_->setValue( 10 );
         }
     }
     {
-        QGroupBox* checkpoints = new QGroupBox( 2, Vertical, tr( "Checkpoints" ), box );
+        QGroupBox* checkpoints = new QGroupBox( 2, Vertical, tools::translate( "GameConfigPanel", "Checkpoints" ), box );
         {
             QHBox* frequencyBox = new QHBox( checkpoints );
-            new QLabel( tr( "Frequency:" ), frequencyBox );
+            new QLabel( tools::translate( "GameConfigPanel", "Frequency:" ), frequencyBox );
             checkFrequency_ = new QTimeEdit( frequencyBox );
             checkFrequency_->setTime( QTime().addSecs( 3600 ) );
         }
         {
             QHBox* keepBox = new QHBox( checkpoints );
-            new QLabel( tr( "Rotations:" ), keepBox );
+            new QLabel( tools::translate( "GameConfigPanel", "Rotations:" ), keepBox );
             keepSpin_ = new QSpinBox( 1, 100, 1, keepBox );
         }
     }
@@ -105,12 +106,12 @@ QWidget* GameConfigPanel::CreateDebugPanel( QWidget* parent )
     QHBox* box = new QVBox( parent );
     box->setSpacing( 5 );
     {
-        QGroupBox* logs = new QGroupBox( 4, Horizontal, tr( "Logs" ), box );
-        decisionalLogs_ = new QCheckBox( tr( "Decisional" ), logs );
-        pathfindLogs_   = new QCheckBox( tr( "Pathfind" ), logs );
+        QGroupBox* logs = new QGroupBox( 4, Horizontal, tools::translate( "GameConfigPanel", "Logs" ), box );
+        decisionalLogs_ = new QCheckBox( tools::translate( "GameConfigPanel", "Decisional" ), logs );
+        pathfindLogs_   = new QCheckBox( tools::translate( "GameConfigPanel", "Pathfind" ), logs );
     }
     {
-        diaDebugBox_ = new QGroupBox( 1, Vertical, tr( "DIA Debugger" ), box );
+        diaDebugBox_ = new QGroupBox( 1, Vertical, tools::translate( "GameConfigPanel", "DIA Debugger" ), box );
         diaDebugBox_->setCheckable( true );
         diaDebugBox_->setChecked( false );
         diaDebugPort_ = new QSpinBox( 1024, 65535, 1, diaDebugBox_ );
@@ -118,7 +119,7 @@ QWidget* GameConfigPanel::CreateDebugPanel( QWidget* parent )
         connect( diaDebugBox_, SIGNAL( toggled( bool ) ), diaDebugPort_, SLOT( setEnabled( bool ) ) );
     }
     {
-        netConBox_ = new QGroupBox( 1, Vertical, tr( "Network Console" ), box );
+        netConBox_ = new QGroupBox( 1, Vertical, tools::translate( "GameConfigPanel", "Network Console" ), box );
         netConBox_->setCheckable( true );
         netConBox_->setChecked( false );
         netConPort_ = new QSpinBox( 1024, 65535, 1, netConBox_ );
@@ -138,14 +139,14 @@ QWidget* GameConfigPanel::CreateSystemPanel( QWidget* parent )
     box->setSpacing( 5 );
     {
         QHBox* pathThreads = new QHBox( box );
-        new QLabel( tr( "Pathfind threads:" ), pathThreads );
+        new QLabel( tools::translate( "GameConfigPanel", "Pathfind threads:" ), pathThreads );
         pathThreads_ = new QSpinBox( 1, 4, 1, pathThreads );
     }
     {
-        profile_ = new QCheckBox( tr( "Profile" ), box );
+        profile_ = new QCheckBox( tools::translate( "GameConfigPanel", "Profile" ), box );
     }
     {
-        checkOdb_ = new QCheckBox( tr( "Check ODB Composition" ), box );
+        checkOdb_ = new QCheckBox( tools::translate( "GameConfigPanel", "Check ODB Composition" ), box );
     }
     return box;
 }

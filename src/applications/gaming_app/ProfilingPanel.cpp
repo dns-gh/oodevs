@@ -11,6 +11,7 @@
 #include "ProfilingPanel.h"
 #include "StatisticsWidget.h"
 #include "gaming/Network.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 
 #include <sstream>
@@ -34,47 +35,47 @@ ProfilingPanel::ProfilingPanel( QWidget* parent, kernel::Controllers& controller
     {
         QVBox* vBox = new QVBox( this );
         QHBox* box = new QHBox( vBox );
-        new QLabel( tr( "Incoming: " ), box );
+        new QLabel( tools::translate( "ProfilingPanel", "Incoming: " ), box );
         networkTotalReceived_ = new QLabel( box );
         networkReceived_ = new StatisticsWidget( vBox );
 
         box = new QHBox( vBox );
-        new QLabel( tr( "Outgoing: " ), box );
+        new QLabel( tools::translate( "ProfilingPanel", "Outgoing: " ), box );
         networkTotalSent_ = new QLabel( box );
         networkSent_ = new StatisticsWidget( vBox );
-        addTab( vBox, tr( "Network" ) );
+        addTab( vBox, tools::translate( "ProfilingPanel", "Network" ) );
     }
 
     {
         QVBox* vBox = new QVBox( this );
         QHBox* box = new QHBox( vBox );
-        new QLabel( tr( "Memory: " ), box );
+        new QLabel( tools::translate( "ProfilingPanel", "Memory: " ), box );
         memoryUsage_ = new QLabel( box );
         memory_ = new StatisticsWidget( vBox );
-        memory_->SetYAxisCaption( tr( "Usage (MiB)" ) );
+        memory_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Usage (MiB)" ) );
 
         box = new QHBox( vBox );
-        new QLabel( tr( "Virtual memory: " ), box );
+        new QLabel( tools::translate( "ProfilingPanel", "Virtual memory: " ), box );
         virtualMemoryUsage_ = new QLabel( box );
         virtualMemory_ = new StatisticsWidget( vBox );
-        virtualMemory_->SetYAxisCaption( tr( "Usage (MiB)" ) );
-        addTab( vBox, tr( "Memory" ) );
+        virtualMemory_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Usage (MiB)" ) );
+        addTab( vBox, tools::translate( "ProfilingPanel", "Memory" ) );
     }
 
     {
         QVBox* vBox = new QVBox( this );
         QHBox* box = new QHBox( vBox );
-        new QLabel( tr( "Shorts: " ), box );
+        new QLabel( tools::translate( "ProfilingPanel", "Shorts: " ), box );
         shortPathfindsCount_ = new QLabel( box );
         shortPathfinds_ = new StatisticsWidget( vBox );
-        shortPathfinds_->SetYAxisCaption( tr( "Count" ) );
+        shortPathfinds_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Count" ) );
 
         box = new QHBox( vBox );
-        new QLabel( tr( "Longs: " ), box );
+        new QLabel( tools::translate( "ProfilingPanel", "Longs: " ), box );
         longPathfindsCount_ = new QLabel( box );
         longPathfinds_ = new StatisticsWidget( vBox );
-        longPathfinds_->SetYAxisCaption( tr( "Count" ) );
-        addTab( vBox, tr( "Pathfinds" ) );
+        longPathfinds_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Count" ) );
+        addTab( vBox, tools::translate( "ProfilingPanel", "Pathfinds" ) );
     }
 
     controllers_.Register( *this );

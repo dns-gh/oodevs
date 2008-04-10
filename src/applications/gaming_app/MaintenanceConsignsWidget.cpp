@@ -11,6 +11,7 @@
 #include "MaintenanceConsignsWidget.h"
 #include "gaming/LogMaintenanceConsign.h"
 #include "gaming/MaintenanceStates.h"
+#include "gaming/tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceConsignsWidget constructor
@@ -19,9 +20,9 @@
 MaintenanceConsignsWidget::MaintenanceConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticConsignsWidget_ABC< MaintenanceConsignsWidget, LogMaintenanceConsign, LogMaintenanceConsigns >( parent, controllers, factory )
 {
-    AddConsignColumn( QVBox::tr( "Equipment:" ) );
-    AddConsignColumn( QVBox::tr( "Breakdown:" ) );
-    AddConsignColumn( QVBox::tr( "State:" ) );
+    AddConsignColumn( tools::translate( "MaintenanceConsignsWidget", "Equipment:" ) );
+    AddConsignColumn( tools::translate( "MaintenanceConsignsWidget", "Breakdown:" ) );
+    AddConsignColumn( tools::translate( "MaintenanceConsignsWidget", "State:" ) );
 }
 
 // -----------------------------------------------------------------------------

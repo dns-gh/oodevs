@@ -12,6 +12,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_gui/ValuedDragObject.h"
+#include "preparation/Tools.h"
 
 using namespace kernel;
 
@@ -25,7 +26,7 @@ PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Contr
     , types_( types )
 {
     setMinimumSize( 1, 1 );
-    addColumn( tr( "Population type" ) );
+    addColumn( tools::translate( "PopulationTypesListView", "Population type" ) );
     setRootIsDecorated( true );
     header()->hide();
     setSorting( -1 );

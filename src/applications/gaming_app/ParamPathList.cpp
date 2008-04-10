@@ -14,6 +14,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionParameterPathList.h"
+#include "gaming/Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -59,5 +60,5 @@ void ParamPathList::CommitTo( ActionParameterContainer_ABC& action ) const
 // -----------------------------------------------------------------------------
 Param_ABC* ParamPathList::CreateElement()
 {
-    return new ParamPath( this, OrderParameter( QObject::tr( "Route %1" ).arg( ++count_ ).ascii(), "path", false ), layer_, converter_, entity_ );
+    return new ParamPath( this, OrderParameter( tools::translate( "ParamPathList", "Route %1" ).arg( ++count_ ).ascii(), "path", false ), layer_, converter_, entity_ );
 }

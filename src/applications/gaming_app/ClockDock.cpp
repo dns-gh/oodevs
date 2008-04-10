@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ClockDock.h"
 #include "ClockWidget.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ClockDock constructor
@@ -22,7 +23,7 @@ ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers, const S
     setWidget( new ClockWidget( this, controllers, simulation ) );
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
-    setCaption( QDockWindow::tr( "Clock" ) );
+    setCaption( tools::translate( "ClockDock","Clock" ) );
 }
 
 // -----------------------------------------------------------------------------

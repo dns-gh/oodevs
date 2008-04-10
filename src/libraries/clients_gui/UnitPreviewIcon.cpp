@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::UnitPreviewIcon */
+
 #include "clients_gui_pch.h"
 #include "UnitPreviewIcon.h"
 #include "moc_UnitPreviewIcon.cpp"

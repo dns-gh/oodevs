@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "PopulationPanel.h"
-
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
@@ -19,6 +18,7 @@
 #include "LabelDisplayer.h"
 #include "ValuedListItem.h"
 #include "ListDisplayer.h"
+#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -28,22 +28,22 @@ using namespace gui;
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC ( parent, panel, tr( "Population state" ) )
+    : InfoPanel_ABC ( parent, panel, tools::translate( "PopulationPanel", "Population state" ) )
     , controllers_  ( controllers )
     , selected_     ( controllers )
 {
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( tr( "Information" ) )
-                .AddLabel( tr( "Name:" ), true )
-                .AddLabel( tr( "Alive people:" ) )
-                .AddLabel( tr( "Dead people:" ) );
+    display_->AddGroup( tools::translate( "PopulationPanel", "Information" ) )
+                .AddLabel( tools::translate( "PopulationPanel", "Name:" ), true )
+                .AddLabel( tools::translate( "PopulationPanel", "Alive people:" ) )
+                .AddLabel( tools::translate( "PopulationPanel", "Dead people:" ) );
 
     pPartsListView_ = new ListDisplayer< PopulationPanel >( this, *this, factory );
-    pPartsListView_->AddColumn( tr( "Chunks" ) )
-                    .AddColumn( tr( "Alive" ) )
-                    .AddColumn( tr( "Dead" ) )
-                    .AddColumn( tr( "Mood" ) )
-                    .AddColumn( tr( "Alive density" ) );
+    pPartsListView_->AddColumn( tools::translate( "PopulationPanel", "Chunks" ) )
+                    .AddColumn( tools::translate( "PopulationPanel", "Alive" ) )
+                    .AddColumn( tools::translate( "PopulationPanel", "Dead" ) )
+                    .AddColumn( tools::translate( "PopulationPanel", "Mood" ) )
+                    .AddColumn( tools::translate( "PopulationPanel", "Alive density" ) );
 
     controllers_.Register( *this );
 }
@@ -104,11 +104,11 @@ void PopulationPanel::DisplayParts( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( tr( "Chunks" ), part.GetName() )
-             .Display( tr( "Alive" ), part.GetLivingHumans() )
-             .Display( tr( "Dead" ), part.GetDeadHumans() )
-             .Display( tr( "Mood" ), part.GetAttitude() )
-             .Display( tr( "Alive density" ), part.GetDensity() );
+    displayer.Display( tools::translate( "PopulationPanel", "Chunks" ), part.GetName() )
+             .Display( tools::translate( "PopulationPanel", "Alive" ), part.GetLivingHumans() )
+             .Display( tools::translate( "PopulationPanel", "Dead" ), part.GetDeadHumans() )
+             .Display( tools::translate( "PopulationPanel", "Mood" ), part.GetAttitude() )
+             .Display( tools::translate( "PopulationPanel", "Alive density" ), part.GetDensity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,10 +119,10 @@ void PopulationPanel::NotifyUpdated( const Population_ABC& p )
 {
     if( ! IsVisible() || selected_ != &p )
         return;
-    display_->Group( tr( "Information" ) )
-                .Display( tr( "Name:" ), p )
-                .Display( tr( "Alive people:" ), p.GetLivingHumans() )
-                .Display( tr( "Dead people:" ),  p.GetDeadHumans() );
+    display_->Group( tools::translate( "PopulationPanel", "Information" ) )
+                .Display( tools::translate( "PopulationPanel", "Name:" ), p )
+                .Display( tools::translate( "PopulationPanel", "Alive people:" ), p.GetLivingHumans() )
+                .Display( tools::translate( "PopulationPanel", "Dead people:" ),  p.GetDeadHumans() );
     DisplayParts( p );
 }
 

@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "TimelinePanel.h"
 #include "TimelineWidget.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: TimelinePanel constructor
@@ -19,7 +20,7 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     : QDockWindow( parent )
 {
     setResizeEnabled( true );
-    setCaption( QDockWindow::tr( "Actions timeline" ) );
+    setCaption( tools::translate( "TimelinePanel", "Actions timeline" ) );
     setCloseMode( QDockWindow::Always );
     QVBox* box = new QVBox( this );
     new TimelineWidget( box, controllers, scheduler );

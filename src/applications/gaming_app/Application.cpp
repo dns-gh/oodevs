@@ -40,7 +40,7 @@ Application::Application( int argc, char** argv, const QString& locale, const Fl
     , mainWindow_ ( 0 )
     , license_( license )
 {
-    AddTranslator( locale, "qt_" );
+    AddTranslator( locale, "qt" );
     AddTranslator( locale, "ENT" );
     AddTranslator( locale, "clients_kernel" );
     AddTranslator( locale, "clients_gui" );

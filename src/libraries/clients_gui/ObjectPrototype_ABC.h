@@ -93,6 +93,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual void NotifyUpdated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void showEvent( QShowEvent* );

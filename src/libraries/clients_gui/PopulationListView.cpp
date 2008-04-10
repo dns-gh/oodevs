@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::PopulationListView */
+
 #include "clients_gui_pch.h"
 #include "PopulationListView.h"
-
 #include "moc_PopulationListView.cpp"
-
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Controllers.h"

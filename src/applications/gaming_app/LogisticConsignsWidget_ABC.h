@@ -17,6 +17,7 @@
 #include "clients_gui/ListDisplayer.h"
 #include "clients_gui/SubItemDisplayer.h"
 #include "gaming/LogisticConsigns.h"
+#include "gaming/Tools.h"
 
 namespace gui
 {
@@ -95,19 +96,19 @@ LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::LogisticCon
     , selected_( controllers )
 {
     pConsignListView_ = new gui::ListDisplayer< ConcreteDisplayer >( this, (ConcreteDisplayer&)*this, factory );
-    pConsignListView_->AddColumn( tr( "Logistic requests" ) );
+    pConsignListView_->AddColumn( tools::translate( "LogisticConsignsWidget_ABC", "Logistic requests" ) );
     pConsignListView_->AddColumn( "" );
     pConsignListView_->setResizeMode( QListView::AllColumns );
 
     pConsignHandledListView_ = new gui::ListDisplayer< ConcreteDisplayer >( this, (ConcreteDisplayer&)*this, factory );
-    pConsignHandledListView_->AddColumn( tr( "Processing consigns" ) );
+    pConsignHandledListView_->AddColumn( tools::translate( "LogisticConsignsWidget_ABC", "Processing consigns" ) );
     pConsignHandledListView_->AddColumn( "" );
     pConsignHandledListView_->setResizeMode( QListView::AllColumns );
 
-    logDisplay_ = new gui::SubItemDisplayer( tr( "Consign:" ), factory );
-    logDisplay_->AddChild( tr( "Instruction:" ) )
-                .AddChild( tr( "Consumer:" ) )
-                .AddChild( tr( "Handler:" ) );
+    logDisplay_ = new gui::SubItemDisplayer( tools::translate( "LogisticConsignsWidget_ABC", "Consign:" ), factory );
+    logDisplay_->AddChild( tools::translate( "LogisticConsignsWidget_ABC", "Instruction:" ) )
+                .AddChild( tools::translate( "LogisticConsignsWidget_ABC", "Consumer:" ) )
+                .AddChild( tools::translate( "LogisticConsignsWidget_ABC", "Handler:" ) );
     controllers_.Register( *this );
 }
 

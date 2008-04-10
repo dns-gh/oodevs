@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: CampAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CampAttributes::CampAttributes( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver )
+CampAttributes::CampAttributes( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
     , tc2_( 0 )

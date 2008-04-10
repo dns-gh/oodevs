@@ -11,6 +11,7 @@
 #include "HlaPluginConfigPanel.h"
 #include "tools/GeneralConfig.h"
 #include "frontend/CreateSession.h"
+#include "clients_gui/Tools.h"
 #include <qlineedit.h>
 
 // -----------------------------------------------------------------------------
@@ -21,15 +22,15 @@ HlaPluginConfigPanel::HlaPluginConfigPanel( QWidget* parent, const tools::Genera
     : QHBox( parent )
     , config_( config )
 {
-    box_ = new QGroupBox( 2, Horizontal, tr( "Enable HLA RPR-FOM export" ), this );
+    box_ = new QGroupBox( 2, Horizontal, tools::translate( "HlaPluginConfigPanel", "Enable HLA RPR-FOM export" ), this );
     box_->setCheckable( true );
     box_->setChecked( false );
     {
-        new QLabel( tr( "Federation: " ), box_ );
+        new QLabel( tools::translate( "HlaPluginConfigPanel", "Federation: " ), box_ );
         federation_ = new QLineEdit( "MyFederation", box_ );
     }
     {
-        new QLabel( tr( "Federate name: " ), box_ );
+        new QLabel( tools::translate( "HlaPluginConfigPanel", "Federate name: " ), box_ );
         name_ = new QLineEdit( "Sword Officer Training", box_ );
     }
 }

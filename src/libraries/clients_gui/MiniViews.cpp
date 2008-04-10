@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::MiniViews */
+
 #include "clients_gui_pch.h"
 #include "MiniViews.h"
 #include "moc_MiniViews.cpp"

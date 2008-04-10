@@ -75,6 +75,17 @@
     </message>
 </context>
 <context>
+    <name>AdvancedButton</name>
+    <message>
+        <source>Advanced view &gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simple view &lt;&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CreateExercisePanel</name>
     <message>
         <source>New exercise name:</source>
@@ -107,6 +118,29 @@
     <message>
         <source>The new exercise will be created in:
 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DisPluginConfigPanel</name>
+    <message>
+        <source>Enable DIS export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Site Id: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Application Id: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exercise Id: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -189,6 +223,60 @@
     </message>
     <message>
         <source>Check ODB Composition</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HlaPluginConfigPanel</name>
+    <message>
+        <source>Enable HLA RPR-FOM export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Federation: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Federate name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InstallPackagePanel</name>
+    <message>
+        <source>Package to be installed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package content:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click &quot;Install package&quot; button to install the content of the package.
+Package will be installed to: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected file is not a valid SWORD Officer Training package.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>JoinAnalysisPanel</name>
+    <message>
+        <source>Choose the analysis to join:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exercise number:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

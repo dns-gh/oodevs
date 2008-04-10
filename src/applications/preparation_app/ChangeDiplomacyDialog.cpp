@@ -113,8 +113,6 @@ void ChangeDiplomacyDialog::Reject()
 void ChangeDiplomacyDialog::NotifyCreated( const Team_ABC& team )
 {
     teams_.push_back( &team );
-    
-    
 }
 
 // -----------------------------------------------------------------------------

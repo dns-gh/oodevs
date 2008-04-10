@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::LocationEditorToolbar */
+
 #include "clients_gui_pch.h"
 #include "LocationEditorToolbar.h"
 #include "moc_LocationEditorToolbar.cpp"

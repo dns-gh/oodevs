@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "SupplyTransportersListView.h"
+#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: SupplyTransportersListView constructor
@@ -17,11 +18,11 @@
 SupplyTransportersListView::SupplyTransportersListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : SupplyAvailabilitiesListView_ABC( parent, controllers, factory )
 {
-    AddColumn( QListView::tr( "Transporters" ) )
-    .AddColumn( QListView::tr( "Total" ) )
-    .AddColumn( QListView::tr( "Available" ) )
-    .AddColumn( QListView::tr( "Working" ) )
-    .AddColumn( QListView::tr( "Resting" ) );
+    AddColumn( tools::translate( "SupplyTransportersListView", "Transporters" ) )
+    .AddColumn( tools::translate( "SupplyTransportersListView", "Total" ) )
+    .AddColumn( tools::translate( "SupplyTransportersListView", "Available" ) )
+    .AddColumn( tools::translate( "SupplyTransportersListView", "Working" ) )
+    .AddColumn( tools::translate( "SupplyTransportersListView", "Resting" ) );
 }
 
 // -----------------------------------------------------------------------------
