@@ -117,10 +117,10 @@ void MIL_SiteFranchissement::Initialize( xml::xistream& xis )
     MIL_RealObject_ABC::Initialize( xis );
 
     xis >> start( "specific-attributes" )
-            >> attribute( "width", rWidth_ )
-            >> attribute( "depth", rDepth_ )
-            >> attribute( "speed", rCurrentSpeed_ )
-            >> attribute( "construction-needed", bBanksToFitOut_ )
+            >> content( "width", rWidth_ )
+            >> content( "depth", rDepth_ )
+            >> content( "speed", rCurrentSpeed_ )
+            >> content( "construction-needed", bBanksToFitOut_ )
         >> end();
 
     if( rWidth_ <= 0. )
