@@ -11,6 +11,8 @@
 #include "GearthPlugin.h"
 #include "ConnectorFacade.h"
 #include "dispatcher/Config.h"
+#include "game_asn/Messenger.h"
+#include "tools/MessageDispatcher_ABC.h"
 
 using namespace gearth;
 
@@ -18,9 +20,10 @@ using namespace gearth;
 // Name: GearthPlugin constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-GearthPlugin::GearthPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis)
+GearthPlugin::GearthPlugin( dispatcher::Model& model, tools::MessageDispatcher_ABC& dispatcher, const dispatcher::Config& config, xml::xistream& xis)
     : facade_ ( new ConnectorFacade( config, model, xis ) )
 {
+    dispatcher.RegisterMessage( *this, &GearthPlugin::OnReceiveMessengerToClient );
     // NOTHING
 }
     
@@ -41,6 +44,16 @@ void GearthPlugin::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
     facade_->Receive( asnMsg );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GearthPlugin::OnReceiveMessengerToClient
+// Created: RDS 2008-04-10
+// -----------------------------------------------------------------------------
+void GearthPlugin::OnReceiveMessengerToClient(const std::string& str, const ASN1T_MsgsMessengerToClient& asnMsg)
+{
+    facade_->OnReceiveMessengerToClient(str, asnMsg);
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: GearthPlugin::NotifyClientAuthenticated

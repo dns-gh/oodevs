@@ -11,6 +11,7 @@
 #define __gearth_ConnectorFacade_h_
 
 #include "game_asn/Simulation.h"
+#include "game_asn/Messenger.h"
 #include "dispatcher/MessageHandler_ABC.h"
 #include <list>
 
@@ -52,6 +53,7 @@ public:
     //! @name Operations
     //@{ 
     virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
+            void OnReceiveMessengerToClient (const std::string&, const ASN1T_MsgsMessengerToClient&);
     //@}
 
 private:
@@ -65,6 +67,7 @@ private:
     //@{        
     void UpdateCurrentState();
     bool IsRelevant( const ASN1T_MsgsSimToClient& asn ) const;
+    bool IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) const;
     //@}
 
 private:

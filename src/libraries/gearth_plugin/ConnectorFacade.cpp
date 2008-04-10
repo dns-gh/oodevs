@@ -51,10 +51,6 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
 {    
     switch ( asn.msg.t )
     {
-    case T_MsgsSimToClient_msg_msg_lima_creation:
-    case T_MsgsSimToClient_msg_msg_lima_destruction:
-    case T_MsgsSimToClient_msg_msg_limit_creation:
-    case T_MsgsSimToClient_msg_msg_limit_destruction:
     case T_MsgsSimToClient_msg_msg_object_creation:
     case T_MsgsSimToClient_msg_msg_object_update:
     case T_MsgsSimToClient_msg_msg_object_destruction:
@@ -76,6 +72,25 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ConnectorFacade::IsRelevant
+// Created: RDS 2008-04-10
+// -----------------------------------------------------------------------------
+bool ConnectorFacade::IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) const
+{
+    switch ( asn.t )
+    {
+    case T_MsgsMessengerToClient_msg_lima_creation:
+    case T_MsgsMessengerToClient_msg_lima_destruction:
+    case T_MsgsMessengerToClient_msg_limit_creation:
+    case T_MsgsMessengerToClient_msg_limit_destruction:
+        return true;
+    default:
+        return false; 
+    }
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ConnectorFacade::Update
@@ -100,6 +115,19 @@ void ConnectorFacade::Receive( const ASN1T_MsgsSimToClient& asnMsg )
         bNeedUpdate_ |= IsRelevant( asnMsg );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ConnectorFacade::OnReceiveMessengerToClient
+// Created: RDS 2008-04-10
+// -----------------------------------------------------------------------------
+void ConnectorFacade::OnReceiveMessengerToClient(const std::string&, const ASN1T_MsgsMessengerToClient& asnMsg)
+{
+    bNeedUpdate_  = IsRelevant( asnMsg );
+}
+
+
+
+
 
 // -----------------------------------------------------------------------------
 // Name: ConnectorFacade::SendCurrentState

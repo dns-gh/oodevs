@@ -100,8 +100,6 @@ void ScopeEditor::Send( const ASN1T_MsgsSimToClient& asn )
     case T_MsgsSimToClient_msg_msg_formation_creation:      Write( *asn.msg.u.msg_formation_creation ); break;
     case T_MsgsSimToClient_msg_msg_automat_creation:        Write( *asn.msg.u.msg_automat_creation ); break;
 
-    case T_MsgsSimToClient_msg_msg_lima_creation:           Write( *asn.msg.u.msg_lima_creation ); break;
-    case T_MsgsSimToClient_msg_msg_limit_creation:          Write( *asn.msg.u.msg_limit_creation ); break;    
     case T_MsgsSimToClient_msg_msg_unit_creation:           Write( *asn.msg.u.msg_unit_creation ); break;
     case T_MsgsSimToClient_msg_msg_unit_attributes:         Write( *asn.msg.u.msg_unit_attributes ); break;
     
@@ -112,6 +110,20 @@ void ScopeEditor::Send( const ASN1T_MsgsSimToClient& asn )
     case T_MsgsSimToClient_msg_msg_report:                  Write( *asn.msg.u.msg_report ); break;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ScopeEditor::Send
+// Created: RDS 2008-04-10
+// -----------------------------------------------------------------------------
+void ScopeEditor::Send( const ASN1T_MsgsMessengerToClient& asn)
+{
+    switch ( asn.t )
+    {
+        case T_MsgsMessengerToClient_msg_lima_creation:           Write( *asn.u.msg_lima_creation ); break;
+        case T_MsgsMessengerToClient_msg_limit_creation:          Write( *asn.u.msg_limit_creation ); break;    
+    }
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ScopeEditor::Write

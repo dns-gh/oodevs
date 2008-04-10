@@ -12,6 +12,7 @@
 
 #include "dispatcher/ClientPublisher_ABC.h"
 #include "game_asn/Simulation.h"
+#include "game_asn/Messenger.h"
 #include <map>
 
 namespace xml
@@ -54,6 +55,7 @@ public:
     virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {};
     virtual void Send( const ASN1T_MsgsReplayToClient&         ) {};
     virtual void Send( const ASN1T_MsgsAarToClient& ) {};
+    virtual void Send( const ASN1T_MsgsMessengerToClient&); 
     //@}
         
 private:
