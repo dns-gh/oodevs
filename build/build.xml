@@ -74,7 +74,7 @@
     <target name="libraries" description="build all libraries"
             depends="library.tools,library.MT_Tools,library.ENT,library.game_asn,library.game_asn,library.simulation_terrain,library.simulation_kernel,
                      library.clients_kernel,library.clients_gui,library.gaming,library.preparation,
-                     library.bml_plugin,library.crossbow_plugin,library.gearth_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,library.3a"/>
+                     library.bml_plugin,library.crossbow_plugin,library.gearth_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,library.messenger_plugin,library.3a"/>
 
     <target name="library.tools" description="build tools static library">
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
@@ -178,6 +178,12 @@
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
+    
+	<target name="library.messenger_plugin" description="build messenger_plugin static library" depends="library.dispatcher">
+        <build-lib name="messenger_plugin" pattern="lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
+        </build-lib>
+    </target>
   
 
     <!--
@@ -207,6 +213,7 @@
                          lib${ant.project.name}_hla_plugin-${platform}-mt
                          lib${ant.project.name}_dis_plugin-${platform}-mt
                          lib${ant.project.name}_tic_plugin-${platform}-mt
+                         lib${ant.project.name}_messenger_plugin-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/masasn"/>
@@ -225,6 +232,7 @@
                          lib${ant.project.name}_hla_plugin-${platform}-mt
                          lib${ant.project.name}_dis_plugin-${platform}-mt
                          lib${ant.project.name}_tic_plugin-${platform}-mt
+                         lib${ant.project.name}_messenger_plugin-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/masasn"/>
@@ -244,6 +252,7 @@
                          lib${ant.project.name}_hla_plugin-${platform}-mt
                          lib${ant.project.name}_dis_plugin-${platform}-mt
                          lib${ant.project.name}_tic_plugin-${platform}-mt
+                         lib${ant.project.name}_messenger_plugin-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt" >
             <syslibset libs="dbghelp,psapi,iphlpapi"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>

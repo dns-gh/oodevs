@@ -36,7 +36,7 @@ TicPluginFactory::~TicPluginFactory()
 // Name: std::auto_ptr< Plugin_ABC > TicPluginFactory::Create
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-std::auto_ptr< Plugin_ABC > TicPluginFactory::Create( const std::string& name, xml::xistream& , const Config& config, Model& model, SimulationPublisher_ABC& , ClientPublisher_ABC& , tools::MessageDispatcher_ABC& ) const
+std::auto_ptr< Plugin_ABC > TicPluginFactory::Create( const std::string& name, xml::xistream& , const Config& config, Model& model, SimulationPublisher_ABC& , ClientPublisher_ABC& , tools::MessageDispatcher_ABC&, dispatcher::LinkResolver_ABC& ) const
 {
     std::auto_ptr< dispatcher::Plugin_ABC > result;
     if( name == "tic" )

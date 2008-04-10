@@ -44,6 +44,8 @@ DECLARE( MsgsOutMaster )
 DECLARE( MsgsInMaster )
 DECLARE( MsgsClientToAar )
 DECLARE( MsgsAarToClient )
+DECLARE( MsgsMessengerToClient )
+DECLARE( MsgsClientToMessenger )
 
 #undef DECLARE
 

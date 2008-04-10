@@ -55,7 +55,7 @@ EntityLayerBase::~EntityLayerBase()
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
 {
-    strategy_.SetAlpha( GetAlpha() );
+    strategy_.SetAlpha( GetAlpha() );       
     for( unsigned i = 0; i < entities_.size(); ++i )
         if( i != selected_ )
             Draw( *entities_[ i ], viewport );

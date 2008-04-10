@@ -119,6 +119,7 @@ namespace
         virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {}
         virtual void Send( const ASN1T_MsgsReplayToClient& ) {}
         virtual void Send( const ASN1T_MsgsAarToClient& ) {}
+        virtual void Send( const ASN1T_MsgsMessengerToClient& ) {}
         Model* model_;
         tools::OutputBinaryWrapper* output_;
         ASN1OCTET* buffer_;

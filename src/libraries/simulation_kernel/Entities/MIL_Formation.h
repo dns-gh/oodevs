@@ -21,7 +21,6 @@ namespace xml
 class MIL_Army;
 class PHY_NatureLevel;
 class MIL_EntityManager;
-class MIL_TacticalLineManager;
 class MIL_Intelligence;
 
 // =============================================================================
@@ -35,7 +34,7 @@ class MIL_Formation
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, unsigned int nID, MIL_Army& army, xml::xistream& xis, MIL_Formation* pParent = 0 );
+             MIL_Formation( MIL_EntityManager& manager, unsigned int nID, MIL_Army& army, xml::xistream& xis, MIL_Formation* pParent = 0 );
              MIL_Formation();
     virtual ~MIL_Formation();
     //@}
@@ -58,8 +57,6 @@ public:
     void RegisterFormation  ( MIL_Formation& formation );
     void UnregisterFormation( MIL_Formation& formation );
 
-    void RegisterIntelligence  ( MIL_Intelligence& intelligence );
-    void UnregisterIntelligence( MIL_Intelligence& intelligence );
     //@}
 
     //! @name Accessors
@@ -83,10 +80,8 @@ private:
 
     //! @name Tools
     //@{
-    void InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, xml::xistream& xis );
+    void InitializeSubordinates( MIL_EntityManager& manager, xml::xistream& xis );
     void CreateAutomat         ( xml::xistream& xis, MIL_EntityManager& manager, MIL_Formation& formation );
-    void CreateLimit           ( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
-    void CreateLima            ( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines );
     //@}
 
 private:
@@ -98,8 +93,6 @@ private:
     typedef std::set< MIL_Automate* >      T_AutomateSet;
     typedef T_AutomateSet::const_iterator  CIT_AutomateSet;
 
-    typedef std::set< MIL_Intelligence* >     T_Intelligences;
-    typedef T_Intelligences::const_iterator CIT_Intelligences;
     //@}
 
 private:
@@ -110,7 +103,6 @@ private:
           std::string       strName_;
           T_FormationSet    formations_;
           T_AutomateSet     automates_;
-          T_Intelligences   intelligences_;
 };
 
 #include "MIL_Formation.inl"

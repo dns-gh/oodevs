@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Types.h"
 #include "game_asn/Simulation.h"
+#include "game_asn/Messenger.h"
 #include "Publisher_ABC.h"
 
 namespace tools
@@ -51,6 +52,8 @@ public:
     virtual void Send( ASN1T_MsgsClientToAuthentication& message );
     virtual void Send( ASN1T_MsgsClientToReplay& message );
     virtual void Send( ASN1T_MsgsClientToAar& message );
+    virtual void Send( ASN1T_MsgsClientToMessenger& message ) ;
+
 
     void SetModel( Model& model );
     //@}
@@ -63,6 +66,7 @@ private:
     void OnReceiveMsgAuthenticationToClient( const std::string& from, const ASN1T_MsgsAuthenticationToClient& message );
     void OnReceiveMsgReplayToClient        ( const std::string& from, const ASN1T_MsgsReplayToClient& message );
     void OnReceiveMsgAarToClient           ( const std::string& from, const ASN1T_MsgsAarToClient& message );
+    void OnReceiveMsgMessengerToClient     ( const std::string& from, const ASN1T_MsgsMessengerToClient& message );
 
     void OnReceiveMsgUnitVisionCones                       ( const ASN1T_MsgUnitVisionCones& message );
     void OnReceiveMsgUnitInterVisibility                   ( const ASN1T_MsgUnitDetection& message );
@@ -134,12 +138,12 @@ private:
     void OnReceiveMsgLogSupplyPushFlowAck       ( const ASN1T_MsgLogSupplyPushFlowAck& asnMsg, unsigned long nCtx );
 
     // Limas / Limits
-    void OnReceiveMsgLimitCreationRequestAck   ( const ASN1T_MsgLimitCreationRequestAck&    asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLimitUpdateRequestAck     ( const ASN1T_MsgLimitUpdateRequestAck&      asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLimitDestructionRequestAck( const ASN1T_MsgLimitDestructionRequestAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLimaCreationRequestAck    ( const ASN1T_MsgLimaCreationRequestAck&    asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLimaUpdateRequestAck      ( const ASN1T_MsgLimaUpdateRequestAck&      asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLimaDestructionRequestAck ( const ASN1T_MsgLimaDestructionRequestAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimitCreationRequestAck   ( const ASN1T_MsgLimitCreationRequestAck&    asnMsg);
+    void OnReceiveMsgLimitUpdateRequestAck     ( const ASN1T_MsgLimitUpdateRequestAck&      asnMsg);
+    void OnReceiveMsgLimitDestructionRequestAck( const ASN1T_MsgLimitDestructionRequestAck& asnMsg);
+    void OnReceiveMsgLimaCreationRequestAck    ( const ASN1T_MsgLimaCreationRequestAck&    asnMsg);
+    void OnReceiveMsgLimaUpdateRequestAck      ( const ASN1T_MsgLimaUpdateRequestAck&      asnMsg);
+    void OnReceiveMsgLimaDestructionRequestAck ( const ASN1T_MsgLimaDestructionRequestAck& asnMsg);
     void OnReceiveMsgLimitCreation      ( const ASN1T_MsgLimitCreation& asnMsg );
     void OnReceiveMsgLimitUpdate        ( const ASN1T_MsgLimitUpdate& asnMsg );
     void OnReceiveMsgLimitDestruction   ( const ASN1T_MsgLimitDestruction& asnMsg );

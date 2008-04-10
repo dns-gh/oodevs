@@ -46,9 +46,9 @@ public:
     virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
 
     virtual std::string       ConvertToMgrs ( const geometry::Point2f& pos ) const;
-    virtual geometry::Point2f ConvertToGeo  ( const geometry::Point2f& pos ) const;
+    virtual geometry::Point2d ConvertToGeo  ( const geometry::Point2f& pos ) const;
     virtual geometry::Point2d ConvertToGeo  ( const geometry::Point2d& pos ) const;
-    virtual geometry::Point2f ConvertFromGeo( const geometry::Point2f& pos ) const;
+    virtual geometry::Point2f ConvertFromGeo( const geometry::Point2d& pos ) const;
     virtual geometry::Point2f ConvertToXY   ( const std::string& mgrs ) const;
     //@}
 

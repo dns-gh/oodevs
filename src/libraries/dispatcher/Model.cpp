@@ -121,13 +121,6 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
 {
     switch( asnMsg.msg.t )
     {
-        case T_MsgsSimToClient_msg_msg_limit_creation_request_ack:
-        case T_MsgsSimToClient_msg_msg_limit_destruction_request_ack:
-        case T_MsgsSimToClient_msg_msg_limit_update_request_ack:
-        case T_MsgsSimToClient_msg_msg_lima_creation_request_ack:
-        case T_MsgsSimToClient_msg_msg_lima_destruction_request_ack:
-        case T_MsgsSimToClient_msg_msg_lima_update_request_ack:
-            break; // NOTHING
         case T_MsgsSimToClient_msg_msg_unit_order_ack:
         case T_MsgsSimToClient_msg_msg_automat_order_ack:
         case T_MsgsSimToClient_msg_msg_population_order_ack:
@@ -167,12 +160,6 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_control_send_current_state_begin:
         case T_MsgsSimToClient_msg_msg_control_send_current_state_end:
             break;  // $$$$ AGE 2007-04-18: messages vides...
-        case T_MsgsSimToClient_msg_msg_limit_creation:                       CreateUpdate( limits_, asnMsg.msg.u.msg_limit_creation->oid, *asnMsg.msg.u.msg_limit_creation ); break;
-        case T_MsgsSimToClient_msg_msg_limit_update:                         limits_.Get    ( asnMsg.msg.u.msg_limit_update->oid ).Update( *asnMsg.msg.u.msg_limit_update ); break;
-        case T_MsgsSimToClient_msg_msg_limit_destruction:                    limits_.Destroy( asnMsg.msg.u.msg_limit_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_lima_creation:                        CreateUpdate( limas_, asnMsg.msg.u.msg_lima_creation->oid, *asnMsg.msg.u.msg_lima_creation ); break;
-        case T_MsgsSimToClient_msg_msg_lima_update:                          limas_ .Get    ( asnMsg.msg.u.msg_lima_update->oid ).Update( *asnMsg.msg.u.msg_lima_update ); break;
-        case T_MsgsSimToClient_msg_msg_lima_destruction:                     limas_ .Destroy( asnMsg.msg.u.msg_lima_destruction ); break;
         case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:              CreateUpdate( agentKnowledges_, asnMsg.msg.u.msg_unit_knowledge_creation->oid, *asnMsg.msg.u.msg_unit_knowledge_creation ); break;
         case T_MsgsSimToClient_msg_msg_unit_knowledge_update:                agentKnowledges_.Get( asnMsg.msg.u.msg_unit_knowledge_update->oid ).Update( *asnMsg.msg.u.msg_unit_knowledge_update ); break;
         case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:           agentKnowledges_.Destroy( asnMsg.msg.u.msg_unit_knowledge_destruction->oid ); break;
@@ -246,9 +233,6 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_update               : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_update->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_update ); break;
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flow_knowledge_destruction->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flow_knowledge_destruction ); break;
         case T_MsgsSimToClient_msg_msg_folk_creation                                  : folkModel_->Update( *asnMsg.msg.u.msg_folk_creation ); break;
-
-        case T_MsgsSimToClient_msg_msg_intelligence_creation    : CreateUpdate( intelligences_, asnMsg.msg.u.msg_intelligence_creation->oid, *asnMsg.msg.u.msg_intelligence_creation ); break;
-        case T_MsgsSimToClient_msg_msg_intelligence_destruction : intelligences_.Destroy( asnMsg.msg.u.msg_intelligence_destruction->oid ); break;
 
 //        default:
 //            assert( false );

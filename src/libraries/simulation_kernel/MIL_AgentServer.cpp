@@ -324,7 +324,6 @@ void MIL_AgentServer::SendMsgEndTick() const
 void MIL_AgentServer::SendStateToNewClient() const
 {    
     pEntityManager_->SendStateToNewClient();
-    pTacticalLineManager_->SendStateToNewClient();
     pFolk_->SendStateToNewClient();
 }
 
@@ -346,7 +345,7 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 //         << pWorkspaceDIA_        // uniquement données statiques
 //         << pMeteoDataManager_    // données statiques + météo locales gérées par MOS
 //         << timerManager_         // pas de données ( MIL_AgentServer::Initialize )
-         << pTacticalLineManager_ 
+//         << pTacticalLineManager_ // plus de limit et de lima
 //         << pPathFindManager_     // pas stockés
 //         << pProfilerMgr_         // pas de données
          << pCheckPointManager_
@@ -367,11 +366,11 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nTimeFactor_
          >> nCurrentTimeStep_
          >> nSimTime_
-         >> pEntityManager_
+         >> pEntityManager_ 
 //         >> pWorkspaceDIA_
 //         >> pMeteoDataManager_
 //         >> timerManager_
-         >> pTacticalLineManager_
+//         >> pTacticalLineManager_
 //         >> pPathFindManager_
 //         >> pProfilerMgr_
          >> pCheckPointManager_

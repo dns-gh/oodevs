@@ -82,7 +82,7 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis ) co
     }
     for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )
     {
-        std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, simulation_, clients_, clients_ ) );
+        std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, simulation_, clients_, clients_ , clients_ ) );
         if( plugin.get() )
             handler_.Add( plugin.release() );
     }

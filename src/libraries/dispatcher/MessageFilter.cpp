@@ -38,15 +38,6 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgsSimToClient& message )
 {
     switch( message.msg.t )
     {
-        case T_MsgsSimToClient_msg_msg_intelligence_creation_request_ack:
-        case T_MsgsSimToClient_msg_msg_intelligence_update_request_ack:
-        case T_MsgsSimToClient_msg_msg_intelligence_destruction_request_ack:
-        case T_MsgsSimToClient_msg_msg_limit_creation_request_ack:
-        case T_MsgsSimToClient_msg_msg_limit_destruction_request_ack:
-        case T_MsgsSimToClient_msg_msg_limit_update_request_ack:
-        case T_MsgsSimToClient_msg_msg_lima_creation_request_ack:
-        case T_MsgsSimToClient_msg_msg_lima_destruction_request_ack:
-        case T_MsgsSimToClient_msg_msg_lima_update_request_ack:
         case T_MsgsSimToClient_msg_msg_unit_magic_action_ack:
         case T_MsgsSimToClient_msg_msg_object_magic_action_ack:
         case T_MsgsSimToClient_msg_msg_population_magic_action_ack:
@@ -98,12 +89,6 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgsSimToClient& message )
             return false;
         case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack:
         case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack:
-        case T_MsgsSimToClient_msg_msg_limit_creation:
-        case T_MsgsSimToClient_msg_msg_limit_update:
-        case T_MsgsSimToClient_msg_msg_limit_destruction:
-        case T_MsgsSimToClient_msg_msg_lima_creation:
-        case T_MsgsSimToClient_msg_msg_lima_update:
-        case T_MsgsSimToClient_msg_msg_lima_destruction:
         case T_MsgsSimToClient_msg_msg_formation_creation:
         case T_MsgsSimToClient_msg_msg_knowledge_group_creation:
         case T_MsgsSimToClient_msg_msg_side_creation:

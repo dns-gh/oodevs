@@ -36,7 +36,7 @@ DisPluginFactory::~DisPluginFactory()
 // Name: std::auto_ptr< Plugin_ABC > DisPluginFactory::Create
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-std::auto_ptr< Plugin_ABC > DisPluginFactory::Create( const std::string& name, xml::xistream& xis, const Config& config, Model& model, SimulationPublisher_ABC& , ClientPublisher_ABC& , tools::MessageDispatcher_ABC& ) const
+std::auto_ptr< Plugin_ABC > DisPluginFactory::Create( const std::string& name, xml::xistream& xis, const Config& config, Model& model, SimulationPublisher_ABC& , ClientPublisher_ABC& , tools::MessageDispatcher_ABC& , dispatcher::LinkResolver_ABC&) const
 {
     std::auto_ptr< Plugin_ABC > result;
     if( name == "dis" )

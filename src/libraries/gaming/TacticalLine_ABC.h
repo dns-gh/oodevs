@@ -75,7 +75,7 @@ protected:
     template< typename Message >
     void Send( Message& message )
     {
-        message.Send( publisher_, (unsigned long)this );
+        message.Send( publisher_);
     }
 
     virtual void DoUpdate( const ASN1T_MsgLimaUpdate& message );

@@ -46,7 +46,7 @@ Intelligence::Intelligence( Controller& controller, IdManager& idManager, const 
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
 Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const Resolver_ABC< HierarchyLevel_ABC, QString >& levels )
-    : EntityImplementation< Intelligence_ABC >( controller, attribute< int >( xis, "id" ), attribute< std::string >( xis, "name" ).c_str() )
+    : EntityImplementation< Intelligence_ABC >( controller, idManager.GetNextId(), attribute< std::string >( xis, "name" ).c_str() )
     , controller_( controller )
     , symbol_    ( attribute< std::string >( xis, "nature" ) )
     , level_     ( &levels.Get( attribute< std::string >( xis, "level" ).c_str() ) )
@@ -54,7 +54,6 @@ Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager
     , karma_     ( &Karma::ResolveId( attribute< std::string >( xis, "karma" ) ) )
 {
     RegisterSelf( *this );
-    idManager.Lock( id_ );
     CreateDictionary( controller );
 }
 
@@ -147,8 +146,7 @@ bool Intelligence::IsMounted() const
 // -----------------------------------------------------------------------------
 void Intelligence::SerializeIntelligences( xml::xostream& xos ) const
 {
-    xos << attribute( "id", id_ )
-        << attribute( "name", GetName().ascii() )
+    xos << attribute( "name", GetName().ascii() )
         << attribute( "karma", karma_->GetId() )
         << attribute( "level", level_->GetName() )
         << attribute( "embarked", mounted_ ) // $$$$ AGE 2008-01-16: odb

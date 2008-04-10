@@ -140,6 +140,17 @@ void ClientsNetworker::Send( const ASN1T_MsgsAarToClient& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Send
+// Created: RDS 2008-04-04
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Send( const ASN1T_MsgsMessengerToClient& asnMsg )
+{
+    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        it->second->Send( asnMsg );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: ClientsNetworker::GetProfile
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------

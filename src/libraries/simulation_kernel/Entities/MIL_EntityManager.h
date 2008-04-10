@@ -155,10 +155,6 @@ public:
     void OnReceiveMsgUnitChangeSuperior          ( const ASN1T_MsgUnitChangeSuperior&               msg, uint nCtx );
     void OnReceiveMsgLogSupplyChangeQuotas       ( const ASN1T_MsgLogSupplyChangeQuotas&            msg, uint nCtx );
     void OnReceiveMsgLogSupplyPushFlow           ( const ASN1T_MsgLogSupplyPushFlow&                msg, uint nCtx );
-
-    void OnReceiveMsgIntelligenceCreationRequest   ( const ASN1T_MsgIntelligenceCreationRequest&    message );
-    void OnReceiveMsgIntelligenceUpdateRequest     ( const ASN1T_MsgIntelligenceUpdateRequest&      message );
-    void OnReceiveMsgIntelligenceDestructionRequest( const ASN1T_MsgIntelligenceDestructionRequest& message );
     //@}
 
     //! @name Population channeling

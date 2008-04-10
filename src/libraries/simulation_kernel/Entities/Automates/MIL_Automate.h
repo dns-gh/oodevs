@@ -215,8 +215,6 @@ private:
     //@{
     void ReadAutomatSubordinate( xml::xistream& xis ); 
     void ReadUnitSubordinate   ( xml::xistream& xis );         
-    void CreateLimit           ( xml::xistream& xis );
-    void CreateLima            ( xml::xistream& xis );
     //@}
 
 protected:

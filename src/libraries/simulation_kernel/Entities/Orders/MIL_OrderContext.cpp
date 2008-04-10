@@ -14,7 +14,6 @@
 #include "MIL_LimaFunction.h"
 #include "TER_LimitData.h"
 #include "MIL_AgentServer.h"
-#include "MIL_TacticalLineManager.h"
 #include "MIL_IntelligenceOrder.h"
 #include "MIL_IntelligenceOrdersVisitor_ABC.h"
 #include "Network/NET_AsnException.h"

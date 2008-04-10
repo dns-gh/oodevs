@@ -14,10 +14,8 @@
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
-#include "MIL_Intelligence.h"
 #include "Network/NET_ASN_Messages.h"
 #include "xeumeuleu/xml.h"
 
@@ -27,7 +25,7 @@ using namespace xml;
 // Name: MIL_Formation constructor
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_Formation::MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, uint nID, MIL_Army& army, xml::xistream& xis, MIL_Formation* pParent )
+MIL_Formation::MIL_Formation( MIL_EntityManager& manager, uint nID, MIL_Army& army, xml::xistream& xis, MIL_Formation* pParent )
     : nID_       ( nID )
     , pArmy_     ( &army )
     , pParent_   ( pParent )
@@ -49,7 +47,7 @@ MIL_Formation::MIL_Formation( MIL_EntityManager& manager, MIL_TacticalLineManage
     else
         pArmy_->RegisterFormation( *this );
 
-    InitializeSubordinates( manager, tacticalLines, xis );
+    InitializeSubordinates( manager, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,14 +83,11 @@ MIL_Formation::~MIL_Formation()
 // Name: MIL_Formation::InitializeSubordinates
 // Created: AGE 2007-08-22
 // -----------------------------------------------------------------------------
-void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, MIL_TacticalLineManager& tacticalLines, xml::xistream& xis )
+void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, xml::xistream& xis )
 {
     assert( pArmy_ );
     xis >> xml::list( "formation"   , manager, &MIL_EntityManager::CreateFormation, *pArmy_, this )
-        >> xml::list( "automat"     , *this,   &MIL_Formation::CreateAutomat, manager, *this )
-        >> xml::list( "limit"       , *this,   &MIL_Formation::CreateLimit, tacticalLines )
-        >> xml::list( "lima"        , *this,   &MIL_Formation::CreateLima,  tacticalLines )
-        >> xml::list( "intelligence", manager, &MIL_EntityManager::CreateIntelligence, *this );
+        >> xml::list( "automat"     , *this,   &MIL_Formation::CreateAutomat, manager, *this ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -102,24 +97,6 @@ void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, MIL_Tact
 void MIL_Formation::CreateAutomat( xml::xistream& xis, MIL_EntityManager& manager, MIL_Formation& formation )
 {
     manager.CreateAutomat( xis, formation );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Formation::CreateLimit
-// Created: AGE 2007-08-23
-// -----------------------------------------------------------------------------
-void MIL_Formation::CreateLimit( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines )
-{
-    tacticalLines.CreateLimit( xis, *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Formation::CreateLima
-// Created: AGE 2007-08-23
-// -----------------------------------------------------------------------------
-void MIL_Formation::CreateLima( xml::xistream& xis, MIL_TacticalLineManager& tacticalLines )
-{
-    tacticalLines.CreateLima( xis, *this );
 }
 
 // =============================================================================
@@ -178,8 +155,7 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const uint )
 
    file >> strName_
         >> formations_
-        >> automates_
-        >> intelligences_;
+        >> automates_ ;
 }
 
 // -----------------------------------------------------------------------------
@@ -196,8 +172,7 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const uint ) const
          << level
          << strName_
          << formations_
-         << automates_
-         << intelligences_;
+         << automates_ ;
 }
 
 // -----------------------------------------------------------------------------
@@ -218,9 +193,6 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
 
     for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
         (**it).WriteODB( xos );
-
-    for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        (*it)->WriteODB( xos );
 
     xos << end(); // formation
 }
@@ -268,9 +240,6 @@ void MIL_Formation::SendCreation() const
 
     for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendCreation();
-
-    for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        (*it)->SendCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -285,6 +254,4 @@ void MIL_Formation::SendFullState() const
     for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendFullState();
 
-    for( CIT_Intelligences it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        (*it)->SendFullState();
 }

@@ -1,0 +1,66 @@
+--
+-- file name : SimMessages.asn
+--
+-- Liste des messages
+--
+
+MessengerMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports                   FROM Base
+        LimaLimiteExports             FROM LimaLimite
+        IntelligenceExports           FROM Intelligence;
+
+MessengerMessagesIncludes ::= SEQUENCE
+{ BaseExports, LimaLimiteExports, IntelligenceExports }
+MessengerMessagesExports  ::= NULL
+-- END includes
+
+
+--
+--
+--
+MsgsMessengerToClient ::= CHOICE
+{
+    -- ACKS
+    msg-limit-creation-request-ack                          MsgLimitCreationRequestAck,
+    msg-limit-destruction-request-ack                       MsgLimitDestructionRequestAck,
+    msg-limit-update-request-ack                            MsgLimitUpdateRequestAck,
+    msg-lima-creation-request-ack                           MsgLimaCreationRequestAck,
+    msg-lima-destruction-request-ack                        MsgLimaDestructionRequestAck,
+    msg-lima-update-request-ack                             MsgLimaUpdateRequestAck,
+
+    msg-intelligence-creation-request-ack                   MsgIntelligenceCreationRequestAck,
+    msg-intelligence-update-request-ack                     MsgIntelligenceUpdateRequestAck,
+    msg-intelligence-destruction-request-ack                MsgIntelligenceDestructionRequestAck,
+
+    -- MESSAGES
+    msg-limit-creation                                      MsgLimitCreation,
+    msg-limit-update                                        MsgLimitUpdate,
+    msg-limit-destruction                                   MsgLimitDestruction,
+    msg-lima-creation                                       MsgLimaCreation,
+    msg-lima-update                                         MsgLimaUpdate,
+    msg-lima-destruction                                    MsgLimaDestruction,
+    
+    msg-intelligence-creation                               MsgIntelligenceCreation,
+    msg-intelligence-update                                 MsgIntelligenceUpdate,
+    msg-intelligence-destruction                            MsgIntelligenceDestruction
+}
+
+MsgsClientToMessenger ::= CHOICE
+{
+    msg-limit-creation-request              MsgLimitCreationRequest,
+    msg-limit-destruction-request           MsgLimitDestructionRequest,
+    msg-limit-update-request                MsgLimitUpdateRequest,
+    msg-lima-creation-request               MsgLimaCreationRequest,
+    msg-lima-destruction-request            MsgLimaDestructionRequest,
+    msg-lima-update-request                 MsgLimaUpdateRequest,
+
+    msg-intelligence-creation-request       MsgIntelligenceCreationRequest,
+    msg-intelligence-update-request         MsgIntelligenceUpdateRequest,
+    msg-intelligence-destruction-request    MsgIntelligenceDestructionRequest
+
+}
+
+
+END

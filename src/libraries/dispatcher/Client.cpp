@@ -73,3 +73,13 @@ void Client::Send( const ASN1T_MsgsAarToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Client::Send
+// Created: RDS 2008-04-04
+// -----------------------------------------------------------------------------
+void Client::Send( const ASN1T_MsgsMessengerToClient& msg )
+{
+    sender_.Send( endpoint_, msg );
+}
+

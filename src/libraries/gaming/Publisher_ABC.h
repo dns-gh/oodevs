@@ -14,6 +14,7 @@
 #include "game_asn/Authentication.h"
 #include "game_asn/Replay.h"
 #include "game_asn/Aar.h"
+#include "game_asn/Messenger.h"
 
 // =============================================================================
 /** @class  Publisher_ABC
@@ -37,6 +38,7 @@ public:
     virtual void Send( ASN1T_MsgsClientToAuthentication& message ) = 0;
     virtual void Send( ASN1T_MsgsClientToReplay& message ) = 0;
     virtual void Send( ASN1T_MsgsClientToAar& message ) = 0;
+    virtual void Send( ASN1T_MsgsClientToMessenger& message ) = 0;
     //@}
 };
 

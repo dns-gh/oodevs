@@ -81,19 +81,10 @@ EnumIntelligenceErrorCode ::= ENUMERATED
    error-invalid-formation         (3)
 }
 
-MsgIntelligenceCreationRequestAck ::= SEQUENCE
-{
-    error-code EnumIntelligenceErrorCode
-}
+MsgIntelligenceCreationRequestAck ::= EnumIntelligenceErrorCode
 
-MsgIntelligenceUpdateRequestAck ::= SEQUENCE
-{
-    error-code EnumIntelligenceErrorCode
-}
+MsgIntelligenceUpdateRequestAck ::= EnumIntelligenceErrorCode
 
-MsgIntelligenceDestructionRequestAck ::= SEQUENCE
-{
-    error-code EnumIntelligenceErrorCode
-}
+MsgIntelligenceDestructionRequestAck ::= EnumIntelligenceErrorCode
 
 END -- Intelligence

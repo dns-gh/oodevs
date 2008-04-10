@@ -73,25 +73,3 @@ void MIL_Formation::UnregisterFormation( MIL_Formation& formation )
     assert( formations_.find( &formation ) != formations_.end() );
     formations_.erase( &formation );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Formation::RegisterIntelligence
-// Created: SBO 2007-10-23
-// -----------------------------------------------------------------------------
-inline
-void MIL_Formation::RegisterIntelligence( MIL_Intelligence& intelligence )
-{
-    assert( intelligences_.find( &intelligence ) == intelligences_.end() );
-    intelligences_.insert( &intelligence );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Formation::UnregisterIntelligence
-// Created: SBO 2007-10-23
-// -----------------------------------------------------------------------------
-inline
-void MIL_Formation::UnregisterIntelligence( MIL_Intelligence& intelligence )
-{
-    assert( intelligences_.find( &intelligence ) != intelligences_.end() );
-    intelligences_.erase( &intelligence );
-}

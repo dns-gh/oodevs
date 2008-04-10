@@ -92,12 +92,6 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& from, const ASN
         case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now        : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow              ( *asnMsg.msg.u.msg_control_checkpoint_save_now               ); break;
         case T_MsgsClientToSim_msg_msg_control_checkpoint_set_frequency   : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency         (  asnMsg.msg.u.msg_control_checkpoint_set_frequency          ); break;
         case T_MsgsClientToSim_msg_msg_control_toggle_vision_cones        : agentServer_                        .SetMustSendUnitVisionCones                 (  asnMsg.msg.u.msg_control_toggle_vision_cones               ); break;
-        case T_MsgsClientToSim_msg_msg_limit_creation_request             : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitCreationRequest           ( *asnMsg.msg.u.msg_limit_creation_request             , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_limit_destruction_request          : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitDestructionRequest        (  asnMsg.msg.u.msg_limit_destruction_request          , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_limit_update_request               : workspace.GetTacticalLineManager  ().OnReceiveMsgLimitUpdateRequest             ( *asnMsg.msg.u.msg_limit_update_request               , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_lima_creation_request              : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaCreationRequest            ( *asnMsg.msg.u.msg_lima_creation_request              , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_lima_destruction_request           : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaDestructionRequest         (  asnMsg.msg.u.msg_lima_destruction_request           , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_lima_update_request                : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaUpdateRequest              ( *asnMsg.msg.u.msg_lima_update_request                , nCtx ); break;            
         case T_MsgsClientToSim_msg_msg_unit_order                         : workspace.GetEntityManager        ().OnReceiveMsgUnitOrder                      ( *asnMsg.msg.u.msg_unit_order                         , nCtx ); break;         
         case T_MsgsClientToSim_msg_msg_automat_order                      : workspace.GetEntityManager        ().OnReceiveMsgAutomatOrder                   ( *asnMsg.msg.u.msg_automat_order                      , nCtx ); break;
         case T_MsgsClientToSim_msg_msg_population_order                   : workspace.GetEntityManager        ().OnReceiveMsgPopulationOrder                ( *asnMsg.msg.u.msg_population_order                   , nCtx ); break;
@@ -114,9 +108,6 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& from, const ASN
         case T_MsgsClientToSim_msg_msg_unit_change_superior               : workspace.GetEntityManager        ().OnReceiveMsgUnitChangeSuperior             ( *asnMsg.msg.u.msg_unit_change_superior               , nCtx ); break;
         case T_MsgsClientToSim_msg_msg_log_supply_change_quotas           : workspace.GetEntityManager        ().OnReceiveMsgLogSupplyChangeQuotas          ( *asnMsg.msg.u.msg_log_supply_change_quotas           , nCtx ); break;
         case T_MsgsClientToSim_msg_msg_log_supply_push_flow               : workspace.GetEntityManager        ().OnReceiveMsgLogSupplyPushFlow              ( *asnMsg.msg.u.msg_log_supply_push_flow               , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_intelligence_creation_request      : workspace.GetEntityManager        ().OnReceiveMsgIntelligenceCreationRequest    ( *asnMsg.msg.u.msg_intelligence_creation_request             ); break;
-        case T_MsgsClientToSim_msg_msg_intelligence_update_request        : workspace.GetEntityManager        ().OnReceiveMsgIntelligenceUpdateRequest      ( *asnMsg.msg.u.msg_intelligence_update_request               ); break;
-        case T_MsgsClientToSim_msg_msg_intelligence_destruction_request   : workspace.GetEntityManager        ().OnReceiveMsgIntelligenceDestructionRequest ( *asnMsg.msg.u.msg_intelligence_destruction_request          ); break;
 
         default:
             assert( false );

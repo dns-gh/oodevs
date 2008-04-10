@@ -61,7 +61,6 @@
 #include "Populations/MIL_PopulationType.h"
 #include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_Population.h"
-#include "Entities/MIL_Intelligence.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "Orders/MIL_LimaFunction.h"
 #include "Orders/MIL_Report.h"
@@ -479,7 +478,7 @@ void MIL_EntityManager::CreateFormation( xml::xistream& xis, MIL_Army& army, MIL
     MIL_Formation*& pFormation = formations_[ id ];
     if( pFormation )
         xis.error( "Formation using this id already exists" );
-    pFormation = new MIL_Formation( *this, MIL_AgentServer::GetWorkspace().GetTacticalLineManager(), id, army, xis, parent );
+    pFormation = new MIL_Formation( *this,  id, army, xis, parent );
 }
 
 // -----------------------------------------------------------------------------
@@ -592,17 +591,6 @@ void MIL_EntityManager::CreatePopulation( xml::xistream& xis, MIL_Army& army )
         xis.error( "Population using this id already exists" );
 
     pPopulation = &pType->InstanciatePopulation( id, army, xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateIntelligence
-// Created: SBO 2007-10-23
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateIntelligence( xml::xistream& xis, MIL_Formation& formation )
-{
-    std::auto_ptr< MIL_Intelligence > intelligence( new MIL_Intelligence( xis, formation ) );
-    intelligences_[intelligence->GetId()] = intelligence.get();
-    intelligence.release();
 }
 
 // =============================================================================
@@ -1314,65 +1302,6 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyP
     ack.Send( nCtx );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgIntelligenceCreationRequest
-// Created: SBO 2007-10-22
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgIntelligenceCreationRequest( const ASN1T_MsgIntelligenceCreationRequest& message )
-{
-    MIL_Formation* formation = FindFormation( message.intelligence.formation );
-    if( !formation )
-    {
-        NET_ASN_MsgIntelligenceCreationRequestAck ack;
-        ack().error_code = EnumIntelligenceErrorCode::error_invalid_formation;
-        ack.Send();
-    }
-    else
-    {
-        std::auto_ptr< MIL_Intelligence > intelligence( new MIL_Intelligence( message, *formation ) );
-        intelligences_[intelligence->GetId()] = intelligence.get();
-        intelligence->Update( message );
-        intelligence.release();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgIntelligenceUpdateRequest
-// Created: SBO 2007-10-23
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgIntelligenceUpdateRequest( const ASN1T_MsgIntelligenceUpdateRequest& message )
-{
-    CIT_IntelligenceMap it = intelligences_.find( message.oid );
-    if( it != intelligences_.end() )
-        it->second->Update( message );
-    else
-    {
-        NET_ASN_MsgIntelligenceCreationRequestAck ack;
-        ack().error_code = EnumIntelligenceErrorCode::error_invalid_oid;
-        ack.Send();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgIntelligenceDestructionRequest
-// Created: SBO 2007-10-22
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgIntelligenceDestructionRequest( const ASN1T_MsgIntelligenceDestructionRequest& message )
-{
-    T_IntelligenceMap::iterator it = intelligences_.find( message.oid );
-    if( it != intelligences_.end() )
-    {
-        it->second->Update( message );
-        delete it->second;
-        intelligences_.erase( it );
-    }
-    else
-    {
-        NET_ASN_MsgIntelligenceCreationRequestAck ack;
-        ack().error_code = EnumIntelligenceErrorCode::error_invalid_oid;
-        ack.Send();
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ChannelPopulations

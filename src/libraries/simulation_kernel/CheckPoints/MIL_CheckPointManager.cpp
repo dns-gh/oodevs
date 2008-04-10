@@ -368,6 +368,7 @@ bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::
 
     MT_LOG_INFO_MSG( "End save checkpoint" );
     NET_ASN_MsgControlCheckPointSaveEnd asnSaveEndMsg;
+    asnSaveEndMsg().name = name.c_str(); 
     asnSaveEndMsg.Send();
 
     return !bNotOk;

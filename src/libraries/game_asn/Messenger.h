@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Simulation_h__
-#define __Simulation_h__
+#ifndef __Messenger_h__
+#define __Messenger_h__
 
 #pragma warning( push, 3 )
 
@@ -17,22 +17,10 @@
 
 #pragma warning( disable : 4800 4996 )
 
-#include "generated/Base.h"
-#include "generated/Army.h"
-#include "generated/KnowledgeGroup.h"
-#include "generated/Formation.h"
-#include "generated/Control.h"
-#include "generated/Fire.h"
-#include "generated/SimMessages.h"
-#include "generated/UnitKnowledge.h"
-#include "generated/Unit.h"
-#include "generated/Automat.h"
-#include "generated/Order.h"
-#include "generated/Object.h"
-#include "generated/Population.h"
-#include "generated/PopulationKnowledge.h"
-#include "generated/Folk.h"
+#include "generated/LimaLimite.h"
+#include "generated/Intelligence.h"
+#include "generated/MessengerMessages.h"
 
 #pragma warning( pop ) 
 
-#endif // __Simulation_h__
+#endif // __Messenger_h__

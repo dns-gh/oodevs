@@ -14,6 +14,7 @@
 #include "game_asn/Authentication.h"
 #include "game_asn/Replay.h"
 #include "game_asn/Aar.h"
+#include "game_asn/Messenger.h" 
 
 namespace dispatcher
 {
@@ -40,6 +41,7 @@ public:
     virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg ) = 0;
     virtual void Send( const ASN1T_MsgsReplayToClient&         msg ) = 0;
     virtual void Send( const ASN1T_MsgsAarToClient&            msg ) = 0;
+    virtual void Send( const ASN1T_MsgsMessengerToClient&      msg ) = 0 ; 
     //@}
 };
 

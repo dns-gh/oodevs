@@ -13,6 +13,7 @@
 #include "Publisher_ABC.h"
 #include "game_asn/Simulation.h"
 #include "game_asn/Aar.h"
+#include "game_asn/Messenger.h"
 
 //=============================================================================
 // ASN ENCODER WRAPPER MACROS
@@ -69,6 +70,42 @@ private:                                                                  \
                                                                           \
 };
                                           
+#define GENERATE_NOCTX_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR, PREFIX )   \
+class ASN_Msg##PREFIX##ASNMSG                                             \
+{                                                                         \
+public:                                                                   \
+    void Send( Publisher_ABC& publisher)                                  \
+    {                                                                     \
+        ASN1T_Msgs##TARGET asnMsg;                                        \
+        asnMsg.t              = T_Msgs##TARGET##_msg_##ASNVAR;            \
+        asnMsg.u.msg_##ASNVAR = &asnTmp;                                  \
+        publisher.Send( asnMsg );                                         \
+    }                                                                     \
+                                                                          \
+    ASN1T_Msg##ASNMSG& operator()() { return asnTmp; }                    \
+private:                                                                  \
+    ASN1T_Msg##ASNMSG asnTmp;                                             \
+                                                                          \
+};
+
+#define GENERATE_NOCTX_NOPTR_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR, PREFIX )   \
+class ASN_Msg##PREFIX##ASNMSG                                             \
+{                                                                         \
+public:                                                                   \
+    void Send( Publisher_ABC& publisher)                                  \
+    {                                                                     \
+        ASN1T_Msgs##TARGET asnMsg;                                        \
+        asnMsg.t              = T_Msgs##TARGET##_msg_##ASNVAR;            \
+        asnMsg.u.msg_##ASNVAR = asnTmp;                                  \
+        publisher.Send( asnMsg );                                         \
+    }                                                                     \
+                                                                          \
+    ASN1T_Msg##ASNMSG& operator()() { return asnTmp; }                    \
+private:                                                                  \
+    ASN1T_Msg##ASNMSG asnTmp;                                             \
+                                                                          \
+};
+
 
 
 //=============================================================================
@@ -94,17 +131,17 @@ GENERATE_ASN_MSG_SENDER( ClientToSim, ControlGlobalMeteo, control_global_meteo )
 GENERATE_ASN_MSG_SENDER( ClientToSim, ControlLocalMeteo, control_local_meteo )
 GENERATE_NOPTR_ASN_MSG_SENDER( ClientToSim, ControlToggleVisionCones, control_toggle_vision_cones )
 
-GENERATE_ASN_MSG_SENDER( ClientToSim, LimitCreationRequest, limit_creation_request )
-GENERATE_NOPTR_ASN_MSG_SENDER( ClientToSim, LimitDestructionRequest, limit_destruction_request )
-GENERATE_ASN_MSG_SENDER( ClientToSim, LimitUpdateRequest, limit_update_request )
+GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, LimitCreationRequest, limit_creation_request )
+GENERATE_NOCTX_NOPTR_ASN_MSG_SENDER( ClientToMessenger, LimitDestructionRequest, limit_destruction_request )
+GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, LimitUpdateRequest, limit_update_request )
 
-GENERATE_ASN_MSG_SENDER( ClientToSim, LimaCreationRequest, lima_creation_request )
-GENERATE_NOPTR_ASN_MSG_SENDER( ClientToSim, LimaDestructionRequest, lima_destruction_request )
-GENERATE_ASN_MSG_SENDER( ClientToSim, LimaUpdateRequest, lima_update_request )
+GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, LimaCreationRequest, lima_creation_request )
+GENERATE_NOCTX_NOPTR_ASN_MSG_SENDER( ClientToMessenger, LimaDestructionRequest, lima_destruction_request )
+GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, LimaUpdateRequest, lima_update_request )
 
-GENERATE_ASN_MSG_SENDER( ClientToSim, IntelligenceCreationRequest   , intelligence_creation_request )
-GENERATE_ASN_MSG_SENDER( ClientToSim, IntelligenceUpdateRequest     , intelligence_update_request )
-GENERATE_ASN_MSG_SENDER( ClientToSim, IntelligenceDestructionRequest, intelligence_destruction_request )
+GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, IntelligenceCreationRequest   , intelligence_creation_request )
+GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, IntelligenceUpdateRequest     , intelligence_update_request )
+GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, IntelligenceDestructionRequest, intelligence_destruction_request )
 
 GENERATE_ASN_MSG_SENDER( ClientToSim, ObjectMagicAction, object_magic_action )
 GENERATE_ASN_MSG_SENDER( ClientToSim, UnitMagicAction, unit_magic_action )

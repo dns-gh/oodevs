@@ -33,21 +33,20 @@ public:
     //@{
     virtual bool IsInBoundaries             ( const geometry::Point2f& point ) const = 0;
     virtual std::string       ConvertToMgrs ( const geometry::Point2f& pos ) const = 0;
-    virtual geometry::Point2f ConvertToGeo  ( const geometry::Point2f& pos ) const = 0;
-    virtual geometry::Point2d ConvertToGeo  ( const geometry::Point2d& pos ) const = 0;
-    virtual geometry::Point2f ConvertFromGeo( const geometry::Point2f& pos ) const = 0;
+    virtual geometry::Point2d ConvertToGeo  ( const geometry::Point2f& pos ) const = 0;
+    virtual geometry::Point2f ConvertFromGeo( const geometry::Point2d& pos ) const = 0;
     virtual geometry::Point2f ConvertToXY   ( const std::string& mgrs ) const = 0;
 
     template< typename T >
     geometry::Point2f ConvertToXY( const T& latlong ) const
     {
-        return ConvertFromGeo( geometry::Point2f( float( latlong.longitude ), float( latlong.latitude ) ) );
+        return ConvertFromGeo( geometry::Point2d( latlong.longitude , latlong.latitude ) );
     }
 
     template< typename T >
     void ConvertToGeo( const geometry::Point2f& pos, T& latlong ) const
     {
-        const geometry::Point2d geo = ConvertToGeo( geometry::Point2d( pos.X(), pos.Y() ) );
+        const geometry::Point2d geo = ConvertToGeo( pos );
         latlong.longitude = geo.X();
         latlong.latitude  = geo.Y();
     }

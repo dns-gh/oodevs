@@ -34,7 +34,6 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
-#include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
@@ -289,30 +288,10 @@ void MIL_Automate::Initialize( xml::xistream& xis )
     pDecision_ = new DEC_AutomateDecision( *this ); //$$$ BULLSHIT : strName_ must be initialized ...
     
     xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
-        >> xml::list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate )
-        >> xml::list( "limit"   , *this, &MIL_Automate::CreateLimit            )
-        >> xml::list( "lima"    , *this, &MIL_Automate::CreateLima             );
+        >> xml::list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate );
         
     if( !pPionPC_ )
         xis.error( "Automat's command post is not defined" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::CreateLimit
-// Created: AGE 2007-08-23
-// -----------------------------------------------------------------------------
-void MIL_Automate::CreateLimit( xml::xistream& xis )
-{
-    MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimit( xis, *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::CreateLima
-// Created: AGE 2007-08-23
-// -----------------------------------------------------------------------------
-void MIL_Automate::CreateLima( xml::xistream& xis )
-{
-    MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLima( xis, *this );
 }
 
 // -----------------------------------------------------------------------------

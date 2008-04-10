@@ -83,7 +83,7 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
         pPositionXYZ_->setText( xypos );
         pPositionMgrs_->setText( converter_.ConvertToMgrs( position ).c_str() );
 
-        const geometry::Point2f latLong( converter_.ConvertToGeo( position ) );
+        const geometry::Point2d latLong( converter_.ConvertToGeo( position ) );
         const QString latlongpos = tr( "Lat:%1 Lon:%2" ).arg( latLong.Y(), 0, 'g', 3 )
                                                         .arg( latLong.X(), 0, 'g', 3 );
 		pPositionLatLong_->setText( latlongpos );

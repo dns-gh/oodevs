@@ -94,8 +94,8 @@ GENERATE_ASN_MSG_SENDER      ( SimToClient, ControlChangeTimeFactorAck      , co
 GENERATE_ASN_MSG_SENDER      ( SimToClient, ControlInformation              , control_information                  )
 GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlGlobalMeteoAck           , control_global_meteo_ack            )
 GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlLocalMeteoAck            , control_local_meteo_ack             )
-GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlCheckPointSaveBegin      , control_checkpoint_save_begin        )
-GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlCheckPointSaveEnd        , control_checkpoint_save_end          )
+GENERATE_EMPTY_ASN_MSG_SENDER ( SimToClient, ControlCheckPointSaveBegin      , control_checkpoint_save_begin        )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, ControlCheckPointSaveEnd        , control_checkpoint_save_end          )
 GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlCheckPointSetFrequencyAck, control_checkpoint_set_frequency_ack )
 GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlCheckPointSaveNowAck     , control_checkpoint_save_now_ack      )
 GENERATE_EMPTY_ASN_MSG_SENDER( SimToClient, ControlSendCurrentStateBegin    , control_send_current_state_begin     )
@@ -150,20 +150,6 @@ GENERATE_ASN_MSG_SENDER( SimToClient, LogSupplyHandlingUpdate          , log_sup
 GENERATE_ASN_MSG_SENDER( SimToClient, LogSupplyHandlingDestruction     , log_supply_handling_destruction      )
 GENERATE_ASN_MSG_SENDER( SimToClient, LogSupplyState                   , log_supply_state                     )
 GENERATE_ASN_MSG_SENDER( SimToClient, LogSupplyQuotas                  , log_supply_quotas                    )
-
-// Context infos
-GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimitCreationRequestAck   , limit_creation_request_ack    )
-GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimitDestructionRequestAck, limit_destruction_request_ack ) 
-GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimitUpdateRequestAck     , limit_update_request_ack      ) 
-GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimaCreationRequestAck    , lima_creation_request_ack     ) 
-GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimaDestructionRequestAck , lima_destruction_request_ack  )
-GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimaUpdateRequestAck      , lima_update_request_ack       )
-GENERATE_ASN_MSG_SENDER      ( SimToClient, LimitCreation             , limit_creation                )
-GENERATE_ASN_MSG_SENDER      ( SimToClient, LimitUpdate               , limit_update                  )
-GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimitDestruction          , limit_destruction             )
-GENERATE_ASN_MSG_SENDER      ( SimToClient, LimaCreation              , lima_creation                 )
-GENERATE_ASN_MSG_SENDER      ( SimToClient, LimaUpdate                , lima_update                   )
-GENERATE_NOPTR_ASN_MSG_SENDER( SimToClient, LimaDestruction           , lima_destruction              )
 
 // Fire
 GENERATE_ASN_MSG_SENDER  ( SimToClient, StartUnitFire      , start_unit_fire       )
@@ -237,13 +223,6 @@ GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFlowKnowledgeUpdate             
 
 GENERATE_ASN_MSG_SENDER( SimToClient, FolkCreation   , folk_creation     )
 GENERATE_ASN_MSG_SENDER( SimToClient, FolkGraphUpdate, folk_graph_update )
-
-GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceCreation             , intelligence_creation )
-GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceUpdate               , intelligence_update )
-GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceDestruction          , intelligence_destruction )
-GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceCreationRequestAck   , intelligence_creation_request_ack )
-GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceUpdateRequestAck     , intelligence_update_request_ack )
-GENERATE_ASN_MSG_SENDER( SimToClient, IntelligenceDestructionRequestAck, intelligence_destruction_request_ack )
 
 #endif // __NET_ASN_Messages_h_
 

@@ -29,7 +29,7 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Limit::DistanceData constructor
+// Name: TER_LimitData::DistanceData constructor
 // Created: AGE 2005-05-12
 // -----------------------------------------------------------------------------
 TER_LimitData::DistanceData::DistanceData( const MT_Vector2D& from, const MT_Vector2D& to )

@@ -109,7 +109,10 @@ MsgControlProfilingInformation ::= SEQUENCE
 
 -- SIM -> MOS
 MsgControlCheckPointSaveBegin ::= NULL
-MsgControlCheckPointSaveEnd   ::= NULL
+MsgControlCheckPointSaveEnd   ::= SEQUENCE
+{
+    name VisibleString 
+}
 MsgControlCheckPointLoadBegin ::= NULL
 MsgControlCheckPointLoadEnd   ::= NULL
 

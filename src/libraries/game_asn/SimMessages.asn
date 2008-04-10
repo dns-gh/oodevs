@@ -8,7 +8,6 @@ SimMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 -- BEGIN includes
 IMPORTS BaseExports                   FROM Base
-        LimaLimiteExports             FROM LimaLimite
         OrderExports                  FROM Order
         ControlExports                FROM Control
         KnowledgeGroupExports         FROM KnowledgeGroup
@@ -26,15 +25,13 @@ IMPORTS BaseExports                   FROM Base
         AutomateExports               FROM Automat
         ArmyExports                   FROM Army
         AuthExports                   FROM Auth
-        FolkExports                   FROM Folk
-        IntelligenceExports           FROM Intelligence;
+        FolkExports                   FROM Folk;
 
 SimMessagesIncludes ::= SEQUENCE
-{ BaseExports, LimaLimiteExports, OrderExports, ControlExports, KnowledgeGroupExports,
+{ BaseExports, OrderExports, ControlExports, KnowledgeGroupExports,
   FormationExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports,
   ObjectKnowledgeExports, PopulationExports, PopulationKnowledgeExports, LogMaintenanceExports,
-  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports, 
-  IntelligenceExports }
+  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports}
 SimMessagesExports  ::= NULL
 -- END includes
 
@@ -48,17 +45,6 @@ MsgsSimToClient ::= SEQUENCE
     msg     CHOICE
     {
         -- ACKS
-        msg-limit-creation-request-ack                          MsgLimitCreationRequestAck,
-        msg-limit-destruction-request-ack                       MsgLimitDestructionRequestAck,
-        msg-limit-update-request-ack                            MsgLimitUpdateRequestAck,
-        msg-lima-creation-request-ack                           MsgLimaCreationRequestAck,
-        msg-lima-destruction-request-ack                        MsgLimaDestructionRequestAck,
-        msg-lima-update-request-ack                             MsgLimaUpdateRequestAck,
-
-        msg-intelligence-creation-request-ack                   MsgIntelligenceCreationRequestAck,
-        msg-intelligence-update-request-ack                     MsgIntelligenceUpdateRequestAck,
-        msg-intelligence-destruction-request-ack                MsgIntelligenceDestructionRequestAck,
-
         msg-unit-order-ack                                      MsgUnitOrderAck,
         msg-automat-order-ack                                   MsgAutomatOrderAck,
         msg-population-order-ack                                MsgPopulationOrderAck,
@@ -95,13 +81,6 @@ MsgsSimToClient ::= SEQUENCE
         msg-control-checkpoint-save-now-ack                     MsgControlCheckPointSaveNowAck,
         msg-control-send-current-state-begin                    MsgControlSendCurrentStateBegin,
         msg-control-send-current-state-end                      MsgControlSendCurrentStateEnd,
-
-        msg-limit-creation                                      MsgLimitCreation,
-        msg-limit-update                                        MsgLimitUpdate,
-        msg-limit-destruction                                   MsgLimitDestruction,
-        msg-lima-creation                                       MsgLimaCreation,
-        msg-lima-update                                         MsgLimaUpdate,
-        msg-lima-destruction                                    MsgLimaDestruction,
 
         msg-formation-creation                                  MsgFormationCreation,
         msg-knowledge-group-creation                            MsgKnowledgeGroupCreation,
@@ -193,11 +172,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-population-flow-knowledge-update                    MsgPopulationFlowKnowledgeUpdate,
 
         msg-folk-creation                                       MsgFolkCreation,
-        msg-folk-graph-update                                   MsgFolkGraphUpdate,
-        
-        msg-intelligence-creation                               MsgIntelligenceCreation,
-        msg-intelligence-update                                 MsgIntelligenceUpdate,
-        msg-intelligence-destruction                            MsgIntelligenceDestruction
+        msg-folk-graph-update                                   MsgFolkGraphUpdate
     }
 }
 
@@ -215,17 +190,6 @@ MsgsClientToSim ::= SEQUENCE
         msg-control-checkpoint-save-now         MsgControlCheckPointSaveNow,
         msg-control-checkpoint-set-frequency    MsgControlCheckPointSetFrequency,
         msg-control-toggle-vision-cones         MsgControlToggleVisionCones,
-
-        msg-limit-creation-request              MsgLimitCreationRequest,
-        msg-limit-destruction-request           MsgLimitDestructionRequest,
-        msg-limit-update-request                MsgLimitUpdateRequest,
-        msg-lima-creation-request               MsgLimaCreationRequest,
-        msg-lima-destruction-request            MsgLimaDestructionRequest,
-        msg-lima-update-request                 MsgLimaUpdateRequest,
-
-        msg-intelligence-creation-request       MsgIntelligenceCreationRequest,
-        msg-intelligence-update-request         MsgIntelligenceUpdateRequest,
-        msg-intelligence-destruction-request    MsgIntelligenceDestructionRequest,
 
         msg-unit-order                          MsgUnitOrder,
         msg-automat-order                       MsgAutomatOrder,

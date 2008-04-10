@@ -1,4 +1,4 @@
-// *****************************************************************************
+    // *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -83,14 +83,14 @@ geometry::Point2f CoordinateConverter::ConvertToXY( const std::string& mgrs ) co
 // Name: CoordinateConverter::ConvertToGeo
 // Created: SBO 2006-04-14
 // -----------------------------------------------------------------------------
-geometry::Point2f CoordinateConverter::ConvertToGeo( const geometry::Point2f& pos ) const
+geometry::Point2d CoordinateConverter::ConvertToGeo( const geometry::Point2f& pos ) const
 {
     static const float r180OverPi = 180.f / std::acos( -1.f );
     const geometry::Point2f translated = pos - translation_;
     planar_.Set( translated.X(), translated.Y() );
     geodetic_.SetCoordinates( planar_ );
-    geometry::Point2f result;
-    result.Set( float( geodetic_.GetLongitude() ) * r180OverPi, float( geodetic_.GetLatitude() ) * r180OverPi );
+    geometry::Point2d result;
+    result.Set( geodetic_.GetLongitude() * r180OverPi, geodetic_.GetLatitude() * r180OverPi );
     return result;
 }
 
@@ -111,7 +111,7 @@ geometry::Point2d CoordinateConverter::ConvertToGeo( const geometry::Point2d& po
 // Name: CoordinateConverter::ConvertFromGeo
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-geometry::Point2f CoordinateConverter::ConvertFromGeo( const geometry::Point2f& pos ) const
+geometry::Point2f CoordinateConverter::ConvertFromGeo( const geometry::Point2d& pos ) const
 {
     static const float rPiOver180 = std::acos( -1.f ) / 180.f;
     geodetic_.Set( pos.Y() * rPiOver180, pos.X() * rPiOver180 );

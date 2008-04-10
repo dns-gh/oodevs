@@ -91,10 +91,6 @@ GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomatChangeKnowledgeGroup      
 GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomatChangeLogisticLinks                    , automat_change_logistic_links                     );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomatChangeSuperiorAck                      , automat_change_superior_ack                       );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, AutomatChangeSuperior                         , automat_change_superior                           );
-GENERATE_ASN_MSG_SENDER         ( SimToClient, LimitCreation                                 , limit_creation                                    );
-GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, LimitDestruction                              , limit_destruction                                 );
-GENERATE_ASN_MSG_SENDER         ( SimToClient, LimaCreation                                  , lima_creation                                     );
-GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, LimaDestruction                               , lima_destruction                                  );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, TeamCreation                                  , side_creation                                     );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, KnowledgeGroupCreation                        , knowledge_group_creation                          );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, FormationCreation                             , formation_creation                                );
@@ -159,9 +155,6 @@ GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationFlowKnowledgeCreation  
 GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationFlowKnowledgeDestruction            , population_flow_knowledge_destruction             );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, PopulationFlowKnowledgeUpdate                 , population_flow_knowledge_update                  );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, FolkCreation                                  , folk_creation                                     );
-GENERATE_ASN_MSG_SENDER         ( SimToClient, IntelligenceCreation                          , intelligence_creation                             );
-GENERATE_ASN_MSG_SENDER         ( SimToClient, IntelligenceUpdate                            , intelligence_update                               );
-GENERATE_ASN_MSG_SENDER         ( SimToClient, IntelligenceDestruction                       , intelligence_destruction                          );
 
 GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, AuthenticationResponse       , authentication_response         );
 GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, ProfileCreation              , profile_creation                );

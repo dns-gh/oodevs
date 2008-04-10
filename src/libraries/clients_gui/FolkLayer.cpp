@@ -169,7 +169,7 @@ namespace
             points.reserve( points.size() + 2 * ( end - start ) );
             for( int i = start; i < end; ++i )
             {
-                const Point2f geodetic( object.padfX[i], object.padfY[i] );
+                const Point2d geodetic( object.padfX[i], object.padfY[i] );
                 const Point2f point = converter.ConvertFromGeo( geodetic );
                 if( i > start )
                     length += points.back().Distance( point );
@@ -206,8 +206,8 @@ void FolkLayer::LoadGraph( const std::string& graph )
 {
     boost::shared_ptr< SHPInfo > shp( SHPOpen( graph.c_str() ,"rb" ), &ShpClose );
     if( ! shp ) return;
-    const Point2f bottomLeft = converter_.ConvertFromGeo( Point2f( shp->adBoundsMin[0], shp->adBoundsMin[1] ) );
-    const Point2f topRight   = converter_.ConvertFromGeo( Point2f( shp->adBoundsMax[0], shp->adBoundsMax[1] ) );
+    const Point2f bottomLeft = converter_.ConvertFromGeo( Point2d( shp->adBoundsMin[0], shp->adBoundsMin[1] ) );
+    const Point2f topRight   = converter_.ConvertFromGeo( Point2d( shp->adBoundsMax[0], shp->adBoundsMax[1] ) );
     box_ = Rectangle2f( bottomLeft, topRight );
     edges_.reserve( shp->nRecords );
     graph_.reserve( shp->nRecords * 4 );

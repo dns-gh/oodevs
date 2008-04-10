@@ -52,9 +52,6 @@ bool SimulationDispatcher::IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg
 {
     switch( asnMsg.msg.t )
     {
-        case T_MsgsSimToClient_msg_msg_limit_destruction:
-        case T_MsgsSimToClient_msg_msg_lima_destruction:
-        case T_MsgsSimToClient_msg_msg_intelligence_destruction:
         case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
         case T_MsgsSimToClient_msg_msg_object_destruction:
         case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:
