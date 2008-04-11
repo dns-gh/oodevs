@@ -204,7 +204,7 @@
             depends="application.selftraining_app,application.frontend_app"/>
 
     <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
-        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,asio,terrain,xeumeuleu,flexlm"
+        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
                    libs="HLA,libFedTime,masalloc,tools,masasn
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -221,7 +221,7 @@
     </target>
 
     <target name="application.dispatcher_app.crossbowed" description="build CSword Dispatcher executable with crossbow plugin" depends="library.dispatcher,library.crossbow_plugin,library.gearth_plugin">
-        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,asio,terrain,xeumeuleu,flexlm" input="dispatcher_app"
+        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm" input="dispatcher_app"
                    libs="HLA,libFedTime,masalloc,tools,masasn
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -241,7 +241,7 @@
     </target>
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher">
-        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,asio,xeumeuleu,flexlm"
+        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm"
                    libs="HLA,libFedTime,masalloc,tools,masasn,population-${platform}-mt
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -264,7 +264,7 @@
     </target>
 
     <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher,library.3a">
-        <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,asio,xeumeuleu,flexlm"
+        <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm"
                    libs="HLA,libFedTime,tools,masasn,
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -300,7 +300,7 @@
     </target>
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
-        <build-app name="gaming_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost,asio,flexlm"
+        <build-app name="gaming_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost,flexlm"
                    libs="masasn,svgl,zipstream,zlib,shapelib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
@@ -314,7 +314,7 @@
     </target>
 
     <target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
-        <build-app name="preparation_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost,asio,flexlm"
+        <build-app name="preparation_app" excludes="**/**_Gen.*" depends="mt,din,terrain,xeumeuleu,qt,boost,flexlm"
                    libs="svgl,zipstream,zlib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
@@ -326,7 +326,7 @@
     </target>
 
     <target name="application.frontend_app" description="build CSword Frontend executable" depends="library.frontend">
-        <build-app name="frontend_app" depends="mt,qt,boost,asio,xeumeuleu,flexlm"
+        <build-app name="frontend_app" depends="mt,qt,boost,xeumeuleu,flexlm"
                    libs="bugtrap,zipstream,zlib,tools
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
@@ -338,7 +338,7 @@
     </target>
 
     <target name="application.selftraining_app" description="build CSword Self-training executable" depends="library.frontend">
-        <build-app name="selftraining_app" depends="mt,qt,boost,asio,xeumeuleu,flexlm" excludes="**/graphics.cpp"
+        <build-app name="selftraining_app" depends="mt,qt,boost,xeumeuleu,flexlm" excludes="**/graphics.cpp"
                    libs="bugtrap,zipstream,zlib,tools
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
@@ -552,7 +552,6 @@
     -->
     <target name="configure" description="initialize local project structure with libraries">
         <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind"/>
-        <update name="asio"/>
         <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Profiler,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>
         <update name="qt" version="3.3.8"/>
         <update name="DIN"/>
