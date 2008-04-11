@@ -464,10 +464,10 @@
         <zip destfile="${run.dir}/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
-        <delete dir="${dist.dir}/unstable/old"/>
-        <move file="${dist.dir}/unstable/current" tofile="${dist.dir}/unstable/old" failonerror="false"/>
-        <mkdir dir="${dist.dir}/unstable/current"/>
-        <zip destfile="${dist.dir}/unstable/current/sword-ot_applications.zip">
+        <delete dir="${dist.dir}/old"/>
+        <move file="${dist.dir}/current" tofile="${dist.dir}/old" failonerror="false"/>
+        <mkdir dir="${dist.dir}/current"/>
+        <zip destfile="${dist.dir}/current/sword-ot_applications.zip">
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/adaptation_app/"  includes="*.exe"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/gaming_app"       includes="*.exe *.pdb *.qm"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/preparation_app"  includes="*.exe *.pdb"/>
@@ -516,8 +516,8 @@
             </zipfileset>
         </zip>
 
-        <zip destfile="${dist.dir}/unstable/current/sword-ot.zip">
-            <zipgroupfileset dir="${dist.dir}/unstable/current" includes="sword-ot_applications.zip"/>
+        <zip destfile="${dist.dir}/current/sword-ot.zip">
+            <zipgroupfileset dir="${dist.dir}/current" includes="sword-ot_applications.zip"/>
             <!-- Cf defaultexcludes : no need of "svn export" -->
             <zipfileset prefix="data/models"   dir="${data.dir}/data/models/main"/>
             <zipfileset prefix="data/terrains" dir="${data.dir}/data/terrains"/>
@@ -528,16 +528,16 @@
 
     <target name="installer" description="create the installer">
         <!-- <nsis todir="${dist.dir}/current" name="sword-ot"      script="sword-ot.nsi"/> -->
-        <nsis todir="${dist.dir}/unstable/current" name="sword-ot-ada"  script="sword-ot-ada.nsi">
+        <nsis todir="${dist.dir}/current" name="sword-ot-ada"  script="sword-ot-ada.nsi">
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
-        <nsis todir="${dist.dir}/unstable/current" name="sword-ot-demo" script="sword-ot-demo.nsi" license="true">
+        <nsis todir="${dist.dir}/current" name="sword-ot-demo" script="sword-ot-demo.nsi" license="true">
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
     </target>
 
     <target name="crossbow-installer" description="create the crossbow installer">
-        <nsis todir="${dist.dir}/unstable/current" name="crossbow_install" script="crossbow.nsi"/>
+        <nsis todir="${dist.dir}/current" name="crossbow_install" script="crossbow.nsi"/>
         <!-- <exec executable="${bin.dir}/RegAsm.exe">
             <arg value="../out/applications/crossbow_app/vc80/Release/Crossbow.dll"/>
             <arg value="/codebase"/>
