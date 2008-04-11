@@ -11,6 +11,7 @@
 #define __DatabasePublisher_h_
 
 #include "game_asn/Simulation.h"
+#include "game_asn/Messenger.h"
 #include "dispatcher/MessageHandler_ABC.h"
 
 namespace xml
@@ -54,6 +55,7 @@ public:
     //! @name Operations
     //@{
     virtual void Receive( const ASN1T_MsgsSimToClient& asn );
+    virtual void Receive( const ASN1T_MsgsMessengerToClient& asn );
     //@}
 
 private:
@@ -71,8 +73,10 @@ private:
     //! @name Helpers
     //@{
     bool IsRelevant( const ASN1T_MsgsSimToClient& asn ) const;
+    bool IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) const;
     void UpdateOnTick( const ASN1T_MsgsSimToClient& asn );
     void UpdateDatabase( const ASN1T_MsgsSimToClient& asn );
+    void UpdateDatabase( const ASN1T_MsgsMessengerToClient& asn );
     void UpdateFolkDatabase( const ASN1T_MsgsSimToClient& asn );
     void UpdateListeners();
     //@}

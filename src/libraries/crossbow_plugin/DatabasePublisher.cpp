@@ -84,8 +84,6 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     {
     case T_MsgsSimToClient_msg_msg_control_begin_tick:
     case T_MsgsSimToClient_msg_msg_control_end_tick:        
-    case T_MsgsSimToClient_msg_msg_lima_destruction:   
-    case T_MsgsSimToClient_msg_msg_limit_destruction:
     case T_MsgsSimToClient_msg_msg_object_update:
     case T_MsgsSimToClient_msg_msg_object_destruction:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_update:
@@ -96,8 +94,6 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
         return modelLoaded_;
     case T_MsgsSimToClient_msg_msg_control_send_current_state_begin:
     case T_MsgsSimToClient_msg_msg_control_send_current_state_end:
-    case T_MsgsSimToClient_msg_msg_lima_creation:   
-    case T_MsgsSimToClient_msg_msg_limit_creation:    
     case T_MsgsSimToClient_msg_msg_object_creation:
     case T_MsgsSimToClient_msg_msg_formation_creation:
     case T_MsgsSimToClient_msg_msg_automat_creation:
@@ -114,6 +110,24 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DatabasePublisher::IsRelevant
+// Created: RDS 2008-04-11
+// -----------------------------------------------------------------------------
+bool DatabasePublisher::IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) const
+{
+    switch ( asn.t )
+    {
+    case T_MsgsMessengerToClient_msg_lima_destruction:   
+    case T_MsgsMessengerToClient_msg_limit_destruction:
+        return modelLoaded_;
+    case T_MsgsMessengerToClient_msg_lima_creation:   
+    case T_MsgsMessengerToClient_msg_limit_creation:    
+        return true; 
+    }
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: DatabasePublisher::Receive
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
@@ -126,6 +140,20 @@ void DatabasePublisher::Receive( const ASN1T_MsgsSimToClient& asn )
     UpdateDatabase( asn );
     UpdateFolkDatabase( asn );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DatabasePublisher::Receive
+// Created: RDS 2008-04-11
+// -----------------------------------------------------------------------------
+void DatabasePublisher::Receive( const ASN1T_MsgsMessengerToClient& asn )
+{
+    if( !IsRelevant( asn ) )
+        return;
+
+    UpdateDatabase( asn );
+
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher::UpdateOnTick
@@ -164,13 +192,6 @@ void DatabasePublisher::UpdateDatabase( const ASN1T_MsgsSimToClient& asn )
     case T_MsgsSimToClient_msg_msg_formation_creation:          databaseUpdater_->Update( *asn.msg.u.msg_formation_creation ); break;
     case T_MsgsSimToClient_msg_msg_automat_creation:            databaseUpdater_->Update( *asn.msg.u.msg_automat_creation ); break;
 
-    case T_MsgsSimToClient_msg_msg_lima_creation:               databaseUpdater_->Update( *asn.msg.u.msg_lima_creation ); break;
-//    case T_MsgsSimToClient_msg_msg_lima_update:                 databaseUpdater_->Update( *asn.msg.u.msg_lima_update ); break;
-//    case T_MsgsSimToClient_msg_msg_lima_destruction:            databaseUpdater_->Update( asn.msg.u.msg_lima_destruction ); break;
-
-    case T_MsgsSimToClient_msg_msg_limit_creation:              databaseUpdater_->Update( *asn.msg.u.msg_limit_creation ); break;
-//    case T_MsgsSimToClient_msg_msg_limit_destruction:           databaseUpdater_->Update( asn.msg.u.msg_lima_destruction ); break;
-
     case T_MsgsSimToClient_msg_msg_unit_creation:               databaseUpdater_->Update( *asn.msg.u.msg_unit_creation ); break;
     case T_MsgsSimToClient_msg_msg_unit_attributes:             databaseUpdater_->Update( *asn.msg.u.msg_unit_attributes ); break;
     case T_MsgsSimToClient_msg_msg_unit_destruction:            databaseUpdater_->DestroyUnit( asn.msg.u.msg_unit_destruction ); break;
@@ -186,6 +207,24 @@ void DatabasePublisher::UpdateDatabase( const ASN1T_MsgsSimToClient& asn )
     }
 }
     
+// -----------------------------------------------------------------------------
+// Name: DatabasePublisher::UpdateDatabase
+// Created: RDS 2008-04-11
+// -----------------------------------------------------------------------------
+void DatabasePublisher::UpdateDatabase( const ASN1T_MsgsMessengerToClient& asn )
+{
+    switch ( asn.t )
+    {
+    case T_MsgsMessengerToClient_msg_lima_creation:               databaseUpdater_->Update( *asn.u.msg_lima_creation ); break;
+//  case T_MsgsMessengerToClient_msg_lima_update:                 databaseUpdater_->Update( *asn.msg.u.msg_lima_update ); break;
+//  case T_MsgsMessengerToClient_msg_lima_destruction:            databaseUpdater_->Update( asn.msg.u.msg_lima_destruction ); break;
+
+    case T_MsgsMessengerToClient_msg_limit_creation:              databaseUpdater_->Update( *asn.u.msg_limit_creation ); break;
+//  case T_MsgsMessengerToClient_msg_limit_destruction:           databaseUpdater_->Update( asn.msg.u.msg_lima_destruction ); break;
+    }
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher::UpdateFolkDatabase
 // Created: JCR 2008-01-11

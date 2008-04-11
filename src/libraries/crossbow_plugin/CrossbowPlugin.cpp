@@ -10,6 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "CrossbowPlugin.h"
 #include "DatabasePublisher.h"
+#include "tools/MessageDispatcher_ABC.h"
 
 using namespace crossbow;
 
@@ -17,10 +18,10 @@ using namespace crossbow;
 // Name: CrossbowPlugin constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-CrossbowPlugin::CrossbowPlugin( dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis )
+CrossbowPlugin::CrossbowPlugin( dispatcher::Model& model, tools::MessageDispatcher_ABC& dispatcher, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis )
     : databasePublisher_( new DatabasePublisher( config, model, publisher, xis ) )
 {
-    // NOTHING
+    dispatcher.RegisterMessage(*this,&CrossbowPlugin::OnReceiveMessengerToClient);
 }
     
 // -----------------------------------------------------------------------------
@@ -40,6 +41,16 @@ void CrossbowPlugin::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
     databasePublisher_->Receive( asnMsg );
 }
+
+// -----------------------------------------------------------------------------
+// Name: CrossbowPlugin::OnReceiveMessengerToClient
+// Created: RDS 2008-04-11
+// -----------------------------------------------------------------------------
+void CrossbowPlugin::OnReceiveMessengerToClient(const std::string&, const ASN1T_MsgsMessengerToClient& asnMsg )
+{
+    databasePublisher_->Receive( asnMsg );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: CrossbowPlugin::NotifyClientAuthenticated

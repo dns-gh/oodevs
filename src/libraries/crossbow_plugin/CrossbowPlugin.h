@@ -11,6 +11,7 @@
 #define __CrossbowPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
+#include "game_asn/Messenger.h"
 
 namespace xml
 {
@@ -22,6 +23,11 @@ namespace dispatcher
     class Model;
     class Config;    
     class SimulationPublisher_ABC;     
+}
+
+namespace tools
+{
+    class MessageDispatcher_ABC;
 }
 
 namespace crossbow
@@ -40,15 +46,16 @@ class CrossbowPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossbowPlugin( dispatcher::Model& model, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis );
+             CrossbowPlugin( dispatcher::Model& model, tools::MessageDispatcher_ABC&, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis );
     virtual ~CrossbowPlugin();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const ASN1T_MsgsSimToClient& asnMsg );
-    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
-    virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
+    virtual void Receive                    ( const ASN1T_MsgsSimToClient& asnMsg );
+            void OnReceiveMessengerToClient (const std::string&, const ASN1T_MsgsMessengerToClient&);
+    virtual void NotifyClientAuthenticated  ( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
+    virtual void NotifyClientLeft           ( dispatcher::ClientPublisher_ABC& client );
     //@}
 
 private:

@@ -35,10 +35,10 @@ CrossbowPluginFactory::~CrossbowPluginFactory()
 // Name: std::auto_ptr< dispatcher::Plugin_ABC > CrossbowPluginFactory::Create
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-std::auto_ptr< dispatcher::Plugin_ABC > CrossbowPluginFactory::Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& /*clientCommands*/ ) const
+std::auto_ptr< dispatcher::Plugin_ABC > CrossbowPluginFactory::Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& clientCommands , dispatcher::LinkResolver_ABC& ) const
 {
     std::auto_ptr< dispatcher::Plugin_ABC > result;
     if( name == "crossbow" )
-        result.reset( new CrossbowPlugin( model, config, simulation, xis ) );
+        result.reset( new CrossbowPlugin( model, clientCommands, config, simulation, xis ) );
     return result;
 }
