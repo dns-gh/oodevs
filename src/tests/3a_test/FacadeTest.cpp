@@ -62,6 +62,7 @@ namespace
             for( unsigned i = 0; i < result.values.n; ++i )
                 Send_mocker.forward( result.values.elem[i] );
         };
+        virtual void Send( const ASN1T_MsgsMessengerToClient& msg ) { }
 
         mockpp::ChainableMockMethod< void, double > Send_mocker;
     };
