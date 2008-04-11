@@ -13,6 +13,7 @@
 #include "GlWidget.h"
 #include "Layer_ABC.h"
 #include "GlTooltip.h"
+#include "TooltipsLayer.h"
 
 using namespace kernel;
 using namespace gui;
@@ -24,6 +25,7 @@ using namespace gui;
 GlProxy::GlProxy()
     : view_   ( 0 )
     , tools_  ( 0 )
+    , tooltipLayer_( new TooltipsLayer( *this ) )
 {
     // NOTHING
 }
@@ -75,6 +77,7 @@ void GlProxy::RegisterTo( Gl3dWidget* newWidget )
 {
     for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->RegisterIn( *newWidget );
+    tooltipLayer_->RegisterIn( *newWidget );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,6 +88,7 @@ void GlProxy::RegisterTo( GlWidget* newWidget )
 {
     for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->RegisterIn( *newWidget );
+    tooltipLayer_->RegisterIn( *newWidget );
 }
 
 // -----------------------------------------------------------------------------
@@ -330,6 +334,7 @@ void GlProxy::Reset2d()
 {
     for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->Reset2d();
+    tooltipLayer_->Reset2d();
 }
 
 // -----------------------------------------------------------------------------
@@ -340,6 +345,7 @@ void GlProxy::Reset3d()
 {
     for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->Reset3d();
+    tooltipLayer_->Reset3d();
 }
 
 // -----------------------------------------------------------------------------
@@ -348,5 +354,5 @@ void GlProxy::Reset3d()
 // -----------------------------------------------------------------------------
 std::auto_ptr< kernel::GlTooltip_ABC > GlProxy::CreateTooltip() const
 {
-    return std::auto_ptr< kernel::GlTooltip_ABC >( new GlTooltip( *this ) );
+    return std::auto_ptr< kernel::GlTooltip_ABC >( new GlTooltip( *tooltipLayer_ ) );
 }

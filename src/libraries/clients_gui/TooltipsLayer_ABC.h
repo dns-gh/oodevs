@@ -3,41 +3,42 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __GlTooltip_ABC_h_
-#define __GlTooltip_ABC_h_
+#ifndef __TooltipsLayer_ABC_h_
+#define __TooltipsLayer_ABC_h_
 
-namespace kernel
+#include "Layer_ABC.h"
+
+class QImage;
+
+namespace gui
 {
-    class Displayer_ABC;
 
 // =============================================================================
-/** @class  GlTooltip_ABC
-    @brief  GlTooltip_ABC
+/** @class  TooltipsLayer_ABC
+    @brief  TooltipsLayer_ABC
 */
-// Created: AGE 2007-05-30
+// Created: SBO 2008-04-11
 // =============================================================================
-class GlTooltip_ABC
+class TooltipsLayer_ABC : public Layer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GlTooltip_ABC() {};
-    virtual ~GlTooltip_ABC() {};
+             TooltipsLayer_ABC() {}
+    virtual ~TooltipsLayer_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual operator Displayer_ABC& () = 0;
-    virtual void Draw( const geometry::Point2f& where ) = 0;
-    virtual void Hide() = 0;
+    virtual void Draw( const geometry::Point2f& position, const QImage& image ) = 0;
     //@}
 };
 
 }
 
-#endif // __GlTooltip_ABC_h_
+#endif // __TooltipsLayer_ABC_h_

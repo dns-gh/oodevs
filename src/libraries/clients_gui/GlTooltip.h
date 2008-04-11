@@ -15,12 +15,9 @@
 #include "clients_kernel/GlTooltip_ABC.h"
 #include <qimage.h>
 
-namespace kernel {
-    class GlTools_ABC;
-}
-
 namespace gui
 {
+    class TooltipsLayer_ABC;
 
 // =============================================================================
 /** @class  GlTooltip
@@ -40,14 +37,14 @@ class GlTooltip : public kernel::GlTooltip_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GlTooltip( const kernel::GlTools_ABC& tools );
+    explicit GlTooltip( TooltipsLayer_ABC& layer );
     virtual ~GlTooltip();
     //@}
 
     //! @name Operations
     //@{
     virtual operator kernel::Displayer_ABC& ();
-    void Draw( const geometry::Point2f& position );
+    virtual void Draw( const geometry::Point2f& position );
     virtual void Hide();
     //@}
 
@@ -88,7 +85,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
+    TooltipsLayer_ABC& layer_;
     QString currentItem_;
     QColor color_;
     QFont font_;

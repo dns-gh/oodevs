@@ -34,7 +34,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , view_       ( view )
     , profile_    ( profile )
     , tooltiped_  ( std::numeric_limits< unsigned >::max() ) 
-    , tooltip_    ( new GlTooltip( tools_ ) )
+    , tooltip_    ( tools_.CreateTooltip() )
     , selected_   ( 0 )
 {
     // NOTHING
@@ -46,7 +46,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
 // -----------------------------------------------------------------------------
 EntityLayerBase::~EntityLayerBase()
 {
-    delete tooltip_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

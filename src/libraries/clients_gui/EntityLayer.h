@@ -22,6 +22,7 @@ namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
+    class GlTooltip_ABC;
     class Entity_ABC;
     class Team_ABC;
     class Displayer_ABC;
@@ -32,7 +33,6 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class View_ABC;
-    class GlTooltip;
 
 // =============================================================================
 /** @class  EntityLayerBase
@@ -113,7 +113,7 @@ private:
     View_ABC& view_;
     T_Entities entities_;
     unsigned tooltiped_;
-    GlTooltip* tooltip_;
+    std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
     unsigned selected_;
 
 protected: // $$$$ AGE 2006-05-17: 

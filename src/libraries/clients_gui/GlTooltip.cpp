@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "GlTooltip.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "TooltipsLayer_ABC.h"
 #include "clients_kernel/Styles.h"
 #include <qpainter.h>
 
@@ -20,8 +20,8 @@ using namespace kernel;
 // Name: GlTooltip constructor
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-GlTooltip::GlTooltip( const kernel::GlTools_ABC& tools )
-    : tools_( tools )
+GlTooltip::GlTooltip( TooltipsLayer_ABC& layer )
+    : layer_( layer )
 {
     // NOTHING
 }
@@ -154,7 +154,7 @@ void GlTooltip::Draw( const geometry::Point2f& position )
     if( image_.isNull() )
         GenerateImage();
     new_.clear();
-    tools_.DrawImage( image_, position );
+    layer_.Draw( position, image_ );
 }
 
 // -----------------------------------------------------------------------------

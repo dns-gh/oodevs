@@ -18,6 +18,7 @@ namespace gui
     class GlWidget;
     class Gl3dWidget;
     class Layer_ABC;
+    class TooltipsLayer_ABC;
 
 // =============================================================================
 /** @class  GlProxy
@@ -100,6 +101,7 @@ private:
     kernel::GlTools_ABC* tools_;
     
     T_Layers layers_;
+    std::auto_ptr< TooltipsLayer_ABC > tooltipLayer_;
     //@}
 };
 
