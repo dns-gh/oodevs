@@ -35,7 +35,7 @@ GearthPluginFactory::~GearthPluginFactory()
 // Name: GearthPluginFactory::Create
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-std::auto_ptr< dispatcher::Plugin_ABC > GearthPluginFactory::Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& /*simulation*/, dispatcher::ClientPublisher_ABC& /*clients*/ , tools::MessageDispatcher_ABC& clientCommands ) const
+std::auto_ptr< dispatcher::Plugin_ABC > GearthPluginFactory::Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& /*simulation*/, dispatcher::ClientPublisher_ABC& /*clients*/ , tools::MessageDispatcher_ABC& clientCommands, dispatcher::LinkResolver_ABC& links ) const
 {
     std::auto_ptr< dispatcher::Plugin_ABC > result;
     if( name == "gearth" )
