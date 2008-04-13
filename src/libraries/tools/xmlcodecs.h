@@ -41,7 +41,7 @@ namespace tools
     bool ReadTimeAttribute( xml::xistream& xis, const std::string& name, T& time )
     {
         std::string timeString;
-        xis >> optional() >> attribute( name, timeString );
+        xis >> xml::optional() >> xml::attribute( name, timeString );
         return DecodeTime( timeString, time );
     }
 }
