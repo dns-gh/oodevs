@@ -176,63 +176,6 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { PHY_RoleAction_FolkInfluence  * pRole; file >> pRole; RegisterRole( pRole ); }
 }
 
-namespace
-{
-    template< typename R >
-    void SaveRole( const MIL_AgentPion& pion, MIL_CheckPointOutArchive& file )
-    {
-        const R* const role = & pion.GetRole< R >();
-        file << role;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::save
-// Created: JVT 2005-03-24
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
-{
-    assert( pType_ );
-    
-    file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
-    file << boost::serialization::base_object< PHY_Actor     >( *this );
-    unsigned type = pType_->GetID();
-    file << type
-         << bIsPC_
-         << strName_
-         << pAutomate_
-      // << actions_ // actions non sauvegardées
-         << pKnowledgeBlackBoard_;
-         
-    SaveRole< NET_RolePion_Dotations         >( *this, file );
-    SaveRole< PHY_RolePion_Reinforcement     >( *this, file );
-    SaveRole< PHY_RolePion_Posture           >( *this, file );
-    SaveRole< PHY_RolePion_Location          >( *this, file );
-    SaveRole< PHY_RolePion_Dotations         >( *this, file );
-    SaveRole< PHY_RolePion_Humans            >( *this, file );
-    SaveRole< PHY_RolePion_Composantes       >( *this, file );
-    SaveRole< PHY_RolePion_Perceiver         >( *this, file );
-    SaveRole< PHY_RolePion_NBC               >( *this, file );
-    SaveRole< PHY_RolePion_Communications    >( *this, file );
-    SaveRole< PHY_RolePion_HumanFactors      >( *this, file );
-    SaveRole< PHY_RolePion_Transported       >( *this, file );
-    SaveRole< PHY_RolePion_Maintenance       >( *this, file );
-    SaveRole< PHY_RolePion_Medical           >( *this, file );
-    SaveRole< PHY_RolePion_Supply            >( *this, file );
-    SaveRole< PHY_RolePion_Surrender         >( *this, file );
-    SaveRole< PHY_RolePion_Refugee           >( *this, file );
-    SaveRole< PHY_RolePion_Population        >( *this, file );
-    SaveRole< PHY_RoleAction_Loading         >( *this, file );
-    SaveRole< PHY_RoleAction_Transport       >( *this, file );
-    SaveRole< PHY_RoleAction_Moving          >( *this, file );
-    SaveRole< PHY_RoleAction_Objects         >( *this, file );
-    SaveRole< PHY_RoleAction_DirectFiring    >( *this, file );
-    SaveRole< PHY_RoleAction_IndirectFiring  >( *this, file );
-    SaveRole< DEC_RolePion_Decision          >( *this, file );
-    SaveRole< PHY_RoleAction_InterfaceFlying >( *this, file );
-    SaveRole< PHY_RoleAction_FolkInfluence   >( *this, file );    
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::WriteODB
 // Created: NLD 2006-05-29
