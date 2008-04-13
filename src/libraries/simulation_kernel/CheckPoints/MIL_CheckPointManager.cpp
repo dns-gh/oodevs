@@ -22,6 +22,8 @@
 #include <boost/filesystem/convenience.hpp>
 #include "xeumeuleu/xml.h"
 
+using namespace xml;
+
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager constructor
 // Created: JVT 2005-03-22
@@ -167,17 +169,17 @@ void MIL_CheckPointManager::CreateMetaData( const std::string& strFileName, cons
     try
     {
         xml::xofstream xos( strFileName );
-        xos << xml::start( "checkpoint" )
-                << xml::content( "name", strCheckPointName )
-                << xml::start( "crc" )
-                    << xml::start( "configuration" )
+        xos << start( "checkpoint" )
+                << content( "name", strCheckPointName )
+                << start( "crc" )
+                    << start( "configuration" )
                         << xml::attribute( "crc", nCRCCRC )
-                    << xml::end()
-                    << xml::start( "save" )
+                    << end()
+                    << start( "save" )
                         << xml::attribute( "crc", nDataCRC )
-                    << xml::end()
-                << xml::end()
-            << xml::end();
+                    << end()
+                << end()
+            << end();
     }
     catch( ... )
     {
