@@ -30,6 +30,10 @@
 
 #pragma warning( disable : 4511 4512 4100 4244 )
 
+#include <boost/pool/pool.hpp>
+#undef min
+#undef max
+
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 
