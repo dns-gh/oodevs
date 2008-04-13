@@ -30,7 +30,6 @@ public:
     virtual ~MIL_CheckPointOutArchive(){}
 }; 
 
-// #define BOOST_ARCHIVE_CUSTOM_OARCHIVE_TYPES MIL_CheckPointOutArchive
-
+BOOST_SERIALIZATION_REGISTER_ARCHIVE( MIL_CheckPointOutArchive );
 
 #endif // __MIL_CheckPointOutArchive_h_

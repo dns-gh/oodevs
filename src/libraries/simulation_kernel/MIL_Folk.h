@@ -11,6 +11,7 @@
 #define __MIL_Folk_h_
 
 #include "folk/population.h"
+#include <boost/scoped_ptr.hpp>
 
 namespace population
 {

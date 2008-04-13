@@ -30,5 +30,6 @@ public:
     virtual ~MIL_CheckPointInArchive(){}
 }; 
 
+BOOST_SERIALIZATION_REGISTER_ARCHIVE( MIL_CheckPointInArchive );
 
 #endif // __MIL_CheckPointInArchive_h_

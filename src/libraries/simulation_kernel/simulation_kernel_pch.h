@@ -17,12 +17,6 @@
 #pragma warning( disable : 4702 )
 #pragma warning( disable : 4511 4512 4100 4244 )
 
-class MIL_CheckPointOutArchive;
-class MIL_CheckPointInArchive;
-#define BOOST_ARCHIVE_CUSTOM_OARCHIVE_TYPES MIL_CheckPointOutArchive
-#define BOOST_ARCHIVE_CUSTOM_IARCHIVE_TYPES MIL_CheckPointInArchive
-#define CUSTOM_ARCHIVE_TYPES MIL_CheckPointOutArchive,MIL_CheckPointInArchive
-
 #include <boost/mpl/and.hpp> // $$$$ MCO : see http://svn.boost.org/trac/boost/ticket/1782
 #include <boost/serialization/serialization.hpp>
 
@@ -31,9 +25,6 @@ class MIL_CheckPointInArchive;
 #include <boost/serialization/set.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
-
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/export.hpp>
 
 #pragma warning( pop )
@@ -83,4 +74,5 @@ class MIL_CheckPointInArchive;
 #endif  // NDEBUG
 
 #endif // __MIL_pch_h_
+
 
