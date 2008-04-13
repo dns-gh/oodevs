@@ -22,7 +22,6 @@ class MIL_CheckPointInArchive;
 #define BOOST_ARCHIVE_CUSTOM_OARCHIVE_TYPES MIL_CheckPointOutArchive
 #define BOOST_ARCHIVE_CUSTOM_IARCHIVE_TYPES MIL_CheckPointInArchive
 #define CUSTOM_ARCHIVE_TYPES MIL_CheckPointOutArchive,MIL_CheckPointInArchive
-#include <boost/archive/detail/known_archive_types.hpp>
 
 #include <boost/serialization/serialization.hpp>
 
