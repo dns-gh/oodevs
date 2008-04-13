@@ -17,10 +17,6 @@
 #pragma warning( disable : 4702 )
 #pragma warning( disable : 4511 4512 4100 4244 )
 
-#include <boost/pool/pool.hpp> // $$$$ MCO : because of http://svn.boost.org/trac/boost/ticket/1285
-#undef min
-#undef max
-
 class MIL_CheckPointOutArchive;
 class MIL_CheckPointInArchive;
 #define BOOST_ARCHIVE_CUSTOM_OARCHIVE_TYPES MIL_CheckPointOutArchive
