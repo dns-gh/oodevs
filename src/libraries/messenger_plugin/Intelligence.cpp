@@ -224,7 +224,7 @@ void Intelligence::ReadPosition( xml::xistream& xis, const kernel::CoordinateCon
 // Name: Intelligence::Write
 // Created: RDS 2008-04-09
 // -----------------------------------------------------------------------------
-void Intelligence::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter )
+void Intelligence::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const
 {
     xos << xml::start("intelligence")
             << xml::attribute("id",id_)
@@ -243,7 +243,7 @@ void Intelligence::Write( xml::xostream& xos, const kernel::CoordinateConverter_
 // Name: Intelligence::WritePosition
 // Created: RDS 2008-04-10
 // -----------------------------------------------------------------------------
-void Intelligence::WritePosition( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter )
+void Intelligence::WritePosition( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const
 {
     geometry::Point2d pos(position_.longitude,position_.latitude);
     xos << xml::attribute("position",converter.ConvertToMgrs(converter.ConvertFromGeo(pos)));

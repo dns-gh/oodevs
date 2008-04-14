@@ -17,7 +17,7 @@ namespace kernel
 
 namespace xml
 {
-    class xostream ; 
+    class xostream; 
 }
 
 namespace messenger 
@@ -35,31 +35,16 @@ class Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Entity_ABC();
-    virtual ~Entity_ABC();
+             Entity_ABC() {};
+    virtual ~Entity_ABC() {};
     //@}
 
     //! @name xml read / write 
     //@{
-    virtual void Write     ( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) = 0 ; 
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Entity_ABC( const Entity_ABC& );            //!< Copy constructor
-    Entity_ABC& operator=( const Entity_ABC& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
+    virtual void Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const = 0; 
     //@}
 };
+
 }
 
 #endif // __Entity_ABC_h_

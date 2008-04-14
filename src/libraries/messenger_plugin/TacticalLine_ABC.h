@@ -15,13 +15,13 @@
 
 namespace kernel
 {
-    class CoordinateConverter_ABC ; 
+    class CoordinateConverter_ABC;
 }
 
 namespace xml
 {
-    class xistream ; 
-    class xostream ; 
+    class xistream ;
+    class xostream ;
 }
 
 namespace messenger
@@ -52,28 +52,28 @@ public:
     //! @name Accessors
     //@{
     unsigned int                         GetID() const;
-    const ASN1T_TacticalLinesDiffusion&  GetDiffusion() const { return diffusion_ ; } 
+    const ASN1T_TacticalLinesDiffusion&  GetDiffusion() const { return diffusion_ ; }
     //@}
 
 protected:
-    
-    //! @name types 
+
+    //! @name types
     //@{
     typedef std::vector< ASN1T_CoordLatLong > T_PositionVector;
-    typedef T_PositionVector::const_iterator  CIT_PositionVector; 
+    typedef T_PositionVector::const_iterator  CIT_PositionVector;
     //@}
 
-    //! @name Network 
+    //! @name Network
     //@{
     void Update        ( const ASN1T_TacticalLine& asn );
-    void UpdateGeometry(const ASN1T_Location& asn );    
+    void UpdateGeometry( const ASN1T_Location& asn );
     //@}
-    
-    //! @name xml read / write 
+
+    //! @name xml read / write
     //@{
-            void ReadPoint ( xml::xistream& xis, T_PositionVector& points, const kernel::CoordinateConverter_ABC& converter) const; 
-    virtual void Write     ( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) ;
-            void WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const ASN1T_CoordLatLong& point) ;  
+            void ReadPoint ( xml::xistream& xis, T_PositionVector& points, const kernel::CoordinateConverter_ABC& converter ) const;
+    virtual void Write     ( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
+            void WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const ASN1T_CoordLatLong& point ) const;
     //@}
 
 private:
@@ -89,7 +89,7 @@ private:
     const unsigned int                   id_;
           std::string                    strName_;
           T_PositionVector               geometry_;
-         ASN1T_TacticalLinesDiffusion    diffusion_ ; 
+          ASN1T_TacticalLinesDiffusion   diffusion_ ;
     //@}
 
 
@@ -98,4 +98,3 @@ private:
 }
 
 #endif // __TacticalLine_ABC_h_
-

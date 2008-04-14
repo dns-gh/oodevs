@@ -47,7 +47,7 @@ namespace messenger
 
 // =============================================================================
 /** @class  MessengerPlugin
-      @brief  MessengerPlugin
+    @brief  MessengerPlugin
 */
 // Created: AGE 2008-04-01
 // =============================================================================
@@ -57,7 +57,7 @@ class MessengerPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MessengerPlugin( dispatcher::ClientPublisher_ABC& client, tools::MessageDispatcher_ABC&, dispatcher::LinkResolver_ABC& links, const dispatcher::Config& config );
+             MessengerPlugin( dispatcher::ClientPublisher_ABC& client, tools::MessageDispatcher_ABC&, dispatcher::LinkResolver_ABC& links, const dispatcher::Config& config );
     virtual ~MessengerPlugin();
     //@}
 
@@ -100,11 +100,11 @@ private:
     //@{
     const dispatcher::Config& config_ ;
           dispatcher::ClientPublisher_ABC& clients_;
-          dispatcher::LinkResolver_ABC& links_ ;
-          std::auto_ptr<TacticalLineManager> tacticalLineManager_ ;
-          std::auto_ptr<IntelligenceManager> intelligenceManager_ ;
-          std::auto_ptr<IdManager> idManager_ ;
-          std::auto_ptr<kernel::CoordinateConverter_ABC> converter_ ;
+          dispatcher::LinkResolver_ABC& links_;
+          std::auto_ptr< TacticalLineManager > tacticalLineManager_;
+          std::auto_ptr< IntelligenceManager > intelligenceManager_;
+          std::auto_ptr< IdManager > idManager_;
+          std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     //@}
 };
 

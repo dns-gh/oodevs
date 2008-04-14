@@ -10,8 +10,6 @@
 #ifndef __messenger_plugin_pch_h_
 #define __messenger_plugin_pch_h_
 
-#include "MT_Tools/MT_Assert.h"
-
 #include <string>
 #include <vector>
 #include <memory>

@@ -69,8 +69,8 @@ public:
     //! @name xml read / write 
     //@{
             void ReadPosition ( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter ) ;  
-    virtual void Write        ( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) ;
-            void WritePosition( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) ;
+    virtual void Write        ( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
+            void WritePosition( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
     //@}
 
 

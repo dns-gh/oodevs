@@ -11,10 +11,8 @@
 #define __TacticalLineManager_h_
 
 #include "game_asn/Messenger.h"
-
-#include "TacticalLine_ABC.h"
-
 #include <map>
+#include <set>
 
 namespace dispatcher
 {
@@ -23,21 +21,22 @@ namespace dispatcher
 
 namespace kernel
 {
-    class CoordinateConverter_ABC ;
+    class CoordinateConverter_ABC;
 }
 
 namespace xml
 {
-    class xistream ;
-    class xostream ;
+    class xistream;
+    class xostream;
 }
 
 namespace messenger
 {
 
-class Lima;
-class Limit;
-class IdManager;
+    class Lima;
+    class Limit;
+    class IdManager;
+    class Entity_ABC;
 
 // =============================================================================
 /** @class  TacticalLineManager
@@ -73,12 +72,18 @@ public:
     virtual void Write     (xml::xostream& xos) ;
     //@}
 
+    //! @name Types
+    //@{
     typedef std::map< unsigned int , std::set< Entity_ABC* > > T_TacticalLineCollectorMap ;
     typedef T_TacticalLineCollectorMap T_FormationMap ;
     typedef T_TacticalLineCollectorMap T_AutomatMap ;
+    //@}
 
-    void CollectFormations(T_FormationMap&);
-    void CollectAutomats(T_AutomatMap&);
+    //! @name Operations
+    //@{
+    void CollectFormations( T_FormationMap& );
+    void CollectAutomats( T_AutomatMap& );
+    //@}
 
 private:
 
@@ -98,9 +103,7 @@ private:
     typedef std::map< unsigned int, Lima* >  T_LimaMap;
     typedef T_LimaMap::iterator              IT_LimaMap;
     typedef T_LimaMap::const_iterator        CIT_LimaMap;
-
     //@}
-
 
     //! @name Members
     //@{

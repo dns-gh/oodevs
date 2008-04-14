@@ -14,16 +14,15 @@
 #include "Intelligence.h"
 #include "ASN_Messages.h"
 
-using namespace messenger ;
-
+using namespace messenger;
 
 // -----------------------------------------------------------------------------
 // Name: IntelligenceManager constructor
 // Created: RDS 2008-04-07
 // -----------------------------------------------------------------------------
-IntelligenceManager::IntelligenceManager(IdManager& idmanager, const kernel::CoordinateConverter_ABC& converter) :
-    idManager_(idmanager),
-    converter_(converter)
+IntelligenceManager::IntelligenceManager( IdManager& idmanager, const kernel::CoordinateConverter_ABC& converter)
+    : idManager_( idmanager )
+    , converter_( converter )
 {
     // NOTHING
 }
@@ -38,14 +37,13 @@ IntelligenceManager::~IntelligenceManager()
         delete it->second;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: IntelligenceManager::ReadIntelligence
 // Created: RDS 2008-04-08
 // -----------------------------------------------------------------------------
 void IntelligenceManager::ReadIntelligence(xml::xistream& xis, const ASN1T_Formation& formation)
 {
-    Intelligence* intelligence = new Intelligence(idManager_.nextId(),xis, formation, converter_ );
+    Intelligence* intelligence = new Intelligence( idManager_.nextId(), xis, formation, converter_ );
     intelligences_[intelligence->GetID()] = intelligence ;
 }
 
@@ -57,7 +55,7 @@ void IntelligenceManager::ReadIntelligence(xml::xistream& xis, const ASN1T_Forma
 void IntelligenceManager::Write(xml::xostream& xos)
 {
     for( CIT_IntelligenceMap it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        it->second->Write(xos,converter_);
+        it->second->Write( xos, converter_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,10 +95,6 @@ void IntelligenceManager::OnReceive( dispatcher::ClientPublisher_ABC& publisher,
         intelligence->Update(asn);
         intelligence->SendUpdate(clients);
     }
-    else
-    {
-        // ERROR !!
-    }
     ack.Send(publisher);
 
 }
@@ -121,10 +115,6 @@ void IntelligenceManager::OnReceive( dispatcher::ClientPublisher_ABC& publisher,
         intelligence->SendDestruction(clients);
         delete intelligence;
         intelligences_.erase( it );
-    }
-    else
-    {
-        // ERROR !!
     }
     ack.Send(publisher);
 }

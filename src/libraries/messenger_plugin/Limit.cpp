@@ -9,9 +9,8 @@
 
 #include "messenger_plugin_pch.h"
 #include "Limit.h"
-#include <xeumeuleu/xml.h>
-
 #include "ASN_Messages.h"
+#include <xeumeuleu/xml.h>
 
 using namespace messenger;
 
@@ -34,8 +33,6 @@ Limit::Limit( unsigned int id, xml::xistream& xis, const ASN1T_TacticalLinesDiff
 {
     // NOTHING
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: Limit destructor

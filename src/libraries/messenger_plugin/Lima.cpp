@@ -9,9 +9,8 @@
 
 #include "messenger_plugin_pch.h"
 #include "Lima.h"
-#include <xeumeuleu/xml.h>
-
 #include "ASN_Messages.h"
+#include <xeumeuleu/xml.h>
 
 using namespace messenger;
 
@@ -24,7 +23,6 @@ Lima::Lima( unsigned int id, const ASN1T_MsgLimaCreationRequest& message )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor

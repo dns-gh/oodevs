@@ -19,8 +19,8 @@ namespace dispatcher
 
 namespace xml
 {
-    class xistream ; 
-    class xostream ; 
+    class xistream; 
+    class xostream; 
 }
 
 namespace messenger
@@ -56,7 +56,6 @@ public:
     //@{
     virtual void Write     ( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) ;
     //@}
-
 
 private:
     //! @name Copy/Assignement

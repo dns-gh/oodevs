@@ -39,7 +39,6 @@ TacticalLine_ABC::TacticalLine_ABC( unsigned int id, xml::xistream& xis, const A
 {
     xis >> xml::attribute( "name", strName_ )
         >> xml::list( "point", *this, &TacticalLine_ABC::ReadPoint, geometry_, converter);
-
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +64,6 @@ void TacticalLine_ABC::ReadPoint( xml::xistream& xis, T_PositionVector& points, 
     geo.longitude = pos.X();
     points.push_back( geo );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::Update
@@ -93,11 +91,11 @@ void TacticalLine_ABC::Send( ASN1T_Line& asn) const
 // Name: TacticalLine_ABC::Send
 // Created: SBO 2007-07-24
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Send( ASN1T_TacticalLine& asn) const
+void TacticalLine_ABC::Send( ASN1T_TacticalLine& asn ) const
 {
     asn.name = strName_.c_str();
     asn.diffusion = diffusion_ ;
-    Send(asn.geometry);
+    Send( asn.geometry );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,13 +107,13 @@ unsigned int TacticalLine_ABC::GetID() const
     return id_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::UpdateGeometry
 // Created: RDS 2008-04-07
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::UpdateGeometry(const ASN1T_Location& asn )
 {
+    geometry_.resize( 0 );
     std::copy( asn.coordinates.elem, asn.coordinates.elem + asn.coordinates.n, std::back_inserter( geometry_ ) );
 }
 
@@ -123,23 +121,22 @@ void TacticalLine_ABC::UpdateGeometry(const ASN1T_Location& asn )
 // Name: TacticalLine_ABC::Write
 // Created: RDS 2008-04-09
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter )
+void TacticalLine_ABC::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const
 {
-    xos << xml::attribute ("id",    id_)
-        << xml::attribute ("name",  strName_) ;
-    for(CIT_PositionVector it = geometry_.begin(); it != geometry_.end(); ++it)
-        WritePoint(xos,converter,(*it));
-
+    xos << xml::attribute( "id",   id_ )
+        << xml::attribute( "name", strName_ );
+    for( CIT_PositionVector it = geometry_.begin(); it != geometry_.end(); ++it )
+        WritePoint( xos, converter, *it );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::WritePoint
 // Created: RDS 2008-04-09
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const ASN1T_CoordLatLong& point)
+void TacticalLine_ABC::WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const ASN1T_CoordLatLong& point ) const
 {
-    geometry::Point2d pos(point.longitude,point.latitude);
-    xos << xml::start("point")
-            << converter.ConvertToMgrs(converter.ConvertFromGeo(pos))
+    geometry::Point2d pos( point.longitude, point.latitude );
+    xos << xml::start( "point" )
+            << converter.ConvertToMgrs( converter.ConvertFromGeo( pos ) )
         << xml::end();
 }

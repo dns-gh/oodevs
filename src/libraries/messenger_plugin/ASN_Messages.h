@@ -55,14 +55,14 @@ private:                                                                  \
 
 // LIMIT
 GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimitCreationRequestAck,   limit_creation_request_ack)
-GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimitDestructionRequestAck,limit_destruction_request_ack ) 
-GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimitUpdateRequestAck,     limit_update_request_ack) 
+GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimitDestructionRequestAck,limit_destruction_request_ack )
+GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimitUpdateRequestAck,     limit_update_request_ack)
 GENERATE_ASN_MSG_SENDER      (MessengerToClient, LimitCreation,             limit_creation)
 GENERATE_ASN_MSG_SENDER      (MessengerToClient, LimitUpdate,               limit_update)
 GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimitDestruction,          limit_destruction)
 
-// LIMA 
-GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimaCreationRequestAck,    lima_creation_request_ack) 
+// LIMA
+GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimaCreationRequestAck,    lima_creation_request_ack)
 GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimaDestructionRequestAck, lima_destruction_request_ack)
 GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimaUpdateRequestAck,      lima_update_request_ack)
 GENERATE_ASN_MSG_SENDER      (MessengerToClient, LimaCreation,              lima_creation)
@@ -70,7 +70,7 @@ GENERATE_ASN_MSG_SENDER      (MessengerToClient, LimaUpdate,                lima
 GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, LimaDestruction,           lima_destruction)
 
 // INTELLIGENCE
-GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, IntelligenceCreationRequestAck,    intelligence_creation_request_ack) 
+GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, IntelligenceCreationRequestAck,    intelligence_creation_request_ack)
 GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, IntelligenceDestructionRequestAck, intelligence_destruction_request_ack)
 GENERATE_NOPTR_ASN_MSG_SENDER(MessengerToClient, IntelligenceUpdateRequestAck,      intelligence_update_request_ack)
 

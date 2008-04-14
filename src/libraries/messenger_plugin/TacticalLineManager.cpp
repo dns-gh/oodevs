@@ -12,30 +12,27 @@
 #include "messenger_plugin_pch.h"
 
 #include "TacticalLineManager.h"
-
-#include "dispatcher/ClientPublisher_ABC.h"
-
+#include "TacticalLine_ABC.h"
 #include "Limit.h"
 #include "Lima.h"
 #include "IdManager.h"
-
 #include "ASN_Messages.h"
-
+#include "dispatcher/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.h>
 
-using namespace messenger ;
-
+using namespace messenger;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLineManager constructor
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
 TacticalLineManager::TacticalLineManager(IdManager& idManager, const kernel::CoordinateConverter_ABC& converter)
-    : idManager_(idManager)
-    , converter_(converter)
-    , limits_     ()
-    , limas_      ()
+    : idManager_( idManager )
+    , converter_( converter )
+    , limits_   ()
+    , limas_    ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,10 +46,6 @@ TacticalLineManager::~TacticalLineManager()
     for( CIT_LimaMap it = limas_.begin(); it != limas_.end(); ++it )
         delete it->second;
 }
-
-// =============================================================================
-// LIMIT DATA
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLineManager::CreateLimit
@@ -88,11 +81,6 @@ void TacticalLineManager::Write(xml::xostream& xos )
     xos << xml::end();
 }
 
-
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: TacticalLineManager::OnReceiveLimit ( creation )
 // Created: NLD 2006-11-13
@@ -102,9 +90,8 @@ void TacticalLineManager::OnReceiveLimit( dispatcher::ClientPublisher_ABC& publi
     ASN_MsgLimitCreationRequestAck ack ;
     ack() = EnumInfoContextErrorCode::no_error;
     Limit* limit = new Limit(idManager_.nextId(),asn);
-    bool bOut = limits_.insert( std::make_pair(limit->GetID(), limit)).second;
-    assert( bOut );
-    limit->SendCreation(clients);
+    limits_.insert( std::make_pair( limit->GetID(), limit ) );
+    limit->SendCreation( clients );
     ack.Send(publisher);
 }
 
@@ -192,7 +179,7 @@ void TacticalLineManager::OnReceiveLima( dispatcher::ClientPublisher_ABC& publis
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLineManager::OnReceiveLima ( destruction ) 
+// Name: TacticalLineManager::OnReceiveLima ( destruction )
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
 void TacticalLineManager::OnReceiveLima( dispatcher::ClientPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& clients, const ASN1T_MsgLimaDestructionRequest& asn)
@@ -226,7 +213,6 @@ void TacticalLineManager::SendStateToNewClient(dispatcher::ClientPublisher_ABC& 
     for( CIT_LimaMap it = limas_.begin(); it != limas_.end(); ++it )
         it->second->SendFullState(client);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLineManager::CollectFormations

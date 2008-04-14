@@ -18,14 +18,10 @@
 #include "dispatcher/ClientPublisher_ABC.h"
 #include "dispatcher/LinkResolver_ABC.h"
 #include "tools/MessageDispatcher_ABC.h"
-
 #include "TacticalLine_ABC.h"
 #include "Intelligence.h"
-
-
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-
 #include <xeumeuleu/xml.h>
 
 namespace bfs = boost::filesystem;
@@ -54,7 +50,7 @@ MessengerPlugin::MessengerPlugin( dispatcher::ClientPublisher_ABC& clients, tool
 // -----------------------------------------------------------------------------
 MessengerPlugin::~MessengerPlugin()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +74,6 @@ void MessengerPlugin::Load(const tools::SessionConfig& config)
                     >> xml::list( "side", *this, &MessengerPlugin::ReadSide) ;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MessengerPlugin::ReadSide
@@ -191,7 +186,6 @@ void MessengerPlugin::SaveCheckPoint(const std::string& name)
     xos << xml::end() ;
 
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MessengerPlugin::NotifyClientAuthenticated
