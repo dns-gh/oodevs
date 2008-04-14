@@ -12,7 +12,7 @@
 
 #pragma warning ( disable : 4275 )
 #include <boost/thread/mutex.hpp>
-
+#undef GetMessage
 namespace tools {
     namespace thread {
         class ThreadPool;
