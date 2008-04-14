@@ -17,6 +17,7 @@
 #include "DispatcherPlugin.h"
 #include "RightsPlugin.h"
 #include "PluginFactory_ABC.h"
+#include "messenger_plugin/MessengerPlugin.h"
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
@@ -63,6 +64,7 @@ void PluginFactory::Instanciate()
     RightsPlugin* rights = new RightsPlugin( model_, clients_, config_, clients_, handler_, clients_ );
     handler_.Add( rights );
     handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights ) );
+    handler_.Add( new messenger::MessengerPlugin( clients_, clients_, clients_, config_) );
 
     xml::xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" ) >> xml::start( "config" ) >> xml::start( "dispatcher" ) >> xml::start( "plugins" )

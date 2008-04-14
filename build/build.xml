@@ -115,7 +115,7 @@
         </build-lib>
     </target>
     
-    <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools,library.tools,library.game_asn">
+    <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools,library.tools,library.game_asn,library.messenger_plugin">
         <build-lib name="dispatcher" pattern="lib${ant.project.name}_dispatcher-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
@@ -274,6 +274,7 @@
                          lib${ant.project.name}_hla_plugin-${platform}-mt
                          lib${ant.project.name}_dis_plugin-${platform}-mt
                          lib${ant.project.name}_tic_plugin-${platform}-mt
+                         lib${ant.project.name}_messenger_plugin-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt" >
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/masasn"/>
