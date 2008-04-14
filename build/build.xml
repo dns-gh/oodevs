@@ -179,7 +179,7 @@
         </build-lib>
     </target>
     
-	<target name="library.messenger_plugin" description="build messenger_plugin static library" depends="library.dispatcher">
+    <target name="library.messenger_plugin" description="build messenger_plugin static library" depends="library.dispatcher">
         <build-lib name="messenger_plugin" pattern="lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
