@@ -86,6 +86,7 @@ struct VisionCones::Updater : public kernel::WorkerTask_ABC
         , computed_        ( false )
     {
         cones.current_ = this;
+        cones.needUpdating_ = false;
         surfaces_.reserve( cones.surfaces_.size() );
         for( CIT_Surfaces it = cones.surfaces_.begin(); it != cones.surfaces_.end(); ++it )
             surfaces_.push_back( new Surface( **it ) );

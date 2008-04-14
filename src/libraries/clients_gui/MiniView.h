@@ -20,7 +20,6 @@ namespace kernel
 
 namespace gui
 {
-    class GlWidget;
 
 // =============================================================================
 /** @class  MiniView
@@ -34,7 +33,7 @@ class MiniView : public QFrame
 public:
     //! @name Constructors/Destructor
     //@{
-             MiniView( QWidget* parent, kernel::Controllers& controllers, const kernel::Entity_ABC& agent, GlWidget* widget );
+             MiniView( QWidget* parent, kernel::Controllers& controllers, const kernel::Entity_ABC& agent );
     virtual ~MiniView();
     //@}
 
@@ -67,7 +66,6 @@ private:
     const kernel::Entity_ABC& agent_;
     const kernel::Positions& position_;
     QPixmap pixmap_;
-    GlWidget* widget_;
     //@}
 };
 

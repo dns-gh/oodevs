@@ -60,6 +60,12 @@ MiniViews::~MiniViews()
 void MiniViews::OnWidget2dChanged( gui::GlWidget* widget )
 {
     widget_ = widget;
+    if( ! widget_ )
+        while( ! miniViews_.empty() )
+        {
+            delete miniViews_.begin()->second;
+            miniViews_.erase( miniViews_.begin() );
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +95,8 @@ void MiniViews::OnMiniView()
         MiniView*& view = miniViews_[ selected_ ];
         if( view )
         {
+
+            widget_->RemoveMiniView( view );
             delete view;
             miniViews_.erase( selected_ );
             if( miniViews_.empty() )
@@ -96,7 +104,8 @@ void MiniViews::OnMiniView()
         }
         else
         {
-            view = new MiniView( grid_, controllers_, *selected_, widget_ );
+            view = new MiniView( grid_, controllers_, *selected_ );
+            widget_->AddMiniView( view );
             show();
         }
         selected_ = 0;

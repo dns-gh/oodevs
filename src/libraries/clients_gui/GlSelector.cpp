@@ -55,6 +55,7 @@ GlSelector::GlSelector( QMainWindow* parent, GlProxy& proxy, Controllers& contro
 // -----------------------------------------------------------------------------
 GlSelector::~GlSelector()
 {
+    emit Widget2dChanged( 0 );
     controllers_.options_.Unregister( *this );
     delete glPlaceHolder_;
     delete widget2d_;

@@ -22,18 +22,16 @@ using namespace gui;
 // Name: MiniView constructor
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-MiniView::MiniView( QWidget* parent, Controllers& controllers, const Entity_ABC& agent, GlWidget* widget )
+MiniView::MiniView( QWidget* parent, Controllers& controllers, const Entity_ABC& agent )
     : QFrame( parent, "MiniView", WRepaintNoErase )
     , actions_( controllers.actions_ )
     , agent_( agent )
     , position_( agent.Get< Positions >() )
     , pixmap_( 128, 128, 32 )
-    , widget_( widget )
 {
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
     setFrameStyle( Box | Plain );
     show();
-    widget_->AddMiniView( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +40,7 @@ MiniView::MiniView( QWidget* parent, Controllers& controllers, const Entity_ABC&
 // -----------------------------------------------------------------------------
 MiniView::~MiniView()
 {
-    widget_->RemoveMiniView( this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
