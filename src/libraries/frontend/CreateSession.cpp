@@ -26,7 +26,7 @@ using namespace frontend;
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
 CreateSession::CreateSession( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
-    : setter_( new ConfigurationManipulator( GetSessionXml( config, exercise, session ), "session" ) )
+    : setter_( new ConfigurationManipulator( GetSessionXml( config, exercise, session ) ) )
     , session_( session )
 {
     // NOTHING
