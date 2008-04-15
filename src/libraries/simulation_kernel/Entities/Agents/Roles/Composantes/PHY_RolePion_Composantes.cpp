@@ -1750,3 +1750,110 @@ bool PHY_RolePion_Composantes::IsNeutralized() const
 {
     return nNeutralizationEndTimeStep_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::HasChanged
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::HasChanged() const
+{
+    return nNbrComposanteChanged_ != 0 || bLoansChanged_ || bOperationalStateChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::IsUsable
+// Created: NLD 2005-08-09
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::IsUsable() const
+{
+    return nNbrUsableComposantes_ > 0 || !lentComposantes_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetMajorComposante
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const PHY_ComposantePion* PHY_RolePion_Composantes::GetMajorComposante() const
+{
+    return pMajorComposante_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetOperationalState
+// Created: NLD 2004-09-08
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Composantes::GetOperationalState() const
+{
+    return rOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetMajorOperationalState
+// Created: NLD 2005-11-25
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Composantes::GetMajorOperationalState() const
+{
+    return rMajorOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetPion
+// Created: NLD 2005-01-04
+// -----------------------------------------------------------------------------
+const MIL_AgentPion& PHY_RolePion_Composantes::GetPion() const
+{
+    assert( pPion_ );
+    return *pPion_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::RepairAllComposantes
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::RepairAllComposantes()
+{
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        (**it).Repair();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::HealAllHumans
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::HealAllHumans()
+{
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        (**it).HealAllHumans();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::DestroyRandomComposante
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::DestroyRandomComposante()
+{
+    T_ComposantePionVector composantes = composantes_;
+    std::random_shuffle( composantes.begin(), composantes.end() );
+
+    for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.GetState().IsUsable() )
+        {
+            composante.ReinitializeState( PHY_ComposanteState::dead_ );
+            return;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::DestroyAllComposantes
+// Created: NLD 2004-12-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::DestroyAllComposantes()
+{
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        (**it).ReinitializeState( PHY_ComposanteState::dead_ );
+}
+
