@@ -10,10 +10,12 @@
 #ifndef __MIL_CheckPointInArchive_h_
 #define __MIL_CheckPointInArchive_h_
 
+#pragma warning( push, 0 )
 #include <boost/archive/binary_iarchive_impl.hpp>
 #include <boost/archive/impl/basic_binary_iprimitive.ipp>
 #include <boost/archive/impl/basic_binary_iarchive.ipp>
 #include <boost/archive/impl/archive_pointer_iserializer.ipp>
+#pragma warning( pop )
 
 // =============================================================================
 /** @class  MIL_CheckPointInArchive
