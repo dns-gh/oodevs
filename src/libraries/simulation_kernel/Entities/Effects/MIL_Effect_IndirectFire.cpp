@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_Effect_IndirectFire.h"
+#include "MIL_AgentServer.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"

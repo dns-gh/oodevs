@@ -9,17 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_AgentServer.h"
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ABC::GetCurrentTimeStep
-// Created: NLD 2004-03-16
-// -----------------------------------------------------------------------------
-inline
-uint DEC_Knowledge_ABC::GetCurrentTimeStep() const
-{
-    return MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ABC::serialize

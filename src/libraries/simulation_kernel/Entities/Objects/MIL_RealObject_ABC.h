@@ -285,7 +285,5 @@ private:
     static MT_Random random_;
 };
 
-#include "MIL_RealObject_ABC.inl"
-
 #endif // __MIL_RealObject_ABC_h_
 

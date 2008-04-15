@@ -14,6 +14,7 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Agent.h"
+#include "MIL_AgentServer.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/MIL_Army.h"

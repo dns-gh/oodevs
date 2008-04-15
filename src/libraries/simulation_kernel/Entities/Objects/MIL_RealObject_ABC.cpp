@@ -260,7 +260,6 @@ void MIL_RealObject_ABC::WriteODB( xml::xostream& xos ) const
 // Name: MIL_RealObject_ABC::InitializeAvoidanceLocalisation
 // Created: NLD 2003-10-10
 // -----------------------------------------------------------------------------
-inline
 void MIL_RealObject_ABC::InitializeAvoidanceLocalisation()
 {
     assert( pType_ );
@@ -489,7 +488,6 @@ void MIL_RealObject_ABC::SendFullState()
 // Name: MIL_RealObject_ABC::IsAttributeUpdated
 // Created: NLD 2003-04-29
 //-----------------------------------------------------------------------------
-inline
 bool MIL_RealObject_ABC::IsAttributeUpdated( E_AttributeUpdate nAttrToUpdate, MT_Float rValue, uint nLastValue )
 {
     if( !( xAttrToUpdate_ & nAttrToUpdate ) )
@@ -1032,3 +1030,374 @@ DEC_Knowledge_Object& MIL_RealObject_ABC::CreateKnowledge( const MIL_Army& teamK
 {
     return *new DEC_Knowledge_Object( teamKnowing, *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::IsReal
+// Created: NLD 2004-10-26
+// -----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::IsReal() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetOccupier
+// Created: NLD 2004-11-26
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* MIL_RealObject_ABC::GetOccupier() const
+{
+    return pOccupier_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetAvoidanceLocalisation
+// Created: NLD 2003-10-10
+// -----------------------------------------------------------------------------
+const TER_Localisation& MIL_RealObject_ABC::GetAvoidanceLocalisation() const
+{
+    return avoidanceLocalisation_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetConstructionPercentage
+// Created: NLD 2003-05-20
+//-----------------------------------------------------------------------------
+MT_Float MIL_RealObject_ABC::GetConstructionPercentage() const
+{
+    return rConstructionPercentage_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetMiningPercentage
+// Created: NLD 2003-05-20
+//-----------------------------------------------------------------------------
+MT_Float MIL_RealObject_ABC::GetMiningPercentage() const
+{
+    return rMiningPercentage_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetBypassPercentage
+// Created: NLD 2003-05-20
+//-----------------------------------------------------------------------------
+MT_Float MIL_RealObject_ABC::GetBypassPercentage() const
+{
+    return rBypassPercentage_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetType
+// Created: NLD 2003-01-21
+//-----------------------------------------------------------------------------
+const MIL_RealObjectType& MIL_RealObject_ABC::GetType() const
+{
+    assert( pType_ );
+    return *pType_;
+}
+   
+//-----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::IsMined
+// Created: NLD 2003-03-13
+//-----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::IsMined() const
+{
+    return rMiningPercentage_ > 0.;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::IsBypassed
+// Created: NLD 2003-03-13
+//-----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::IsBypassed() const
+{
+    return rBypassPercentage_ >= 1.;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetID
+// Created: NLD 2003-03-17
+//-----------------------------------------------------------------------------
+uint MIL_RealObject_ABC::GetID() const
+{
+    return nID_;
+}
+
+// =============================================================================
+// TOOLS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::WriteSpecificAttributes
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::WriteSpecificAttributes( xml::xostream& /*xos*/ ) const
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::WriteSpecificAttributes
+// Created: NLD 2003-11-25
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& /*asnMsg*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::WriteSpecificAttributes
+// Created: NLD 2005-02-18
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::WriteSpecificAttributes( NET_ASN_MsgObjectUpdate&   /*asnMsg*/ )
+{
+    // NOTHING
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::NotifyAttributeUpdated
+// Created: NLD 2003-04-29
+//-----------------------------------------------------------------------------
+void MIL_RealObject_ABC::NotifyAttributeUpdated( E_AttributeUpdate nAttrToUpdate )
+{
+    xAttrToUpdate_ |= nAttrToUpdate;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetSizeCoef
+// Created: NLD 2004-09-15
+// -----------------------------------------------------------------------------
+MT_Float MIL_RealObject_ABC::GetSizeCoef() const
+{
+    return rSizeCoef_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::CanBePerceived
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::CanBePerceived() const
+{
+    return !IsMarkedForDestruction() && rConstructionPercentage_ > 0.;
+}
+
+// =============================================================================
+// CONSTRUCTION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::CanBeActivated
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::CanBeActivated() const
+{
+    return IsReservedObstacle() && !bReservedObstacleActivated_ && rConstructionPercentage_ > 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::CanBeConstructed
+// Created: NLD 2004-09-15
+// -----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::CanBeConstructed() const
+{
+    return !IsMarkedForDestruction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::CanBeDestroyed
+// Created: NLD 2004-09-16
+// -----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::CanBeDestroyed() const
+{
+    return !IsMarkedForDestruction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetDotationNeededForConstruction
+// Created: NLD 2004-09-15
+// -----------------------------------------------------------------------------
+uint MIL_RealObject_ABC::GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const
+{
+    const MT_Float rNewPercentage = std::max( 0., std::min( 1., rConstructionPercentage_ + rDeltaPercentage ) );
+    return (uint)( rNewPercentage * nFullNbrDotationForConstruction_ ) - nCurrentNbrDotationForConstruction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetDotationRecoveredWhenDestroying
+// Created: NLD 2005-05-11
+// -----------------------------------------------------------------------------
+uint MIL_RealObject_ABC::GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const
+{
+    const MT_Float rNewPercentage = std::max( 0., std::min( 1., rConstructionPercentage_ - rDeltaPercentage ) );
+    return nCurrentNbrDotationForConstruction_ - (uint)( rNewPercentage * nFullNbrDotationForConstruction_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetNbrDotationForConstruction
+// Created: NLD 2005-12-23
+// -----------------------------------------------------------------------------
+uint MIL_RealObject_ABC::GetNbrDotationForConstruction() const
+{
+    return nCurrentNbrDotationForConstruction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetNbrDotationForMining
+// Created: NLD 2005-12-23
+// -----------------------------------------------------------------------------
+uint MIL_RealObject_ABC::GetNbrDotationForMining() const
+{
+    return nCurrentNbrDotationForMining_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::ChangeConstructionPercentage
+// Created: NLD 2003-05-20
+//-----------------------------------------------------------------------------
+void MIL_RealObject_ABC::ChangeConstructionPercentage( MT_Float rNewConstructionPercentage )
+{
+    if( IsMarkedForDestruction() )
+        return;
+
+    const MT_Float rDeltaPercentage = rNewConstructionPercentage - rConstructionPercentage_;
+    if( rDeltaPercentage == 0. )
+        return;
+    if( rDeltaPercentage > 0. )
+        Construct( rDeltaPercentage );
+    else
+    {
+        rMiningPercentage_ = 0.;
+        Destroy( -rDeltaPercentage );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::ChangeMiningPercentage
+// Created: NLD 2004-09-16
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::ChangeMiningPercentage( MT_Float rNewMiningPercentage )
+{
+    if( IsMarkedForDestruction() )
+        return;
+
+    const MT_Float rDeltaPercentage = rNewMiningPercentage - rMiningPercentage_;
+    if( rDeltaPercentage == 0. )
+        return;
+    if( rDeltaPercentage > 0. )
+        Mine( rDeltaPercentage );
+    else
+    {
+        rMiningPercentage_ = 0;
+        Demine( -rDeltaPercentage );
+    }
+}
+
+// =============================================================================
+// OCCUPATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::AddOccupier
+// Created: NLD 2004-11-26
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::AddOccupier( const MIL_AgentPion& agent )
+{
+    if( !pOccupier_ )
+        pOccupier_ = &agent;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::RemoveOccupier
+// Created: NLD 2004-11-26
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::RemoveOccupier( const MIL_AgentPion& agent )
+{
+    if( pOccupier_ == &agent )
+        pOccupier_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::CanBeOccupiedBy
+// Created: NLD 2004-11-26
+// -----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::CanBeOccupiedBy( const MIL_AgentPion& agent ) const
+{
+    return !pOccupier_ || pOccupier_ == &agent;
+}
+
+// =============================================================================
+// ANIMATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::AddAnimator
+// Created: NLD 2004-11-02
+// -----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::AddAnimator( const MIL_AgentPion& agent )
+{
+    if( !CanBeAnimatedBy( agent ) )
+        return false;
+
+    animators_.insert( &agent );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::RemoveAnimator
+// Created: NLD 2004-11-02
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::RemoveAnimator( const MIL_AgentPion& agent )
+{
+    animators_.erase( &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetAnimators
+// Created: NLD 2005-03-23
+// -----------------------------------------------------------------------------
+const MIL_RealObject_ABC::T_AgentSet& MIL_RealObject_ABC::GetAnimators() const
+{
+    return animators_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::SetExitingPopulationDensity
+// Created: NLD 2006-03-08
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::SetExitingPopulationDensity( MT_Float rDensity )
+{
+    assert( rDensity >= 0. );
+    rExitingPopulationDensity_ = rDensity;
+}   
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::IsReservedObstacle
+// Created: NLD 2007-05-22
+// -----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::IsReservedObstacle() const
+{
+    return pObstacleType_ && pObstacleType_->CouldBeActivated();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetObstacleType
+// Created: NLD 2007-05-23
+// -----------------------------------------------------------------------------
+const MIL_ObstacleType* MIL_RealObject_ABC::GetObstacleType() const
+{
+    return pObstacleType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::IsReservedObstacleActivated
+// Created: NLD 2007-05-23
+// -----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::IsReservedObstacleActivated() const
+{
+    return bReservedObstacleActivated_;
+}
+
+
+
+
+

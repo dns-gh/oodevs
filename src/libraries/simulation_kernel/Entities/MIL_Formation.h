@@ -105,6 +105,4 @@ private:
           T_AutomateSet     automates_;
 };
 
-#include "MIL_Formation.inl"
-
 #endif // __MIL_Formation_h_

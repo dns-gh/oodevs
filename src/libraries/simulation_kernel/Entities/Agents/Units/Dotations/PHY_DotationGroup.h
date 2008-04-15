@@ -122,6 +122,4 @@ private:
           T_DotationMap               dotations_;
 };
 
-#include "PHY_DotationGroup.inl"
-
 #endif // __PHY_DotationGroup_h_

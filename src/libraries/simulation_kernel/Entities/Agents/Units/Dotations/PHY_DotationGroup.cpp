@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 
+#include "PHY_DotationGroupContainer.h"
 #include "PHY_DotationGroup.h"
 
 #include "PHY_Dotation.h"
@@ -371,4 +372,45 @@ void PHY_DotationGroup::NotifyReleased()
 
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
         it->second->NotifyReleased();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::GetDotation
+// Created: NLD 2004-08-16
+// -----------------------------------------------------------------------------
+PHY_Dotation* PHY_DotationGroup::GetDotation( const PHY_DotationCategory& dotationCategory ) const
+{
+    CIT_DotationMap it = dotations_.find( &dotationCategory );
+    if( it == dotations_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::NotifyDotationChanged
+// Created: NLD 2004-08-16
+// -----------------------------------------------------------------------------
+void PHY_DotationGroup::NotifyDotationChanged( const PHY_Dotation& dotation )
+{
+    assert( pGroupContainer_ );
+    pGroupContainer_->NotifyDotationChanged( dotation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::NotifySupplyNeeded
+// Created: NLD 2005-01-21
+// -----------------------------------------------------------------------------
+void PHY_DotationGroup::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
+{
+    assert( pGroupContainer_ );
+    pGroupContainer_->NotifySupplyNeeded( dotationCategory, bNewNeed );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::GetDotations
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const PHY_DotationGroup::T_DotationMap& PHY_DotationGroup::GetDotations() const
+{
+    return dotations_;
 }

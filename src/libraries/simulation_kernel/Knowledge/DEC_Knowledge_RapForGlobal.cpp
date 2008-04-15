@@ -15,6 +15,7 @@
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_KnowledgeGroup.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Agents/MIL_AgentPion.h"

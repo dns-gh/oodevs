@@ -16,6 +16,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "DEC_Knowledge_Agent.h"
 #include "MIL_KnowledgeGroup.h"
+#include "MIL_AgentServer.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_KS_Sharing, "DEC_KS_Sharing" )
 

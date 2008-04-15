@@ -16,6 +16,7 @@
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "MIL_AgentServer.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_RapForLocal, "DEC_Knowledge_RapForLocal" )
 
