@@ -123,8 +123,7 @@ void TacticalLine_ABC::UpdateGeometry(const ASN1T_Location& asn )
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const
 {
-    xos << xml::attribute( "id",   id_ )
-        << xml::attribute( "name", strName_ );
+    xos << xml::attribute( "name", strName_ );
     for( CIT_PositionVector it = geometry_.begin(); it != geometry_.end(); ++it )
         WritePoint( xos, converter, *it );
 }
