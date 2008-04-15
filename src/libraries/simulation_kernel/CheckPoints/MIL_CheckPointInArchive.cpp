@@ -10,6 +10,10 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_CheckPointInArchive.h"
 
+#include <boost/archive/impl/basic_binary_iprimitive.ipp>
+#include <boost/archive/impl/basic_binary_iarchive.ipp>
+#include <boost/archive/impl/archive_pointer_iserializer.ipp>
+
 namespace boost {
 namespace archive {
 

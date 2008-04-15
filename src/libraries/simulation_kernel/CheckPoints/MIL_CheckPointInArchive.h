@@ -12,9 +12,6 @@
 
 #pragma warning( push, 0 )
 #include <boost/archive/binary_iarchive_impl.hpp>
-#include <boost/archive/impl/basic_binary_iprimitive.ipp>
-#include <boost/archive/impl/basic_binary_iarchive.ipp>
-#include <boost/archive/impl/archive_pointer_iserializer.ipp>
 #pragma warning( pop )
 
 // =============================================================================
@@ -28,8 +25,19 @@ class  MIL_CheckPointInArchive : public boost::archive::binary_iarchive_impl<MIL
 public:
 
              MIL_CheckPointInArchive(std::istream & is, unsigned int flags = 0) : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>(is, flags) 
-                {}
+             {}
+             MIL_CheckPointInArchive(std::streambuf & bsb, unsigned int flags = 0) : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>(bsb, flags)
+             {}
     virtual ~MIL_CheckPointInArchive(){}
+
+private:
+
+    //! @name Copy/Assignement
+    //@{
+    MIL_CheckPointInArchive( const MIL_CheckPointInArchive& );            //!< Copy constructor
+    MIL_CheckPointInArchive& operator=( const MIL_CheckPointInArchive& ); //!< Assignement operator
+    //@}
+
 }; 
 
 BOOST_SERIALIZATION_REGISTER_ARCHIVE( MIL_CheckPointInArchive );

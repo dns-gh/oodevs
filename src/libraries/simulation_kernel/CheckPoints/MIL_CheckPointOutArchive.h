@@ -10,11 +10,9 @@
 #ifndef __MIL_CheckPointOutArchive_h_
 #define __MIL_CheckPointOutArchive_h_
 
+#include <ostream>
 #pragma warning( push, 0 )
 #include <boost/archive/binary_oarchive_impl.hpp>
-#include <boost/archive/impl/basic_binary_oprimitive.ipp>
-#include <boost/archive/impl/basic_binary_oarchive.ipp>
-#include <boost/archive/impl/archive_pointer_oserializer.ipp>
 #pragma warning( pop )
 
 // =============================================================================
@@ -29,7 +27,18 @@ public:
 
              MIL_CheckPointOutArchive(std::ostream & os, unsigned int flags = 0) : boost::archive::binary_oarchive_impl<MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type>(os, flags) 
              {}
+             MIL_CheckPointOutArchive(std::streambuf & bsb, unsigned int flags = 0) : boost::archive::binary_oarchive_impl<MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type>(bsb, flags)
+             {}
     virtual ~MIL_CheckPointOutArchive(){}
+
+private:
+
+    //! @name Copy/Assignement
+    //@{
+    MIL_CheckPointOutArchive( const MIL_CheckPointOutArchive& );            //!< Copy constructor
+    MIL_CheckPointOutArchive& operator=( const MIL_CheckPointOutArchive& ); //!< Assignement operator
+    //@}
+
 }; 
 
 BOOST_SERIALIZATION_REGISTER_ARCHIVE( MIL_CheckPointOutArchive );
