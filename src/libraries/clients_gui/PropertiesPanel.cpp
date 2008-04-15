@@ -73,12 +73,9 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
     {
         table_->Clear();
         selected_ = element;
-        if( selected_ )
+        if( selected_ && isVisible() )
             if( kernel::PropertiesDictionary* dico = const_cast< kernel::Entity_ABC* >( element )->Retrieve< kernel::PropertiesDictionary >() )
-            {
                 dico->Display( *table_ );
-                return;
-            }
     }
 }
 

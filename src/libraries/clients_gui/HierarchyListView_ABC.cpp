@@ -212,8 +212,10 @@ void HierarchyListView_ABC::NotifySelected( const Entity_ABC* element )
         selected_ = element;
         if( item != selectedItem() )
         {
+            blockSignals( true );
             selectAll( false );
             setSelected( item, true );
+            blockSignals( false );
         }
         ensureItemVisible( selectedItem() );
     }

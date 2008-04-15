@@ -51,14 +51,14 @@ public:
 
     virtual void Reset2d();
     virtual void Reset3d();
-    
+
     virtual void SetAlpha( float alpha );
     float GetAlpha() const;
 
     void MoveAbove( Layer_ABC& layer );
     void MoveBelow( Layer_ABC& layer );
     //@}
-    
+
 private:
     //! @name Member data
     //@{
@@ -76,7 +76,7 @@ private:
 // =============================================================================
 class Layer2d_ABC : public Layer_ABC
 {
- 
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -102,7 +102,7 @@ public:
 // =============================================================================
 class Layer3d_ABC : public Layer_ABC
 {
- 
+
 public:
     //! @name Constructors/Destructor
     //@{
