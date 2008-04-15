@@ -13,7 +13,7 @@
 #include "GlWidget.h"
 #include "Layer_ABC.h"
 #include "GlTooltip.h"
-#include "TooltipsLayer.h"
+#include "TooltipsLayer_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -25,7 +25,7 @@ using namespace gui;
 GlProxy::GlProxy()
     : view_   ( 0 )
     , tools_  ( 0 )
-    , tooltipLayer_( new TooltipsLayer( *this ) )
+    , tooltipLayer_( 0 )
 {
     // NOTHING
 }
@@ -47,6 +47,16 @@ GlProxy::~GlProxy()
 void GlProxy::Register( Layer_ABC& layer )
 {
     layers_.push_back( & layer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::Register
+// Created: SBO 2008-04-15
+// -----------------------------------------------------------------------------
+void GlProxy::Register( TooltipsLayer_ABC& layer )
+{
+    layers_.push_back( & layer );
+    tooltipLayer_ = &layer;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +87,6 @@ void GlProxy::RegisterTo( Gl3dWidget* newWidget )
 {
     for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->RegisterIn( *newWidget );
-    tooltipLayer_->RegisterIn( *newWidget );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +97,6 @@ void GlProxy::RegisterTo( GlWidget* newWidget )
 {
     for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->RegisterIn( *newWidget );
-    tooltipLayer_->RegisterIn( *newWidget );
 }
 
 // -----------------------------------------------------------------------------
@@ -285,9 +293,9 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where,
 // Name: GlProxy::DrawApp6Symbol
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /*= 1.f*/ ) const
+void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /*= 1.f*/, float thickness /*= 1.f*/ ) const
 {
-    tools_->DrawApp6Symbol( symbol, where, factor );
+    tools_->DrawApp6Symbol( symbol, where, factor, thickness );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,7 +342,6 @@ void GlProxy::Reset2d()
 {
     for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->Reset2d();
-    tooltipLayer_->Reset2d();
 }
 
 // -----------------------------------------------------------------------------
@@ -345,7 +352,6 @@ void GlProxy::Reset3d()
 {
     for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->Reset3d();
-    tooltipLayer_->Reset3d();
 }
 
 // -----------------------------------------------------------------------------
@@ -354,5 +360,7 @@ void GlProxy::Reset3d()
 // -----------------------------------------------------------------------------
 std::auto_ptr< kernel::GlTooltip_ABC > GlProxy::CreateTooltip() const
 {
-    return std::auto_ptr< kernel::GlTooltip_ABC >( new GlTooltip( *tooltipLayer_ ) );
+    if( tooltipLayer_ )
+        return std::auto_ptr< kernel::GlTooltip_ABC >( new GlTooltip( *tooltipLayer_ ) );
+    throw std::runtime_error( __FUNCTION__ );
 }

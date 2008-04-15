@@ -11,6 +11,7 @@
 #include "SymbolIcons.h"
 #include "moc_SymbolIcons.cpp"
 #include "GlWidget.h"
+#include "IconsRenderPass.h"
 
 using namespace gui;
 
@@ -21,6 +22,7 @@ using namespace gui;
 SymbolIcons::SymbolIcons( QObject* parent )
     : QObject( parent )
     , widget_( 0 )
+    , renderPass_( new IconsRenderPass() )
 {
     // NOTHING
 }
@@ -40,6 +42,8 @@ SymbolIcons::~SymbolIcons()
 // -----------------------------------------------------------------------------
 void SymbolIcons::OnWidget2dChanged( gui::GlWidget* widget )
 {
+    if( !widget_ && widget )
+        widget->AddPass( *renderPass_ );
     widget_ = widget;
 }
 
@@ -53,7 +57,7 @@ QPixmap SymbolIcons::GetSymbol( SymbolIcon symbol )
     const QPixmap& result = icons_[ symbol ];
     if( result.isNull() )
         if( widget_ && pending_.insert( symbol ).second )
-            widget_->CreateIcon( symbol, *this );
+            renderPass_->CreateIcon( symbol, *this );
     return result;
 }
 

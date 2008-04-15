@@ -17,8 +17,8 @@ using namespace frontend;
 // Name: ConfigurationManipulator constructor
 // Created: SBO 2008-02-25
 // -----------------------------------------------------------------------------
-ConfigurationManipulator::ConfigurationManipulator( const std::string& filename, const std::string& rootNode )
-    : document_( new XmlNode( filename, rootNode ) )
+ConfigurationManipulator::ConfigurationManipulator( const std::string& filename )
+    : document_( new XmlNode( filename ) )
     , output_  ( new xml::xofstream( filename ) )
 {
     // NOTHING

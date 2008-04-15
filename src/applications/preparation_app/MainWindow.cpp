@@ -82,6 +82,7 @@
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/IntelligenceList.h"
+#include "clients_gui/TooltipsLayer.h"
 #include "graphics/DragMovementLayer.h"
 
 #include "tools/ExerciseConfig.h"
@@ -242,39 +243,41 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locations, WeatherLayer& weather, ::AgentsLayer& agents, DrawerLayer& drawer, GraphicPreferences& setup, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
-    Layer_ABC& automats            = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, agents );
-    Layer_ABC& objectCreationLayer = *new MiscLayer< ObjectCreationPanel >( objects );
-    Elevation2dLayer& elevation2d  = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    Layer_ABC& raster              = *new RasterLayer( controllers_.controller_ );
-    Layer_ABC& terrain             = *new TerrainLayer( controllers_, *glProxy_, setup );
-    Layer_ABC& elevation3d         = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    Layer_ABC& grid                = *new GridLayer( controllers_, *glProxy_ );
-    Layer_ABC& metrics             = *new MetricsLayer( *glProxy_ );
-    Layer_ABC& intelligences       = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligences_ );
-    Layer_ABC& limits              = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
-    Layer_ABC& objectsLayer        = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    Layer_ABC& populations         = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    Layer_ABC& defaultLayer        = *new DefaultLayer( controllers_ );
+    TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
+    Layer_ABC& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, agents );
+    Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
+    Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
+    Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
+    Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
+    Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
+    Layer_ABC& intelligences        = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligences_ );
+    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
+    Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
-    glProxy_->Register( elevation2d );             preferences.AddLayer( tr( "Elevation" ), elevation2d );
-    glProxy_->Register( raster );                  preferences.AddLayer( tr( "Raster" ), raster );
-    glProxy_->Register( terrain );                 preferences.AddLayer( tr( "Terrain" ), terrain );
+    glProxy_->Register( elevation2d );             preferences.AddLayer( tr( "Elevation" ), elevation2d );          elevation2d         .SetPasses( "main" );
+    glProxy_->Register( raster );                  preferences.AddLayer( tr( "Raster" ), raster );                  raster              .SetPasses( "main" );
+    glProxy_->Register( terrain );                 preferences.AddLayer( tr( "Terrain" ), terrain );                terrain             .SetPasses( "main" );
     glProxy_->Register( elevation3d );
-    glProxy_->Register( grid );
-    glProxy_->Register( weather );
-    glProxy_->Register( limits );
-    glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );
-    glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );
-    glProxy_->Register( populations );              preferences.AddLayer( tr( "Populations" ), populations );
-    glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );
-    glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );
-    glProxy_->Register( objectCreationLayer );
-    glProxy_->Register( parameters );
-    glProxy_->Register( metrics );
-    glProxy_->Register( locations );
-    glProxy_->Register( drawer );
+    glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main" );
+    glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main" );
+    glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main" );
+    glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main" );
+    glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main" );
+    glProxy_->Register( populations );              preferences.AddLayer( tr( "Populations" ), populations );       populations         .SetPasses( "main" );
+    glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main" );
+    glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main" );
+    glProxy_->Register( objectCreationLayer );                                                                      objectCreationLayer .SetPasses( "main" );
+    glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );
+    glProxy_->Register( metrics );                                                                                  metrics             .SetPasses( "main" );
+    glProxy_->Register( locations );                                                                                locations           .SetPasses( "main" );
+    glProxy_->Register( drawer );                                                                                   drawer              .SetPasses( "main" );
+    glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );
 
     // ordre des evenements
     forward_->Register( parameters );

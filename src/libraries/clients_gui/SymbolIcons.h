@@ -16,6 +16,7 @@
 namespace gui
 {
     class GlWidget;
+    class IconsRenderPass;
 
 // =============================================================================
 /** @class  SymbolIcons
@@ -70,6 +71,7 @@ private:
     GlWidget* widget_;
     T_PendingIcons pending_;
     T_Icons icons_;
+    std::auto_ptr< IconsRenderPass > renderPass_;
     //@}
 };
 

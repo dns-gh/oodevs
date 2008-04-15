@@ -19,6 +19,7 @@
 #include "MiniView.h"
 #include "GlWidget.h"
 #include "SmartGridWidget.h"
+#include "MiniViewsRenderPass.h"
 
 using namespace kernel;
 using namespace gui;
@@ -59,6 +60,13 @@ MiniViews::~MiniViews()
 // -----------------------------------------------------------------------------
 void MiniViews::OnWidget2dChanged( gui::GlWidget* widget )
 {
+    if( widget_ && !widget )
+        while( ! renderPasses_.empty() )
+        {
+            widget_->RemovePass( *renderPasses_.begin()->second );
+            delete renderPasses_.begin()->second;
+            renderPasses_.erase( renderPasses_.begin() );
+        }
     widget_ = widget;
     if( ! widget_ )
         while( ! miniViews_.empty() )
@@ -95,8 +103,12 @@ void MiniViews::OnMiniView()
         MiniView*& view = miniViews_[ selected_ ];
         if( view )
         {
-
-            widget_->RemoveMiniView( view );
+            if( GlRenderPass_ABC* pass = renderPasses_[ view ] )
+            {
+                widget_->RemovePass( *pass );
+                delete pass;
+                renderPasses_.erase( view );
+            }
             delete view;
             miniViews_.erase( selected_ );
             if( miniViews_.empty() )
@@ -105,7 +117,9 @@ void MiniViews::OnMiniView()
         else
         {
             view = new MiniView( grid_, controllers_, *selected_ );
-            widget_->AddMiniView( view );
+            GlRenderPass_ABC* pass = new MiniViewsRenderPass( *view );
+            renderPasses_[ view ] = pass;
+            widget_->AddPass( *pass );
             show();
         }
         selected_ = 0;

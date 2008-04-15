@@ -27,6 +27,7 @@ namespace gui
     class SmartGridWidget;
     class GlWidget;
     class MiniView;
+    class GlRenderPass_ABC;
 
 // =============================================================================
 /** @class  MiniViews
@@ -70,6 +71,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< const kernel::Entity_ABC*, MiniView* > T_MiniViews;
+    typedef std::map< MiniView*, GlRenderPass_ABC* >         T_RenderPasses;
     //@}
 
 private:
@@ -80,6 +82,7 @@ private:
     SmartGridWidget* grid_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     T_MiniViews miniViews_;
+    T_RenderPasses renderPasses_;
     //@}
 };
 

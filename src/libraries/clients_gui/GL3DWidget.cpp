@@ -378,7 +378,7 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where, const 
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/, float /*thickness = 1.f*/ ) const
 {
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;

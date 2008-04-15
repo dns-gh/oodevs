@@ -39,6 +39,9 @@ TooltipsLayer::~TooltipsLayer()
 // -----------------------------------------------------------------------------
 void TooltipsLayer::Paint( kernel::Viewport_ABC& viewport )
 {
+    // $$$$ SBO 2008-04-14: make a special tooltips pass
+    if( !ShouldDrawPass() )
+        return;
     for( CIT_Tooltips it = tooltips_.begin(); it != tooltips_.end(); ++it )
         if( viewport.IsVisible( it->first ) )
             tools_.DrawImage( it->second, it->first );

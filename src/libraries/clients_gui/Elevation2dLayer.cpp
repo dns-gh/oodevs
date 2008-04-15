@@ -165,6 +165,8 @@ namespace
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 {
+    if( !ShouldDrawPass() )
+        return;
     if( reset_ )
     {
         bool modelLoaded = modelLoaded_;

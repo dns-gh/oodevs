@@ -185,6 +185,16 @@ void VisionCones::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& v
 }
 
 // -----------------------------------------------------------------------------
+// Name: VisionCones::DrawFill
+// Created: SBO 2008-04-14
+// -----------------------------------------------------------------------------
+void VisionCones::DrawFill( const kernel::Viewport_ABC& viewport ) const
+{
+    for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+        (*it)->DrawFill( viewport );
+}
+
+// -----------------------------------------------------------------------------
 // Name: VisionCones::Invalidate
 // Created: AGE 2006-12-08
 // -----------------------------------------------------------------------------

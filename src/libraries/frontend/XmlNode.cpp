@@ -19,7 +19,7 @@ using namespace frontend;
 // Name: XmlNode constructor
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
-XmlNode::XmlNode( const std::string& filename, const std::string& root )
+XmlNode::XmlNode( const std::string& filename )
 {
     if( boost::filesystem::exists( filename ) )
     {

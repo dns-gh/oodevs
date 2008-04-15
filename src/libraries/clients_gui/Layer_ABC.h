@@ -11,6 +11,7 @@
 #define __Layer_ABC_h_
 
 #include "graphics/MapLayer_ABC.h"
+#include <string>
 
 class ViewFrustum;
 
@@ -57,6 +58,10 @@ public:
 
     void MoveAbove( Layer_ABC& layer );
     void MoveBelow( Layer_ABC& layer );
+
+    void SetPasses( const std::string& passes );
+    std::string GetCurrentPass() const;
+    bool ShouldDrawPass() const;
     //@}
 
 private:
@@ -64,7 +69,8 @@ private:
     //@{
     GlWidget*     currentWidget_;
     MapLayer_ABC* currentProxy_;
-    float alpha_;
+    float         alpha_;
+    std::string   passes_;
     //@}
 };
 

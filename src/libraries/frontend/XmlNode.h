@@ -34,7 +34,7 @@ class XmlNode
 public:
     //! @name Constructors/Destructor
     //@{
-             XmlNode( const std::string& filename, const std::string& root );
+    explicit XmlNode( const std::string& filename );
     virtual ~XmlNode();
     //@}
 

@@ -11,11 +11,11 @@
 #include "GlWidget.h"
 #include "graphics/MapLayer_ABC.h"
 #include "graphics/Scale.h"
-#include "MiniView.h"
 #include "IconLayout.h"
 #include "DrawerStyle.h"
-#include "IconHandler_ABC.h"
-#include "xeumeuleu/xml.h"
+#include "GlRenderPass_ABC.h"
+#include "graphics/extensions.h"
+#include <xeumeuleu/xml.h>
 #include <qbitmap.h>
 
 using namespace geometry;
@@ -41,6 +41,15 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::passLess::operator()
+// Created: SBO 2008-04-15
+// -----------------------------------------------------------------------------
+bool GlWidget::passLess::operator()( GlRenderPass_ABC* lhs, GlRenderPass_ABC* rhs ) const
+{
+    return names_.find( lhs->GetName() ) < names_.find( rhs->GetName() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
@@ -55,6 +64,8 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const tools::Exe
     , viewport_( 0, 0, width_, height_ )
     , frame_( 0 )
     , iconLayout_( iconLayout )
+    , passes_( passLess( "" ) )
+    , currentPass_()
     , baseFont_( 0 )
 {
     setAcceptDrops( true );
@@ -115,163 +126,84 @@ void GlWidget::updateGL()
 // -----------------------------------------------------------------------------
 void GlWidget::paintGL()
 {
-    RenderMiniViews();
-    RenderIcons();
-
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity();
-
-    MapWidget::paintGL();
+    setAutoUpdate( false );
+    for( T_RenderPasses::iterator it = passes_.begin(); it != passes_.end(); ++it )
+        RenderPass( **it );
     Scale().Draw( 20, 20, *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlWidget::RenderMiniViews
-// Created: AGE 2006-06-22
-// -----------------------------------------------------------------------------
-void GlWidget::RenderMiniViews()
-{
-    if( views_.empty() )
-        return;
-    setAutoUpdate( false );
-    const geometry::Rectangle2f viewport = viewport_;
-    const int windowHeight = windowHeight_;
-    const int windowWidth = windowWidth_;
-    const Point2f oldCenter = Center( Point2f() );
-    const float oldZoom = Zoom( 1000 );
-
-    for( CIT_Views it = views_.begin(); it != views_.end(); ++it )
-        RenderMiniView( **it );
-
-    Center( oldCenter );
-    Zoom( oldZoom );
-    viewport_ = viewport;
-    windowHeight_ = windowHeight;
-    windowWidth_ = windowWidth;
-    MapWidget::resizeGL( windowWidth_, windowHeight_ );
     setAutoUpdate( true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::RenderMiniView
-// Created: AGE 2006-06-22
+// Name: GlWidget::PaintLayers
+// Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
-void GlWidget::RenderMiniView( MiniView& view )
+void GlWidget::PaintLayers()
 {
-    viewport_ = view.GetViewport() ;
-    if( ! viewport_.IsEmpty() )
-    {
-        Center( viewport_.Center() );
-        Zoom( viewport_.Height() );
-        MapWidget::resizeGL( miniViewSide_, miniViewSide_ );
-        windowHeight_ = miniViewSide_;
-        windowWidth_ = miniViewSide_;
-
-        QImage image( miniViewSide_, miniViewSide_, 32 );
-        MapWidget::paintGL();
-        glFlush();
-        glReadPixels( 0, 0, miniViewSide_, miniViewSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
-        glFlush();
-
-        view.SetImage( image.mirror() );
-    }
+    MapWidget::PaintLayers();
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::AddMiniView
-// Created: AGE 2006-06-23
+// Name: GlWidget::SetPassOrder
+// Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
-void GlWidget::AddMiniView( MiniView* view )
+void GlWidget::SetPassOrder( const std::string& names )
 {
-    views_.push_back( view );
+    passLess comparator( names );
+    T_RenderPasses passes( comparator );
+    std::copy( passes_.begin(), passes_.end(), std::inserter( passes, passes.begin() ) );
+    std::swap( passes_, passes );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::RemoveMiniView
-// Created: AGE 2006-06-23
+// Name: GlWidget::AddPass
+// Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
-void GlWidget::RemoveMiniView( MiniView* view )
+void GlWidget::AddPass( GlRenderPass_ABC& pass )
 {
-    IT_Views it = std::find( views_.begin(), views_.end(), view );
-    if( it != views_.end() )
-    {
-        std::swap( *it, views_.back() );
-        views_.pop_back();
-    }
+    passes_.insert( &pass );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::CreateIcon
-// Created: AGE 2007-10-31
+// Name: GlWidget::RemovePass
+// Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-void GlWidget::CreateIcon( const SymbolIcon& symbol, IconHandler_ABC& handler )
+void GlWidget::RemovePass( GlRenderPass_ABC& pass )
 {
-    tasks_.push_back( T_IconTask( symbol, &handler ) );
+    passes_.erase( &pass );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::RenderIcons
-// Created: AGE 2006-11-22
+// Name: GlWidget::RenderPass
+// Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
-void GlWidget::RenderIcons()
+void GlWidget::RenderPass( GlRenderPass_ABC& pass )
 {
-    if( tasks_.empty() || frame_ < 10 ) // whatever
-        return;
-
-    setAutoUpdate( false );
-    const geometry::Rectangle2f viewport = viewport_;
+    currentPass_ = pass.GetName();
+    const geometry::Rectangle2f viewport = GetViewport();
     const int windowHeight = windowHeight_;
-    const int windowWidth = windowWidth_;
-    const geometry::Rectangle2f iconViewport( 0, 0, 600, 600 );
-    const Point2f oldCenter = Center( iconViewport.Center() );
-    const float oldZoom = Zoom( iconViewport.Width() + 10 );
+    const int windowWidth  = windowWidth_;
+    viewport_ = pass.Viewport();
+    SetViewport( viewport_ );
+    windowWidth_  = pass.Width();
+    windowHeight_ = pass.Height();
 
-    viewport_ = iconViewport;
-    windowHeight_ = iconSide_;
-    windowWidth_ = iconSide_;
-
-    glEnable( GL_LINE_SMOOTH );
-    for( CIT_IconTasks it = tasks_.begin(); it != tasks_.end(); ++it )
-        RenderIcon( *it, iconViewport );
-    tasks_.clear();
-    glDisable( GL_LINE_SMOOTH );
-
-    Center( oldCenter );
-    Zoom( oldZoom );
-    viewport_ = viewport;
-    windowHeight_ = windowHeight;
-    windowWidth_ = windowWidth;
     MapWidget::resizeGL( windowWidth_, windowHeight_ );
-    setAutoUpdate( true );
+    pass.Render( *this );
+
+    SetViewport( viewport );
+    viewport_     = viewport;
+    windowHeight_ = windowHeight;
+    windowWidth_  = windowWidth;
+    MapWidget::resizeGL( windowWidth_, windowHeight_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::RenderIcon
-// Created: AGE 2006-11-22
+// Name: GlWidget::GetCurrentPass
+// Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-void GlWidget::RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& viewport )
+std::string GlWidget::GetCurrentPass() const
 {
-    MapWidget::resizeGL( iconSide_, iconSide_ );
-
-    QImage image( iconSide_, iconSide_, 32 );
-    glColor3f( 1, 1, 1 );
-    glRectf( viewport.Left() - 50, viewport.Bottom() - 50, viewport.Right() + 50, viewport.Top() + 50 );
-    const SymbolIcon& symbol = task.first;
-    SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
-    windowWidth_ = windowHeight_ = viewport.Width() * 1.5f; // => trait svg de 2 px
-    const Point2f center( 300, 100 );
-    DrawApp6Symbol( symbol.symbol_, center );
-    if( ! symbol.level_.empty() )
-        DrawApp6Symbol( symbol.level_, center );
-    windowWidth_ = windowHeight_ = iconSide_;
-
-    glFlush();
-    glReadPixels( 0, 0, iconSide_, iconSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
-    glFlush();
-
-    QPixmap result( image.mirror().smoothScale( symbol.size_ ) );
-    result.setMask( result.createHeuristicMask( true ) );
-    task.second->AddIcon( task.first, result );
+    return currentPass_;
 }
 
 // -----------------------------------------------------------------------------
@@ -595,7 +527,7 @@ void GlWidget::Print( const std::string& message, const geometry::Point2f& where
 // Name: GLWidget::DrawApp6Symbolc
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
+void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/, float thickness /*= 1.f*/ ) const
 {
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
@@ -606,13 +538,14 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, 
 
     const float scaleRatio = expectedWidth / svgWidth;
 
+    gl::Initialize();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glMatrixMode(GL_MODELVIEW);
+    glMatrixMode( GL_MODELVIEW );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.0f );
         glScalef( scaleRatio, -scaleRatio, 1 );
         glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-        Base().PrintApp6( symbol, viewport_, windowWidth_, windowHeight_ );
+        Base().PrintApp6( symbol, viewport_, windowWidth_ * thickness, windowHeight_ * thickness );
     glPopMatrix();
     glPopAttrib();
 }

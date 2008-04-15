@@ -38,6 +38,8 @@ FolkLayer::~FolkLayer()
 // -----------------------------------------------------------------------------
 void FolkLayer::Paint( const geometry::Rectangle2f& viewport )
 {
+    if( !ShouldDrawPass() )
+        return;
     SetOccupation( model_.GetCurrentOccupation() );
     gui::FolkLayer::Paint( viewport );
 }

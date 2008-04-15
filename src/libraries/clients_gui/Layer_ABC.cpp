@@ -54,8 +54,11 @@ void Layer_ABC::Paint( const ViewFrustum& frustum )
 // -----------------------------------------------------------------------------
 void Layer_ABC::Paint( const geometry::Rectangle2f& rectangle )
 {
-    Viewport2d viewport( rectangle );
-    Paint( viewport );
+    if( ShouldDrawPass() )
+    {
+        Viewport2d viewport( rectangle );
+        Paint( viewport );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -179,4 +182,31 @@ void Layer3d_ABC::Reset3d()
 void Layer3d_ABC::Reset()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::SetPasses
+// Created: SBO 2008-04-15
+// -----------------------------------------------------------------------------
+void Layer_ABC::SetPasses( const std::string& passes )
+{
+    passes_ = passes;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::GetCurrentPass
+// Created: SBO 2008-04-14
+// -----------------------------------------------------------------------------
+std::string Layer_ABC::GetCurrentPass() const
+{
+    return currentWidget_ ? currentWidget_->GetCurrentPass() : "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::ShouldDrawPass
+// Created: SBO 2008-04-15
+// -----------------------------------------------------------------------------
+bool Layer_ABC::ShouldDrawPass() const
+{
+    return passes_.empty() || GetCurrentPass().empty() || passes_.find( GetCurrentPass() ) != std::string::npos;
 }

@@ -59,9 +59,20 @@ void Surface::Draw( const kernel::Viewport_ABC& viewport, const GlTools_ABC& too
 {
     if( ! viewport.IsVisible( Extent() ) )
         return;
-
     for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
-        itSector->Draw( viewport, tools, maxRadius_ );
+        itSector->Draw( tools, maxRadius_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Surface::DrawFill
+// Created: SBO 2008-04-14
+// -----------------------------------------------------------------------------
+void Surface::DrawFill( const kernel::Viewport_ABC& viewport ) const
+{
+    if( ! viewport.IsVisible( Extent() ) )
+        return;
+    for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
+        itSector->DrawFill( maxRadius_ );
 }
 
 // -----------------------------------------------------------------------------

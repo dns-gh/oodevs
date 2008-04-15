@@ -16,6 +16,9 @@
 #include "Gl3dWidget.h"
 #include "GlProxy.h"
 #include "IconLayout.h"
+#include "LayersRenderPass.h"
+#include "TextureRenderPass.h"
+#include "CompositionPass.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "graphics/DragMovementLayer.h"
@@ -71,6 +74,7 @@ void GlSelector::Load()
     if( widget2d_ )
         return;
     widget2d_ = new GlWidget( parent_, controllers_, config_, *iconLayout_ );
+    InitializePasses();
     moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
     widget2d_->Configure( strategy_ );
     widget2d_->Configure( *moveLayer_ );
@@ -164,4 +168,23 @@ void GlSelector::OptionChanged( const std::string& name, const OptionVariant& va
 void GlSelector::AddIcon( const char** xpm, int x, int y )
 {
     iconLayout_->AddIcon( xpm, x, y );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlSelector::InitializePasses
+// Created: SBO 2008-04-15
+// -----------------------------------------------------------------------------
+void GlSelector::InitializePasses()
+{
+    if( !widget2d_ )
+        return;
+    widget2d_->SetPassOrder( "icons,miniviews,main,fog,composition,tooltip" );
+    LayersRenderPass*  tooltip     = new LayersRenderPass ( *widget2d_, "tooltip", false );
+    TextureRenderPass* main        = new TextureRenderPass( *widget2d_, "main", controllers_ );
+    TextureRenderPass* fog         = new TextureRenderPass( *widget2d_, "fog", controllers_, "FogOfWar" );
+    GlRenderPass_ABC*  composition = new CompositionPass  ( *main, *fog, controllers_, "FogOfWar" );
+    widget2d_->AddPass( *tooltip );
+    widget2d_->AddPass( *composition );
+    widget2d_->AddPass( *fog );
+    widget2d_->AddPass( *main );
 }

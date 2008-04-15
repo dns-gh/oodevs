@@ -42,6 +42,8 @@ WeatherLayer::~WeatherLayer()
 // -----------------------------------------------------------------------------
 void WeatherLayer::Paint( const geometry::Rectangle2f& viewport )
 {
+    if( !ShouldDrawPass() )
+        return;
     const geometry::Point2f topRight( bottomRight_.X(), topLeft_.Y() );
     const geometry::Point2f bottomLeft( topLeft_.X(), bottomRight_.Y() );
 

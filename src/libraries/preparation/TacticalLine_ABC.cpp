@@ -57,7 +57,7 @@ TacticalLine_ABC::~TacticalLine_ABC()
 // Name: TacticalLine_ABC::Draw
 // Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void TacticalLine_ABC::Draw( const geometry::Point2f&, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
 {
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor3f( 0.f, 0.f, 0.f );

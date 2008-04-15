@@ -93,7 +93,7 @@ void DrawerLayer::StartShape( const DrawerStyle& style, const QColor& color )
 // -----------------------------------------------------------------------------
 void DrawerLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( show_ )
+    if( !ShouldDrawPass() && show_ )
     {
         for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
         {

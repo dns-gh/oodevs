@@ -52,6 +52,8 @@ void GridLayer::Initialize( const geometry::Rectangle2f& extent )
 // -----------------------------------------------------------------------------
 void GridLayer::Paint( const geometry::Rectangle2f& v )
 {
+    if( !ShouldDrawPass() )
+        return;
     if( gridSize_ >= 0 )
     {
         geometry::Rectangle2f viewport = v.Intersect( extent_ );

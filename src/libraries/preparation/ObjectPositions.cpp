@@ -222,7 +222,7 @@ void ObjectPositions::VisitPoint( const geometry::Point2f& point )
 // Name: ObjectPositions::Draw
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectPositions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ObjectPositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;

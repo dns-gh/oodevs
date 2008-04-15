@@ -111,7 +111,7 @@ namespace
 // Name: ProfilingPanel::NotifyUpdated
 // Created: SBO 2007-01-04
 // -----------------------------------------------------------------------------
-void ProfilingPanel::NotifyUpdated( const Simulation::sEndTick& endTick )
+void ProfilingPanel::NotifyUpdated( const Simulation::sEndTick& )
 {
     ++ticks_;
     unsigned long received = network_.GetReceivedAmount();

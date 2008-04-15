@@ -34,7 +34,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , view_       ( view )
     , profile_    ( profile )
     , tooltiped_  ( std::numeric_limits< unsigned >::max() ) 
-    , tooltip_    ( tools_.CreateTooltip() )
+    , tooltip_    ( 0 )
     , selected_   ( 0 )
 {
     // NOTHING
@@ -65,6 +65,11 @@ void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
     {
         const Positions& positions = entities_[ tooltiped_ ]->Get< Positions >();
         const geometry::Point2f position = positions.GetPosition();
+        if( !tooltip_.get() )
+        {
+            std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
+            tooltip_ = tooltip;
+        }
         tooltip_->Draw( position );
     }
 }
@@ -155,7 +160,8 @@ bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& p
     if( ! ShouldDisplayTooltip( tooltiped_, point ) )
     {
         tooltiped_ = std::numeric_limits< unsigned >::max();
-        tooltip_->Hide();
+        if( tooltip_.get() )
+            tooltip_->Hide();
         if( ! DisplayTooltip( selected_, point ) )
         {
             bool found = false;
@@ -183,6 +189,11 @@ bool EntityLayerBase::ShouldDisplayTooltip( unsigned i, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::DisplayTooltip( unsigned i, const geometry::Point2f& point )
 {
+    if( !tooltip_.get() )
+    {
+        std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
+        tooltip_ = tooltip;
+    }
     return ShouldDisplayTooltip( i, point )
         && DisplayTooltip( *entities_[ i ], *tooltip_ )
         && ( tooltiped_ = i, 1 );  // $$$$ AGE 2006-06-29: duh

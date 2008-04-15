@@ -12,7 +12,6 @@
 #include "gaming_pch.h"
 #include "Sector.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 
 const float Sector::pi_ = std::acos( -1.f );
 
@@ -95,9 +94,9 @@ Sector::~Sector()
 // Name: Sector::Draw
 // Created: AGE 2006-04-26
 // -----------------------------------------------------------------------------
-void Sector::Draw( const kernel::Viewport_ABC& , const GlTools_ABC& tools, float radius ) const
+void Sector::Draw( const GlTools_ABC& tools, float radius ) const
 {
-    if( vOrigin_.IsZero() )
+    if( vDirection_.IsNull() )
         tools.DrawCircle( vOrigin_, radius );
     else
     {
@@ -108,4 +107,22 @@ void Sector::Draw( const kernel::Viewport_ABC& , const GlTools_ABC& tools, float
         tools.DrawLine( vOrigin_, vOrigin_ + dir2 );
         tools.DrawArc( vOrigin_, vOrigin_ + dir1, vOrigin_ + dir2 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sector::DrawFill
+// Created: SBO 2008-04-14
+// -----------------------------------------------------------------------------
+void Sector::DrawFill( float radius ) const
+{
+    glBegin( GL_TRIANGLE_FAN );
+        glTexCoord1f( 0.125f );
+        glVertex3f( vOrigin_.X(), vOrigin_.Y(), 200  );
+        for( float angle = minAngle_; angle < maxAngle_; angle += 0.05f )
+        {
+            geometry::Point2f point = vOrigin_ + radius * geometry::Vector2f( std::cos( angle ), std::sin( angle ) );
+            glTexCoord1f( 1.f -  0.125f );
+            glVertex3f( point.X(), point.Y(), 0 );
+        }
+    glEnd();
 }

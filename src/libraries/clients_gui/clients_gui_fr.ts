@@ -1022,6 +1022,14 @@ Please check access permissions or write protection.</source>
         <source>Transparency</source>
         <translation>Transparence</translation>
     </message>
+    <message>
+        <source>Fog of war</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display fog of war</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::LightingPanel</name>

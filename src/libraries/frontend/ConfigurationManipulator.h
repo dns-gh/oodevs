@@ -35,7 +35,7 @@ class ConfigurationManipulator
 public:
     //! @name Constructors/Destructor
     //@{
-             ConfigurationManipulator( const std::string& filename, const std::string& rootNode );
+    explicit ConfigurationManipulator( const std::string& filename );
     virtual ~ConfigurationManipulator();
     //@}
 

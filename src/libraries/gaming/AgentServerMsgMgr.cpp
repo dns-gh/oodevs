@@ -1569,14 +1569,14 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const A
 // Name: AgentServerMsgMgr::OnReceiveMsgAarToClient
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAarToClient( const std::string& from, const ASN1T_MsgsAarToClient& message )
+void AgentServerMsgMgr::OnReceiveMsgAarToClient( const std::string&, const ASN1T_MsgsAarToClient& message )
 {
     if( host_.empty() )
         return;
     switch( message.msg.t )
     {
-    case T_MsgsAarToClient_msg_msg_aar_information:  OnReceiveMsgAarInformation( *message.msg.u.msg_aar_information     ); break;
-    case T_MsgsAarToClient_msg_msg_indicator_result: OnReceiveMsgAarResult     ( *message.msg.u.msg_indicator_result); break;
+    case T_MsgsAarToClient_msg_msg_aar_information:  OnReceiveMsgAarInformation( *message.msg.u.msg_aar_information ); break;
+    case T_MsgsAarToClient_msg_msg_indicator_result: OnReceiveMsgAarResult     ( *message.msg.u.msg_indicator_result ); break;
     default:
         UnhandledMessage( message.msg.t );
     }
@@ -1586,7 +1586,7 @@ void AgentServerMsgMgr::OnReceiveMsgAarToClient( const std::string& from, const 
 // Name: AgentServerMsgMgr::OnReceiveMsgMessengerToClient
 // Created: RDS 2008-04-07
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string& from, const ASN1T_MsgsMessengerToClient& message )
+void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const ASN1T_MsgsMessengerToClient& message )
 {
     if( host_.empty() )
         return;

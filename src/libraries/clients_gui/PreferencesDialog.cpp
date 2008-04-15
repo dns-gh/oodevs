@@ -114,7 +114,7 @@ void PreferencesDialog::AddPage( const QString& name, PreferencePanel_ABC& page 
 // -----------------------------------------------------------------------------
 QSize PreferencesDialog::sizeHint() const
 {
-    return QSize( 500, 300 );
+    return QSize( 500, 400 );
 }
 
 // -----------------------------------------------------------------------------

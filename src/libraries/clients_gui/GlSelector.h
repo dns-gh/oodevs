@@ -88,6 +88,7 @@ private:
     //! @name Helpers
     //@{
     void Clean();
+    void InitializePasses();
     //@}
 
 private:

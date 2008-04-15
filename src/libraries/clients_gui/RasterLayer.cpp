@@ -42,7 +42,7 @@ RasterLayer::~RasterLayer()
 // -----------------------------------------------------------------------------
 void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( GetAlpha() == 0 )
+    if( !ShouldDrawPass() || GetAlpha() == 0 )
         return;
     if( ! textures_.get() && ! graphicsDirectory_.empty() && ! ignore_ )
         try

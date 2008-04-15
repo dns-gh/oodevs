@@ -30,6 +30,7 @@
 #include "ObjectsLayer.h"
 #include "ObjectKnowledgesLayer.h"
 #include "LimitsLayer.h"
+#include "FogLayer.h"
 #include "StatusBar.h"
 #include "AgentList.h"
 #include "LoginDialog.h"
@@ -104,6 +105,7 @@
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/FormationLayer.h"
 #include "clients_gui/IntelligenceList.h"
+#include "clients_gui/TooltipsLayer.h"
 
 #include "tools/ExerciseConfig.h"
 
@@ -329,6 +331,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
 {
+    TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& creationsLayer       = *new MiscLayer< CreationPanels >( creationPanels );
     Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
@@ -349,33 +352,36 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& logoLayer            = *new LogoLayer( *glProxy_, QImage( "logo.png" ), 0.7f );
     Layer_ABC& formationLayer       = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& folkLayer            = *new ::FolkLayer( controllers_.controller_, staticModel_.coordinateConverter_, model_.folk_ );
+    Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
-    glProxy_->Register( elevation2d );              preferences.AddLayer( tr( "Elevation" ), elevation2d );
-    glProxy_->Register( raster );                   preferences.AddLayer( tr( "Raster" ), raster );
-    glProxy_->Register( terrain );                  preferences.AddLayer( tr( "Terrain" ), terrain );
+    glProxy_->Register( elevation2d );              preferences.AddLayer( tr( "Elevation" ), elevation2d );         elevation2d         .SetPasses( "main,composition,miniviews" );
+    glProxy_->Register( raster );                   preferences.AddLayer( tr( "Raster" ), raster );                 raster              .SetPasses( "main,composition,miniviews" );
+    glProxy_->Register( terrain );                  preferences.AddLayer( tr( "Terrain" ), terrain );               terrain             .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( elevation3d );
-    glProxy_->Register( grid );
-    glProxy_->Register( folkLayer );                preferences.AddLayer( tr( "Folk" ), folkLayer );
-    glProxy_->Register( meteo );
-    glProxy_->Register( limits );
-    glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );
-    glProxy_->Register( objectKnowledges );
-    glProxy_->Register( populationKnowledges );
-    glProxy_->Register( agentKnowledges );
-    glProxy_->Register( formationLayer );
-    glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );
-    glProxy_->Register( populations );              preferences.AddLayer( tr( "Populations" ), populations );
-    glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );
-    glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );
-    glProxy_->Register( missionsLayer );
-    glProxy_->Register( creationsLayer );
-    glProxy_->Register( parameters );
-    glProxy_->Register( metrics );
-    glProxy_->Register( locationsLayer );
-    glProxy_->Register( drawer );
-    glProxy_->Register( logoLayer );                preferences.AddLayer( tr( "Logo" ), logoLayer );
+    glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main,miniviews" );
+    glProxy_->Register( folkLayer );                preferences.AddLayer( tr( "Folk" ), folkLayer );                folkLayer           .SetPasses( "main,miniviews" );
+    glProxy_->Register( meteo );                                                                                    meteo               .SetPasses( "main,miniviews" );
+    glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main,miniviews" );
+    glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main,miniviews" );
+    glProxy_->Register( objectKnowledges );                                                                         objectKnowledges    .SetPasses( "main,miniviews" );
+    glProxy_->Register( populationKnowledges );                                                                     populationKnowledges.SetPasses( "main,miniviews" );
+    glProxy_->Register( agentKnowledges );                                                                          agentKnowledges     .SetPasses( "main,miniviews" );
+    glProxy_->Register( formationLayer );                                                                           formationLayer      .SetPasses( "main,miniviews" );
+    glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main,miniviews" );
+    glProxy_->Register( populations );              preferences.AddLayer( tr( "Populations" ), populations );       populations         .SetPasses( "main,miniviews" );
+    glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main,miniviews" );
+    glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main,miniviews" );
+    glProxy_->Register( missionsLayer );                                                                            missionsLayer       .SetPasses( "main,miniviews" );
+    glProxy_->Register( creationsLayer );                                                                           creationsLayer      .SetPasses( "main" );
+    glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );
+    glProxy_->Register( metrics );                                                                                  metrics             .SetPasses( "main" );
+    glProxy_->Register( locationsLayer );                                                                           locationsLayer      .SetPasses( "main" );
+    glProxy_->Register( drawer );                                                                                   drawer              .SetPasses( "main,miniviews" );
+    glProxy_->Register( fogLayer );                                                                                 fogLayer            .SetPasses( "fog" );
+    glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );
+    glProxy_->Register( logoLayer );                preferences.AddLayer( tr( "Logo" ), logoLayer );                logoLayer           .SetPasses( "main" );
     
     // ordre des evenements
     forward_->Register( parameters );

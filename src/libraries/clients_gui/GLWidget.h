@@ -15,7 +15,6 @@
 #include "SetGlOptions.h"
 #include "View_ABC.h"
 #include "GlToolsBase.h"
-#include "SymbolIcon.h"
 
 namespace tools
 {
@@ -29,9 +28,9 @@ namespace kernel
 
 namespace gui
 {  
-    class MiniView;
     class IconLayout;
-    class IconHandler_ABC;
+    class GlRenderPass_ABC;
+    class TextureRenderPass;
 
 // =============================================================================
 /** @class  GlWidget
@@ -55,10 +54,12 @@ public:
 
     //! @name Operations
     //@{
-    void AddMiniView   ( MiniView* view );
-    void RemoveMiniView( MiniView* view );
+    void SetPassOrder( const std::string& names );
+    void AddPass( GlRenderPass_ABC& pass );
+    void RemovePass( GlRenderPass_ABC& pass );
 
-    void CreateIcon( const SymbolIcon& symbol, IconHandler_ABC& handler );
+    std::string GetCurrentPass() const;
+    virtual void PaintLayers();
     //@}
 
     //! @name Operations
@@ -78,7 +79,7 @@ public:
     virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where, const QFont& font ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where ) const;
-    virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f ) const;
+    virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f ) const;
     virtual void DrawIcon         ( const char** xpm, const geometry::Point2f& where, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawImage        ( const QImage& image, const geometry::Point2f& where ) const;
     virtual void DrawCell         ( const geometry::Point2f& center ) const;
@@ -97,13 +98,13 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< MiniView* >   T_Views;
-    typedef T_Views::iterator         IT_Views;
-    typedef T_Views::const_iterator  CIT_Views;
-
-    typedef std::pair< SymbolIcon, IconHandler_ABC* > T_IconTask;
-    typedef std::vector< T_IconTask >                 T_IconTasks;
-    typedef T_IconTasks::const_iterator             CIT_IconTasks;
+    struct passLess
+    {
+        explicit passLess( const std::string& names ) : names_( names ){}
+        bool operator()( GlRenderPass_ABC* lhs, GlRenderPass_ABC* rhs ) const;
+        std::string names_;
+    };
+    typedef std::multiset< GlRenderPass_ABC*, passLess > T_RenderPasses;
 
     struct sFontLess : public std::binary_function< QFont, QFont, bool >
     {
@@ -125,18 +126,12 @@ private:
     virtual void updateGL();
     unsigned int GenerateCircle();
 
-    void RenderMiniViews();
-    void RenderMiniView( MiniView& view );
-    void RenderIcons();
-    void RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& viewport );
+    void RenderPass( GlRenderPass_ABC& pass );
     //@}
 
 private:
     //! @name Member data
     //@{
-    static const unsigned miniViewSide_ = 128;
-    static const unsigned iconSide_     = 128;
- 
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;
@@ -144,11 +139,11 @@ private:
     geometry::Rectangle2f viewport_;
     unsigned int frame_;
 
-    T_Views views_;
     IconLayout& iconLayout_;
 
-    T_IconTasks tasks_;
- 
+    T_RenderPasses passes_;
+    std::string    currentPass_;
+
     T_Fonts fonts_;
     int     baseFont_;
     //@}

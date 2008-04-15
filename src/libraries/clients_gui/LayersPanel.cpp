@@ -32,6 +32,11 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
     , currentLayer_      ( -1 )
 {
     {
+        QGroupBox* box = new QGroupBox( 1, Qt::Vertical, tr( "Fog of war" ), this );
+        fogOfWar_ = new QCheckBox( tr( "Display fog of war" ), box );
+        connect( fogOfWar_, SIGNAL( toggled( bool ) ), SLOT( OnFogOfWarChanged( bool ) ) );
+    }
+    {
         QHBox* box = new QHBox( this );
         box->setSpacing( 5 );
         layersList_ = new QListView( box );
@@ -209,6 +214,11 @@ void LayersPanel::OnDown()
 // -----------------------------------------------------------------------------
 void LayersPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
+    if( name == "FogOfWar" )
+    {
+        fogOfWar_->setChecked( value.To< bool >() );
+        return;
+    }
     QString option( name.c_str() );
     if( !option.startsWith( "Layers/" ) )
         return;
@@ -235,4 +245,13 @@ void LayersPanel::OptionChanged( const std::string& name, const kernel::OptionVa
             }
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::OnFogOfWarChanged
+// Created: SBO 2008-04-15
+// -----------------------------------------------------------------------------
+void LayersPanel::OnFogOfWarChanged( bool value )
+{
+    options_.Change( "FogOfWar", value );
 }
