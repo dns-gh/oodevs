@@ -139,7 +139,8 @@ namespace
     "   blur          += texture2D( tex0, gl_TexCoord[0].st + vec2( texelSize.x, -texelSize.y ) );"
     "   blur          += texture2D( tex0, gl_TexCoord[0].st - vec2( texelSize.x, -texelSize.y ) );"
     "   blur          /= 4.;"
-    "   vec4 color     = ( mainColor + 3. * fogColor.r * mainColor + ( 1. - fogColor.r ) * blur ) / 4.;"
+    "   vec4 blured    = ( mainColor + blur ) / 4.;"
+    "   vec4 color     = mix( blured, mainColor, fogColor.r );"
     "   gl_FragColor   = color;"
     "}";
 }
