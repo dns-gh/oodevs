@@ -9,10 +9,11 @@ MessengerMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 -- BEGIN includes
 IMPORTS BaseExports                   FROM Base
         LimaLimiteExports             FROM LimaLimite
-        IntelligenceExports           FROM Intelligence;
+        IntelligenceExports           FROM Intelligence
+        DrawingExports                FROM Drawing;
 
 MessengerMessagesIncludes ::= SEQUENCE
-{ BaseExports, LimaLimiteExports, IntelligenceExports }
+{ BaseExports, LimaLimiteExports, IntelligenceExports, DrawingExports }
 MessengerMessagesExports  ::= NULL
 -- END includes
 
@@ -22,45 +23,64 @@ MessengerMessagesExports  ::= NULL
 --
 MsgsMessengerToClient ::= CHOICE
 {
-    -- ACKS
+    -- LIMIT
+    msg-limit-creation                                      MsgLimitCreation,
+    msg-limit-update                                        MsgLimitUpdate,
+    msg-limit-destruction                                   MsgLimitDestruction,
+
     msg-limit-creation-request-ack                          MsgLimitCreationRequestAck,
     msg-limit-destruction-request-ack                       MsgLimitDestructionRequestAck,
     msg-limit-update-request-ack                            MsgLimitUpdateRequestAck,
+
+    -- LIMA 
+    msg-lima-creation                                       MsgLimaCreation,
+    msg-lima-update                                         MsgLimaUpdate,
+    msg-lima-destruction                                    MsgLimaDestruction,
+
     msg-lima-creation-request-ack                           MsgLimaCreationRequestAck,
     msg-lima-destruction-request-ack                        MsgLimaDestructionRequestAck,
     msg-lima-update-request-ack                             MsgLimaUpdateRequestAck,
+
+  -- INTELLIGENCE
+    msg-intelligence-creation                               MsgIntelligenceCreation,
+    msg-intelligence-update                                 MsgIntelligenceUpdate,
+    msg-intelligence-destruction                            MsgIntelligenceDestruction,
 
     msg-intelligence-creation-request-ack                   MsgIntelligenceCreationRequestAck,
     msg-intelligence-update-request-ack                     MsgIntelligenceUpdateRequestAck,
     msg-intelligence-destruction-request-ack                MsgIntelligenceDestructionRequestAck,
 
-    -- MESSAGES
-    msg-limit-creation                                      MsgLimitCreation,
-    msg-limit-update                                        MsgLimitUpdate,
-    msg-limit-destruction                                   MsgLimitDestruction,
-    msg-lima-creation                                       MsgLimaCreation,
-    msg-lima-update                                         MsgLimaUpdate,
-    msg-lima-destruction                                    MsgLimaDestruction,
-    
-    msg-intelligence-creation                               MsgIntelligenceCreation,
-    msg-intelligence-update                                 MsgIntelligenceUpdate,
-    msg-intelligence-destruction                            MsgIntelligenceDestruction
+    -- SHAPE 
+    msg-shape-creation                                       MsgShapeCreation,
+    msg-shape-update                                         MsgShapeUpdate,
+    msg-shape-destruction                                    MsgShapeDestruction,
+
+    msg-shape-creation-request-ack                           MsgShapeCreationRequestAck,
+    msg-shape-destruction-request-ack                        MsgShapeDestructionRequestAck,
+    msg-shape-update-request-ack                             MsgShapeUpdateRequestAck
+   
 }
 
 MsgsClientToMessenger ::= CHOICE
 {
+
     msg-limit-creation-request              MsgLimitCreationRequest,
     msg-limit-destruction-request           MsgLimitDestructionRequest,
     msg-limit-update-request                MsgLimitUpdateRequest,
+
     msg-lima-creation-request               MsgLimaCreationRequest,
     msg-lima-destruction-request            MsgLimaDestructionRequest,
     msg-lima-update-request                 MsgLimaUpdateRequest,
 
     msg-intelligence-creation-request       MsgIntelligenceCreationRequest,
     msg-intelligence-update-request         MsgIntelligenceUpdateRequest,
-    msg-intelligence-destruction-request    MsgIntelligenceDestructionRequest
+    msg-intelligence-destruction-request    MsgIntelligenceDestructionRequest,
 
+    msg-shape-creation-request              MsgShapeCreationRequest,
+    msg-shape-destruction-request           MsgShapeDestructionRequest,
+    msg-shape-update-request                MsgShapeUpdateRequest
+  
+  
 }
-
 
 END

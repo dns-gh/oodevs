@@ -1,0 +1,80 @@
+--
+-- file name : Shape.asn
+--
+-- Shape related messages
+--
+
+Drawing DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base; 
+DrawingIncludes ::= SEQUENCE { BaseExports }
+DrawingExports  ::= NULL
+-- END includes
+
+Shape ::= SEQUENCE
+{
+    category        VisibleString,
+    color      		VisibleString,
+    template      	VisibleString,
+    type    		EnumLocationType,
+	points			CoordLatLongList 
+}
+
+ShapeList ::= SEQUENCE OF Shape
+
+MsgShapeCreation ::= SEQUENCE
+{
+    oid          OID,
+    shape 	     Shape
+}
+
+MsgShapeUpdate ::= SEQUENCE
+{
+    oid         OID,
+    category    VisibleString OPTIONAL,
+    color      	VisibleString OPTIONAL,
+    template    VisibleString OPTIONAL,
+    type    	EnumLocationType OPTIONAL,
+	points		CoordLatLongList OPTIONAL
+}
+
+MsgShapeDestruction ::= SEQUENCE
+{
+    oid         OID
+}
+
+MsgShapeCreationRequest ::= SEQUENCE
+{
+    shape 		Shape
+}
+
+MsgShapeUpdateRequest ::= SEQUENCE
+{
+    oid         OID,
+    category    VisibleString OPTIONAL,
+    color      	VisibleString OPTIONAL,
+    template    VisibleString OPTIONAL,
+    type    	EnumLocationType OPTIONAL,
+	points		CoordLatLongList OPTIONAL
+}
+
+MsgShapeDestructionRequest ::= SEQUENCE
+{
+    oid         OID
+}
+
+-- Error handling
+
+EnumShapeErrorCode ::= ENUMERATED
+{
+   no-error                        (0),
+   error-invalid-oid               (1),
+   error-invalid-geometry          (2)
+}
+
+MsgShapeCreationRequestAck ::= EnumShapeErrorCode
+MsgShapeUpdateRequestAck ::= EnumShapeErrorCode
+MsgShapeDestructionRequestAck ::= EnumShapeErrorCode
+
+END -- Shape
