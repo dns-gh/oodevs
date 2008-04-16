@@ -22,8 +22,8 @@ using namespace kernel;
 // Name: ParamAgentKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledgeList::ParamAgentKnowledgeList( QObject* parent, const OrderParameter& parameter, kernel::ActionController& controller, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
-    : EntityListParameter< AgentKnowledge_ABC >( parent, parameter, controller )
+ParamAgentKnowledgeList::ParamAgentKnowledgeList( QObject* parent, const OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
+    : EntityListParameter< AgentKnowledge_ABC >( parent, parameter, actions, controller )
     , parameter_( parameter )
     , converter_( converter )
     , agent_    ( agent )

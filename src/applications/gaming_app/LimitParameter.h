@@ -19,6 +19,7 @@ namespace kernel
     class TacticalLine_ABC;
     class CoordinateConverter_ABC;
     class OrderParameter;
+    class Controller;
 }
 
 namespace gui
@@ -38,7 +39,7 @@ class ActionParameter_ABC;
 class LimitParameter : public QObject
                      , public Param_ABC
                      , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
-                     , public kernel::ElementObserver_ABC< Limit >
+                     , public kernel::ElementObserver_ABC< kernel::TacticalLine_ABC >
 
 {
     Q_OBJECT;
@@ -46,7 +47,7 @@ class LimitParameter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
+             LimitParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller );
     virtual ~LimitParameter();
     //@}
 
@@ -76,19 +77,19 @@ private:
     virtual bool IsOptional() const;
     void Display( const QString& what );
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
-    virtual void NotifyUpdated( const Limit& ) {};
-    virtual void NotifyDeleted( const Limit& entity );
+    virtual void NotifyDeleted( const kernel::TacticalLine_ABC& entity );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::OrderParameter& parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     gui::RichLabel* pLabel_;
     QLabel*         entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
-    const Limit*    potential_;
-    const Limit*    selected_;
+    const Limit* potential_;
+    const Limit* selected_;
     //@}
 };
 

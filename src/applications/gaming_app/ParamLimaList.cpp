@@ -16,6 +16,7 @@
 #include "gaming/ActionParameterLimaList.h"
 #include "gaming/Action_ABC.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/Controller.h"
 
 using namespace kernel;
 
@@ -23,15 +24,16 @@ using namespace kernel;
 // Name: ParamLimaList constructor
 // Created: SBO 2006-11-14
 // ----------------------------------------------------------------------------
-ParamLimaList::ParamLimaList( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, ActionController& controller, const Simulation& simulation )
-    : ListParameter( parent, parameter.GetName().c_str(), controller, parameter.IsOptional() )
+ParamLimaList::ParamLimaList( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, ActionController& actions, Controller& controller, const Simulation& simulation )
+    : ListParameter( parent, parameter.GetName().c_str(), actions, parameter.IsOptional() )
+    , controller_( controller )
     , parameter_( parameter )
     , converter_( converter )
     , simulation_( simulation )
     , count_( 0 )
     , potential_( 0 )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +42,7 @@ ParamLimaList::ParamLimaList( QObject* parent, const OrderParameter& parameter, 
 // -----------------------------------------------------------------------------
 ParamLimaList::~ParamLimaList()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,6 +140,8 @@ void ParamLimaList::NotifyDeleted( const kernel::TacticalLine_ABC& entity )
 {
     if( entity.IsLimit() )
         return;
+    if( potential_ == &entity )
+        potential_ = 0;
     CIT_Limas it = limas_.find( &entity );
     if( it != limas_.end() )
     {

@@ -15,6 +15,7 @@
 #include "gaming/Action_ABC.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_kernel/Lines.h"
+#include "clients_kernel/Controller.h"
 
 using namespace kernel;
 
@@ -22,16 +23,17 @@ using namespace kernel;
 // Name: LimitParameter constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-LimitParameter::LimitParameter( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter )
-    : QObject   ( parent )
-    , Param_ABC ( parameter.GetName().c_str() )
-    , parameter_( parameter )
-    , converter_( converter )
-    , pLabel_   ( 0 )
-    , potential_( 0 )
-    , selected_ ( 0 )
+LimitParameter::LimitParameter( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, kernel::Controller& controller )
+    : QObject     ( parent )
+    , Param_ABC   ( parameter.GetName().c_str() )
+    , controller_ ( controller )
+    , parameter_  ( parameter )
+    , converter_  ( converter )
+    , pLabel_     ( 0 )
+    , potential_  ( 0 )
+    , selected_   ( 0 )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -40,7 +42,7 @@ LimitParameter::LimitParameter( QObject* parent, const OrderParameter& parameter
 // -----------------------------------------------------------------------------
 LimitParameter::~LimitParameter()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +66,7 @@ void LimitParameter::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool LimitParameter::CheckValidity()
 {
-    if( ! parameter_.IsOptional() && ! selected_ )
+    if( ! parameter_.IsOptional() && !selected_ )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -85,7 +87,7 @@ void LimitParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, 
         menu.SetChecked( id, selected_ );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LimitParameter::MenuItemValidated
 // Created: SBO 2006-11-14
@@ -98,9 +100,9 @@ void LimitParameter::MenuItemValidated()
 
 // -----------------------------------------------------------------------------
 // Name: LimitParameter::NotifyDeleted
-// Created: SBO 2006-11-14
+// Created: SBO 2008-04-16
 // -----------------------------------------------------------------------------
-void LimitParameter::NotifyDeleted( const Limit& entity )
+void LimitParameter::NotifyDeleted( const kernel::TacticalLine_ABC& entity )
 {
     if( &entity == potential_ )
         potential_ = 0;

@@ -47,6 +47,7 @@
 #include "gaming/AgentKnowledge_ABC.h"
 #include "gaming/ObjectKnowledge_ABC.h"
 #include "gaming/PopulationKnowledge_ABC.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OrderType.h"
@@ -59,10 +60,10 @@ using namespace kernel;
 // Name: MissionInterfaceBuilder constructor
 // Created: SBO 2006-11-22
 // -----------------------------------------------------------------------------
-MissionInterfaceBuilder::MissionInterfaceBuilder( ActionController& controller, gui::ParametersLayer& layer
+MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui::ParametersLayer& layer
                                                 , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
                                                 , const StaticModel& staticModel, const Simulation& simulation )
-    : controller_              ( controller )
+    : controllers_             ( controllers )
     , layer_                   ( layer )
     , converter_               ( staticModel.coordinateConverter_ )
     , knowledgeConverter_      ( knowledgeConverter )
@@ -167,7 +168,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAgent( const OrderParameter& parameter 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAgentList( const OrderParameter& parameter ) const
 {
-    return new ParamAgentList( missionInterface_, parameter, controller_ );
+    return new ParamAgentList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +186,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAutomat( const OrderParameter& paramete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAutomatList( const OrderParameter& parameter ) const
 {
-    return new ParamAutomatList( missionInterface_, parameter, controller_ );
+    return new ParamAutomatList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,7 +249,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledge( const OrderParameter& p
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledgeList( const OrderParameter& parameter ) const
 {
-    return new ParamAgentKnowledgeList( missionInterface_, parameter, controller_, knowledgeConverter_, *entity_ );
+    return new ParamAgentKnowledgeList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_, knowledgeConverter_, *entity_ );
 }
  
 // -----------------------------------------------------------------------------
@@ -266,7 +267,7 @@ Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledge( const OrderParameter& 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledgeList( const OrderParameter& parameter ) const
 {
-    return new ParamObjectKnowledgeList( missionInterface_, parameter, controller_, objectKnowledgeConverter_, *entity_ );
+    return new ParamObjectKnowledgeList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_, objectKnowledgeConverter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -293,7 +294,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPath( const OrderParameter& parameter )
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPathList( const OrderParameter& parameter ) const
 {
-    return new ParamPathList( missionInterface_, parameter, layer_, converter_, *entity_, controller_ );
+    return new ParamPathList( missionInterface_, parameter, layer_, converter_, *entity_, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,7 +312,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPoint( const OrderParameter& parameter 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPointList( const OrderParameter& parameter ) const
 {
-    return new ParamPointList( missionInterface_, parameter, layer_, converter_, controller_ );
+    return new ParamPointList( missionInterface_, parameter, layer_, converter_, controllers_.actions_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -329,7 +330,7 @@ Param_ABC* MissionInterfaceBuilder::BuildPolygon( const OrderParameter& paramete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPolygonList( const OrderParameter& parameter ) const
 {
-    return new ParamPolygonList( missionInterface_, parameter, layer_, converter_, controller_ );
+    return new ParamPolygonList( missionInterface_, parameter, layer_, converter_, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -347,7 +348,7 @@ Param_ABC* MissionInterfaceBuilder::BuildLocation( const OrderParameter& paramet
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildLocationList( const OrderParameter& parameter ) const
 {
-    return new ParamLocationList( missionInterface_, parameter, layer_, converter_, controller_ );
+    return new ParamLocationList( missionInterface_, parameter, layer_, converter_, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -365,7 +366,7 @@ Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderParameter& parame
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& parameter ) const
 {
-    return new ParamObstacleList( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controller_ );
+    return new ParamObstacleList( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -383,7 +384,7 @@ Param_ABC* MissionInterfaceBuilder::BuildMissionObjective( const kernel::OrderPa
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildMissionObjectiveList( const kernel::OrderParameter& parameter ) const
 {
-    return new ParamMissionObjectiveList( missionInterface_, parameter, layer_, simulation_, converter_, controller_ );
+    return new ParamMissionObjectiveList( missionInterface_, parameter, layer_, simulation_, converter_, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,7 +436,7 @@ Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const OrderParameter& para
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildLimit( const OrderParameter& parameter ) const
 {
-    return new LimitParameter( missionInterface_, parameter, converter_ );
+    return new LimitParameter( missionInterface_, parameter, converter_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -444,7 +445,7 @@ Param_ABC* MissionInterfaceBuilder::BuildLimit( const OrderParameter& parameter 
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildLimaList( const OrderParameter& parameter ) const
 {
-    return new ParamLimaList( missionInterface_, parameter, converter_, controller_, simulation_ );
+    return new ParamLimaList( missionInterface_, parameter, converter_, controllers_.actions_, controllers_.controller_, simulation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -462,5 +463,5 @@ Param_ABC* MissionInterfaceBuilder::BuildDotationTypeList( const kernel::OrderPa
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildIntelligenceList( const kernel::OrderParameter& parameter ) const
 {
-    return new ParamIntelligenceList( missionInterface_, parameter, converter_, controller_ );
+    return new ParamIntelligenceList( missionInterface_, parameter, converter_, controllers_.actions_, controllers_.controller_ );
 }

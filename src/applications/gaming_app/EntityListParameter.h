@@ -15,6 +15,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/Controller.h"
 
 namespace kernel
 {
@@ -79,7 +80,7 @@ class EntityListParameter : public EntityListParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller );
+             EntityListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller );
     virtual ~EntityListParameter();
     //@}
 
@@ -115,6 +116,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const ConcreteEntity* potential_; // $$$$ SBO 2007-05-23: safe pointer
     T_Entities entities_;
     //@}

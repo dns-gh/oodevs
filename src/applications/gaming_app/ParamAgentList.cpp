@@ -24,8 +24,8 @@ using namespace kernel;
 // Name: ParamAgentList constructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ParamAgentList::ParamAgentList( QObject* parent, const OrderParameter& parameter, ActionController& controller )
-    : EntityListParameter< Agent_ABC >( parent, parameter, controller )
+ParamAgentList::ParamAgentList( QObject* parent, const OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller )
+    : EntityListParameter< Agent_ABC >( parent, parameter, actions, controller )
     , parameter_( parameter )
     , count_( 0 )
     , superior_( 0 )

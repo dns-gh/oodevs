@@ -166,7 +166,7 @@ boost::shared_ptr< Param_ABC > AfterActionFunctionList::CreateParameter( const s
     if( type == "unit" )
         result.reset( new ParamAgent( this, parameter ) );
     else if( type == "unit list" )
-        result.reset( new ParamAgentList( this, parameter, controllers_.actions_ ) );
+        result.reset( new ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
     else if( type == "dotation list" )
         result.reset( new ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
     else if( type == "equipment list" )

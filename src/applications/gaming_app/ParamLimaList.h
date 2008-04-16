@@ -16,6 +16,7 @@
 
 namespace kernel
 {
+    class Controller;
     class ActionController;
     class OrderParameter;
     class CoordinateConverter_ABC;
@@ -41,7 +42,7 @@ class ParamLimaList : public ListParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller, const Simulation& simulation );
+             ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& actions, kernel::Controller& controller, const Simulation& simulation );
     virtual ~ParamLimaList();
     //@}
 
@@ -83,6 +84,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::OrderParameter& parameter_;
     const Simulation& simulation_;

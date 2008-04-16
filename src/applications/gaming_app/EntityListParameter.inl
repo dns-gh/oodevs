@@ -12,11 +12,12 @@
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller )
-    : EntityListParameterBase( parent, parameter, controller )
+EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller )
+    : EntityListParameterBase( parent, parameter, actions )
+    , controller_( controller )
     , potential_( 0 )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -26,7 +27,7 @@ EntityListParameter< ConcreteEntity >::EntityListParameter( QObject* parent, con
 template< typename ConcreteEntity >
 EntityListParameter< ConcreteEntity >::~EntityListParameter()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,6 +108,8 @@ void EntityListParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEnt
 template< typename ConcreteEntity >
 void EntityListParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& entity )
 {
+    if( potential_ == &entity )
+        potential_ = 0;
     CIT_Entities it = entities_.find( &entity );
     if( it != entities_.end() )
     {

@@ -21,8 +21,8 @@ using namespace kernel;
 // Name: ParamIntelligenceList constructor
 // Created: SBO 2007-10-24
 // -----------------------------------------------------------------------------
-ParamIntelligenceList::ParamIntelligenceList( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, ActionController& controller )
-    : EntityListParameter< Intelligence_ABC >( parent, parameter, controller )
+ParamIntelligenceList::ParamIntelligenceList( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, kernel::ActionController& actions, kernel::Controller& controller )
+    : EntityListParameter< Intelligence_ABC >( parent, parameter, actions, controller )
     , parameter_( parameter )
     , converter_( converter )
     , count_( 0 )

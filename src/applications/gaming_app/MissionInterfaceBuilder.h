@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class ActionController;
+    class Controllers;
     class Entity_ABC;
     class CoordinateConverter_ABC;
     class OrderType;
@@ -51,7 +51,7 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterfaceBuilder( kernel::ActionController& controller, gui::ParametersLayer& layer
+             MissionInterfaceBuilder( kernel::Controllers& controllers, gui::ParametersLayer& layer
                                     , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
                                     , const StaticModel& staticModel, const Simulation& simulation );
     virtual ~MissionInterfaceBuilder();
@@ -125,7 +125,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::ActionController&              controller_;
+    kernel::Controllers&                   controllers_;
     gui::ParametersLayer&                  layer_;
     const kernel::CoordinateConverter_ABC& converter_;
     AgentKnowledgeConverter_ABC&           knowledgeConverter_;
