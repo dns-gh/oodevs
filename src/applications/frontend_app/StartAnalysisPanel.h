@@ -33,7 +33,7 @@ class StartAnalysisPanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StartAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
+             StartAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~StartAnalysisPanel();
     //@}
 

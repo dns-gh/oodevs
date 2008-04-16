@@ -18,11 +18,12 @@
 // Name: Panel_ABC constructor
 // Created: SBO 2007-10-05
 // -----------------------------------------------------------------------------
-Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action )
-    : QVBox  ( widget )
-    , stack_ ( widget )
-    , action_( action )
-    , next_  ( 0 )
+Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action, ActionsContext& context )
+    : QVBox   ( widget )
+    , context_( context )
+    , stack_  ( widget )
+    , action_ ( action )
+    , next_   ( 0 )
 {
     setPaletteBackgroundColor( Qt::white );
     layout()->setAlignment( Qt::AlignTop );

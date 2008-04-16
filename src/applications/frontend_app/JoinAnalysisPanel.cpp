@@ -12,6 +12,7 @@
 #include "moc_JoinAnalysisPanel.cpp"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "ActionsContext.h"
 #include "frontend/commands.h"
 #include "frontend/JoinAnalysis.h"
 #include "frontend/CommandLineTools.h"
@@ -25,8 +26,8 @@
 // Name: JoinAnalysisPanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinAnalysisPanel::JoinAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
-    : Panel_ABC( widget, action )
+JoinAnalysisPanel::JoinAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+    : Panel_ABC( widget, action, context )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -69,7 +70,10 @@ JoinAnalysisPanel::~JoinAnalysisPanel()
 void JoinAnalysisPanel::StartExercise()
 {
     if( list_->selectedItem() )
+    {
         new frontend::JoinAnalysis( this, config_, list_->selectedItem()->text(), frontend::DispatcherPort( exerciseNumber_->value() ) );
+        context_.Save( "exercise", list_ );
+    }
     Update();
     ShowNext();
 }
@@ -82,5 +86,5 @@ void JoinAnalysisPanel::Update()
 {
     list_->clear();
     list_->insertStringList( frontend::commands::ListExercises( config_ ) );
-    list_->setSelected( 0, true );
+    context_.Load( "exercise", list_ );
 }

@@ -12,6 +12,7 @@
 #include "moc_CreateExercisePanel.cpp"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "ActionsContext.h"
 #include "tools/GeneralConfig.h"
 #include "frontend/CreateExercise.h"
 #include "frontend/commands.h"
@@ -26,8 +27,8 @@ using namespace frontend;
 // Name: CreateExercisePanel constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-CreateExercisePanel::CreateExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
-    : Panel_ABC         ( widget, action )
+CreateExercisePanel::CreateExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+    : Panel_ABC         ( widget, action, context )
     , config_           ( config )
     , existingExercises_( commands::ListExercises( config ) )
 {
@@ -91,12 +92,18 @@ void CreateExercisePanel::showEvent( QShowEvent* event )
 // -----------------------------------------------------------------------------
 void CreateExercisePanel::CreateExercise()
 {
-    if( terrainList_->selectedItem() && modelList_->selectedItem()
+    if( terrainList_->selectedItem() && modelList_->selectedItem() 
         && ( physicalList_->selectedItem() || ! physicalList_->isVisible() ) )
-        ::CreateExercise( config_, name_->text().ascii(),
-                                 terrainList_->selectedItem()->text().ascii(),
-                                 modelList_->selectedItem()->text().ascii(),
-                                 physicalList_->selectedItem() ? physicalList_->selectedItem()->text().ascii() :"" );
+    {
+        const std::string terrain  = terrainList_->selectedItem()->text().ascii();
+        const std::string model    = modelList_->selectedItem()->text().ascii();
+        const std::string physical = physicalList_->selectedItem() ? physicalList_->selectedItem()->text().ascii() : "";
+        ::CreateExercise( config_, name_->text().ascii(), terrain, model, physical );
+        context_.Save( "terrain", terrainList_ );
+        context_.Save( "model", modelList_ );
+        context_.Save( "physical", physicalList_ );
+        context_.Save( "exercise", name_->text() );
+    }
     Update();
     ShowNext();
 }
@@ -114,7 +121,7 @@ void CreateExercisePanel::ModelSelected()
         physicalList_->insertStringList( physical );
         physicalLabel_->setShown( !physical.empty() );
         physicalList_->setShown( !physical.empty() );
-        physicalList_->setSelected( 0, true );
+        context_.Load( "physical", physicalList_ );
     }
 }
 
@@ -142,6 +149,6 @@ void CreateExercisePanel::Update()
     modelList_->insertStringList( commands::ListModels( config_ ) );
     terrainList_->clear();
     terrainList_->insertStringList( commands::ListTerrains( config_ ) );
-    modelList_->setSelected( 0, true );
-    terrainList_->setSelected( 0, true );
+    context_.Load( "model", modelList_ );
+    context_.Load( "terrain", terrainList_ );
 }

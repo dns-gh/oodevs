@@ -12,6 +12,7 @@
 
 class QAction;
 class QWidgetStack;
+class ActionsContext;
 
 // =============================================================================
 /** @class  Panel_ABC
@@ -25,7 +26,7 @@ class Panel_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             Panel_ABC( QWidgetStack* widget, QAction& action );
+             Panel_ABC( QWidgetStack* widget, QAction& action, ActionsContext& context );
     virtual ~Panel_ABC();
     //@}
 
@@ -48,6 +49,12 @@ protected:
     virtual void showEvent( QShowEvent* event );
     virtual void Update();
     void ShowNext();
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    ActionsContext& context_;
     //@}
 
 private:

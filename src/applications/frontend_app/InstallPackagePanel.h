@@ -41,7 +41,7 @@ class InstallPackagePanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InstallPackagePanel( QWidgetStack* widget, QAction& action, const frontend::Config& config );
+             InstallPackagePanel( QWidgetStack* widget, QAction& action, const frontend::Config& config, ActionsContext& context );
     virtual ~InstallPackagePanel();
     //@}
 

@@ -15,6 +15,7 @@
 #include "HlaPluginConfigPanel.h"
 #include "DisPluginConfigPanel.h"
 #include "resources.h"
+#include "ActionsContext.h"
 #include "frontend/commands.h"
 #include "frontend/StartExercise.h"
 #include "tools/GeneralConfig.h"
@@ -40,8 +41,8 @@ using namespace frontend;
 // Name: StartExercisePanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
-    : Panel_ABC( widget, action )
+StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+    : Panel_ABC( widget, action, context )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -125,6 +126,8 @@ void StartExercisePanel::StartExercise()
         hlaConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
         disConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
         new ::StartExercise( this, config_, list_->selectedItem()->text(), session_.c_str() );
+        context_.Save( "exercise", list_ );
+        context_.Save( "session", session_.c_str() );
         Update();
         ShowNext();
     }
@@ -147,7 +150,7 @@ void StartExercisePanel::Update()
 {
     list_->clear();
     list_->insertStringList( commands::ListExercises( config_ ) );
-    list_->setSelected( 0, true );
+    context_.Load( "exercise", list_ );
 }
 
 // -----------------------------------------------------------------------------

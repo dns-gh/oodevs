@@ -12,6 +12,7 @@
 #include "moc_RestartExercisePanel.cpp"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "ActionsContext.h"
 #include "frontend/commands.h"
 #include "frontend/StartExercise.h"
 #include <qaction.h>
@@ -28,8 +29,8 @@ using namespace frontend;
 // Name: RestartExercisePanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-RestartExercisePanel::RestartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
-    : StartExercisePanel( widget, action, config )
+RestartExercisePanel::RestartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+    : StartExercisePanel( widget, action, config, context )
 {
     {
         new QLabel( tr( "Choose the session to restart:" ), listBox_ );
@@ -61,6 +62,8 @@ void RestartExercisePanel::StartExercise()
 {
 //    if( list_->selectedItem() )
 //        new ::StartExercise( this, config_, list_->selectedItem()->text(),  ); // $$$$ AGE 2008-01-04: 
+    context_.Save( "exercise", list_ );
+    context_.Save( "session", sessionList_ );
     Update();
     ShowNext();
 }
@@ -84,7 +87,7 @@ void RestartExercisePanel::ExerciseSelected()
     if( QListBoxItem* item = list_->selectedItem() )
     {
         sessionList_->insertStringList( commands::ListSessions( config_, item->text().ascii() ) );
-        sessionList_->setSelected( 0, true );
+        context_.Load( "session", sessionList_ );
     }
     SessionSelected();
 }
@@ -127,5 +130,5 @@ void RestartExercisePanel::Update()
 {
     list_->clear();
     list_->insertStringList( commands::ListExercises( config_ ) );
-    list_->setSelected( 0, true );
+    context_.Load( "exercise", list_ );
 }

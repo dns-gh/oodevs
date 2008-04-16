@@ -12,6 +12,7 @@
 #include "moc_EditExercisePanel.cpp"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "ActionsContext.h"
 #include "frontend/commands.h"
 #include "frontend/EditExercise.h"
 #include <qaction.h>
@@ -24,8 +25,8 @@ using namespace frontend;
 // Name: EditExercisePanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-EditExercisePanel::EditExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
-    : Panel_ABC( widget, action )
+EditExercisePanel::EditExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+    : Panel_ABC( widget, action, context )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -64,7 +65,10 @@ EditExercisePanel::~EditExercisePanel()
 void EditExercisePanel::EditExercise()
 {
     if( list_->selectedItem() )
+    {
         new ::EditExercise( this, config_, list_->selectedItem()->text() );
+        context_.Save( "exercise", list_ );
+    }
     Update();
     ShowNext();
 }
@@ -77,5 +81,5 @@ void EditExercisePanel::Update()
 {
     list_->clear();
     list_->insertStringList( commands::ListExercises( config_) );
-    list_->setSelected( 0, true );
+    context_.Load( "exercise", list_ );
 }

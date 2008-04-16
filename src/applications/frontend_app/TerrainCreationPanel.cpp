@@ -12,6 +12,7 @@
 #include "moc_TerrainCreationPanel.cpp"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "ActionsContext.h"
 #include "frontend/CreateTerrain.h"
 #include "frontend/commands.h"
 #include "tools/GeneralConfig.h"
@@ -25,9 +26,9 @@ using namespace frontend;
 // Name: TerrainCreationPanel constructor
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
-TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
-    : Panel_ABC        ( widget, action )
-    , config_          ( config )
+TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+    : Panel_ABC( widget, action, context )
+    , config_  ( config )
 {
     QVBox* box = new QVBox( this );
     box->setMargin( 10 );
@@ -77,6 +78,7 @@ void TerrainCreationPanel::showEvent( QShowEvent* event )
 void TerrainCreationPanel::CreateTerrain()
 {
     new ::CreateTerrain( this, config_, name_->text() );
+    context_.Save( "terrain", name_->text() );
     Update();
     ShowNext();
 }

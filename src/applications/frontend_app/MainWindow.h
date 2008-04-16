@@ -12,6 +12,7 @@
 
 #include <qmainwindow.h>
 #include "ActionLinker.h"
+#include "ActionsContext.h"
 
 class QAction;
 class QWidgetStack;
@@ -61,11 +62,12 @@ private:
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< frontend::Config > config_;
+    ActionsContext context_;
     ActionLinker linker_;
     ActionList* list_;
     MainMenu*   menu_;
     QWidgetStack* pages_;
-    std::auto_ptr< frontend::Config > config_;
     //@}
 };
 

@@ -33,7 +33,7 @@ class JoinAnalysisPanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
+             JoinAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~JoinAnalysisPanel();
     //@}
 

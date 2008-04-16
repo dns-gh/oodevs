@@ -32,7 +32,7 @@ class TerrainCreationPanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
+             TerrainCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~TerrainCreationPanel();
     //@}
 

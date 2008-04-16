@@ -39,7 +39,7 @@ class StartExercisePanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
+             StartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~StartExercisePanel();
     //@}
 

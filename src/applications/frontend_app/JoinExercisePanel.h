@@ -33,7 +33,7 @@ class JoinExercisePanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
+             JoinExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~JoinExercisePanel();
     //@}
 

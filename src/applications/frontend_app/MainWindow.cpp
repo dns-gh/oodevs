@@ -109,7 +109,7 @@ void MainWindow::AddAction( const QString& category, QAction& action )
 {
     menu_->AddAction( category, action );
     list_->AddAction( category, action );
-    Page* page = new Page( pages_, action, *config_ );
+    Page* page = new Page( pages_, action, *config_, context_ );
     linker_.Register( action.name(), *page );
     pages_->addWidget( page );
 }

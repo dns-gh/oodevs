@@ -36,8 +36,8 @@ namespace bfs = boost::filesystem;
 // Name: InstallPackagePanel constructor
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
-InstallPackagePanel::InstallPackagePanel( QWidgetStack* widget, QAction& action, const frontend::Config& config )
-    : Panel_ABC( widget, action )
+InstallPackagePanel::InstallPackagePanel( QWidgetStack* widget, QAction& action, const frontend::Config& config, ActionsContext& context )
+    : Panel_ABC( widget, action, context )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -123,7 +123,10 @@ std::string InstallPackagePanel::GetDestinationDirectory() const
 {
     bfs::path p( config_.GetRootDir(), bfs::native );
     if( !p.has_root_name() )
-        p = Normalize( bfs::path( qApp->applicationDirPath().ascii(), bfs::native ) / p );
+    {
+        p = bfs::path( qApp->applicationDirPath().ascii(), bfs::native ) / p;
+        p = Normalize( p );
+    }
     return p.native_file_string();
 }
 

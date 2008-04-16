@@ -12,6 +12,7 @@
 #include "moc_StartAnalysisPanel.cpp"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "ActionsContext.h"
 #include "frontend/commands.h"
 #include "frontend/StartReplay.h"
 #include "frontend/CommandLineTools.h"
@@ -26,8 +27,8 @@
 // Name: StartAnalysisPanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartAnalysisPanel::StartAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
-    : Panel_ABC( widget, action )
+StartAnalysisPanel::StartAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+    : Panel_ABC( widget, action, context )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -84,7 +85,7 @@ void StartAnalysisPanel::ExerciseSelected()
     {
         QString exercise = exercises_->selectedItem()->text();
         replays_->insertStringList( frontend::commands::ListSessions( config_, exercise.ascii() ) );
-        replays_->setSelected( 0, true );
+        context_.Load( "session", replays_ );
         ReplaySelected();
     }
 }
@@ -137,7 +138,11 @@ QString StartAnalysisPanel::BuildMessage( const QString& session ) const
 void StartAnalysisPanel::StartReplay()
 {
     if( exercises_->selectedItem() && replays_->selectedItem() )
+    {
         new frontend::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text(), frontend::DispatcherPort( exerciseNumber_->value() ) );
+        context_.Save( "exercise", exercises_ );
+        context_.Save( "session", replays_ );
+    }
     Update();
     ShowNext();
 }
@@ -150,5 +155,5 @@ void StartAnalysisPanel::Update()
 {
     exercises_->clear();
     exercises_->insertStringList( frontend::commands::ListExercises( config_ ) );
-    exercises_->setSelected( 0, true );
+    context_.Load( "exercise", exercises_ );
 }

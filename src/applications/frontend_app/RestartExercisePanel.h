@@ -25,7 +25,7 @@ class RestartExercisePanel : public StartExercisePanel
 public:
     //! @name Constructors/Destructor
     //@{
-             RestartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config );
+             RestartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
     virtual ~RestartExercisePanel();
     //@}
 

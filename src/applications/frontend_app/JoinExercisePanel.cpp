@@ -12,6 +12,7 @@
 #include "moc_JoinExercisePanel.cpp"
 #include "InfoBubble.h"
 #include "resources.h"
+#include "ActionsContext.h"
 #include "frontend/commands.h"
 #include "frontend/StartExercise.h"
 #include "frontend/JoinExercise.h"
@@ -26,8 +27,8 @@ using namespace frontend;
 // Name: JoinExercisePanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinExercisePanel::JoinExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config )
-    : Panel_ABC( widget, action )
+JoinExercisePanel::JoinExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
+    : Panel_ABC( widget, action, context )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -90,8 +91,7 @@ void JoinExercisePanel::ExerciseSelected()
     if( QListBoxItem* item = list_->selectedItem() )
     {
         sessionList_->insertStringList( commands::ListSessions( config_, item->text().ascii() ) );
-        if( sessionList_->count() )
-            sessionList_->setSelected( sessionList_->count()-1, true );
+        context_.Load( "session", sessionList_ );
     }
     SessionSelected();
 }
@@ -113,6 +113,6 @@ void JoinExercisePanel::Update()
 {
     list_->clear();
     list_->insertStringList( commands::ListExercises( config_ ) );
-    list_->setSelected( 0, true );
+    context_.Load( "exercise", list_ );
     ExerciseSelected();
 }
