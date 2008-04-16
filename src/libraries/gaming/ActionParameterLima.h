@@ -42,6 +42,7 @@ public:
     //! @name Operations
     //@{
     void AddFunction( unsigned int i );
+    virtual void DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
     void CommitTo( ASN1T_LimaOrder& asn ) const;

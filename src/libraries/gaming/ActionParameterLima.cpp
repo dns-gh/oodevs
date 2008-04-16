@@ -102,12 +102,24 @@ void ActionParameterLima::ReadParameter( xml::xistream& xis, const CoordinateCon
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionParameterLima::DisplayTooltip
+// Created: SBO 2008-04-16
+// -----------------------------------------------------------------------------
+void ActionParameterLima::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    ActionParameter< QString >::DisplayTooltip( viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionParameterLima::DisplayInToolTip
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
 void ActionParameterLima::DisplayInToolTip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "", GetValue() );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        if( it->second->GetType() != "location" )
+            it->second->DisplayInToolTip( displayer );
 }
 
 // -----------------------------------------------------------------------------
