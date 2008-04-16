@@ -76,9 +76,11 @@ private:
     TextureRenderPass& second_;
     std::auto_ptr< gl::FragmentShader > fragment_;
     std::auto_ptr< gl::ShaderProgram > program_;
+    unsigned noiseTexture_;
     bool ignoreShader_;
     std::string option_;
     bool enabled_;
+    float time_;
     //@}
 };
 
