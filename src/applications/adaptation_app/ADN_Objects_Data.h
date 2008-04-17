@@ -131,6 +131,7 @@ public:
         ADN_Type_Bool                                bHasOutgoingPopulationDensity_;
         ADN_Type_Double                              rOutgoingPopulationDensity_;
 
+        ADN_Type_String                              geometries_;
         T_ScoreLocationInfosVector                   vScoreLocation_;
 
         ADN_Type_Bool                                bAttritions_;

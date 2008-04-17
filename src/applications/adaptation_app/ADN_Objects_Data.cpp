@@ -283,7 +283,9 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "default-bypassed-speed", rDefaultBypassSpeed_ )
           >> xml::attribute( "max-interaction-height", rMaxInteractionHeight_ )
           >> xml::optional() >> xml::attribute( "population-density", rOutgoingPopulationDensity_ )
-          >> xml::optional() >> xml::attribute( "max-animating-units", nMaxNbrUsers_ );
+          >> xml::optional() >> xml::attribute( "max-animating-units", nMaxNbrUsers_ )
+          >> xml::optional() >> xml::attribute( "geometry", geometries_ );
+
 
     if( rDefaultSpeed_.GetData() < -1 )
         throw ADN_DataException( "Donnée invalide",
@@ -353,6 +355,8 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& output )
     output  << xml::attribute( "default-speed", rDefaultSpeed_ )
             << xml::attribute( "default-bypassed-speed", rDefaultBypassSpeed_ )
             << xml::attribute( "max-interaction-height", rMaxInteractionHeight_ );
+    if( !geometries_.GetData().empty() )
+        output << xml::attribute( "geometry", geometries_.GetData() );
             
     if( bHasOutgoingPopulationDensity_.GetData() )
         output << xml::attribute( "population-density", rOutgoingPopulationDensity_ );

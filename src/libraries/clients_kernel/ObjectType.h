@@ -39,6 +39,11 @@ public:
     bool CanBeValorized() const;
     bool CanBeBypassed() const;
 
+    bool CanBePoint() const;
+    bool CanBeLine() const;
+    bool CanBePolygon() const;
+    bool CanBeCircle() const;
+
     unsigned long GetId() const;
     //@}
 
@@ -59,6 +64,7 @@ public:
     bool canBeReservedObstacle_;
     bool canBeValorized_;
     bool canBeBypassed_;
+    std::string geometry_;
     //@}
 };
 

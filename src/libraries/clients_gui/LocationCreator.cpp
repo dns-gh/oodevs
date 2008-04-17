@@ -12,9 +12,10 @@
 #include "moc_LocationCreator.cpp"
 #include "ParametersLayer.h"
 #include "Tools.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Point.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -59,6 +60,45 @@ LocationCreator::LocationCreator( QObject* parent, ParametersLayer& layer, Shape
 LocationCreator::~LocationCreator()
 {
     // NOTHING
+}
+
+namespace
+{
+    struct LocationValidator : public LocationVisitor_ABC
+    {
+        LocationValidator( bool point, bool line, bool polygon, bool circle )
+            : pointAllowed_( point ), lineAllowed_( line ), polygonAllowed_( polygon ), circleAllowed_( circle )
+            , valid_( false ) {}
+        virtual void VisitLines( const T_PointVector& )
+        {
+            valid_ = lineAllowed_;
+        }
+        virtual void VisitPolygon( const T_PointVector& )
+        {
+            valid_ = polygonAllowed_;
+        }
+        virtual void VisitCircle( const geometry::Point2f&, float )
+        {
+            valid_ = circleAllowed_;
+        }
+        virtual void VisitPoint( const geometry::Point2f& )
+        {
+            valid_ = pointAllowed_;
+        }
+        bool pointAllowed_, lineAllowed_, polygonAllowed_, circleAllowed_;
+        bool valid_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationCreator::Allows
+// Created: SBO 2008-04-17
+// -----------------------------------------------------------------------------
+bool LocationCreator::Allows( const Location_ABC& location ) const
+{
+    LocationValidator validator( pointAllowed_, lineAllowed_, polygonAllowed_, circleAllowed_ );
+    location.Accept( validator );
+    return validator.valid_;
 }
 
 // -----------------------------------------------------------------------------

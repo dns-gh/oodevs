@@ -204,6 +204,7 @@ void ObjectPrototype_ABC::Clean()
     reservedObstacleActivated_->setChecked( false );
     if( activeAttributes_ )
         activeAttributes_->Clean();
+    ResetLocation();
 }
 
 // -----------------------------------------------------------------------------
@@ -299,6 +300,12 @@ void ObjectPrototype_ABC::OnObstacleTypeChanged()
     const ObjectType* type = objectTypes_->GetValue();
     E_ObstacleType obstacleType = obstacleTypes_->GetValue();
     emit ToggleActivable( type && type->CanBeReservedObstacle() && obstacleType == eObstacleType_Reserved );
+    if( type )
+    {
+        locationCreator_->Allow( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle() );
+        if( location_ && !locationCreator_->Allows( *location_ ) )
+            ResetLocation();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -316,11 +323,26 @@ void ObjectPrototype_ABC::Handle( Location_ABC& location )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::ResetLocation
+// Created: SBO 2008-04-17
+// -----------------------------------------------------------------------------
+void ObjectPrototype_ABC::ResetLocation()
+{
+    delete location_; location_ = 0;
+    locationLabel_->setText( tr( "---" ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectPrototype_ABC::Draw
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::Draw( const GlTools_ABC& tools ) const
 {
     if( isVisible() && location_ )
-        location_->Draw( tools );
+    {
+        glPushAttrib( GL_LINE_BIT );
+            glLineWidth( 3.f );
+            location_->Draw( tools );
+        glPopAttrib();
+    }
 }

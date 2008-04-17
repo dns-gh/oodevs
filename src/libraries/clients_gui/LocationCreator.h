@@ -15,6 +15,7 @@
 namespace kernel
 {
     struct Nothing;
+    class Location_ABC;
 }
 
 namespace gui
@@ -45,6 +46,7 @@ public:
 
     //! @name Operations
     //@{
+    bool Allows( const kernel::Location_ABC& location ) const;
     void Allow( bool point, bool line, bool polygon, bool circle );
     //@}
 

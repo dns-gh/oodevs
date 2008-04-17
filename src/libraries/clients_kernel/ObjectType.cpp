@@ -25,7 +25,8 @@ ObjectType::ObjectType( xistream& xis, unsigned long id )
     xis >> attribute( "type", type_ )
         >> attribute( "can-be-maneuver-obstacle", canBeReservedObstacle_ )
         >> attribute( "can-be-developed", canBeValorized_ )
-        >> attribute( "can-be-bypassed", canBeBypassed_ );
+        >> attribute( "can-be-bypassed", canBeBypassed_ )
+        >> optional() >> attribute( "geometry", geometry_ );
     name_ = tools::TranslateObjectType( type_ );
 }
 
@@ -92,3 +93,38 @@ bool ObjectType::CanBeBypassed() const
     return canBeBypassed_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ObjectType::CanBePoint
+// Created: SBO 2008-04-17
+// -----------------------------------------------------------------------------
+bool ObjectType::CanBePoint() const
+{
+    return geometry_.empty() || geometry_.find( "point" ) != std::string::npos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::CanBeLine
+// Created: SBO 2008-04-17
+// -----------------------------------------------------------------------------
+bool ObjectType::CanBeLine() const
+{
+    return geometry_.empty() || geometry_.find( "line" ) != std::string::npos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::CanBePolygon
+// Created: SBO 2008-04-17
+// -----------------------------------------------------------------------------
+bool ObjectType::CanBePolygon() const
+{
+    return geometry_.empty() || geometry_.find( "polygon" ) != std::string::npos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::CanBeCircle
+// Created: SBO 2008-04-17
+// -----------------------------------------------------------------------------
+bool ObjectType::CanBeCircle() const
+{
+    return geometry_.empty() || geometry_.find( "circle" ) != std::string::npos;
+}
