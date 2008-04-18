@@ -11,6 +11,7 @@
 #include "DrawerFactory.h"
 #include "DrawerCategory.h"
 #include "clients_kernel/Controllers.h"
+#include "svgl/TextRenderer.h"
 
 using namespace gui;
 
@@ -18,11 +19,11 @@ using namespace gui;
 // Name: DrawerFactory constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerFactory::DrawerFactory( QWidget* parent, kernel::GlTools_ABC& tools, svg::TextRenderer& renderer, kernel::Controllers& controllers )
+DrawerFactory::DrawerFactory( QWidget* parent, kernel::GlTools_ABC& tools, kernel::Controllers& controllers )
     : parent_( parent )
     , controllers_( controllers )
     , tools_( tools )
-    , renderer_( renderer )
+    , renderer_( *new svg::TextRenderer() )
 {
     // NOTHING
 }
@@ -33,7 +34,7 @@ DrawerFactory::DrawerFactory( QWidget* parent, kernel::GlTools_ABC& tools, svg::
 // -----------------------------------------------------------------------------
 DrawerFactory::~DrawerFactory()
 {
-    // NOTHING
+    delete &renderer_; 
 }
 
 // -----------------------------------------------------------------------------

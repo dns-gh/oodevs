@@ -89,7 +89,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     DrawerLayer& layer_;
-    svg::TextRenderer* renderer_;
     DrawerFactory& factory_;
     DrawerModel& model_;
 

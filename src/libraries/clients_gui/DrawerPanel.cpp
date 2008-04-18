@@ -20,7 +20,6 @@
 #include "DrawerFactory.h"
 #include "DrawerModel.h"
 #include "clients_kernel/Controllers.h"
-#include "svgl/TextRenderer.h"
 #include "resources.h"
 
 using namespace gui;
@@ -33,8 +32,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_A
     : QVBox( parent, "Drawer" )
     , controllers_( controllers )
     , layer_( layer )
-    , renderer_( new svg::TextRenderer() )
-    , factory_( *new DrawerFactory( this, tools, *renderer_, controllers_ ) )
+    , factory_( *new DrawerFactory( this, tools, controllers_ ) )
     , model_( *new DrawerModel( factory_ ) )
 {
     QHBox* box = new QHBox( this );

@@ -42,7 +42,7 @@ class DrawerFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerFactory( QWidget* parent, kernel::GlTools_ABC& tools, svg::TextRenderer& renderer, kernel::Controllers& controllers );
+             DrawerFactory( QWidget* parent, kernel::GlTools_ABC& tools, kernel::Controllers& controllers );
     virtual ~DrawerFactory();
     //@}
 
