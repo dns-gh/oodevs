@@ -23,7 +23,7 @@
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationPionAttritionData::sAttritionData
@@ -72,7 +72,7 @@ void MIL_PopulationPionAttritionData::Initialize( xml::xistream& xis )
 void MIL_PopulationPionAttritionData::ReadAttritionEffect( xml::xistream& xis )
 {
     std::string strAttitude;
-    xis >> attribute( "population-attitude", strAttitude );
+    xis >> xml::attribute( "population-attitude", strAttitude );
 
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
     if( !pAttitude )
@@ -91,8 +91,8 @@ void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAtti
 
     sAttritionData& attitudeData = attitudeAttritionData_[ attitude.GetID() ];
 
-    xis >> attribute( "population-density", attitudeData.rPopulationDensity_ )
-        >> attribute( "intensity", attitudeData.rIntensity_ );
+    xis >> xml::attribute( "population-density", attitudeData.rPopulationDensity_ )
+        >> xml::attribute( "intensity", attitudeData.rIntensity_ );
 
     if( attitudeData.rPopulationDensity_ < 0 )
         xis.error( "attrition-effect: population-density < 0" );
@@ -109,7 +109,7 @@ void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAtti
 void MIL_PopulationPionAttritionData::ReadAttritionUnitEffect( xml::xistream& xis, sAttritionData& attitudeData )
 {
     std::string strProtection;
-    xis >> attribute( "protection", strProtection );
+    xis >> xml::attribute( "protection", strProtection );
     const PHY_Protection* pProtection = PHY_Protection::Find( strProtection );
     if( !pProtection )
         xis.error( "Unknown protection '" + strProtection + "'" );

@@ -35,7 +35,7 @@
 #include "tools/win32/ProcessMonitor.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 

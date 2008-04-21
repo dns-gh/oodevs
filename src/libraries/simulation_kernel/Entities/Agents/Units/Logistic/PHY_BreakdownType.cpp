@@ -18,7 +18,7 @@
 #include "Tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
 uint                              PHY_BreakdownType::nDiagnosticTime_ = 0;
@@ -64,15 +64,15 @@ void PHY_BreakdownType::Initialize( xml::xistream& xis )
     MT_Float rTimeVal;
     std::string timeVal;
     LoadingWrapper loader;
-    xis >> start( "breakdowns" )
-            >> start( "diagnosis" )
-                >> attribute( "time", timeVal )
-            >> end();
+    xis >> xml::start( "breakdowns" )
+            >> xml::start( "diagnosis" )
+                >> xml::attribute( "time", timeVal )
+            >> xml::end();
     if( ! tools::DecodeTime( timeVal, rTimeVal ) || rTimeVal < 0 )
         xis.error( "diagnosis: time < 0" );
     nDiagnosticTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTimeVal );
     xis >> xml::list( "category", loader, &LoadingWrapper::ReadCategory )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void PHY_BreakdownType::ReadCategory( xml::xistream& xis )
 {
     const PHY_MaintenanceLevel::T_MaintenanceLevelMap& maintenanceLevels = PHY_MaintenanceLevel::GetMaintenanceLevels();
     std::string categoryType;
-    xis >> attribute( "name", categoryType );
+    xis >> xml::attribute( "name", categoryType );
 
     PHY_MaintenanceLevel::CIT_MaintenanceLevelMap it = maintenanceLevels.find( categoryType );
     const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
@@ -101,8 +101,8 @@ void PHY_BreakdownType::ReadBreakdown( xml::xistream& xis, const PHY_Maintenance
     std::set< uint > ids_;
     std::string strBreakdown;
     std::string strType;
-    xis >> attribute( "name", strBreakdown )
-        >> attribute( "type", strType );
+    xis >> xml::attribute( "name", strBreakdown )
+        >> xml::attribute( "type", strType );
 
     const E_Type nType = ConvertType( strType );
     if( nType == eUnknown )
@@ -144,9 +144,9 @@ PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_Main
 {
     std::string repairTime, variance;
     MT_Float rVariance;
-    xis >> attribute( "id", nID_ )
-        >> attribute( "average-repairing-time", repairTime )
-        >> attribute( "variance", variance );
+    xis >> xml::attribute( "id", nID_ )
+        >> xml::attribute( "average-repairing-time", repairTime )
+        >> xml::attribute( "variance", variance );
 
     if( !tools::DecodeTime( repairTime, nTheoricRepairTime_ ) || nTheoricRepairTime_ < 0 )
         xis.error( "average-repairing-time < 0" );
@@ -168,7 +168,7 @@ PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_Main
 void PHY_BreakdownType::ReadPart( xml::xistream& xis )
 {
     std::string strCategory;
-    xis >> attribute( "dotation", strCategory );
+    xis >> xml::attribute( "dotation", strCategory );
 
     const PHY_DotationCategory* pCategory = PHY_DotationType::piece_.FindDotationCategory( strCategory );
     if( !pCategory )
@@ -177,7 +177,7 @@ void PHY_BreakdownType::ReadPart( xml::xistream& xis )
     uint& nNbr = parts_[ pCategory ];
     if( nNbr > 0 )
         xis.error( "Part already initialized" );
-    xis >> attribute( "quantity", nNbr );
+    xis >> xml::attribute( "quantity", nNbr );
     if( nNbr < 1 )
         xis.error( "part: quantity < 1" );
 }

@@ -24,7 +24,7 @@
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Config constructor
@@ -82,37 +82,37 @@ void MIL_Config::Parse( int argc, char** argv )
 // -----------------------------------------------------------------------------
 void MIL_Config::ReadSessionFile( const std::string& file )
 {
-    xifstream xis( file );
-    xis >> start( "session" )
-        >> start( "config" )
-            >> start( "simulation" )
-                >> start( "decisional" )
-                    >> attribute( "useonlybinaries", bUseOnlyDIAArchive_ )
-                >> end()
-                >> start( "orbat" )
-                    >> attribute( "checkcomposition", bCheckAutomateComposition_ )
-                >> end()
-                >> start( "profiling" )
-                    >> attribute( "enabled", bProfilingEnabled_ )
-                >> end()
-                >> start( "dispatcher" )
-                    >> attribute( "embedded", bEmbeddedDispatcher_ )
-                >> end()
-                >> start( "network" )
-                    >> attribute( "port", networkPort_ )
-                >> end()
-                >> start( "time" )
-                    >> attribute( "step", timeStep_ )
-                    >> attribute( "factor", timeFactor_ )
-                >> end()
-                >> start( "pathfinder" )
-                    >> attribute( "threads", pathFinderThreads_ )
-                >> end()
-                >> start( "hla" )
-                    >> attribute( "enabled"   , bHLAEnabled_ )
-                    >> attribute( "federation", hlaFederation_ )
-                    >> attribute( "federate"  , hlaFederate_ )
-                >> end();
+    xml::xifstream xis( file );
+    xis >> xml::start( "session" )
+        >> xml::start( "config" )
+            >> xml::start( "simulation" )
+                >> xml::start( "decisional" )
+                    >> xml::attribute( "useonlybinaries", bUseOnlyDIAArchive_ )
+                >> xml::end()
+                >> xml::start( "orbat" )
+                    >> xml::attribute( "checkcomposition", bCheckAutomateComposition_ )
+                >> xml::end()
+                >> xml::start( "profiling" )
+                    >> xml::attribute( "enabled", bProfilingEnabled_ )
+                >> xml::end()
+                >> xml::start( "dispatcher" )
+                    >> xml::attribute( "embedded", bEmbeddedDispatcher_ )
+                >> xml::end()
+                >> xml::start( "network" )
+                    >> xml::attribute( "port", networkPort_ )
+                >> xml::end()
+                >> xml::start( "time" )
+                    >> xml::attribute( "step", timeStep_ )
+                    >> xml::attribute( "factor", timeFactor_ )
+                >> xml::end()
+                >> xml::start( "pathfinder" )
+                    >> xml::attribute( "threads", pathFinderThreads_ )
+                >> xml::end()
+                >> xml::start( "hla" )
+                    >> xml::attribute( "enabled"   , bHLAEnabled_ )
+                    >> xml::attribute( "federation", hlaFederation_ )
+                    >> xml::attribute( "federate"  , hlaFederate_ )
+                >> xml::end();
 
     ReadCheckPointConfiguration( xis );
     ReadDebugConfiguration     ( xis );
@@ -125,11 +125,11 @@ void MIL_Config::ReadSessionFile( const std::string& file )
 void MIL_Config::ReadCheckPointConfiguration( xml::xistream& xis )
 {
     std::string frequency;
-    xis >> start( "checkpoint" )
-            >> attribute( "frequency", frequency )
-            >> attribute( "keep", checkPointsKept_ )
-            >> attribute( "usecrc", bUseCheckPointCRC_ )
-        >> end();
+    xis >> xml::start( "checkpoint" )
+            >> xml::attribute( "frequency", frequency )
+            >> xml::attribute( "keep", checkPointsKept_ )
+            >> xml::attribute( "usecrc", bUseCheckPointCRC_ )
+        >> xml::end();
     if( !tools::DecodeTime( frequency, checkPointsFrequency_ ) )
         xis.error( "Invalid time specified for checkpoint frequency" );
 }
@@ -140,14 +140,14 @@ void MIL_Config::ReadCheckPointConfiguration( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
 {
-    xis >> start( "debug" )
-            >> attribute( "decisional", bUseDecDebug_ )
-            >> attribute( "pathfind", bUsePathDebug_ )
-            >> attribute( "diadebugger", bUseDiaDebugger_ )
-            >> optional() >> attribute( "diadebuggerport", diaDebuggerPort_ )
-            >> attribute( "networklogger", bUseNetworkLogger_ )
-            >> optional() >> attribute( "networkloggerport", networkLoggerPort_ )
-        >> end();
+    xis >> xml::start( "debug" )
+            >> xml::attribute( "decisional", bUseDecDebug_ )
+            >> xml::attribute( "pathfind", bUsePathDebug_ )
+            >> xml::attribute( "diadebugger", bUseDiaDebugger_ )
+            >> xml::optional() >> xml::attribute( "diadebuggerport", diaDebuggerPort_ )
+            >> xml::attribute( "networklogger", bUseNetworkLogger_ )
+            >> xml::optional() >> xml::attribute( "networkloggerport", networkLoggerPort_ )
+        >> xml::end();
     if( bUseDiaDebugger_ && !diaDebuggerPort_ )
         throw std::exception( "DIA debug server activated but no debugger port specified!" );
     if( bUseNetworkLogger_ && !networkLoggerPort_ )
@@ -174,13 +174,13 @@ boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFile
     {
         xml::xofstream xos( strFileName );
 
-        xos << start( "files" );
+        xos << xml::start( "files" );
         for( CIT_CRCMap it = CRCMap_.begin(); it != CRCMap_.end(); ++it )
-            xos << start( "file" )
-                    << attribute( "name", it->first )
-                    << attribute( "crc", it->second )
-                << end();
-        xos << end();
+            xos << xml::start( "file" )
+                    << xml::attribute( "name", it->first )
+                    << xml::attribute( "crc", it->second )
+                << xml::end();
+        xos << xml::end();
     }
     catch( xml::exception& e )
     {

@@ -39,7 +39,7 @@
 #include "Tools/MIL_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MT_Random PHY_WeaponDataType_DirectFire::randomGenerator_;
 
@@ -74,7 +74,7 @@ void PHY_WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
     const PHY_Volume::T_VolumeMap& volumes = PHY_Volume::GetVolumes();
 
     std::string targetType;
-    xis >> attribute( "target", targetType );
+    xis >> xml::attribute( "target", targetType );
 
     PHY_Volume::CIT_VolumeMap it = volumes.find( targetType );
     const PHY_Volume& volume = *it->second;
@@ -95,8 +95,8 @@ void PHY_WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_I
     MT_Float rDistance;
     MT_Float rPH;
 
-    xis >> attribute( "distance", rDistance )
-        >> attribute( "percentage", rPH );
+    xis >> xml::attribute( "distance", rDistance )
+        >> xml::attribute( "percentage", rPH );
 
     if( rDistance < 0 )
         xis.error( "hit-probability: distance <  0" );

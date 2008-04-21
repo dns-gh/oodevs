@@ -14,7 +14,7 @@
 #include "PHY_Tiredness.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;
 
@@ -44,11 +44,11 @@ void PHY_Tiredness::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
 
-    xis >> start( "humans-factors" )
-            >> start( "tiredness-factor" )
+    xis >> xml::start( "humans-factors" )
+            >> xml::start( "tiredness-factor" )
                 >> xml::list( "modifier", loader, LoadingWrapper::ReadTiredness )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void PHY_Tiredness::ReadTiredness( xml::xistream& xis )
     tirednesses_[ epuise_  .GetName() ] = &epuise_;
 
     std::string type;
-    xis >> attribute( "state", type );
+    xis >> xml::attribute( "state", type );
     T_TirednessMap::iterator it = tirednesses_.find( type );
     if( it == tirednesses_.end() )
         xis.error( "Undefined tiredness state" );
@@ -115,11 +115,11 @@ PHY_Tiredness::~PHY_Tiredness()
 // -----------------------------------------------------------------------------
 void PHY_Tiredness::Read( xml::xistream& xis )
 {
-    xis >> attribute( "max-speed", rCoefMaxSpeedModificator_ )
-        >> attribute( "loading-time", rCoefReloadingTimeModificator_ )
-        >> attribute( "ph", rCoefPhModificator_ )
-        >> attribute( "posture-setup-time", rCoefPostureTimeModificator_ )
-        >> attribute( "sensor-distance", rCoefSensorDistanceModificator_ );
+    xis >> xml::attribute( "max-speed", rCoefMaxSpeedModificator_ )
+        >> xml::attribute( "loading-time", rCoefReloadingTimeModificator_ )
+        >> xml::attribute( "ph", rCoefPhModificator_ )
+        >> xml::attribute( "posture-setup-time", rCoefPostureTimeModificator_ )
+        >> xml::attribute( "sensor-distance", rCoefSensorDistanceModificator_ );
 
     if( rCoefMaxSpeedModificator_ <= 0 )
         xis.error( "max-speed <= 0" );

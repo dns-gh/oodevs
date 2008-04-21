@@ -18,7 +18,7 @@
 #include "Tools/MIL_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_VirtualObjectType_ControlZone constructor
@@ -59,13 +59,13 @@ void MIL_VirtualObjectType_ControlZone::Read( xml::xistream& xis )
 void MIL_VirtualObjectType_ControlZone::ReadPercentage( xml::xistream& xis )
 {
         std::string strVolume;
-        xis >> attribute( "volume", strVolume );
+        xis >> xml::attribute( "volume", strVolume );
         const PHY_Volume* pVolume = PHY_Volume::FindVolume( strVolume );
         if ( !pVolume )
             xis.error( "Unknown volume name" );
 
         MT_Float rUnitDensityFirePercentage;
-        xis >> attribute( "percentage", rUnitDensityFirePercentage );
+        xis >> xml::attribute( "percentage", rUnitDensityFirePercentage );
         if( rUnitDensityFirePercentage < 0 || rUnitDensityFirePercentage > 100 )
             xis.error( "percentage not in [0..100]" );
         

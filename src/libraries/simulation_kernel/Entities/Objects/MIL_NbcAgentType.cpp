@@ -16,7 +16,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_NbcAgentType::T_NbcAgentTypeMap MIL_NbcAgentType::nbcAgentTypes_;
 MT_Float                            MIL_NbcAgentType::rCoefMaxSpeedModificator_      = 1.;
@@ -44,14 +44,14 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing nbc types" );
 
-    xis >> start( "nbc" )
-            >> start( "nbc-suit" )
-                >> attribute( "max-speed-modifier", rCoefMaxSpeedModificator_ )
-                >> attribute( "reloading-time-modifier", rCoefReloadingTimeModificator_ )
-            >> end()
-            >> start( "propagation" )
-                >> attribute( "wind-speed-limit", rMinPropagationSpeed_ )
-            >> end();
+    xis >> xml::start( "nbc" )
+            >> xml::start( "nbc-suit" )
+                >> xml::attribute( "max-speed-modifier", rCoefMaxSpeedModificator_ )
+                >> xml::attribute( "reloading-time-modifier", rCoefReloadingTimeModificator_ )
+            >> xml::end()
+            >> xml::start( "propagation" )
+                >> xml::attribute( "wind-speed-limit", rMinPropagationSpeed_ )
+            >> xml::end();
 
     if( rCoefMaxSpeedModificator_ < 0 )
         xis.error( "nbc-suit: max-speed-modifier < 0" );
@@ -65,10 +65,10 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
    
     LoadingWrapper loader;
 
-    xis >> start( "agents" )
+    xis >> xml::start( "agents" )
             >> xml::list( "agent", loader, &LoadingWrapper::ReadAgent )
-        >> end()
-    >> end();
+        >> xml::end()
+    >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void MIL_NbcAgentType::ReadAgent( xml::xistream& xis )
     std::set< uint > ids_;
     std::string strName;
 
-    xis >> attribute( "name", strName );
+    xis >> xml::attribute( "name", strName );
 
     const MIL_NbcAgentType*& pNbcAgentType = nbcAgentTypes_[ strName ];
     if( pNbcAgentType )
@@ -123,7 +123,7 @@ MIL_NbcAgentType::MIL_NbcAgentType( const std::string& strName, xml::xistream& x
     , nGasLifeTime_        ( 0 )
     , rGasPropagationAngle_( 0. )
 {
-    xis >> attribute( "id", nID_ )
+    xis >> xml::attribute( "id", nID_ )
         >> xml::list( "effects", *this, &MIL_NbcAgentType::SortEffectType );
 }
 
@@ -134,7 +134,7 @@ MIL_NbcAgentType::MIL_NbcAgentType( const std::string& strName, xml::xistream& x
 void MIL_NbcAgentType::SortEffectType( xml::xistream& xis )
 {
     std::string effectType;
-    xis >> attribute( "type", effectType );
+    xis >> xml::attribute( "type", effectType );
     if( effectType == "liquid" )
         ReadLiquid( xis );
     else if( effectType == "gaseous" )
@@ -152,7 +152,7 @@ void MIL_NbcAgentType::ReadLiquid( xml::xistream& xis )
     if( ReadPoisonousData( xis, liquidPoisonous_ ) )
         bLiquidPoisonous_ = true;
     
-    xis >> optional() >> attribute( "contamination", bLiquidContaminating_ );
+    xis >> xml::optional() >> xml::attribute( "contamination", bLiquidContaminating_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,14 +164,14 @@ void MIL_NbcAgentType::ReadGaz( xml::xistream& xis )
     bCanBeVaporized_ = true;
     if( ReadPoisonousData( xis, gasPoisonous_ ) )
         bGasPoisonous_ = true;
-    xis >> optional() >> attribute( "contamination", bGasContaminating_ );
+    xis >> xml::optional() >> xml::attribute( "contamination", bGasContaminating_ );
 
     tools::ReadTimeAttribute( xis, "life-time", nGasLifeTime_ );
     if( nGasLifeTime_ <= 0 )
         xis.error( "effects: life-time <= 0" );
     nGasLifeTime_ = (uint)MIL_Tools::ConvertSecondsToSim( nGasLifeTime_ );
 
-    xis >> attribute( "propagation", rGasPropagationAngle_ );
+    xis >> xml::attribute( "propagation", rGasPropagationAngle_ );
     if( rGasPropagationAngle_ <= 0 )
         xis.error( "effects: propagation <= 0" );
     rGasPropagationAngle_ *= ( MT_PI / 180. );
@@ -193,7 +193,7 @@ MIL_NbcAgentType::~MIL_NbcAgentType()
 bool MIL_NbcAgentType::ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVector& data )
 {
     std::string affliction = "nothing";
-    xis >> optional() >> attribute( "affliction", affliction );
+    xis >> xml::optional() >> xml::attribute( "affliction", affliction );
     if( affliction != "intoxication" )
         return false;
     xis >> xml::list( "effect", *this, &MIL_NbcAgentType::ReadEffect, data );
@@ -211,12 +211,12 @@ bool MIL_NbcAgentType::ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVe
 void MIL_NbcAgentType::ReadEffect( xml::xistream& xis, T_HumanPoisonousVector& data )
 {
     std::string wound;
-    xis >> attribute( "wound", wound );
+    xis >> xml::attribute( "wound", wound );
     PHY_HumanWound::CIT_HumanWoundMap it = PHY_HumanWound::GetHumanWounds().find( wound );
     if( it != PHY_HumanWound::GetHumanWounds().end() )
     {
         MT_Float percentage;
-        xis >> attribute( "percentage", percentage );
+        xis >> xml::attribute( "percentage", percentage );
         if( percentage < 0.f || percentage > 1.f )
             xis.error( "Poisonous percentage is out of bound for NBC Agent type" );
         data[it->second->GetID()] = percentage;

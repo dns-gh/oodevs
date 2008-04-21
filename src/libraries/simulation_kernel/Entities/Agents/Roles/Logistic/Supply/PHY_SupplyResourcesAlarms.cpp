@@ -11,7 +11,7 @@
 #include "PHY_SupplyResourcesAlarms.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_SupplyResourcesAlarms::T_LevelSet PHY_SupplyResourcesAlarms::convoyTransporterResourcesLevels_;
 
@@ -32,11 +32,11 @@ void PHY_SupplyResourcesAlarms::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing supply resources alarms" );
     LoadingWrapper loader;
 
-    xis >> start( "supply" )
-            >> start( "resource-availability-alerts" )
+    xis >> xml::start( "supply" )
+            >> xml::start( "resource-availability-alerts" )
                 >> xml::list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceAvailabilityAlert )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ void PHY_SupplyResourcesAlarms::Initialize( xml::xistream& xis )
 void PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert( xml::xistream& xis )
 {
     MT_Float rRatio;
-    xis >> attribute( "availability-threshold", rRatio );
+    xis >> xml::attribute( "availability-threshold", rRatio );
     if( rRatio < 0 || rRatio > 100 )
         xis.error( "resource-availabilty-alert: availability-threshold not in [0..100]" );
     rRatio /= 100.;

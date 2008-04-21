@@ -22,7 +22,7 @@
 #include "MIL_AgentServer.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MT_Float PHY_PerceptionFlyingShell::rRadius_ = 0;
 
@@ -32,9 +32,9 @@ MT_Float PHY_PerceptionFlyingShell::rRadius_ = 0;
 // -----------------------------------------------------------------------------
 void PHY_PerceptionFlyingShell::Initialize( xml::xistream& xis )
 {
-    xis >> start( "cobra-radar" )
-            >> attribute( "action-range", rRadius_ )
-        >> end();
+    xis >> xml::start( "cobra-radar" )
+            >> xml::attribute( "action-range", rRadius_ )
+        >> xml::end();
     
     if( rRadius_ < 0 )
         xis.error( "cobra-radar: action-range < 0" );

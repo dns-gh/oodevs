@@ -18,7 +18,7 @@
 #pragma warning( pop )
 
 namespace bpt = boost::posix_time;
-using namespace xml;
+
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Ephemeride::UpdateNight
@@ -44,10 +44,10 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
     , bIsNight_  ( false )
 {
     std::string sunRise, sunSet, moon, date;
-    xis >> start( "ephemerides" )
-            >> attribute( "sunrise", sunRise )
-            >> attribute( "sunset", sunSet )
-            >> attribute( "moon", moon )
+    xis >> xml::start( "ephemerides" )
+            >> xml::attribute( "sunrise", sunRise )
+            >> xml::attribute( "sunset", sunSet )
+            >> xml::attribute( "moon", moon )
         >> xml::end()
         >> xml::start( "exercise-date" )
             >> xml::attribute( "value", date )

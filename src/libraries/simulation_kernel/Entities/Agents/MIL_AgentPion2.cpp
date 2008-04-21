@@ -70,7 +70,7 @@
 
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 namespace
 {

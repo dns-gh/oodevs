@@ -15,7 +15,7 @@
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOGConvoy_Supply.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGConvoy, "MIL_AgentPionLOGConvoy" )
 

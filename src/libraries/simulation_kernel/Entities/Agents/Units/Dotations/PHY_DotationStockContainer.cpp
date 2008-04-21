@@ -27,7 +27,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationStockContainer, "PHY_DotationStockContainer" )
 
@@ -156,18 +156,18 @@ void PHY_DotationStockContainer::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::WriteODB( xml::xostream& xos ) const
 {
-    xos << start( "stocks" );
+    xos << xml::start( "stocks" );
 
     for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
     {
         const PHY_DotationStock& dotationStock = *it->second;
 
-        xos << start( "dotation" )
-            << attribute( "name", dotationStock.GetCategory().GetName() )
-            << attribute( "quantity", dotationStock.GetValue() )
-        << end(); // dotation"
+        xos << xml::start( "dotation" )
+            << xml::attribute( "name", dotationStock.GetCategory().GetName() )
+            << xml::attribute( "quantity", dotationStock.GetValue() )
+        << xml::end(); // dotation"
     }
-    xos << end(); // stocks
+    xos << xml::end(); // stocks
 }
 
 // =============================================================================
@@ -180,9 +180,9 @@ void PHY_DotationStockContainer::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::ReadValues( xml::xistream& xis )
 {
-    xis >> optional() >> start( "stocks" )
+    xis >> xml::optional() >> xml::start( "stocks" )
                           >> xml::list( "dotation", *this, &PHY_DotationStockContainer::ReadStock )
-                      >> end();
+                      >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +192,7 @@ void PHY_DotationStockContainer::ReadValues( xml::xistream& xis )
 void PHY_DotationStockContainer::ReadStock( xml::xistream& xis )
 {
     std::string strType;
-    xis >> attribute( "name", strType );
+    xis >> xml::attribute( "name", strType );
 
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
@@ -258,7 +258,7 @@ PHY_DotationStock* PHY_DotationStockContainer::GetStock( const PHY_DotationCateg
 PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCategory& category, xml::xistream& xis)
 {
     MT_Float rValue;
-    xis >> attribute( "quantity", rValue );
+    xis >> xml::attribute( "quantity", rValue );
     if( rValue < 0 )
         xis.error( "stock: quantity < 0" );
 

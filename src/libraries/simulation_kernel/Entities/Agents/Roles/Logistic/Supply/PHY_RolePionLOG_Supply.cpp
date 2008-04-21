@@ -26,7 +26,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Supply, "PHY_RolePionLOG_Supply" )
 

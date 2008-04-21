@@ -30,7 +30,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MT_Random PHY_DotationCategory_IndirectFire::random_;
 
@@ -51,7 +51,7 @@ PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
     , phs_                                 ( PHY_Posture::GetPostures().size(), 1. )
 {
-    xis >> attribute( "neutralization-ratio", rNeutralizationCoef_ );
+    xis >> xml::attribute( "neutralization-ratio", rNeutralizationCoef_ );
     if( rNeutralizationCoef_ < 1. )
         xis.error( "neutralization-ratio < 1" );
 
@@ -70,12 +70,12 @@ void PHY_DotationCategory_IndirectFire::ReadPh( xml::xistream& xis )
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
     std::string postureType;
 
-    xis >> attribute( "target-posture", postureType );
+    xis >> xml::attribute( "target-posture", postureType );
 
     PHY_Posture::CIT_PostureMap it = postures.find( postureType );
     const PHY_Posture& posture = *it->second;
     assert( phs_.size() > posture.GetID() );
-    xis >> attribute( "value", phs_[ posture.GetID() ] );
+    xis >> xml::attribute( "value", phs_[ posture.GetID() ] );
 }
 
 // -----------------------------------------------------------------------------

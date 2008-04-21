@@ -21,7 +21,7 @@
 #include "HLA/HLA_UpdateFunctor.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_ItineraireLogistique, "MIL_ItineraireLogistique" )
 
@@ -83,13 +83,13 @@ void MIL_ItineraireLogistique::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_ItineraireLogistique::WriteSpecificAttributes( xml::xostream& xos ) const
 {
-    xos << start( "specific-attributes" )
-            << content( "max-weight", rWeightSupported_ )
-            << content( "width"     , rWidth_ )
-            << content( "length"    , rLength_ )
-            << content( "flow"      , rFlow_ )
-            << content( "equipped"  , bEquipped_ )
-        << end(); // specific-attributes
+    xos << xml::start( "specific-attributes" )
+            << xml::content( "max-weight", rWeightSupported_ )
+            << xml::content( "width"     , rWidth_ )
+            << xml::content( "length"    , rLength_ )
+            << xml::content( "flow"      , rFlow_ )
+            << xml::content( "equipped"  , bEquipped_ )
+        << xml::end(); // specific-attributes
 }
 
 // =============================================================================
@@ -133,13 +133,13 @@ void MIL_ItineraireLogistique::Initialize( xml::xistream& xis )
 {
     MIL_RealObject_ABC::Initialize( xis );
 
-    xis >> start( "specific-attributes" )
-            >> content( "max-weight", rWeightSupported_ )
-            >> content( "width", rWidth_ )
-            >> content( "length", rLength_ )
-            >> content( "flow", rFlow_ )
-            >> content( "equipped", bEquipped_ )
-        >> end();
+    xis >> xml::start( "specific-attributes" )
+            >> xml::content( "max-weight", rWeightSupported_ )
+            >> xml::content( "width", rWidth_ )
+            >> xml::content( "length", rLength_ )
+            >> xml::content( "flow", rFlow_ )
+            >> xml::content( "equipped", bEquipped_ )
+        >> xml::end();
 
     if( rWeightSupported_ <= 0. )
         xis.error( "max-weight is not greater than 0" );

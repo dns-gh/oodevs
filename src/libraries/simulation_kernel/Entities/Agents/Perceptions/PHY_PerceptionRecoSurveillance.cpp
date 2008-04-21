@@ -25,7 +25,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 
 MT_Float PHY_PerceptionRecoSurveillance::rForestSurveillanceTime_ = std::numeric_limits< MT_Float >::max();
@@ -69,9 +69,9 @@ void PHY_PerceptionRecoSurveillance::Initialize( xml::xistream& xis )
 {
     LoadingWrapper loader;
 
-    xis >> start( "alat-monitoring-times" )
+    xis >> xml::start( "alat-monitoring-times" )
             >> xml::list( "alat-monitoring-time", loader, &LoadingWrapper::ReadAlatTime )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

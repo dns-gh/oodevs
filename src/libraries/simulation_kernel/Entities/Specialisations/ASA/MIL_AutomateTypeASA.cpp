@@ -17,7 +17,7 @@
 #include "Decision/DEC_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeASA constructor

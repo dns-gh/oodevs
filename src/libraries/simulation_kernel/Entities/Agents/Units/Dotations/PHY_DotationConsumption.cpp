@@ -16,7 +16,7 @@
 #include "Tools/MIL_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConsumption constructor
@@ -26,7 +26,7 @@ PHY_DotationConsumption::PHY_DotationConsumption( const PHY_DotationCategory& ca
     : category_ ( category )
     , rConsumption_( 0. )
 {
-    xis >> attribute( "value", rConsumption_ );
+    xis >> xml::attribute( "value", rConsumption_ );
     if( rConsumption_ < 0 )
         xis.error( "dotation: value < 0" );
 

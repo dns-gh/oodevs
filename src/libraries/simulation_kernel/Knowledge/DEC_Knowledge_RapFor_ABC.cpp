@@ -15,7 +15,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                        = 5.0;
@@ -32,12 +32,12 @@ const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                       
       void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis )
 {
     // Rapport de force
-    xis >> start( "force-ratio" );
+    xis >> xml::start( "force-ratio" );
     MT_Float rTmp;
     tools::ReadTimeAttribute( xis, "default-feedback-time", rTmp );
     rTmp                                    = MIL_Tools::ConvertSecondsToSim       ( rTmp );
     rRapForIncreasePerTimeStepDefaultValue_ = ComputeRapForIncreasePerTimeStepValue( rTmp );
-    xis >> end();
+    xis >> xml::end();
 }
 
 // =============================================================================

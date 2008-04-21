@@ -18,8 +18,6 @@
 #include "Tools/MIL_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
-
 BOOST_CLASS_EXPORT_GUID( MIL_BouchonMines, "MIL_BouchonMines" )
 
 //-----------------------------------------------------------------------------
@@ -77,7 +75,7 @@ void MIL_BouchonMines::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_BouchonMines::WriteSpecificAttributes( xml::xostream& xos ) const
 {
-    xos << content( "activity-time", nMinesActivityTime_ );
+    xos << xml::content( "activity-time", nMinesActivityTime_ );
  }
 
 //=============================================================================
@@ -104,7 +102,7 @@ bool MIL_BouchonMines::Initialize( const MIL_ObstacleType& obstacleType, DIA_Par
 void MIL_BouchonMines::Initialize( xml::xistream& xis )
 {
     MIL_RealObject_ABC::Initialize( xis );
-    xis >> optional() >>content( "activity-time", nMinesActivityTime_ );
+    xis >> xml::optional() >> xml::content( "activity-time", nMinesActivityTime_ );
 
     if( nMinesActivityTime_ < 0 )
         xis.error( "nMinesActivityTime_ is not greater or equal than 0" );

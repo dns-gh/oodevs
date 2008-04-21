@@ -14,7 +14,7 @@
 #include "MIL_AgentTypePionASA.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionASA constructor

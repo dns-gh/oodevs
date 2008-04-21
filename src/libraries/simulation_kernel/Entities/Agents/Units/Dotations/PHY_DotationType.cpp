@@ -17,7 +17,7 @@
 #include "PHY_DotationLogisticType.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_DotationType PHY_DotationType::munition_ ( "munition" , eMunition , EnumDotationFamily::munition , PHY_DotationLogisticType::uniteFeuSansTD_ );
 PHY_DotationType PHY_DotationType::carburant_( "carburant", eCarburant, EnumDotationFamily::carburant, PHY_DotationLogisticType::uniteEssence_   );
@@ -60,9 +60,9 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
 
-    xis >> start( "dotations" )
+    xis >> xml::start( "dotations" )
             >> xml::list( "dotation", loader, &LoadingWrapper::ReadDotation )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -74,8 +74,8 @@ void PHY_DotationType::ReadDotation( xml::xistream& xis )
     std::string strTypeName;
     std::string strCategoryName;
 
-    xis >> attribute( "name", strTypeName )
-        >> attribute( "category", strCategoryName );
+    xis >> xml::attribute( "name", strTypeName )
+        >> xml::attribute( "category", strCategoryName );
 
     CIT_DotationTypeMap it = dotationTypes_.find( strTypeName );
     if( it == dotationTypes_.end() )

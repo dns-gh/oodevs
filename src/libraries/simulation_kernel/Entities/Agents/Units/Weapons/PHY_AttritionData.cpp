@@ -16,7 +16,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MT_Random PHY_AttritionData::randomGenerator_;
 
@@ -43,9 +43,9 @@ PHY_AttritionData::PHY_AttritionData( xml::xistream& xis )
     MT_Float rReparableWithEvacuation;
     MT_Float rReparableWithoutEvacuation;
 
-    xis >> attribute( "destruction", rDestroyed )
-        >> attribute( "repairable-with-evacuation", rReparableWithEvacuation )
-        >> attribute( "repairable-without-evacuation", rReparableWithoutEvacuation );
+    xis >> xml::attribute( "destruction", rDestroyed )
+        >> xml::attribute( "repairable-with-evacuation", rReparableWithEvacuation )
+        >> xml::attribute( "repairable-without-evacuation", rReparableWithoutEvacuation );
 
     if( rDestroyed < 0. || rDestroyed > 1. )
         xis.error( "rDestroyed not in [0..1]" );

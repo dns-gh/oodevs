@@ -21,7 +21,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::sComposanteTypeData::sComposanteTypeData
@@ -55,10 +55,10 @@ PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     , bCanFly_                        ( false )
     , bIsAutonomous_                  ( false )
 {
-    xis >> optional()
-            >> attribute( "can-fly", bCanFly_ )
-        >> optional()
-            >> attribute( "is-autonomous", bIsAutonomous_ );
+    xis >> xml::optional()
+            >> xml::attribute( "can-fly", bCanFly_ )
+        >> xml::optional()
+            >> xml::attribute( "is-autonomous", bIsAutonomous_ );
 
     InitializeComposantes                 ( xis );
     InitializeCommanderRepartition        ( xis );
@@ -84,10 +84,10 @@ PHY_UnitType::~PHY_UnitType()
 // -----------------------------------------------------------------------------
 void PHY_UnitType::InitializeStockLogisticThresholdRatios( xml::xistream& xis )
 {
-    xis >> optional()
-            >> start( "stocks" )
+    xis >> xml::optional()
+            >> xml::start( "stocks" )
                 >> xml::list( "stock", *this, &PHY_UnitType::ReadStock )
-            >> end();
+            >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ void PHY_UnitType::InitializeStockLogisticThresholdRatios( xml::xistream& xis )
 void PHY_UnitType::ReadStock( xml::xistream& xis )
 {
     std::string strCategory;
-    xis >> attribute( "category", strCategory );
+    xis >> xml::attribute( "category", strCategory );
 
     const PHY_DotationLogisticType* pType = PHY_DotationLogisticType::Find( strCategory );
     if( !pType )
@@ -106,7 +106,7 @@ void PHY_UnitType::ReadStock( xml::xistream& xis )
     assert( stockLogisticThresholdRatios_.size() > pType->GetID() );
 
     MT_Float rThreshold = 0.;
-    xis >> attribute( "threshold", rThreshold );
+    xis >> xml::attribute( "threshold", rThreshold );
     if( rThreshold < 0 || rThreshold > 100 )
         xis.error( "stock: thresolh not in [0..100]" );
 
@@ -122,12 +122,12 @@ void PHY_UnitType::ReadStock( xml::xistream& xis )
 void PHY_UnitType::InitializeNBC( xml::xistream& xis )
 {
     float rTmp;
-    xis >> start( "nbc" );
+    xis >> xml::start( "nbc" );
     tools::ReadTimeAttribute( xis, "decontamination-delay", rTmp );
     if( rTmp <= 0 )
         xis.error( "nbc: decontamination-delay <= 0" );
     rCoefDecontaminationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rTmp );
-    xis >> end();
+    xis >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -136,9 +136,9 @@ void PHY_UnitType::InitializeNBC( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::InitializeComposantes( xml::xistream& xis )
 {
-    xis >> start( "equipments" )
+    xis >> xml::start( "equipments" )
             >> xml::list( "equipment", *this, &PHY_UnitType::ReadEquipment )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ void PHY_UnitType::InitializeComposantes( xml::xistream& xis )
 void PHY_UnitType::ReadEquipment( xml::xistream& xis )
 {
     std::string strComposanteType;
-    xis >> attribute( "type", strComposanteType );
+    xis >> xml::attribute( "type", strComposanteType );
 
     const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( strComposanteType );
     if( !pComposanteType )
@@ -163,13 +163,13 @@ void PHY_UnitType::ReadEquipment( xml::xistream& xis )
     compData.bCanBePartOfConvoy_ = false;
     compData.nNbrHumanInCrew_ = 0;
 
-    xis >> optional()
-            >> attribute( "major", compData.bMajor_ )
-        >> optional()
-            >> attribute( "loadable", compData.bLoadable_ )
-        >> optional()
-            >> attribute( "convoyer", compData.bCanBePartOfConvoy_ )
-        >> attribute( "crew", compData.nNbrHumanInCrew_ );
+    xis >> xml::optional()
+            >> xml::attribute( "major", compData.bMajor_ )
+        >> xml::optional()
+            >> xml::attribute( "loadable", compData.bLoadable_ )
+        >> xml::optional()
+            >> xml::attribute( "convoyer", compData.bCanBePartOfConvoy_ )
+        >> xml::attribute( "crew", compData.nNbrHumanInCrew_ );
 
     if( compData.nNbrHumanInCrew_ < 0 )
         xis.error( "equipment: crew < 0" );
@@ -177,7 +177,7 @@ void PHY_UnitType::ReadEquipment( xml::xistream& xis )
     if( compData.nNbrHumanInCrew_ == 0 && !IsAutonomous() )
         xis.error( "Composante not viable : no humans in crew" );
 
-    xis >> attribute( "count", compData.nNbr_ );
+    xis >> xml::attribute( "count", compData.nNbr_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,9 +186,9 @@ void PHY_UnitType::ReadEquipment( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::InitializeCommanderRepartition( xml::xistream& xis )
 {
-    xis >> start( "crew-ranks" )
+    xis >> xml::start( "crew-ranks" )
             >> xml::list( "crew-rank", *this, &PHY_UnitType::ReadCrewRank )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -200,7 +200,7 @@ void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
     std::string crewType;
 
-    xis >> attribute( "type", crewType );
+    xis >> xml::attribute( "type", crewType );
 
     PHY_HumanRank::CIT_HumanRankMap it = ranks.find( crewType );
     const PHY_HumanRank& rank = *it->second;
@@ -211,7 +211,7 @@ void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
         xis.error( "crew-rank: type undefined" );        
 
     uint nValue = 0;
-    xis >> attribute( "count", nValue );
+    xis >> xml::attribute( "count", nValue );
     if( nValue > 0 )
         commandersRepartition_[ &rank ] = nValue;
 }
@@ -222,9 +222,9 @@ void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::InitializePostureTimes( xml::xistream& xis )
 {
-    xis >> start( "postures" )
+    xis >> xml::start( "postures" )
             >> xml::list( "posture", *this, &PHY_UnitType::ReadPosture )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -236,7 +236,7 @@ void PHY_UnitType::ReadPosture( xml::xistream& xis )
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
     std::string postureName;
 
-    xis >> attribute( "name", postureName );
+    xis >> xml::attribute( "name", postureName );
 
     PHY_Posture::CIT_PostureMap it = postures.find( postureName );
     const PHY_Posture& posture = *it->second;
@@ -291,8 +291,8 @@ void PHY_UnitType::InitializeCoupDeSonde( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::ReadDrill( xml::xistream& xis )
 {
-    xis >> attribute( "width", rCoupDeSondeWidth_ )
-        >> attribute( "length", rCoupDeSondeLength_ );
+    xis >> xml::attribute( "width", rCoupDeSondeWidth_ )
+        >> xml::attribute( "length", rCoupDeSondeLength_ );
 
     if ( rCoupDeSondeLength_ < rCoupDeSondeWidth_ )
         xis.error( "Length should be greater than width" );

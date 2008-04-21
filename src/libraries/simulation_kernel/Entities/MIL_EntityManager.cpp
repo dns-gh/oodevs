@@ -74,7 +74,7 @@
 #include "MIL_Singletons.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
@@ -107,7 +107,7 @@ void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time
     MIL_LimaFunction             ::Initialize();
 
     xml::xifstream xis( config.GetPhysicalFile() );
-    xis >> start( "physical" );
+    xis >> xml::start( "physical" );
 
     InitializeType< MIL_Report                     >( xis, config, "reports"             );
     InitializeType< PHY_MaintenanceWorkRate        >( xis, config, "maintenance"         );
@@ -136,7 +136,7 @@ void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time
     InitializeType< MIL_PopulationType             >( xis, config, "populations"         );
     InitializeMedical( xis, config );
 
-    xis >> end(); // physical
+    xis >> xml::end(); // physical
 }
 
 // -----------------------------------------------------------------------------
@@ -205,21 +205,21 @@ void MIL_EntityManager::InitializeSensors( xml::xistream& xis, MIL_Config& confi
     MT_LOG_INFO_MSG( "Initializing sensor types" );
 
     std::string strFile;
-    xis >> start( "sensors" )
-            >> attribute( "file", strFile )
-        >> end();
+    xis >> xml::start( "sensors" )
+            >> xml::attribute( "file", strFile )
+        >> xml::end();
     strFile = config.BuildPhysicalChildFile( strFile );
 
 
     xml::xifstream xisSensors( strFile );
     config.AddFileToCRC( strFile );
 
-    xisSensors >> start( "sensors" );
+    xisSensors >> xml::start( "sensors" );
     PHY_PerceptionRecoSurveillance::Initialize( xisSensors );
     PHY_PerceptionFlyingShell     ::Initialize( xisSensors );
     PHY_SensorType                ::Initialize( xisSensors );
     PHY_RadarType                 ::Initialize( xisSensors, time );
-    xisSensors >> end();
+    xisSensors >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -231,19 +231,19 @@ void MIL_EntityManager::InitializeMedical( xml::xistream& xis, MIL_Config& confi
     MT_LOG_INFO_MSG( "Initializing medical data" );
 
     std::string strFile;
-    xis >> start( "health" )
-            >> attribute( "file", strFile )
-        >> end();
+    xis >> xml::start( "health" )
+            >> xml::attribute( "file", strFile )
+        >> xml::end();
     strFile = config.BuildPhysicalChildFile( strFile );
 
     xml::xifstream xisHealth( strFile );
 
-    xisHealth >> start( "health" );
+    xisHealth >> xml::start( "health" );
     config.AddFileToCRC( strFile );
 
     PHY_HumanWound::InitializeMedicalData( xisHealth );
 
-    xisHealth >> end();
+    xisHealth >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -254,9 +254,9 @@ template < typename T >
 void MIL_EntityManager::InitializeType( xml::xistream& xis, MIL_Config& config, const std::string& strSection )
 {
     std::string strFile;
-    xis >> start( strSection )
-            >> attribute( "file", strFile )
-        >> end();
+    xis >> xml::start( strSection )
+            >> xml::attribute( "file", strFile )
+        >> xml::end();
 
     strFile = config.BuildPhysicalChildFile( strFile );
 
@@ -273,9 +273,9 @@ void MIL_EntityManager::InitializeType( xml::xistream& xis, MIL_Config& config, 
 void MIL_EntityManager::InitializeComposantes( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time )
 {
     std::string strFile;
-    xis >> start( "components" )
-            >> attribute( "file", strFile )
-        >> end();
+    xis >> xml::start( "components" )
+            >> xml::attribute( "file", strFile )
+        >> xml::end();
     strFile = config.BuildPhysicalChildFile( strFile );
 
     xml::xifstream xisComponents( strFile );
@@ -291,9 +291,9 @@ void MIL_EntityManager::InitializeComposantes( xml::xistream& xis, MIL_Config& c
 void MIL_EntityManager::InitializeWeapons( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects )
 {
     std::string strFile;
-    xis >> start( "weapon-systems" )
-            >> attribute( "file", strFile )
-        >> end();
+    xis >> xml::start( "weapon-systems" )
+            >> xml::attribute( "file", strFile )
+        >> xml::end();
     strFile = config.BuildPhysicalChildFile( strFile );
 
     xml::xifstream xisWeapons( strFile );
@@ -385,7 +385,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
 
     xml::xifstream xis( strOrbat );
-    xis >> start( "orbat" );
+    xis >> xml::start( "orbat" );
 
     InitializeArmies   ( xis );
     InitializeDiplomacy( xis );
@@ -394,7 +394,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , pions_      .size() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
 
-    xis >> end();
+    xis >> xml::end();
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
@@ -417,9 +417,9 @@ void MIL_EntityManager::InitializeDiplomacy( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing diplomacy" );
 
-    xis >> start( "diplomacies" )
+    xis >> xml::start( "diplomacies" )
             >> xml::list( "side", *this, MIL_EntityManager::ReadDiplomacy )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -429,7 +429,7 @@ void MIL_EntityManager::InitializeDiplomacy( xml::xistream& xis )
 void MIL_EntityManager::ReadDiplomacy( xml::xistream& xis )
 {
     uint id;
-    xis >> attribute( "id", id );
+    xis >> xml::attribute( "id", id );
 
     MIL_Army* pArmy = FindArmy( id );
     if( !pArmy )
@@ -447,9 +447,9 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
 
     assert( armies_.empty() );
 
-    xis >> start( "sides" )
+    xis >> xml::start( "sides" )
             >> xml::list( "side", *this, &MIL_EntityManager::ReadArmy )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -459,7 +459,7 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
 void MIL_EntityManager::ReadArmy( xml::xistream& xis )
 {
     uint id;
-    xis >> attribute( "id", id );
+    xis >> xml::attribute( "id", id );
 
     MIL_Army*& pArmy = armies_[ id ];
     if( pArmy )
@@ -474,7 +474,7 @@ void MIL_EntityManager::ReadArmy( xml::xistream& xis )
 void MIL_EntityManager::CreateFormation( xml::xistream& xis, MIL_Army& army, MIL_Formation* parent /*=0*/ )
 {
     uint id;
-    xis >> attribute( "id", id );
+    xis >> xml::attribute( "id", id );
     MIL_Formation*& pFormation = formations_[ id ];
     if( pFormation )
         xis.error( "Formation using this id already exists" );
@@ -490,8 +490,8 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& format
     uint id;
     std::string strType;
 
-    xis >> attribute( "id", id )
-        >> attribute( "type", strType );
+    xis >> xml::attribute( "id", id )
+        >> xml::attribute( "type", strType );
 
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
     if( !pType )
@@ -516,8 +516,8 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent 
     uint id;
     std::string strType;
 
-    xis >> attribute( "id", id )
-        >> attribute( "type", strType );
+    xis >> xml::attribute( "id", id )
+        >> xml::attribute( "type", strType );
 
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
     if( !pType )
@@ -579,8 +579,8 @@ void MIL_EntityManager::CreatePopulation( xml::xistream& xis, MIL_Army& army )
 {
     uint id;
     std::string strType;
-    xis >> attribute( "id", id )
-        >> attribute( "type", strType );
+    xis >> xml::attribute( "id", id )
+        >> xml::attribute( "type", strType );
 
     const MIL_PopulationType* pType = MIL_PopulationType::Find( strType );
     if( !pType )
@@ -1373,16 +1373,16 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 {
-    xos << start( "orbat" )
-            << start( "sides" );
+    xos << xml::start( "orbat" )
+            << xml::start( "sides" );
     for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
         it->second->WriteODB( xos );
-    xos     << end();
+    xos     << xml::end();
 
-    xos     << start( "diplomacies" );
+    xos     << xml::start( "diplomacies" );
     for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
         it->second->WriteDiplomacyODB( xos );
-    xos     << end();
+    xos     << xml::end();
 
-    xos << end();
+    xos << xml::end();
 }

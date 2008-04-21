@@ -18,7 +18,7 @@
 #include "Tools/MIL_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
@@ -39,13 +39,13 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     xml::xifstream xisWeather( fileName );
     config.AddFileToCRC( fileName );
 
-    xisWeather >> start( "weather" );
+    xisWeather >> xml::start( "weather" );
     pEphemeride_  = new PHY_Ephemeride( xisWeather );
     InitializeGlobalMeteo( xisWeather );
     pRawData_     = new PHY_RawVisionData( *pGlobalMeteo_, config );
     InitializeLocalMeteos( xisWeather );
 
-    xisWeather >> end();
+    xisWeather >> xml::end();
 }
 
 //-----------------------------------------------------------------------------
@@ -68,11 +68,11 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
-    xis >> start( "theater" );
+    xis >> xml::start( "theater" );
     pGlobalMeteo_ = new PHY_Meteo( xis, *pEphemeride_ );
     pGlobalMeteo_->IncRef();
     RegisterMeteo( *pGlobalMeteo_ );
-    xis >> end();
+    xis >> xml::end();
 }
 
 //-----------------------------------------------------------------------------
@@ -81,9 +81,9 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 //-----------------------------------------------------------------------------
 void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 {
-    xis >> optional() >> start( "local-weather" )
+    xis >> xml::optional() >> xml::start( "local-weather" )
                           >> xml::list( "local", *this, &PHY_MeteoDataManager::ReadPatchLocal )
-                      >> end();
+                      >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -96,10 +96,10 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
     MT_Vector2D vUpLeft;
     MT_Vector2D vDownRight;
 
-    xis >> attribute( "top-left", strPos );
+    xis >> xml::attribute( "top-left", strPos );
     MIL_Tools::ConvertCoordMosToSim( strPos, vUpLeft );
 
-    xis >> attribute( "bottom-right", strPos );
+    xis >> xml::attribute( "bottom-right", strPos );
     MIL_Tools::ConvertCoordMosToSim( strPos, vDownRight );
 
     PHY_Meteo* pMeteo = new PHY_Meteo( xis, *pEphemeride_ );

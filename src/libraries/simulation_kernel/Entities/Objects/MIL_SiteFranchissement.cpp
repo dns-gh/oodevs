@@ -20,7 +20,7 @@
 
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_SiteFranchissement, "MIL_SiteFranchissement" )
 
@@ -87,12 +87,12 @@ void MIL_SiteFranchissement::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_SiteFranchissement::WriteSpecificAttributes( xml::xostream& xos ) const
 {
-    xos << start( "specific-attributes" )
-            << content( "width", rWidth_ )
-            << content( "depth", rDepth_ )
-            << content( "speed", rCurrentSpeed_ )
-            << content( "construction-needed", bBanksToFitOut_ )
-        << end(); // specific-attributes
+    xos << xml::start( "specific-attributes" )
+            << xml::content( "width", rWidth_ )
+            << xml::content( "depth", rDepth_ )
+            << xml::content( "speed", rCurrentSpeed_ )
+            << xml::content( "construction-needed", bBanksToFitOut_ )
+        << xml::end(); // specific-attributes
 }
 
 //=============================================================================
@@ -116,12 +116,12 @@ void MIL_SiteFranchissement::Initialize( xml::xistream& xis )
 {
     MIL_RealObject_ABC::Initialize( xis );
 
-    xis >> start( "specific-attributes" )
-            >> content( "width", rWidth_ )
-            >> content( "depth", rDepth_ )
-            >> content( "speed", rCurrentSpeed_ )
-            >> content( "construction-needed", bBanksToFitOut_ )
-        >> end();
+    xis >> xml::start( "specific-attributes" )
+            >> xml::content( "width", rWidth_ )
+            >> xml::content( "depth", rDepth_ )
+            >> xml::content( "speed", rCurrentSpeed_ )
+            >> xml::content( "construction-needed", bBanksToFitOut_ )
+        >> xml::end();
 
     if( rWidth_ <= 0. )
         xis.error( "rWidth_ is not greater than 0 " );

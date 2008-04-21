@@ -23,7 +23,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_CampRefugies, "MIL_CampRefugies" )
 
@@ -80,11 +80,11 @@ void MIL_CampRefugies::serialize( Archive& file, const uint )
 void MIL_CampRefugies::WriteSpecificAttributes( xml::xostream& xos ) const
 {
     assert( pTC2_ );
-    xos << start( "specific-attributes" )
-            << start( "tc2" )
-            << attribute( "id", pTC2_->GetID() )
-            << end()
-        << end();
+    xos << xml::start( "specific-attributes" )
+            << xml::start( "tc2" )
+            << xml::attribute( "id", pTC2_->GetID() )
+            << xml::end()
+        << xml::end();
 }
 
 // =============================================================================
@@ -121,9 +121,9 @@ void MIL_CampRefugies::Initialize( xml::xistream& xis )
 
     uint nTC2;
 
-    xis >> start( "specific-attributes" )
-            >> start( "tc2" )
-            >> attribute( "id", nTC2 );
+    xis >> xml::start( "specific-attributes" )
+            >> xml::start( "tc2" )
+            >> xml::attribute( "id", nTC2 );
 
     MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nTC2 );
     if( !pTC2Tmp )
@@ -131,8 +131,8 @@ void MIL_CampRefugies::Initialize( xml::xistream& xis )
     if( !pTC2Tmp->GetType().IsLogistic() )
         xis.error( "Automate TC2 specified is not a logistic automate" );
     pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2Tmp );
-    xis >> end()
-        >> end();
+    xis >> xml::end()
+        >> xml::end();
 }
     
 // -----------------------------------------------------------------------------

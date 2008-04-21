@@ -18,7 +18,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC constructor
@@ -34,8 +34,8 @@ DEC_Model_ABC< T >::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std:
     , fragOrdersPerMission_()
 {
     std::string strDIAType;
-    xis >> attribute( "dia-type", strDIAType )
-        >> attribute( "file", strScript_ );
+    xis >> xml::attribute( "dia-type", strDIAType )
+        >> xml::attribute( "file", strScript_ );
 
     pDIAType_ = DIA_TypeManager::Instance().GetType( strDIAType );
     if( !pDIAType_ )
@@ -201,7 +201,7 @@ void DEC_Model_ABC< T >::InitializeMissions( xml::xistream& xis )
     missionBitset_.clear();
     fragOrdersPerMission_.clear();
 
-    xis >> optional() >> xml::start( "missions" )
+    xis >> xml::optional() >> xml::start( "missions" )
                            >> xml::list( "mission", *this, &DEC_Model_ABC::ReadMission )
                       >> xml::end();
 }
@@ -214,7 +214,7 @@ template< typename T >
 void DEC_Model_ABC< T >::ReadMission( xml::xistream& xis )
 {
     std::string strMission;
-    xis >> attribute( "name", strMission );
+    xis >> xml::attribute( "name", strMission );
 
     const T* pType = T::Find( strMission );
     if ( !pType )
@@ -248,7 +248,7 @@ template< typename T >
 void DEC_Model_ABC< T >::ReadFragorder( xml::xistream& xis, const T& missionType )
 {
         std::string strOrdreConduite;
-        xis >> attribute( "name", strOrdreConduite );
+        xis >> xml::attribute( "name", strOrdreConduite );
 
         const MIL_FragOrderType* pType = MIL_FragOrderType::Find( strOrdreConduite );
         if( !pType )

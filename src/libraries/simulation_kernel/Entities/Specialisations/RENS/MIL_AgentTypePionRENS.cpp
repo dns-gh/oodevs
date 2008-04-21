@@ -16,7 +16,7 @@
 #include "Decision/Functions/DEC_PerceptionFunctions.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionRENS constructor

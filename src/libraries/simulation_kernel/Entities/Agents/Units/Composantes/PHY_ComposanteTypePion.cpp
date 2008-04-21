@@ -32,7 +32,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
 MT_Random                                   PHY_ComposanteTypePion::randomGenerator_;
@@ -81,9 +81,9 @@ void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, xml::xistream
 
     LoadingWrapper loader;
 
-    xis >> start( "elements" )
+    xis >> xml::start( "elements" )
             >> xml::list( "element", loader, &LoadingWrapper::ReadElement, time )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC
 {
     std::set< uint > ids_;
     std::string strComposanteType;
-    xis >> attribute( "name", strComposanteType );
+    xis >> xml::attribute( "name", strComposanteType );
     PHY_ComposanteTypePion*& pComposanteType = composantesTypes_[ strComposanteType ];
     if( pComposanteType )
         xis.error( "Composante type '" + strComposanteType + "' already registered" );
@@ -164,9 +164,9 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , rStockTransporterWeightCapacity_           ( 0. )
     , rStockTransporterVolumeCapacity_           ( 0. )
 {
-    xis >> optional()
-            >> attribute( "max-slope", rMaxSlope_ )
-        >> attribute( "weight", rWeight_ );
+    xis >> xml::optional()
+            >> xml::attribute( "max-slope", rMaxSlope_ )
+        >> xml::attribute( "weight", rWeight_ );
 
     if( rMaxSlope_ < 0 || rMaxSlope_ > 1 )
         xis.error( "element: max-slope not in [0..1]" );
@@ -209,9 +209,9 @@ void PHY_ComposanteTypePion::InitializeBreakdownTypes( xml::xistream& xis )
 
     attritionBreakdownTypeProbabilities_.clear();
     randomBreakdownTypeProbabilities_.clear();
-    xis >> start( "breakdowns" )
+    xis >> xml::start( "breakdowns" )
             >> xml::list( "breakdown", *this, &PHY_ComposanteTypePion::InitializeBreakdown );
-    xis >> end();
+    xis >> xml::end();
 
     if( randomBreakdownTypeProbabilities_.empty()
         || std::fabs( 1. - randomBreakdownTypeProbabilities_.back().rProbabilityBound_ ) > 0.01 )
@@ -228,7 +228,7 @@ void PHY_ComposanteTypePion::InitializeBreakdownTypes( xml::xistream& xis )
 void PHY_ComposanteTypePion::InitializeBreakdown( xml::xistream& xis )
 {
     std::string breakdownType;
-    xis >> attribute( "origin", breakdownType );
+    xis >> xml::attribute( "origin", breakdownType );
     if( breakdownType == "random" )
         InitializeRandomBreakdownTypes( xis );
     if( breakdownType == "attrition" )
@@ -242,13 +242,13 @@ void PHY_ComposanteTypePion::InitializeBreakdown( xml::xistream& xis )
 void PHY_ComposanteTypePion::InitializeRandomBreakdownTypes( xml::xistream& xis )
 {
     std::string strBuf;
-    xis >> attribute( "type", strBuf );
+    xis >> xml::attribute( "type", strBuf );
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
     if ( !pType )
         xis.error( "Unknown breakdown type '" + strBuf + "'" );
     
     MT_Float rPercentage;
-    xis >> attribute( "percentage", rPercentage );
+    xis >> xml::attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
         xis.error( "random breakdown: percentage not in [0..100]" );
 
@@ -265,13 +265,13 @@ void PHY_ComposanteTypePion::InitializeRandomBreakdownTypes( xml::xistream& xis 
 void PHY_ComposanteTypePion::InitializeAttritionBreakdownTypes( xml::xistream& xis )
 {
     std::string strBuf;
-    xis >> attribute( "type", strBuf );
+    xis >> xml::attribute( "type", strBuf );
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
     if ( !pType )
         xis.error( "Unknown breakdown type '" + strBuf + "'" );
 
     MT_Float rPercentage;
-    xis >> attribute( "percentage", rPercentage );
+    xis >> xml::attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
         xis.error( "attrition breakdown: percentage not in [0..100]" );
 
@@ -287,9 +287,9 @@ void PHY_ComposanteTypePion::InitializeAttritionBreakdownTypes( xml::xistream& x
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeWeapons( xml::xistream& xis )
 {
-    xis >> start( "weapon-systems" )
+    xis >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &PHY_ComposanteTypePion::ReadWeaponSystem )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -302,10 +302,10 @@ void PHY_ComposanteTypePion::ReadWeaponSystem( xml::xistream& xis )
         std::string strAmmunition;
         bool        bMajor = false;
 
-        xis >> attribute( "launcher", strLauncher )
-            >> attribute( "munition", strAmmunition )
-            >> optional()
-                >> attribute( "major", bMajor );
+        xis >> xml::attribute( "launcher", strLauncher )
+            >> xml::attribute( "munition", strAmmunition )
+            >> xml::optional()
+                >> xml::attribute( "major", bMajor );
 
         const PHY_WeaponType* pWeaponType = PHY_WeaponType::FindWeaponType( strLauncher, strAmmunition );
         if( !pWeaponType )
@@ -326,9 +326,9 @@ void PHY_ComposanteTypePion::InitializeSensors( xml::xistream& xis )
 {
     rSensorRotationAngle_ = std::numeric_limits< MT_Float >::max();
 
-    xis >> start( "sensors" )
+    xis >> xml::start( "sensors" )
             >> xml::list( "sensor", *this, &PHY_ComposanteTypePion::ReadSensor )
-        >> end();
+        >> xml::end();
     
     if ( rSensorRotationAngle_ == std::numeric_limits< MT_Float >::max() )
         rSensorRotationAngle_ = 0.;
@@ -343,7 +343,7 @@ void PHY_ComposanteTypePion::InitializeSensors( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
 {
         std::string strSensor;
-        xis >> attribute( "type", strSensor );
+        xis >> xml::attribute( "type", strSensor );
 
         const PHY_SensorType* pSensorType = PHY_SensorType::FindSensorType( strSensor );
         if( !pSensorType )
@@ -352,7 +352,7 @@ void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
         if( sensorTypes_.find( pSensorType ) != sensorTypes_.end() )
             xis.error( "Sensor type '" + strSensor + "' already defined" );
 
-        xis >> attribute( "height", sensorTypes_[ pSensorType ] );
+        xis >> xml::attribute( "height", sensorTypes_[ pSensorType ] );
 
         if( pSensorType->GetTypeAgent() )
             rSensorRotationAngle_ = std::min( rSensorRotationAngle_, pSensorType->GetTypeAgent()->GetAngle() );
@@ -364,10 +364,10 @@ void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeRadars( xml::xistream& xis )
 {
-    xis >> optional()
-            >> start( "radars" )
+    xis >> xml::optional()
+            >> xml::start( "radars" )
                 >> xml::list( "radar", *this, &PHY_ComposanteTypePion::ReadRadar )
-            >> end();
+            >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -377,7 +377,7 @@ void PHY_ComposanteTypePion::InitializeRadars( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadRadar( xml::xistream& xis )
 {
     std::string strRadar;
-    xis >> attribute( "type", strRadar );
+    xis >> xml::attribute( "type", strRadar );
 
     const PHY_RadarType* pRadarType = PHY_RadarType::Find( strRadar );
     if( !pRadarType )
@@ -394,10 +394,10 @@ void PHY_ComposanteTypePion::ReadRadar( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeTransport( xml::xistream& xis )
 {
-    xis >> start( "transports" )
+    xis >> xml::start( "transports" )
             >> xml::list( "crew", *this, &PHY_ComposanteTypePion::ReadTransportCrew )
             >> xml::list( "unit", *this, &PHY_ComposanteTypePion::ReadTransportUnit )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -421,7 +421,7 @@ void PHY_ComposanteTypePion::ReadTransportCrew( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
 {
-    xis >> attribute( "capacity", rPionTransporterWeightCapacity_ );
+    xis >> xml::attribute( "capacity", rPionTransporterWeightCapacity_ );
     if( rPionTransporterWeightCapacity_ <= 0 )
         xis.error( "unit: capacity <= 0" );
     if( !tools::ReadTimeAttribute( xis, "ton-loading-time", rPionTransporterWeightLoadedPerTimeStep_ )
@@ -441,9 +441,9 @@ void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis )
 {
-    xis >> start( "objects" )
+    xis >> xml::start( "objects" )
             >> xml::list( "object", *this, &PHY_ComposanteTypePion::ReadObject )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -453,7 +453,7 @@ void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis )
 {
     std::string strType;
-    xis >> attribute( "type", strType );
+    xis >> xml::attribute( "type", strType );
 
     const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
     if( !pObjectType )
@@ -473,9 +473,9 @@ void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeConsumptions( xml::xistream& xis )
 {
-    xis >> start( "consumptions" )
+    xis >> xml::start( "consumptions" )
             >> xml::list( "consumption", *this, &PHY_ComposanteTypePion::ReadConsumption )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -486,7 +486,7 @@ void PHY_ComposanteTypePion::ReadConsumption( xml::xistream& xis )
 {
     const PHY_ConsumptionType::T_ConsumptionTypeMap& consumptionTypes = PHY_ConsumptionType::GetConsumptionTypes();
     std::string typeName;
-    xis >> attribute( "status", typeName );
+    xis >> xml::attribute( "status", typeName );
 
     PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.find( typeName );
     const PHY_ConsumptionType& consumptionType = *it->second;
@@ -528,7 +528,7 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
     const PHY_MaintenanceLevel::T_MaintenanceLevelMap& maintenanceLevels = PHY_MaintenanceLevel::GetMaintenanceLevels();
     std::string maintenanceType;
 
-    xis >> attribute( "category", maintenanceType );
+    xis >> xml::attribute( "category", maintenanceType );
 
     PHY_MaintenanceLevel::CIT_MaintenanceLevelMap it = maintenanceLevels.find( maintenanceType );
     const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
@@ -536,7 +536,7 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
     sNTICapability ntiCapability( maintenanceLevel );
 
     std::string types;
-    xis >> attribute( "type", types );
+    xis >> xml::attribute( "type", types );
     std::stringstream stream( types );
     std::string type;
     while( std::getline( stream, type, ',' ) )
@@ -568,7 +568,7 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadTowing( xml::xistream& xis )
 {
-    xis >> attribute( "capacity", rHaulerWeightCapacity_ );
+    xis >> xml::attribute( "capacity", rHaulerWeightCapacity_ );
     tools::ReadTimeAttribute( xis, "loading-time", rHaulerLoadingTime_ );
     tools::ReadTimeAttribute( xis, "unloading-time", rHaulerUnloadingTime_ );
 
@@ -590,7 +590,7 @@ bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundC
     bool bHasCapability = false;
 
     std::string strWounds;
-    xis >> optional() >> attribute( attributeName, strWounds );
+    xis >> xml::optional() >> xml::attribute( attributeName, strWounds );
     std::stringstream stream( strWounds );
     std::string wound;
     while( std::getline( stream, wound, ',' ) )
@@ -609,12 +609,12 @@ bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundC
 //$$$ A splitter
 void PHY_ComposanteTypePion::InitializeLogisticMedical( xml::xistream& xis )
 {
-    xis >> optional()
-            >> start( "health-functions" )
+    xis >> xml::optional()
+            >> xml::start( "health-functions" )
                 >> xml::list( "caring", *this, &PHY_ComposanteTypePion::ReadCaring )
                 >> xml::list( "collecting", *this, &PHY_ComposanteTypePion::ReadCollecting )
                 >> xml::list( "relieving", *this, &PHY_ComposanteTypePion::ReadRelieving )
-            >> end();
+            >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -625,11 +625,11 @@ void PHY_ComposanteTypePion::ReadRelieving( xml::xistream& xis )
 {
     ReadWoundCapabilities( xis, woundEvacuationCapabilities_, "wounded-transport" );
 
-    xis >> optional()
-            >> attribute( "nbc-transport", bCanEvacuateContaminated_ )
-        >> optional()
-            >> attribute( "reac-mental-transport", bCanEvacuateMentalDiseases_ )
-        >> attribute( "capacity", nAmbulanceEvacuationCapacity_ );
+    xis >> xml::optional()
+            >> xml::attribute( "nbc-transport", bCanEvacuateContaminated_ )
+        >> xml::optional()
+            >> xml::attribute( "reac-mental-transport", bCanEvacuateMentalDiseases_ )
+        >> xml::attribute( "capacity", nAmbulanceEvacuationCapacity_ );
 
     tools::ReadTimeAttribute( xis, "man-loading-time", rNbrHumansLoadedForEvacuationPerTimeStep_ );
     tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedForEvacuationPerTimeStep_ );
@@ -653,11 +653,11 @@ void PHY_ComposanteTypePion::ReadCollecting( xml::xistream& xis )
 {
     ReadWoundCapabilities( xis, woundCollectionCapabilities_, "wounded-transport" );
 
-    xis >> optional()
-            >> attribute( "nbc-transport", bCanCollectContaminated_ )
-        >> optional()
-            >> attribute( "reac-mental-transport", bCanCollectMentalDiseases_ )
-        >> attribute( "capacity", nAmbulanceCollectionCapacity_ );
+    xis >> xml::optional()
+            >> xml::attribute( "nbc-transport", bCanCollectContaminated_ )
+        >> xml::optional()
+            >> xml::attribute( "reac-mental-transport", bCanCollectMentalDiseases_ )
+        >> xml::attribute( "capacity", nAmbulanceCollectionCapacity_ );
 
     tools::ReadTimeAttribute( xis, "man-loading-time", rNbrHumansLoadedForCollectionPerTimeStep_ );
     tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedForCollectionPerTimeStep_ );
@@ -680,12 +680,12 @@ void PHY_ComposanteTypePion::ReadCollecting( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadCaring( xml::xistream& xis )
 {
     bCanDiagnoseHumans_ = true;
-    xis >> optional()
-            >> attribute( "sorting", bCanSortHumans_ )
-        >> optional()
-            >> attribute( "nbc", bCanHealContaminated_ )
-        >> optional()
-            >> attribute( "psychiatry", bCanHealMentalDiseases_ );
+    xis >> xml::optional()
+            >> xml::attribute( "sorting", bCanSortHumans_ )
+        >> xml::optional()
+            >> xml::attribute( "nbc", bCanHealContaminated_ )
+        >> xml::optional()
+            >> xml::attribute( "psychiatry", bCanHealMentalDiseases_ );
     bCanHealWounds_ = ReadWoundCapabilities( xis, woundHealingCapabilities_, "caring" );
 }
 
@@ -695,10 +695,10 @@ void PHY_ComposanteTypePion::ReadCaring( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeLogisticSupply( xml::xistream& xis )
 {
-    xis >> optional()
-            >> start( "supply-functions" )
+    xis >> xml::optional()
+            >> xml::start( "supply-functions" )
                 >> xml::list( "carrying", *this, PHY_ComposanteTypePion::ReadSupply )
-            >> end();
+            >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -708,9 +708,9 @@ void PHY_ComposanteTypePion::InitializeLogisticSupply( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadSupply( xml::xistream& xis )
 {
     std::string strNature;
-    xis >> attribute( "nature", strNature )
-        >> attribute( "mass", rStockTransporterWeightCapacity_ )
-        >> attribute( "volume", rStockTransporterVolumeCapacity_ );
+    xis >> xml::attribute( "nature", strNature )
+        >> xml::attribute( "mass", rStockTransporterWeightCapacity_ )
+        >> xml::attribute( "volume", rStockTransporterVolumeCapacity_ );
 
     pStockTransporterNature_ = PHY_DotationNature::Find( strNature );
     if( !pStockTransporterNature_ )

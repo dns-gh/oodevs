@@ -22,7 +22,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationGroupContainer, "PHY_DotationGroupContainer" )
 
@@ -168,7 +168,7 @@ void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis )
 void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis )
 {
     std::string strType;
-    xis >> attribute( "name", strType );
+    xis >> xml::attribute( "name", strType );
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
         xis.error( "Unknown dotation type" );
@@ -186,10 +186,10 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::WriteODB( xml::xostream& xos ) const
 {
-    xos << start( "dotations" );
+    xos << xml::start( "dotations" );
     for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->WriteODB( xos );
-    xos << end(); // dotations
+    xos << xml::end(); // dotations
 }
 
 // =============================================================================

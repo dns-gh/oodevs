@@ -32,7 +32,7 @@
 #include "MIL_Singletons.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MT_Converter< std::string, MIL_Army::E_Diplomacy > MIL_Army::diplomacyConverter_( eUnknown );
 
@@ -81,27 +81,27 @@ MIL_Army::MIL_Army( MIL_EntityManager& manager, uint id, xml::xistream& xis )
     , objects_             ()
 {
     std::string strType;
-    xis >> attribute( "name", strName_ )
-        >> attribute( "type", strType );
+    xis >> xml::attribute( "name", strName_ )
+        >> xml::attribute( "type", strType );
 
     nType_ = diplomacyConverter_.Convert( strType );
 
     MIL_Formation* formation = 0;
-    xis >> start( "communication" )
+    xis >> xml::start( "communication" )
             >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic )
-        >> end()
-        >> start( "tactical" )
+        >> xml::end()
+        >> xml::start( "tactical" )
             >> xml::list( "formation", manager_, &MIL_EntityManager::CreateFormation, *this, formation )
-        >> end()
-        >> start( "objects" )
+        >> xml::end()
+        >> xml::start( "objects" )
             >> xml::list( "object", manager_, &MIL_EntityManager::CreateObject, *this )
-        >> end()
-        >> start( "logistic" )
+        >> xml::end()
+        >> xml::start( "logistic" )
             >> xml::list( "automat", *this, &MIL_Army::ReadAutomat  )
-        >> end()
-        >> start( "populations" )
+        >> xml::end()
+        >> xml::start( "populations" )
             >> xml::list( "population", manager_, &MIL_EntityManager::CreatePopulation, *this )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -193,37 +193,37 @@ void MIL_Army::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_Army::WriteODB( xml::xostream& xos ) const
 {
-    xos << start( "side" )
-            << attribute( "id", nID_ )
-            << attribute( "name", strName_ )
-            << attribute( "type", diplomacyConverter_.RevertConvert( nType_ ) );
+    xos << xml::start( "side" )
+            << xml::attribute( "id", nID_ )
+            << xml::attribute( "name", strName_ )
+            << xml::attribute( "type", diplomacyConverter_.RevertConvert( nType_ ) );
 
-    xos     << start( "communication" );
+    xos     << xml::start( "communication" );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->WriteODB( xos );
-    xos     << end();
+    xos     << xml::end();
     
-    xos     << start( "tactical" );
+    xos     << xml::start( "tactical" );
     for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
         (*it)->WriteODB( xos );
-    xos     << end();
+    xos     << xml::end();
 
-    xos     << start( "logistic" );
+    xos     << xml::start( "logistic" );
     for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
         (*it)->WriteLogisticLinksODB( xos );
-    xos     << end();
+    xos     << xml::end();
 
-    xos     << start( "objects" );
+    xos     << xml::start( "objects" );
     for( CIT_ObjectSet it = objects_.begin(); it != objects_.end(); ++it )
         (*it)->WriteODB( xos );    
-    xos     << end();
+    xos     << xml::end();
 
-    xos     << start( "populations" );
+    xos     << xml::start( "populations" );
     for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
         (*it)->WriteODB( xos );
-    xos     << end();
+    xos     << xml::end();
 
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -232,16 +232,16 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_Army::WriteDiplomacyODB( xml::xostream& xos ) const
 {
-    xos << start( "side" )
-        << attribute( "id", nID_ );
+    xos << xml::start( "side" )
+        << xml::attribute( "id", nID_ );
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
-        xos << start( "relationship" )
-            << attribute( "side", it->first->GetID() )
-            << attribute( "diplomacy", diplomacyConverter_.RevertConvert(it->second) )
-        << end();
+        xos << xml::start( "relationship" )
+            << xml::attribute( "side", it->first->GetID() )
+            << xml::attribute( "diplomacy", diplomacyConverter_.RevertConvert(it->second) )
+        << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 }
 
 // =============================================================================
@@ -266,8 +266,8 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
     uint        nTeam;
     std::string strDiplomacy;
 
-    xis >> attribute( "side", nTeam )
-        >> attribute( "diplomacy", strDiplomacy );
+    xis >> xml::attribute( "side", nTeam )
+        >> xml::attribute( "diplomacy", strDiplomacy );
 
     E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( strDiplomacy );
     if( nDiplomacy == eUnknown )
@@ -293,8 +293,8 @@ void MIL_Army::ReadLogistic( xml::xistream& xis )
 {
     uint        id;
     std::string strType;
-    xis >> attribute( "id", id )
-        >> attribute( "type", strType );
+    xis >> xml::attribute( "id", id )
+        >> xml::attribute( "type", strType );
 
     const MIL_KnowledgeGroupType* pType = MIL_KnowledgeGroupType::FindType( strType );
     if( !pType )
@@ -312,7 +312,7 @@ void MIL_Army::ReadLogistic( xml::xistream& xis )
 void MIL_Army::ReadAutomat( xml::xistream& xis )
 {
     uint id;
-    xis >> attribute( "id", id );
+    xis >> xml::attribute( "id", id );
 
     MIL_Automate* pSuperior = manager_.FindAutomate( id );
     if( !pSuperior )
@@ -333,7 +333,7 @@ void MIL_Army::ReadSubordinate( xml::xistream& xis, MIL_Automate* pSuperior )
 {
     uint        nSubordinateID;
     std::string strLink;
-    xis >> attribute( "id", nSubordinateID );
+    xis >> xml::attribute( "id", nSubordinateID );
 
     MIL_Automate* pSubordinate = manager_.FindAutomate( nSubordinateID );
     if( !pSubordinate )

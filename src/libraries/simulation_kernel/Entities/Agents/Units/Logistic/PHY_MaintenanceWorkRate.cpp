@@ -17,7 +17,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_MaintenanceWorkRate::T_WorkRateMap PHY_MaintenanceWorkRate::workRates_;
 
@@ -46,11 +46,11 @@ void PHY_MaintenanceWorkRate::Initialize( xml::xistream& xis )
     workRates_[ r4_.GetName() ] = &r4_;
 
     LoadingWrapper loader;
-    xis >> start( "maintenance" )
-            >> start( "working-schemes" )
+    xis >> xml::start( "maintenance" )
+            >> xml::start( "working-schemes" )
                 >> xml::list( "working-scheme", loader, &LoadingWrapper::ReadWorkRate )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -92,20 +92,20 @@ PHY_MaintenanceWorkRate::~PHY_MaintenanceWorkRate()
 void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
 {
     std::string name;
-    xis >> attribute( "type", name );
+    xis >> xml::attribute( "type", name );
 
     T_WorkRateMap::iterator it = workRates_.find( name );
     if( it == workRates_.end() )
         xis.error( "Undefined working scheme" );
 
     PHY_MaintenanceWorkRate& workRate = const_cast< PHY_MaintenanceWorkRate& >( *it->second );
-    xis >> attribute( "working-time", workRate.rWorkTime_ );
+    xis >> xml::attribute( "working-time", workRate.rWorkTime_ );
     if( workRate.rWorkTime_ <= 0 )
         xis.error( "Working time <= 0" );
     workRate.rWorkerRatio_ = workRate.rWorkTime_ / 24.;
 
     std::string time;
-    xis >> optional() >> attribute( "time-before-warning", time );
+    xis >> xml::optional() >> xml::attribute( "time-before-warning", time );
     if( tools::DecodeTime( time, workRate.nDelayBeforeWarningRC_ ) && workRate.nDelayBeforeWarningRC_ == 0 )
         xis.error( "Time before warning is null" );
 }

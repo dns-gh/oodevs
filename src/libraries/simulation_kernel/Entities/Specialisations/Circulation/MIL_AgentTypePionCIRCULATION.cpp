@@ -16,7 +16,7 @@
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
 #include "xeumeuleu/xml.H"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionCIRCULATION constructor

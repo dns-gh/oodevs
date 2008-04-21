@@ -23,7 +23,7 @@
 #include <algorithm>
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Speeds constructor
@@ -45,7 +45,7 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis )
     std::fill( rBorderSpeeds_, rBorderSpeeds_ + 8, -1. );
     std::fill( rLinearSpeeds_, rLinearSpeeds_ + 11, -1. );
 
-    xis >> optional()
+    xis >> xml::optional()
         >> xml::list( "speeds", *this, &PHY_Speeds::ReadSpeed );
 
     CheckInitialization( xis );
@@ -105,7 +105,7 @@ PHY_Speeds::~PHY_Speeds()
 // -----------------------------------------------------------------------------
 void PHY_Speeds::ReadSpeed( xml::xistream& xis )
 {
-    xis >> attribute( "max", rMaxSpeed_ );
+    xis >> xml::attribute( "max", rMaxSpeed_ );
     if( rMaxSpeed_ <= 0 )
         xis.error( "speeds: max <= 0" );
 
@@ -121,7 +121,7 @@ void PHY_Speeds::ReadTerrain( xml::xistream& xis )
 {
     std::string strTerrainType;
 
-    xis >> attribute( "terrain", strTerrainType );
+    xis >> xml::attribute( "terrain", strTerrainType );
 
     const TerrainData data = MIL_Tools::ConvertLandType( strTerrainType );
     if( data.Area() == 0xFF )
@@ -129,7 +129,7 @@ void PHY_Speeds::ReadTerrain( xml::xistream& xis )
 
     MT_Float& speed = SpeedFor( data );
 
-    xis >> attribute( "value", speed );
+    xis >> xml::attribute( "value", speed );
 
     if( speed < 0 )
         xis.error( "speed: terrain < 0" );

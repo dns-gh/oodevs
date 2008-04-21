@@ -17,7 +17,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_KnowledgeGroupType::T_KnowledgeGroupTypeMap MIL_KnowledgeGroupType::knowledgeGroupTypes_;
 uint                                            MIL_KnowledgeGroupType::nNextID_ = 0;
@@ -39,9 +39,9 @@ void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing knowledge groups types" );
     LoadingWrapper loader;
 
-    xis >> start( "knowledge-groups" )
+    xis >> xml::start( "knowledge-groups" )
             >> xml::list( "knowledge-group", loader, &LoadingWrapper::ReadKnowledgeGroup )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis )
     std::string strName;
     std::string strType;
 
-    xis >> attribute( "name", strName );
+    xis >> xml::attribute( "name", strName );
 
     const MIL_KnowledgeGroupType*& pType = knowledgeGroupTypes_[ strName ];
     if( pType )
@@ -89,7 +89,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     , rKnowledgePopulationMaxLifeTime_              ( 0. )
 {
     // Connaissances agent
-    xis >> start( "unit-knowledge" );
+    xis >> xml::start( "unit-knowledge" );
 
     tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgeAgentMaxLifeTime_ );
     if( rKnowledgeAgentMaxLifeTime_ <= 0 )
@@ -97,7 +97,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     rKnowledgeAgentMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgeAgentMaxLifeTime_ );
 
     uint nTmp = std::numeric_limits< unsigned int >::max();
-    xis >> optional() >> attribute( "max-unit-to-knowledge-distance", nTmp );
+    xis >> xml::optional() >> xml::attribute( "max-unit-to-knowledge-distance", nTmp );
     if( nTmp <= 0 )
         xis.error( "unit-knowledge: max-unit-to-knowledge-distance <= 0" );
     rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_ = MIL_Tools::ConvertMeterToSim( nTmp );
@@ -108,10 +108,10 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     rKnowledgeAgentExtrapolationTime_ = std::max( 1., MIL_Tools::ConvertSecondsToSim( rKnowledgeAgentExtrapolationTime_ ) );
     // JVT : 1 car lorsque l'on perd de vue une unité, on veux au moins que l'emplacement de la connaissance soit celle au pas de temps suivant le non vu
 
-    xis >> end();
+    xis >> xml::end();
 
     // Connaissances population
-    xis >> start( "population-knowledge" );
+    xis >> xml::start( "population-knowledge" );
 
     tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgePopulationMaxLifeTime_ );
     if( rKnowledgePopulationMaxLifeTime_ <= 0 )
@@ -119,7 +119,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
 
     rKnowledgePopulationMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgePopulationMaxLifeTime_ );
 
-    xis >> end();
+    xis >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

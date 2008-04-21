@@ -30,7 +30,7 @@
 
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
 MT_Float                            MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
@@ -56,11 +56,11 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing population types" );
 
-    xis >> start( "populations" )
-            >> start( "reloading-time-effect" )
-                >> attribute( "population-density", rEffectReloadingTimeDensity_ )
-                >> attribute( "modifier", rEffectReloadingTimeFactor_ )
-            >> end();
+    xis >> xml::start( "populations" )
+            >> xml::start( "reloading-time-effect" )
+                >> xml::attribute( "population-density", rEffectReloadingTimeDensity_ )
+                >> xml::attribute( "modifier", rEffectReloadingTimeFactor_ )
+            >> xml::end();
 
     if( rEffectReloadingTimeDensity_ < 0 )
         xis.error( "reloading-time-effet: population-density < 0" );
@@ -70,7 +70,7 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis     >> xml::list( "population", loader, &LoadingWrapper::ReadPopulation )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
 void MIL_PopulationType::ReadPopulation( xml::xistream& xis )
 {
     std::string strName;
-    xis >> attribute( "name", strName );
+    xis >> xml::attribute( "name", strName );
 
     const MIL_PopulationType*& pPopulation = populations_[ strName ];
     if( pPopulation )
@@ -119,10 +119,10 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), sDamageData( 0., 0. ) )
     , pDIAFunctionTable_    ( new DIA_FunctionTable< MIL_Population >() )
 {
-    xis >> attribute( "id", nID_ )
-        >> attribute( "concentration-density", rConcentrationDensity_ )
-        >> attribute( "moving-base-density", rDefaultFlowDensity_ )
-        >> attribute( "moving-speed", rMaxSpeed_ );
+    xis >> xml::attribute( "id", nID_ )
+        >> xml::attribute( "concentration-density", rConcentrationDensity_ )
+        >> xml::attribute( "moving-base-density", rDefaultFlowDensity_ )
+        >> xml::attribute( "moving-speed", rMaxSpeed_ );
 
     if( rConcentrationDensity_ <= 0 )
         xis.error( "population: concentration-density <= 0" );
@@ -137,7 +137,7 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     InitializeFireData    ( xis );
 
     std::string strModel;
-    xis >> attribute( "decisional-model", strModel );
+    xis >> xml::attribute( "decisional-model", strModel );
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( strModel );
     if( !pModel_ )
         xis.error( "Unknown population model" );
@@ -160,9 +160,9 @@ MIL_PopulationType::~MIL_PopulationType()
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::InitializeSlowDownData( xml::xistream& xis )
 {
-    xis >> start( "slowing-effects" )
+    xis >> xml::start( "slowing-effects" )
             >> xml::list( "slowing-effect", *this, &MIL_PopulationType::ReadSlowingEffect )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +172,7 @@ void MIL_PopulationType::InitializeSlowDownData( xml::xistream& xis )
 void MIL_PopulationType::ReadSlowingEffect( xml::xistream& xis )
 {
     std::string strAttitude;
-    xis >> attribute( "population-attitude", strAttitude );
+    xis >> xml::attribute( "population-attitude", strAttitude );
 
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
     if( !pAttitude )
@@ -194,9 +194,9 @@ void MIL_PopulationType::ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlow
     MT_Float    rPopulationDensity = 0.;
     MT_Float    rMaxSpeed          = 0.;
 
-    xis >> attribute( "unit-size", strVolume )
-        >> attribute( "population-density", rPopulationDensity )
-        >> attribute( "max-speed", rMaxSpeed );
+    xis >> xml::attribute( "unit-size", strVolume )
+        >> xml::attribute( "population-density", rPopulationDensity )
+        >> xml::attribute( "max-speed", rMaxSpeed );
 
     if( rPopulationDensity <= 0 )
         xis.error( "unit: population-density <= 0" );
@@ -219,13 +219,13 @@ void MIL_PopulationType::ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlow
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::InitializeFireData( xml::xistream& xis )
 {
-    xis >> start( "attrition-effects" );
+    xis >> xml::start( "attrition-effects" );
     attritionData_.Initialize( xis );
-    xis >> end();
+    xis >> xml::end();
 
-    xis >> start( "unit-fire-effects" )
+    xis >> xml::start( "unit-fire-effects" )
             >> xml::list( "unit", *this, &MIL_PopulationType::ReadUnitFireEffect )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -235,15 +235,15 @@ void MIL_PopulationType::InitializeFireData( xml::xistream& xis )
 void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
 {
     std::string strRoe;
-    xis >> attribute( "rule-of-engagment", strRoe );
+    xis >> xml::attribute( "rule-of-engagment", strRoe );
     const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( strRoe );
     if( !pRoe )
         xis.error( "Unknown population roe '" + strRoe + "'" );
 
     assert( damageData_.size() > pRoe->GetID() );
 
-    xis >> attribute( "attrition-surface", damageData_[ pRoe->GetID() ].rAttritionSurface_ )
-        >> attribute( "ph", damageData_[ pRoe->GetID() ].rPH_ );
+    xis >> xml::attribute( "attrition-surface", damageData_[ pRoe->GetID() ].rAttritionSurface_ )
+        >> xml::attribute( "ph", damageData_[ pRoe->GetID() ].rPH_ );
 
     if( damageData_[ pRoe->GetID() ].rAttritionSurface_ < 0 )
         xis.error( "unit-fire-effect: rule-of-engagment < 0" );

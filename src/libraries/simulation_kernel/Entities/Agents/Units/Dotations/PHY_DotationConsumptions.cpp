@@ -18,7 +18,7 @@
 #include "PHY_DotationGroupContainer.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConsumptions constructor
@@ -36,8 +36,8 @@ PHY_DotationConsumptions::PHY_DotationConsumptions( const std::string& strParent
 void PHY_DotationConsumptions::ReadDotation( xml::xistream& xis )
 {
     std::string category, name;
-    xis >> attribute( "category", category )
-        >> attribute( "name", name );
+    xis >> xml::attribute( "category", category )
+        >> xml::attribute( "name", name );
 
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( category );
     if( !pDotationType )

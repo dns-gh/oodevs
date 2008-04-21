@@ -24,7 +24,7 @@
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 std::set< uint > MIL_KnowledgeGroup::ids_;
 
@@ -114,10 +114,10 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const uint ) cons
 void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
 {
     assert( pType_ );
-    xos << start( "knowledge-group" )
-            << attribute( "id", nID_ )
-            << attribute( "type", pType_->GetName() )
-        << end();
+    xos << xml::start( "knowledge-group" )
+            << xml::attribute( "id", nID_ )
+            << xml::attribute( "type", pType_->GetName() )
+        << xml::end();
 }
 
 // =============================================================================

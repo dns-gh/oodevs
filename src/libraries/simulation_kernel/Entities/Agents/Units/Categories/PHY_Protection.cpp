@@ -17,7 +17,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
 uint                            PHY_Protection::nNextID_;
@@ -55,9 +55,9 @@ void PHY_Protection::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing protections" );
 
     LoadingWrapper loader;
-    xis >> start( "protections" )
+    xis >> xml::start( "protections" )
             >> xml::list( "protection", loader, &LoadingWrapper::ReadProtection )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ void PHY_Protection::Initialize( xml::xistream& xis )
 void PHY_Protection::ReadProtection( xml::xistream& xis )
 {
     std::string strProtection;
-    xis >> attribute( "name", strProtection );
+    xis >> xml::attribute( "name", strProtection );
     
     const PHY_Protection*& pProtection = protections_[ strProtection ];
     if( pProtection )
@@ -104,14 +104,14 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
     , attritionEffectsOnHumans_ ( PHY_ComposanteState::GetNbrStates(), T_HumanEffect() )
 {
     std::string type;
-    xis >> attribute( "type", type );
+    xis >> xml::attribute( "type", type );
     nType_ = sCaseInsensitiveEqual()( type, "humain" ) ? eHuman : eMaterial;
 
     std::string timeString, varianceString;
-    xis >> start( "neutralization" )
-            >> attribute( "average-time", timeString )
-            >> attribute( "variance", varianceString )
-        >> end();
+    xis >> xml::start( "neutralization" )
+            >> xml::attribute( "average-time", timeString )
+            >> xml::attribute( "variance", varianceString )
+        >> xml::end();
 
     MT_Float timeVal, variance;
     if( ! tools::DecodeTime( timeString, timeVal ) || timeVal < 0 )
@@ -134,10 +134,10 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
     }
     else
     {
-        xis >> start( "random-breakdown-probability" )
-                >> attribute( "eva", rBreakdownProbabilityEva_ )
-                >> attribute( "neva", rBreakdownProbabilityNeva_ )
-            >> end();
+        xis >> xml::start( "random-breakdown-probability" )
+                >> xml::attribute( "eva", rBreakdownProbabilityEva_ )
+                >> xml::attribute( "neva", rBreakdownProbabilityNeva_ )
+            >> xml::end();
 
         if( rBreakdownProbabilityEva_ < 0 || rBreakdownProbabilityEva_ > 100 )
             xis.error( "random-breakdown-probability eva not in [0..100]" );
@@ -146,9 +146,9 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
         rBreakdownProbabilityEva_  /= 100.;
         rBreakdownProbabilityNeva_ /= 100.;
 
-        xis >> start( "attrition-effects" )
+        xis >> xml::start( "attrition-effects" )
                 >> xml::list( "attrition-effect", *this, &PHY_Protection::ReadAttrition )
-            >> end();
+            >> xml::end();
     }
 }
 
@@ -159,7 +159,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
 void PHY_Protection::ReadAttrition( xml::xistream& xis )
 {
     std::string state;
-    xis >> attribute( "equipment-state", state );
+    xis >> xml::attribute( "equipment-state", state );
     const PHY_ComposanteState* pComposanteState = PHY_ComposanteState::Find( state );
     if( !pComposanteState )
         xis.error( "Unknown composante state" );
@@ -169,12 +169,12 @@ void PHY_Protection::ReadAttrition( xml::xistream& xis )
     T_HumanEffect& data = attritionEffectsOnHumans_[ pComposanteState->GetID() ];
 
     MT_Float rTmp;
-    xis >> attribute( "injured-percentage", rTmp );
+    xis >> xml::attribute( "injured-percentage", rTmp );
     if( rTmp < 0 || rTmp > 100 )
         xis.error( "injured-percentage not in [0..100]" );
     data.rWoundedRatio_ = rTmp / 100.;
         
-    xis >> attribute( "dead-percentage", rTmp );
+    xis >> xml::attribute( "dead-percentage", rTmp );
     if( rTmp < 0 || rTmp > 100 )
         xis.error( "dead-percentage not in [0..100]" );
     data.rDeadRatio_ = rTmp / 100.;

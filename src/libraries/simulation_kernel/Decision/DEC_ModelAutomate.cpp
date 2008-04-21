@@ -16,7 +16,7 @@
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ModelAutomate constructor

@@ -17,7 +17,7 @@
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentType_ABC constructor
@@ -29,7 +29,7 @@ MIL_AgentType_ABC::MIL_AgentType_ABC( const std::string& strName, xml::xistream&
     , pNatureLevel_( 0 )
     , pNatureAtlas_( 0 )
 {
-    xis >> attribute( "id", nID_ );
+    xis >> xml::attribute( "id", nID_ );
     InitializeNature( xis );
 }
 
@@ -50,15 +50,15 @@ MIL_AgentType_ABC::~MIL_AgentType_ABC()
 void MIL_AgentType_ABC::InitializeNature( xml::xistream& xis )
 {
     std::string strBuf;
-    xis >> start( "nature" )
-        >> attribute( "level", strBuf );
+    xis >> xml::start( "nature" )
+        >> xml::attribute( "level", strBuf );
     pNatureLevel_ = PHY_NatureLevel::Find( strBuf );
     if ( !pNatureLevel_ )
         xis.error( "Unknown nature level type" );
 
-    xis >> attribute( "atlas-nature", strBuf );
+    xis >> xml::attribute( "atlas-nature", strBuf );
     pNatureAtlas_ = PHY_NatureAtlas::Find( strBuf );
     if ( !pNatureAtlas_ )
         xis.error( "Unknown atlas qualificatif" );
-    xis >> end();
+    xis >> xml::end();
 }

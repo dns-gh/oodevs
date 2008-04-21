@@ -12,7 +12,7 @@
 #include "MIL_FragOrderType.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_FragOrderType::T_MissionIDMap   MIL_FragOrderType::missionIDs_;
 MIL_FragOrderType::T_MissionNameMap MIL_FragOrderType::missionNames_;
@@ -39,11 +39,11 @@ void MIL_FragOrderType::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
     
-    xis >> start( "missions" )
-            >> start( "fragorders" )
+    xis >> xml::start( "missions" )
+            >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", loader, &LoadingWrapper::ReadFragorder )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ void MIL_FragOrderType::Initialize( xml::xistream& xis )
 void MIL_FragOrderType::ReadFragorder( xml::xistream& xis )
 {
     uint nID;
-    xis >> attribute( "id", nID );
+    xis >> xml::attribute( "id", nID );
 
     const MIL_FragOrderType*& pMission = missionIDs_[ nID ];
     if( pMission )
@@ -79,8 +79,8 @@ MIL_FragOrderType::MIL_FragOrderType( uint nID, xml::xistream& xis )
     , bAvailableWithoutMission_( false )
     , bAvailableForAllMissions_( false )
 {
-    xis >> optional() >> attribute( "available-without-mission", bAvailableWithoutMission_ )
-        >> optional() >> attribute( "available-for-all-mission", bAvailableForAllMissions_ );
+    xis >> xml::optional() >> xml::attribute( "available-without-mission", bAvailableWithoutMission_ )
+        >> xml::optional() >> xml::attribute( "available-for-all-mission", bAvailableForAllMissions_ );
 }
 
 //-----------------------------------------------------------------------------

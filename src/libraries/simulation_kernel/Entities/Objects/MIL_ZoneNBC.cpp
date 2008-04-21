@@ -30,7 +30,7 @@
 
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_ZoneNBC, "MIL_ZoneNBC" )
 
@@ -88,11 +88,11 @@ void MIL_ZoneNBC::serialize( Archive& file, const uint )
 void MIL_ZoneNBC::WriteSpecificAttributes( xml::xostream& xos ) const
 {
     assert( pNbcAgent_ );
-    xos << start( "specific-attributes" )
-            << start( "nbc-agent" )
-            << attribute( "type", pNbcAgent_->GetType().GetName() )
-            << end()
-        << end();
+    xos << xml::start( "specific-attributes" )
+            << xml::start( "nbc-agent" )
+            << xml::attribute( "type", pNbcAgent_->GetType().GetName() )
+            << xml::end()
+        << xml::end();
 }
 
 //=============================================================================
@@ -132,18 +132,18 @@ void MIL_ZoneNBC::Initialize( xml::xistream& xis )
     if( !GetLocalisation().WasACircle() )
         xis.error( "Localisation of object type 'ZoneNBC' MUST be a circle" );
 
-    xis >> start( "specific-attributes" )
-            >> start( "nbc-agent" );
+    xis >> xml::start( "specific-attributes" )
+            >> xml::start( "nbc-agent" );
 
     std::string strNbcAgentType_;
-    xis >> attribute( "type", strNbcAgentType_ );
+    xis >> xml::attribute( "type", strNbcAgentType_ );
 
     const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcAgentType_ );
     if( !pNbcAgentType )
         xis.error( "Unknown 'AgentNBC' '" + strNbcAgentType_ + "' for NBC object" );
 
-    xis >> end()
-        >> end();
+    xis >> xml::end()
+        >> xml::end();
 
 
     pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eLiquid );

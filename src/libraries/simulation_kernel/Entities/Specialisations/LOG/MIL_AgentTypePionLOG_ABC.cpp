@@ -21,7 +21,7 @@
 #include <functional>
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOG_ABC constructor

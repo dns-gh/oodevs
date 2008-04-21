@@ -19,7 +19,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation constructor
@@ -35,8 +35,8 @@ MIL_Formation::MIL_Formation( MIL_EntityManager& manager, uint nID, MIL_Army& ar
     , automates_ ()
 {
     std::string strLevel;
-    xis >> attribute( "name", strName_ )
-        >> attribute( "level", strLevel );
+    xis >> xml::attribute( "name", strName_ )
+        >> xml::attribute( "level", strLevel );
 
     pLevel_ = PHY_NatureLevel::Find( strLevel );
     if( !pLevel_ )
@@ -183,10 +183,10 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
 {
     assert( pLevel_ );
 
-    xos << start( "formation" )
-            << attribute( "id", nID_ )
-            << attribute( "level", pLevel_->GetName() )
-            << attribute( "name", strName_ );
+    xos << xml::start( "formation" )
+            << xml::attribute( "id", nID_ )
+            << xml::attribute( "level", pLevel_->GetName() )
+            << xml::attribute( "name", strName_ );
 
     for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
         (**it).WriteODB( xos );
@@ -194,7 +194,7 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
     for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
         (**it).WriteODB( xos );
 
-    xos << end(); // formation
+    xos << xml::end(); // formation
 }
 
 // -----------------------------------------------------------------------------

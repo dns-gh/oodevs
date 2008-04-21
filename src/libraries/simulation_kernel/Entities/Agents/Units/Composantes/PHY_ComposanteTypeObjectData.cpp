@@ -20,7 +20,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypeObjectData constructor
@@ -55,7 +55,7 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_RealObject
     if ( rSpeedWithinWhenBypassed_ < 0 )
         rSpeedWithinWhenBypassed_ = std::numeric_limits< MT_Float >::max();
 
-    xis >> optional() >> attribute( "consumption-mode", strConsumptionMode );
+    xis >> xml::optional() >> xml::attribute( "consumption-mode", strConsumptionMode );
 
     if ( strConsumptionMode != "" )
     {

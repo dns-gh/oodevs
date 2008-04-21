@@ -30,7 +30,7 @@
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
-using namespace xml;
+
 namespace
 {
    template< typename C >
@@ -44,7 +44,7 @@ namespace
         void ReadFactor( xml::xistream& xis, PHY_SensorTypeAgent::T_FactorVector& factors )
         {
             std::string containerType;
-            xis >> attribute( "type", containerType );
+            xis >> xml::attribute( "type", containerType );
 
             C::const_iterator it = container_.find( containerType );
             if( it != container_.end() )
@@ -52,7 +52,7 @@ namespace
                 assert( factors.size() > it->second->GetID() );
                 MT_Float& rFactor = factors[ it->second->GetID() ];
 
-                xis >> attribute( "value", rFactor );
+                xis >> xml::attribute( "value", rFactor );
                 if( rFactor < 0 || rFactor > 1 )
                     xis.error( "distance-modifier: value not in [0..1]" );
             }
@@ -74,7 +74,7 @@ namespace
         void ReadFactor( xml::xistream& xis, PHY_SensorTypeAgent::T_FactorVector& factors )
         {
             std::string containerType;
-            xis >> attribute( "type", containerType );
+            xis >> xml::attribute( "type", containerType );
 
             PHY_Posture::CIT_PostureMap it = container_.find( containerType );
             if( it != container_.end() )
@@ -84,7 +84,7 @@ namespace
                 assert( factors.size() > it->second->GetID() );
                 MT_Float& rFactor = factors[ it->second->GetID() ];
 
-                xis >> attribute( "value", rFactor );
+                xis >> xml::attribute( "value", rFactor );
                 if( rFactor < 0 || rFactor > 1 )
                     xis.error( "distance-modifier: value not in [0..1]" );
             }
@@ -101,9 +101,9 @@ namespace
     {
         typedef typename Loader< C > T_Loader;
         T_Loader loader( container );
-        xis >> start( strTagName )
+        xis >> xml::start( strTagName )
                 >> xml::list( "distance-modifier", loader, &T_Loader::ReadFactor, factors )
-            >> end();
+            >> xml::end();
     }
 }
 
@@ -125,7 +125,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     InitializeAngle        ( xis );
     InitializeDistances    ( xis );
 
-    xis >> start( "distance-modifiers" );
+    xis >> xml::start( "distance-modifiers" );
 
     InitializeFactors( PHY_Volume       ::GetVolumes        (), "size-modifiers"  , volumeFactors_       , xis );
     InitializeFactors( PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
@@ -136,7 +136,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     InitializeEnvironmentFactors( xis );
     InitializePopulationFactors ( xis );
 
-    xis >> end();
+    xis >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -154,8 +154,8 @@ PHY_SensorTypeAgent::~PHY_SensorTypeAgent()
 // -----------------------------------------------------------------------------
 void PHY_SensorTypeAgent::InitializeAngle( xml::xistream& xis )
 {
-    xis >> attribute( "angle", rAngle_ )
-        >> attribute( "scanning", bScanningAllowed_ );
+    xis >> xml::attribute( "angle", rAngle_ )
+        >> xml::attribute( "scanning", bScanningAllowed_ );
 
     rAngle_ *= ( MT_PI / 180. );
 }
@@ -167,13 +167,13 @@ void PHY_SensorTypeAgent::InitializeAngle( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_SensorTypeAgent::InitializeDistances( xml::xistream& xis )
 {
-    xis >> start( "base-distances" )
-            >> attribute( "close-range", rSquareProximityDist_ );
+    xis >> xml::start( "base-distances" )
+            >> xml::attribute( "close-range", rSquareProximityDist_ );
     rSquareProximityDist_ = MIL_Tools::ConvertMeterToSim( rSquareProximityDist_ );
     rSquareProximityDist_ *= rSquareProximityDist_;
 
     xis     >> xml::list( "base-distance", *this, &PHY_SensorTypeAgent::ReadDistance )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -183,24 +183,24 @@ void PHY_SensorTypeAgent::InitializeDistances( xml::xistream& xis )
 void PHY_SensorTypeAgent::ReadDistance( xml::xistream& xis )
 {
     std::string distanceType;
-    xis >> attribute( "level", distanceType );
+    xis >> xml::attribute( "level", distanceType );
     if( distanceType == "identification" )
     {
-        xis >> attribute( "distance", rIdentificationDist_ );
+        xis >> xml::attribute( "distance", rIdentificationDist_ );
         if( rIdentificationDist_ < 0 )
             xis.error( "base-distance: identification distance < 0" );
         rIdentificationDist_ = MIL_Tools::ConvertMeterToSim( rIdentificationDist_ );
     }
     else if( distanceType == "recognition" )
     {
-        xis >> attribute( "distance", rRecognitionDist_ );
+        xis >> xml::attribute( "distance", rRecognitionDist_ );
         if( rRecognitionDist_ < rIdentificationDist_ )
             xis.error( "base-distance: recognition distance < identification distance" );
         rRecognitionDist_ = MIL_Tools::ConvertMeterToSim( rRecognitionDist_ );
     }
     else if( distanceType == "detection" )
     {
-        xis >> attribute( "distance", rDetectionDist_ );
+        xis >> xml::attribute( "distance", rDetectionDist_ );
         if( rDetectionDist_ < rRecognitionDist_ )
             xis.error( "base-distance: detection distance < recognition distance" );
         rDetectionDist_ = MIL_Tools::ConvertMeterToSim( rDetectionDist_ );
@@ -216,9 +216,9 @@ void PHY_SensorTypeAgent::ReadDistance( xml::xistream& xis )
 void PHY_SensorTypeAgent::InitializeEnvironmentFactors( xml::xistream& xis )
 {
     unsigned int visionObject = 0;
-    xis >> start( "terrain-modifiers" )
+    xis >> xml::start( "terrain-modifiers" )
             >> xml::list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadTerrainModifier, visionObject )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -230,8 +230,8 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis, unsigned int&
     assert( environmentFactors_.size() > visionObject );  // $$$$ _RC_ ABL 2007-07-27: use exception instead
     MT_Float& rFactor = environmentFactors_[ visionObject ];
     std::string terrainType;
-    xis >> attribute( "type", terrainType )
-        >> attribute( "value", rFactor );
+    xis >> xml::attribute( "type", terrainType )
+        >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
         xis.error( "terrain-modifier: value not in [0..1]" );
     ++visionObject;
@@ -243,10 +243,10 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis, unsigned int&
 // -----------------------------------------------------------------------------
     void PHY_SensorTypeAgent::InitializePopulationFactors( xml::xistream& xis )
 {
-    xis >> start( "population-modifier" )
-            >> attribute( "density", rPopulationDensity_ )
-            >> attribute( "modifier", rPopulationFactor_ )
-        >> end();
+    xis >> xml::start( "population-modifier" )
+            >> xml::attribute( "density", rPopulationDensity_ )
+            >> xml::attribute( "modifier", rPopulationFactor_ )
+        >> xml::end();
 
     if( rPopulationDensity_ < 0 )
         xis.error( "population-modifier: density < 0" );

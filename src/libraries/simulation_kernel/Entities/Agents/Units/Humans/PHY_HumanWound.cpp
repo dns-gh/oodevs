@@ -17,7 +17,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_HumanWound::T_HumanWoundMap PHY_HumanWound::humanWounds_;
 MT_Random                       PHY_HumanWound::randomGenerator_;
@@ -73,7 +73,7 @@ void PHY_HumanWound::Initialize()
 void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
 {
     MT_Float rTimeVal = 0.;
-    xis >> start( "times" );
+    xis >> xml::start( "times" );
     tools::ReadTimeAttribute( xis, "diagnosis-time", rTimeVal );
     if( rTimeVal < 0 )
         xis.error( "times: diagnosis-time < 0" );
@@ -83,13 +83,13 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
     if( rTimeVal < 0 )
         xis.error( "times: sorting-time < 0" );
     nSortingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTimeVal );
-    xis >> end();
+    xis >> xml::end();
 
     MT_Float rFactorSum = 0.;
     LoadingWrapper loader;
-    xis >> start( "injuries" )
+    xis >> xml::start( "injuries" )
             >> xml::list( "injury", loader, &LoadingWrapper::ReadInjury, rFactorSum )
-        >> end();
+        >> xml::end();
 
     if( std::fabs( 1. - rFactorSum ) > 0.01 )
         xis.error( "Total pourcentage is not 100%" );
@@ -105,7 +105,7 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
 void PHY_HumanWound::ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
 {
     std::string injuryType;
-    xis >> attribute( "category", injuryType );
+    xis >> xml::attribute( "category", injuryType );
 
     CIT_HumanWoundMap it = humanWounds_.find( injuryType );
     if( it != humanWounds_.end() )
@@ -116,7 +116,7 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
             return;
 
         MT_Float rValue = 0.;
-        xis >> attribute( "percentage", rValue );
+        xis >> xml::attribute( "percentage", rValue );
         if( rValue < 0 || rValue > 100 )
             xis.error( "injury: percentage not in [0..100]" );
 

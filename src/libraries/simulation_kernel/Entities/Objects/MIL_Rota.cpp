@@ -29,7 +29,7 @@
 
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_Rota, "MIL_Rota" )
 
@@ -113,18 +113,18 @@ void MIL_Rota::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 void MIL_Rota::WriteSpecificAttributes( xml::xostream& xos ) const
 {
-    xos << start( "specific-attributes" )
-        << content( "danger", nDanger_ )
-            << start( "nbc-agents" );
+    xos << xml::start( "specific-attributes" )
+        << xml::content( "danger", nDanger_ )
+            << xml::start( "nbc-agents" );
 
     for( CIT_NbcAgentSet it = nbcAgents_.begin(); it != nbcAgents_.end(); ++it )
     {
-        xos << start( "nbc-agent" )
-            << attribute( "type", (**it).GetName() )
-            << end(); // nbc-agent
+        xos << xml::start( "nbc-agent" )
+            << xml::attribute( "type", (**it).GetName() )
+            << xml::end(); // nbc-agent
     }
-    xos        << end()
-        << end();
+    xos        << xml::end()
+        << xml::end();
 }
 
 //=============================================================================
@@ -149,18 +149,18 @@ void MIL_Rota::Initialize( xml::xistream& xis )
 {
     MIL_RealObject_ABC::Initialize( xis );
 
-    xis >> start( "specific-attributes" )
-            >> content( "danger", nDanger_ );
+    xis >> xml::start( "specific-attributes" )
+            >> xml::content( "danger", nDanger_ );
 
     if( nDanger_ > 10 || nDanger_ < 0 )
         xis.error( "specific-attributes is not in bound( 0, 10 )" );
     
     nbcAgents_.clear();
-    xis >> start( "nbc-agents" )
+    xis >> xml::start( "nbc-agents" )
             >> xml::list( "nbc-agent", *this, &MIL_Rota::ReadNbcAgent )
-        >> end();
+        >> xml::end();
 
-    xis >> end(); // specific-attributes
+    xis >> xml::end(); // specific-attributes
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +170,7 @@ void MIL_Rota::Initialize( xml::xistream& xis )
 void MIL_Rota::ReadNbcAgent( xml::xistream& xis )
 {
     std::string strNbcTmp;
-    xis >> attribute( "type", strNbcTmp );
+    xis >> xml::attribute( "type", strNbcTmp );
 
     const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcTmp );
     if( !pNbcAgentType )

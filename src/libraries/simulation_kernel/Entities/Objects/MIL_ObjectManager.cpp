@@ -28,7 +28,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_ObjectManager, "MIL_ObjectManager" )
 
@@ -169,8 +169,8 @@ void MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army& army )
 {
     uint        id;
     std::string strType;
-    xis >> attribute( "id", id )
-        >> attribute( "type", strType );
+    xis >> xml::attribute( "id", id )
+        >> xml::attribute( "type", strType );
 
     const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strType );
     if( !pType )

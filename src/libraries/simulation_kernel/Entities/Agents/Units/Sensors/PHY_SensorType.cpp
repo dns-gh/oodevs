@@ -18,7 +18,7 @@
 #include "PHY_Sensor.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_SensorType::T_SensorTypeMap PHY_SensorType::sensorTypes_;
 uint                            PHY_SensorType::nNextID_ = 0;
@@ -43,9 +43,9 @@ void PHY_SensorType::Initialize( xml::xistream& xis )
 {
     LoadingWrapper loader;
 
-    xis >> start( "sensors" )
+    xis >> xml::start( "sensors" )
             >> xml::list( "sensor", loader, &LoadingWrapper::ReadSensor )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void PHY_SensorType::Initialize( xml::xistream& xis )
 void PHY_SensorType::ReadSensor( xml::xistream& xis )
 {
     std::string strSensorName;
-    xis >> attribute( "name", strSensorName );
+    xis >> xml::attribute( "name", strSensorName );
 
     const PHY_SensorType*& pSensorType = sensorTypes_[ strSensorName ];
     if( pSensorType )

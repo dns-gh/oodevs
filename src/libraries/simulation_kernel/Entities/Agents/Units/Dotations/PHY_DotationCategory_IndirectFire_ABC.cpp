@@ -16,7 +16,7 @@
 #include "Tools/MIL_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC
@@ -28,9 +28,9 @@ PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC( co
     , rDispersionX_     ( 0. )
     , rDispersionY_     ( 0. )
 {
-    xis >> attribute( "intervention-type", nInterventionType_ )
-        >> attribute( "x-dispersion", rDispersionX_ )
-        >> attribute( "y-dispersion", rDispersionY_ );
+    xis >> xml::attribute( "intervention-type", nInterventionType_ )
+        >> xml::attribute( "x-dispersion", rDispersionX_ )
+        >> xml::attribute( "y-dispersion", rDispersionY_ );
 
     if( nInterventionType_ <= 0. )
         xis.error( "intervention-type <= 0" );

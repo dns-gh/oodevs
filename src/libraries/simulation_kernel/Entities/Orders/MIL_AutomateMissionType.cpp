@@ -12,7 +12,7 @@
 #include "MIL_AutomateMissionType.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_AutomateMissionType::T_MissionIDMap   MIL_AutomateMissionType::missionIDs_;
 MIL_AutomateMissionType::T_MissionIDMap   MIL_AutomateMissionType::missionDiaIDs_;
@@ -40,11 +40,11 @@ void MIL_AutomateMissionType::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
     
-    xis >> start( "missions" )
-            >> start( "automats" )
+    xis >> xml::start( "missions" )
+            >> xml::start( "automats" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ void MIL_AutomateMissionType::Initialize( xml::xistream& xis )
 void MIL_AutomateMissionType::ReadMission( xml::xistream& xis )
 {
     uint nID;
-    xis >> attribute( "id", nID );
+    xis >> xml::attribute( "id", nID );
     
     const MIL_AutomateMissionType*& pMission = missionIDs_[ nID ];
     if( pMission )
@@ -78,14 +78,14 @@ void MIL_AutomateMissionType::ReadMission( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 const MIL_AutomateMissionType& MIL_AutomateMissionType::InitializeAutomaticMission( xml::xistream& xis, const std::string& strTagName )
 {
-    xis >> start( strTagName );
+    xis >> xml::start( strTagName );
 
     std::string strMissionName;
-    xis >> attribute( "name", strMissionName );
+    xis >> xml::attribute( "name", strMissionName );
     const MIL_AutomateMissionType* pType = MIL_AutomateMissionType::Find( strMissionName );
     if( !pType )
         xis.error( "Unknown mission" );
-    xis >> end();
+    xis >> xml::end();
     return *pType;
 }
 
@@ -102,8 +102,8 @@ MIL_AutomateMissionType::MIL_AutomateMissionType( uint nID, xml::xistream& xis )
     , strDIAMrtBehavior_ ()
     , strDIACdtBehavior_ ()
 {
-    xis >> attribute( "mrt-dia-behavior", strDIAMrtBehavior_ )
-        >> attribute( "cdt-dia-behavior", strDIACdtBehavior_ );
+    xis >> xml::attribute( "mrt-dia-behavior", strDIAMrtBehavior_ )
+        >> xml::attribute( "cdt-dia-behavior", strDIACdtBehavior_ );
 }
 
 //-----------------------------------------------------------------------------

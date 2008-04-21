@@ -11,7 +11,7 @@
 #include "MIL_PopulationMissionType.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_PopulationMissionType::T_MissionIDMap   MIL_PopulationMissionType::missionIDs_;
 MIL_PopulationMissionType::T_MissionNameMap MIL_PopulationMissionType::missionNames_;
@@ -38,11 +38,11 @@ void MIL_PopulationMissionType::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
 
-    xis >> start( "missions" )
-            >> start( "populations" )
+    xis >> xml::start( "missions" )
+            >> xml::start( "populations" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ void MIL_PopulationMissionType::Initialize( xml::xistream& xis )
 void MIL_PopulationMissionType::ReadMission( xml::xistream& xis )
 {
     uint nID;
-    xis >> attribute( "id", nID );
+    xis >> xml::attribute( "id", nID );
 
     const MIL_PopulationMissionType*& pMission = missionIDs_[ nID ];
     if( pMission )
@@ -71,7 +71,7 @@ void MIL_PopulationMissionType::ReadMission( xml::xistream& xis )
 //-----------------------------------------------------------------------------
 MIL_PopulationMissionType::MIL_PopulationMissionType( uint nID, xml::xistream& xis )
     : MIL_MissionType_ABC( nID, xis )
-    , strDIABehavior_    ( attribute< std::string >( xis, "dia-behavior" ) )
+    , strDIABehavior_    ( xml::attribute< std::string >( xis, "dia-behavior" ) )
 {
     // NOTHING
 }

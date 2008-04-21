@@ -12,7 +12,7 @@
 #include "PHY_MaintenanceResourcesAlarms.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_MaintenanceResourcesAlarms::T_LevelSet PHY_MaintenanceResourcesAlarms::repairerResourcesLevels_;
 PHY_MaintenanceResourcesAlarms::T_LevelSet PHY_MaintenanceResourcesAlarms::haulerResourcesLevels_;
@@ -34,11 +34,11 @@ void PHY_MaintenanceResourcesAlarms::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing maintenance resources alarms" );
 
     LoadingWrapper loader;
-    xis >> start( "maintenance" )
-            >> start( "resource-availability-alerts" )
+    xis >> xml::start( "maintenance" )
+            >> xml::start( "resource-availability-alerts" )
                 >> xml::list( "resource-availability-alert", loader, &LoadingWrapper::ReadResource )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,8 +49,8 @@ void PHY_MaintenanceResourcesAlarms::ReadResource( xml::xistream& xis )
 {
     MT_Float rRation;
     std::string strType;
-    xis >> attribute( "resource", strType )
-        >> attribute( "availability-threshold", rRation );
+    xis >> xml::attribute( "resource", strType )
+        >> xml::attribute( "availability-threshold", rRation );
     if( rRation < 0 || rRation > 100 )
         xis.error( "availability-threshod not in [0..100]" );
     rRation /= 100.;

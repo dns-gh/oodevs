@@ -27,7 +27,7 @@
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentration" )
 
@@ -47,10 +47,10 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 {
     // Position
     std::string strPosition;
-    xis >> attribute( "position", strPosition );
+    xis >> xml::attribute( "position", strPosition );
     MIL_Tools::ConvertCoordMosToSim( strPosition, position_ );
     MT_Float rNbrHumans;
-    xis >> attribute( "humans", rNbrHumans );
+    xis >> xml::attribute( "humans", rNbrHumans );
     if( rNbrHumans <= 0. )
         xis.error( "rNbrHumans is not greater than 0." );
 

@@ -14,7 +14,7 @@
 #include "PHY_DotationNature.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_DotationNature::T_DotationNatureMap PHY_DotationNature::natures_;
 uint                                    PHY_DotationNature::nNextID_ = 0;
@@ -40,9 +40,9 @@ void PHY_DotationNature::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing dotation natures" );
     LoadingWrapper loader;
 
-    xis >> start( "natures" )
+    xis >> xml::start( "natures" )
             >> xml::list( "nature", loader, &LoadingWrapper::ReadNature )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ void PHY_DotationNature::Initialize( xml::xistream& xis )
 void PHY_DotationNature::ReadNature( xml::xistream& xis )
 {
     std::string strName;
-    xis >> attribute( "type", strName );
+    xis >> xml::attribute( "type", strName );
 
     const PHY_DotationNature*& pDotationNature = natures_[ strName ];
     if( pDotationNature )

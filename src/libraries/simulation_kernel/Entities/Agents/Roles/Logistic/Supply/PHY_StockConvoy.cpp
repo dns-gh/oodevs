@@ -22,7 +22,7 @@
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( PHY_StockConvoy, "PHY_StockConvoy" )
 

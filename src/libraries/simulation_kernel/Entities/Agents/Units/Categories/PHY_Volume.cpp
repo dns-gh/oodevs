@@ -14,7 +14,7 @@
 #include "PHY_Volume.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_Volume::T_VolumeMap PHY_Volume::volumes_;
 uint                    PHY_Volume::nNextID_ = 0;
@@ -42,9 +42,9 @@ void PHY_Volume::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     // Initialisation des composantes
-    xis >> start( "volumes" )
+    xis >> xml::start( "volumes" )
             >> xml::list( "volume", loader, &LoadingWrapper::ReadVolume )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ void PHY_Volume::Initialize( xml::xistream& xis )
 void PHY_Volume::ReadVolume( xml::xistream& xis )
 {
     std::string strVolume;
-    xis >> attribute( "name", strVolume );
+    xis >> xml::attribute( "name", strVolume );
 
     const PHY_Volume*& pVolume = volumes_[ strVolume ];
     if( pVolume )

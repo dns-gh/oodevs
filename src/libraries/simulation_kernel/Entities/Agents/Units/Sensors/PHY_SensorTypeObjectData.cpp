@@ -26,7 +26,7 @@
 #include "Tools/MIL_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 struct PHY_SensorTypeObjectData::LoadingWrapper
 {
@@ -45,9 +45,9 @@ void PHY_SensorTypeObjectData::InitializeFactors( const PHY_Posture::T_PostureMa
 {
     LoadingWrapper loader;
 
-    xis >> start( strTagName )
+    xis >> xml::start( strTagName )
             >> xml::list( "source-posture-modifier", loader, &LoadingWrapper::ReadPosture, container, factors )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ void PHY_SensorTypeObjectData::InitializeFactors( const PHY_Posture::T_PostureMa
 void PHY_SensorTypeObjectData::ReadPosture( xml::xistream& xis, const PHY_Posture::T_PostureMap& container, T_FactorVector& factors )
 {
     std::string postureType;
-    xis >> attribute( "type", postureType );
+    xis >> xml::attribute( "type", postureType );
 
     PHY_Posture::CIT_PostureMap it = container.find( postureType );
     if( it != container.end() )
@@ -67,7 +67,7 @@ void PHY_SensorTypeObjectData::ReadPosture( xml::xistream& xis, const PHY_Postur
 
         assert( factors.size() > it->second->GetID() );
         MT_Float& rFactor = factors[ it->second->GetID() ];
-        xis >> attribute( "value", rFactor );
+        xis >> xml::attribute( "value", rFactor );
         if( rFactor < 0 || rFactor > 1 )
             xis.error( "source-posture-modifier: value not in [0..1]" );
     }
@@ -85,7 +85,7 @@ PHY_SensorTypeObjectData::PHY_SensorTypeObjectData( xml::xistream& xis )
     , rPopulationDensity_  ( 1. )
     , rPopulationFactor_   ( 1. )
 {
-    xis >> attribute( "detection-distance", rDD_ );
+    xis >> xml::attribute( "detection-distance", rDD_ );
     rDD_ = MIL_Tools::ConvertMeterToSim( rDD_ );
 
     InitializeFactors          ( PHY_Posture::GetPostures(), "source-posture-modifiers", postureSourceFactors_, xis );
@@ -111,10 +111,10 @@ PHY_SensorTypeObjectData::~PHY_SensorTypeObjectData()
 // -----------------------------------------------------------------------------
 void PHY_SensorTypeObjectData::InitializePopulationFactors( xml::xistream& xis )
 {
-    xis >> start( "population-modifier" )
-            >> attribute( "density", rPopulationDensity_ )
-            >> attribute( "modifier", rPopulationFactor_ )
-        >> end();
+    xis >> xml::start( "population-modifier" )
+            >> xml::attribute( "density", rPopulationDensity_ )
+            >> xml::attribute( "modifier", rPopulationFactor_ )
+        >> xml::end();
 
     if( rPopulationDensity_ < 0 )
         xis.error( "population-modifier: density < 0" );

@@ -34,7 +34,7 @@
 #include "Network/NET_AsnException.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
 
@@ -189,7 +189,7 @@ void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream
     MIL_Automate::ReadLogisticLink( superior, xis );
 
     std::string strLink;
-    xis >> attribute( "link", strLink );
+    xis >> xml::attribute( "link", strLink );
 
     if( sCaseInsensitiveEqual()( strLink, "maintenance" ) )
         pMaintenanceSuperior_ = &superior;
@@ -198,9 +198,9 @@ void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream
     else if( sCaseInsensitiveEqual()( strLink, "supply" ) )
     {
         pSupplySuperior_ = &superior;
-        xis >> start( "quotas" )
+        xis >> xml::start( "quotas" )
                 >> xml::list( "dotation", *this, &MIL_AutomateLOG::ReadDotation )
-            >> end();
+            >> xml::end();
     }
 
 }
@@ -212,7 +212,7 @@ void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream
 void MIL_AutomateLOG::ReadDotation( xml::xistream& xis )
 {
     std::string strType;
-    xis >> attribute( "name", strType );
+    xis >> xml::attribute( "name", strType );
 
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
@@ -222,7 +222,7 @@ void MIL_AutomateLOG::ReadDotation( xml::xistream& xis )
         xis.error( "Quota already defined" );
 
     uint        nQuantity;
-    xis >> attribute( "quantity", nQuantity );
+    xis >> xml::attribute( "quantity", nQuantity );
     if( nQuantity < 0 )
         xis.error( "nQuantity is not greater or equal to 0" );
 
@@ -242,47 +242,47 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
 
     if( pMaintenanceSuperior_ )
     {
-        xos << start( "automat" )
-                << attribute( "id", pMaintenanceSuperior_->GetID() )
-                << start ( "subordinate" )
-                    << attribute( "id", GetID() )
-                    << attribute( "link"   , "maintenance" )
-                << end()
-            << end();
+        xos << xml::start( "automat" )
+                << xml::attribute( "id", pMaintenanceSuperior_->GetID() )
+                << xml::start ( "subordinate" )
+                    << xml::attribute( "id", GetID() )
+                    << xml::attribute( "link"   , "maintenance" )
+                << xml::end()
+            << xml::end();
     }
 
     if( pMedicalSuperior_ )
     {
-        xos << start( "automat" )
-                << attribute( "id", pMedicalSuperior_->GetID() )
-                << start ( "subordinate" )
-                    << attribute( "id", GetID() )
-                    << attribute( "link"   , "medical" )
-                << end()
-            << end();
+        xos << xml::start( "automat" )
+                << xml::attribute( "id", pMedicalSuperior_->GetID() )
+                << xml::start ( "subordinate" )
+                    << xml::attribute( "id", GetID() )
+                    << xml::attribute( "link"   , "medical" )
+                << xml::end()
+            << xml::end();
     }
 
     if( pSupplySuperior_ )
     {
-        xos << start( "automat" )
-            << attribute( "id", pSupplySuperior_->GetID() )
-                << start ( "subordinate" )
-                    << attribute( "id", GetID() )
-                    << attribute( "link"   , "supply" );
+        xos << xml::start( "automat" )
+            << xml::attribute( "id", pSupplySuperior_->GetID() )
+                << xml::start ( "subordinate" )
+                    << xml::attribute( "id", GetID() )
+                    << xml::attribute( "link"   , "supply" );
 
-        xos         << start( "quotas" );
+        xos         << xml::start( "quotas" );
         for( CIT_DotationQuotaMap it = stockQuotas_.begin(); it != stockQuotas_.end(); ++it )
         {
             const PHY_DotationCategory& dotation = *it->first;
-            xos << start( "dotation" )
-                    << attribute( "name", dotation.GetName()  )
-                    << attribute( "quantity", it->second.rQuota_ )
-                << end(); // dotation
+            xos << xml::start( "dotation" )
+                    << xml::attribute( "name", dotation.GetName()  )
+                    << xml::attribute( "quantity", it->second.rQuota_ )
+                << xml::end(); // dotation
         }
-        xos         << end(); // quotas
+        xos         << xml::end(); // quotas
 
-        xos     << end() // subordinate
-            << end(); // automat
+        xos     << xml::end() // subordinate
+            << xml::end(); // automat
     }
 }
 

@@ -44,7 +44,7 @@
 
 #include <sys/stat.h>
 
-using namespace xml;
+
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Workspace constructor
@@ -199,11 +199,11 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
     xml::xifstream xis( config.GetPhysicalFile() );
 
     std::string strDecFile;
-    xis >> start( "physical" )
-            >> start( "decisional" )
-                >> attribute( "file", strDecFile )
-            >> end()
-        >> end();
+    xis >> xml::start( "physical" )
+            >> xml::start( "decisional" )
+                >> xml::attribute( "file", strDecFile )
+            >> xml::end()
+        >> xml::end();
 
     strDecFile = config.BuildPhysicalChildFile( strDecFile );
 
@@ -212,31 +212,31 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 
     uint nTmp;
 
-    xisDecisional >> start( "decisonal" )
-                      >> start( "dangerosity-modifiers" )
-                          >> attribute( "max-accuracy", nTmp );
+    xisDecisional >> xml::start( "decisonal" )
+                      >> xml::start( "dangerosity-modifiers" )
+                          >> xml::attribute( "max-accuracy", nTmp );
     if( nTmp < 0 || nTmp > 100 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dangerosity-modifiers: max-accuracy not in [0..100]" );
     DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_ = nTmp / 100.;
 
-    xisDecisional >> attribute( "max-operational-state", nTmp );
+    xisDecisional >> xml::attribute( "max-operational-state", nTmp );
     if( nTmp < 0 || nTmp > 100 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dangerosity-modifiers: max-operationnal-state not in [0..100]" );
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
     PHY_RolePion_Composantes::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
 
-    xisDecisional >> attribute( "max-neutralized-state", nTmp );
+    xisDecisional >> xml::attribute( "max-neutralized-state", nTmp );
     if( nTmp < 0 || nTmp > 100 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "degerousity-modifiers: max-neutralized-state not in [0..100]" );
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
     PHY_RolePion_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
 
-    xisDecisional     >> end()
-                          >> start( "operational-state-weights" )
-                              >> attribute( "component", PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ )
-                              >> attribute( "major-component", PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ )
-                              >> attribute( "crew", PHY_ComposantePion::rOpStateWeightHumans_ )
-                          >> end();
+    xisDecisional     >> xml::end()
+                          >> xml::start( "operational-state-weights" )
+                              >> xml::attribute( "component", PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ )
+                              >> xml::attribute( "major-component", PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ )
+                              >> xml::attribute( "crew", PHY_ComposantePion::rOpStateWeightHumans_ )
+                          >> xml::end();
 
     if( PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ < 0 || PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ > 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: component not in [0..1]" );
@@ -250,7 +250,7 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 
     DEC_Knowledge_RapFor_ABC::Initialize( xisDecisional );
 
-    xisDecisional >> end();
+    xisDecisional >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -438,10 +438,10 @@ void DEC_Workspace::InitializeMissions( MIL_Config& config )
     xml::xifstream xis( config.GetPhysicalFile() );
 
     std::string strMissionsFile;
-    xis >> start( "physical" )
-            >> start( "missions" )
-               >> attribute( "file", strMissionsFile )
-            >> end();
+    xis >> xml::start( "physical" )
+            >> xml::start( "missions" )
+               >> xml::attribute( "file", strMissionsFile )
+            >> xml::end();
 
     strMissionsFile = config.BuildPhysicalChildFile( strMissionsFile );
 
@@ -464,11 +464,11 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
     xml::xifstream xis( config.GetPhysicalFile() );
 
     std::string strModelsFile;
-    xis >> start( "physical" )
-            >> start( "models" )
-                >> attribute( "file", strModelsFile )
-            >> end()
-        >> end();
+    xis >> xml::start( "physical" )
+            >> xml::start( "models" )
+                >> xml::attribute( "file", strModelsFile )
+            >> xml::end()
+        >> xml::end();
 
     strModelsFile = config.BuildPhysicalChildFile( strModelsFile );
 
@@ -476,27 +476,27 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
 
     config.AddFileToCRC( strModelsFile );
 
-    xisModels >> start( "models" );
+    xisModels >> xml::start( "models" );
 
     // Pions
     MT_LOG_INFO_MSG( "Initializing unit DIA models" );
-    xisModels >> start( "units" )
+    xisModels >> xml::start( "units" )
                   >> xml::list( "unit", *this, &DEC_Workspace::ReadUnit, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
-              >> end();
+              >> xml::end();
 
     // Automates
     MT_LOG_INFO_MSG( "Initializing automat DIA models" );
-    xisModels >> start( "automats" )
+    xisModels >> xml::start( "automats" )
                   >> xml::list( "automat", *this, &DEC_Workspace::ReadAutomat, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
-              >> end();
+              >> xml::end();
 
     // Populations
     MT_LOG_INFO_MSG( "Initializing population DIA models" );
-    xisModels >> start( "populations" )
+    xisModels >> xml::start( "populations" )
                   >> xml::list( "population", *this, &DEC_Workspace::ReadPopulation, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath )
-              >> end();
+              >> xml::end();
 
-    xisModels >> end(); // models
+    xisModels >> xml::end(); // models
 }
 
 // -----------------------------------------------------------------------------
@@ -506,7 +506,7 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
 void DEC_Workspace::ReadUnit( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
 {
     std::string strName;
-    xis >> attribute( "name", strName );
+    xis >> xml::attribute( "name", strName );
 
     const DEC_ModelPion*& pModel = pionModels_[ strName ];
     if( pModel )
@@ -522,7 +522,7 @@ void DEC_Workspace::ReadUnit( xml::xistream& xis, bool bNeedScriptParsing, bool 
 void DEC_Workspace::ReadAutomat( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
 {
     std::string strName;
-    xis >> attribute( "name", strName );
+    xis >> xml::attribute( "name", strName );
 
     const DEC_ModelAutomate*& pModel = automateModels_[ strName ];
     if( pModel )
@@ -538,7 +538,7 @@ void DEC_Workspace::ReadAutomat( xml::xistream& xis, bool bNeedScriptParsing, bo
 void DEC_Workspace::ReadPopulation( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
 {
     std::string strName;
-    xis >> attribute( "name", strName );
+    xis >> xml::attribute( "name", strName );
 
     const DEC_ModelPopulation*& pModel = populationModels_[ strName ];
     if( pModel )

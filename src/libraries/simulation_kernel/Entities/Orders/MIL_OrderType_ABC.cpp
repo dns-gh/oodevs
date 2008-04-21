@@ -15,7 +15,7 @@
 #include "Network/NET_AsnException.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderType_ABC constructor
@@ -23,8 +23,8 @@ using namespace xml;
 //-----------------------------------------------------------------------------
 MIL_OrderType_ABC::MIL_OrderType_ABC( uint nID, xml::xistream& xis )
     : nID_       ( nID )
-    , strName_   ( attribute< std::string >( xis, "name" ) )
-    , pDIAType_  ( &DEC_Tools::GetDIAType( attribute< std::string >( xis, "dia-type" ) ) )
+    , strName_   ( xml::attribute< std::string >( xis, "name" ) )
+    , pDIAType_  ( &DEC_Tools::GetDIAType( xml::attribute< std::string >( xis, "dia-type" ) ) )
 {
     xis >> xml::list( "parameter", *this, &MIL_OrderType_ABC::ReadParameter );
 }

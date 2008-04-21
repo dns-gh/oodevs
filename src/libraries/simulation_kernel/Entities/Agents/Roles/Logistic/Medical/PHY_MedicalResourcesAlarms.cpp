@@ -11,7 +11,7 @@
 #include "PHY_MedicalResourcesAlarms.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::evacuationResourcesLevels_;
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::collectionResourcesLevels_;
@@ -35,11 +35,11 @@ void PHY_MedicalResourcesAlarms::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
 
-    xis >> start( "health" )
-            >> start( "resource-availability-alerts" )
+    xis >> xml::start( "health" )
+            >> xml::start( "resource-availability-alerts" )
                 >> xml::list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceLevel )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +50,8 @@ void PHY_MedicalResourcesAlarms::ReadResourceLevel( xml::xistream& xis )
 {
     MT_Float rRatio;
     std::string resourceType;
-    xis >> attribute( "resource", resourceType )
-        >> attribute( "availability-threshold", rRatio );
+    xis >> xml::attribute( "resource", resourceType )
+        >> xml::attribute( "availability-threshold", rRatio );
 
     if( rRatio < 0 || rRatio > 100 )
         xis.error( "resource-availability-alert: availability-treshold not in [0..100]" );

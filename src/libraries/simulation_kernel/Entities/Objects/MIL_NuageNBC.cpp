@@ -31,7 +31,7 @@
 
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_NuageNBC, "MIL_NuageNBC" )
 
@@ -93,11 +93,11 @@ void MIL_NuageNBC::WriteSpecificAttributes( xml::xostream& xos ) const
 {
     assert( pNbcAgent_ );
 
-    xos << start( "specific-attributes" )
-            << start( "nbc-agent" )
-            << attribute( "type", pNbcAgent_->GetType().GetName() )
-            << end()
-        << end();
+    xos << xml::start( "specific-attributes" )
+            << xml::start( "nbc-agent" )
+            << xml::attribute( "type", pNbcAgent_->GetType().GetName() )
+            << xml::end()
+        << xml::end();
 }
 
 //=============================================================================
@@ -142,18 +142,18 @@ void MIL_NuageNBC::Initialize( xml::xistream& xis )
     if( !GetLocalisation().WasACircle() )
         xis.error( "Localisation of object type 'NuageNBC' MUST be a circle" );
 
-    xis >> start( "specific-attributes" )
-            >> start( "nbc-agent" );
+    xis >> xml::start( "specific-attributes" )
+            >> xml::start( "nbc-agent" );
 
     std::string strNbcAgentType_;
-    xis >> attribute( "type", strNbcAgentType_ );
+    xis >> xml::attribute( "type", strNbcAgentType_ );
     const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcAgentType_ );
     if( !pNbcAgentType )
         xis.error( "Unknown 'AgentNBC' '" + strNbcAgentType_ + "'" );
     pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eGas );
 
-    xis >> end()
-        >> end();
+    xis >> xml::end()
+        >> xml::end();
 
     vOrigin_              = GetLocalisation().GetCircleCenter();
     rCurrentCircleRadius_ = GetLocalisation().GetCircleRadius();

@@ -49,7 +49,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_Automate, "MIL_Automate" )
 
@@ -275,11 +275,11 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 void MIL_Automate::Initialize( xml::xistream& xis )
 {
-    xis >> optional() >> attribute( "engaged", bEngaged_ )
-        >> optional() >> attribute( "name"   , strName_ );
+    xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ )
+        >> xml::optional() >> xml::attribute( "name"   , strName_ );
 
     uint nKnowledgeGroup;
-    xis >> attribute( "knowledge-group", nKnowledgeGroup );
+    xis >> xml::attribute( "knowledge-group", nKnowledgeGroup );
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
     if( !pKnowledgeGroup_ )
         xis.error( "Unknown knowledge group" );
@@ -303,9 +303,9 @@ void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
     uint        id;
     std::string strType;
     bool isPc = false;
-    xis >> attribute( "id", id )
-        >> attribute( "type", strType )
-        >> optional() >> attribute( "command-post", isPc );
+    xis >> xml::attribute( "id", id )
+        >> xml::attribute( "type", strType )
+        >> xml::optional() >> xml::attribute( "command-post", isPc );
 
     if( isPc && pPionPC_ )
         xis.error( "Automat's command post already defined" );
@@ -328,8 +328,8 @@ void MIL_Automate::ReadAutomatSubordinate( xml::xistream& xis )
     uint        id;
     std::string strType;
 
-    xis >> attribute( "id", id )
-        >> attribute( "type", strType );
+    xis >> xml::attribute( "id", id )
+        >> xml::attribute( "type", strType );
 
     const MIL_AutomateType* pAutomateType = MIL_AutomateType::FindAutomateType( strType );
     if( !pAutomateType )
@@ -381,12 +381,12 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     assert( pType_ );
     assert( pKnowledgeGroup_ );
 
-    xos << start( "automat" )
-            << attribute( "id", nID_ )
-            << attribute( "name", strName_ )
-            << attribute( "engaged", bEngaged_ )
-            << attribute( "knowledge-group", pKnowledgeGroup_->GetID() )
-            << attribute( "type", pType_->GetName() );
+    xos << xml::start( "automat" )
+            << xml::attribute( "id", nID_ )
+            << xml::attribute( "name", strName_ )
+            << xml::attribute( "engaged", bEngaged_ )
+            << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetID() )
+            << xml::attribute( "type", pType_->GetName() );
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).WriteODB( xos );
@@ -394,7 +394,7 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         (**it).WriteODB( xos );
 
-    xos << end(); // automat
+    xos << xml::end(); // automat
 }
 
 // -----------------------------------------------------------------------------
@@ -413,7 +413,7 @@ void MIL_Automate::ReadOverloading( xml::xistream& xis )
 void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis )
 {
     std::string strLink;
-    xis >> attribute( "link", strLink );
+    xis >> xml::attribute( "link", strLink );
 
     if( sCaseInsensitiveEqual()( strLink, "tc2" ) )
     {
@@ -430,13 +430,13 @@ void MIL_Automate::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
     if( pTC2_ )
     {
-        xos << start( "automat" )
-                << attribute( "id", pTC2_->GetID() )
-                << start( "subordinate" )
-                    << attribute( "id", GetID() )
-                    << attribute( "link", "tc2" )
-                << end()
-            << end();
+        xos << xml::start( "automat" )
+                << xml::attribute( "id", pTC2_->GetID() )
+                << xml::start( "subordinate" )
+                    << xml::attribute( "id", GetID() )
+                    << xml::attribute( "link", "tc2" )
+                << xml::end()
+            << xml::end();
     }
 }
 

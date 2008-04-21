@@ -29,7 +29,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
 

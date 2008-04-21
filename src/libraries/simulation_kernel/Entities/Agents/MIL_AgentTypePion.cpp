@@ -85,7 +85,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_AgentTypePion::T_PionTypeAllocatorMap  MIL_AgentTypePion::pionTypeAllocators_;
 MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;
@@ -141,9 +141,9 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     
     LoadingWrapper loader;
     
-    xis >> start( "units" )
+    xis >> xml::start( "units" )
             >> xml::list( "unit", loader, &LoadingWrapper::ReadUnit )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -156,8 +156,8 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
     std::string strName;
     std::string strType;
 
-    xis >> attribute( "name", strName )
-        >> attribute( "type", strType );
+    xis >> xml::attribute( "name", strName )
+        >> xml::attribute( "type", strType );
 
     CIT_PionTypeAllocatorMap itPionAllocator = pionTypeAllocators_.find( strType );
     if( itPionAllocator == pionTypeAllocators_.end() )
@@ -222,10 +222,10 @@ MIL_AgentTypePion::~MIL_AgentTypePion()
 //-----------------------------------------------------------------------------
 void MIL_AgentTypePion::InitializeDistancesAvantPoints( xml::xistream& xis )
 {
-    xis >> optional()
-            >> start( "distance-before-points" )
+    xis >> xml::optional()
+            >> xml::start( "distance-before-points" )
                 >> xml::list( "distance-before-point", *this, &MIL_AgentTypePion::ReadPoint )
-            >> end();
+            >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -235,12 +235,12 @@ void MIL_AgentTypePion::InitializeDistancesAvantPoints( xml::xistream& xis )
 void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
 {
     std::string strTypePoint;
-    xis >> attribute( "type", strTypePoint );
+    xis >> xml::attribute( "type", strTypePoint );
 
     // Cas particulier : limas ( point n'appartenant pas à TER ! )
     if ( sCaseInsensitiveEqual()( strTypePoint, "lima" ) )
     {
-        xis >> attribute( "value", rDistanceAvantLimas_ );
+        xis >> xml::attribute( "value", rDistanceAvantLimas_ );
         rDistanceAvantLimas_ = MIL_Tools::ConvertMeterToSim( rDistanceAvantLimas_ );
     }
     else
@@ -254,7 +254,7 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
             xis.error( "Unknown 'distance avant point'" );
 
         MT_Float& rDistance = distancesAvantPoints_[ nType ];
-        xis >> attribute( "value", rDistance );
+        xis >> xml::attribute( "value", rDistance );
         rDistance = MIL_Tools::ConvertMeterToSim( rDistance );
     }
 }
@@ -287,7 +287,7 @@ void MIL_AgentTypePion::ReadFeedback( xml::xistream& xis )
 void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
 {
     std::string strModel;
-    xis >> attribute( "decisional-model", strModel );
+    xis >> xml::attribute( "decisional-model", strModel );
 
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( strModel );
     if( !pModel_ )

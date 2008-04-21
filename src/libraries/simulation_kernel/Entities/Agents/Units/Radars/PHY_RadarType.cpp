@@ -26,7 +26,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_RadarType::T_RadarTypeMap PHY_RadarType::radarTypes_;
 uint                          PHY_RadarType::nNextID_ = 0;
@@ -50,7 +50,7 @@ namespace
     {
         int seconds = 0;
         std::string timeString;
-        xis >> optional() >> attribute( name, timeString );
+        xis >> xml::optional() >> xml::attribute( name, timeString );
         if( tools::DecodeTime( timeString, seconds ) )
         {
             time = seconds;
@@ -68,9 +68,9 @@ void PHY_RadarType::Initialize( xml::xistream& xis, const MIL_Time_ABC& time )
 {
     LoadingWrapper loader;
 
-    xis >> start( "radars" )
+    xis >> xml::start( "radars" )
             >> xml::list( "radar", loader, &LoadingWrapper::ReadRadar, time )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,10 +80,10 @@ void PHY_RadarType::Initialize( xml::xistream& xis, const MIL_Time_ABC& time )
 void PHY_RadarType::ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time )
 {
     std::string strRadarName;
-    xis >> attribute( "name", strRadarName );
+    xis >> xml::attribute( "name", strRadarName );
 
     std::string strType;
-    xis >> attribute( "type", strType );
+    xis >> xml::attribute( "type", strType );
     const PHY_RadarClass* pType = PHY_RadarClass::Find( strType );
     if( !pType )
         xis.error( "Unknown radar type " + strType );
@@ -147,9 +147,9 @@ PHY_RadarType::~PHY_RadarType()
 // -----------------------------------------------------------------------------
 void PHY_RadarType::InitializeRange( xml::xistream& xis )
 {
-    xis >> attribute( "action-range", rRadius_ )
-        >> optional() >> attribute( "min-height", rMinHeight_ )
-        >> optional() >> attribute( "max-height", rMaxHeight_ );
+    xis >> xml::attribute( "action-range", rRadius_ )
+        >> xml::optional() >> xml::attribute( "min-height", rMinHeight_ )
+        >> xml::optional() >> xml::attribute( "max-height", rMaxHeight_ );
 
     if( rRadius_ < 0 )
         xis.error( "radar: action-range < 0" );
@@ -197,14 +197,14 @@ void PHY_RadarType::ReadActivity( xml::xistream& xis )
     const PHY_ConsumptionType::T_ConsumptionTypeMap& consumptionTypes = PHY_ConsumptionType::GetConsumptionTypes();
 
     std::string activityType;
-    xis >> attribute( "type", activityType );
+    xis >> xml::attribute( "type", activityType );
 
     PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.find( activityType );
     if( it != consumptionTypes.end() )
     {
         const PHY_ConsumptionType& conso = *it->second;
         bool bValue = false;
-        xis >> optional() >> attribute( "value", bValue );
+        xis >> xml::optional() >> xml::attribute( "value", bValue );
         detectableActivities_[ conso.GetID() ] = bValue;
     }
 }
@@ -252,7 +252,7 @@ void PHY_RadarType::ReadAcquisitionTime( xml::xistream& xis, bool& bIsTime )
 void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
 {
     std::string acquisitionType;
-    xis >> attribute( "level", acquisitionType );
+    xis >> xml::attribute( "level", acquisitionType );
 
     if( acquisitionType == "detection" )
     {

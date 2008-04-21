@@ -13,7 +13,7 @@
 #include "Population/DEC_Population_PathClass.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 DEC_PathFactory* DEC_PathFactory::pInstance_;
 

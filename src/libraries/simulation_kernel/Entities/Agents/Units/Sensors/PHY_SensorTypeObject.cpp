@@ -20,7 +20,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObject constructor
@@ -41,7 +41,7 @@ PHY_SensorTypeObject::PHY_SensorTypeObject( const PHY_SensorType& type, xml::xis
 void PHY_SensorTypeObject::ReadObject( xml::xistream& xis )
 {
     std::string strType;
-    xis >> attribute( "type", strType );
+    xis >> xml::attribute( "type", strType );
 
     const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
     if( !pObjectType )

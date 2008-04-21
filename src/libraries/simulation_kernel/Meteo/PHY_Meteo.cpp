@@ -22,7 +22,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo constructor
@@ -34,18 +34,18 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
     , nRefCount_     ( 0 )
 {
     uint nVal;
-    xis >> start( "cloud-cover" )
-            >> attribute( "floor", nPlancherCouvertureNuageuse_ )
-            >> attribute( "ceiling", nPlafondCouvertureNuageuse_ )
-            >> attribute( "density", nVal )
-        >> end();
+    xis >> xml::start( "cloud-cover" )
+            >> xml::attribute( "floor", nPlancherCouvertureNuageuse_ )
+            >> xml::attribute( "ceiling", nPlafondCouvertureNuageuse_ )
+            >> xml::attribute( "density", nVal )
+        >> xml::end();
     rDensiteCouvertureNuageuse_ = std::min( nVal, (uint)100 ) / 100.;
 
     uint nAngle;
-    xis >> start( "wind" )
-            >> attribute( "speed", wind_.rWindSpeed_ )
-            >> attribute( "speed", nAngle )
-        >> end();
+    xis >> xml::start( "wind" )
+            >> xml::attribute( "speed", wind_.rWindSpeed_ )
+            >> xml::attribute( "speed", nAngle )
+        >> xml::end();
     if( wind_.rWindSpeed_ < 0 )
         xis.error( "meteo: VitesseVent < 0" );
     wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( wind_.rWindSpeed_ );
@@ -54,9 +54,9 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
     NET_ASN_Tools::ReadDirection( nAngle, wind_.vWindDirection_ );
 
     std::string strVal;
-    xis >> start( "precipitation" )
-            >> attribute( "value", strVal )
-        >> end();
+    xis >> xml::start( "precipitation" )
+            >> xml::attribute( "value", strVal )
+        >> xml::end();
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( strVal );
     if( !pPrecipitation_ )
         xis.error( "Unknown Precipitation type '" + strVal + "'" );

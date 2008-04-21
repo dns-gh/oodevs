@@ -42,7 +42,7 @@
 #include "HLA/AttributeIdentifier.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MT_Random MIL_RealObject_ABC::random_;
 
@@ -232,24 +232,24 @@ void MIL_RealObject_ABC::WriteODB( xml::xostream& xos ) const
     if( *pType_ == MIL_RealObjectType::nuageNBC_ )
         return;
 
-    xos << start( "object" )
-            << attribute( "id"  , nID_ )
-            << attribute( "name", strName_ )
-            << attribute( "type", pType_->GetName() );
+    xos << xml::start( "object" )
+            << xml::attribute( "id"  , nID_ )
+            << xml::attribute( "name", strName_ )
+            << xml::attribute( "type", pType_->GetName() );
 
     if( pType_->CanBeReservedObstacle() )
     {
         assert( pObstacleType_ );
-        xos << attribute( "obstacle-type", pObstacleType_->GetName() );
+        xos << xml::attribute( "obstacle-type", pObstacleType_->GetName() );
         if( pObstacleType_->CouldBeActivated() )
-            xos << attribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
+            xos << xml::attribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
     }
 
     GetLocalisation().Write( xos );
 
     WriteSpecificAttributes( xos );
 
-    xos << end(); // object
+    xos << xml::end(); // object
 }
 
 //=============================================================================
@@ -297,16 +297,16 @@ void MIL_RealObject_ABC::InitializeCommon( const TER_Localisation& localisation 
 void MIL_RealObject_ABC::Initialize( xml::xistream& xis )
 {
     std::string strName;
-    xis >> optional() >> attribute( "name", strName_ );
+    xis >> xml::optional() >> xml::attribute( "name", strName_ );
     if( pType_->CanBeReservedObstacle() )
     {
         std::string strObstacleTypeName;
-        xis >> attribute( "obstacle-type", strObstacleTypeName );
+        xis >> xml::attribute( "obstacle-type", strObstacleTypeName );
         pObstacleType_ = MIL_ObstacleType::Find( strObstacleTypeName );
         if( !pObstacleType_ )
             xis.error( "Unknown obstacle type" );
         if( pObstacleType_->CouldBeActivated() )
-            xis >> attribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
+            xis >> xml::attribute( "reserved-obstacle-activated", bReservedObstacleActivated_ );
     }
 
     TER_Localisation localisation;

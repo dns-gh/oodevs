@@ -22,7 +22,7 @@
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationRequestContainer.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationGroup, "PHY_DotationGroup" )
 
@@ -149,10 +149,10 @@ void PHY_DotationGroup::WriteODB( xml::xostream& xos ) const
 {
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
     {
-        xos << start( "dotation" )
-                << attribute( "name", it->first->GetName() )
-                << attribute( "quantity", it->second->GetValue() )
-            << end(); // dotation
+        xos << xml::start( "dotation" )
+                << xml::attribute( "name", it->first->GetName() )
+                << xml::attribute( "quantity", it->second->GetValue() )
+            << xml::end(); // dotation
     }
 }
 

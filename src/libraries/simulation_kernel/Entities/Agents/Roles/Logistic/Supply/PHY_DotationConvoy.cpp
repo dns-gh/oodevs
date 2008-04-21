@@ -20,7 +20,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationConvoy, "PHY_DotationConvoy" )
 

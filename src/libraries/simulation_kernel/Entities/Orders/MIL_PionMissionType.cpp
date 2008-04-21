@@ -12,7 +12,7 @@
 #include "MIL_PionMissionType.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_PionMissionType::T_MissionIDMap   MIL_PionMissionType::missionIDs_;
 MIL_PionMissionType::T_MissionIDMap   MIL_PionMissionType::missionDiaIDs_;
@@ -40,11 +40,11 @@ void MIL_PionMissionType::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
     
-    xis >> start( "missions" )
-            >> start( "units" )
+    xis >> xml::start( "missions" )
+            >> xml::start( "units" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ void MIL_PionMissionType::Initialize( xml::xistream& xis )
 void MIL_PionMissionType::ReadMission( xml::xistream& xis )
 {
     uint nID;
-    xis >> attribute( "id", nID );
+    xis >> xml::attribute( "id", nID );
 
     const MIL_PionMissionType*& pMission = missionIDs_[ nID ];
     if( pMission )
@@ -84,7 +84,7 @@ MIL_PionMissionType::MIL_PionMissionType( uint nID, xml::xistream& xis )
     : MIL_MissionType_ABC( nID, xis )
     , strDIABehavior_    ()
 {
-    xis >> attribute( "dia-behavior", strDIABehavior_ );
+    xis >> xml::attribute( "dia-behavior", strDIABehavior_ );
 }
 
 //-----------------------------------------------------------------------------

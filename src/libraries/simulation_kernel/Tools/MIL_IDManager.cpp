@@ -22,7 +22,7 @@
 #include "MIL_AgentServer.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_MOSIDManager                 MIL_IDManager::units_;
 MIL_MOSIDManager                 MIL_IDManager::fireResultsPion_;
@@ -61,12 +61,12 @@ void MIL_IDManager::Initialize( MIL_Config& config )
     MT_LOG_INFO_MSG( "Initializing classe ids" );
 
     xml::xifstream xisPhysical( config.GetPhysicalFile() );
-    xisPhysical >> start( "physical" );
+    xisPhysical >> xml::start( "physical" );
 
     std::string strName;
-    xisPhysical >> start( "classeids" )
-                    >> attribute( "file", strName )
-                >> end();
+    xisPhysical >> xml::start( "classeids" )
+                    >> xml::attribute( "file", strName )
+                >> xml::end();
 
     xml::xifstream  xisClasse( config.BuildPhysicalChildFile( strName ) );
 
@@ -74,9 +74,9 @@ void MIL_IDManager::Initialize( MIL_Config& config )
 
     LoadingWrapper loader;
 
-    xisClasse >> start( "Classes" )
+    xisClasse >> xml::start( "Classes" )
                   >> xml::list( "Classe", loader, &LoadingWrapper::ReadClasse )
-              >> end();
+              >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,8 +87,8 @@ void MIL_IDManager::ReadClasse( xml::xistream& xis )
 {
     uint nClassID;
     std::string strName;
-    xis >> attribute( "id", nClassID )
-        >> attribute( "nom", strName );
+    xis >> xml::attribute( "id", nClassID )
+        >> xml::attribute( "nom", strName );
 
             if( sCaseInsensitiveEqual()( strName, "Unite"                                  ) )  units_                             .SetClassID( nClassID );
     else if( sCaseInsensitiveEqual()( strName, "TirPion"                                ) )  fireResultsPion_                   .SetClassID( nClassID );

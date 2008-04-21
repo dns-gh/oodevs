@@ -28,7 +28,7 @@
 #include "Network/NET_AsnException.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_Population, "MIL_Population" )
 
@@ -51,10 +51,10 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
     , rOverloadedPionMaxSpeed_( 0. )
     , bHasDoneMagicMove_      ( false )
 {
-    xis >> optional() >> attribute( "name", strName_ );
+    xis >> xml::optional() >> xml::attribute( "name", strName_ );
 
     std::string strAttitude;
-    xis >> attribute( "attitude", strAttitude );
+    xis >> xml::attribute( "attitude", strAttitude );
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
     if( !pDefaultAttitude_ )
         xis.error( "Unknown attitude" );
@@ -177,19 +177,19 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
     assert( pDefaultAttitude_ );
     assert( !concentrations_.empty() || !flows_.empty() );
 
-    xos << start( "population" )
-        << attribute( "id"      , nID_ )
-        << attribute( "type"    , pType_->GetName() )
-        << attribute( "name"    , strName_ )
-        << attribute( "humans"  , GetNbrAliveHumans() + GetNbrDeadHumans() )
-        << attribute( "attitude", pDefaultAttitude_->GetName() );
+    xos << xml::start( "population" )
+        << xml::attribute( "id"      , nID_ )
+        << xml::attribute( "type"    , pType_->GetName() )
+        << xml::attribute( "name"    , strName_ )
+        << xml::attribute( "humans"  , GetNbrAliveHumans() + GetNbrDeadHumans() )
+        << xml::attribute( "attitude", pDefaultAttitude_->GetName() );
     
     if( !concentrations_.empty() )
-        xos << attribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
+        xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
     else
-        xos << attribute( "position", MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition() ) );
+        xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition() ) );
 
-    xos << end(); // population
+    xos << xml::end(); // population
 }
 
 // =============================================================================

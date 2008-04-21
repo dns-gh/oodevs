@@ -22,7 +22,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 
 //-----------------------------------------------------------------------------
@@ -42,8 +42,8 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , rVolume_           ( 0. ) 
 {
     std::string strNature;
-    xis >> attribute( "id", nMosID_ )
-        >> attribute( "nature", strNature );
+    xis >> xml::attribute( "id", nMosID_ )
+        >> xml::attribute( "nature", strNature );
 
     pNature_ = PHY_DotationNature::Find( strNature );
     if( !pNature_ )
@@ -57,7 +57,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     if( !attritions_.empty() || pIndirectFireData_ )
     {
         std::string strTmp;
-        xis >> attribute( "type", strTmp );
+        xis >> xml::attribute( "type", strTmp );
         pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( strTmp );
         if( !pAmmoDotationClass_ )
             xis.error( "Invalid ammo dotation class" );
@@ -82,9 +82,9 @@ PHY_DotationCategory::~PHY_DotationCategory()
 void PHY_DotationCategory::InitializePackagingData( xml::xistream& xis )
 {
     MT_Float rNbrInPackage;
-    xis >> attribute( "package-size", rNbrInPackage )
-        >> attribute( "package-mass", rWeight_ )
-        >> attribute( "package-volume", rVolume_ );
+    xis >> xml::attribute( "package-size", rNbrInPackage )
+        >> xml::attribute( "package-mass", rWeight_ )
+        >> xml::attribute( "package-volume", rVolume_ );
 
     if( rNbrInPackage <= 0 )
         xis.error( "dotation rNbrInPackage <= 0" );
@@ -124,7 +124,7 @@ void PHY_DotationCategory::ReadAttrition( xml::xistream& xis )
 {
     attritions_.resize( PHY_Protection::GetProtections().size() );
     std::string protectionType;
-    xis >> attribute( "protection", protectionType );
+    xis >> xml::attribute( "protection", protectionType );
 
     const PHY_Protection::T_ProtectionMap& protections = PHY_Protection::GetProtections();
     PHY_Protection::CIT_ProtectionMap it = protections.find( protectionType );
@@ -154,7 +154,7 @@ void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis )
     pIndirectFireData_ = 0;
     std::string strType;
 
-    xis >> attribute( "type", strType );
+    xis >> xml::attribute( "type", strType );
 
     const PHY_IndirectFireDotationClass* pType = PHY_IndirectFireDotationClass::Find( strType );
     if( !pType )
@@ -172,7 +172,7 @@ void PHY_DotationCategory::InitializeLogisticType( xml::xistream& xis )
     pLogisticType_ = &type_.GetDefaultLogisticType();
     bool dTranche = false;
 
-    xis >> optional() >> attribute( "d-type", dTranche );
+    xis >> xml::optional() >> xml::attribute( "d-type", dTranche );
     if( dTranche )
         pLogisticType_ = &PHY_DotationLogisticType::uniteFeuTD_;
 }

@@ -32,7 +32,7 @@
 #include "Tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
 
@@ -59,9 +59,9 @@ void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC&
     LoadingWrapper loader;
 
     // Initialisation des composantes
-    xis >> start( "weapons" )
+    xis >> xml::start( "weapons" )
             >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, manager, time )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,8 +73,8 @@ void PHY_WeaponType::ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager,
     std::string strLauncher;
     std::string strAmmunition;
 
-    xis >> attribute( "launcher", strLauncher )
-        >> attribute( "munition", strAmmunition );
+    xis >> xml::attribute( "launcher", strLauncher )
+        >> xml::attribute( "munition", strAmmunition );
 
     const PHY_WeaponType*& pWeaponType = weaponTypes_[ std::make_pair( strLauncher, strAmmunition ) ];
     if ( pWeaponType )
@@ -118,14 +118,14 @@ PHY_WeaponType::PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& 
         xis.error( "Unknown dotation category '" + strAmmunition + "'" );
     std::string burstTime, reloadingTime;
 
-    xis >> start( "burst" )
-            >> attribute( "munition", nNbrAmmoPerBurst_ )
-            >> attribute( "duration", burstTime )
-        >> end()
-        >> start( "reloading" )
-            >> attribute( "munition", nNbrAmmoPerLoader_ )
-            >> attribute( "duration", reloadingTime )
-        >> end();
+    xis >> xml::start( "burst" )
+            >> xml::attribute( "munition", nNbrAmmoPerBurst_ )
+            >> xml::attribute( "duration", burstTime )
+        >> xml::end()
+        >> xml::start( "reloading" )
+            >> xml::attribute( "munition", nNbrAmmoPerLoader_ )
+            >> xml::attribute( "duration", reloadingTime )
+        >> xml::end();
     if( ! tools::DecodeTime( burstTime,     rBurstDuration_ )
      || ! tools::DecodeTime( reloadingTime, rReloadingDuration_ ) )
         xis.error( "Invalid burst or reloading durations" );

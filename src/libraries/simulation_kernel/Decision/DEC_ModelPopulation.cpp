@@ -15,7 +15,7 @@
 #include "Entities/Orders/MIL_PopulationMissionType.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ModelPopulation constructor

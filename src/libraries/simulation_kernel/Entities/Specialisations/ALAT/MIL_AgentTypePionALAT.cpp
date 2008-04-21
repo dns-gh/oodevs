@@ -19,7 +19,7 @@
 #include "Decision/Functions/DEC_GeometryFunctions.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionALAT constructor

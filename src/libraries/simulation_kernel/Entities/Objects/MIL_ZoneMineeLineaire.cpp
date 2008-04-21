@@ -18,7 +18,7 @@
 #include "Tools/MIL_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_ZoneMineeLineaire, "MIL_ZoneMineeLineaire" )
 
@@ -80,8 +80,8 @@ void MIL_ZoneMineeLineaire::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_ZoneMineeLineaire::WriteSpecificAttributes( xml::xostream& xos ) const
 {
-    xos << content( "activity-time", nMinesActivityTime_ )
-        << content( "density", rMinesDensity_ );
+    xos << xml::content( "activity-time", nMinesActivityTime_ )
+        << xml::content( "density", rMinesDensity_ );
 }
 
 //=============================================================================
@@ -113,11 +113,11 @@ void MIL_ZoneMineeLineaire::Initialize( xml::xistream& xis )
 {
     MIL_RealObject_ABC::Initialize( xis );
 
-    xis >> optional() >> content( "activity-time", nMinesActivityTime_ );
+    xis >> xml::optional() >> xml::content( "activity-time", nMinesActivityTime_ );
     if( nMinesActivityTime_ < 0 )
         xis.error( "nMinesActivityTime_ is not greater or equal to 0 " );
 
-    xis >> optional() >> content( "density", rMinesDensity_ );
+    xis >> xml::optional() >> xml::content( "density", rMinesDensity_ );
     if( rMinesDensity_ < 0 )
         xis.error( "rMinesDensity is not greater or equal to 0 " );
 

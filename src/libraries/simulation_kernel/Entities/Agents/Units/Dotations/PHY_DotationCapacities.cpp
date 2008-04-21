@@ -19,7 +19,7 @@
 #include "PHY_DotationStockContainer.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacities constructor
@@ -27,10 +27,10 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 PHY_DotationCapacities::PHY_DotationCapacities( const std::string& strParentTagName, xml::xistream& xis )
 {
-    xis >> optional()
-        >> start( strParentTagName )
+    xis >> xml::optional()
+        >> xml::start( strParentTagName )
             >> xml::list( "category", *this, &PHY_DotationCapacities::ReadCategory )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ PHY_DotationCapacities::PHY_DotationCapacities( const std::string& strParentTagN
 void PHY_DotationCapacities::ReadCategory( xml::xistream& xis )
 {
     std::string strDotationType;
-    xis >> attribute( "name", strDotationType );
+    xis >> xml::attribute( "name", strDotationType );
 
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
     if( !pDotationType )
@@ -65,7 +65,7 @@ void PHY_DotationCapacities::ReadDotationCategories( xml::xistream& xis, const P
 void PHY_DotationCapacities::ReadDotation( xml::xistream& xis, const PHY_DotationType& dotationType )
 {
     std::string strCategoryName;
-    xis >> attribute( "name", strCategoryName );
+    xis >> xml::attribute( "name", strCategoryName );
 
     const PHY_DotationCategory* pDotationCategory = dotationType.FindDotationCategory( strCategoryName );
     if( !pDotationCategory )

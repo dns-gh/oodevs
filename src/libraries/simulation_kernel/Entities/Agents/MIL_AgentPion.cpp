@@ -72,7 +72,7 @@
 
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
 
@@ -186,19 +186,19 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 {
     assert( pType_ );
 
-    xos << start( "unit" )
-            << attribute( "id", GetID() )
-            << attribute( "name", strName_ )
-            << attribute( "type", pType_->GetName() )
-            << attribute( "command-post", bIsPC_ )
-            << attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
+    xos << xml::start( "unit" )
+            << xml::attribute( "id", GetID() )
+            << xml::attribute( "name", strName_ )
+            << xml::attribute( "type", pType_->GetName() )
+            << xml::attribute( "command-post", bIsPC_ )
+            << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
 
     GetRole< PHY_RolePion_Composantes >().WriteODB( xos ); // Equipements
     GetRole< PHY_RolePion_Humans      >().WriteODB( xos ); // Personnels
     GetRole< PHY_RolePion_Dotations   >().WriteODB( xos ); // Dotations
     GetRole< PHY_RolePion_Supply      >().WriteODB( xos ); // Stocks
        
-    xos << end();// unit
+    xos << xml::end();// unit
 }
 
 // -----------------------------------------------------------------------------
@@ -253,12 +253,12 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Initialize( xml::xistream& xis )
 {
-    xis >> optional() >> attribute( "command-post", bIsPC_ )
-        >> optional() >> attribute( "name", strName_ );
+    xis >> xml::optional() >> xml::attribute( "command-post", bIsPC_ )
+        >> xml::optional() >> xml::attribute( "name", strName_ );
 
     // Position - $$$ DEGEU
     std::string strPosition;
-    xis >> attribute( "position", strPosition );
+    xis >> xml::attribute( "position", strPosition );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
 

@@ -16,7 +16,7 @@
 
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGTC2 constructor

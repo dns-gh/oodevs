@@ -42,7 +42,7 @@
 
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MT_Float PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_             = 0.;
 MT_Float PHY_RolePion_Composantes::rOpStateWeightMajorComposante_                = 0.;
@@ -367,7 +367,7 @@ void PHY_RolePion_Composantes::ReadEquipements( xml::xistream& xis )
 void PHY_RolePion_Composantes::ReadEquipement( xml::xistream& xis )
 {
     std::string strType;
-    xis >> attribute( "type", strType );
+    xis >> xml::attribute( "type", strType );
 
     const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( strType );
     if( !pType )
@@ -376,8 +376,8 @@ void PHY_RolePion_Composantes::ReadEquipement( xml::xistream& xis )
     uint nNbrRepairable;
     uint nNbrDead;
 
-    xis >> attribute( "reparable", nNbrRepairable )
-        >> attribute( "indisponible", nNbrDead );
+    xis >> xml::attribute( "reparable", nNbrRepairable )
+        >> xml::attribute( "indisponible", nNbrDead );
 
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
@@ -429,7 +429,7 @@ void PHY_RolePion_Composantes::ReadPersonnel( xml::xistream& xis )
     std::string strState;
     CIT_ComposantePionVector itCurrentComp = composantes_.begin();
 
-    xis >> attribute( "etat", strState );
+    xis >> xml::attribute( "etat", strState );
 
     const PHY_HumanWound* pWound = PHY_HumanWound::Find( strState );
     if( !pWound )
@@ -442,7 +442,7 @@ void PHY_RolePion_Composantes::ReadPersonnel( xml::xistream& xis )
         std::stringstream strRank;
         strRank << "nb" << rank.GetName();
         uint nNbr;
-        xis >> attribute( strRank.str(), nNbr );
+        xis >> xml::attribute( strRank.str(), nNbr );
         DistributeHumanWounds( rank, *pWound, nNbr, itCurrentComp );
     }
 }

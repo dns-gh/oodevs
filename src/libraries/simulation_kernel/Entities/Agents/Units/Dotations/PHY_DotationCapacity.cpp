@@ -14,7 +14,7 @@
 #include "PHY_DotationCapacity.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacity constructor
@@ -27,8 +27,8 @@ PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category
 {
     float rSupplyThresholdPercentage;
 
-    xis >> attribute( "capacity", rCapacity_ )
-        >> attribute( "logistic-threshold", rSupplyThresholdPercentage );
+    xis >> xml::attribute( "capacity", rCapacity_ )
+        >> xml::attribute( "logistic-threshold", rSupplyThresholdPercentage );
 
     if( rCapacity_ <= 0 )
         xis.error( "dotation: capacity <= 0" );

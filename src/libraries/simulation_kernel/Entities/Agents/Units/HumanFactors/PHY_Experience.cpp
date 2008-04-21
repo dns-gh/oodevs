@@ -14,7 +14,7 @@
 #include "PHY_Experience.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
@@ -43,11 +43,11 @@ void PHY_Experience::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing experiences" );
     
     LoadingWrapper loader;
-    xis >> start( "humans-factors" )
-            >> start( "experience-factor" )
+    xis >> xml::start( "humans-factors" )
+            >> xml::start( "experience-factor" )
                 >> xml::list( "modifier", loader, &LoadingWrapper::ReadExperience )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ void PHY_Experience::ReadExperience( xml::xistream& xis )
     experiences_[ veteran_     .GetName() ] = &veteran_;
 
     std::string type;
-    xis >> attribute( "state", type );
+    xis >> xml::attribute( "state", type );
     T_ExperienceMap::iterator it = experiences_.find( type );
     if( it == experiences_.end() )
         xis.error( "Undefined experience state" );
@@ -114,11 +114,11 @@ PHY_Experience::~PHY_Experience()
 // -----------------------------------------------------------------------------
 void PHY_Experience::Read( xml::xistream& xis )
 {
-    xis >> attribute( "max-speed", rCoefMaxSpeedModificator_ )
-        >> attribute( "loading-time", rCoefReloadingTimeModificator_ )
-        >> attribute( "ph", rCoefPhModificator_ )
-        >> attribute( "posture-setup-time", rCoefPostureTimeModificator_ )
-        >> attribute( "sensor-distance", rCoefSensorDistanceModificator_ );
+    xis >> xml::attribute( "max-speed", rCoefMaxSpeedModificator_ )
+        >> xml::attribute( "loading-time", rCoefReloadingTimeModificator_ )
+        >> xml::attribute( "ph", rCoefPhModificator_ )
+        >> xml::attribute( "posture-setup-time", rCoefPostureTimeModificator_ )
+        >> xml::attribute( "sensor-distance", rCoefSensorDistanceModificator_ );
 
     if( rCoefMaxSpeedModificator_ <= 0 )
         xis.error( "max-speed <= 0" );

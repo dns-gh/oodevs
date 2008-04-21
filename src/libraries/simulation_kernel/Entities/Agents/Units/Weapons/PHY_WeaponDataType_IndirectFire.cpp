@@ -21,7 +21,7 @@
 #include "Tools/MIL_Tools.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_IndirectFire constructor
@@ -32,9 +32,9 @@ PHY_WeaponDataType_IndirectFire::PHY_WeaponDataType_IndirectFire( const PHY_Weap
 {
     assert( weaponType_.GetDotationCategory().GetIndirectFireData() != 0 );
 
-    xis >> attribute( "average-speed", rAverageSpeed_ )
-        >> attribute( "min-range", rMinRange_ )
-        >> attribute( "max-range", rMaxRange_ );
+    xis >> xml::attribute( "average-speed", rAverageSpeed_ )
+        >> xml::attribute( "min-range", rMinRange_ )
+        >> xml::attribute( "max-range", rMaxRange_ );
 
     if( rAverageSpeed_ < 0 )
         xis.error( "indirect-fire: average-speed < 0" );

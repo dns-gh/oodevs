@@ -24,7 +24,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 struct PHY_Convoy_ABC::LoadingWrapper
 {
@@ -59,8 +59,8 @@ void PHY_Convoy_ABC::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing convoys" );
 
-    xis >> start( "supply" )
-            >> start( "convoys" );
+    xis >> xml::start( "supply" )
+            >> xml::start( "convoys" );
 
     InitializeConvoyUnitType( xis );
     InitializeConvoyMission ( xis );
@@ -70,8 +70,8 @@ void PHY_Convoy_ABC::Initialize( xml::xistream& xis )
     InitializeInterpolatedTime ( xis, "unloading-times"   , unloadingTime_ );
     InitializeSpeedModificators( xis );
    
-    xis     >> end()
-        >> end();
+    xis     >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void PHY_Convoy_ABC::Initialize( xml::xistream& xis )
 void PHY_Convoy_ABC::InitializeConvoyUnitType( xml::xistream& xis )
 {
     std::string strConvoyAgentType;
-    xis >> attribute( "unit-type", strConvoyAgentType );
+    xis >> xml::attribute( "unit-type", strConvoyAgentType );
 
     pConvoyAgentType_ = MIL_AgentTypePion::Find( strConvoyAgentType );
     if( !pConvoyAgentType_ )
@@ -95,7 +95,7 @@ void PHY_Convoy_ABC::InitializeConvoyUnitType( xml::xistream& xis )
 void PHY_Convoy_ABC::InitializeConvoyMission( xml::xistream& xis )
 {
     std::string strMission;
-    xis >> attribute( "mission", strMission );
+    xis >> xml::attribute( "mission", strMission );
 
     pConvoyMissionType_ = MIL_PionMissionType::Find( strMission );
     if( !pConvoyMissionType_ )
@@ -116,9 +116,9 @@ void PHY_Convoy_ABC::InitializeInterpolatedTime( xml::xistream& xis, const std::
     LoadingWrapper loader;
 
     std::pair< uint, MT_Float > upperBound( 0, 0.f );
-    xis >> start( strTagName )
+    xis >> xml::start( strTagName )
             >> xml::list( "unit-time", loader, &LoadingWrapper::ReadInterpolatedTime, data, upperBound )
-        >> end();
+        >> xml::end();
 
     data.SetAfterValue( upperBound.second );
 }
@@ -132,7 +132,7 @@ void PHY_Convoy_ABC::ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFu
     uint     nNbrCamions;
     MT_Float rTime;
 
-    xis >> attribute( "truck-count", nNbrCamions );
+    xis >> xml::attribute( "truck-count", nNbrCamions );
     if( nNbrCamions <= 0 )
         xis.error( "time: truck-count <= 0" );
 
@@ -161,9 +161,9 @@ void PHY_Convoy_ABC::InitializeSpeedModificators( xml::xistream& xis )
 
     std::pair< uint, MT_Float > upperBound( 0, 0.f );
 
-    xis >> start( "speed-modifiers" )
+    xis >> xml::start( "speed-modifiers" )
             >> xml::list( "speed-modifier", loader, &LoadingWrapper::ReadSpeedModifier, upperBound )
-        >> end();
+        >> xml::end();
 
     coefSpeedModificator_.SetAfterValue( upperBound.second );
 }
@@ -177,8 +177,8 @@ void PHY_Convoy_ABC::ReadSpeedModifier( xml::xistream& xis, std::pair< uint, MT_
     uint     nNbrCamions;
     MT_Float rValue;
 
-    xis >> attribute( "truck-count", nNbrCamions )
-        >> attribute( "value", rValue );
+    xis >> xml::attribute( "truck-count", nNbrCamions )
+        >> xml::attribute( "value", rValue );
 
     if( nNbrCamions <= 0 )
         xis.error( "speed-modifier: truck-count <= 0" );

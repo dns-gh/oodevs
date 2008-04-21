@@ -20,7 +20,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 BOOST_CLASS_EXPORT_GUID( PHY_Dotation, "PHY_Dotation" )
 
@@ -116,7 +116,7 @@ void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const uint ) const
 void PHY_Dotation::ReadValue( xml::xistream& xis )
 {
     MT_Float rValue;
-    xis >> attribute( "quantity", rValue );
+    xis >> xml::attribute( "quantity", rValue );
     if( rValue < 0. )
         xis.error( "rValue is not greater or equal to 0." );
 

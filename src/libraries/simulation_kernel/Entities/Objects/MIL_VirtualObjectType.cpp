@@ -16,7 +16,7 @@
 #include "MIL_VirtualObjectType_ControlZone.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
       MIL_VirtualObjectType::T_ObjectTypeMap MIL_VirtualObjectType::objectTypes_;
 const MIL_VirtualObjectType_ControlZone&     MIL_VirtualObjectType::controlZone_ = *new MIL_VirtualObjectType_ControlZone( "controle de zone" );
@@ -44,11 +44,11 @@ void MIL_VirtualObjectType::Initialize( xml::xistream& xis )
     objectTypes_[ controlZone_.GetName() ] = &controlZone_;
     LoadingWrapper loader;
 
-    xis >> start( "objects" )
-            >> start( "virtual-objects" )
+    xis >> xml::start( "objects" )
+            >> xml::start( "virtual-objects" )
                 >> xml::list( "object", loader, &LoadingWrapper::ReadObject )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 
 
     // Post check
@@ -64,7 +64,7 @@ void MIL_VirtualObjectType::Initialize( xml::xistream& xis )
 void MIL_VirtualObjectType::ReadObject( xml::xistream& xis )
 {
     std::string strType;
-    xis >> attribute( "type", strType );
+    xis >> xml::attribute( "type", strType );
 
     const MIL_VirtualObjectType* pType = Find( strType );
     if( !pType )

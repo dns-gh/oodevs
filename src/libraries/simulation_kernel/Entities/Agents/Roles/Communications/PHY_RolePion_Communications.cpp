@@ -17,7 +17,7 @@
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MT_Float PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;
 MT_Float PHY_RolePion_Communications::rCoefReloadingTimeModificator_ = 0.;
@@ -30,12 +30,12 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Communications, "PHY_RolePion_Communicatio
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
 {
-    xis >> start( "communications" )
-            >> start( "communication-breakdown" )
-                >> attribute( "speed-modifier", rCoefSpeedModificator_ )
-                >> attribute( "reloading-time-modifier", rCoefReloadingTimeModificator_ )
-            >> end()
-        >> end();
+    xis >> xml::start( "communications" )
+            >> xml::start( "communication-breakdown" )
+                >> xml::attribute( "speed-modifier", rCoefSpeedModificator_ )
+                >> xml::attribute( "reloading-time-modifier", rCoefReloadingTimeModificator_ )
+            >> xml::end()
+        >> xml::end();
 
     if( rCoefSpeedModificator_ < 0 )
         xis.error( "communication-breakdown: speed-modifier < 0" );

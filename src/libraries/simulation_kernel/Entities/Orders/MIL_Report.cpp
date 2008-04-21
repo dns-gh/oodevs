@@ -19,7 +19,7 @@
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 
 // =============================================================================
@@ -47,9 +47,9 @@ void MIL_Report::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing reports types" );
 
     LoadingWrapper loader;
-    xis >> start( "reports" )
+    xis >> xml::start( "reports" )
             >> xml::list( "report", loader, &LoadingWrapper::ReadReport )
-        >> end();
+        >> xml::end();
 
     diaEvents_[ eReport_ReAvailableAfterRepairation                 ] = "EVT_RC_ANouveauDisponibleApresReparation";                
     diaEvents_[ eReport_EquipementRepairedInPlace                   ] = "EVT_RC_MaterielRepareSurPlace";                           
@@ -119,7 +119,7 @@ void MIL_Report::Initialize( xml::xistream& xis )
 void MIL_Report::ReadReport( xml::xistream& xis )
 {
     uint id;
-    xis >> attribute( "id", id );
+    xis >> xml::attribute( "id", id );
 
     const MIL_Report*& pReport = reports_[ id ];
     if( pReport )
@@ -139,7 +139,7 @@ MIL_Report::MIL_Report( uint id, xml::xistream& xis )
     : nID_       ( id )
     , strMessage_()
 {
-    xis >> attribute( "message", strMessage_ );
+    xis >> xml::attribute( "message", strMessage_ );
     xis >> xml::list( "parameter", *this, &MIL_Report::ReadParameter );
 }
 
@@ -150,7 +150,7 @@ MIL_Report::MIL_Report( uint id, xml::xistream& xis )
 void MIL_Report::ReadParameter( xml::xistream& xis )
 {
     std::string strType;
-    xis >> attribute( "type", strType );
+    xis >> xml::attribute( "type", strType );
     const MIL_ParameterType_ABC* pParameter = MIL_ParameterType_ABC::Find( strType );
     if( !pParameter )
         xis.error( "Unknown parameter type" );

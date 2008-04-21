@@ -20,7 +20,7 @@
 #include "xeumeuleu/xml.h"
 #include "Tools/xmlcodecs.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create
@@ -39,8 +39,8 @@ PHY_DotationCategory_IndirectWeatherFire::PHY_DotationCategory_IndirectWeatherFi
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
 {
     std::string setupTime, lifeTime;
-    xis >> attribute( "setup-time", setupTime )
-        >> attribute( "life-time", lifeTime );
+    xis >> xml::attribute( "setup-time", setupTime )
+        >> xml::attribute( "life-time", lifeTime );
 
     if( ! tools::DecodeTime( setupTime, rDeploymentDuration_ ) || rDeploymentDuration_ < 0. )
         xis.error( "indirect-fire: setup-time < 0" );

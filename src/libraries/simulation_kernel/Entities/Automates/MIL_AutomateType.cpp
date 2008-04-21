@@ -39,7 +39,7 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_AutomateType::T_AutomateTypeAllocatorMap  MIL_AutomateType::automateTypeAllocators_;
 MIL_AutomateType::T_AutomateTypeMap           MIL_AutomateType::automateTypes_;
@@ -94,9 +94,9 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     
     LoadingWrapper loader;
 
-    xis >> start( "automats" )
+    xis >> xml::start( "automats" )
             >> xml::list( "automat", loader, &LoadingWrapper::ReadAutomat )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -109,8 +109,8 @@ void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
     std::string strName;
     std::string strType;
 
-    xis >> attribute( "name", strName )
-        >> attribute( "type", strType );
+    xis >> xml::attribute( "name", strName )
+        >> xml::attribute( "type", strType );
 
     CIT_AutomateTypeAllocatorMap itAutomateAllocator = automateTypeAllocators_.find( strType );
     if( itAutomateAllocator == automateTypeAllocators_.end() )
@@ -153,7 +153,7 @@ MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& x
     , pModel_                         ( 0 )
     , rRapForIncreasePerTimeStepValue_( DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue() )
 {
-    xis >> attribute( "id", nID_ )
+    xis >> xml::attribute( "id", nID_ )
         >> xml::list( "unit", *this, &MIL_AutomateType::ReadUnit );
     if( !pTypePC_ )
         xis.error( "No command-post defined for automat type: " + strName_ );
@@ -179,7 +179,7 @@ MIL_AutomateType::~MIL_AutomateType()
 void MIL_AutomateType::ReadUnit( xml::xistream& xis )
 {
     std::string strPionType;
-    xis >> attribute( "type", strPionType );
+    xis >> xml::attribute( "type", strPionType );
 
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strPionType );
     if( !pType )
@@ -191,11 +191,11 @@ void MIL_AutomateType::ReadUnit( xml::xistream& xis )
     composition_[ pType ].nMax_ = std::numeric_limits< uint >::max();
     composition_[ pType ].nMin_ = 0;
 
-    xis >> optional() >> attribute( "min-occurs", composition_[ pType ].nMin_ )
-        >> optional() >> attribute( "max-occurs", composition_[ pType ].nMax_ );
+    xis >> xml::optional() >> xml::attribute( "min-occurs", composition_[ pType ].nMin_ )
+        >> xml::optional() >> xml::attribute( "max-occurs", composition_[ pType ].nMax_ );
 
     bool isCommandPost = false;
-    xis >> optional() >> attribute( "command-post", isCommandPost );
+    xis >> xml::optional() >> xml::attribute( "command-post", isCommandPost );
     if( isCommandPost )
         if( !pTypePC_ )
             pTypePC_ = pType;
@@ -210,7 +210,7 @@ void MIL_AutomateType::ReadUnit( xml::xistream& xis )
 void MIL_AutomateType::InitializeModel( xml::xistream& xis )
 {
     std::string strModel;
-    xis >> attribute( "decisional-model", strModel );
+    xis >> xml::attribute( "decisional-model", strModel );
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( strModel );
     if( !pModel_ )
         xis.error( "Unknown automata model" );

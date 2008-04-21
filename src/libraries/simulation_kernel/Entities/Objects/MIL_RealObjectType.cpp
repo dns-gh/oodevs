@@ -64,7 +64,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 MIL_RealObjectType::T_ObjectTypeMap     MIL_RealObjectType::objectTypes_;
 MIL_RealObjectTypeFilter*               MIL_RealObjectType::pDangerousObjectTypes_ = 0;
@@ -176,11 +176,11 @@ void MIL_RealObjectType::Initialize( xml::xistream& xis )
     pDangerousObjectTypes_ = new MIL_RealObjectTypeFilter();
     LoadingWrapper loader;
 
-    xis >> start( "objects" )
-            >> start( "real-objects" )
+    xis >> xml::start( "objects" )
+            >> xml::start( "real-objects" )
             >> xml::list( "object", loader, &LoadingWrapper::ReadObject )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 
     // Post check
     for( CIT_ObjectTypeMap itType = objectTypes_.begin(); itType != objectTypes_.end(); ++itType )
@@ -196,7 +196,7 @@ void MIL_RealObjectType::Initialize( xml::xistream& xis )
 void MIL_RealObjectType::ReadObject( xml::xistream& xis )
 {
     std::string strType;
-    xis >> attribute( "type", strType );
+    xis >> xml::attribute( "type", strType );
 
     const MIL_RealObjectType* pType = Find( strType );
     if( !pType )
@@ -283,7 +283,7 @@ void MIL_RealObjectType::ReadAttrition( xml::xistream& xis )
     const PHY_Protection::T_ProtectionMap& protections = PHY_Protection::GetProtections();
     std::string protectionType;
 
-    xis >> attribute( "protection", protectionType );
+    xis >> xml::attribute( "protection", protectionType );
 
     PHY_Protection::CIT_ProtectionMap it = protections.find( protectionType );
 
@@ -314,8 +314,8 @@ void MIL_RealObjectType::ReadPopulation( xml::xistream& xis )
     rPopulationAttritionPH_      = 0.;
     rPopulationAttritionSurface_ = 0.;
 
-    xis >> attribute( "surface", rPopulationAttritionSurface_ )
-        >> attribute( "ph", rPopulationAttritionPH_ );
+    xis >> xml::attribute( "surface", rPopulationAttritionSurface_ )
+        >> xml::attribute( "ph", rPopulationAttritionPH_ );
 
     if( rPopulationAttritionPH_ <= 0. )
         xis.error( "population-attrition: ph <= 0" );
@@ -341,8 +341,8 @@ void MIL_RealObjectType::ReadValorizationOrConstruction( xml::xistream& xis, uin
     std::string strDotationType;
     std::string strDotationCategory;
 
-    xis >> attribute( "category", strDotationType )
-        >> attribute( "dotation", strDotationCategory );
+    xis >> xml::attribute( "category", strDotationType )
+        >> xml::attribute( "dotation", strDotationCategory );
 
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
     if( !pDotationType )
@@ -351,7 +351,7 @@ void MIL_RealObjectType::ReadValorizationOrConstruction( xml::xistream& xis, uin
     if( !pDotationCategory )
         xis.error( "Unknown dotation category" );
 
-    xis >> attribute( "count", nDotationValue );
+    xis >> xml::attribute( "count", nDotationValue );
 
     if( nDotationValue < 0 )
         xis.error( "dotations: count < 0" );
@@ -383,10 +383,10 @@ void MIL_RealObjectType::ReadInitializeDotation( xml::xistream& xis )
 void MIL_RealObjectType::InitializePlacementScores( xml::xistream& xis )
 {
      // Placement scores
-    xis >> optional()
-            >> start( "sensible-positions" )
+    xis >> xml::optional()
+            >> xml::start( "sensible-positions" )
                 >> xml::list( "terrain", *this, MIL_RealObjectType::ReadTerrain )
-            >> end();
+            >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -398,8 +398,8 @@ void MIL_RealObjectType::ReadTerrain( xml::xistream& xis )
     std::string strTerrainType;
     uint nScore = 0;
 
-    xis >> attribute( "terrain", strTerrainType )
-        >> attribute( "value", nScore );
+    xis >> xml::attribute( "terrain", strTerrainType )
+        >> xml::attribute( "value", nScore );
 
     TerrainData nLandType = MIL_Tools::ConvertLandType( strTerrainType );
     if( nLandType.Area() == 0xFF )
@@ -414,8 +414,8 @@ void MIL_RealObjectType::ReadTerrain( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::InitializeSpeedData( xml::xistream& xis )
 {
-    xis >> attribute( "default-speed", rDefaultSpeedWhenNotBypassed_ )
-        >> attribute( "default-bypassed-speed", rDefaultSpeedWhenBypassed_ );
+    xis >> xml::attribute( "default-speed", rDefaultSpeedWhenNotBypassed_ )
+        >> xml::attribute( "default-bypassed-speed", rDefaultSpeedWhenBypassed_ );
 
     if( rDefaultSpeedWhenNotBypassed_ >= 0. )
         rDefaultSpeedWhenNotBypassed_ = MIL_Tools::ConvertSpeedMosToSim( rDefaultSpeedWhenNotBypassed_ );
@@ -429,7 +429,7 @@ void MIL_RealObjectType::InitializeSpeedData( xml::xistream& xis )
 
     std::string strSpeedPolicy;
 
-    xis >> attribute( "unit-speed-impact-mode", strSpeedPolicy );
+    xis >> xml::attribute( "unit-speed-impact-mode", strSpeedPolicy );
 
     if( sCaseInsensitiveEqual()( strSpeedPolicy, "AuPlusLent" ) )
         nSpeedPolicy_ = eSpeedPolicy_Slowest;
@@ -438,7 +438,7 @@ void MIL_RealObjectType::InitializeSpeedData( xml::xistream& xis )
     else if( sCaseInsensitiveEqual()( strSpeedPolicy, "VitesseMaxAgent" ) )
     {
         nSpeedPolicy_ = eSpeedPolicy_AgentMaxSpeed;
-        xis >> attribute( "max-unit-percentage-speed", rSpeedPolicyMaxSpeedAgentFactor_ );
+        xis >> xml::attribute( "max-unit-percentage-speed", rSpeedPolicyMaxSpeedAgentFactor_ );
         if( rSpeedPolicyMaxSpeedAgentFactor_ < 0 || rSpeedPolicyMaxSpeedAgentFactor_ > 100 )
             xis.error( "max-unit-percentage-speed not in [0..100]" );
         rSpeedPolicyMaxSpeedAgentFactor_ /= 100.;
@@ -459,33 +459,33 @@ void MIL_RealObjectType::Read( xml::xistream& xis )
         xis.error( "Class ID of object '" + strName_ + "' is not initialized" );
 
     bool bDangerous;
-    xis >> attribute( "dangerous", bDangerous );
+    xis >> xml::attribute( "dangerous", bDangerous );
     if( bDangerous )
         pDangerousObjectTypes_->Set( *this );
 
     std::string strConsumptionMode;
-    xis >> attribute( "default-consumption-mode", strConsumptionMode );
+    xis >> xml::attribute( "default-consumption-mode", strConsumptionMode );
     pDefaultConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( strConsumptionMode );
     if( !pDefaultConsumptionMode_ )
         xis.error( "Unknown consumption type" );
 
-    xis >> attribute( "can-be-maneuver-obstacle", bCanBeReservedObstacle_ )
-        >> attribute( "can-be-developed", bCanBeMined_ )
-        >> attribute( "can-be-bypassed", bCanBeBypassed_ )
-        >> attribute( "max-interaction-height", rMaxInteractionHeight_ );
+    xis >> xml::attribute( "can-be-maneuver-obstacle", bCanBeReservedObstacle_ )
+        >> xml::attribute( "can-be-developed", bCanBeMined_ )
+        >> xml::attribute( "can-be-bypassed", bCanBeBypassed_ )
+        >> xml::attribute( "max-interaction-height", rMaxInteractionHeight_ );
 
     rAvoidanceDistance_ = 100.; // $$$$ AGE 2005-03-30:
-    xis >> optional()
-            >> attribute( "avoid-distance", rAvoidanceDistance_ );
+    xis >> xml::optional()
+            >> xml::attribute( "avoid-distance", rAvoidanceDistance_ );
     rAvoidanceDistance_ = MIL_Tools::ConvertMeterToSim( rAvoidanceDistance_ );
 
     nNbrMaxAnimators_ = 0;
     rExitingPopulationDensity_ = 0;
 
-    xis >> optional()
-            >> attribute( "max-animating-units", nNbrMaxAnimators_ )
-        >> optional()
-            >> attribute( "population-density", rExitingPopulationDensity_ );
+    xis >> xml::optional()
+            >> xml::attribute( "max-animating-units", nNbrMaxAnimators_ )
+        >> xml::optional()
+            >> xml::attribute( "population-density", rExitingPopulationDensity_ );
 
     if( nNbrMaxAnimators_ < 0 )
         xis.error( "max-animating-units < 0" );

@@ -20,7 +20,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create
@@ -38,7 +38,7 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectMineFire::Cr
 PHY_DotationCategory_IndirectMineFire::PHY_DotationCategory_IndirectMineFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
 {
-    xis >> attribute( "mine-count", nNbrObjects_ );
+    xis >> xml::attribute( "mine-count", nNbrObjects_ );
 }
 
 // -----------------------------------------------------------------------------

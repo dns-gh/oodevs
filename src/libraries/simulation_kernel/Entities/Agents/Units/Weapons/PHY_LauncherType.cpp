@@ -17,7 +17,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
+
 
 // =============================================================================
 // MANAGER
@@ -43,9 +43,9 @@ void PHY_LauncherType::Initialize( xml::xistream& xis )
 
     LoadingWrapper loader;
 
-    xis >> start( "launchers" )
+    xis >> xml::start( "launchers" )
             >> xml::list( "launcher", loader, &LoadingWrapper::ReadLauncher )
-        >> end();
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void PHY_LauncherType::Initialize( xml::xistream& xis )
 void PHY_LauncherType::ReadLauncher( xml::xistream& xis )
 {
         std::string strLauncherName;
-        xis >> attribute( "name", strLauncherName );
+        xis >> xml::attribute( "name", strLauncherName );
 
         const PHY_LauncherType*& pLauncherType = launcherTypes_[ strLauncherName ];
         if ( pLauncherType )
@@ -109,8 +109,8 @@ PHY_LauncherType::~PHY_LauncherType()
 void PHY_LauncherType::InitializeForIndirectFire( xml::xistream& xis )
 {
     bIndirectFire_ = false;
-    xis >> optional()
-        >> attribute( "indirect-fire", bIndirectFire_ );
+    xis >> xml::optional()
+        >> xml::attribute( "indirect-fire", bIndirectFire_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ void PHY_LauncherType::ReadDirect( xml::xistream& xis )
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
     std::string postureType;
 
-    xis >> attribute( "posture", postureType );
+    xis >> xml::attribute( "posture", postureType );
     PHY_Posture::CIT_PostureMap it = postures.find( postureType );
     const PHY_Posture& postureSource = *it->second;
     if( !postureSource.CanModifyPH() )
@@ -150,14 +150,14 @@ void PHY_LauncherType::ReadModifier( xml::xistream& xis, const PHY_Posture& post
 {
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
     std::string targetType;
-    xis >> attribute( "target-posture", targetType );
+    xis >> xml::attribute( "target-posture", targetType );
     PHY_Posture::CIT_PostureMap it = postures.find( targetType );
     const PHY_Posture& postureTarget = *it->second;
     if( !postureTarget.CanModifyPH() )
         return;
 
     MT_Float rModificatorValue;
-    xis >> attribute( "value", rModificatorValue );
+    xis >> xml::attribute( "value", rModificatorValue );
 
     if( rModificatorValue < 0 || rModificatorValue > 1 )
         xis.error( "target-posture: value not in [0..1]" );
