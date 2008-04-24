@@ -66,7 +66,6 @@ private:
     //! @name Helpers
     //@{
     virtual void AddPlatform( const tic::Platform_ABC& platform );
-    void SendUnitState() const;
     //@}
 
     //! @name Types
@@ -84,9 +83,9 @@ private:
     UdpNetwork&            network_;
     const DisTypeResolver& resolver_;
     dispatcher::Agent&     holder_;
-    EntityIdentifier       myId_;
     const unsigned char    exercise_;
     T_Identifiers          ids_;
+    std::auto_ptr< tic::Platform_ABC > adapted_;
     //@}
 };
 

@@ -15,6 +15,7 @@
 #include "DisTypeResolver.h"
 #include "tic_plugin/TicExtension_ABC.h"
 #include "tic_plugin/Platform_ABC.h"
+#include "tic_plugin/PlatformAdapter.h"
 #include "dispatcher/Agent.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ComponentType.h"
@@ -35,8 +36,8 @@ DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, con
     , network_  ( network )
     , resolver_ ( resolver )
     , holder_   ( holder )
-    , myId_     ( id_.CreateNewIdentifier() )
     , exercise_ ( exercise )
+    , adapted_  ( new tic::PlatformAdapter( holder_, converter ) )
 {
     // NOTHING
 }
@@ -59,7 +60,7 @@ void DisExtension::DoUpdate( const ASN1T_MsgUnitAttributes& )
     if( tic::TicExtension_ABC* extension = holder_.Retrieve< tic::TicExtension_ABC >() )
         extension->Accept( *this );
     else
-        SendUnitState();
+        AddPlatform( *adapted_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,21 +86,6 @@ void DisExtension::AddPlatform( const tic::Platform_ABC& platform )
     const geometry::Point2f position( platform.GetPosition().X(), platform.GetPosition().Y() );
     const geometry::Point2d geocoord = converter_.ConvertToGeo( position );
     pdu.SetPosition( geocoord.Y(), geocoord.X(), platform.GetAltitude(), platform.GetSpeed(), platform.GetHeading() );
-
-    network_.Send( pdu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DisExtension::SendUnitState
-// Created: AGE 2008-04-02
-// -----------------------------------------------------------------------------
-void DisExtension::SendUnitState() const
-{
-    EntityStatePDU pdu( time_.GetTime(), exercise_, myId_ );
-    pdu.SetEntityName( holder_.GetName() );
-
-    pdu.SetPosition( holder_.position_.latitude, holder_.position_.longitude,
-        (float)holder_.nHeight_, (float)holder_.nSpeed_, (float)holder_.nDirection_ );
 
     network_.Send( pdu );
 }
