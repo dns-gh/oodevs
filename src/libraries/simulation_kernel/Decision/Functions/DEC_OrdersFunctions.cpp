@@ -75,7 +75,8 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
     for( CIT_ObjectVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
         MIL_AgentPion& pion = static_cast< DEC_RolePion_Decision* >( *itPion )->GetPion();
-        for( MIL_Fuseau::IT_FuseauPtrList itFuseau = subFuseaux.begin(); itFuseau != subFuseaux.end(); ++itFuseau )
+        MIL_Fuseau::IT_FuseauPtrList itFuseau ;
+		for( itFuseau = subFuseaux.begin(); itFuseau != subFuseaux.end(); ++itFuseau )
         {
             MIL_Fuseau& fuseau = **itFuseau;
             if( fuseau.IsInside( pion.GetRole< PHY_RolePion_Location >().GetPosition() ) )
