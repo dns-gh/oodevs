@@ -151,6 +151,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asnMsg )
         case T_MsgsSimToClient_msg_msg_control_pause_ack:                    pSimulationModel_->Update_Pause( asnMsg.msg.u.msg_control_pause_ack ); break;
         case T_MsgsSimToClient_msg_msg_control_resume_ack:                   pSimulationModel_->Update_Resume( asnMsg.msg.u.msg_control_resume_ack ); break;
         case T_MsgsSimToClient_msg_msg_control_change_time_factor_ack:       pSimulationModel_->Update( *asnMsg.msg.u.msg_control_change_time_factor_ack ); break;
+        case T_MsgsSimToClient_msg_msg_control_date_time_change_ack:
         case T_MsgsSimToClient_msg_msg_control_global_meteo_ack:
         case T_MsgsSimToClient_msg_msg_control_local_meteo_ack:
         case T_MsgsSimToClient_msg_msg_control_checkpoint_save_begin:

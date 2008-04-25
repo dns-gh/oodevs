@@ -42,11 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    void Start();
-    void Stop();
-    bool IsRunning() const;
-    unsigned long GetCurrentTime() const;
-    void Shift( long shift );
+    QDateTime GetDateTime() const;
+    void Shift( long secs );
     //@}
 
 private:
@@ -68,10 +65,7 @@ private:
     const Simulation& simulation_;
     const ActionsModel& actions_;
     Publisher_ABC& publisher_;
-    unsigned long currentTime_;
-    unsigned long lastTick_;
-    bool running_;
-    bool paused_;
+    QDateTime currentTime_;
     //@}
 };
 

@@ -13,6 +13,7 @@
 #include "Action_ABC.h"
 #include "ActionsModel.h"
 #include "ActionTiming.h"
+#include "gaming/ASN_Messages.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace kernel;
@@ -27,10 +28,7 @@ ActionsScheduler::ActionsScheduler( QObject* parent, Controllers& controllers, c
     , simulation_( simulation )
     , actions_( actions )
     , publisher_( publisher )
-    , currentTime_( 0 )
-    , lastTick_( 0 )
-    , running_( false )
-    , paused_( false )
+    , currentTime_()
 {
     controllers_.Register( *this );
 }
@@ -45,50 +43,12 @@ ActionsScheduler::~ActionsScheduler()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsScheduler::Start
-// Created: SBO 2007-07-13
-// -----------------------------------------------------------------------------
-void ActionsScheduler::Start()
-{
-    if( running_ )
-        paused_ = !paused_;
-    else
-    {
-        lastTick_ = simulation_.GetCurrentTick();
-        running_ = true;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsScheduler::Stop
-// Created: SBO 2007-07-13
-// -----------------------------------------------------------------------------
-void ActionsScheduler::Stop()
-{
-    paused_ = false;
-    running_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsScheduler::IsRunning
-// Created: SBO 2007-07-16
-// -----------------------------------------------------------------------------
-bool ActionsScheduler::IsRunning() const
-{
-    return running_ && !paused_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionsScheduler::NotifyUpdated
 // Created: SBO 2007-07-13
 // -----------------------------------------------------------------------------
 void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )
 {
-    int interval = simulation_.GetCurrentTick() - lastTick_; // $$$$ SBO 2007-07-16: should provide replayer time-shifting compatibility
-    lastTick_ = simulation_.GetCurrentTick();
-    if( !running_ || paused_ || currentTime_ + interval < 0 )
-        return;
-    currentTime_ += interval;
+    currentTime_ = simulation_.GetDateTime();
     Iterator< const Action_ABC& > it( actions_.CreateIterator() );
     while( it.HasMoreElements() )
     {
@@ -100,19 +60,36 @@ void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsScheduler::GetCurrentTime
+// Name: ActionsScheduler::GetDateTime
 // Created: SBO 2007-07-16
 // -----------------------------------------------------------------------------
-unsigned long ActionsScheduler::GetCurrentTime() const
+QDateTime ActionsScheduler::GetDateTime() const
 {
     return currentTime_;
+}
+
+namespace
+{
+    std::string MakeGDHString( const QDateTime& datetime )
+    {
+        // $$$$ SBO 2008-04-25: ...
+        QString str = datetime.toString( Qt::ISODate );
+        str.remove( ':' );
+        str.remove( '-' );
+        return str.ascii();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsScheduler::Shift
 // Created: SBO 2007-07-16
 // -----------------------------------------------------------------------------
-void ActionsScheduler::Shift( long shift )
+void ActionsScheduler::Shift( long secs )
 {
-    currentTime_ = std::max< long >( 0, long( currentTime_ ) + shift );
+    QDateTime newTime = simulation_.GetDateTime().addSecs( secs );
+    if( newTime < simulation_.GetInitialDateTime() )
+        newTime = simulation_.GetInitialDateTime();
+    ASN_MsgSimControlDatetimeChange asn;
+    asn().date_time = MakeGDHString( newTime ).c_str();
+    asn.Send( publisher_ );    
 }

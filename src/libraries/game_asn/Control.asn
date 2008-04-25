@@ -20,7 +20,8 @@ EnumControlErrorCode ::= ENUMERATED
    error-not-started            (2),
    error-not-paused             (3),
    error-already-paused         (4),
-   error-invalid-time-factor    (5)
+   error-invalid-time-factor    (5),
+   error-invalid-date-time      (6)
 }
 
 MsgControlStop     ::= NULL 
@@ -75,7 +76,8 @@ EnumSimulationState ::= ENUMERATED
 
 MsgControlInformation ::= SEQUENCE
 {
-    current-tick            INTEGER,     
+    current-tick            INTEGER,
+    initial-date-time       DateTime,
     date-time               DateTime,
     tick-duration           INTEGER,  -- En secondes
     time-factor             INTEGER,
@@ -88,6 +90,7 @@ MsgControlInformation ::= SEQUENCE
 MsgControlReplayInformation ::= SEQUENCE
 {
     current-tick            INTEGER,     
+    initial-date-time       DateTime,
     date-time               DateTime,
     tick-duration           INTEGER,  -- En secondes
     time-factor             INTEGER,
@@ -172,5 +175,16 @@ MsgControlLocalMeteo ::= SEQUENCE
 
 MsgControlGlobalMeteoAck ::= NULL
 MsgControlLocalMeteoAck  ::= NULL
+
+----------------
+-- DATETIME
+----------------
+
+MsgControlDatetimeChange ::= SEQUENCE
+{
+    date-time DateTime
+}
+
+MsgControlDatetimeChangeAck ::= EnumControlErrorCode
 
 END -- Control

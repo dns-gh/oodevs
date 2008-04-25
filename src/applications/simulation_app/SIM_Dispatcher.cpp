@@ -18,6 +18,7 @@
 #   include "gearth_plugin/GearthPluginFactory.h"
 #   include "crossbow_plugin/CrossbowPluginFactory.h"
 #endif
+#include "bml_plugin/BmlPluginFactory.h"
 #include "tools/win32/Win32Exception.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
@@ -35,6 +36,7 @@ SIM_Dispatcher::SIM_Dispatcher( SIM_Config& config )
     dispatcher_.RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
     dispatcher_.RegisterPluginFactory( *new gearth::GearthPluginFactory() );
 #endif
+//    dispatcher_.RegisterPluginFactory( *new bml::BmlPluginFactory() );
     dispatcher_.CreatePlugins();
 
     Thread::Start();

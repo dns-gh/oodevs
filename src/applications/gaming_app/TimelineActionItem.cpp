@@ -9,21 +9,27 @@
 
 #include "gaming_app_pch.h"
 #include "TimelineActionItem.h"
+#include "moc_TimelineActionItem.cpp"
+#include "TimelineView.h"
 #include "TimelineEntityItem.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionTiming.h"
 #include "clients_kernel/Controllers.h"
 #include <qpainter.h>
+#include <qfontmetrics.h>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineActionItem constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineActionItem::TimelineActionItem( const TimelineItem_ABC& parent, kernel::Controllers& controllers, const Action_ABC& action )
-    : TimelineItem_ABC( parent.canvas() )
+TimelineActionItem::TimelineActionItem( const TimelineView& view, const TimelineItem_ABC& parent, kernel::Controllers& controllers, const Action_ABC& action )
+    : QObject( view.canvas() )
+    , TimelineItem_ABC( view.canvas() )
+    , view_( view )
     , controllers_( controllers )
     , parentItem_( parent )
     , action_( action )
+    , textWidth_( 0 )
 {
     palette_.setColor( QPalette::Disabled, QColorGroup::Background, QColor( 220, 220, 220 ) );
     palette_.setColor( QPalette::Disabled, QColorGroup::Foreground, QColor( 180, 180, 180 ) );
@@ -32,7 +38,6 @@ TimelineActionItem::TimelineActionItem( const TimelineItem_ABC& parent, kernel::
     palette_.setColor( QPalette::Active  , QColorGroup::Background, QColor( 200, 215, 240 ) );
     palette_.setColor( QPalette::Active  , QColorGroup::Foreground, QColor(  50, 105, 200 ) );
 
-    setZ( parent.z() - 100 );
     show();
     controllers_.Register( *this );
 }
@@ -54,7 +59,7 @@ void TimelineActionItem::NotifyUpdated( const ActionTiming& timing )
 {
     if( &timing == action_.Retrieve< ActionTiming >() )
     {
-        setX( parentItem_.width() + timing.GetTime() ); // $$$$ SBO 2007-07-05: 
+        setX( view_.ConvertToPosition( timing.GetTime() ) );
         setEnabled( timing.IsEnabled() );
         if( x() + rect().width() > canvas()->width() )
             canvas()->resize( x() + rect().width(), canvas()->height() );
@@ -72,7 +77,7 @@ void TimelineActionItem::setVisible( bool visible )
     {
         if( timing->IsEnabled() != isVisible() )
             timing->ToggleEnabled();
-        setX( parentItem_.width() + timing->GetTime() ); // $$$$ SBO 2007-07-05: 
+        setX( view_.ConvertToPosition( timing->GetTime() ) );
     }
 }
 
@@ -84,7 +89,7 @@ void TimelineActionItem::Shift( long shift )
 {
     if( isEnabled() )
         if( ActionTiming* timing = const_cast< ActionTiming* >( action_.Retrieve< ActionTiming >() ) )
-            timing->Shift( shift ); // $$$$ SBO 2007-07-06: 
+            timing->Shift( view_.ConvertToSeconds( shift ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,8 +98,36 @@ void TimelineActionItem::Shift( long shift )
 // -----------------------------------------------------------------------------
 void TimelineActionItem::Update()
 {
-    setY( parentItem_.y() + 3 );
-    setSize( 100, parentItem_.height() - 5 );
+    setY( parentItem_.y() + 1 );
+    setSize( textWidth_ + 10, parentItem_.height() - 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineActionItem::ComputeTextWidth
+// Created: SBO 2008-04-22
+// -----------------------------------------------------------------------------
+void TimelineActionItem::ComputeTextWidth( QPainter& painter )
+{
+    QFontMetrics metrics( painter.font() );
+    textWidth_ = metrics.width( action_.GetName() );
+}
+
+namespace
+{
+    void DrawArrow( QPainter& painter, const QRect& rect )
+    {
+        painter.drawLine( rect.left()    , rect.top()    , rect.left()    , rect.bottom() );
+        painter.drawLine( rect.left() - 2, rect.top() + 2, rect.left()    , rect.top() );
+        painter.drawLine( rect.left() + 2, rect.top() + 2, rect.left()    , rect.top() );
+        painter.drawLine( rect.left() + 2, rect.top() + 2, rect.left() - 2, rect.top() + 2 );
+    }
+
+    void DrawBox( QPainter& painter, const QRect& rect, const QColor& background, const QColor& foreground )
+    {
+        painter.fillRect( rect, background );
+        painter.setPen( foreground );
+        painter.drawRect( rect );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -103,16 +136,20 @@ void TimelineActionItem::Update()
 // -----------------------------------------------------------------------------
 void TimelineActionItem::draw( QPainter& painter )
 {
+    if( !textWidth_ )
+        ComputeTextWidth( painter );
     Update();
     if( isSelected() )
-        setZ( parentItem_.z() - 99 );
+        setZ( parentItem_.z() );
     else
-        setZ( parentItem_.z() - 100 );
+        setZ( parentItem_.z() - 1 );
     const QPalette::ColorGroup colorGroup = isEnabled() ? ( isSelected() ? QPalette::Active : QPalette::Inactive ) : QPalette::Disabled;
     const QPen oldPen = painter.pen();
-    painter.fillRect( rect(), palette_.color( colorGroup, QColorGroup::Background ) );
-    painter.setPen( palette_.color( colorGroup, QColorGroup::Foreground ) );
-    painter.drawRect( rect() );
+
+    painter.fillRect( rect().left(), rect().top() + 1, rect().width(), rect().height() - 2, Qt::white ); // $$$$ SBO 2008-04-22: clear color
+    const QRect bottomRect( rect().left(), rect().bottom() - 3, 30, 4 );
+    DrawBox( painter, bottomRect, palette_.color( colorGroup, QColorGroup::Background ), palette_.color( colorGroup, QColorGroup::Foreground ) );
+    DrawArrow( painter, rect() );
     painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, " " + action_.GetName() );
     painter.setPen( oldPen );
 }
@@ -128,10 +165,41 @@ void TimelineActionItem::DisplayToolTip( QWidget* parent ) const
     if( !isEnabled() )
         tip += "<i>disabled</i>";
     else
-        tip += "<table cellspacing='0' cellpadding='0'><tr><td>Start time: </td><td><i>tick " + QString::number( rect().left() - parentItem_.width() ) + "</i></td></tr></table>";
+        tip += "<table cellspacing='0' cellpadding='0'><tr><td>Starts: </td><td><i>"
+        + action_.Get< ActionTiming >().GetTime().toString() + "</i></td></tr></table>";
     if( QToolTip::textFor( parent ) != tip )
     {
         QToolTip::remove( parent );
         QToolTip::add( parent, tip );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineActionItem::DisplayContextMenu
+// Created: SBO 2008-04-22
+// -----------------------------------------------------------------------------
+void TimelineActionItem::DisplayContextMenu( QWidget* parent, const QPoint& pos  ) const
+{
+    QPopupMenu* popup = new QPopupMenu( parent );
+    popup->insertItem( tr( "Rename" ), this, SLOT( OnRename() ) );
+    popup->insertItem( tr( "Delete" ), this, SLOT( OnDelete() ) );
+    popup->popup( pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineActionItem::OnDelete
+// Created: SBO 2008-04-22
+// -----------------------------------------------------------------------------
+void TimelineActionItem::OnDelete()
+{
+     // $$$$ SBO 2008-04-22: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineActionItem::OnRename
+// Created: SBO 2008-04-22
+// -----------------------------------------------------------------------------
+void TimelineActionItem::OnRename()
+{
+     // $$$$ SBO 2008-04-22: 
 }

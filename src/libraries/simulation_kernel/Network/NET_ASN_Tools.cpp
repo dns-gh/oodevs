@@ -419,10 +419,10 @@ DEC_Knowledge_Population* NET_ASN_Tools::ReadPopulationKnowledge( const ASN1T_Po
 // Name: NET_ASN_Tools::ReadGDH
 // Created: NLD 2004-01-15
 // -----------------------------------------------------------------------------
-uint NET_ASN_Tools::ReadGDH( const ASN1T_DateTime& asnGDH )
+void NET_ASN_Tools::ReadGDH( const ASN1T_DateTime& asn, uint& realTimeSec )
 {
-    bpt::ptime time = bpt::from_iso_string( std::string( (const char*)asnGDH.data, 15 ) );
-    return ( time - bpt::from_time_t( 0 ) ).total_seconds();
+    bpt::ptime time = bpt::from_iso_string( std::string( (const char*)asn.data, 15 ) );
+    realTimeSec = ( time - bpt::from_time_t( 0 ) ).total_seconds();
 }
 
 //=============================================================================
@@ -2196,7 +2196,9 @@ bool NET_ASN_Tools::CopyPathList( const DIA_Variable_ABC& diaFrom, DIA_Variable_
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::CopyGDH( const ASN1T_DateTime& asn, DIA_Variable_ABC& dia )
 {
-    dia.SetValue( (float)ReadGDH( asn ) );
+    uint value = 0;
+    ReadGDH( asn, value );
+    dia.SetValue( float( value ) );
     return true;
 }
 
@@ -2229,7 +2231,9 @@ void NET_ASN_Tools::WriteGDH( uint nRealTimeSec, ASN1T_DateTime& asnGDH )
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::ReadTick( const ASN1T_DateTime& asn, uint& simTick )
 {
-    simTick = MIL_AgentServer::GetWorkspace().RealTimeToTick( ReadGDH( asn ) );
+    uint value = 0;
+    ReadGDH( asn, value );
+    simTick = MIL_AgentServer::GetWorkspace().RealTimeToTick( value );
 }
 
 // -----------------------------------------------------------------------------

@@ -15,6 +15,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class ActionsModel;
 class ActionsScheduler;
 class Publisher_ABC;
@@ -33,7 +38,7 @@ class ActionsToolbar : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsScheduler& scheduler );
+             ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config );
     virtual ~ActionsToolbar();
     //@}
 
@@ -49,7 +54,6 @@ private slots:
     //@{
     void Load();
     void Save();
-    void Play();
     void Record();
     //@}
 
@@ -58,11 +62,11 @@ private:
     //@{
     ActionsModel& actions_;
     ActionsScheduler& scheduler_;
+    const tools::ExerciseConfig& config_;
     QToolButton*  loadBtn_;
     QToolButton*  recordBtn_;
-    QToolButton*  playBtn_;
     QToolButton*  saveBtn_;
-    QPixmap       pixStart_, pixRecord_, pixStop_;
+    QPixmap       pixRecord_, pixStop_;
     //@}
 };
 

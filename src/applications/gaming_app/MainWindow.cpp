@@ -232,12 +232,12 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // Actions panel
     ActionsScheduler* scheduler = new ActionsScheduler( this, controllers_, simulation, model_.actions_, publisher );
-    ActionsPanel* actionsPanel = new ActionsPanel( this, controllers_, *factory, model_.actions_, *scheduler );
+    ActionsPanel* actionsPanel = new ActionsPanel( this, controllers_, *factory, model_.actions_, *scheduler, config_ );
     moveDockWindow( actionsPanel, Qt::DockRight );
     setDockEnabled( actionsPanel, Qt::DockTop, false );
     actionsPanel->hide();
 
-    TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, *scheduler );
+    TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, *scheduler, simulation );
     moveDockWindow( timelinePanel, Qt::DockTop );
     timelinePanel->hide();
 

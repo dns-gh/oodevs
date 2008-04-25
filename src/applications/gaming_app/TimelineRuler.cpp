@@ -9,24 +9,26 @@
 
 #include "gaming_app_pch.h"
 #include "TimelineRuler.h"
+#include "moc_TimelineRuler.cpp"
+#include "gaming/Simulation.h"
+#include "clients_kernel/Controllers.h"
 #include <qpainter.h>
 
-const unsigned short tickHeight_  = 5;
-const unsigned short rulerHeight_ = 15; // $$$$ SBO 2007-07-04: 
+const unsigned int TimelineRuler::tickStep_ = 40;  // 1h => 20px
 
 // -----------------------------------------------------------------------------
 // Name: TimelineRuler constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineRuler::TimelineRuler( QCanvas* canvas, QCanvasView* view )
-    : TimelineItem_ABC( canvas, QRect( 200, 0, canvas->width(), rulerHeight_ ) )
-    , view_( *view )
-    , tickStep_( 5 )
-    , pageStep_( 100 )
+TimelineRuler::TimelineRuler( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, const unsigned int height )
+    : QWidget     ( parent )
+    , controllers_( controllers )
+    , simulation_ ( simulation )
+    , startX_     ( 0 )
+    , tickHeight_ ( height / 2 )
 {
-    SetOverlayed( true );
-    setZ( 1000 );
-    show();
+    setFixedHeight( height );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,51 +37,95 @@ TimelineRuler::TimelineRuler( QCanvas* canvas, QCanvasView* view )
 // -----------------------------------------------------------------------------
 TimelineRuler::~TimelineRuler()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineRuler::Update
-// Created: SBO 2007-07-06
+// Name: TimelineRuler::NotifyUpdated
+// Created: SBO 2008-04-25
 // -----------------------------------------------------------------------------
-void TimelineRuler::Update()
+void TimelineRuler::NotifyUpdated( const Simulation& )
 {
-    const QPoint canvasTopLeft = view_.inverseWorldMatrix().map( QPoint( view_.contentsX(), view_.contentsY() ) );
-    setY( canvasTopLeft.y() );
-    setSize( canvas()->width(), height() );
+    repaint();
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineRuler::draw
-// Created: SBO 2007-07-04
+// Name: TimelineRuler::paintEvent
+// Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineRuler::draw( QPainter& painter )
+void TimelineRuler::paintEvent( QPaintEvent* )
 {
-    Update();
-    const QPoint canvasTopLeft = view_.inverseWorldMatrix().map( QPoint( view_.contentsX(), view_.contentsY() ) );
-    painter.fillRect( 0, y(), width(), height(), Qt::white ); // $$$$ SBO 2007-07-04: clearBackground needed ?
+    QPainter painter( this );
+    painter.fillRect( 0, 0, width(), height(), Qt::white );
     DrawTimeline( painter );
-    painter.drawLine( canvasTopLeft.x() + x(), y(), canvasTopLeft.x() + x(), y() + canvas()->height() );
+}
+
+namespace
+{
+    QDateTime FloorHour( const QDateTime& datetime )
+    {
+        QDateTime result( datetime.date() );
+        result = result.addSecs( datetime.time().hour() * 3600 );
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineRuler::DrawTimeline
-// Created: SBO 2007-07-04
+// Created: SBO 2008-04-23
 // -----------------------------------------------------------------------------
-void TimelineRuler::DrawTimeline( QPainter& painter )
+void TimelineRuler::DrawTimeline( QPainter& painter ) const
 {
     const QFont oldFont = painter.font();
-
     const QFont newFont( "arial", 7 );
     painter.setFont( newFont );
-    painter.drawLine( 0, y() + height(), rect().right(), y() + height() );
-    for( int i = x(); i < width(); i += tickStep_ )
-        if( i % pageStep_ )
-            painter.drawLine( i, y(), i, y() + tickHeight_ - 1 );
-        else
+    painter.drawLine( 0, height(), width(), height() );
+    painter.drawLine( 0, height() - tickHeight_, width(), height() - tickHeight_ );
+
+    const unsigned int initialOffset = FloorHour( simulation_.GetInitialDateTime() )
+                                         .secsTo( simulation_.GetInitialDateTime() ) * tickStep_ / 3600;
+
+    const unsigned int hourOffset = ( startX_ / tickStep_ ) % 24;
+    for( unsigned int h = hourOffset; h * tickStep_ < width() + startX_; ++h )
+    {
+        const unsigned int x = h * tickStep_ - startX_ - initialOffset;
+        painter.drawLine( x, height() - tickHeight_, x, height() );
+        painter.drawText( x + 2, height() - 1, Time( h ) );
+        if( Time( h ).toInt() == 0 ) // $$$$ SBO 2008-04-23: 
         {
-            painter.drawLine( i, y(), i, y() + height() - 1 );
-            painter.drawText( i + 2, y() + height() - 1, QString::number( i - x() ) );
+            painter.drawLine( x, 0, x, height() );
+            painter.drawText( x + 2, height() - tickHeight_ - 1, Day( h / 24 + 1 ) );
         }
+    }
     painter.setFont( oldFont );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineRuler::SetContentsPos
+// Created: SBO 2008-04-22
+// -----------------------------------------------------------------------------
+void TimelineRuler::SetContentsPos( int x, int )
+{
+    startX_ = x;
+    repaint();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineRuler::Day
+// Created: SBO 2008-04-23
+// -----------------------------------------------------------------------------
+QString TimelineRuler::Day( unsigned int dayOffset ) const
+{
+    const QDateTime day = simulation_.GetInitialDateTime().addDays( dayOffset );
+    return day.date().toString( "MMMM d" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineRuler::Time
+// Created: SBO 2008-04-23
+// -----------------------------------------------------------------------------
+QString TimelineRuler::Time( unsigned int hourOffset ) const
+{
+    const QDateTime hour = simulation_.GetInitialDateTime().addSecs( hourOffset * 3600 );
+    return hour.time().toString( "hh" );
 }

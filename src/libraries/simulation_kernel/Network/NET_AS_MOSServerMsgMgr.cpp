@@ -87,6 +87,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& from, const ASN
         case T_MsgsClientToSim_msg_msg_control_pause                      : simulation_.Pause(); break;
         case T_MsgsClientToSim_msg_msg_control_resume                     : simulation_.Resume(); break;
         case T_MsgsClientToSim_msg_msg_control_change_time_factor         : simulation_.SetTimeFactor( asnMsg.msg.u.msg_control_change_time_factor ); break;
+        case T_MsgsClientToSim_msg_msg_control_date_time_change           : simulation_.SetRealTime( std::string( (const char*)asnMsg.msg.u.msg_control_date_time_change->date_time.data ) ); break;
         case T_MsgsClientToSim_msg_msg_control_global_meteo               : workspace.GetMeteoDataManager     ().OnReceiveMsgGlobalMeteo                    ( *asnMsg.msg.u.msg_control_global_meteo                      ); break;
         case T_MsgsClientToSim_msg_msg_control_local_meteo                : workspace.GetMeteoDataManager     ().OnReceiveMsgLocalMeteo                     ( *asnMsg.msg.u.msg_control_local_meteo                       ); break;
         case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now        : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow              ( *asnMsg.msg.u.msg_control_checkpoint_save_now               ); break;

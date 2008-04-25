@@ -9,29 +9,24 @@
 
 #include "gaming_app_pch.h"
 #include "TimelineEntityItem.h"
+#include "TimelineView.h"
 #include "TimelineActionItem.h"
+#include "gaming/Action_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Controllers.h"
 #include <qpainter.h>
-
-const unsigned int itemHeight_ = 30;
-const unsigned int itemWidth_  = 200;
 
 // -----------------------------------------------------------------------------
 // Name: TimelineEntityItem constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineEntityItem::TimelineEntityItem( QCanvasView& view, const TimelineItem_ABC* after, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
-    : TimelineItem_ABC( view.canvas(), QRect( 0, 0, itemWidth_, itemHeight_ ) )
-    , controllers_( controllers )
+TimelineEntityItem::TimelineEntityItem( TimelineView& view, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
+    : TimelineItem_ABC( view.canvas(), QRect( 0, 0, view.canvas()->width(), 25 ) ) // $$$$ SBO 2008-04-23: 
     , view_( view )
-    , previous_( after )
+    , controllers_( controllers )
     , entity_( entity )
 {
-    SetOverlayed( true );
-    setZ( 900 );
-    if( previous_ )
-        setY( previous_->y() + previous_->height() );
-    show();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,31 +39,13 @@ TimelineEntityItem::~TimelineEntityItem()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineEntityItem::AddAction
-// Created: SBO 2007-07-05
+// Name: TimelineEntityItem::MoveAfter
+// Created: SBO 2008-04-23
 // -----------------------------------------------------------------------------
-void TimelineEntityItem::AddAction( const Action_ABC& action )
+void TimelineEntityItem::MoveAfter( const TimelineItem_ABC* previous )
 {
-    TimelineItem_ABC*& item = childItems_[ &action ];
-    if( !item )
-    {
-        item = new TimelineActionItem( *this, controllers_, action );
-        canvas()->resize( canvas()->width(), canvas()->height() + itemHeight_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineEntityItem::RemoveAction
-// Created: SBO 2007-07-05
-// -----------------------------------------------------------------------------
-void TimelineEntityItem::RemoveAction( const Action_ABC& action )
-{
-    T_Items::iterator it = childItems_.find( &action );
-    if( it != childItems_.end() )
-    {
-        delete it->second;
-        childItems_.erase( it );
-    }
+    if( previous )
+        setY( previous->y() + previous->height() );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,33 +54,34 @@ void TimelineEntityItem::RemoveAction( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineEntityItem::Update()
 {
-    const QPoint canvasTopLeft = view_.inverseWorldMatrix().map( QPoint( view_.contentsX(), view_.contentsY() ) );
-    setX( canvasTopLeft.x() );
-    if( previous_ && ! previous_->IsOverlayed() )
-        setY( previous_->y() + previous_->height() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineEntityItem::draw
-// Created: SBO 2007-07-04
+// Name: TimelineEntityItem::AddAction
+// Created: SBO 2008-04-23
 // -----------------------------------------------------------------------------
-void TimelineEntityItem::draw( QPainter& painter )
+void TimelineEntityItem::AddAction( const Action_ABC& action )
 {
-    static const QColor fillColor( 240, 240, 240 );
-    painter.fillRect( rect().left(), rect().top() + 1, rect().width(), rect().height() - 2, fillColor );
-    painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, " " + entity_.GetName() );
+    if( &action.GetEntity() != &entity_ )
+        return;
+    TimelineItem_ABC*& item = childItems_[ &action ];
+    if( !item )
+        item = new TimelineActionItem( view_, *this, controllers_, action );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineEntityItem::DisplayToolTip
-// Created: SBO 2007-07-19
+// Name: TimelineEntityItem::RemoveAction
+// Created: SBO 2008-04-23
 // -----------------------------------------------------------------------------
-void TimelineEntityItem::DisplayToolTip( QWidget* parent ) const
+void TimelineEntityItem::RemoveAction( const Action_ABC& action )
 {
-    QString tip = QString( "<nobr><b>%1 - [%2]</b></nobr>" ).arg( entity_.GetName(), QString::number( entity_.GetId() ) );
-    if( QToolTip::textFor( parent ) != tip )
+    if( &action.GetEntity() != &entity_ )
+        return;
+    T_Items::iterator it = childItems_.find( &action );
+    if( it != childItems_.end() )
     {
-        QToolTip::remove( parent );
-        QToolTip::add( parent, tip );
+        delete it->second;
+        childItems_.erase( it );
     }
 }

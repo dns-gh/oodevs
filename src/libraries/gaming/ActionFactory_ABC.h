@@ -44,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission, unsigned long startTime ) const = 0;
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder, unsigned long startTime ) const = 0;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const = 0;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const = 0;
 
     virtual Action_ABC* CreateAction( const ASN1T_MsgUnitOrder& message ) const = 0;
     virtual Action_ABC* CreateAction( const ASN1T_MsgAutomatOrder& message ) const = 0;

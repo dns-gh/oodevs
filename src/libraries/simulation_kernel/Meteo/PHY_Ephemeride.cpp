@@ -53,7 +53,7 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
             >> xml::attribute( "value", date )
         >> xml::end();
     unsigned int time = ( bpt::from_iso_string( date ) - bpt::from_time_t( 0 ) ).total_seconds();
-    MIL_AgentServer::GetWorkspace().SetRealTime( time );
+    MIL_AgentServer::GetWorkspace().SetInitialRealTime( time );
     {
         char tmp = 0;
         std::istringstream strTmp( sunRise );

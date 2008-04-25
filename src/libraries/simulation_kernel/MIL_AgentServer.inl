@@ -139,13 +139,13 @@ uint MIL_AgentServer::GetSimTime() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::SetRealTime
+// Name: MIL_AgentServer::SetInitialRealTime
 // Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
 inline
-void MIL_AgentServer::SetRealTime( unsigned int time )
+void MIL_AgentServer::SetInitialRealTime( unsigned int time )
 {
-    nRealTime_ = time;
+    nRealTime_ = nInitialRealTime_ = time;
 }
 
 //-----------------------------------------------------------------------------

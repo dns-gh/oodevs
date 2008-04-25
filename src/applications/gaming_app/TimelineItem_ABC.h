@@ -34,8 +34,7 @@ public:
     virtual void Update() = 0;
     virtual void Shift( long shift );
     virtual void DisplayToolTip( QWidget* parent ) const; // $$$$ SBO 2007-07-19: make a displayer maybe...
-    void SetOverlayed( bool overlayed );
-    bool IsOverlayed() const;
+    virtual void DisplayContextMenu( QWidget* parent, const QPoint& pos ) const;
     //@}
 
 private:
@@ -43,16 +42,6 @@ private:
     //@{
     TimelineItem_ABC( const TimelineItem_ABC& );            //!< Copy constructor
     TimelineItem_ABC& operator=( const TimelineItem_ABC& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    bool overlayed_;
     //@}
 };
 

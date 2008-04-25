@@ -16,7 +16,10 @@
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ItemFactory_ABC.h"
 #include "tools/win32/FlexLm.h"
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 )
 #include <boost/date_time/gregorian/gregorian.hpp>
+#pragma warning( pop )
 
 using namespace gui;
 using namespace boost::gregorian;

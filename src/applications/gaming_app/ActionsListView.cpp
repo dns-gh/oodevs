@@ -76,7 +76,7 @@ void ActionsListView::NotifyCreated( const Action_ABC& action )
     if( const ActionTiming* timing = action.Retrieve< ActionTiming >() )
     {
         item->setPixmap( 0, timing->IsEnabled() ? checkboxOn_ : checkboxOff_ );
-        item->setText( 1, QString( "%1" ).arg( timing->GetTime() ) );
+        item->setText( 1, timing->GetTime().toString() );
     }
     item->setPixmap( 2, mission_ );
     item->setText( 2, action.GetName() );
@@ -111,7 +111,7 @@ void ActionsListView::NotifyUpdated( const ActionTiming& extension )
     if( QListViewItem* item = gui::FindItem( &extension.GetAction(), firstChild() ) )
     {
         item->setPixmap( 0, extension.IsEnabled() ? checkboxOn_ : checkboxOff_ );
-        item->setText  ( 1, QString( "%1" ).arg( extension.GetTime() ) );
+        item->setText  ( 1, extension.GetTime().toString() );
     }
 }
 

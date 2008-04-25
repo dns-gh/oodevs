@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __TimelineEditor_h_
-#define __TimelineEditor_h_
+#ifndef __TimelineView_h_
+#define __TimelineView_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
 #include <qcanvas.h>
@@ -22,40 +22,40 @@ namespace kernel
 class ActionsModel;
 class Action_ABC;
 class ActionsScheduler;
+class Simulation;
 class TimelineItem_ABC;
 class TimelineEntityItem;
 
 // =============================================================================
-/** @class  TimelineEditor
-    @brief  TimelineEditor
+/** @class  TimelineView
+    @brief  TimelineView
 */
 // Created: SBO 2007-07-04
 // =============================================================================
-class TimelineEditor : public QCanvasView
-                     , public kernel::Observer_ABC
-                     , public kernel::ElementObserver_ABC< Action_ABC >
-                     , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+class TimelineView : public QCanvasView
+                   , public kernel::Observer_ABC
+                   , public kernel::ElementObserver_ABC< Action_ABC >
+                   , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineEditor( QWidget* parent, QCanvas* canvas, kernel::Controllers& controllers, ActionsScheduler& scheduler );
-    virtual ~TimelineEditor();
+             TimelineView( QWidget* parent, QCanvas* canvas, kernel::Controllers& controllers, ActionsScheduler& scheduler, const Simulation& simulation );
+    virtual ~TimelineView();
     //@}
 
-private slots:
-    //! @name Slots
+    //! @name Operations
     //@{
-    void Update();
+    unsigned long ConvertToPosition( const QDateTime& datetime ) const;
+    long ConvertToSeconds( long pixels ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    TimelineEditor( const TimelineEditor& );            //!< Copy constructor
-    TimelineEditor& operator=( const TimelineEditor& ); //!< Assignment operator
+    TimelineView( const TimelineView& );            //!< Copy constructor
+    TimelineView& operator=( const TimelineView& ); //!< Assignment operator
     //@}
 
     //! @name Events
@@ -63,8 +63,9 @@ private:
     virtual void contentsMousePressEvent( QMouseEvent* event );
     virtual void contentsMouseReleaseEvent( QMouseEvent* event );
     virtual void contentsMouseMoveEvent( QMouseEvent* event );
+    virtual void contentsContextMenuEvent( QContextMenuEvent* event );
     virtual void keyPressEvent( QKeyEvent* event );
-    virtual void resizeEvent( QResizeEvent* event );
+    virtual void setContentsPos( int x, int y );
     //@}
 
     //! @name Helpers
@@ -73,27 +74,29 @@ private:
     virtual void NotifyDeleted( const Action_ABC& action );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
 
+    void Update();
     void ClearSelection();
     void SetSelected( TimelineItem_ABC& item );
-    QPoint ConvertToContent( const QPoint& point ) const;
+    void Select( const QPoint& point );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Entity_ABC*, TimelineEntityItem* > T_EntityItems;
-    typedef T_EntityItems::const_iterator                            CIT_EntityItems;
-    typedef std::vector< TimelineItem_ABC* >                           T_Lines;
+    typedef std::pair< TimelineEntityItem*, unsigned int >      T_EntityLine;
+    typedef std::map< const kernel::Entity_ABC*, T_EntityLine > T_EntityLines;
+    typedef std::vector< TimelineItem_ABC* >                    T_Lines;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_EntityItems        items_;
+    const Simulation&    simulation_;
+    T_EntityLines        entityLines_;
     T_Lines              lines_;
     TimelineItem_ABC*    selectedItem_;
     QPoint               grabPoint_;
     //@}
 };
 
-#endif // __TimelineEditor_h_
+#endif // __TimelineView_h_

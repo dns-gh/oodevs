@@ -72,6 +72,7 @@ public:
     virtual void Pause();
     virtual void Resume();
     virtual void SetTimeFactor( unsigned timeFactor );
+    virtual void SetRealTime( const std::string& realTime );
     //@}
 
     //! @name Simulation main loop
@@ -112,7 +113,7 @@ public:
 
     //! @name Time management
     //@{
-    void SetRealTime( unsigned int time );
+    void SetInitialRealTime( unsigned int time );
     uint GetSimTime () const; // Durée en secondes depuis le début de la SIM
     uint GetRealTime() const; // Temps simulé en secondes depuis 01/01/1970
     uint RealTimeToTick( uint rt   ) const;
@@ -153,6 +154,7 @@ private:
     uint nTimeFactor_;
     uint nCurrentTimeStep_;
     uint nSimTime_;
+    uint nInitialRealTime_;
     uint nRealTime_;
 
     MIL_EffectManager*           pEffectManager_;

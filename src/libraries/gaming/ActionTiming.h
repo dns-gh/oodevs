@@ -38,9 +38,8 @@ class ActionTiming : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionTiming( kernel::Controller& controller, unsigned long startTime, const Action_ABC& owner );
              ActionTiming( kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner );
-             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Action_ABC& owner );
+             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner );
     virtual ~ActionTiming();
     //@}
 
@@ -48,14 +47,14 @@ public:
     //@{
     void ToggleEnabled();
     void Serialize( xml::xostream& xos ) const;
-    void Shift( long shift );
+    void Shift( long secs );
     //@}
 
     //! @name Accessors
     //@{
     const Action_ABC& GetAction() const;
     bool IsEnabled() const;
-    unsigned long GetTime() const; // $$$$ SBO 2007-07-05: should be a datetime
+    QDateTime GetTime() const;
     //@}
 
 private:
@@ -69,9 +68,10 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const Simulation& simulation_;
     const Action_ABC& owner_;
     bool enabled_;
-    unsigned long time_;
+    QDateTime time_;
     //@}
 };
 

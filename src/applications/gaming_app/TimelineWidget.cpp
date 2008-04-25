@@ -9,21 +9,22 @@
 
 #include "gaming_app_pch.h"
 #include "TimelineWidget.h"
-#include "TimelineEditor.h"
+#include "TimelineListView.h"
+#include "TimelineView.h"
+#include "TimelineRuler.h"
 #include <qcanvas.h>
 #include <qpainter.h>
-
-const unsigned int rulerHeight_ = 15; // $$$$ SBO 2007-07-06: constants to put somewhere...
-const unsigned int lineHeight_  = 30; // $$$$ SBO 2007-07-06: 
+#include <qsplitter.h>
 
 namespace
 {
     class TimelineCanvas : public QCanvas
     {
     public:
-        TimelineCanvas()
-            : QCanvas( 10000, 200 )
-            , linePen_( QColor( 150, 150, 150 ), 1, QPen::DotLine )
+        explicit TimelineCanvas( unsigned int lineHeight )
+            : QCanvas( 10000, 0 )
+            , linePen_( QColor( 225, 225, 225 ), 1, QPen::SolidLine )
+            , lineHeight_( lineHeight )
         {
 //            setUpdatePeriod( 50 );
             setDoubleBuffering( true );
@@ -37,12 +38,13 @@ namespace
             QCanvas::drawBackground( painter, area );
             const QPen oldPen = painter.pen();
             painter.setPen( linePen_ );
-            for( int i = rulerHeight_; i < height(); i += lineHeight_ ) // $$$$ SBO 2007-07-06: optimize to draw only "area"
+            for( int i = lineHeight_ - 1; i < height(); i += lineHeight_ ) // $$$$ SBO 2007-07-06: optimize to draw only "area"
                 painter.drawLine( 0, i, width(), i );
             painter.setPen( oldPen );
         }
 
         QPen linePen_;
+        unsigned int lineHeight_;
     };
 }
 
@@ -50,10 +52,18 @@ namespace
 // Name: TimelineWidget constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsScheduler& scheduler )
+TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsScheduler& scheduler, const Simulation& simulation )
     : QHBox( parent )
 {
-    new TimelineEditor( parent, new TimelineCanvas(), controllers, scheduler );
+    QSplitter* splitter = new QSplitter( this );
+    QListView* list = new TimelineListView( splitter, controllers );
+    QVBox* box = new QVBox( splitter );
+    TimelineRuler* ruler = new TimelineRuler( box, controllers, simulation, list->header()->height() );
+    QCanvasView* editor = new TimelineView( box, new TimelineCanvas( 25 ), controllers, scheduler, simulation ); // $$$$ SBO 2008-04-25: leak ?
+
+    connect( editor, SIGNAL( contentsMoving( int, int ) ), list  , SLOT( setContentsPos( int, int ) ) );
+    connect( list  , SIGNAL( contentsMoving( int, int ) ), editor, SLOT( setContentsPos( int, int ) ) );
+    connect( editor, SIGNAL( contentsMoving( int, int ) ), ruler , SLOT( SetContentsPos( int, int ) ) );
 }
 
 // -----------------------------------------------------------------------------

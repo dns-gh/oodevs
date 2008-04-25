@@ -17,7 +17,7 @@
 // Name: ActionsPanel constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsPanel::ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionsModel& actions, ActionsScheduler& scheduler )
+ActionsPanel::ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config )
     : QDockWindow( parent )
 {
     setResizeEnabled( true );
@@ -26,7 +26,7 @@ ActionsPanel::ActionsPanel( QMainWindow* parent, kernel::Controllers& controller
 
     QVBox* box = new QVBox( this );
     setWidget( box );
-    new ActionsToolbar( box, actions, scheduler );
+    new ActionsToolbar( box, actions, scheduler, config );
     new ActionsListView( box, controllers, factory );
 }
 

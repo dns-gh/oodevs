@@ -58,12 +58,13 @@ public:
     
     void BeginCheckPoint();
     void EndCheckPoint();
-
+    
     bool IsReplayer() const;
     //@}
 
     //! @name Accessors
     //@{
+    QDateTime GetInitialDateTime() const;
     QDateTime GetDateTime() const;
     QString GetTimeAsString() const; 
     QString GetDateAsString() const; 
@@ -102,6 +103,7 @@ private:
     unsigned int currentTick_;
     unsigned int tickCount_;
     int time_;
+    std::string initialDate_;
     std::string date_;
     bool paused_;
     bool connected_;

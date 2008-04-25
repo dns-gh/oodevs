@@ -254,6 +254,15 @@ void AgentServerMsgMgr::OnReceiveMsgControlChangeTimeFactorAck( const ASN1T_MsgC
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgControlDatetimeChangeAck
+// Created: SBO 2008-04-24
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgControlDatetimeChangeAck( const ASN1T_MsgControlDatetimeChangeAck& message )
+{
+    CheckAcknowledge( message, "ControlDatetimeChangeAck" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgControlSkipToTickAck
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------

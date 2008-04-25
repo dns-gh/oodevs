@@ -17,26 +17,14 @@ using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionTiming constructor
-// Created: SBO 2007-07-16
-// -----------------------------------------------------------------------------
-ActionTiming::ActionTiming( kernel::Controller& controller, unsigned long startTime, const Action_ABC& owner )
-    : controller_( controller )
-    , owner_( owner )
-    , enabled_( true )
-    , time_( startTime )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionTiming constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
 ActionTiming::ActionTiming( kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner )
     : controller_( controller )
+    , simulation_( simulation )
     , owner_( owner )
     , enabled_( true )
-    , time_( simulation.GetCurrentTick() )
+    , time_( simulation_.GetDateTime() )
 {
     // NOTHING
 }
@@ -45,12 +33,17 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const Simulation& si
 // Name: ActionTiming constructor
 // Created: SBO 2007-06-28
 // -----------------------------------------------------------------------------
-ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Action_ABC& owner )
+ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner )
     : controller_( controller )
+    , simulation_( simulation )
     , owner_( owner )
     , enabled_( true )
 {
-    xis >> attribute( "time", time_ );
+    std::string datetime;
+    xis >> attribute( "time", datetime );
+    time_ = QDateTime::fromString( datetime.c_str(), Qt::ISODate );
+    if( !time_.isValid() )
+        time_ = simulation_.GetInitialDateTime().addSecs( QString( datetime.c_str() ).toInt() * 10 ); // $$$$ SBO 2008-04-25: time factor
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +61,7 @@ ActionTiming::~ActionTiming()
 // -----------------------------------------------------------------------------
 void ActionTiming::Serialize( xml::xostream& xos ) const
 {
-    xos << attribute( "time", time_ );
+    xos << attribute( "time", time_.toString( Qt::ISODate ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +96,7 @@ bool ActionTiming::IsEnabled() const
 // Name: ActionTiming::GetTime
 // Created: SBO 2007-07-05
 // -----------------------------------------------------------------------------
-unsigned long ActionTiming::GetTime() const
+QDateTime ActionTiming::GetTime() const
 {
     return time_;
 }
@@ -112,8 +105,10 @@ unsigned long ActionTiming::GetTime() const
 // Name: ActionTiming::Shift
 // Created: SBO 2007-07-06
 // -----------------------------------------------------------------------------
-void ActionTiming::Shift( long shift )
+void ActionTiming::Shift( long secs )
 {
-    time_ = std::max< long >( 0, long( time_ ) + shift );
+    time_ = time_.addSecs( secs );
+    if( time_ < simulation_.GetInitialDateTime() )
+        time_ = simulation_.GetInitialDateTime();
     controller_.Update( *this );
 }

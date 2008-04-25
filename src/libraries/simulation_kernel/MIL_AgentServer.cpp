@@ -404,7 +404,8 @@ void MIL_AgentServer::SendControlInformation() const
     NET_ASN_MsgControlInformation message;
 
     message().current_tick         = GetCurrentTimeStep();
-    NET_ASN_Tools::WriteGDH( nRealTime_, message().date_time );
+    NET_ASN_Tools::WriteGDH( nInitialRealTime_, message().initial_date_time );
+    NET_ASN_Tools::WriteGDH( nRealTime_       , message().date_time );
 	message().tick_duration        = GetTimeStepDuration();
     message().time_factor          = nTimeFactor_;
     message().status               = (ASN1T_EnumSimulationState)GetSimState();
@@ -492,6 +493,25 @@ void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
     }
     msg().time_factor = nTimeFactor_;
     msg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::SetRealTime
+// Created: SBO 2008-04-24
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::SetRealTime( const std::string& realTime )
+{
+    uint secs = 0;
+    NET_ASN_Tools::ReadGDH( realTime.c_str(), secs );
+    NET_ASN_MsgControlDatetimeChangeAck ack;
+    if( secs < nInitialRealTime_ )
+        ack() = EnumControlErrorCode::error_invalid_date_time;
+    else
+    {
+        nRealTime_ = secs;
+        ack() = EnumControlErrorCode::no_error;
+    }
+    ack.Send();
 }
 
 // -----------------------------------------------------------------------------

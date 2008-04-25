@@ -102,6 +102,7 @@ void Simulation::Update( const ASN1T_MsgControlInformation& message )
     paused_       = message.status == EnumSimulationState::paused;
     timeFactor_   = message.time_factor;
     time_         = message.current_tick * tickDuration_;
+    initialDate_  = std::string( (const char*)message.initial_date_time.data, 15 );
     date_         = std::string( (const char*)message.date_time.data, 15 );
     controller_.Update( *this );
 }
@@ -117,6 +118,7 @@ void Simulation::Update( const ASN1T_MsgControlReplayInformation& message )
     paused_       = message.status == EnumSimulationState::paused;
     timeFactor_   = message.time_factor;
     time_         = message.current_tick * tickDuration_;
+    initialDate_  = std::string( (const char*)message.initial_date_time.data, 15 );
     date_         = std::string( (const char*)message.date_time.data, 15 );
     controller_.Update( *this );
 }
@@ -268,17 +270,34 @@ QString Simulation::GetDateAsString() const
     return GetDateTime().date().toString();
 }
 
+namespace
+{
+    QDateTime MakeDate( const std::string& str )
+    {
+        // $$$$ AGE 2007-10-12: ...
+        QString extended( str.c_str() );
+        extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
+        extended.insert(  6, '-' ); extended.insert(  4, '-' );
+        return QDateTime::fromString( extended, Qt::ISODate );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Simulation::GetDateTime
 // Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
 QDateTime Simulation::GetDateTime() const
 {
-    // $$$$ AGE 2007-10-12: ...
-    QString extended( date_.c_str() );
-    extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
-    extended.insert(  6, '-' ); extended.insert(  4, '-' );
-    return QDateTime::fromString( extended, Qt::ISODate );
+    return MakeDate( date_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetInitialDateTime
+// Created: SBO 2008-04-24
+// -----------------------------------------------------------------------------
+QDateTime Simulation::GetInitialDateTime() const
+{
+    return MakeDate( initialDate_ );
 }
 
 // -----------------------------------------------------------------------------

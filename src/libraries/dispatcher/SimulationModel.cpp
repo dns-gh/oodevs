@@ -53,6 +53,7 @@ void SimulationModel::Reset()
 // -----------------------------------------------------------------------------
 void SimulationModel::Update( const ASN1T_MsgControlInformation& msg )
 {
+    initialDate_          = std::string( (const char*)msg.initial_date_time.data, 15 );
     nCurrentTick_         = msg.current_tick;
     nTickDuration_        = msg.tick_duration;
     nTimeFactor_          = msg.time_factor;
@@ -143,14 +144,15 @@ void SimulationModel::Update( const ASN1T_MsgControlEndTick& msg )
 void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 {
     AsnMsgSimToClientControlInformation asn;
-    asn().current_tick           = nCurrentTick_;
-    asn().date_time              = date_.c_str();
-    asn().tick_duration          = nTickDuration_;
-    asn().time_factor            = nTimeFactor_;
-    asn().checkpoint_frequency   = nCheckpointFrequency_;
-    asn().status                 = nSimState_;
-    asn().send_vision_cones      = bSendVisionCones_;
-    asn().profiling_enabled      = bProfilingEnabled_;
+    asn().current_tick         = nCurrentTick_;
+    asn().initial_date_time    = initialDate_.c_str();
+    asn().date_time            = date_.c_str();
+    asn().tick_duration        = nTickDuration_;
+    asn().time_factor          = nTimeFactor_;
+    asn().checkpoint_frequency = nCheckpointFrequency_;
+    asn().status               = nSimState_;
+    asn().send_vision_cones    = bSendVisionCones_;
+    asn().profiling_enabled    = bProfilingEnabled_;
     asn.Send( publisher );
 }
 
@@ -161,12 +163,13 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const
 {
     AsnMsgReplayToClientControlReplayInformation asn;
-    asn().current_tick = nCurrentTick_;
-    asn().date_time  = date_.c_str();
-    asn().tick_duration = nTickDuration_;
-    asn().time_factor = factor;
-    asn().status = status;
-    asn().tick_count = totalTicks;
+    asn().current_tick      = nCurrentTick_;
+    asn().initial_date_time = initialDate_.c_str();
+    asn().date_time         = date_.c_str();
+    asn().tick_duration     = nTickDuration_;
+    asn().time_factor       = factor;
+    asn().status            = status;
+    asn().tick_count        = totalTicks;
     asn.Send( publisher );
 }
 

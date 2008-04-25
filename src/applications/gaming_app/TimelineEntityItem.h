@@ -19,6 +19,7 @@ namespace kernel
 }
 
 class Action_ABC;
+class TimelineView;
 
 // =============================================================================
 /** @class  TimelineEntityItem
@@ -32,16 +33,17 @@ class TimelineEntityItem : public TimelineItem_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineEntityItem( QCanvasView& view, const TimelineItem_ABC* after, kernel::Controllers& controllers, const kernel::Entity_ABC& entity );
+             TimelineEntityItem( TimelineView& view, kernel::Controllers& controllers, const kernel::Entity_ABC& entity );
     virtual ~TimelineEntityItem();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Update();
+
+    void MoveAfter( const TimelineItem_ABC* previous );
     void AddAction( const Action_ABC& action );
     void RemoveAction( const Action_ABC& action );
-    void Update();
-    virtual void DisplayToolTip( QWidget* parent ) const;
     //@}
 
 private:
@@ -51,23 +53,16 @@ private:
     TimelineEntityItem& operator=( const TimelineEntityItem& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual void draw( QPainter& painter );
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< const Action_ABC*, TimelineItem_ABC* > T_Items;
-    typedef T_Items::const_iterator                        CIT_Items;
     //@}
 
 private:
     //! @name Member data
     //@{
+    TimelineView& view_;
     kernel::Controllers& controllers_;
-    QCanvasView& view_;
-    const TimelineItem_ABC* previous_;
     const kernel::Entity_ABC& entity_;
     T_Items childItems_;
     //@}

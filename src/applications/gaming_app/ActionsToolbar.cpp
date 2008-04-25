@@ -14,18 +14,19 @@
 #include "gaming/ActionsModel.h"
 #include "gaming/Action_ABC.h"
 #include "clients_gui/resources.h"
+#include "tools/ExerciseConfig.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionsToolbar constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsScheduler& scheduler )
-    : QHBox( parent )
-    , actions_( actions )
+ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config )
+    : QHBox     ( parent )
+    , actions_  ( actions )
     , scheduler_( scheduler )
-    , pixStart_( MAKE_PIXMAP( recplay ) )
+    , config_   ( config )
     , pixRecord_( MAKE_PIXMAP( recrec ) )
-    , pixStop_( MAKE_PIXMAP( recstop ) )
+    , pixStop_  ( MAKE_PIXMAP( recstop ) )
 {
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     setBackgroundMode( Qt::PaletteButton );
@@ -42,18 +43,12 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsS
     saveBtn_->setPixmap( MAKE_PIXMAP( save ) );
     saveBtn_->setDisabled( true );
 
-    playBtn_ = new QToolButton( this );
-    playBtn_->setAutoRaise( true );
-    playBtn_->setPixmap( pixStart_ );
-    playBtn_->setDisabled( true );
-
     recordBtn_ = new QToolButton( this );
     recordBtn_->setAutoRaise( true );
     recordBtn_->setPixmap( pixRecord_ );
     
     connect( loadBtn_  , SIGNAL( clicked() ), SLOT( Load()   ) );
     connect( saveBtn_  , SIGNAL( clicked() ), SLOT( Save()   ) );
-    connect( playBtn_  , SIGNAL( clicked() ), SLOT( Play()   ) );
     connect( recordBtn_, SIGNAL( clicked() ), SLOT( Record() ) );
 }
 
@@ -75,18 +70,7 @@ void ActionsToolbar::Record()
     actions_.ToggleRecording();
     const bool isRecording = actions_.IsRecording();
     recordBtn_->setPixmap( isRecording ? pixStop_ : pixRecord_ );
-    playBtn_->setDisabled( isRecording );
     saveBtn_->setDisabled( isRecording );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsToolbar::Play
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-void ActionsToolbar::Play()
-{
-    scheduler_.Start();
-    playBtn_->setPixmap( scheduler_.IsRunning() ? pixStop_ : pixStart_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,15 +79,13 @@ void ActionsToolbar::Play()
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Load()
 {
-    const QString filename = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) );
+    const std::string rootDir = config_.BuildExerciseChildFile( "orders" );
+    const QString filename = QFileDialog::getOpenFileName( rootDir.c_str(), tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) );
     if( filename.isEmpty() )
         return;
     try
     {
-        scheduler_.Stop();
-        playBtn_->setPixmap( pixStart_ );
         actions_.Load( filename.ascii() );
-        playBtn_->setDisabled( false );
         saveBtn_->setDisabled( false );
     }
     catch( std::exception& e )
@@ -118,7 +100,8 @@ void ActionsToolbar::Load()
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Save()
 {
-    QString filename = QFileDialog::getSaveFileName( QString::null, tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
+    const std::string rootDir = config_.BuildExerciseChildFile( "orders" );
+    QString filename = QFileDialog::getSaveFileName( rootDir.c_str(), tr( "Order files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
     if( filename == QString::null )
         return;
     if( filename.right( 4 ) != ".ord" )

@@ -33,6 +33,7 @@ public:
     virtual void Pause() = 0;
     virtual void Resume() = 0;
     virtual void SetTimeFactor( unsigned timeFactor ) = 0;
+    virtual void SetRealTime( const std::string& realTime ) = 0;
     //@}
 };
 

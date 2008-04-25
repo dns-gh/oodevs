@@ -83,6 +83,7 @@ GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, ControlStopAck                   
 GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, ControlPauseAck                               , control_pause_ack                                 );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, ControlResumeAck                              , control_resume_ack                                );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, ControlChangeTimeFactorAck                    , control_change_time_factor_ack                    );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( SimToClient, ControlDatetimeChangeAck                      , control_date_time_change_ack                      );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( SimToClient, ControlSendCurrentStateBegin                  , control_send_current_state_begin                  );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( SimToClient, ControlSendCurrentStateEnd                    , control_send_current_state_end                    );
 GENERATE_ASN_MSG_SENDER         ( SimToClient, UnitChangeSuperiorAck                         , unit_change_superior_ack                          );
@@ -165,10 +166,10 @@ GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, ProfileUpdateRequestAc
 GENERATE_ASN_MSG_SENDER         ( AuthenticationToClient, ProfileDestructionRequestAck , profile_destruction_request_ack );
 
 GENERATE_ASN_MSG_SENDER         ( ReplayToClient, ControlReplayInformation     , control_replay_information      );
-GENERATE_NOPTR_ASN_MSG_SENDER   ( ReplayToClient, ControlStopAck               , control_stop_ack                                  );
-GENERATE_NOPTR_ASN_MSG_SENDER   ( ReplayToClient, ControlPauseAck              , control_pause_ack                                 );
-GENERATE_NOPTR_ASN_MSG_SENDER   ( ReplayToClient, ControlResumeAck             , control_resume_ack                                );
-GENERATE_ASN_MSG_SENDER         ( ReplayToClient, ControlChangeTimeFactorAck   , control_change_time_factor_ack                    );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( ReplayToClient, ControlStopAck               , control_stop_ack                );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( ReplayToClient, ControlPauseAck              , control_pause_ack               );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( ReplayToClient, ControlResumeAck             , control_resume_ack              );
+GENERATE_ASN_MSG_SENDER         ( ReplayToClient, ControlChangeTimeFactorAck   , control_change_time_factor_ack  );
 GENERATE_ASN_MSG_SENDER         ( ReplayToClient, ControlSkipToTickAck         , control_skip_to_tick_ack        );
 
 GENERATE_ASN_MSG_SENDER         ( AarToClient, AarInformation,  aar_information );

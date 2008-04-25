@@ -20,6 +20,7 @@ namespace kernel
 
 class Action_ABC;
 class ActionTiming;
+class TimelineView;
 
 // =============================================================================
 /** @class  TimelineActionItem
@@ -27,15 +28,17 @@ class ActionTiming;
 */
 // Created: SBO 2007-07-04
 // =============================================================================
-class TimelineActionItem : public TimelineItem_ABC
+class TimelineActionItem : public QObject
+                         , public TimelineItem_ABC
                          , public kernel::Observer_ABC
                          , public kernel::ElementObserver_ABC< ActionTiming >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineActionItem( const TimelineItem_ABC& parent, kernel::Controllers& controllers, const Action_ABC& action );
+             TimelineActionItem( const TimelineView& view, const TimelineItem_ABC& parent, kernel::Controllers& controllers, const Action_ABC& action );
     virtual ~TimelineActionItem();
     //@}
 
@@ -43,8 +46,15 @@ public:
     //@{
     virtual void Update();
     virtual void Shift( long shift );
-    virtual void setVisible( bool visible );
     virtual void DisplayToolTip( QWidget* parent ) const;
+    virtual void DisplayContextMenu( QWidget* parent, const QPoint& pos ) const;
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnDelete();
+    void OnRename();
     //@}
 
 private:
@@ -56,17 +66,21 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void setVisible( bool visible );
     virtual void draw( QPainter& painter );
     virtual void NotifyUpdated( const ActionTiming& timing );
+    void ComputeTextWidth( QPainter& painter );
+    void SetTime( const QDateTime& datetime );
     //@}
 
 private:
     //! @name Member data
     //@{
+    const TimelineView& view_;
     kernel::Controllers& controllers_;
     const TimelineItem_ABC& parentItem_;
     const Action_ABC& action_;
-
+    unsigned int textWidth_;
     QPalette palette_;
     //@}
 };

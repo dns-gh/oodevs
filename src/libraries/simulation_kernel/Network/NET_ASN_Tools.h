@@ -243,6 +243,7 @@ public:
     static bool ReadPointList ( const ASN1T_PointList&    asn, T_PointVector& pointVector );
     static bool ReadLocation  ( const ASN1T_Location&     asn, TER_Localisation& localisation );
     static void ReadDirection ( const ASN1T_Heading&      asn, MT_Vector2D& vDir );
+    static void ReadGDH       ( const ASN1T_DateTime&     asn, uint& realTimeSec );
     static void ReadTick      ( const ASN1T_DateTime&     asn, uint& simTick );
     //@}
 
@@ -292,7 +293,6 @@ private:
 
     static DEC_Knowledge_Object*        ReadObjectKnowledge    ( const ASN1T_ObjectKnowledge&     asn, const DEC_KnowledgeResolver_ABC& resolver );
     static bool                         ReadObjectKnowledgeList( const ASN1T_ObjectKnowledgeList& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KnowledgeResolver_ABC& resolver );
-    static uint                         ReadGDH                ( const ASN1T_DateTime&                 asn );
     //@}
     
     // @name Encoding tools

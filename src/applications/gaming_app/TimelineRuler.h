@@ -10,7 +10,14 @@
 #ifndef __TimelineRuler_h_
 #define __TimelineRuler_h_
 
-#include "TimelineItem_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+}
+
+class Simulation;
 
 // =============================================================================
 /** @class  TimelineRuler
@@ -18,19 +25,23 @@
 */
 // Created: SBO 2007-07-04
 // =============================================================================
-class TimelineRuler : public TimelineItem_ABC
+class TimelineRuler : public QWidget
+                    , public kernel::Observer_ABC
+                    , public kernel::ElementObserver_ABC< Simulation >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineRuler( QCanvas* canvas, QCanvasView* view );
+             TimelineRuler( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, const unsigned int height );
     virtual ~TimelineRuler();
     //@}
 
-    //! @name Operations
+private slots:
+    //! @name Slots
     //@{
-    virtual void Update();
+    void SetContentsPos( int x, int y );
     //@}
 
 private:
@@ -42,16 +53,25 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void draw( QPainter& painter );
-    void DrawTimeline( QPainter& painter );
+    virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void paintEvent( QPaintEvent* event );
+    void DrawTimeline( QPainter& painter ) const;
+    QString Day( unsigned int dayOffset ) const;
+    QString Time( unsigned int hourOffset ) const;
     //@}
 
 private:
+    //! @name Statics
+    //@{
+    static const unsigned int tickStep_;
+    //@}
+
     //! @name Member data
     //@{
-    QCanvasView& view_;
-    unsigned int tickStep_;
-    unsigned int pageStep_;
+    kernel::Controllers& controllers_;
+    const Simulation&    simulation_;
+    unsigned int         startX_;
+    const unsigned short tickHeight_;
     //@}
 };
 

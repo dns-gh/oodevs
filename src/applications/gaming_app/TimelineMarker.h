@@ -11,8 +11,16 @@
 #define __TimelineMarker_h_
 
 #include "TimelineItem_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+}
 
 class ActionsScheduler;
+class Simulation;
+class TimelineView;
 
 // =============================================================================
 /** @class  TimelineMarker
@@ -21,12 +29,14 @@ class ActionsScheduler;
 // Created: SBO 2007-07-16
 // =============================================================================
 class TimelineMarker : public TimelineItem_ABC
+                     , public kernel::Observer_ABC
+                     , public kernel::ElementObserver_ABC< Simulation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineMarker( QCanvasView* view, ActionsScheduler& scheduler );
+             TimelineMarker( TimelineView& view, ActionsScheduler& scheduler, kernel::Controllers& controllers );
     virtual ~TimelineMarker();
     //@}
 
@@ -45,13 +55,15 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyUpdated( const Simulation& simulation );
     virtual void draw( QPainter& painter );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QCanvasView& view_;
+    kernel::Controllers& controllers_;
+    TimelineView& view_;
     ActionsScheduler& scheduler_;
     //@}
 };

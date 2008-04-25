@@ -79,6 +79,7 @@ private:
     void OnReceiveMsgControlPauseAck             ( const ASN1T_MsgControlPauseAck&  asnMsg );
     void OnReceiveMsgControlResumeAck            ( const ASN1T_MsgControlResumeAck& asnMsg );
     void OnReceiveMsgControlChangeTimeFactorAck  ( const ASN1T_MsgControlChangeTimeFactorAck& asnMsg );
+    void OnReceiveMsgControlDatetimeChangeAck    ( const ASN1T_MsgControlDatetimeChangeAck& asnMsg );
     void OnReceiveMsgControlSkipToTickAck        ( const ASN1T_MsgControlSkipToTickAck& asnMsg );
     void OnReceiveMsgControlInformation          ( const ASN1T_MsgControlInformation& asnMsg );
     void OnReceiveMsgProfilingValues             ( const ASN1T_MsgControlProfilingInformation& message );

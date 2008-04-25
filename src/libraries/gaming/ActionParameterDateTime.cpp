@@ -12,7 +12,8 @@
 #include "Simulation.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
-#pragma warning( push, 1 )
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 

@@ -16,7 +16,6 @@
 // -----------------------------------------------------------------------------
 TimelineItem_ABC::TimelineItem_ABC( QCanvas* canvas )
     : QCanvasRectangle( canvas )
-    , overlayed_( false )
 {
     // NOTHING
 }
@@ -27,7 +26,6 @@ TimelineItem_ABC::TimelineItem_ABC( QCanvas* canvas )
 // -----------------------------------------------------------------------------
 TimelineItem_ABC::TimelineItem_ABC( QCanvas* canvas, const QRect& area )
     : QCanvasRectangle( area, canvas )
-    , overlayed_( false )
 {
     // NOTHING
 }
@@ -60,19 +58,10 @@ void TimelineItem_ABC::DisplayToolTip( QWidget* ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineItem_ABC::SetOverlayed
-// Created: SBO 2007-07-06
+// Name: TimelineItem_ABC::DisplayContextMenu
+// Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineItem_ABC::SetOverlayed( bool overlayed )
+void TimelineItem_ABC::DisplayContextMenu( QWidget*, const QPoint& ) const
 {
-    overlayed_ = overlayed;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineItem_ABC::IsOverlayed
-// Created: SBO 2007-07-06
-// -----------------------------------------------------------------------------
-bool TimelineItem_ABC::IsOverlayed() const
-{
-    return overlayed_;
+    // NOTHING
 }

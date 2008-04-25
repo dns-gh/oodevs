@@ -55,8 +55,7 @@ void ActionsModel::Purge()
 // -----------------------------------------------------------------------------
 Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const MissionType& mission )
 {
-    const unsigned long startTime = isRecording_ ? std::max< long >( 0, simulation_.GetCurrentTick() - recordingStartTime_ ) : 0;
-    Action_ABC* action = factory_.CreateAction( target, mission, startTime );
+    Action_ABC* action = factory_.CreateAction( target, mission );
     Register( action->GetId(), *action );
     return action;
 }
@@ -67,8 +66,7 @@ Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const MissionT
 // -----------------------------------------------------------------------------
 Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const FragOrderType& fragOrder )
 {
-    const unsigned long startTime = isRecording_ ? std::max< long >( 0, simulation_.GetCurrentTick() - recordingStartTime_ ) : 0;
-    Action_ABC* action = factory_.CreateAction( target, fragOrder, startTime );
+    Action_ABC* action = factory_.CreateAction( target, fragOrder );
     Register( action->GetId(), *action );
     return action;
 }
@@ -147,6 +145,4 @@ bool ActionsModel::IsRecording() const
 void ActionsModel::ToggleRecording()
 {
     isRecording_ = !isRecording_;
-    if( isRecording_ )
-        recordingStartTime_ = simulation_.GetCurrentTick();
 }
