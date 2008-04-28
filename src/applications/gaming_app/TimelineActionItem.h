@@ -20,7 +20,7 @@ namespace kernel
 
 class Action_ABC;
 class ActionTiming;
-class TimelineView;
+class TimelineRuler;
 
 // =============================================================================
 /** @class  TimelineActionItem
@@ -38,7 +38,7 @@ class TimelineActionItem : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineActionItem( const TimelineView& view, const TimelineItem_ABC& parent, kernel::Controllers& controllers, const Action_ABC& action );
+             TimelineActionItem( const TimelineItem_ABC& parent, const TimelineRuler& ruler, kernel::Controllers& controllers, const Action_ABC& action );
     virtual ~TimelineActionItem();
     //@}
 
@@ -76,7 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const TimelineView& view_;
+    const TimelineRuler& ruler_;
     kernel::Controllers& controllers_;
     const TimelineItem_ABC& parentItem_;
     const Action_ABC& action_;

@@ -209,6 +209,7 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_control_pause                         : return bSupervision_;
         case T_MsgsClientToSim_msg_msg_control_resume                        : return bSupervision_; 
         case T_MsgsClientToSim_msg_msg_control_change_time_factor            : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_control_date_time_change              : return bSupervision_;
         case T_MsgsClientToSim_msg_msg_control_global_meteo                  : return bSupervision_;
         case T_MsgsClientToSim_msg_msg_control_local_meteo                   : return bSupervision_;
         case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now           : return bSupervision_;

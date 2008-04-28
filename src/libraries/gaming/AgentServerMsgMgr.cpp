@@ -1426,6 +1426,7 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_control_pause_ack:                       OnReceiveMsgControlPauseAck              ( message.msg.u.msg_control_pause_ack                       ); break;
         case T_MsgsSimToClient_msg_msg_control_resume_ack:                      OnReceiveMsgControlResumeAck             ( message.msg.u.msg_control_resume_ack                      ); break;
         case T_MsgsSimToClient_msg_msg_control_change_time_factor_ack:          OnReceiveMsgControlChangeTimeFactorAck   ( *message.msg.u.msg_control_change_time_factor_ack         ); break;
+        case T_MsgsSimToClient_msg_msg_control_date_time_change_ack:            OnReceiveMsgControlDatetimeChangeAck     ( message.msg.u.msg_control_date_time_change_ack            ); break;
         case T_MsgsSimToClient_msg_msg_control_global_meteo_ack:                OnReceiveMsgControlMeteoGlobalAck        (); break;
         case T_MsgsSimToClient_msg_msg_control_local_meteo_ack:                 OnReceiveMsgControlMeteoLocalAck         (); break;
         case T_MsgsSimToClient_msg_msg_control_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break;

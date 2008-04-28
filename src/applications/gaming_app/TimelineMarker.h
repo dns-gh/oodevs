@@ -20,7 +20,7 @@ namespace kernel
 
 class ActionsScheduler;
 class Simulation;
-class TimelineView;
+class TimelineRuler;
 
 // =============================================================================
 /** @class  TimelineMarker
@@ -36,7 +36,7 @@ class TimelineMarker : public TimelineItem_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineMarker( TimelineView& view, ActionsScheduler& scheduler, kernel::Controllers& controllers );
+             TimelineMarker( QCanvas* canvas, ActionsScheduler& scheduler, kernel::Controllers& controllers, const TimelineRuler& ruler );
     virtual ~TimelineMarker();
     //@}
 
@@ -63,8 +63,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    TimelineView& view_;
     ActionsScheduler& scheduler_;
+    const TimelineRuler& ruler_;
     //@}
 };
 

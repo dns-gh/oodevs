@@ -34,8 +34,17 @@ class TimelineRuler : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineRuler( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, const unsigned int height );
+             TimelineRuler( QWidget* parent, kernel::Controllers& controllers, const unsigned int height );
     virtual ~TimelineRuler();
+    //@}
+
+    //! @name Operations
+    //@{
+    unsigned long ConvertToPosition( const QDateTime& datetime ) const;
+    long ConvertToPixels( long secs ) const;
+    long ConvertToSeconds( long pixels ) const;
+    void ZoomIn();
+    void ZoomOut();
     //@}
 
 private slots:
@@ -56,22 +65,18 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void paintEvent( QPaintEvent* event );
     void DrawTimeline( QPainter& painter ) const;
-    QString Day( unsigned int dayOffset ) const;
-    QString Time( unsigned int hourOffset ) const;
+    void DrawDates( QPainter& painter ) const;
+    void DrawTimes( QPainter& painter ) const;
     //@}
 
 private:
-    //! @name Statics
-    //@{
-    static const unsigned int tickStep_;
-    //@}
-
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const Simulation&    simulation_;
-    unsigned int         startX_;
+    QDateTime            initialDateTime_;
     const unsigned short tickHeight_;
+    unsigned int         tickStep_;
+    unsigned int         startX_;
     //@}
 };
 

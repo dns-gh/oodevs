@@ -41,9 +41,14 @@ ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, 
 {
     std::string datetime;
     xis >> attribute( "time", datetime );
-    time_ = QDateTime::fromString( datetime.c_str(), Qt::ISODate );
-    if( !time_.isValid() )
-        time_ = simulation_.GetInitialDateTime().addSecs( QString( datetime.c_str() ).toInt() * 10 ); // $$$$ SBO 2008-04-25: time factor
+    bool ok = false;
+    unsigned int ticks = QString( datetime.c_str() ).toUInt( &ok );
+    if( ok )
+        time_ = simulation_.GetInitialDateTime().addSecs( ticks * 10 ); // $$$$ SBO 2008-04-25: time factor
+    else
+        time_ = QDateTime::fromString( datetime.c_str(), Qt::ISODate );
+//    if( !time_.isValid() )
+//        time_ = simulation_.GetInitialDateTime().addSecs( QString( datetime.c_str() ).toInt() * 10 ); // $$$$ SBO 2008-04-25: time factor
 }
 
 // -----------------------------------------------------------------------------

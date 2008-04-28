@@ -14,18 +14,17 @@
 #include "clients_kernel/Controllers.h"
 #include <qpainter.h>
 
-const unsigned int TimelineRuler::tickStep_ = 40;  // 1h => 20px
-
 // -----------------------------------------------------------------------------
 // Name: TimelineRuler constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineRuler::TimelineRuler( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, const unsigned int height )
-    : QWidget     ( parent )
-    , controllers_( controllers )
-    , simulation_ ( simulation )
-    , startX_     ( 0 )
-    , tickHeight_ ( height / 2 )
+TimelineRuler::TimelineRuler( QWidget* parent, kernel::Controllers& controllers, const unsigned int height )
+    : QWidget         ( parent )
+    , controllers_    ( controllers )
+    , initialDateTime_()
+    , tickHeight_     ( height / 2 )
+    , tickStep_       ( 40 ) // default: 1h => 40px
+    , startX_         ( 0 )
 {
     setFixedHeight( height );
     controllers_.Register( *this );
@@ -44,9 +43,13 @@ TimelineRuler::~TimelineRuler()
 // Name: TimelineRuler::NotifyUpdated
 // Created: SBO 2008-04-25
 // -----------------------------------------------------------------------------
-void TimelineRuler::NotifyUpdated( const Simulation& )
+void TimelineRuler::NotifyUpdated( const Simulation& simulation )
 {
-    repaint();
+    if( simulation.GetInitialDateTime() != initialDateTime_ )
+    {
+        initialDateTime_ = simulation.GetInitialDateTime();
+        update();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -56,8 +59,11 @@ void TimelineRuler::NotifyUpdated( const Simulation& )
 void TimelineRuler::paintEvent( QPaintEvent* )
 {
     QPainter painter( this );
-    painter.fillRect( 0, 0, width(), height(), Qt::white );
+    painter.fillRect( rect(), Qt::white );
     DrawTimeline( painter );
+    painter.drawLine( 0, 0, 0, height() );
+    painter.drawLine( 0, 0, width() -1, 0 );
+    painter.drawLine( width() - 1, 0, width() - 1, height() );
 }
 
 namespace
@@ -71,8 +77,8 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineRuler::DrawTimeline
-// Created: SBO 2008-04-23
+// Name: TimelineRuler::DrawTimeline2
+// Created: SBO 2008-04-28
 // -----------------------------------------------------------------------------
 void TimelineRuler::DrawTimeline( QPainter& painter ) const
 {
@@ -82,22 +88,87 @@ void TimelineRuler::DrawTimeline( QPainter& painter ) const
     painter.drawLine( 0, height(), width(), height() );
     painter.drawLine( 0, height() - tickHeight_, width(), height() - tickHeight_ );
 
-    const unsigned int initialOffset = FloorHour( simulation_.GetInitialDateTime() )
-                                         .secsTo( simulation_.GetInitialDateTime() ) * tickStep_ / 3600;
+    DrawDates( painter );
+    DrawTimes( painter );
 
-    const unsigned int hourOffset = ( startX_ / tickStep_ ) % 24;
-    for( unsigned int h = hourOffset; h * tickStep_ < width() + startX_; ++h )
-    {
-        const unsigned int x = h * tickStep_ - startX_ - initialOffset;
-        painter.drawLine( x, height() - tickHeight_, x, height() );
-        painter.drawText( x + 2, height() - 1, Time( h ) );
-        if( Time( h ).toInt() == 0 ) // $$$$ SBO 2008-04-23: 
-        {
-            painter.drawLine( x, 0, x, height() );
-            painter.drawText( x + 2, height() - tickHeight_ - 1, Day( h / 24 + 1 ) );
-        }
-    }
     painter.setFont( oldFont );
+}
+
+namespace
+{
+    QString GetDateText( const QFontMetrics& metrics, const QDate& date, int availableWidth )
+    {
+        QString result = date.toString();
+        if( metrics.width( result ) < availableWidth )
+            return result;
+        result = date.toString( "MMMM d" );
+        if( metrics.width( result ) < availableWidth )
+            return result;
+        result = date.toString( "MM-dd" );
+        if( metrics.width( result ) < availableWidth )
+            return result;
+        return "";
+    }
+
+    QString GetTimeText( const QFontMetrics& metrics, const QTime& time, int availableWidth )
+    {
+        QString result = time.toString();
+        if( metrics.width( result ) < availableWidth )
+            return result;
+        result = time.toString( "hh:mm" );
+        if( metrics.width( result ) < availableWidth )
+            return result;
+        result = time.toString( "hh" );
+        if( metrics.width( result ) < availableWidth )
+            return result;
+        return "";
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineRuler::DrawDates
+// Created: SBO 2008-04-28
+// -----------------------------------------------------------------------------
+void TimelineRuler::DrawDates( QPainter& painter ) const
+{
+    const QFontMetrics metrics( painter.font() );
+    QDateTime current = initialDateTime_.addSecs( ConvertToSeconds( startX_ ) );
+    QDate     next    = current.date().addDays( 1 );
+    long lastX = 0;
+    while( lastX < width() )
+    {
+        const long x = long( ConvertToPosition( next ) ) - startX_;
+        const QString text = GetDateText( metrics, current.date(), x - lastX );
+        painter.drawLine( x, 0, x, height() );
+        if( !text.isEmpty() )
+            painter.drawText( lastX + 2, height() - tickHeight_ - 1, text );
+        current = next;
+        next    = next.addDays( 1 );
+        lastX = x;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineRuler::DrawTimes
+// Created: SBO 2008-04-28
+// -----------------------------------------------------------------------------
+void TimelineRuler::DrawTimes( QPainter& painter ) const
+{
+    const QFontMetrics metrics( painter.font() );
+    QDateTime current = initialDateTime_.addSecs( ConvertToSeconds( startX_ ) );
+    QDateTime next    = FloorHour( current ).addSecs( 3600 );
+    long lastX = 0;
+    while( lastX < width() )
+    {
+        const long x = long( ConvertToPosition( next ) ) - startX_;
+        const QString text = GetTimeText( metrics, current.time(), x - lastX );
+        painter.drawLine( x, height() - tickHeight_, x, height() );
+        if( !text.isEmpty() )
+            painter.drawText( lastX + 2, height() - 1, text );
+        current = next;
+        next    = next.addSecs( 3600 );
+        lastX = x;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -107,25 +178,57 @@ void TimelineRuler::DrawTimeline( QPainter& painter ) const
 void TimelineRuler::SetContentsPos( int x, int )
 {
     startX_ = x;
-    repaint();
+    update();
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineRuler::Day
-// Created: SBO 2008-04-23
+// Name: TimelineRuler::ConvertToPosition
+// Created: SBO 2008-04-28
 // -----------------------------------------------------------------------------
-QString TimelineRuler::Day( unsigned int dayOffset ) const
+unsigned long TimelineRuler::ConvertToPosition( const QDateTime& datetime ) const
 {
-    const QDateTime day = simulation_.GetInitialDateTime().addDays( dayOffset );
-    return day.date().toString( "MMMM d" );
+    const int secs = initialDateTime_.secsTo( datetime );
+    return secs * tickStep_ / 3600;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineRuler::Time
-// Created: SBO 2008-04-23
+// Name: TimelineRuler::ConvertToSeconds
+// Created: SBO 2008-04-28
 // -----------------------------------------------------------------------------
-QString TimelineRuler::Time( unsigned int hourOffset ) const
+long TimelineRuler::ConvertToSeconds( long pixels ) const
 {
-    const QDateTime hour = simulation_.GetInitialDateTime().addSecs( hourOffset * 3600 );
-    return hour.time().toString( "hh" );
+    return pixels * 3600 / int( tickStep_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineRuler::ConvertToPixels
+// Created: SBO 2008-04-28
+// -----------------------------------------------------------------------------
+long TimelineRuler::ConvertToPixels( long secs ) const
+{
+    return secs * int( tickStep_ ) / 3600;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineRuler::ZoomIn
+// Created: SBO 2008-04-28
+// -----------------------------------------------------------------------------
+void TimelineRuler::ZoomIn()
+{
+    tickStep_ *= 2;
+    update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineRuler::ZoomOut
+// Created: SBO 2008-04-28
+// -----------------------------------------------------------------------------
+void TimelineRuler::ZoomOut()
+{
+    const unsigned int newStep = std::max< int >( 2, tickStep_ / 2 );
+    if( newStep != tickStep_ )
+    {
+        tickStep_ = newStep;
+        update();
+    }
 }

@@ -14,7 +14,6 @@
 #include "clients_kernel/FragOrderType.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -29,22 +28,12 @@ ActionFragOrder::ActionFragOrder( const Entity_ABC& entity, const FragOrderType&
     // NOTHING
 }
 
-namespace
-{
-    const FragOrderType& ReadFragOrder( xml::xistream& xis, const Resolver_ABC< FragOrderType >& fragOrders )
-    {
-        unsigned int id = 0;
-        xis >> attribute( "id", id );
-        return fragOrders.Get( id );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionFragOrder constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
 ActionFragOrder::ActionFragOrder( xml::xistream& xis, Controller& controller, const Resolver_ABC< FragOrderType >& fragOrders, const Entity_ABC& entity )
-    : Action_ABC ( controller, ReadFragOrder( xis, fragOrders ), entity )
+    : Action_ABC ( controller, fragOrders.Get( xml::attribute< unsigned int >( xis, "id" ) ), entity )
     , controller_( controller )
     , registered_( true )
 {
@@ -77,7 +66,7 @@ void ActionFragOrder::Polish()
 // -----------------------------------------------------------------------------
 void ActionFragOrder::Serialize( xml::xostream& xos ) const
 {
-    xos << attribute( "type", "fragorder" );
+    xos << xml::attribute( "type", "fragorder" );
     Action_ABC::Serialize( xos );
 }
 

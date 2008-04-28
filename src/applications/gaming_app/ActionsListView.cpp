@@ -31,13 +31,12 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
     , parameter_  ( MAKE_PIXMAP( parameter2 ) )
 {
     sub_ = new GamingListItemDisplayer();
-    AddColumn( tr( "S" ), Qt::AlignHCenter );
-    AddColumn( tr( "Time" ), Qt::AlignHCenter );
+    AddColumn( tr( "S" ), Qt::AlignHCenter, 20 );
+    AddColumn( tr( "Time" ), Qt::AlignHCenter, 60 );
     AddColumn( tr( "Action" ) );
     AddColumn( tr( "Value" ) );
-    setColumnWidth( 0, 20 );
-    setColumnWidth( 1, 50 );
     setSortColumn( 1 );
+    setResizeMode( QListView::LastColumn );
 
     connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( QListViewItem*, const QPoint&, int ) ) );
 
@@ -58,9 +57,9 @@ ActionsListView::~ActionsListView()
 // Name: ActionsListView::AddColumn
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------
-void ActionsListView::AddColumn( const QString& column, int alignment /*=AlignAuto*/ )
+void ActionsListView::AddColumn( const QString& column, int alignment /*=AlignAuto*/, int size /*= -1*/ )
 {
-    int col = addColumn( column );
+    int col = addColumn( column, size );
     setColumnAlignment( col, alignment );
     sub_->AddColumn( column );
 }
@@ -76,7 +75,7 @@ void ActionsListView::NotifyCreated( const Action_ABC& action )
     if( const ActionTiming* timing = action.Retrieve< ActionTiming >() )
     {
         item->setPixmap( 0, timing->IsEnabled() ? checkboxOn_ : checkboxOff_ );
-        item->setText( 1, timing->GetTime().toString() );
+        item->setText( 1, timing->GetTime().toString( tr( "MM-dd hh:mm" ) ) );
     }
     item->setPixmap( 2, mission_ );
     item->setText( 2, action.GetName() );
@@ -111,7 +110,7 @@ void ActionsListView::NotifyUpdated( const ActionTiming& extension )
     if( QListViewItem* item = gui::FindItem( &extension.GetAction(), firstChild() ) )
     {
         item->setPixmap( 0, extension.IsEnabled() ? checkboxOn_ : checkboxOff_ );
-        item->setText  ( 1, extension.GetTime().toString() );
+        item->setText  ( 1, extension.GetTime().toString( tr( "MM-d hh:mm" ) ) );
     }
 }
 

@@ -21,14 +21,15 @@ namespace
     class TimelineCanvas : public QCanvas
     {
     public:
-        explicit TimelineCanvas( unsigned int lineHeight )
-            : QCanvas( 10000, 0 )
+        TimelineCanvas( QObject* parent, unsigned int lineHeight )
+            : QCanvas( parent )
             , linePen_( QColor( 225, 225, 225 ), 1, QPen::SolidLine )
             , lineHeight_( lineHeight )
         {
 //            setUpdatePeriod( 50 );
             setDoubleBuffering( true );
             setBackgroundColor( Qt::white );
+            resize( 10000, 0 );
         }
         virtual ~TimelineCanvas() {}
 
@@ -52,14 +53,14 @@ namespace
 // Name: TimelineWidget constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsScheduler& scheduler, const Simulation& simulation )
+TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler )
     : QHBox( parent )
 {
     QSplitter* splitter = new QSplitter( this );
     QListView* list = new TimelineListView( splitter, controllers );
     QVBox* box = new QVBox( splitter );
-    TimelineRuler* ruler = new TimelineRuler( box, controllers, simulation, list->header()->height() );
-    QCanvasView* editor = new TimelineView( box, new TimelineCanvas( 25 ), controllers, scheduler, simulation ); // $$$$ SBO 2008-04-25: leak ?
+    TimelineRuler* ruler = new TimelineRuler( box, controllers, list->header()->height() );
+    QCanvasView* editor = new TimelineView( box, new TimelineCanvas( this, 25 ), controllers, model, scheduler, *ruler );
 
     connect( editor, SIGNAL( contentsMoving( int, int ) ), list  , SLOT( setContentsPos( int, int ) ) );
     connect( list  , SIGNAL( contentsMoving( int, int ) ), editor, SLOT( setContentsPos( int, int ) ) );

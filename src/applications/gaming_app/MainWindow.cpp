@@ -237,7 +237,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( actionsPanel, Qt::DockTop, false );
     actionsPanel->hide();
 
-    TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, *scheduler, simulation );
+    TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler );
     moveDockWindow( timelinePanel, Qt::DockTop );
     timelinePanel->hide();
 

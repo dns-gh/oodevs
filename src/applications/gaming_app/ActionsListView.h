@@ -66,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddColumn( const QString& column, int alignment = AlignAuto );
+    void AddColumn( const QString& column, int alignment = AlignAuto, int size = -1 );
     virtual void NotifyCreated( const Action_ABC& action );
     virtual void NotifyUpdated( const Action_ABC& action );
     virtual void NotifyDeleted( const Action_ABC& action );

@@ -20,9 +20,9 @@
 // Name: TimelineEntityItem constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineEntityItem::TimelineEntityItem( TimelineView& view, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
-    : TimelineItem_ABC( view.canvas(), QRect( 0, 0, view.canvas()->width(), 25 ) ) // $$$$ SBO 2008-04-23: 
-    , view_( view )
+TimelineEntityItem::TimelineEntityItem( QCanvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
+    : TimelineItem_ABC( canvas, QRect( 0, 0, canvas->width(), 25 ) ) // $$$$ SBO 2008-04-23: 
+    , ruler_( ruler )
     , controllers_( controllers )
     , entity_( entity )
 {
@@ -67,7 +67,7 @@ void TimelineEntityItem::AddAction( const Action_ABC& action )
         return;
     TimelineItem_ABC*& item = childItems_[ &action ];
     if( !item )
-        item = new TimelineActionItem( view_, *this, controllers_, action );
+        item = new TimelineActionItem( *this, ruler_, controllers_, action );
 }
 
 // -----------------------------------------------------------------------------

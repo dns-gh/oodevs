@@ -12,6 +12,7 @@
 #include "TimelineMarker.h"
 #include "TimelineEntityItem.h"
 #include "TimelineActionItem.h"
+#include "TimelineRuler.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/Simulation.h"
 #include "clients_kernel/Controllers.h"
@@ -24,17 +25,18 @@ using namespace kernel;
 // Name: TimelineView constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineView::TimelineView( QWidget* parent, QCanvas* canvas, Controllers& controllers, ActionsScheduler& scheduler, const Simulation& simulation )
+TimelineView::TimelineView( QWidget* parent, QCanvas* canvas, Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler )
     : QCanvasView  ( canvas, parent )
     , controllers_ ( controllers )
-    , simulation_  ( simulation )
+    , model_       ( model )
+    , ruler_       ( ruler )
     , selectedItem_( 0 )
 {
     // initialize some elements needed in action tooltips
     QMimeSourceFactory::defaultFactory()->setPixmap( "mission", MAKE_PIXMAP( mission ) );
 
     viewport()->setMouseTracking( true );
-    new TimelineMarker( *this, scheduler, controllers_ );
+    new TimelineMarker( canvas, scheduler, controllers_, ruler_ );
     controllers_.Register( *this );
 }
 
@@ -57,7 +59,7 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
     T_EntityLine& line = entityLines_[ &action.GetEntity() ];
     if( line.second == 0 )
     {
-        line.first = new TimelineEntityItem( *this, controllers_, action.GetEntity() );
+        line.first = new TimelineEntityItem( canvas(), ruler_, controllers_, action.GetEntity() );
         line.first->MoveAfter( lines_.empty() ? 0 : lines_.back() );
         lines_.push_back( line.first );
         canvas()->resize( canvas()->width(), canvas()->height() + line.first->height() );
@@ -205,14 +207,17 @@ void TimelineView::contentsContextMenuEvent( QContextMenuEvent* event )
 // -----------------------------------------------------------------------------
 void TimelineView::keyPressEvent( QKeyEvent* event )
 {
-    if( !selectedItem_ )
-        return;
-    if( event->key() == Qt::Key_Delete )
+    if( selectedItem_ && event->key() == Qt::Key_Delete )
         selectedItem_->setVisible( false ); // $$$$ SBO 2008-04-23: real delete
-    else if( event->key() == Qt::Key_Left || event->key() == Qt::Key_Right )
+    else if( event->key() == Qt::Key_Plus )
+        ruler_.ZoomIn();
+    else if( event->key() == Qt::Key_Minus )
+        ruler_.ZoomOut();
+    else if( selectedItem_ && ( event->key() == Qt::Key_Left || event->key() == Qt::Key_Right ) )
     {
         const short sign = event->key() == Qt::Key_Left ? -1 : 1;
-        selectedItem_->Shift( sign * ( ( event->state() & Qt::ShiftButton ) ? 100 : 5 ) ); // $$$$ SBO 2007-07-05: ruler.getPageStep / ruler.getTickStep
+        const long seconds = ( event->state() & Qt::ShiftButton ) ? 3600 * 24 : 3600;
+        selectedItem_->Shift( ruler_.ConvertToPixels( sign * seconds ) );
     }
     Update();
 }
@@ -248,23 +253,4 @@ void TimelineView::setContentsPos( int x, int y )
     blockSignals( true );
     QCanvasView::setContentsPos( x, y );
     blockSignals( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineView::ConvertToPosition
-// Created: SBO 2008-04-25
-// -----------------------------------------------------------------------------
-unsigned long TimelineView::ConvertToPosition( const QDateTime& datetime ) const
-{
-    int secs = simulation_.GetInitialDateTime().secsTo( datetime );
-    return  secs * 40 / 3600; // $$$$ SBO 2008-04-25: 20 = tickStep_
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineView::ConvertToSeconds
-// Created: SBO 2008-04-25
-// -----------------------------------------------------------------------------
-long TimelineView::ConvertToSeconds( long pixels ) const
-{
-    return pixels * 3600 / 40; // $$$$ SBO 2008-04-25: 
 }

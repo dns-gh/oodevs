@@ -16,7 +16,6 @@
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActionMission constructor
@@ -35,7 +34,7 @@ ActionMission::ActionMission( const Entity_ABC& entity, const MissionType& missi
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 ActionMission::ActionMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
-    : Action_ABC( controller, missions.Get( attribute< unsigned int >( xis, "id" ) ), entity )
+    : Action_ABC( controller, missions.Get( xml::attribute< unsigned int >( xis, "id" ) ), entity )
     , controller_( controller )
     , registered_( true )
 {
@@ -68,7 +67,7 @@ void ActionMission::Polish()
 // -----------------------------------------------------------------------------
 void ActionMission::Serialize( xml::xostream& xos ) const
 {
-    xos << attribute( "type", "mission" );
+    xos << xml::attribute( "type", "mission" );
     Action_ABC::Serialize( xos );
 }
 

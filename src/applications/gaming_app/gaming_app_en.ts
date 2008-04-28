@@ -36,6 +36,14 @@
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>MM-dd hh:mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MM-d hh:mm</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionsPanel</name>

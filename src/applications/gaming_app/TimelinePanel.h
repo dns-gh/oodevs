@@ -15,8 +15,8 @@ namespace kernel
     class Controllers;
 }
 
+class ActionsModel;
 class ActionsScheduler;
-class Simulation;
 
 // =============================================================================
 /** @class  TimelinePanel
@@ -30,7 +30,7 @@ class TimelinePanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsScheduler& scheduler, const Simulation& simulation );
+             TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler );
     virtual ~TimelinePanel();
     //@}
 

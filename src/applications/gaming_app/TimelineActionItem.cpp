@@ -12,6 +12,7 @@
 #include "moc_TimelineActionItem.cpp"
 #include "TimelineView.h"
 #include "TimelineEntityItem.h"
+#include "TimelineRuler.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionTiming.h"
 #include "clients_kernel/Controllers.h"
@@ -22,14 +23,14 @@
 // Name: TimelineActionItem constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineActionItem::TimelineActionItem( const TimelineView& view, const TimelineItem_ABC& parent, kernel::Controllers& controllers, const Action_ABC& action )
-    : QObject( view.canvas() )
-    , TimelineItem_ABC( view.canvas() )
-    , view_( view )
-    , controllers_( controllers )
-    , parentItem_( parent )
-    , action_( action )
-    , textWidth_( 0 )
+TimelineActionItem::TimelineActionItem( const TimelineItem_ABC& parent, const TimelineRuler& ruler, kernel::Controllers& controllers, const Action_ABC& action )
+    : QObject         ( parent.canvas() )
+    , TimelineItem_ABC( parent.canvas() )
+    , ruler_          ( ruler )
+    , controllers_    ( controllers )
+    , parentItem_     ( parent )
+    , action_         ( action )
+    , textWidth_      ( 0 )
 {
     palette_.setColor( QPalette::Disabled, QColorGroup::Background, QColor( 220, 220, 220 ) );
     palette_.setColor( QPalette::Disabled, QColorGroup::Foreground, QColor( 180, 180, 180 ) );
@@ -58,12 +59,7 @@ TimelineActionItem::~TimelineActionItem()
 void TimelineActionItem::NotifyUpdated( const ActionTiming& timing )
 {
     if( &timing == action_.Retrieve< ActionTiming >() )
-    {
-        setX( view_.ConvertToPosition( timing.GetTime() ) );
-        setEnabled( timing.IsEnabled() );
-        if( x() + rect().width() > canvas()->width() )
-            canvas()->resize( x() + rect().width(), canvas()->height() );
-    }
+        Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -74,11 +70,8 @@ void TimelineActionItem::setVisible( bool visible )
 {
     QCanvasRectangle::setVisible( visible );
     if( ActionTiming* timing = const_cast< ActionTiming* >( action_.Retrieve< ActionTiming >() ) )
-    {
         if( timing->IsEnabled() != isVisible() )
             timing->ToggleEnabled();
-        setX( view_.ConvertToPosition( timing->GetTime() ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +82,7 @@ void TimelineActionItem::Shift( long shift )
 {
     if( isEnabled() )
         if( ActionTiming* timing = const_cast< ActionTiming* >( action_.Retrieve< ActionTiming >() ) )
-            timing->Shift( view_.ConvertToSeconds( shift ) );
+            timing->Shift( ruler_.ConvertToSeconds( shift ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,6 +93,12 @@ void TimelineActionItem::Update()
 {
     setY( parentItem_.y() + 1 );
     setSize( textWidth_ + 10, parentItem_.height() - 1 );
+    if( const ActionTiming* timing =action_.Retrieve< ActionTiming >() )
+    {
+        setX( ruler_.ConvertToPosition( timing->GetTime() ) );
+        setEnabled( timing->IsEnabled() );
+    }
+    update();
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +177,7 @@ void TimelineActionItem::DisplayToolTip( QWidget* parent ) const
 // Name: TimelineActionItem::DisplayContextMenu
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineActionItem::DisplayContextMenu( QWidget* parent, const QPoint& pos  ) const
+void TimelineActionItem::DisplayContextMenu( QWidget* parent, const QPoint& pos ) const
 {
     QPopupMenu* popup = new QPopupMenu( parent );
     popup->insertItem( tr( "Rename" ), this, SLOT( OnRename() ) );

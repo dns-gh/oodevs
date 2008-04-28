@@ -19,7 +19,7 @@ namespace kernel
 }
 
 class Action_ABC;
-class TimelineView;
+class TimelineRuler;
 
 // =============================================================================
 /** @class  TimelineEntityItem
@@ -33,7 +33,7 @@ class TimelineEntityItem : public TimelineItem_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineEntityItem( TimelineView& view, kernel::Controllers& controllers, const kernel::Entity_ABC& entity );
+             TimelineEntityItem( QCanvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, const kernel::Entity_ABC& entity );
     virtual ~TimelineEntityItem();
     //@}
 
@@ -61,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    TimelineView& view_;
+    const TimelineRuler& ruler_;
     kernel::Controllers& controllers_;
     const kernel::Entity_ABC& entity_;
     T_Items childItems_;

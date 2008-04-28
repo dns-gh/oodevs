@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "TimelineMarker.h"
 #include "TimelineView.h"
+#include "TimelineRuler.h"
 #include "gaming/ActionsScheduler.h"
 #include "clients_kernel/Controllers.h"
 #include <qpainter.h>
@@ -18,11 +19,11 @@
 // Name: TimelineMarker constructor
 // Created: SBO 2007-07-16
 // -----------------------------------------------------------------------------
-TimelineMarker::TimelineMarker( TimelineView& view, ActionsScheduler& scheduler, kernel::Controllers& controllers )
-    : TimelineItem_ABC( view.canvas() )
-    , controllers_( controllers )
-    , view_( view )
-    , scheduler_( scheduler )
+TimelineMarker::TimelineMarker( QCanvas* canvas, ActionsScheduler& scheduler, kernel::Controllers& controllers, const TimelineRuler& ruler )
+    : TimelineItem_ABC( canvas )
+    , controllers_    ( controllers )
+    , ruler_          ( ruler )
+    , scheduler_      ( scheduler )
 {
     setZ( 1100 );
     show();
@@ -44,7 +45,7 @@ TimelineMarker::~TimelineMarker()
 // -----------------------------------------------------------------------------
 void TimelineMarker::Shift( long shift )
 {
-    scheduler_.Shift( view_.ConvertToSeconds( shift ) );
+    scheduler_.Shift( ruler_.ConvertToSeconds( shift ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,9 +72,9 @@ void TimelineMarker::NotifyUpdated( const Simulation& )
 // -----------------------------------------------------------------------------
 void TimelineMarker::draw( QPainter& painter )
 {
-    setX( view_.ConvertToPosition( scheduler_.GetDateTime() ) );
+    setX( ruler_.ConvertToPosition( scheduler_.GetDateTime() ) );
     setY( 0 );
-    setSize( 3, view_.contentsHeight() );
+    setSize( 3, canvas()->height() );
 
     const QPen oldPen( painter.pen() );
     QPen p( QColor( 255, 0, 0 ), 2, QPen::SolidLine );

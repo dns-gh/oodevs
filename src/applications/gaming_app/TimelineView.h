@@ -25,6 +25,7 @@ class ActionsScheduler;
 class Simulation;
 class TimelineItem_ABC;
 class TimelineEntityItem;
+class TimelineRuler;
 
 // =============================================================================
 /** @class  TimelineView
@@ -41,14 +42,8 @@ class TimelineView : public QCanvasView
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineView( QWidget* parent, QCanvas* canvas, kernel::Controllers& controllers, ActionsScheduler& scheduler, const Simulation& simulation );
+             TimelineView( QWidget* parent, QCanvas* canvas, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler );
     virtual ~TimelineView();
-    //@}
-
-    //! @name Operations
-    //@{
-    unsigned long ConvertToPosition( const QDateTime& datetime ) const;
-    long ConvertToSeconds( long pixels ) const;
     //@}
 
 private:
@@ -91,7 +86,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const Simulation&    simulation_;
+    ActionsModel&        model_;
+    TimelineRuler&       ruler_;
     T_EntityLines        entityLines_;
     T_Lines              lines_;
     TimelineItem_ABC*    selectedItem_;
