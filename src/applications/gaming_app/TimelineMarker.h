@@ -43,6 +43,7 @@ public:
     //! @name Operations
     //@{
     virtual void Shift( long shift );
+    virtual void Release();
     virtual void Update();
     //@}
 
@@ -65,6 +66,7 @@ private:
     kernel::Controllers& controllers_;
     ActionsScheduler& scheduler_;
     const TimelineRuler& ruler_;
+    long shift_;
     //@}
 };
 

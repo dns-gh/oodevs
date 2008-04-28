@@ -33,6 +33,7 @@ public:
     //@{
     virtual void Update() = 0;
     virtual void Shift( long shift );
+    virtual void Release();
     virtual void DisplayToolTip( QWidget* parent ) const; // $$$$ SBO 2007-07-19: make a displayer maybe...
     virtual void DisplayContextMenu( QWidget* parent, const QPoint& pos ) const;
     //@}

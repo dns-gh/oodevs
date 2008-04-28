@@ -24,6 +24,7 @@ TimelineMarker::TimelineMarker( QCanvas* canvas, ActionsScheduler& scheduler, ke
     , controllers_    ( controllers )
     , ruler_          ( ruler )
     , scheduler_      ( scheduler )
+    , shift_          ( 0 )
 {
     setZ( 1100 );
     show();
@@ -45,7 +46,20 @@ TimelineMarker::~TimelineMarker()
 // -----------------------------------------------------------------------------
 void TimelineMarker::Shift( long shift )
 {
-    scheduler_.Shift( ruler_.ConvertToSeconds( shift ) );
+    shift_ += shift;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineMarker::Release
+// Created: SBO 2008-04-28
+// -----------------------------------------------------------------------------
+void TimelineMarker::Release()
+{
+    if( shift_ )
+    {
+        scheduler_.Shift( ruler_.ConvertToSeconds( shift_ ) );
+        shift_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -183,6 +183,8 @@ void TimelineView::contentsMouseMoveEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void TimelineView::contentsMouseReleaseEvent( QMouseEvent* )
 {
+    if( selectedItem_ )
+        selectedItem_->Release();
     setCursor( QCursor::arrowCursor );
 }
 
