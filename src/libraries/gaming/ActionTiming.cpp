@@ -13,8 +13,6 @@
 #include "clients_kernel/Controller.h"
 #include "xeumeuleu/xml.h"
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: ActionTiming constructor
 // Created: SBO 2007-06-19
@@ -29,6 +27,20 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const Simulation& si
     // NOTHING
 }
 
+namespace
+{
+    QDateTime ReadDateTime( xml::xistream& xis, const Simulation& simulation )
+    {
+        std::string datetime;
+        xis >> xml::attribute( "time", datetime );
+        bool ok = false;
+        const unsigned int ticks = QString( datetime.c_str() ).toUInt( &ok );
+        if( ok )
+            return simulation.GetInitialDateTime().addSecs( ticks * simulation.GetTickDuration() );
+        return QDateTime::fromString( datetime.c_str(), Qt::ISODate );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionTiming constructor
 // Created: SBO 2007-06-28
@@ -38,17 +50,9 @@ ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, 
     , simulation_( simulation )
     , owner_( owner )
     , enabled_( true )
+    , time_( ReadDateTime( xis, simulation ) )
 {
-    std::string datetime;
-    xis >> attribute( "time", datetime );
-    bool ok = false;
-    unsigned int ticks = QString( datetime.c_str() ).toUInt( &ok );
-    if( ok )
-        time_ = simulation_.GetInitialDateTime().addSecs( ticks * 10 ); // $$$$ SBO 2008-04-25: time factor
-    else
-        time_ = QDateTime::fromString( datetime.c_str(), Qt::ISODate );
-//    if( !time_.isValid() )
-//        time_ = simulation_.GetInitialDateTime().addSecs( QString( datetime.c_str() ).toInt() * 10 ); // $$$$ SBO 2008-04-25: time factor
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +70,7 @@ ActionTiming::~ActionTiming()
 // -----------------------------------------------------------------------------
 void ActionTiming::Serialize( xml::xostream& xos ) const
 {
-    xos << attribute( "time", time_.toString( Qt::ISODate ) );
+    xos << xml::attribute( "time", time_.toString( Qt::ISODate ) );
 }
 
 // -----------------------------------------------------------------------------

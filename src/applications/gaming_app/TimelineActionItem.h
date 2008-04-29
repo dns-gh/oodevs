@@ -19,6 +19,7 @@ namespace kernel
 }
 
 class Action_ABC;
+class ActionsModel;
 class ActionTiming;
 class TimelineRuler;
 
@@ -38,14 +39,15 @@ class TimelineActionItem : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineActionItem( const TimelineItem_ABC& parent, const TimelineRuler& ruler, kernel::Controllers& controllers, const Action_ABC& action );
+             TimelineActionItem( QCanvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, ActionsModel& model, const Action_ABC& action, const QPalette& palette );
     virtual ~TimelineActionItem();
     //@}
 
     //! @name Operations
     //@{
     virtual void Update();
-    virtual void Shift( long shift );
+    virtual void Move( long offset );
+    virtual void Delete();
     virtual void DisplayToolTip( QWidget* parent ) const;
     virtual void DisplayContextMenu( QWidget* parent, const QPoint& pos ) const;
     //@}
@@ -78,10 +80,10 @@ private:
     //@{
     const TimelineRuler& ruler_;
     kernel::Controllers& controllers_;
-    const TimelineItem_ABC& parentItem_;
+    ActionsModel& model_;
     const Action_ABC& action_;
     unsigned int textWidth_;
-    QPalette palette_;
+    const QPalette& palette_;
     //@}
 };
 

@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "TimelineListView.h"
+#include "moc_TimelineListView.cpp"
 #include "gaming/Action_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -20,7 +21,7 @@ namespace
     class TimeLineEntityListItem : public gui::ValuedListItem
     {
     public:
-        explicit TimeLineEntityListItem( QListView* parent ) : gui::ValuedListItem( parent ) {}
+        TimeLineEntityListItem( QListView* parent, QListViewItem* after ) : gui::ValuedListItem( parent, after ) {}
 
         virtual void paintCell( QPainter* p, const QColorGroup& cg, int column, int width, int align )
         {
@@ -51,8 +52,10 @@ TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& contro
     addColumn( "action count", 0 );
     addColumn( tr( "Units" ) );
     setResizeMode( LastColumn );
-    setHScrollBarMode( QScrollView::AlwaysOn ); // $$$$ SBO 2008-04-23: to have the same height as canvasview
+    setHScrollBarMode( QScrollView::AlwaysOn ); //--> to have the same height as canvasview
     setSortColumn( -1 ); // $$$$ SBO 2008-04-25: TODO
+
+    connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChange( QListViewItem* ) ) );
     controllers_.Register( *this );
 }
 
@@ -74,7 +77,7 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
     const kernel::Entity_ABC& entity = action.GetEntity();
     gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() );
     if( !item )
-        item = new TimeLineEntityListItem( this );
+        item = new TimeLineEntityListItem( this, lastItem() );
     item->Set( &entity, QString::number( item->text( 0 ).toInt() + 1 ), entity.GetName() );
 }
 
@@ -114,4 +117,14 @@ void TimelineListView::setContentsPos( int x, int y )
     blockSignals( true );
     QListView::setContentsPos( x, y );
     blockSignals( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineListView::OnSelectionChange
+// Created: SBO 2008-04-29
+// -----------------------------------------------------------------------------
+void TimelineListView::OnSelectionChange( QListViewItem* item )
+{
+    if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item ) )
+        valuedItem->Select( controllers_.actions_ );
 }

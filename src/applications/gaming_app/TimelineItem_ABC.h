@@ -25,15 +25,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit TimelineItem_ABC( QCanvas* canvas );
-             TimelineItem_ABC( QCanvas* canvas, const QRect& area );
     virtual ~TimelineItem_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual void Update() = 0;
-    virtual void Shift( long shift );
-    virtual void Release();
+    virtual void Move( long offset );
+    virtual void Delete();
     virtual void DisplayToolTip( QWidget* parent ) const; // $$$$ SBO 2007-07-19: make a displayer maybe...
     virtual void DisplayContextMenu( QWidget* parent, const QPoint& pos ) const;
     //@}

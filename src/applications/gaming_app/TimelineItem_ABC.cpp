@@ -21,16 +21,6 @@ TimelineItem_ABC::TimelineItem_ABC( QCanvas* canvas )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineItem_ABC constructor
-// Created: SBO 2007-07-06
-// -----------------------------------------------------------------------------
-TimelineItem_ABC::TimelineItem_ABC( QCanvas* canvas, const QRect& area )
-    : QCanvasRectangle( area, canvas )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: TimelineItem_ABC destructor
 // Created: SBO 2007-07-06
 // -----------------------------------------------------------------------------
@@ -40,19 +30,19 @@ TimelineItem_ABC::~TimelineItem_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineItem_ABC::Shift
+// Name: TimelineItem_ABC::Move
 // Created: SBO 2007-07-19
 // -----------------------------------------------------------------------------
-void TimelineItem_ABC::Shift( long )
+void TimelineItem_ABC::Move( long )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineItem_ABC::Release
+// Name: TimelineItem_ABC::Delete
 // Created: SBO 2008-04-28
 // -----------------------------------------------------------------------------
-void TimelineItem_ABC::Release()
+void TimelineItem_ABC::Delete()
 {
     // NOTHING
 }

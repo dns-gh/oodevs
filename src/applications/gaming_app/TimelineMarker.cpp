@@ -9,7 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "TimelineMarker.h"
-#include "TimelineView.h"
 #include "TimelineRuler.h"
 #include "gaming/ActionsScheduler.h"
 #include "clients_kernel/Controllers.h"
@@ -26,7 +25,6 @@ TimelineMarker::TimelineMarker( QCanvas* canvas, ActionsScheduler& scheduler, ke
     , scheduler_      ( scheduler )
     , shift_          ( 0 )
 {
-    setZ( 1100 );
     show();
     controllers_.Register( *this );
 }
@@ -41,19 +39,19 @@ TimelineMarker::~TimelineMarker()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineMarker::Shift
+// Name: TimelineMarker::Move
 // Created: SBO 2007-07-16
 // -----------------------------------------------------------------------------
-void TimelineMarker::Shift( long shift )
+void TimelineMarker::Move( long offset )
 {
-    shift_ += shift;
+    shift_ += offset;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineMarker::Release
+// Name: TimelineMarker::CommitMove
 // Created: SBO 2008-04-28
 // -----------------------------------------------------------------------------
-void TimelineMarker::Release()
+void TimelineMarker::CommitMove()
 {
     if( shift_ )
     {
@@ -68,7 +66,11 @@ void TimelineMarker::Release()
 // -----------------------------------------------------------------------------
 void TimelineMarker::Update()
 {
-    // NOTHING
+    setX( ruler_.ConvertToPosition( scheduler_.GetDateTime() ) );
+    setY( 0 );
+    setZ( x() + 1 );
+    setSize( 3, canvas()->height() );
+    update();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +79,7 @@ void TimelineMarker::Update()
 // -----------------------------------------------------------------------------
 void TimelineMarker::NotifyUpdated( const Simulation& )
 {
-    update();
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,13 +88,24 @@ void TimelineMarker::NotifyUpdated( const Simulation& )
 // -----------------------------------------------------------------------------
 void TimelineMarker::draw( QPainter& painter )
 {
-    setX( ruler_.ConvertToPosition( scheduler_.GetDateTime() ) );
-    setY( 0 );
-    setSize( 3, canvas()->height() );
-
+    Update();
     const QPen oldPen( painter.pen() );
     QPen p( QColor( 255, 0, 0 ), 2, QPen::SolidLine );
     painter.setPen( p );
     painter.drawLine( rect().topLeft(), rect().bottomLeft() );
     painter.setPen( oldPen );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineMarker::DisplayToolTip
+// Created: SBO 2008-04-29
+// -----------------------------------------------------------------------------
+void TimelineMarker::DisplayToolTip( QWidget* parent ) const
+{
+    const QString tip = scheduler_.GetDateTime().toString();
+    if( QToolTip::textFor( parent ) != tip )
+    {
+        QToolTip::remove( parent );
+        QToolTip::add( parent, tip );
+    }
 }

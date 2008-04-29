@@ -54,8 +54,11 @@ void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )
     {
         const Action_ABC& action = it.NextElement();
         if( const ActionTiming* timing = action.Retrieve< ActionTiming >() )
-            if( timing->IsEnabled() && timing->GetTime() == currentTime_ )
+        {
+            const QDateTime dateTime = timing->GetTime();
+            if( timing->IsEnabled() && dateTime <= currentTime_ && dateTime.secsTo( currentTime_ ) < int( simulation_.GetTickDuration() ) )
                 action.Publish( publisher_ );
+        }
     }
 }
 

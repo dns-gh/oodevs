@@ -69,10 +69,11 @@ public:
     QString GetTimeAsString() const; 
     QString GetDateAsString() const; 
 
-    int  GetTime() const;                    //!< seconds since simulation start
+    int GetTime() const;                    //!< seconds since simulation start
     
     unsigned GetCurrentTick() const;         //!< tick since simulation start
     unsigned GetTickCount() const;           //!< total tick count (replayer)
+    unsigned GetTickDuration() const;
 
     bool IsPaused() const;
     bool IsConnected() const;

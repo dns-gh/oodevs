@@ -32,6 +32,7 @@ class TimelineListView : public QListView
                        , public kernel::ElementObserver_ABC< Action_ABC >
                        , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -40,8 +41,10 @@ public:
     virtual ~TimelineListView();
     //@}
 
+private slots:
     //! @name Operations
     //@{
+    void OnSelectionChange( QListViewItem* item );
     //@}
 
 private:

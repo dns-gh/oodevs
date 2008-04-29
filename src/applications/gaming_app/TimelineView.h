@@ -24,8 +24,9 @@ class Action_ABC;
 class ActionsScheduler;
 class Simulation;
 class TimelineItem_ABC;
-class TimelineEntityItem;
 class TimelineRuler;
+class TimelineActionItem;
+class TimelineMarker;
 
 // =============================================================================
 /** @class  TimelineView
@@ -77,21 +78,28 @@ private:
 
     //! @name Types
     //@{
-    typedef std::pair< TimelineEntityItem*, unsigned int >      T_EntityLine;
-    typedef std::map< const kernel::Entity_ABC*, T_EntityLine > T_EntityLines;
-    typedef std::vector< TimelineItem_ABC* >                    T_Lines;
+    typedef std::map< const Action_ABC*, TimelineActionItem* > T_Actions;
+    typedef std::map< const kernel::Entity_ABC*, T_Actions >   T_EntityActions;
+    typedef std::vector< const kernel::Entity_ABC* >           T_Entities;
     //@}
 
 private:
+    //! @name Statics
+    //@{
+    static const unsigned int rowHeight_;
+    //@}
+
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     ActionsModel&        model_;
+    T_EntityActions      actions_;
+    T_Entities           entities_;
     TimelineRuler&       ruler_;
-    T_EntityLines        entityLines_;
-    T_Lines              lines_;
+    TimelineMarker*      marker_;
     TimelineItem_ABC*    selectedItem_;
     QPoint               grabPoint_;
+    QPalette             actionPalette_;
     //@}
 };
 

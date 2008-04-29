@@ -42,9 +42,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Shift( long shift );
-    virtual void Release();
+    void CommitMove();
+    virtual void Move( long offset );
     virtual void Update();
+    virtual void DisplayToolTip( QWidget* parent ) const;
     //@}
 
 private:

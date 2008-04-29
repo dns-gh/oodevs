@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "TimelineView.h"
 #include "TimelineMarker.h"
-#include "TimelineEntityItem.h"
 #include "TimelineActionItem.h"
 #include "TimelineRuler.h"
 #include "gaming/Action_ABC.h"
@@ -21,6 +20,8 @@
 
 using namespace kernel;
 
+const unsigned int TimelineView::rowHeight_ = 25;
+
 // -----------------------------------------------------------------------------
 // Name: TimelineView constructor
 // Created: SBO 2007-07-04
@@ -30,13 +31,20 @@ TimelineView::TimelineView( QWidget* parent, QCanvas* canvas, Controllers& contr
     , controllers_ ( controllers )
     , model_       ( model )
     , ruler_       ( ruler )
+    , marker_      ( new TimelineMarker( canvas, scheduler, controllers_, ruler_ ) )
     , selectedItem_( 0 )
 {
+    actionPalette_.setColor( QPalette::Disabled, QColorGroup::Background, QColor( 220, 220, 220 ) );
+    actionPalette_.setColor( QPalette::Disabled, QColorGroup::Foreground, QColor( 180, 180, 180 ) );
+    actionPalette_.setColor( QPalette::Inactive, QColorGroup::Background, QColor( 200, 240, 215 ) );
+    actionPalette_.setColor( QPalette::Inactive, QColorGroup::Foreground, QColor(  50, 200, 105 ) );
+    actionPalette_.setColor( QPalette::Active  , QColorGroup::Background, QColor( 200, 215, 240 ) );
+    actionPalette_.setColor( QPalette::Active  , QColorGroup::Foreground, QColor(  50, 105, 200 ) );
+
     // initialize some elements needed in action tooltips
     QMimeSourceFactory::defaultFactory()->setPixmap( "mission", MAKE_PIXMAP( mission ) );
 
     viewport()->setMouseTracking( true );
-    new TimelineMarker( canvas, scheduler, controllers_, ruler_ );
     controllers_.Register( *this );
 }
 
@@ -56,16 +64,14 @@ TimelineView::~TimelineView()
 // -----------------------------------------------------------------------------
 void TimelineView::NotifyCreated( const Action_ABC& action )
 {
-    T_EntityLine& line = entityLines_[ &action.GetEntity() ];
-    if( line.second == 0 )
+    const kernel::Entity_ABC* entity = &action.GetEntity();
+    T_Entities::iterator it = std::find( entities_.begin(), entities_.end(), entity );
+    if( it == entities_.end() )
     {
-        line.first = new TimelineEntityItem( canvas(), ruler_, controllers_, action.GetEntity() );
-        line.first->MoveAfter( lines_.empty() ? 0 : lines_.back() );
-        lines_.push_back( line.first );
-        canvas()->resize( canvas()->width(), canvas()->height() + line.first->height() );
+        entities_.push_back( entity );
+        canvas()->resize( canvas()->width(), canvas()->height() + rowHeight_ );
     }
-    line.first->AddAction( action );
-    ++line.second;
+    actions_[ entity ][ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action, actionPalette_ );
     Update();
 }
 
@@ -75,13 +81,19 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineView::NotifyDeleted( const Action_ABC& action )
 {
-    T_EntityLines::iterator it = entityLines_.find( &action.GetEntity() );
-    if( it != entityLines_.end() )
+    T_EntityActions::iterator it = actions_.find( &action.GetEntity() );
+    if( it != actions_.end() )
     {
-        T_EntityLine& line = it->second;
-        line.first->RemoveAction( action );
-        if( --line.second == 0 )
-            NotifyDeleted( action.GetEntity() );
+        T_Actions::iterator itAction = it->second.find( &action );
+        if( itAction != it->second.end() )
+        {
+            if( itAction->second == selectedItem_ )
+                ClearSelection();
+            delete itAction->second;
+            it->second.erase( itAction );
+            if( it->second.empty() )
+                NotifyDeleted( *it->first );
+        }
     }
 }
 
@@ -91,16 +103,19 @@ void TimelineView::NotifyDeleted( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    T_EntityLines::iterator it = entityLines_.find( &entity );
-    if( it != entityLines_.end() )
+    T_EntityActions::iterator it = actions_.find( &entity );
+    if( it != actions_.end() )
     {
-        T_Lines::iterator itLine = std::find( lines_.begin(), lines_.end(), it->second.first );
-        if( itLine != lines_.end() )
-            lines_.erase( itLine );
-        const unsigned int height = it->second.first->height();
-        delete it->second.first;
-        entityLines_.erase( it );
-        canvas()->resize( canvas()->width(), canvas()->height() - height );
+        for( T_Actions::iterator itAction = it->second.begin(); itAction != it->second.end(); ++itAction )
+        {
+            if( itAction->second == selectedItem_ )
+                ClearSelection();
+            delete itAction->second;
+        }
+        actions_.erase( it );
+        T_Entities::iterator itEntity = std::find( entities_.begin(), entities_.end(), &entity );
+        entities_.erase( itEntity );
+        canvas()->resize( canvas()->width(), canvas()->height() - rowHeight_ );
         Update();
     }
 }
@@ -111,8 +126,19 @@ void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void TimelineView::Update()
 {
-    for( T_Lines::const_iterator it = lines_.begin(); it != lines_.end(); ++it )
-        (*it)->Update();
+    for( T_Entities::iterator it = entities_.begin(); it != entities_.end(); ++it )
+    {
+        const int row = std::distance( entities_.begin(), it );
+        T_Actions& actions = actions_[ *it ];
+        for( T_Actions::iterator itAction = actions.begin(); itAction != actions.end(); ++itAction )
+        {
+            TimelineActionItem& item = *itAction->second;
+            item.setY( row * rowHeight_ );
+            item.setSize( item.width(), rowHeight_ );
+            item.Update();
+        }
+    }
+    marker_->Update();
     canvas()->setAllChanged();
     canvas()->update();
 }
@@ -126,20 +152,17 @@ void TimelineView::Select( const QPoint& point )
     grabPoint_ = point;
     QCanvasItemList list = canvas()->collisions( grabPoint_ );
     if( list.empty() )
-    {
         ClearSelection();
-        Update();
-        return;
-    }
-    for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
-        if( *it != selectedItem_ )
-        {
-            TimelineItem_ABC* item = dynamic_cast< TimelineItem_ABC* >( *it );
-            ClearSelection();
-            SetSelected( *item );
-            Update();
-            return;
-        }
+    else
+        for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
+            if( *it != selectedItem_ )
+            {
+                TimelineItem_ABC* item = dynamic_cast< TimelineItem_ABC* >( *it );
+                ClearSelection();
+                SetSelected( *item );
+                break;
+            }
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +172,8 @@ void TimelineView::Select( const QPoint& point )
 void TimelineView::contentsMousePressEvent( QMouseEvent* event )
 {
     setFocus();
-    Select( event->pos() );
+    if( ( event->button() & Qt::LeftButton ) == Qt::LeftButton )
+        Select( event->pos() );
     if( selectedItem_ )
         ensureVisible( selectedItem_->x(), selectedItem_->y() );
 }
@@ -164,7 +188,7 @@ void TimelineView::contentsMouseMoveEvent( QMouseEvent* event )
         Select( grabPoint_ );
     if( selectedItem_ && ( event->state() & Qt::LeftButton ) )
     {
-        selectedItem_->Shift( event->pos().x() - grabPoint_.x() );
+        selectedItem_->Move( event->pos().x() - grabPoint_.x() );
         ensureVisible( selectedItem_->x(), selectedItem_->y() );
         grabPoint_ = event->pos();
         setCursor( QCursor::sizeHorCursor );
@@ -183,8 +207,8 @@ void TimelineView::contentsMouseMoveEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void TimelineView::contentsMouseReleaseEvent( QMouseEvent* )
 {
-    if( selectedItem_ )
-        selectedItem_->Release();
+    if( selectedItem_ == marker_ )
+        marker_->CommitMove();
     setCursor( QCursor::arrowCursor );
 }
 
@@ -210,7 +234,7 @@ void TimelineView::contentsContextMenuEvent( QContextMenuEvent* event )
 void TimelineView::keyPressEvent( QKeyEvent* event )
 {
     if( selectedItem_ && event->key() == Qt::Key_Delete )
-        selectedItem_->setVisible( false ); // $$$$ SBO 2008-04-23: real delete
+        selectedItem_->Delete();
     else if( event->key() == Qt::Key_Plus )
         ruler_.ZoomIn();
     else if( event->key() == Qt::Key_Minus )
@@ -219,7 +243,7 @@ void TimelineView::keyPressEvent( QKeyEvent* event )
     {
         const short sign = event->key() == Qt::Key_Left ? -1 : 1;
         const long seconds = ( event->state() & Qt::ShiftButton ) ? 3600 * 24 : 3600;
-        selectedItem_->Shift( ruler_.ConvertToPixels( sign * seconds ) );
+        selectedItem_->Move( ruler_.ConvertToPixels( sign * seconds ) );
     }
     Update();
 }

@@ -26,7 +26,7 @@ namespace
             , linePen_( QColor( 225, 225, 225 ), 1, QPen::SolidLine )
             , lineHeight_( lineHeight )
         {
-//            setUpdatePeriod( 50 );
+            setUpdatePeriod( 50 );
             setDoubleBuffering( true );
             setBackgroundColor( Qt::white );
             resize( 10000, 0 );

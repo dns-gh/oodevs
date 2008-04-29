@@ -11,10 +11,10 @@
 #include "TimelineActionItem.h"
 #include "moc_TimelineActionItem.cpp"
 #include "TimelineView.h"
-#include "TimelineEntityItem.h"
 #include "TimelineRuler.h"
 #include "gaming/Action_ABC.h"
 #include "gaming/ActionTiming.h"
+#include "gaming/ActionsModel.h"
 #include "clients_kernel/Controllers.h"
 #include <qpainter.h>
 #include <qfontmetrics.h>
@@ -23,22 +23,16 @@
 // Name: TimelineActionItem constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineActionItem::TimelineActionItem( const TimelineItem_ABC& parent, const TimelineRuler& ruler, kernel::Controllers& controllers, const Action_ABC& action )
-    : QObject         ( parent.canvas() )
-    , TimelineItem_ABC( parent.canvas() )
+TimelineActionItem::TimelineActionItem( QCanvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, ActionsModel& model, const Action_ABC& action, const QPalette& palette )
+    : QObject         ( canvas )
+    , TimelineItem_ABC( canvas )
     , ruler_          ( ruler )
     , controllers_    ( controllers )
-    , parentItem_     ( parent )
+    , model_          ( model )
     , action_         ( action )
     , textWidth_      ( 0 )
+    , palette_        ( palette )
 {
-    palette_.setColor( QPalette::Disabled, QColorGroup::Background, QColor( 220, 220, 220 ) );
-    palette_.setColor( QPalette::Disabled, QColorGroup::Foreground, QColor( 180, 180, 180 ) );
-    palette_.setColor( QPalette::Inactive, QColorGroup::Background, QColor( 200, 240, 215 ) );
-    palette_.setColor( QPalette::Inactive, QColorGroup::Foreground, QColor(  50, 200, 105 ) );
-    palette_.setColor( QPalette::Active  , QColorGroup::Background, QColor( 200, 215, 240 ) );
-    palette_.setColor( QPalette::Active  , QColorGroup::Foreground, QColor(  50, 105, 200 ) );
-
     show();
     controllers_.Register( *this );
 }
@@ -75,14 +69,14 @@ void TimelineActionItem::setVisible( bool visible )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineActionItem::Shift
+// Name: TimelineActionItem::Move
 // Created: SBO 2007-07-06
 // -----------------------------------------------------------------------------
-void TimelineActionItem::Shift( long shift )
+void TimelineActionItem::Move( long offset )
 {
     if( isEnabled() )
         if( ActionTiming* timing = const_cast< ActionTiming* >( action_.Retrieve< ActionTiming >() ) )
-            timing->Shift( ruler_.ConvertToSeconds( shift ) );
+            timing->Shift( ruler_.ConvertToSeconds( offset ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,9 +85,8 @@ void TimelineActionItem::Shift( long shift )
 // -----------------------------------------------------------------------------
 void TimelineActionItem::Update()
 {
-    setY( parentItem_.y() + 1 );
-    setSize( textWidth_ + 10, parentItem_.height() - 1 );
-    if( const ActionTiming* timing =action_.Retrieve< ActionTiming >() )
+    setSize( textWidth_ + 10, height() );
+    if( const ActionTiming* timing = action_.Retrieve< ActionTiming >() )
     {
         setX( ruler_.ConvertToPosition( timing->GetTime() ) );
         setEnabled( timing->IsEnabled() );
@@ -138,10 +131,7 @@ void TimelineActionItem::draw( QPainter& painter )
     if( !textWidth_ )
         ComputeTextWidth( painter );
     Update();
-    if( isSelected() )
-        setZ( parentItem_.z() );
-    else
-        setZ( parentItem_.z() - 1 );
+    setZ( isSelected() ? std::numeric_limits< double >::max() : x() );
     const QPalette::ColorGroup colorGroup = isEnabled() ? ( isSelected() ? QPalette::Active : QPalette::Inactive ) : QPalette::Disabled;
     const QPen oldPen = painter.pen();
 
@@ -149,8 +139,8 @@ void TimelineActionItem::draw( QPainter& painter )
     const QRect bottomRect( rect().left(), rect().bottom() - 3, 30, 4 );
     DrawBox( painter, bottomRect, palette_.color( colorGroup, QColorGroup::Background ), palette_.color( colorGroup, QColorGroup::Foreground ) );
     DrawArrow( painter, rect() );
-    painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, " " + action_.GetName() );
     painter.setPen( oldPen );
+    painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, " " + action_.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,9 +170,18 @@ void TimelineActionItem::DisplayToolTip( QWidget* parent ) const
 void TimelineActionItem::DisplayContextMenu( QWidget* parent, const QPoint& pos ) const
 {
     QPopupMenu* popup = new QPopupMenu( parent );
-    popup->insertItem( tr( "Rename" ), this, SLOT( OnRename() ) );
+//    popup->insertItem( tr( "Rename" ), this, SLOT( OnRename() ) ); // $$$$ SBO 2008-04-29: TODO
     popup->insertItem( tr( "Delete" ), this, SLOT( OnDelete() ) );
     popup->popup( pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineActionItem::Delete
+// Created: SBO 2008-04-28
+// -----------------------------------------------------------------------------
+void TimelineActionItem::Delete()
+{
+    model_.Destroy( action_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +190,7 @@ void TimelineActionItem::DisplayContextMenu( QWidget* parent, const QPoint& pos 
 // -----------------------------------------------------------------------------
 void TimelineActionItem::OnDelete()
 {
-     // $$$$ SBO 2008-04-22: 
+     Delete();
 }
 
 // -----------------------------------------------------------------------------
@@ -200,5 +199,5 @@ void TimelineActionItem::OnDelete()
 // -----------------------------------------------------------------------------
 void TimelineActionItem::OnRename()
 {
-     // $$$$ SBO 2008-04-22: 
+     // $$$$ SBO 2008-04-22: TODO
 }

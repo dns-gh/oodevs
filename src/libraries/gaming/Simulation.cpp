@@ -235,6 +235,15 @@ unsigned Simulation::GetTickCount() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Simulation::GetTickDuration
+// Created: SBO 2008-04-29
+// -----------------------------------------------------------------------------
+unsigned Simulation::GetTickDuration() const
+{
+    return tickDuration_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Simulation::GetSimulationHost
 // Created: AGE 2006-07-03
 // -----------------------------------------------------------------------------
