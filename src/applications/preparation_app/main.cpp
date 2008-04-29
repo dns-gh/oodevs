@@ -9,8 +9,20 @@
 
 #include "preparation_app_pch.h"
 #include "Application.h"
-#include "tools/win32/FlexLm.h"
 #include "tools/Win32/BugTrap.h"
+
+//#define NO_LICENSE_CHECK
+
+#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+#   pragma warning( push )
+#   pragma warning( disable: 4127 4512 )
+#   include <boost/date_time/gregorian/gregorian.hpp>
+#   pragma warning( pop )
+#   include "tools/win32/FlexLm.h"
+using namespace boost::gregorian;
+#else
+class FlexLmLicense {};
+#endif
 
 namespace
 {
@@ -31,15 +43,19 @@ int main( int argc, char** argv )
     SetConsoleTitle( APP_NAME " - " APP_VERSION " - " __TIMESTAMP__ );
 
     std::auto_ptr< FlexLmLicense > license;
+    QString expiration;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
     license = FlexLmLicense::CheckLicense( "sword", 1.0f );
+    const boost::gregorian::date expirationDate( license->GetExpirationDate() );
+    if( !expirationDate.is_infinity() )
+        expiration = boost::gregorian::to_simple_string( expirationDate ).c_str();
 #endif
 
     BugTrap::Setup( "Sword Officer Training" )
             .SetEmail( "sword-ot@masagroup.net" )
             .SetVersion( APP_VERSION " - " __TIMESTAMP__ );
 
-    Application app( argc, argv, locale, license.get() );
+    Application app( argc, argv, locale, expiration );
     try
     {
         app.Initialize();

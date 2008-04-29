@@ -83,10 +83,7 @@ namespace
 {
     unsigned TextureSize( unsigned i )
     {
-        unsigned int result = 1024;
-        while( result >= i )
-            result /= 2;
-        return result*2;
+        return i;
     }
 
     struct Color

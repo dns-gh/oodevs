@@ -29,7 +29,6 @@ namespace gui
 class OrderBrowser;
 class UserProfileDialog;
 class Profile;
-class FlexLmLicense;
 
 // =============================================================================
 /** @class  Menu
@@ -46,7 +45,7 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, OrderBrowser& recorderToolBar, gui::ItemFactory_ABC& factory, const FlexLmLicense* license );
+             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, OrderBrowser& recorderToolBar, gui::ItemFactory_ABC& factory, const QString& license );
     virtual ~Menu();
     //@}
 

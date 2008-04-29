@@ -35,10 +35,10 @@ namespace
 // Name: Application::Application
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv, const QString& locale, const FlexLmLicense* license )
+Application::Application( int argc, char** argv, const QString& locale, const QString& expiration )
     : QApplication( argc, argv )
     , mainWindow_ ( 0 )
-    , license_( license )
+    , expiration_ ( expiration )
 {
     AddTranslator( locale, "qt" );
     AddTranslator( locale, "ENT" );
@@ -105,7 +105,7 @@ void Application::Initialize( int argc, char** argv )
     staticModel_ = new StaticModel( *controllers_, *rcResolver, *simulation_ );
     model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver );
     network_->GetMessageMgr().SetModel( *model_ );
-    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, license_ );
+    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, expiration_ );
     mainWindow_->show();
 
     // Make sure the application exits when the main window is closed.

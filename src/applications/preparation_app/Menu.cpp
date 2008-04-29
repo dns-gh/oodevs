@@ -56,7 +56,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, gui::ItemFactory_ABC& factory, const FlexLmLicense* license )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, gui::ItemFactory_ABC& factory, const QString& license )
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );

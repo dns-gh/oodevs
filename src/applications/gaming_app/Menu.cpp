@@ -57,7 +57,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, OrderBrowser& recorderToolBar, ItemFactory_ABC& factory, const FlexLmLicense* license )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, OrderBrowser& recorderToolBar, ItemFactory_ABC& factory, const QString& license )
     : QMenuBar( pParent )
     , controllers_( controllers )
     , profileDialog_( profileDialog )

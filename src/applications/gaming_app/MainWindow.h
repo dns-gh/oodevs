@@ -53,7 +53,6 @@ class MissionPanel;
 class CreationPanels;
 class LoginDialog;
 class Publisher_ABC;
-class FlexLmLicense;
 
 // =============================================================================
 /** @class  MainWindow
@@ -78,7 +77,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& profile, tools::ExerciseConfig& config, const FlexLmLicense* license );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& profile, tools::ExerciseConfig& config, const QString& license );
     virtual ~MainWindow();
     //@}
 

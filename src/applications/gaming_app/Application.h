@@ -25,7 +25,6 @@ class Model;
 class Simulation;
 class Profile;
 class Config;
-class FlexLmLicense;
 
 // =============================================================================
 /** @class  Application
@@ -40,7 +39,7 @@ class Application : public QApplication
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int argc, char** argv, const QString& locale, const FlexLmLicense* license );
+             Application( int argc, char** argv, const QString& locale, const QString& expiration );
     virtual ~Application();
     //@}
 
@@ -81,7 +80,7 @@ private:
     Network* network_;
     MainWindow* mainWindow_;
     QTimer* networkTimer_;
-    const FlexLmLicense* license_;
+    const QString expiration_;
     //@}
 };
 
