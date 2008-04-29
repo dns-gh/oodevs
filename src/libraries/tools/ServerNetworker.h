@@ -13,7 +13,10 @@
 #include "MessageDispatcher_ABC.h"
 #include "MessageSender_ABC.h"
 #include "ConnectionCallback_ABC.h"
+#pragma warning( push )
+#pragma warning( disable : 4512 )
 #include <boost/thread.hpp>
+#pragma warning( pop )
 #include <string>
 #include <memory>
 
