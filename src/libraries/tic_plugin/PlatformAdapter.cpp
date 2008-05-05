@@ -59,6 +59,15 @@ geometry::Point2f PlatformAdapter::GetPosition() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PlatformAdapter::GetLastPosition
+// Created: AGE 2008-05-05
+// -----------------------------------------------------------------------------
+geometry::Point2f PlatformAdapter::GetLastPosition() const
+{
+    return GetPosition();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PlatformAdapter::GetAltitude
 // Created: AGE 2008-04-24
 // -----------------------------------------------------------------------------

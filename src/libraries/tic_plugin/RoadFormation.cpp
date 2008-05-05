@@ -37,7 +37,7 @@ RoadFormation::~RoadFormation()
 // Name: RoadFormation::Start
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void RoadFormation::Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned count )
+void RoadFormation::Start( const geometry::Point2f& at, const geometry::Vector2f& , unsigned count )
 {
     const float distanceBetweenPlatforms = 20.f;
     Fill( at, count, distanceBetweenPlatforms );
@@ -97,13 +97,15 @@ void RoadFormation::AddPoint( const geometry::Point2f& from, const geometry::Poi
 // Name: RoadFormation::Apply
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void RoadFormation::Apply( Movable_ABC& movable )
+void RoadFormation::Apply( Movable_ABC* movable )
 {
+    if( ! movable )
+        return;
     if( ! result_.empty() )
     {
-        movable.Move( result_.back() );
+        movable->Move( result_.back() );
         result_.pop_back();
     }
     else 
-        movable.Stop();
+        movable->Stop();
 }

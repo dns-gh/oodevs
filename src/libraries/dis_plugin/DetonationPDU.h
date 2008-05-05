@@ -35,7 +35,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DetonationPDU();
+             DetonationPDU( unsigned long time, unsigned char exercise );
     virtual ~DetonationPDU();
     //@}
 

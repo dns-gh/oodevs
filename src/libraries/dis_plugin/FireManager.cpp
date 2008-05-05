@@ -9,7 +9,6 @@
 
 #include "dis_plugin_pch.h"
 #include "FireManager.h"
-
 #include "UdpNetwork.h"
 
 using namespace dis;

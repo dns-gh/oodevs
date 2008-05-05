@@ -45,6 +45,7 @@ public:
     //@{
     virtual const kernel::ComponentType& GetType() const;
     virtual geometry::Point2f GetPosition() const;
+    virtual geometry::Point2f GetLastPosition() const;
     virtual float GetAltitude() const;
     virtual float GetSpeed() const;
     virtual float GetHeading() const;

@@ -29,7 +29,7 @@ using namespace dis;
 // Name: DisExtension constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const DisTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise )
+DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const DisTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame )
     : time_     ( time )
     , id_       ( id )
     , converter_( converter )
@@ -37,6 +37,7 @@ DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, con
     , resolver_ ( resolver )
     , holder_   ( holder )
     , exercise_ ( exercise )
+    , lagAFrame_( lagAFrame )
     , adapted_  ( new tic::PlatformAdapter( holder_, converter ) )
 {
     // NOTHING
@@ -83,7 +84,7 @@ void DisExtension::AddPlatform( const tic::Platform_ABC& platform )
     case tic::Platform_ABC::broken:     pdu.SetAppearance( 1, false, true ); break;
     case tic::Platform_ABC::destroyed:  pdu.SetAppearance( 3, true, true ); break;
     }
-    const geometry::Point2f position( platform.GetPosition().X(), platform.GetPosition().Y() );
+    const geometry::Point2f position( lagAFrame_ ? platform.GetLastPosition() : platform.GetPosition() );
     const geometry::Point2d geocoord = converter_.ConvertToGeo( position );
     pdu.SetPosition( geocoord.Y(), geocoord.X(), platform.GetAltitude(), platform.GetSpeed(), platform.GetHeading() );
 

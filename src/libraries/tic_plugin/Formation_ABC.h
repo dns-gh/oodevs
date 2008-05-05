@@ -35,12 +35,13 @@ public:
     //! @name Operations
     //@{
     virtual void Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned count ) = 0;
-    virtual void Apply( Movable_ABC& movable ) = 0;
+    virtual void Apply( Movable_ABC* movable ) = 0;
     //@}
 
-protected:
+public:
     //! @name Helpers
     //@{
+    static bool Compare( const geometry::Point2f& lhs, const geometry::Point2f& rhs, const geometry::Point2f& center, const geometry::Vector2f& towards );
     static void Sort( std::vector< geometry::Point2f >& points, const geometry::Point2f& center, const geometry::Vector2f& towards );
     //@}
 };

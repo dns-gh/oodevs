@@ -27,6 +27,7 @@ DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& t
     , site_( xml::attribute< unsigned short >( xis, "site" ) )
     , application_( xml::attribute< unsigned short >( xis, "application" ) )
     , exercise_( (unsigned char)xml::attribute< unsigned short >( xis, "exercise" ) )
+    , lag_( xml::attribute( xis, "lag", false ) )
     , id_( 1 )
 {
     // NOTHING
@@ -47,7 +48,7 @@ DisExtensionFactory::~DisExtensionFactory()
 // -----------------------------------------------------------------------------
 void DisExtensionFactory::Create( dispatcher::Agent& entity )
 {
-    std::auto_ptr< DisExtension > extension( new DisExtension( time_, *this, converter_, network_, resolver_, entity, exercise_ ) );
+    std::auto_ptr< DisExtension > extension( new DisExtension( time_, *this, converter_, network_, resolver_, entity, exercise_, lag_ ) );
     entity.Attach( *extension.release() );
 }
 

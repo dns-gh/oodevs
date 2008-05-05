@@ -71,6 +71,7 @@ private:
     void CreatePlatforms( float timeStep );
     void UpdatePlatforms( const ASN1T_MsgUnitAttributes& updateMessage );
     void UpdatePlatforms( const ASN1T_EquipmentDotations& updateMessage );
+    void SortPlatforms();
     void UpdateFormation();
     //@}
 
@@ -81,6 +82,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
 
     boost::ptr_vector< Platform > platforms_;
+    std::vector< Platform* > sorted_;
     std::vector< geometry::Point2f > path_;
     geometry::Point2f position_;
     geometry::Vector2f direction_;

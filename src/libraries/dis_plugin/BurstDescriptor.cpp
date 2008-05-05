@@ -10,3 +10,22 @@
 #include "dis_plugin_pch.h"
 #include "BurstDescriptor.h"
 
+using namespace dis;
+
+// -----------------------------------------------------------------------------
+// Name: BurstDescriptor constructor
+// Created: AGE 2008-04-30
+// -----------------------------------------------------------------------------
+BurstDescriptor::BurstDescriptor()
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: BurstDescriptor destructor
+// Created: AGE 2008-04-30
+// -----------------------------------------------------------------------------
+BurstDescriptor::~BurstDescriptor()
+{
+    // NOTHING
+}

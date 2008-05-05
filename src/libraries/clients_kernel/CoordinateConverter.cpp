@@ -85,7 +85,7 @@ geometry::Point2f CoordinateConverter::ConvertToXY( const std::string& mgrs ) co
 // -----------------------------------------------------------------------------
 geometry::Point2d CoordinateConverter::ConvertToGeo( const geometry::Point2f& pos ) const
 {
-    static const float r180OverPi = 180.f / std::acos( -1.f );
+    static const double r180OverPi = 180. / std::acos( -1. );
     const geometry::Point2f translated = pos - translation_;
     planar_.Set( translated.X(), translated.Y() );
     geodetic_.SetCoordinates( planar_ );

@@ -55,6 +55,7 @@ public:
     //@{
     virtual const kernel::ComponentType& GetType() const;
     virtual geometry::Point2f GetPosition() const;
+    virtual geometry::Point2f GetLastPosition() const;
     virtual float GetAltitude() const;
     virtual float GetSpeed() const;
     virtual float GetHeading() const;
@@ -74,7 +75,7 @@ private:
     virtual void SendCreation  ( dispatcher::ClientPublisher_ABC& ) const {};
     void Apply( ASN1T_EquipmentDotations& updateMessage );
     bool SetStatus( int& number, E_State state );
-    void ComputeHeading( const geometry::Point2f& from, const geometry::Point2f& to ); 
+    void ComputeHeading( const geometry::Point2f& to ); 
     //@}
 
 private:
@@ -88,6 +89,7 @@ private:
     float heading_;
     float altitude_;
 
+    geometry::Point2f previous_;
     geometry::Point2f position_;
     //@}
 };

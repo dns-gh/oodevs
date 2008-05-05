@@ -97,6 +97,7 @@ void Platform::Move( const geometry::Point2f& to )
         speed_ = 0;
         return;
     }
+    previous_ = position_;
 
     const float teleportThreshold = 3000.f;
     const float maxAcceleration = 1.f;
@@ -112,7 +113,7 @@ void Platform::Move( const geometry::Point2f& to )
     }
     else if( requiredSpeed <= speed_ )
     {
-        ComputeHeading( position_, to );
+        ComputeHeading( to );
         speed_ = requiredSpeed;
         position_ = to;
     }
@@ -123,7 +124,7 @@ void Platform::Move( const geometry::Point2f& to )
         speed_ += acceleration * timeStep_;
         const float ratio = speed_ / requiredSpeed;
         const geometry::Point2f target = position_ + ratio * geometry::Vector2f( position_, to );
-        ComputeHeading( position_, target );
+        ComputeHeading( target );
         position_ = target;
     }
 }
@@ -141,9 +142,9 @@ void Platform::Stop()
 // Name: Platform::ComputeHeading
 // Created: AGE 2008-04-02
 // -----------------------------------------------------------------------------
-void Platform::ComputeHeading( const geometry::Point2f& from, const geometry::Point2f& to )
+void Platform::ComputeHeading( const geometry::Point2f& to )
 {
-    geometry::Vector2f direction( from, to );
+    geometry::Vector2f direction( previous_, to );
     direction.Normalize();
     const float angle = std::atan2( direction.Y(), direction.X() );
     static const float iPiOver180 = 180.f / std::acos( -1.f );
@@ -170,6 +171,15 @@ const kernel::ComponentType& Platform::GetType() const
 geometry::Point2f Platform::GetPosition() const
 {
     return position_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Platform::GetLastPosition
+// Created: AGE 2008-05-05
+// -----------------------------------------------------------------------------
+geometry::Point2f Platform::GetLastPosition() const
+{
+    return previous_;
 }
 
 // -----------------------------------------------------------------------------

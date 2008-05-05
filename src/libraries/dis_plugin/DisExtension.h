@@ -47,7 +47,7 @@ class DisExtension : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const DisTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise );
+             DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const DisTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame );
     virtual ~DisExtension();
     //@}
 
@@ -84,6 +84,7 @@ private:
     const DisTypeResolver& resolver_;
     dispatcher::Agent&     holder_;
     const unsigned char    exercise_;
+    bool                   lagAFrame_;
     T_Identifiers          ids_;
     std::auto_ptr< tic::Platform_ABC > adapted_;
     //@}

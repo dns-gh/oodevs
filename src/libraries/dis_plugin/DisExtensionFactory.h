@@ -78,6 +78,7 @@ private:
     const unsigned short site_;
     const unsigned short application_;
     const unsigned char  exercise_;
+    const bool lag_;
     unsigned short id_;
     //@}
 };

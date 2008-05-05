@@ -9,33 +9,27 @@
 
 #include "tic_plugin_pch.h"
 #include "Formation_ABC.h"
+#include <boost/bind.hpp>
 
 using namespace tic;
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: Formation_ABC::Compare
+// Created: AGE 2008-05-05
+// -----------------------------------------------------------------------------
+bool Formation_ABC::Compare( const geometry::Point2f& lhs, const geometry::Point2f& rhs, const geometry::Point2f& center, const geometry::Vector2f& towards )
 {
-    struct Sorter
-    {
-        Sorter( const geometry::Point2f& from, const geometry::Vector2f& towards )
-            : from_( from )
-            , towards_( towards ) {}
-        bool operator()( const geometry::Point2f& lhs, const geometry::Point2f& rhs ) const
-        {
-            const geometry::Vector2f left( from_, lhs );
-            const geometry::Vector2f right( from_, rhs );
-            const float ldot = towards_.DotProduct( left );
-            const float rdot = towards_.DotProduct( right );
-            if( ldot < rdot ) return true;
-            if( ldot > rdot ) return false;
+    const geometry::Vector2f left( center, lhs );
+    const geometry::Vector2f right( center, rhs );
+    const float ldot = towards.DotProduct( left );
+    const float rdot = towards.DotProduct( right );
+    if( ldot < rdot ) return true;
+    if( ldot > rdot ) return false;
 
-            const float lcross = towards_.CrossProduct( left );
-            const float rcross = towards_.CrossProduct( right );
+    const float lcross = towards.CrossProduct( left );
+    const float rcross = towards.CrossProduct( right );
 
-            return lcross < rcross;
-        }
-        geometry::Point2f from_;
-        geometry::Vector2f towards_;
-    };
+    return lcross < rcross;
 }
 
 // -----------------------------------------------------------------------------
@@ -44,5 +38,5 @@ namespace
 // -----------------------------------------------------------------------------
 void Formation_ABC::Sort( std::vector< geometry::Point2f >& points, const geometry::Point2f& center, const geometry::Vector2f& towards )
 {
-    std::sort( points.begin(), points.end(), Sorter( center, towards ) );
+    std::sort( points.begin(), points.end(), boost::bind( &Formation_ABC::Compare, _1, _2, center, towards ) );
 }

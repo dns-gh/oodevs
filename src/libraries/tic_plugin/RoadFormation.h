@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual void Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned count );
-    virtual void Apply( Movable_ABC& movable );
+    virtual void Apply( Movable_ABC* movable );
     //@}
 
 private:

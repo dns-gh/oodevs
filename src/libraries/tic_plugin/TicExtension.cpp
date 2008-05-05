@@ -60,6 +60,8 @@ void TicExtension::DoUpdate( const ASN1T_MsgUnitAttributes& asnMsg )
     {
         const float angle = float( asnMsg.direction ) * std::acos( -1.f ) / 180.f;
         direction_ = geometry::Vector2f( std::sin( angle ), std::cos( angle ) );
+        if( !onRoad_ )
+            SortPlatforms();
     }
 
     if( asnMsg.m.positionPresent )
@@ -87,7 +89,12 @@ void TicExtension::DoUpdate( const ASN1T_MsgUnitEnvironmentType& message )
 {
     const unsigned int mask = TerrainData::motorway_  | TerrainData::largeroad_  | TerrainData::mediumroad_
                             | TerrainData::smallroad_ | TerrainData::bridge_;
-    onRoad_ = ( message.linear & mask ) != 0;
+    const bool nowOnRoad = ( message.linear & mask ) != 0;
+    if( onRoad_ != nowOnRoad )
+    {
+        SortPlatforms();
+        onRoad_ = nowOnRoad;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +110,10 @@ void TicExtension::CreatePlatforms( float timeStep )
         const ComponentType& component = it.NextElement();
         unsigned count = type.GetComponentCount( component );
         while( count-- )
+        {
             platforms_.push_back( new Platform( component, timeStep ) );
+            sorted_.push_back( &platforms_.back() );
+        }
     }
 }
 
@@ -137,8 +147,8 @@ void TicExtension::UpdateFormation()
     DiamondFormation diamond;
 
     Formation_ABC* current = onRoad_ ? &road : (Formation_ABC*) &diamond;
-    current->Start( position_, direction_, platforms_.size() );
-    std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &Formation_ABC::Apply, current, _1 ) );
+    current->Start( position_, direction_, sorted_.size() );
+    std::for_each( sorted_.begin(), sorted_.end(), boost::bind( &Formation_ABC::Apply, current, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,4 +158,17 @@ void TicExtension::UpdateFormation()
 void TicExtension::Accept( PlatformVisitor_ABC& visitor ) const
 {
     std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &PlatformVisitor_ABC::AddPlatform, &visitor, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TicExtension::SortPlatforms
+// Created: AGE 2008-05-05
+// -----------------------------------------------------------------------------
+void TicExtension::SortPlatforms()
+{
+    std::sort( sorted_.begin(), sorted_.end(), 
+        boost::bind( &Formation_ABC::Compare, 
+            boost::bind( &Platform::GetPosition, _1 ),
+            boost::bind( &Platform::GetPosition, _2 ),
+            position_, direction_ ) );
 }
