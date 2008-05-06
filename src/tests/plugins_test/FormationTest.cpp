@@ -41,7 +41,7 @@ namespace
         RoadFormation formation( path );
         formation.Start( from, Vector2f( 1, 0 ), count );
         for( unsigned i = 0; i < count; ++i )
-            formation.Apply( movable );
+            formation.Apply( &movable );
         movable.verify();
     }
 }
