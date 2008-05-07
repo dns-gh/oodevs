@@ -11,10 +11,12 @@
 #define __FireManager_h_
 
 #include "game_asn/simulation.h"
+#include "hla_plugin/EntityIdentifier.h"
 
 namespace dis
 {
     class UdpNetwork;
+    class Time_ABC;
 
 // =============================================================================
 /** @class  FireManager
@@ -28,13 +30,13 @@ class FireManager
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FireManager( UdpNetwork& network );
+             FireManager( UdpNetwork& network, const Time_ABC& time, unsigned char exercise );
     virtual ~FireManager();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgsSimToClient& message );
+    void Update       ( const ASN1T_MsgsSimToClient& message );
     //@}
 
 private:
@@ -48,6 +50,7 @@ private:
     //@{
     void ReceiveFire( const ASN1T_MsgStartUnitFire& fire );
     void ReceiveFire( const ASN1T_MsgStopUnitFire& fire );
+    void UpdateFireEffect( const ASN1T_MsgStartFireEffect& fire );
     void UpdateDetonations();
     void CreateFire( const ASN1T_CoordLatLong& position );
     //@}
@@ -62,6 +65,8 @@ private:
     //! @name Member data
     //@{
     UdpNetwork& network_;
+    const Time_ABC& time_;
+    unsigned char exercise_;
     T_Fires activeFires_;
     //@}
 };

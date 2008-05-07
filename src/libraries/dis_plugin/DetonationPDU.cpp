@@ -16,9 +16,10 @@ using namespace dis;
 // Name: DetonationPDU constructor
 // Created: AGE 2008-04-30
 // -----------------------------------------------------------------------------
-DetonationPDU::DetonationPDU( unsigned long time, unsigned char exercise )
-    : header_( DisHeader::DetonationPDU( time, exercise ) )
-    , detonationResult_              ( 0 )
+DetonationPDU::DetonationPDU( const EntityIdentifier& firer, unsigned long time, unsigned char exercise )
+    : header_                        ( DisHeader::DetonationPDU( time, exercise ) )
+    , firer_                         ( firer )
+    , detonationResult_              ( 3 ) // Ground Impact
     , numberOfArticulationParameters_( 0 )
     , padding_                       ( 0 )
 {
@@ -32,4 +33,22 @@ DetonationPDU::DetonationPDU( unsigned long time, unsigned char exercise )
 DetonationPDU::~DetonationPDU()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DetonationPDU::SetBurst
+// Created: AGE 2008-05-05
+// -----------------------------------------------------------------------------
+void DetonationPDU::SetBurst( unsigned short quantity, unsigned seconds, BurstDescriptor::warhead w )
+{
+    burst_ = BurstDescriptor( quantity, seconds, w );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DetonationPDU::SetPosition
+// Created: AGE 2008-05-05
+// -----------------------------------------------------------------------------
+void DetonationPDU::SetPosition( double latitude, double longitude, float altitude )
+{
+    location_ = WorldLocation( latitude, longitude, altitude );
 }

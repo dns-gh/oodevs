@@ -43,8 +43,9 @@ public:
     Serializer& operator<<( const unsigned short& n );
     Serializer& operator<<( const long& n );
     Serializer& operator<<( const unsigned long& n );
-    template< unsigned N >
-    Serializer& operator<<( const unsigned char (&buffer)[N] )
+
+    template< typename T, unsigned N >
+    Serializer& operator<<( const T (&buffer)[N] )
     {
         for( unsigned i = 0; i < N; ++i )
             *this << buffer[i];

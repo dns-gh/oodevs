@@ -60,8 +60,8 @@ DisHeader DisHeader::EntityStatePDU( unsigned long time, unsigned char exercise 
 DisHeader DisHeader::DetonationPDU( unsigned long time, unsigned char exercise )
 {
     DisHeader result( exercise );
-    result.PDUType_ = 1;
-    result.protocolFamily_ = 3;
+    result.PDUType_ = 3;
+    result.protocolFamily_ = 1;
     result.timeStamp_ = time;
     result.length_ = DetonationPDU::size;
     return result;

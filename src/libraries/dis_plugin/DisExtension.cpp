@@ -22,6 +22,7 @@
 #include "UdpNetwork.h"
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
+#include "DetonationPDU.h"
 
 using namespace dis;
 

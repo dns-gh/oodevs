@@ -9,7 +9,9 @@
 
 #include "dis_plugin_pch.h"
 #include "FireManager.h"
+#include "DetonationPDU.h"
 #include "UdpNetwork.h"
+#include "Time_ABC.h"
 
 using namespace dis;
 
@@ -17,8 +19,10 @@ using namespace dis;
 // Name: FireManager constructor
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-FireManager::FireManager( UdpNetwork& network )
-    : network_( network )
+FireManager::FireManager( UdpNetwork& network, const Time_ABC& time, unsigned char exercise )
+    : network_ ( network )
+    , time_    ( time )
+    , exercise_( exercise )
 {
     // NOTHING
 }
@@ -41,11 +45,13 @@ void FireManager::Update( const ASN1T_MsgsSimToClient& message )
     switch( message.msg.t )
     {
     case T_MsgsSimToClient_msg_msg_start_unit_fire:
-        ReceiveFire( *message.msg.u.msg_start_unit_fire );
+        ReceiveFire( *message.msg.u.msg_start_unit_fire ); break;
     case T_MsgsSimToClient_msg_msg_stop_unit_fire:
-        ReceiveFire( *message.msg.u.msg_stop_unit_fire );
+        ReceiveFire( *message.msg.u.msg_stop_unit_fire ); break;
+    case T_MsgsSimToClient_msg_msg_start_fire_effect:
+        UpdateFireEffect( *message.msg.u.msg_start_fire_effect ); break;
     case T_MsgsSimToClient_msg_msg_control_end_tick:
-        UpdateDetonations();
+        UpdateDetonations(); break;
     };
 }
 
@@ -63,11 +69,27 @@ void FireManager::ReceiveFire( const ASN1T_MsgStartUnitFire& fire )
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireManager::UpdateFireEffect
+// Created: AGE 2008-05-05
+// -----------------------------------------------------------------------------
+void FireManager::UpdateFireEffect( const ASN1T_MsgStartFireEffect& fire )
+{
+    DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
+    pdu.SetBurst( 1, 1, fire.type == EnumFireEffectType::fumigene ? BurstDescriptor::smoke : BurstDescriptor::illumination );
+    pdu.SetPosition( fire.location.coordinates.elem->latitude, fire.location.coordinates.elem->longitude, 0 );  // $$$$ AGE 2008-05-05: altitude
+    network_.Send( pdu );
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireManager::ReceiveFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
 void FireManager::ReceiveFire( const ASN1T_MsgStopUnitFire& fire )
 {
+    DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
+    pdu.SetPosition( activeFires_[ fire.fire_oid ].latitude, activeFires_[ fire.fire_oid ].longitude, 0 );  // $$$$ AGE 2008-05-05: altitude
+    network_.Send( pdu );
+
     activeFires_.erase( fire.fire_oid );
 }
 
@@ -77,7 +99,7 @@ void FireManager::ReceiveFire( const ASN1T_MsgStopUnitFire& fire )
 // -----------------------------------------------------------------------------
 void FireManager::UpdateDetonations()
 {
-    // $$$$ AGE 2008-04-08: 
+    // $$$$ AGE 2008-04-08: ?
 }
 
 // -----------------------------------------------------------------------------
@@ -86,5 +108,6 @@ void FireManager::UpdateDetonations()
 // -----------------------------------------------------------------------------
 void FireManager::CreateFire( const ASN1T_CoordLatLong& position )
 {
-
+    // $$$$ AGE 2008-05-05:  ?
 }
+

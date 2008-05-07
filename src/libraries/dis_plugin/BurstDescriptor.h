@@ -25,25 +25,32 @@ class BurstDescriptor
 {
 
 public:
+    //! @name Enums
+    //@{
+    enum warhead
+    {
+        high_explosive = 1000,
+        smoke          = 2000,
+        illumination   = 3000
+    };
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              BurstDescriptor();
+             BurstDescriptor( unsigned short quantity, unsigned seconds, warhead w = high_explosive );
     virtual ~BurstDescriptor();
     //@}
 
     //! @name Operations
     //@{
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    BurstDescriptor( const BurstDescriptor& );            //!< Copy constructor
-    BurstDescriptor& operator=( const BurstDescriptor& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        type_.Serialize( archive );
+        archive << warhead_ << fuse_ << quantity_ << rate_;
+    }
     //@}
 
 private:

@@ -44,7 +44,7 @@ DisPlugin::DisPlugin( dispatcher::Model& model, const dispatcher::Config& config
     , converter_( new kernel::CoordinateConverter( config ) )
     , resolver_( new DisTypeResolver( config.BuildPhysicalChildFile( "dis.xml" ) ) )
     , factory_( new DisExtensionFactory( *network_, *this, *converter_, *resolver_, xis ) )
-    , fires_( new FireManager( *network_ ) )
+    , fires_( new FireManager( *network_, *this, (unsigned char)xml::attribute< unsigned short >( xis, "exercise"  ) ) )
     , timeStep_( ReadTimeStep( config.GetSessionFile() ) )
     , time_( 0 )
 {

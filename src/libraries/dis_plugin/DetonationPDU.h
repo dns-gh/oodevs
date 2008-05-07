@@ -35,12 +35,32 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DetonationPDU( unsigned long time, unsigned char exercise );
+             DetonationPDU( const EntityIdentifier& firer, unsigned long time, unsigned char exercise );
     virtual ~DetonationPDU();
     //@}
 
     //! @name Operations
     //@{
+    void SetBurst   ( unsigned short quantity, unsigned seconds, BurstDescriptor::warhead w );
+    void SetPosition( double latitude, double longitude, float altitude );
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        header_  .Serialize( archive );
+        firer_   .Serialize( archive );
+        target_  .Serialize( archive );
+        event_   .Serialize( archive );
+        velocity_.Serialize( archive );
+        location_.Serialize( archive );
+        burst_   .Serialize( archive );
+
+        archive << locInEntityCoords_
+                << detonationResult_ << numberOfArticulationParameters_ << padding_;
+    }
     //@}
 
 private:
@@ -48,10 +68,6 @@ private:
     //@{
     DetonationPDU( const DetonationPDU& );            //!< Copy constructor
     DetonationPDU& operator=( const DetonationPDU& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:
