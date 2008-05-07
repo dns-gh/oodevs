@@ -77,8 +77,9 @@ void Intelligence::Draw( const geometry::Point2f& where, const Viewport_ABC& vie
 {
     if( viewport.IsHotpointVisible() )
     {
-        tools.DrawApp6Symbol( symbol_, where );
-        tools.DrawApp6Symbol( level_->GetSymbol(), where );
+        const std::string style( "stroke:black;fill:currentColor;stroke-width:4;stroke-dasharray:10,10px" );
+        tools.DrawApp6Symbol( symbol_, style, where );
+        tools.DrawApp6Symbol( level_->GetSymbol(), style, where );
     }
 }
 
@@ -92,7 +93,6 @@ void Intelligence::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
                 .Add( (Intelligence_ABC*)this )
              .End();
     DisplayInSummary( displayer );
-
 }
 
 // -----------------------------------------------------------------------------
