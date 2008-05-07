@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
+    void PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
     //@}
 
 private:
@@ -59,8 +59,9 @@ private:
 
     //! @name Types
     //@{
+    typedef std::pair< std::string, std::string >       T_SymbolKey;
     typedef std::pair< svg::Node_ABC*, svg::Node_ABC* > T_LodSymbol;
-    typedef std::map< std::string, T_LodSymbol >        T_Symbols;
+    typedef std::map< T_SymbolKey, T_LodSymbol >        T_Symbols;
     typedef T_Symbols::const_iterator                 CIT_Symbols;
     //@}
 

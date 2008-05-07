@@ -524,10 +524,19 @@ void GlWidget::Print( const std::string& message, const geometry::Point2f& where
 }
 
 // -----------------------------------------------------------------------------
-// Name: GLWidget::DrawApp6Symbolc
+// Name: GlWidget::DrawApp6Symbolc
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/, float thickness /*= 1.f*/ ) const
+{
+    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawApp6Symbol
+// Created: AGE 2008-05-07
+// -----------------------------------------------------------------------------
+void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /*= 1.f*/, float thickness /*= 1.f*/ ) const
 {
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
@@ -545,10 +554,11 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, 
         glTranslatef( center.X(), center.Y(), 0.0f );
         glScalef( scaleRatio, -scaleRatio, 1 );
         glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-        Base().PrintApp6( symbol, viewport_, windowWidth_ * thickness, windowHeight_ * thickness );
+        Base().PrintApp6( symbol, style, viewport_, windowWidth_ * thickness, windowHeight_ * thickness );
     glPopMatrix();
     glPopAttrib();
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawIcon

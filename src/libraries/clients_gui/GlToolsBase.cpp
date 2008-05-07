@@ -113,7 +113,7 @@ void GlToolsBase::BindIcon( const char** xpm )
     unsigned int& texture = icons_[ xpm ];
     if( ! texture )
     {
-        QImage image( xpm ); 
+        QImage image( xpm );
         if( ! image.isNull() )
         {
             image = image.convertDepth( 32 );
@@ -148,12 +148,21 @@ void GlToolsBase::SetCurrentColor( float r, float g, float b, float a /*= 1*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlToolsBase::DefaultStyle
+// Created: AGE 2008-05-07
+// -----------------------------------------------------------------------------
+std::string GlToolsBase::DefaultStyle()
+{
+    return SvglRenderer::DefaultStyle();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlToolsBase::PrintApp6
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/  )
+void GlToolsBase::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/  )
 {
-    symbols_->PrintApp6( symbol, viewport, vWidth, vHeight );
+    symbols_->PrintApp6( symbol, style, viewport, vWidth, vHeight );
 }
 
 // -----------------------------------------------------------------------------

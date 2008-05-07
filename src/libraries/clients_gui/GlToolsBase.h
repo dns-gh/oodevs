@@ -51,7 +51,8 @@ public:
 
     GlToolsBase& Base() const;
     void BindIcon( const char** xpm );
-    void PrintApp6( const std::string& symbol,   const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
+    static std::string DefaultStyle();
+    void PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
     void DrawSvg  ( const std::string& filename, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
     void DrawBillboardRect();
     //@}

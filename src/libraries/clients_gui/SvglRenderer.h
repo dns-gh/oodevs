@@ -48,9 +48,10 @@ public:
 
     //! @name Operations
     //@{
+    static std::string DefaultStyle();
     void SetCurrentColor( float r, float g, float b, float a );
-    svg::Node_ABC* Compile( xml::xistream& input, float lod );
-    void Render( svg::Node_ABC* node, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
+    svg::Node_ABC* Compile( xml::xistream& input, float lod);
+    void Render( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
     //@}
 
 private:
@@ -68,7 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    unsigned int GenerateList( svg::Node_ABC* node, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
+    unsigned int GenerateList( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
     void         ConfigureColorList();
     void         ConfigureWidthList( const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
     void         CreateStaticLists();

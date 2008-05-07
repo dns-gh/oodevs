@@ -47,10 +47,11 @@ GLSymbols::~GLSymbols()
 // Name: GLSymbols::PrintApp6
 // Created: SBO 2006-12-15
 // -----------------------------------------------------------------------------
-void GLSymbols::PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/ )
+void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/ )
 {
-    const bool create = ! symbol.empty() && symbols_.find( symbol ) == symbols_.end();
-    T_LodSymbol& node = symbols_[ symbol ];
+    const T_SymbolKey key( symbol, style );
+    const bool create = ! symbol.empty() && symbols_.find( key ) == symbols_.end();
+    T_LodSymbol& node = symbols_[ key ];
     if( create )
     {
         // $$$$ AGE 2006-09-11: error management !
@@ -67,7 +68,7 @@ void GLSymbols::PrintApp6( const std::string& symbol, const geometry::Rectangle2
     }
     Node_ABC* renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
     if( renderNode )
-        renderer_.Render( renderNode, viewport, vWidth, vHeight );
+        renderer_.Render( renderNode, style, viewport, vWidth, vHeight );
 }
 
 // -----------------------------------------------------------------------------

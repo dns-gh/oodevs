@@ -64,6 +64,15 @@ void SvglRenderer::SetCurrentColor( float r, float g, float b, float a )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SvglRenderer::DefaultStyle
+// Created: AGE 2008-05-07
+// -----------------------------------------------------------------------------
+std::string SvglRenderer::DefaultStyle()
+{
+    return "stroke:black;fill:currentColor;stroke-width:4";
+}
+
+// -----------------------------------------------------------------------------
 // Name: SvglRenderer::Compile
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
@@ -72,7 +81,7 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
     CreateStaticLists();
     SVGFactory factory( *renderer_ );
     factory.ChangePropertyFactory( svg::RenderingContext_ABC::strokeWidth, *listLenghts_ );
-    std::auto_ptr< Style > border( CreateStyle( "stroke:black;fill:currentColor;stroke-width:4" ) );
+    std::auto_ptr< Style > border( CreateStyle( "" ) );
     references_->Register( "border", *border );
     return factory.Compile( input, *references_, lod );
 }
@@ -81,12 +90,12 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
 // Name: SvglRenderer::Render
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void SvglRenderer::Render( svg::Node_ABC* node, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
+void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
 {
     CreateStaticLists();
     unsigned int& list = lists_[ node ];
     if( ! list )
-        list = GenerateList( node, viewport, vWidth, vHeight );
+        list = GenerateList( node, style, viewport, vWidth, vHeight );
     if( list )
     {
         ConfigureColorList();
@@ -99,7 +108,7 @@ void SvglRenderer::Render( svg::Node_ABC* node, const geometry::Rectangle2f& vie
 // Name: SvglRenderer::GenerateList
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
+unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
 {
     unsigned int result = glGenLists( 1 );
     if( result )
@@ -109,7 +118,7 @@ unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const geometry::Re
             ListPaint color( colorList_ );
             renderingContext_->SetViewport( box, vWidth, vHeight );
             renderingContext_->PushProperty( RenderingContext::color, color );
-            std::auto_ptr< Style > border( CreateStyle( "stroke:black;fill:currentColor;stroke-width:4" ) );
+            std::auto_ptr< Style > border( CreateStyle( style ) );
             references_->Register( "border", *border );
             node->Draw( *renderingContext_, *references_ );
             renderingContext_->PopProperty( RenderingContext::color );
@@ -139,10 +148,10 @@ void SvglRenderer::ConfigureColorList()
 // -----------------------------------------------------------------------------
 void SvglRenderer::ConfigureWidthList( const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
 {
-    if( viewport != previousViewport_ 
+    if( viewport != previousViewport_
      || vWidth   != previousWidth_
      || vHeight  != previousHeight_ )
-    {   
+    {
         const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
         listLenghts_->SetViewport( box, vWidth, vHeight );
         previousViewport_ = viewport;

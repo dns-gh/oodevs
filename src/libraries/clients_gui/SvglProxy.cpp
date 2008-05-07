@@ -48,5 +48,5 @@ void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& view
         node = renderer_.Compile( input, 100 ); // $$$$ AGE 2007-05-31: 
     }
     if( node )
-        renderer_.Render( node, viewport, vWidth, vHeight );
+        renderer_.Render( node, SvglRenderer::DefaultStyle(), viewport, vWidth, vHeight );
 }
