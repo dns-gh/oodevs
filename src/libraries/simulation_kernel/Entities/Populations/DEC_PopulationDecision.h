@@ -13,6 +13,7 @@
 #define __DEC_PopulationDecision_h_
 
 #include "MIL.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 class MIL_Population;
 class MIL_PopulationMission;
@@ -22,7 +23,8 @@ class NET_ASN_MsgPopulationUpdate;
 // @class  DEC_PopulationDecision
 // Created: JVT 2004-08-03
 // =============================================================================
-class DEC_PopulationDecision : public DIA_Engine
+class DEC_PopulationDecision : public DEC_Decision_ABC
+                             , public DIA_Engine
 {
     MT_COPYNOTALLOWED( DEC_PopulationDecision )
 

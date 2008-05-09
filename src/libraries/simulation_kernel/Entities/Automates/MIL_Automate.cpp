@@ -49,7 +49,15 @@
 #include "Tools/MIL_IDManager.h"
 #include "xeumeuleu/xml.h"
 
-
+namespace
+{
+    template< typename R >
+    void SaveRole( const MIL_Automate& automate, MIL_CheckPointOutArchive& file )
+    {
+        const R* const role = & automate.GetRole< R >();
+        file << role;
+    }
+}
 
 BOOST_CLASS_EXPORT_GUID( MIL_Automate, "MIL_Automate" )
 
@@ -65,7 +73,6 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
     , strName_                           ( type.GetName() )
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
-    , pDecision_                         ( 0 )
     , orderManager_                      ( *this )
     , pPionPC_                           ( 0 )
     , pions_                             ()
@@ -97,7 +104,6 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate
     , strName_                           ( type.GetName() )
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
-    , pDecision_                         ( 0 )
     , orderManager_                      ( *this )
     , pPionPC_                           ( 0 )
     , pions_                             ()
@@ -129,7 +135,6 @@ MIL_Automate::MIL_Automate()
     , strName_                           ()
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
-    , pDecision_                         ( 0 )
     , orderManager_                      ( *this )
     , pPionPC_                           ( 0 )
     , pions_                             ()
@@ -159,8 +164,30 @@ MIL_Automate::~MIL_Automate()
         pParentAutomate_->UnregisterAutomate( *this );
     if( pParentFormation_ )
         pParentFormation_->UnregisterAutomate( *this );    
-    delete pDecision_;
 }
+
+// =============================================================================
+// Accessors
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetDecision
+// Created: NLD 2004-09-03
+// -----------------------------------------------------------------------------
+const DEC_AutomateDecision& MIL_Automate::GetDecision() const
+{
+    return GetRole< DEC_AutomateDecision >(); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetDecision
+// Created: NLD 2004-09-03
+// -----------------------------------------------------------------------------
+DEC_AutomateDecision& MIL_Automate::GetDecision() 
+{
+    return GetRole< DEC_AutomateDecision >(); 
+}
+
 
 // =============================================================================
 // CHEKPOINTS
@@ -224,7 +251,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
          >> strName_
          >> bEngaged_
          >> pKnowledgeGroup_
-         >> pDecision_
          >> pPionPC_
          >> pions_
          >> recycledPions_
@@ -236,6 +262,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
          >> pKnowledgeBlackBoard_
          >> const_cast< MIL_Army*& >( pArmySurrenderedTo_ )
          >> nTickRcDotationSupplyQuerySent_;
+    { DEC_RolePion_Decision         * pRole; file >> pRole; RegisterRole( pRole ); }
 }
 
 // -----------------------------------------------------------------------------
@@ -255,7 +282,6 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
          << strName_
          << bEngaged_
          << pKnowledgeGroup_
-         << pDecision_
          << pPionPC_
          << pions_
          << recycledPions_
@@ -267,6 +293,8 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
          << pKnowledgeBlackBoard_
          << pArmySurrenderedTo_
          << nTickRcDotationSupplyQuerySent_;
+    SaveRole< DEC_AutomateDecision >( *this, file );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -285,7 +313,7 @@ void MIL_Automate::Initialize( xml::xistream& xis )
         xis.error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
       
-    pDecision_ = new DEC_AutomateDecision( *this ); //$$$ BULLSHIT : strName_ must be initialized ...
+    RegisterRole( new DEC_AutomateDecision( *this ) ) ;  //$$$ BULLSHIT : strName_ must be initialized ...
     
     xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
         >> xml::list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate );
@@ -460,9 +488,8 @@ bool MIL_Automate::CheckComposition() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::UpdateDecision()
 {
-    assert( pDecision_ );
     orderManager_.Update();
-    pDecision_->UpdateDecision();
+    GetRole< DEC_AutomateDecision >().UpdateDecision();
 }
 
 // -----------------------------------------------------------------------------
@@ -499,8 +526,7 @@ void MIL_Automate::CleanKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_Automate::UpdateNetwork() const
 {
-    assert( pDecision_ );
-    if( bAutomateModeChanged_ || pDecision_->HasStateChanged() )
+    if( bAutomateModeChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() )
     {
         NET_ASN_MsgAutomatAttributes msg;
         msg().oid = nID_;
@@ -511,7 +537,7 @@ void MIL_Automate::UpdateNetwork() const
             msg().etat_automate = bEngaged_ ? EnumAutomatMode::embraye : EnumAutomatMode::debraye;
         }
 
-        pDecision_->SendChangedState( msg );
+        GetRole< DEC_AutomateDecision >().SendChangedState( msg );
         msg.Send();
     }
 
@@ -542,7 +568,7 @@ void MIL_Automate::Clean()
     bAutomateModeChanged_               = false;
     for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
         it->second->Clean();
-    pDecision_->Clean();
+    GetRole< DEC_AutomateDecision >().Clean();
 }
 
 // =============================================================================
@@ -864,13 +890,12 @@ void MIL_Automate::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::SendFullState() const
 {
-    assert( pDecision_ );
 
     NET_ASN_MsgAutomatAttributes asn;
     asn().oid = nID_;
     asn().m.etat_automatePresent = 1;
     asn().etat_automate = bEngaged_ ? EnumAutomatMode::embraye : EnumAutomatMode::debraye;
-    pDecision_->SendFullState( asn );
+    GetRole< DEC_AutomateDecision >().SendFullState( asn );
     asn.Send();
 
     SendLogisticLinks();
@@ -961,7 +986,7 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& 
         for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             (**itPion).OnReceiveMsgMagicMove( (**itPion).GetRole< PHY_RolePion_Location >().GetPosition() + vTranslation );
 
-        pDecision_->Reset();
+        GetRole< DEC_AutomateDecision >().Reset();
         orderManager_.ReplaceMission();
     }
     else if( asnMsg.action.t == T_MsgUnitMagicAction_action_se_rendre )

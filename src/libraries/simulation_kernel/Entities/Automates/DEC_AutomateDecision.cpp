@@ -51,7 +51,8 @@ void DEC_AutomateDecision::InitializeDIA()
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
-    : DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Automate" ), "" )
+    : DEC_Decision_ABC         ( automate ) 
+    , DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Automate" ), "" )
     , pAutomate_               ( &automate )
     , diaFunctionCaller_       ( automate, automate.GetType().GetFunctionTable() )
     , nForceRatioState_        ( eForceRatioStateNone  )
@@ -93,7 +94,8 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision::DEC_AutomateDecision()
-    : DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Automate" ), "" )
+    : DEC_Decision_ABC         ( ) 
+    , DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Automate" ), "" )
     , pAutomate_               ( 0 )
     , diaFunctionCaller_       ( *(MIL_Automate*)0, *(DIA_FunctionTable< MIL_Automate >*)1 ) // $$$$ JVT : Eurkkk
     , nForceRatioState_        ( eForceRatioStateNone  )

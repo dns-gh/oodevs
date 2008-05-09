@@ -61,17 +61,6 @@ const std::string& MIL_Population::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetDecision
-// Created: NLD 2005-09-28
-// -----------------------------------------------------------------------------
-inline
-DEC_PopulationDecision& MIL_Population::GetDecision() const
-{
-    assert( pDecision_ );
-    return *pDecision_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetOrderManager
 // Created: NLD 2005-09-29
 // -----------------------------------------------------------------------------

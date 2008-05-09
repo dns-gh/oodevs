@@ -28,9 +28,17 @@
 #include "Network/NET_AsnException.h"
 #include "xeumeuleu/xml.h"
 
-
-
 BOOST_CLASS_EXPORT_GUID( MIL_Population, "MIL_Population" )
+
+namespace
+{
+    template< typename R >
+    void SaveRole( const MIL_Population& population, MIL_CheckPointOutArchive& file )
+    {
+        const R* const role = & population.GetRole< R >();
+        file << role;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population constructor
@@ -45,7 +53,6 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
     , pDefaultAttitude_       ( 0 )
     , rPeopleCount_           ( 0. )
     , pKnowledge_             ( 0 )
-    , pDecision_              ( 0 )
     , orderManager_           ( *this )
     , bPionMaxSpeedOverloaded_( false )
     , rOverloadedPionMaxSpeed_( 0. )
@@ -60,7 +67,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
         xis.error( "Unknown attitude" );
 
     pKnowledge_ = new DEC_PopulationKnowledge();
-    pDecision_  = new DEC_PopulationDecision( *this );
+    RegisterRole( new DEC_PopulationDecision( *this  ) ); 
 
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
@@ -82,7 +89,6 @@ MIL_Population::MIL_Population()
     , pDefaultAttitude_       ( 0 )
     , rPeopleCount_           ( 0. )
     , pKnowledge_             ()
-    , pDecision_              ( 0 )
     , orderManager_           ( *this )
     , bPionMaxSpeedOverloaded_( false )
     , rOverloadedPionMaxSpeed_( 0. )
@@ -91,6 +97,10 @@ MIL_Population::MIL_Population()
     // NOTHING
 }
 
+// =============================================================================
+// Accessors
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population destructor
 // Created: NLD 2005-09-28
@@ -98,9 +108,27 @@ MIL_Population::MIL_Population()
 MIL_Population::~MIL_Population()
 {
     pArmy_->UnregisterPopulation( *this );
-    delete pDecision_;
     delete pKnowledge_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetDecision
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+const DEC_PopulationDecision& MIL_Population::GetDecision() const
+{
+    return GetRole< DEC_PopulationDecision>();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetDecision
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+DEC_PopulationDecision& MIL_Population::GetDecision()
+{
+    return GetRole< DEC_PopulationDecision>();
+}
+
 
 // =============================================================================
 // CHECKPOINTS
@@ -136,8 +164,8 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> bPionMaxSpeedOverloaded_
          >> rOverloadedPionMaxSpeed_
          >> pKnowledge_
-         >> bHasDoneMagicMove_
-         >> pDecision_;
+         >> bHasDoneMagicMove_;
+    { DEC_RolePion_Decision         * pRole; file >> pRole; RegisterRole( pRole ); }
 }
 
 // -----------------------------------------------------------------------------
@@ -162,8 +190,8 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
          << bPionMaxSpeedOverloaded_
          << rOverloadedPionMaxSpeed_
          << pKnowledge_
-         << bHasDoneMagicMove_
-         << pDecision_;
+         << bHasDoneMagicMove_;
+    SaveRole< DEC_PopulationDecision >( *this, file );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +211,7 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
         << xml::attribute( "name"    , strName_ )
         << xml::attribute( "humans"  , GetNbrAliveHumans() + GetNbrDeadHumans() )
         << xml::attribute( "attitude", pDefaultAttitude_->GetName() );
-    
+
     if( !concentrations_.empty() )
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
     else
@@ -275,9 +303,8 @@ void MIL_Population::CleanKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateDecision()
 {
-    assert( pDecision_ );
     orderManager_.Update();
-    pDecision_->UpdateDecision();
+    GetRole< DEC_PopulationDecision >().UpdateDecision();
 }
 
 // -----------------------------------------------------------------------------
@@ -294,7 +321,7 @@ void MIL_Population::UpdateState()
         delete *it;
     trashedFlows_.clear();
 
-    // Flows    
+    // Flows
     for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); )
     {
         MIL_PopulationFlow* pFlow = *itFlow;
@@ -303,7 +330,7 @@ void MIL_Population::UpdateState()
             itFlow = flows_.erase( itFlow );
             trashedFlows_.push_back( pFlow );
         }
-        else 
+        else
             ++ itFlow;
     }
 
@@ -316,7 +343,7 @@ void MIL_Population::UpdateState()
             itConcentration = concentrations_.erase( itConcentration );
             trashedConcentrations_.push_back( pConcentration );
         }
-        else 
+        else
             ++ itConcentration;
     }
 }
@@ -327,8 +354,7 @@ void MIL_Population::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Population::Clean()
 {
-    assert( pDecision_ );
-    pDecision_->Clean();
+    GetRole< DEC_PopulationDecision >().Clean();
 
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         (**itConcentration).Clean();
@@ -505,7 +531,7 @@ void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT
         {
             rMinDistance = rDistance;
             closestPoint = nearestPointTmp;
-        }                
+        }
     }
 
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
@@ -850,7 +876,7 @@ void MIL_Population::OnReceiveMsgMagicMove( const ASN1T_MagicActionPopulationMov
     for( IT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         (**it).MagicMove( vPosTmp );
 
-    pDecision_->Reset();
+    GetRole< DEC_PopulationDecision >().Reset();
     orderManager_.ReplaceMission();
     bHasDoneMagicMove_ = true;
 }
@@ -867,7 +893,7 @@ void MIL_Population::OnReceiveMsgDestroyAll()
     for( IT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         (**it).KillAllHumans();
 
-    pDecision_->Reset();
+    GetRole< DEC_PopulationDecision >().Reset();
     orderManager_.ReplaceMission();
 }
 
@@ -965,7 +991,7 @@ void MIL_Population::SendCreation() const
     asnMsg().oid             = nID_;
     asnMsg().type_population = pType_->GetID();
     asnMsg().oid_camp        = pArmy_->GetID();
-    asnMsg().nom             = strName_.c_str(); // !! pointeur sur const char*   
+    asnMsg().nom             = strName_.c_str(); // !! pointeur sur const char*
     asnMsg.Send();
 
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -985,11 +1011,9 @@ void MIL_Population::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_Population::SendFullState()
 {
-    assert( pDecision_ );
-
     NET_ASN_MsgPopulationUpdate asnMsg;
-    asnMsg().oid = nID_;   
-    pDecision_->SendFullState( asnMsg );
+    asnMsg().oid = nID_;
+    GetRole< DEC_PopulationDecision >().SendFullState( asnMsg );
     asnMsg.Send();
 
     sPeopleCounter counter( rPeopleCount_ );
@@ -1018,12 +1042,11 @@ void MIL_Population::SendFullState()
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateNetwork()
 {
-    assert( pDecision_ );
-    if( pDecision_->HasStateChanged() )
+    if( GetRole< DEC_PopulationDecision >().HasStateChanged() )
     {
         NET_ASN_MsgPopulationUpdate asnMsg;
-        asnMsg().oid = nID_;   
-        pDecision_->SendChangedState( asnMsg );
+        asnMsg().oid = nID_;
+        GetRole< DEC_PopulationDecision >().SendChangedState( asnMsg );
         asnMsg.Send();
     }
 
@@ -1058,7 +1081,7 @@ void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& 
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         visitor.Visit( **it );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::GetBoundedPeople
 // Created: SBO 2006-04-03

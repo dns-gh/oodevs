@@ -11,6 +11,7 @@
 #define __MIL_Population_h_
 
 #include "MIL.h"
+#include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Actions/PHY_Actor.h"
@@ -38,7 +39,8 @@ class TER_Localisation;
 // =============================================================================
 // Created: NLD 2005-09-28
 // =============================================================================
-class MIL_Population : public PHY_Actor
+class MIL_Population : public MIL_Entity_ABC
+                     , public PHY_Actor
                      , public MIL_VisitableEntity_ABC< MIL_PopulationElement_ABC >
 {
 public:
@@ -54,7 +56,8 @@ public:
           uint                        GetID                () const;
     const MIL_PopulationType&         GetType              () const;
     const std::string&                GetName              () const;
-          DEC_PopulationDecision&     GetDecision          () const;
+    const DEC_PopulationDecision&     GetDecision          () const;
+          DEC_PopulationDecision&     GetDecision          ();
     const MIL_PopulationOrderManager& GetOrderManager      () const;
           MIL_PopulationOrderManager& GetOrderManager      ();
           MT_Float                    GetMaxSpeed          () const;
@@ -215,7 +218,6 @@ private:
           T_FlowVector               trashedFlows_;
 
           DEC_PopulationKnowledge*   pKnowledge_;
-          DEC_PopulationDecision*    pDecision_;
           MIL_PopulationOrderManager orderManager_;
 
           // Pion effects

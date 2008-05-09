@@ -13,6 +13,7 @@
 #define __MIL_Automate_h_
 
 #include "MIL.h"
+#include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Actions/PHY_Actor.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 
@@ -45,7 +46,8 @@ class DEC_KnowledgeBlackBoard_Automate;
 // @class  MIL_Automate
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_Automate : public PHY_Actor
+class MIL_Automate : public MIL_Entity_ABC
+                   , public PHY_Actor
 {
     MT_COPYNOTALLOWED( MIL_Automate )
 
@@ -103,7 +105,8 @@ public:
     const T_PionVector&                     GetPions         () const; // Including pion PC
     const T_AutomateVector&                 GetAutomates     () const;
           MIL_Automate*                     GetParentAutomate() const;
-          DEC_AutomateDecision&             GetDecision      () const;
+    const DEC_AutomateDecision&             GetDecision      () const;
+          DEC_AutomateDecision&             GetDecision      () ;
           DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
           bool                              IsEngaged        () const;
 
@@ -231,7 +234,6 @@ private:
           bool              bEngaged_;
 
     MIL_KnowledgeGroup*      pKnowledgeGroup_;
-    DEC_AutomateDecision*    pDecision_; 
     MIL_AutomateOrderManager orderManager_;
     MIL_AgentPion*           pPionPC_;
     T_PionVector             pions_; // Including pion PC

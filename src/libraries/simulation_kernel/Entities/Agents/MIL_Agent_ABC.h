@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "MT_Tools/MT_RoleContainer.h"
+#include "Entities/MIL_Entity_ABC.h"
 
 class MIL_Army;
 class MIL_KnowledgeGroup;
@@ -27,7 +27,7 @@ class DEC_Knowledge_Agent;
 // @class  MIL_Agent_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_Agent_ABC : public MT_RoleContainer
+class MIL_Agent_ABC : public MIL_Entity_ABC
 {
     MT_COPYNOTALLOWED( MIL_Agent_ABC )
 

@@ -13,8 +13,7 @@
 #define __DEC_RolePion_Decision_h_
 
 #include "MIL.h"
-
-#include "MT_Tools/MT_Role_ABC.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 class MIL_AgentPion;
 class MIL_PionMission;
@@ -31,7 +30,7 @@ enum E_FireAvailability;
 // @class  DEC_RolePion_Decision
 // Created: JVT 2004-08-03
 // =============================================================================
-class DEC_RolePion_Decision : public MT_Role_ABC
+class DEC_RolePion_Decision : public DEC_Decision_ABC
                             , public DIA_Engine
 {
     MT_COPYNOTALLOWED( DEC_RolePion_Decision )

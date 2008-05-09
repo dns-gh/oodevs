@@ -17,6 +17,7 @@
 #include "MIL_PopulationType.h"
 #include "Decision/DEC_ModelPopulation.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DIA3/DEC_DIA3Engine.h"
 #include "Entities/Orders/MIL_PopulationMissionType.h"
 #include "Entities/Orders/MIL_PopulationMission.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -50,7 +51,8 @@ void DEC_PopulationDecision::InitializeDIA()
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
-    : DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Population" ), "" )
+    : DEC_Decision_ABC         ( population ) 
+    , DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Population" ), "" )
     , pPopulation_             ( &population )
     , diaFunctionCaller_       ( population, population.GetType().GetFunctionTable() )
     , rDominationState_        ( 0. )
@@ -66,7 +68,7 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
         CopyFrom( &model.GetDIAModel() );
         GetVariable( nDIANameIdx_    ).SetValue( population.GetName() );
         GetVariable( nDIAMissionIdx_ ).Reset();
-        DIA_Workspace::Instance().SetObjectName( *this, population.GetName() ); // ????
+        DIA_Workspace::Instance().SetObjectName( *this , population.GetName() ); // ????
     }
     catch( DIA_Internal_Exception& e )
     {
@@ -87,7 +89,8 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
 DEC_PopulationDecision::DEC_PopulationDecision()
-    : DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Population" ), "" )
+    : DEC_Decision_ABC         ( ) 
+    , DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Population" ), "" )
     , pPopulation_             ( 0 )
     , diaFunctionCaller_       ( *(MIL_Population*)0, *(DIA_FunctionTable< MIL_Population >*)1 ) // $$$$ JVT : Eurkkk
     , rDominationState_        ( 0. )
@@ -134,7 +137,7 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
         CopyFrom( &model.GetDIAModel() );
         GetVariable( nDIANameIdx_    ).SetValue( pPopulation_->GetName() );
         GetVariable( nDIAMissionIdx_ ).Reset();
-        DIA_Workspace::Instance().SetObjectName( *this, pPopulation_->GetName() ); // ????
+        DIA_Workspace::Instance().SetObjectName( *this , pPopulation_->GetName() ); // ????
 
         DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
         file >> diaSerializer;
@@ -333,4 +336,69 @@ void DEC_PopulationDecision::SendChangedState( NET_ASN_MsgPopulationUpdate& msg 
     if( bStateHasChanged_ )
         SendFullState( msg );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::GetDominationState
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+MT_Float DEC_PopulationDecision::GetDominationState() const
+{
+    return rDominationState_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::GetBehaviorPart
+// Created: NLD 2002-12-12
+//-----------------------------------------------------------------------------
+DIA_BehaviorPart& DEC_PopulationDecision::GetBehaviorPart() const
+{
+    assert( pBehaviorTool_ != 0 );
+    return( static_cast< DIA_BehaviorPart& >( *pBehaviorTool_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::GetPopulation
+// Created: NLD 2004-10-26
+// -----------------------------------------------------------------------------
+MIL_Population& DEC_PopulationDecision::GetPopulation() const
+{
+    assert( pPopulation_ );
+    return *pPopulation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::NotifyDominationStateChanged
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::NotifyDominationStateChanged( MT_Float rValue )
+{
+    assert( rValue >= 0. && rValue <= 1. );
+    if( rDominationState_ == rValue )
+        return;
+
+    rDominationState_ = rValue;
+
+    static const MT_Float rDeltaPercentageForNetwork = 0.05;
+    if( fabs( rLastDominationState_ - rDominationState_ ) > rDeltaPercentageForNetwork || rDominationState_ == 0. || rDominationState_ == 1. )
+        bStateHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::Clean
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::Clean()
+{
+    bStateHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::HasStateChanged
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+bool DEC_PopulationDecision::HasStateChanged() const
+{
+    return bStateHasChanged_;
+}
+
 

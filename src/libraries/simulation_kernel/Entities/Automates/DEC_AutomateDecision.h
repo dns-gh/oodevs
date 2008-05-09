@@ -13,6 +13,7 @@
 #define __DEC_AutomateDecision_h_
 
 #include "MIL.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 class MIL_Automate;
 class MIL_AutomateMission;
@@ -27,7 +28,8 @@ enum E_CloseCombatState;
 // @class  DEC_AutomateDecision
 // Created: JVT 2004-08-03
 // =============================================================================
-class DEC_AutomateDecision : public DIA_Engine
+class DEC_AutomateDecision : public DEC_Decision_ABC
+                           , public DIA_Engine
 {
     MT_COPYNOTALLOWED( DEC_AutomateDecision )
 

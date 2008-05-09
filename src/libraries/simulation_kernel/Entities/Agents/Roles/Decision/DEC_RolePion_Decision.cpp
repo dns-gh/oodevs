@@ -57,7 +57,7 @@ void DEC_RolePion_Decision::InitializeDIA()
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : MT_Role_ABC               ( role )
+    : DEC_Decision_ABC          ( pion )
     , pPion_                    ( &pion )
     , DIA_Engine                ( *DIA_TypeManager::Instance().GetType( "T_Pion" ), "" )
     , diaFunctionCaller_        ( pion, pion.GetType().GetFunctionTable() )
@@ -102,7 +102,8 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentP
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 DEC_RolePion_Decision::DEC_RolePion_Decision()
-    : pPion_                    ( 0 )
+    : DEC_Decision_ABC          ( ) 
+    , pPion_                    ( 0 )
     , DIA_Engine                ( *DIA_TypeManager::Instance().GetType( "T_Pion" ), "" )
     , diaFunctionCaller_        ( *(MIL_AgentPion*)0, *(DIA_FunctionTable< MIL_AgentPion >*)1 ) // $$$$ JVT : Eurkkk
     , nForceRatioState_         ( eForceRatioStateNone      )

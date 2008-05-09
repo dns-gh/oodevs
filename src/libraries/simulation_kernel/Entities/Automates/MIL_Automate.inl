@@ -84,17 +84,6 @@ const MIL_AutomateType& MIL_Automate::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetDecision
-// Created: NLD 2004-09-03
-// -----------------------------------------------------------------------------
-inline
-DEC_AutomateDecision& MIL_Automate::GetDecision() const
-{
-    assert( pDecision_ );
-    return *pDecision_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetPionPC
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
