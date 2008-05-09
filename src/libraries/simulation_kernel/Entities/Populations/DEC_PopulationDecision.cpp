@@ -17,7 +17,6 @@
 #include "MIL_PopulationType.h"
 #include "Decision/DEC_ModelPopulation.h"
 #include "Decision/DEC_Tools.h"
-#include "Decision/DIA3/DEC_DIA3Engine.h"
 #include "Entities/Orders/MIL_PopulationMissionType.h"
 #include "Entities/Orders/MIL_PopulationMission.h"
 #include "Entities/Orders/MIL_Report.h"
