@@ -81,11 +81,10 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
-    : MIL_Agent_ABC            ( nID )
+    : MIL_Agent_ABC            ( type.GetName(), xis, nID )
     , PHY_Actor                ()
     , pType_                   ( &type )
     , bIsPC_                   ( false )
-    , strName_                 ( pType_->GetName() )
     , pAutomate_               ( &automate )
     , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_            ( *new MIL_PionOrderManager( *this ) )
@@ -98,11 +97,10 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
-    : MIL_Agent_ABC            ( nID )
+    : MIL_Agent_ABC            ( type.GetName(), nID )
     , PHY_Actor                ()
     , pType_                   ( &type )
     , bIsPC_                   ( false )
-    , strName_                 ( pType_->GetName() )
     , pAutomate_               ( &automate )
     , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_            ( *new MIL_PionOrderManager( *this ) )
@@ -136,15 +134,14 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
 {
     uint nTypeID;
     
-    file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
-    file >> boost::serialization::base_object< PHY_Actor     >( *this );
+    file >> boost::serialization::base_object< MIL_Agent_ABC >( *this )
+         >> boost::serialization::base_object< PHY_Actor     >( *this );
 
     file >> nTypeID;
     pType_ = MIL_AgentTypePion::Find( nTypeID );
     assert( pType_ );
     
     file >> const_cast< bool& >( bIsPC_ )
-         >> strName_
          >> pAutomate_
       // >> actions_ // actions non sauvegardées
          >> pKnowledgeBlackBoard_;
@@ -186,9 +183,11 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 {
     assert( pType_ );
 
-    xos << xml::start( "unit" )
-            << xml::attribute( "id", GetID() )
-            << xml::attribute( "name", strName_ )
+    xos << xml::start( "unit" ); 
+       
+    MIL_Entity_ABC::WriteODB( xos ) ; 
+
+    xos     << xml::attribute( "id", GetID() )
             << xml::attribute( "type", pType_->GetName() )
             << xml::attribute( "command-post", bIsPC_ )
             << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
@@ -253,8 +252,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Initialize( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::attribute( "command-post", bIsPC_ )
-        >> xml::optional() >> xml::attribute( "name", strName_ );
+    xis >> xml::optional() >> xml::attribute( "command-post", bIsPC_ ); 
 
     // Position - $$$ DEGEU
     std::string strPosition;
@@ -540,7 +538,7 @@ void MIL_AgentPion::SendCreation() const
     NET_ASN_MsgUnitCreation asnMsg;
     asnMsg().oid          = GetID();
     asnMsg().type_pion    = pType_->GetID();
-    asnMsg().nom          = strName_.c_str(); // !! pointeur sur const char*
+    asnMsg().nom          = GetName().c_str(); // !! pointeur sur const char*
     asnMsg().oid_automate = GetAutomate().GetID();    
     asnMsg().pc           = IsPC();
     asnMsg.Send();

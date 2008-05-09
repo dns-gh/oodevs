@@ -147,12 +147,3 @@ MIL_LimaOrder* MIL_AgentPion::FindNextScheduledLima() const
     return orderManager_.FindNextScheduledLima();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::GetName
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-inline
-const std::string& MIL_AgentPion::GetName() const
-{
-    return strName_;
-}

@@ -36,7 +36,7 @@
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
 MIL_AgentHLA::MIL_AgentHLA( uint nID, const ObjectIdentifier& objectId, HLA_InteractionManager_ABC& interactionManager )
-    : MIL_Agent_ABC( nID )
+    : MIL_Agent_ABC( "", nID )
     , pArmy_( 0 )
     , pType_( 0 )
     , bPc_( false )

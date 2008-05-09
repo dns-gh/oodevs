@@ -132,7 +132,8 @@ DEC_AutomateDecision::~DEC_AutomateDecision()
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pAutomate_
+    file >> boost::serialization::base_object< MT_Role_ABC >( *this )
+         >> pAutomate_
          >> nForceRatioState_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
@@ -188,7 +189,8 @@ void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) co
 {
     assert( pAutomate_ );
     unsigned id = pAutomate_->GetType().GetID();
-    file << pAutomate_
+    file << boost::serialization::base_object< MT_Role_ABC >( *this )
+         << pAutomate_
          << nForceRatioState_
          << nRulesOfEngagementState_
          << nCloseCombatState_

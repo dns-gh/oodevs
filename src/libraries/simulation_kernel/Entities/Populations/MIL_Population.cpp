@@ -45,11 +45,11 @@ namespace
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, xml::xistream& xis )
-    : PHY_Actor               ()
+    : MIL_Entity_ABC          ( type.GetName(), xis ) 
+    , PHY_Actor               ()
     , pType_                  ( &type )
     , nID_                    ( nID )
     , pArmy_                  ( &army )
-    , strName_                ( type.GetName() )
     , pDefaultAttitude_       ( 0 )
     , rPeopleCount_           ( 0. )
     , pKnowledge_             ( 0 )
@@ -58,7 +58,6 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
     , rOverloadedPionMaxSpeed_( 0. )
     , bHasDoneMagicMove_      ( false )
 {
-    xis >> xml::optional() >> xml::attribute( "name", strName_ );
 
     std::string strAttitude;
     xis >> xml::attribute( "attitude", strAttitude );
@@ -81,11 +80,11 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population()
-    : PHY_Actor               ()
+    : MIL_Entity_ABC          ( "" )
+    , PHY_Actor               ()
     , pType_                  ( 0 )
     , nID_                    ( 0 )
     , pArmy_                  ( 0 )
-    , strName_                ()
     , pDefaultAttitude_       ( 0 )
     , rPeopleCount_           ( 0. )
     , pKnowledge_             ()
@@ -140,7 +139,8 @@ DEC_PopulationDecision& MIL_Population::GetDecision()
 // -----------------------------------------------------------------------------
 void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< PHY_Actor >( *this );
+    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this ) 
+         >> boost::serialization::base_object< PHY_Actor >( *this ); 
 
     uint nTypeID;
     file >> nTypeID;
@@ -148,8 +148,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
     assert( pType_ );
 
     file >> const_cast< uint& >( nID_ )
-         >> const_cast< MIL_Army*& >( pArmy_ )
-         >> strName_;
+         >> const_cast< MIL_Army*& >( pArmy_ ); 
 
     uint nAttitudeID;
     file >> nAttitudeID;
@@ -165,7 +164,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> rOverloadedPionMaxSpeed_
          >> pKnowledge_
          >> bHasDoneMagicMove_;
-    { DEC_RolePion_Decision         * pRole; file >> pRole; RegisterRole( pRole ); }
+    { DEC_PopulationDecision         * pRole; file >> pRole; RegisterRole( pRole ); }
 }
 
 // -----------------------------------------------------------------------------
@@ -174,13 +173,14 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << boost::serialization::base_object< PHY_Actor >( *this );
+    file << boost::serialization::base_object< MIL_Entity_ABC >( *this )
+         << boost::serialization::base_object< PHY_Actor >( *this );
+    
     unsigned type     = pType_->GetID(),
              attitude = pDefaultAttitude_->GetID();
     file << type
          << nID_
          << pArmy_
-         << strName_
          << attitude
          << rPeopleCount_
          << concentrations_
@@ -205,10 +205,12 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
     assert( pDefaultAttitude_ );
     assert( !concentrations_.empty() || !flows_.empty() );
 
-    xos << xml::start( "population" )
-        << xml::attribute( "id"      , nID_ )
+    xos << xml::start( "population" ); 
+
+    MIL_Entity_ABC::WriteODB ( xos ) ; 
+    
+    xos << xml::attribute( "id"      , nID_ )
         << xml::attribute( "type"    , pType_->GetName() )
-        << xml::attribute( "name"    , strName_ )
         << xml::attribute( "humans"  , GetNbrAliveHumans() + GetNbrDeadHumans() )
         << xml::attribute( "attitude", pDefaultAttitude_->GetName() );
 
@@ -991,7 +993,7 @@ void MIL_Population::SendCreation() const
     asnMsg().oid             = nID_;
     asnMsg().type_population = pType_->GetID();
     asnMsg().oid_camp        = pArmy_->GetID();
-    asnMsg().nom             = strName_.c_str(); // !! pointeur sur const char*
+    asnMsg().nom             = GetName().c_str(); // !! pointeur sur const char*
     asnMsg.Send();
 
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )

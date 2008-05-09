@@ -139,7 +139,7 @@ DEC_RolePion_Decision::~DEC_RolePion_Decision()
 void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< MT_Role_ABC >( *this )
-         >> pPion_
+         >> pPion_ 
          >> nForceRatioState_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_

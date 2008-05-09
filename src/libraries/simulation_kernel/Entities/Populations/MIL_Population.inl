@@ -51,16 +51,6 @@ const MIL_PopulationType& MIL_Population::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetName
-// Created: NLD 2005-09-28
-// -----------------------------------------------------------------------------
-inline
-const std::string& MIL_Population::GetName() const
-{
-    return strName_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetOrderManager
 // Created: NLD 2005-09-29
 // -----------------------------------------------------------------------------

@@ -95,7 +95,6 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     unsigned type = pType_->GetID();
     file << type
          << bIsPC_
-         << strName_
          << pAutomate_
       // << actions_ // actions non sauvegardées
          << pKnowledgeBlackBoard_;

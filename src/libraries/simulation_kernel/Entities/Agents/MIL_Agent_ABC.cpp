@@ -20,8 +20,24 @@
 // Name: MIL_Agent_ABC constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Agent_ABC::MIL_Agent_ABC( uint nID )
-    : nID_( nID )
+MIL_Agent_ABC::MIL_Agent_ABC( const std::string& name, xml::xistream& xis, uint nID )
+    : MIL_Entity_ABC ( name, xis ) 
+    , nID_           ( nID )
+{
+    if( MIL_IDManager::units_.IsMosIDValid( nID_ ) )
+    {
+        bool bOut = MIL_IDManager::units_.LockMosID( nID_ );
+        assert( bOut );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Agent_ABC constructor
+// Created: RDS 2008-05-09
+// -----------------------------------------------------------------------------
+MIL_Agent_ABC::MIL_Agent_ABC( const std::string& name, uint nID )
+    : MIL_Entity_ABC ( name ) 
+    , nID_           ( nID )
 {
     if( MIL_IDManager::units_.IsMosIDValid( nID_ ) )
     {
@@ -52,7 +68,7 @@ MIL_Agent_ABC::~MIL_Agent_ABC()
 // -----------------------------------------------------------------------------
 void MIL_Agent_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< MT_RoleContainer >( *this );
+    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> nID_;
     
     if( MIL_IDManager::units_.IsMosIDValid( nID_ ) )
@@ -68,6 +84,6 @@ void MIL_Agent_ABC::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_Agent_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << boost::serialization::base_object< MT_RoleContainer >( *this );
+    file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file << nID_;
 }

@@ -121,7 +121,8 @@ DEC_PopulationDecision::~DEC_PopulationDecision()
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pPopulation_
+    file >> boost::serialization::base_object< MT_Role_ABC >( *this )
+         >> pPopulation_
          >> rDominationState_
          >> rLastDominationState_;
    
@@ -163,7 +164,8 @@ void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const uint ) 
 {
     assert( pPopulation_ );
     
-    file << pPopulation_
+    file << boost::serialization::base_object< MT_Role_ABC >( *this )
+         << pPopulation_
          << rDominationState_
          << rLastDominationState_;
 

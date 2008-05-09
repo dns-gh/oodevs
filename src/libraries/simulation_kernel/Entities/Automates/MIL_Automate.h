@@ -93,7 +93,6 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&                      GetName          () const;
           uint                              GetID            () const;
     const MIL_AutomateType&                 GetType          () const;
           MIL_Army&                         GetArmy          () const;
@@ -230,7 +229,6 @@ private:
     const uint              nID_;
           MIL_Formation*    pParentFormation_;
           MIL_Automate*     pParentAutomate_;
-          std::string       strName_;
           bool              bEngaged_;
 
     MIL_KnowledgeGroup*      pKnowledgeGroup_;

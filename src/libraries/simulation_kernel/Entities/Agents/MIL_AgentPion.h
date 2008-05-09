@@ -66,7 +66,6 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&                       GetName        () const;
           DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const;        
     const MIL_PionOrderManager&              GetOrderManager() const;
           MIL_PionOrderManager&              GetOrderManager();
@@ -167,7 +166,6 @@ private:
 private:
     const MIL_AgentTypePion*  pType_;
           bool                bIsPC_;
-          std::string         strName_;
           MIL_Automate*       pAutomate_;
 
     // Knowledge

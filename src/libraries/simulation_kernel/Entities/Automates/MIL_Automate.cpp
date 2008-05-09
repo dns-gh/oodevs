@@ -66,11 +66,11 @@ BOOST_CLASS_EXPORT_GUID( MIL_Automate, "MIL_Automate" )
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& parent, xml::xistream& xis )
-    : pType_                             ( &type )
+    : MIL_Entity_ABC                     ( type.GetName() , xis ) 
+    , pType_                             ( &type )
     , nID_                               ( nID )
     , pParentFormation_                  ( &parent )
     , pParentAutomate_                   ( 0 )
-    , strName_                           ( type.GetName() )
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
     , orderManager_                      ( *this )
@@ -97,11 +97,11 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate& parent, xml::xistream& xis )
-    : pType_                             ( &type )
+    : MIL_Entity_ABC                     ( type.GetName(), xis ) 
+    , pType_                             ( &type )
     , nID_                               ( nID )
     , pParentFormation_                  ( 0 )
     , pParentAutomate_                   ( &parent )
-    , strName_                           ( type.GetName() )
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
     , orderManager_                      ( *this )
@@ -128,11 +128,11 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate
 // Created: JVT 2005-03-15
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate()
-    : pType_                             ( 0 )
+    : MIL_Entity_ABC                     ( "" ) 
+    , pType_                             ( 0 )
     , nID_                               ( 0 )
     , pParentFormation_                  ( 0 )
     , pParentAutomate_                   ( 0 )
-    , strName_                           ()
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
     , orderManager_                      ( *this )
@@ -237,7 +237,8 @@ namespace boost
 // -----------------------------------------------------------------------------
 void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pTC2_
+    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this )  
+         >> pTC2_
          >> pNominalTC2_;
 
     uint nTypeID;
@@ -248,7 +249,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
     file >> const_cast< uint& >( nID_ )
          >> pParentFormation_
          >> pParentAutomate_
-         >> strName_
          >> bEngaged_
          >> pKnowledgeGroup_
          >> pPionPC_
@@ -262,7 +262,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
          >> pKnowledgeBlackBoard_
          >> const_cast< MIL_Army*& >( pArmySurrenderedTo_ )
          >> nTickRcDotationSupplyQuerySent_;
-    { DEC_RolePion_Decision         * pRole; file >> pRole; RegisterRole( pRole ); }
+    { DEC_AutomateDecision         * pRole; file >> pRole; RegisterRole( pRole ); }
 }
 
 // -----------------------------------------------------------------------------
@@ -273,13 +273,13 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     assert( pType_ );
     unsigned type = pType_->GetID();
-    file << pTC2_
+    file << boost::serialization::base_object< MIL_Entity_ABC >( *this ) 
+         << pTC2_
          << pNominalTC2_
          << type
          << const_cast< uint& >( nID_ )
          << pParentFormation_
          << pParentAutomate_
-         << strName_
          << bEngaged_
          << pKnowledgeGroup_
          << pPionPC_
@@ -303,8 +303,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 void MIL_Automate::Initialize( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ )
-        >> xml::optional() >> xml::attribute( "name"   , strName_ );
+    xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ ); 
 
     uint nKnowledgeGroup;
     xis >> xml::attribute( "knowledge-group", nKnowledgeGroup );
@@ -409,12 +408,14 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     assert( pType_ );
     assert( pKnowledgeGroup_ );
 
-    xos << xml::start( "automat" )
-            << xml::attribute( "id", nID_ )
-            << xml::attribute( "name", strName_ )
-            << xml::attribute( "engaged", bEngaged_ )
-            << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetID() )
-            << xml::attribute( "type", pType_->GetName() );
+    xos << xml::start( "automat" ); 
+    
+    MIL_Entity_ABC::WriteODB( xos ) ;  
+    
+    xos << xml::attribute( "id", nID_ )
+        << xml::attribute( "engaged", bEngaged_ )
+        << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetID() )
+        << xml::attribute( "type", pType_->GetName() );
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).WriteODB( xos );
@@ -862,7 +863,7 @@ void MIL_Automate::SendCreation() const
     asn().type_automate           = pType_->GetID();
     asn().oid_camp                = GetArmy().GetID();
     asn().oid_groupe_connaissance = GetKnowledgeGroup().GetID();
-    asn().nom                     = strName_.c_str();
+    asn().nom                     = GetName().c_str();
 
     assert( pParentAutomate_ || pParentFormation_ );
     if( pParentAutomate_ )

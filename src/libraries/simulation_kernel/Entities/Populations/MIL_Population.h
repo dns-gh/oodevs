@@ -55,7 +55,6 @@ public:
     //@{
           uint                        GetID                () const;
     const MIL_PopulationType&         GetType              () const;
-    const std::string&                GetName              () const;
     const DEC_PopulationDecision&     GetDecision          () const;
           DEC_PopulationDecision&     GetDecision          ();
     const MIL_PopulationOrderManager& GetOrderManager      () const;
@@ -206,7 +205,6 @@ private:
     const MIL_PopulationType*        pType_;
     const uint                       nID_;
           MIL_Army*                  pArmy_;
-          std::string                strName_;
     const MIL_PopulationAttitude*    pDefaultAttitude_;
           MT_Float                   rPeopleCount_;
           sPeopleCounter*            pPeopleCounter_;

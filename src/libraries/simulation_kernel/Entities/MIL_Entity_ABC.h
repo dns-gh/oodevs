@@ -12,6 +12,12 @@
 
 #include "MT_Tools/MT_RoleContainer.h"
 
+namespace xml
+{
+    class xistream ; 
+    class xostream ; 
+}
+
 // =============================================================================
 /** @class  MIL_Entity_ABC
     @brief  MIL_Entity_ABC
@@ -24,8 +30,26 @@ class MIL_Entity_ABC : public MT_RoleContainer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_Entity_ABC (); 
+    explicit MIL_Entity_ABC ( ) ; 
+    explicit MIL_Entity_ABC ( const std::string& name ) ; 
+    explicit MIL_Entity_ABC ( const std::string& name, xml::xistream& xis ); 
     virtual ~MIL_Entity_ABC ();
+    //@}
+
+    //! @name Accessors
+    //@{
+    const std::string& GetName() const;
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive >
+    void serialize( Archive&, const uint );
+    //@}
+
+    //! @name ODB 
+    //@{
+    void WriteODB( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -35,6 +59,13 @@ private:
     MIL_Entity_ABC& operator=( const MIL_Entity_ABC& ); //!< Assignment operator
     //@}
 
+    //! @name data Members
+    //@{
+    std::string strName_; 
+    //@}
+
 };
+
+#include "MIL_Entity_ABC.inl" 
 
 #endif // __MIL_Entity_ABC_h_

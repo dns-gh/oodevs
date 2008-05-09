@@ -36,12 +36,6 @@ class DEC_RolePion_Decision : public DEC_Decision_ABC
     MT_COPYNOTALLOWED( DEC_RolePion_Decision )
 
 public:
-    //! @name Types
-    //@{
-    typedef DEC_RolePion_Decision RoleInterface;
-    //@}
-
-public:
              DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentPion& pion );
              DEC_RolePion_Decision();
     virtual ~DEC_RolePion_Decision();
