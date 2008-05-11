@@ -12,7 +12,7 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
-class MIL_Entity_ABC ; 
+class MIL_Entity_ABC;
 
 // =============================================================================
 /** @class  DEC_Decision_ABC
@@ -24,13 +24,16 @@ class DEC_Decision_ABC : public MT_Role_ABC
 {
 
 public:
+    //! @name Types
+    //@{
+    typedef DEC_Decision_ABC RoleInterface;
+    //@}
 
-    typedef DEC_Decision_ABC RoleInterface; 
-
+public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Decision_ABC( MIL_Entity_ABC& entity );
-             DEC_Decision_ABC(); 
+    explicit DEC_Decision_ABC( MIL_Entity_ABC& entity );
+             DEC_Decision_ABC();
     virtual ~DEC_Decision_ABC();
     //@}
 
@@ -39,16 +42,6 @@ private:
     //@{
     DEC_Decision_ABC( const DEC_Decision_ABC& );            //!< Copy constructor
     DEC_Decision_ABC& operator=( const DEC_Decision_ABC& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-
-    //! @name Member data
-    //@{
     //@}
 };
 

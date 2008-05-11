@@ -9,15 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Decision_ABC.h"
-
-#include "Entities/MIL_Entity_ABC.h" 
+#include "Entities/MIL_Entity_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision_ABC constructor
 // Created: RDS 2008-04-30
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC::DEC_Decision_ABC( MIL_Entity_ABC& entity )
-    : MT_Role_ABC( entity ) 
+    : MT_Role_ABC( entity )
 {
     // NOTHING
 }
@@ -27,7 +26,6 @@ DEC_Decision_ABC::DEC_Decision_ABC( MIL_Entity_ABC& entity )
 // Created: RDS 2008-05-05
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC::DEC_Decision_ABC()
-    : MT_Role_ABC( )
 {
     // NOTHING
 }

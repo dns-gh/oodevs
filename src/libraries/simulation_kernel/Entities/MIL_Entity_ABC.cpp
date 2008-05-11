@@ -9,16 +9,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Entity_ABC.h"
-
-#include "xeumeuleu/xml.h" 
-
+#include "xeumeuleu/xml.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Entity_ABC constructor
 // Created: RDS 2008-05-09
 // -----------------------------------------------------------------------------
-MIL_Entity_ABC::MIL_Entity_ABC( )
-    : strName_ ( ) 
+MIL_Entity_ABC::MIL_Entity_ABC()
 {
     // NOTHING
 }
@@ -28,18 +25,17 @@ MIL_Entity_ABC::MIL_Entity_ABC( )
 // Created: RDS 2008-05-09
 // -----------------------------------------------------------------------------
 MIL_Entity_ABC::MIL_Entity_ABC( const std::string& name )
-    : strName_ ( name ) 
+    : strName_( name )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Entity_ABC constructor
 // Created: RDS 2008-05-05
 // -----------------------------------------------------------------------------
-MIL_Entity_ABC::MIL_Entity_ABC ( const std::string& name, xml::xistream& xis ) 
-    : strName_ ( name ) 
+MIL_Entity_ABC::MIL_Entity_ABC( const std::string& name, xml::xistream& xis )
+    : strName_( name )
 {
     xis >> xml::optional() >> xml::attribute( "name", strName_ );
 }
@@ -63,7 +59,7 @@ MIL_Entity_ABC::~MIL_Entity_ABC()
 // -----------------------------------------------------------------------------
 const std::string& MIL_Entity_ABC::GetName() const
 {
-    return strName_ ; 
+    return strName_;
 }
 
 // =============================================================================
@@ -76,7 +72,5 @@ const std::string& MIL_Entity_ABC::GetName() const
 // -----------------------------------------------------------------------------
 void MIL_Entity_ABC::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "name", strName_ ); 
+    xos << xml::attribute( "name", strName_ );
 }
-
-
