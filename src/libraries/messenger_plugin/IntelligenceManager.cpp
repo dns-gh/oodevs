@@ -47,7 +47,6 @@ void IntelligenceManager::ReadIntelligence(xml::xistream& xis, const ASN1T_Forma
     intelligences_[intelligence->GetID()] = intelligence ;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: IntelligenceManager::Write
 // Created: RDS 2008-04-09
@@ -96,7 +95,6 @@ void IntelligenceManager::OnReceive( dispatcher::ClientPublisher_ABC& publisher,
         intelligence->SendUpdate(clients);
     }
     ack.Send(publisher);
-
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +116,6 @@ void IntelligenceManager::OnReceive( dispatcher::ClientPublisher_ABC& publisher,
     }
     ack.Send(publisher);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: IntelligenceManager::SendStateToNewClient

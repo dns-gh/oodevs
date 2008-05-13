@@ -139,7 +139,6 @@ void TacticalLineManager::OnReceiveLimit( dispatcher::ClientPublisher_ABC& publi
         ack() = EnumInfoContextErrorCode::error_invalid_id;
     }
     ack.Send(publisher);
-
 }
 
 // -----------------------------------------------------------------------------

@@ -120,7 +120,6 @@ Intelligence::Intelligence( unsigned int id, xml::xistream& xis, const ASN1T_For
     ReadPosition(xis,converter);
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Intelligence destructor
 // Created: SBO 2007-10-22
@@ -218,7 +217,6 @@ void Intelligence::ReadPosition( xml::xistream& xis, const kernel::CoordinateCon
     position_.latitude = pos.Y();
     position_.longitude = pos.X();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Intelligence::Write

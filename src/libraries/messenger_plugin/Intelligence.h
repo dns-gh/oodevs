@@ -68,9 +68,7 @@ public:
 
     //! @name xml read / write 
     //@{
-            void ReadPosition ( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter ) ;  
-    virtual void Write        ( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
-            void WritePosition( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
+    virtual void Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
     //@}
 
 
@@ -79,6 +77,12 @@ private:
     //@{
     Intelligence( const Intelligence& );            //!< Copy constructor
     Intelligence& operator=( const Intelligence& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadPosition ( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter ) ;  
+    void WritePosition( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
     //@}
 
 private:

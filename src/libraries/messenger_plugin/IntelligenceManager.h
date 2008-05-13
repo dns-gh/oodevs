@@ -63,8 +63,8 @@ public:
 
     //! @name xml read / write
     //@{
-            void ReadIntelligence(xml::xistream& xis, const ASN1T_Formation& formation);
-    virtual void Write           (xml::xostream& xos) ;
+    void ReadIntelligence( xml::xistream& xis, const ASN1T_Formation& formation );
+    void Write           ( xml::xostream& xos );
     //@}
 
     typedef std::map< unsigned int , std::set< Entity_ABC* > > T_EntityCollectorMap ;
@@ -84,7 +84,6 @@ private:
     typedef T_IntelligenceMap::iterator             IT_IntelligenceMap;
     typedef T_IntelligenceMap::const_iterator       CIT_IntelligenceMap;
     //@}
-
 
     //! @name Members
     //@{

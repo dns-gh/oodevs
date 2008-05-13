@@ -56,6 +56,15 @@ void FogLayer::NotifyDeleted( const kernel::Agent_ABC& entity )
 
 // -----------------------------------------------------------------------------
 // Name: FogLayer::Paint
+// Created: AGE 2008-05-13
+// -----------------------------------------------------------------------------
+void FogLayer::Paint( const ViewFrustum& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: FogLayer::Paint
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
 void FogLayer::Paint( const geometry::Rectangle2f& rect )
