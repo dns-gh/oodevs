@@ -117,7 +117,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
     {
         PHY_Composante_ABC& compTarget       = **itCompTarget;
         const PHY_ComposantePion* pBestFirer       = 0;
-        PHY_Weapon*               pBestFirerWeapon = 0;
+        PHY_Weapon*         pBestFirerWeapon = 0;
 
         firerWeapons.ChooseBestWeapon( target, compTarget, pBestFirer, pBestFirerWeapon );
         if( !pBestFirer )
@@ -241,7 +241,7 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_ControlZone& zone, PHY_Fir
     {
         MIL_Agent_ABC&      target       = *itTarget->first;
         PHY_Composante_ABC& compTarget   = *itTarget->second;
-        PHY_ComposantePion* pCompFirer   = 0;
+        const PHY_ComposantePion* pCompFirer   = 0;
         PHY_Weapon*         pFirerWeapon = 0;
 
         firerWeapons.ChooseRandomWeapon( target, compTarget, pCompFirer, pFirerWeapon );
@@ -298,7 +298,7 @@ int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_Fi
         pFireResult = new PHY_FireResults_Pion( *pPion_, *pTarget );
 
     // Tir
-    PHY_ComposantePion* pFirer       = 0;
+    const PHY_ComposantePion* pFirer       = 0;
     PHY_Weapon*         pFirerWeapon = 0;
     while( firerWeapons.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) )
     {

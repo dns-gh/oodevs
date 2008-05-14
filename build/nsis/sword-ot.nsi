@@ -128,6 +128,15 @@ Section "!Basic"
 	WriteRegStr HKCR "Officer Training Package\shell" "" "open"
 	WriteRegStr HKCR "Officer Training Package\DefaultIcon" "" "$INSTDIR\applications\sword-ot.ico"
 	WriteRegStr HKCR "Officer Training Package\shell\open\command" "" '$INSTDIR\applications\frontend_app.exe --install="%1"'
+	
+	; vcredist
+	SetOutPath $TEMP
+    File /oname=vcredist_x86_rtm.exe "${OUTDIR}\vcredist_x86\rtm\vcredist_x86.exe"
+    ExecWait '"$TEMP\vcredist_x86_rtm.exe" /q:a /c:"VCREDI~1.EXE /q:a /c:""msiexec /i vcredist.msi /q"" "'
+    Delete "$TEMP\vcredist_x86_rtm.exe"
+    File /oname=vcredist_x86_sp1.exe "${OUTDIR}\vcredist_x86\sp1\vcredist_x86.exe"
+    ExecWait '"$TEMP\vcredist_x86_sp1.exe" /q:a /c:"VCREDI~3.EXE /q:a /c:""msiexec /i vcredist.msi /q"" "'
+    Delete "$TEMP\vcredist_x86_sp1.exe"
 SectionEnd
 
 Section "Terrains"

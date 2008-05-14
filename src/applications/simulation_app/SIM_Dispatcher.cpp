@@ -36,7 +36,7 @@ SIM_Dispatcher::SIM_Dispatcher( SIM_Config& config )
     dispatcher_.RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
     dispatcher_.RegisterPluginFactory( *new gearth::GearthPluginFactory() );
 #endif
-//    dispatcher_.RegisterPluginFactory( *new bml::BmlPluginFactory() );
+    dispatcher_.RegisterPluginFactory( *new bml::BmlPluginFactory() );
     dispatcher_.CreatePlugins();
 
     Thread::Start();

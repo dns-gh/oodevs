@@ -81,7 +81,7 @@ unsigned int Population::GetLivingHumans() const
 // -----------------------------------------------------------------------------
 unsigned int Population::GetDeadHumans() const
 {
-    return 0.;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

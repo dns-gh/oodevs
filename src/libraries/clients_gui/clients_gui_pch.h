@@ -10,9 +10,7 @@
 #ifndef __clients_gui_pch_h_
 #define __clients_gui_pch_h_
 
-
-#pragma warning( disable : 4290 )
-#pragma warning( disable : 4702 )
+#pragma warning( disable : 4231 4290 4702 )
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -22,64 +20,71 @@
 #undef GetObject
 #undef GetMessage
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qlistbox.h>
-#include <qpopupmenu.h>
-#include <qcursor.h>
-#include <qgroupbox.h>
-#include <qframe.h>
-#include <qspinbox.h>
+#pragma warning( push, 0 )
 #include <qaction.h>
-#include <qgl.h>
-#include <qradiobutton.h>
-#include <qmainwindow.h>
+#include <qbitmap.h>
+#include <qbuttongroup.h>
+#include <qcanvas.h>
+#include <qcheckbox.h>
+#include <qcolordialog.h>
+#include <qcombobox.h>
+#include <qcstring.h>
+#include <qcursor.h>
+#include <qdatetimeedit.h>
+#include <qdial.h>
 #include <qdialog.h>
-#include <qtoolbar.h>
-#include <qsignalmapper.h> 
-#include <qfiledialog.h>
-#include <qmessagebox.h>
-#include <qtextedit.h>
-#include <qtimer.h>
-#include <qstatusbar.h>
-#include <qsettings.h>
-#include <qheader.h>
+#include <qdict.h>
+#include <qdockwindow.h>
+#include <qdragobject.h> 
 #include <qfile.h>
-#include <qobject.h>
-#include <qlistview.h>
+#include <qfiledialog.h>
 #include <qfont.h>
 #include <qfontmetrics.h>
-#include <qsplashscreen.h>
-#include <qtabwidget.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qwidgetstack.h>
-#include <qvbox.h>
-#include <qdialog.h>
-#include <qtextedit.h>
-#include <qheader.h>
-#include <qdial.h>
+#include <qframe.h>
+#include <qgl.h>
+#include <qgroupbox.h>
 #include <qhbox.h>
+#include <qheader.h>
+#include <qiconset.h>
+#include <qimage.h>
+#include <qinputdialog.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qlineedit.h>
+#include <qlistbox.h>
+#include <qlistview.h>
+#include <qmainwindow.h>
+#include <qmessagebox.h>
+#include <qobject.h>
+#include <qpainter.h>
+#include <qpixmap.h>
+#include <qpopupmenu.h>
+#include <qprocess.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
+#include <qregexp.h>
+#include <qsettings.h>
+#include <qsignalmapper.h> 
+#include <qsimplerichtext.h>
+#include <qslider.h>
+#include <qsound.h>
+#include <qspinbox.h>
+#include <qsplashscreen.h>
+#include <qstatusbar.h>
+#include <qstring.h>
+#include <qtable.h>
+#include <qtabwidget.h>
+#include <qtextedit.h>
+#include <qtimer.h>
+#include <qtoolbar.h>
+#include <qtoolbox.h>
 #include <qtoolbutton.h>
 #include <qtooltip.h>
-#include <qdragobject.h> 
-#include <qcheckbox.h>
-#include <qsimplerichtext.h>
-#include <qhbox.h>
-#include <qdial.h>
-#include <qgroupbox.h>
-#include <qslider.h>
-#include <qdatetimeedit.h>
-#include <qbuttongroup.h>
-#include <qstring.h>
-#include <qiconset.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qmainwindow.h>
-#include <qdockwindow.h>
-#include <qsound.h>
+#include <qvalidator.h>
+#include <qvbox.h>
+#include <qvbuttongroup.h>
+#include <qwidgetstack.h>
+#pragma warning( pop )
 
 #include <stdexcept>
 #include <vector>
@@ -90,6 +95,7 @@
 #include <cassert>
 
 #include "geometry/Types.h"
+
 typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;

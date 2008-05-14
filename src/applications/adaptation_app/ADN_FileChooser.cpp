@@ -121,7 +121,7 @@ ADN_FileChooser::~ADN_FileChooser()
 inline
 std::string GetPartPath(const std::string szWorking,const std::string& full)
 {
-    if (strcmpi(szWorking.c_str(),full.substr(0,szWorking.size()).c_str()))
+    if (_strcmpi(szWorking.c_str(),full.substr(0,szWorking.size()).c_str()))
         return std::string();
     else
         return full.substr(szWorking.size(),full.size()-szWorking.size());

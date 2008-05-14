@@ -22,9 +22,12 @@
 #undef GetObject
 #undef GetMessage
 
+#pragma warning( push )
+#pragma warning( disable : 4996 ) // $$$$ SBO 2008-05-13: vc80 deprecation
 #include <qstring.h>
 #include <qgl.h>
 #include <qdatetime.h>
+#pragma warning( pop )
 
 #include <stdexcept>
 #include <vector>

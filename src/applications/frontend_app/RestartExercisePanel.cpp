@@ -114,7 +114,7 @@ void RestartExercisePanel::SessionSelected()
 void RestartExercisePanel::CheckpointSelected()
 {
     // $$$$ AGE 2007-10-08: read meta data
-    const bool selected = checkpointList_->selectedItem();
+    const bool selected = checkpointList_->selectedItem() != 0;
     okay_->setEnabled( selected );
     if( selected )
         bubble_->ShowInfo( tr( "Restart game: %1" ).arg( checkpointList_->selectedItem()->text() ) ); // $$$$ SBO 2007-10-05: TODO

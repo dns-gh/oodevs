@@ -89,7 +89,7 @@ bool LinkInterpreter_ABC::InterpreteId( const QUrl& url )
     const Entity_ABC* entity = entites_[ classId ][ id ];
     if( entity )
         entity->Activate( actions_ );
-    return entity;
+    return entity != 0;
 }
 
 // -----------------------------------------------------------------------------

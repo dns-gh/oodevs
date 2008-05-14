@@ -72,7 +72,7 @@ private:
     void LoadIndices();
     void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback );
-    void LoadSimToClientMessage( const unsigned char*& input, MessageHandler_ABC& handler );
+    void LoadSimToClientMessage( unsigned char*& input, MessageHandler_ABC& handler );
     //@}
 
 private:

@@ -10,6 +10,8 @@
 #ifndef __tools_pch_h_
 #define __tools_pch_h_
 
+#pragma warning( disable : 4996 ) // $$$$ SBO 2008-05-13: vc80 deprecation
+
 #include <string>
 #include "asio.h"
 

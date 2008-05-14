@@ -49,7 +49,7 @@ namespace
         QListView* list = new QListView( parent );
         list->addColumn( "" );
         list->header()->hide();
-        list->setResizeMode( QListView::ResizeMode::LastColumn );
+        list->setResizeMode( QListView::LastColumn );
         list->setAllColumnsShowFocus( true );
         return list;
     }

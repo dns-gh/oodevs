@@ -349,7 +349,7 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
             return false;
     }
 
-    for( it = parts.begin(); it != parts.end(); ++it )
+    for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
     {
         uint nOut = (uint)roleDotations.ConsumeDotation( *it->first, it->second );
         assert( nOut == it->second );

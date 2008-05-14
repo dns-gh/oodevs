@@ -18,7 +18,8 @@ using namespace bml;
 // Name: ExtensionFactory constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory()
+ExtensionFactory::ExtensionFactory( Publisher& publisher )
+    : publisher_( publisher )
 {
     // NOTHING
 }
@@ -38,5 +39,5 @@ ExtensionFactory::~ExtensionFactory()
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
-    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity ) );
+    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity, publisher_ ) );
 }

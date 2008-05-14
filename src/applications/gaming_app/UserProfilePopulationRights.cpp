@@ -11,6 +11,8 @@
 #include "UserProfilePopulationRights.h"
 #include "moc_UserProfilePopulationRights.cpp"
 
+#pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
+
 // -----------------------------------------------------------------------------
 // Name: UserProfilePopulationRights constructor
 // Created: SBO 2007-01-18

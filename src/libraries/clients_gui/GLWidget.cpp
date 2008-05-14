@@ -215,7 +215,7 @@ unsigned int GlWidget::GenerateCircle()
     const float twoPi = 2.f * std::acos( -1.f );
     unsigned int id = glGenLists(1);
     glNewList( id, GL_COMPILE);
-        for( float angle = 0; angle < twoPi; angle += twoPi / 40.f + 1e-7 )
+        for( float angle = 0; angle < twoPi; angle += twoPi / 40.f + 1e-7f )
             glVertex2f( std::cos( angle ), std::sin( angle ) );
         glVertex2f( 1.f, 0.f );
     glEndList();
@@ -348,12 +348,12 @@ void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f
     float maxAngle = std::acos( v2.X() ) * ( v2.Y() > 0 ? 1.f : -1.f );
     if( minAngle > maxAngle )
     {
-        static const float twoPi = 2.0 * std::acos( -1.0 );
+        static const float twoPi = 2.f * std::acos( -1.f );
         maxAngle = maxAngle + twoPi;
     }
 
 
-    const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6;
+    const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6f;
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );

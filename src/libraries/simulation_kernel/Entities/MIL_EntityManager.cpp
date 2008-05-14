@@ -418,7 +418,7 @@ void MIL_EntityManager::InitializeDiplomacy( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing diplomacy" );
 
     xis >> xml::start( "diplomacies" )
-            >> xml::list( "side", *this, MIL_EntityManager::ReadDiplomacy )
+            >> xml::list( "side", *this, &MIL_EntityManager::ReadDiplomacy )
         >> xml::end();
 }
 
@@ -810,7 +810,7 @@ void MIL_EntityManager::UpdateStates()
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         itPopulation->second->UpdateState();
 
-    for( itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         itPion->second->UpdateNetwork();
     for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
         itAutomate->second->UpdateNetwork();

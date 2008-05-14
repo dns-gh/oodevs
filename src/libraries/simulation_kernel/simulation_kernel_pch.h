@@ -12,8 +12,9 @@
 #ifndef __MIL_pch_h_
 #define __MIL_pch_h_
 
-#pragma warning( push )
+#pragma warning( disable : 4996 ) // $$$$ SBO 2008-05-13: vc80 deprecation
 
+#pragma warning( push )
 #pragma warning( disable : 4702 )
 #pragma warning( disable : 4511 4512 4100 4244 )
 
@@ -66,12 +67,15 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_Polygon.h"
 
+#pragma warning( push )
+#pragma warning( disable : 4005 ) // $$$$ SBO 2008-05-13: "macro redefinition"
 //$$$ DEGUEU
 #ifdef  NDEBUG
 #   define assert( exp ) ( static_cast< void >( exp ) )
 #else
 #   define assert( exp ) ( (exp) || MT_Assert( #exp, __FILE__, __LINE__ ) )
 #endif  // NDEBUG
+#pragma warning( pop )
 
 #endif // __MIL_pch_h_
 

@@ -21,8 +21,13 @@
 #undef GetObject
 #undef GetMessage
 
-#include <qstring.h>
+#pragma warning( push, 0 )
+#include <qdatetime.h>
 #include <qgl.h>
+#include <qregexp.h>
+#include <qstring.h>
+#pragma warning( pop )
+
 #include <string>
 #include <map>
 #include <vector>

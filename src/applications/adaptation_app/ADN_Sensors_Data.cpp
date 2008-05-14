@@ -866,7 +866,7 @@ void ADN_Sensors_Data::SensorInfos::ReadObjectDetection( xml::xistream& input )
 void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ )
-          >> xml::list( *this, ADN_Sensors_Data::SensorInfos::ReadItem );
+          >> xml::list( *this, &ADN_Sensors_Data::SensorInfos::ReadItem );
 }
 
 // -----------------------------------------------------------------------------

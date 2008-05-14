@@ -14,6 +14,8 @@
 #include "clients_gui/ValuedDragObject.h"
 #include "preparation/Tools.h"
 
+#pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
+
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

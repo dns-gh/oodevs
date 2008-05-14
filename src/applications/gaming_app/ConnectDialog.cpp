@@ -109,10 +109,12 @@ void ConnectDialog::LoadDefaultConfig()
     if( list.empty() )
         list.push_back( "localhost" );
     const QString currentItem = nIndex < int( list.count() ) ? list[ nIndex ] : list[0];
-    QStringList::iterator newEnd = std::unique( list.begin(), list.end() );
-    list.erase( newEnd, list.end() );
-
-    pHostNameComboBox_->insertStringList( list );
+    list.sort();
+    QStringList uniqList;
+    for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it )
+        if( *it != uniqList.back() )
+            uniqList.append( *it );
+    pHostNameComboBox_->insertStringList( uniqList );
     pHostNameComboBox_->setCurrentText( currentItem );
 }
 

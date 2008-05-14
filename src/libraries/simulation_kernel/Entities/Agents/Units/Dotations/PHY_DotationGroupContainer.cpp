@@ -458,7 +458,7 @@ void PHY_DotationGroupContainer::SendFullState( NET_ASN_MsgUnitAttributes& asn )
     ASN1T_ResourceDotations* pResources = new ASN1T_ResourceDotations[ nNbrDotations ];
     uint i = 0;
 
-    for( itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
+    for( CIT_DotationGroupMap itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
     {
         const PHY_DotationGroup::T_DotationMap& dotations = itDotationGroup->second->GetDotations();
         for( PHY_DotationGroup::CIT_DotationMap itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )

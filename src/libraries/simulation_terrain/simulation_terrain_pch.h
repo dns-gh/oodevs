@@ -19,16 +19,12 @@
 #ifndef __TER_pch_h_
 #define __TER_pch_h_
 
-//#pragma warning( disable : 4290 )
-//#pragma warning( disable : 4702 )
-
-#   include <string>
-#   include <vector>
-#   include <cassert>
+#include <string>
+#include <vector>
+#include <cassert>
 
 #pragma warning( push )
-
-#pragma warning( disable : 4511 4512 4100 4244 )
+#pragma warning( disable : 4511 4512 4100 4244 4996 )
 
 #include <boost/pool/pool.hpp>
 #undef min
@@ -36,18 +32,13 @@
 
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
-
 #include <boost/serialization/serialization.hpp>
-
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/list.hpp>
 #include <boost/serialization/set.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
-
-
 #pragma warning( pop )
-
 
 #include "TER.h"
 

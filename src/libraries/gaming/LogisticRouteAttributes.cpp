@@ -49,7 +49,7 @@ void LogisticRouteAttributes::UpdateData( const T& message )
         nLogRouteLength_    = message.specific_attributes.u.logistic_route->length;
         nLogRouteWidth_     = message.specific_attributes.u.logistic_route->width;
         nLogRouteMaxWeight_ = message.specific_attributes.u.logistic_route->max_weight;
-        bLogRouteEquipped_  = message.specific_attributes.u.logistic_route->equipped;
+        bLogRouteEquipped_  = message.specific_attributes.u.logistic_route->equipped != 0;
         controller_.Update( *(LogisticRouteAttributes_ABC*)this );
     }
 }

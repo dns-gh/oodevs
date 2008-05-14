@@ -9,8 +9,90 @@
 //
 //*****************************************************************************
 
+#pragma warning( disable : 4231 )
+
 #ifndef __ADN_APPLICATION_PCH_H_
 #define __ADN_APPLICATION_PCH_H_
+
+#pragma warning( push, 0 )
+#include <qaction.h>
+#include <qapp.h>
+#include <qapplication.h>
+#include <qbrush.h>
+#include <qbuttongroup.h>
+#include <qcheckbox.h>
+#include <qcolor.h>
+#include <qcombo.h>
+#include <qcombobox.h>
+#include <qcstring.h>
+#include <qcursor.h>
+#include <qdialog.h>
+#include <qdict.h>
+#include <qdragobject.h>
+#include <qeventloop.h>
+#include <qfiledialog.h>
+#include <qfont.h>
+#include <qfontmetrics.h>
+#include <qframe.h>
+#include <qgrid.h>
+#include <qgroupbox.h>
+#include <qhbox.h>
+#include <qheader.h>
+#include <qhgroupbox.h>
+#include <qiconset.h>
+#include <qimage.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qlineedit.h>
+#include <qlistbox.h>
+#include <qlistview.h>
+#include <qmainwindow.h>
+#include <qmap.h>
+#include <qmenubar.h>
+#include <qmessagebox.h>
+#include <qmime.h>
+#include <qobject.h>
+#include <qpaintdevicemetrics.h>
+#include <qpainter.h>
+#include <qpalette.h>
+#include <qpen.h>
+#include <qpixmap.h>
+#include <qpoint.h>
+#include <qpointarray.h>
+#include <qpopmenu.h>
+#include <qpopupmenu.h>
+#include <qprinter.h>
+#include <qprocess.h>
+#include <qprogressbar.h>
+#include <qptrlist.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
+#include <qrect.h>
+#include <qsettings.h>
+#include <qsplashscreen.h>
+#include <qstatusbar.h>
+#include <qstring.h>
+#include <qstringlist.h>
+#include <qstyle.h>
+#include <qtable.h>
+#include <qtabwidget.h>
+#include <qtextcodec.h>
+#include <qtextedit.h>
+#include <qtextview.h>
+#include <qtimer.h>
+#include <qtoolbar.h>
+#include <qtoolbutton.h>
+#include <qtooltip.h>
+#include <qtranslator.h>
+#include <qvalidator.h>
+#include <qvalidator.h> 
+#include <qvaluelist.h>
+#include <qvbox.h>
+#include <qvgroupbox.h>
+#include <qwhatsthis.h>
+#include <qwidget.h>
+#include <qwizard.h>
+#pragma warning( pop )
 
 #include "MT/MT_Tools/MT_Tools_lib.h"
 #include "MT/MT_IO/MT_IO_lib.h"

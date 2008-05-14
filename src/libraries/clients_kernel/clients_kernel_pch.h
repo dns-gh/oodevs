@@ -10,14 +10,24 @@
 #ifndef __clients_kernel_pch_h_
 #define __clients_kernel_pch_h_
 
-#pragma warning( push )
-#pragma warning( disable : 4290 4702 )
+#pragma warning( push, 0 )
+#include <qapplication.h>
+#include <qdatetime.h>
+#include <qfont.h>
+#include <qgl.h>
+#include <qpopupmenu.h>
 #include <qstring.h>
+#include <qstringlist.h>
+#include <qwidget.h>
+#pragma warning( pop )
+
 #include <string>
 #include <vector>
 #include <map>
 #include <set>
-#pragma warning( pop )
+
+#undef max
+#undef min
 
 #include "Types.h"
 

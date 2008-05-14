@@ -141,7 +141,7 @@ InfoDialog< Extension >::~InfoDialog()
 template< typename Extension >
 bool InfoDialog< Extension >::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
-    return element.Retrieve< Extension >();
+    return element.Retrieve< Extension >() != 0;
 }
 
 // -----------------------------------------------------------------------------

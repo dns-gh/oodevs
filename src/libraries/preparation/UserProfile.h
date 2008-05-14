@@ -84,7 +84,7 @@ private:
         explicit ExistenceChecker( const Resolver& resolver ) : resolver_( &resolver ) {}
         virtual bool operator()( unsigned long id ) const
         {
-            return resolver_->Find( id );
+            return resolver_->Find( id ) != 0;
         }
         const Resolver* resolver_;
     };

@@ -82,7 +82,7 @@ void AgentTemplateElement::Serialize( xml::xostream& output )
 // -----------------------------------------------------------------------------
 bool AgentTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) const
 {
-    return dynamic_cast< const kernel::Automat_ABC* >( &superior );
+    return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
 }
 
 // -----------------------------------------------------------------------------

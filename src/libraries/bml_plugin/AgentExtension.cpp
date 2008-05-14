@@ -10,6 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "AgentExtension.h"
 #include "SerializationTools.h"
+#include "Publisher.h"
 #include "dispatcher/Agent.h"
 #include <xeumeuleu/xml.h>
 
@@ -19,8 +20,9 @@ using namespace bml;
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Agent& holder )
+AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher& publisher )
     : holder_( holder )
+    , publisher_( publisher )
 {
     // NOTHING
 }
@@ -52,8 +54,8 @@ void AgentExtension::UpdateWhere( const ASN1T_MsgUnitAttributes& )
 {
     xml::xostringstream xos;
     xos << xml::start( "NewWherePush" )
-            << xml::attribute( "xmlns:msdl", "http://netlab.gmu.edu/JBML/MSDL" ) // $$$$ SBO 2008-02-29: maybe not necessary
-            << xml::attribute( "xmlns:bml", "http://netlab.gmu.edu/JBML/BML" )  // $$$$ SBO 2008-02-29: maybe not necessary
+            << xml::attribute( "xmlns:msdl", "http://netlab.gmu.edu/JBML/MSDL" )
+            << xml::attribute( "xmlns:bml", "http://netlab.gmu.edu/JBML/BML" )
             << xml::start( "NewWhere" )
                 << xml::start( "RelocatedWho" )
                     << xml::content( "bml:OrgName", holder_.GetID() )
@@ -70,5 +72,5 @@ void AgentExtension::UpdateWhere( const ASN1T_MsgUnitAttributes& )
                 << xml::end()
             << xml::end()
         << xml::end();
-    // $$$$ SBO 2008-02-29: publisher_.Push( xos.str() ); or something
+    publisher_.BBSPush( "newWherePush", xos.str() );
 }

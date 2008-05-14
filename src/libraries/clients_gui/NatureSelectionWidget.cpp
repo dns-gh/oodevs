@@ -28,7 +28,7 @@ NatureSelectionWidget::NatureSelectionWidget( QWidget* parent, const std::string
     addColumn( "" );
     header()->hide();
     setRootIsDecorated( true );
-    setResizeMode( QListView::ResizeMode::LastColumn );
+    setResizeMode( QListView::LastColumn );
     xifstream xis( symbolFile );
     xis >> start( "app6" )
             >> start( "symbols" )

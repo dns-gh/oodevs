@@ -204,7 +204,7 @@ ADN_Reports_Data::ReportInfo* ADN_Reports_Data::ReportInfo::CreateCopy()
 void ADN_Reports_Data::ReportInfo::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "message", message_ )
-          >> xml::list( "parameter", *this, ADN_Reports_Data::ReportInfo::ReadParameter );
+          >> xml::list( "parameter", *this, &ADN_Reports_Data::ReportInfo::ReadParameter );
 }
 
 // -----------------------------------------------------------------------------

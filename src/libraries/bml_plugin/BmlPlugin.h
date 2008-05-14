@@ -26,6 +26,7 @@ namespace dispatcher
 namespace bml
 {
     class ExtensionFactory;
+    class Publisher;
 
 // =============================================================================
 /** @class  BmlPlugin
@@ -65,6 +66,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::Model& model_;
+    std::auto_ptr< Publisher > publisher_;
     std::auto_ptr< ExtensionFactory > factory_;
     //@}
 };

@@ -92,7 +92,7 @@ void InfoMissionsTab::NotifySelected( const kernel::Entity_ABC* entity )
             NotifyUpdated( *extension );
         else
             clear();
-        parent_->setTabEnabled( this, extension );
+        parent_->setTabEnabled( this, extension != 0 );
     }
 }
 

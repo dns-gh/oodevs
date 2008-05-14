@@ -10,8 +10,11 @@
 #ifndef __Workers_h_
 #define __Workers_h_
 
-#pragma warning ( disable : 4275 )
+#pragma warning( push )
+#pragma warning( disable : 4275 4244 )
 #include <boost/thread/mutex.hpp>
+#pragma warning( pop )
+
 #undef GetMessage
 namespace tools {
     namespace thread {

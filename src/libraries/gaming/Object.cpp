@@ -53,7 +53,7 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
         obstacleType_ = (E_ObstacleType)message.obstacle_type;
     
     if( message.m.reserved_obstacle_activatedPresent )
-        reservedObstacleActivated_ = message.reserved_obstacle_activated;
+        reservedObstacleActivated_ = message.reserved_obstacle_activated != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ QString Object::GetTypeName() const
 void Object::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
     if( message.m.reserved_obstacle_activatedPresent )
-        reservedObstacleActivated_ = message.reserved_obstacle_activated;
+        reservedObstacleActivated_ = message.reserved_obstacle_activated != 0;
 
     if( message.m.construction_dotation_nbrPresent )
         nDotationConstruction_ = message.construction_dotation_nbr;

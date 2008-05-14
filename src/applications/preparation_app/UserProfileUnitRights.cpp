@@ -12,6 +12,8 @@
 #include "moc_UserProfileUnitRights.cpp"
 #include "PreparationProfile.h"
 
+#pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
+
 using namespace gui;
 using namespace kernel;
 

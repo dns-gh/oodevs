@@ -59,7 +59,7 @@ void PopulationConcentrationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcen
     if( asnMsg.m.attitudePresent )
         eAttitude_ = ( E_PopulationAttitude )asnMsg.attitude;
     if( asnMsg.m.est_percuPresent )
-        bIsPerceived_ = ( bool )asnMsg.est_percu;
+        bIsPerceived_ = asnMsg.est_percu != 0;
     if( asnMsg.m.nb_humains_vivantsPresent )
         nNbrAliveHumans_ = ( uint )asnMsg.nb_humains_vivants;
     if( asnMsg.m.nb_humains_mortsPresent )

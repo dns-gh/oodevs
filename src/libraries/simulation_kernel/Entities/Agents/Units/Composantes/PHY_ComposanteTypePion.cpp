@@ -697,7 +697,7 @@ void PHY_ComposanteTypePion::InitializeLogisticSupply( xml::xistream& xis )
 {
     xis >> xml::optional()
             >> xml::start( "supply-functions" )
-                >> xml::list( "carrying", *this, PHY_ComposanteTypePion::ReadSupply )
+                >> xml::list( "carrying", *this, &PHY_ComposanteTypePion::ReadSupply )
             >> xml::end();
 }
 

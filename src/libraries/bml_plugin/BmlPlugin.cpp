@@ -10,6 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "BmlPlugin.h"
 #include "ExtensionFactory.h"
+#include "Publisher.h"
 #include "dispatcher/Model.h"
 
 using namespace bml;
@@ -20,7 +21,8 @@ using namespace bml;
 // -----------------------------------------------------------------------------
 BmlPlugin::BmlPlugin( dispatcher::Model& model, const dispatcher::Config& config, xml::xistream& xis )
     : model_( model )
-    , factory_( new ExtensionFactory() )
+    , publisher_( new Publisher( xis ) )
+    , factory_( new ExtensionFactory( *publisher_ ) )
 {
     model_.RegisterFactory( *factory_ );
 }

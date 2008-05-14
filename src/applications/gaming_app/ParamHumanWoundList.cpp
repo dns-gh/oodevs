@@ -53,7 +53,7 @@ void ParamHumanWoundList::BuildInterface( QWidget* parent )
     list_->addColumn( "" );
     list_->header()->hide();
     list_->setSorting( -1, true );
-    list_->setResizeMode( QListView::ResizeMode::LastColumn );
+    list_->setResizeMode( QListView::LastColumn );
     list_->setAllColumnsShowFocus( true );
 
     QVBox* buttonBox = new QVBox( hBox );

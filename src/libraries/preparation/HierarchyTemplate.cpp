@@ -57,7 +57,7 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& forma
     : name_( "" )
 {
     element_.reset( CreateElement( agents, formations, types, input ) );
-    input >> xml::list( "template", *this, HierarchyTemplate::ReadSubTemplate, agents, formations, types );
+    input >> xml::list( "template", *this, &HierarchyTemplate::ReadSubTemplate, agents, formations, types );
 }
 
 // -----------------------------------------------------------------------------

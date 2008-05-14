@@ -67,7 +67,7 @@ void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceHandlingUpdate&
     if( message.m.etatPresent )
         nState_ = E_LogMaintenanceHandlingStatus( message.etat );
     if( message.m.diagnostique_effectuePresent )
-        diagnosed_ = message.diagnostique_effectue;
+        diagnosed_ = message.diagnostique_effectue != 0;
 
     if( pPionLogHandling_ )
         pPionLogHandling_->Get< LogMaintenanceConsigns >().TerminateConsign( *this );

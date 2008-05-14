@@ -309,7 +309,7 @@ struct sCaseInsensitiveEqual : public std::binary_function< std::string, std::st
 {
     bool operator () ( const char* lhs, const char* rhs ) const
     {
-        return !::stricmp( lhs, rhs );
+        return !::_stricmp( lhs, rhs );
     }
 
     bool operator () ( const std::string& lhs, const std::string& rhs ) const
@@ -332,7 +332,7 @@ struct sCaseInsensitiveLess
 {
     bool operator () ( const char* lhs, const char* rhs ) const
     {
-        return ::stricmp( lhs, rhs ) < 0;
+        return ::_stricmp( lhs, rhs ) < 0;
     }
 
     bool operator () ( const std::string& lhs, const std::string& rhs ) const

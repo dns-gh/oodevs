@@ -224,7 +224,7 @@ bool NET_ASN_Tools::ReadPolygonList( const ASN1T_PolygonList& asn, T_Localisatio
     }
     
     localisationVector.clear(); localisationVector.reserve( asn.n );
-    for( i = 0; i < asn.n; ++i )
+    for( uint i = 0; i < asn.n; ++i )
     {
         TER_Localisation* pLocalisation = new TER_Localisation(); //$$$ RAM
         if( !ReadLocation( asn.elem[i], *pLocalisation ) )

@@ -48,7 +48,7 @@ void CrossingSiteAttributes::UpdateData( const T& message )
         width_ = message.specific_attributes.u.crossing_site->width;
         depth_ = message.specific_attributes.u.crossing_site->depth;
         speed_ = message.specific_attributes.u.crossing_site->flow_rate;
-        needsConstruction_ = message.specific_attributes.u.crossing_site->banks_require_fitting;
+        needsConstruction_ = message.specific_attributes.u.crossing_site->banks_require_fitting != 0;
         controller_.Update( *(CrossingSiteAttributes_ABC*)this );
     }
 }

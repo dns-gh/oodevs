@@ -30,7 +30,7 @@ namespace
         {
             if( intelligence.IsEnemy() && intelligence.IsInside( *boundaries_ ) )
             {
-                const unsigned int factor = (unsigned int)std::pow( 4, (unsigned int)intelligence.GetLevel() );
+                const unsigned int factor = (unsigned int)std::pow( 4.f, int( intelligence.GetLevel() ) );
                 count_ += factor;
                 if( intelligence.IsEmbarked() == loaded_ )
                     sum_ += factor;

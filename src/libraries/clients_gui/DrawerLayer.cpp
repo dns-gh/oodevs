@@ -189,7 +189,7 @@ bool DrawerLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& 
         cursors_->SelectContext( QCursor( Qt::SizeAllCursor ), true );
     }
     else
-        cursors_->SelectContext( QCursor( Qt::PointingHandCursor ), overlined_ );
+        cursors_->SelectContext( QCursor( Qt::PointingHandCursor ), overlined_ != 0 );
 
     return true;
 }

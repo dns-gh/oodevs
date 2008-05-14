@@ -38,7 +38,7 @@ StyleEditor::StyleEditor( const dispatcher::Config& config, const std::string& o
     xml::xifstream xis( config.BuildSessionChildFile( "kml-styles.xml" ) );    
     xis >> xml::start( "kml-styles" )
         >> xml::start( "icons" ) >> xml::attribute( "small", path_small_ ) >> xml::attribute( "large", path_large_ )
-                >> xml::list( "icon", *this, ReadStyle )
+                >> xml::list( "icon", *this, &StyleEditor::ReadStyle )
             >> xml::end()
         >> xml::end();
 

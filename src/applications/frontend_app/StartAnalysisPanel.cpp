@@ -96,7 +96,7 @@ void StartAnalysisPanel::ExerciseSelected()
 // -----------------------------------------------------------------------------
 void StartAnalysisPanel::ReplaySelected()
 {
-    const bool selected = replays_->selectedItem();
+    const bool selected = replays_->selectedItem() != 0;
     okay_->setEnabled( selected );
     if( selected )
         bubble_->ShowInfo( BuildMessage( replays_->selectedItem()->text() ) );

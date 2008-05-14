@@ -99,13 +99,13 @@ std::string ADN_ListView_Models::GetToolTipFor( QListViewItem& item )
     std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
     switch( eEntityType_ )
     {
-    case ModelInfos::E_ModelEntityType::ePawn:
+    case ModelInfos::ePawn:
         strToolTip += ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData );
         break;
-    case ModelInfos::E_ModelEntityType::eAutomat:
+    case ModelInfos::eAutomat:
         strToolTip += ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData );
         break;
-    case ModelInfos::E_ModelEntityType::ePopulation:
+    case ModelInfos::ePopulation:
         strToolTip += ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData );
         break;
     default:

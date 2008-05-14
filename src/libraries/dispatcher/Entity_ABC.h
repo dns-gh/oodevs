@@ -65,7 +65,7 @@ public:
     template< typename T >
     void ApplyUpdate( const T& message )
     {
-        Apply( kernel::Updatable_ABC< T >::DoUpdate, message );
+        Apply( &kernel::Updatable_ABC< T >::DoUpdate, message );
     }
     //@}
 

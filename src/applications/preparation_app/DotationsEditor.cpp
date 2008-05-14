@@ -89,7 +89,7 @@ void DotationsEditor::OnReject()
 // Name: DotationsEditor::SetCurrentItem
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-void DotationsEditor::SetCurrentItem( const DotationsItem*& dotations )
+void DotationsEditor::SetCurrentItem( DotationsItem*& dotations )
 {
     table_->setNumRows( 0 );
     Iterator< const Dotation& > it = dotations->CreateIterator();

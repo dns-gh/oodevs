@@ -45,7 +45,7 @@ ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKn
     if( message.m.obstacle_typePresent )
         obstacleType_ = (E_ObstacleType)message.obstacle_type;   
     if( message.m.reserved_obstacle_activatedPresent )
-        reservedObstacleActivated_ = message.reserved_obstacle_activated;
+        reservedObstacleActivated_ = message.reserved_obstacle_activated != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -83,10 +83,10 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
         nBypassConstructionPercentage_ = message.bypass_construction_percentage;
     
     if( message.m.reserved_obstacle_activatedPresent )
-        reservedObstacleActivated_ = message.reserved_obstacle_activated;
+        reservedObstacleActivated_ = message.reserved_obstacle_activated != 0;
     
     if( message.m.perceivedPresent )
-        bIsPerceived_ = message.perceived;
+        bIsPerceived_ = message.perceived != 0;
 
     Touch();
 }

@@ -124,7 +124,7 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
         if( ShouldDisplay( entity ) && IsInSelection( entity, point ) )
         {
             if( button == Qt::LeftButton )
-                Select( entity, event->state() & Qt::ShiftButton );
+                Select( entity, ( event->state() & Qt::ShiftButton ) != 0 );
             else if( button == Qt::RightButton )
                 ContextMenu( entity, point, event->globalPos() );
             return true;

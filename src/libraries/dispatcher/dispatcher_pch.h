@@ -10,6 +10,8 @@
 #ifndef __dispatcher_pch_h_
 #define __dispatcher_pch_h_
 
+#pragma warning ( disable : 4996 ) // $$$$ SBO 2008-05-13: vc80 deprecation
+
 #pragma warning ( push )
 #pragma warning ( disable : 4702 )
 

@@ -109,7 +109,7 @@ void UserProfileList::OnDelete()
 void UserProfileList::NotifyCreated( const UserProfile& profile )
 {
     profiles_.push_back( &profile );
-    const bool itemSelected = list_->selectedItem();
+    const bool itemSelected = list_->selectedItem() != 0;
     list_->insertItem( profile.GetLogin() );
     if( !itemSelected )
     {

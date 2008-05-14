@@ -12,6 +12,7 @@
 #include <xeumeuleu/xml.h>
 #include <geocoord/Geodetic.h>
 #include <geocoord/MGRS.h>
+#include <cmath>
 
 namespace bml
 {
@@ -27,14 +28,14 @@ namespace bml
     UtmLocation::UtmLocation( double latitude, double longitude, int height )
         : height_( height )
     {
-        geocoord::Geodetic geodetic( latitude, longitude );
+        const double piOver180O = std::acos( -1.f ) / 180.f ;
+        geocoord::Geodetic geodetic( latitude * piOver180O, longitude * piOver180O );
         geocoord::MGRS mgrs( geodetic );
         const std::string str = mgrs.GetString();
         gridZone_ = str.substr( 0, 3 );
         easting_  = str.substr( 3, 6 );
         northing_ = str.substr( 7, 6 );
     }
-
 
     xml::xostream& operator<<( xml::xostream& xos, const UtmLocation& location )
     {

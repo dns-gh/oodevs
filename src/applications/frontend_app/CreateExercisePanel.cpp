@@ -131,7 +131,7 @@ void CreateExercisePanel::ModelSelected()
 // -----------------------------------------------------------------------------
 void CreateExercisePanel::NameChanged( const QString& name )
 {
-    const bool exists = existingExercises_.contains( name );
+    const bool exists = existingExercises_.contains( name ) != 0;
     okay_->setDisabled( exists );
     if( exists )
         bubble_->ShowError( tr( "An exercise with this name already exists." ) );

@@ -89,7 +89,7 @@ void TerrainCreationPanel::CreateTerrain()
 // -----------------------------------------------------------------------------
 void TerrainCreationPanel::NameChanged( const QString& name )
 {
-    const bool exists = existingTerrains_.contains( name );
+    const bool exists = existingTerrains_.contains( name ) != 0;
     okay_->setDisabled( exists );
     if( exists )
         bubble_->ShowError( tr( "A terrain with this name already exists." ) );

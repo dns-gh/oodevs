@@ -93,7 +93,7 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     switch( asn.value.t )
     {
     case T_MissionParameter_value_aBool:
-        return new ActionParameterBool( parameter, asn.value.u.aBool );
+        return new ActionParameterBool( parameter, asn.value.u.aBool != 0 );
     case T_MissionParameter_value_aCharStr:
         return new ActionParameter< QString >( parameter, asn.value.u.aCharStr );
     case T_MissionParameter_value_unit:

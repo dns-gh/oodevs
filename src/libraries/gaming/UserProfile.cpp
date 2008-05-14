@@ -186,7 +186,7 @@ void UserProfile::SetProfile( const ASN1T_Profile& profile )
     login_ = profile.login;
     if( profile.m.passwordPresent )
         password_ = profile.password;
-    supervision_ = profile.superviseur;
+    supervision_ = profile.superviseur != 0;
 
     if( profile.m.read_only_campsPresent )
         CopyList( profile.read_only_camps, readSides_);

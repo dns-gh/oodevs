@@ -12,7 +12,7 @@
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
 template< typename Superior, typename I >
-LogisticHierarchies< Superior, I >::LogisticHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity )
+::LogisticHierarchies< Superior, I >::LogisticHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity )
     : LogisticHierarchies_ABC< I >( controller, entity )
     , tc2_( 0 )
 {
@@ -24,7 +24,7 @@ LogisticHierarchies< Superior, I >::LogisticHierarchies( kernel::Controller& con
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
 template< typename Superior, typename I >
-LogisticHierarchies< Superior, I >::~LogisticHierarchies()
+::LogisticHierarchies< Superior, I >::~LogisticHierarchies()
 {
     // NOTHING
 }
@@ -34,7 +34,7 @@ LogisticHierarchies< Superior, I >::~LogisticHierarchies()
 // Created: SBO 2006-11-16
 // -----------------------------------------------------------------------------
 template< typename Superior, typename I >
-void LogisticHierarchies< Superior, I >::Load( xml::xistream& xis, const kernel::Automat_ABC* superior )
+void ::LogisticHierarchies< Superior, I >::Load( xml::xistream& xis, const kernel::Automat_ABC* superior )
 {
     SetSuperior( superior );
     Load( xis );
@@ -45,7 +45,7 @@ void LogisticHierarchies< Superior, I >::Load( xml::xistream& xis, const kernel:
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
 template< typename Superior, typename I >
-void LogisticHierarchies< Superior, I >::SetSuperior( const Superior& automat )
+void ::LogisticHierarchies< Superior, I >::SetSuperior( const Superior& automat )
 {
     const kernel::Automat_ABC* superior = automat; 
     LogisticHierarchies_ABC< I >::SetSuperior( const_cast< kernel::Automat_ABC* >( superior ) );
@@ -56,7 +56,7 @@ void LogisticHierarchies< Superior, I >::SetSuperior( const Superior& automat )
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
 template< typename Superior, typename I >
-void LogisticHierarchies< Superior, I >::SetSuperiorInternal( kernel::Entity_ABC* superior )
+void ::LogisticHierarchies< Superior, I >::SetSuperiorInternal( kernel::Entity_ABC* superior )
 {
     tc2_ = static_cast< kernel::Automat_ABC* >( superior );
     LogisticHierarchies_ABC< I >::SetSuperiorInternal( superior );
@@ -67,7 +67,7 @@ void LogisticHierarchies< Superior, I >::SetSuperiorInternal( kernel::Entity_ABC
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
 template< typename Superior, typename I >
-void LogisticHierarchies< Superior, I >::DrawLink( const geometry::Point2f& where, const kernel::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const
+void ::LogisticHierarchies< Superior, I >::DrawLink( const geometry::Point2f& where, const kernel::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const
 {
     if( tc2_ && displayLinks )
         tools.DrawCurvedArrow( where, tc2_->Get< kernel::Positions >().GetPosition(), curve );

@@ -229,11 +229,11 @@ void Gl3dWidget::DrawArc( const Point2f& center, const Point2f& from, const Poin
     float maxAngle = std::acos( v2.X() ) * ( v2.Y() > 0 ? 1.f : -1.f );
     if( minAngle > maxAngle )
     {
-        static const float twoPi = 2.0 * std::acos( -1.0 );
+        static const float twoPi = 2.f * std::acos( -1.f );
         maxAngle = maxAngle + twoPi;
     }
     
-    const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6;
+    const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6f;
     glBegin( GL_LINE_STRIP );
     for( float angle = minAngle; angle < maxAngle; angle += deltaAngle )
     {
@@ -296,7 +296,7 @@ void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/, E_U
         radius *= Pixels( center );
 
     float px = center.X() + radius, py = center.Y();
-    for( float angle = twoPi / 40.f; angle < twoPi; angle += twoPi / 40.f + 1e-7 )
+    for( float angle = twoPi / 40.f; angle < twoPi; angle += twoPi / 40.f + 1e-7f )
     {
         float cx = center.X() + radius * std::cos( angle );
         float cy = center.Y() + radius * std::sin( angle );
@@ -595,7 +595,7 @@ void Gl3dWidget::UndoRotations() const
 	glGetFloatv( GL_MODELVIEW_MATRIX, modelview );
 	for( uint i = 0; i < 3; i++ ) 
 	    for( uint j = 0; j < 3; j++ )
-            modelview[ i * 4 + j ] = ( i == j ) ? 1.0 : 0.0;
+            modelview[ i * 4 + j ] = ( i == j ) ? 1.f : 0;
 	glLoadMatrixf( modelview );
 }
 

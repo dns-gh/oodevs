@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    void SetCurrentItem( const DotationsItem*& dotations );
+    void SetCurrentItem( DotationsItem*& dotations );
     virtual DotationsItem* GetValue();
     //@}
 

@@ -363,7 +363,7 @@ void MIL_RealObjectType::ReadValorizationOrConstruction( xml::xistream& xis, uin
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::InitializeDotations( xml::xistream& xis )
 {
-    xis >> xml::list( "dotations", *this, MIL_RealObjectType::ReadInitializeDotation );
+    xis >> xml::list( "dotations", *this, &MIL_RealObjectType::ReadInitializeDotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,7 +385,7 @@ void MIL_RealObjectType::InitializePlacementScores( xml::xistream& xis )
      // Placement scores
     xis >> xml::optional()
             >> xml::start( "sensible-positions" )
-                >> xml::list( "terrain", *this, MIL_RealObjectType::ReadTerrain )
+                >> xml::list( "terrain", *this, &MIL_RealObjectType::ReadTerrain )
             >> xml::end();
 }
 

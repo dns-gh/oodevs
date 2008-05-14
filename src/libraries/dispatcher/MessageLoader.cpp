@@ -175,7 +175,7 @@ void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer, Messa
 // Name: MessageLoader::LoadSimToClientMessage
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-void MessageLoader::LoadSimToClientMessage( const unsigned char*& input, MessageHandler_ABC& handler )
+void MessageLoader::LoadSimToClientMessage( unsigned char*& input, MessageHandler_ABC& handler )
 {
     unsigned messageSize = *reinterpret_cast< const unsigned* >( input );
     input += sizeof( unsigned );

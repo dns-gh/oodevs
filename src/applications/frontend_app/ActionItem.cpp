@@ -20,7 +20,7 @@ ActionItem::ActionItem( QWidget* parent, QAction& action )
     , action_( action )
 {
     setIconSet( action.iconSet().pixmap() );
-    setTextLabel( action.text(), action.toolTip() );
+    setTextLabel( action.text(), ! action.toolTip().isEmpty() );
     setTextPosition( QToolButton::BelowIcon );
     setUsesBigPixmap( true );
     setUsesTextLabel( true );

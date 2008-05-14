@@ -8,37 +8,33 @@
 // *****************************************************************************
 
 #include "bml_plugin_pch.h"
-#include "BmlPluginFactory.h"
-#include "BmlPlugin.h"
+#include "Publisher.h"
 
 using namespace bml;
 
 // -----------------------------------------------------------------------------
-// Name: BmlPluginFactory constructor
-// Created: SBO 2008-02-29
+// Name: Publisher constructor
+// Created: SBO 2008-04-02
 // -----------------------------------------------------------------------------
-BmlPluginFactory::BmlPluginFactory()
+Publisher::Publisher( xml::xistream& xis )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: BmlPluginFactory destructor
-// Created: SBO 2008-02-29
+// Name: Publisher destructor
+// Created: SBO 2008-04-02
 // -----------------------------------------------------------------------------
-BmlPluginFactory::~BmlPluginFactory()
+Publisher::~Publisher()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: BmlPluginFactory::Create
-// Created: SBO 2008-02-29
+// Name: Publisher::BBSPush
+// Created: SBO 2008-04-03
 // -----------------------------------------------------------------------------
-std::auto_ptr< dispatcher::Plugin_ABC > BmlPluginFactory::Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& /*simulation*/, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& /*client*/, dispatcher::LinkResolver_ABC& /*resolver*/ ) const
+void Publisher::BBSPush( const std::string& operation, const std::string& message )
 {
-    std::auto_ptr< dispatcher::Plugin_ABC > result;
-    if( name == "bml" )
-        result.reset( new BmlPlugin( model, config, xis ) );
-    return result;
+    // $$$$ SBO 2008-05-13: TODO
 }

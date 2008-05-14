@@ -7,47 +7,43 @@
 //
 // *****************************************************************************
 
-#ifndef __ExtensionFactory_h_
-#define __ExtensionFactory_h_
+#ifndef __Publisher_h_
+#define __Publisher_h_
 
-#include "dispatcher/ExtensionFactory_ABC.h"
-#include <map>
-
-namespace dispatcher
+namespace xml
 {
-    class Agent;
+    class xistream;
 }
 
 namespace bml
 {
-    class Publisher;
 
 // =============================================================================
-/** @class  ExtensionFactory
-    @brief  ExtensionFactory
+/** @class  Publisher
+    @brief  Publisher
 */
-// Created: SBO 2008-02-29
+// Created: SBO 2008-04-02
 // =============================================================================
-class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
+class Publisher
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExtensionFactory( Publisher& publisher );
-    virtual ~ExtensionFactory();
+    explicit Publisher( xml::xistream& xis );
+    virtual ~Publisher();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Create( dispatcher::Agent& entity );
+    void BBSPush( const std::string& operation, const std::string& message );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ExtensionFactory( const ExtensionFactory& );            //!< Copy constructor
-    ExtensionFactory& operator=( const ExtensionFactory& ); //!< Assignment operator
+    Publisher( const Publisher& );            //!< Copy constructor
+    Publisher& operator=( const Publisher& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -57,10 +53,9 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher& publisher_;
     //@}
 };
 
 }
 
-#endif // __ExtensionFactory_h_
+#endif // __Publisher_h_

@@ -42,7 +42,7 @@ void ObjectKnowledgePositions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& m
     if( message.m.locationPresent )
         Update( message.location );
     if( message.m.perceivedPresent )
-        perceived_ = message.perceived;
+        perceived_ = message.perceived != 0;
     if( message.m.real_objectPresent )
         realObjectKnown_ = true;
 }

@@ -125,11 +125,11 @@ public:
     void AddExtensions( T& entity )
     {
         AddExtensions( &entity );
-        compositeFactory_->Apply( ExtensionFactory_ABC< T >::Create, entity );
+        compositeFactory_->Apply( &ExtensionFactory_ABC< T >::Create, entity );
     }
     void AddExtensions( Entity_ABC* entity )
     {
-        compositeFactory_->Apply( ExtensionFactory_ABC< Entity_ABC >::Create, *entity );
+        compositeFactory_->Apply( &ExtensionFactory_ABC< Entity_ABC >::Create, *entity );
     }
     void AddExtensions( void* ) {}
     //@}

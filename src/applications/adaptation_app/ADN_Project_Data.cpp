@@ -185,7 +185,7 @@ std::string ADN_Project_Data::WorkDirInfos::GetFullPath( const std::string& part
 std::string ADN_Project_Data::WorkDirInfos::GetRelativePath( const std::string& full, E_WorkDir e )
 {
     std::string dir = ( e == eWorking ) ? szWorkingDir_.GetData() : szTempDir_.GetData();
-    if( strcmpi( dir.c_str(), full.substr( 0, dir.size() ).c_str() ) )
+    if( _strcmpi( dir.c_str(), full.substr( 0, dir.size() ).c_str() ) )
         return std::string();
     else
         return full.substr( dir.size(), full.size() - dir.size() );
@@ -203,8 +203,8 @@ void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory( const std::string& fil
     char szFile[_MAX_PATH];
     char szExt[_MAX_PATH];
     char szPath[_MAX_PATH];
-    _splitpath( filename.c_str(), szDrive, szDir, szFile, szExt );
-    _makepath( szPath, szDrive, szDir, 0, 0 );
+    _splitpath_s( filename.c_str(), szDrive, szDir, szFile, szExt );
+    _makepath_s( szPath, szDrive, szDir, 0, 0 );
     szWorkingDir_ = std::string( szPath );
 }
 

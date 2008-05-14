@@ -85,7 +85,7 @@ void PopulationFlowKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUp
     if( asnMsg.m.vitessePresent )
         rSpeed_ = ( float )asnMsg.vitesse;
     if( asnMsg.m.est_percuPresent )
-        bIsPerceived_ = ( bool )asnMsg.est_percu;
+        bIsPerceived_ = asnMsg.est_percu != 0;
     if( asnMsg.m.nb_humains_vivantsPresent )
         nNbrAliveHumans_ = ( uint )asnMsg.nb_humains_vivants;
     if( asnMsg.m.nb_humains_mortsPresent )

@@ -83,7 +83,7 @@ void PHY_WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
 
     MT_InterpolatedFunction< MT_Float >& phFunction = phs_[ volume.GetID() ];
 
-    xis >> xml::list( "hit-probability", *this, PHY_WeaponDataType_DirectFire::ReadHitProbability, phFunction );
+    xis >> xml::list( "hit-probability", *this, &PHY_WeaponDataType_DirectFire::ReadHitProbability, phFunction );
 }
 
 // -----------------------------------------------------------------------------

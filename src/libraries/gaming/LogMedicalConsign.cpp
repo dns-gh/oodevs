@@ -34,8 +34,8 @@ LogMedicalConsign::LogMedicalConsign( Controller& controller, const Resolver_ABC
     , pion_            ( resolver_.Get( message.oid_pion ) )
     , pPionLogHandling_( 0 )
     , wound_           ( E_HumanWound( message.blessure ) )
-    , bMentalDeceased_ ( message.blesse_mental )
-    , bContaminated_   ( message.contamine_nbc )
+    , bMentalDeceased_ ( message.blesse_mental != 0 )
+    , bContaminated_   ( message.contamine_nbc != 0 )
     , diagnosed_       ( false )
     , nState_          ( eLogMedicalHandlingStatus_Termine )
 {
@@ -73,15 +73,15 @@ void LogMedicalConsign::Update( const ASN1T_MsgLogMedicalHandlingUpdate& message
     }
 
     if( message.m.blesse_mentalPresent )
-        bMentalDeceased_ = message.blesse_mental;
+        bMentalDeceased_ = message.blesse_mental != 0;
     if( message.m.contamine_nbcPresent )
-        bContaminated_   = message.contamine_nbc;
+        bContaminated_   = message.contamine_nbc != 0;
     if( message.m.blessurePresent )
         wound_ = E_HumanWound( message.blessure );
     if( message.m.etatPresent )
         nState_ = E_LogMedicalHandlingStatus( message.etat );
     if( message.m.diagnostique_effectuePresent )
-        diagnosed_ = message.diagnostique_effectue;
+        diagnosed_ = message.diagnostique_effectue != 0;
 
     controller_.Update( *this );
 }
