@@ -121,9 +121,10 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) con
     case T_MsgsMessengerToClient_msg_limit_destruction:
         return modelLoaded_;
     case T_MsgsMessengerToClient_msg_lima_creation:   
-    case T_MsgsMessengerToClient_msg_limit_creation:    
-        return true; 
+    case T_MsgsMessengerToClient_msg_limit_creation:
+        break;
     }
+    return true;
 }
 
 

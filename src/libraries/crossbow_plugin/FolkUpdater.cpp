@@ -79,20 +79,19 @@ void FolkUpdater::Update( const ASN1T_MsgFolkCreation& msg )
 
 namespace 
 {
-    class LockedScopeEditor
+    struct LockedScopeEditor
     {
-    public: 
         explicit LockedScopeEditor( Database_ABC& database ) 
-            : database_ ( database )
+            : database_ ( &database )
         {
-            database_.Lock();
+            database_->Lock();
         }
         ~LockedScopeEditor()
         {
-            database_.UnLock();
+            database_->UnLock();
         }
     private:
-        Database_ABC& database_;
+        Database_ABC* database_;
     };
 }
 

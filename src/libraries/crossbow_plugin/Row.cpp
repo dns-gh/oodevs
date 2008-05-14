@@ -88,7 +88,7 @@ namespace
         case VT_BSTR:
             return crossbow::FieldVariant( std::string( _bstr_t( value.bstrVal ) ) ); // $$$$ SBO 2007-05-31: !!
         case VT_BOOL:
-            return crossbow::FieldVariant( (bool)value.bVal );
+            return crossbow::FieldVariant( value.bVal != 0 );
         }
         throw;
     }
