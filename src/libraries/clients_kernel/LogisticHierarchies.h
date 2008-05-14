@@ -22,20 +22,20 @@ namespace kernel
     class Automat_ABC;
 
 // =============================================================================
-/** @class  LogisticHierarchies
-    @brief  LogisticHierarchies
+/** @class  LogisticHierarchiesBase
+    @brief  LogisticHierarchiesBase
     // $$$$ AGE 2006-11-21: bouger dans prepa
 */
 // Created: AGE 2006-11-21
 // =============================================================================
-class LogisticHierarchies : public Hierarchies
+class LogisticHierarchiesBase : public Hierarchies
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticHierarchies() {};
-    virtual ~LogisticHierarchies() {};
+             LogisticHierarchiesBase() {};
+    virtual ~LogisticHierarchiesBase() {};
     //@}
 
     //! @name Operations
@@ -45,7 +45,7 @@ public:
     //@}
 };
 
-class MaintenanceHierarchies : public LogisticHierarchies
+class MaintenanceHierarchies : public LogisticHierarchiesBase
 {
 
 public:
@@ -61,7 +61,7 @@ public:
     //@}
 };
 
-class MedicalHierarchies : public LogisticHierarchies
+class MedicalHierarchies : public LogisticHierarchiesBase
 {
 
 public:
@@ -77,7 +77,7 @@ public:
     //@}
 };
 
-class SupplyHierarchies : public LogisticHierarchies
+class SupplyHierarchies : public LogisticHierarchiesBase
 {
 
 public:
@@ -93,7 +93,7 @@ public:
     //@}
 };
 
-class TC2Hierarchies : public LogisticHierarchies
+class TC2Hierarchies : public LogisticHierarchiesBase
 {
 
 public:
