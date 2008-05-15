@@ -34,7 +34,7 @@ class DEC_AutomateDecision : public DEC_Decision_ABC
     MT_COPYNOTALLOWED( DEC_AutomateDecision )
 
 public:
-             DEC_AutomateDecision( MIL_Automate& automate );
+    explicit DEC_AutomateDecision( MIL_Automate& automate );
              DEC_AutomateDecision();
     virtual ~DEC_AutomateDecision();
 

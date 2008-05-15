@@ -113,7 +113,7 @@ void UserProfileWidget::Reset()
 // -----------------------------------------------------------------------------
 bool UserProfileWidget::NeedsSaving() const
 {
-    if( !selectedProfile_ )
+    if( !isVisible() || !selectedProfile_ )
         return false;
     return selectedProfile_->GetLogin() != login_->text() || selectedProfile_->GetPassword() != password_->text()
         || selectedProfile_->IsSupervisor() != supervisor_->isChecked()
