@@ -60,6 +60,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/ColorStrategy.h"
 #include "clients_gui/SelectionColorModifier.h"
+#include "clients_gui/HighlightColorModifier.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
 #include "clients_gui/TerrainLayer.h"
@@ -127,6 +128,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
+    strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new HighlightColorModifier( controllers ) ) );
 
     selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
 
