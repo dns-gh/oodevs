@@ -14,7 +14,7 @@
           <hla enabled="false" federation="MyFederation" federate="CSword power"/>          
       </simulation>
       <dispatcher>
-          <network client="localhost:10000" server="10001"/>
+          <network client="localhost:10010" server="10011"/>
           <plugins>
               <plugin name="recorder" enabled="false">
                   <parameter name="directory" value="records"/>
