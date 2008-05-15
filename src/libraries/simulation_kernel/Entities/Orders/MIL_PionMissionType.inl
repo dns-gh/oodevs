@@ -28,7 +28,7 @@ inline
 const MIL_PionMissionType* MIL_PionMissionType::FindFromDiaID( uint nID )
 {
     CIT_MissionIDMap it = missionDiaIDs_.find( nID );
-    if( it == missionIDs_.end() )
+    if( it == missionDiaIDs_.end() )
         return 0;
     return it->second;
 }

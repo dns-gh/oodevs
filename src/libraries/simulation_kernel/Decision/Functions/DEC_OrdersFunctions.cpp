@@ -75,14 +75,13 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
     for( CIT_ObjectVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
         MIL_AgentPion& pion = static_cast< DEC_RolePion_Decision* >( *itPion )->GetPion();
-        MIL_Fuseau::IT_FuseauPtrList itFuseau ;
+        MIL_Fuseau::IT_FuseauPtrList itFuseau;
 		for( itFuseau = subFuseaux.begin(); itFuseau != subFuseaux.end(); ++itFuseau )
         {
             MIL_Fuseau& fuseau = **itFuseau;
             if( fuseau.IsInside( pion.GetRole< PHY_RolePion_Location >().GetPosition() ) )
             {
                 callerAutomate.GetOrderManager().MRT_SetFuseauForPion( pion, fuseau );
-                subFuseaux.erase( itFuseau );
                 break;
             }
         }
@@ -90,10 +89,12 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
         // Pas de fuseau trouvé => prend le 1er
         if( itFuseau == subFuseaux.end() )
         {
-            MIL_Fuseau& fuseau = **subFuseaux.begin();
+            MIL_Fuseau& fuseau = *subFuseaux.front();
             callerAutomate.GetOrderManager().MRT_SetFuseauForPion( pion, fuseau );
             subFuseaux.erase( subFuseaux.begin() );
         }
+        else
+            subFuseaux.erase( itFuseau );
     }
     assert( subFuseaux.empty() );
 }
