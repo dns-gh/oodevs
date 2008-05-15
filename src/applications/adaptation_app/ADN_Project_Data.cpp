@@ -203,8 +203,8 @@ void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory( const std::string& fil
     char szFile[_MAX_PATH];
     char szExt[_MAX_PATH];
     char szPath[_MAX_PATH];
-    _splitpath_s( filename.c_str(), szDrive, szDir, szFile, szExt );
-    _makepath_s( szPath, szDrive, szDir, 0, 0 );
+    _splitpath( filename.c_str(), szDrive, szDir, szFile, szExt );
+    _makepath( szPath, szDrive, szDir, 0, 0 );
     szWorkingDir_ = std::string( szPath );
 }
 
