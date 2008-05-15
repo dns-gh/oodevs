@@ -482,7 +482,7 @@ void DEC_LogisticFunctions::ConvoyIsUnloadingDone( DIA_Call_ABC& call, const MIL
 void DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetSupplyingAutomate();
-    DEC_AutomateDecision* dec = pAutomate ? const_cast< DEC_AutomateDecision* >( pAutomate->GetDecision() ) : (DEC_AutomateDecision*)0;
+    DEC_AutomateDecision* dec = pAutomate ? const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) : (DEC_AutomateDecision*)0;
     call.GetResult().SetValue( *dec );
 }
 
@@ -493,7 +493,7 @@ void DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( DIA_Call_ABC& call, cons
 void DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetConvoyingAutomate();
-    DEC_AutomateDecision* dec = pAutomate ? const_cast< DEC_AutomateDecision* >( pAutomate->GetDecision() ) : (DEC_AutomateDecision*)0;
+    DEC_AutomateDecision* dec = pAutomate ? const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) : (DEC_AutomateDecision*)0;
     call.GetResult().SetValue( *dec );
 }
 
@@ -504,7 +504,7 @@ void DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( DIA_Call_ABC& call, cons
 void DEC_LogisticFunctions::ConvoyGetSuppliedAutomate( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetSuppliedAutomate();
-    DEC_AutomateDecision* dec = pAutomate ? const_cast< DEC_AutomateDecision* >( pAutomate->GetDecision() ) : (DEC_AutomateDecision*)0;
+    DEC_AutomateDecision* dec = pAutomate ? const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) : (DEC_AutomateDecision*)0;
     call.GetResult().SetValue( *dec );
 }
 

@@ -120,7 +120,7 @@ void DEC_ObjectFunctions::GetGenObjectTC2( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
     DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
-    DEC_AutomateDecision* dec = pTmp->GetTC2() ? const_cast< DEC_AutomateDecision* >( pTmp->GetTC2()->GetDecision() ) : (DEC_AutomateDecision*)0;
+    DEC_AutomateDecision* dec = pTmp->GetTC2() ? const_cast< DEC_AutomateDecision* >( &pTmp->GetTC2()->GetDecision() ) : (DEC_AutomateDecision*)0;
     call.GetResult().SetValue( *dec );
 }
 
