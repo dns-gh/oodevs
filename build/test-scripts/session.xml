@@ -6,7 +6,7 @@
           <debug decisional="true" pathfind="true" diadebugger="false" diadebuggerport="15000" networklogger="true" networkloggerport="20000"/>
           <decisional useonlybinaries="false"/>
           <dispatcher embedded="true"/>
-          <network port="10000" threaded="true"/>
+          <network port="10010" threaded="true"/>
           <orbat checkcomposition="true"/>
           <profiling enabled="false"/>
           <time step="10" factor="10"/>
