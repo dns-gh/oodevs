@@ -60,7 +60,7 @@ void TimelineItem_ABC::DisplayToolTip( QWidget* ) const
 // Name: TimelineItem_ABC::DisplayContextMenu
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineItem_ABC::DisplayContextMenu( QWidget*, const QPoint& ) const
+void TimelineItem_ABC::DisplayContextMenu( QPopupMenu* ) const
 {
     // NOTHING
 }

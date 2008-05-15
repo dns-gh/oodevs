@@ -167,12 +167,10 @@ void TimelineActionItem::DisplayToolTip( QWidget* parent ) const
 // Name: TimelineActionItem::DisplayContextMenu
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineActionItem::DisplayContextMenu( QWidget* parent, const QPoint& pos ) const
+void TimelineActionItem::DisplayContextMenu( QPopupMenu* menu ) const
 {
-    QPopupMenu* popup = new QPopupMenu( parent );
-//    popup->insertItem( tr( "Rename" ), this, SLOT( OnRename() ) ); // $$$$ SBO 2008-04-29: TODO
-    popup->insertItem( tr( "Delete" ), this, SLOT( OnDelete() ) );
-    popup->popup( pos );
+//    menu->insertItem( tr( "Rename" ), this, SLOT( OnRename() ), Qt::Key_F2 ); // $$$$ SBO 2008-05-15: TODO
+    menu->insertItem( tr( "Delete" ), this, SLOT( OnDelete() ), Qt::Key_Delete );
 }
 
 // -----------------------------------------------------------------------------

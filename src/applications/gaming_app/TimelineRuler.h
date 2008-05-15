@@ -43,6 +43,11 @@ public:
     unsigned long ConvertToPosition( const QDateTime& datetime ) const;
     long ConvertToPixels( long secs ) const;
     long ConvertToSeconds( long pixels ) const;
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
     void ZoomIn();
     void ZoomOut();
     //@}

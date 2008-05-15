@@ -220,11 +220,16 @@ void TimelineView::contentsContextMenuEvent( QContextMenuEvent* event )
 {
     if( !selectedItem_ )
         Select( event->pos() );
+    QPopupMenu* menu = new QPopupMenu( this );
     if( selectedItem_ )
     {
-        selectedItem_->DisplayContextMenu( this, event->globalPos() );
-        event->accept();
+        selectedItem_->DisplayContextMenu( menu );
+        menu->insertSeparator();
     }
+    menu->insertItem( tr( "Zoom In" ), &ruler_, SLOT( ZoomIn() ), Qt::Key_Plus );
+    menu->insertItem( tr( "Zoom Out" ), &ruler_, SLOT( ZoomOut() ), Qt::Key_Minus );
+    menu->popup( event->globalPos() );
+    event->accept();
 }
 
 // -----------------------------------------------------------------------------

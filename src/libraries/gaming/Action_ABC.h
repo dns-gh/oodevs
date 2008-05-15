@@ -62,6 +62,7 @@ public:
     virtual void Publish( Publisher_ABC& publisher ) const = 0;
 
     virtual void Polish() = 0;
+    virtual void Rename( const QString& name );
     //@}
 
 protected:
@@ -83,6 +84,7 @@ private:
     //@{
     kernel::Controller& controller_;
     unsigned long id_;
+    QString name_;
     const kernel::Entity_ABC& target_;
     const kernel::OrderType& type_;
 

@@ -58,7 +58,17 @@ unsigned long Action_ABC::GetId() const
 // -----------------------------------------------------------------------------
 QString Action_ABC::GetName() const
 {
-    return type_.GetName().c_str();
+    return name_.isEmpty() ? type_.GetName().c_str() : name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::Rename
+// Created: SBO 2008-05-15
+// -----------------------------------------------------------------------------
+void Action_ABC::Rename( const QString& name )
+{
+    name_ = name;
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -34,7 +34,7 @@ public:
     virtual void Move( long offset );
     virtual void Delete();
     virtual void DisplayToolTip( QWidget* parent ) const; // $$$$ SBO 2007-07-19: make a displayer maybe...
-    virtual void DisplayContextMenu( QWidget* parent, const QPoint& pos ) const;
+    virtual void DisplayContextMenu( QPopupMenu* menu ) const;
     //@}
 
 private:
