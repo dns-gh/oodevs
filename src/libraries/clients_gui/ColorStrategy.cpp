@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "ColorStrategy.h"
 #include "clients_kernel/GlTools_ABC.h"
-
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -25,6 +24,9 @@
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "ColorModifier_ABC.h"
+#include <numeric>
+#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -36,7 +38,6 @@ using namespace gui;
 ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
     : controllers_       ( controllers )
     , tools_             ( tools )
-    , selectedEntity_    ( controllers )
     , alpha_             ( 1 )
 {
     InitializeColors();
@@ -53,30 +54,12 @@ ColorStrategy::~ColorStrategy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorStrategy::BeforeSelection
-// Created: AGE 2006-03-23
+// Name: ColorStrategy::Add
+// Created: AGE 2008-05-14
 // -----------------------------------------------------------------------------
-void ColorStrategy::BeforeSelection()
+void ColorStrategy::Add( std::auto_ptr< ColorModifier_ABC > modifier )
 {
-    selectedEntity_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::Select
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Entity_ABC& element )
-{
-    selectedEntity_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::AfterSelection
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void ColorStrategy::AfterSelection()
-{
-    // NOTHING
+    modifiers_.push_back( modifier.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,19 +72,13 @@ void ColorStrategy::SetAlpha( float alpha )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorStrategy::ApplySelectionStatus
-// Created: AGE 2007-05-31
+// Name: ColorStrategy::ApplyModifiers
+// Created: AGE 2008-05-14
 // -----------------------------------------------------------------------------
-QColor ColorStrategy::ApplySelectionStatus( const Entity_ABC& entity, const QColor& base )
+QColor ColorStrategy::ApplyModifiers( const kernel::Entity_ABC& entity, const QColor& color )
 {
-    bool selected         = selectedEntity_ == &entity;
-    bool superiorSelected = selectedEntity_ && entity.Get< TacticalHierarchies >().IsSubordinateOf( *selectedEntity_ );
-    tools_.Select( selected, superiorSelected );
-    if( selected )
-        return SelectedColor( base );
-    if( superiorSelected )
-        return SuperiorSelectedColor( base );
-    return base;
+    return std::accumulate( modifiers_.begin(), modifiers_.end(), color,
+                            boost::bind( &ColorModifier_ABC::Apply, _2, boost::ref( entity ), _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +87,7 @@ QColor ColorStrategy::ApplySelectionStatus( const Entity_ABC& entity, const QCol
 // -----------------------------------------------------------------------------
 void ColorStrategy::Process( const Entity_ABC& entity )
 {
-    ApplyColor( ApplySelectionStatus( entity, FindColor( entity ) ) );
+    ApplyColor( ApplyModifiers( entity, FindColor( entity ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,11 +188,7 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 {
-    QColor color( FindColor( knowledge ) );
-    if( selectedEntity_ == &knowledge )
-        color = SelectedColor( color );
-    color = KnowledgeColor( color );
-    ApplyColor( color );
+    ApplyColor( KnowledgeColor( ApplyModifiers( knowledge, FindColor( knowledge ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,11 +197,7 @@ void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
 {
-    QColor color = FindColor( line );
-    if( selectedEntity_ == &line )
-        color = SelectedColor( color );
-    tools_.Select( selectedEntity_ == &line, false );
-    ApplyColor( color );
+    ApplyColor( ApplyModifiers( line, FindColor( line ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,29 +206,7 @@ void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Intelligence_ABC& intelligence )
 {
-    QColor color = GetKarmaColor( intelligence.GetKarma() );
-    if( selectedEntity_ == &intelligence )
-        color = SelectedColor( color );
-    tools_.Select( selectedEntity_ == &intelligence, false );
-    ApplyColor( color );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::SelectedColor
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-QColor ColorStrategy::SelectedColor( const QColor& base ) const
-{
-    return base.light( 150 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::SuperiorSelectedColor
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-QColor ColorStrategy::SuperiorSelectedColor( const QColor& base ) const
-{
-    return base.light( 120 );
+    ApplyColor( ApplyModifiers( intelligence, GetKarmaColor( intelligence.GetKarma() ) ) );
 }
 
 // -----------------------------------------------------------------------------

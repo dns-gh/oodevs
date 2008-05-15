@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "CompositionPass.h"
 #include "TextureRenderPass.h"
-#include "GlWidget.h"
 #include "graphics/extensions.h"
 #include "graphics/ShaderProgram.h"
 #include "graphics/FragmentShader.h"
@@ -60,7 +59,7 @@ std::string CompositionPass::GetName() const
 // Name: CompositionPass::Render
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-void CompositionPass::Render( GlWidget& )
+void CompositionPass::Render( MapWidget_ABC& )
 {
     if( !enabled_ )
         return;

@@ -54,7 +54,8 @@ void DrawerModel::Load( const std::string& filename )
 void DrawerModel::ReadCategory( xml::xistream& xis )
 {
     std::auto_ptr< DrawerCategory > category( factory_.CreateCategory( xis ) );
-    Register( category->GetName(), *category.release() );
+    Register( category->GetName(), *category );
+    category.release();
 }
 
 // -----------------------------------------------------------------------------

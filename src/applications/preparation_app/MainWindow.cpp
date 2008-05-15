@@ -59,6 +59,7 @@
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/ColorStrategy.h"
+#include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
 #include "clients_gui/TerrainLayer.h"
@@ -125,6 +126,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
+    strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
 
     selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
 
@@ -135,7 +137,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    gui::SymbolIcons* symbols = new gui::SymbolIcons( this );
+    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_ );

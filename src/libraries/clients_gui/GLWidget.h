@@ -15,6 +15,7 @@
 #include "SetGlOptions.h"
 #include "View_ABC.h"
 #include "GlToolsBase.h"
+#include "MapWidget_ABC.h"
 
 namespace tools
 {
@@ -41,6 +42,7 @@ namespace gui
 class GlWidget : private kernel::WorldParameters
                , private SetGlOptions
                , public MapWidget
+               , public MapWidget_ABC
                , public GlToolsBase
                , public View_ABC
 {
@@ -60,6 +62,9 @@ public:
 
     std::string GetCurrentPass() const;
     virtual void PaintLayers();
+    virtual unsigned int Width() const;
+    virtual unsigned int Height() const;
+    virtual geometry::Rectangle2f Viewport() const;
     //@}
 
     //! @name Operations

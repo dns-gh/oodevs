@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "MiniViewsRenderPass.h"
 #include "MiniView.h"
-#include "GlWidget.h"
+#include "MapWidget_ABC.h"
 
 using namespace gui;
 
@@ -46,7 +46,7 @@ std::string MiniViewsRenderPass::GetName() const
 // Name: MiniViewsRenderPass::Render
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-void MiniViewsRenderPass::Render( GlWidget& widget )
+void MiniViewsRenderPass::Render( MapWidget_ABC& widget )
 {
     widget.PaintLayers();
     QImage image( miniViewSide_, miniViewSide_, 32 );

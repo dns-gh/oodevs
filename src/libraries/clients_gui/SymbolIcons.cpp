@@ -19,10 +19,10 @@ using namespace gui;
 // Name: SymbolIcons constructor
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-SymbolIcons::SymbolIcons( QObject* parent )
+SymbolIcons::SymbolIcons( QObject* parent, kernel::GlTools_ABC& tools )
     : QObject( parent )
     , widget_( 0 )
-    , renderPass_( new IconsRenderPass() )
+    , renderPass_( new IconsRenderPass( tools ) )
 {
     // NOTHING
 }

@@ -35,13 +35,13 @@ class TextureRenderPass : public LayersRenderPass
 public:
     //! @name Constructors/Destructor
     //@{
-             TextureRenderPass( GlWidget& widget, const std::string& name, kernel::Controllers& controllers, const std::string& option = "" );
+             TextureRenderPass( MapWidget_ABC& widget, const std::string& name, kernel::Controllers& controllers, const std::string& option = "" );
     virtual ~TextureRenderPass();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Render( GlWidget& widget );
+    virtual void Render( MapWidget_ABC& widget );
     void BindTexture() const;
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}

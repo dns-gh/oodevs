@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetName() const;
-    virtual void Render( GlWidget& widget );
+    virtual void Render( MapWidget_ABC& widget );
     virtual unsigned int Width() const;
     virtual unsigned int Height() const;
     virtual geometry::Rectangle2f Viewport() const;
@@ -46,10 +46,6 @@ private:
     //@{
     MiniViewsRenderPass( const MiniViewsRenderPass& );            //!< Copy constructor
     MiniViewsRenderPass& operator=( const MiniViewsRenderPass& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

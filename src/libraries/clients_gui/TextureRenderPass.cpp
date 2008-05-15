@@ -19,7 +19,7 @@ using namespace gui;
 // Name: TextureRenderPass constructor
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-TextureRenderPass::TextureRenderPass( GlWidget& widget, const std::string& name, kernel::Controllers& controllers, const std::string& option /*= ""*/ )
+TextureRenderPass::TextureRenderPass( MapWidget_ABC& widget, const std::string& name, kernel::Controllers& controllers, const std::string& option /*= ""*/ )
     : LayersRenderPass( widget, name, true )
     , controllers_( controllers )
     , texture_( 0 )
@@ -42,7 +42,7 @@ TextureRenderPass::~TextureRenderPass()
 // Name: TextureRenderPass::Render
 // Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
-void TextureRenderPass::Render( GlWidget& widget )
+void TextureRenderPass::Render( MapWidget_ABC& widget )
 {
     if( !enabled_ )
         return;

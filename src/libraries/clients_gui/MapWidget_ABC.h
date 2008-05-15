@@ -7,33 +7,31 @@
 //
 // *****************************************************************************
 
-#ifndef __GlRenderPass_ABC_h_
-#define __GlRenderPass_ABC_h_
+#ifndef __MapWidget_ABC_h_
+#define __MapWidget_ABC_h_
 
 namespace gui
 {
-    class MapWidget_ABC;
 
 // =============================================================================
-/** @class  GlRenderPass_ABC
-    @brief  GlRenderPass_ABC
+/** @class  MapWidget_ABC
+    @brief  Map Widget definition
 */
-// Created: SBO 2008-04-11
+// Created: AGE 2008-05-14
 // =============================================================================
-class GlRenderPass_ABC
+class MapWidget_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GlRenderPass_ABC() {}
-    virtual ~GlRenderPass_ABC() {}
+             MapWidget_ABC() {};
+    virtual ~MapWidget_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string GetName() const = 0;
-    virtual void Render( MapWidget_ABC& widget ) = 0;
+    virtual void PaintLayers() = 0;
     virtual unsigned int Width() const = 0;
     virtual unsigned int Height() const = 0;
     virtual geometry::Rectangle2f Viewport() const = 0;
@@ -42,4 +40,4 @@ public:
 
 }
 
-#endif // __GlRenderPass_ABC_h_
+#endif // __MapWidget_ABC_h_

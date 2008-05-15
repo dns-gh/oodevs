@@ -11,19 +11,19 @@
 #define __ColorStrategy_h_
 
 #include "ColorStrategy_ABC.h"
-#include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
-#include "clients_kernel/SafePointer.h"
+#include <boost/ptr_container/ptr_vector.hpp>
 
 namespace kernel
 {
     class Team_ABC;
     class GlTools_ABC;
+    class Controllers;
 }
 
 namespace gui
 {
+    class ColorModifier_ABC;
 
 // =============================================================================
 /** @class  ColorStrategy
@@ -34,8 +34,6 @@ namespace gui
 class ColorStrategy : public ColorStrategy_ABC
                     , public kernel::Observer_ABC
                     , public kernel::ElementObserver_ABC< kernel::Team_ABC >
-                    , public kernel::SelectionObserver_ABC
-                    , public kernel::SelectionObserver_Base< kernel::Entity_ABC >
 {
 
 public:
@@ -61,6 +59,11 @@ public:
     virtual QColor FindColor( const kernel::Knowledge_ABC& knowledge );
     //@}
 
+    //! @name Modifiers
+    //@{
+    void Add( std::auto_ptr< ColorModifier_ABC > modifier );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
@@ -74,25 +77,19 @@ private:
     virtual void NotifyUpdated( const kernel::Team_ABC& );
     virtual void NotifyDeleted( const kernel::Team_ABC& );
 
-    virtual void BeforeSelection();
-    virtual void Select( const kernel::Entity_ABC& element );
-    virtual void AfterSelection();
-
     void InitializeColors();
 
     QColor RandomColor() const;
-    QColor SelectedColor( const QColor& base ) const;
-    QColor SuperiorSelectedColor( const QColor& base ) const;
     QColor KnowledgeColor( const QColor& base ) const;
     void ApplyColor( const QColor& color ) const;
     QColor FindTeamColor( const kernel::Entity_ABC& team );
-
     void Process( const kernel::Entity_ABC& entity );
-    QColor ApplySelectionStatus( const kernel::Entity_ABC& entity, const QColor& base );
+    QColor ApplyModifiers( const kernel::Entity_ABC& entity, const QColor& color );
     //@}
 
     //! @name Types 
     //@{
+    typedef boost::ptr_vector< ColorModifier_ABC >                                T_Modifiers;
     typedef std::vector< QColor >                                                 T_Colors;
     typedef std::map< const kernel::Entity_ABC*, std::pair< QColor, T_Colors* > > T_TeamColors;
     //@}
@@ -103,8 +100,7 @@ private:
     kernel::Controllers& controllers_;
     kernel::GlTools_ABC& tools_;
 
-    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
-
+    T_Modifiers  modifiers_;
     T_TeamColors teamColors_;
     T_Colors     friendlyAvailable_;
     T_Colors     enemyAvailable_;

@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "LayersRenderPass.h"
-#include "GlWidget.h"
+#include "MapWidget_ABC.h"
 
 using namespace gui;
 
@@ -17,7 +17,7 @@ using namespace gui;
 // Name: LayersRenderPass constructor
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-LayersRenderPass::LayersRenderPass( GlWidget& widget, const std::string& name, bool clear )
+LayersRenderPass::LayersRenderPass( MapWidget_ABC& widget, const std::string& name, bool clear )
     : widget_( widget )
     , name_( name )
     , clear_( clear )
@@ -47,7 +47,7 @@ std::string LayersRenderPass::GetName() const
 // Name: LayersRenderPass::Render
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-void LayersRenderPass::Render( GlWidget& widget )
+void LayersRenderPass::Render( MapWidget_ABC& widget )
 {
     if( clear_ )
         glClear( GL_COLOR_BUFFER_BIT );
@@ -65,7 +65,7 @@ void LayersRenderPass::Render( GlWidget& widget )
 // -----------------------------------------------------------------------------
 unsigned int LayersRenderPass::Width() const
 {
-    return widget_.width();
+    return widget_.Width();
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ unsigned int LayersRenderPass::Width() const
 // -----------------------------------------------------------------------------
 unsigned int LayersRenderPass::Height() const
 {
-    return widget_.height();
+    return widget_.Height();
 }
 
 // -----------------------------------------------------------------------------
@@ -83,5 +83,5 @@ unsigned int LayersRenderPass::Height() const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f LayersRenderPass::Viewport() const
 {
-    return widget_.GetViewport();
+    return widget_.Viewport();
 }

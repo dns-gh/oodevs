@@ -86,6 +86,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/ColorStrategy.h"
+#include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
 #include "clients_gui/Elevation3dLayer.h"
@@ -151,6 +152,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
+    strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
 
     selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
     selector_->AddIcon( xpm_cadenas        , -200, 270 );
@@ -180,7 +182,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new OrbatToolbar( box, controllers, profile, *automatsLayer );
     QTabWidget* pListsTabWidget = new QTabWidget( box );
 
-    SymbolIcons* symbols = new SymbolIcons( this );
+    SymbolIcons* symbols = new SymbolIcons( this, *glProxy_ );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     EntitySymbols* icons = new EntitySymbols( *symbols, *strategy_ );
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );

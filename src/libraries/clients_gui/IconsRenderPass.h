@@ -13,10 +13,14 @@
 #include "GlRenderPass_ABC.h"
 #include "SymbolIcon.h"
 
+namespace kernel
+{
+    class GlTools_ABC;
+}
+
 namespace gui
 {
     class IconHandler_ABC;
-    class GlWidget;
 
 // =============================================================================
 /** @class  IconsRenderPass
@@ -30,7 +34,7 @@ class IconsRenderPass : public GlRenderPass_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IconsRenderPass();
+    explicit IconsRenderPass( kernel::GlTools_ABC& tools );
     virtual ~IconsRenderPass();
     //@}
 
@@ -39,7 +43,7 @@ public:
     void CreateIcon( const SymbolIcon& symbol, IconHandler_ABC& handler );
 
     virtual std::string GetName() const;
-    virtual void Render( GlWidget& widget );
+    virtual void Render( MapWidget_ABC& widget );
     virtual unsigned int Width() const;
     virtual unsigned int Height() const;
     virtual geometry::Rectangle2f Viewport() const;
@@ -61,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    void RenderIcon( const T_IconTask& task, GlWidget& widget );
+    void RenderIcon( const T_IconTask& task );
     //@}
 
 private:
@@ -72,6 +76,7 @@ private:
 
     //! @name Member data
     //@{
+    kernel::GlTools_ABC& tools_;
     const geometry::Rectangle2f viewport_;
     T_IconTasks tasks_;
     //@}

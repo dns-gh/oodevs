@@ -9,8 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "IconsRenderPass.h"
-#include "GlWidget.h"
 #include "IconHandler_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include <qbitmap.h>
 
 using namespace gui;
@@ -19,8 +19,9 @@ using namespace gui;
 // Name: IconsRenderPass constructor
 // Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
-IconsRenderPass::IconsRenderPass()
-    : viewport_( 0, 0, 600, 600 )
+IconsRenderPass::IconsRenderPass( kernel::GlTools_ABC& tools )
+    : tools_   ( tools )
+    , viewport_( 0, 0, 600, 600 )
 {
     // NOTHING
 }
@@ -56,11 +57,11 @@ std::string IconsRenderPass::GetName() const
 // Name: IconsRenderPass::Render
 // Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
-void IconsRenderPass::Render( GlWidget& widget )
+void IconsRenderPass::Render( MapWidget_ABC& )
 {
     glEnable( GL_LINE_SMOOTH );
     for( CIT_IconTasks it = tasks_.begin(); it != tasks_.end(); ++it )
-        RenderIcon( *it, widget );
+        RenderIcon( *it );
     tasks_.clear();
     glDisable( GL_LINE_SMOOTH );
 }
@@ -69,20 +70,18 @@ void IconsRenderPass::Render( GlWidget& widget )
 // Name: IconsRenderPass::RenderIcon
 // Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
-void IconsRenderPass::RenderIcon( const T_IconTask& task, GlWidget& widget )
+void IconsRenderPass::RenderIcon( const T_IconTask& task )
 {
     QImage image( iconSide_, iconSide_, 32 );
     glColor3f( 1, 1, 1 );
     glRectf( viewport_.Left() - 50, viewport_.Bottom() - 50, viewport_.Right() + 50, viewport_.Top() + 50 );
     const SymbolIcon& symbol = task.first;
-    widget.SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
-//    windowWidth_ = windowHeight_ = viewport_.Width() * 1.5f; // => trait svg de 2 px
+    tools_.SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
     const float thickness = viewport_.Width() * 1.5f / iconSide_;
     const geometry::Point2f center( 300, 100 );
-    widget.DrawApp6Symbol( symbol.symbol_, center, 1.f, thickness );
+    tools_.DrawApp6Symbol( symbol.symbol_, center, 1.f, thickness );
     if( ! symbol.level_.empty() )
-        widget.DrawApp6Symbol( symbol.level_, center, 1.f, thickness );
-//    windowWidth_ = windowHeight_ = iconSide_;
+        tools_.DrawApp6Symbol( symbol.level_, center, 1.f, thickness );
 
     glFlush();
     glReadPixels( 0, 0, iconSide_, iconSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
