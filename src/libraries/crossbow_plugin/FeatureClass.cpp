@@ -10,6 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "FeatureClass.h"
 #include "FeatureRow.h"
+#include <boost/lexical_cast.hpp>
 
 namespace
 {
@@ -100,10 +101,8 @@ namespace
         BSTR strError;
         ::GetErrorInfo( 0, &ipError );
         ipError->GetDescription( &strError );
-
-        TCHAR szFinal[ 255 ];
-        sprintf_s( szFinal, _T( "%s" ), ( LPCTSTR )_bstr_t( strError ) );
-        MT_LOG_ERROR_MSG( szFinal ); // $$$$ SBO 2007-08-24: should throw
+        const std::string error = boost::lexical_cast< std::string >( _bstr_t( strError ) );
+        MT_LOG_ERROR_MSG( error ); // $$$$ SBO 2008-05-15: should throw
     }
 }
 

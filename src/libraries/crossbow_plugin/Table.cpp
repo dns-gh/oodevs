@@ -10,6 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "Table.h"
 #include "Row.h"
+#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Table constructor
@@ -43,9 +44,8 @@ namespace
         ::GetErrorInfo( 0, &ipError );
         ipError->GetDescription( &strError );
 
-        TCHAR szFinal[ 255 ];
-        _stprintf_s( szFinal, _T( "%s" ), ( LPCTSTR )_bstr_t( strError ) );
-        MT_LOG_ERROR_MSG( szFinal ); // $$$$ SBO 2007-08-24: should throw
+        const std::string error = boost::lexical_cast< std::string >( _bstr_t( strError ) );
+        MT_LOG_ERROR_MSG( error ); // $$$$ SBO 2007-08-24: should throw
     }
 }
 
