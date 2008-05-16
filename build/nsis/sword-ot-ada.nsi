@@ -111,7 +111,7 @@ Section "!Basic"
     File "${RUNDIR}\bugtrap.dll"
     File "${RUNDIR}\population-${PLATFORM}-mt.dll"
     File "${RUNDIR}\shapelib.dll"
-    File "${RUNDIR}\*.manifest"
+    File /nonfatal "${RUNDIR}\*.manifest"
     File "*.ico"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
