@@ -16,17 +16,20 @@
 !include AdvUninstLog.nsh
 ;..................................................................................................
 
+!ifndef PLATFORM
+    !define PLATFORM "vc80"
+!endif
 !ifndef RUNDIR
-    !define RUNDIR "..\..\run\vc71"
+    !define RUNDIR "..\..\run\${PLATFORM}"
 !endif
 !ifndef DATADIR
     !define DATADIR "..\..\data"
 !endif
 !ifndef LIBDIR
-    !define LIBDIR "..\..\lib\vc71"
+    !define LIBDIR "..\..\lib\${PLATFORM}"
 !endif
 !ifndef OUTDIR
-    !define OUTDIR "..\..\out\vc71"
+    !define OUTDIR "..\..\out\${PLATFORM}"
 !endif
 !ifndef DISTDIR
     !define DISTDIR "."
@@ -77,6 +80,7 @@ Section "!Basic"
     File "${OUTDIR}\release\applications\simulation_app\*.exe"
     File "${OUTDIR}\release\applications\replayer_app\*.exe"
     File "${OUTDIR}\release\applications\frontend_app\*.exe"
+    File "${OUTDIR}\generation_app\*.exe"
     File "${RUNDIR}\*.qm"
     File "${RUNDIR}\symbols.pak"
     File "${RUNDIR}\symbols.xml"
@@ -99,16 +103,15 @@ Section "!Basic"
     File "${RUNDIR}\libFedTime.dll"
     File "${RUNDIR}\libRTI-NG.dll"
     File "${RUNDIR}\librtiInternalIntercept.dll"
-    ;File "${RUNDIR}\msvcp71.dll"
-    ;File "${RUNDIR}\msvcr71.dll"
+    File /x "msvc*d.dll" "${RUNDIR}\msvc*.dll"
     File "${RUNDIR}\qt-*.dll"
     File "${RUNDIR}\userDdm.dll"
     File "${RUNDIR}\xerces-c_2_7.dll"
     File "${RUNDIR}\zlib1.dll"
     File "${RUNDIR}\bugtrap.dll"
-    File "${RUNDIR}\population-vc71-mt.dll"
+    File "${RUNDIR}\population-${PLATFORM}-mt.dll"
     File "${RUNDIR}\shapelib.dll"
-    File "${OUTDIR}\generation_app\*.exe"
+    File "${RUNDIR}\*.manifest"
     File "*.ico"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
@@ -128,15 +131,6 @@ Section "!Basic"
 	WriteRegStr HKCR "Officer Training Package\shell" "" "open"
 	WriteRegStr HKCR "Officer Training Package\DefaultIcon" "" "$INSTDIR\applications\sword-ot.ico"
 	WriteRegStr HKCR "Officer Training Package\shell\open\command" "" '$INSTDIR\applications\frontend_app.exe --install="%1"'
-	
-	; vcredist
-	SetOutPath $TEMP
-    File /oname=vcredist_x86_rtm.exe "${OUTDIR}\vcredist_x86\rtm\vcredist_x86.exe"
-    ExecWait '"$TEMP\vcredist_x86_rtm.exe" /q:a /c:"VCREDI~1.EXE /q:a /c:""msiexec /i vcredist.msi /q"" "'
-    Delete "$TEMP\vcredist_x86_rtm.exe"
-    File /oname=vcredist_x86_sp1.exe "${OUTDIR}\vcredist_x86\sp1\vcredist_x86.exe"
-    ExecWait '"$TEMP\vcredist_x86_sp1.exe" /q:a /c:"VCREDI~3.EXE /q:a /c:""msiexec /i vcredist.msi /q"" "'
-    Delete "$TEMP\vcredist_x86_sp1.exe"
 SectionEnd
 
 Section "Terrains"
