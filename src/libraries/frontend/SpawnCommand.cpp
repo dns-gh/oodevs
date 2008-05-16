@@ -71,16 +71,16 @@ void SpawnCommand::AddSessionArgument( const QString& session )
 void SpawnCommand::Start()
 {
     STARTUPINFO startupInfo = { sizeof( STARTUPINFOA ), 0, 0, 0,
-	    (ulong)CW_USEDEFAULT, (ulong)CW_USEDEFAULT, (ulong)CW_USEDEFAULT, (ulong)CW_USEDEFAULT,
-	    0, 0, 0,
-	    0,
-	    0, 0, 0,
-	    0, 0, 0
-	};
+        (ulong)CW_USEDEFAULT, (ulong)CW_USEDEFAULT, (ulong)CW_USEDEFAULT, (ulong)CW_USEDEFAULT,
+        0, 0, 0,
+        0,
+        0, 0, 0,
+        0, 0, 0
+    };
     PROCESS_INFORMATION pid;
     if( !CreateProcessA( 0, commandLine_.local8Bit().data(),
-		        0, 0, TRUE, CREATE_NEW_CONSOLE, 0,
-		        ".", &startupInfo, &pid ) )
+                0, 0, TRUE, CREATE_NEW_CONSOLE, 0,
+                ".", &startupInfo, &pid ) )
         throw std::runtime_error( "Could not start process" );
 }
 
