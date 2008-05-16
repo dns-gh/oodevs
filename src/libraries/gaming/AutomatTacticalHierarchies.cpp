@@ -116,6 +116,8 @@ std::string AutomatTacticalHierarchies::Max( const std::string& lhs, const std::
 // -----------------------------------------------------------------------------
 std::string AutomatTacticalHierarchies::Increase( const std::string& value )
 {
+    if( value.empty() )
+        return "";
     const unsigned count = Count( value );
     const char level = Level( value );
     if( count < 3 || level == 'x' )
@@ -130,7 +132,7 @@ std::string AutomatTacticalHierarchies::Increase( const std::string& value )
 // -----------------------------------------------------------------------------
 char AutomatTacticalHierarchies::Level( const std::string& value )
 {
-    return *value.rbegin();
+    return value.empty() ? 0 : *value.rbegin();
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +141,9 @@ char AutomatTacticalHierarchies::Level( const std::string& value )
 // -----------------------------------------------------------------------------
 unsigned AutomatTacticalHierarchies::Count( const std::string& value )
 {
-    char level = Level( value );
+    if( value.empty() )
+        return 0;
+    const char level = Level( value );
     unsigned count = 0;
     while( value[ value.size() - count - 1 ] == level )
         ++count;
