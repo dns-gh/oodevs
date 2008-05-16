@@ -51,6 +51,7 @@
 #include "SimulationLighting.h"
 #include "IntelligencesLayer.h"
 #include "Properties.h"
+#include "LoggerProxy.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -128,7 +129,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, tools::ExerciseConfig& config, const QString& license )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, tools::ExerciseConfig& config, LoggerProxy& logger, const QString& license )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )
@@ -254,8 +255,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pLogDockWnd_->setCloseMode( QDockWindow::Always );
     pLogDockWnd_->setCaption( tr( "Log" ) );
     setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
-    connect( pLogPanel_, SIGNAL( Error() ), pLogDockWnd_, SLOT( show() ) );
+    connect( pLogPanel_, SIGNAL( EmitError() ), pLogDockWnd_, SLOT( show() ) );
     pLogDockWnd_->hide();
+    logger.SetLogger( *pLogPanel_ );
 
     // Info
     QDockWindow* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory );
@@ -290,7 +292,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( pCreationWnd, Qt::DockTop, false );
 
     new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );
-    new SIMControlToolbar( this, controllers, network, publisher );
+    new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel_ );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     new DisplayToolbar( this, controllers );
     new EventToolbar( this, controllers, profile );

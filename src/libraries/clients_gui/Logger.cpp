@@ -12,10 +12,9 @@
 #include "clients_gui_pch.h"
 #include "Logger.h"
 #include "moc_Logger.cpp"
-
-#include "MT/MT_Logger/MT_logger_lib.h"
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
+#include <qdatetime.h>
 
 using namespace gui;
 
@@ -25,11 +24,8 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory )
     : QListView( pParent )
-    , MT_Logger_ABC ()
     , factory_( factory )
 {
-    MT_LogManager::Instance().RegisterLogger( *this );
-
     setMinimumSize( 1, 1 );
     setShowSortIndicator( true );
     setSorting( -1 );
@@ -44,65 +40,70 @@ Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory )
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Logger destructor
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
 Logger::~Logger()
 {
-    MT_LogManager::Instance().UnregisterLogger( *this );
+    // NOTHING
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: Logger::Info
+// Created: AGE 2008-05-16
+// -----------------------------------------------------------------------------
+Logger::LogElement Logger::Info()
 {
-    QColor ChooseMessageColor( MT_Logger_ABC::E_LogLevel level )
-    {
-        switch( level )
-        {
-        case MT_Logger_ABC::eLogLevel_Error:
-        case MT_Logger_ABC::eLogLevel_FatalError: 
-            return Qt::red;
-        case MT_Logger_ABC::eLogLevel_Warning:
-            return Qt::darkRed;
-        case MT_Logger_ABC::eLogLevel_Message:
-        case MT_Logger_ABC::eLogLevel_Info:
-            return Qt::black;
-        };
-        return Qt::darkBlue;
-    };
-
-    bool IsErrorMesssage( MT_Logger_ABC::E_LogLevel level )
-    {
-        return ( level & ( MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError | MT_Logger_ABC::eLogLevel_Warning ) ) != 0;
-    };
+    return StartLog( Qt::black, false );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Logger::Warning
+// Created: AGE 2008-05-16
+// -----------------------------------------------------------------------------
+Logger::LogElement Logger::Warning()
+{
+    return StartLog( Qt::darkRed, true );
+}
 
 // -----------------------------------------------------------------------------
-// Name: Logger::LogString
-// Created: APE 2004-06-02
+// Name: Logger::Error
+// Created: AGE 2008-05-16
 // -----------------------------------------------------------------------------
-void Logger::LogString( const char* /*szLayerName*/, E_LogLevel nLevel, const char* szMsg, const char* szContext, int /*code*/ )
+Logger::LogElement Logger::Error()
+{
+    return StartLog( Qt::red, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Logger::StartLog
+// Created: AGE 2008-05-16
+// -----------------------------------------------------------------------------
+Logger::LogElement Logger::StartLog( const QColor& color, bool popup )
 {
     ValuedListItem* pItem = factory_.CreateItem( this );
-    pItem->setText( 0, GetTimestampAsString() );
-    pItem->setText( 1, szMsg );
-    const QColor itemColor = ChooseMessageColor( nLevel );
-    pItem->SetFontColor( itemColor );
-
-    if( szContext != 0 )
-    {
-        ValuedListItem* pSubItem = factory_.CreateItem( pItem );
-        pSubItem->setText( 1, szContext );
-        pSubItem->setMultiLinesEnabled( true );
-        pSubItem->SetFontColor( itemColor );
-    }
-
-    if( IsErrorMesssage( nLevel ) )
-        emit Error();
+    pItem->setText( 0, QTime::currentTime().toString() );
+    pItem->SetFontColor( color );
+    std::stringstream* output = new std::stringstream();
+    items_[ output ] = T_Item( pItem, popup );
+    return LogElement( *this, *output );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Logger::End
+// Created: AGE 2008-05-16
+// -----------------------------------------------------------------------------
+void Logger::End( std::stringstream& output )
+{
+    T_Item& item = items_[ &output ];
+    if( item.first )
+        item.first->setText( 1, output.str().c_str() );
+    if( item.second )
+        emit EmitError();
+    items_.erase( &output );
+    delete &output;
+}
 
 // -----------------------------------------------------------------------------
 // Name: Logger::OnRequestPopup

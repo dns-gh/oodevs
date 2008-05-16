@@ -11,7 +11,7 @@
 #define __Logger_h_
 
 #include "Types.h"
-#include "MT/MT_logger/MT_Logger_ABC.h"
+#include "clients_kernel/Logger_ABC.h"
 
 namespace gui
 {
@@ -23,7 +23,7 @@ namespace gui
 */
 // Created: APE 2004-06-02
 // =============================================================================
-class Logger : public QListView, public MT_Logger_ABC
+class Logger : public QListView, public kernel::Logger_ABC
 {
     Q_OBJECT;
 
@@ -34,10 +34,17 @@ public:
     virtual ~Logger();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual LogElement Info();
+    virtual LogElement Warning();
+    virtual LogElement Error();
+    //@}
+
 protected:
     //! @name Operations
     //@{
-    void LogString( const char* szLayerName, E_LogLevel nLevel, const char* szMsg, const char* szContext, int nCode );
+    virtual void End( std::stringstream& output );
     QSize sizeHint() const { return QSize( 400, 250 ); }
     //@}
 
@@ -50,7 +57,7 @@ private slots:
 signals:
     //! @name Signals
     //@{
-    void Error();
+    void EmitError();
     //@}
 
 private:
@@ -60,11 +67,23 @@ private:
     Logger& operator=( const Logger& );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::pair< QListViewItem*, bool >      T_Item;
+    typedef std::map< std::stringstream*, T_Item > T_Items;
+    //@}
+
+    //! @name Helpers
+    //@{
+    LogElement StartLog( const QColor& color, bool popup );
+    //@}
+
 private:
     //! @name Member data
     //@{
     ItemFactory_ABC& factory_;
     QPopupMenu popupMenu_;
+    T_Items items_;
     //@}
 };
 

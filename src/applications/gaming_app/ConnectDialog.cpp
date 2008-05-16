@@ -12,15 +12,16 @@
 #include "ConnectDialog.h"
 #include "moc_ConnectDialog.cpp"
 #include "gaming/Network.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include "clients_kernel/Logger_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog constructor
 // Created:  NLD 2002-01-03 
 //-----------------------------------------------------------------------------
-ConnectDialog::ConnectDialog( QWidget* pParent, Network& network )
+ConnectDialog::ConnectDialog( QWidget* pParent, Network& network, kernel::Logger_ABC& logger )
     : QDialog ( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title ) 
     , network_( network )
+    , logger_ ( logger )
 {
     setCaption( tr("Connection parameters") );
 
@@ -80,11 +81,9 @@ void ConnectDialog::Validate()
     }
     catch ( std::exception& e )
     {
-        std::stringstream strMsgTitle;
-        std::stringstream strMsg;
-        strMsgTitle << "Non connecté à " << pHostNameComboBox_->currentText().ascii() << ":" << pPortSpinBox_->value();
-        strMsg << "Raison :" << std::endl << e.what();
-        MT_LOG_INFO( strMsgTitle.str().c_str(), 0, strMsg.str().c_str() );
+        logger_.Info() << "Non connecté à " << pHostNameComboBox_->currentText().ascii() << ":" << pPortSpinBox_->value() << "\n"
+                       << "Raison :" << "\n"
+                       << e.what();
         reject();
         return;
     }

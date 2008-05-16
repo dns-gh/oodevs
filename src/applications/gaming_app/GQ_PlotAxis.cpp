@@ -479,9 +479,6 @@ void GQ_PlotAxis::SetAxisLength( unsigned int nLength )
     if( nLength == nAxisLength_ || nLength <= 1 )
         return;
 
-//    if( nLength <= 1 )
-//        throw MT_Exception( "GQ_PlotAxis", 0, "null axis length forbidden." );
-
     nAxisLength_ = nLength;
     Touch();
 }

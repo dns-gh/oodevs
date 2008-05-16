@@ -39,6 +39,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Logger_ABC.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "tools/MessageSender_ABC.h"
 #include <ctime>
@@ -51,11 +52,12 @@ using namespace tools;
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, MessageSender_ABC& sender, Simulation& simu, Profile& profile )
+AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, MessageSender_ABC& sender, Simulation& simu, Profile& profile, kernel::Logger_ABC& logger )
     : dispatcher_      ( dispatcher )
     , sender_          ( sender )
     , simulation_      ( simu )
     , profile_         ( profile )
+    , logger_          ( logger )
 {
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgSimToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient );
@@ -229,7 +231,7 @@ void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const ASN1T_MsgDebugPoints&
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlPauseAck( const ASN1T_MsgControlPauseAck& message )
 {
-    if( CheckAcknowledge( message, "ControlPauseAck" ) )
+    if( CheckAcknowledge( logger_, message, "ControlPauseAck" ) )
         simulation_.Pause( true );
 }
 
@@ -239,7 +241,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlPauseAck( const ASN1T_MsgControlPause
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlResumeAck( const ASN1T_MsgControlResumeAck& message )
 {
-    if( CheckAcknowledge( message, "ControlResumeAck" ) )
+    if( CheckAcknowledge( logger_, message, "ControlResumeAck" ) )
         simulation_.Pause( false );
 }
 
@@ -249,7 +251,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlResumeAck( const ASN1T_MsgControlResu
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlChangeTimeFactorAck( const ASN1T_MsgControlChangeTimeFactorAck& message )
 {
-    if( CheckAcknowledge( message, "ControlTimeFactorAck" ) )
+    if( CheckAcknowledge( logger_, message, "ControlTimeFactorAck" ) )
         simulation_.ChangeSpeed( (int)message.time_factor );
 }
 
@@ -259,7 +261,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlChangeTimeFactorAck( const ASN1T_MsgC
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlDatetimeChangeAck( const ASN1T_MsgControlDatetimeChangeAck& message )
 {
-    CheckAcknowledge( message, "ControlDatetimeChangeAck" );
+    CheckAcknowledge( logger_, message, "ControlDatetimeChangeAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +270,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlDatetimeChangeAck( const ASN1T_MsgCon
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlSkipToTickAck( const ASN1T_MsgControlSkipToTickAck& message )
 {
-    CheckAcknowledge( message, "ControlSkipToTickAck" );
+    CheckAcknowledge( logger_, message, "ControlSkipToTickAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -331,7 +333,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfileCreation( const ASN1T_MsgProfileCreat
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgProfileCreationRequestAck( const ASN1T_MsgProfileCreationRequestAck& message )
 {
-    CheckAcknowledge( message, "ProfileCreationRequestAck" );
+    CheckAcknowledge( logger_, message, "ProfileCreationRequestAck" );
     // $$$$ SBO 2007-01-19: display profile name + error
 }
 
@@ -351,7 +353,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfileDestruction( const ASN1T_MsgProfileDe
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgProfileDestructionRequestAck( const ASN1T_MsgProfileDestructionRequestAck& message )
 {
-    CheckAcknowledge( message, "ProfileDestructionRequestAck" );
+    CheckAcknowledge( logger_, message, "ProfileDestructionRequestAck" );
     // $$$$ SBO 2007-01-19: display profile name + error
 }
 
@@ -372,7 +374,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfileUpdate( const ASN1T_MsgProfileUpdate&
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgProfileUpdateRequestAck( const ASN1T_MsgProfileUpdateRequestAck& message )
 {
-    CheckAcknowledge( message, "ProfileUpdateRequestAck" );
+    CheckAcknowledge( logger_, message, "ProfileUpdateRequestAck" );
     // $$$$ SBO 2007-01-19: display profile name + error
 }
 
@@ -517,7 +519,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyQuotas( const ASN1T_MsgLogSupplyQuo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogSupplyChangeQuotasAck& message, unsigned long )
 {
-    CheckAcknowledge( message, "MsgLogSupplyChangeQuotasAck" );
+    CheckAcknowledge( logger_, message, "MsgLogSupplyChangeQuotasAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -526,7 +528,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyPushFlowAck( const ASN1T_MsgLogSupplyPushFlowAck& message, unsigned long )
 {
-    CheckAcknowledge( message, "MsgLogSupplyPushFlowAck" );
+    CheckAcknowledge( logger_, message, "MsgLogSupplyPushFlowAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -544,7 +546,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitPathFind( const ASN1T_MsgUnitPathFind& m
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( message, "UnitMagicActionAck" );
+    CheckAcknowledge( logger_, message, "UnitMagicActionAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -553,7 +555,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagic
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectMagicActionAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( message, "ObjectMagicActionAck" );
+    CheckAcknowledge( logger_, message, "ObjectMagicActionAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -562,7 +564,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectM
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobalAck()
 {
-    CheckAcknowledge( "ControlGlobalMeteoAck" );
+    CheckAcknowledge( logger_, "ControlGlobalMeteoAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -571,7 +573,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobalAck()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalAck()
 {
-    CheckAcknowledge( "ControlLocalMeteoAck" );
+    CheckAcknowledge( logger_, "ControlLocalMeteoAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -625,7 +627,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSetFrequencyAck()
 {
-    CheckAcknowledge( "ControlCheckPointSetFrequencyAck" );
+    CheckAcknowledge( logger_, "ControlCheckPointSetFrequencyAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -634,7 +636,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSetFrequencyAck()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 {
-    CheckAcknowledge( "ControlCheckPointSetSaveNowAck" );
+    CheckAcknowledge( logger_, "ControlCheckPointSetSaveNowAck" );
 }
 
 //=============================================================================
@@ -647,7 +649,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitCreationRequestAck( const ASN1T_MsgLimitCreationRequestAck& message)
 {
-    CheckAcknowledge( message, "LimitCreationAck" );
+    CheckAcknowledge( logger_, message, "LimitCreationAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -656,7 +658,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationRequestAck( const ASN1T_MsgLimi
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitUpdateRequestAck( const ASN1T_MsgLimitUpdateRequestAck& message)
 {
-    CheckAcknowledge( message, "LimitUpdateAck" );
+    CheckAcknowledge( logger_, message, "LimitUpdateAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -665,7 +667,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdateRequestAck( const ASN1T_MsgLimitU
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitDestructionRequestAck( const ASN1T_MsgLimitDestructionRequestAck& message)
 {
-    CheckAcknowledge( message, "LimitDestructionAck" );
+    CheckAcknowledge( logger_, message, "LimitDestructionAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -674,7 +676,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestructionRequestAck( const ASN1T_MsgL
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaCreationRequestAck( const ASN1T_MsgLimaCreationRequestAck& message)
 {
-    CheckAcknowledge( message, "LimaCreationAck" );
+    CheckAcknowledge( logger_, message, "LimaCreationAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -683,7 +685,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreationRequestAck( const ASN1T_MsgLimaC
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaUpdateRequestAck( const ASN1T_MsgLimaUpdateRequestAck& message)
 {
-    CheckAcknowledge( message, "LimaUpdateAck" );
+    CheckAcknowledge( logger_, message, "LimaUpdateAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -692,7 +694,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaUpdateRequestAck( const ASN1T_MsgLimaUpd
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaDestructionRequestAck( const ASN1T_MsgLimaDestructionRequestAck& message)
 {
-    CheckAcknowledge( message, "LimaDestructionAck" );
+    CheckAcknowledge( logger_, message, "LimaDestructionAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -721,7 +723,6 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestruction( const ASN1T_MsgLimitDestru
 {
     GetModel().limits_.DeleteLimit( message );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaCreation
@@ -765,7 +766,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatOrder( const ASN1T_MsgAutomatOrder& a
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatOrderAck( const ASN1T_MsgAutomatOrderAck& message, unsigned long /*nCtx*/ )
 {
-    if( CheckAcknowledge( message, "AutomatOrderAck" ) )
+    if( CheckAcknowledge( logger_, message, "AutomatOrderAck" ) )
         GetModel().agents_.GetAutomat( message.oid ).Update( message );
 }
 
@@ -775,7 +776,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatOrderAck( const ASN1T_MsgAutomatOrder
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitOrderAck( const ASN1T_MsgUnitOrderAck& message, unsigned long /*nCtx*/ )
 {
-    if( CheckAcknowledge( message, "UnitOrderAck" ) )
+    if( CheckAcknowledge( logger_, message, "UnitOrderAck" ) )
         GetModel().agents_.GetAgent( message.oid ).Update( message );
 }
 
@@ -794,7 +795,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitOrder( const ASN1T_MsgUnitOrder& message
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgFragOrderAck( const ASN1T_MsgFragOrderAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( message, "FragOrderAck" );
+    CheckAcknowledge( logger_, message, "FragOrderAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -803,7 +804,7 @@ void AgentServerMsgMgr::OnReceiveMsgFragOrderAck( const ASN1T_MsgFragOrderAck& m
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitCreationRequestAck( const ASN1T_MsgUnitCreationRequestAck& message )
 {
-    CheckAcknowledge( message, "UnitCreationRequestAck" );
+    CheckAcknowledge( logger_, message, "UnitCreationRequestAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -848,7 +849,7 @@ void AgentServerMsgMgr::OnReceiveMsgDecisionalState( const ASN1T_MsgDecisionalSt
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomatModeAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( message, "SetAutomatModeAck" );
+    CheckAcknowledge( logger_, message, "SetAutomatModeAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -857,7 +858,7 @@ void AgentServerMsgMgr::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomat
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperiorAck( const ASN1T_MsgUnitChangeSuperiorAck& message, unsigned long )
 {
-    CheckAcknowledge( message, "UnitChangeSuperiorAck" );
+    CheckAcknowledge( logger_, message, "UnitChangeSuperiorAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -875,7 +876,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperior( const ASN1T_MsgUnitChang
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomacyAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "ChangeDiplomacyAck" ) )
+    if( CheckAcknowledge( logger_, message, "ChangeDiplomacyAck" ) )
     {
         GetModel().teams_.GetTeam( message.oid_camp1 ).Update( message );
         GetModel().teams_.GetTeam( message.oid_camp2 ).Update( message );
@@ -897,7 +898,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperior( const ASN1T_MsgAutoma
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeSuperiorAck( const ASN1T_MsgAutomatChangeSuperiorAck& message, unsigned long )
 {
-    CheckAcknowledge( message, "AutomatChangeSuperiorAck" );
+    CheckAcknowledge( logger_, message, "AutomatChangeSuperiorAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -915,7 +916,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroup( const ASN1T_Msg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroupAck( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& message, unsigned long )
 {
-    CheckAcknowledge( message, "AutomatChangeKnowledgeGroupAck" );
+    CheckAcknowledge( logger_, message, "AutomatChangeKnowledgeGroupAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -933,7 +934,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinks( const ASN1T_MsgA
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinksAck( const ASN1T_MsgAutomatChangeLogisticLinksAck& message, unsigned long )
 {
-    CheckAcknowledge( message, "AutomatChangeLogisticLinksAck" );
+    CheckAcknowledge( logger_, message, "AutomatChangeLogisticLinksAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1259,7 +1260,7 @@ void AgentServerMsgMgr::OnMsgPopulationFlowUpdate( const ASN1T_MsgPopulationFlow
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& message, unsigned long )
 {
-    CheckAcknowledge( message, "PopulationMagicActionAck" );
+    CheckAcknowledge( logger_, message, "PopulationMagicActionAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1268,7 +1269,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPop
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationOrderAck( const ASN1T_MsgPopulationOrderAck& message, unsigned long )
 {
-    CheckAcknowledge( message, "PopulationOrderAck" );
+    CheckAcknowledge( logger_, message, "PopulationOrderAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1340,7 +1341,7 @@ void AgentServerMsgMgr::OnReceiveMsgIntelligenceDestruction( const ASN1T_MsgInte
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgIntelligenceCreationRequestAck( const ASN1T_MsgIntelligenceCreationRequestAck& message )
 {
-    CheckAcknowledge( message, "IntelligenceCreationRequestAck" );
+    CheckAcknowledge( logger_, message, "IntelligenceCreationRequestAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1349,7 +1350,7 @@ void AgentServerMsgMgr::OnReceiveMsgIntelligenceCreationRequestAck( const ASN1T_
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgIntelligenceUpdateRequestAck( const ASN1T_MsgIntelligenceUpdateRequestAck& message )
 {
-    CheckAcknowledge( message, "IntelligenceUpdateRequestAck" );
+    CheckAcknowledge( logger_, message, "IntelligenceUpdateRequestAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1358,7 +1359,7 @@ void AgentServerMsgMgr::OnReceiveMsgIntelligenceUpdateRequestAck( const ASN1T_Ms
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgIntelligenceDestructionRequestAck( const ASN1T_MsgIntelligenceDestructionRequestAck& message )
 {
-    CheckAcknowledge( message, "IntelligenceDestructionRequestAck" );
+    CheckAcknowledge( logger_, message, "IntelligenceDestructionRequestAck" );
 }
 
 // -----------------------------------------------------------------------------

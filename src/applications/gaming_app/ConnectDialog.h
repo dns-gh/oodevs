@@ -15,6 +15,11 @@
 
 #include "clients_gui/Types.h"
 
+namespace kernel
+{
+    class Logger_ABC;
+}
+
 class QComboBox;
 class QSpinBox;
 class QCheckBox;
@@ -31,7 +36,7 @@ class ConnectDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-             ConnectDialog( QWidget* pParent, Network& network );
+             ConnectDialog( QWidget* pParent, Network& network, kernel::Logger_ABC& logger );
     virtual ~ConnectDialog();
     //@}
 
@@ -63,7 +68,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Network&     network_;
+    Network&            network_;
+    kernel::Logger_ABC& logger_;
     QComboBox*   pHostNameComboBox_;
     QSpinBox*    pPortSpinBox_;
     //@}

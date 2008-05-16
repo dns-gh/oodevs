@@ -17,6 +17,7 @@ namespace kernel
 {
     class Controllers;
     class Profile_ABC;
+    class Logger_ABC;
 }
 
 class ConnectDialog;
@@ -42,7 +43,7 @@ class SIMControlToolbar : public QToolBar
 public:
     //! @name Constructor/Destructor
     //@{
-             SIMControlToolbar( QMainWindow* pParent, kernel::Controllers& controllers, Network& network, Publisher_ABC& publisher );
+             SIMControlToolbar( QMainWindow* pParent, kernel::Controllers& controllers, Network& network, Publisher_ABC& publisher, kernel::Logger_ABC& logger );
     virtual ~SIMControlToolbar();
     //@}
 

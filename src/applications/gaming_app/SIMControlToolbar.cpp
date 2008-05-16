@@ -73,7 +73,7 @@ namespace
 // Name: SIMControlToolbar constructor
 // Created: FBD 03-01-14
 //-----------------------------------------------------------------------------
-SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network, Publisher_ABC& publisher )
+SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network, Publisher_ABC& publisher, kernel::Logger_ABC& logger )
     : QToolBar( pParent, "sim control toolbar" )
     , controllers_( controllers )
     , publisher_( publisher )
@@ -129,7 +129,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
         connect( lineEdit, SIGNAL( returnPressed() ), SLOT( SlotNamedCheckPoint() ) );
     }
 
-    pConnectDlg_ = new ConnectDialog( this, network );
+    pConnectDlg_ = new ConnectDialog( this, network, logger );
     pConnectDlg_->SetContextMenu( pConnectButton_ );
     pConnectDlg_->hide();
 

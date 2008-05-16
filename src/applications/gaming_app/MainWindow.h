@@ -53,16 +53,11 @@ class MissionPanel;
 class CreationPanels;
 class LoginDialog;
 class Publisher_ABC;
+class LoggerProxy;
 
 // =============================================================================
 /** @class  MainWindow
     @brief  Main window of the application.
-
-    The main window serves as a transit point for nearly all GUI QT signals, whether
-    they are inter-GUI (ie. one GUI element signaling the others) or GUI-data.
-    This allows GUI objects to be independant: The only other element they know of
-    is the main window, and thus they can be moved around in the class hierachy
-    without having to redo the connexions every time.
 */
 // Created: APE 2004-03-01
 // =============================================================================
@@ -77,7 +72,9 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& profile, tools::ExerciseConfig& config, const QString& license );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation,
+                         Network& network, const kernel::Profile_ABC& profile, tools::ExerciseConfig& config, LoggerProxy& logger,
+                         const QString& license );
     virtual ~MainWindow();
     //@}
 

@@ -10,6 +10,11 @@
 #ifndef __LogTools_h_
 #define __LogTools_h_
 
+namespace kernel
+{
+    class Logger_ABC;
+}
+
 // =============================================================================
 /** @namespace log_tools
     @brief  log tools...
@@ -18,17 +23,17 @@
 // =============================================================================
 namespace log_tools
 {
-    bool CheckAcknowledge( int errorCode, const char* logMessage );
+    bool CheckAcknowledge( kernel::Logger_ABC& logger, int errorCode, const char* logMessage );
 
     inline
-    bool CheckAcknowledge( const char* logMessage ) {
-        return CheckAcknowledge( 0, logMessage );
+    bool CheckAcknowledge( kernel::Logger_ABC& logger, const char* logMessage ) {
+        return CheckAcknowledge( logger, 0, logMessage );
     }
 
     template< typename T >
-    bool CheckAcknowledge( const T& message, const char* logMessage, void(T::*)(void) = 0 )
+    bool CheckAcknowledge( kernel::Logger_ABC& logger, const T& message, const char* logMessage, void(T::*)(void) = 0 )
     {
-        return CheckAcknowledge( message.error_code, logMessage );
+        return CheckAcknowledge( logger, message.error_code, logMessage );
     }
 
 } // namespace

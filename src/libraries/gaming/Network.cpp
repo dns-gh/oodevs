@@ -10,12 +10,12 @@
 #include "gaming_pch.h"
 #include "Network.h"
 #include "clients_kernel/Types.h"
+#include "clients_kernel/Logger_ABC.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
 #include "Simulation.h"
 #include "Profile.h"
 #include "Tools.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
 
 #pragma warning( disable: 4127 4511 4512 )
 #include <boost/lexical_cast.hpp>
@@ -27,10 +27,11 @@ using namespace tools;
 // Name: Network constructor
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
-Network::Network( Simulation& simu, Profile& profile )
-    : simu_      ( simu )
-    , profile_   ( profile )
-    , manager_   ( new AgentServerMsgMgr( *this, *this, simu, profile ) )
+Network::Network( Simulation& simu, Profile& profile, kernel::Logger_ABC& logger )
+    : simu_   ( simu )
+    , profile_( profile )
+    , logger_ ( logger )
+    , manager_( new AgentServerMsgMgr( *this, *this, simu, profile, logger ) )
 {
     // NOTHING
 }
@@ -125,7 +126,7 @@ void Network::ConnectionSucceeded( const std::string& endpoint )
 {
     ClientNetworker::ConnectionSucceeded( endpoint );
     session_ = endpoint;
-    MT_LOG_INFO_MSG( tools::translate( "Network", "Connected to " ) << endpoint );
+    logger_.Info() << tools::translate( "Network", "Connected to " ) << endpoint;
     manager_->Connect( session_ );
     simu_.Connect( session_ );
     profile_.Login( *manager_ );
@@ -139,7 +140,7 @@ void Network::ConnectionFailed( const std::string& address, const std::string& e
 {
     ClientNetworker::ConnectionFailed( address, error );
     session_.clear();
-    MT_LOG_WARNING_MSG( tools::translate( "Network", "Not connected to " ) << address << tools::translate( "Network", " (cause :" ) << error << ")" );
+    logger_.Warning() << tools::translate( "Network", "Not connected to " ) << address << tools::translate( "Network", " (cause :" ) << error << ")";
     manager_->Disconnect();
     simu_.Disconnect();
 }
@@ -152,7 +153,7 @@ void Network::ConnectionError( const std::string& address, const std::string& er
 {
     ClientNetworker::ConnectionError( address, error );
     session_.clear();
-    MT_LOG_WARNING_MSG( tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " lost (cause :" ) << error << ")" );
+    logger_.Error() << tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " lost (cause :" ) << error << ")";
     manager_->Disconnect();
     simu_.Disconnect();
 }

@@ -13,6 +13,8 @@
 
 #include "MainWindow.h"
 #include "Config.h"
+#include "LoggerProxy.h"
+#include "RcEntityResolver.h"
 #include "gaming/Network.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Model.h"
@@ -21,7 +23,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Workers.h"
 #include "gaming/AgentServerMsgMgr.h"
-#include "RcEntityResolver.h"
 #include "ENT/ENT_Tr.h"
 
 using namespace kernel;
@@ -100,12 +101,13 @@ void Application::Initialize( int argc, char** argv )
     simulation_  = new Simulation( controllers_->controller_  );
     profile_     = new Profile( *controllers_ );
     workers_     = new Workers();
-    network_     = new Network( *simulation_, *profile_ );
+    logger_      = new LoggerProxy();
+    network_     = new Network( *simulation_, *profile_, *logger_ );
     RcEntityResolver_ABC* rcResolver = new RcEntityResolver( this, *controllers_ );
     staticModel_ = new StaticModel( *controllers_, *rcResolver, *simulation_ );
     model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver );
     network_->GetMessageMgr().SetModel( *model_ );
-    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, expiration_ );
+    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, *logger_, expiration_ );
     mainWindow_->show();
 
     // Make sure the application exits when the main window is closed.

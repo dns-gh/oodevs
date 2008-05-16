@@ -25,6 +25,7 @@ class Model;
 class Simulation;
 class Profile;
 class Config;
+class LoggerProxy;
 
 // =============================================================================
 /** @class  Application
@@ -77,6 +78,7 @@ private:
     Simulation* simulation_;
     Profile* profile_;
     kernel::Workers* workers_;
+    LoggerProxy* logger_;
     Network* network_;
     MainWindow* mainWindow_;
     QTimer* networkTimer_;

@@ -17,6 +17,10 @@ class Model;
 class Simulation;
 class Profile;
 
+namespace kernel
+{
+    class Logger_ABC;
+}
 
 // =============================================================================
 /** @class  Network
@@ -30,7 +34,7 @@ class Network : public tools::ClientNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-             Network( Simulation& simu, Profile& profile );
+             Network( Simulation& simu, Profile& profile, kernel::Logger_ABC& logger );
     virtual ~Network();
     //@}
 
@@ -71,6 +75,7 @@ private:
     //@{
     Simulation& simu_;
     Profile& profile_;
+    kernel::Logger_ABC& logger_;
     std::string session_;
     AgentServerMsgMgr* manager_;
     //@}

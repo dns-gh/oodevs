@@ -24,6 +24,7 @@ namespace tools
 namespace kernel
 {
     class Agent_ABC;
+    class Logger_ABC;
 }
 
 class Model;
@@ -39,7 +40,7 @@ class AgentServerMsgMgr : public Publisher_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             AgentServerMsgMgr( tools::MessageDispatcher_ABC& dispatcher, tools::MessageSender_ABC& sender, Simulation& simu, Profile& profile ); 
+             AgentServerMsgMgr( tools::MessageDispatcher_ABC& dispatcher, tools::MessageSender_ABC& sender, Simulation& simu, Profile& profile, kernel::Logger_ABC& logger ); 
     virtual ~AgentServerMsgMgr();
     //@}
 
@@ -267,6 +268,7 @@ private:
     Model*               model_;
     Simulation&          simulation_;
     Profile&             profile_;
+    kernel::Logger_ABC&  logger_;
     //@}
 };
 

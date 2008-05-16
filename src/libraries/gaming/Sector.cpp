@@ -1,7 +1,6 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/Sector.cpp $
 // $Author: Jvt $
 // $Modtime: 12/04/05 10:00 $
 // $Revision: 2 $
