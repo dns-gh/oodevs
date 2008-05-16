@@ -499,6 +499,7 @@
     -->
     <target name="configure" description="initialize local project structure with libraries">
         <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind"/>
+        <update name="terrain" package="generation_app_${platform}"/>
         <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Profiler,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>
         <update name="qt" version="3.3.8"/>
         <update name="DIN"/>
@@ -515,9 +516,7 @@
         <update name="zipstream"/>
         <update name="zlib"/>
         <update name="bugtrap"/>
-        <update name="system"/>
         <update name="shapelib"/>
-        <update name="terrain" package="generation_app_${platform}"/>
         <update name="esri"/>
         <update name="folk"/>
         <update name="mockpp"/>
