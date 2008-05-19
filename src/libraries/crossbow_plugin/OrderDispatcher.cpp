@@ -195,7 +195,8 @@ void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsign
     std::stringstream ss;
     ss << "OrderID=" << orderId;
     Row_ABC* result = paramTable_.Find( ss.str() );
-    for( unsigned int i = 0; result != 0 && i < parameters.n; ++i )
+    unsigned int i ; 
+	for( i = 0; result != 0 && i < parameters.n; ++i )
     {
         SetParameter( parameters.elem[i], *result, type );
         result = paramTable_.GetNextRow();

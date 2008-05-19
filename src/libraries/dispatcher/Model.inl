@@ -161,24 +161,5 @@ ModelsContainer< Population >& Model::GetPopulations()
     return populations_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ModelsContainer< Limit>& Model::GetLimits
-// Created: SBO 2007-06-01
-// -----------------------------------------------------------------------------
-inline
-const ModelsContainer< Limit >& Model::GetLimits() const
-{
-    return limits_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelsContainer< Lima >& Model::GetLimas
-// Created: SBO 2007-06-06
-// -----------------------------------------------------------------------------
-inline
-const ModelsContainer< Lima >& Model::GetLimas() const
-{
-    return limas_;
-}
 
 }

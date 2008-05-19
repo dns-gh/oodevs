@@ -26,8 +26,6 @@
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
 #include "PopulationKnowledge.h"
-#include "Limit.h"
-#include "Lima.h"
 #include "Visitors.h"
 #include "Fire.h"
 #include "PopulationFire.h"
@@ -80,8 +78,6 @@ void Model::Reset()
     fireEffects_            .Clear();
     populationFires_        .Clear();
     fires_                  .Clear();
-    limits_                 .Clear();
-    limas_                  .Clear();
     agentKnowledges_        .Clear();
     objectKnowledges_       .Clear();
     populationKnowledges_   .Clear();
@@ -317,8 +313,6 @@ void Model::Accept( ModelVisitor_ABC& visitor ) const
     agentKnowledges_       .Apply( std::mem_fun_ref( &AgentKnowledge::Accept        ), visitor );
     objectKnowledges_      .Apply( std::mem_fun_ref( &ObjectKnowledge::Accept       ), visitor );
     populationKnowledges_  .Apply( std::mem_fun_ref( &PopulationKnowledge::Accept   ), visitor );
-    limits_                .Apply( std::mem_fun_ref( &Limit::Accept                 ), visitor );
-    limas_                 .Apply( std::mem_fun_ref( &Lima ::Accept                 ), visitor );
     logConsignsMaintenance_.Apply( std::mem_fun_ref( &LogConsignMaintenance::Accept ), visitor );
     logConsignsSupply_     .Apply( std::mem_fun_ref( &LogConsignSupply     ::Accept ), visitor );
     logConsignsMedical_    .Apply( std::mem_fun_ref( &LogConsignMedical    ::Accept ), visitor );

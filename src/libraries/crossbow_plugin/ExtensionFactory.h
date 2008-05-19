@@ -37,8 +37,6 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Formation >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Side >
-                       , public dispatcher::ExtensionFactory_ABC< dispatcher::Lima >
-                       , public dispatcher::ExtensionFactory_ABC< dispatcher::Limit >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Object >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::AgentKnowledge >
 {
@@ -56,8 +54,6 @@ public:
     virtual void Create( dispatcher::Automat&        entity );
     virtual void Create( dispatcher::Formation&      entity );
     virtual void Create( dispatcher::Side&           entity );
-    virtual void Create( dispatcher::Lima&           entity );
-    virtual void Create( dispatcher::Limit&          entity );
     virtual void Create( dispatcher::Object&         entity );
     virtual void Create( dispatcher::AgentKnowledge& entity );
     //@}

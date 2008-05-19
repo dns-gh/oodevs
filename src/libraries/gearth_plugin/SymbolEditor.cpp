@@ -18,8 +18,6 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/Object.h"
-#include "dispatcher/Limit.h"
-#include "dispatcher/Lima.h"
 #include "dispatcher/EntitySymbols_ABC.h"
 
 #include "clients_kernel/AgentType.h"

@@ -13,15 +13,12 @@
 #include "dispatcher/AutomatSymbols.h"
 #include "dispatcher/FormationSymbols.h"
 #include "dispatcher/SideSymbols.h"
-#include "dispatcher/TacticalLineSymbols.h"
 #include "dispatcher/ObjectSymbols.h"
 #include "dispatcher/AgentKnowledgeSymbols.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Formation.h"
 #include "dispatcher/Side.h"
-#include "dispatcher/Lima.h"
-#include "dispatcher/Limit.h"
 #include "dispatcher/Object.h"
 #include "dispatcher/AgentKnowledge.h"
 
@@ -83,26 +80,6 @@ void ExtensionFactory::Create( dispatcher::Side& entity )
 {
     if( !entity.Retrieve< dispatcher::EntitySymbols_ABC >() )
         entity.Attach< dispatcher::EntitySymbols_ABC >( *new dispatcher::SideSymbols( entity ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-02-14
-// -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Lima& entity )
-{
-    if( !entity.Retrieve< dispatcher::EntitySymbols_ABC >() )
-        entity.Attach< dispatcher::EntitySymbols_ABC >( *new dispatcher::TacticalLineSymbols( entity ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-02-14
-// -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Limit& entity )
-{
-    if( !entity.Retrieve< dispatcher::EntitySymbols_ABC >() )
-        entity.Attach< dispatcher::EntitySymbols_ABC >( *new dispatcher::TacticalLineSymbols( entity ) );
 }
 
 // -----------------------------------------------------------------------------

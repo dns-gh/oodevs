@@ -10,8 +10,6 @@
 #include "crossbow_plugin_pch.h"
 #include "OrderParameterSerializer.h"
 #include "clients_kernel/OrderParameter.h"
-#include "dispatcher/Limit.h"
-#include "dispatcher/Lima.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"

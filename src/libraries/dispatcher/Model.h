@@ -46,8 +46,6 @@ class Population;
 class PopulationKnowledge;
 class SimulationModel;
 class ClientPublisher_ABC;
-class Limit;
-class Lima;
 class Entity_ABC;
 class Fire;
 class PopulationFire;
@@ -107,8 +105,6 @@ public:
           ModelsContainer< Object         >& GetObjects        ();
     const ModelsContainer< Object         >& GetObjects        () const;
           ModelsContainer< Population     >& GetPopulations    ();
-    const ModelsContainer< Limit          >& GetLimits         () const;
-    const ModelsContainer< Lima           >& GetLimas          () const;
 
     const kernel::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
 
@@ -168,8 +164,6 @@ private:
     ModelsContainer< LogConsignMedical      > logConsignsMedical_;
     ModelsContainer< Population             > populations_;
     ModelsContainer< PopulationKnowledge    > populationKnowledges_;
-    ModelsContainer< Limit                  > limits_;
-    ModelsContainer< Lima                   > limas_;
     ModelsContainer< Fire                   > fires_;
     ModelsContainer< PopulationFire         > populationFires_;
     ModelsContainer< FireEffect             > fireEffects_;
