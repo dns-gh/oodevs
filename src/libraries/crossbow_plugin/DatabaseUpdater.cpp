@@ -133,7 +133,6 @@ void DatabaseUpdater::Update( const ASN1T_MsgLimitCreation& msg )
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
     row.SetField( "Name"      , FieldVariant( std::string( msg.tactical_line.name ) ) );
-    UpdateSymbol( row, model_.GetLimits(), msg.oid );
     row.SetShape( Line( msg.tactical_line.geometry.coordinates ) );
     table.UpdateRow( row );
 }
@@ -149,7 +148,6 @@ void DatabaseUpdater::Update( const ASN1T_MsgLimaCreation& msg )
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
     row.SetField( "Name"      , FieldVariant( std::string( msg.tactical_line.name ) ) );
-    UpdateSymbol( row, model_.GetLimas(), msg.oid );
     row.SetShape( Line( msg.tactical_line.geometry.coordinates ) );
     table.UpdateRow( row );
 }
