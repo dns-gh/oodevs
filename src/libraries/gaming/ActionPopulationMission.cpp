@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ActionPopulationMission.h"
-#include "ASN_Messages.h"
+#include "SimulationMessages.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
 
@@ -50,7 +50,7 @@ ActionPopulationMission::~ActionPopulationMission()
 // -----------------------------------------------------------------------------
 void ActionPopulationMission::Publish( Publisher_ABC& publisher ) const
 {
-    ASN_MsgPopulationOrder asn;
+    simulation::PopulationOrder asn;
     asn().oid = GetEntity().GetId();
     asn().mission = GetType().GetId();
     CommitTo( asn().parametres );

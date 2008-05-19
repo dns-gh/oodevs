@@ -20,7 +20,7 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Styles.h"
-#include "ASN_Messages.h"
+#include "MessengerMessages.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -177,7 +177,7 @@ void Intelligence::CreateDictionary( Controller& controller )
 // -----------------------------------------------------------------------------
 void Intelligence::Delete()
 {
-    ASN_MsgIntelligenceDestructionRequest message;
+    messenger::IntelligenceDestructionRequest message;
     message().oid = id_;
     message.Send( publisher_ );
 }
@@ -188,7 +188,7 @@ void Intelligence::Delete()
 // -----------------------------------------------------------------------------
 void Intelligence::Rename( const QString& name )
 {
-    ASN_MsgIntelligenceUpdateRequest message;
+    messenger::IntelligenceUpdateRequest message;
     message().oid = id_;
     message().m.namePresent = 1;
     message().name = name.ascii();

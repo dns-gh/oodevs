@@ -17,7 +17,6 @@ namespace kernel
     class FragOrderType;
 }
 
-class ASN_MsgFragOrder;
 class Publisher_ABC;
 class MissionInterfaceBuilder;
 class ActionsModel;

@@ -15,7 +15,7 @@
 #include "clients_gui/LabelDisplayer.h"
 #include "clients_gui/CheckBoxDisplayer.h"
 #include "clients_gui/SpinBoxDisplayer.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "clients_kernel/Object_ABC.h"
 
 using namespace kernel;
@@ -123,7 +123,7 @@ void ObjectPanel::OnApply()
         asnAction.bypass_construction_percentage          = contournement_->GetValue();
 //        asnAction.en_preparation                     = prepared_     ->IsChecked();
 
-        ASN_MsgObjectMagicAction asnMsg;
+        simulation::ObjectMagicAction asnMsg;
         asnMsg().action.t                 = T_MsgObjectMagicAction_action_update_object;
         asnMsg().action.u.update_object   = &asnAction;
 

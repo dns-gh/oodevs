@@ -12,7 +12,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
-#include "ASN_Messages.h"
+#include "SimulationMessages.h"
 #include "Simulation.h"
 
 using namespace kernel;
@@ -84,7 +84,7 @@ void VisionConesToggler::ToggleVisionCones()
 {
     if( ! replay_ )
     {
-        ASN_MsgControlToggleVisionCones msg;
+        simulation::ControlToggleVisionCones msg;
         msg() = displayCones_ || displaySurfaces_;
         msg.Send( publisher_ );
     }

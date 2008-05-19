@@ -15,7 +15,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "ASN_Messages.h"
+#include "AuthenticationMessages.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor
@@ -85,7 +85,7 @@ UserProfile::~UserProfile()
 // -----------------------------------------------------------------------------
 void UserProfile::RequestCreation()
 {
-    ASN_MsgProfileCreationRequest message;
+    authentication::ProfileCreationRequest message;
     message().login       = login_.ascii();
     message().superviseur = supervision_;
     message.Send( publisher_ );
@@ -97,7 +97,7 @@ void UserProfile::RequestCreation()
 // -----------------------------------------------------------------------------
 void UserProfile::RequestDeletion()
 {
-    ASN_MsgProfileDestructionRequest message;
+    authentication::ProfileDestructionRequest message;
     message() = login_.ascii();
     message.Send( publisher_ );
 }
@@ -124,7 +124,7 @@ namespace
 // -----------------------------------------------------------------------------
 void UserProfile::RequestUpdate( const QString& newLogin )
 {
-    ASN_MsgProfileUpdateRequest message;
+    authentication::ProfileUpdateRequest message;
     message().login = login_.ascii();
 
     ASN1T_Profile& profile = message().profile;

@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Limit.h"
-#include "ASN_Messages.h"
+#include "MessengerMessages.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "Tools.h"
@@ -58,7 +58,7 @@ void Limit::UpdateToSim( E_State state )
     {
     case eStateCreated:
         {
-            ASN_MsgLimitCreationRequest message;
+            messenger::LimitCreationRequest message;
             message().name = GetName();
             WriteGeometry ( message().geometry );
             WriteDiffusion( message().diffusion );
@@ -68,7 +68,7 @@ void Limit::UpdateToSim( E_State state )
         break;
     case eStateModified:
         {
-            ASN_MsgLimitUpdateRequest message;
+            messenger::LimitUpdateRequest message;
             message().oid = GetId();
             message().tactical_line.name  = GetName();
             WriteGeometry ( message().tactical_line.geometry );
@@ -78,7 +78,7 @@ void Limit::UpdateToSim( E_State state )
         }
         break;
     case eStateDeleted:
-        ASN_MsgLimitDestructionRequest asnMsg;
+        messenger::LimitDestructionRequest asnMsg;
         asnMsg() = GetId();
         Send( asnMsg );
         break;

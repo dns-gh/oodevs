@@ -11,7 +11,7 @@
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "moc_LogisticSupplyChangeQuotasDialog.cpp"
 #include "gaming/AgentsModel.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "gaming/Dotation.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/Model.h"
@@ -135,7 +135,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     if( !selected_ || !target )
         return;
 
-    ASN_MsgLogSupplyChangeQuotas message;
+    simulation::LogSupplyChangeQuotas message;
 
     message().oid_donneur  = selected_->GetId();
     message().oid_receveur = target->GetId();

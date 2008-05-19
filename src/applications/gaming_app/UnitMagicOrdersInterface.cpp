@@ -27,7 +27,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "gaming/AutomatDecisions.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "gaming/Attributes.h"
 
 using namespace kernel;
@@ -148,7 +148,7 @@ namespace
         MagicFunctor( Publisher_ABC& publisher, int id ) : publisher_( publisher ), id_( id ) {};
         void operator()( const Agent_ABC& agent ) const
         {
-            ASN_MsgUnitMagicAction asnMsg;
+            simulation::UnitMagicAction asnMsg;
             asnMsg().oid      = agent.GetId();
             asnMsg().action.t = id_;
             asnMsg.Send( publisher_ );
@@ -201,7 +201,7 @@ void UnitMagicOrdersInterface::DestroyComponent()
 {
     if( selectedEntity_ )
     {
-        ASN_MsgUnitMagicAction asnMsg;
+        simulation::UnitMagicAction asnMsg;
         asnMsg().oid      = selectedEntity_->GetId();
         asnMsg().action.t = T_MsgUnitMagicAction_action_destruction_composante;
         asnMsg.Send( publisher_ );
@@ -229,7 +229,7 @@ void UnitMagicOrdersInterface::RecoverHumanTransporters()
 {
     if( selectedEntity_ )
     {
-        ASN_MsgUnitMagicAction asnMsg;
+        simulation::UnitMagicAction asnMsg;
         asnMsg().oid      = selectedEntity_ ->GetId();
         asnMsg().action.t = T_MsgUnitMagicAction_action_recuperer_transporteurs;
         asnMsg.Send( publisher_ );
@@ -244,7 +244,7 @@ void UnitMagicOrdersInterface::SurrenderTo( int id )
 {
     if( selectedEntity_ )
     {
-        ASN_MsgUnitMagicAction asnMsg;
+        simulation::UnitMagicAction asnMsg;
         asnMsg().oid      = selectedEntity_->GetId();
         asnMsg().action.t = T_MsgUnitMagicAction_action_se_rendre;
         asnMsg().action.u.se_rendre = id;
@@ -304,7 +304,7 @@ void UnitMagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
     {
         ASN1T_CoordLatLong utm;
         static_.coordinateConverter_.ConvertToGeo( point, utm );
-        ASN_MsgUnitMagicAction message;
+        simulation::UnitMagicAction message;
         message().oid = selectedEntity_->GetId();
         message().action.t = T_MsgUnitMagicAction_action_move_to;
         message().action.u.move_to = &utm;

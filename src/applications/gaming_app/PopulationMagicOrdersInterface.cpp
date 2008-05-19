@@ -18,7 +18,7 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/StaticModel.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "gaming/tools.h"
 
 using namespace kernel;
@@ -139,7 +139,7 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
 {
     if( selectedEntity_ )
     {
-        ASN_MsgPopulationMagicAction asn;
+        simulation::PopulationMagicAction asn;
         asn().oid      = selectedEntity_->GetId();
         asn().action.t = T_MsgPopulationMagicAction_action_destruction_totale;
         asn.Send( publisher_ );
@@ -155,7 +155,7 @@ void PopulationMagicOrdersInterface::KillSomePopulation()
     if( selectedEntity_ )
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
-            ASN_MsgPopulationMagicAction asn;
+            simulation::PopulationMagicAction asn;
             asn().oid           = selectedEntity_->GetId();
             asn().action.t      = T_MsgPopulationMagicAction_action_tuer;
             asn().action.u.tuer = editor->text().toUInt();
@@ -172,7 +172,7 @@ void PopulationMagicOrdersInterface::ResurectSomePopulation()
     if( selectedEntity_ )
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
-            ASN_MsgPopulationMagicAction asn;
+            simulation::PopulationMagicAction asn;
             asn().oid                  = selectedEntity_->GetId();
             asn().action.t             = T_MsgPopulationMagicAction_action_ressusciter;
             asn().action.u.ressusciter = editor->text().toUInt();
@@ -188,7 +188,7 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
 {
     if( selectedEntity_ )
     {
-        ASN_MsgPopulationMagicAction asn;
+        simulation::PopulationMagicAction asn;
         asn().oid      = selectedEntity_->GetId();
         asn().action.t = T_MsgPopulationMagicAction_action_change_attitude;
 
@@ -235,7 +235,7 @@ void PopulationMagicOrdersInterface::VisitPoint( const geometry::Point2f& point 
     {
         ASN1T_CoordLatLong utm;
         static_.coordinateConverter_.ConvertToGeo( point, utm );
-        ASN_MsgPopulationMagicAction message;
+        simulation::PopulationMagicAction message;
         message().oid = selectedEntity_->GetId();
         message().action.t = T_MsgPopulationMagicAction_action_move_to;
         message().action.u.move_to = &utm;

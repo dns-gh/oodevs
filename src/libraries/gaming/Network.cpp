@@ -12,7 +12,7 @@
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "AgentServerMsgMgr.h"
-#include "ASN_Messages.h"
+#include "SimulationMessages.h"
 #include "Simulation.h"
 #include "Profile.h"
 #include "Tools.h"

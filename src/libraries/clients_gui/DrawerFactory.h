@@ -51,9 +51,10 @@ public:
 
     //! @name Operations
     //@{
-    DrawerCategory* CreateCategory( xml::xistream& xis ) const;
-    DrawerShape* CreateShape( const DrawerStyle& style, const QColor& color ) const;
-    DrawerShape* CreateShape( xml::xistream& xis, const DrawerModel& model ) const;
+    virtual DrawerCategory* CreateCategory( xml::xistream& xis ) const;
+    
+    virtual DrawerShape* CreateShape( const DrawerStyle& style, const QColor& color ) const;
+    virtual DrawerShape* CreateShape( xml::xistream& xis, const DrawerModel& model ) const;
     //@}
 
 private:

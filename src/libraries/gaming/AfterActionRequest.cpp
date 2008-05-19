@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "AfterActionRequest.h"
 #include "AfterActionFunction.h"
-#include "ASN_Messages.h"
+#include "AarMessages.h"
 #include "clients_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ void AfterActionRequest::SetParameter( const std::string& name, const std::strin
 // -----------------------------------------------------------------------------
 void AfterActionRequest::Commit()
 {
-    ASN_MsgIndicatorRequest request;
+    aar::IndicatorRequest request;
     const std::string xmlRequest = function_.Commit( parameters_ );
     request().identifier = reinterpret_cast< int >( this );
     request().request = xmlRequest.c_str();

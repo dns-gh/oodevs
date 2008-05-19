@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "CrossingSitePrototype.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "clients_kernel/Units.h"
 
 using namespace kernel;

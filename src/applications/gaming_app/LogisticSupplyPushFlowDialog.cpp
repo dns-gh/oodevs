@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "gaming/Dotation.h"
 #include "gaming/SupplyStates.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -135,7 +135,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     if( !selected_ || !target )
         return;
 
-    ASN_MsgLogSupplyPushFlow message;
+    simulation::LogSupplyPushFlow message;
 
     message().oid_donneur  = selected_->GetId();
     message().oid_receveur = target->GetId();

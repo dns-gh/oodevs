@@ -14,7 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "gaming/Object.h"
 
 using namespace kernel;
@@ -79,7 +79,7 @@ void ObjectMagicOrdersInterface::SendObjectMagic( ASN1T_MagicActionUpdateObject&
     if( selectedEntity_ )
     {
         asn.oid = selectedEntity_->GetId();
-        ASN_MsgObjectMagicAction asnMsg;
+        simulation::ObjectMagicAction asnMsg;
         asnMsg().action.t               = T_MsgObjectMagicAction_action_update_object;
         asnMsg().action.u.update_object = &asn;
         asnMsg.Send( publisher_ );

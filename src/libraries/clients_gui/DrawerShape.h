@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DrawerShape_h_
-#define __DrawerShape_h_
+#ifndef __GUI_DrawerShape_h_
+#define __GUI_DrawerShape_h_
 
 namespace svg
 {
@@ -49,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    void Create();
+    virtual void Create();
 
     virtual void PopPoint();
     virtual void AddPoint( const geometry::Point2f& point );
@@ -86,4 +86,4 @@ protected:
 
 }
 
-#endif // __DrawerShape_h_
+#endif // __GUI_DrawerShape_h_

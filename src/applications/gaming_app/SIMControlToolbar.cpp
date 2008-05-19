@@ -14,7 +14,8 @@
 
 #include "ConnectDialog.h"
 #include "DisconnectDialog.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
+#include "gaming/ReplayMessages.h"
 #include "gaming/Simulation.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -185,12 +186,12 @@ void SIMControlToolbar::SlotPlayPause()
     {
         if( replay_ )
         {
-            ASN_MsgReplayControlResume asnMsg;
+            replay::ControlResume asnMsg;
             asnMsg.Send( publisher_ );
         }
         else
         {
-            ASN_MsgSimControlResume  asnMsg;
+            simulation::ControlResume  asnMsg;
             asnMsg.Send( publisher_ );
         }
     }
@@ -198,12 +199,12 @@ void SIMControlToolbar::SlotPlayPause()
     {
         if( replay_ )
         {
-            ASN_MsgReplayControlPause asnMsg;
+            replay::ControlPause asnMsg;
             asnMsg.Send( publisher_ );
         }
         else
         {
-            ASN_MsgSimControlPause asnMsg;
+            simulation::ControlPause asnMsg;
             asnMsg.Send( publisher_ );
         }
     }
@@ -219,13 +220,13 @@ void SIMControlToolbar::SlotSpeedChange()
     {
         if( replay_ )
         {
-            ASN_MsgReplayControlChangeTimeFactor asnMsg;
+            replay::ControlChangeTimeFactor asnMsg;
             asnMsg() = pSpeedSpinBox_->value();
             asnMsg.Send( publisher_ );
         }
         else
         {
-            ASN_MsgSimControlChangeTimeFactor asnMsg;
+            simulation::ControlChangeTimeFactor asnMsg;
             asnMsg() = pSpeedSpinBox_->value();
             asnMsg.Send( publisher_ );
         }
@@ -336,7 +337,7 @@ void SIMControlToolbar::SlotNamedCheckPoint()
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::RequestCheckpoint( const std::string& name )
 {
-    ASN_MsgControlCheckPointSaveNow asn;
+    simulation::ControlCheckPointSaveNow asn;
     asn().m.namePresent = ! name.empty();
     if( asn().m.namePresent )
         asn().name = name.c_str();

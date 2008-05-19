@@ -17,7 +17,6 @@ namespace kernel
     class MissionType;
 }
 
-class ASN_MsgUnitOrder;
 class Publisher_ABC;
 class MissionInterfaceBuilder;
 class ActionsModel;

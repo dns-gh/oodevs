@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "IntelligencePositions.h"
-#include "ASN_Messages.h"
+#include "MessengerMessages.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -129,7 +129,7 @@ void IntelligencePositions::DoUpdate( const ASN1T_MsgIntelligenceUpdate& message
 // -----------------------------------------------------------------------------
 void IntelligencePositions::Set( const geometry::Point2f& point )
 {
-    ASN_MsgIntelligenceUpdateRequest message;
+    messenger::IntelligenceUpdateRequest message;
     message().oid = holder_.GetId();
     message().m.locationPresent = 1;
     converter_.ConvertToGeo( point, message().location );

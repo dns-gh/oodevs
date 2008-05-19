@@ -11,7 +11,7 @@
 #include "TacticalListView.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -117,7 +117,7 @@ bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automa
 {
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
         return false;
-    ASN_MsgUnitChangeSuperior asnMsg;
+    simulation::UnitChangeSuperior asnMsg;
     asnMsg().oid = item.GetId();
     asnMsg().oid_automate = target.GetId();
     asnMsg.Send( publisher_ );
@@ -132,7 +132,7 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Auto
 {
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target || &item == &target )
         return false;
-    ASN_MsgAutomatChangeSuperior asnMsg;
+    simulation::AutomatChangeSuperior asnMsg;
     asnMsg().oid                     = item.GetId();
     asnMsg().oid_superior.t          = T_MsgAutomatChangeSuperior_oid_superior_automate;
     asnMsg().oid_superior.u.automate = target.GetId();
@@ -148,7 +148,7 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Form
 {
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
         return false;
-    ASN_MsgAutomatChangeSuperior asnMsg;
+    simulation::AutomatChangeSuperior asnMsg;
     asnMsg().oid                      = item.GetId();
     asnMsg().oid_superior.t           = T_MsgAutomatChangeSuperior_oid_superior_formation;
     asnMsg().oid_superior.u.formation = target.GetId();

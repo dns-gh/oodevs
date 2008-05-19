@@ -11,7 +11,7 @@
 #define __ObjectPrototype_h_
 
 #include "clients_gui/ObjectPrototype_ABC.h"
-#include "gaming/ASN_messages.h"
+#include "gaming/SimulationMessages.h"
 #include "LocationSerializer.h"
 
 namespace kernel
@@ -59,7 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN_MsgObjectMagicAction msg_;
+    simulation::ObjectMagicAction msg_;
     ASN1T_MagicActionCreateObject creation_;
     LocationSerializer serializer_;
     //@}

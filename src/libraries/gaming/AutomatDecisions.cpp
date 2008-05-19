@@ -16,7 +16,7 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "ASN_Messages.h"
+#include "SimulationMessages.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -140,7 +140,7 @@ bool AutomatDecisions::IsEmbraye() const
 // -----------------------------------------------------------------------------
 void AutomatDecisions::Engage() const
 {
-    ASN_MsgSetAutomatMode asnMsg;
+    simulation::SetAutomatMode asnMsg;
     asnMsg().oid  = agent_.GetId();
     asnMsg().mode = EnumAutomatMode::embraye;
     asnMsg.Send( publisher_, 0 );
@@ -152,7 +152,7 @@ void AutomatDecisions::Engage() const
 // -----------------------------------------------------------------------------
 void AutomatDecisions::Disengage() const
 {
-    ASN_MsgSetAutomatMode asnMsg;
+    simulation::SetAutomatMode asnMsg;
     asnMsg().oid  = agent_.GetId();
     asnMsg().mode = EnumAutomatMode::debraye;
     asnMsg.Send( publisher_, 0 );

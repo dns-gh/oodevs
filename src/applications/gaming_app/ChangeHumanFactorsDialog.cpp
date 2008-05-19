@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "moc_ChangeHumanFactorsDialog.cpp"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/tools.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -168,7 +168,7 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, AS
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitTiredness tiredness, ASN1T_EnumUnitMorale moral, ASN1T_EnumUnitExperience experience )
 {
-    ASN_MsgUnitMagicAction asnMsg;
+    simulation::UnitMagicAction asnMsg;
     asnMsg().oid = id;
 
     ASN1T_MagicActionChangeHumanFactors asnMagicAction;

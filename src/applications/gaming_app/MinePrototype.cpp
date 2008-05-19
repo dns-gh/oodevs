@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "MinePrototype.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 
 // -----------------------------------------------------------------------------
 // Name: MinePrototype constructor

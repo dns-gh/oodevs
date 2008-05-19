@@ -10,7 +10,7 @@
 #ifndef __ObjectHierarchies_h_
 #define __ObjectHierarchies_h_
 
-#include "ASN_Messages.h"
+#include "SimulationMessages.h"
 #include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"

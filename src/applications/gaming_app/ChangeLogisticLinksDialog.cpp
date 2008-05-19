@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "moc_ChangeLogisticLinksDialog.cpp"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "gaming/LogisticLinks.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -177,7 +177,7 @@ void ChangeLogisticLinksDialog::Validate()
 {
     if( selected_ )
     {
-        ASN_MsgAutomatChangeLogisticLinks message;
+        simulation::AutomatChangeLogisticLinks message;
         message().oid = selected_->GetId();
 
         message().m.oid_tc2Present            = SetId( *tc2Combo_, message().oid_tc2 );

@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ActionFragOrder.h"
-#include "ASN_Messages.h"
+#include "SimulationMessages.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/FragOrderType.h"
 #include "xeumeuleu/xml.h"
@@ -79,7 +79,7 @@ void ActionFragOrder::Publish( Publisher_ABC& publisher ) const
     // $$$$ SBO 2007-06-26: check profile! CanBeOrdered
     // $$$$ SBO 2007-06-26: check engaged/disengaged
 
-    ASN_MsgFragOrder asn;
+    simulation::FragOrder asn;
     asn().oid = GetEntity().GetId();
     asn().frag_order = GetType().GetId();
     CommitTo( asn().parametres );

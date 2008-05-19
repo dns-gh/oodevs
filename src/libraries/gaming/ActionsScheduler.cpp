@@ -13,7 +13,7 @@
 #include "Action_ABC.h"
 #include "ActionsModel.h"
 #include "ActionTiming.h"
-#include "gaming/ASN_Messages.h"
+#include "SimulationMessages.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace kernel;
@@ -92,7 +92,7 @@ void ActionsScheduler::Shift( long secs )
     QDateTime newTime = simulation_.GetDateTime().addSecs( secs );
     if( newTime < simulation_.GetInitialDateTime() )
         newTime = simulation_.GetInitialDateTime();
-    ASN_MsgSimControlDatetimeChange asn;
+    simulation::ControlDatetimeChange asn;
     asn().date_time = MakeGDHString( newTime ).c_str();
     asn.Send( publisher_ );    
 }

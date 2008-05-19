@@ -11,7 +11,7 @@
 #include "NBCPrototype.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/Iterator.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 
 using namespace kernel;
 using namespace gui;

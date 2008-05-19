@@ -11,7 +11,7 @@
 #include "ObjectsLayer.h"
 #include "clients_kernel/Object_ABC.h"
 #include "gaming/Publisher_ABC.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectsLayer constructor
@@ -42,7 +42,7 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
     {
-        ASN_MsgObjectMagicAction asn;
+        simulation::ObjectMagicAction asn;
         asn().action.t = T_MsgObjectMagicAction_action_destroy_object;
         asn().action.u.destroy_object = selected_->GetId();
         asn.Send( publisher_ );

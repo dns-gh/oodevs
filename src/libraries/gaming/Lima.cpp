@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Lima.h"
-#include "ASN_Messages.h"
+#include "MessengerMessages.h"
 #include "Tools.h"
 #include "TacticalLinePositions.h"
 #include "clients_kernel/Controller.h"
@@ -61,7 +61,7 @@ void Lima::UpdateToSim( E_State state )
     {
     case eStateCreated:
         {
-            ASN_MsgLimaCreationRequest message;
+            messenger::LimaCreationRequest message;
             message().name = GetName();
             WriteGeometry ( message().geometry );
             WriteDiffusion( message().diffusion );
@@ -71,7 +71,7 @@ void Lima::UpdateToSim( E_State state )
         break;
     case eStateModified:
         {
-            ASN_MsgLimaUpdateRequest message;
+            messenger::LimaUpdateRequest message;
             message().oid = GetId();
             message().tactical_line.name= GetName();
             WriteGeometry ( message().tactical_line.geometry );
@@ -81,7 +81,7 @@ void Lima::UpdateToSim( E_State state )
         }
         break;
     case eStateDeleted:
-        ASN_MsgLimaDestructionRequest asnMsg;
+        messenger::LimaDestructionRequest asnMsg;
         asnMsg() = GetId();
         Send( asnMsg );
         break;

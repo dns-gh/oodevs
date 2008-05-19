@@ -13,7 +13,7 @@
 #include "clients_kernel/NBCAgent.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ValuedListItem.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 
 using namespace kernel;
 using namespace gui;

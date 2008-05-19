@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ActionAgentMission.h"
-#include "ASN_Messages.h"
+#include "SimulationMessages.h"
 #include "AutomatDecisions.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -60,7 +60,7 @@ void ActionAgentMission::Publish( Publisher_ABC& publisher ) const
             decisions.Disengage();
     }
 
-    ASN_MsgUnitOrder asn;
+    simulation::UnitOrder asn;
     asn().oid = GetEntity().GetId();
     asn().mission = GetType().GetId();
     CommitTo( asn().parametres );

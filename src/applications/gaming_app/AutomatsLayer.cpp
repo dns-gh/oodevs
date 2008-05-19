@@ -11,7 +11,7 @@
 #include "AutomatsLayer.h"
 #include "gaming/MissionParameters.h"
 #include "gaming/ConvexHulls.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "gaming/Publisher_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/AgentType.h"
@@ -103,7 +103,7 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type )
 {
-    ASN_MsgUnitCreationRequest asn;
+    simulation::UnitCreationRequest asn;
     asn().oid_automate = selected_->GetId();
     converter_.ConvertToGeo( point, asn().position );
     asn().type_pion = type.GetId();

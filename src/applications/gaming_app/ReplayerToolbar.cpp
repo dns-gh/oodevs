@@ -11,7 +11,7 @@
 #include "ReplayerToolbar.h"
 #include "moc_ReplayerToolbar.cpp"
 #include "gaming/Simulation.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/ReplayMessages.h"
 #include "clients_kernel/Controllers.h"
 #include "icons.h"
 
@@ -94,7 +94,7 @@ void ReplayerToolbar::OnSliderReleased()
 {
     if( userMove_ )
     {
-        ASN_MsgReplayControlSkipToTick skip;
+        replay::ControlSkipToTick skip;
         skip() = slider_->value();
         skip.Send( network_ );
     }

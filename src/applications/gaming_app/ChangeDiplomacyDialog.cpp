@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChangeDiplomacyDialog.h"
 #include "moc_ChangeDiplomacyDialog.cpp"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "gaming/Diplomacies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
@@ -89,7 +89,7 @@ void ChangeDiplomacyDialog::Validate()
 {
     if( pArmy1ComboBox_->count() && pArmy2ComboBox_->count() )
     {
-        ASN_MsgChangeDiplomacy asn;
+        simulation::ChangeDiplomacy asn;
         asn().oid_camp1  = pArmy1ComboBox_->GetValue()->GetId();
         asn().oid_camp2  = pArmy2ComboBox_->GetValue()->GetId();
         asn().diplomatie = pDiplomacyComboBox_->GetValue();

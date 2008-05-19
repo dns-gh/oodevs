@@ -15,7 +15,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/CommandPostAttributes.h"
 #include "gaming/AutomatDecisions.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/SimulationMessages.h"
 #include "icons.h"
 
 using namespace kernel;
@@ -133,7 +133,7 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
     if( & item.Get< CommunicationHierarchies >().GetUp() == &target )
         return false;
 
-    ASN_MsgUnitChangeSuperior asnMsg;
+    simulation::UnitChangeSuperior asnMsg;
     asnMsg().oid = item.GetId();
     asnMsg().oid_automate = target.GetId();
     asnMsg.Send( publisher_ );
@@ -146,7 +146,7 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& target )
 {
-    ASN_MsgAutomatChangeKnowledgeGroup asnMsg;
+    simulation::AutomatChangeKnowledgeGroup asnMsg;
     asnMsg().oid                     = item.GetId();
     asnMsg().oid_camp                = target.Get< CommunicationHierarchies >().GetTop().GetId();
     asnMsg().oid_groupe_connaissance = target.GetId();

@@ -20,7 +20,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "gaming/Tools.h"
-#include "ASN_Messages.h"
+#include "AuthenticationMessages.h"
 
 using namespace kernel;
 
@@ -53,7 +53,7 @@ Profile::~Profile()
 // -----------------------------------------------------------------------------
 void Profile::Login( Publisher_ABC& publisher ) const
 {
-    ASN_MsgAuthenticationRequest asnMsg;
+    authentication::AuthenticationRequest asnMsg;
     asnMsg().login    = login_.c_str();
     asnMsg().password = password_.c_str();
     asnMsg.Send( publisher );

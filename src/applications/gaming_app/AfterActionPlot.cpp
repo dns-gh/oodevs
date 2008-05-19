@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "AfterActionPlot.h"
 #include "gaming/AfterActionRequest.h"
-#include "gaming/ASN_Messages.h"
+#include "gaming/ReplayMessages.h"
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
@@ -107,7 +107,7 @@ void AfterActionPlot::mouseReleaseEvent( QMouseEvent* e )
 {
     const int offset = YAxis().GetAxisSize().width() + YAxis().GetCaptionSize().width();
     double tick = XAxis().MapFromViewport( e->pos().x() - offset );
-    ASN_MsgReplayControlSkipToTick skip;
+    replay::ControlSkipToTick skip;
     skip() = unsigned( tick );
     skip.Send( publisher_ );
 
