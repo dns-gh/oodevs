@@ -42,7 +42,7 @@ public:
     {
         FlowPart( ASN1T_FlowPart& asn, const kernel::CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox );
         T_PointVector flowPart_;
-        float         rRelevance_;
+        unsigned short relevance_;
     };
 
     typedef std::vector< FlowPart >       T_FlowParts;

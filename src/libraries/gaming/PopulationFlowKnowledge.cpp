@@ -34,7 +34,7 @@ using namespace kernel;
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
 PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_FlowPart& asn, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
-     : rRelevance_ ( asn.pertinence )
+     : relevance_ ( (unsigned short)asn.pertinence )
 {
     for( uint i = 0; i < asn.forme.coordinates.n; ++i )
     {
@@ -163,7 +163,7 @@ void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const kernel::View
             SelectColor( eAttitude_ );
             glLineWidth( 10.f );
             tools.DrawLines( part.flowPart_ );
-            glColor4f( color[0], color[1], color[2], 0.5f * ( 1.f + part.rRelevance_ * 0.01f ) );
+            glColor4f( color[0], color[1], color[2], 0.5f * ( 1.f + part.relevance_ * 0.01f ) );
             glLineWidth( 8.f );
             tools.DrawLines( part.flowPart_ );
         }

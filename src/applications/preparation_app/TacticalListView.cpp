@@ -155,7 +155,7 @@ void TacticalListView::OnContextMenuRequested( QListViewItem* item, const QPoint
 // Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2007-11-09
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const Entity_ABC& entity, kernel::ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const Entity_ABC&, kernel::ContextMenu& menu )
 {
     if( !isVisible() )
         return;

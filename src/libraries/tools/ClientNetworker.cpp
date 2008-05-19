@@ -17,6 +17,8 @@
 #include <boost/bind.hpp>
 #include "asio.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace tools;
 
 // -----------------------------------------------------------------------------

@@ -136,7 +136,7 @@ void LayersPanel::Reset()
 // -----------------------------------------------------------------------------
 void LayersPanel::OnValueChanged()
 {
-    if( currentLayer_ != -1 && currentLayer_ < layers_.size() )
+    if( currentLayer_ != -1 && currentLayer_ < int( layers_.size() ) )
     {
         new_   [ currentLayer_ ] = transparency_->value() * 0.01f;
         layers_[ currentLayer_ ]->SetAlpha( new_[ currentLayer_ ] );
@@ -155,7 +155,7 @@ void LayersPanel::OnSelectionChanged( QListViewItem* i )
     if( it != layers_.end() )
     {
         currentLayer_ = it - layers_.begin();
-        transparency_->setValue( new_[ currentLayer_ ] * 100 );
+        transparency_->setValue( int( new_[ currentLayer_ ] * 100 ) );
     }
 }
 
@@ -165,7 +165,7 @@ void LayersPanel::OnSelectionChanged( QListViewItem* i )
 // -----------------------------------------------------------------------------
 void LayersPanel::OnUp()
 {
-    if( currentLayer_ != -1 && currentLayer_ < layers_.size() )
+    if( currentLayer_ != -1 && currentLayer_ < int( layers_.size() ) )
     {
         Layer_ABC* layer = layers_[ currentLayer_ ];
         if( ValuedListItem* item = FindItem( layer, layersList_->firstChild() ) )
@@ -189,7 +189,7 @@ void LayersPanel::OnUp()
 // -----------------------------------------------------------------------------
 void LayersPanel::OnDown()
 {
-    if( currentLayer_ != -1 && currentLayer_ < layers_.size() )
+    if( currentLayer_ != -1 && currentLayer_ < int( layers_.size() ) )
     {
         Layer_ABC* layer = layers_[ currentLayer_ ];
         ValuedListItem* item = FindItem( layer, layersList_->firstChild() );
@@ -236,7 +236,7 @@ void LayersPanel::OptionChanged( const std::string& name, const kernel::OptionVa
         {
             T_Layers::iterator oldPosition = std::find( currentLayers_.begin(), currentLayers_.end(), layers_[i] );
             const int newIndex = value.To< int >();
-            if( oldPosition != currentLayers_.end() && newIndex < currentLayers_.size() )
+            if( oldPosition != currentLayers_.end() && newIndex < int( currentLayers_.size() ) )
             {
                 T_Layers::iterator newPosition = currentLayers_.begin() + newIndex;
                 std::swap( *oldPosition, *newPosition );

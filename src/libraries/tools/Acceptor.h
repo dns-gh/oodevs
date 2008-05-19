@@ -28,7 +28,7 @@ class Acceptor
 public:
     //! @name Constructors/Destructor
     //@{
-             Acceptor( SocketManager& manager, boost::asio::io_service& service, unsigned port );
+             Acceptor( SocketManager& manager, boost::asio::io_service& service, unsigned short port );
     virtual ~Acceptor();
     //@}
 
@@ -57,7 +57,7 @@ private:
     SocketManager& manager_;
     boost::asio::io_service& service_;
     boost::asio::ip::tcp::acceptor acceptor_;
-    unsigned port_;
+    unsigned short port_;
     volatile bool accept_;
     //@}
 };

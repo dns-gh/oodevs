@@ -133,6 +133,8 @@ void DrawerShape::Draw( const geometry::Rectangle2f& viewport, bool overlined ) 
 // -----------------------------------------------------------------------------
 void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const QColor& color, bool overlined ) const
 {
+    if( points_.empty() )// $$$$ SBO 2008-05-17: check viewport
+        return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 1 );
 

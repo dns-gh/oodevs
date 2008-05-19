@@ -42,7 +42,7 @@ MagicOrders::~MagicOrders()
 void MagicOrders::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.transporteurs_disponiblesPresent )
-        transportersReady_ = message.transporteurs_disponibles;
+        transportersReady_ = message.transporteurs_disponibles != 0;
 }
 
 // -----------------------------------------------------------------------------

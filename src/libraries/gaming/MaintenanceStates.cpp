@@ -59,7 +59,7 @@ void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico ) c
 void MaintenanceStates::DoUpdate( const ASN1T_MsgLogMaintenanceState& message )
 {
     if( message.m.chaine_activeePresent )
-        bChainEnabled_ = message.chaine_activee;
+        bChainEnabled_ = message.chaine_activee != 0;
     if( message.m.regime_travailPresent )
         nWorkRate_ = message.regime_travail + 1; // $$$$ AGE 2006-06-27: 
 

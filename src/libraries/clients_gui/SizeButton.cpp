@@ -61,7 +61,7 @@ void SizeButton::OnValueChanged( int value )
 {
     if( ! changed_ )
         previous_ = size_;
-    size_ = value * 0.5;
+    size_ = value * 0.5f;
     changed_ = true;
     if( valueLabel_ )
         setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_ ) );

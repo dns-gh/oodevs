@@ -12,6 +12,8 @@
 #include "resources.h"
 #include "clients_gui/Tools.h"
 
+#pragma warning( disable : 4355 )
+
 // -----------------------------------------------------------------------------
 // Name: Actions constructor
 // Created: AGE 2007-10-10

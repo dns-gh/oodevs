@@ -123,10 +123,10 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         nInstallationState_ = message.etat_installation;
 
     if( message.m.mortPresent ) 
-        bDead_ = message.mort;
+        bDead_ = message.mort != 0;
 
     if( message.m.neutralisePresent )
-        bNeutralized_ = message.neutralise;
+        bNeutralized_ = message.neutralise != 0;
 
     if( message.m.rapport_de_forcePresent )
         nFightRateState_ = (E_ForceRatioStatus)message.rapport_de_force;
@@ -141,13 +141,13 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         nCloseCombatState_ = (E_MeetingEngagementStatus)message.combat_de_rencontre;
 
     if( message.m.embarquePresent )
-        bLoadingState_ = message.embarque;
+        bLoadingState_ = message.embarque != 0;
 
     if( message.m.transporteurs_disponiblesPresent )
-        bHumanTransportersReady_ = message.transporteurs_disponibles;
+        bHumanTransportersReady_ = message.transporteurs_disponibles != 0;
 
     if( message.m.mode_furtif_actifPresent )
-        bStealthModeEnabled_ = message.mode_furtif_actif;
+        bStealthModeEnabled_ = message.mode_furtif_actif != 0;
 
     if( message.m.vitessePresent )
         nSpeed_ = message.vitesse;
@@ -159,22 +159,22 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         nDirection_ = message.direction;
 
     if( message.m.communications_brouilleesPresent )
-        bCommJammed_ = message.communications_brouillees;
+        bCommJammed_ = message.communications_brouillees != 0;
 
     if( message.m.silence_radioPresent )
-        bRadioSilence_ = message.silence_radio;
+        bRadioSilence_ = message.silence_radio != 0;
 
     if( message.m.radar_actifPresent  )
-        bRadarEnabled_ = message.radar_actif;
+        bRadarEnabled_ = message.radar_actif != 0;
 
     if( message.m.prisonnierPresent )
-        bPrisoner_ = message.prisonnier;
+        bPrisoner_ = message.prisonnier != 0;
 
     if( message.m.renduPresent )
         surrenderedTo_ = teamResolver_.Find( message.rendu );
 
     if( message.m.refugie_pris_en_comptePresent )
-        bRefugeesManaged_ = message.refugie_pris_en_compte;
+        bRefugeesManaged_ = message.refugie_pris_en_compte != 0;
 
     controller_.Update( *(Attributes_ABC*)this );
 }

@@ -41,6 +41,8 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/FormationLevels.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

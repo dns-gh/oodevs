@@ -175,7 +175,7 @@ void TimelineView::contentsMousePressEvent( QMouseEvent* event )
     if( ( event->button() & Qt::LeftButton ) == Qt::LeftButton )
         Select( event->pos() );
     if( selectedItem_ )
-        ensureVisible( selectedItem_->x(), selectedItem_->y() );
+        ensureVisible( int( selectedItem_->x() ), int( selectedItem_->y() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +189,7 @@ void TimelineView::contentsMouseMoveEvent( QMouseEvent* event )
     if( selectedItem_ && ( event->state() & Qt::LeftButton ) )
     {
         selectedItem_->Move( event->pos().x() - grabPoint_.x() );
-        ensureVisible( selectedItem_->x(), selectedItem_->y() );
+        ensureVisible( int( selectedItem_->x() ), int( selectedItem_->y() ) );
         grabPoint_ = event->pos();
         setCursor( QCursor::sizeHorCursor );
     }

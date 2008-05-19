@@ -27,6 +27,8 @@
 #include "ListItemToolTip.h"
 #include "ValuedDragObject.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace kernel;
 using namespace gui;
 
@@ -206,8 +208,8 @@ QSize HierarchyListView_ABC::sizeHint() const
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifySelected( const Entity_ABC* element )
 {
-    ValuedListItem* item = 0;
-    if( element && ( item = FindItem( element, firstChild() ) ) )
+    ValuedListItem* item = element ? FindItem( element, firstChild() ) : 0;
+    if( item )
     {
         selected_ = element;
         if( item != selectedItem() )

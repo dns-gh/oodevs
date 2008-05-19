@@ -201,9 +201,9 @@ void ObjectPositions::VisitPolygon( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void ObjectPositions::VisitCircle( const geometry::Point2f& center, float radius )
 {
-    static const double PI = 3.1415926539;
+    static const float PI = 3.1415926539f;
     points_.clear();
-    for( double angle = 0.; angle <= 2 * PI; angle += PI / 8. )
+    for( float angle = 0.; angle <= 2.f * PI; angle += PI / 8.f )
         points_.push_back( geometry::Point2f( center.X() + radius * std::cos( angle )
                                             , center.Y() + radius * std::sin( angle ) ) );
 }

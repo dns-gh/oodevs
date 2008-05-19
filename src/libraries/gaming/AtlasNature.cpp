@@ -65,7 +65,7 @@ unsigned short AtlasNature::GetValue() const
 // -----------------------------------------------------------------------------
 bool AtlasNature::IsSet( unsigned short value ) const
 {
-    return value_ & value;
+    return ( value_ & value ) != 0;
 }
 
 // -----------------------------------------------------------------------------

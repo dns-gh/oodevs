@@ -24,6 +24,8 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace kernel;
 using namespace gui;
 
@@ -167,8 +169,8 @@ QSize ObjectListView::sizeHint() const
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifySelected( const kernel::Entity_ABC* element )
 {
-    ValuedListItem* item = 0;
-    if( element && ( item = FindItem( element, firstChild() ) ) )
+    ValuedListItem* item = element ? FindItem( element, firstChild() ) : 0;
+    if( item )
     {
         if( item != selectedItem() )
         {

@@ -137,5 +137,5 @@ void TacticalLineFactory::Select( const kernel::Formation_ABC& element )
 // -----------------------------------------------------------------------------
 bool TacticalLineFactory::IsReady() const
 {
-    return selectedSuperior_;
+    return selectedSuperior_ != 0;
 }

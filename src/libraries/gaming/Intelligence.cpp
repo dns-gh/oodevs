@@ -53,7 +53,7 @@ Intelligence::Intelligence( const ASN1T_MsgIntelligenceCreation& message, Contro
     , symbol_   ( message.intelligence.nature )
     , level_    ( &levels_.Get( message.intelligence.level ) )
     , karma_    ( &ConvertToKarma( message.intelligence.diplomacy ) )
-    , mounted_  ( message.intelligence.embarked )
+    , mounted_  ( message.intelligence.embarked != 0 )
     , publisher_( publisher )
 {
     RegisterSelf( *this );

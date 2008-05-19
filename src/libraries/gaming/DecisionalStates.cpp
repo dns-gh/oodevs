@@ -101,5 +101,5 @@ void DecisionalStates::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void DecisionalStates::Aggregate( const bool& agg )
 {
-    ratio_ = agg ? 2.0 : 1.0;
+    ratio_ = agg ? 2.f : 1.f;
 }

@@ -32,6 +32,8 @@
 
 #include <cassert>
 
+#pragma warning( disable : 4355 )
+
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot constructor
 /** @param  pParent 

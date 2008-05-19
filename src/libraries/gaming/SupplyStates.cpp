@@ -53,7 +53,7 @@ void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 void SupplyStates::DoUpdate( const ASN1T_MsgLogSupplyState& message )
 {
     if( message.m.chaine_activeePresent )
-        bChainEnabled_ = message.chaine_activee;
+        bChainEnabled_ = message.chaine_activee != 0;
 
     if( message.m.disponibilites_transporteurs_convoisPresent )
     {

@@ -98,7 +98,7 @@ namespace
     public:
                  DecimalSpinBox( QWidget* parent, unsigned short decimals = 0 )
                      : QSpinBox( parent )
-                     , decimals_( std::pow( 10.f, decimals ) )
+                     , decimals_( (unsigned int)std::pow( 10.f, decimals ) )
                  {
                      setMinValue( 0 );
                      setMaxValue( std::numeric_limits< int >::max() );
@@ -131,7 +131,7 @@ namespace
         template< typename T >
         void SetValue( const T& value )
         {
-            setValue( value * T( decimals_ ) );
+            setValue( int( value * T( decimals_ ) ) );
         }
 
     private:

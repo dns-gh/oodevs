@@ -17,7 +17,7 @@
 #include "Profile.h"
 #include "Tools.h"
 
-#pragma warning( disable: 4127 4511 4512 )
+#pragma warning( disable: 4127 4355 4511 4512 )
 #include <boost/lexical_cast.hpp>
 
 using namespace kernel;

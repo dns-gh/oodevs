@@ -13,6 +13,8 @@
 #include "AgentKnowledgeFactory_ABC.h"
 #include "clients_kernel/Controller.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

@@ -581,7 +581,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
         glTranslatef( center.X(), center.Y(), 0.0f );
         glScalef( scaleRatio, -scaleRatio, 1 );
         glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-        Base().PrintApp6( symbol, style, viewport_, windowWidth_ * thickness, windowHeight_ * thickness );
+        Base().PrintApp6( symbol, style, viewport_, int( windowWidth_ * thickness ), int( windowHeight_ * thickness ) );
     glPopMatrix();
     glPopAttrib();
 }

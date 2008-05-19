@@ -18,7 +18,7 @@ using namespace tools;
 // Name: Acceptor constructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-Acceptor::Acceptor( SocketManager& manager, boost::asio::io_service& service, unsigned port )
+Acceptor::Acceptor( SocketManager& manager, boost::asio::io_service& service, unsigned short port )
     : manager_( manager )
     , service_( service )
     , acceptor_( service )

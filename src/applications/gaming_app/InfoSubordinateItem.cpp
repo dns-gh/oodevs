@@ -59,7 +59,7 @@ void InfoSubordinateItem::DrawLife( QPainter* p, int life )
     QColor color;
     color.setHsv( life, 255, 255 );
     p->fillRect( lifeRect, QColor( 255, 100, 100 ) );
-    p->fillRect( lifeRect.left(), lifeRect.top(), lifeRect.width() * float( life ) / 100.f, lifeRect.height(), color );
+    p->fillRect( lifeRect.left(), lifeRect.top(), int( lifeRect.width() * float( life ) / 100.f ), lifeRect.height(), color );
     p->drawRect( lifeRect );
 }
 

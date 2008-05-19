@@ -21,6 +21,8 @@
 #include "resources.h"
 #include "Tools.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace kernel;
 using namespace gui;
 

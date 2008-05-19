@@ -87,19 +87,19 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
         team_ = & teamResolver_.Get( message.camp );
 
     if( message.m.nature_pcPresent )
-        bIsPC_ = message.nature_pc;
+        bIsPC_ = message.nature_pc != 0;
 
     if( message.m.pertinencePresent )
         nRelevance_ = message.pertinence;
 
     if( message.m.prisonnierPresent )
-        bPrisonner_ = message.prisonnier;
+        bPrisonner_ = message.prisonnier != 0;
 
     if( message.m.renduPresent )
         surrenderedTo_ = teamResolver_.Find( message.rendu );
 
     if( message.m.refugie_pris_en_comptePresent )
-        bRefugies_ = message.refugie_pris_en_compte;
+        bRefugies_ = message.refugie_pris_en_compte != 0;
 
     UpdateSymbol();
 

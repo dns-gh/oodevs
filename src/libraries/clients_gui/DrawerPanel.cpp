@@ -22,6 +22,8 @@
 #include "clients_kernel/Controllers.h"
 #include "resources.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace gui;
 
 // -----------------------------------------------------------------------------

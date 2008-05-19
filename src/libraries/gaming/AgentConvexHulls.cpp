@@ -40,7 +40,7 @@ void AgentConvexHulls::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
     if( attributes.m.positionPresent )
         SetPosition( converter_.ConvertToXY( attributes.position ) );
     if( attributes.m.mortPresent )
-        SetDead( attributes.mort );
+        SetDead( attributes.mort != 0 );
 }
 
 // -----------------------------------------------------------------------------

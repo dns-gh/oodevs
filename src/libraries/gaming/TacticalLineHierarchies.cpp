@@ -43,7 +43,7 @@ TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity
     , automats_  ( automats )
     , formations_( formations )
 {
-    superiorIsAutomat_ = dynamic_cast< const Automat_ABC* >( &superior );
+    superiorIsAutomat_ = dynamic_cast< const Automat_ABC* >( &superior ) != 0;
     SetSuperior( &superior );
 }
     

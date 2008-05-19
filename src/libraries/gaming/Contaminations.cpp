@@ -70,7 +70,7 @@ void Contaminations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     }
 
     if( message.m.en_tenue_de_protection_nbcPresent )
-        bNbcProtectionSuitWorn_ = message.en_tenue_de_protection_nbc;
+        bNbcProtectionSuitWorn_ = message.en_tenue_de_protection_nbc != 0;
 
     controller_.Update( *this );
 }

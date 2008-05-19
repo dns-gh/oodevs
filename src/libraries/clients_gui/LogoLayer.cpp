@@ -68,8 +68,8 @@ void LogoLayer::SetAlpha( float alpha )
 {
     unsigned int a = unsigned char( 255 * alpha );
     a <<= 24;
-    for( unsigned i = 0; i < image_.width(); ++i )
-        for( unsigned j = 0; j < image_.height(); ++j )
+    for( unsigned i = 0; i < unsigned( image_.width() ); ++i )
+        for( unsigned j = 0; j < unsigned( image_.height() ); ++j )
         {
             QRgb rgb = image_.pixel( i, j );
             rgb = ( rgb & 0x00FFFFFF ) | a;

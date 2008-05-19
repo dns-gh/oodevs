@@ -11,6 +11,8 @@
 #include "ActionLinker.h"
 #include "Panel_ABC.h"
 
+#pragma warning( disable : 4355 )
+
 // -----------------------------------------------------------------------------
 // Name: ActionLinker constructor
 // Created: AGE 2007-10-10

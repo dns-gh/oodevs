@@ -70,7 +70,7 @@ ActionParameterIntelligence::ActionParameterIntelligence( const OrderParameter& 
     AddParameter( *new ActionParameterString   ( OrderParameter( tools::translate( "ActionParameter", "Nature" ).ascii()   , "nature"   , false ), asn.nature ) );
     AddParameter( *new ActionParameterKarma    ( OrderParameter( tools::translate( "ActionParameter", "Karma" ).ascii()    , "karma"    , false ), asn.diplomacy ) );
     AddParameter( *new ActionParameterLevel    ( OrderParameter( tools::translate( "ActionParameter", "Level" ).ascii()    , "level"    , false ), asn.level, levels ) );
-    AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Mounted" ).ascii()  , "bool"     , false ), asn.embarked ) );
+    AddParameter( *new ActionParameterBool     ( OrderParameter( tools::translate( "ActionParameter", "Mounted" ).ascii()  , "bool"     , false ), asn.embarked != 0 ) );
     AddParameter( *new ActionParameterFormation( OrderParameter( tools::translate( "ActionParameter", "Formation" ).ascii(), "formation", false ), asn.formation, resolver ) );
     AddParameter( *new ActionParameterPoint    ( OrderParameter( tools::translate( "ActionParameter", "Point" ).ascii()    , "point"    , false ), converter, MakePoint( converter, asn.location ) ) );
 }

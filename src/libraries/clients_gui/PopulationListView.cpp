@@ -20,6 +20,8 @@
 #include "ItemFactory_ABC.h"
 #include "ValuedListItem.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace kernel;
 using namespace gui;
 
@@ -137,8 +139,8 @@ void PopulationListView::OnContextMenuRequested( QListViewItem* i, const QPoint&
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifySelected( const Entity_ABC* element )
 {
-    ValuedListItem* item = 0;
-    if( element && ( item = FindItem( element, firstChild() ) ) )
+    ValuedListItem* item = element ? FindItem( element, firstChild() ) : 0;
+    if( item )
     {
         if( item != selectedItem() )
         {

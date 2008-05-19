@@ -16,6 +16,8 @@
 #include "Acceptor.h"
 #include "asio.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace tools;
 
 // -----------------------------------------------------------------------------

@@ -76,7 +76,7 @@ void Panels::AddPanel( InfoPanel_ABC* panel )
 // -----------------------------------------------------------------------------
 void Panels::Select( int index )
 {
-    if( index != -1 && currentPanels_.size() > index  )
+    if( index != -1 && index < int( currentPanels_.size() ) )
     {
         stack_->raiseWidget( currentPanels_.at( index ) );
         combo_->setCurrentItem( index );

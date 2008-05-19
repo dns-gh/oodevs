@@ -31,7 +31,7 @@ const QString Agent::typeName_ = "agent";
 Agent::Agent( const ASN1T_MsgUnitCreation& message, Controller& controller,  const Resolver_ABC< AgentType >& resolver )
     : EntityImplementation< Agent_ABC >( controller, message.oid, message.nom )
     , type_( resolver.Get( message.type_pion ) )
-    , isPc_( message.pc )
+    , isPc_( message.pc != 0 )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid );

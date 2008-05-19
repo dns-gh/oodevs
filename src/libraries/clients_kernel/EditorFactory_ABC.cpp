@@ -10,6 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "EditorFactory_ABC.h"
 
+#pragma warning( disable : 4355 )
+
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

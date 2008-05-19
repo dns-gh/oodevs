@@ -164,7 +164,7 @@ void GradientWidget::OnPresetDeleted()
 Gradient* GradientWidget::CurrentPreset() const
 {
     const int current = presetCombo_->currentItem();
-    if( current < 0 || current > presets_.size() - 1 )
+    if( current < 0 || current > int( presets_.size() ) - 1 )
         return 0;
     return presets_.at( current );
 }

@@ -56,7 +56,7 @@ void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 void MedicalStates::DoUpdate( const ASN1T_MsgLogMedicalState& message )
 {
     if( message.m.chaine_activeePresent )
-        bChainEnabled_ = message.chaine_activee;
+        bChainEnabled_ = message.chaine_activee != 0;
 
     if( message.m.prioritesPresent )
     {
