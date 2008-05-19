@@ -200,9 +200,7 @@ void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsign
         SetParameter( parameters.elem[i], *result, type );
         result = paramTable_.GetNextRow();
     }
-    if ( i < parameters.n )
-    {
-    }
+    // TODO : if ( i < parameters.n )
 }
 
 namespace
@@ -233,19 +231,6 @@ void OrderDispatcher::SetParameter( ASN1T_MissionParameter& parameter, const Row
     if( param )
         serializer_->Serialize( parameter, *param, parameterId, GetField< std::string >( row, "Value" ) );
 }
-
-// -----------------------------------------------------------------------------
-// Name: OrderDispatcher::SetParameter
-// Created: SBO 2007-05-31
-// -----------------------------------------------------------------------------
-void OrderDispatcher::SetParameter( ASN1T_MissionParameter& parameter, const std::string& name, const kernel::OrderType& type ) 
-{
-    const kernel::OrderParameter* param = GetParameterByName( type, name );
-    parameter.null_value = param ? 0 : 1;
-    if( param )
-        serializer_->Serialize( parameter, *param, -1, "null" );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher::CleanParameters
