@@ -76,6 +76,7 @@
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/DrawerLayer.h"
+#include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/DisplayToolbar.h"
@@ -215,7 +216,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new DisplayToolbar( this, controllers );
 
     // Drawer
-    DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
+    DrawerFactory* drawerFactory = new DrawerFactory( this, *glProxy_, controllers_ );
+    DrawerLayer* drawer = new DrawerLayer( controllers_, *glProxy_, *drawerFactory );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
 
     new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *factory, expiration );
