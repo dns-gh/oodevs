@@ -45,8 +45,9 @@ OrderListener::~OrderListener()
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
 void OrderListener::Listen()
-{    
-    Row_ABC* row = table_.Find( "processed=0" );
+{
+    // Table_ABC* table = database.OpenTable( "Orders" );
+    Row_ABC* row = table_.Find( "Checked=0" );
     if ( row != 0 )
     {
         while( row != 0 )
@@ -64,6 +65,6 @@ void OrderListener::Listen()
 // -----------------------------------------------------------------------------
 void OrderListener::MarkProcessed( Row_ABC& row ) const
 {    
-    row.SetField( "processed", FieldVariant( -1 ) );    
+    row.SetField( "Checked", FieldVariant( -1 ) );    
     table_.UpdateRow( row );
 }

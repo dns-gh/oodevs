@@ -41,8 +41,7 @@ geometry::Point2d GeometryEditor::ConvertPosition( const std::string& stMGRS ) c
     static const double convert_rad_deg = 180. / 3.14159265358979;
     
     geocoord::MGRS      mgrs( stMGRS );
-    // geocoord::UTM       utm( geocoord::eNorth, manager_.GetZone(), value.Y() + offset.Y(), value.X() + offset.X() );
     geocoord::Geodetic  geo( mgrs );
 
-    return geometry::Point2d( geo.GetLongitude() * convert_rad_deg, geo.GetLatitude() * convert_rad_deg );   
+    return geometry::Point2d( geo.GetLongitude() * convert_rad_deg, geo.GetLatitude() * convert_rad_deg );
 }

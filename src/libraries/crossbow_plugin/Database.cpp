@@ -126,6 +126,7 @@ Table_ABC& Database::OpenTable( const std::string& name, bool clear /*=true*/ )
 {
     Table_ABC*& table = openedTables_[name];
     if( !table )
+    // Table_ABC* table = OpenWrappedTable( name );
     {
         table = OpenWrappedTable( name );
         if( table && clear )

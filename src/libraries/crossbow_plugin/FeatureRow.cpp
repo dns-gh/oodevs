@@ -11,6 +11,7 @@
 #include "FeatureRow.h"
 #include "Line.h"
 #include "Point.h"
+#include "Area.h"
 
 using namespace crossbow;
 
@@ -84,8 +85,10 @@ Shape_ABC& FeatureRow::GetShape() const
     geometry->get_GeometryType( &shapeType );
     if( shapeType == esriGeometryPoint )
         shape_.reset( new Point( geometry ) );
-    else if( shapeType == esriGeometryLine )
+    else if( shapeType == esriGeometryLine || shapeType == esriGeometryPolyline )
         shape_.reset( new Line( geometry ) );
+    else if( shapeType == esriGeometryPolygon )
+        shape_.reset( new Area( geometry ) );    
     else
         throw std::runtime_error( "Unsupported feature geometry type" ); // $$$$ SBO 2007-09-26: 
     return *shape_;

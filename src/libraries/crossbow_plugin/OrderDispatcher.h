@@ -72,6 +72,7 @@ private:
     const kernel::OrderType* GetAutomatMission( const Row_ABC& row ) const;
     void SetParameters( ASN1T_MissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type );
     void SetParameter( ASN1T_MissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type );
+    void SetParameter( ASN1T_MissionParameter& parameter, const std::string& name, const kernel::OrderType& type );
     void CleanParameters( ASN1T_MissionParameters& parameters );
 //    unsigned int GetLimaCount( unsigned long orderId );
     //@}

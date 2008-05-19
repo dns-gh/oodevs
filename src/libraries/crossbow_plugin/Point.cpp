@@ -85,6 +85,16 @@ void crossbow::Point::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePt
 // Name: Point::Serialize
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
+void crossbow::Point::Serialize( ASN1T_CoordLatLong& asn ) const
+{
+    asn.latitude = y_;
+    asn.longitude = x_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Point::Serialize
+// Created: SBO 2007-09-26
+// -----------------------------------------------------------------------------
 void crossbow::Point::Serialize( ASN1T_Location& asn ) const
 {
     asn.type = EnumLocationType::point;

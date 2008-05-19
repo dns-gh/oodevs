@@ -12,18 +12,17 @@
 
 namespace crossbow
 {
-    class Line;
     class Point;
-
+    class PointCollection;
+    
     class ShapeVisitor_ABC
     {
     public:
                  ShapeVisitor_ABC() {}
         virtual ~ShapeVisitor_ABC() {}
 
-        virtual void Visit( const Line& ) {}
+        virtual void Visit( const PointCollection& ) {}
         virtual void Visit( const Point& ) {}
-
     };
 
 // =============================================================================
@@ -44,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Accept( ShapeVisitor_ABC& visitor ) const = 0;
+    virtual void Accept( ShapeVisitor_ABC& visitor ) const = 0;    
     //@}
 };
 

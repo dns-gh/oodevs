@@ -40,6 +40,7 @@ public:
     virtual void Accept( ShapeVisitor_ABC& visitor ) const;
     void UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
     void Serialize( ASN1T_Location& asn ) const;
+    void Serialize( ASN1T_CoordLatLong& asn ) const;
     //@}
 
 private:

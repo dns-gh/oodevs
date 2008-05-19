@@ -10,9 +10,7 @@
 #ifndef __Line_h_
 #define __Line_h_
 
-#include "game_asn/Simulation.h"
-#include "Shape_ABC.h"
-#include "ESRI.h"
+#include "PointCollection.h"
 
 namespace crossbow
 {
@@ -24,9 +22,8 @@ namespace crossbow
 */
 // Created: SBO 2007-08-30
 // =============================================================================
-class Line : public Shape_ABC
+class Line : public PointCollection
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -38,7 +35,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Accept( ShapeVisitor_ABC& visitor ) const;
     void UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
     void Serialize( ASN1T_Location& asn ) const;
     //@}
@@ -48,18 +44,6 @@ private:
     //@{
     Line( const Line& );            //!< Copy constructor
     Line& operator=( const Line& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    typedef std::vector< Point >       T_Points;
-    typedef T_Points::const_iterator CIT_Points;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    T_Points points_;
     //@}
 };
 

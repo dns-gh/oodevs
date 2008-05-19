@@ -24,6 +24,7 @@ namespace dispatcher
 
 namespace crossbow
 {
+    class Database_ABC;
 
 // =============================================================================
 /** @class  OrderParameterSerializer
@@ -37,13 +38,13 @@ class OrderParameterSerializer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit OrderParameterSerializer( const dispatcher::Model& model );
+    explicit OrderParameterSerializer( Database_ABC& database, const dispatcher::Model& model );
     virtual ~OrderParameterSerializer();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( ASN1T_MissionParameter& asn, const kernel::OrderParameter& parameter, const std::string& value ) const;
+    void Serialize( ASN1T_MissionParameter& asn, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const;
     void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 
@@ -56,15 +57,15 @@ private:
 
     //! @name Helpers
     //@{
-    void SerializeLimit( ASN1T_Line*& asn, const std::string& value ) const;
-    void SerializePhaseLines( ASN1T_LimasOrder*& asn, const std::string& value ) const;
+    void SerializeLimit( ASN1T_Line*& asn, unsigned long parameterId, const std::string& tablename ) const;
+    void SerializePhaseLines( ASN1T_LimasOrder*& asn, unsigned long parameterId, const std::string& tablename ) const;
     void SerializePhaseLine( ASN1T_LimaOrder& asn, const std::string& value ) const;
     void SerializeDirection( ASN1T_Heading& asn, const std::string& value ) const;
     void SerializeIntelligenceList( ASN1T_IntelligenceList*& asn, const std::string& value ) const;
 
     void SerializeAutomat( ASN1T_Automat& asn, const std::string& value ) const;
     void SerializeBool( ASN1BOOL& asn, const std::string& value ) const;
-    void SerializeLocation( ASN1T_Location*& asn, const std::string& value ) const;
+    void SerializeLocation( ASN1T_Location*& asn, unsigned long parameterId, const std::string& value ) const;
     void CleanLocation( ASN1T_Location*& asn ) const;
     //@}
 
@@ -72,6 +73,7 @@ private:
     //! @name Member data
     //@{
     const dispatcher::Model& model_;
+    Database_ABC& database_;
     //@}
 };
 

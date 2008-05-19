@@ -15,9 +15,16 @@
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
-#include <geocoord/Geodetic.h>
-#include <geocoord/MGRS.h>
-#include <cmath>
+#include "Shape_ABC.h"
+#include "Table_ABC.h"
+#include "Row_ABC.h"
+#include "Database_ABC.h"
+#include "PointCollection.h"
+#include "Point.h"
+
+// #include <geocoord/Geodetic.h>
+// #include <geocoord/MGRS.h>
+// #include <cmath>
 
 using namespace crossbow;
 
@@ -25,8 +32,9 @@ using namespace crossbow;
 // Name: OrderParameterSerializer constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-OrderParameterSerializer::OrderParameterSerializer( const dispatcher::Model& model )
+OrderParameterSerializer::OrderParameterSerializer( Database_ABC& database, const dispatcher::Model& model )
     : model_( model )
+    , database_( database )
 {
     // NOTHING
 }
@@ -58,7 +66,7 @@ namespace
             return T_MissionParameter_value_aBool;
         else if( lowerType == "automate" ) // $$$$ SBO 2007-07-24: 
             return T_MissionParameter_value_automat;
-        else if( lowerType == "dangerdirection" )
+        else if( lowerType == "dangerdirection" || lowerType == "direction" )
             return T_MissionParameter_value_heading;
         else if( lowerType == "phaselinelist" )
             return T_MissionParameter_value_limasOrder;
@@ -74,22 +82,22 @@ namespace
 // Name: OrderParameterSerializer::Serialize
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::Serialize( ASN1T_MissionParameter& asn, const kernel::OrderParameter& parameter, const std::string& value ) const
+void OrderParameterSerializer::Serialize( ASN1T_MissionParameter& asn, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const
 {
     asn.value.t = ResolveType( parameter.GetType() );
     switch( asn.value.t )
     {
     case T_MissionParameter_value_point:
-        SerializeLocation( asn.value.u.point, value );
+        SerializeLocation( asn.value.u.point, parameterId, value );
         break;
     case T_MissionParameter_value_polygon:
-        SerializeLocation( asn.value.u.polygon, value );
+        SerializeLocation( asn.value.u.polygon, parameterId, value );
         break;
     case T_MissionParameter_value_location:
-        SerializeLocation( asn.value.u.location, value );
+        SerializeLocation( asn.value.u.location, parameterId, value );
         break;
     case T_MissionParameter_value_path:
-        SerializeLocation( asn.value.u.path, value );
+        SerializeLocation( asn.value.u.path, parameterId, value );
         break;
     case T_MissionParameter_value_automat:
         SerializeAutomat( asn.value.u.automat, value );
@@ -101,10 +109,10 @@ void OrderParameterSerializer::Serialize( ASN1T_MissionParameter& asn, const ker
         SerializeDirection( asn.value.u.heading, value );
         break;
     case T_MissionParameter_value_limasOrder:
-        SerializePhaseLines( asn.value.u.limasOrder, value );
+        SerializePhaseLines( asn.value.u.limasOrder, parameterId, value );
         break;
     case T_MissionParameter_value_line:
-        SerializeLimit( asn.value.u.line, value );
+        SerializeLimit( asn.value.u.line, parameterId, value );
         break;
     case T_MissionParameter_value_intelligenceList:
         SerializeIntelligenceList( asn.value.u.intelligenceList, value );
@@ -199,42 +207,69 @@ void OrderParameterSerializer::SerializeBool( ASN1BOOL& asn, const std::string& 
     asn = value == "true" ? true : false;
 }
 
+namespace 
+{
+    class GeometrySerializer : public crossbow::ShapeVisitor_ABC
+    {
+    public:
+        explicit GeometrySerializer( ASN1T_Location& asn ) 
+            : asn_ ( asn ) 
+        {
+        }
+        void Visit( const crossbow::PointCollection& points )
+        {
+            points.Serialize( asn_ );
+        }
+        void Visit( const crossbow::Point& point )
+        {
+            point.Serialize( asn_ );
+        }
+    private:
+        ASN1T_Location& asn_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeLocation
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeLocation( ASN1T_Location*& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializeLocation( ASN1T_Location*& asn, unsigned long parameterId, const std::string& tablename ) const
 {
+    Table_ABC& table = database_.OpenTable( tablename, false );
+    std::stringstream ss;
+    ss << "ParameterID=" << parameterId;
+    const Row_ABC* result = table.Find( ss.str() );
     asn = new ASN1T_Location();
-    asn->coordinates.n = std::count( value.begin(), value.end(), ';' );
-    asn->coordinates.elem = new ASN1T_CoordLatLong[asn->coordinates.n];
-
-    // value = type;coord1;coord2...
-    std::stringstream ss( value );
-    std::string v;
-    for( unsigned int i = 0; std::getline( ss, v, ';' ); ++i )
-        if( i == 0 )
-        {
-            std::stringstream converter( v );
-            unsigned int type;
-            converter >> type;
-            asn->type = ASN1T_EnumLocationType( type );
-        }
-        else
-        {
-            geocoord::MGRS mgrs( v );
-            geocoord::Geodetic geodetic( mgrs );
-            asn->coordinates.elem[i - 1].latitude  = geodetic.GetLatitude() * std::acos( -1. ) / 180;
-            asn->coordinates.elem[i - 1].longitude = geodetic.GetLongitude() * std::acos( -1. ) / 180;
-        }
+    if ( result == 0 )
+        throw std::exception( "Cannot instanciate location parameter" );    
+    Shape_ABC& shape = result->GetShape();
+    GeometrySerializer serializer( *asn );
+    shape.Accept( serializer );
+    /*
+    geocoord::MGRS mgrs( v );
+    geocoord::Geodetic geodetic( mgrs );
+    asn->coordinates.elem[i - 1].latitude  = geodetic.GetLatitude() * std::acos( -1. ) / 180;
+    asn->coordinates.elem[i - 1].longitude = geodetic.GetLongitude() * std::acos( -1. ) / 180;
+    */
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeLimit
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeLimit( ASN1T_Line*& asn, const std::string& value ) const
-{
+void OrderParameterSerializer::SerializeLimit( ASN1T_Line*& asn, unsigned long parameterId, const std::string& tablename ) const
+{        
+    Table_ABC& table = database_.OpenTable( tablename, false );
+    std::stringstream ss;
+    ss << "ParameterID=" << parameterId;
+    const Row_ABC* result = table.Find( ss.str() );
+    asn = new ASN1T_Line();
+    if ( result == 0 )
+        throw std::exception( "Cannot instanciate limit parameter" );    
+    Shape_ABC& shape = result->GetShape();
+    GeometrySerializer serializer( *asn );
+    shape.Accept( serializer );
+    /*
     unsigned long id = 0;
     std::stringstream ss( value );
     ss >> id;
@@ -243,15 +278,34 @@ void OrderParameterSerializer::SerializeLimit( ASN1T_Line*& asn, const std::stri
         asn = new ASN1T_Line();
         limit->Send( *asn );
     }
+    */
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializePhaseLines
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializePhaseLines( ASN1T_LimasOrder*& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializePhaseLines( ASN1T_LimasOrder*& asn, unsigned long parameterId, const std::string& tablename ) const
 {
-    // $$$$ SBO 2008-03-04: value=id1,func1,func2;id2,func1;...
+    // $$$$ SBO 2008-03-10: Not Supported
+    asn = new ASN1T_LimasOrder();
+    asn->n = 0;
+    asn->elem = 0;
+
+    /*
+    Table_ABC& table = database_.OpenTable( tablename, false );
+    std::stringstream ss;
+    ss << "ParameterID=" << parameterId;
+    const Row_ABC* result = table.Find( ss.str() );
+        
+    for( unsigned int i = 0; result != 0; ++i )
+    {
+        SerializePhaseLine(asn->elem[i], v);
+        result = paramTable_.GetNextRow();
+    }    
+    */
+    // $$$$ SBO 2008-03-04: value=id1,func1,func2;id2,func1;...    
+    /*
     asn = new ASN1T_LimasOrder();
     asn->n = std::count( value.begin(), value.end(), ';' );
     if( !asn->n )
@@ -261,6 +315,7 @@ void OrderParameterSerializer::SerializePhaseLines( ASN1T_LimasOrder*& asn, cons
     std::string v;
     for( unsigned int i = 0; std::getline( ss, v, ';' ); ++i )
         SerializePhaseLine( asn->elem[i], v );
+    */
 }
 
 namespace
@@ -282,6 +337,7 @@ namespace
 void OrderParameterSerializer::SerializePhaseLine( ASN1T_LimaOrder& asn, const std::string& value ) const
 {
     // $$$$ SBO 2008-03-10: value=id,func1,func2
+    /*
     asn.fonctions.n = std::count( value.begin(), value.end(), ',' );
     if( asn.fonctions.n )
         asn.fonctions.elem = new ASN1T_EnumLimaType[asn.fonctions.n];
@@ -299,6 +355,7 @@ void OrderParameterSerializer::SerializePhaseLine( ASN1T_LimaOrder& asn, const s
         }
         else
             asn.fonctions.elem[i - 1] = ConvertLimaTypeFromString( v );
+    */
 }
 
 // -----------------------------------------------------------------------------
