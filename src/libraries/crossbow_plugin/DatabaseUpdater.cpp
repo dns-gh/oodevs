@@ -22,8 +22,6 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Formation.h"
-#include "dispatcher/Lima.h"
-#include "dispatcher/Limit.h"
 #include "dispatcher/Object.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "tools/App6Symbol.h"
