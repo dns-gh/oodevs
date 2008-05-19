@@ -35,7 +35,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_A
     , controllers_( controllers )
     , layer_( layer )
     , factory_( *new DrawerFactory( this, tools, controllers_ ) )
-    , model_( *new DrawerModel( factory_ ) )
+    , model_( *new DrawerModel( controllers, factory_ ) )
 {
     QHBox* box = new QHBox( this );
     box->layout()->setAlignment( Qt::AlignCenter );
@@ -138,7 +138,7 @@ void DrawerPanel::Open()
         filename.replace( "/", "\\" );
     try
     {
-        layer_.Load( filename.ascii(), model_ );
+        model_.LoadDrawings( filename.ascii() );
     }
     catch( xml::exception& )
     {
@@ -161,7 +161,7 @@ void DrawerPanel::Save()
         filename.append( ".xml" );
     try
     {
-        layer_.Save( filename.ascii() );
+        model_.SaveDrawings( filename.ascii() );
     }
     catch( xml::exception& )
     {
@@ -175,5 +175,5 @@ void DrawerPanel::Save()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Clear()
 {
-    layer_.Clear();
+    model_.ClearDrawings();
 }

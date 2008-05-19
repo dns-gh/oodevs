@@ -21,6 +21,11 @@ namespace xml
     class xostream;
 }
 
+namespace kernel
+{
+    class Controller;
+}
+
 namespace gui
 {
     class DrawerStyle;
@@ -37,13 +42,15 @@ class DrawerShape
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerShape( const DrawerStyle& style, const QColor& color );
-             DrawerShape( const DrawerStyle& style, xml::xistream& xis );
+             DrawerShape( kernel::Controller& controller, const DrawerStyle& style, const QColor& color );
+             DrawerShape( kernel::Controller& controller, const DrawerStyle& style, xml::xistream& xis );
     virtual ~DrawerShape();
     //@}
 
     //! @name Operations
     //@{
+    void Create();
+
     virtual void PopPoint();
     virtual void AddPoint( const geometry::Point2f& point );
 
@@ -68,6 +75,7 @@ private:
 protected:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const DrawerStyle& style_;
     svg::RenderingContext* context_;
     QColor color_;

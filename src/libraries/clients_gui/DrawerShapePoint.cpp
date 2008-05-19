@@ -18,8 +18,8 @@ using namespace gui;
 // Name: DrawerShapePoint constructor
 // Created: SBO 2007-03-07
 // -----------------------------------------------------------------------------
-DrawerShapePoint::DrawerShapePoint( const DrawerStyle& style, const QColor& color )
-    : DrawerShape( style, color )
+DrawerShapePoint::DrawerShapePoint( kernel::Controller& controller, const DrawerStyle& style, const QColor& color )
+    : DrawerShape( controller, style, color )
 {
     // NOTHING
 }
@@ -28,8 +28,8 @@ DrawerShapePoint::DrawerShapePoint( const DrawerStyle& style, const QColor& colo
 // Name: DrawerShapePoint constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerShapePoint::DrawerShapePoint( const DrawerStyle& style, xml::xistream& xis )
-    : DrawerShape( style, xis )
+DrawerShapePoint::DrawerShapePoint( kernel::Controller& controller, const DrawerStyle& style, xml::xistream& xis )
+    : DrawerShape( controller, style, xis )
 {
     // NOTHING
 }

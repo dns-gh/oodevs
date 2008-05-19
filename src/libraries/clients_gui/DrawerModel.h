@@ -11,16 +11,23 @@
 #define __DrawerModel_h_
 
 #include "clients_kernel/Resolver.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 namespace xml
 {
     class xistream;
 }
 
+namespace kernel
+{
+    class Controllers;
+}
+
 namespace gui
 {
     class DrawerCategory;
     class DrawerFactory;
+    class DrawerShape;
 
 // =============================================================================
 /** @class  DrawerModel
@@ -29,12 +36,14 @@ namespace gui
 // Created: SBO 2007-03-22
 // =============================================================================
 class DrawerModel : public kernel::Resolver< DrawerCategory, QString >
+                  , public kernel::Observer_ABC
+                  , public kernel::ElementObserver_ABC< DrawerShape >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DrawerModel( const DrawerFactory& factory );
+             DrawerModel( kernel::Controllers& controllers, const DrawerFactory& factory );
     virtual ~DrawerModel();
     //@}
 
@@ -42,6 +51,10 @@ public:
     //@{
     void Load( const std::string& filename );
     void Purge();
+
+    void LoadDrawings( const std::string& filename );
+    void SaveDrawings( const std::string& filename ) const;
+    void ClearDrawings();
     //@}
 
 private:
@@ -54,12 +67,24 @@ private:
     //! @name Helpers
     //@{
     void ReadCategory( xml::xistream& xis );
+    void ReadShape   ( xml::xistream& xis );
+    virtual void NotifyCreated( const DrawerShape& );
+    virtual void NotifyDeleted( const DrawerShape& );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< const DrawerShape* > T_Shapes;
+    typedef T_Shapes::iterator               IT_Shapes;
+    
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const DrawerFactory& factory_;
+    T_Shapes shapes_;
     //@}
 };
 

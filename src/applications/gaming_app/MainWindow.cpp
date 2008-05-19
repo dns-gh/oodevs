@@ -100,6 +100,7 @@
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/DrawerLayer.h"
+#include "clients_gui/DrawerFactory.h"
 #include "clients_gui/LogoLayer.h"
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
@@ -302,7 +303,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     OrderBrowser* browser = new OrderBrowser( this, config.BuildExerciseChildFile( "orders" ).c_str() );
     
     // Drawer
-    DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
+    DrawerFactory* drawerFactory = new DrawerFactory( this, *glProxy_, controllers_ );
+    DrawerLayer* drawer = new DrawerLayer( controllers_, *glProxy_, *drawerFactory );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
 
     AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, publisher, *paramLayer, staticModel_ );

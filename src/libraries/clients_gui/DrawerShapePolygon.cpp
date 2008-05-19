@@ -16,8 +16,8 @@ using namespace gui;
 // Name: DrawerShapePolygon constructor
 // Created: SBO 2007-03-07
 // -----------------------------------------------------------------------------
-DrawerShapePolygon::DrawerShapePolygon( const DrawerStyle& style, const QColor& color )
-    : DrawerShape( style, color )
+DrawerShapePolygon::DrawerShapePolygon( kernel::Controller& controller, const DrawerStyle& style, const QColor& color )
+    : DrawerShape( controller, style, color )
 {
     // NOTHING
 }
@@ -26,8 +26,8 @@ DrawerShapePolygon::DrawerShapePolygon( const DrawerStyle& style, const QColor& 
 // Name: DrawerShapePolygon constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerShapePolygon::DrawerShapePolygon( const DrawerStyle& style, xml::xistream& xis )
-    : DrawerShape( style, xis )
+DrawerShapePolygon::DrawerShapePolygon( kernel::Controller& controller, const DrawerStyle& style, xml::xistream& xis )
+    : DrawerShape( controller, style, xis )
 {
     // NOTHING
 }

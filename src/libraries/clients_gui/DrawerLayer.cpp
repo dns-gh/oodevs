@@ -10,31 +10,31 @@
 #include "clients_gui_pch.h"
 #include "DrawerLayer.h"
 #include "DrawerShape.h"
-#include "DrawerShapeFactory.h"
 #include "CursorStrategy.h"
 #include "resources.h"
+#include "DrawerFactory.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "xeumeuleu/xml.h"
+#include "clients_kernel/Controllers.h"
 
 using namespace gui;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: DrawerLayer constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerLayer::DrawerLayer( kernel::GlTools_ABC& tools )
-    : tools_( tools )
+DrawerLayer::DrawerLayer( kernel::Controllers& controllers, kernel::GlTools_ABC& tools, DrawerFactory& factory )
+    : controllers_( controllers )
+    , tools_( tools )
     , cursors_( new CursorStrategy( tools ) )
-    , factory_( *new DrawerShapeFactory() )
-    , current_( 0 )
+    , factory_( factory )
     , show_( true )
-    , selected_( 0 )
-    , overlined_( 0 )
+    , current_( controllers )
+    , selected_( controllers )
+    , overlined_( controllers )
     , selectedStyle_( 0 )
     , selectedColor_()
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ DrawerLayer::DrawerLayer( kernel::GlTools_ABC& tools )
 // -----------------------------------------------------------------------------
 DrawerLayer::~DrawerLayer()
 {
-    delete &factory_;
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ void DrawerLayer::ChangeColor( const QColor& color )
 {
     selectedColor_ = color;
     if( current_ )
-        current_->ChangeColor( color );
+        current_.ConstCast()->ChangeColor( color );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,9 +118,9 @@ bool DrawerLayer::HandleKeyPress( QKeyEvent* key )
         case Qt::Key_BackSpace:
         case Qt::Key_Delete:
             if( current_ ) 
-                current_->PopPoint();
-            else if( selected_ )
-                DeleteSelected();
+                current_.ConstCast()->PopPoint();
+            else 
+                delete selected_;
             return true;
         case Qt::Key_Return:
         case Qt::Key_Enter:
@@ -128,23 +128,9 @@ bool DrawerLayer::HandleKeyPress( QKeyEvent* key )
             return true;
         case Qt::Key_Escape:
             delete current_;
-            current_ = 0;
             return true;
     };
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::DeleteSelected
-// Created: AGE 2006-09-04
-// -----------------------------------------------------------------------------
-void DrawerLayer::DeleteSelected()
-{
-    T_Shapes::iterator it = std::find( shapes_.begin(), shapes_.end(), selected_ );
-    if( it != shapes_.end() )
-        shapes_.erase( it );
-    delete selected_;
-    selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +141,7 @@ void DrawerLayer::Done()
 {
     if( current_ )
     {
-        shapes_.push_back( current_ );
+        current_.ConstCast()->Create();
         current_ = 0;
     }
 }
@@ -184,7 +170,7 @@ bool DrawerLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& 
     if( selected_ && mouse->state() == Qt::LeftButton && ! dragPoint_.IsZero() )
     {
         const geometry::Vector2f translation( dragPoint_, point );
-        selected_->Translate( dragPoint_, translation, precision );
+        selected_.ConstCast()->Translate( dragPoint_, translation, precision );
         dragPoint_ = point;
         cursors_->SelectContext( QCursor( Qt::SizeAllCursor ), true );
     }
@@ -218,9 +204,9 @@ bool DrawerLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f&
         current_ = factory_.CreateShape( *selectedStyle_, selectedColor_ );
     }
     if( current_ && leftRelease )
-        current_->AddPoint( point );
+        current_.ConstCast()->AddPoint( point );
     else if( current_ && rightRelease )
-        current_->PopPoint();
+        current_.ConstCast()->PopPoint();
     return true;
 }
 
@@ -233,56 +219,31 @@ bool DrawerLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Po
     if( ! current_ )
         return false;
     if( mouse->button() == Qt::RightButton )
-        current_->PopPoint();
+        current_.ConstCast()->PopPoint();
     if( mouse->button() == Qt::LeftButton )
         Done();
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerLayer::Load
-// Created: SBO 2007-03-21
+// Name: DrawerLayer::NotifyCreated
+// Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-void DrawerLayer::Load( const std::string& filename, const DrawerModel& model )
+void DrawerLayer::NotifyCreated( const DrawerShape& shape )
 {
-    xml::xifstream xis( filename );
-    xis >> start( "shapes" )
-            >> list( "shape", *this, &DrawerLayer::ReadShape, model )
-        >> end();
+    shapes_.push_back( const_cast< DrawerShape* >( &shape ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerLayer::ReadShape
-// Created: SBO 2007-03-21
+// Name: DrawerLayer::NotifyDeleted
+// Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-void DrawerLayer::ReadShape( xml::xistream& xis, const DrawerModel& model )
+void DrawerLayer::NotifyDeleted( const DrawerShape& shape )
 {
-    std::auto_ptr< DrawerShape > newShape( factory_.CreateShape( xis, model ) );
-    if( newShape.get() )
-        shapes_.push_back( newShape.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::Save
-// Created: SBO 2007-03-21
-// -----------------------------------------------------------------------------
-void DrawerLayer::Save( const std::string& filename ) const
-{
-    xml::xofstream xos( filename );
-    xos << start( "shapes" );
-    for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
-        (*it)->Serialize( xos );
-    xos << end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::Clear
-// Created: SBO 2007-03-22
-// -----------------------------------------------------------------------------
-void DrawerLayer::Clear()
-{
-    Done();
-    for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
-        delete *it;
-    shapes_.clear();
+    IT_Shapes it = std::find( shapes_.begin(), shapes_.end(), &shape );
+    if( it != shapes_.end() )
+    {
+        std::swap( *it, shapes_.back() );
+        shapes_.pop_back();
+    }
 }

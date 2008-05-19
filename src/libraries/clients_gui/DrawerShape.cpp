@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "DrawerShape.h"
 #include "DrawerStyle.h"
+#include "clients_kernel/Controller.h"
 #include "svgl/svgl.h"
 #include "xeumeuleu/xml.h"
 
@@ -36,8 +37,9 @@ namespace
 // Name: DrawerShape constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerShape::DrawerShape( const DrawerStyle& style, const QColor& color )
-    : style_( style )
+DrawerShape::DrawerShape( kernel::Controller& controller, const DrawerStyle& style, const QColor& color )
+    : controller_( controller )
+    , style_( style )
     , context_( new svg::RenderingContext() )
     , color_( color )
     , complement_( Complement( color ) )
@@ -49,8 +51,9 @@ DrawerShape::DrawerShape( const DrawerStyle& style, const QColor& color )
 // Name: DrawerShape constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerShape::DrawerShape( const DrawerStyle& style, xml::xistream& xis )
-    : style_( style )
+DrawerShape::DrawerShape( kernel::Controller& controller, const DrawerStyle& style, xml::xistream& xis )
+    : controller_( controller )
+    , style_( style )
     , context_( new svg::RenderingContext() )
 {
     std::string color;
@@ -58,6 +61,8 @@ DrawerShape::DrawerShape( const DrawerStyle& style, xml::xistream& xis )
         >> list( "point", *this, &DrawerShape::ReadPoint );
     color_.setNamedColor( color.c_str() );
     complement_ = Complement( color_ );
+
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +71,17 @@ DrawerShape::DrawerShape( const DrawerStyle& style, xml::xistream& xis )
 // -----------------------------------------------------------------------------
 DrawerShape::~DrawerShape()
 {
+    controller_.Delete( *this );
     delete context_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::Create
+// Created: AGE 2008-05-19
+// -----------------------------------------------------------------------------
+void DrawerShape::Create()
+{
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------

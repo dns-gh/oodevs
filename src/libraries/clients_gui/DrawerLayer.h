@@ -11,10 +11,13 @@
 #define __DrawerLayer_h_
 
 #include "Layer_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
     class GlTools_ABC;
+    class Controllers;
 }
 
 namespace xml
@@ -26,8 +29,7 @@ namespace gui
 {
     class DrawerShape;
     class DrawerStyle;
-    class DrawerShapeFactory;
-    class DrawerModel;
+    class DrawerFactory;
     class CursorStrategy_ABC;
 
 // =============================================================================
@@ -37,12 +39,14 @@ namespace gui
 // Created: AGE 2006-08-31
 // =============================================================================
 class DrawerLayer : public Layer2d_ABC
+                  , public kernel::Observer_ABC
+                  , public kernel::ElementObserver_ABC< DrawerShape >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DrawerLayer( kernel::GlTools_ABC& tools );
+             DrawerLayer( kernel::Controllers& controllers, kernel::GlTools_ABC& tools, DrawerFactory& factory );
     virtual ~DrawerLayer();
     //@}
 
@@ -50,9 +54,6 @@ public:
     //@{
     void TakeFocus( bool take );
     void Show( bool show );
-    void Load( const std::string& filename, const DrawerModel& model );
-    void Save( const std::string& filename ) const;
-    void Clear();
 
     void ChangeColor( const QColor& color );
     void StartShape( const DrawerStyle& style, const QColor& color );
@@ -73,31 +74,32 @@ private:
     virtual bool HandleMouseMove ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual void NotifyCreated( const DrawerShape& );
+    virtual void NotifyDeleted( const DrawerShape& );
 
     void Done();
-    void DeleteSelected();
     float Precision() const;
-
-    void ReadShape( xml::xistream& xis, const DrawerModel& model );
     //@}
 
     //! @name Types
     //@{
     typedef std::vector< DrawerShape* > T_Shapes;
+    typedef T_Shapes::iterator         IT_Shapes;
     typedef T_Shapes::const_iterator  CIT_Shapes;
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
     std::auto_ptr< CursorStrategy_ABC > cursors_;
-    DrawerShapeFactory& factory_;
+    DrawerFactory& factory_;
     bool         show_;
-    DrawerShape* current_;
+    kernel::SafePointer< DrawerShape > current_;
+    kernel::SafePointer< DrawerShape > overlined_;
+    kernel::SafePointer< DrawerShape > selected_;
     T_Shapes     shapes_;
-    DrawerShape* overlined_;
-    DrawerShape* selected_;
     geometry::Point2f dragPoint_;
 
     const DrawerStyle* selectedStyle_;

@@ -29,6 +29,9 @@ namespace svg
 namespace gui
 {
     class DrawerCategory;
+    class DrawerShape;
+    class DrawerStyle;
+    class DrawerModel;
 
 // =============================================================================
 /** @class  DrawerFactory
@@ -49,6 +52,8 @@ public:
     //! @name Operations
     //@{
     DrawerCategory* CreateCategory( xml::xistream& xis ) const;
+    DrawerShape* CreateShape( const DrawerStyle& style, const QColor& color ) const;
+    DrawerShape* CreateShape( xml::xistream& xis, const DrawerModel& model ) const;
     //@}
 
 private:
