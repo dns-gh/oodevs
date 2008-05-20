@@ -111,6 +111,8 @@ void SimulationModel::Update( const ASN1T_MsgControlBeginTick& msg )
 {
     nCurrentTick_ = msg.current_tick;
     date_ = std::string( (const char*)msg.date_time.data, 15 );
+    if( initialDate_.empty() )
+        initialDate_ = date_;
 }
 
 // -----------------------------------------------------------------------------
