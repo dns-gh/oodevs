@@ -96,25 +96,7 @@
         <build-lib name="ENT" depends="qt" pattern="lib${ant.project.name}_ENT-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.bml_plugin" description="build BML dispatcher plugin static library" depends="library.dispatcher">
-        <build-lib name="bml_plugin" pattern="lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}" suffix="-gd">
-            <includepath path="${include.dir}/masasn"/>
-        </build-lib>
-    </target>
-
-    <target name="library.crossbow_plugin" description="build crossbow dispatcher plugin static library" depends="library.MT_Tools,library.tools,library.game_asn">
-        <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd">
-            <includepath path="${include.dir}/masasn"/>
-            <includepath path="${include.dir}/esri"/>
-        </build-lib>
-    </target>
-
-    <target name="library.gearth_plugin" description="build google-earth dispatcher plugin static library" depends="library.MT_Tools,library.tools,library.game_asn">
-        <build-lib name="gearth_plugin" pattern="lib${ant.project.name}_gearth_plugin-${platform}-mt@{suffix}" suffix="-gd">
-            <includepath path="${include.dir}/masasn"/>
-        </build-lib>
-    </target>
-    
+   
     <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools,library.tools,library.game_asn">
         <build-lib name="dispatcher" pattern="lib${ant.project.name}_dispatcher-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
@@ -164,6 +146,25 @@
         </build-lib>
     </target>
     
+    <target name="library.bml_plugin" description="build BML dispatcher plugin static library" depends="library.dispatcher">
+        <build-lib name="bml_plugin" pattern="lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
+        </build-lib>
+    </target>
+
+    <target name="library.crossbow_plugin" description="build crossbow dispatcher plugin static library" depends="library.MT_Tools,library.tools,library.game_asn">
+        <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
+            <includepath path="${include.dir}/esri"/>
+        </build-lib>
+    </target>
+
+    <target name="library.gearth_plugin" description="build google-earth dispatcher plugin static library" depends="library.MT_Tools,library.tools,library.game_asn">
+        <build-lib name="gearth_plugin" pattern="lib${ant.project.name}_gearth_plugin-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
+        </build-lib>
+    </target>
+    
     <target name="library.hla_plugin" description="build hla_plugin static library" depends="library.dispatcher">
         <build-lib name="hla_plugin" pattern="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
@@ -187,7 +188,10 @@
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-  
+    
+    <target name="library.plugins" description="build all dispatcher plugins" 
+            depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,
+                     library.bml_plugin,library.crossbow_plugin,library.gearth_plugin"/>
 
     <!--
     ============================================================================
@@ -198,16 +202,16 @@
             depends="applications.simulation,applications.clients,applications.frontends"/>
 
     <target name="applications.simulation" description="build CSword Simulation executables"
-            depends="application.dispatcher_app,application.dispatcher_app.crossbowed,application.simulation_app,application.replayer_app,application.simulation_tester,application.AGR" />
+            depends="application.dispatcher_app,application.simulation_app,application.replayer_app,application.AGR" />
 
     <target name="applications.clients" description="build CSword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app"/>
             
     <target name="applications.frontends" description="build CSword Frontend executables"
             depends="application.selftraining_app,application.frontend_app"/>
-
-    <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
-        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
+            
+    <target name="application.dispatcher_dll" description="build CSword Dispatcher dll" depends="library.dispatcher,library.plugins">
+        <build-lib name="dispatcher_dll" outtype="shared" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
                    libs="HLA,libFedTime,masalloc,tools,masasn
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -221,27 +225,40 @@
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/masasn"/>
-        </build-app>
+            <defineset define="DISPATCHER_DLL_EXPORTS"/>
+            <linkerarg value="/FIXED:NO"/>
+        </build-lib>
     </target>
-
-    <target name="application.dispatcher_app.crossbowed" description="build CSword Dispatcher executable with crossbow plugin" depends="library.dispatcher,library.crossbow_plugin,library.gearth_plugin">
-        <build-app name="dispatcher_app_crossbowed" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm" input="dispatcher_app"
+    
+    <target name="application.dispatcher_dll.crossbowed" description="build CSword Dispatcher dll with crossbow" depends="library.dispatcher,library.plugins">
+        <build-lib name="dispatcher_dll_crossbowed" outtype="shared" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm" input="dispatcher_dll"
                    libs="HLA,libFedTime,masalloc,tools,masasn
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
                          lib${ant.project.name}_dispatcher-${platform}-mt
+                         lib${ant.project.name}_hla_plugin-${platform}-mt
+                         lib${ant.project.name}_dis_plugin-${platform}-mt
+                         lib${ant.project.name}_tic_plugin-${platform}-mt
+                         lib${ant.project.name}_bml_plugin-${platform}-mt
+                         lib${ant.project.name}_messenger_plugin-${platform}-mt
                          lib${ant.project.name}_crossbow_plugin-${platform}-mt
                          lib${ant.project.name}_gearth_plugin-${platform}-mt
-                         lib${ant.project.name}_hla_plugin-${platform}-mt
-                         lib${ant.project.name}_dis_plugin-${platform}-mt
-                         lib${ant.project.name}_tic_plugin-${platform}-mt
-                         lib${ant.project.name}_bml_plugin-${platform}-mt
-                         lib${ant.project.name}_messenger_plugin-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/masasn"/>
-            <defineset define="CROSSBOW_PLUGIN"/>
+            <defineset define="DISPATCHER_DLL_EXPORTS,CROSSBOW_PLUGIN"/>
+            <linkerarg value="/FIXED:NO"/>
+        </build-lib>
+    </target>
+
+    <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="application.dispatcher_dll">
+        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
+                   libs="masalloc,tools
+                         lib${ant.project.name}_tools-${platform}-mt
+                         lib${ant.project.name}_MT_Tools-${platform}-mt
+                         lib${ant.project.name}_dispatcher_dll-${platform}-mt">
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
         </build-app>
     </target>
 
@@ -253,13 +270,7 @@
                          lib${ant.project.name}_game_asn-${platform}-mt
                          lib${ant.project.name}_simulation_terrain-${platform}-mt
                          lib${ant.project.name}_simulation_kernel-${platform}-mt
-                         lib${ant.project.name}_dispatcher-${platform}-mt
-                         lib${ant.project.name}_hla_plugin-${platform}-mt
-                         lib${ant.project.name}_dis_plugin-${platform}-mt
-                         lib${ant.project.name}_tic_plugin-${platform}-mt
-                         lib${ant.project.name}_bml_plugin-${platform}-mt
-                         lib${ant.project.name}_messenger_plugin-${platform}-mt
-                         lib${ant.project.name}_clients_kernel-${platform}-mt" >
+                         lib${ant.project.name}_dispatcher_dll-${platform}-mt" >
             <syslibset libs="dbghelp,psapi,iphlpapi"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <includepath path="${include.dir}/masasn"/>
@@ -277,25 +288,10 @@
                          lib${ant.project.name}_game_asn-${platform}-mt
                          lib${ant.project.name}_dispatcher-${platform}-mt
                          lib${ant.project.name}_3a-${platform}-mt
-                         lib${ant.project.name}_hla_plugin-${platform}-mt
-                         lib${ant.project.name}_dis_plugin-${platform}-mt
-                         lib${ant.project.name}_tic_plugin-${platform}-mt
-                         lib${ant.project.name}_bml_plugin-${platform}-mt
-                         lib${ant.project.name}_messenger_plugin-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt" >
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/masasn"/>
         </build-app>        
-    </target>
-
-    <target name="application.simulation_tester" description="build CSword Simulation Tester executable" depends="library.game_asn,library.MT_Tools">
-        <!-- TMP
-        <build-app name="simulation_tester" subsystem="console" depends="mt,din,terrain"
-                   libs="MT_Tools,ASN,asn1per"
-                   excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp,**/Actions/Missions/Population/*.cpp">
-            <includepath path="${applications.dir}/simulation_tester"/>
-            <includepath path="${include.dir}/ASN"/>
-        </build-app>-->
     </target>
 
     <target name="application.adaptation_app" description="build CSword Adaptation executable" depends="library.ENT,library.clients_gui">

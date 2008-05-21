@@ -12,12 +12,8 @@
 
 #include <string>
 #include <memory>
-#include "dispatcher/Config.h"
 
-namespace dispatcher
-{
-    class Dispatcher;
-}
+class DispatcherFacade;
 
 // =============================================================================
 /** @class  Application
@@ -50,8 +46,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Config      config_;
-    std::auto_ptr< dispatcher::Dispatcher > dispatcher_;
+    std::auto_ptr< DispatcherFacade > dispatcher_;
     //@}
 };
 

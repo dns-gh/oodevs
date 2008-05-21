@@ -17,7 +17,6 @@ Shape ::= SEQUENCE
     category        VisibleString,
     color      		VisibleString,
     template      	VisibleString,
-    type    		EnumLocationType,
 	points			CoordLatLongList 
 }
 

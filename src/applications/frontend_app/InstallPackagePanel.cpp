@@ -132,6 +132,21 @@ std::string InstallPackagePanel::GetDestinationDirectory() const
     return p.native_file_string();
 }
 
+namespace
+{
+    struct Progress
+    {
+        Progress( QProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
+        void operator()() 
+        {
+            progress_->setProgress( ++count_ );
+            qApp->processEvents();
+        }
+        QProgressBar* progress_;
+        unsigned count_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: InstallPackagePanel::InstallPackage
 // Created: SBO 2008-03-14
@@ -147,12 +162,7 @@ void InstallPackagePanel::InstallPackage()
             progress_->setProgress( 0, content_->count() );
             setCursor( QCursor::waitCursor );
             okay_->setDisabled( true );
-            for( unsigned int i = 0; i < content_->count(); ++i )
-            {
-                frontend::commands::InstallPackageFile( archive, content_->item( i )->text().ascii(), GetDestinationDirectory() );
-                progress_->setProgress( i + 1 );
-                qApp->processEvents();
-            }
+            frontend::commands::InstallPackageFile( archive, GetDestinationDirectory(), Progress( progress_ ) );
             setCursor( QCursor::arrowCursor );
             okay_->setDisabled( false );
         }

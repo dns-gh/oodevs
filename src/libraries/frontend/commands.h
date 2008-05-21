@@ -10,6 +10,8 @@
 #ifndef __commands_h_
 #define __commands_h_
 
+#include <boost/function.hpp>
+
 namespace tools
 {
     class GeneralConfig;
@@ -33,7 +35,9 @@ namespace frontend
         QStringList ListModels        ( const tools::GeneralConfig& config );
         QStringList ListPhysicalModels( const tools::GeneralConfig& config, const std::string& model );
         QStringList ListPackageFiles  ( const std::string& filename );
+
         void        InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination );
+        void        InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback );
     }
 }
 

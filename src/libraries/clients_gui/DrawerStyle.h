@@ -55,6 +55,7 @@ public:
     QString GetName() const;
     QString GetType() const;
     QString GetDescription() const;
+    QString GetCategory() const;
     QPixmap GetPixmap() const;
     void Draw( const T_PointVector& points, svg::RenderingContext_ABC& context ) const;
     void Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context ) const;

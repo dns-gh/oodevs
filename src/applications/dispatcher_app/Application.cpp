@@ -8,16 +8,9 @@
 // *****************************************************************************
 
 #include "Application.h"
-#include "dispatcher/Dispatcher.h"
-#include "hla_plugin/HlaPluginFactory.h"
-#include "dis_plugin/DisPluginFactory.h"
-#include "tic_plugin/TicPluginFactory.h"
-#ifdef CROSSBOW_PLUGIN
-#   include "gearth_plugin/GearthPluginFactory.h"
-#   include "crossbow_plugin/CrossbowPluginFactory.h"
-#endif
+#include "dispatcher_dll/DispatcherFacade.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
-#include <windows.h> //$$$ A VIRER
+#include <windows.h>
 
 // -----------------------------------------------------------------------------
 // Name: Application constructor
@@ -28,17 +21,7 @@ Application::Application( int argc, char** argv )
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "Sword Officer Training(tm) Dispatcher" );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    config_.Parse( argc, argv );
-
-    dispatcher_.reset( new dispatcher::Dispatcher( config_ ) );
-    dispatcher_->RegisterPluginFactory( *new hla::HlaPluginFactory() );
-    dispatcher_->RegisterPluginFactory( *new dis::DisPluginFactory() );
-    dispatcher_->RegisterPluginFactory( *new tic::TicPluginFactory() );
-#ifdef CROSSBOW_PLUGIN
-    dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
-    dispatcher_->RegisterPluginFactory( *new gearth::GearthPluginFactory() );
-#endif
-    dispatcher_->CreatePlugins();
+    dispatcher_.reset( new DispatcherFacade( argc, argv ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,4 +53,3 @@ int Application::Execute()
     }
     return 0;
 }
-

@@ -14,7 +14,7 @@
 
 #include "Sim.h"
 
-#include "SIM_Config.h"
+#include "simulation_kernel/tools/MIL_Config.h"
 
 class SIM_NetworkLogger;
 class SIM_Dispatcher;
@@ -51,7 +51,9 @@ private:
 private:
     //! @name Member data
     //@{
-    SIM_Config startupConfig_;
+    MIL_Config startupConfig_;
+    int argc_;
+    char** argv_;
     
     // Error dispatchers
     SIM_NetworkLogger* pNetworkLogger_;

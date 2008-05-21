@@ -26,6 +26,10 @@ GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, IntelligenceCreationRequ
 GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, IntelligenceUpdateRequest,      intelligence_update_request )
 GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, IntelligenceDestructionRequest, intelligence_destruction_request )
 
+GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, ShapeCreationRequest,           shape_creation_request )
+GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, ShapeUpdateRequest,             shape_update_request )
+GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, ShapeDestructionRequest,        shape_destruction_request )
+
 }
 
 #endif // __MessengerMessages_h_

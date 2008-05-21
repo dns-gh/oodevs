@@ -142,21 +142,44 @@ namespace frontend
             return result;
         }
 
-        void InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination )
+        void Copy( std::istream& file, std::ostream& output )
         {
-            bfs::path p = bfs::path( destination, bfs::native ) / filename;
+            std::istreambuf_iterator< char > it( file );
+            std::istreambuf_iterator< char > end;
+            std::ostreambuf_iterator< char > out( output );
+            std::copy( it, end, out );
+        }
+
+        void InstallPackageFile( zip::izipfile& archive, const char* inputName, const std::string& outputName, const std::string& destination )
+        {
+            bfs::path p = bfs::path( destination, bfs::native ) / outputName;
             p = Normalize( p );
             if( p.leaf() == "." )
                 return;
-            zip::izipstream file( archive, filename.c_str(), std::ios_base::in | std::ios_base::binary );
+            zip::izipstream file( archive, inputName, std::ios_base::in | std::ios_base::binary );
             if( file.good() )
             {
                 bfs::create_directories( p.branch_path() );
                 std::ofstream output( p.native_file_string().c_str(), std::ios_base::out | std::ios_base::binary );
-                std::istreambuf_iterator< char > it( file );
-                std::istreambuf_iterator< char > end;
-                std::ostreambuf_iterator< char > out( output );
-                std::copy( it, end, out );
+                Copy( file, output );
+            }
+        }
+
+        void InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination )
+        {
+            InstallPackageFile( archive, filename.c_str(), filename, destination );
+        }
+
+        void InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback )
+        {
+            while( archive.isOk() && archive.browse() )
+            {
+                const std::string name = archive.getCurrentFileName();
+                if( name != "content.xml" ) // $$$$ SBO 2008-03-17: hard coded!
+                {
+                    InstallPackageFile( archive, 0, name, destination );
+                    callback();
+                }
             }
         }
     }

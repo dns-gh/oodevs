@@ -12,7 +12,7 @@
 
 #undef Yield // $$$$ AGE 2005-03-02: ....
 #include "tools/thread/Thread.h"
-#include "dispatcher/Dispatcher.h"
+#include "dispatcher_dll/DispatcherFacade.h"
 
 class SIM_Config;
 
@@ -27,7 +27,7 @@ class SIM_Dispatcher : public tools::thread::Thread
 public:
     //! @name Constructors/Destructor
     //@{
-             SIM_Dispatcher( SIM_Config& config );
+             SIM_Dispatcher( int argc, char** argv );
     virtual ~SIM_Dispatcher();
     //@}
 
@@ -47,7 +47,7 @@ private:
     //@}
 
 private:
-    dispatcher::Dispatcher dispatcher_;
+    DispatcherFacade dispatcher_;
 };
 
 

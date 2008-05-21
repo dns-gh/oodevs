@@ -32,10 +32,12 @@ bool SIM_App::bUserInterrupt_     = false;
 // Last modified: JVT 03-07-24
 //-----------------------------------------------------------------------------
 SIM_App::SIM_App( int argc, char** argv )
-    : startupConfig_ ( argc, argv )
-    , pNetworkLogger_( 0 )
+    : pNetworkLogger_( 0 )
+    , argc_( argc )
+    , argv_( argv )
     , pDispatcher_   ( 0 )
 {
+    startupConfig_.Parse( argc, argv );
     std::string strMsg = "CSword(tm) Simulation - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( strMsg.c_str() );
@@ -103,7 +105,7 @@ void SIM_App::Initialize()
     if( startupConfig_.IsDispatcherEmbedded() )
     {
         MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
-        pDispatcher_ = new SIM_Dispatcher( startupConfig_ );
+        pDispatcher_ = new SIM_Dispatcher( argc_, argv_ );
     }
 
     MT_Profiler::Initialize();

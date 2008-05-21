@@ -271,3 +271,12 @@ void DrawerStyle::Serialize( xml::xostream& xos ) const
         << xml::attribute( "category", category_.GetName() )
         << xml::attribute( "type", type_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DrawerStyle::GetCategory
+// Created: AGE 2008-05-21
+// -----------------------------------------------------------------------------
+QString DrawerStyle::GetCategory() const
+{
+    return category_.GetName();
+}
