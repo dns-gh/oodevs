@@ -27,6 +27,11 @@ DisPluginConfigPanel::DisPluginConfigPanel( QWidget* parent, const tools::Genera
     box_->setCheckable( true );
     box_->setChecked( false );
     {
+        new QLabel( tools::translate( "DisPluginConfigPanel", "Disaggregate units:" ), box_ );
+        tic_ = new QCheckBox( box_ );
+        tic_->setChecked( false );
+    }
+    {
         new QLabel( tools::translate( "DisPluginConfigPanel", "Host: " ), box_ );
         QHBox* box = new QHBox( box_ );
         server_ = new QLineEdit( "localhost", box );
@@ -69,12 +74,12 @@ void DisPluginConfigPanel::Commit( const std::string& exercise, const std::strin
     if( box_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
-        {
-            action.SetOption( "session/config/dispatcher/plugins/dis/@server", server_->text() );
-            action.SetOption( "session/config/dispatcher/plugins/dis/@port", port_->value() );
-            action.SetOption( "session/config/dispatcher/plugins/dis/@site", site_->value() );
-            action.SetOption( "session/config/dispatcher/plugins/dis/@application", application_->value() );
-            action.SetOption( "session/config/dispatcher/plugins/dis/@exercise", exercise_->value() );
-        }
+        action.SetOption( "session/config/dispatcher/plugins/dis/@server", server_->text() );
+        action.SetOption( "session/config/dispatcher/plugins/dis/@port", port_->value() );
+        action.SetOption( "session/config/dispatcher/plugins/dis/@site", site_->value() );
+        action.SetOption( "session/config/dispatcher/plugins/dis/@application", application_->value() );
+        action.SetOption( "session/config/dispatcher/plugins/dis/@exercise", exercise_->value() );
+        if( tic_->isChecked() )
+           action.SetOption( "session/config/dispatcher/plugins/tic/@enable", true );
     }
 }

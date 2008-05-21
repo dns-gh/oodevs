@@ -19,6 +19,7 @@ namespace tools
 
 class QLineEdit;
 class QSpinBox;
+class QCheckBox;
 
 // =============================================================================
 /** @class  DisPluginConfigPanel
@@ -57,6 +58,7 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     QGroupBox* box_;
+    QCheckBox* tic_;
     QLineEdit* server_;
     QSpinBox*  port_;
     QSpinBox*  site_;

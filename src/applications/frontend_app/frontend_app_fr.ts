@@ -144,6 +144,10 @@
         <source>Exercise Id: </source>
         <translation>Id exercice: </translation>
     </message>
+    <message>
+        <source>Disaggregate units:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditExercisePanel</name>
