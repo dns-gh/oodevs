@@ -58,8 +58,10 @@ InstallPackagePanel::InstallPackagePanel( QWidgetStack* widget, QAction& action,
         QVBox* vBox = new QVBox( group );
         vBox->setSpacing( 5 );
         name_ = new QLineEdit( vBox );
+        name_->setReadOnly( true );
         description_ = new QTextEdit( vBox );
-        description_->setMaximumHeight( 40 );
+        description_->setMaximumHeight( 80 );
+        description_->setReadOnly( true );
         content_ = new QListBox( vBox );
     }
     progress_ = new QProgressBar( box );
