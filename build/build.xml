@@ -231,7 +231,7 @@
     </target>
     
     <target name="application.dispatcher_dll.crossbowed" description="build CSword Dispatcher dll with crossbow" depends="library.dispatcher,library.plugins">
-        <build-lib name="dispatcher_dll_crossbowed" outtype="shared" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm" input="dispatcher_dll"
+        <build-lib name="dispatcher_dll_crossbowed" outtype="shared" depends="mt,din,boost,terrain,xeumeuleu,flexlm" input="dispatcher_dll"
                    libs="HLA,libFedTime,masalloc,tools,masasn
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
