@@ -148,11 +148,11 @@ namespace frontend
             p = Normalize( p );
             if( p.leaf() == "." )
                 return;
-            zip::izipstream file( archive, filename.c_str() );
+            zip::izipstream file( archive, filename.c_str(), std::ios_base::in | std::ios_base::binary );
             if( file.good() )
             {
                 bfs::create_directories( p.branch_path() );
-                std::ofstream output( p.native_file_string().c_str() );
+                std::ofstream output( p.native_file_string().c_str(), std::ios_base::out | std::ios_base::binary );
                 std::istreambuf_iterator< char > it( file );
                 std::istreambuf_iterator< char > end;
                 std::ostreambuf_iterator< char > out( output );
