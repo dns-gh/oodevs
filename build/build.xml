@@ -212,6 +212,7 @@
             
     <target name="application.dispatcher_dll" description="build CSword Dispatcher dll" depends="library.dispatcher,library.plugins">
         <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
+                   pattern="dispatcher-${platform}-mt@{suffix}"
                    libs="HLA,libFedTime,masalloc,tools,masasn
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -232,6 +233,7 @@
     
     <target name="application.dispatcher_dll.crossbowed" description="build CSword Dispatcher dll with crossbow" depends="library.dispatcher,library.plugins">
         <build-lib name="dispatcher_dll_crossbowed" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm" input="dispatcher_dll"
+                   pattern="dispatcher_crossbowed-${platform}-mt@{suffix}"
                    libs="HLA,libFedTime,masalloc,tools,masasn
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
@@ -255,22 +257,23 @@
     <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="application.dispatcher_dll">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
                    libs="masalloc,tools
-                         lib${ant.project.name}_tools-${platform}-mt
-                         lib${ant.project.name}_MT_Tools-${platform}-mt
-                         lib${ant.project.name}_dispatcher_dll-${platform}-mt">
+                         dispatcher-${platform}-mt@{suffix}
+                         lib${ant.project.name}_tools-${platform}-mt@{suffix}
+                         lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
         </build-app>
     </target>
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher">
         <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,population-${platform}-mt
-                         lib${ant.project.name}_tools-${platform}-mt
-                         lib${ant.project.name}_MT_Tools-${platform}-mt
-                         lib${ant.project.name}_game_asn-${platform}-mt
-                         lib${ant.project.name}_simulation_terrain-${platform}-mt
-                         lib${ant.project.name}_simulation_kernel-${platform}-mt
-                         lib${ant.project.name}_dispatcher_dll-${platform}-mt" >
+                   libs="HLA,libFedTime,masalloc,tools,masasn
+                         population-${platform}-mt@{suffix}
+                         dispatcher-${platform}-mt@{suffix}
+                         lib${ant.project.name}_tools-${platform}-mt@{suffix}
+                         lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}
+                         lib${ant.project.name}_game_asn-${platform}-mt@{suffix}
+                         lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}
+                         lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" >
             <syslibset libs="dbghelp,psapi,iphlpapi"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <includepath path="${include.dir}/masasn"/>
