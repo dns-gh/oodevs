@@ -191,6 +191,7 @@ int Run( uint nArgc, char* pArgv[] )
                << "Line : "        << exception.GetLine()        << std::endl
                << "Message : "     << exception.GetMsg()         << std::endl
                << "Description : " << exception.GetDescription() << std::endl;
+        MT_LOG_ERROR_MSG( strMsg.str() );
         MessageBox( 0, strMsg.str().c_str(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( MT_Exception& exception )
@@ -199,18 +200,22 @@ int Run( uint nArgc, char* pArgv[] )
         strMsg << "Context : " << exception.GetContext() << std::endl
                << "Code :"     << exception.GetCode()    << std::endl
                << "Message : " << exception.GetInfo()    << std::endl;
+        MT_LOG_ERROR_MSG( strMsg.str() );
         MessageBox( 0, strMsg.str().c_str(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( xml::exception& exception )
     {
+        MT_LOG_ERROR_MSG( exception.what() );
         MessageBox ( 0, exception.what(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( std::bad_alloc& /*exception*/ )
     {
+        MT_LOG_ERROR_MSG( "Bad alloc" );
         MessageBox( 0, "Allocation error : not enough memory", "Scipio - Memory error", MB_ICONERROR | MB_OK | MB_TOPMOST );
     }
     catch( std::exception& exception )
     {
+        MT_LOG_ERROR_MSG( exception.what() );
         MessageBox( 0, exception.what(), "Scipio - Exception standard", MB_ICONERROR | MB_OK | MB_TOPMOST );
     }
 
