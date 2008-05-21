@@ -6,40 +6,43 @@ namespace Sword
 {
     namespace Crossbow
     {
-        public sealed class ParameterDirection : IOrderParameter
+        public class ParameterDirection : OrderParameter
         {
-            private int m_direction;
-
-            public void Serialize(ITable table, int id)
+            sealed class ParameterTypeDirection : ParameterType_ABC
             {
-                IRow row = table.CreateRow();
-                Tools.SetValue(row, "order_id", id);
-                Tools.SetValue(row, "name", "Danger direction");
-                Tools.SetValue(row, "ParamValue", m_direction);
-                row.Store();
-            }
+                private int m_direction;
 
-            public void OnContextMenu(MultiItemContextMenu menu, int x, int y, IFeature selected)
-            {
-                throw new Exception("Direction.OnContextMenu should not be here.");
-            }
-
-            public void SetValue(string value)
-            {
-                m_direction = int.Parse(value);
-            }
-
-            public void NotifyUpdate(IMissionObserver observer)
-            {
-                // $$$$ SBO 2007-08-13: 
-            }
-
-            public string Name
-            {
-                get
+                public override void OnContextMenu(int x, int y, IFeature selected)
                 {
-                    return "Danger direction";
+                    // NOTHING ?
                 }
+                
+                public override void OnSelect(string value)
+                {
+                    m_direction = int.Parse(value);
+                }
+
+                public override string Type
+                {
+                    get
+                    {
+                        return "Danger";
+                    }
+                }
+
+                public override string Value
+                {
+                    get
+                    {
+                        return m_direction.ToString();
+                    }
+                }
+            }
+
+            public ParameterDirection()
+                : base("Danger direction", new ParameterTypeDirection())
+            {
+                // NOTHING
             }
         }
     }

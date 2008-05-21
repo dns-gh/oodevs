@@ -140,7 +140,7 @@ namespace Sword
                 if (m_emergencyHandler == null)
                     m_emergencyHandler = new EmergencyHandler(m_model);
                 ModelLoaded(this, EventArgs.Empty);
-                OrderParameter.Initialize(Config.SharedFile);
+                ParameterTypeFactory.Initialize(Config.SharedFile);
             }
 
             public OrderHandler OrderHandler

@@ -55,6 +55,8 @@ namespace Sword
                 LookupLayer(System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/" + workspace);
                 string shared = doc.SelectSingleNode("/session/config/dispatcher/plugins/crossbow/@geodatabase-shared").Value;
                 m_workspace.SharedFile = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/" + shared;
+                string population = doc.SelectSingleNode("/session/config/dispatcher/plugins/crossbow/@geodatabase-population").Value;
+                m_workspace.PopulationFile = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/" + population;
             }
 
             private void LookupLayer(string file)

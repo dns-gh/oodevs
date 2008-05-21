@@ -48,6 +48,7 @@ namespace Sword
             private string m_exerciseFile;
             private string m_workspaceFile;
             private string m_sharedFile;
+            private string m_populationFile;
 
             public event EventHandler ConfigurationLoaded;
 
@@ -99,6 +100,18 @@ namespace Sword
                 set
                 {
                     m_sharedFile = value;
+                }
+            }
+
+            public string PopulationFile
+            {
+                get
+                {
+                    return m_populationFile;
+                }
+                set
+                {
+                    m_populationFile = value;
                 }
             }
 

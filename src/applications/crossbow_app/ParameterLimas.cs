@@ -6,25 +6,23 @@ namespace Sword
 {
     namespace Crossbow
     {
+        public sealed class ParameterLima : OrderParameter
+        {
+            public ParameterLima()
+                : base("Phase line", ParameterTypeFactory.Create("Line"))
+            {
+            }
+        }
+
         public sealed class ParameterLimas : IOrderParameter
         {
-            private System.Collections.Generic.Dictionary<int, string> m_limas = new System.Collections.Generic.Dictionary<int, string>();
+            private System.Collections.Generic.Dictionary<int, ParameterLima> m_limas = new System.Collections.Generic.Dictionary<int, ParameterLima>();
             private IFeature m_potential;
 
             public void Serialize(ITable table, int id)
             {
-                string value = "";
-                foreach (System.Collections.Generic.KeyValuePair<int, string> elt in m_limas)
-                {
-                    if (value != "")
-                        value += ";";
-                    value += elt.Key + "," + elt.Value;
-                }
-                IRow row = table.CreateRow();
-                Tools.SetValue<int>(row, "order_id", id);
-                Tools.SetValue<string>(row, "name", "Phase lines");
-                Tools.SetValue<string>(row, "ParamValue", value);
-                row.Store();
+                foreach (System.Collections.Generic.KeyValuePair<int, ParameterLima> elt in m_limas)
+                    elt.Value.Serialize(table, id);
             }
 
             public void OnContextMenu(MultiItemContextMenu menu, int x, int y, IFeature selected)
@@ -47,13 +45,13 @@ namespace Sword
             public void SetValue(string value)
             {
                 if (m_potential != null)
-                    m_limas[Tools.GetValue<int>(m_potential, "Public_OID")] = value;
+                    m_limas[Tools.GetValue<int>(m_potential, "Public_OID")].SetValue(value);
             }
 
             public void NotifyUpdate(IMissionObserver observer)
             {
-                foreach (System.Collections.Generic.KeyValuePair<int, string> elt in m_limas)
-                    observer.Update(this, elt.Key.ToString(), elt.Value);
+                foreach (System.Collections.Generic.KeyValuePair<int, ParameterLima> elt in m_limas)
+                    observer.Update(this, elt.Key.ToString(), elt.Value.Value);
             }
 
             public string Name

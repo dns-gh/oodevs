@@ -1,35 +1,56 @@
 using System;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
+using ESRI.ArcGIS.Geometry;
 
 namespace Sword
 {
     namespace Crossbow
     {
+        public sealed class ParameterLimit : OrderParameter
+        {
+            public ParameterLimit(String name)
+                : base(name, ParameterTypeFactory.Create("Line"))
+            {
+            }
+
+            public void UpdateGeometry(IGeometry geometry)
+            {
+                base.SetValue(geometry);
+            }
+
+            public void UpdateGeometry(IPoint first, IPoint second)
+            {
+                IPolyline line = new PolylineClass();
+                line.FromPoint = first;
+                line.ToPoint = second;
+                base.SetValue(line as IGeometry);
+            }
+        }
+
         public sealed class ParameterLimits : IOrderParameter
         {
-            struct Boundaries
+            class Boundaries
             {
-                public int first;
-                public int second;
-            };
-
+                public ParameterLimit first = new ParameterLimit("Boundary limit 1");
+                public ParameterLimit second = new ParameterLimit("Boundary limit 2");
+            };            
+            
+            Boundaries m_limits = new Boundaries();
             IFeature m_potential;
-            Boundaries m_limits;
 
-            private void SerializeLimit(ITable table, int order, string name, int limit)
+            public ParameterLimits()
             {
-                IRow row = table.CreateRow();
-                Tools.SetValue<int>(row, "order_id", order);
-                Tools.SetValue<string>(row, "name", name);
-                Tools.SetValue<string>(row, "ParamValue", limit.ToString());
-                row.Store();
+                IFeatureWorkspace ws = (IFeatureWorkspace)Tools.OpenWorkspace(Tools.GetCSwordExtension().Config.PopulationFile);
+                IGeoDataset dataset = (IGeoDataset)ws.OpenFeatureClass("Population");
+                m_limits.first.UpdateGeometry(dataset.Extent.UpperLeft, dataset.Extent.LowerLeft);
+                m_limits.second.UpdateGeometry(dataset.Extent.UpperRight, dataset.Extent.LowerRight);
             }
 
             public void Serialize(ITable table, int id)
             {
-                SerializeLimit(table, id, "Boundary limit 1", m_limits.first);
-                SerializeLimit(table, id, "Boundary limit 2", m_limits.second);
+                m_limits.first.Serialize(table, id);
+                m_limits.second.Serialize(table, id);
             }
 
             public void OnContextMenu(MultiItemContextMenu menu, int x, int y, IFeature selected)
@@ -37,8 +58,8 @@ namespace Sword
                 if (menu == null || selected == null || selected.Class.AliasName != "BoundaryLimits")
                     return;
                 m_potential = selected;
-                menu.Add("Set limit 1", this);
-                menu.Add("Set limit 2", this);
+                menu.Add("Set limit 1", m_limits.first);
+                menu.Add("Set limit 2", m_limits.second);
             }
 
             public void SetValue(string value)
@@ -46,9 +67,9 @@ namespace Sword
                 if (m_potential == null)
                     return;
                 if (value == "Set limit 1")
-                    m_limits.first = Tools.GetValue<int>(m_potential, "Public_OID");
+                    m_limits.first.UpdateGeometry(m_potential.Shape);
                 if (value == "Set limit 2")
-                    m_limits.second = Tools.GetValue<int>(m_potential, "Public_OID");
+                    m_limits.second.UpdateGeometry(m_potential.Shape);
             }
 
             public void NotifyUpdate(IMissionObserver observer)

@@ -103,7 +103,7 @@ namespace Sword
                     Serialize(workspace);
             }
 
-            public void Serialize(IFeatureWorkspace featureWorkspace)
+            void Serialize(IFeatureWorkspace featureWorkspace)
             {
                 ScopeLockEditor editor = new ScopeLockEditor(featureWorkspace);
 
@@ -117,17 +117,18 @@ namespace Sword
             {
                 ITable table = featureWorkspace.OpenTable("Orders"); // $$$$ SBO 2007-07-20: keep it maybe...
                 IRow row = table.CreateRow();
-                Tools.SetValue<int>(row, "target_id", m_Id);
-                Tools.SetValue<string>(row, "OrderName", m_name);
-                Tools.SetValue<bool>(row, "processed", false);
+                Tools.SetValue<string>(row, "Name", m_name);
+                Tools.SetValue<int>(row, "TargetId", m_Id);
+                Tools.SetValue<bool>(row, "Checked", false);
                 row.Store();
                 return row.OID;
             }
-
+            
             void SerializeParameters(IFeatureWorkspace featureWorkspace, int orderId)
             {
-                ITable table = featureWorkspace.OpenTable("OrdersParameters"); // $$$$ SBO 2007-07-20: keep it maybe...
+                ITable table = featureWorkspace.OpenTable("OrderParameters"); // $$$$ SBO 2007-07-20: keep it maybe...
 
+                // parameters must be serializable following this order
                 m_direction.Serialize(table, orderId);
                 m_limas.Serialize(table, orderId);
                 m_limits.Serialize(table, orderId);

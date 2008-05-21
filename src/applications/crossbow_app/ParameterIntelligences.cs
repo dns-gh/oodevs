@@ -6,38 +6,36 @@ namespace Sword
 {
     namespace Crossbow
     {
-        public sealed class ParameterIntelligences : IOrderParameter
+        public sealed class ParameterIntelligences : OrderParameter
         {
-            public void Serialize(ITable table, int id)
+            sealed class ParameterTypeIntelligence : ParameterType_ABC
             {
-                IRow row = table.CreateRow();
-                Tools.SetValue(row, "order_id", id);
-                Tools.SetValue(row, "name", "Intelligences");
-                Tools.SetValue(row, "ParamValue", "");
-                row.Store();
-            }
-
-            public void OnContextMenu(MultiItemContextMenu menu, int x, int y, IFeature selected)
-            {
-                throw new Exception("Intelligences.OnContextMenu should not be here.");
-            }
-
-            public void SetValue(string value)
-            {
-                // NOTHING
-            }
-
-            public void NotifyUpdate(IMissionObserver observer)
-            {
-                // NOTHING
-            }
-
-            public string Name
-            {
-                get
+                public override void OnContextMenu(int x, int y, IFeature selected)
                 {
-                    return "Intelligences";
+                    throw new Exception("Intelligence.OnContextMenu should not be here.");
                 }
+
+                public override string Type
+                {
+                    get
+                    {
+                        return "Intelligences";
+                    }
+                }
+
+                public override string Value
+                {
+                    get
+                    {
+                        return "null";
+                    }
+                }
+            }
+
+            public ParameterIntelligences()
+                : base("Intelligences", new ParameterTypeIntelligence())
+            {
+                // NOTHING
             }
         }
     }
