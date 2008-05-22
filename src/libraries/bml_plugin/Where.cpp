@@ -8,47 +8,43 @@
 // *****************************************************************************
 
 #include "bml_plugin_pch.h"
-#include "ExtensionFactory.h"
-#include "AgentExtension.h"
-#include "AutomatExtension.h"
+#include "Where.h"
+#include "Point.h"
 #include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
+#include <xeumeuleu/xml.h>
 
 using namespace bml;
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory constructor
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher& publisher )
-    : publisher_( publisher )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory destructor
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-ExtensionFactory::~ExtensionFactory()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Agent& entity )
-{
-    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity, publisher_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
+// Name: Where constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Automat& entity )
+Where::Where( const dispatcher::Agent& agent )
+    : agent_( agent )
 {
-    entity.Attach< BmlExtension_ABC >( *new AutomatExtension( entity, publisher_ ) );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Where destructor
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+Where::~Where()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: operator<<
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+xml::xostream& bml::operator<<( xml::xostream& xos, const Where& data )
+{
+    xos << xml::start( "C_BML_Where" )
+            << xml::start( "WhereInstance" );
+    Point point( data.agent_.position_.latitude, data.agent_.position_.longitude );
+    point.Serialize( xos );
+    xos     << xml::end()
+        << xml::end();
+    return xos;
 }

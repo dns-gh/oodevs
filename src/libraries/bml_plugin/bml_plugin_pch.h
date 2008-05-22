@@ -12,5 +12,7 @@
 
 #include <string>
 #include <memory>
+#include <map>
+#include <vector>
 
 #endif // __bml_plugin_pch_h_

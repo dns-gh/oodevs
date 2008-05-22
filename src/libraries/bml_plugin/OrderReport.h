@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __ExtensionFactory_h_
-#define __ExtensionFactory_h_
+#ifndef __OrderReport_h_
+#define __OrderReport_h_
 
-#include "dispatcher/ExtensionFactory_ABC.h"
+#include "game_asn/Simulation.h"
 
 namespace dispatcher
 {
@@ -21,44 +21,51 @@ namespace dispatcher
 namespace bml
 {
     class Publisher;
-
+    class Who;
+    class ReportingData;
+    
 // =============================================================================
-/** @class  ExtensionFactory
-    @brief  ExtensionFactory
+/** @class  OrderReport
+    @brief  OrderReport
 */
-// Created: SBO 2008-02-29
+// Created: SBO 2008-05-22
 // =============================================================================
-class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
-                       , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
+class OrderReport
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExtensionFactory( Publisher& publisher );
-    virtual ~ExtensionFactory();
+             OrderReport( const dispatcher::Agent& agent, const ASN1T_MsgUnitOrder& asn );
+             OrderReport( const dispatcher::Automat& automat, const ASN1T_MsgAutomatOrder& asn );
+    virtual ~OrderReport();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Create( dispatcher::Agent& entity );
-    virtual void Create( dispatcher::Automat& entity );
+    void Send( Publisher& publisher ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ExtensionFactory( const ExtensionFactory& );            //!< Copy constructor
-    ExtensionFactory& operator=( const ExtensionFactory& ); //!< Assignment operator
+    OrderReport( const OrderReport& );            //!< Copy constructor
+    OrderReport& operator=( const OrderReport& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
     //@}
 
 private:
     //! @name Member data
     //@{
-    Publisher& publisher_;
+    std::auto_ptr< Who > who_;
+    std::auto_ptr< ReportingData > reportingData_;
+    std::string activityCode_;
     //@}
 };
 
 }
 
-#endif // __ExtensionFactory_h_
+#endif // __OrderReport_h_

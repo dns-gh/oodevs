@@ -9,9 +9,8 @@
 
 #include "bml_plugin_pch.h"
 #include "AgentExtension.h"
-#include "SerializationTools.h"
-#include "Publisher.h"
-#include "dispatcher/Agent.h"
+#include "PositionReport.h"
+#include "OrderReport.h"
 #include <xeumeuleu/xml.h>
 
 using namespace bml;
@@ -43,34 +42,18 @@ AgentExtension::~AgentExtension()
 void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 {
     if( attributes.m.positionPresent || attributes.m.hauteurPresent )
-        UpdateWhere( attributes );
+    {
+        PositionReport report( holder_ );
+        report.Send( publisher_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::UpdateWhere
-// Created: SBO 2008-02-29
+// Name: AgentExtension::DoUpdate
+// Created: SBO 2008-05-16
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateWhere( const ASN1T_MsgUnitAttributes& )
+void AgentExtension::DoUpdate( const ASN1T_MsgUnitOrder& message )
 {
-    xml::xostringstream xos;
-    xos << xml::start( "NewWherePush" )
-            << xml::attribute( "xmlns:msdl", "http://netlab.gmu.edu/JBML/MSDL" )
-            << xml::attribute( "xmlns:bml", "http://netlab.gmu.edu/JBML/BML" )
-            << xml::start( "NewWhere" )
-                << xml::start( "RelocatedWho" )
-                    << xml::content( "bml:OrgName", holder_.GetID() )
-                << xml::end()
-                << xml::start( "RelocatedWhere" )
-                    << xml::content( "bml:WhereLabel", holder_.GetName() )
-                    << xml::content( "bml:WhereClass", "POINT" )
-                    << xml::start( "bml:WhereValue" )
-                        << xml::start( "bml:WhereLocation" )
-                            << bml::UtmLocation( holder_.position_.latitude, holder_.position_.longitude, holder_.nHeight_ )
-                        << xml::end()
-                    << xml::end()
-                    << xml::content( "WhereQualifier", "AT" )
-                << xml::end()
-            << xml::end()
-        << xml::end();
-    publisher_.BBSPush( "newWherePush", xos.str() );
+    OrderReport report( holder_, message );
+    report.Send( publisher_ );
 }

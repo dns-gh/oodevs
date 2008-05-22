@@ -8,47 +8,48 @@
 // *****************************************************************************
 
 #include "bml_plugin_pch.h"
-#include "ExtensionFactory.h"
-#include "AgentExtension.h"
-#include "AutomatExtension.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
+#include "MissionParameterHeading.h"
+#include "Point.h"
 
 using namespace bml;
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory constructor
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher& publisher )
-    : publisher_( publisher )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory destructor
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-ExtensionFactory::~ExtensionFactory()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Agent& entity )
-{
-    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity, publisher_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
+// Name: MissionParameterHeading constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Automat& entity )
+MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type )
+    : MissionParameter_ABC( type )
+    , angle_( 0 )
 {
-    entity.Attach< BmlExtension_ABC >( *new AutomatExtension( entity, publisher_ ) );
+    Point point( xis );
+    // $$$$ SBO 2008-05-22: set angle from unit position
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameterHeading destructor
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+MissionParameterHeading::~MissionParameterHeading()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameterHeading::Serialize
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+void MissionParameterHeading::Serialize( ASN1T_MissionParameter& parameter ) const
+{
+    parameter.null_value = 0;
+    parameter.value.t = T_MissionParameter_value_heading;
+    parameter.value.u.heading = angle_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameterHeading::Clean
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+void MissionParameterHeading::Clean( ASN1T_MissionParameter& ) const
+{
+    // NOTHING
 }

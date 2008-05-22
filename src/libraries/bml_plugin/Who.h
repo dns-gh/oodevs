@@ -7,10 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef __ExtensionFactory_h_
-#define __ExtensionFactory_h_
+#ifndef __Who_h_
+#define __Who_h_
 
-#include "dispatcher/ExtensionFactory_ABC.h"
+namespace xml
+{
+    class xostream;
+}
 
 namespace dispatcher
 {
@@ -20,45 +23,44 @@ namespace dispatcher
 
 namespace bml
 {
-    class Publisher;
 
 // =============================================================================
-/** @class  ExtensionFactory
-    @brief  ExtensionFactory
+/** @class  Who
+    @brief  Who
 */
-// Created: SBO 2008-02-29
+// Created: SBO 2008-05-22
 // =============================================================================
-class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
-                       , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
+class Who
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExtensionFactory( Publisher& publisher );
-    virtual ~ExtensionFactory();
+    explicit Who( const dispatcher::Agent& entity );
+    explicit Who( const dispatcher::Automat& entity );
+    virtual ~Who();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Create( dispatcher::Agent& entity );
-    virtual void Create( dispatcher::Automat& entity );
+    friend xml::xostream& operator<<( xml::xostream& xos, const Who& who );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ExtensionFactory( const ExtensionFactory& );            //!< Copy constructor
-    ExtensionFactory& operator=( const ExtensionFactory& ); //!< Assignment operator
+    Who( const Who& );            //!< Copy constructor
+    Who& operator=( const Who& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    Publisher& publisher_;
+    const dispatcher::Agent* agent_;
+    const dispatcher::Automat* automat_;
     //@}
 };
 
 }
 
-#endif // __ExtensionFactory_h_
+#endif // __Who_h_

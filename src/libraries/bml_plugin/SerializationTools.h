@@ -17,15 +17,8 @@ namespace xml
 
 namespace bml
 {
-    struct UtmLocation
-    {
-        UtmLocation( const char* utm, int height );
-        UtmLocation( double latitude, double longitude, int height );
-        std::string gridZone_, easting_, northing_;
-        int height_;
-    };
-
-    xml::xostream& operator<<( xml::xostream& xos, const UtmLocation& location );
+    struct Namespaces {};
+    xml::xostream& operator<<( xml::xostream& xos, const Namespaces& );
 }
 
 #endif // __SerializationTools_h_

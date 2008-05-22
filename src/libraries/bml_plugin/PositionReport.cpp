@@ -8,47 +8,48 @@
 // *****************************************************************************
 
 #include "bml_plugin_pch.h"
-#include "ExtensionFactory.h"
-#include "AgentExtension.h"
-#include "AutomatExtension.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
+#include "PositionReport.h"
+#include "SerializationTools.h"
+#include "Publisher.h"
+#include "Who.h"
+#include "Where.h"
+#include <xeumeuleu/xml.h>
 
 using namespace bml;
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory constructor
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher& publisher )
-    : publisher_( publisher )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory destructor
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-ExtensionFactory::~ExtensionFactory()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Agent& entity )
-{
-    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity, publisher_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
+// Name: PositionReport constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Automat& entity )
+PositionReport::PositionReport( const dispatcher::Agent& entity )
+    : entity_( entity )
 {
-    entity.Attach< BmlExtension_ABC >( *new AutomatExtension( entity, publisher_ ) );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PositionReport destructor
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+PositionReport::~PositionReport()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PositionReport::Send
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+void PositionReport::Send( Publisher& publisher ) const
+{
+    Who who( entity_ );
+    xml::xostringstream xos;
+    xos << xml::start( "ReportPush" ) << Namespaces()
+            << xml::start( "ReportPush" )
+                << xml::start( "ReportedByWho" ) << who << xml::end()
+                << xml::start( "NewWhere" )      << who << Where( entity_ ) << xml::end()
+                << xml::start( "ReportedWho" )   << who << xml::end()
+            << xml::end()
+        << xml::end();
+    publisher.PushReport( xos.str() );
 }

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentExtension_h_
-#define __AgentExtension_h_
+#ifndef __AutomatExtension_h_
+#define __AutomatExtension_h_
 
 #include "BmlExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -16,7 +16,7 @@
 
 namespace dispatcher
 {
-    class Agent;
+    class Automat;
 }
 
 namespace bml
@@ -24,44 +24,42 @@ namespace bml
     class Publisher;
 
 // =============================================================================
-/** @class  AgentExtension
-    @brief  AgentExtension
+/** @class  AutomatExtension
+    @brief  AutomatExtension
 */
-// Created: SBO 2008-02-29
+// Created: SBO 2008-05-22
 // =============================================================================
-class AgentExtension : public BmlExtension_ABC
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
+class AutomatExtension : public BmlExtension_ABC
+                       , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, Publisher& publisher );
-    virtual ~AgentExtension();
+             AutomatExtension( dispatcher::Automat& holder, Publisher& publisher );
+    virtual ~AutomatExtension();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
-    virtual void DoUpdate( const ASN1T_MsgUnitOrder& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomatOrder& message );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AgentExtension( const AgentExtension& );            //!< Copy constructor
-    AgentExtension& operator=( const AgentExtension& ); //!< Assignment operator
+    AutomatExtension( const AutomatExtension& );            //!< Copy constructor
+    AutomatExtension& operator=( const AutomatExtension& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
+    dispatcher::Automat& holder_;
     Publisher& publisher_;
     //@}
 };
 
 }
 
-#endif // __AgentExtension_h_
+#endif // __AutomatExtension_h_

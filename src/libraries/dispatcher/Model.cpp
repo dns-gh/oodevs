@@ -331,3 +331,12 @@ const kernel::Resolver_ABC< kernel::AgentType >& Model::GetAgentTypes() const
 {
     return *agentTypes_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: kernel::Resolver_ABC< kernel::MissionType >& Model::GetMissionTypes
+// Created: SBO 2008-05-21
+// -----------------------------------------------------------------------------
+const kernel::Resolver_ABC< kernel::MissionType >& Model::GetMissionTypes() const
+{
+    return *agentTypes_;
+}

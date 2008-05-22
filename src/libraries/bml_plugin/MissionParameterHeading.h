@@ -7,63 +7,59 @@
 //
 // *****************************************************************************
 
-#ifndef __Publisher_h_
-#define __Publisher_h_
+#ifndef __MissionParameterHeading_h_
+#define __MissionParameterHeading_h_
+
+#include "MissionParameter_ABC.h"
 
 namespace xml
 {
     class xistream;
 }
 
-class DCSOperationsSoapBindingProxy;
-
 namespace bml
 {
-    class ResponseHandler_ABC;
 
 // =============================================================================
-/** @class  Publisher
-    @brief  Publisher
+/** @class  MissionParameterHeading
+    @brief  MissionParameterHeading
 */
-// Created: SBO 2008-04-02
+// Created: SBO 2008-05-22
 // =============================================================================
-class Publisher
+class MissionParameterHeading : public MissionParameter_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Publisher( xml::xistream& xis );
-    virtual ~Publisher();
+             MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type );
+    virtual ~MissionParameterHeading();
     //@}
 
     //! @name Operations
     //@{
-    void PushReport( const std::string& message );
-    void PullOrder ( const std::string& message, ResponseHandler_ABC& handler );
+    virtual void Serialize( ASN1T_MissionParameter& parameter ) const;
+    virtual void Clean( ASN1T_MissionParameter& parameter ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Publisher( const Publisher& );            //!< Copy constructor
-    Publisher& operator=( const Publisher& ); //!< Assignment operator
+    MissionParameterHeading( const MissionParameterHeading& );            //!< Copy constructor
+    MissionParameterHeading& operator=( const MissionParameterHeading& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void ConfigureService( DCSOperationsSoapBindingProxy& service ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string endpoint_;
-    const std::string proxyHost_;
-    const unsigned short proxyPort_;
+    unsigned short angle_;
     //@}
 };
 
 }
 
-#endif // __Publisher_h_
+#endif // __MissionParameterHeading_h_

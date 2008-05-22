@@ -20,6 +20,7 @@ namespace kernel
 {
     class AgentTypes;
     class AgentType;
+    class MissionType;
 }
 
 namespace tools
@@ -107,6 +108,7 @@ public:
           ModelsContainer< Population     >& GetPopulations    ();
 
     const kernel::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
+    const kernel::Resolver_ABC< kernel::MissionType >& GetMissionTypes() const;
 
     void RegisterFactory( Factory_ABC& factory )
     {

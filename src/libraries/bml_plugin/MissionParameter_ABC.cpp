@@ -8,47 +8,34 @@
 // *****************************************************************************
 
 #include "bml_plugin_pch.h"
-#include "ExtensionFactory.h"
-#include "AgentExtension.h"
-#include "AutomatExtension.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
+#include "MissionParameter_ABC.h"
 
 using namespace bml;
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory constructor
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher& publisher )
-    : publisher_( publisher )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory destructor
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-ExtensionFactory::~ExtensionFactory()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Agent& entity )
-{
-    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity, publisher_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
+// Name: MissionParameter_ABC constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Automat& entity )
+MissionParameter_ABC::MissionParameter_ABC( const kernel::OrderParameter& type )
+    : type_( type )
 {
-    entity.Attach< BmlExtension_ABC >( *new AutomatExtension( entity, publisher_ ) );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameter_ABC destructor
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+MissionParameter_ABC::~MissionParameter_ABC()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameter_ABC::GetType
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+const kernel::OrderParameter& MissionParameter_ABC::GetType() const
+{
+    return type_;
 }

@@ -8,47 +8,39 @@
 // *****************************************************************************
 
 #include "bml_plugin_pch.h"
-#include "ExtensionFactory.h"
-#include "AgentExtension.h"
 #include "AutomatExtension.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
+#include "PositionReport.h"
+#include "OrderReport.h"
+#include <xeumeuleu/xml.h>
 
 using namespace bml;
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory constructor
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher& publisher )
-    : publisher_( publisher )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory destructor
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-ExtensionFactory::~ExtensionFactory()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-02-29
-// -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Agent& entity )
-{
-    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity, publisher_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
+// Name: AutomatExtension constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Automat& entity )
+AutomatExtension::AutomatExtension( dispatcher::Automat& holder, Publisher& publisher )
+    : holder_( holder )
+    , publisher_( publisher )
 {
-    entity.Attach< BmlExtension_ABC >( *new AutomatExtension( entity, publisher_ ) );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatExtension destructor
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+AutomatExtension::~AutomatExtension()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatExtension::DoUpdate
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+void AutomatExtension::DoUpdate( const ASN1T_MsgAutomatOrder& message )
+{
+    OrderReport report( holder_, message );
+    report.Send( publisher_ );
 }

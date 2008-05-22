@@ -7,10 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef __ExtensionFactory_h_
-#define __ExtensionFactory_h_
+#ifndef __ReportingData_h_
+#define __ReportingData_h_
 
-#include "dispatcher/ExtensionFactory_ABC.h"
+namespace xml
+{
+    class xostream;
+}
 
 namespace dispatcher
 {
@@ -20,45 +23,44 @@ namespace dispatcher
 
 namespace bml
 {
-    class Publisher;
 
 // =============================================================================
-/** @class  ExtensionFactory
-    @brief  ExtensionFactory
+/** @class  ReportingData
+    @brief  ReportingData
 */
-// Created: SBO 2008-02-29
+// Created: SBO 2008-05-22
 // =============================================================================
-class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
-                       , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
+class ReportingData
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExtensionFactory( Publisher& publisher );
-    virtual ~ExtensionFactory();
+    explicit ReportingData( const dispatcher::Agent& entity );
+    explicit ReportingData( const dispatcher::Automat& entity );
+    virtual ~ReportingData();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Create( dispatcher::Agent& entity );
-    virtual void Create( dispatcher::Automat& entity );
+    friend xml::xostream& operator<<( xml::xostream& xos, const ReportingData& data );    
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ExtensionFactory( const ExtensionFactory& );            //!< Copy constructor
-    ExtensionFactory& operator=( const ExtensionFactory& ); //!< Assignment operator
+    ReportingData( const ReportingData& );            //!< Copy constructor
+    ReportingData& operator=( const ReportingData& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    Publisher& publisher_;
+    std::string reportDatetime_;
+    std::string organisation_;
     //@}
 };
 
 }
 
-#endif // __ExtensionFactory_h_
+#endif // __ReportingData_h_

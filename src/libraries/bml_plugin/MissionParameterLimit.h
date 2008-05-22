@@ -7,63 +7,56 @@
 //
 // *****************************************************************************
 
-#ifndef __Publisher_h_
-#define __Publisher_h_
+#ifndef __MissionParameterLimit_h_
+#define __MissionParameterLimit_h_
+
+#include "MissionParameter_ABC.h"
 
 namespace xml
 {
     class xistream;
 }
 
-class DCSOperationsSoapBindingProxy;
-
 namespace bml
 {
-    class ResponseHandler_ABC;
+    class PointList;
 
 // =============================================================================
-/** @class  Publisher
-    @brief  Publisher
+/** @class  MissionParameterLimit
+    @brief  MissionParameterLimit
 */
-// Created: SBO 2008-04-02
+// Created: SBO 2008-05-22
 // =============================================================================
-class Publisher
+class MissionParameterLimit : public MissionParameter_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Publisher( xml::xistream& xis );
-    virtual ~Publisher();
+             MissionParameterLimit( xml::xistream& xis, const kernel::OrderParameter& type );
+    virtual ~MissionParameterLimit();
     //@}
 
     //! @name Operations
     //@{
-    void PushReport( const std::string& message );
-    void PullOrder ( const std::string& message, ResponseHandler_ABC& handler );
+    virtual void Serialize( ASN1T_MissionParameter& parameter ) const;
+    virtual void Clean( ASN1T_MissionParameter& parameter ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Publisher( const Publisher& );            //!< Copy constructor
-    Publisher& operator=( const Publisher& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ConfigureService( DCSOperationsSoapBindingProxy& service ) const;
+    MissionParameterLimit( const MissionParameterLimit& );            //!< Copy constructor
+    MissionParameterLimit& operator=( const MissionParameterLimit& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string endpoint_;
-    const std::string proxyHost_;
-    const unsigned short proxyPort_;
+    std::auto_ptr< PointList > points_;
     //@}
 };
 
 }
 
-#endif // __Publisher_h_
+#endif // __MissionParameterLimit_h_

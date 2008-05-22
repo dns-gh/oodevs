@@ -7,61 +7,64 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentExtension_h_
-#define __AgentExtension_h_
+#ifndef __UpdateListener_h_
+#define __UpdateListener_h_
 
-#include "BmlExtension_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
 
 namespace dispatcher
 {
-    class Agent;
+    class Model;
+    class SimulationPublisher_ABC;
 }
 
 namespace bml
 {
     class Publisher;
+    class ResponseHandler_ABC;
 
 // =============================================================================
-/** @class  AgentExtension
-    @brief  AgentExtension
+/** @class  UpdateListener
+    @brief  UpdateListener
 */
-// Created: SBO 2008-02-29
+// Created: SBO 2008-05-16
 // =============================================================================
-class AgentExtension : public BmlExtension_ABC
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
+class UpdateListener
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, Publisher& publisher );
-    virtual ~AgentExtension();
+             UpdateListener( Publisher& publisher, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation );
+    virtual ~UpdateListener();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
-    virtual void DoUpdate( const ASN1T_MsgUnitOrder& message );
+    void Update( const ASN1T_MsgControlBeginTick& message );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AgentExtension( const AgentExtension& );            //!< Copy constructor
-    AgentExtension& operator=( const AgentExtension& ); //!< Assignment operator
+    UpdateListener( const UpdateListener& );            //!< Copy constructor
+    UpdateListener& operator=( const UpdateListener& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void PullOrders( const std::string& time );
     //@}
 
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
     Publisher& publisher_;
+    std::auto_ptr< ResponseHandler_ABC > orderProcessor_;
+    std::string lastUpdateTime_;
     //@}
 };
 
 }
 
-#endif // __AgentExtension_h_
+#endif // __UpdateListener_h_

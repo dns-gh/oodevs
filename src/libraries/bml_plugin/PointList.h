@@ -7,63 +7,68 @@
 //
 // *****************************************************************************
 
-#ifndef __Publisher_h_
-#define __Publisher_h_
+#ifndef __PointList_h_
+#define __PointList_h_
+
+#include "game_asn/Simulation.h"
 
 namespace xml
 {
     class xistream;
+    class xostream;
 }
-
-class DCSOperationsSoapBindingProxy;
 
 namespace bml
 {
-    class ResponseHandler_ABC;
+    class Point;
 
 // =============================================================================
-/** @class  Publisher
-    @brief  Publisher
+/** @class  PointList
+    @brief  PointList
 */
-// Created: SBO 2008-04-02
+// Created: SBO 2008-05-22
 // =============================================================================
-class Publisher
+class PointList
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Publisher( xml::xistream& xis );
-    virtual ~Publisher();
+    explicit PointList( xml::xistream& xis );
+    virtual ~PointList();
     //@}
 
     //! @name Operations
     //@{
-    void PushReport( const std::string& message );
-    void PullOrder ( const std::string& message, ResponseHandler_ABC& handler );
+    void Serialize( xml::xostream& xos ) const;
+    void Serialize( ASN1T_CoordLatLongList& asn ) const;
+    void Clean( ASN1T_CoordLatLongList& asn ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Publisher( const Publisher& );            //!< Copy constructor
-    Publisher& operator=( const Publisher& ); //!< Assignment operator
+    PointList( const PointList& );            //!< Copy constructor
+    PointList& operator=( const PointList& ); //!< Assignment operator
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< Point > T_Points;
     //@}
 
     //! @name Helpers
     //@{
-    void ConfigureService( DCSOperationsSoapBindingProxy& service ) const;
+    void ReadPoint( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string endpoint_;
-    const std::string proxyHost_;
-    const unsigned short proxyPort_;
+    T_Points points_;
     //@}
 };
 
 }
 
-#endif // __Publisher_h_
+#endif // __PointList_h_
