@@ -96,7 +96,7 @@
         <build-lib name="ENT" depends="qt" pattern="lib${ant.project.name}_ENT-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-   
+
     <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools,library.tools,library.game_asn">
         <build-lib name="dispatcher" pattern="lib${ant.project.name}_dispatcher-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
@@ -145,7 +145,7 @@
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-    
+
     <target name="library.bml_plugin" description="build BML dispatcher plugin static library" depends="library.dispatcher">
         <build-lib name="bml_plugin" pattern="lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
@@ -164,32 +164,32 @@
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-    
+
     <target name="library.hla_plugin" description="build hla_plugin static library" depends="library.dispatcher">
         <build-lib name="hla_plugin" pattern="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-    
+
     <target name="library.dis_plugin" description="build dis_plugin static library" depends="library.dispatcher">
         <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-    
+
     <target name="library.tic_plugin" description="build tic_plugin static library" depends="library.dispatcher">
         <build-lib name="tic_plugin" pattern="lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-    
+
     <target name="library.messenger_plugin" description="build messenger_plugin static library" depends="library.dispatcher">
         <build-lib name="messenger_plugin" pattern="lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-    
-    <target name="library.plugins" description="build all dispatcher plugins" 
+
+    <target name="library.plugins" description="build all dispatcher plugins"
             depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,
                      library.bml_plugin,library.crossbow_plugin,library.gearth_plugin"/>
 
@@ -206,10 +206,10 @@
 
     <target name="applications.clients" description="build CSword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app"/>
-            
+
     <target name="applications.frontends" description="build CSword Frontend executables"
             depends="application.selftraining_app,application.frontend_app"/>
-            
+
     <target name="application.dispatcher_dll" description="build CSword Dispatcher dll" depends="library.dispatcher,library.plugins">
         <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
                    pattern="dispatcher-${platform}-mt@{suffix}"
@@ -230,7 +230,7 @@
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
     </target>
-    
+
     <target name="application.dispatcher_dll.crossbowed" description="build CSword Dispatcher dll with crossbow" depends="library.dispatcher,library.plugins">
         <build-lib name="dispatcher_dll_crossbowed" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm" input="dispatcher_dll"
                    pattern="dispatcher_crossbowed-${platform}-mt@{suffix}"
@@ -294,7 +294,7 @@
                          lib${ant.project.name}_clients_kernel-${platform}-mt" >
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/masasn"/>
-        </build-app>        
+        </build-app>
     </target>
 
     <target name="application.adaptation_app" description="build CSword Adaptation executable" depends="library.ENT,library.clients_gui">
@@ -308,7 +308,7 @@
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
         <build-app name="gaming_app" excludes="**/**_Gen.*" depends="terrain,xeumeuleu,qt,boost,flexlm"
-                   libs="masasn,svgl,zipstream,zlib,shapelib,bugtrap
+                   libs="masasn,svgl,zipstream,zlib1,shapelib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
@@ -322,7 +322,7 @@
 
     <target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
         <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xeumeuleu,qt,boost,flexlm"
-                   libs="svgl,zipstream,zlib,bugtrap
+                   libs="svgl,zipstream,zlib1,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
                          lib${ant.project.name}_preparation-${platform}-mt
@@ -334,7 +334,7 @@
 
     <target name="application.frontend_app" description="build CSword Frontend executable" depends="library.frontend">
         <build-app name="frontend_app" depends="qt,boost,xeumeuleu,flexlm"
-                   libs="bugtrap,zipstream,zlib,tools
+                   libs="bugtrap,zipstream,zlib1,tools
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
                          lib${ant.project.name}_frontend-${platform}-mt
@@ -346,7 +346,7 @@
 
     <target name="application.selftraining_app" description="build CSword Self-training executable" depends="library.frontend">
         <build-app name="selftraining_app" depends="qt,boost,xeumeuleu,flexlm" excludes="**/graphics.cpp"
-                   libs="bugtrap,zipstream,zlib,tools
+                   libs="bugtrap,zipstream,zlib1,tools
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
                          lib${ant.project.name}_frontend-${platform}-mt
@@ -392,9 +392,9 @@
             <includepath path="${include.dir}/masasn"/>
         </build-test>
     </target>
-    
+
     <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin">
-        <build-test name="plugins" depends="terrain,boost" 
+        <build-test name="plugins" depends="terrain,boost"
             libs="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}
                   lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}"/>
     </target>
