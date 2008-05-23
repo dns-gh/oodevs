@@ -21,6 +21,7 @@ namespace bml
 {
     std::string GetMissionNameFromCode( const std::string& code );
     std::string GetCodeFromMissionId( const kernel::Resolver_ABC< kernel::MissionType >& missions, unsigned int id );
+    std::string GetParameterTypeFromCode( const std::string& code );
 }
 
 #endif // __MissionMapping_h_

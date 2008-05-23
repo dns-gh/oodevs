@@ -10,6 +10,8 @@
 #include "bml_plugin_pch.h"
 #include "MissionParameterHeading.h"
 #include "Point.h"
+#include "dispatcher/Agent.h"
+#include "dispatcher/Automat.h"
 
 using namespace bml;
 
@@ -17,12 +19,56 @@ using namespace bml;
 // Name: MissionParameterHeading constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type )
+MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Agent& agent )
     : MissionParameter_ABC( type )
     , angle_( 0 )
 {
-    Point point( xis );
-    // $$$$ SBO 2008-05-22: set angle from unit position
+    const Point entityPosition( agent.position_.latitude, agent.position_.longitude );
+    const Point enemyPosition( xis );
+    angle_ = entityPosition.ComputeBearing( enemyPosition );
+}
+
+namespace
+{
+    struct PositionComputer
+    {
+        PositionComputer() : latitude_( 0 ), longitude_( 0 ), count_( 0 ) {}
+
+        void operator()( const dispatcher::Agent& entity )
+        {
+            latitude_  += entity.position_.latitude;
+            longitude_ += entity.position_.longitude;
+            ++count_;
+        }
+        void operator()( const dispatcher::Automat& entity )
+        {
+            const_cast< dispatcher::Automat& >( entity ).GetAgents().Apply( *this );
+        }
+        
+        double latitude_;
+        double longitude_;
+        unsigned int count_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameterHeading constructor
+// Created: SBO 2008-05-23
+// -----------------------------------------------------------------------------
+MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Automat& automat )
+    : MissionParameter_ABC( type )
+    , angle_( 0 )
+{
+    dispatcher::Automat& entity = const_cast< dispatcher::Automat& >( automat );
+    PositionComputer computer;
+    entity.GetAutomats().Apply( computer );
+    entity.GetAgents().Apply( computer );
+    if( computer.count_ > 0 )
+    {
+        const Point entityPosition( computer.latitude_ / computer.count_, computer.longitude_ / computer.count_ );
+        const Point enemyPosition( xis );
+        angle_ = entityPosition.ComputeBearing( enemyPosition );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -32,6 +78,11 @@ MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kern
 MissionParameterHeading::~MissionParameterHeading()
 {
     // NOTHING
+}
+
+namespace
+{
+    
 }
 
 // -----------------------------------------------------------------------------

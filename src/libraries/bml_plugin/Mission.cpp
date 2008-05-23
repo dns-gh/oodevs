@@ -31,9 +31,10 @@ Mission::Mission( xml::xistream& xis, const dispatcher::Model& model )
     : model_( model )
     , type_( ResolveMission( xis ) )
     , taskee_( 0 )
-    , factory_( new MissionParameterFactory() )
+    , factory_( 0 )
 {
     ReadTaskeeWho( xis );
+    factory_.reset( new MissionParameterFactory( *this, type_, *taskee_ ) );
     ReadParameters( xis );
 }
 
@@ -135,10 +136,9 @@ void Mission::ReadParameters( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Mission::ReadParameter( xml::xistream& xis )
 {
-    MissionParameter_ABC* parameter = factory_->CreateParameter( xis, type_ );
-    if( !parameter )
-        throw std::runtime_error( __FUNCTION__ ": Error creating mission parameter" );
+    std::auto_ptr< MissionParameter_ABC > parameter( factory_->CreateParameter( xis ) );
     AddParameter( *parameter );
+    parameter.release();
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +204,7 @@ namespace
 void Mission::Serialize( ASN1T_MissionParameters& asn ) const
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        asn.elem[i].null_value = 1;
+        asn.elem[i].null_value = 1; // $$$$ SBO 2008-05-23: probably not enough to initialize optional parameters
     for( T_Parameters::const_iterator it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         const unsigned int index = GetParameterIndex( type_, (*it)->GetType() );
@@ -226,4 +226,16 @@ void Mission::Clean( ASN1T_MissionParameters& asn ) const
             (*it)->Clean( asn.elem[index] );
     }
     delete[] asn.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission::IsSet
+// Created: SBO 2008-05-23
+// -----------------------------------------------------------------------------
+bool Mission::IsSet( const kernel::OrderParameter& parameter ) const
+{
+    for( T_Parameters::const_iterator it = parameters_.begin(); it != parameters_.end(); ++it )
+        if( &(*it)->GetType() == &parameter )
+            return true;
+    return false;
 }

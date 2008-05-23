@@ -17,6 +17,12 @@ namespace xml
     class xistream;
 }
 
+namespace dispatcher
+{
+    class Agent;
+    class Automat;
+}
+
 namespace bml
 {
 
@@ -32,7 +38,8 @@ class MissionParameterHeading : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type );
+             MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Agent& agent );
+             MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Automat& automat );
     virtual ~MissionParameterHeading();
     //@}
 

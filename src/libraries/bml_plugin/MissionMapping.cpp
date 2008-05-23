@@ -45,4 +45,20 @@ namespace bml
         throw std::runtime_error( __FUNCTION__ ": Unsupported mission" );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: GetParameterTypeFromCode
+    // Created: SBO 2008-05-23
+    // -----------------------------------------------------------------------------
+    std::string GetParameterTypeFromCode( const std::string& code )
+    {
+        if( code == "PHLINE" )
+            return "phaselinelist";
+        if( code == "BDYOR" )
+            return "limit";
+        if( code == "MAXIS" )
+            return "direction";
+        if( code == "OBJA" )
+            return "polygon";
+        throw std::runtime_error( __FUNCTION__ ": Unsupported parameter type");
+    }
 }

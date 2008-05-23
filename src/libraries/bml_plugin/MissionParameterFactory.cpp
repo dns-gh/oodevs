@@ -13,6 +13,8 @@
 #include "MissionParameterPhaseLine.h"
 #include "MissionParameterHeading.h"
 #include "MissionParameterPolygon.h"
+#include "Mission.h"
+#include "MissionMapping.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/OrderParameter.h"
 #include <xeumeuleu/xml.h>
@@ -23,7 +25,10 @@ using namespace bml;
 // Name: MissionParameterFactory constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-MissionParameterFactory::MissionParameterFactory()
+MissionParameterFactory::MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Automat& automat )
+    : mission_( mission )
+    , type_( type )
+    , automat_( automat )
 {
     // NOTHING
 }
@@ -39,28 +44,17 @@ MissionParameterFactory::~MissionParameterFactory()
 
 namespace
 {
-    const kernel::OrderParameter* GetParameterByName( const kernel::OrderType& type, const std::string& name )
+    const kernel::OrderParameter* GetParameterByType( const kernel::MissionType& type, const Mission& mission, const std::string& code )
     {
+        const std::string parameterType = GetParameterTypeFromCode( code );
         kernel::Iterator< const kernel::OrderParameter& > it( type.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const kernel::OrderParameter& parameter = it.NextElement();
-            if( parameter.GetName() == name )
+            if( parameter.GetType() == parameterType && !mission.IsSet( parameter ) )
                 return &parameter;
         }
         return 0;
-    }
-
-    int GetParameterIndex( const kernel::OrderType& type, const std::string& name )
-    {
-        kernel::Iterator< const kernel::OrderParameter& > it( type.CreateIterator() );
-        for( unsigned int i = 0; it.HasMoreElements(); ++i )
-        {
-            const kernel::OrderParameter& parameter = it.NextElement();
-            if( parameter.GetName() == name )
-                return i;
-        }
-        return -1;
     }
 }
 
@@ -68,7 +62,7 @@ namespace
 // Name: MissionParameterFactory::CreateParameter
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& xis, const kernel::MissionType& mission ) const
+MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& xis ) const
 {
     std::string name, code;
     xis >> xml::start( "C_BML_Who" )
@@ -79,13 +73,11 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
                 >> xml::end()
             >> xml::end()
         >> xml::end();
-    const int index = GetParameterIndex( mission, code == "PHLINE" ? "Phase lines" : name );
-    if( index < 0 )
-        throw std::runtime_error( __FUNCTION__ ": Unknown parameter" );
-    const kernel::OrderParameter* definition = GetParameterByName( mission, code == "PHLINE" ? "Phase lines" : name );
+    
+    const kernel::OrderParameter* definition = GetParameterByType( type_, mission_, code );
     if( definition == 0 )
         throw std::runtime_error( __FUNCTION__ ": Unknown parameter" );
-
+    
     xis >> xml::start( "C_BML_Where" )
             >> xml::start( "WhereInstance" );
     MissionParameter_ABC* param = 0;
@@ -94,7 +86,7 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
     else if( definition->GetType() == "phaselinelist" )
         param = new MissionParameterPhaseLine( xis, *definition, name );
     else if( definition->GetType() == "direction" )
-        param = new MissionParameterHeading( xis, *definition );
+        param = new MissionParameterHeading( xis, *definition, automat_ );
     else if( definition->GetType() == "polygon" )
         param = new MissionParameterPolygon( xis, *definition );
     if( !param )

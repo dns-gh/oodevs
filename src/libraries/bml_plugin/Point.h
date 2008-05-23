@@ -42,6 +42,7 @@ public:
     //@{
     void Serialize( xml::xostream& xos ) const;
     void Serialize( ASN1T_CoordLatLong& asn ) const;
+    unsigned short ComputeBearing( const Point& rhs ) const;
     //@}
 
 private:

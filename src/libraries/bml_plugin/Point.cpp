@@ -10,6 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "Point.h"
 #include <xeumeuleu/xml.h>
+#include <cmath>
 
 using namespace bml;
 
@@ -80,4 +81,15 @@ void Point::Serialize( ASN1T_CoordLatLong& asn ) const
 {
     asn.latitude  = latitude_;
     asn.longitude = longitude_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Point::ComputeBearing
+// Created: SBO 2008-05-23
+// -----------------------------------------------------------------------------
+unsigned short Point::ComputeBearing( const Point& rhs ) const
+{
+    const double rad = std::atan2( rhs.latitude_ - latitude_, rhs.longitude_ - longitude_ );
+    const short  deg = short( rad * 180. / std::acos( -1. ) );
+    return deg < 0 ? 360 + deg : deg;
 }

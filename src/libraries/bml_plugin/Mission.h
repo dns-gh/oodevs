@@ -20,6 +20,7 @@ namespace xml
 namespace kernel
 {
     class MissionType;
+    class OrderParameter;
 }
 
 namespace dispatcher
@@ -53,6 +54,7 @@ public:
     //! @name Operations
     //@{
     void Send( dispatcher::SimulationPublisher_ABC& publisher ) const;
+    bool IsSet( const kernel::OrderParameter& parameter ) const;
     //@}
 
 private:

@@ -20,9 +20,15 @@ namespace kernel
     class MissionType;
 }
 
+namespace dispatcher
+{
+    class Automat;
+}
+
 namespace bml
 {
     class MissionParameter_ABC;
+    class Mission;
 
 // =============================================================================
 /** @class  MissionParameterFactory
@@ -36,13 +42,13 @@ class MissionParameterFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameterFactory();
+             MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Automat& automat );
     virtual ~MissionParameterFactory();
     //@}
 
     //! @name Operations
     //@{
-    MissionParameter_ABC* CreateParameter( xml::xistream& xis, const kernel::MissionType& mission ) const;
+    MissionParameter_ABC* CreateParameter( xml::xistream& xis ) const;
     //@}
 
 private:
@@ -50,6 +56,14 @@ private:
     //@{
     MissionParameterFactory( const MissionParameterFactory& );            //!< Copy constructor
     MissionParameterFactory& operator=( const MissionParameterFactory& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const Mission& mission_;
+    const kernel::MissionType& type_;
+    const dispatcher::Automat& automat_;
     //@}
 };
 
