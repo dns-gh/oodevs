@@ -397,7 +397,9 @@
         <build-test name="plugins" depends="terrain,boost,xeumeuleu"
             libs="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}
                   lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}
-                  lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}"/>
+                  lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}">
+            <includepath path="${include.dir}/masasn"/>
+        </build-test>
     </target>
 
     <macrodef name="test-scripts">
