@@ -95,7 +95,7 @@ void SimulationNetworker::OnReceiveMsgSimToClient( const std::string& /*linkFrom
     }
     catch( std::runtime_error& exception )
     {
-        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
     }
 }
 
@@ -115,7 +115,7 @@ void SimulationNetworker::Send( const ASN1T_MsgsClientToSim& asnMsg )
     }
     catch( std::runtime_error& exception )
     {
-        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
     }
 }
 
@@ -131,6 +131,6 @@ void SimulationNetworker::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
     }
     catch( std::runtime_error& exception )
     {
-        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
     }
 }

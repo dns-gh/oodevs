@@ -105,8 +105,15 @@ void ClientsNetworker::ConnectionError( const std::string& link , const std::str
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Send( const ASN1T_MsgsSimToClient& asnMsg )
 {
-    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-        it->second->Send( asnMsg );
+    try
+    {
+        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+            it->second->Send( asnMsg );
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -115,8 +122,15 @@ void ClientsNetworker::Send( const ASN1T_MsgsSimToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
 {
-    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-        it->second->Send( asnMsg );
+    try
+    {
+        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+            it->second->Send( asnMsg );
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +139,15 @@ void ClientsNetworker::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Send( const ASN1T_MsgsReplayToClient& asnMsg )
 {
-    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-        it->second->Send( asnMsg );
+    try
+    {
+        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+            it->second->Send( asnMsg );
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -135,8 +156,15 @@ void ClientsNetworker::Send( const ASN1T_MsgsReplayToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Send( const ASN1T_MsgsAarToClient& asnMsg )
 {
-    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-        it->second->Send( asnMsg );
+    try
+    {
+        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+            it->second->Send( asnMsg );
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -145,8 +173,15 @@ void ClientsNetworker::Send( const ASN1T_MsgsAarToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Send( const ASN1T_MsgsMessengerToClient& asnMsg )
 {
-    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-        it->second->Send( asnMsg );
+    try
+    {
+        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+            it->second->Send( asnMsg );
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+    }
 }
 
 
