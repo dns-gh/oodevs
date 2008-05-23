@@ -59,13 +59,26 @@ namespace
 {
     ASN1T_EnumLimaType ToPhaseLineType( const std::string& function )
     {
+        if( function == "LD" )
+            return EnumLimaType::ligne_debouche;
+        if( function == "LCA" )
+            return EnumLimaType::ligne_changement_attitude;
+        if( function == "LC" )
+            return EnumLimaType::ligne_coordination;
+        if( function == "LI" )
+            return EnumLimaType::ligne_interdire;
+        if( function == "LO" )
+            return EnumLimaType::ligne_objectif;
         if( function == "LCAR" )
             return EnumLimaType::ligne_coup_arret;
+        if( function == "LR" )
+            return EnumLimaType::ligne_recueil;
         if( function == "LDM" )
             return EnumLimaType::ligne_debut_mission;
         if( function == "LFM" )
             return EnumLimaType::ligne_fin_mission;
-        // $$$$ SBO 2008-05-22: handle everything
+        if( function == "LIA" )
+            return EnumLimaType::ligne_identification_accueil;
         return ASN1T_EnumLimaType( -1 );
     }
 

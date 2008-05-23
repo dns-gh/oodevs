@@ -36,7 +36,7 @@ ReportFactory::~ReportFactory()
 // Name: ReportFactory::CreateOrderReport
 // Created: SBO 2008-05-23
 // -----------------------------------------------------------------------------
-std::auto_ptr< OrderReport > ReportFactory::CreateOrderReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitOrder& asn ) const
+OrderReport* ReportFactory::CreateOrderReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitOrder& asn ) const
 {
     return new OrderReport( entity, missions_, asn );
 }
@@ -45,7 +45,7 @@ std::auto_ptr< OrderReport > ReportFactory::CreateOrderReport( const dispatcher:
 // Name: ReportFactory::CreateOrderReport
 // Created: SBO 2008-05-23
 // -----------------------------------------------------------------------------
-std::auto_ptr< OrderReport > ReportFactory::CreateOrderReport( const dispatcher::Automat& entity, const ASN1T_MsgAutomatOrder& asn ) const
+OrderReport* ReportFactory::CreateOrderReport( const dispatcher::Automat& entity, const ASN1T_MsgAutomatOrder& asn ) const
 {
     return new OrderReport( entity, missions_, asn );
 }

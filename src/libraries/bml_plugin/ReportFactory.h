@@ -46,8 +46,8 @@ public:
 
     //! @name Operations
     //@{
-    std::auto_ptr< OrderReport > CreateOrderReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitOrder& asn ) const;
-    std::auto_ptr< OrderReport > CreateOrderReport( const dispatcher::Automat& entity, const ASN1T_MsgAutomatOrder& asn ) const;
+    OrderReport* CreateOrderReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitOrder& asn ) const;
+    OrderReport* CreateOrderReport( const dispatcher::Automat& entity, const ASN1T_MsgAutomatOrder& asn ) const;
     //@}
 
 private:
