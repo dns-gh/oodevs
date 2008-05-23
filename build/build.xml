@@ -393,7 +393,7 @@
         </build-test>
     </target>
 
-    <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin">
+    <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin">
         <build-test name="plugins" depends="terrain,boost,xeumeuleu"
             libs="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}
                   lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}
