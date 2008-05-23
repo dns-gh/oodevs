@@ -28,6 +28,8 @@ namespace
     unsigned short ReadProxyPort( xml::xistream& xis )
     {
         const std::string proxy = xml::attribute< std::string >( xis, "proxy", "" );
+        if( proxy.empty() )
+            return 0;
         return boost::lexical_cast< unsigned short >( proxy.substr( proxy.find_first_of( ':' ) + 1 ) );
     }
 }

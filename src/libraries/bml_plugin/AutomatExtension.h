@@ -22,6 +22,7 @@ namespace dispatcher
 namespace bml
 {
     class Publisher;
+    class ReportFactory;
 
 // =============================================================================
 /** @class  AutomatExtension
@@ -36,7 +37,7 @@ class AutomatExtension : public BmlExtension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatExtension( dispatcher::Automat& holder, Publisher& publisher );
+             AutomatExtension( dispatcher::Automat& holder, Publisher& publisher, const ReportFactory& factory );
     virtual ~AutomatExtension();
     //@}
 
@@ -57,6 +58,7 @@ private:
     //@{
     dispatcher::Automat& holder_;
     Publisher& publisher_;
+    const ReportFactory& factory_;
     //@}
 };
 

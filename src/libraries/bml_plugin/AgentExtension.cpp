@@ -11,6 +11,7 @@
 #include "AgentExtension.h"
 #include "PositionReport.h"
 #include "OrderReport.h"
+#include "ReportFactory.h"
 #include <xeumeuleu/xml.h>
 
 using namespace bml;
@@ -19,9 +20,10 @@ using namespace bml;
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher& publisher )
+AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher& publisher, const ReportFactory& factory )
     : holder_( holder )
     , publisher_( publisher )
+    , factory_( factory )
 {
     // NOTHING
 }
@@ -54,6 +56,6 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 // -----------------------------------------------------------------------------
 void AgentExtension::DoUpdate( const ASN1T_MsgUnitOrder& message )
 {
-    OrderReport report( holder_, message );
-    report.Send( publisher_ );
+    std::auto_ptr< OrderReport > report( factory_.CreateOrderReport( holder_, message ) );
+    report->Send( publisher_ );
 }

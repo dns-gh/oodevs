@@ -13,26 +13,19 @@
 #include "ReportingData.h"
 #include "SerializationTools.h"
 #include "Publisher.h"
+#include "MissionMapping.h"
 #include <xeumeuleu/xml.h>
 
 using namespace bml;
-
-namespace
-{
-    std::string ResolveActivityCode( unsigned int missionId )
-    {
-        return "ATTACK"; // $$$$ SBO 2008-05-22: TODO
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: OrderReport constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-OrderReport::OrderReport( const dispatcher::Agent& agent, const ASN1T_MsgUnitOrder& asn )
+OrderReport::OrderReport( const dispatcher::Agent& agent, const kernel::Resolver_ABC< kernel::MissionType >& missions, const ASN1T_MsgUnitOrder& asn )
     : who_( new Who( agent ) )
     , reportingData_( new ReportingData( agent ) )
-    , activityCode_( ResolveActivityCode( asn.mission ) )
+    , activityCode_( GetCodeFromMissionId( missions, asn.mission ) )
 {
     // NOTHING
 }
@@ -41,10 +34,10 @@ OrderReport::OrderReport( const dispatcher::Agent& agent, const ASN1T_MsgUnitOrd
 // Name: OrderReport constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-OrderReport::OrderReport( const dispatcher::Automat& automat, const ASN1T_MsgAutomatOrder& asn )
+OrderReport::OrderReport( const dispatcher::Automat& automat, const kernel::Resolver_ABC< kernel::MissionType >& missions, const ASN1T_MsgAutomatOrder& asn )
     : who_( new Who( automat ) )
     , reportingData_( new ReportingData( automat ) )
-    , activityCode_( ResolveActivityCode( asn.mission ) )
+    , activityCode_( GetCodeFromMissionId( missions, asn.mission ) )
 {
     // NOTHING
 }

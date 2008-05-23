@@ -25,7 +25,7 @@ namespace
     std::string CurrentTime()
     {
         bpt::ptime time;
-        return bpt::to_iso_string( time ).c_str();
+        return bpt::to_iso_extended_string( time ).c_str();
     }
 }
 

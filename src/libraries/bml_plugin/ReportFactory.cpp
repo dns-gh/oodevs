@@ -8,48 +8,44 @@
 // *****************************************************************************
 
 #include "bml_plugin_pch.h"
-#include "ExtensionFactory.h"
-#include "AgentExtension.h"
-#include "AutomatExtension.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
+#include "ReportFactory.h"
+#include "OrderReport.h"
 
 using namespace bml;
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory constructor
-// Created: SBO 2008-02-29
+// Name: ReportFactory constructor
+// Created: SBO 2008-05-23
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher& publisher, const ReportFactory& reportFactory )
-    : publisher_( publisher )
-    , reportFactory_( reportFactory )
+ReportFactory::ReportFactory( const kernel::Resolver_ABC< kernel::MissionType >& missions )
+    : missions_( missions )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory destructor
-// Created: SBO 2008-02-29
+// Name: ReportFactory destructor
+// Created: SBO 2008-05-23
 // -----------------------------------------------------------------------------
-ExtensionFactory::~ExtensionFactory()
+ReportFactory::~ReportFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-02-29
+// Name: ReportFactory::CreateOrderReport
+// Created: SBO 2008-05-23
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Agent& entity )
+std::auto_ptr< OrderReport > ReportFactory::CreateOrderReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitOrder& asn ) const
 {
-    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity, publisher_, reportFactory_ ) );
+    return new OrderReport( entity, missions_, asn );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-05-22
+// Name: ReportFactory::CreateOrderReport
+// Created: SBO 2008-05-23
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Automat& entity )
+std::auto_ptr< OrderReport > ReportFactory::CreateOrderReport( const dispatcher::Automat& entity, const ASN1T_MsgAutomatOrder& asn ) const
 {
-    entity.Attach< BmlExtension_ABC >( *new AutomatExtension( entity, publisher_, reportFactory_ ) );
+    return new OrderReport( entity, missions_, asn );
 }

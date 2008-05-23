@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __OrderReport_h_
-#define __OrderReport_h_
+#ifndef __ReportFactory_h_
+#define __ReportFactory_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Resolver_ABC.h"
+#include "game_asn/Simulation.h"
 
 namespace kernel
 {
@@ -26,48 +26,44 @@ namespace dispatcher
 
 namespace bml
 {
-    class Publisher;
-    class Who;
-    class ReportingData;
-    
+    class OrderReport;
+
 // =============================================================================
-/** @class  OrderReport
-    @brief  OrderReport
+/** @class  ReportFactory
+    @brief  ReportFactory
 */
-// Created: SBO 2008-05-22
+// Created: SBO 2008-05-23
 // =============================================================================
-class OrderReport
+class ReportFactory
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderReport( const dispatcher::Agent& agent, const kernel::Resolver_ABC< kernel::MissionType >& missions, const ASN1T_MsgUnitOrder& asn );
-             OrderReport( const dispatcher::Automat& automat, const kernel::Resolver_ABC< kernel::MissionType >& missions, const ASN1T_MsgAutomatOrder& asn );
-    virtual ~OrderReport();
+    explicit ReportFactory( const kernel::Resolver_ABC< kernel::MissionType >& missions );
+    virtual ~ReportFactory();
     //@}
 
     //! @name Operations
     //@{
-    void Send( Publisher& publisher ) const;
+    std::auto_ptr< OrderReport > CreateOrderReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitOrder& asn ) const;
+    std::auto_ptr< OrderReport > CreateOrderReport( const dispatcher::Automat& entity, const ASN1T_MsgAutomatOrder& asn ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    OrderReport( const OrderReport& );            //!< Copy constructor
-    OrderReport& operator=( const OrderReport& ); //!< Assignment operator
+    ReportFactory( const ReportFactory& );            //!< Copy constructor
+    ReportFactory& operator=( const ReportFactory& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Who > who_;
-    std::auto_ptr< ReportingData > reportingData_;
-    std::string activityCode_;
+    const kernel::Resolver_ABC< kernel::MissionType >& missions_;
     //@}
 };
 
 }
 
-#endif // __OrderReport_h_
+#endif // __ReportFactory_h_

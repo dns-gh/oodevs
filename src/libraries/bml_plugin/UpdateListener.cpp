@@ -25,7 +25,7 @@ namespace
     std::string CurrentTime()
     {
         bpt::ptime time;
-        return bpt::to_iso_string( time ).c_str();
+        return bpt::to_iso_extended_string( time ).c_str();
     }
 }
 
@@ -36,7 +36,7 @@ namespace
 UpdateListener::UpdateListener( Publisher& publisher, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation )
     : publisher_( publisher )
     , orderProcessor_( new OrderProcessor( model, simulation ) )
-    , lastUpdateTime_( bpt::to_iso_string( bpt::from_time_t( 0 ) ).c_str() )
+    , lastUpdateTime_( bpt::to_iso_extended_string( bpt::from_time_t( 0 ) ).c_str() )
 {
     // NOTHING
 }

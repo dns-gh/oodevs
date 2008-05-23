@@ -9,6 +9,7 @@
 
 #include "bml_plugin_pch.h"
 #include "Mission.h"
+#include "MissionMapping.h"
 #include "MissionParameterFactory.h"
 #include "MissionParameterPhaseLine.h"
 #include "MissionParameterPhaseLines.h"
@@ -47,17 +48,6 @@ Mission::~Mission()
 
 namespace
 {
-    std::string MissionNameFromCode( const std::string& code )
-    {
-        if( code == "ATTACK" )
-            return "ABC GTIA Attaquer";
-//        if( code == "" )
-//            return "ABC GTIA DonnerCoupArret";
-//        if( code == "" )
-//            return "ABC GTIA Freiner";
-        throw std::runtime_error( __FUNCTION__ ": Unsupported mission" );
-    }
-
     const kernel::MissionType& GetMissionByName( const kernel::Resolver_ABC< kernel::MissionType >& missions, const std::string& name )
     {
         kernel::Iterator< const kernel::MissionType& > it( missions.CreateIterator() );
@@ -87,7 +77,7 @@ const kernel::MissionType& Mission::ResolveMission( xml::xistream& xis )
                 >> xml::end()
             >> xml::end()
         >> xml::end();
-    return GetMissionByName( model_.GetMissionTypes(), MissionNameFromCode( code ) );
+    return GetMissionByName( model_.GetMissionTypes(), GetMissionNameFromCode( code ) );
 }
 
 namespace

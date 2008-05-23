@@ -11,6 +11,7 @@
 #include "AutomatExtension.h"
 #include "PositionReport.h"
 #include "OrderReport.h"
+#include "ReportFactory.h"
 #include <xeumeuleu/xml.h>
 
 using namespace bml;
@@ -19,9 +20,10 @@ using namespace bml;
 // Name: AutomatExtension constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-AutomatExtension::AutomatExtension( dispatcher::Automat& holder, Publisher& publisher )
+AutomatExtension::AutomatExtension( dispatcher::Automat& holder, Publisher& publisher, const ReportFactory& factory )
     : holder_( holder )
     , publisher_( publisher )
+    , factory_( factory )
 {
     // NOTHING
 }
@@ -41,6 +43,6 @@ AutomatExtension::~AutomatExtension()
 // -----------------------------------------------------------------------------
 void AutomatExtension::DoUpdate( const ASN1T_MsgAutomatOrder& message )
 {
-    OrderReport report( holder_, message );
-    report.Send( publisher_ );
+    std::auto_ptr< OrderReport > report( factory_.CreateOrderReport( holder_, message ) );
+    report->Send( publisher_ );
 }

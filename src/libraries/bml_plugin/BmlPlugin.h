@@ -29,6 +29,7 @@ namespace bml
     class Publisher;
     class Serializer;
     class UpdateListener;
+    class ReportFactory;
 
 // =============================================================================
 /** @class  BmlPlugin
@@ -69,7 +70,8 @@ private:
     //@{
     dispatcher::Model& model_;
     std::auto_ptr< Publisher > publisher_;
-    std::auto_ptr< ExtensionFactory > factory_;
+    std::auto_ptr< ReportFactory > reportFactory_;
+    std::auto_ptr< ExtensionFactory > extensionFactory_;
     std::auto_ptr< UpdateListener > listener_;
     //@}
 };

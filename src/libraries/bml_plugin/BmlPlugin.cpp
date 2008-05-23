@@ -12,6 +12,7 @@
 #include "ExtensionFactory.h"
 #include "Publisher.h"
 #include "UpdateListener.h"
+#include "ReportFactory.h"
 #include "dispatcher/Model.h"
 
 using namespace bml;
@@ -23,10 +24,11 @@ using namespace bml;
 BmlPlugin::BmlPlugin( dispatcher::Model& model, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation )
     : model_( model )
     , publisher_( new Publisher( xis ) )
-    , factory_( new ExtensionFactory( *publisher_ ) )
+    , reportFactory_( new ReportFactory( model_.GetMissionTypes() ) )
+    , extensionFactory_( new ExtensionFactory( *publisher_, *reportFactory_ ) )
     , listener_( new UpdateListener( *publisher_, model_, simulation ) )
 {
-    model_.RegisterFactory( *factory_ );
+    model_.RegisterFactory( *extensionFactory_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +37,7 @@ BmlPlugin::BmlPlugin( dispatcher::Model& model, xml::xistream& xis, dispatcher::
 // -----------------------------------------------------------------------------
 BmlPlugin::~BmlPlugin()
 {
-    model_.UnregisterFactory( *factory_ );
+    model_.UnregisterFactory( *extensionFactory_ );
 }
 
 // -----------------------------------------------------------------------------
