@@ -97,6 +97,7 @@ void GlWidget::initializeGL()
     glShadeModel( GL_FLAT );
     circle_ = GenerateCircle();
     glEnableClientState( GL_VERTEX_ARRAY );
+    gl::Initialize();
 }
 
 // -----------------------------------------------------------------------------

@@ -61,8 +61,9 @@ std::string CompositionPass::GetName() const
 // -----------------------------------------------------------------------------
 void CompositionPass::Render( MapWidget_ABC& )
 {
-    if( !enabled_ )
+    if( !enabled_ || !gl::HasMultiTexturing() )
         return;
+
     glClear( GL_COLOR_BUFFER_BIT );
     if( !ignoreShader_ && !program_.get() )
         Initialize();
@@ -185,9 +186,8 @@ void CompositionPass::Initialize()
         glTexParameteri( gl::GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri( gl::GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     }
-    catch( std::exception& e )
+    catch( ... )
     {
-        std::cout << e.what() << std::endl;
         ignoreShader_ = true;
     }
 }

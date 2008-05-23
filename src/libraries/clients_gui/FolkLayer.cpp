@@ -98,6 +98,8 @@ void FolkLayer::UpdateGradient()
     if( ! gradientTexture_ )
         glGenTextures( 1, &gradientTexture_ );
     gl::Initialize();
+    if( ! gl::HasMultiTexturing() )
+        return;
     gl::glActiveTexture( gl::GL_TEXTURE0 );
     glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
     gradient_.MakeGlTexture( 1 );
@@ -121,11 +123,14 @@ void FolkLayer::Paint( const Rectangle2f& viewport )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_TEXTURE_BIT );
         glLineWidth( 1 );
-        gl::glActiveTexture( gl::GL_TEXTURE1 );
-        glBindTexture( GL_TEXTURE_1D, 0 );
-        glDisable( GL_TEXTURE_1D );
-        glDisable( GL_TEXTURE_2D );
-        gl::glActiveTexture( gl::GL_TEXTURE0 );
+        if( gl::HasMultiTexturing() )
+        {
+            gl::glActiveTexture( gl::GL_TEXTURE1 );
+            glBindTexture( GL_TEXTURE_1D, 0 );
+            glDisable( GL_TEXTURE_1D );
+            glDisable( GL_TEXTURE_2D );
+            gl::glActiveTexture( gl::GL_TEXTURE0 );
+        }
         glDisable( GL_TEXTURE_GEN_S );
         glDisable( GL_TEXTURE_GEN_T );
         glEnable( GL_TEXTURE_1D );

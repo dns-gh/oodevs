@@ -37,7 +37,13 @@ MapLayerProxy::~MapLayerProxy()
 // -----------------------------------------------------------------------------
 void MapLayerProxy::Initialize( const geometry::Rectangle2f& extent )
 {
-    layer_.Initialize( extent );
+    try
+    {
+        layer_.Initialize( extent );
+    }
+    catch( ... )
+    {
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +52,13 @@ void MapLayerProxy::Initialize( const geometry::Rectangle2f& extent )
 // -----------------------------------------------------------------------------
 void MapLayerProxy::Paint( const ViewFrustum& frustum )
 {
-    layer_.Paint( frustum );
+    try
+    {
+        layer_.Paint( frustum );
+    }
+    catch( ... )
+    {
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +67,13 @@ void MapLayerProxy::Paint( const ViewFrustum& frustum )
 // -----------------------------------------------------------------------------
 void MapLayerProxy::Paint( const geometry::Rectangle2f& viewport )
 {
-    layer_.Paint( viewport );
+    try
+    {
+        layer_.Paint( viewport );
+    }
+    catch( ... )
+    {
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +82,13 @@ void MapLayerProxy::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 void MapLayerProxy::Paint( kernel::Viewport_ABC& viewport )
 {
-    layer_.Paint( viewport );
+    try
+    {
+        layer_.Paint( viewport );
+    }
+    catch( ... )
+    {
+    }
 }
 
 // -----------------------------------------------------------------------------

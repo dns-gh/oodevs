@@ -93,7 +93,7 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
         reset_ = false;
     }
 
-    if(  !program_.get() && ! ignoreShader_ )
+    if( !program_.get() && ! ignoreShader_ )
         CreateShaders();
     if( ! textures_.get() && !graphicsDirectory_.empty() && !ignoreTextures_ )
         CreateTextures();
@@ -118,9 +118,9 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
         program_->SetUniformValue( "tex0", 0 );
         program_->SetUniformValue( "tex1", 1 );
     }
-    
+
     glPushAttrib( GL_CURRENT_BIT | GL_TEXTURE_BIT );
-    glPushMatrix(); 
+    glPushMatrix();
         glScalef( 1.f, 1.f, zRatio_ );
         glColor3f( 1, 1, 1 );
         textures_->Accept( visitor_->Compiled( frustum ) );
@@ -130,16 +130,20 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
     if( program_.get() )
         program_->Unuse();
     glDisable( GL_LIGHTING );
-    gl::glActiveTexture( gl::GL_TEXTURE0 );
-    glDisable( GL_TEXTURE_2D );
-    gl::glActiveTexture( gl::GL_TEXTURE1 );
+
+    if( gl::HasMultiTexturing() )
+    {
+        gl::glActiveTexture( gl::GL_TEXTURE1 );
+        glDisable( GL_TEXTURE_2D );
+        gl::glActiveTexture( gl::GL_TEXTURE0 );
+    }
 
     lastFrustum_ = frustum;
 }
 
 namespace
 {
-    static const char* shagger = 
+    static const char* shagger =
     "uniform sampler2D tex0;"
     "uniform sampler2D tex1;"
     "void main()"
@@ -161,7 +165,7 @@ namespace
 void Elevation3dLayer::CreateShaders()
 {
     gl::Initialize();
-    try 
+    try
     {
         fragment_.reset( new gl::FragmentShader( shagger ) );
         program_.reset( new gl::ShaderProgram() );

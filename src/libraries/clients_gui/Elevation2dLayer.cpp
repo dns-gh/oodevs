@@ -209,10 +209,13 @@ void Elevation2dLayer::Cleanup()
 {
     if( shader_.get() )
         shader_->Unuse();
-    gl::glActiveTexture( gl::GL_TEXTURE1 );
-    glBindTexture( GL_TEXTURE_1D, 0 );
-    glDisable( GL_TEXTURE_1D );
-    gl::glActiveTexture( gl::GL_TEXTURE0 );
+    if( gl::HasMultiTexturing() )
+    {
+        gl::glActiveTexture( gl::GL_TEXTURE1 );
+        glBindTexture( GL_TEXTURE_1D, 0 );
+        glDisable( GL_TEXTURE_1D );
+        gl::glActiveTexture( gl::GL_TEXTURE0 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -222,6 +225,8 @@ void Elevation2dLayer::Cleanup()
 void Elevation2dLayer::SetGradient()
 {
     gl::Initialize();
+    if( !gl::HasMultiTexturing() )
+        return;
     gl::glActiveTexture( gl::GL_TEXTURE1 );
     glDisable( GL_TEXTURE_2D );
     glEnable( GL_TEXTURE_1D );
