@@ -44,7 +44,9 @@ void PointList::ReadPoint( xml::xistream& xis )
     xis >> xml::content( "jc3iedm:SequenceOrdinal", index );
     if( index == 0 )
         throw std::runtime_error( __FUNCTION__ ": jc3iedm:SequenceOrdinal out of range [1 +inf)" );
-    points_.insert( points_.begin() + index, Point( xis ) );
+    if( index + 1 > points_.size() )
+        points_.resize( index );
+    points_[--index] = Point( xis );
 }
 
 // -----------------------------------------------------------------------------

@@ -33,6 +33,7 @@ class Point
 public:
     //! @name Constructors/Destructor
     //@{
+             Point();
     explicit Point( xml::xistream& xis );
              Point( double latitude, double longitude );
     virtual ~Point();
