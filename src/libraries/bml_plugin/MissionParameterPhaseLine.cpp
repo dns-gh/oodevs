@@ -24,7 +24,7 @@ MissionParameterPhaseLine::MissionParameterPhaseLine( xml::xistream& xis, const 
     , functions_( functions )
 {
     xis >> xml::start( "Line" );
-    points_ = new PointList( xis );
+    points_.reset( new PointList( xis ) );
     xis >> xml::end();
 }
 

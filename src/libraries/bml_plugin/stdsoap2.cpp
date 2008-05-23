@@ -64,6 +64,7 @@ when locally allocated data exceeds 64K.
 */
 
 #include "bml_plugin_pch.h"
+#pragma warning( disable : 4100 4127 4211 4244 4310 4706 )
 
 #ifdef AS400
 # pragma convert(819)	/* EBCDIC to ASCII */

@@ -23,7 +23,7 @@ MissionParameterLimit::MissionParameterLimit( xml::xistream& xis, const kernel::
     , points_( 0 )
 {
     xis >> xml::start( "Line" );
-    points_ = new PointList( xis );
+    points_.reset( new PointList( xis ) );
     xis >> xml::end();
 }
 

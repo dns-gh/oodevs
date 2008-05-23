@@ -8,6 +8,8 @@
 #include "bml_plugin_pch.h"
 #include "soapH.h"
 
+#pragma warning( disable : 4065 4100 4706 )
+
 SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.7.10 2008-05-16 08:35:02 GMT")
 
 
