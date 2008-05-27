@@ -10,6 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "OrderProcessor.h"
 #include "Mission.h"
+#include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 
 using namespace bml;
@@ -41,7 +42,9 @@ OrderProcessor::~OrderProcessor()
 void OrderProcessor::Handle( const std::string& response )
 {
     xml::xistringstream xis( response );
-    xis >> xml::list( "OrderPush", *this, &OrderProcessor::ReadOrder );
+    xis >> xml::start( NS( "OrderPush", "cbml" ) )
+            >> xml::list( NS( "OrderPush", "cbml" ), *this, &OrderProcessor::ReadOrder )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +53,7 @@ void OrderProcessor::Handle( const std::string& response )
 // -----------------------------------------------------------------------------
 void OrderProcessor::ReadOrder( xml::xistream& xis )
 {
-    xis >> xml::list( "Task", *this, &OrderProcessor::ReadTask );
+    xis >> xml::list( NS( "Task", "cbml" ), *this, &OrderProcessor::ReadTask );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +62,7 @@ void OrderProcessor::ReadOrder( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void OrderProcessor::ReadTask( xml::xistream& xis )
 {
-    xis >> xml::list( "GroundTask", *this, &OrderProcessor::ReadGroundTask );
+    xis >> xml::list( NS( "GroundTask", "cbml" ), *this, &OrderProcessor::ReadGroundTask );
 }
 
 // -----------------------------------------------------------------------------

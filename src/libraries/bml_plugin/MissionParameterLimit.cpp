@@ -10,6 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "MissionParameterLimit.h"
 #include "PointList.h"
+#include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 
 using namespace bml;
@@ -22,7 +23,7 @@ MissionParameterLimit::MissionParameterLimit( xml::xistream& xis, const kernel::
     : MissionParameter_ABC( type )
     , points_( 0 )
 {
-    xis >> xml::start( "Line" );
+    xis >> xml::start( NS( "Line", "cbml" ) );
     points_.reset( new PointList( xis ) );
     xis >> xml::end();
 }

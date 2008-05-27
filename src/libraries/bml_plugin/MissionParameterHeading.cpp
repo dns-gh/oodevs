@@ -10,6 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "MissionParameterHeading.h"
 #include "Point.h"
+#include "SerializationTools.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 
@@ -24,7 +25,7 @@ MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kern
     , angle_( 0 )
 {
     const Point entityPosition( agent.position_.latitude, agent.position_.longitude );
-    const Point enemyPosition( xis );
+    const Point enemyPosition( xis, NS( "AbstractAbsolutePoint", "cbml" ) );
     angle_ = entityPosition.ComputeBearing( enemyPosition );
 }
 
@@ -42,7 +43,7 @@ namespace
         }
         void operator()( const dispatcher::Automat& entity )
         {
-            const_cast< dispatcher::Automat& >( entity ).GetAgents().Apply( *this );
+            const_cast< dispatcher::Automat& >( entity ).GetAgents().Apply< PositionComputer& >( *this );
         }
         
         double latitude_;
@@ -61,12 +62,12 @@ MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kern
 {
     dispatcher::Automat& entity = const_cast< dispatcher::Automat& >( automat );
     PositionComputer computer;
-    entity.GetAutomats().Apply( computer );
-    entity.GetAgents().Apply( computer );
+    entity.GetAutomats().Apply< PositionComputer& >( computer );
+    entity.GetAgents().Apply< PositionComputer& >( computer );
     if( computer.count_ > 0 )
     {
         const Point entityPosition( computer.latitude_ / computer.count_, computer.longitude_ / computer.count_ );
-        const Point enemyPosition( xis );
+        const Point enemyPosition( xis, NS( "AbstractAbsolutePoint", "cbml" ) );
         angle_ = entityPosition.ComputeBearing( enemyPosition );
     }
 }
@@ -78,11 +79,6 @@ MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kern
 MissionParameterHeading::~MissionParameterHeading()
 {
     // NOTHING
-}
-
-namespace
-{
-    
 }
 
 // -----------------------------------------------------------------------------

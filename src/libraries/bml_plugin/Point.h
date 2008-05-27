@@ -34,14 +34,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              Point();
-    explicit Point( xml::xistream& xis );
+			 Point( xml::xistream& xis, const std::string& fieldname );
              Point( double latitude, double longitude );
     virtual ~Point();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos ) const;
+	void Serialize( xml::xostream& xos, const std::string& fieldname ) const;
     void Serialize( ASN1T_CoordLatLong& asn ) const;
     unsigned short ComputeBearing( const Point& rhs ) const;
     //@}
@@ -52,7 +52,6 @@ private:
     double latitude_;
     double longitude_;
     double height_;
-    std::string type_;
     //@}
 };
 

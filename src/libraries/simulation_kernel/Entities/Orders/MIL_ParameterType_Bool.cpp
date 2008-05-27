@@ -39,7 +39,8 @@ MIL_ParameterType_Bool::~MIL_ParameterType_Bool()
 void MIL_ParameterType_Bool::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_aBool ) 
+    // $$$$ SBO 2008-05-26: check optional + null
+    if( from.value.t != T_MissionParameter_value_aBool ) 
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest

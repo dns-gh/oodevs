@@ -10,6 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "PointList.h"
 #include "Point.h"
+#include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 
 using namespace bml;
@@ -20,8 +21,8 @@ using namespace bml;
 // -----------------------------------------------------------------------------
 PointList::PointList( xml::xistream& xis )
 {
-    xis >> xml::start( "jc3iedm:PointList" )
-            >> xml::list( "jc3iedm:Point", *this, &PointList::ReadPoint )
+    xis >> xml::start( NS( "PointList", "jc3iedm" ) )
+            >> xml::list( NS( "Point", "jc3iedm" ), *this, &PointList::ReadPoint )
         >> xml::end();
 }
 
@@ -41,12 +42,12 @@ PointList::~PointList()
 void PointList::ReadPoint( xml::xistream& xis )
 {
     unsigned int index = 0;
-    xis >> xml::content( "jc3iedm:SequenceOrdinal", index );
+    xis >> xml::content( NS( "SequenceOrdinal", "jc3iedm" ), index );
     if( index == 0 )
         throw std::runtime_error( __FUNCTION__ ": jc3iedm:SequenceOrdinal out of range [1 +inf)" );
     if( index + 1 > points_.size() )
         points_.resize( index );
-    points_[--index] = Point( xis );
+	points_[--index] = Point( xis, NS( "Point", "jc3iedm" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +61,7 @@ void PointList::Serialize( xml::xostream& xos ) const
     for( T_Points::const_iterator it = points_.begin(); it != points_.end(); ++it, ++i )
     {
         xos << xml::content( "jc3iedm:SequenceOrdinal", i );
-        it->Serialize( xos );
+        it->Serialize( xos, "jc3iedm:Point" );
     }
     xos << xml::end();
 }

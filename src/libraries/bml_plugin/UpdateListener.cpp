@@ -16,6 +16,7 @@
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
+#include <iostream>
 
 namespace bpt = boost::posix_time;
 using namespace bml;
@@ -24,8 +25,7 @@ namespace
 {
     std::string CurrentTime()
     {
-        bpt::ptime time;
-        return bpt::to_iso_extended_string( time ).c_str();
+        return bpt::to_iso_extended_string( bpt::second_clock::local_time() );
     }
 }
 
@@ -66,9 +66,16 @@ void UpdateListener::Update( const ASN1T_MsgControlBeginTick& )
 // -----------------------------------------------------------------------------
 void UpdateListener::PullOrders( const std::string& time )
 {
-    xml::xostringstream xos;
-    xos << xml::start( "OrderPull" ) << Namespaces()
-            << xml::content( "PostedTimeCutoff", time )
-        << xml::end();
-    publisher_.PullOrder( xos.str(), *orderProcessor_ );
+	try
+	{
+		xml::xostringstream xos;
+		xos << xml::start( "OrderPull" ) << Namespaces()
+				<< xml::content( "PostedTimeCutoff", time )
+			<< xml::end();
+		publisher_.PullOrder( xos.str(), *orderProcessor_ );
+	}
+	catch( std::exception& e )
+	{
+		std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+	}
 }

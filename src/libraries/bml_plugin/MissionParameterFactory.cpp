@@ -15,9 +15,12 @@
 #include "MissionParameterPolygon.h"
 #include "Mission.h"
 #include "MissionMapping.h"
+#include "SerializationTools.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/OrderParameter.h"
 #include <xeumeuleu/xml.h>
+#pragma warning( disable : 4512 )
+#include <boost/algorithm/string.hpp>
 
 using namespace bml;
 
@@ -51,7 +54,7 @@ namespace
         while( it.HasMoreElements() )
         {
             const kernel::OrderParameter& parameter = it.NextElement();
-            if( parameter.GetType() == parameterType && !mission.IsSet( parameter ) )
+            if( boost::algorithm::to_lower_copy( parameter.GetType() ) == parameterType && !mission.IsSet( parameter ) )
                 return &parameter;
         }
         return 0;
@@ -65,11 +68,11 @@ namespace
 MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& xis ) const
 {
     std::string name, code;
-    xis >> xml::start( "C_BML_Who" )
-            >> xml::start( "WhoInstance" )
-                >> xml::start( "ControlFeatureType" )
-                    >> xml::content( "jc3iedm:NameText", name )
-                    >> xml::content( "jc3iedm:CategoryCode", code )
+    xis >> xml::start( NS( "C_BML_Who", "cbml" ) )
+            >> xml::start( NS( "WhoInstance", "cbml" ) )
+                >> xml::start( NS( "ControlFeatureType", "cbml" ) )
+                    >> xml::content( NS( "NameText", "jc3iedm" ), name )
+                    >> xml::content( NS( "CategoryCode", "jc3iedm" ), code )
                 >> xml::end()
             >> xml::end()
         >> xml::end();
@@ -78,16 +81,17 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
     if( definition == 0 )
         throw std::runtime_error( __FUNCTION__ ": Unknown parameter" );
     
-    xis >> xml::start( "C_BML_Where" )
-            >> xml::start( "WhereInstance" );
+    xis >> xml::start( NS( "C_BML_Where", "cbml" ) )
+            >> xml::start( NS( "WhereInstance", "cbml" ) );
     MissionParameter_ABC* param = 0;
-    if( definition->GetType() == "limit" )
+	std::string type = boost::algorithm::to_lower_copy( definition->GetType() );
+    if( type == "limit" )
         param = new MissionParameterLimit( xis, *definition );
-    else if( definition->GetType() == "phaselinelist" )
+    else if( type == "phaselinelist" )
         param = new MissionParameterPhaseLine( xis, *definition, name );
-    else if( definition->GetType() == "direction" )
+    else if( type == "direction" )
         param = new MissionParameterHeading( xis, *definition, automat_ );
-    else if( definition->GetType() == "polygon" )
+    else if( type == "polygon" )
         param = new MissionParameterPolygon( xis, *definition );
     if( !param )
         throw std::runtime_error( std::string( __FUNCTION__ ": Unsupported mission parameter: " ) + definition->GetType() );

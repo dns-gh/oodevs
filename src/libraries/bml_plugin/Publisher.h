@@ -13,6 +13,8 @@
 namespace xml
 {
     class xistream;
+    class xostream;
+    class xostringstream;
 }
 
 class DCSOperationsSoapBindingProxy;
@@ -39,8 +41,9 @@ public:
 
     //! @name Operations
     //@{
-    void PushReport( const std::string& message );
-    void PullOrder ( const std::string& message, ResponseHandler_ABC& handler );
+	void PushReports();
+    xml::xostream& CreateReport();
+    void PullOrder( const std::string& message, ResponseHandler_ABC& handler );
     //@}
 
 private:
@@ -61,6 +64,7 @@ private:
     const std::string endpoint_;
     const std::string proxyHost_;
     const unsigned short proxyPort_;
+    std::auto_ptr< xml::xostringstream > reports_;
     //@}
 };
 

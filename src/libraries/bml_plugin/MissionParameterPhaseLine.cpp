@@ -10,8 +10,13 @@
 #include "bml_plugin_pch.h"
 #include "MissionParameterPhaseLine.h"
 #include "PointList.h"
+#include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
+#pragma warning( push, 1 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
 
+namespace bpt = boost::posix_time;
 using namespace bml;
 
 // -----------------------------------------------------------------------------
@@ -23,7 +28,7 @@ MissionParameterPhaseLine::MissionParameterPhaseLine( xml::xistream& xis, const 
     , points_( 0 )
     , functions_( functions )
 {
-    xis >> xml::start( "Line" );
+    xis >> xml::start( NS( "Line", "cbml" ) );
     points_.reset( new PointList( xis ) );
     xis >> xml::end();
 }
@@ -97,7 +102,9 @@ namespace
 void MissionParameterPhaseLine::Serialize( ASN1T_LimaOrder& asn ) const
 {
     SerializeFunctions( asn.fonctions, functions_ );
+    asn.lima.type = EnumLocationType::line;
     points_->Serialize( asn.lima.coordinates );
+    asn.horaire = bpt::to_iso_string( bpt::from_time_t( 0 ) ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -106,5 +113,6 @@ void MissionParameterPhaseLine::Serialize( ASN1T_LimaOrder& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameterPhaseLine::Clean( ASN1T_LimaOrder& asn ) const
 {
+    points_->Clean( asn.lima.coordinates );
     delete[] asn.fonctions.elem;
 }

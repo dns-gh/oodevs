@@ -13,6 +13,7 @@
 #include "OrderReport.h"
 #include "ReportFactory.h"
 #include <xeumeuleu/xml.h>
+#include <iostream>
 
 using namespace bml;
 
@@ -43,6 +44,13 @@ AutomatExtension::~AutomatExtension()
 // -----------------------------------------------------------------------------
 void AutomatExtension::DoUpdate( const ASN1T_MsgAutomatOrder& message )
 {
-    std::auto_ptr< OrderReport > report( factory_.CreateOrderReport( holder_, message ) );
-    report->Send( publisher_ );
+	try
+	{
+		std::auto_ptr< OrderReport > report( factory_.CreateOrderReport( holder_, message ) );
+		report->Send( publisher_ );
+	}
+	catch( std::exception& e )
+	{
+		std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+	}
 }

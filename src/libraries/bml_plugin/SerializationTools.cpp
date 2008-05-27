@@ -20,4 +20,23 @@ namespace bml
             << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" );
         return xos;
     }
+
+//    std::string NS( const std::string& tag, const std::string& preferred )
+//    {
+//        if( preferred == "jc3iedm" )
+//            return "jc3iedm:" + tag;
+//        if( preferred == "xsi" )
+//            return "xsi:" + tag;
+//        return tag;
+//    }
+
+    std::string NS( const std::string& tag, const std::string& preferred )
+    {
+        if( preferred == "cbml" )
+            return "ns2:" + tag;
+        if( preferred == "xsi" )
+            return "xsi:" + tag;
+        return tag;
+    }
+
 }

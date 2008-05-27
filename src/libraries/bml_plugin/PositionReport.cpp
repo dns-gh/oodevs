@@ -43,13 +43,10 @@ PositionReport::~PositionReport()
 void PositionReport::Send( Publisher& publisher ) const
 {
     Who who( entity_ );
-    xml::xostringstream xos;
-    xos << xml::start( "ReportPush" ) << Namespaces()
-            << xml::start( "ReportPush" )
-                << xml::start( "ReportedByWho" ) << who << xml::end()
-                << xml::start( "NewWhere" )      << who << Where( entity_ ) << xml::end()
-                << xml::start( "ReportedWho" )   << who << xml::end()
-            << xml::end()
+    xml::xostream& xos = publisher.CreateReport();
+    xos << xml::start( "ReportPush" )
+            << xml::start( "ReportedByWho" ) << who << xml::end()
+            << xml::start( "NewWhere" )      << who << Where( entity_ ) << xml::end()
+            << xml::start( "ReportedWho" )   << who << xml::end()
         << xml::end();
-    publisher.PushReport( xos.str() );
 }

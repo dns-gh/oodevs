@@ -13,6 +13,7 @@
 #include "MissionParameterFactory.h"
 #include "MissionParameterPhaseLine.h"
 #include "MissionParameterPhaseLines.h"
+#include "SerializationTools.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
@@ -20,6 +21,8 @@
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/OrderParameter.h"
 #include <xeumeuleu/xml.h>
+#pragma warning( disable : 4512 )
+#include <boost/algorithm/string.hpp>
 
 using namespace bml;
 
@@ -47,21 +50,6 @@ Mission::~Mission()
     // NOTHING
 }
 
-namespace
-{
-    const kernel::MissionType& GetMissionByName( const kernel::Resolver_ABC< kernel::MissionType >& missions, const std::string& name )
-    {
-        kernel::Iterator< const kernel::MissionType& > it( missions.CreateIterator() );
-        while( it.HasMoreElements() )
-        {
-            const kernel::MissionType& type = it.NextElement();
-            if( type.GetName() == name )
-                return type;
-        }
-        throw std::runtime_error( __FUNCTION__ ": Unable to resolve Mission" );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Mission::ResolveMission
 // Created: SBO 2008-05-22
@@ -69,16 +57,16 @@ namespace
 const kernel::MissionType& Mission::ResolveMission( xml::xistream& xis )
 {
     std::string code;
-    xis >> xml::start( "What" )
-            >> xml::start( "C_BML_WhatWhen" )
-                >> xml::start( "WhatWhenInstance" )
-                    >> xml::start( "ActionTask" )
-                        >> xml::content( "jc3iedm:ActivityCode", code )
+    xis >> xml::start( NS( "What", "cbml" ) )
+            >> xml::start( NS( "C_BML_WhatWhen", "cbml" ) )
+                >> xml::start( NS( "WhatWhenInstance", "cbml" ) )
+                    >> xml::start( NS( "ActionTask", "cbml" ) )
+                        >> xml::content( NS( "ActivityCode", "jc3iedm" ), code )
                     >> xml::end()
                 >> xml::end()
             >> xml::end()
         >> xml::end();
-    return GetMissionByName( model_.GetMissionTypes(), GetMissionNameFromCode( code ) );
+    return model_.GetMissionTypes().Get( GetMissionIdFromCode( model_.GetMissionTypes(), code ) );
 }
 
 namespace
@@ -103,17 +91,17 @@ namespace
 void Mission::ReadTaskeeWho( xml::xistream& xis )
 {
     std::string name;
-    xis >> xml::start( "TaskeeWho" )
-            >> xml::start( "C_BML_Who" )
-                >> xml::start( "WhoRef" )
-                    >> xml::start( "UnitRef" )
-                        >> xml::content( "jc3iedm::OID", name )
+    xis >> xml::start( NS( "TaskeeWho", "cbml" ) )
+            >> xml::start( NS( "C_BML_Who", "cbml" ) )
+                >> xml::start( NS( "WhoRef", "cbml" ) )
+                    >> xml::start( NS( "UnitRef", "cbml" ) )
+                        >> xml::content( NS( "OID", "jc3iedm" ), name )
                     >> xml::end()
                 >> xml::end()
             >> xml::end()
         >> xml::end();
     NameFinder finder( name );
-    model_.GetAutomats().Apply( finder );
+    model_.GetAutomats().Apply< NameFinder& >( finder );
     taskee_ = finder.result_;
     if( !taskee_ )
         throw std::runtime_error( __FUNCTION__ ": Unable to resolve TaskeeWho" );
@@ -125,8 +113,8 @@ void Mission::ReadTaskeeWho( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Mission::ReadParameters( xml::xistream& xis )
 {
-    xis >> xml::start( "TaskControlMeasures" )
-            >> xml::list( "TaskControlMeasure", *this, &Mission::ReadParameter )
+    xis >> xml::start( NS( "TaskControlMeasures", "cbml" ) )
+            >> xml::list( NS( "TaskControlMeasure", "cbml" ), *this, &Mission::ReadParameter )
         >> xml::end();
 }
 
@@ -147,7 +135,7 @@ void Mission::ReadParameter( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Mission::AddParameter( MissionParameter_ABC& parameter )
 {
-    if( parameter.GetType().GetName() == "phaselinelist" )
+    if( boost::algorithm::to_lower_copy( parameter.GetType().GetType() ) == "phaselinelist" )
     {
         MissionParameterPhaseLines* lines = 0;
         for( T_Parameters::iterator it = parameters_.begin(); it != parameters_.end(); ++it )
@@ -157,7 +145,10 @@ void Mission::AddParameter( MissionParameter_ABC& parameter )
                 break;
             }
         if( !lines )
+        {
             lines = new MissionParameterPhaseLines( parameter.GetType() );
+            parameters_.push_back( lines );
+        }
         lines->AddLine( static_cast< MissionParameterPhaseLine& >( parameter ) );
     }
     else
@@ -203,14 +194,57 @@ namespace
 // -----------------------------------------------------------------------------
 void Mission::Serialize( ASN1T_MissionParameters& asn ) const
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        asn.elem[i].null_value = 1; // $$$$ SBO 2008-05-23: probably not enough to initialize optional parameters
+	SerializeDummyParameters( asn );
     for( T_Parameters::const_iterator it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         const unsigned int index = GetParameterIndex( type_, (*it)->GetType() );
         if( index >= 0 )
             (*it)->Serialize( asn.elem[index] );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission::SerializeDummyParameters
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+void Mission::SerializeDummyParameters( ASN1T_MissionParameters& asn ) const
+{
+	kernel::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
+	for( unsigned int i = 0; it.HasMoreElements(); ++i )
+	{
+		const kernel::OrderParameter& parameter = it.NextElement();
+		asn.elem[i].null_value = parameter.IsOptional() ? 1 : 0;
+		const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
+		if( type == "bool" )
+		{
+            asn.elem[i].null_value = 0; // $$$$ SBO 2008-05-26: FIXME: simulation bug
+			asn.elem[i].value.t = T_MissionParameter_value_aBool;
+			asn.elem[i].value.u.aBool = false;
+		}
+		else if( type == "intelligencelist" )
+		{
+			asn.elem[i].value.t = T_MissionParameter_value_intelligenceList;
+			asn.elem[i].value.u.intelligenceList = new ASN1T_IntelligenceList();
+			asn.elem[i].value.u.intelligenceList->n = 0;
+		}
+		else if( type == "objectivelist" )
+		{
+			asn.elem[i].value.t = T_MissionParameter_value_missionObjectiveList;
+			asn.elem[i].value.u.missionObjectiveList = new ASN1T_MissionObjectiveList();
+			asn.elem[i].value.u.missionObjectiveList->n = 0;
+		}
+		else if( type == "genobjectlist" )
+		{
+			asn.elem[i].value.t = T_MissionParameter_value_plannedWorkList;
+			asn.elem[i].value.u.plannedWorkList = new ASN1T_PlannedWorkList();
+			asn.elem[i].value.u.plannedWorkList->n = 0;
+		}
+		else if( type == "direction" )
+		{
+			asn.elem[i].value.t = T_MissionParameter_value_heading;
+			asn.elem[i].value.u.heading = 0;
+		}
+	}
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +259,26 @@ void Mission::Clean( ASN1T_MissionParameters& asn ) const
         if( index >= 0 )
             (*it)->Clean( asn.elem[index] );
     }
+	CleanDummyParameters( asn );
     delete[] asn.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission::CleanDummyParameters
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+void Mission::CleanDummyParameters( ASN1T_MissionParameters& asn ) const
+{
+	for( unsigned int i = 0; i < asn.n; ++i )
+		switch( asn.elem[i].value.t )
+		{
+		case T_MissionParameter_value_intelligenceList:
+			delete asn.elem[i].value.u.intelligenceList; break;
+		case T_MissionParameter_value_missionObjectiveList:
+			delete asn.elem[i].value.u.missionObjectiveList; break;
+		case T_MissionParameter_value_plannedWorkList:
+			delete asn.elem[i].value.u.plannedWorkList; break;
+		}
 }
 
 // -----------------------------------------------------------------------------
@@ -236,6 +289,6 @@ bool Mission::IsSet( const kernel::OrderParameter& parameter ) const
 {
     for( T_Parameters::const_iterator it = parameters_.begin(); it != parameters_.end(); ++it )
         if( &(*it)->GetType() == &parameter )
-            return true;
+			return boost::algorithm::to_lower_copy( parameter.GetType() ) != "phaselinelist";
     return false;
 }

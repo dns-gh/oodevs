@@ -73,6 +73,7 @@ private:
     std::auto_ptr< ReportFactory > reportFactory_;
     std::auto_ptr< ExtensionFactory > extensionFactory_;
     std::auto_ptr< UpdateListener > listener_;
+    unsigned int counter_;
     //@}
 };
 

@@ -57,27 +57,25 @@ OrderReport::~OrderReport()
 // -----------------------------------------------------------------------------
 void OrderReport::Send( Publisher& publisher ) const
 {
-    xml::xostringstream xos;
+    xml::xostream& xos = publisher.CreateReport();
     xos << xml::start( "ReportPush" )
-            << Namespaces()
-            << xml::start( "ReportPush" )
-                << xml::start( "ReportedByWho" ) << *who_ << xml::end()
-                << xml::start( "ReportedWho" )   << *who_ << xml::end()
-                << xml::start( "NewWhatWhen" )
-                    << xml::start( "C_BML_WhatWhen" )
-                        << xml::start( "WhatWhenInstance" )
-                            << xml::start( "ActionTask" )
-                                << xml::content( "jc3iedm:ActivityCode", activityCode_ )
-                                << *reportingData_
-                            << xml::end()
-                            << xml::start( "ActionTaskStatus" )
-                                << xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
-                                << *reportingData_
-                            << xml::end()
+            << xml::start( "ReportedByWho" ) << *who_ << xml::end()
+            << xml::start( "ReportedWho" )   << *who_ << xml::end()
+            << xml::start( "NewWhatWhen" )
+                << xml::start( "C_BML_WhatWhen" )
+                    << xml::start( "WhatWhenInstance" )
+                        << xml::start( "ActionTask" )
+							<< xml::attribute( "xsi:type", "jc3iedm:ActionTask" )
+                            << xml::content( "jc3iedm:ActivityCode", activityCode_ )
+                            << xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
+                        << xml::end()
+                        << xml::start( "ActionTaskStatus" )
+							<< xml::attribute( "xsi:type", "jc3iedm:ActionTaskStatus" )
+                            << xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
+                            << *reportingData_
                         << xml::end()
                     << xml::end()
                 << xml::end()
             << xml::end()
         << xml::end();
-    publisher.PushReport( xos.str() );
 }

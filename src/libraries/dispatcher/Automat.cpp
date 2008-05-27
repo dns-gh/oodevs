@@ -214,6 +214,7 @@ void Automat::Update( const ASN1T_MsgAutomatOrder& asnMsg )
     pOrder_ = 0;
     if( asnMsg.mission != 0 )
         pOrder_ = new AutomatOrder( model_, *this, asnMsg );
+    ApplyUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------

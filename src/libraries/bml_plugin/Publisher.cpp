@@ -12,8 +12,10 @@
 #include "soapDCSOperationsSoapBindingProxy.h"
 #include "DCSOperationsSoapBinding.nsmap"
 #include "ResponseHandler_ABC.h"
+#include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 #include <boost/lexical_cast.hpp>
+#include <fstream>
 
 using namespace bml;
 
@@ -56,17 +58,44 @@ Publisher::~Publisher()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Publisher::PushReport
-// Created: SBO 2008-05-15
+// Name: Publisher::PushReports
+// Created: SBO 2008-05-26
 // -----------------------------------------------------------------------------
-void Publisher::PushReport( const std::string& message )
+void Publisher::PushReports()
 {
-    DCSOperationsSoapBindingProxy service;
-    ConfigureService( service );
-    std::string response;
-    service.pushReport( message, response ); // $$$$ SBO 2008-05-16: make it non-blocking
-    if( service.error )
-        throw std::exception( service.soap_fault_string() );
+    if( reports_.get() != 0 )
+    {
+        try
+        {
+            *reports_ << xml::end();
+            DCSOperationsSoapBindingProxy service;
+            ConfigureService( service );
+            std::string response;
+            service.pushReport( reports_->str(), response ); // $$$$ SBO 2008-05-16: make it non-blocking
+            if( service.error )
+                throw std::exception( service.soap_fault_string() );
+        }
+        catch( std::exception& e )
+        {
+            std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+        }
+        reports_.release();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Publisher::CreateReport
+// Created: SBO 2008-05-26
+// -----------------------------------------------------------------------------
+xml::xostream& Publisher::CreateReport()
+{
+    if( reports_.get() == 0 )
+    {
+        reports_.reset( new xml::xostringstream() );
+        *reports_ << xml::start( "ReportPush" )
+                    << Namespaces();
+    }
+    return *new xml::xosubstream( *reports_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,13 +104,20 @@ void Publisher::PushReport( const std::string& message )
 // -----------------------------------------------------------------------------
 void Publisher::PullOrder( const std::string& message, ResponseHandler_ABC& handler )
 {
-    DCSOperationsSoapBindingProxy service;
-    ConfigureService( service );
-    std::string response;
-    service.pullOrder( message, response ); // $$$$ SBO 2008-05-16: make it non-blocking
-    if( service.error )
-        throw std::exception( service.soap_fault_string() );
-    handler.Handle( response );
+    try
+    {
+        DCSOperationsSoapBindingProxy service;
+        ConfigureService( service );
+        std::string response;
+        service.pullOrder( message, response ); // $$$$ SBO 2008-05-16: make it non-blocking
+        if( service.error )
+            throw std::exception( service.soap_fault_string() );
+	    handler.Handle( response );
+    }
+    catch( std::exception& e )
+    {
+        std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+    }
 }
 
 // -----------------------------------------------------------------------------

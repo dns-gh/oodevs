@@ -72,8 +72,10 @@ private:
     //! @name Helpers
     //@{
     void Serialize( ASN1T_MissionParameters& asn ) const;
-    void Clean( ASN1T_MissionParameters& asn ) const;
-
+	void Clean( ASN1T_MissionParameters& asn ) const;
+	void SerializeDummyParameters( ASN1T_MissionParameters& asn ) const;
+	void CleanDummyParameters( ASN1T_MissionParameters& asn ) const;
+	
     const kernel::MissionType& ResolveMission( xml::xistream& xis );
     void AddParameter( MissionParameter_ABC& parameter );
 

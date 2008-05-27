@@ -13,6 +13,7 @@
 #include "OrderReport.h"
 #include "ReportFactory.h"
 #include <xeumeuleu/xml.h>
+#include <iostream>
 
 using namespace bml;
 
@@ -45,8 +46,15 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 {
     if( attributes.m.positionPresent || attributes.m.hauteurPresent )
     {
-        PositionReport report( holder_ );
-        report.Send( publisher_ );
+		try
+		{
+			PositionReport report( holder_ );
+			report.Send( publisher_ );
+		}
+		catch( std::exception& e )
+		{
+			std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+		}
     }
 }
 
@@ -56,6 +64,13 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 // -----------------------------------------------------------------------------
 void AgentExtension::DoUpdate( const ASN1T_MsgUnitOrder& message )
 {
-    std::auto_ptr< OrderReport > report( factory_.CreateOrderReport( holder_, message ) );
-    report->Send( publisher_ );
+	try
+	{
+		std::auto_ptr< OrderReport > report( factory_.CreateOrderReport( holder_, message ) );
+		report->Send( publisher_ );
+	}
+	catch( std::exception& e )
+	{
+		std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+	}
 }

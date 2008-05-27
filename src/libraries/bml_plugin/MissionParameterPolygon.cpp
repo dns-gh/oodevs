@@ -10,6 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "MissionParameterPolygon.h"
 #include "PointList.h"
+#include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 
 using namespace bml;
@@ -22,8 +23,8 @@ MissionParameterPolygon::MissionParameterPolygon( xml::xistream& xis, const kern
     : MissionParameter_ABC( type )
     , points_( 0 )
 {
-    xis >> xml::start( "PolygonArea" )
-            >> xml::start( "BoundingLine" );
+    xis >> xml::start( NS( "PolygonArea", "cbml" ) )
+            >> xml::start( NS( "BoundingLine", "cbml" ) );
     points_.reset( new PointList( xis ) );
     xis     >> xml::end()
         >> xml::end();

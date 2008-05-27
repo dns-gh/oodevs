@@ -19,7 +19,7 @@ namespace kernel
 
 namespace bml
 {
-    std::string GetMissionNameFromCode( const std::string& code );
+    unsigned long GetMissionIdFromCode( const kernel::Resolver_ABC< kernel::MissionType >& missions, const std::string& code );
     std::string GetCodeFromMissionId( const kernel::Resolver_ABC< kernel::MissionType >& missions, unsigned int id );
     std::string GetParameterTypeFromCode( const std::string& code );
 }

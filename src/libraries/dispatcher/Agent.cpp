@@ -310,6 +310,7 @@ void Agent::Update( const ASN1T_MsgUnitOrder& asnMsg )
     pOrder_ = 0;
     if( asnMsg.mission != 0 )
         pOrder_ = new AgentOrder( model_, *this, asnMsg );
+    ApplyUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------

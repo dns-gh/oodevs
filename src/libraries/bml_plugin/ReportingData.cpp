@@ -24,8 +24,7 @@ namespace
 {
     std::string CurrentTime()
     {
-        bpt::ptime time;
-        return bpt::to_iso_extended_string( time ).c_str();
+        return bpt::to_iso_string( bpt::second_clock::local_time() );
     }
 }
 
@@ -67,6 +66,7 @@ ReportingData::~ReportingData()
 xml::xostream& bml::operator<<( xml::xostream& xos, const ReportingData& data )
 {
     xos << xml::start( "jc3iedm:ReportingData" )
+            << xml::attribute( "xsi:type", "jc3iedm:ReportingData" )
             << xml::content( "jc3iedm:CategoryCode", "ASS" ) //!< report is assumed to be trustable
             << xml::content( "jc3iedm:ReportingDatetime", data.reportDatetime_ ) //!< time of report, compact ISO8601
             << xml::start( "jc3iedm:ReportingOrganisationRef" )

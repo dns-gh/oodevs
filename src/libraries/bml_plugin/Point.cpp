@@ -9,6 +9,7 @@
 
 #include "bml_plugin_pch.h"
 #include "Point.h"
+#include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 #include <cmath>
 
@@ -27,19 +28,12 @@ Point::Point()
 // Name: Point constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-Point::Point( xml::xistream& xis )
+Point::Point( xml::xistream& xis, const std::string& fieldname )
 {
-    std::string type;
-    xis >> xml::start( "AbstractAbsolutePoint" )
-            >> xml::attribute( "xsi:type", type_ );
-    if( type_ == "jc3iedm:GeographicPoint" )
-        xis >> xml::content( "jc3iedm:LatitudeCoordinate" , latitude_ )
-            >> xml::content( "jc3iedm:LongitudeCoordinate", longitude_ );
-    else if( type_ == "jc3iedm:CartesianPoint" )
-        xis >> xml::content( "jc3iedm:XCoordinateDimension", latitude_ )
-            >> xml::content( "jc3iedm:YCoordinateDimension", longitude_ )
-            >> xml::content( "jc3iedm:ZCoordinateDimension", height_ );
-    xis >> xml::end();
+    xis >> xml::start( fieldname )
+            >> xml::content( NS( "LatitudeCoordinate" , "jc3iedm" ), latitude_ )
+            >> xml::content( NS( "LongitudeCoordinate", "jc3iedm" ), longitude_ )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +44,6 @@ Point::Point( double latitude, double longitude )
     : latitude_( latitude )
     , longitude_( longitude )
     , height_( 0 )
-    , type_( "jc3iedm:GeographicPoint" )
 {
     // NOTHING
 }
@@ -68,18 +61,13 @@ Point::~Point()
 // Name: Point::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void Point::Serialize( xml::xostream& xos ) const
+void Point::Serialize( xml::xostream& xos, const std::string& fieldname ) const
 {
-    xos << xml::start( "AbstractAbsolutePoint" )
-            << xml::attribute( "xsi:type", type_ );
-    if( type_ == "jc3iedm:GeographicPoint" )
-        xos << xml::content( "jc3iedm:LatitudeCoordinate" , latitude_ )
-            << xml::content( "jc3iedm:LongitudeCoordinate", longitude_ );
-    else if( type_ == "jc3iedm:CartesianPoint" )
-        xos << xml::content( "jc3iedm:XCoordinateDimension", latitude_ )
-            << xml::content( "jc3iedm:YCoordinateDimension", longitude_ )
-            << xml::content( "jc3iedm:ZCoordinateDimension", height_ );
-    xos << xml::end();
+    xos << xml::start( fieldname )
+            << xml::attribute( "xsi:type", "jc3iedm:GeographicPoint" )
+            << xml::content( "jc3iedm:LatitudeCoordinate" , latitude_ )
+            << xml::content( "jc3iedm:LongitudeCoordinate", longitude_ )
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------

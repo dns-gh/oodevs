@@ -13,19 +13,37 @@
 
 namespace bml
 {
+	namespace
+	{
+		// -----------------------------------------------------------------------------
+		// Name: GetMissionId
+		// Created: SBO 2008-05-23
+		// -----------------------------------------------------------------------------
+		unsigned long GetMissionId( const kernel::Resolver_ABC< kernel::MissionType >& missions, const std::string& name1, const std::string& name2 )
+		{
+			kernel::Iterator< const kernel::MissionType& > it( missions.CreateIterator() );
+			while( it.HasMoreElements() )
+			{
+				const kernel::MissionType& type = it.NextElement();
+				if( type.GetName() == name1 || type.GetName() == name2 )
+					return type.GetId();
+			}
+			throw std::runtime_error( __FUNCTION__ ": Unable to resolve Mission" );
+		}
+	}
 
     // -----------------------------------------------------------------------------
-    // Name: GetMissionNameFromCode
+    // Name: GetMissionIdFromCode
     // Created: SBO 2008-05-23
     // -----------------------------------------------------------------------------
-    std::string GetMissionNameFromCode( const std::string& code )
+    unsigned long GetMissionIdFromCode( const kernel::Resolver_ABC< kernel::MissionType >& missions, const std::string& code )
     {
         if( code == "ATTACK" )
-            return "ABC GTIA Attaquer";
+            return GetMissionId( missions, "ABC GTIA Attaquer", "Battalion - Attack" );
         if( code == "BLOCK" )
-            return "ABC GTIA DonnerCoupArret";
+            return GetMissionId( missions, "ABC GTIA DonnerCoupArret", "Battalion - conduct a blocking action" );
         if( code == "DELAY" )
-            return "ABC GTIA Freiner";
+            return GetMissionId( missions, "ABC GTIA Freiner", "Battalion - delay" );
         throw std::runtime_error( __FUNCTION__ ": Unsupported mission" );
     }
 
@@ -35,14 +53,14 @@ namespace bml
     // -----------------------------------------------------------------------------
     std::string GetCodeFromMissionId( const kernel::Resolver_ABC< kernel::MissionType >& missions, unsigned int id )
     {
-        const kernel::MissionType& mission = missions.Get( id );
-        if( mission.GetName() == "ABC GTIA Freiner" )
+        if( id == GetMissionId( missions, "ABC GTIA Freiner", "Battalion - Attack" ) )
             return "ATTACK";
-        if( mission.GetName() == "ABC GTIA DonnerCoupArret" )
+        if( id == GetMissionId( missions, "ABC GTIA DonnerCoupArret", "Battalion - conduct a blocking action" ) )
             return "BLOCK";
-        if( mission.GetName() == "ABC GTIA Freiner" )
+        if( id == GetMissionId( missions, "ABC GTIA Freiner", "Battalion - delay" ) )
             return "DELAY";
-        throw std::runtime_error( __FUNCTION__ ": Unsupported mission" );
+        return "MOVE";
+//        throw std::runtime_error( __FUNCTION__ ": Unsupported mission" );
     }
 
     // -----------------------------------------------------------------------------

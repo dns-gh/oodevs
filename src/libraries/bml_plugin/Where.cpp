@@ -43,7 +43,7 @@ xml::xostream& bml::operator<<( xml::xostream& xos, const Where& data )
     xos << xml::start( "C_BML_Where" )
             << xml::start( "WhereInstance" );
     Point point( data.agent_.position_.latitude, data.agent_.position_.longitude );
-    point.Serialize( xos );
+    point.Serialize( xos, "AbstractAbsolutePoint" );
     xos     << xml::end()
         << xml::end();
     return xos;
