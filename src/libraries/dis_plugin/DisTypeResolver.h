@@ -10,7 +10,7 @@
 #ifndef __DisTypeResolver_h_
 #define __DisTypeResolver_h_
 
-#include "ApproximativeMap.h"
+#include "clients_kernel/ApproximativeMap.h"
 #include "hla_plugin/EntityType.h"
 #include <map>
 
@@ -63,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ApproximativeMap< EntityType > types_;
+    kernel::ApproximativeMap< EntityType > types_;
     mutable std::map< const kernel::ComponentType*, EntityType > resolved_;
     EntityType default_;
     //@}

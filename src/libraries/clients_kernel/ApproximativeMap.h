@@ -13,6 +13,9 @@
 #include <vector>
 #include <string>
 
+namespace kernel
+{
+
 namespace internal
 {
     int Find( const std::string& key, const std::vector< std::string >& candidates, int threshold );
@@ -57,6 +60,8 @@ private:
     int defaultThreshold_;
     //@}
 };
+
+}
 
 #include "ApproximativeMap.inl"
 

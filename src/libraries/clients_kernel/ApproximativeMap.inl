@@ -7,6 +7,9 @@
 //
 // *****************************************************************************
 
+namespace kernel
+{
+
 // -----------------------------------------------------------------------------
 // Name: ApproximativeMap constructor
 // Created: AGE 2008-04-04
@@ -60,4 +63,6 @@ const T* ApproximativeMap< T >::Find( const std::string& key, int threshold ) co
     if( index >= 0 )
         return & values_.at( index );
     return 0;
+}
+
 }

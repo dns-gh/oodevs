@@ -7,9 +7,11 @@
 //
 // *****************************************************************************
 
-#include "dis_plugin_pch.h"
+#include "clients_kernel_pch.h"
 #include "ApproximativeMap.h"
 #include <cmath>
+
+using namespace kernel;
 
 namespace
 {
@@ -127,7 +129,7 @@ namespace
 // Name: internal::Find
 // Created: AGE 2008-04-04
 // -----------------------------------------------------------------------------
-int internal::Find( const std::string& text, const std::vector< std::string >& candidates, int threshold )
+int ::kernel::internal::Find( const std::string& text, const std::vector< std::string >& candidates, int threshold )
 {
     std::vector< int > scores;
     CoMatrix cmTarget( text.c_str() );
