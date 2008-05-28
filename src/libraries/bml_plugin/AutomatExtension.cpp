@@ -12,6 +12,7 @@
 #include "PositionReport.h"
 #include "OrderReport.h"
 #include "ReportFactory.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include <xeumeuleu/xml.h>
 #include <iostream>
 
@@ -51,6 +52,6 @@ void AutomatExtension::DoUpdate( const ASN1T_MsgAutomatOrder& message )
 	}
 	catch( std::exception& e )
 	{
-		std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+		MT_LOG_ERROR_MSG( "BML error sending automat order report: " << e.what() );
 	}
 }

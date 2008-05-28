@@ -12,6 +12,7 @@
 #include "PositionReport.h"
 #include "OrderReport.h"
 #include "ReportFactory.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include <xeumeuleu/xml.h>
 #include <iostream>
 
@@ -53,7 +54,7 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 		}
 		catch( std::exception& e )
 		{
-			std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+			MT_LOG_ERROR_MSG( "BML error sending position report: " << e.what() );
 		}
     }
 }
@@ -71,6 +72,6 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitOrder& message )
 	}
 	catch( std::exception& e )
 	{
-		std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+		MT_LOG_ERROR_MSG( "BML error sending agent order report: " << e.what() );
 	}
 }

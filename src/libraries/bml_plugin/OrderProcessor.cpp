@@ -12,6 +12,7 @@
 #include "Mission.h"
 #include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace bml;
 
@@ -71,6 +72,15 @@ void OrderProcessor::ReadTask( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void OrderProcessor::ReadGroundTask( xml::xistream& xis )
 {
-    Mission mission( xis, model_ );
-    mission.Send( publisher_ );
+	try
+	{
+		xml::xisubstream sub( xis );
+		Mission mission( sub, model_ );
+		mission.Send( publisher_ );
+	}
+	catch( std::exception& e)
+	{
+		MT_LOG_ERROR_MSG( "BML translating mission: " << e.what() );
+	}
+    
 }

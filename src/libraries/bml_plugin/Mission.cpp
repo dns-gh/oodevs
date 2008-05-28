@@ -186,6 +186,16 @@ namespace
         }
         return -1;
     }
+
+	void MarkParameters( ASN1T_MissionParameters& asn )
+	{
+		for( unsigned i = 0; i < asn.n; ++i )
+		{
+			asn.elem[i].null_value = 1;
+			asn.elem[i].value.t = 0;
+			asn.elem[i].value.u.aBool = 0;
+		}
+	}
 }
 
 // -----------------------------------------------------------------------------
@@ -194,6 +204,8 @@ namespace
 // -----------------------------------------------------------------------------
 void Mission::Serialize( ASN1T_MissionParameters& asn ) const
 {
+	MarkParameters( asn );
+
 	SerializeDummyParameters( asn );
     for( T_Parameters::const_iterator it = parameters_.begin(); it != parameters_.end(); ++it )
     {
@@ -201,6 +213,35 @@ void Mission::Serialize( ASN1T_MissionParameters& asn ) const
         if( index >= 0 )
             (*it)->Serialize( asn.elem[index] );
     }
+
+	FillEmptyParameters( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission::FillEmptyParameters
+// Created: AGE 2008-05-28
+// -----------------------------------------------------------------------------
+void Mission::FillEmptyParameters( ASN1T_MissionParameters& asn ) const
+{
+	kernel::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
+	for( unsigned int i = 0; it.HasMoreElements(); ++i )
+	{
+		const kernel::OrderParameter& parameter = it.NextElement();
+		ASN1T_MissionParameter& asnParam = asn.elem[i];
+		if( asnParam.value.t == 0 )
+		{
+			const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
+			if( type == "phaselinelist" )
+			{
+				static ASN1T_LimasOrder limas;
+				limas.elem = 0; limas.n = 0;
+
+				asnParam.null_value = 0;
+				asnParam.value.t = T_MissionParameter_value_limasOrder;
+				asnParam.value.u.limasOrder = &limas;
+			}
+		}
+	}
 }
 
 // -----------------------------------------------------------------------------
@@ -213,36 +254,40 @@ void Mission::SerializeDummyParameters( ASN1T_MissionParameters& asn ) const
 	for( unsigned int i = 0; it.HasMoreElements(); ++i )
 	{
 		const kernel::OrderParameter& parameter = it.NextElement();
-		asn.elem[i].null_value = parameter.IsOptional() ? 1 : 0;
+		ASN1T_MissionParameter& asnParam = asn.elem[i];
+		asnParam.null_value = parameter.IsOptional() ? 1 : 0;
 		const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
 		if( type == "bool" )
 		{
-            asn.elem[i].null_value = 0; // $$$$ SBO 2008-05-26: FIXME: simulation bug
-			asn.elem[i].value.t = T_MissionParameter_value_aBool;
-			asn.elem[i].value.u.aBool = false;
+            asnParam.null_value = 0; // $$$$ SBO 2008-05-26: FIXME: simulation bug
+			asnParam.value.t = T_MissionParameter_value_aBool;
+			asnParam.value.u.aBool = false;
 		}
 		else if( type == "intelligencelist" )
 		{
-			asn.elem[i].value.t = T_MissionParameter_value_intelligenceList;
-			asn.elem[i].value.u.intelligenceList = new ASN1T_IntelligenceList();
-			asn.elem[i].value.u.intelligenceList->n = 0;
+			asnParam.value.t = T_MissionParameter_value_intelligenceList;
+			asnParam.value.u.intelligenceList = new ASN1T_IntelligenceList();
+			asnParam.value.u.intelligenceList->n = 0;
+			asnParam.value.u.intelligenceList->elem = 0;
 		}
 		else if( type == "objectivelist" )
 		{
-			asn.elem[i].value.t = T_MissionParameter_value_missionObjectiveList;
-			asn.elem[i].value.u.missionObjectiveList = new ASN1T_MissionObjectiveList();
-			asn.elem[i].value.u.missionObjectiveList->n = 0;
+			asnParam.value.t = T_MissionParameter_value_missionObjectiveList;
+			asnParam.value.u.missionObjectiveList = new ASN1T_MissionObjectiveList();
+			asnParam.value.u.missionObjectiveList->n = 0;
+			asnParam.value.u.missionObjectiveList->elem = 0;
 		}
 		else if( type == "genobjectlist" )
 		{
-			asn.elem[i].value.t = T_MissionParameter_value_plannedWorkList;
-			asn.elem[i].value.u.plannedWorkList = new ASN1T_PlannedWorkList();
-			asn.elem[i].value.u.plannedWorkList->n = 0;
+			asnParam.value.t = T_MissionParameter_value_plannedWorkList;
+			asnParam.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
+			asnParam.value.u.plannedWorkList->n = 0;
+			asnParam.value.u.plannedWorkList->elem = 0;
 		}
 		else if( type == "direction" )
 		{
-			asn.elem[i].value.t = T_MissionParameter_value_heading;
-			asn.elem[i].value.u.heading = 0;
+			asnParam.value.t = T_MissionParameter_value_heading;
+			asnParam.value.u.heading = 0;
 		}
 	}
 }

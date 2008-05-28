@@ -47,16 +47,10 @@ BmlPlugin::~BmlPlugin()
 // -----------------------------------------------------------------------------
 void BmlPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 {
-    if( ++counter_ > 10 )
-    {
-        if( message.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
-            listener_->Update( *message.msg.u.msg_control_begin_tick );
-        else if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
-        {
-            publisher_->PushReports();
-            counter_ = 0;
-        }
-    }
+    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
+        listener_->Update( *message.msg.u.msg_control_begin_tick );
+    else if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
+		publisher_->PushReports();
 }
 
 // -----------------------------------------------------------------------------

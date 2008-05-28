@@ -75,6 +75,8 @@ void PointList::Serialize( ASN1T_CoordLatLongList& asn ) const
     asn.n = points_.size();
     if( asn.n > 0 )
         asn.elem = new ASN1T_CoordLatLong[asn.n];
+	else 
+		asn.elem = 0;
     unsigned int i = 0;
     for( T_Points::const_iterator it = points_.begin(); it != points_.end(); ++it, ++i )
         it->Serialize( asn.elem[i] );

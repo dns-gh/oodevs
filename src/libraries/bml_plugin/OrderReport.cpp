@@ -67,13 +67,15 @@ void OrderReport::Send( Publisher& publisher ) const
                         << xml::start( "ActionTask" )
 							<< xml::attribute( "xsi:type", "jc3iedm:ActionTask" )
                             << xml::content( "jc3iedm:ActivityCode", activityCode_ )
+							<< xml::start( "jc3iedm:StatusList" )
+								<< xml::start( "jc3iedm:Status" )
+									<< xml::attribute( "xsi:type", "jc3iedm:ActionTaskStatus" )
+									<< xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
+									<< xml::content("jc3iedm:ReportingDataRef", "" )
+								<< xml::end()
+							<< xml::end()
                             << xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
-                        << xml::end()
-                        << xml::start( "ActionTaskStatus" )
-							<< xml::attribute( "xsi:type", "jc3iedm:ActionTaskStatus" )
-                            << xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
-                            << *reportingData_
-                        << xml::end()
+						<< xml::end()
                     << xml::end()
                 << xml::end()
             << xml::end()

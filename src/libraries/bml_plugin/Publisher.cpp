@@ -13,6 +13,7 @@
 #include "DCSOperationsSoapBinding.nsmap"
 #include "ResponseHandler_ABC.h"
 #include "SerializationTools.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include <xeumeuleu/xml.h>
 #include <boost/lexical_cast.hpp>
 #include <fstream>
@@ -77,7 +78,7 @@ void Publisher::PushReports()
         }
         catch( std::exception& e )
         {
-            std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+			MT_LOG_ERROR_MSG( "BML error pushing reports: " << e.what() );
         }
         reports_.release();
     }
@@ -116,7 +117,7 @@ void Publisher::PullOrder( const std::string& message, ResponseHandler_ABC& hand
     }
     catch( std::exception& e )
     {
-        std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
+		MT_LOG_ERROR_MSG( "BML error pulling orders: " << e.what() );
     }
 }
 

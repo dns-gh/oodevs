@@ -18,6 +18,7 @@
 #   include "gearth_plugin/GearthPluginFactory.h"
 #   include "crossbow_plugin/CrossbowPluginFactory.h"
 #endif
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 // -----------------------------------------------------------------------------
 // Name: DispatcherFacade constructor
@@ -26,6 +27,9 @@
 DispatcherFacade::DispatcherFacade( int argc, char** argv )
     : config_  ( new dispatcher::Config() )
 {
+	MT_LOG_REGISTER_LOGGER( *new MT_ConsoleLogger() );
+	MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( "./Debug/Dispatcher.log", MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ) );
+
     config_->Parse( argc, argv );
     dispatcher_.reset( new dispatcher::Dispatcher( *config_ ) );
     dispatcher_->RegisterPluginFactory( *new hla::HlaPluginFactory() );

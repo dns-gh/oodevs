@@ -66,16 +66,9 @@ void UpdateListener::Update( const ASN1T_MsgControlBeginTick& )
 // -----------------------------------------------------------------------------
 void UpdateListener::PullOrders( const std::string& time )
 {
-	try
-	{
-		xml::xostringstream xos;
-		xos << xml::start( "OrderPull" ) << Namespaces()
-				<< xml::content( "PostedTimeCutoff", time )
-			<< xml::end();
-		publisher_.PullOrder( xos.str(), *orderProcessor_ );
-	}
-	catch( std::exception& e )
-	{
-		std::cerr << e.what() << std::endl; // $$$$ SBO 2008-05-26: log somewhere
-	}
+	xml::xostringstream xos;
+	xos << xml::start( "OrderPull" ) << Namespaces()
+			<< xml::content( "PostedTimeCutoff", time )
+		<< xml::end();
+	publisher_.PullOrder( xos.str(), *orderProcessor_ );
 }
