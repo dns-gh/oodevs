@@ -11,6 +11,7 @@
 #include "WorldParameters.h"
 #include "tools/ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace kernel;
 using namespace xml;
@@ -61,6 +62,7 @@ void WorldParameters::Load( const tools::ExerciseConfig& config )
     detection_ = config.BuildTerrainChildFile( detection + "/detection.dat" );
     graphicsDirectory_ = config.BuildTerrainChildFile( graphics );
     ReadWorld( config.BuildTerrainChildFile( world ) );
+    ReadExtent( config.BuildTerrainChildFile( "extent.xml" ) );
 
     if( ! config.GetPopulationFile().empty() )
     {
@@ -94,4 +96,34 @@ geometry::Point2f WorldParameters::Clip( const geometry::Point2f& point ) const
 {
     return geometry::Point2f( std::min( std::max( point.X(), 0.f ), width_ )
                             , std::min( std::max( point.Y(), 0.f ), height_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldParameters::ReadExtent
+// Created: AGE 2008-05-29
+// -----------------------------------------------------------------------------
+void WorldParameters::ReadExtent( const std::string& extent )
+{
+    try
+    {
+        unsigned char min = 255;
+        unsigned char max = 0;
+        xifstream xis( extent );
+        xis >> start( "Extent" );
+        char* toRead[4] = {"HautGauche", "HautDroit", "BasDroit", "BasGauche" };
+        for( unsigned i = 0; i < 4; ++i )
+        {
+            std::string mgrs;
+            xis >> content( toRead[i], mgrs );
+            const unsigned char zone = (unsigned char)boost::lexical_cast< unsigned int >( mgrs.substr( 0, 2 ) );
+            min = std::min( min, zone );
+            max = std::max( max, zone );
+        }
+        for( unsigned char i = min; i <= max; ++i )
+            utmZones_.push_back( i );
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
 }

@@ -46,6 +46,7 @@ private:
     //! @name Helpers
     //@{
     void ReadWorld( const std::string& world );
+    void ReadExtent( const std::string& extent );
     //@}
 
 public:
@@ -57,6 +58,7 @@ public:
     std::string graphicsDirectory_;
     std::string detection_;
     std::string populationGraph_;
+    std::vector< unsigned char > utmZones_;
     //@}
 };
 

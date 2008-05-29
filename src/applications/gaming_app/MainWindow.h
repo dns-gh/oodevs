@@ -44,7 +44,6 @@ namespace gui
     class LocationsLayer;
 }
 
-class Spy;
 class Model;
 class StaticModel;
 class Profile;
@@ -138,7 +137,6 @@ private:
     gui::OptionsPanel*    pOptionsPanel_;
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer*     agents_;
-    Spy*      spy_;
     //@}
 };
 

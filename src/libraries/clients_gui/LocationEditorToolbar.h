@@ -80,7 +80,8 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
-    bool GetPosition( geometry::Point2f& point ) const;
+    bool GetPosition( geometry::Point2f& point );
+    void SetAspect( const QString& hint, bool red );
     //@}
 
     //! @name Types
@@ -114,6 +115,8 @@ private:
     QToolButton* paramsButton_;
     QToolButton* gotoButton_;
     QPopupMenu* bookmarksMenu_;
+    QPopupMenu* subMenu_;
+    QListBox* list_;
     T_Bookmarks bookmarks_;
     geometry::Point2f menuPoint_;
     T_Parsers parsers_;

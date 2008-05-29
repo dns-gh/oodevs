@@ -11,10 +11,13 @@
 #define __UtmParser_h_
 
 #include "LocationParser_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/ModelLoaded.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class Controllers;
 }
 
 namespace gui
@@ -27,18 +30,20 @@ namespace gui
 // Created: AGE 2008-05-29
 // =============================================================================
 class UtmParser : public LocationParser_ABC
+                , public kernel::Observer_ABC
+                , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UtmParser( const kernel::CoordinateConverter_ABC& converter );
+             UtmParser( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter );
     virtual ~UtmParser();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool Parse( const QString& content, geometry::Point2f& result, QString& hint ) const;
+    virtual bool Parse( QString content, geometry::Point2f& result, QString& hint ) const;
     //@}
 
 private:
@@ -50,12 +55,16 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    static QString Fill( QString value );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
+    std::string zone_;
     //@}
 };
 

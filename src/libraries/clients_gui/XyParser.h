@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Parse( const QString& content, geometry::Point2f& result, QString& hint ) const;
+    virtual bool Parse( QString content, geometry::Point2f& result, QString& hint ) const;
     //@}
 };
 

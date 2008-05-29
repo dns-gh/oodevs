@@ -34,7 +34,7 @@ XyParser::~XyParser()
 // Name: XyParser::Parse
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool XyParser::Parse( const QString& content, geometry::Point2f& result, QString& hint ) const
+bool XyParser::Parse( QString content, geometry::Point2f& result, QString& hint ) const
 {
     hint = content;
     hint.replace( ',', ' ' );

@@ -42,7 +42,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     , bookmarksMenu_( 0 )
 {
     // $$$$ AGE 2008-05-29: externaliser
-    parsers_.push_back( new UtmParser( converter ) );
+    parsers_.push_back( new UtmParser( controllers, converter ) );
     parsers_.push_back( new XyParser() );
     parsers_.push_back( new FeatureNameParser( controllers ) );
 
@@ -67,6 +67,14 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     paramsButton_ = new QToolButton( this );
     paramsButton_->setIconSet( MAKE_PIXMAP( special_point ) );
     QToolTip::add( paramsButton_, tr( "Set special point" ) );
+
+    subMenu_ = new QPopupMenu();
+    list_ = new QListBox( subMenu_ );
+    list_->setColumnMode( QListBox::Variable );
+    list_->setRowMode( QListBox::Variable );
+    list_->setFrameStyle( QFrame::NoFrame );
+    subMenu_->insertItem( list_ );
+    subMenu_->hide();
 
     connect( utm_, SIGNAL( returnPressed() ), SLOT( Goto() ) );
     connect( gotoButton_, SIGNAL( clicked() ), SLOT( Goto() ) );
@@ -210,21 +218,38 @@ void LocationEditorToolbar::ClearBookmarks()
 // Name: LocationEditorToolbar::GetPosition
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool LocationEditorToolbar::GetPosition( geometry::Point2f& result ) const
+bool LocationEditorToolbar::GetPosition( geometry::Point2f& result )
 {
+    subMenu_->hide();
     if( utm_->text().isEmpty() )
         return false;
     QString hint;
     T_Parsers::const_iterator it = std::find_if( parsers_.begin(), parsers_.end(),
         boost::bind( &LocationParser_ABC::Parse, _1, utm_->text(), boost::ref( result ), boost::ref( hint ) ) );
-    if( it == parsers_.end() )
+
+    SetAspect( hint, it == parsers_.end() );
+    return it != parsers_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorToolbar::SetAspect
+// Created: AGE 2008-05-29
+// -----------------------------------------------------------------------------
+void LocationEditorToolbar::SetAspect( const QString& hint, bool red )
+{
+    if( !hint.isEmpty() && hint != utm_->text() )
     {
-        // $$$$ AGE 2008-05-29: show hint
-        utm_->setPaletteBackgroundColor( Qt::red );
+        list_->clear();
+        list_->insertItem( hint );
+        list_->setMinimumSize( 110, 12 );
+        const QPoint topLeft = utm_->mapToGlobal( QPoint( 0, 0 ) );
+        subMenu_->popup( QPoint( topLeft.x(), topLeft.y() + utm_->height() ) );
+        utm_->setFocus();
     }
+    if( red )
+        utm_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
     else
         utm_->unsetPalette();
-    return it != parsers_.end();
 }
 
 // -----------------------------------------------------------------------------
