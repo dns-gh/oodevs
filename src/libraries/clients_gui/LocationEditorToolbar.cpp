@@ -15,11 +15,16 @@
 #include "ParametersLayer.h"
 #include "View_ABC.h"
 #include "LocationsLayer.h"
+#include "LocationParser_ABC.h"
+#include "UtmParser.h"
+#include "XyParser.h"
+#include "FeatureNameParser.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "resources.h"
 #include <qinputdialog.h>
+#include <boost/bind.hpp>
 
 using namespace gui;
 
@@ -36,10 +41,15 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     , parameters_( 0 )
     , bookmarksMenu_( 0 )
 {
+    // $$$$ AGE 2008-05-29: externaliser
+    parsers_.push_back( new UtmParser( converter ) );
+    parsers_.push_back( new XyParser() );
+    parsers_.push_back( new FeatureNameParser( controllers ) );
+
     setLabel( tr( "Location editor" ) );
     new QLabel( tr( "Location: " ), this );
     utm_ = new QLineEdit( this );
-    QToolTip::add( utm_, tr( "Enter UTM coordinate" ) );
+    QToolTip::add( utm_, tr( "Enter UTM coordinate, local coordinate or feature name" ) );
     utm_->setMaxLength( 20 );
     utm_->setFixedWidth( 110 );
     gotoButton_ = new QToolButton( this );
@@ -49,7 +59,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     gotoButton_->setPopup( bookmarksMenu_ );
     ClearBookmarks();
     QToolTip::add( gotoButton_, tr( "Center on location" ) );
-    
+
     okButton_ = new QToolButton( this );
     okButton_->setIconSet( MAKE_PIXMAP( add_point ) );
     QToolTip::add( okButton_, tr( "Add point to current location" ) );
@@ -73,6 +83,15 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
 LocationEditorToolbar::~LocationEditorToolbar()
 {
     controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorToolbar::AddParser
+// Created: AGE 2008-05-29
+// -----------------------------------------------------------------------------
+void LocationEditorToolbar::AddParser( std::auto_ptr< LocationParser_ABC > parser )
+{
+    parsers_.push_back( parser.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,15 +121,9 @@ void LocationEditorToolbar::EndEdit()
 // -----------------------------------------------------------------------------
 void LocationEditorToolbar::Goto()
 {
-    if( utm_->text().isEmpty() )
-        return;
-    try
-    {
-        view_.CenterOn( GetPosition() );
-    }
-    catch( ... )
-    {
-    }
+    geometry::Point2f point;
+    if( GetPosition( point ) )
+        view_.CenterOn( point );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,15 +132,9 @@ void LocationEditorToolbar::Goto()
 // -----------------------------------------------------------------------------
 void LocationEditorToolbar::AddPoint()
 {
-    if( !parameters_ || utm_->text().isEmpty() )
-        return;
-    try
-    {
-        parameters_->AddPoint( GetPosition() );
-    }
-    catch( ... )
-    {
-    }
+    geometry::Point2f point;
+    if( parameters_  && GetPosition( point ) )
+        parameters_->AddPoint( point );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,15 +143,9 @@ void LocationEditorToolbar::AddPoint()
 // -----------------------------------------------------------------------------
 void LocationEditorToolbar::AddParamPoint()
 {
-    if( utm_->text().isEmpty() )
-        return;
-    try
-    {
-        controllers_.actions_.ContextMenu( GetPosition(), mapToGlobal( paramsButton_->geometry().bottomLeft() ) );
-    }
-    catch( ... )
-    {
-    }
+    geometry::Point2f point;
+    if( GetPosition( point ) )
+        controllers_.actions_.ContextMenu( point, mapToGlobal( paramsButton_->geometry().bottomLeft() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,44 +206,25 @@ void LocationEditorToolbar::ClearBookmarks()
     bookmarksMenu_->insertItem( tr( "No bookmark defined" ) );
 }
 
-namespace
-{
-    geometry::Point2f Parse( std::string coord )
-    {
-        std::replace( coord.begin(), coord.end(), ',', ' ' );
-        std::replace( coord.begin(), coord.end(), ';', ' ' );
-        std::replace( coord.begin(), coord.end(), '[', ' ' );
-        std::replace( coord.begin(), coord.end(), ']', ' ' );
-        std::replace( coord.begin(), coord.end(), '(', ' ' );
-        std::replace( coord.begin(), coord.end(), ')', ' ' );
-
-        std::stringstream str( coord );
-        float x, y;
-        str >> x >> y;
-        if( ! str )
-            throw std::runtime_error( "" );
-        return geometry::Point2f( x, y );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: LocationEditorToolbar::GetPosition
-// Created: SBO 2007-03-06
+// Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-geometry::Point2f LocationEditorToolbar::GetPosition() const
+bool LocationEditorToolbar::GetPosition( geometry::Point2f& result ) const
 {
-    const std::string coord( utm_->text().ascii() );
-    try {
-        return converter_.ConvertToXY( coord );
-    } catch( ... ) {}
-
-    try {
-        return Parse( coord );
-    } catch( ... )
+    if( utm_->text().isEmpty() )
+        return false;
+    QString hint;
+    T_Parsers::const_iterator it = std::find_if( parsers_.begin(), parsers_.end(),
+        boost::bind( &LocationParser_ABC::Parse, _1, utm_->text(), boost::ref( result ), boost::ref( hint ) ) );
+    if( it == parsers_.end() )
     {
-        QMessageBox::critical( topLevelWidget(), tr( "Error" ), "'" + utm_->text() + "'" + tr( " is not a valid coordinate." ) );
-        throw;
+        // $$$$ AGE 2008-05-29: show hint
+        utm_->setPaletteBackgroundColor( Qt::red );
     }
+    else
+        utm_->unsetPalette();
+    return it != parsers_.end();
 }
 
 // -----------------------------------------------------------------------------

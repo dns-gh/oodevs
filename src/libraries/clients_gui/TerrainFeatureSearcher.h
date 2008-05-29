@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __TerrainFeatureSearchBox_h_
-#define __TerrainFeatureSearchBox_h_
+#ifndef __TerrainFeatureSearcher_h_
+#define __TerrainFeatureSearcher_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
@@ -21,32 +21,28 @@ namespace kernel
 
 namespace gui
 {
-    class View_ABC;
 
 // =============================================================================
-/** @class  TerrainFeatureSearchBox
-    @brief  TerrainFeatureSearchBox
+/** @class  TerrainFeatureSearcher
+    @brief  TerrainFeatureSearcher
 */
-// Created: AGE 2008-05-28
+// Created: AGE 2008-05-29
 // =============================================================================
-class TerrainFeatureSearchBox : public QHBox
-                              , public kernel::Observer_ABC
-                              , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+class TerrainFeatureSearcher : public kernel::Observer_ABC
+                             , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainFeatureSearchBox( QWidget* parent, kernel::Controllers& controllers, View_ABC& view );
-    virtual ~TerrainFeatureSearchBox();
+    explicit TerrainFeatureSearcher( kernel::Controllers& controllers );
+    virtual ~TerrainFeatureSearcher();
     //@}
 
-private slots:
-    //! @name Slots
+    //! @name Operations
     //@{
-    void Search( const QString& );
-    void FindNext();
+    bool Search  ( const QString& name, geometry::Point2f& point, QString& hint );
+    bool FindNext( geometry::Point2f& point, QString& hint );
     //@}
 
 private:
@@ -58,26 +54,26 @@ private:
 private:
     //! @name Copy/Assignment
     //@{
-    TerrainFeatureSearchBox( const TerrainFeatureSearchBox& );            //!< Copy constructor
-    TerrainFeatureSearchBox& operator=( const TerrainFeatureSearchBox& ); //!< Assignment operator
+    TerrainFeatureSearcher( const TerrainFeatureSearcher& );            //!< Copy constructor
+    TerrainFeatureSearcher& operator=( const TerrainFeatureSearcher& ); //!< Assignment operator
     //@}
 
     //! @name Types
     //@{
-    typedef kernel::ApproximativeMap< T_PointVector > T_NameLocations;
+    typedef std::pair< QString, T_PointVector >   T_Feature;
+    typedef kernel::ApproximativeMap< T_Feature > T_NameLocations;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    View_ABC& view_;
     std::auto_ptr< T_NameLocations > nameLocations_;
-    const T_PointVector* current_;
+    const T_Feature* current_;
     unsigned index_;
     //@}
 };
 
 }
 
-#endif // __TerrainFeatureSearchBox_h_
+#endif // __TerrainFeatureSearcher_h_

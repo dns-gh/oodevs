@@ -12,6 +12,7 @@
 
 #include "LocationEditor_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include <boost/ptr_container/ptr_vector.hpp>
 
 namespace kernel
 {
@@ -24,6 +25,7 @@ namespace gui
     class ParametersLayer;
     class LocationsLayer;
     class View_ABC;
+    class LocationParser_ABC;
 
 // =============================================================================
 /** @class  LocationEditorToolbar
@@ -43,6 +45,11 @@ public:
     //@{
              LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer );
     virtual ~LocationEditorToolbar();
+    //@}
+
+    //! @name Construction
+    //@{
+    void AddParser( std::auto_ptr< LocationParser_ABC > parser );
     //@}
 
     //! @name Operations
@@ -73,7 +80,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
-    geometry::Point2f GetPosition() const;
+    bool GetPosition( geometry::Point2f& point ) const;
     //@}
 
     //! @name Types
@@ -90,6 +97,8 @@ private:
 
     typedef std::vector< Bookmark >       T_Bookmarks;
     typedef T_Bookmarks::const_iterator CIT_Bookmarks;
+
+    typedef boost::ptr_vector< LocationParser_ABC > T_Parsers;
     //@}
 
 private:
@@ -107,6 +116,7 @@ private:
     QPopupMenu* bookmarksMenu_;
     T_Bookmarks bookmarks_;
     geometry::Point2f menuPoint_;
+    T_Parsers parsers_;
     //@}
 };
 

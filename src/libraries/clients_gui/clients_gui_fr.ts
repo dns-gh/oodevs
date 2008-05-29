@@ -1078,7 +1078,7 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Enter UTM coordinate</source>
-        <translation>Saisissez les coordonnées UTM</translation>
+        <translation type="obsolete">Saisissez les coordonnées UTM</translation>
     </message>
     <message>
         <source>Center on location</source>
@@ -1120,11 +1120,15 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source> is not a valid coordinate.</source>
-        <translation> n&apos;est pas une coordonnée valide.</translation>
+        <translation type="obsolete"> n&apos;est pas une coordonnée valide.</translation>
     </message>
     <message>
         <source>Bookmark location</source>
         <translation>Ajouter la position en tant que favori</translation>
+    </message>
+    <message>
+        <source>Enter UTM coordinate, local coordinate or feature name</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

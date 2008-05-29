@@ -539,10 +539,6 @@ Please check access permissions or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter UTM coordinate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Center on location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -580,11 +576,11 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> is not a valid coordinate.</source>
+        <source>Bookmark location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Bookmark location</source>
+        <source>Enter UTM coordinate, local coordinate or feature name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
