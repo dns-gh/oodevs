@@ -1355,14 +1355,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open orders...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save orders...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1884,41 +1876,6 @@
     </message>
     <message>
         <source>Filter view</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>OrderBrowser</name>
-    <message>
-        <source> Orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File name: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Order files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save order file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load order file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

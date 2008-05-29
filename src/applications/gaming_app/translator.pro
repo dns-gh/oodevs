@@ -63,7 +63,6 @@ ObjectKnowledgePanel.cpp \
 ObjectMagicOrdersInterface.cpp \
 ObjectPanel.cpp \
 OrbatToolbar.cpp \
-OrderBrowser.cpp \
 ParamAgentKnowledgeList.cpp \
 ParamAgentList.cpp \
 ParamAutomatList.cpp \

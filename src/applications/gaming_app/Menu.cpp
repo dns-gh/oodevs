@@ -9,7 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "Menu.h"
-#include "OrderBrowser.h"
 #include "UserProfileDialog.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
@@ -57,7 +56,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, OrderBrowser& recorderToolBar, ItemFactory_ABC& factory, const QString& license )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, ItemFactory_ABC& factory, const QString& license )
     : QMenuBar( pParent )
     , controllers_( controllers )
     , profileDialog_( profileDialog )
@@ -65,9 +64,6 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     QPopupMenu* menu = new QPopupMenu( this );
     menu->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open exercice..." ), parent(), SLOT( Open() ), CTRL + Key_O );
     menu->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ) );
-    menu->insertSeparator();
-    menu->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "Open orders..." ), &recorderToolBar, SLOT( Load() ) ); // $$$$ SBO 2007-05-03: 
-    menu->insertItem( MAKE_ICON( save ), tools::translate( "Menu", "Save orders..." ), &recorderToolBar, SLOT( Save() ) ); // $$$$ SBO 2007-05-03: 
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
     insertItem( tools::translate( "Menu", "&File" ), menu );

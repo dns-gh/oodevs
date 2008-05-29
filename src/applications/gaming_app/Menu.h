@@ -26,7 +26,6 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class OrderBrowser;
 class UserProfileDialog;
 class Profile;
 
@@ -45,7 +44,7 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, OrderBrowser& recorderToolBar, gui::ItemFactory_ABC& factory, const QString& license );
+             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, gui::ItemFactory_ABC& factory, const QString& license );
     virtual ~Menu();
     //@}
 

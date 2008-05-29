@@ -19,7 +19,6 @@
 #include "Menu.h"
 #include "MissionPanel.h"
 #include "CreationPanels.h"
-#include "OrderBrowser.h"
 #include "SIMControlToolbar.h"
 #include "LinkInterpreter.h"
 #include "AgentsLayer.h"
@@ -299,9 +298,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new EventToolbar( this, controllers, profile );
     FolkToolbar* folkToolbar = new FolkToolbar( this, controllers, model.folk_ );
 
-    // $$$$ AGE 2007-05-14: mettre un GetOrdersDirectory
-    OrderBrowser* browser = new OrderBrowser( this, config.BuildExerciseChildFile( "orders" ).c_str() );
-    
     // Drawer
     DrawerFactory* drawerFactory = new DrawerFactory( this, *glProxy_, controllers_ );
     DrawerLayer* drawer = new DrawerLayer( controllers_, *glProxy_, *drawerFactory );
@@ -309,7 +305,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, publisher, *paramLayer, staticModel_ );
 
-    new Menu( this, controllers, *prefDialog, *profileDialog, *browser, *factory, license );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *factory, license );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *drawer, *prefDialog, profile, publisher );
