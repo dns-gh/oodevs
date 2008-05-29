@@ -9,13 +9,28 @@
 
 #include "gaming_pch.h"
 #include "ActionMission.h"
+#include "Tools.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/GlTooltip_ABC.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
+
+namespace
+{
+    const OrderType& ResolveType( xml::xistream& xis, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
+    {
+        const unsigned int id = xml::attribute< unsigned int >( xis, "id", 0 );
+        const std::string name = xml::attribute< std::string >( xis, "name", "" );
+        const OrderType* type = missions.Find( id );
+        if( !type )
+            throw std::exception( tools::translate( "ActionMission", "Entity '%1' (id: %2) cannot execute mission '%3' (id: %4)" )
+                                    .arg( entity.GetName() ).arg( entity.GetId() ).arg( name.c_str() ).arg( id ) );
+        return *type;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ActionMission constructor
@@ -34,7 +49,7 @@ ActionMission::ActionMission( const Entity_ABC& entity, const MissionType& missi
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 ActionMission::ActionMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
-    : Action_ABC( controller, missions.Get( xml::attribute< unsigned int >( xis, "id" ) ), entity )
+    : Action_ABC( xis, controller, ResolveType( xis, missions, entity ), entity )
     , controller_( controller )
     , registered_( true )
 {

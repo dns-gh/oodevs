@@ -49,12 +49,18 @@ private:
     ActionsToolbar& operator=( const ActionsToolbar& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void PurgeConfirmed( int result );
+    //@}
+
 private slots:
     //! @name Helpers
     //@{
     void Load();
     void Save();
     void Record();
+    void Purge();
     //@}
 
 private:
@@ -67,6 +73,7 @@ private:
     QToolButton*  recordBtn_;
     QToolButton*  saveBtn_;
     QPixmap       pixRecord_, pixStop_;
+    QMessageBox*  confirmation_;
     //@}
 };
 

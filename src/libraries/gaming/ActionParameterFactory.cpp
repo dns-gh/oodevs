@@ -52,9 +52,12 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "Tools.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
+#pragma warning( push, 1 )
+#pragma warning( disable : 4512 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -166,15 +169,25 @@ ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParamet
     return 0;
 }
 
+namespace
+{
+    void ThrowUnexpected( const OrderParameter& expected, xml::xistream& xis )
+    {
+        const std::string found = xml::attribute< std::string >( xis, "name" );
+        throw std::exception( tools::translate( "ActionParameterFactory", "Expecting '%1' found '%2'" ).arg( expected.GetName().c_str() ).arg( found.c_str() ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const
 {
-    std::string type = parameter.GetType();
-    std::transform( type.begin(), type.end(), type.begin(), & tolower );
-
+    std::string expected = boost::algorithm::to_lower_copy( parameter.GetType() );
+    std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
+    if( type != expected )
+        ThrowUnexpected( parameter, xis );
     std::auto_ptr< ActionParameter_ABC > param;
     if( type == "bool" )
         param.reset( new ActionParameterBool( parameter, xis ) );

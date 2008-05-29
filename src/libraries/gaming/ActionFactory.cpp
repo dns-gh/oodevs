@@ -16,6 +16,7 @@
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ActionTiming.h"
+#include "ActionParameter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -69,7 +70,7 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const Mission
     else if( model_.agents_.FindPopulation( target.GetId() ) )
         action.reset( new ActionPopulationMission( target, mission, controllers_.controller_, true ) );
     else
-        throw std::runtime_error( __FUNCTION__ );
+        throw std::runtime_error( __FUNCTION__ " Cannot resolve executing entity" );
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
@@ -164,7 +165,7 @@ void ActionFactory::AddParameters( Action_ABC& action, const OrderType& order, c
     while( it.HasMoreElements() )
     {
         if( i >= asn.n )
-            throw std::runtime_error( "Mission parameter count does not match mission definition" );
+            throw std::runtime_error( __FUNCTION__ " Mission parameter count does not match mission definition" );
         if( ActionParameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), asn.elem[i++], action.GetEntity() ) )
             action.AddParameter( *newParam );
     }
@@ -185,14 +186,27 @@ Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
     return 0;
 }
 
+namespace
+{
+    void ThrowMissingParameter( const Action_ABC& action, const OrderParameter& param )
+    {
+        throw std::exception( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): missing parameter '%3'." )
+                                .arg( action.GetName() ).arg( action.GetId() ).arg( param.GetName().c_str() ) );
+    }
+
+    void ThrowTargetNotFound( unsigned long id )
+    {
+        throw std::exception( tools::translate( "ActionFactory", "Unable to find executing entity '%1'." ).arg( id ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateMission
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
 {
-    unsigned long id;
-    xis >> attribute( "target", id );
+    const unsigned long id = xml::attribute< unsigned long >( xis, "target" );
 
     std::auto_ptr< ActionMission > action;
     const kernel::Entity_ABC* target = model_.agents_.FindAgent( id );
@@ -201,7 +215,7 @@ Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
     else if( target = model_.agents_.FindAutomat( id ) )
         action.reset( new ActionAutomatMission( xis, controllers_.controller_, missions_, *target ) );
     else
-        throw std::runtime_error( tools::translate( "ActionFactory", "Mission's entity '%1' not found." ).arg( id ).ascii() );
+        ThrowTargetNotFound( id );
 
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
     action->Polish();
@@ -209,7 +223,7 @@ Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
     if( it.HasMoreElements() )
-        throw std::runtime_error( tools::translate( "ActionFactory", "Parameter mismatch: too few parameters provided." ).ascii() );
+        ThrowMissingParameter( *action, it.NextElement() );
     return action.release();
 }
 
@@ -219,15 +233,14 @@ Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
 {
-    unsigned long id;
-    xis >> attribute( "target", id );
+    const unsigned long id = xml::attribute< unsigned long >( xis, "target" );
 
     std::auto_ptr< ActionFragOrder > action;
     const kernel::Entity_ABC* target = model_.agents_.FindAgent( id );
     if( !target )
         target = model_.agents_.FindAutomat( id );
     if( !target )
-        throw std::runtime_error( tools::translate( "ActionFactory", "Frag order's entity '%1' not found." ).arg( id ).ascii() );
+        ThrowTargetNotFound( id );
     action.reset( new ActionFragOrder( xis, controllers_.controller_, fragOrders_, *target ) );
 
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
@@ -236,7 +249,7 @@ Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
     Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
     if( it.HasMoreElements() )
-        throw std::runtime_error( tools::translate( "ActionFactory", "Parameter mismatch: too few parameters provided." ).ascii() );
+        ThrowMissingParameter( *action, it.NextElement() );
     return action.release();
 }
 
@@ -246,8 +259,17 @@ Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
 // -----------------------------------------------------------------------------
 void ActionFactory::ReadParameter( xml::xistream& xis, Action_ABC& action, Iterator< const OrderParameter& >& it, const Entity_ABC& entity ) const
 {
-    if( !it.HasMoreElements() )
-        throw std::runtime_error( tools::translate( "ActionFactory", "Parameter mismatch: too much parameters provided." ).ascii() );
-    if( ActionParameter_ABC* param = factory_.CreateParameter( it.NextElement(), xis, entity ) )
+    try
+    {
+        if( !it.HasMoreElements() )
+            throw std::exception( tools::translate( "ActionFactory", "too much parameters provided" ) );
+        std::auto_ptr< ActionParameter_ABC > param( factory_.CreateParameter( it.NextElement(), xis, entity ) );
         action.AddParameter( *param );
+        param.release();
+    }
+    catch( std::exception& e )
+    {
+        throw std::exception( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): %3." )
+                                .arg( action.GetName() ).arg( action.GetId() ).arg( e.what() ) );
+    }
 }

@@ -85,6 +85,30 @@
         <source>Error loading order file</source>
         <translation>Erreur lors du chargement du fichier d&apos;ordres</translation>
     </message>
+    <message>
+        <source>Load order file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save orders to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle order recording on/off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete recorded orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions recorder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete recorded orders?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AfterAction</name>

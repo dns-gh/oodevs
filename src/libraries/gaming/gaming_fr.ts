@@ -14,19 +14,35 @@
     <name>ActionFactory</name>
     <message>
         <source>Mission&apos;s entity &apos;%1&apos; not found.</source>
-        <translation>L&apos;entité &apos;%1&apos; n&apos;a pas été trouvée.</translation>
+        <translation type="obsolete">L&apos;entité &apos;%1&apos; n&apos;a pas été trouvée.</translation>
     </message>
     <message>
         <source>Parameter mismatch: too few parameters provided.</source>
-        <translation>Paramètres incorrects: nombre insuffisant.</translation>
+        <translation type="obsolete">Paramètres incorrects: nombre insuffisant.</translation>
     </message>
     <message>
         <source>Frag order&apos;s entity &apos;%1&apos; not found.</source>
-        <translation>L&apos;entité &apos;%1&apos; n&apos;a pas été trouvée.</translation>
+        <translation type="obsolete">L&apos;entité &apos;%1&apos; n&apos;a pas été trouvée.</translation>
     </message>
     <message>
         <source>Parameter mismatch: too much parameters provided.</source>
-        <translation>Paramètres incorrects: trop de paramètres.</translation>
+        <translation type="obsolete">Paramètres incorrects: trop de paramètres.</translation>
+    </message>
+    <message>
+        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): missing parameter &apos;%3&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to find executing entity &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>too much parameters provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -173,6 +189,10 @@
     <message>
         <source>not set</source>
         <translation>non défini</translation>
+    </message>
+    <message>
+        <source>Expecting &apos;%1&apos; found &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

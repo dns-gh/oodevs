@@ -28,6 +28,7 @@ namespace kernel
 namespace xml
 {
     class xostream;
+    class xistream;
 }
 
 class Publisher_ABC;
@@ -46,6 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Action_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target );
+             Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target );
     virtual ~Action_ABC();
     //@}
 
@@ -83,10 +85,10 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const kernel::OrderType& type_;
+    const kernel::Entity_ABC& target_;
     unsigned long id_;
     QString name_;
-    const kernel::Entity_ABC& target_;
-    const kernel::OrderType& type_;
 
     static unsigned long idManager_;
     //@}

@@ -10,11 +10,26 @@
 #include "gaming_pch.h"
 #include "ActionFragOrder.h"
 #include "SimulationMessages.h"
+#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/FragOrderType.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
+
+namespace
+{
+    const OrderType& ResolveType( xml::xistream& xis, const Resolver_ABC< FragOrderType >& missions, const Entity_ABC& entity )
+    {
+        const unsigned int id = xml::attribute< unsigned int >( xis, "id", 0 );
+        const std::string name = xml::attribute< std::string >( xis, "name", "" );
+        const OrderType* type = missions.Find( id );
+        if( !type )
+            throw std::exception( tools::translate( "ActionFragOrder", "Entity '%1' (id: %2) cannot execute fragmentary order '%3' (id: %4)" )
+                                    .arg( entity.GetName() ).arg( entity.GetId() ).arg( name.c_str() ).arg( id ) );
+        return *type;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ActionFragOrder constructor
@@ -33,7 +48,7 @@ ActionFragOrder::ActionFragOrder( const Entity_ABC& entity, const FragOrderType&
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
 ActionFragOrder::ActionFragOrder( xml::xistream& xis, Controller& controller, const Resolver_ABC< FragOrderType >& fragOrders, const Entity_ABC& entity )
-    : Action_ABC ( controller, fragOrders.Get( xml::attribute< unsigned int >( xis, "id" ) ), entity )
+    : Action_ABC ( xis, controller, ResolveType( xis, fragOrders, entity ), entity )
     , controller_( controller )
     , registered_( true )
 {

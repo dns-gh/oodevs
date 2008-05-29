@@ -12,9 +12,9 @@
 #include "Action_ABC.h"
 #include "ActionFactory_ABC.h"
 #include "Simulation.h"
-#include "xeumeuleu/xml.h"
+#include "Tools.h"
+#include <xeumeuleu/xml.h>
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -87,29 +87,31 @@ void ActionsModel::Destroy( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void ActionsModel::Load( const std::string& filename )
 {
-    Purge();
-    try
-    {
-        xml::xifstream xis( filename );
-        xis >> start( "actions" )
-                >> list( "action", *this, &ActionsModel::ReadAction )
-            >> end();
-    }
-    catch( ... )
-    {
-        Purge();
-        throw;
-    }
+    std::string errors;
+    xml::xifstream xis( filename );
+    xis >> xml::start( "actions" )
+            >> xml::list( "action", *this, &ActionsModel::ReadAction, errors )
+        >> xml::end();
+    if( !errors.empty() )
+        throw std::exception( tools::translate( "ActionsModel", "The order file contains error(s), some actions could not be loaded:\n%1" ).arg( errors.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::ReadAction
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void ActionsModel::ReadAction( xml::xistream& xis )
+void ActionsModel::ReadAction( xml::xistream& xis, std::string& errors )
 {
-    Action_ABC* action = factory_.CreateAction( xis );
-    Register( action->GetId(), *action );
+    try
+    {
+        std::auto_ptr< Action_ABC > action( factory_.CreateAction( xis ) );
+        Register( action->GetId(), *action );
+        action.release();
+    }
+    catch( std::exception& e )
+    {
+        errors += std::string( e.what() ) + "\n";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -119,14 +121,14 @@ void ActionsModel::ReadAction( xml::xistream& xis )
 void ActionsModel::Save( const std::string& filename ) const
 {
     xml::xofstream xos( filename );
-    xos << start( "actions" );
+    xos << xml::start( "actions" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( "action" );
+        xos << xml::start( "action" );
         it->second->Serialize( xos );
-        xos << end();
+        xos << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------

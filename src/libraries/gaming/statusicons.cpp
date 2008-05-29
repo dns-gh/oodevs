@@ -57,6 +57,7 @@
 #include "res/not_activated.xpm"
 #include "res/replayer.xpm"
 #include "res/timer.xpm"
+#include "res/trash2.xpm"
 #include "res/aaa_function_copy.xpm"
 #include "res/aaa_function_edit.xpm"
 #include "res/aaa_function_delete.xpm"
