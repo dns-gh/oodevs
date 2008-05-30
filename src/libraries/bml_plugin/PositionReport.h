@@ -17,7 +17,7 @@ namespace dispatcher
 
 namespace bml
 {
-    class Publisher;
+    class Publisher_ABC;
 
 // =============================================================================
 /** @class  PositionReport
@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void Send( Publisher& publisher ) const;
+    void Send( Publisher_ABC& publisher ) const;
     //@}
 
 private:

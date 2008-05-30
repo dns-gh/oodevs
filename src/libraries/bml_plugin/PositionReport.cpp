@@ -10,7 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "PositionReport.h"
 #include "SerializationTools.h"
-#include "Publisher.h"
+#include "Publisher_ABC.h"
 #include "Who.h"
 #include "Where.h"
 #include <xeumeuleu/xml.h>
@@ -40,7 +40,7 @@ PositionReport::~PositionReport()
 // Name: PositionReport::Send
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void PositionReport::Send( Publisher& publisher ) const
+void PositionReport::Send( Publisher_ABC& publisher ) const
 {
     Who who( entity_ );
     xml::xostream& xos = publisher.CreateReport();

@@ -22,7 +22,7 @@ using namespace bml;
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher& publisher, const ReportFactory& factory )
+AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory )
     : holder_( holder )
     , publisher_( publisher )
     , factory_( factory )

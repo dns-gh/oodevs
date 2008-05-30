@@ -20,7 +20,7 @@ using namespace bml;
 // Name: ExtensionFactory constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher& publisher, const ReportFactory& reportFactory )
+ExtensionFactory::ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory )
     : publisher_( publisher )
     , reportFactory_( reportFactory )
 {

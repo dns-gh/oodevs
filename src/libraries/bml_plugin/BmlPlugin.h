@@ -26,7 +26,7 @@ namespace dispatcher
 namespace bml
 {
     class ExtensionFactory;
-    class Publisher;
+    class PublisherActor;
     class Serializer;
     class UpdateListener;
     class ReportFactory;
@@ -69,7 +69,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::Model& model_;
-    std::auto_ptr< Publisher > publisher_;
+    std::auto_ptr< PublisherActor > publisher_;
     std::auto_ptr< ReportFactory > reportFactory_;
     std::auto_ptr< ExtensionFactory > extensionFactory_;
     std::auto_ptr< UpdateListener > listener_;

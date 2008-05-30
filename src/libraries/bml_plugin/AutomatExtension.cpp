@@ -22,7 +22,7 @@ using namespace bml;
 // Name: AutomatExtension constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-AutomatExtension::AutomatExtension( dispatcher::Automat& holder, Publisher& publisher, const ReportFactory& factory )
+AutomatExtension::AutomatExtension( dispatcher::Automat& holder, Publisher_ABC& publisher, const ReportFactory& factory )
     : holder_( holder )
     , publisher_( publisher )
     , factory_( factory )

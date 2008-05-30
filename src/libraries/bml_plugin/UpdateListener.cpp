@@ -9,7 +9,7 @@
 
 #include "bml_plugin_pch.h"
 #include "UpdateListener.h"
-#include "Publisher.h"
+#include "Publisher_ABC.h"
 #include "SerializationTools.h"
 #include "OrderProcessor.h"
 #include <xeumeuleu/xml.h>
@@ -33,10 +33,11 @@ namespace
 // Name: UpdateListener constructor
 // Created: SBO 2008-05-16
 // -----------------------------------------------------------------------------
-UpdateListener::UpdateListener( Publisher& publisher, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation )
+UpdateListener::UpdateListener( Publisher_ABC& publisher, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation )
     : publisher_( publisher )
     , orderProcessor_( new OrderProcessor( model, simulation ) )
     , lastUpdateTime_( bpt::to_iso_extended_string( bpt::from_time_t( 0 ) ).c_str() )
+    , receivedAnswer_( true )
 {
     // NOTHING
 }
@@ -51,13 +52,17 @@ UpdateListener::~UpdateListener()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UpdateListener::Update
-// Created: SBO 2008-05-16
+// Name: UpdateListener::PullOrders
+// Created: AGE 2008-05-30
 // -----------------------------------------------------------------------------
-void UpdateListener::Update( const ASN1T_MsgControlBeginTick& )
+void UpdateListener::PullOrders()
 {
-    PullOrders( lastUpdateTime_ );
-    lastUpdateTime_ = CurrentTime();
+    if( receivedAnswer_ )
+    {
+        receivedAnswer_ = false;
+        PullOrders( lastUpdateTime_ );
+        lastUpdateTime_ = CurrentTime();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -70,5 +75,16 @@ void UpdateListener::PullOrders( const std::string& time )
 	xos << xml::start( "OrderPull" ) << Namespaces()
 			<< xml::content( "PostedTimeCutoff", time )
 		<< xml::end();
-	publisher_.PullOrder( xos.str(), *orderProcessor_ );
+	publisher_.PullOrder( xos.str(), *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UpdateListener::Handle
+// Created: AGE 2008-05-30
+// -----------------------------------------------------------------------------
+void UpdateListener::Handle( const std::string& response )
+{
+    receivedAnswer_ = true;
+    orderProcessor_->Handle( response );
+}
+

@@ -12,7 +12,7 @@
 #include "Who.h"
 #include "ReportingData.h"
 #include "SerializationTools.h"
-#include "Publisher.h"
+#include "Publisher_ABC.h"
 #include "MissionMapping.h"
 #include <xeumeuleu/xml.h>
 
@@ -55,7 +55,7 @@ OrderReport::~OrderReport()
 // Name: OrderReport::Send
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void OrderReport::Send( Publisher& publisher ) const
+void OrderReport::Send( Publisher_ABC& publisher ) const
 {
     xml::xostream& xos = publisher.CreateReport();
     xos << xml::start( "ReportPush" )

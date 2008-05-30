@@ -10,10 +10,11 @@
 #ifndef __Publisher_h_
 #define __Publisher_h_
 
+#include "Publisher_ABC.h"
+
 namespace xml
 {
     class xistream;
-    class xostream;
     class xostringstream;
 }
 
@@ -29,7 +30,7 @@ namespace bml
 */
 // Created: SBO 2008-04-02
 // =============================================================================
-class Publisher
+class Publisher : public Publisher_ABC
 {
 
 public:
