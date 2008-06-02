@@ -44,6 +44,20 @@ namespace bml
             return GetMissionId( missions, "ABC GTIA DonnerCoupArret", "Battalion - conduct a blocking action" );
         if( code == "DELAY" )
             return GetMissionId( missions, "ABC GTIA Freiner", "Battalion - delay" );
+        if( code == "RECCE" )
+            return GetMissionId( missions, "ABC Reconnaitre Axe", "Armor - reconnoiter an axis" );
+        if( code == "RECCEF" )
+            return GetMissionId( missions, "INF Reconnaitre Axe", "Infantry - reconnoiter an axis" );
+        if( code == "SEIZNG" )
+            return GetMissionId( missions, "INF Semparer", "Infantry - seize" );
+        if( code == "HLDOFF" )
+            return GetMissionId( missions, "INF Defendre Ferme", "Infantry - defend (until the end)" );
+        if( code == "MOVE" )
+            return GetMissionId( missions, "Faire Mouvement", "move" );
+        if( code == "FOLASS" )
+            return GetMissionId( missions, "ABC Soutenir", "Armor - support (dynamic)" );
+        if( code == "FOLSPT" )
+            return GetMissionId( missions, "INF Appuyer", "Infantry - support" );
         throw std::runtime_error( __FUNCTION__ ": Unsupported mission" );
     }
 
@@ -59,6 +73,20 @@ namespace bml
             return "BLOCK";
         if( id == GetMissionId( missions, "ABC GTIA Freiner", "Battalion - delay" ) )
             return "DELAY";
+        if( id == GetMissionId( missions, "ABC Reconnaitre Axe", "Armor - reconnoiter an axis" ) )
+            return "RECCE";
+        if( id == GetMissionId( missions, "INF Reconnaissance Axe", "Infantry - reconnoiter an axis" ) )
+            return "RECCEF";
+        if( id == GetMissionId( missions, "INF Semparer", "Infantry - seize" ) )
+            return "SEIZNG";
+        if( id == GetMissionId( missions, "INF Defendre Ferme", "Infantry - defend (until the end)" ) )
+            return "HLDOFF";
+        if( id == GetMissionId( missions, "Faire Mouvement", "move" ) )
+            return "MOVE";
+        if( id == GetMissionId( missions, "ABC Soutenir", "Armor - support (dynamic)" ) )
+            return "FOLASS";
+        if( id == GetMissionId( missions, "INF Appuyer", "Infantry - support" ) )
+            return "FOLSPT";
         return "MOVE";
 //        throw std::runtime_error( __FUNCTION__ ": Unsupported mission" );
     }
@@ -77,6 +105,14 @@ namespace bml
             return "direction";
         if( code == "OBJA" )
             return "polygon";
+        if( code == "AXIS" )
+            return "path";
+        if( code == "ENDRPT" )
+            return "point";
+        if( code == "automat" )
+            return "automat";
+        if( code == "agent" )
+            return "agent";
         throw std::runtime_error( __FUNCTION__ ": Unsupported parameter type");
     }
 }

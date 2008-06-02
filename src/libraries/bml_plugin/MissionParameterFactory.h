@@ -23,6 +23,8 @@ namespace kernel
 namespace dispatcher
 {
     class Automat;
+    class Agent;
+    class Model;
 }
 
 namespace bml
@@ -43,12 +45,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Automat& automat );
+             MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Agent& agent );
     virtual ~MissionParameterFactory();
     //@}
 
     //! @name Operations
     //@{
-    MissionParameter_ABC* CreateParameter( xml::xistream& xis ) const;
+    MissionParameter_ABC* CreateParameter( xml::xistream& xis, const dispatcher::Model& model ) const;
     //@}
 
 private:
@@ -63,7 +66,8 @@ private:
     //@{
     const Mission& mission_;
     const kernel::MissionType& type_;
-    const dispatcher::Automat& automat_;
+    const dispatcher::Automat* automat_;
+    const dispatcher::Agent*   agent_;
     //@}
 };
 

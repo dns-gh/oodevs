@@ -16,6 +16,7 @@
 #include "SerializationTools.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Automat.h"
+#include "dispatcher/Agent.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Network_Def.h"
 #include "clients_kernel/MissionType.h"
@@ -33,11 +34,15 @@ using namespace bml;
 Mission::Mission( xml::xistream& xis, const dispatcher::Model& model )
     : model_( model )
     , type_( ResolveMission( xis ) )
-    , taskee_( 0 )
+    , automatTaskee_( 0 )
+    , agentTaskee_( 0 )
     , factory_( 0 )
 {
     ReadTaskeeWho( xis );
-    factory_.reset( new MissionParameterFactory( *this, type_, *taskee_ ) );
+    if( automatTaskee_ )
+        factory_.reset( new MissionParameterFactory( *this, type_, *automatTaskee_ ) );
+    else
+        factory_.reset( new MissionParameterFactory( *this, type_, *agentTaskee_ ) );
     ReadParameters( xis );
 }
 
@@ -71,17 +76,32 @@ const kernel::MissionType& Mission::ResolveMission( xml::xistream& xis )
 
 namespace
 {
+    template< typename Entity >
     struct NameFinder
     {
         explicit NameFinder( const std::string& name ) : name_( name ), result_( 0 ) {}
-        void operator()( const dispatcher::Automat& entity )
+        void operator()( const Entity& entity )
         {
             if( entity.strName_ == name_ )
                 result_ = &entity;
         }
         std::string name_;
-        const dispatcher::Automat* result_;
+        const Entity* result_;
     };
+
+    const dispatcher::Automat* FindAutomat( const dispatcher::Model& model, const std::string& name )
+    {
+        NameFinder< dispatcher::Automat > automatFinder( name );
+        model.GetAutomats().Apply< NameFinder< dispatcher::Automat >& >( automatFinder );
+        return automatFinder.result_;
+    }
+
+    const dispatcher::Agent* FindAgent( const dispatcher::Model& model, const std::string& name )
+    {
+        NameFinder< dispatcher::Agent > agentFinder( name );
+        model.GetAgents().Apply< NameFinder< dispatcher::Agent >& >( agentFinder );
+        return agentFinder.result_;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -100,10 +120,11 @@ void Mission::ReadTaskeeWho( xml::xistream& xis )
                 >> xml::end()
             >> xml::end()
         >> xml::end();
-    NameFinder finder( name );
-    model_.GetAutomats().Apply< NameFinder& >( finder );
-    taskee_ = finder.result_;
-    if( !taskee_ )
+    automatTaskee_ = FindAutomat( model_, name );
+    if( !automatTaskee_ )
+        return;
+    agentTaskee_ = FindAgent( model_, name );
+    if( !agentTaskee_ )
         throw std::runtime_error( __FUNCTION__ ": Unable to resolve TaskeeWho" );
 }
 
@@ -124,7 +145,7 @@ void Mission::ReadParameters( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Mission::ReadParameter( xml::xistream& xis )
 {
-    std::auto_ptr< MissionParameter_ABC > parameter( factory_->CreateParameter( xis ) );
+    std::auto_ptr< MissionParameter_ABC > parameter( factory_->CreateParameter( xis, model_ ) );
     AddParameter( *parameter );
     parameter.release();
 }
@@ -161,10 +182,39 @@ void Mission::AddParameter( MissionParameter_ABC& parameter )
 // -----------------------------------------------------------------------------
 void Mission::Send( dispatcher::SimulationPublisher_ABC& publisher ) const
 {
+    if( automatTaskee_ != 0 )
+        SendAutomatMission( publisher );
+    else
+        SendAgentMission( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission::SendAutomatMission
+// Created: SBO 2008-06-02
+// -----------------------------------------------------------------------------
+void Mission::SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher ) const
+{
     dispatcher::AsnMsgClientToSimAutomatOrder asn;
-    asn().oid = taskee_->GetID();
+    asn().oid = automatTaskee_->GetID();
     asn().mission = type_.GetId();
     asn().formation = EnumAutomatOrderFormation::deux_echelons;
+    asn().parametres.n = type_.Count();
+    if( asn().parametres.n > 0 )
+        asn().parametres.elem = new ASN1T_MissionParameter[ asn().parametres.n ];
+    Serialize( asn().parametres );
+    asn.Send( publisher );
+    Clean( asn().parametres );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission::SendAgentMission
+// Created: SBO 2008-06-02
+// -----------------------------------------------------------------------------
+void Mission::SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher ) const
+{
+    dispatcher::AsnMsgClientToSimUnitOrder asn;
+    asn().oid = agentTaskee_->GetID();
+    asn().mission = type_.GetId();
     asn().parametres.n = type_.Count();
     if( asn().parametres.n > 0 )
         asn().parametres.elem = new ASN1T_MissionParameter[ asn().parametres.n ];

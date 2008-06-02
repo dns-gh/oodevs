@@ -27,6 +27,7 @@ namespace dispatcher
 {
     class Model;
     class Automat;
+    class Agent;
     class SimulationPublisher_ABC;
 }
 
@@ -71,6 +72,9 @@ private:
 
     //! @name Helpers
     //@{
+    void SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher ) const;
+    void SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher ) const;
+
     void Serialize( ASN1T_MissionParameters& asn ) const;
 	void Clean( ASN1T_MissionParameters& asn ) const;
 	void SerializeDummyParameters( ASN1T_MissionParameters& asn ) const;
@@ -90,7 +94,8 @@ private:
     //@{
     const dispatcher::Model& model_;
     const kernel::MissionType& type_;
-    const dispatcher::Automat* taskee_;
+    const dispatcher::Automat* automatTaskee_;
+    const dispatcher::Agent* agentTaskee_;
     T_Parameters parameters_;
     std::auto_ptr< MissionParameterFactory > factory_;
     //@}
