@@ -23,7 +23,7 @@ using namespace kernel;
 MissionType::MissionType( xml::xistream& xis )
     : OrderType( xis )
 {
-    xis >> list( "parameter", *this, &MissionType::ReadParameter );
+    Read( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ MissionType::MissionType( xml::xistream& xis, const OrderContext& context )
     : OrderType( xis )
 {
     context.AddParameters( *this );
-    xis >> list( "parameter", *this, &MissionType::ReadParameter );
+    Read( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +47,18 @@ MissionType::~MissionType()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionType::Read
+// Created: SBO 2008-06-02
+// -----------------------------------------------------------------------------
+void MissionType::Read( xml::xistream& xis )
+{
+    std::string mrt;
+    xis >> optional() >> attribute( "mrt-dia-behavior", mrt )
+        >> list( "parameter", *this, &MissionType::ReadParameter );
+    automat_ = !mrt.empty();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionType::ReadParameter
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
@@ -54,4 +66,13 @@ void MissionType::ReadParameter( xml::xistream& xis )
 {
     OrderParameter* param = new OrderParameter( xis );
     Register( Count(), *param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionType::IsAutomat
+// Created: SBO 2008-06-02
+// -----------------------------------------------------------------------------
+bool MissionType::IsAutomat() const
+{
+    return automat_;
 }

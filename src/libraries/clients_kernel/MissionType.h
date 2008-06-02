@@ -33,6 +33,11 @@ public:
     virtual ~MissionType();
     //@}
 
+    //! @name Accessors
+    //@{
+    bool IsAutomat() const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -42,7 +47,14 @@ private:
 
     //! @name Helpers
     //@{
+    void Read( xml::xistream& xis );
     void ReadParameter( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool automat_;
     //@}
 };
 

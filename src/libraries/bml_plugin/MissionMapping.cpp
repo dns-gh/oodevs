@@ -25,7 +25,7 @@ namespace bml
 			while( it.HasMoreElements() )
 			{
 				const kernel::MissionType& type = it.NextElement();
-				if( type.GetName() == name1 || type.GetName() == name2 )
+				if( type.IsAutomat() && ( type.GetName() == name1 || type.GetName() == name2 ) )
 					return type.GetId();
 			}
 			throw std::runtime_error( __FUNCTION__ ": Unable to resolve Mission" );
@@ -45,11 +45,13 @@ namespace bml
         if( code == "DELAY" )
             return GetMissionId( missions, "ABC GTIA Freiner", "Battalion - delay" );
         if( code == "RECCE" )
-            return GetMissionId( missions, "ABC Reconnaitre Axe", "Armor - reconnoiter an axis" );
+            return GetMissionId( missions, "ABC Reconnaitre", "Armor - reconnoiter" );
         if( code == "RECCEF" )
-            return GetMissionId( missions, "INF Reconnaitre Axe", "Infantry - reconnoiter an axis" );
+            return GetMissionId( missions, "INF Reconnaissance Offensive", "Infantry - reconnoiter" );
         if( code == "SEIZNG" )
             return GetMissionId( missions, "INF Semparer", "Infantry - seize" );
+        if( code == "HLDDEF" )
+            return GetMissionId( missions, "ABC Tenir", "Armor - hold" );
         if( code == "HLDOFF" )
             return GetMissionId( missions, "INF Defendre Ferme", "Infantry - defend (until the end)" );
         if( code == "MOVE" )
@@ -73,12 +75,14 @@ namespace bml
             return "BLOCK";
         if( id == GetMissionId( missions, "ABC GTIA Freiner", "Battalion - delay" ) )
             return "DELAY";
-        if( id == GetMissionId( missions, "ABC Reconnaitre Axe", "Armor - reconnoiter an axis" ) )
+        if( id == GetMissionId( missions, "ABC Reconnaitre", "Armor - reconnoiter" ) )
             return "RECCE";
-        if( id == GetMissionId( missions, "INF Reconnaissance Axe", "Infantry - reconnoiter an axis" ) )
+        if( id == GetMissionId( missions, "INF Reconnaissance Offensive", "Infantry - reconnoiter" ) )
             return "RECCEF";
         if( id == GetMissionId( missions, "INF Semparer", "Infantry - seize" ) )
             return "SEIZNG";
+        if( id == GetMissionId( missions, "ABC Tenir", "Armor - hold" ) )
+            return "HLDDEF";
         if( id == GetMissionId( missions, "INF Defendre Ferme", "Infantry - defend (until the end)" ) )
             return "HLDOFF";
         if( id == GetMissionId( missions, "Faire Mouvement", "move" ) )
