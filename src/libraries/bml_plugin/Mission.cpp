@@ -121,7 +121,7 @@ void Mission::ReadTaskeeWho( xml::xistream& xis )
             >> xml::end()
         >> xml::end();
     automatTaskee_ = FindAutomat( model_, name );
-    if( !automatTaskee_ )
+    if( automatTaskee_ )
         return;
     agentTaskee_ = FindAgent( model_, name );
     if( !agentTaskee_ )
