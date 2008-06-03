@@ -27,6 +27,7 @@ namespace gui
     class ParametersLayer;
     class SymbolIcons;
     class ColorStrategy_ABC;
+    class IntelligencesPanel;
 }
 
 class StaticModel;
@@ -69,6 +70,7 @@ private:
     bool shown_;
     gui::UnitsPanel* units_;
     ObjectCreationPanel* objects_;
+    gui::IntelligencesPanel* intel_;
     //@}
 };
 

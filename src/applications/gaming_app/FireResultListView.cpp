@@ -34,6 +34,7 @@ FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& co
 {
     setFrameStyle( QFrame::Plain );
     setMargin( 2 );
+    AddColumn( tools::translate( "FireResultListView", "Date" ) );
     AddColumn( tools::translate( "FireResultListView", "Target" ) );
     AddColumn( tools::translate( "FireResultListView", "Attrition" ) );
 
@@ -76,7 +77,7 @@ void FireResultListView::Display( const PopulationFireResult* result, Displayer_
 // Name: FireResultListView::Display
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&, ValuedListItem* item )
+void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC& rootDisplayer, ValuedListItem* item )
 {
     if( ! result ) {
         RemoveItem( item );
@@ -87,8 +88,8 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
     item->SetValue( result );
     Displayer_ABC& displayer = (*subDisplayer_)( item );
 
-    displayer.Display( tools::translate( "FireResultListView", "Date" ), result->time_ );
-    displayer.Display( tools::translate( "FireResultListView", "Target" ), result->target_ );
+    rootDisplayer.Display( tools::translate( "FireResultListView", "Date" ), result->time_ );
+    rootDisplayer.Display( tools::translate( "FireResultListView", "Target" ), result->target_ );
     displayer.Display( tools::translate( "FireResultListView", "Equipments" ), tools::translate( "FireResultListView", " (avail, unavail, repairable):" ) );
     displayer.Display( tools::translate( "FireResultListView", "Troops" ), tools::translate( "FireResultListView", " (officer, warrant-off., private)" ) );
 

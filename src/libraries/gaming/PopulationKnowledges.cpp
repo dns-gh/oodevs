@@ -46,8 +46,11 @@ PopulationKnowledges::~PopulationKnowledges()
 template< typename T >
 void PopulationKnowledges::UpdatePopulation( const T& message )
 {
-    Get( message.oid_connaissance_population ).Update( message );
-    controller_.Update( *this );
+    if( PopulationKnowledge_ABC* k = Find( message.oid_connaissance_population ) )
+    {
+        k->Update( message );
+        controller_.Update( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -70,8 +73,11 @@ void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationKnowledgeCreation&
 // -----------------------------------------------------------------------------
 void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& message )
 {
-    Get( message.oid_connaissance ).Update( message );
-    controller_.Update( *this );
+    if( PopulationKnowledge_ABC* k = Find( message.oid_connaissance ) )
+    {
+        k->Update( message );
+        controller_.Update( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------

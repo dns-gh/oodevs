@@ -32,7 +32,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     AddPanel( units_   = new gui::UnitsPanel    ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, publisher, staticModel, paramLayer, tools ) );
     controllers_.Register( *this );
-    AddPanel( new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
+    AddPanel( intel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,9 +63,11 @@ void CreationPanels::NotifyUpdated( const Simulation& simu )
     {
         Remove( units_ );
         Remove( objects_ );
+        Remove( intel_ );
     } else 
     {
         Add( units_ );
         Add( objects_ );
+        Add( intel_ );
     }
 }
