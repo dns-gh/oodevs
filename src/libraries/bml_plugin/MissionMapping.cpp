@@ -48,6 +48,8 @@ namespace bml
             return GetMissionId( missions, "ABC Reconnaitre", "Armor - reconnoiter" );
         if( code == "RECCEF" )
             return GetMissionId( missions, "INF Reconnaissance Offensive", "Infantry - reconnoiter" );
+        if( code == "SEIZE" )
+            return GetMissionId( missions, "ABC Semparer", "Armor - seize" );
         if( code == "SEIZNG" )
             return GetMissionId( missions, "INF Semparer", "Infantry - seize" );
         if( code == "HLDDEF" )
@@ -79,6 +81,8 @@ namespace bml
             return "RECCE";
         if( id == GetMissionId( missions, "INF Reconnaissance Offensive", "Infantry - reconnoiter" ) )
             return "RECCEF";
+        if( id == GetMissionId( missions, "ABC Semparer", "Armor - seize" ) )
+            return "SEIZE";
         if( id == GetMissionId( missions, "INF Semparer", "Infantry - seize" ) )
             return "SEIZNG";
         if( id == GetMissionId( missions, "ABC Tenir", "Armor - hold" ) )
