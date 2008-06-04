@@ -142,7 +142,7 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
         automat = FindAutomat( model, oid );
         if( !automat )
             agent = FindAgent( model, oid );
-        code = automat ? "automat" : ( agent ? "agent" : "" );
+        code = automat ? "automate" : ( agent ? "agent" : "" );
     }
 
     const kernel::OrderParameter* definition = GetParameterByType( type_, mission_, code );
@@ -171,7 +171,7 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
         param = new MissionParameterPath( xis, *definition );
     else if( type == "point" )
         param = new MissionParameterPoint( xis, *definition );
-    else if( type == "automat" )
+    else if( type == "automate" )
         param = new MissionParameterAutomat( *definition, *automat );
     else if( type == "agent" )
         param = new MissionParameterAgent( *definition, *agent );

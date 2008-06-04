@@ -113,8 +113,8 @@ namespace bml
             return "path";
         if( code == "ENDRPT" )
             return "point";
-        if( code == "automat" )
-            return "automat";
+        if( code == "automate" )
+            return "automate";
         if( code == "agent" )
             return "agent";
         throw std::runtime_error( __FUNCTION__ ": Unsupported parameter type");

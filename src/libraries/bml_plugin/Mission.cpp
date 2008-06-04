@@ -290,6 +290,8 @@ void Mission::FillEmptyParameters( ASN1T_MissionParameters& asn ) const
 				asnParam.value.t = T_MissionParameter_value_limasOrder;
 				asnParam.value.u.limasOrder = &limas;
 			}
+            else
+                throw std::runtime_error( "Missing parameter: " + type + " for mission " + type_.GetName() );
 		}
 	}
 }
