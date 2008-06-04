@@ -60,7 +60,7 @@ namespace bml
             return GetMissionId( missions, "ABC Soutenir", "Armor - support (dynamic)" );
         if( code == "FOLSPT" )
             return GetMissionId( missions, "INF Appuyer", "Infantry - support" );
-        throw std::runtime_error( __FUNCTION__ ": Unsupported mission" );
+        throw std::runtime_error( __FUNCTION__ ": Unsupported mission " + code );
     }
 
     // -----------------------------------------------------------------------------
@@ -117,6 +117,6 @@ namespace bml
             return "automate";
         if( code == "agent" )
             return "agent";
-        throw std::runtime_error( __FUNCTION__ ": Unsupported parameter type");
+        throw std::runtime_error( __FUNCTION__ ": Unsupported parameter type " + code );
     }
 }
