@@ -61,7 +61,6 @@ void UpdateListener::PullOrders()
     {
         receivedAnswer_ = false;
         PullOrders( lastUpdateTime_ );
-        lastUpdateTime_ = CurrentTime();
     }
 }
 
@@ -85,6 +84,36 @@ void UpdateListener::PullOrders( const std::string& time )
 void UpdateListener::Handle( const std::string& response )
 {
     receivedAnswer_ = true;
+    FindLastDate( response );
     orderProcessor_->Handle( response );
 }
 
+// -----------------------------------------------------------------------------
+// Name: UpdateListener::FindLastDate
+// Created: SBO 2008-06-06
+// -----------------------------------------------------------------------------
+void UpdateListener::FindLastDate( const std::string& response )
+{
+    xml::xistringstream xis( response );
+    xis >> xml::start( NS( "OrderPush", "cbml" ) )
+            >> xml::list( NS( "OrderPush", "cbml" ), *this, &UpdateListener::ReadOrder )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UpdateListener::ReadOrder
+// Created: SBO 2008-06-06
+// -----------------------------------------------------------------------------
+void UpdateListener::ReadOrder( xml::xistream& xis )
+{
+    static const unsigned int minLength = std::string( "YYYY-MM-DDTHH:MM:SS" ).length();
+    static const unsigned int maxLength = std::string( "YYYY-MM-DDTHH:MM:SS,fffffffff" ).length();
+    std::string when;
+    xis >> xml::content( NS( "OrderIssuedWhen", "cbml" ), when );
+    if( lastUpdateTime_ < when )
+    {
+        lastUpdateTime_ = when;
+        if( when.length() > minLength && when.length() < maxLength )
+            lastUpdateTime_ += '9'; // $$$$ SBO 2008-06-06: ahaha
+    }
+}

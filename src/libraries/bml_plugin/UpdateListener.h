@@ -18,6 +18,11 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace bml
 {
     class Publisher_ABC;
@@ -56,6 +61,8 @@ private:
     //@{
     virtual void Handle( const std::string& response );
     void PullOrders( const std::string& time );
+    void FindLastDate( const std::string& response );
+    void ReadOrder( xml::xistream& xis );
     //@}
 
 private:
