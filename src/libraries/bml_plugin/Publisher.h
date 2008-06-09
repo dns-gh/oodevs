@@ -11,6 +11,7 @@
 #define __Publisher_h_
 
 #include "Publisher_ABC.h"
+#include <boost/thread/recursive_mutex.hpp>
 
 namespace xml
 {
@@ -57,6 +58,7 @@ private:
     //! @name Helpers
     //@{
     void ConfigureService( DCSOperationsSoapBindingProxy& service ) const;
+    std::string GetReports();
     //@}
 
 private:
@@ -66,6 +68,7 @@ private:
     const std::string proxyHost_;
     const unsigned short proxyPort_;
     std::auto_ptr< xml::xostringstream > reports_;
+    boost::recursive_mutex mutex_;
     //@}
 };
 

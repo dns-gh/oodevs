@@ -64,24 +64,40 @@ Publisher::~Publisher()
 // -----------------------------------------------------------------------------
 void Publisher::PushReports()
 {
+    try
+    {
+        std::string toSend = GetReports();
+        if( toSend.empty() )
+            return;
+
+        DCSOperationsSoapBindingProxy service;
+        ConfigureService( service );
+        std::string response;
+        service.pushReport( toSend, response ); // $$$$ SBO 2008-05-16: make it non-blocking
+        if( service.error )
+            throw std::exception( service.soap_fault_string() );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "BML error pushing reports: " << e.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Publisher::GetReports
+// Created: AGE 2008-06-06
+// -----------------------------------------------------------------------------
+std::string Publisher::GetReports()
+{
+    boost::recursive_mutex::scoped_lock locker( mutex_ );
+    std::string result;
     if( reports_.get() != 0 )
     {
-        try
-        {
-            *reports_ << xml::end();
-            DCSOperationsSoapBindingProxy service;
-            ConfigureService( service );
-            std::string response;
-            service.pushReport( reports_->str(), response ); // $$$$ SBO 2008-05-16: make it non-blocking
-            if( service.error )
-                throw std::exception( service.soap_fault_string() );
-        }
-        catch( std::exception& e )
-        {
-			MT_LOG_ERROR_MSG( "BML error pushing reports: " << e.what() );
-        }
+        *reports_ << xml::end();
+        result = reports_->str();
         reports_.release();
     }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +106,7 @@ void Publisher::PushReports()
 // -----------------------------------------------------------------------------
 xml::xostream& Publisher::CreateReport()
 {
+    boost::recursive_mutex::scoped_lock locker( mutex_ );
     if( reports_.get() == 0 )
     {
         reports_.reset( new xml::xostringstream() );
@@ -113,11 +130,11 @@ void Publisher::PullOrder( const std::string& message, ResponseHandler_ABC& hand
         service.pullOrder( message, response ); // $$$$ SBO 2008-05-16: make it non-blocking
         if( service.error )
             throw std::exception( service.soap_fault_string() );
-	    handler.Handle( response );
+        handler.Handle( response );
     }
     catch( std::exception& e )
     {
-		MT_LOG_ERROR_MSG( "BML error pulling orders: " << e.what() );
+        MT_LOG_ERROR_MSG( "BML error pulling orders: " << e.what() );
     }
 }
 

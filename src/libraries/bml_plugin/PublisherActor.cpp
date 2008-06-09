@@ -52,7 +52,6 @@ void PublisherActor::PushReports()
 // -----------------------------------------------------------------------------
 xml::xostream& PublisherActor::CreateReport()
 {
-    boost::mutex::scoped_lock locker( mutex_ );
     return base_->CreateReport();
 }
 
@@ -71,7 +70,6 @@ void PublisherActor::PullOrder( const std::string& message, ResponseHandler_ABC&
 // -----------------------------------------------------------------------------
 void PublisherActor::DoPushReports()
 {
-    boost::mutex::scoped_lock locker( mutex_ );
     base_->PushReports();
 }
 
@@ -94,12 +92,11 @@ namespace
 // -----------------------------------------------------------------------------
 void PublisherActor::DoPullOrder( const std::string& message, ResponseHandler_ABC& handler )
 {
-    boost::mutex::scoped_lock locker( mutex_ );
-
     std::string answer;
     HandlerWrapper wrapper( answer );
     base_->PullOrder( message, wrapper );
 
+    boost::recursive_mutex::scoped_lock locker( mutex_ );
     answers_.push_back( T_Answer( &handler, answer ) );
 }
 
@@ -111,7 +108,7 @@ void PublisherActor::CommitOrders()
 {
     T_Answers toDeal;
     {
-        boost::mutex::scoped_lock locker( mutex_ );
+        boost::recursive_mutex::scoped_lock locker( mutex_ );
         std::swap( answers_, toDeal );
     }
     for( T_Answers::const_iterator it = toDeal.begin(); it != toDeal.end(); ++it )

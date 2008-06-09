@@ -82,5 +82,4 @@ void OrderProcessor::ReadGroundTask( xml::xistream& xis )
 	{
 		MT_LOG_ERROR_MSG( "BML translating mission: " << e.what() );
 	}
-    
 }

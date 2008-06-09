@@ -11,7 +11,7 @@
 #define __PublisherActor_h_
 
 #include "Publisher_ABC.h"
-#include <boost/thread/mutex.hpp>
+#include <boost/thread/recursive_mutex.hpp>
 
 namespace tools { 
     namespace thread {
@@ -71,8 +71,8 @@ private:
     //@{
     std::auto_ptr< Publisher_ABC > base_;
     std::auto_ptr< tools::thread::ThreadPool > thread_;
+    boost::recursive_mutex mutex_;
     T_Answers answers_;
-    boost::mutex mutex_;
     //@}
 };
 
