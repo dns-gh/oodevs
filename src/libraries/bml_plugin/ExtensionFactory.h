@@ -22,6 +22,7 @@ namespace bml
 {
     class Publisher_ABC;
     class ReportFactory;
+    class Simulation;
 
 // =============================================================================
 /** @class  ExtensionFactory
@@ -36,7 +37,7 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory );
+             ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation );
     virtual ~ExtensionFactory();
     //@}
 
@@ -58,6 +59,7 @@ private:
     //@{
     Publisher_ABC& publisher_;
     const ReportFactory& reportFactory_;
+    const Simulation& simulation_;
     //@}
 };
 

@@ -13,6 +13,7 @@
 #include "BmlExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
+#include "Point.h"
 
 namespace dispatcher
 {
@@ -23,6 +24,7 @@ namespace bml
 {
     class Publisher_ABC;
     class ReportFactory;
+    class Simulation;
 
 // =============================================================================
 /** @class  AgentExtension
@@ -38,7 +40,7 @@ class AgentExtension : public BmlExtension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory  );
+             AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation );
     virtual ~AgentExtension();
     //@}
 
@@ -61,6 +63,8 @@ private:
     dispatcher::Agent& holder_;
     Publisher_ABC& publisher_;
     const ReportFactory& factory_;
+    const Simulation& simulation_;
+    unsigned long lastUpdate_;
     //@}
 };
 

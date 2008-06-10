@@ -73,7 +73,7 @@ void Publisher::PushReports()
         DCSOperationsSoapBindingProxy service;
         ConfigureService( service );
         std::string response;
-        service.pushReport( toSend, response ); // $$$$ SBO 2008-05-16: make it non-blocking
+        service.pushReport( toSend, response );
         if( service.error )
             throw std::exception( service.soap_fault_string() );
     }
@@ -127,7 +127,7 @@ void Publisher::PullOrder( const std::string& message, ResponseHandler_ABC& hand
         DCSOperationsSoapBindingProxy service;
         ConfigureService( service );
         std::string response;
-        service.pullOrder( message, response ); // $$$$ SBO 2008-05-16: make it non-blocking
+        service.pullOrder( message, response );
         if( service.error )
             throw std::exception( service.soap_fault_string() );
         handler.Handle( response );

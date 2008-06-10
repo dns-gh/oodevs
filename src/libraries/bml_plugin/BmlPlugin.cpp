@@ -14,6 +14,7 @@
 #include "PublisherActor.h"
 #include "UpdateListener.h"
 #include "ReportFactory.h"
+#include "Simulation.h"
 #include "dispatcher/Model.h"
 
 using namespace bml;
@@ -25,10 +26,10 @@ using namespace bml;
 BmlPlugin::BmlPlugin( dispatcher::Model& model, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation )
     : model_( model )
     , publisher_( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
+    , simulation_( new Simulation() )
     , reportFactory_( new ReportFactory( model_.GetMissionTypes() ) )
-    , extensionFactory_( new ExtensionFactory( *publisher_, *reportFactory_ ) )
+    , extensionFactory_( new ExtensionFactory( *publisher_, *reportFactory_, *simulation_ ) )
     , listener_( new UpdateListener( *publisher_, model_, simulation ) )
-    , counter_( 0 )
 {
     model_.RegisterFactory( *extensionFactory_ );
 }
@@ -50,6 +51,7 @@ void BmlPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 {
     if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
     {
+        simulation_->Update( *message.msg.u.msg_control_end_tick );
         publisher_->CommitOrders();
         listener_->PullOrders();
         publisher_->PushReports();

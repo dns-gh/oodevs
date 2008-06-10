@@ -8,49 +8,50 @@
 // *****************************************************************************
 
 #include "bml_plugin_pch.h"
-#include "ExtensionFactory.h"
-#include "AgentExtension.h"
-#include "AutomatExtension.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
+#include "Simulation.h"
 
 using namespace bml;
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory constructor
-// Created: SBO 2008-02-29
+// Name: Simulation constructor
+// Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation )
-    : publisher_( publisher )
-    , reportFactory_( reportFactory )
-    , simulation_( simulation )
+Simulation::Simulation()
+    : currentTick_( 1 )
+    , tickDuration_( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory destructor
-// Created: SBO 2008-02-29
+// Name: Simulation destructor
+// Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-ExtensionFactory::~ExtensionFactory()
+Simulation::~Simulation()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-02-29
+// Name: Simulation::Update
+// Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Agent& entity )
+void Simulation::Update( const ASN1T_MsgControlEndTick& message )
 {
-    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity, publisher_, reportFactory_, simulation_ ) );
+    currentTick_  = message.current_tick;
+    tickDuration_ = message.tick_duration;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-05-22
+// Name: Simulation::MustReportPosition
+// Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Automat& entity )
+bool Simulation::MustReportPosition( unsigned long& currentTick ) const
 {
-    entity.Attach< BmlExtension_ABC >( *new AutomatExtension( entity, publisher_, reportFactory_ ) );
+    if( currentTick == 0 || tickDuration_ > 0 && currentTick_ > currentTick + 5 * 60 / tickDuration_ ) // $$$$ SBO 2008-06-09: every 5 minutes
+    {
+        currentTick = currentTick_;
+        return true;
+    }
+    return false;
 }

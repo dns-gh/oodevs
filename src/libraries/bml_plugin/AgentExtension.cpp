@@ -12,20 +12,27 @@
 #include "PositionReport.h"
 #include "OrderReport.h"
 #include "ReportFactory.h"
+#include "Simulation.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include <xeumeuleu/xml.h>
+#pragma warning( push, 1 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
 #include <iostream>
 
+namespace bpt = boost::posix_time;
 using namespace bml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory )
+AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation )
     : holder_( holder )
     , publisher_( publisher )
     , factory_( factory )
+    , simulation_( simulation )
+    , lastUpdate_( 0 )
 {
     // NOTHING
 }
@@ -45,7 +52,8 @@ AgentExtension::~AgentExtension()
 // -----------------------------------------------------------------------------
 void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 {
-    if( attributes.m.positionPresent || attributes.m.hauteurPresent )
+    if(  ( attributes.m.positionPresent || attributes.m.hauteurPresent ) 
+        && simulation_.MustReportPosition( lastUpdate_ ) )
     {
 		try
 		{
