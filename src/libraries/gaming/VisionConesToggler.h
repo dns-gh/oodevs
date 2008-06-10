@@ -71,7 +71,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
-    bool displayCones_, displaySurfaces_;
+    bool displayCones_, displaySurfaces_, displayFog_;
     bool replay_;
     //@}
 };

@@ -27,6 +27,7 @@ VisionConesToggler::VisionConesToggler( Controllers& controllers, Publisher_ABC&
     , publisher_( publisher )
     , displayCones_   ( false )
     , displaySurfaces_( false )
+    , displayFog_     ( false )
     , replay_         ( true )
 {
     controllers_.Register( *this );
@@ -54,6 +55,15 @@ void VisionConesToggler::OptionChanged( const std::string& name, const OptionVar
     if( pDummy )
     {
         *pDummy = value.To< FourStateOption >().IsSet( true, true );
+        ToggleVisionCones();
+    }
+
+    pDummy = 
+          name == "FogOfWar" ? &displayFog_
+        : 0;
+    if( pDummy )
+    {
+        *pDummy = value.To< bool >();
         ToggleVisionCones();
     }
 }
@@ -85,7 +95,7 @@ void VisionConesToggler::ToggleVisionCones()
     if( ! replay_ )
     {
         simulation::ControlToggleVisionCones msg;
-        msg() = displayCones_ || displaySurfaces_;
+        msg() = displayCones_ || displaySurfaces_ || displayFog_;
         msg.Send( publisher_ );
     }
 }
