@@ -39,7 +39,7 @@ namespace
     geometry::Point2f CartesianFromPolar( float radius, float angle )
     {
         static const float pi = std::acos( -1.f );
-        const float radianAngle = pi * angle;
+        const float radianAngle = pi * angle / 180.f;;
         return geometry::Point2f( radius * std::sin( radianAngle ), radius * std::cos( radianAngle ) );
     }
 }
