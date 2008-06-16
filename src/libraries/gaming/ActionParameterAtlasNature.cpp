@@ -30,7 +30,7 @@ ActionParameterAtlasNature::ActionParameterAtlasNature( const OrderParameter& pa
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 ActionParameterAtlasNature::ActionParameterAtlasNature( const OrderParameter& parameter, const ASN1T_AtlasNature& asn, const AtlasNatures& natures )
-    : ActionParameter< AtlasNature >( parameter, natures.MakeNature( unsigned short( asn.data ) ) )
+    : ActionParameter< AtlasNature >( parameter, natures.MakeNature( *(unsigned short*)( asn.data ) ) )
 {
     // NOTHING
 }
@@ -40,7 +40,7 @@ ActionParameterAtlasNature::ActionParameterAtlasNature( const OrderParameter& pa
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 ActionParameterAtlasNature::ActionParameterAtlasNature( const OrderParameter& parameter, xml::xistream& xis, const AtlasNatures& natures )
-: ActionParameter< AtlasNature >( parameter, natures.MakeNature( attribute< unsigned short >( xis, "value" ) ) )
+    : ActionParameter< AtlasNature >( parameter, natures.MakeNature( attribute< unsigned short >( xis, "value" ) ) )
 {
     // NOTHING
 }
@@ -62,6 +62,28 @@ void ActionParameterAtlasNature::Serialize( xml::xostream& xos ) const
 {
     ActionParameter< AtlasNature >::Serialize( xos );
     xos << attribute( "value", GetValue().GetValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterAtlasNature::CommitTo
+// Created: SBO 2008-06-16
+// -----------------------------------------------------------------------------
+void ActionParameterAtlasNature::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = !IsSet();
+    asn.value.t = T_MissionParameter_value_atlasNature;
+    asn.value.u.atlasNature = new ASN1T_AtlasNature();
+    if( IsSet() )
+        GetValue().CommitTo( *asn.value.u.atlasNature );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterAtlasNature::Clean
+// Created: SBO 2008-06-16
+// -----------------------------------------------------------------------------
+void ActionParameterAtlasNature::Clean( ASN1T_MissionParameter& asn ) const
+{
+    delete asn.value.u.atlasNature;
 }
 
 // -----------------------------------------------------------------------------

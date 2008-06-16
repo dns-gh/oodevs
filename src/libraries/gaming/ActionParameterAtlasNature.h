@@ -36,6 +36,8 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( ASN1T_MissionParameter& asn ) const;
     //@}
 
 private:

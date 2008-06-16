@@ -88,5 +88,5 @@ void AtlasNature::Toggle( const AtlasNature& nature )
 void AtlasNature::CommitTo( ASN1T_AtlasNature& asn ) const
 {
     asn.numbits = 11;
-    std::memcpy( asn.data, (const unsigned char*)&value_, sizeof( asn.data ) );
+    std::memcpy( asn.data, (const unsigned char*)&value_, sizeof( value_ ) );
 }
