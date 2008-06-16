@@ -142,7 +142,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::KnowledgeGroupType** const& value )
 {
-    typedef kernel::Resolver_ABC< kernel::KnowledgeGroupType, QString > T_Resolver;
+    typedef kernel::Resolver_ABC< kernel::KnowledgeGroupType, std::string > T_Resolver;
     SimpleResolverEditor< kernel::KnowledgeGroupType, T_Resolver >* editor = new SimpleResolverEditor< kernel::KnowledgeGroupType, T_Resolver >( parent_, (T_Resolver&)( staticModel_.types_ ) );
     editor->SetCurrentItem( *value );
     result_ = editor;
