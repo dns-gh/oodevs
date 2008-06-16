@@ -294,10 +294,10 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
 void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
 {
     munitionsFamilyTable_->setNumRows( 0 );
-    AddAmmunition( 0, tr( "Shell" ) );
-    AddAmmunition( 1, tr( "Air missile" ) );
-    AddAmmunition( 2, tr( "Ground missile" ) );
-    AddAmmunition( 3, tr( "Bullet" ) );
+    AddAmmunition( 0, tr( "Shell" ) );          //eAmmunitionFamily_Obus
+    AddAmmunition( 1, tr( "Air missile" ) );    //eAmmunitionFamily_MissileAir
+    AddAmmunition( 2, tr( "Ground missile" ) ); //eAmmunitionFamily_MissileSol
+    AddAmmunition( 3, tr( "Bullet" ) );         //eAmmunitionFamily_Mitraille
     munitionsFamilyTable_->setMinimumHeight( munitionsFamilyTable_->rowHeight( 0 ) * 5 );
 }
 
@@ -494,7 +494,8 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionPartial
             assert( pPercentageItem );
 
             ASN1T_AmmunitionDotationRecovery& asnMunition = pAsnMunitions[ nAsnIdx ++ ];
-            asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)tools::AmmunitionFamilyFromString( pMunitionItem->text() );
+            asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)nRow; // $$$$ SBO 2008-06-16: should use munition family
+//            asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)tools::AmmunitionFamilyFromString( pMunitionItem->text() );
             asnMunition.pourcentage      = pPercentageItem->text().toUInt();
         }
     }   
