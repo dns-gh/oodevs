@@ -194,6 +194,17 @@ void GlTooltip::GenerateImage()
     new_.clear();
 }
 
+namespace
+{
+    bool IsMagenta( unsigned int i )
+    {
+        int delta = 0x000000FF - ( i & 0x000000FF );
+        delta    += ( i >> 8 ) & 0x000000FF;
+        delta    += 0x000000FF - ( ( i >> 16 ) & 0x000000FF );
+        return delta < 256;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlTooltip::RestoreAlpha
 // Created: AGE 2006-06-29
@@ -205,8 +216,8 @@ void GlTooltip::RestoreAlpha()
     unsigned int* data = (unsigned int*)image_.bits();
     for( int i = image_.width() * image_.height(); i > 0; --i )
     {
-        if( *data == 0x00FF00FF ) 
-            *data = 0xE0FFFFFF;
+        if( IsMagenta( *data ) ) 
+            *data |= 0xE000FF00;
         else
             *data |= 0xFF000000;
         ++data;
