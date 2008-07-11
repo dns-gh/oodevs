@@ -95,7 +95,7 @@ void ADN_Objects_GUI::Build()
     builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Can be mined"), vInfosConnectors[eCanBeValorized] );
 
     // Avoid distance
-    builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Avoid distance"), vInfosConnectors[eAvoidDistance], tr( "m" ) );
+    builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Safety distance"), vInfosConnectors[eAvoidDistance], tr( "m" ) );
 
     // Default speed
     builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Default speed"), vInfosConnectors[eDefaultSpeed], tr( "km/h" ) );
@@ -107,13 +107,13 @@ void ADN_Objects_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Max interaction height"), vInfosConnectors[eMaxInteractionHeight], tr( "m" ) );
 
     // Consumption
-    builder.AddEnumField<E_ConsumptionType>( pParamGroup, tr( "Default consumption"), vInfosConnectors[eDefaultConsumption], ADN_Tr::ConvertFromConsumptionType  );
+    builder.AddEnumField<E_ConsumptionType>( pParamGroup, tr( "Activity type when working"), vInfosConnectors[eDefaultConsumption], ADN_Tr::ConvertFromConsumptionType  );
 
     // Speed impact
-    pSpeedImpactCombo_ = builder.AddEnumField<E_SpeedImpact>( pParamGroup, tr( "Speed impact"), vInfosConnectors[eSpeedImpact], ADN_Tr::ConvertFromSpeedImpact  );
+    pSpeedImpactCombo_ = builder.AddEnumField<E_SpeedImpact>( pParamGroup, tr( "Effect on movement"), vInfosConnectors[eSpeedImpact], ADN_Tr::ConvertFromSpeedImpact  );
 
     // Max agent speed
-    pMaxAgentSpeed_ = builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Max agent speed"), vInfosConnectors[eMaxAgentSpeedPercentage], tr( "%" ), ePercentage );
+    pMaxAgentSpeed_ = builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Units max speed"), vInfosConnectors[eMaxAgentSpeedPercentage], tr( "%" ), ePercentage );
 
     connect( pSpeedImpactCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSpeedImpactComboChanged() ) );
 
@@ -121,23 +121,23 @@ void ADN_Objects_GUI::Build()
     builder.AddOptionnalField<ADN_EditLine_Double>( pParamGroup, tr( "Outgoing population density"), vInfosConnectors[eHasOutgoingPopulationDensity], vInfosConnectors[eOutgoingPopulationDensity], tr( "people/m²" ), eGreaterEqualZero );
 
     // Users
-    builder.AddField<ADN_EditLine_Int>( pParamGroup, tr( "Max nbr of animators"), vInfosConnectors[eMaxNbrUsers], 0, eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Int>( pParamGroup, tr( "Max nbr of concurrent users"), vInfosConnectors[eMaxNbrUsers], 0, eGreaterEqualZero );
 
     // Reserved obstacle
-    ADN_GroupBox* pBuildGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Construction" ), pGroup );
+    ADN_GroupBox* pBuildGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Resources required for construction" ), pGroup );
     vInfosConnectors[eHasToBuild] = &pBuildGroup->GetConnector();
-    builder.AddField<ADN_EquipementSelector>( pBuildGroup, tr( "uses"), vInfosConnectors[eToBuild] );
-    builder.AddField< ADN_EditLine_Int >( pBuildGroup, tr( "valeur" ), vInfosConnectors[eNbrToBuild], 0, eGreaterEqualZero );
+    builder.AddField<ADN_EquipementSelector>( pBuildGroup, tr( "Resource"), vInfosConnectors[eToBuild] );
+    builder.AddField< ADN_EditLine_Int >( pBuildGroup, tr( "Qty" ), vInfosConnectors[eNbrToBuild], 0, eGreaterEqualZero );
     
     // Valorized
-    ADN_GroupBox* pValorizeGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Mining" ), pGroup );
+    ADN_GroupBox* pValorizeGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Resources required for mining" ), pGroup );
     vInfosConnectors[eHasToReinforce] = &pValorizeGroup->GetConnector();
-    builder.AddField<ADN_EquipementSelector>( pValorizeGroup, tr( "uses"), vInfosConnectors[eToReinforce] );
-    builder.AddField< ADN_EditLine_Int >( pValorizeGroup, tr( "valeur" ), vInfosConnectors[eNbrToReinforce], 0, eGreaterEqualZero );
+    builder.AddField<ADN_EquipementSelector>( pValorizeGroup, tr( "Resource"), vInfosConnectors[eToReinforce] );
+    builder.AddField< ADN_EditLine_Int >( pValorizeGroup, tr( "Qty" ), vInfosConnectors[eNbrToReinforce], 0, eGreaterEqualZero );
 
     //-------------
     // Placement scores
-    QGroupBox* pGroupScoreLocation = new QVGroupBox( tr( "Location weights" ), pGroup );
+    QGroupBox* pGroupScoreLocation = new QVGroupBox( tr( "Automatic obstacle positioning" ), pGroup );
 
     ADN_Table_Objects_LocationScore* pScoreLocation = new ADN_Table_Objects_LocationScore( pGroupScoreLocation );
     vInfosConnectors[eLocationScores] = &pScoreLocation->GetConnector();
@@ -195,5 +195,6 @@ void ADN_Objects_GUI::OnSpeedImpactComboChanged()
     else
         pMaxAgentSpeed_->setEnabled( false );
 }
+
 
 

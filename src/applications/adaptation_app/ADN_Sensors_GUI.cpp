@@ -110,7 +110,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     builder.AddField<ADN_EditLine_String>( pNameHolder, tr( "Name" ), vConnectors[eName] );
 
     // Agent detection parameters
-    ADN_GroupBox* pAgentParamGroupBox = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Can detect agents" ), pSensorGroupBox );
+    ADN_GroupBox* pAgentParamGroupBox = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Can detect units" ), pSensorGroupBox );
     vConnectors[eCanDetectAgents] = &pAgentParamGroupBox->GetConnector();
 
     // Angle & scanning
@@ -119,15 +119,15 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     builder.AddField<ADN_CheckBox>( pParamHolder, tr( "Can perform scanning" ), vConnectors[eCanScan] );
 
     // Detection distances
-    QGroupBox* pDistancesGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Distances" ), pAgentParamGroupBox );
+    QGroupBox* pDistancesGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Ranges" ), pAgentParamGroupBox );
     
-    builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Proximity distance" ), vConnectors[eDistProximity], tr( "m" ), eGreaterEqualZero );
-    builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Detection distance" ), vConnectors[eDistDetection], tr( "m" ), eGreaterEqualZero );
-    builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Reco distance" ), vConnectors[eDistReco], tr( "m" ), eGreaterEqualZero );
-    builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Ident distance" ), vConnectors[eDistIdent], tr( "m" ), eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Proximity range" ), vConnectors[eDistProximity], tr( "m" ), eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Detection range" ), vConnectors[eDistDetection], tr( "m" ), eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Recognition range" ), vConnectors[eDistReco], tr( "m" ), eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Identification range" ), vConnectors[eDistIdent], tr( "m" ), eGreaterEqualZero );
 
     // Modificators (group 1)
-    QGroupBox* pAgentDetectionModifiersGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Modificators" ), pAgentParamGroupBox );
+    QGroupBox* pAgentDetectionModifiersGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Terrain modifiers" ), pAgentParamGroupBox );
 
     ADN_Sensors_Sizes_GUI* pComposantes = new ADN_Sensors_Sizes_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifSizes] = &pComposantes->GetConnector();
@@ -142,7 +142,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     vConnectors[eModifEnvironement] = &pEnv->GetConnector();
 
     // Modificators (group 2)
-    QGroupBox* pAgentDetectionModifiersGroup2 = new QGroupBox( 0, Qt::Horizontal, tr( "Stance modificators" ), pAgentParamGroupBox );
+    QGroupBox* pAgentDetectionModifiersGroup2 = new QGroupBox( 0, Qt::Horizontal, tr( "Stance modifiers" ), pAgentParamGroupBox );
 
     ADN_Sensors_Postures_GUI* pStance = new ADN_Sensors_Postures_GUI( tr( "Stance" ), pAgentDetectionModifiersGroup2 );
     vConnectors[eModifStances] = &pStance->GetConnector();
@@ -168,7 +168,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
 
     // Detection
     QWidget* pHolder = builder.AddFieldHolder( pTargetParamsGroupBox );
-    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Detection distance" ), vTargetConnectors[eObjDistDetect], tr( "m" ), eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Detection range" ), vTargetConnectors[eObjDistDetect], tr( "m" ), eGreaterEqualZero );
 
     // Population modifiers
     QGroupBox* pObjPopulationModifiersGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population modifiers" ), pTargetParamsGroupBox );
@@ -233,13 +233,13 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
     pParent->addTab( pPage, tr( "Special sensors" ) );
 
     // Alat parameters
-    QGroupBox* pAlatGroup = new QGroupBox( 1, Qt::Horizontal, tr( "ALAT" ), pPage );
-    QGroupBox* pAlatGroup1 = new QGroupBox( 3, Qt::Horizontal, tr( "Survey times" ), pAlatGroup );
+    QGroupBox* pAlatGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Army aviation" ), pPage );
+    QGroupBox* pAlatGroup1 = new QGroupBox( 3, Qt::Horizontal, tr( "Survey durations" ), pAlatGroup );
     for( int n = 1; n < eNbrVisionObjects; ++n )
         builder.AddField<ADN_TimeField>( pAlatGroup1, ADN_Tr::ConvertFromVisionObject( (E_VisionObject)n ).c_str(), data_.GetAlatInfos().surveyTimes_[n-1], tr( "/ha" ) );
 
     // Cobra parameters
-    QGroupBox* pCobraGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Cobra" ), pPage );
+    QGroupBox* pCobraGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Counter battery radar" ), pPage );
     builder.AddField<ADN_EditLine_Double>( pCobraGroup, tr( "Range" ), data_.GetCobraInfos().rRange_ , tr( "m" ), eGreaterEqualZero );
 
     radarGui_.Build();
@@ -341,10 +341,10 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     builder.AddTableCell( pTable, 0, 0 );
     builder.AddTableCell( pTable, 1, 0 );
     builder.AddTableCell( pTable, 1, 1, tr( "Angle" ) );
-    builder.AddTableCell( pTable, 1, 2, tr( "Detect" ) );
-    builder.AddTableCell( pTable, 1, 3, tr( "Reco" ) );
-    builder.AddTableCell( pTable, 1, 4, tr( "Ident" ) );
-    builder.AddTableCell( pTable, 1, 5, tr( "Proximity" ) );
+    builder.AddTableCell( pTable, 1, 2, tr( "Detection range" ) );
+    builder.AddTableCell( pTable, 1, 3, tr( "Recognition range" ) );
+    builder.AddTableCell( pTable, 1, 4, tr( "Identification range" ) );
+    builder.AddTableCell( pTable, 1, 5, tr( "Proximity range" ) );
     pTable->AddBoldGridCol( 1 );
     pTable->AddBoldGridCol( 6 );
     pTable->AddBoldGridRow( 2 );
@@ -418,7 +418,7 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
     pTable->AddBoldGridCol( 3 );
 
     for( uint n = 0; n < eNbrUnitPosture; ++n )
-        builder.AddTableCell( pTable, 1, 3 + n, ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)n ).c_str() );
+		builder.AddTableCell( pTable, 1, 3 + n, ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)n, ENT_Tr::eToTr  ).c_str());
 
     // Fill the table
     int nRow = 2;

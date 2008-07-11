@@ -82,23 +82,23 @@ void ADN_Radars_GUI::Build()
     for( int n = 0; n < eNbrConsumptionType; ++n )
         builder.AddField<ADN_CheckBox>( pDetectableActivitiesGroup, ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)n ).c_str(), vConnectors[eHasDetectableActivities + 1 + n] );
 
-    ADN_GroupBox* pDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Detection times" ), pGroup );
+    ADN_GroupBox* pDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Durations" ), pGroup );
     vConnectors[eHasDetectionTimes] = &pDetectTimesGroup->GetConnector();
     pHolder = builder.AddFieldHolder( pDetectTimesGroup );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Detect time" ), vConnectors[eHasDetectionTime], vConnectors[eDetectionTime] );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Recognize time" ), vConnectors[eHasRecoTime], vConnectors[eRecoTime] );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Identification time" ), vConnectors[eHasIdentificationTime], vConnectors[eIdentificationTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Detection duration" ), vConnectors[eHasDetectionTime], vConnectors[eDetectionTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Recognition duration" ), vConnectors[eHasRecoTime], vConnectors[eRecoTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Identification duration" ), vConnectors[eHasIdentificationTime], vConnectors[eIdentificationTime] );
 
-    ADN_GroupBox* pHQDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "HQ detection times" ), pDetectTimesGroup );
+    ADN_GroupBox* pHQDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "CP durations" ), pDetectTimesGroup );
     vConnectors[eHasHQDetectionTimes] = &pHQDetectTimesGroup->GetConnector();
     pHolder = builder.AddFieldHolder( pHQDetectTimesGroup );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Detect time" ), vConnectors[eHasHQDetectionTime], vConnectors[eHQDetectionTime] );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Recognize time" ), vConnectors[eHasHQRecoTime], vConnectors[eHQRecoTime] );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Identification time" ), vConnectors[eHasHQIdentificationTime], vConnectors[eHQIdentificationTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Detection duration" ), vConnectors[eHasHQDetectionTime], vConnectors[eHQDetectionTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Recognition duration" ), vConnectors[eHasHQRecoTime], vConnectors[eHQRecoTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Identification duration" ), vConnectors[eHasHQIdentificationTime], vConnectors[eHQIdentificationTime] );
 
     QLabel* pLabel = new QLabel( pDetectTimesGroup );
-    pLabel->setText( tr( "When 'Detection times' is unchecked, units are recognized instantly.\n"
-                         "When 'HQ detection times' is unchecked, the detection times for HQs are the same as the others." ) );
+    pLabel->setText( tr( "When 'Durations' is unchecked, units are recognized instantly.\n"
+                         "When 'HQ Durations' is unchecked, the detection times for HQs are the same as the others." ) );
 
     builder.AddStretcher( pGroup, Qt::Vertical );
 

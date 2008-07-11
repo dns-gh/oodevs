@@ -400,7 +400,7 @@ void ADN_Sensors_Data::TargetInfos::ReadPosture( xml::xistream& input )
             vModifStance_.at( i )->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( "TargetInfos", "Unknown posture '" + type + "'" );
+    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -415,7 +415,7 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( xml::xistream& input )
     ADN_Objects_Data::T_ObjectsInfos_Vector& objects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
     ADN_Objects_Data::IT_ObjectsInfos_Vector itObject = std::find_if( objects.begin(), objects.end(), ADN_Objects_Data::ObjectInfos::Cmp( nType ) );
     if( itObject == objects.end() )
-        throw ADN_DataException( "TargetInfos", "Type d'objet '" + strType + "' invalide" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid object '%1'" ).arg( strType.c_str() ).ascii() );
     ptrObject_ = *itObject;
     strName_ = ptrObject_.GetData()->strName_.GetData();
 
@@ -433,7 +433,7 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( xml::xistream& input )
 void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "object" )
-        << xml::attribute( "type", ptrObject_.GetData()->strName_ )
+		<< xml::attribute( "type", ENT_Tr::ConvertFromObjectType(ptrObject_.GetData()->nObjectType_.GetData() ))
         << xml::attribute( "detection-distance", rDistanceDetection_ );
     populationInfos_.WriteArchive( output );
 
@@ -716,7 +716,7 @@ void ADN_Sensors_Data::SensorInfos::ReadSize( xml::xistream& input )
     if( it != vModifSizes_.end() )
         (*it)->ReadArchive( input );
     else
-        throw ADN_DataException( "SensorInfos", "Unknown size '" + type + "'" );
+    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -731,8 +731,9 @@ void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
         {
             vModifWeather_.at( i )->ReadArchive( input );
             return;
-        }
-    throw ADN_DataException( "SensorInfos", "Unknown precipitation '" + type + "'" );
+    
+    }
+    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid weather '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -759,7 +760,7 @@ void ADN_Sensors_Data::SensorInfos::ReadSourcePosture( xml::xistream& input )
             vModifStance_.at( i )->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( "SensorInfos", "Unknown posture '" + type + "'" );
+    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -775,7 +776,7 @@ void ADN_Sensors_Data::SensorInfos::ReadTargetPosture( xml::xistream& input )
             vModifTargetStance_.at( i )->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( "SensorInfos", "Unknown posture '" + type + "'" );
+    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

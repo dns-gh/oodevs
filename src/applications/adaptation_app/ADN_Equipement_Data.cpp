@@ -129,7 +129,7 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "nature", strNature );
     ADN_Categories_Data::DotationNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
     if( !pNature )
-        throw ADN_DataException( "CategoryInfo", "La nature de dotation : " + strNature + " n'existe pas." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource nature '%1'" ).arg( strNature.c_str() ).ascii() );
     ptrDotationNature_ = pNature;
 }
 
@@ -343,7 +343,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadPh( xml::xistream& input )
             vModifStance_[i]->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( "IndirectAmmoInfos", "Unknown posture " + posture );
+    throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid stance '%1'" ).arg( posture.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -359,7 +359,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "y-dispersion", rDispersionY_ );
     nIndirectType_ = ADN_Tr::ConvertToTypeMunitionTirIndirect( type );
     if( nIndirectType_ == (E_TypeMunitionTirIndirect)-1 )
-        throw ADN_DataException( "IndirectAmmoInfos", "Le type de munition indirecte '" + type + "' est invalide." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid indirect fire ammo type '%1'" ).arg( type.c_str() ).ascii() );
 
     switch( nIndirectType_.GetData() )
     {
@@ -468,7 +468,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition( xml::xistream& input 
     std::string protection = xml::attribute< std::string >( input, "protection" );
     IT_AttritionInfos_Vector itAttrition = std::find_if( attritions_.begin(), attritions_.end(),AttritionInfos::Cmp( protection ));
     if( itAttrition == attritions_.end() )
-        throw ADN_DataException( "AmmoCategoryInfo", "Unknown protection " + protection );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).ascii() );
     (*itAttrition)->ReadArchive( input );
 }
 
@@ -495,7 +495,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToMunitionType( type );
     if( nType_ == E_MunitionType( -1 ) )
-        throw ADN_DataException( "AmmoCategoryInfo", "Unknown ammo category " + type );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource type '%1'" ).arg( type.c_str() ).ascii() );
 
     input >> xml::optional() 
           >> xml::start( "attritions" )
@@ -677,7 +677,7 @@ void ADN_Equipement_Data::ReadDotation( xml::xistream& input )
     input >> xml::attribute( "name", name );
     E_DotationFamily nTypeDotation = ENT_Tr::ConvertToDotationFamily( name );
     if( nTypeDotation == -1 )
-        throw ADN_DataException( "ADN_Equipement_Data", "Unknown dotation family " + name );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource type '%1'" ).arg( name.c_str() ).ascii() );
     dotations_.at( nTypeDotation )->ReadArchive( input );
 }
 

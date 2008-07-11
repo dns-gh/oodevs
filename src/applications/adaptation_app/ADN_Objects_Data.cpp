@@ -234,7 +234,7 @@ void ADN_Objects_Data::ObjectInfos::ReadDotation( const std::string& type, xml::
           >> xml::attribute( "count", count );
     ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( category, dotation );
     if( pCategory == 0 )
-        throw ADN_DataException( "Donnée invalide", "Dotation invalide dans l'objet " + strName_.GetData() );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Objects - Object '%1' - Invalid resource '%2'" ).arg( strName_.GetData().c_str(), category.c_str() ).ascii() );
     if( type == "construction" )
     {
         ptrToBuild_ = pCategory;
@@ -288,25 +288,15 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& input )
 
 
     if( rDefaultSpeed_.GetData() < -1 )
-        throw ADN_DataException( "Donnée invalide",
-        MT_FormatString( "La vitesse par défaut de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
-        "Editer le fichier pour modifier le champ Objets::Type::VitesseParDefaut de cet objet." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Objects - Object '%1' - Default speed must be >= 0" ).arg( strName_.GetData().c_str() ).ascii() );
     if( rDefaultBypassSpeed_.GetData() < -1 )
-        throw ADN_DataException( "Donnée invalide",
-        MT_FormatString( "La vitesse par défaut de l'objet %s, lorsqu'il est contourné, est négative.", strName_.GetData().c_str() ).c_str(),
-        "Editer le fichier %s pour modifier le champ Objets::Type::VitesseParDefautQuandContourne de cet objet." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Objects - Object '%1' - Default speed when bypassed >= 0" ).arg( strName_.GetData().c_str() ).ascii() );
     if( rMaxInteractionHeight_.GetData() < 0 )
-        throw ADN_DataException( "Donnée invalide",
-        MT_FormatString( "La hauteur maximale d'interaction de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
-        "Editer le fichier %s pour modifier le champ Objets::Type::HauteurMaxInteraction de cet objet." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Objects - Object '%1' - Max interaction height must be >= 0" ).arg( strName_.GetData().c_str() ).ascii() );
     if( rOutgoingPopulationDensity_.GetData() < 0 )
-        throw ADN_DataException( "Donnée invalide",
-        MT_FormatString( "La densité des populations sortantes de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
-        "Editer le fichier pour modifier le champ Objets::Type::DensitePopulationSortante de cet objet." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Objects - Object '%1' - Outgoing population density must be >= 0" ).arg( strName_.GetData().c_str() ).ascii() );
      if( nMaxNbrUsers_.GetData() < -1 )
-        throw ADN_DataException( "Donnée invalide",
-        MT_FormatString( "Le nombre d'animateurs de l'objet %s est négatif.", strName_.GetData().c_str() ).c_str() );
-
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Objects - Object '%1' - Number of users must be > 0" ).arg( strName_.GetData().c_str() ).ascii() );
     bHasOutgoingPopulationDensity_ = rOutgoingPopulationDensity_.GetData() != 0;
 
     std::string impact = xml::attribute< std::string >( input, "unit-speed-impact-mode" );
@@ -341,7 +331,7 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& input )
 void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& output )
 {
     if( nObjectType_ == eObjectType_SiteDecontamination && nMaxNbrUsers_.GetData() <= 0 )
-        throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Nbr max users for decontamination site <= 0 when it should be >= 1." ).ascii() );
+        throw ADN_DataException( "Invalid data", tr( "Objects - Invalid number of 'users'" ).ascii() );
 
     output << xml::start( "object" )
             << xml::attribute( "type", ENT_Tr::ConvertFromObjectType( nObjectType_.GetData() ) )
@@ -381,7 +371,7 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& output )
         if( bToBuild_.GetData() == true )
         {
             if( ptrToBuild_.GetData() == 0 )
-                throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Undefined category for construction in object %1." ).arg( ENT_Tr::ConvertFromObjectType( nObjectType_.GetData() ).c_str() ).ascii() );
+                throw ADN_DataException( "Invalid data", tr( "Objects - Invalid resource category for construction" ).ascii() );
             output << xml::start( "construction" )
                     << xml::attribute( "category", ptrToBuild_.GetData()->parentDotation_.strName_ )
                     << xml::attribute( "dotation", ptrToBuild_.GetData()->strName_ )
@@ -391,7 +381,7 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& output )
         if( bToReinforce_.GetData() == true )
         {
             if( ptrToReinforce_.GetData() == 0 )
-                throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Undefined category for valorization in object %1." ).arg( ENT_Tr::ConvertFromObjectType( nObjectType_.GetData() ).c_str() ).ascii() );
+                throw ADN_DataException( "Invalid data", tr( "Objects - Invalid resource category for mining" ).ascii() );
             output << xml::start( "valorization" )
                     << xml::attribute( "category", ptrToReinforce_.GetData()->parentDotation_.strName_ )
                     << xml::attribute( "dotation", ptrToReinforce_.GetData()->strName_ )
@@ -531,10 +521,10 @@ void ADN_Objects_Data::ReadObject( xml::xistream& input )
     input >> xml::attribute( "type", type );
     E_ObjectType nObjectType = ENT_Tr::ConvertToObjectType( type );
     if( nObjectType == (E_ObjectType)-1)
-        throw ADN_DataException( "Object", "Le type d'objet " + type + " n'est pas connu" );
+        throw ADN_DataException( "Invalid data", tr( "Objects - Invalid object type '%1'" ).arg( type.c_str() ).ascii() );
 
     ObjectInfos* pObjInfo = vObjectInfos_[ (int)nObjectType ];
-    pObjInfo->strName_ = type;
+    //pObjInfo->strName_ = ENT_Tr::ConvertFromObjectType( nObjectType, ENT_Tr::eToTr ); //$$$$ C LA QUE C POURRI
     pObjInfo->ReadArchive( input );
 }
 

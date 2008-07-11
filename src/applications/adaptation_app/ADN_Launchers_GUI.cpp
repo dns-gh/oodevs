@@ -76,7 +76,7 @@ void ADN_Launchers_GUI::Build()
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Direct fire" ), pGroup );
     vConnectors[eDirect] = &pDirectGroup->GetConnector();
 
-    QGroupBox* pGroupModificators = new QHGroupBox( tr( "Phs modificators" ), pDirectGroup );
+    QGroupBox* pGroupModificators = new QHGroupBox( tr( "Phs modifiers" ), pDirectGroup );
 
     // modificators headers
     QLabel* pLabel = new QLabel( tr( "Shooter's\nstance" ), pGroupModificators );
@@ -89,7 +89,7 @@ void ADN_Launchers_GUI::Build()
     pModifPhs_ = new ADN_Launchers_ModifPhs_GUI( pBox );
     vConnectors[ePhModifiers] = &pModifPhs_->GetConnector();
 
-    ADN_CheckBox* pCheckBox = new ADN_CheckBox( tr( "Indirect" ), pGroup );
+    ADN_CheckBox* pCheckBox = new ADN_CheckBox( tr( "Indirect fire" ), pGroup );
     vConnectors[eIndirect] = &pCheckBox->GetConnector();
 
     builder.AddStretcher( pGroup, Qt::Vertical );

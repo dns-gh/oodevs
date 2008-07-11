@@ -201,7 +201,7 @@ void ADN_Weapons_GUI::Build()
     ADN_GuiBuilder builder;
 
     // Create the top widget.
-    pMainWidget_ = new QWidget( 0, "Weapons main widget" );
+    pMainWidget_ = new QWidget( 0, "Weapon systems main widget" );
 
     // Create the weapons listview.
     ADN_Weapons_ListView* pWeaponList = new ADN_Weapons_ListView( pMainWidget_ );
@@ -209,7 +209,7 @@ void ADN_Weapons_GUI::Build()
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Parameters group
-    QGroupBox* pGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Weapon" ), pMainWidget_ );
+    QGroupBox* pGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Weapon system" ), pMainWidget_ );
 
     QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
 
@@ -229,7 +229,7 @@ void ADN_Weapons_GUI::Build()
 
 
     // Direct group
-    ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Direct" ), pGroup );
+    ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Direct fire" ), pGroup );
     vInfosConnectors[eDirect] = &pDirectGroup->GetConnector();
 
     ADN_Graph* pGraph = new ADN_Graph( pDirectGroup );
@@ -257,7 +257,7 @@ void ADN_Weapons_GUI::Build()
     pPhSizeListView->SetItemConnectors( vPhConnectors );
 
     // Indirect group
-    ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Indirect" ), pGroup );
+    ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Indirect fire" ), pGroup );
     vInfosConnectors[eIndirect] = &pIndirectGroup->GetConnector();
 
     builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Average speed" ), vInfosConnectors[eAverageSpeed], tr( "km/h" ), eGreaterEqualZero );
@@ -298,7 +298,7 @@ ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
 
     // Setup the header.
     pTable->setNumCols( 5 );
-    pTable->horizontalHeader()->setLabel( 0, tr( "Weapon" ) );
+    pTable->horizontalHeader()->setLabel( 0, tr( "Weapon system" ) );
     pTable->horizontalHeader()->setLabel( 1, tr( "Rnd per burst" ) );
     pTable->horizontalHeader()->setLabel( 2, tr( "Burst duration (s)" ) );
     pTable->horizontalHeader()->setLabel( 3, tr( "Rnd per reload" ) );
@@ -306,7 +306,7 @@ ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
     pTable->horizontalHeader()->show();
 
     pTable->setNumRows( weapons.size() + 1 );
-    builder.AddTableCell( pTable, 0, 0, tr( "Weapon" ) );
+    builder.AddTableCell( pTable, 0, 0, tr( "Weapon system" ) );
     builder.AddTableCell( pTable, 0, 1, tr( "Rnd per burst" ) );
     builder.AddTableCell( pTable, 0, 2, tr( "Burst duration (s)" ) );
     builder.AddTableCell( pTable, 0, 3, tr( "Rnd per reload" ) );
@@ -358,7 +358,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
 
     // Setup the header.
     pTable->setNumCols( distancesSet.size() + 2 );
-    pTable->horizontalHeader()->setLabel( 0, tr( "Weapon" ) );
+    pTable->horizontalHeader()->setLabel( 0, tr( "Weapon system" ) );
     pTable->horizontalHeader()->setLabel( 1, tr( "Target size" ) );
     int n = 2;
     for( std::set<int>::iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
@@ -366,7 +366,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
     pTable->horizontalHeader()->show();
 
     pTable->setNumRows( 1 );
-    builder.AddTableCell( pTable, 0, 0, tr( "Weapon" ) );
+    builder.AddTableCell( pTable, 0, 0, tr( "Weapon system" ) );
     builder.AddTableCell( pTable, 0, 1, tr( "Target size" ) );
     n = 2;
     for( std::set<int>::iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
@@ -422,7 +422,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Weapons" ), new ADN_Callback<ADN_Table*,ADN_Weapons_GUI>( this, & ADN_Weapons_GUI::CreateWeaponsTable ) );
+    mainWindow.AddTable( tr( "Weapon systems" ), new ADN_Callback<ADN_Table*,ADN_Weapons_GUI>( this, & ADN_Weapons_GUI::CreateWeaponsTable ) );
     mainWindow.AddTable( tr( "PHs" ), new ADN_Callback<ADN_Table*,ADN_Weapons_GUI>( this, &ADN_Weapons_GUI::CreatePHTable ) );
 }
 
@@ -432,10 +432,10 @@ void ADN_Weapons_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
 {
-    QString strLocalPath = strPath + tr( "Weapons/" );
+    QString strLocalPath = strPath + tr( "WeaponSystems/" );
     ADN_Tools::CreatePathToFile( strLocalPath.ascii() );
     ADN_HtmlBuilder indexBuilder;
-    indexBuilder.BeginHtml( tr( "Weapons" ) );
+    indexBuilder.BeginHtml( tr( "Weapon Systems" ) );
     indexBuilder.BeginList();
 
 
@@ -444,7 +444,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
     for( ADN_Weapons_Data::IT_WeaponInfosVector it = weapons.begin(); it != weapons.end(); ++it, ++n )
     {
         ADN_Weapons_Data::WeaponInfos& weapon = **it;
-        QString strFileName = tr( "Weapon_%1.htm" ).arg( n );
+        QString strFileName = tr( "WeaponSystem_%1.htm" ).arg( n );
         QString strLink = "<a href=\"" + strFileName + "\">" + weapon.strName_.GetData().c_str() + "</a>";
         indexBuilder.ListItem( strLink );
 
@@ -518,8 +518,9 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
     indexBuilder.EndHtml();
     indexBuilder.WriteToFile( strLocalPath + "index.htm" );
 
-    QString strText = "<a href=\"" + tr( "Weapons/" ) + "index.htm\">" + tr( "Weapons" ) + "</a>";
+    QString strText = "<a href=\"" + tr( "WeaponSystems/" ) + "index.htm\">" + tr( "Weapon Systems" ) + "</a>";
     mainIndexBuilder.ListItem( strText );
 }
+
 
 

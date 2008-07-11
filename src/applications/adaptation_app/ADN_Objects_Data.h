@@ -202,7 +202,7 @@ public:
 
 
     T_ObjectsInfos_Vector& GetObjectInfos();
-    ObjectInfos*           FindObject( const std::string& strName );
+    ObjectInfos*           FindObject( const E_ObjectType nObjectType );
 
 private:
     void ReadArchive( xml::xistream& input );
@@ -232,12 +232,16 @@ ADN_Objects_Data::T_ObjectsInfos_Vector& ADN_Objects_Data::GetObjectInfos()
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
 inline
-ADN_Objects_Data::ObjectInfos* ADN_Objects_Data::FindObject( const std::string& strName )
+ADN_Objects_Data::ObjectInfos* ADN_Objects_Data::FindObject( const E_ObjectType nObjectType )
 {
-    IT_ObjectsInfos_Vector it = std::find_if( vObjectInfos_.begin(), vObjectInfos_.end(), ADN_Tools::NameCmp<ADN_Objects_Data::ObjectInfos>(strName) );
-    if( it == vObjectInfos_.end() )
-        return 0;
-    return *it;
+	for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+	{
+		ADN_Objects_Data::ObjectInfos* pObject = *it;
+		if( pObject->nObjectType_ == nObjectType )
+			return *it;
+	}
+
+	return 0;
 }
 
 

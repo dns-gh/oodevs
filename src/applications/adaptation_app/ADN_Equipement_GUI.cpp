@@ -102,7 +102,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pPare
 {
     ADN_GuiBuilder builder;
     QWidget* pPage = new QWidget( pParent );
-    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( nType ).c_str() );
+    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
 
     ADN_Equipement_GenericListView* pListView = new ADN_Equipement_GenericListView( nType, pPage );
     pListView->GetConnector().Connect( & data_.GetDotation( nType ).categories_ );
@@ -141,7 +141,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     ADN_GuiBuilder builder;
 
     QWidget* pPage = new QWidget( pParent );
-    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition ).c_str() );
+    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
 
     pAmmoListView_ = new ADN_Equipement_AmmoListView( pPage );
     pAmmoListView_->GetConnector().Connect( & data_.GetDotation( eDotationFamily_Munition ).categories_ );
@@ -164,7 +164,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package weight" ), vConnectors[eAmmoPackageWeight], tr( "T" ), eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package volume" ), vConnectors[eAmmoPackageVolume], tr( "m3" ), eGreaterZero );
 
-    builder.AddField<ADN_CheckBox>( pHolder, tr( "Tranche D" ), vConnectors[eTrancheD] );
+    builder.AddField<ADN_CheckBox>( pHolder, tr( "For indirect fire" ), vConnectors[eTrancheD] );
 
 
     // Direct fire properties
@@ -202,14 +202,14 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     pFlareParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Flare/Smoke ammo parameters" ), pIndirectGroup );
     pFlareParametersGroup_->hide();
 
-    builder.AddField<ADN_TimeField>( pFlareParametersGroup_, tr( "Deploy time" ), vConnectors[eDeployTime] );
-    builder.AddField<ADN_TimeField>( pFlareParametersGroup_, tr( "Lifetime" ), vConnectors[eLifetime] );
+    builder.AddField<ADN_TimeField>( pFlareParametersGroup_, tr( "Activation duration" ), vConnectors[eDeployTime] );
+    builder.AddField<ADN_TimeField>( pFlareParametersGroup_, tr( "Span" ), vConnectors[eLifetime] );
 
     // Mine parameters
     pMineParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Mine ammo parameters" ), pIndirectGroup );
     pMineParametersGroup_->hide();
 
-    builder.AddField<ADN_EditLine_Int>( pMineParametersGroup_, tr( "Nbr of mines" ), vConnectors[eMineNumber] );
+    builder.AddField<ADN_EditLine_Int>( pMineParametersGroup_, tr( "Mines quantity" ), vConnectors[eMineNumber] );
 
     pAmmoListView_->SetItemConnectors(vConnectors);
 
@@ -258,16 +258,16 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
     pTable->setNumCols( 5 );
     pTable->horizontalHeader()->setLabel( 0, tr( "Ammunition" ) );
     pTable->horizontalHeader()->setLabel( 1, tr( "Target armor" ) );
-    pTable->horizontalHeader()->setLabel( 2, tr( "Repair no evac" ) );
-    pTable->horizontalHeader()->setLabel( 3, tr( "Repair evac" ) );
+    pTable->horizontalHeader()->setLabel( 2, tr( "On site fixable" ) );
+    pTable->horizontalHeader()->setLabel( 3, tr( "Maintenance support needed" ) );
     pTable->horizontalHeader()->setLabel( 4, tr( "Destroyed" ) );
     pTable->horizontalHeader()->show();
 
     pTable->setNumRows( 1 );
     builder.AddTableCell( pTable, 0, 0, tr( "Ammunition" ) );
     builder.AddTableCell( pTable, 0, 1, tr( "Target armor" ) );
-    builder.AddTableCell( pTable, 0, 2, tr( "Repair no evac" ) );
-    builder.AddTableCell( pTable, 0, 3, tr( "Repair evac" ) );
+    builder.AddTableCell( pTable, 0, 2, tr( "On site fixable" ) );
+    builder.AddTableCell( pTable, 0, 3, tr( "Maintenance support needed" ) );
     builder.AddTableCell( pTable, 0, 4, tr( "Destroyed" ) );
     pTable->hideRow( 0 );
     pTable->AddBoldGridRow( 0 );

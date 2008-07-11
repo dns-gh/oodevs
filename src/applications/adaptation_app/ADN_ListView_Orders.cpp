@@ -69,7 +69,7 @@ ADN_ListView_Orders::ADN_ListView_Orders(QWidget * parent /*= 0*/, const char * 
 :   ADN_ListView(parent,name,f)
 {
     // add one column
-    addColumn( tr( "Orders"));
+    addColumn( tr( "Frag orders"));
     setResizeMode(QListView::AllColumns);
 
     // connector creation
@@ -116,9 +116,9 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
 
     QPopupMenu * pMenu=new QPopupMenu(this);
     if ( bDisplayAdd )
-        pMenu->insertItem( tr( "Add order"), pTargetMenu.get() ,0 );
+        pMenu->insertItem( tr( "Add frag order"), pTargetMenu.get() ,0 );
     if ( bDisplayRem )
-        pMenu->insertItem( tr( "Remove order"), 1 );
+        pMenu->insertItem( tr( "Remove frag order"), 1 );
     
     int nMenu = pMenu->exec( pt );
     if ( nMenu == 1 )

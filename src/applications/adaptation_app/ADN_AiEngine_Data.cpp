@@ -80,19 +80,13 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::end();
 
     if( rPertinenceMaxDecrease_.GetData() < 0.0 || rPertinenceMaxDecrease_.GetData() > 100.0 )
-        throw ADN_DataException( "Donnée invalide",
-        "La dégradation maximale due à la pertinence d'une connaissance doit être comprise dans l'intervalle [0;100].",
-        "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ DegradationMaxParPertinence" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Thread management - Invalid relevance effect value(must be >=0 and <= 100)" ).ascii() );
 
     if( rOperationalStateMaxDecrease_.GetData() < 0.0 || rOperationalStateMaxDecrease_.GetData() > 100.0 )
-        throw ADN_DataException( "Donnée invalide",
-        "La dégradation maximale due à l'état opérationnel d'une connaissance doit être comprise dans l'intervalle [0;100].",
-        "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ DegradationMaxParEtatOps" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Thread management - Invalid operational state effect value (must be >=0 and <= 100)" ).ascii() );
 
     if( rNeutralizedStateMaxDecrease_.GetData() < 0.0 || rNeutralizedStateMaxDecrease_.GetData() > 100.0 )
-        throw ADN_DataException( "Donnée invalide",
-        "La dégradation maximale due à l'état de neutralisation d'une connaissance doit être comprise dans l'intervalle [0;100].",
-        "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ DegradationMaxParEtatNeutralise" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Thread management - Invalid neutralization state effect value (must be >=0 and <= 100)" ).ascii() );
 
     input >> xml::start( "operational-state-weights" )
             >> xml::attribute( "component", rMinorEquipmentWeight_ )
@@ -101,25 +95,17 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
           >> xml::end();
 
     if( rMinorEquipmentWeight_.GetData() < 0.0 || rMinorEquipmentWeight_.GetData() > 1.0 )
-        throw ADN_DataException( "Donnée invalide",
-        "Le poids des composantes non majeures doit être compris entre 0 et 1.",
-        "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ PoidsComposantesNonMajeures." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
     
     if( rMajorEquipmentWeight_.GetData() < 0.0 || rMajorEquipmentWeight_.GetData() > 1.0 )
-        throw ADN_DataException( "Donnée invalide",
-        "Le poids des composantes majeures doit être compris entre 0 et 1.",
-        "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ PoidsComposantesMajeures." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
 
     if( rMinorEquipmentWeight_.GetData() + rMajorEquipmentWeight_.GetData() != 1.0 )
-        throw ADN_DataException( "Donnée invalide",
-        "La somme des poids des composantes doit être égal à 1.",
-        "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier les champs PoidsComposantesMajeures et PoidsComposantesNonMajeures." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
 
     if( rHumanWeight_.GetData() < 0.0 || rHumanWeight_.GetData() > 1.0 )
-        throw ADN_DataException( "Donnée invalide",
-            "Le poids du personnel doit être compris entre 0 et 1.",
-            "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ PoidsPersonnel." );
-
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid crew state weight (must be >=0 and <= 1)" ).ascii() );
+        
     input >> xml::start( "force-ratio" )
             >> xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )
           >> xml::end();

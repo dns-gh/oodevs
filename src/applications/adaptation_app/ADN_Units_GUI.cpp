@@ -98,7 +98,7 @@ void ADN_Units_GUI::Build()
     connect( pTypeCombo_, SIGNAL( activated( const QString& ) ), this, SLOT( OnTypeChanged() ) );
 
     // Model
-    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pParamGroup, tr( "Model" ), vInfosConnectors[eModel] );
+    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pParamGroup, tr( "Doctrine model" ), vInfosConnectors[eModel] );
     builder.SetToolTip( "Le modèle comportemental associé à l'unité." );
 
     // Decontamination delay
@@ -146,7 +146,7 @@ void ADN_Units_GUI::Build()
     connect( pOfficersEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNbrOfOfficersChanged() ) );
 
     // nc officer
-    pNCOfficersEditLine_ = builder.AddField<ADN_EditLine_Int>( pCommandGroup, tr( "Nbr of NC officer(s)" ), vInfosConnectors[eNbNCOfficer] );
+    pNCOfficersEditLine_ = builder.AddField<ADN_EditLine_Int>( pCommandGroup, tr( "Nbr of warrant officer(s)" ), vInfosConnectors[eNbNCOfficer] );
     connect( pNCOfficersEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNbrOfNCOfficersChanged() ) );
 
     QVBox* postureInstallationBox = new QVBox( pGroup );
@@ -157,27 +157,27 @@ void ADN_Units_GUI::Build()
     vInfosConnectors[ePostures] = &pPostures->GetConnector();
 
     // Installation
-    pInstallationGroup_ = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Installation" ), postureInstallationBox );
+    pInstallationGroup_ = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Deployment" ), postureInstallationBox );
     vInfosConnectors[eHasInstallation] = &pInstallationGroup_->GetConnector();
-    builder.AddField<ADN_TimeField>( pInstallationGroup_, tr( "Installation delay" ), vInfosConnectors[eInstallationDelay] );
-    builder.AddField<ADN_TimeField>( pInstallationGroup_, tr( "Uninstallation delay" ), vInfosConnectors[eUninstallationDelay] );
+    builder.AddField<ADN_TimeField>( pInstallationGroup_, tr( "Deployment duration" ), vInfosConnectors[eInstallationDelay] );
+    builder.AddField<ADN_TimeField>( pInstallationGroup_, tr( "Un-deployment duration" ), vInfosConnectors[eUninstallationDelay] );
 
 
     // Distances before point on path
-    QGroupBox* pDistancesGroup = new QHGroupBox( tr( "Distances before point" ), pGroup );
+    QGroupBox* pDistancesGroup = new QHGroupBox( tr( "Key terrain features range" ), pGroup );
     ADN_Point_GUI* pSensors = new ADN_Point_GUI( pDistancesGroup );
     vInfosConnectors[ePointInfos] = &pSensors->GetConnector();
 
 
     // Composantes
-    QVGroupBox* pComposantesGroup = new QVGroupBox( tr( "Composantes" ), pGroup );
+    QVGroupBox* pComposantesGroup = new QVGroupBox( tr( "Equipments" ), pGroup );
     ADN_Units_Composantes_GUI * pComposantes = new ADN_Units_Composantes_GUI( pComposantesGroup );
     vInfosConnectors[eComposantes] = &pComposantes->GetConnector();
     connect( pComposantes, SIGNAL( valueChanged ( int, int ) ), this, SLOT( OnNbrOfOfficersChanged() ) );
     connect( pComposantes, SIGNAL( currentChanged ( int, int ) ), this, SLOT( OnNbrOfOfficersChanged() ) );
 
     // Dotations
-    ADN_GroupBox* pDotationsGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Complementary Dotations" ), pGroup );
+    ADN_GroupBox* pDotationsGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Complementary resources" ), pGroup );
     vInfosConnectors[eHasTC1] = &pDotationsGroup->GetConnector();
     ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, pDotationsGroup );
     vInfosConnectors[eContenancesTC1] = &pDotations->GetConnector();

@@ -78,9 +78,9 @@ void ADN_Breakdowns_GUI::Build()
 
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddEnumField<E_BreakdownType>( pHolder, tr( "Type" ), vInfosConnectors[eType], ADN_Tr::ConvertFromBreakdownType );
-    builder.AddEnumField<E_BreakdownNTI>( pHolder, tr( "NTI" ), vInfosConnectors[eNTI], ADN_Tr::ConvertFromBreakdownNTI );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Repair time" ), vInfosConnectors[eRepairTime] );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Repair time variance" ), vInfosConnectors[eRepairTimeVariance] );
+    builder.AddEnumField<E_BreakdownNTI>( pHolder, tr( "Seriousness" ), vInfosConnectors[eNTI], ADN_Tr::ConvertFromBreakdownNTI );
+    builder.AddField<ADN_TimeField>( pHolder, tr( "Repair duration" ), vInfosConnectors[eRepairTime] );
+    builder.AddField<ADN_TimeField>( pHolder, tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
 
     QGroupBox* pPartsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Required parts" ), pBreakdownGroup );
     ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable( pPartsGroup );
@@ -92,7 +92,7 @@ void ADN_Breakdowns_GUI::Build()
 
     QGroupBox* pGeneralGroup = new QGroupBox( 1, Qt::Horizontal, tr( "General parameter" ), pMainWidget_ );
     QWidget* pHolder2 = builder.AddFieldHolder( pGeneralGroup );
-    builder.AddField<ADN_TimeField>( pHolder2, tr( "Average diagnostic time" ), data_.strAverageDiagnosticTime_ );
+    builder.AddField<ADN_TimeField>( pHolder2, tr( "Average diagnostic duration" ), data_.strAverageDiagnosticTime_ );
 
     // Layout
     QHBoxLayout* pLayout = new QHBoxLayout( pMainWidget_, 10, 10 );

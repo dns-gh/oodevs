@@ -102,10 +102,10 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
     {
         *pWound = xml::attribute< double >( input, "percentage" ) * 100.;
         if( pWound->GetData() < 0. || pWound->GetData() > 100. )
-            throw ADN_DataException( "Donnée invalide", "Un pourcentage d'intoxication NBC n'est pas entre 0 et 1" );
+            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).ascii() );
     }
     else 
-        throw ADN_DataException( "NbcIntoxInfos", "Unknown wound " + wound );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Invalid wound type '%1'" ).arg( wound.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,9 +120,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
     {
         input >> xml::list( "effect", *this, &ADN_NBC_Datas::NbcIntoxInfos::ReadEffect );
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw ADN_DataException( "Incohérence des données",
-            "La répartition de l'intoxication sur les humains de l'agent NBC '" + GetParentNode()->GetNodeName() 
-            + "' ne couvre pas tous les cas possibles (soit 100%)." );
+            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
     }
     input >> xml::optional() >> xml::attribute( "contamination", bContaminationPresent_ );
 }
@@ -148,7 +146,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
     if( bIntoxPresent_.GetData() )
     {
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw ADN_DataException( "Incohérence des données", "La répartition de l'intoxication de l'agent NBC '" + GetParentNode()->GetNodeName() + " ne couvre pas tous les cas possibles (soit 100%)." );
+            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
 
         output << xml::attribute( "affliction", "intoxication" )
                << xml::start( "effect" )

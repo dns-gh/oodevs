@@ -133,8 +133,8 @@ void ADN_Automata_SubUnitsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, cons
 
     addMenu.insertItem( &listView );
 
-    popupMenu.insertItem( tr( "Add sub-unit"), &addMenu );
-    popupMenu.insertItem( tr( "Remove sub-unit"), 0 );
+    popupMenu.insertItem( tr( "Add subordinate"), &addMenu );
+    popupMenu.insertItem( tr( "Remove subordinate"), 0 );
     popupMenu.setItemEnabled( 0, GetCurrentData() != 0 );
 
     bMenuListItemSelected_ = false;

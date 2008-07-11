@@ -762,7 +762,7 @@
   </units>
   <automats>
     <context>
-      <parameter dia-name="dangerDirection_" name="Danger direction" optional="false" type="direction"/>
+      <parameter dia-name="dangerDirection_" name="Danger direction" optional="false" type="Direction"/>
       <parameter dia-name="phaseLines_" name="Phase lines" optional="true" type="PhaseLineList"/>
       <parameter dia-name="boundaryLimit1_" name="Boundary limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="false" type="Limit"/>

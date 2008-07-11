@@ -62,13 +62,13 @@ void ADN_HumanFactors_GUI::Build()
     // Create the main widget.
     pMainWidget_ = new QWidget( 0 );
 
-    QGroupBox* pGroupBox1 = new QGroupBox( 3, Qt::Horizontal, tr( "Training modifiers" ), pMainWidget_ );
+    QGroupBox* pGroupBox1 = new QGroupBox( 3, Qt::Horizontal, tr( "Experience modifiers" ), pMainWidget_ );
     this->BuildModifiers( pGroupBox1, data_.newbieModifiers_, tr( "Newbie" ) );
     this->BuildModifiers( pGroupBox1, data_.xpModifiers_, tr( "Experienced" ) );
     this->BuildModifiers( pGroupBox1, data_.veteranModifiers_, tr( "Veteran" ) );
 
     QGroupBox* pGroupBox2 = new QGroupBox( 3, Qt::Horizontal, tr( "Tiredness modifiers" ), pMainWidget_ );
-    this->BuildModifiers( pGroupBox2, data_.normalModifiers_, tr( "Normal" ) );
+    this->BuildModifiers( pGroupBox2, data_.normalModifiers_, tr( "Not tired" ) );
     this->BuildModifiers( pGroupBox2, data_.tiredModifiers_, tr( "Tired" ) );
     this->BuildModifiers( pGroupBox2, data_.exhaustedModifiers_, tr( "Exhausted" ) );
 
@@ -89,12 +89,13 @@ QWidget* ADN_HumanFactors_GUI::BuildModifiers( QWidget* pParent, ADN_HumanFactor
     ADN_GuiBuilder builder;
 
     QGroupBox* pGroupBox = new QGroupBox( 3, Qt::Horizontal, szName, pParent );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Speed factor" ), modifiers.rSpeedModifier_, 0, eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Reloading speed factor" ), modifiers.rReloadModifier_, 0, eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Stance change speed factor" ), modifiers.rStanceModifier_, 0, eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "PH factor" ), modifiers.rPHModifier_, 0, eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Sensors distance factor" ), modifiers.rSensorsModifier_, 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on movement speed" ), modifiers.rSpeedModifier_, 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on reloading duration" ), modifiers.rReloadModifier_, 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on stance changes duration" ), modifiers.rStanceModifier_, 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on PH" ), modifiers.rPHModifier_, 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on detection ranges" ), modifiers.rSensorsModifier_, 0, eGreaterZero );
 
     return pGroupBox;
 }
+
 

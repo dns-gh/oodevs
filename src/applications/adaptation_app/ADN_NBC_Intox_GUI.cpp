@@ -66,13 +66,13 @@ ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent )
 {
     ADN_GuiBuilder builder;
 
-    ADN_GroupBox* pIntoxGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Intoxication" ), this );
+    ADN_GroupBox* pIntoxGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Poisoning effect" ), this );
     vInfosConnectors_[eIntoxPresent] = &pIntoxGroup->GetConnector();
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Unhurt" ), vInfosConnectors_[eNbrOk]   , tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "U1" )    , vInfosConnectors_[eNbrHurt1], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "U2" )    , vInfosConnectors_[eNbrHurt2], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "U3" )    , vInfosConnectors_[eNbrHurt3], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "UE" )    , vInfosConnectors_[eNbrHurt4], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Unwounded" ), vInfosConnectors_[eNbrOk]   , tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Wounded seriousness level 1" )    , vInfosConnectors_[eNbrHurt1], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Wounded seriousness level 2" )    , vInfosConnectors_[eNbrHurt2], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Wounded seriousness level 3" )    , vInfosConnectors_[eNbrHurt3], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Wounded extreme seriousness" )    , vInfosConnectors_[eNbrHurt4], tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Killed" ), vInfosConnectors_[eNbrDead] , tr( "%" ), ePercentage );
 
     QWidget* pHolder = builder.AddFieldHolder( this );

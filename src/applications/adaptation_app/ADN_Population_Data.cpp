@@ -118,7 +118,7 @@ ADN_Population_Data::FireEffectInfos::FireEffectInfos( E_PopulationAttitude nAtt
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
 , nAttitude_          ( nAttitude )
-, strName_            ( ENT_Tr::ConvertFromPopulationAttitude( nAttitude ) )
+, strName_            ( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
 , vProtectionInfos_   ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
 , rIntensityDensity_  ( 0. )
 , rIntensityFactor_   ( 0. )
@@ -349,7 +349,7 @@ ADN_Population_Data::SpeedEffectInfos::SpeedEffectInfos( E_PopulationAttitude nA
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
 , nAttitude_          ( nAttitude )
-, strName_            ( ENT_Tr::ConvertFromPopulationAttitude( nAttitude ) )
+, strName_            ( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
 , vVolumeInfos_       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
 {
     // NOTHING
@@ -524,7 +524,7 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "decisional-model", strModel );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindPopulationModel( strModel );
     if( !pModel )
-        throw ADN_DataException( "Donnée invalide", MT_FormatString( "Modele '%s' inconnu - réferencé par la population '%s'", strModel.c_str(), strName_.GetData().c_str() ), "" );
+        throw ADN_DataException( "Invalid data", tr( "Population types - Invalid behavior model '%1'" ).arg( strModel.c_str() ).ascii() );
     ptrModel_ = pModel;
 
     input >> xml::start( "slowing-effects" )
@@ -548,7 +548,7 @@ void ADN_Population_Data::PopulationInfos::ReadSlowingEffect( xml::xistream& inp
     input >> xml::attribute( "population-attitude", strAttitude );
     uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
     if( nAttitude == (E_PopulationAttitude)-1 )
-        throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid population attitude." ).ascii() );
+        throw ADN_DataException( "Invalid data", tr( "Population types - Invalid population attitude '%1'" ).arg( strAttitude.c_str() ).ascii() );
     vSpeedEffectInfos_[ nAttitude ]->ReadArchive( input );
 }
 
@@ -562,7 +562,7 @@ void ADN_Population_Data::PopulationInfos::ReadAttritionEffect( xml::xistream& i
     input >> xml::attribute( "population-attitude", strAttitude );
     uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
     if( nAttitude == (E_PopulationAttitude)-1 )
-        throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid population attitude." ).ascii() );
+        throw ADN_DataException( "Invalid data", tr( "Population types - Invalid population attitude '%1'" ).arg( strAttitude.c_str() ).ascii() );
     vFireEffectInfos_[ nAttitude ]->ReadArchive( input );
 }
 
@@ -576,7 +576,7 @@ void ADN_Population_Data::PopulationInfos::ReadFireEffect( xml::xistream& input 
     input >> xml::attribute( "rule-of-engagment", strROE );
     uint nROE = ENT_Tr::ConvertToPopulationRoe( strROE );
     if( nROE == (E_PopulationRoe)-1 )
-        throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid population ROE." ).ascii() );
+        throw ADN_DataException( "Invalid data", tr( "Population types - Invalid population 'rules of engagment' '%1'" ).arg( strROE.c_str() ).ascii() );
     vFireEffectRoeInfos_[ nROE ]->ReadArchive( input );
 }
 

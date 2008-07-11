@@ -79,7 +79,7 @@ void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "quantity", nNbr_ );
     ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Piece ).FindCategory( strCategoryName );
     if( pCategory == 0 )
-        throw ADN_DataException( "RepairPartInfo", tr( "Repair part '%1' does not exist." ).arg( strCategoryName.c_str() ).ascii() );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Breakdowns - Invalid part '%1'" ).arg( strCategoryName.c_str() ).ascii() );
     ptrPart_ = pCategory;
 }
 
@@ -179,7 +179,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "variance", repairTimeVariance_ );
     nType_ = ADN_Tr::ConvertToBreakdownType( type );
     if( nType_ == E_BreakdownType( -1 ) )
-        throw ADN_DataException( "BreakdownInfo", "Unknown breakdown type " + type );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Breakdowns - Invalid breakdown type '%1'" ).arg( type.c_str() ).ascii() );
     input >> xml::list( "part", *this, &ADN_Breakdowns_Data::BreakdownInfo::ReadPart );
 }
 

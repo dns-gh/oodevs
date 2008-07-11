@@ -272,12 +272,12 @@ void ADN_Weapons_Data::WeaponInfos::ReadArchive( xml::xistream& input )
 
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
     if( !pLauncher )
-        throw ADN_DataException( "WeaponInfos", "Armement lanceur '" + strLauncher + "' / dotation '" + strAmmunition + "' : type de lanceur invalide" );
+		throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Weapon systems '%1'/'%2' - Invalid launcher type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).ascii() );
     ptrLauncher_ = pLauncher;
 
     ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
     if( !pAmmo )
-        throw ADN_DataException( "WeaponInfos", "Armement lanceur '" + strLauncher + "' / dotation '" + strAmmunition + "' : type de dotation invalide" );
+		throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Weapon systems '%1'/'%2' - Invalid ammunition type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).ascii() );
     ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
 
     strName_ = strLauncher + " & " + strAmmunition;
@@ -332,7 +332,7 @@ void ADN_Weapons_Data::WeaponInfos::WriteArchive( xml::xostream& output )
     if( bIndirect_.GetData() )
     {
         if( rMaxRange_.GetData() < rMinRange_.GetData() )
-            throw ADN_DataException( tr( "Data errror" ).ascii(), tr( "In the indirect fire parameters of weapon %1, the max range is inferior to min range." ).arg( strName_.GetData().c_str() ).ascii() );
+            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Weapon %1 - Indirect fire - max range < min range" ).arg( strName_.GetData().c_str() ).ascii() );
 
         output << xml::start( "indirect-fire" )
                 << xml::attribute( "average-speed", rAverageSpeed_ )

@@ -52,7 +52,7 @@ private:
 ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( QWidget * parent, const char * name, WFlags f )
     : ADN_ListView( parent, name, f )
 {
-    addColumn( tr( "Dotation Natures" ) );
+    addColumn( tr( "Resource Natures" ) );
     setSorting( -1, true );
     setResizeMode( QListView::AllColumns );
     pConnector_ = new ADN_CLV_Categories_DotationNature( *this );
@@ -92,8 +92,8 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
 {
     QPopupMenu popuMenu( this );
 
-    popuMenu.insertItem( tr( "New dotation nature"), 0 );
-    popuMenu.insertItem( tr( "Delete dotation nature"), 1 );
+    popuMenu.insertItem( tr( "New nature"), 0 );
+    popuMenu.insertItem( tr( "Delete nature"), 1 );
     popuMenu.setItemEnabled( 1, pCurData_ != 0 );
 
     int nResult = popuMenu.exec( pt );

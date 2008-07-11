@@ -85,7 +85,7 @@ ADN_Sensors_Sizes_GUI::ADN_Sensors_Sizes_GUI(QWidget * parent )
     setMaximumWidth( 300 );
     
     horizontalHeader()->setLabel(0, tr( "Volumes" ) );
-    horizontalHeader()->setLabel(1, tr( "Modificators (%)" ) );
+    horizontalHeader()->setLabel(1, tr( "Modifiers" ) );
 
     // connector creation
     pConnector_=new ADN_CT_Sensors_Sizes(*this);

@@ -55,7 +55,7 @@ void ADN_Categories_Data::AttritionEffectOnHuman::ReadArchive( xml::xistream& in
           >> xml::attribute( "dead-percentage", nDeadPercentage_ );
     nEquipmentState_ = ADN_Tr::ConvertToEquipmentState( equipment );
     if( nEquipmentState_ == E_EquipmentState( -1 ) )
-        throw ADN_DataException( "AttritionEffectOnHuman", "Unknown state + '" + equipment + "'" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Invalid equipment state '%1'" ).arg( equipment.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +101,7 @@ void ADN_Categories_Data::ArmorInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToProtectionType( type );
     if( nType_ == E_ProtectionType( -1 ) )
-        throw ADN_DataException( "ArmorInfos", __FUNCTION__ );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Invalid armor type '%1'" ).arg( type.c_str() ).ascii() );
 
     input >> xml::start( "neutralization" )
             >> xml::attribute( "average-time", neutralizationAverageTime_ )
@@ -138,8 +138,7 @@ void ADN_Categories_Data::ArmorInfos::ReadAttrition( xml::xistream& input )
 void ADN_Categories_Data::ArmorInfos::WriteArchive( xml::xostream& output )
 {
     if( strName_.GetData().empty() )
-        throw ADN_DataException( "Mauvaises données dans les catégories",
-        "Il existe une ou plusieurs catégories de blindage dont le nom n'est pas valide." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated armor type name" ).ascii() );
 
     if( nType_ == eProtectionType_Human )
     {
@@ -327,7 +326,7 @@ void ADN_Categories_Data::ReadVolume( xml::xistream& input )
     std::string strName = xml::attribute< std::string >( input, "name" );
     T_SizeInfos_Vector::iterator foundSize = std::find_if( vSizes_.begin(), vSizes_.end(), ADN_String_Cmp( strName ) );
     if( foundSize != vSizes_.end() )
-        throw ADN_DataException( "ReadVolume", "La catégorie de taille '" + strName + "' est définie plusieurs fois dans le fichier." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated volume type name '%1'" ).arg( strName.c_str() ).ascii() );
 
     SizeInfos* pNewArmor = new SizeInfos(strName);
     pNewArmor->SetDataName( "le nom de la catégorie de volume" );
@@ -377,8 +376,8 @@ void ADN_Categories_Data::ReadNature( xml::xistream& input )
     input >> xml::attribute( "type", strName );
     T_DotationNatureInfos_Vector::iterator found = std::find_if( vDotationNatures_.begin(), vDotationNatures_.end(), ADN_String_Cmp( strName ) );
     if( found != vDotationNatures_.end() )
-        throw ADN_DataException( "ReadNature", "La nature de dotation '" + strName + "' est définie plusieurs fois dans le fichier." );
-
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated resource nature type name '%1'" ).arg( strName.c_str() ).ascii() );
+        
     DotationNatureInfos* pNew = new DotationNatureInfos( strName );
     pNew->SetDataName( "le nom de la nature de dotation" );
     vDotationNatures_.AddItem( pNew );
@@ -404,15 +403,13 @@ void ADN_Categories_Data::WriteSizes( xml::xostream& output )
 {
     // Check the sizes data for duplicates.
     if( HasDuplicates( vSizes_, StringExtractor() ) )
-        throw ADN_DataException( "Duplication de données dans les catégories",
-        "Il existe une ou plusieurs catégories de taille avec le même nom.",
-        "Assurez vous qu'il n'y a pas de doublons dans l'onglet 'Catégories'" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated volume type names" ).ascii() );
 
     output << xml::start( "volumes" );
     for( T_SizeInfos_Vector::const_iterator itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
     {
         if( (*itSize)->GetData().empty() )
-            throw ADN_DataException( "Mauvaises données dans les catégories", "Il existe une ou plusieurs catégories de taille dont le nom n'est pas valide." );
+            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Invalid volume type name" ).ascii() );
         output << xml::start( "volume" )
                 << xml::attribute( "name", trim( (*itSize)->GetData() ) )
                << xml::end();
@@ -429,9 +426,7 @@ void ADN_Categories_Data::WriteArmors( xml::xostream& output )
 {
     // Check the armors data for duplicates.
     if( HasDuplicates( vArmors_, ArmorExtractor() ) )
-        throw ADN_DataException( "Duplication de données dans les catégories",
-        "Il existe une ou plusieurs catégories de blindage avec le même nom.",
-        "Assurez vous qu'il n'y a pas de doublons dans l'onglet 'Catégories'" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated armor type names" ).ascii() );
 
     output << xml::start( "protections" );
     for( T_ArmorInfos_Vector::const_iterator itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
@@ -447,16 +442,13 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
 {
     // Check the dotation natures for duplicates.
     if( HasDuplicates( vDotationNatures_, StringExtractor() ) )
-        throw ADN_DataException( "Duplication de données dans les catégories",
-        "Il existe une ou plusieurs nature de dotation avec le même nom.",
-        "Assurez vous qu'il n'y a pas de doublons dans l'onglet 'Catégories'" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated resource nature names" ).ascii() );
 
     output << xml::start( "natures" );
     for( T_DotationNatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
     {
         if( (*it)->GetData().empty() )
-            throw ADN_DataException( "Mauvaises données dans les catégories",
-            "Il existe une ou plusieurs nature de dotation dont le nom n'est pas valide." );
+            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Invalid resource nature" ).ascii() );
         output << xml::start( "nature" )
                 << xml::attribute( "type", trim( (*it)->GetData() ) )
                << xml::end();

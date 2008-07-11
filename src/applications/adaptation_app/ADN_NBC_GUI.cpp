@@ -82,13 +82,13 @@ void ADN_NBC_GUI::Build()
     ADN_NBC_Intox_GUI* liquid = new ADN_NBC_Intox_GUI( liquidGroup );
     vInfosConnectors[eLiquidGroup] = &liquid->GetConnector();
 
-    ADN_GroupBox* gazGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Gaz" ), hBox );
+    ADN_GroupBox* gazGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Gaseous" ), hBox );
     vInfosConnectors[eGazGroupPresent] = &gazGroup->GetConnector();
 
     ADN_NBC_Intox_GUI* gaz = new ADN_NBC_Intox_GUI( gazGroup );
     vInfosConnectors[eGazGroup] = &gaz->GetConnector();
     pHolder = builder.AddFieldHolder( gazGroup );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Lifetime" ), vInfosConnectors[eGazLifetime] );
+    builder.AddField<ADN_TimeField>( pHolder, tr( "Span" ), vInfosConnectors[eGazLifetime] );
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Spread angle" ), vInfosConnectors[eGazSpreadAngle], tr( "°" ) );
     builder.SetValidator( new ADN_DoubleValidator( 0.01, 360, 2, this ) );
 

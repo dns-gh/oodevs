@@ -39,22 +39,22 @@ ENT_Tr::T_ConverterLocationType ENT_Tr::LocationTypeConverter_[] =
 
 ENT_Tr::T_ConverterDotationFamily ENT_Tr::DotationFamilyConverter_[] =
 {
-    T_ConverterDotationFamily( "munition", QT_TRANSLATE_NOOP( "ENT_Tr", "munition" ), eDotationFamily_Munition ),
-    T_ConverterDotationFamily( "carburant", QT_TRANSLATE_NOOP( "ENT_Tr", "carburant" ), eDotationFamily_Carburant ),
-    T_ConverterDotationFamily( "explosif", QT_TRANSLATE_NOOP( "ENT_Tr", "explosif" ), eDotationFamily_Explosif ),
+    T_ConverterDotationFamily( "munition", QT_TRANSLATE_NOOP( "ENT_Tr", "ammunition" ), eDotationFamily_Munition ),
+    T_ConverterDotationFamily( "carburant", QT_TRANSLATE_NOOP( "ENT_Tr", "fuel" ), eDotationFamily_Carburant ),
+    T_ConverterDotationFamily( "explosif", QT_TRANSLATE_NOOP( "ENT_Tr", "explosive" ), eDotationFamily_Explosif ),
     T_ConverterDotationFamily( "mine", QT_TRANSLATE_NOOP( "ENT_Tr", "mine" ), eDotationFamily_Mine ),
-    T_ConverterDotationFamily( "barbele", QT_TRANSLATE_NOOP( "ENT_Tr", "barbele" ), eDotationFamily_Barbele ),
-    T_ConverterDotationFamily( "piece", QT_TRANSLATE_NOOP( "ENT_Tr", "piece" ), eDotationFamily_Piece ),
-    T_ConverterDotationFamily( "ration", QT_TRANSLATE_NOOP( "ENT_Tr", "ration" ), eDotationFamily_Ration ),
+    T_ConverterDotationFamily( "barbele", QT_TRANSLATE_NOOP( "ENT_Tr", "barbed wire" ), eDotationFamily_Barbele ),
+    T_ConverterDotationFamily( "piece", QT_TRANSLATE_NOOP( "ENT_Tr", "parts" ), eDotationFamily_Piece ),
+    T_ConverterDotationFamily( "ration", QT_TRANSLATE_NOOP( "ENT_Tr", "food/water" ), eDotationFamily_Ration ),
     T_ConverterDotationFamily( "", "", (E_DotationFamily)-1 )
 };
 
 ENT_Tr::T_ConverterAmmunitionFamily ENT_Tr::AmmunitionFamilyConverter_[] =
 {
-    T_ConverterAmmunitionFamily( "obus", QT_TRANSLATE_NOOP( "ENT_Tr", "obus" ), eAmmunitionFamily_Obus ),
-    T_ConverterAmmunitionFamily( "missile air", QT_TRANSLATE_NOOP( "ENT_Tr", "missile air" ), eAmmunitionFamily_MissileAir ),
-    T_ConverterAmmunitionFamily( "missile sol", QT_TRANSLATE_NOOP( "ENT_Tr", "missile sol" ), eAmmunitionFamily_MissileSol ),
-    T_ConverterAmmunitionFamily( "mitraille", QT_TRANSLATE_NOOP( "ENT_Tr", "mitraille" ), eAmmunitionFamily_Mitraille ),
+    T_ConverterAmmunitionFamily( "obus", QT_TRANSLATE_NOOP( "ENT_Tr", "shell" ), eAmmunitionFamily_Obus ),
+    T_ConverterAmmunitionFamily( "missile air", QT_TRANSLATE_NOOP( "ENT_Tr", "air missile" ), eAmmunitionFamily_MissileAir ),
+    T_ConverterAmmunitionFamily( "missile sol", QT_TRANSLATE_NOOP( "ENT_Tr", "missile" ), eAmmunitionFamily_MissileSol ),
+    T_ConverterAmmunitionFamily( "mitraille", QT_TRANSLATE_NOOP( "ENT_Tr", "bullet" ), eAmmunitionFamily_Mitraille ),
     T_ConverterAmmunitionFamily( "", "", (E_AmmunitionFamily)-1 )
 };
 
@@ -86,29 +86,29 @@ ENT_Tr::T_ConverterNatureLevel ENT_Tr::NatureLevelConverter_[] =
 
 ENT_Tr::T_ConverterHumanWound ENT_Tr::HumanWoundConverter_[] =
 {
-    T_ConverterHumanWound( "non blesse", QT_TRANSLATE_NOOP( "ENT_Tr", "non blesse" ), eHumanWound_NonBlesse ),
-    T_ConverterHumanWound( "mort", QT_TRANSLATE_NOOP( "ENT_Tr", "mort" ), eHumanWound_Mort ),
-    T_ConverterHumanWound( "blesse urgence 1", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 1" ), eHumanWound_BlesseUrgence1 ),
-    T_ConverterHumanWound( "blesse urgence 2", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 2" ), eHumanWound_BlesseUrgence2 ),
-    T_ConverterHumanWound( "blesse urgence 3", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 3" ), eHumanWound_BlesseUrgence3 ),
-    T_ConverterHumanWound( "blesse urgence extreme", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence extreme" ), eHumanWound_BlesseUrgenceExtreme ),
+    T_ConverterHumanWound( "non blesse", QT_TRANSLATE_NOOP( "ENT_Tr", "unwounded" ), eHumanWound_NonBlesse ),
+    T_ConverterHumanWound( "mort", QT_TRANSLATE_NOOP( "ENT_Tr", "dead" ), eHumanWound_Mort ),
+    T_ConverterHumanWound( "blesse urgence 1", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded seriousness level 1" ), eHumanWound_BlesseUrgence1 ),
+    T_ConverterHumanWound( "blesse urgence 2", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded seriousness level 2" ), eHumanWound_BlesseUrgence2 ),
+    T_ConverterHumanWound( "blesse urgence 3", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded seriousness level 3" ), eHumanWound_BlesseUrgence3 ),
+    T_ConverterHumanWound( "blesse urgence extreme", QT_TRANSLATE_NOOP( "ENT_Tr", "wounded extreme seriousness" ), eHumanWound_BlesseUrgenceExtreme ),
     T_ConverterHumanWound( "", "", (E_HumanWound)-1 )
 };
 
 ENT_Tr::T_ConverterHumanRank ENT_Tr::HumanRankConverter_[] =
 {
-    T_ConverterHumanRank( "officier", QT_TRANSLATE_NOOP( "ENT_Tr", "officier" ), eHumanRank_Officier ),
-    T_ConverterHumanRank( "sous officer", QT_TRANSLATE_NOOP( "ENT_Tr", "sous officer" ), eHumanRank_SousOfficer ),
-    T_ConverterHumanRank( "mdr", QT_TRANSLATE_NOOP( "ENT_Tr", "mdr" ), eHumanRank_Mdr ),
+    T_ConverterHumanRank( "officier", QT_TRANSLATE_NOOP( "ENT_Tr", "officer" ), eHumanRank_Officier ),
+    T_ConverterHumanRank( "sous officer", QT_TRANSLATE_NOOP( "ENT_Tr", "warrant officer" ), eHumanRank_SousOfficer ),
+    T_ConverterHumanRank( "mdr", QT_TRANSLATE_NOOP( "ENT_Tr", "trooper" ), eHumanRank_Mdr ),
     T_ConverterHumanRank( "", "", (E_HumanRank)-1 )
 };
 
 ENT_Tr::T_ConverterDiplomacy ENT_Tr::DiplomacyConverter_[] =
 {
-    T_ConverterDiplomacy( "inconnu", QT_TRANSLATE_NOOP( "ENT_Tr", "inconnu" ), eDiplomacy_Inconnu ),
-    T_ConverterDiplomacy( "ami", QT_TRANSLATE_NOOP( "ENT_Tr", "ami" ), eDiplomacy_Ami ),
-    T_ConverterDiplomacy( "ennemi", QT_TRANSLATE_NOOP( "ENT_Tr", "ennemi" ), eDiplomacy_Ennemi ),
-    T_ConverterDiplomacy( "neutre", QT_TRANSLATE_NOOP( "ENT_Tr", "neutre" ), eDiplomacy_Neutre ),
+    T_ConverterDiplomacy( "inconnu", QT_TRANSLATE_NOOP( "ENT_Tr", "unknown" ), eDiplomacy_Inconnu ),
+    T_ConverterDiplomacy( "ami", QT_TRANSLATE_NOOP( "ENT_Tr", "friendly" ), eDiplomacy_Ami ),
+    T_ConverterDiplomacy( "ennemi", QT_TRANSLATE_NOOP( "ENT_Tr", "enemy" ), eDiplomacy_Ennemi ),
+    T_ConverterDiplomacy( "neutre", QT_TRANSLATE_NOOP( "ENT_Tr", "neutral" ), eDiplomacy_Neutre ),
     T_ConverterDiplomacy( "", "", (E_Diplomacy)-1 )
 };
 
@@ -122,35 +122,35 @@ ENT_Tr::T_ConverterChangeDiplomacyErrorCode ENT_Tr::ChangeDiplomacyErrorCodeConv
 ENT_Tr::T_ConverterForceRatioStatus ENT_Tr::ForceRatioStatusConverter_[] =
 {
     T_ConverterForceRatioStatus( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eForceRatioStatus_None ),
-    T_ConverterForceRatioStatus( "neutre", QT_TRANSLATE_NOOP( "ENT_Tr", "neutre" ), eForceRatioStatus_Neutre ),
-    T_ConverterForceRatioStatus( "favorable", QT_TRANSLATE_NOOP( "ENT_Tr", "favorable" ), eForceRatioStatus_Favorable ),
-    T_ConverterForceRatioStatus( "defavorable", QT_TRANSLATE_NOOP( "ENT_Tr", "defavorable" ), eForceRatioStatus_Defavorable ),
+    T_ConverterForceRatioStatus( "neutre", QT_TRANSLATE_NOOP( "ENT_Tr", "even" ), eForceRatioStatus_Neutre ),
+    T_ConverterForceRatioStatus( "favorable", QT_TRANSLATE_NOOP( "ENT_Tr", "high" ), eForceRatioStatus_Favorable ),
+    T_ConverterForceRatioStatus( "defavorable", QT_TRANSLATE_NOOP( "ENT_Tr", "low" ), eForceRatioStatus_Defavorable ),
     T_ConverterForceRatioStatus( "", "", (E_ForceRatioStatus)-1 )
 };
 
 ENT_Tr::T_ConverterMeetingEngagementStatus ENT_Tr::MeetingEngagementStatusConverter_[] =
 {
     T_ConverterMeetingEngagementStatus( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eMeetingEngagementStatus_None ),
-    T_ConverterMeetingEngagementStatus( "etat esquive", QT_TRANSLATE_NOOP( "ENT_Tr", "etat esquive" ), eMeetingEngagementStatus_EtatEsquive ),
-    T_ConverterMeetingEngagementStatus( "etat fixe", QT_TRANSLATE_NOOP( "ENT_Tr", "etat fixe" ), eMeetingEngagementStatus_EtatFixe ),
-    T_ConverterMeetingEngagementStatus( "etat poursuite mission", QT_TRANSLATE_NOOP( "ENT_Tr", "etat poursuite mission" ), eMeetingEngagementStatus_EtatPoursuiteMission ),
+    T_ConverterMeetingEngagementStatus( "etat esquive", QT_TRANSLATE_NOOP( "ENT_Tr", "withdrawing" ), eMeetingEngagementStatus_EtatEsquive ),
+    T_ConverterMeetingEngagementStatus( "etat fixe", QT_TRANSLATE_NOOP( "ENT_Tr", "fixed" ), eMeetingEngagementStatus_EtatFixe ),
+    T_ConverterMeetingEngagementStatus( "etat poursuite mission", QT_TRANSLATE_NOOP( "ENT_Tr", "carrying out mission" ), eMeetingEngagementStatus_EtatPoursuiteMission ),
     T_ConverterMeetingEngagementStatus( "", "", (E_MeetingEngagementStatus)-1 )
 };
 
 ENT_Tr::T_ConverterOperationalStatus ENT_Tr::OperationalStatusConverter_[] =
 {
-    T_ConverterOperationalStatus( "detruit totalement", QT_TRANSLATE_NOOP( "ENT_Tr", "detruit totalement" ), eOperationalStatus_DetruitTotalement ),
-    T_ConverterOperationalStatus( "detruit tactiquement", QT_TRANSLATE_NOOP( "ENT_Tr", "detruit tactiquement" ), eOperationalStatus_DetruitTactiquement ),
-    T_ConverterOperationalStatus( "operationnel", QT_TRANSLATE_NOOP( "ENT_Tr", "operationnel" ), eOperationalStatus_Operationnel ),
+    T_ConverterOperationalStatus( "detruit totalement", QT_TRANSLATE_NOOP( "ENT_Tr", "totally destroyed" ), eOperationalStatus_DetruitTotalement ),
+    T_ConverterOperationalStatus( "detruit tactiquement", QT_TRANSLATE_NOOP( "ENT_Tr", "tactically destroyed" ), eOperationalStatus_DetruitTactiquement ),
+    T_ConverterOperationalStatus( "operationnel", QT_TRANSLATE_NOOP( "ENT_Tr", "operational" ), eOperationalStatus_Operationnel ),
     T_ConverterOperationalStatus( "", "", (E_OperationalStatus)-1 )
 };
 
 ENT_Tr::T_ConverterRoe ENT_Tr::RoeConverter_[] =
 {
     T_ConverterRoe( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eRoe_None ),
-    T_ConverterRoe( "tir libre", QT_TRANSLATE_NOOP( "ENT_Tr", "tir libre" ), eRoe_TirLibre ),
-    T_ConverterRoe( "tir sur riposte", QT_TRANSLATE_NOOP( "ENT_Tr", "tir sur riposte" ), eRoe_TirSurRiposte ),
-    T_ConverterRoe( "tir interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "tir interdit" ), eRoe_TirInterdit ),
+    T_ConverterRoe( "tir libre", QT_TRANSLATE_NOOP( "ENT_Tr", "free fire" ), eRoe_TirLibre ),
+    T_ConverterRoe( "tir sur riposte", QT_TRANSLATE_NOOP( "ENT_Tr", "retaliation only" ), eRoe_TirSurRiposte ),
+    T_ConverterRoe( "tir interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "forbidden fire" ), eRoe_TirInterdit ),
     T_ConverterRoe( "", "", (E_Roe)-1 )
 };
 
@@ -166,63 +166,63 @@ ENT_Tr::T_ConverterUnitErrorCode ENT_Tr::UnitErrorCodeConverter_[] =
 
 ENT_Tr::T_ConverterUnitPosture ENT_Tr::UnitPostureConverter_[] =
 {
-    T_ConverterUnitPosture( "posture mouvement", QT_TRANSLATE_NOOP( "ENT_Tr", "posture mouvement" ), eUnitPosture_PostureMouvement ),
-    T_ConverterUnitPosture( "posture mouvement discret", QT_TRANSLATE_NOOP( "ENT_Tr", "posture mouvement discret" ), eUnitPosture_PostureMouvementDiscret ),
-    T_ConverterUnitPosture( "posture arret", QT_TRANSLATE_NOOP( "ENT_Tr", "posture arret" ), eUnitPosture_PostureArret ),
-    T_ConverterUnitPosture( "posture poste reflexe", QT_TRANSLATE_NOOP( "ENT_Tr", "posture poste reflexe" ), eUnitPosture_PosturePosteReflexe ),
-    T_ConverterUnitPosture( "posture poste", QT_TRANSLATE_NOOP( "ENT_Tr", "posture poste" ), eUnitPosture_PosturePoste ),
-    T_ConverterUnitPosture( "posture poste amenage", QT_TRANSLATE_NOOP( "ENT_Tr", "posture poste amenage" ), eUnitPosture_PosturePosteAmenage ),
-    T_ConverterUnitPosture( "posture poste prepare genie", QT_TRANSLATE_NOOP( "ENT_Tr", "posture poste prepare genie" ), eUnitPosture_PosturePostePrepareGenie ),
+    T_ConverterUnitPosture( "posture mouvement", QT_TRANSLATE_NOOP( "ENT_Tr", "moving" ), eUnitPosture_PostureMouvement ),
+    T_ConverterUnitPosture( "posture mouvement discret", QT_TRANSLATE_NOOP( "ENT_Tr", "infiltrating" ), eUnitPosture_PostureMouvementDiscret ),
+    T_ConverterUnitPosture( "posture arret", QT_TRANSLATE_NOOP( "ENT_Tr", "stopping" ), eUnitPosture_PostureArret ),
+    T_ConverterUnitPosture( "posture poste reflexe", QT_TRANSLATE_NOOP( "ENT_Tr", "stopped" ), eUnitPosture_PosturePosteReflexe ),
+    T_ConverterUnitPosture( "posture poste", QT_TRANSLATE_NOOP( "ENT_Tr", "parked" ), eUnitPosture_PosturePoste ),
+    T_ConverterUnitPosture( "posture poste amenage", QT_TRANSLATE_NOOP( "ENT_Tr", "parked on self-prepared area" ), eUnitPosture_PosturePosteAmenage ),
+    T_ConverterUnitPosture( "posture poste prepare genie", QT_TRANSLATE_NOOP( "ENT_Tr", "parked on engineer-prepared area" ), eUnitPosture_PosturePostePrepareGenie ),
     T_ConverterUnitPosture( "", "", (E_UnitPosture)-1 )
 };
 
 ENT_Tr::T_ConverterFireAvailability ENT_Tr::FireAvailabilityConverter_[] =
 {
     T_ConverterFireAvailability( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eFireAvailability_None ),
-    T_ConverterFireAvailability( "pret au tir", QT_TRANSLATE_NOOP( "ENT_Tr", "pret au tir" ), eFireAvailability_PretAuTir ),
-    T_ConverterFireAvailability( "indisponible", QT_TRANSLATE_NOOP( "ENT_Tr", "indisponible" ), eFireAvailability_Indisponible ),
+    T_ConverterFireAvailability( "pret au tir", QT_TRANSLATE_NOOP( "ENT_Tr", "ready to fire" ), eFireAvailability_PretAuTir ),
+    T_ConverterFireAvailability( "indisponible", QT_TRANSLATE_NOOP( "ENT_Tr", "unavailable" ), eFireAvailability_Indisponible ),
     T_ConverterFireAvailability( "", "", (E_FireAvailability)-1 )
 };
 
 ENT_Tr::T_ConverterPopulationRoe ENT_Tr::PopulationRoeConverter_[] =
 {
     T_ConverterPopulationRoe( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), ePopulationRoe_None ),
-    T_ConverterPopulationRoe( "emploi force interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "emploi force interdit" ), ePopulationRoe_EmploiForceInterdit ),
-    T_ConverterPopulationRoe( "maintien a distance par moyens non letaux", QT_TRANSLATE_NOOP( "ENT_Tr", "maintien a distance par moyens non letaux" ), ePopulationRoe_MaintienADistanceParMoyensNonLetaux ),
-    T_ConverterPopulationRoe( "dispersion par moyens de defense actifs", QT_TRANSLATE_NOOP( "ENT_Tr", "dispersion par moyens de defense actifs" ), ePopulationRoe_DispersionParMoyensDeDefenseActifs ),
-    T_ConverterPopulationRoe( "armes letales autorisees", QT_TRANSLATE_NOOP( "ENT_Tr", "armes letales autorisees" ), ePopulationRoe_ArmesLetalesAutorisees ),
+    T_ConverterPopulationRoe( "emploi force interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "force shall not be used" ), ePopulationRoe_EmploiForceInterdit ),
+    T_ConverterPopulationRoe( "maintien a distance par moyens non letaux", QT_TRANSLATE_NOOP( "ENT_Tr", "non lethal weapons use allowed" ), ePopulationRoe_MaintienADistanceParMoyensNonLetaux ),
+    T_ConverterPopulationRoe( "dispersion par moyens de defense actifs", QT_TRANSLATE_NOOP( "ENT_Tr", "active defense allowed" ), ePopulationRoe_DispersionParMoyensDeDefenseActifs ),
+    T_ConverterPopulationRoe( "armes letales autorisees", QT_TRANSLATE_NOOP( "ENT_Tr", "lethal weapon use allowed" ), ePopulationRoe_ArmesLetalesAutorisees ),
     T_ConverterPopulationRoe( "", "", (E_PopulationRoe)-1 )
 };
 
 ENT_Tr::T_ConverterUnitTiredness ENT_Tr::UnitTirednessConverter_[] =
 {
-    T_ConverterUnitTiredness( "normal", QT_TRANSLATE_NOOP( "ENT_Tr", "normal" ), eUnitTiredness_Normal ),
-    T_ConverterUnitTiredness( "fatigue", QT_TRANSLATE_NOOP( "ENT_Tr", "fatigue" ), eUnitTiredness_Fatigue ),
-    T_ConverterUnitTiredness( "epuise", QT_TRANSLATE_NOOP( "ENT_Tr", "epuise" ), eUnitTiredness_Epuise ),
+    T_ConverterUnitTiredness( "normal", QT_TRANSLATE_NOOP( "ENT_Tr", "not tired" ), eUnitTiredness_Normal ),
+    T_ConverterUnitTiredness( "fatigue", QT_TRANSLATE_NOOP( "ENT_Tr", "tired" ), eUnitTiredness_Fatigue ),
+    T_ConverterUnitTiredness( "epuise", QT_TRANSLATE_NOOP( "ENT_Tr", "exhausted" ), eUnitTiredness_Epuise ),
     T_ConverterUnitTiredness( "", "", (E_UnitTiredness)-1 )
 };
 
 ENT_Tr::T_ConverterUnitMorale ENT_Tr::UnitMoraleConverter_[] =
 {
-    T_ConverterUnitMorale( "fanatique", QT_TRANSLATE_NOOP( "ENT_Tr", "fanatique" ), eUnitMorale_Fanatique ),
-    T_ConverterUnitMorale( "bon", QT_TRANSLATE_NOOP( "ENT_Tr", "bon" ), eUnitMorale_Bon ),
-    T_ConverterUnitMorale( "moyen", QT_TRANSLATE_NOOP( "ENT_Tr", "moyen" ), eUnitMorale_Moyen ),
-    T_ConverterUnitMorale( "mauvais", QT_TRANSLATE_NOOP( "ENT_Tr", "mauvais" ), eUnitMorale_Mauvais ),
+    T_ConverterUnitMorale( "fanatique", QT_TRANSLATE_NOOP( "ENT_Tr", "fanatical" ), eUnitMorale_Fanatique ),
+    T_ConverterUnitMorale( "bon", QT_TRANSLATE_NOOP( "ENT_Tr", "high" ), eUnitMorale_Bon ),
+    T_ConverterUnitMorale( "moyen", QT_TRANSLATE_NOOP( "ENT_Tr", "standard" ), eUnitMorale_Moyen ),
+    T_ConverterUnitMorale( "mauvais", QT_TRANSLATE_NOOP( "ENT_Tr", "low" ), eUnitMorale_Mauvais ),
     T_ConverterUnitMorale( "", "", (E_UnitMorale)-1 )
 };
 
 ENT_Tr::T_ConverterUnitExperience ENT_Tr::UnitExperienceConverter_[] =
 {
     T_ConverterUnitExperience( "veteran", QT_TRANSLATE_NOOP( "ENT_Tr", "veteran" ), eUnitExperience_Veteran ),
-    T_ConverterUnitExperience( "experimente", QT_TRANSLATE_NOOP( "ENT_Tr", "experimente" ), eUnitExperience_Experimente ),
-    T_ConverterUnitExperience( "conscrit", QT_TRANSLATE_NOOP( "ENT_Tr", "conscrit" ), eUnitExperience_Conscrit ),
+    T_ConverterUnitExperience( "experimente", QT_TRANSLATE_NOOP( "ENT_Tr", "experienced" ), eUnitExperience_Experimente ),
+    T_ConverterUnitExperience( "conscrit", QT_TRANSLATE_NOOP( "ENT_Tr", "newbie" ), eUnitExperience_Conscrit ),
     T_ConverterUnitExperience( "", "", (E_UnitExperience)-1 )
 };
 
 ENT_Tr::T_ConverterAutomatMode ENT_Tr::AutomatModeConverter_[] =
 {
-    T_ConverterAutomatMode( "embraye", QT_TRANSLATE_NOOP( "ENT_Tr", "embraye" ), eAutomatMode_Embraye ),
-    T_ConverterAutomatMode( "debraye", QT_TRANSLATE_NOOP( "ENT_Tr", "debraye" ), eAutomatMode_Debraye ),
+    T_ConverterAutomatMode( "embraye", QT_TRANSLATE_NOOP( "ENT_Tr", "engaged" ), eAutomatMode_Embraye ),
+    T_ConverterAutomatMode( "debraye", QT_TRANSLATE_NOOP( "ENT_Tr", "disengaged" ), eAutomatMode_Debraye ),
     T_ConverterAutomatMode( "", "", (E_AutomatMode)-1 )
 };
 
@@ -255,19 +255,19 @@ ENT_Tr::T_ConverterSimulationState ENT_Tr::SimulationStateConverter_[] =
 
 ENT_Tr::T_ConverterPrecipitationType ENT_Tr::PrecipitationTypeConverter_[] =
 {
-    T_ConverterPrecipitationType( "pas de precipitation", QT_TRANSLATE_NOOP( "ENT_Tr", "pas de precipitation" ), ePrecipitationType_PasDePrecipitation ),
-    T_ConverterPrecipitationType( "tempete sable", QT_TRANSLATE_NOOP( "ENT_Tr", "tempete sable" ), ePrecipitationType_TempeteSable ),
-    T_ConverterPrecipitationType( "brouillard", QT_TRANSLATE_NOOP( "ENT_Tr", "brouillard" ), ePrecipitationType_Brouillard ),
-    T_ConverterPrecipitationType( "crachin", QT_TRANSLATE_NOOP( "ENT_Tr", "crachin" ), ePrecipitationType_Crachin ),
-    T_ConverterPrecipitationType( "pluie", QT_TRANSLATE_NOOP( "ENT_Tr", "pluie" ), ePrecipitationType_Pluie ),
-    T_ConverterPrecipitationType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "neige" ), ePrecipitationType_Neige ),
+    T_ConverterPrecipitationType( "pas de precipitation", QT_TRANSLATE_NOOP( "ENT_Tr", "no rainfall" ), ePrecipitationType_PasDePrecipitation ),
+    T_ConverterPrecipitationType( "tempete sable", QT_TRANSLATE_NOOP( "ENT_Tr", "sand storm" ), ePrecipitationType_TempeteSable ),
+    T_ConverterPrecipitationType( "brouillard", QT_TRANSLATE_NOOP( "ENT_Tr", "fog" ), ePrecipitationType_Brouillard ),
+    T_ConverterPrecipitationType( "crachin", QT_TRANSLATE_NOOP( "ENT_Tr", "drizzle" ), ePrecipitationType_Crachin ),
+    T_ConverterPrecipitationType( "pluie", QT_TRANSLATE_NOOP( "ENT_Tr", "rain" ), ePrecipitationType_Pluie ),
+    T_ConverterPrecipitationType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "snow" ), ePrecipitationType_Neige ),
     T_ConverterPrecipitationType( "", "", (E_PrecipitationType)-1 )
 };
 
 ENT_Tr::T_ConverterFireEffectType ENT_Tr::FireEffectTypeConverter_[] =
 {
-    T_ConverterFireEffectType( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "fumigene" ), eFireEffectType_Fumigene ),
-    T_ConverterFireEffectType( "eclairant", QT_TRANSLATE_NOOP( "ENT_Tr", "eclairant" ), eFireEffectType_Eclairant ),
+    T_ConverterFireEffectType( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "smoke" ), eFireEffectType_Fumigene ),
+    T_ConverterFireEffectType( "eclairant", QT_TRANSLATE_NOOP( "ENT_Tr", "illumination shell" ), eFireEffectType_Eclairant ),
     T_ConverterFireEffectType( "", "", (E_FireEffectType)-1 )
 };
 
@@ -283,56 +283,56 @@ ENT_Tr::T_ConverterInfoContextErrorCode ENT_Tr::InfoContextErrorCodeConverter_[]
 
 ENT_Tr::T_ConverterLimaType ENT_Tr::LimaTypeConverter_[] =
 {
-    T_ConverterLimaType( "ligne debouche", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne debouche" ), eLimaType_LigneDebouche ),
-    T_ConverterLimaType( "ligne changement attitude", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne changement attitude" ), eLimaType_LigneChangementAttitude ),
-    T_ConverterLimaType( "ligne coordination", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne coordination" ), eLimaType_LigneCoordination ),
-    T_ConverterLimaType( "ligne interdire", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne interdire" ), eLimaType_LigneInterdire ),
-    T_ConverterLimaType( "ligne objectif", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne objectif" ), eLimaType_LigneObjectif ),
-    T_ConverterLimaType( "ligne coup arret", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne coup arret" ), eLimaType_LigneCoupArret ),
-    T_ConverterLimaType( "ligne recueil", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne recueil" ), eLimaType_LigneRecueil ),
-    T_ConverterLimaType( "ligne debut mission", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne debut mission" ), eLimaType_LigneDebutMission ),
-    T_ConverterLimaType( "ligne fin mission", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne fin mission" ), eLimaType_LigneFinMission ),
-    T_ConverterLimaType( "ligne identification accueil", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne identification accueil" ), eLimaType_LigneIdentificationAccueil ),
+    T_ConverterLimaType( "ligne debouche", QT_TRANSLATE_NOOP( "ENT_Tr", "line of departure" ), eLimaType_LigneDebouche ),
+    T_ConverterLimaType( "ligne changement attitude", QT_TRANSLATE_NOOP( "ENT_Tr", "posture switching line" ), eLimaType_LigneChangementAttitude ),
+    T_ConverterLimaType( "ligne coordination", QT_TRANSLATE_NOOP( "ENT_Tr", "coordination line" ), eLimaType_LigneCoordination ),
+    T_ConverterLimaType( "ligne interdire", QT_TRANSLATE_NOOP( "ENT_Tr", "deny line" ), eLimaType_LigneInterdire ),
+    T_ConverterLimaType( "ligne objectif", QT_TRANSLATE_NOOP( "ENT_Tr", "line of objectives" ), eLimaType_LigneObjectif ),
+    T_ConverterLimaType( "ligne coup arret", QT_TRANSLATE_NOOP( "ENT_Tr", "block line" ), eLimaType_LigneCoupArret ),
+    T_ConverterLimaType( "ligne recueil", QT_TRANSLATE_NOOP( "ENT_Tr", "rearward line" ), eLimaType_LigneRecueil ),
+    T_ConverterLimaType( "ligne debut mission", QT_TRANSLATE_NOOP( "ENT_Tr", "starting line" ), eLimaType_LigneDebutMission ),
+    T_ConverterLimaType( "ligne fin mission", QT_TRANSLATE_NOOP( "ENT_Tr", "finish line" ), eLimaType_LigneFinMission ),
+    T_ConverterLimaType( "ligne identification accueil", QT_TRANSLATE_NOOP( "ENT_Tr", "identification and reception line" ), eLimaType_LigneIdentificationAccueil ),
     T_ConverterLimaType( "", "", (E_LimaType)-1 )
 };
 
 ENT_Tr::T_ConverterLogMaintenanceRegimeTravail ENT_Tr::LogMaintenanceRegimeTravailConverter_[] =
 {
-    T_ConverterLogMaintenanceRegimeTravail( "regime 1", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 1" ), eLogMaintenanceRegimeTravail_Regime1 ),
-    T_ConverterLogMaintenanceRegimeTravail( "regime 2", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 2" ), eLogMaintenanceRegimeTravail_Regime2 ),
-    T_ConverterLogMaintenanceRegimeTravail( "regime 3", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 3" ), eLogMaintenanceRegimeTravail_Regime3 ),
-    T_ConverterLogMaintenanceRegimeTravail( "regime 4", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 4" ), eLogMaintenanceRegimeTravail_Regime4 ),
+    T_ConverterLogMaintenanceRegimeTravail( "regime 1", QT_TRANSLATE_NOOP( "ENT_Tr", "shift type 1" ), eLogMaintenanceRegimeTravail_Regime1 ),
+    T_ConverterLogMaintenanceRegimeTravail( "regime 2", QT_TRANSLATE_NOOP( "ENT_Tr", "shift type 2" ), eLogMaintenanceRegimeTravail_Regime2 ),
+    T_ConverterLogMaintenanceRegimeTravail( "regime 3", QT_TRANSLATE_NOOP( "ENT_Tr", "shift type 3" ), eLogMaintenanceRegimeTravail_Regime3 ),
+    T_ConverterLogMaintenanceRegimeTravail( "regime 4", QT_TRANSLATE_NOOP( "ENT_Tr", "shift type 4" ), eLogMaintenanceRegimeTravail_Regime4 ),
     T_ConverterLogMaintenanceRegimeTravail( "", "", (E_LogMaintenanceRegimeTravail)-1 )
 };
 
 ENT_Tr::T_ConverterLogMaintenanceHandlingStatus ENT_Tr::LogMaintenanceHandlingStatusConverter_[] =
 {
-    T_ConverterLogMaintenanceHandlingStatus( "deplacement vers chaine", QT_TRANSLATE_NOOP( "ENT_Tr", "deplacement vers chaine" ), eLogMaintenanceHandlingStatus_DeplacementVersChaine ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite remorqueur", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite remorqueur" ), eLogMaintenanceHandlingStatus_AttenteDisponibiliteRemorqueur ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "remorqueur deplacement aller" ), eLogMaintenanceHandlingStatus_RemorqueurDeplacementAller ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "remorqueur chargement" ), eLogMaintenanceHandlingStatus_RemorqueurChargement ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "remorqueur deplacement retour" ), eLogMaintenanceHandlingStatus_RemorqueurDeplacementRetour ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "remorqueur dechargement" ), eLogMaintenanceHandlingStatus_RemorqueurDechargement ),
-    T_ConverterLogMaintenanceHandlingStatus( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostique" ), eLogMaintenanceHandlingStatus_Diagnostique ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente prise en charge par niveau superieur", QT_TRANSLATE_NOOP( "ENT_Tr", "attente prise en charge par niveau superieur" ), eLogMaintenanceHandlingStatus_AttentePriseEnChargeParNiveauSuperieur ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite pieces", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite pieces" ), eLogMaintenanceHandlingStatus_AttenteDisponibilitePieces ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite reparateur", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite reparateur" ), eLogMaintenanceHandlingStatus_AttenteDisponibiliteReparateur ),
-    T_ConverterLogMaintenanceHandlingStatus( "reparation", QT_TRANSLATE_NOOP( "ENT_Tr", "reparation" ), eLogMaintenanceHandlingStatus_Reparation ),
-    T_ConverterLogMaintenanceHandlingStatus( "retour pion", QT_TRANSLATE_NOOP( "ENT_Tr", "retour pion" ), eLogMaintenanceHandlingStatus_RetourPion ),
-    T_ConverterLogMaintenanceHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "termine" ), eLogMaintenanceHandlingStatus_Termine ),
+    T_ConverterLogMaintenanceHandlingStatus( "deplacement vers chaine", QT_TRANSLATE_NOOP( "ENT_Tr", "moving toward logistic system" ), eLogMaintenanceHandlingStatus_DeplacementVersChaine ),
+    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite remorqueur", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for available tow-truck" ), eLogMaintenanceHandlingStatus_AttenteDisponibiliteRemorqueur ),
+    T_ConverterLogMaintenanceHandlingStatus( "remorqueur deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck moving to target" ), eLogMaintenanceHandlingStatus_RemorqueurDeplacementAller ),
+    T_ConverterLogMaintenanceHandlingStatus( "remorqueur chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck loading" ), eLogMaintenanceHandlingStatus_RemorqueurChargement ),
+    T_ConverterLogMaintenanceHandlingStatus( "remorqueur deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck moving from target" ), eLogMaintenanceHandlingStatus_RemorqueurDeplacementRetour ),
+    T_ConverterLogMaintenanceHandlingStatus( "remorqueur dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck unloading" ), eLogMaintenanceHandlingStatus_RemorqueurDechargement ),
+    T_ConverterLogMaintenanceHandlingStatus( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostic" ), eLogMaintenanceHandlingStatus_Diagnostique ),
+    T_ConverterLogMaintenanceHandlingStatus( "attente prise en charge par niveau superieur", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting to be handled by higher level" ), eLogMaintenanceHandlingStatus_AttentePriseEnChargeParNiveauSuperieur ),
+    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite pieces", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for available parts" ), eLogMaintenanceHandlingStatus_AttenteDisponibilitePieces ),
+    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite reparateur", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for available repairer" ), eLogMaintenanceHandlingStatus_AttenteDisponibiliteReparateur ),
+    T_ConverterLogMaintenanceHandlingStatus( "reparation", QT_TRANSLATE_NOOP( "ENT_Tr", "repairing" ), eLogMaintenanceHandlingStatus_Reparation ),
+    T_ConverterLogMaintenanceHandlingStatus( "retour pion", QT_TRANSLATE_NOOP( "ENT_Tr", "unit returning" ), eLogMaintenanceHandlingStatus_RetourPion ),
+    T_ConverterLogMaintenanceHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogMaintenanceHandlingStatus_Termine ),
     T_ConverterLogMaintenanceHandlingStatus( "", "", (E_LogMaintenanceHandlingStatus)-1 )
 };
 
 ENT_Tr::T_ConverterLogSupplyHandlingStatus ENT_Tr::LogSupplyHandlingStatusConverter_[] =
 {
-    T_ConverterLogSupplyHandlingStatus( "convoi en attente camions", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi en attente camions" ), eLogSupplyHandlingStatus_ConvoiEnAttenteCamions ),
-    T_ConverterLogSupplyHandlingStatus( "convoi constitution", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi constitution" ), eLogSupplyHandlingStatus_ConvoiConstitution ),
-    T_ConverterLogSupplyHandlingStatus( "convoi deplacement vers point chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi deplacement vers point chargement" ), eLogSupplyHandlingStatus_ConvoiDeplacementVersPointChargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi chargement" ), eLogSupplyHandlingStatus_ConvoiChargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi deplacement vers point dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi deplacement vers point dechargement" ), eLogSupplyHandlingStatus_ConvoiDeplacementVersPointDechargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi dechargement" ), eLogSupplyHandlingStatus_ConvoiDechargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi deplacement retour" ), eLogSupplyHandlingStatus_ConvoiDeplacementRetour ),
-    T_ConverterLogSupplyHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "termine" ), eLogSupplyHandlingStatus_Termine ),
+    T_ConverterLogSupplyHandlingStatus( "convoi en attente camions", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy waiting for trucks" ), eLogSupplyHandlingStatus_ConvoiEnAttenteCamions ),
+    T_ConverterLogSupplyHandlingStatus( "convoi constitution", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy setting up" ), eLogSupplyHandlingStatus_ConvoiConstitution ),
+    T_ConverterLogSupplyHandlingStatus( "convoi deplacement vers point chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy moving to loading point" ), eLogSupplyHandlingStatus_ConvoiDeplacementVersPointChargement ),
+    T_ConverterLogSupplyHandlingStatus( "convoi chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy loading" ), eLogSupplyHandlingStatus_ConvoiChargement ),
+    T_ConverterLogSupplyHandlingStatus( "convoi deplacement vers point dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy moving to unloading point" ), eLogSupplyHandlingStatus_ConvoiDeplacementVersPointDechargement ),
+    T_ConverterLogSupplyHandlingStatus( "convoi dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy unloading" ), eLogSupplyHandlingStatus_ConvoiDechargement ),
+    T_ConverterLogSupplyHandlingStatus( "convoi deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy moving back" ), eLogSupplyHandlingStatus_ConvoiDeplacementRetour ),
+    T_ConverterLogSupplyHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogSupplyHandlingStatus_Termine ),
     T_ConverterLogSupplyHandlingStatus( "", "", (E_LogSupplyHandlingStatus)-1 )
 };
 
@@ -354,27 +354,27 @@ ENT_Tr::T_ConverterMsgLogSupplyPushFlowAck ENT_Tr::MsgLogSupplyPushFlowAckConver
 
 ENT_Tr::T_ConverterLogMedicalHandlingStatus ENT_Tr::LogMedicalHandlingStatusConverter_[] =
 {
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite ambulance releve" ), eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceReleve ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve deplacement aller" ), eLogMedicalHandlingStatus_AmbulanceReleveDeplacementAller ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve chargement" ), eLogMedicalHandlingStatus_AmbulanceReleveChargement ),
-    T_ConverterLogMedicalHandlingStatus( "attente chargement complet ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "attente chargement complet ambulance releve" ), eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceReleve ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve deplacement retour" ), eLogMedicalHandlingStatus_AmbulanceReleveDeplacementRetour ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve dechargement" ), eLogMedicalHandlingStatus_AmbulanceReleveDechargement ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour diagnostique" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourDiagnostique ),
-    T_ConverterLogMedicalHandlingStatus( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostique" ), eLogMedicalHandlingStatus_Diagnostique ),
-    T_ConverterLogMedicalHandlingStatus( "recherche secteur tri", QT_TRANSLATE_NOOP( "ENT_Tr", "recherche secteur tri" ), eLogMedicalHandlingStatus_RechercheSecteurTri ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour tri", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour tri" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourTri ),
-    T_ConverterLogMedicalHandlingStatus( "tri", QT_TRANSLATE_NOOP( "ENT_Tr", "tri" ), eLogMedicalHandlingStatus_Tri ),
-    T_ConverterLogMedicalHandlingStatus( "recherche secteur soin", QT_TRANSLATE_NOOP( "ENT_Tr", "recherche secteur soin" ), eLogMedicalHandlingStatus_RechercheSecteurSoin ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour soin", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour soin" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourSoin ),
-    T_ConverterLogMedicalHandlingStatus( "soin", QT_TRANSLATE_NOOP( "ENT_Tr", "soin" ), eLogMedicalHandlingStatus_Soin ),
-    T_ConverterLogMedicalHandlingStatus( "hospitalisation", QT_TRANSLATE_NOOP( "ENT_Tr", "hospitalisation" ), eLogMedicalHandlingStatus_Hospitalisation ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite ambulance ramassage" ), eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceRamassage ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage chargement" ), eLogMedicalHandlingStatus_AmbulanceRamassageChargement ),
-    T_ConverterLogMedicalHandlingStatus( "attente chargement complet ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "attente chargement complet ambulance ramassage" ), eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceRamassage ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage deplacement aller" ), eLogMedicalHandlingStatus_AmbulanceRamassageDeplacementAller ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage dechargement" ), eLogMedicalHandlingStatus_AmbulanceRamassageDechargement ),
-    T_ConverterLogMedicalHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "termine" ), eLogMedicalHandlingStatus_Termine ),
+    T_ConverterLogMedicalHandlingStatus( "attente disponibilite ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for evacuation ambulance" ), eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceReleve ),
+    T_ConverterLogMedicalHandlingStatus( "ambulance releve deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance coming" ), eLogMedicalHandlingStatus_AmbulanceReleveDeplacementAller ),
+    T_ConverterLogMedicalHandlingStatus( "ambulance releve chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance loading" ), eLogMedicalHandlingStatus_AmbulanceReleveChargement ),
+    T_ConverterLogMedicalHandlingStatus( "attente chargement complet ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for evacuation ambulance loading" ), eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceReleve ),
+    T_ConverterLogMedicalHandlingStatus( "ambulance releve deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance going back" ), eLogMedicalHandlingStatus_AmbulanceReleveDeplacementRetour ),
+    T_ConverterLogMedicalHandlingStatus( "ambulance releve dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance unloading" ), eLogMedicalHandlingStatus_AmbulanceReleveDechargement ),
+    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for doctor" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourDiagnostique ),
+    T_ConverterLogMedicalHandlingStatus( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostic" ), eLogMedicalHandlingStatus_Diagnostique ),
+    T_ConverterLogMedicalHandlingStatus( "recherche secteur tri", QT_TRANSLATE_NOOP( "ENT_Tr", "looking for triange area" ), eLogMedicalHandlingStatus_RechercheSecteurTri ),
+    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour tri", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for triage" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourTri ),
+    T_ConverterLogMedicalHandlingStatus( "tri", QT_TRANSLATE_NOOP( "ENT_Tr", "triage" ), eLogMedicalHandlingStatus_Tri ),
+    T_ConverterLogMedicalHandlingStatus( "recherche secteur soin", QT_TRANSLATE_NOOP( "ENT_Tr", "looking for treatment area" ), eLogMedicalHandlingStatus_RechercheSecteurSoin ),
+    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour soin", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for doctor (treatment)" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourSoin ),
+    T_ConverterLogMedicalHandlingStatus( "soin", QT_TRANSLATE_NOOP( "ENT_Tr", "treatment" ), eLogMedicalHandlingStatus_Soin ),
+    T_ConverterLogMedicalHandlingStatus( "hospitalisation", QT_TRANSLATE_NOOP( "ENT_Tr", "hospitalization" ), eLogMedicalHandlingStatus_Hospitalisation ),
+    T_ConverterLogMedicalHandlingStatus( "attente disponibilite ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for collection ambulance" ), eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceRamassage ),
+    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "collection ambulance loading" ), eLogMedicalHandlingStatus_AmbulanceRamassageChargement ),
+    T_ConverterLogMedicalHandlingStatus( "attente chargement complet ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for collection ambulance loading" ), eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceRamassage ),
+    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "collection ambulance coming" ), eLogMedicalHandlingStatus_AmbulanceRamassageDeplacementAller ),
+    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "collection ambulance unloading" ), eLogMedicalHandlingStatus_AmbulanceRamassageDechargement ),
+    T_ConverterLogMedicalHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogMedicalHandlingStatus_Termine ),
     T_ConverterLogMedicalHandlingStatus( "", "", (E_LogMedicalHandlingStatus)-1 )
 };
 
@@ -392,45 +392,45 @@ ENT_Tr::T_ConverterObjectErrorCode ENT_Tr::ObjectErrorCodeConverter_[] =
 
 ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
 {
-    T_ConverterObjectType( "bouchon mines", QT_TRANSLATE_NOOP( "ENT_Tr", "bouchon mines" ), eObjectType_BouchonMines ),
-    T_ConverterObjectType( "zone minee lineaire", QT_TRANSLATE_NOOP( "ENT_Tr", "zone minee lineaire" ), eObjectType_ZoneMineeLineaire ),
-    T_ConverterObjectType( "zone minee par dispersion", QT_TRANSLATE_NOOP( "ENT_Tr", "zone minee par dispersion" ), eObjectType_ZoneMineeParDispersion ),
-    T_ConverterObjectType( "fosse anti char", QT_TRANSLATE_NOOP( "ENT_Tr", "fosse anti char" ), eObjectType_FosseAntiChar ),
-    T_ConverterObjectType( "abattis", QT_TRANSLATE_NOOP( "ENT_Tr", "abattis" ), eObjectType_Abattis ),
+    T_ConverterObjectType( "bouchon mines", QT_TRANSLATE_NOOP( "ENT_Tr", "mines" ), eObjectType_BouchonMines ),
+    T_ConverterObjectType( "zone minee lineaire", QT_TRANSLATE_NOOP( "ENT_Tr", "mined area" ), eObjectType_ZoneMineeLineaire ),
+    T_ConverterObjectType( "zone minee par dispersion", QT_TRANSLATE_NOOP( "ENT_Tr", "mined area (scattered)" ), eObjectType_ZoneMineeParDispersion ),
+    T_ConverterObjectType( "fosse anti char", QT_TRANSLATE_NOOP( "ENT_Tr", "anti tank obstacle" ), eObjectType_FosseAntiChar ),
+    T_ConverterObjectType( "abattis", QT_TRANSLATE_NOOP( "ENT_Tr", "abatis" ), eObjectType_Abattis ),
     T_ConverterObjectType( "barricade", QT_TRANSLATE_NOOP( "ENT_Tr", "barricade" ), eObjectType_Barricade ),
-    T_ConverterObjectType( "eboulement", QT_TRANSLATE_NOOP( "ENT_Tr", "eboulement" ), eObjectType_Eboulement ),
-    T_ConverterObjectType( "destruction route", QT_TRANSLATE_NOOP( "ENT_Tr", "destruction route" ), eObjectType_DestructionRoute ),
-    T_ConverterObjectType( "destruction pont", QT_TRANSLATE_NOOP( "ENT_Tr", "destruction pont" ), eObjectType_DestructionPont ),
-    T_ConverterObjectType( "pont flottant continu", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant continu" ), eObjectType_PontFlottantContinu ),
-    T_ConverterObjectType( "poste tir", QT_TRANSLATE_NOOP( "ENT_Tr", "poste tir" ), eObjectType_PosteTir ),
-    T_ConverterObjectType( "zone protegee", QT_TRANSLATE_NOOP( "ENT_Tr", "zone protegee" ), eObjectType_ZoneProtegee ),
-    T_ConverterObjectType( "zone implantation canon", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation canon" ), eObjectType_ZoneImplantationCanon ),
-    T_ConverterObjectType( "zone implantation cobra", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation cobra" ), eObjectType_ZoneImplantationCobra ),
-    T_ConverterObjectType( "zone implantation lrm", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation lrm" ), eObjectType_ZoneImplantationLrm ),
-    T_ConverterObjectType( "site franchissement", QT_TRANSLATE_NOOP( "ENT_Tr", "site franchissement" ), eObjectType_SiteFranchissement ),
-    T_ConverterObjectType( "nuage nbc", QT_TRANSLATE_NOOP( "ENT_Tr", "nuage nbc" ), eObjectType_NuageNbc ),
-    T_ConverterObjectType( "plot ravitaillement", QT_TRANSLATE_NOOP( "ENT_Tr", "plot ravitaillement" ), eObjectType_PlotRavitaillement ),
-    T_ConverterObjectType( "site decontamination", QT_TRANSLATE_NOOP( "ENT_Tr", "site decontamination" ), eObjectType_SiteDecontamination ),
-    T_ConverterObjectType( "zone brouillage brod", QT_TRANSLATE_NOOP( "ENT_Tr", "zone brouillage brod" ), eObjectType_ZoneBrouillageBrod ),
-    T_ConverterObjectType( "rota", QT_TRANSLATE_NOOP( "ENT_Tr", "rota" ), eObjectType_Rota ),
-    T_ConverterObjectType( "zone nbc", QT_TRANSLATE_NOOP( "ENT_Tr", "zone nbc" ), eObjectType_ZoneNbc ),
-    T_ConverterObjectType( "zone brouillage bromure", QT_TRANSLATE_NOOP( "ENT_Tr", "zone brouillage bromure" ), eObjectType_ZoneBrouillageBromure ),
-    T_ConverterObjectType( "aire poser", QT_TRANSLATE_NOOP( "ENT_Tr", "aire poser" ), eObjectType_AirePoser ),
-    T_ConverterObjectType( "piste", QT_TRANSLATE_NOOP( "ENT_Tr", "piste" ), eObjectType_Piste ),
-    T_ConverterObjectType( "plateforme", QT_TRANSLATE_NOOP( "ENT_Tr", "plateforme" ), eObjectType_Plateforme ),
-    T_ConverterObjectType( "zone mobilite amelioree", QT_TRANSLATE_NOOP( "ENT_Tr", "zone mobilite amelioree" ), eObjectType_ZoneMobiliteAmelioree ),
-    T_ConverterObjectType( "zone poser helicoptere", QT_TRANSLATE_NOOP( "ENT_Tr", "zone poser helicoptere" ), eObjectType_ZonePoserHelicoptere ),
-    T_ConverterObjectType( "aire logistique", QT_TRANSLATE_NOOP( "ENT_Tr", "aire logistique" ), eObjectType_AireLogistique ),
-    T_ConverterObjectType( "itineraire logistique", QT_TRANSLATE_NOOP( "ENT_Tr", "itineraire logistique" ), eObjectType_ItineraireLogistique ),
-    T_ConverterObjectType( "camp prisonniers", QT_TRANSLATE_NOOP( "ENT_Tr", "camp prisonniers" ), eObjectType_CampPrisonniers ),
-    T_ConverterObjectType( "camp refugies", QT_TRANSLATE_NOOP( "ENT_Tr", "camp refugies" ), eObjectType_CampRefugies ),
-    T_ConverterObjectType( "poste controle", QT_TRANSLATE_NOOP( "ENT_Tr", "poste controle" ), eObjectType_PosteControle ),
-    T_ConverterObjectType( "terrain largage", QT_TRANSLATE_NOOP( "ENT_Tr", "terrain largage" ), eObjectType_TerrainLargage ),
-    T_ConverterObjectType( "zone interdite mouvement", QT_TRANSLATE_NOOP( "ENT_Tr", "zone interdite mouvement" ), eObjectType_ZoneInterditeMouvement ),
-    T_ConverterObjectType( "zone interdite tir", QT_TRANSLATE_NOOP( "ENT_Tr", "zone interdite tir" ), eObjectType_ZoneInterditeTir ),
-    T_ConverterObjectType( "zone implantation mortier", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation mortier" ), eObjectType_ZoneImplantationMortier ),
-    T_ConverterObjectType( "pont flottant discontinu", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant discontinu" ), eObjectType_PontFlottantDiscontinu ),
-    T_ConverterObjectType( "installation", QT_TRANSLATE_NOOP( "ENT_Tr", "installation" ), eObjectType_Installation ),
+    T_ConverterObjectType( "eboulement", QT_TRANSLATE_NOOP( "ENT_Tr", "collapse" ), eObjectType_Eboulement ),
+    T_ConverterObjectType( "destruction route", QT_TRANSLATE_NOOP( "ENT_Tr", "road destruction" ), eObjectType_DestructionRoute ),
+    T_ConverterObjectType( "destruction pont", QT_TRANSLATE_NOOP( "ENT_Tr", "bridge destruction" ), eObjectType_DestructionPont ),
+    T_ConverterObjectType( "pont flottant continu", QT_TRANSLATE_NOOP( "ENT_Tr", "engineer bridge" ), eObjectType_PontFlottantContinu ),
+    T_ConverterObjectType( "poste tir", QT_TRANSLATE_NOOP( "ENT_Tr", "firing post" ), eObjectType_PosteTir ),
+    T_ConverterObjectType( "zone protegee", QT_TRANSLATE_NOOP( "ENT_Tr", "protected area" ), eObjectType_ZoneProtegee ),
+    T_ConverterObjectType( "zone implantation canon", QT_TRANSLATE_NOOP( "ENT_Tr", "gun artillery deployment area" ), eObjectType_ZoneImplantationCanon ),
+    T_ConverterObjectType( "zone implantation cobra", QT_TRANSLATE_NOOP( "ENT_Tr", "counter battery radar deployment area" ), eObjectType_ZoneImplantationCobra ),
+    T_ConverterObjectType( "zone implantation lrm", QT_TRANSLATE_NOOP( "ENT_Tr", "mlrs deployment area" ), eObjectType_ZoneImplantationLrm ),
+    T_ConverterObjectType( "site franchissement", QT_TRANSLATE_NOOP( "ENT_Tr", "crossing site" ), eObjectType_SiteFranchissement ),
+    T_ConverterObjectType( "nuage nbc", QT_TRANSLATE_NOOP( "ENT_Tr", "NBC cloud" ), eObjectType_NuageNbc ),
+    T_ConverterObjectType( "plot ravitaillement", QT_TRANSLATE_NOOP( "ENT_Tr", "FARP" ), eObjectType_PlotRavitaillement ),
+    T_ConverterObjectType( "site decontamination", QT_TRANSLATE_NOOP( "ENT_Tr", "decontamination site" ), eObjectType_SiteDecontamination ),
+    T_ConverterObjectType( "zone brouillage brod", QT_TRANSLATE_NOOP( "ENT_Tr", "jamming area" ), eObjectType_ZoneBrouillageBrod ),
+    T_ConverterObjectType( "rota", QT_TRANSLATE_NOOP( "ENT_Tr", "ROTA zone" ), eObjectType_Rota ),
+    T_ConverterObjectType( "zone nbc", QT_TRANSLATE_NOOP( "ENT_Tr", "NBC zone" ), eObjectType_ZoneNbc ),
+    T_ConverterObjectType( "zone brouillage bromure", QT_TRANSLATE_NOOP( "ENT_Tr", "jamming area (type 2)" ), eObjectType_ZoneBrouillageBromure ),
+    T_ConverterObjectType( "aire poser", QT_TRANSLATE_NOOP( "ENT_Tr", "landing area" ), eObjectType_AirePoser ),
+    T_ConverterObjectType( "piste", QT_TRANSLATE_NOOP( "ENT_Tr", "slope" ), eObjectType_Piste ),
+    T_ConverterObjectType( "plateforme", QT_TRANSLATE_NOOP( "ENT_Tr", "platform" ), eObjectType_Plateforme ),
+    T_ConverterObjectType( "zone mobilite amelioree", QT_TRANSLATE_NOOP( "ENT_Tr", "mobility enhanced area" ), eObjectType_ZoneMobiliteAmelioree ),
+    T_ConverterObjectType( "zone poser helicoptere", QT_TRANSLATE_NOOP( "ENT_Tr", "landing area (helicopters)" ), eObjectType_ZonePoserHelicoptere ),
+    T_ConverterObjectType( "aire logistique", QT_TRANSLATE_NOOP( "ENT_Tr", "logistics support area" ), eObjectType_AireLogistique ),
+    T_ConverterObjectType( "itineraire logistique", QT_TRANSLATE_NOOP( "ENT_Tr", "logistics support route" ), eObjectType_ItineraireLogistique ),
+    T_ConverterObjectType( "camp prisonniers", QT_TRANSLATE_NOOP( "ENT_Tr", "prisoners camp" ), eObjectType_CampPrisonniers ),
+    T_ConverterObjectType( "camp refugies", QT_TRANSLATE_NOOP( "ENT_Tr", "refugees camp" ), eObjectType_CampRefugies ),
+    T_ConverterObjectType( "poste controle", QT_TRANSLATE_NOOP( "ENT_Tr", "checkpoint" ), eObjectType_PosteControle ),
+    T_ConverterObjectType( "terrain largage", QT_TRANSLATE_NOOP( "ENT_Tr", "dropping zone" ), eObjectType_TerrainLargage ),
+    T_ConverterObjectType( "zone interdite mouvement", QT_TRANSLATE_NOOP( "ENT_Tr", "keep out zone" ), eObjectType_ZoneInterditeMouvement ),
+    T_ConverterObjectType( "zone interdite tir", QT_TRANSLATE_NOOP( "ENT_Tr", "fire forbidden zone" ), eObjectType_ZoneInterditeTir ),
+    T_ConverterObjectType( "zone implantation mortier", QT_TRANSLATE_NOOP( "ENT_Tr", "mortar deployment area" ), eObjectType_ZoneImplantationMortier ),
+    T_ConverterObjectType( "pont flottant discontinu", QT_TRANSLATE_NOOP( "ENT_Tr", "engineer bridge (type2)" ), eObjectType_PontFlottantDiscontinu ),
+    T_ConverterObjectType( "installation", QT_TRANSLATE_NOOP( "ENT_Tr", "facility" ), eObjectType_Installation ),
     T_ConverterObjectType( "fire", QT_TRANSLATE_NOOP( "ENT_Tr", "fire" ), eObjectType_Fire ),
     T_ConverterObjectType( "emergency shelter", QT_TRANSLATE_NOOP( "ENT_Tr", "emergency shelter" ), eObjectType_EmergencyShelter ),
     T_ConverterObjectType( "", "", (E_ObjectType)-1 )
@@ -464,16 +464,16 @@ ENT_Tr::T_ConverterOrderErrorCode ENT_Tr::OrderErrorCodeConverter_[] =
 ENT_Tr::T_ConverterReportType ENT_Tr::ReportTypeConverter_[] =
 {
     T_ConverterReportType( "message", QT_TRANSLATE_NOOP( "ENT_Tr", "message" ), eReportType_Message ),
-    T_ConverterReportType( "operationel", QT_TRANSLATE_NOOP( "ENT_Tr", "operationel" ), eReportType_Operationel ),
-    T_ConverterReportType( "evenement exceptionnel", QT_TRANSLATE_NOOP( "ENT_Tr", "evenement exceptionnel" ), eReportType_EvenementExceptionnel ),
+    T_ConverterReportType( "operationel", QT_TRANSLATE_NOOP( "ENT_Tr", "operational" ), eReportType_Operationel ),
+    T_ConverterReportType( "evenement exceptionnel", QT_TRANSLATE_NOOP( "ENT_Tr", "event" ), eReportType_EvenementExceptionnel ),
     T_ConverterReportType( "warning", QT_TRANSLATE_NOOP( "ENT_Tr", "warning" ), eReportType_Warning ),
     T_ConverterReportType( "", "", (E_ReportType)-1 )
 };
 
 ENT_Tr::T_ConverterAutomatOrderFormation ENT_Tr::AutomatOrderFormationConverter_[] =
 {
-    T_ConverterAutomatOrderFormation( "un echelon", QT_TRANSLATE_NOOP( "ENT_Tr", "un echelon" ), eAutomatOrderFormation_UnEchelon ),
-    T_ConverterAutomatOrderFormation( "deux echelons", QT_TRANSLATE_NOOP( "ENT_Tr", "deux echelons" ), eAutomatOrderFormation_DeuxEchelons ),
+    T_ConverterAutomatOrderFormation( "un echelon", QT_TRANSLATE_NOOP( "ENT_Tr", "one echelon" ), eAutomatOrderFormation_UnEchelon ),
+    T_ConverterAutomatOrderFormation( "deux echelons", QT_TRANSLATE_NOOP( "ENT_Tr", "two echelons" ), eAutomatOrderFormation_DeuxEchelons ),
     T_ConverterAutomatOrderFormation( "", "", (E_AutomatOrderFormation)-1 )
 };
 
@@ -487,9 +487,9 @@ ENT_Tr::T_ConverterPopulationErrorCode ENT_Tr::PopulationErrorCodeConverter_[] =
 
 ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
 {
-    T_ConverterPopulationAttitude( "calme", QT_TRANSLATE_NOOP( "ENT_Tr", "calme" ), ePopulationAttitude_Calme ),
-    T_ConverterPopulationAttitude( "agitee", QT_TRANSLATE_NOOP( "ENT_Tr", "agitee" ), ePopulationAttitude_Agitee ),
-    T_ConverterPopulationAttitude( "excitee", QT_TRANSLATE_NOOP( "ENT_Tr", "excitee" ), ePopulationAttitude_Excitee ),
+    T_ConverterPopulationAttitude( "calme", QT_TRANSLATE_NOOP( "ENT_Tr", "quiet" ), ePopulationAttitude_Calme ),
+    T_ConverterPopulationAttitude( "agitee", QT_TRANSLATE_NOOP( "ENT_Tr", "agitated" ), ePopulationAttitude_Agitee ),
+    T_ConverterPopulationAttitude( "excitee", QT_TRANSLATE_NOOP( "ENT_Tr", "nervous" ), ePopulationAttitude_Excitee ),
     T_ConverterPopulationAttitude( "agressive", QT_TRANSLATE_NOOP( "ENT_Tr", "agressive" ), ePopulationAttitude_Agressive ),
     T_ConverterPopulationAttitude( "", "", (E_PopulationAttitude)-1 )
 };
@@ -503,7 +503,7 @@ ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
 //-----------------------------------------------------------------------------
 void ENT_Tr::InitTranslations()
 {
-        InitTr( ChangeHierarchyErrorCodeConverter_, "ENT_Tr" );
+	InitTr( ChangeHierarchyErrorCodeConverter_, "ENT_Tr" );
     InitTr( LocationTypeConverter_, "ENT_Tr" );
     InitTr( DotationFamilyConverter_, "ENT_Tr" );
     InitTr( AmmunitionFamilyConverter_, "ENT_Tr" );
@@ -880,7 +880,8 @@ const std::string& ENT_Tr::ConvertFromObjectErrorCode( E_ObjectErrorCode nValue,
 //-----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromObjectType( E_ObjectType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( ObjectTypeConverter_, nValue, nConverterType );
+	const std::string& strOut = ENT_Tr::InverseFindInConverter( ObjectTypeConverter_, nValue, nConverterType );
+	return strOut;
 }
 
 //-----------------------------------------------------------------------------

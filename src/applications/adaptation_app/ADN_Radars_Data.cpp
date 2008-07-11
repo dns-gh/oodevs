@@ -90,7 +90,7 @@ void ADN_Radars_Data::DetectTimes::ReadAcquisitionTime( xml::xistream& input, bo
         detectTime_ = time;
     }
     else
-        throw ADN_DataException( "ADN_Radars_Data", "Unknown acquisition level " + level );
+        throw ADN_DataException( "Invalid data", tr( "Sensors - Invalid level '%1'" ).arg( level.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +176,7 @@ void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToRadarType( type );
     if( nType_ == E_RadarType(-1 ) )
-        throw ADN_DataException( "RadarInfos", "Invalid radar type " + type );
+        throw ADN_DataException( "Invalid data", tr( "Sensors - Invalid radar type '%1'" ).arg( type.c_str() ).ascii() );
 
     input >> xml::attribute( "action-range", rRange_ )
           >> xml::optional() >> xml::attribute( "min-height", rMinHeight_ )
@@ -210,7 +210,7 @@ void ADN_Radars_Data::RadarInfos::ReadDetectableActivity( xml::xistream& input )
           >> xml::optional() >> xml::attribute( "value", value );
     unsigned n = (unsigned)ADN_Tr::ConvertToConsumptionType( consumption );
     if( n == unsigned( -1 ) )
-        throw ADN_DataException( "ADN_Radars_Data", "Unknown consumption " + consumption );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid activity '%1'" ).arg( consumption.c_str() ).ascii() );
     detectableActivities_[n] = value;
     bHasDetectableActivities_ = bHasDetectableActivities_.GetData() || value;
 }

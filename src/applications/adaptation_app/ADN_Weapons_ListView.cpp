@@ -38,7 +38,7 @@ ADN_Weapons_ListView::ADN_Weapons_ListView( QWidget* pParent, const char* szName
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Weapon" ) );
+    addColumn( tr( "Weapon system" ) );
     setResizeMode( QListView::AllColumns );
 
     // Connector creation

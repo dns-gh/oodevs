@@ -63,9 +63,9 @@ void ADN_Communications_GUI::Build()
     // Create the top widget.
     pMainWidget_ = new QWidget( 0 );
 
-    QGroupBox* pGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Communications blackout effects" ), pMainWidget_ );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Reload time factor" ), data_.rReloadModifier_, 0, eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Speed factor" ), data_.rSpeedModifier_, 0, eGreaterEqualZero );
+    QGroupBox* pGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Jamming" ), pMainWidget_ );
+    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on reloading duration" ), data_.rReloadModifier_, 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on movement speed" ), data_.rSpeedModifier_, 0, eGreaterEqualZero );
 
     // Layout
     QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );

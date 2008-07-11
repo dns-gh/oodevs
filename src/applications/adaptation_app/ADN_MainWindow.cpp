@@ -70,7 +70,7 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
 , strAdminPassword_ ( "" )
 {
     setMinimumSize( 640, 480 );
-    setCaption( tr( "Scipio Adaptation Tool - No Project" ) );
+    setCaption( tr( "Sword Officer Training Adaptation Tool - No Project" ) );
 }
 
 
@@ -111,9 +111,9 @@ void ADN_MainWindow::Build()
     connect( pProjectSaveAction, SIGNAL( activated() ) , this, SLOT( SaveProject() ) );
     pActionSave_ = pProjectSaveAction;
 
-    QAction* pProjectTestDataAction = new QAction( MAKE_PIXMAP(testdata), tr("&Test data"), CTRL+Key_T, this, "testdata" );
+/*    QAction* pProjectTestDataAction = new QAction( MAKE_PIXMAP(testdata), tr("&Test data"), CTRL+Key_T, this, "testdata" );
     connect( pProjectTestDataAction, SIGNAL( activated() ), this, SLOT( TestData() ) );
-
+*/
 // $$$ UNDO DISABLED
 //    QAction* pUndoAction = QtUndoManager::manager()->createUndoAction( this );
 //    pUndoAction->setAccel( QKeySequence( "Ctrl+Z" ) );
@@ -125,7 +125,7 @@ void ADN_MainWindow::Build()
     pProjectNewAction     ->addTo( pToolBar );
     pProjectLoadAction    ->addTo( pToolBar );
     pProjectSaveAction    ->addTo( pToolBar );
-    pProjectTestDataAction->addTo( pToolBar );
+//    pProjectTestDataAction->addTo( pToolBar );
 
 // $$$ UNDO DISABLED
 //    pToolBar->addSeparator();
@@ -149,10 +149,10 @@ void ADN_MainWindow::Build()
     menuBar()->insertItem( tr( "Consistency &tables" ), pCoheranceTablesMenu_ );
 
     // Configuration menu
-    pConfigurationMenu_ = new QPopupMenu( this );
+/*    pConfigurationMenu_ = new QPopupMenu( this );
     menuBar()->insertItem( tr( "Confi&guration" ), pConfigurationMenu_ );
     pConfigurationMenu_->insertItem( tr( "Data test..." ), this, SLOT( ConfigureDataTest() ) );
-
+*/
     // Help menu
     pHelpMenu_ = new QPopupMenu( this );
     menuBar()->insertItem( tr( "&Help" ), pHelpMenu_ );
@@ -258,7 +258,7 @@ void ADN_MainWindow::SaveProject()
         return; // we were not able to save all the datas
 
     std::string szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + workspace_.GetProject().GetFileInfos().GetFileName().GetData();
-    setCaption( tr( "Scipio Adaptation Tool - " ) + szProject.c_str() );
+    setCaption( tr( "Sword Officer Training Adaptation Tool - " ) + szProject.c_str() );
 }
 
 
@@ -287,7 +287,7 @@ void ADN_MainWindow::SaveAsProject()
 
     QApplication::restoreOverrideCursor();	// restore original cursor
     
-    QString strCaption = tr( "Scipio Adaptation Tool - " ) + strFileName;
+    QString strCaption = tr( "Sword Officer Training Adaptation Tool - " ) + strFileName;
     setCaption( strCaption );
 }
 
@@ -315,7 +315,7 @@ void ADN_MainWindow::NewProject()
 
     SetMenuEnabled(true);
     pTab_->show();
-    QString strCaption = tr( "Scipio Adaptation Tool - " ) + qfilename;
+    QString strCaption = tr( "Sword Officer Training Adaptation Tool - " ) + qfilename;
     setCaption( strCaption );
 }
 
@@ -374,7 +374,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename )
 
     QApplication::restoreOverrideCursor();	// restore original cursor
 
-    QString strCaption = tr( "Scipio Adaptation Tool - " ) + szFilename.c_str();
+    QString strCaption = tr( "Sword Officer Training Adaptation Tool - " ) + szFilename.c_str();
     setCaption( strCaption );
 
     SetMenuEnabled(true);
@@ -468,10 +468,7 @@ extern const char* szVersionNumber;
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::About()
 {
-    std::stringstream strMsg;
-    strMsg << "Version : " << tr( "Scipio Adaptation Tool" ).ascii() << " " << szVersionNumber << std::endl << " " << std::endl;
-
-    QMessageBox::about( this , tr( "Scipio Adaptation Tool" ), strMsg.str().c_str() );
+    QMessageBox::about( this , tr( "Sword Officer Training Adaptation Tool" ), "Sword Officer Training Adaptation Tool - Copyright (c) MASA Group 2008" );
 }
 
 
@@ -508,11 +505,11 @@ void ADN_MainWindow::ChangeSaveState( bool bNoCommand )
     {
         std::string szProject = workspace_.GetProject().GetFileInfos().GetFileName().GetData();
         if( szProject == ADN_Project_Data::FileInfos::szUntitled_ )
-            setCaption( tr( "Scipio Adaptation Tool - No Project" ) );
+            setCaption( tr( "Sword Officer Training Adaptation Tool - No Project" ) );
         else
         {
             szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + szProject;
-            setCaption( tr( "Scipio Adaptation Tool - " ) + szProject.c_str() );
+            setCaption( tr( "Sword Officer Training Adaptation Tool - " ) + szProject.c_str() );
         }
     }
 }
@@ -606,7 +603,7 @@ bool ADN_MainWindow::OfferToSave()
         return true;
 
     QString strMessage = tr( "Save changes to project %1?" ).arg( workspace_.GetProject().GetFileInfos().GetFileNameFull().c_str() );
-    int nResult = QMessageBox::information( this, tr( "Scipio Adaptation Tool" ), strMessage, QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+    int nResult = QMessageBox::information( this, tr( "Sword Officer Training Adaptation Tool" ), strMessage, QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
     switch( nResult )
     {
         case QMessageBox::Yes:

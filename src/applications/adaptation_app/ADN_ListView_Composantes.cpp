@@ -32,7 +32,7 @@ ADN_ListView_Composantes::ADN_ListView_Composantes( QWidget* pParent, const char
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Composantes" ) );
+    addColumn( tr( "Equipments" ) );
     setResizeMode(QListView::AllColumns);
 
     // Connector creation.

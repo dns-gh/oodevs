@@ -157,13 +157,13 @@ void ADN_Supply_Data::ReadArchive( xml::xistream& input )
 
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
     if( pUnit == 0 )
-        throw ADN_DataException( "ADN_Supply_Data", tr( "Unit '%1' does not exist." ).arg( strUnit.c_str() ).ascii() );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).ascii() );
     ptrUnit_ = pUnit;
 
     ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
     ADN_Missions_Data::Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
     if( mission == 0 )
-        throw ADN_DataException( "ADN_Supply_Data", tr( "Mission '%1' does not exist." ).arg( supplyMission.c_str() ).ascii() );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).ascii() );
     ptrSupplyMission_ = mission;
 
     input >> xml::start( "resource-availability-alerts" )
@@ -236,10 +236,10 @@ void ADN_Supply_Data::ReadSpeedModifier( xml::xistream& input )
 void ADN_Supply_Data::WriteArchive( xml::xostream& output )
 {
     if( ptrUnit_.GetData() == 0 )
-        throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Convoy unit undefined." ).ascii() );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Logistic supply systems - Convoy unit type not defined" ).ascii() );
 
     if( ptrUnit_.GetData()->eTypeId_.GetData() != eAgentTypePionLOGConvoi )
-        throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Convoy unit is not of type 'Pion LOG Convoi'." ).ascii() );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Logistic supply system - Invalid unit type for convoy units" ).ascii() );
 
     output << xml::start( "supply" )
             << xml::start( "convoys" )

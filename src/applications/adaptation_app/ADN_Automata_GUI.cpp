@@ -73,7 +73,7 @@ void ADN_Automata_GUI::Build()
     ADN_GuiBuilder builder;
 
     // Create the top widget.
-    pMainWidget_ = new QWidget( 0, "Weapons main widget" );
+    pMainWidget_ = new QWidget( 0, "Weapon systems main widget" );
 
     // Create the automata listview.
     ADN_Automata_ListView* pAutomataList = new ADN_Automata_ListView( pMainWidget_ );
@@ -91,7 +91,7 @@ void ADN_Automata_GUI::Build()
     builder.AddEnumField<E_AgentTypeAutomate>( pPropertiesGroup, tr( "Type" ), vInfosConnectors[eAgentType], ADN_Tr::ConvertFromAgentTypeAutomate );
 
     // Model
-    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pPropertiesGroup, tr( "Model" ), vInfosConnectors[eModel] );
+    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pPropertiesGroup, tr( "Doctrine model" ), vInfosConnectors[eModel] );
 
     // Unit
     builder.AddField< ADN_ComboBox_Vector<ADN_Units_Data::UnitInfos> >( pPropertiesGroup, tr( "Command post" ), vInfosConnectors[eUnit] );
@@ -128,15 +128,15 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 
     // Setup the header.
     pTable->setNumCols( 3 );
-    pTable->horizontalHeader()->setLabel( 0, tr( "Automata [ off/sic/troop ]" ) );
-    pTable->horizontalHeader()->setLabel( 1, tr( "Unit [ off/sic/troop ]" ) );
-    pTable->horizontalHeader()->setLabel( 2, tr( "Composante [ off/sic/troop ]" ) );
+    pTable->horizontalHeader()->setLabel( 0, tr( "Automata [ officers/warrant officers/soldiers ]" ) );
+    pTable->horizontalHeader()->setLabel( 1, tr( "Unit [ officers/warrant officers/soldiers ]" ) );
+    pTable->horizontalHeader()->setLabel( 2, tr( "Equipment [ officers/warrant officers/soldiers ]" ) );
     pTable->horizontalHeader()->show();
 
     pTable->setNumRows( 1 );
-    builder.AddTableCell( pTable, 0, 0, tr( "Automata [ off/sic/troop ]" ) );
-    builder.AddTableCell( pTable, 0, 1, tr( "Unit [ off/sic/troop ]" ) );
-    builder.AddTableCell( pTable, 0, 2, tr( "Composante [ off/sic/troop ]" ) );
+    builder.AddTableCell( pTable, 0, 0, tr( "Automata [ officers/warrant officers/soldiers ]" ) );
+    builder.AddTableCell( pTable, 0, 1, tr( "Unit [ officers/warrant officers/soldiers ]" ) );
+    builder.AddTableCell( pTable, 0, 2, tr( "Equipment [ officers/warrant officers/soldiers ]" ) );
     pTable->hideRow( 0 );
     pTable->AddBoldGridRow( 0 );
     pTable->sortColumn( 0, true, true );

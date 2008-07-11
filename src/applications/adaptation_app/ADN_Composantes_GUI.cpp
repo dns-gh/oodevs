@@ -79,7 +79,7 @@ void ADN_Composantes_GUI::Build()
     ADN_GuiBuilder builder;
 
     // Create the top widget.
-    pMainWidget_ = new QWidget( 0, "Weapons main widget" );
+    pMainWidget_ = new QWidget( 0, "Weapon systems main widget" );
 
     // Create the weapons listview & the tabwidget.
     pComposanteList_ = new ADN_ListView_Composantes( pMainWidget_ );
@@ -87,7 +87,7 @@ void ADN_Composantes_GUI::Build()
     pComposanteList_->GetConnector().Connect( &data_.GetComposantes() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Composante" ), pMainWidget_ );
+    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Equipment" ), pMainWidget_ );
     QTabWidget* pTabWidget = new QTabWidget( pGroup );
 
     // Main page
@@ -170,12 +170,12 @@ void ADN_Composantes_GUI::Build()
     vInfosConnectors[eRadars] = &pRadars_->GetConnector();
 
     // Weapons
-    QHGroupBox* pWeaponsGroup = new QHGroupBox( tr( "Weapons" ), pDataPage );    
+    QHGroupBox* pWeaponsGroup = new QHGroupBox( tr( "Weapon systems" ), pDataPage );    
     pWeapons_ = new ADN_Composantes_WeaponsListView( pWeaponsGroup );
     vInfosConnectors[eWeapons] = &pWeapons_->GetConnector();
 
     // Dotations
-    QHGroupBox* pDotationGroup = new QHGroupBox( tr( "Contenance" ), pDataPage );
+    QHGroupBox* pDotationGroup = new QHGroupBox( tr( "Resources" ), pDataPage );
     pDotations_ = new ADN_Composantes_Dotations_GUI( true, pDotationGroup );
     vInfosConnectors[eDotations] = &pDotations_->GetConnector();
 
@@ -271,18 +271,18 @@ void ADN_Composantes_GUI::Build()
 QWidget* ADN_Composantes_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
 {
     ADN_GuiBuilder builder;
-    ADN_GroupBox* pHealthGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Health" ), pParent );
+    ADN_GroupBox* pHealthGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Medical system" ), pParent );
     vInfosConnectors[eHasHealthLog] = & pHealthGroup->GetConnector();
 
     QHBox* pAmbulanceHolder = new QHBox( pHealthGroup );
-    this->BuildAmbulance( pAmbulanceHolder, tr( "Ambulance" ), vInfosConnectors, eHasAmbulance );
-    this->BuildAmbulance( pAmbulanceHolder, tr( "Ambulance releve" ), vInfosConnectors, eHasRAmbulance );
+    this->BuildAmbulance( pAmbulanceHolder, tr( "Ambulance, collection" ), vInfosConnectors, eHasAmbulance );
+    this->BuildAmbulance( pAmbulanceHolder, tr( "Ambulance, evacuation" ), vInfosConnectors, eHasRAmbulance );
 
     ADN_GroupBox* pDoctorGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Doctor" ), pHealthGroup );
     vInfosConnectors[eIsDoctor] = & pDoctorGroup->GetConnector();
 
     QWidget* pHolder = builder.AddFieldHolder( pDoctorGroup );
-    builder.AddField<ADN_CheckBox>( pHolder, tr( "Sorts" ), vInfosConnectors[eIsSortingDoctor] );
+    builder.AddField<ADN_CheckBox>( pHolder, tr( "Triage" ), vInfosConnectors[eIsSortingDoctor] );
 
     ADN_GroupBox* pCureDoctorGroup = new ADN_GroupBox( 1, Qt::Vertical, tr( "Treats" ), pDoctorGroup );
     vInfosConnectors[eIsCuringDoctor] = & pCureDoctorGroup->GetConnector();
@@ -295,7 +295,7 @@ QWidget* ADN_Composantes_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& 
 
     pHolder = builder.AddFieldHolder( pDoctorGroup );
     builder.AddField<ADN_CheckBox>( pHolder, tr( "Treats NBC" ), vInfosConnectors[eTreatsNBC] );
-    builder.AddField<ADN_CheckBox>( pHolder, tr( "Treats shock" ), vInfosConnectors[eTreatsShock] );
+    builder.AddField<ADN_CheckBox>( pHolder, tr( "Treats psyop" ), vInfosConnectors[eTreatsShock] );
 
     return pHealthGroup;
 }
@@ -315,11 +315,11 @@ QWidget* ADN_Composantes_GUI::BuildAmbulance( QWidget* pParent, const char* szNa
     QWidget* pHolder = builder.AddFieldHolder( box );
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Capacity" ), vInfosConnectors[nIndex+1], 0, eGreaterZero ); 
     pHolder = builder.AddFieldHolder( box );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Load time per person" ), vInfosConnectors[nIndex+2] ); 
+    builder.AddField<ADN_TimeField>( pHolder, tr( "Loading duration per person" ), vInfosConnectors[nIndex+2] ); 
     pHolder = builder.AddFieldHolder( box );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Unload time per person" ), vInfosConnectors[nIndex+3] ); 
+    builder.AddField<ADN_TimeField>( pHolder, tr( "Unloading duration per person" ), vInfosConnectors[nIndex+3] ); 
 
-    QGroupBox* pSkillsBox = new QGroupBox( eNbrDoctorSkills + 2, Qt::Horizontal, tr( "Transports" ), pAmbulanceGroup );
+    QGroupBox* pSkillsBox = new QGroupBox( eNbrDoctorSkills + 2, Qt::Horizontal, tr( "Capabilities" ), pAmbulanceGroup );
     for( int n = 0; n < eNbrDoctorSkills; ++n )
     {
         pHolder = builder.AddFieldHolder( pSkillsBox );
@@ -328,7 +328,7 @@ QWidget* ADN_Composantes_GUI::BuildAmbulance( QWidget* pParent, const char* szNa
     pHolder = builder.AddFieldHolder( pSkillsBox );
     builder.AddField<ADN_CheckBox>( pHolder, tr( "NBC" ), vInfosConnectors[nIndex+4] );
     pHolder = builder.AddFieldHolder( pSkillsBox );
-    builder.AddField<ADN_CheckBox>( pHolder, tr( "shock" ), vInfosConnectors[nIndex+5] );
+    builder.AddField<ADN_CheckBox>( pHolder, tr( "psyop" ), vInfosConnectors[nIndex+5] );
     return pAmbulanceGroup;
 }
 
@@ -339,7 +339,7 @@ QWidget* ADN_Composantes_GUI::BuildAmbulance( QWidget* pParent, const char* szNa
 QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
 {
     ADN_GuiBuilder builder;
-    ADN_GroupBox* pSupplyGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Supply" ), pParent );
+    ADN_GroupBox* pSupplyGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Supply system" ), pParent );
     vInfosConnectors[eIsLogSupply] = & pSupplyGroup->GetConnector();
 
     QWidget* pHolder = new QWidget( pSupplyGroup );
@@ -350,7 +350,7 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
 
     builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max weight carried"  ), vInfosConnectors[eLogCarryWeightCapacity], tr( "T" ), eGreaterZero ); 
     builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max volume carried"  ), vInfosConnectors[eLogCarryVolumeCapacity], tr( "m3" ), eGreaterZero ); 
-    builder.AddField<ADN_ComboBox_Equipment_Nature>( pCarrierGroup, tr( "Carried nature" ), vInfosConnectors[eLogCarryNature] );
+    builder.AddField<ADN_ComboBox_Equipment_Nature>( pCarrierGroup, tr( "Resource nature carried" ), vInfosConnectors[eLogCarryNature] );
 
     return pSupplyGroup;
 }
@@ -363,20 +363,20 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
 QWidget* ADN_Composantes_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
 {
     ADN_GuiBuilder builder;
-    ADN_GroupBox* pMaintenanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Maintenance" ), pParent );
+    ADN_GroupBox* pMaintenanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Maintenance system" ), pParent );
     vInfosConnectors[eIsMaintenance] = & pMaintenanceGroup->GetConnector();
 
-    ADN_GroupBox* pTowerGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Tower" ), pMaintenanceGroup );
+    ADN_GroupBox* pTowerGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Tow truck" ), pMaintenanceGroup );
     vInfosConnectors[eIsTower] = & pTowerGroup->GetConnector();
     builder.AddField<ADN_EditLine_Double>( pTowerGroup, tr( "Capacity" ), vInfosConnectors[eTowerCapacity], tr( "T" ), eGreaterZero ); 
-    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Load time" ), vInfosConnectors[eMaintenanceLoadTime] ); 
-    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Unload time" ), vInfosConnectors[eMaintenanceUnloadTime] ); 
+    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Loading duration" ), vInfosConnectors[eMaintenanceLoadTime] ); 
+    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Unloading duration" ), vInfosConnectors[eMaintenanceUnloadTime] ); 
 
     QHBox* pNTIHolder = new QHBox( pMaintenanceGroup );
 
-    this->BuildNTI( pNTIHolder, tr( "NTI 1" ), vInfosConnectors, eNTI1 );
-    this->BuildNTI( pNTIHolder, tr( "NTI 2" ), vInfosConnectors, eNTI2 );
-    this->BuildNTI( pNTIHolder, tr( "NTI 3" ), vInfosConnectors, eNTI3 );
+    this->BuildNTI( pNTIHolder, tr( "Seriousness level 1" ), vInfosConnectors, eNTI1 );
+    this->BuildNTI( pNTIHolder, tr( "Seriousness level 2" ), vInfosConnectors, eNTI2 );
+    this->BuildNTI( pNTIHolder, tr( "Seriousness level 3" ), vInfosConnectors, eNTI3 );
 
     return pMaintenanceGroup;
 }
@@ -392,9 +392,9 @@ QWidget* ADN_Composantes_GUI::BuildNTI( QWidget* pParent, const char* szName, T_
     ADN_GroupBox* pNTIGroup = new ADN_GroupBox( 3, Qt::Horizontal, szName, pParent );
     vInfosConnectors[nIndex + eNTIIsPresent] = & pNTIGroup->GetConnector();
 
-    builder.AddOptionnalField<ADN_TimeField>( pNTIGroup, tr( "Max repair time" ), vInfosConnectors[nIndex + eHasMaxRepairTime], vInfosConnectors[nIndex + eMaxRepairTime] ); 
-    builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can repair electronic breakdowns" ), vInfosConnectors[nIndex + eCanRepairEA] ); 
-    builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can repair mobility breakdowns" ), vInfosConnectors[nIndex + eCanRepairM] ); 
+    builder.AddOptionnalField<ADN_TimeField>( pNTIGroup, tr( "Max repair duration" ), vInfosConnectors[nIndex + eHasMaxRepairTime], vInfosConnectors[nIndex + eMaxRepairTime] ); 
+    builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can fix electronic breakdowns" ), vInfosConnectors[nIndex + eCanRepairEA] ); 
+    builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can fix mobility breakdowns" ), vInfosConnectors[nIndex + eCanRepairM] ); 
 
     return pNTIGroup;
 }
@@ -411,15 +411,15 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
 
     // Setup the header.
     pTable->setNumCols( eNbrLocation + 1 );
-    pTable->horizontalHeader()->setLabel( 0, tr( "Composante" ) );
+    pTable->horizontalHeader()->setLabel( 0, tr( "Equipment" ) );
     for( uint n = 0; n < eNbrLocation; ++n )
-        pTable->horizontalHeader()->setLabel( n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n ).c_str() );
+		pTable->horizontalHeader()->setLabel( n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n, ADN_Tr::eToTr ).c_str() );
     pTable->horizontalHeader()->show();
 
     pTable->setNumRows( data_.vComposantes_.size() + 1 );
-    builder.AddTableCell( pTable, 0, 0, tr( "Composante" ) );
+    builder.AddTableCell( pTable, 0, 0, tr( "Equipment" ) );
     for( uint n = 0; n < eNbrLocation; ++n )
-        builder.AddTableCell( pTable, 0, n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n ).c_str() );
+        builder.AddTableCell( pTable, 0, n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n, ADN_Tr::eToTr ).c_str() );
     pTable->AddBoldGridCol( 1 );
     pTable->AddBoldGridRow( 1 );
     pTable->hideRow( 0 );
@@ -447,7 +447,7 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
 // -----------------------------------------------------------------------------
 void ADN_Composantes_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Composante speeds" ), new ADN_Callback<ADN_Table*,ADN_Composantes_GUI>( this, & ADN_Composantes_GUI::CreateComposanteSpeedsTable ) );
+    mainWindow.AddTable( tr( "Equipment speeds" ), new ADN_Callback<ADN_Table*,ADN_Composantes_GUI>( this, & ADN_Composantes_GUI::CreateComposanteSpeedsTable ) );
 }
 
 
@@ -457,10 +457,10 @@ void ADN_Composantes_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 // -----------------------------------------------------------------------------
 void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
 {
-    QString strLocalPath = strPath + tr( "Composantes/" );
+    QString strLocalPath = strPath + tr( "Equipments/" );
     ADN_Tools::CreatePathToFile( strLocalPath.ascii() );
     ADN_HtmlBuilder indexBuilder;
-    indexBuilder.BeginHtml( tr( "Composantes" ) );
+    indexBuilder.BeginHtml( tr( "Equipments" ) );
     indexBuilder.BeginList();
 
     int n = 0;
@@ -484,17 +484,17 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
         builder.ListItem( tr( "Volume" ), composante.ptrSize_.GetData()->GetData().c_str() );
         builder.ListItem( tr( "Weight" ), composante.rWeight_.GetData(), tr( "T" ) );
         if( composante.bMaxSlope_.GetData() )
-            builder.ListItem( tr( "Max slope" ), composante.rMaxSlope_.GetData() );
+            builder.ListItem( tr( "Max steepness" ), composante.rMaxSlope_.GetData() );
         if( composante.bTroopEmbarkingTimes_.GetData() )
         {
-            builder.ListItem( tr( "Embark time per person" ), composante.embarkingTimePerPerson_.GetData().c_str() );
-            builder.ListItem( tr( "Disembarking time per person" ), composante.disembarkingTimePerPerson_.GetData().c_str() );
+            builder.ListItem( tr( "Mounting duration per person" ), composante.embarkingTimePerPerson_.GetData().c_str() );
+            builder.ListItem( tr( "Dismounting duration per person" ), composante.disembarkingTimePerPerson_.GetData().c_str() );
         }
         if( composante.bCanCarryCargo_.GetData() )
         {
             builder.ListItem( tr( "Weight capacity" ), composante.rWeightTransportCapacity_.GetData(), tr( "T" ) );
-            builder.ListItem( tr( "Loading time per ton" ), composante.embarkingTimePerTon_.GetData().c_str() );
-            builder.ListItem( tr( "Unloading time per ton" ), composante.disembarkingTimePerTon_.GetData().c_str() );
+            builder.ListItem( tr( "Loading duration per ton" ), composante.embarkingTimePerTon_.GetData().c_str() );
+            builder.ListItem( tr( "Unloading duration per ton" ), composante.disembarkingTimePerTon_.GetData().c_str() );
         }
         builder.EndList();
 
@@ -510,7 +510,7 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
         builder.CreateTableFrom( *pDotations_ );
         builder.Section( tr("Consumptions") );
         builder.CreateTableFrom( *pConsumptions_ );
-        builder.Section( tr("Weapons") );
+        builder.Section( tr("Weapon systems") );
         builder.CreateTableFrom( *pWeapons_ );
 
         builder.Section( tr( "Objects" ) );
@@ -520,19 +520,19 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
             builder.SubSection( object.ptrObject_.GetData()->strName_.GetData().c_str() );
             builder.BeginList();
             if( object.bInitialBuildTime_.GetData() )
-                builder.ListItem( tr( "Initial Construction Time" ), object.initialBuildTime_.GetData().c_str() );
+                builder.ListItem( tr( "Initial construction duration" ), object.initialBuildTime_.GetData().c_str() );
             if( object.bInitialDestructionTime_.GetData() )
-                builder.ListItem( tr( "Initial Destruction Time" ), object.initialDestructionTime_.GetData().c_str() );
+                builder.ListItem( tr( "Initial destruction duration" ), object.initialDestructionTime_.GetData().c_str() );
             if( object.bCoeffBuildTime_.GetData() )
-                builder.ListItem( tr( "Time Construction Coefficient" ), object.coeffBuildTime_.GetData().c_str() );
+                builder.ListItem( tr( "Duration construction factor" ), object.coeffBuildTime_.GetData().c_str() );
             if( object.bCoeffDestructionTime_.GetData() )
-                builder.ListItem( tr( "Time Destruction Coefficient" ), object.coeffDestructionTime_.GetData().c_str() );
+                builder.ListItem( tr( "Duration destruction factor" ), object.coeffDestructionTime_.GetData().c_str() );
             if( object.bValorizationTime_.GetData() )
-                builder.ListItem( tr( "Mining time" ), object.valorizationTime_.GetData().c_str() );
+                builder.ListItem( tr( "Mining duration" ), object.valorizationTime_.GetData().c_str() );
             if( object.bDevalorizationTime_.GetData() )
-                builder.ListItem( tr( "Demining time" ), object.devalorizationTime_.GetData().c_str() );
+                builder.ListItem( tr( "Mine clearing duration" ), object.devalorizationTime_.GetData().c_str() );
             if( object.bCoeffCircTime_.GetData() )
-                builder.ListItem( tr( "Bypass coefficient" ), object.rCoeffCirc_.GetData() );
+                builder.ListItem( tr( "Bypass factor" ), object.rCoeffCirc_.GetData() );
             if( object.bSpeedCirc_.GetData() )
                 builder.ListItem( tr( "Speed when bypassed" ), object.rSpeedCirc_.GetData(), tr( "km/h" ) );
             if( object.bSpeedNotCirc_.GetData() )
@@ -543,7 +543,7 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
 
         builder.EndHtml();
 
-        QString strFileName = tr( "Composante_%1.htm" ).arg( n );
+        QString strFileName = tr( "Equipment_%1.htm" ).arg( n );
         QString strLink = "<a href=\"" + strFileName + "\">" + composante.strName_.GetData().c_str() + "</a>";
         indexBuilder.ListItem( strLink );
         builder.WriteToFile( strLocalPath + strFileName );
@@ -552,7 +552,7 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
     indexBuilder.EndHtml();
     indexBuilder.WriteToFile( strLocalPath + "index.htm" );
 
-    QString strText = "<a href=\"" + tr( "Composantes/" ) + "index.htm\">" + tr( "Composantes" ) + "</a>";
+    QString strText = "<a href=\"" + tr( "Equipments/" ) + "index.htm\">" + tr( "Equipments" ) + "</a>";
     mainIndexBuilder.ListItem( strText );
 }
 

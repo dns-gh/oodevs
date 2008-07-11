@@ -29,7 +29,7 @@ ADN_Composantes_WeaponsListView::ADN_Composantes_WeaponsListView( QWidget* pPare
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Weapons" ) );
+    addColumn( tr( "Weapon systems" ) );
 //    setResizeMode( QListView::AllColumns );
 
     setMinimumHeight( 115 );
@@ -126,4 +126,5 @@ bool ADN_Composantes_WeaponsListView::Contains( const ADN_Weapons_Data::WeaponIn
     }
     return false;    
 }
+
 

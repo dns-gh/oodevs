@@ -31,13 +31,13 @@ typedef ADN_Equipement_Data::CategoryInfo CategoryInfos;
 ADN_Equipement_Wizard::ADN_Equipement_Wizard( ADN_Equipement_Data::DotationInfos& parentDotation, QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<CategoryInfos>( pParent, szName )
 {
-    setCaption( tr( "New equipement creation" ) );
+    setCaption( tr( "New resource creation" ) );
 
     ADN_Equipement_Wizard_Page0* pFirstPage = new ADN_Equipement_Wizard_Page0( parentDotation, this );
-    pFirstPage->SetCaptions( tr( "New equipement creation" ), tr( "Equipements" ) );
+    pFirstPage->SetCaptions( tr( "New resource creation" ), tr( "Resources" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, tr( "Creation completed" ), tr( "Click \"Done\" to create the new equipement category." ) );
+    new ADN_Wizard_LastPage( this, tr( "Creation completed" ), tr( "Click \"Done\" to create the new resource category." ) );
 }
 
 

@@ -85,7 +85,7 @@ void ADN_Population_GUI::Build()
 
     // Global parameters
     QGroupBox* pGlobalGroup          = new QGroupBox( 1, Qt::Horizontal, tr( "Global parameters" ), pMainBox );
-    QGroupBox* pReloadingEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Reloading effects" ), pGlobalGroup );
+    QGroupBox* pReloadingEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population effects on units firing capability" ), pGlobalGroup );
 
     // Density
     builder.AddField<ADN_EditLine_Double>( pReloadingEffectGroup, tr( "Density" ), vInfosConnectors[eReloadingEffectDensity], tr( "people/m²" ), eGreaterZero );
@@ -104,20 +104,20 @@ void ADN_Population_GUI::Build()
     builder.AddField<ADN_EditLine_String>( pPropertiesGroup, tr( "Name" ), vInfosConnectors[eName] );
 
     // Model
-    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pPropertiesGroup, tr( "Model" ), vInfosConnectors[eModel] );
+    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pPropertiesGroup, tr( "Behavior model" ), vInfosConnectors[eModel] );
     
     // Concentration density
-    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Concentration density" ), vInfosConnectors[eConcentrationDensity], tr( "people/m²" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Density" ), vInfosConnectors[eConcentrationDensity], tr( "people/m²" ), eGreaterZero );
 
     // Move nominal density
-    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Move nominal density" ), vInfosConnectors[eMoveDensity], tr( "people/m²" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Density while moving" ), vInfosConnectors[eMoveDensity], tr( "people/m²" ), eGreaterZero );
 
     // Move speed
-    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Move speed" ), vInfosConnectors[eMoveSpeed], tr( "km/h" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Average movement speed" ), vInfosConnectors[eMoveSpeed], tr( "km/h" ), eGreaterZero );
 
     // Speed effects
     //@{
-    QGroupBox* pSpeedEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Speed effects" ), pGroup );
+    QGroupBox* pSpeedEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population effects on units movement capability" ), pGroup );
 
     ADN_Population_SpeedEffect_Attitude_ListView* pSpeedEffectAttitudeList = new ADN_Population_SpeedEffect_Attitude_ListView( pSpeedEffectGroup );
     vInfosConnectors[eSpeedEffectAttitude] = &pSpeedEffectAttitudeList->GetConnector();
@@ -133,9 +133,9 @@ void ADN_Population_GUI::Build()
 
     // Fire effects
     //@{
-    QGroupBox* pFireEffectGlobalGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Fire effects" ), pGroup );
+    QGroupBox* pFireEffectGlobalGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Attritions" ), pGroup );
 
-    QGroupBox* pFireEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population -> Agent" ), pFireEffectGlobalGroup );
+    QGroupBox* pFireEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population -> Units" ), pFireEffectGlobalGroup );
     ADN_Population_FireEffect_Attitude_ListView* pFireEffectAttitudeList = new ADN_Population_FireEffect_Attitude_ListView( pFireEffectGroup );
     vInfosConnectors[eFireEffectAttitude] = &pFireEffectAttitudeList->GetConnector();
 
@@ -160,7 +160,7 @@ void ADN_Population_GUI::Build()
 
     // Fire Roe effects
     //@{
-    QGroupBox* pFireEffectRoeGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Agent -> Population" ), pFireEffectGlobalGroup );
+    QGroupBox* pFireEffectRoeGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Units -> Population" ), pFireEffectGlobalGroup );
     ADN_Population_FireEffectRoe_GUI* pFireEffectRoe = new ADN_Population_FireEffectRoe_GUI( pFireEffectRoeGroup );
     vInfosConnectors[eFireEffectRoe] = &pFireEffectRoe->GetConnector();
     //@}

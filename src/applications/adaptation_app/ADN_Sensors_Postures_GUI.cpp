@@ -79,7 +79,7 @@ ADN_Sensors_Postures_GUI::ADN_Sensors_Postures_GUI( const QString& strColCaption
     
     verticalHeader()->hide();
     horizontalHeader()->setLabel( 0, strColCaption );
-    horizontalHeader()->setLabel( 1, tr( "Modificator (%)" ) );
+    horizontalHeader()->setLabel( 1, tr( "Modifiers" ) );
 
     // Create the connector.
     pConnector_ = new ADN_CT_Sensors_Postures( *this );

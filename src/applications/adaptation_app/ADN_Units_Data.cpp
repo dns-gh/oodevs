@@ -102,7 +102,7 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
           >> xml::optional() >> xml::attribute( "loadable", bLoadable_ );
     ADN_Composantes_Data::ComposanteInfos* pComposante = ADN_Workspace::GetWorkspace().GetComposantes().GetData().FindComposante( strName );
     if( pComposante == 0 )
-        throw ADN_DataException( "ComposanteInfos", tr( "Composante %1 does not exist." ).arg( strName.c_str() ).ascii() );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Unit types - Invalid equipment '%1'" ).arg( strName.c_str() ).ascii() );
     ptrComposante_ = pComposante;
 }
 
@@ -113,8 +113,7 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool bIsAutonomous )
 {
     if( !bIsAutonomous && nNbrHumanInCrew_.GetData() == 0 )
-        throw ADN_DataException( "Mauvaises données dans les catégories",
-            "Il existe un pion dont un equipement a un équipage vide." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Unit has no crew in equipment '%1'" ).arg( ptrComposante_.GetData()->strName_.GetData().c_str() ).ascii() );
 
     output << xml::start( "equipment" )
             << xml::attribute( "type", ptrComposante_.GetData()->strName_ )
@@ -178,7 +177,7 @@ void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 
     E_StockCategory eCategory = ADN_Tr::ConvertToStockCategory( strCategory );
     if( eCategory == (E_StockCategory)-1 )
-        throw ADN_DataException( "StockLogThresholdInfos", "La category de stock '" + strCategory + "' est invalide" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Unit types - Invalid resource '%1'" ).arg( strCategory.c_str() ).ascii() );
     eCategory_ = eCategory;
 }
 
@@ -464,7 +463,7 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     ptrModel_.SetNodeName( "le modèle décisionnel" );
     ptrModel_.SetParentNode( *this );
 
-    vComposantes_.SetItemTypeName( "une composante" );
+    vComposantes_.SetItemTypeName( "an equipment" );
     vComposantes_.SetParentNode( *this );
 
     ADN_Type_Enum<E_NatureLevel,eNbrNatureLevel>::SetConverter( &ENT_Tr::ConvertFromNatureLevel );
@@ -596,7 +595,7 @@ void ADN_Units_Data::UnitInfos::ReadPosture( xml::xistream& input )
     if( itPosture != vPostures_.end() )
         (*itPosture)->ReadArchive( input );
     else
-        throw ADN_DataException( "UnitInfos", "Unknown posture " + posture );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Unit types - Invalid stance '%1'" ).arg( posture.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -623,10 +622,10 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     eTypeId_ = ADN_Tr::ConvertToAgentTypePion( strType );
     if( eTypeId_ == (E_AgentTypePion)-1 )
-        throw ADN_DataException( "UnitInfos", "Le type d'unité '" + strType + "' est invalide" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Unit types - Invalid unit type '%1'" ).arg( strType.c_str() ).ascii() );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindUnitModel( strModel );
     if( !pModel )
-        throw ADN_DataException( "Donnée invalide", "Modele '" + strModel + "' inconnu - réferencé par le pion '" + strName_.GetData() + "'" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Unit types - Invalid doctrine model '%1'" ).arg( strModel.c_str() ).ascii() );
     ptrModel_ = pModel;
 
     std::string level, atlas;
@@ -638,12 +637,12 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     E_NatureLevel eNatureLevelType = ENT_Tr::ConvertToNatureLevel( level );
     if( eNatureLevelType == (E_NatureLevel)-1 )
-        throw ADN_DataException( "UnitInfos", "Le niveau hiéarchique '" + level + "' est invalide." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Unit types - Invalid hierarchical level '%1'" ).arg( level.c_str() ).ascii() );
     eNatureLevel_=eNatureLevelType;
 
     E_NatureAtlasType eNatureAtlasType = ADN_Tr::ConvertToNatureAtlasType( atlas );
     if( eNatureAtlasType == (E_NatureAtlasType)-1 )
-        throw ADN_DataException( "UnitInfos", "Le qualificatif ATLAS '" + atlas + "' est invalide" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Unit types - Invalid 'Atlas' attribute '%1'" ).arg( atlas.c_str() ).ascii() );
     eNatureAtlas_=eNatureAtlasType;
 
     input >> xml::start( "equipments" )

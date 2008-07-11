@@ -83,8 +83,8 @@ ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( QWidget* pParent )
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
 
-    horizontalHeader()->setLabel( 0, tr( "Nbr of trucks" ) );
-    horizontalHeader()->setLabel( 1, tr( "Speed factor" ) );
+    horizontalHeader()->setLabel( 0, tr( "Trucks qty" ) );
+    horizontalHeader()->setLabel( 1, tr( "Max speed modifier" ) );
 
     // Create the connector.
     pConnector_ = new ADN_Connector_TrucksDoubleTable( *this );
@@ -134,4 +134,5 @@ void ADN_Supply_TrucksDoubleTable::OnContextMenu( int /*nRow*/, int /*nCol*/, co
         pCTable->AddItem( 0 );  
     }
 }
+
 

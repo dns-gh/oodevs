@@ -56,14 +56,14 @@ void ADN_Maintenance_GUI::Build()
 {
     pMainWidget_ = new QWidget( 0 );
 
-    QHGroupBox* pGroup = new QHGroupBox( tr( "Maintenance data" ), pMainWidget_ );
+    QHGroupBox* pGroup = new QHGroupBox( tr( "Maintenance system data" ), pMainWidget_ );
     BuildWorkingSchemeTable( pGroup );
 
-    QHGroupBox* pWarningGroup = new QHGroupBox( tr( "Resources availability warnings" ), pGroup );
+    QHGroupBox* pWarningGroup = new QHGroupBox( tr( "Equipments availability warnings" ), pGroup );
     QHGroupBox* pRepairerGroup = new QHGroupBox( tr( "Repairers" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pRepairerWarningTable = new ADN_AvailabilityWarningTable( pRepairerGroup );
     pRepairerWarningTable->GetConnector().Connect( & data_.vRepairerWarnings_ );
-    QHGroupBox* pHaulerGroup = new QHGroupBox( tr( "Haulers" ), pWarningGroup );
+    QHGroupBox* pHaulerGroup = new QHGroupBox( tr( "Tow trucks" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pHaulerWarningTable = new ADN_AvailabilityWarningTable( pHaulerGroup );
     pHaulerWarningTable->GetConnector().Connect( & data_.vHaulerWarnings_ );
 
@@ -80,7 +80,7 @@ void ADN_Maintenance_GUI::BuildWorkingSchemeTable( QWidget* parent )
 {
     ADN_GuiBuilder builder;
 
-    QGroupBox* pGroup = new QHGroupBox( tr( "Regimes de travail" ), parent );
+    QGroupBox* pGroup = new QHGroupBox( tr( "Shifts durations" ), parent );
 
     ADN_Table* pTable = builder.CreateTable( pGroup );
     pTable->setNumCols( data_.vWorkingSchemes_.size() );
@@ -92,13 +92,13 @@ void ADN_Maintenance_GUI::BuildWorkingSchemeTable( QWidget* parent )
     uint n = 0;
     for( ADN_Maintenance_Data::IT_WorkingSchemeInfo_Vector it = data_.vWorkingSchemes_.begin(); it != data_.vWorkingSchemes_.end(); ++it )
     {
-        pTable->horizontalHeader()->setLabel( n, tr( "Regime" ) + QString::number( ( **it ).nIdx_.GetData() ) );
+        pTable->horizontalHeader()->setLabel( n, tr( "Shift " ) + QString::number( ( **it ).nIdx_.GetData() ) );
         pTable->setColumnStretchable( n, true );
         ++n;
     }
 
-    pTable->verticalHeader()->setLabel( 0, tr( "Work time" ) );
-    pTable->verticalHeader()->setLabel( 1, tr( "Warning Delay" ) );
+    pTable->verticalHeader()->setLabel( 0, tr( "Work duration" ) );
+    pTable->verticalHeader()->setLabel( 1, tr( "Warning after" ) );
 
     n = 0;
     for( ADN_Maintenance_Data::IT_WorkingSchemeInfo_Vector it = data_.vWorkingSchemes_.begin(); it != data_.vWorkingSchemes_.end(); ++it )

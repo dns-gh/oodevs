@@ -61,14 +61,14 @@ void ADN_Health_GUI::Build()
 
     // Create the top widget.
     pMainWidget_ = new QWidget( 0 );
-    QGroupBox* pGroup = new QGroupBox( 4, Qt::Horizontal, tr( "Health" ), pMainWidget_ );
+    QGroupBox* pGroup = new QGroupBox( 4, Qt::Horizontal, tr( "Medical system data" ), pMainWidget_ );
 
     QVBox* pVBox = new QVBox( pGroup ); 
 
     QWidget* pHolder = builder.AddFieldHolder( pVBox );
 
-    builder.AddField< ADN_TimeField >( pHolder, tr( "Diagnostic time" ), data_.diagnosticTime_ );
-    builder.AddField< ADN_TimeField >( pHolder, tr( "Sorting time" ), data_.sortingTime_ );
+    builder.AddField< ADN_TimeField >( pHolder, tr( "Diagnostic duration" ), data_.diagnosticTime_ );
+    builder.AddField< ADN_TimeField >( pHolder, tr( "Triage duration" ), data_.sortingTime_ );
     
     // wounds
     QHBox* pWoundsGroup = new QHBox( pVBox );
@@ -87,15 +87,15 @@ void ADN_Health_GUI::Build()
         pWoundTable->horizontalHeader()->setLabel( n, ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str() );
         pWoundTable->setColumnStretchable( n, true );
     }
-    pWoundTable->horizontalHeader()->setLabel( n, tr( "Shock" ) );
+    pWoundTable->horizontalHeader()->setLabel( n, tr( "Psyop" ) );
     pWoundTable->setColumnStretchable( n, true );
     pWoundTable->horizontalHeader()->setLabel( n + 1, tr( "Contamination" ) );
     pWoundTable->setColumnStretchable( n + 1, true );
 
-    pWoundTable->verticalHeader()->setLabel( 0, tr( "Treating time" ) );
-    pWoundTable->verticalHeader()->setLabel( 1, tr( "Resting time" ) );
-    pWoundTable->verticalHeader()->setLabel( 2, tr( "Repartition (%)" ) );
-    pWoundTable->verticalHeader()->setLabel( 3, tr( "Life expectency" ) );
+    pWoundTable->verticalHeader()->setLabel( 0, tr( "Treatment duration" ) );
+    pWoundTable->verticalHeader()->setLabel( 1, tr( "Convalescence duration" ) );
+    pWoundTable->verticalHeader()->setLabel( 2, tr( "Seriousness distribution (%)" ) );
+    pWoundTable->verticalHeader()->setLabel( 3, tr( "Life span" ) );
 
     for( n = 0; n < eNbrDoctorSkills; ++n )
     {
@@ -116,12 +116,12 @@ void ADN_Health_GUI::Build()
     pWoundTable->setItem( 3, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
 
     // Warning tables
-    QHGroupBox* pWarningGroup = new QHGroupBox( tr( "Resources availability warnings" ), pGroup );
-    QHGroupBox* pAvailabilityGroup = new QHGroupBox( tr( "Changeover" ), pWarningGroup );
+    QHGroupBox* pWarningGroup = new QHGroupBox( tr( "Equipments availability warnings" ), pGroup );
+    QHGroupBox* pAvailabilityGroup = new QHGroupBox( tr( "Ambulances - evacuation" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pChangeOverWarningTable = new ADN_AvailabilityWarningTable( pAvailabilityGroup );
     pChangeOverWarningTable->GetConnector().Connect( & data_.vChangeOverWarnings_ );
     
-    pAvailabilityGroup = new QHGroupBox( tr( "Collect" ), pWarningGroup );
+    pAvailabilityGroup = new QHGroupBox( tr( "Ambulances - collection" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pCollectWarningTable = new ADN_AvailabilityWarningTable( pAvailabilityGroup );
     pCollectWarningTable->GetConnector().Connect( & data_.vCollectingWarnings_ );
 

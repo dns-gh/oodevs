@@ -87,7 +87,7 @@ ADN_Sensors_Illumination_GUI::ADN_Sensors_Illumination_GUI(QWidget * parent )
     setMaximumWidth( 300 );
     
     horizontalHeader()->setLabel(0, tr( "Illumination" ) );
-    horizontalHeader()->setLabel(1, tr( "Modificators (%)" ) );
+    horizontalHeader()->setLabel(1, tr( "Modifiers" ) );
 
     // connector creation
     pConnector_=new ADN_CT_Sensors_Illuminations(*this);

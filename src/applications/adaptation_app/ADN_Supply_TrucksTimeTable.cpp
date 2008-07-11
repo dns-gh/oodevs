@@ -83,8 +83,8 @@ ADN_Supply_TrucksTimeTable::ADN_Supply_TrucksTimeTable( QWidget* pParent )
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
 
-    horizontalHeader()->setLabel( 0, tr( "Nbr of trucks" ) );
-    horizontalHeader()->setLabel( 1, tr( "Time required (s)" ) );
+    horizontalHeader()->setLabel( 0, tr( "Trucks qty" ) );
+    horizontalHeader()->setLabel( 1, tr( "Duration" ) );
 
     // Create the connector.
     pConnector_ = new ADN_Connector_TrucksTimeTable( *this );
@@ -134,4 +134,5 @@ void ADN_Supply_TrucksTimeTable::OnContextMenu( int /*nRow*/, int /*nCol*/, cons
         pCTable->AddItem( 0 );  
     }
 }
+
 

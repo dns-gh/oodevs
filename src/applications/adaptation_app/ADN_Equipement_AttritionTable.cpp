@@ -97,8 +97,8 @@ ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( QWidget* pParent )
     // Set up the columns.
     setNumCols(3);
     horizontalHeader()->setLabel( 0, tr( "% destroyed" ) );
-    horizontalHeader()->setLabel( 1, tr( "% repairable with evac." ) );
-    horizontalHeader()->setLabel( 2, tr( "% repairable w/o evac." ) );
+    horizontalHeader()->setLabel( 1, tr( "% maintenance support needed" ) );
+    horizontalHeader()->setLabel( 2, tr( "% on site fixable" ) );
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
     setColumnStretchable( 2, true );

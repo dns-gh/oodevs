@@ -71,18 +71,18 @@ void ADN_AiEngine_GUI::Build()
     pMainWidget_ = new QWidget( 0, "Ai main widget" );
 
     // Danger
-    QGroupBox* pDangerBox = new QGroupBox( 3, Qt::Horizontal, tr( "Danger management" ), pMainWidget_ );
+    QGroupBox* pDangerBox = new QGroupBox( 3, Qt::Horizontal, tr( "Threat management" ), pMainWidget_ );
 
-    builder.AddField<ADN_EditLine_Double>( pDangerBox, tr( "Maximum decrease due to the operational state" ), data_.rOperationalStateMaxDecrease_, tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pDangerBox, tr( "Maximum decrease due to the pertinence" ), data_.rPertinenceMaxDecrease_, tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pDangerBox, tr( "Maximum decrease due to the neutralized" ), data_.rNeutralizedStateMaxDecrease_, tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pDangerBox, tr( "Operational state maximum effect on threat" ), data_.rOperationalStateMaxDecrease_, tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pDangerBox, tr( "Information relevance maximum effect on threat" ), data_.rPertinenceMaxDecrease_, tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pDangerBox, tr( "Neutralization state maximum effect on threat" ), data_.rNeutralizedStateMaxDecrease_, tr( "%" ), ePercentage );
 
     // Operational state
-    QGroupBox* pOpStateBox = new QGroupBox( 3, Qt::Horizontal, tr( "Operationnal state" ), pMainWidget_ );
+    QGroupBox* pOpStateBox = new QGroupBox( 3, Qt::Horizontal, tr( "Operational state computation" ), pMainWidget_ );
     
-    builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Non major composantes weight" ), data_.rMinorEquipmentWeight_, 0, eZeroOne );
-    builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Major composantes weight" ), data_.rMajorEquipmentWeight_, 0, eZeroOne );
-    builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Humans weight" ), data_.rHumanWeight_, 0, eZeroOne );
+    builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Non major equipments state weight" ), data_.rMinorEquipmentWeight_, 0, eZeroOne );
+    builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Major equipments state weight" ), data_.rMajorEquipmentWeight_, 0, eZeroOne );
+    builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Crew state weight" ), data_.rHumanWeight_, 0, eZeroOne );
 
     // Layout
     QVBoxLayout* pMainLayout = new QVBoxLayout( pMainWidget_, 10, 10 );

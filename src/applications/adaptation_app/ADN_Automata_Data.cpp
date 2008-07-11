@@ -74,7 +74,7 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "type", type );
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( type );
     if( ! pUnit )
-        throw ADN_DataException( "ADN_Automata_Data", "Type d'unité '" + type + "' inconnu." );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Automat - Invalid unit type '%1'" ).arg( type.c_str() ).ascii() );
     ptrUnit_ = pUnit;
     input >> xml::optional() >> xml::attribute( "min-occurs", min_ )
           >> xml::optional() >> xml::attribute( "max-occurs", max_ );
@@ -190,7 +190,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
     nAgentType_ = ADN_Tr::ConvertToAgentTypeAutomate( strType );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindAutomataModel( strModel );
     if( !pModel )
-        throw ADN_DataException( "Donnée invalide", "Modele '" + strModel + "' inconnu - réferencé par l'automate '" + strName_.GetData() + "'" );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Automat - Invalid doctrine model '%1'" ).arg( strModel.c_str() ).ascii() );
     ptrModel_ = pModel;
 
     input >> xml::list( "unit", *this, &ADN_Automata_Data::AutomatonInfos::ReadUnit );

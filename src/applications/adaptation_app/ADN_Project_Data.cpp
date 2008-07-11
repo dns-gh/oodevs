@@ -225,7 +225,7 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
             pTempDir = ( char* )realloc( pTempDir, sizeof( char ) * len + 1 );
             assert( ( int )GetTempPath( len + 1, pTempDir ) <= len + 1 );
         }
-        szTempDir_ = ADN_Tools::Replace( pTempDir, '\\', '/' ) + "scipio data.tmp/";
+        szTempDir_ = ADN_Tools::Replace( pTempDir, '\\', '/' ) + "sword ot data.tmp/";
         free( pTempDir );
     }
 }

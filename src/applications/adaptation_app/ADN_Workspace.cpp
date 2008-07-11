@@ -116,17 +116,17 @@ ADN_Workspace::ADN_Workspace()
     elements_[eCategories]     = new ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >( tr( "Categories" ) );
     elements_[eNBC]            = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >( tr( "NBC" ) );
     elements_[eLaunchers]      = new ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >( tr( "Launchers" ) );
-    elements_[eEquipement]     = new ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >( tr( "Equipements" ) );
+    elements_[eEquipement]     = new ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >( tr( "Resources" ) );
     elements_[eObjects]        = new ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>( tr( "Objects" ) );
-    elements_[eWeapons]        = new ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI >( tr( "Weapons" ) );
+    elements_[eWeapons]        = new ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI >( tr( "Weapon systems" ) );
     elements_[eSensors]        = new ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI >( tr( "Sensors" ) );
-    elements_[eComposantes]    = new ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >( tr( "Composantes" ) );
-    elements_[eAiEngine]       = new ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI >( tr( "Ai" ) );   
-    elements_[eModels]         = new ADN_WorkspaceElement< ADN_Models_Data, ADN_Models_GUI >( tr( "Models" ) );
+    elements_[eComposantes]    = new ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >( tr( "Equipments" ) );
+    elements_[eAiEngine]       = new ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI >( tr( "Op. indicators" ) );   
+    elements_[eModels]         = new ADN_WorkspaceElement< ADN_Models_Data, ADN_Models_GUI >( tr( "Doctrine models" ) );
     elements_[eUnits]          = new ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >( tr( "Units" ) );
     elements_[eAutomata]       = new ADN_WorkspaceElement< ADN_Automata_Data, ADN_Automata_GUI >( tr( "Automata" ) );
     elements_[eBreakdowns]     = new ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI >( tr( "Breakdowns" ) );
-    elements_[eCommunications] = new ADN_WorkspaceElement< ADN_Communications_Data, ADN_Communications_GUI>( tr( "Communications" ) );
+    elements_[eCommunications] = new ADN_WorkspaceElement< ADN_Communications_Data, ADN_Communications_GUI>( tr( "Jamming" ) );
     elements_[eHumanFactors]   = new ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI>( tr( "Human factors" ) );
     elements_[eMaintenance]    = new ADN_WorkspaceElement< ADN_Maintenance_Data, ADN_Maintenance_GUI>( tr( "Maintenance" ) );
     elements_[eMissions]       = new ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI>( tr( "Missions" ) );
@@ -289,7 +289,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
     
     // dialog log
     ADN_DialogLog dlgLog( 0 );
-    dlgLog.setCaption( tr( "Scipio Adaptation Tool - Saving Errors" ) );
+    dlgLog.setCaption( tr( "Sword Officer Training Adaptation Tool - Saving Errors" ) );
     dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).ascii() + filename );
     dlgLog.setMsgFormat( tr( "<p>- Unable to save %s : file is write protected</p>" ).ascii());
 

@@ -105,8 +105,8 @@ void ADN_Categories_GUI::Build()
     builder.AddField<ADN_TimeField>( pArmorNeutralizationGroup, tr( "Variance" ), vArmorInfosConnectors[eNeutralizationVariance] );
 
     pArmorBreakdownGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Breakdowns" ), pArmorInfoGroup );
-    builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "EVA" ), vArmorInfosConnectors[eBreakdownEVA], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "NEVA" ), vArmorInfosConnectors[eBreakdownNEVA], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "Maintenance support needed" ), vArmorInfosConnectors[eBreakdownEVA], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "On site fixable" ), vArmorInfosConnectors[eBreakdownNEVA], tr( "%" ), ePercentage );
 
     pAttritionEffectGroup_ = new QVGroupBox( tr( "Attrition effects on humans" ), pArmorGroup );
     pAttritionEffects_ = new ADN_Categories_AttritionEffect_Table( pAttritionEffectGroup_ );
@@ -123,7 +123,7 @@ void ADN_Categories_GUI::Build()
     T_ConnectorVector    vSizeInfosConnectors(eNbrSizeGuiElements,(ADN_Connector_ABC*)0 );
     pListSize_=new ADN_ListView_Categories_Size(pGroupSize);
     static_cast<ADN_Connector_Vector_ABC*>( &pListSize_->GetConnector() )->Connect( &data_.GetSizesInfos() );
-    QWhatsThis::add( pListSize_, "Les différentes catégories de volumes existants dans la simulation.\nCes catégories sont utilisées pour caractériser les composantes.\nElles influencent la perception des unités et les PHs des systèmes d'armes." );
+    //QWhatsThis::add( pListSize_, "Les différentes catégories de volumes existants dans la simulation.\nCes catégories sont utilisées pour caractériser les composantes.\nElles influencent la perception des unités et les PHs des systèmes d'armes." );
 
     // size
     pGroup = new QVGroupBox( tr( "Size" ),pGroup);
@@ -134,14 +134,14 @@ void ADN_Categories_GUI::Build()
 
     ///////////////////
     // Dotation Natures
-    QGroupBox* pNatureGroup = new QVGroupBox( tr( "Dotation natures" ), pBox );
+    QGroupBox* pNatureGroup = new QVGroupBox( tr( "Resource natures" ), pBox );
     QHBox*     pNatureHBox  = new QHBox( pNatureGroup );
     
     // dotation natures list
     T_ConnectorVector    vDotationNatureInfosConnectors( eNbrDotationNatureGuiElements, (ADN_Connector_ABC*)0 );
     pListDotationNature_ = new ADN_ListView_Categories_DotationNature( pNatureHBox );
     static_cast<ADN_Connector_Vector_ABC*>( &pListDotationNature_->GetConnector() )->Connect( &data_.GetDotationNaturesInfos() );
-    QWhatsThis::add( pListDotationNature_, "Les différentes nature de dotations existantes dans la simulation." );
+	//QWhatsThis::add( pListDotationNature_, "Les différentes nature de dotations existantes dans la simulation." );
 
     // size
     pNatureGroup = new QVGroupBox( tr( "Nature" ), pNatureGroup );

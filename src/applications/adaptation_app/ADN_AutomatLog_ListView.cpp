@@ -62,19 +62,19 @@ void ADN_AutomatLog_ListView::BuildHeaders()
 {
     addColumn( tr( "Automat > Unit > Comp > Item" ) );
     addColumn( tr( "Units" ) );
-    addColumn( tr( "Comp." ) );
-    addColumn( tr( "Contenance" ) );
-    addColumn( tr( "Norm. Conso" ) );
-    addColumn( tr( "Conso Move" ) );
-    addColumn( tr( "Autonomy Move" ) );
-    addColumn( tr( "Conso Engine Stopped" ) );
-    addColumn( tr( "Autonomy Engine Stopped" ) );
-    addColumn( tr( "Conso Engine Started" ) );
-    addColumn( tr( "Autonomy Engine Started" ) );
+    addColumn( tr( "Equipments" ) );
+    addColumn( tr( "Resources" ) );
+    addColumn( tr( "Norm. Consumption" ) );
+    addColumn( tr( "Consumption\nMoving" ) );
+    addColumn( tr( "Autonomy\nMoving" ) );
+    addColumn( tr( "Consumption\nParked engine stopped" ) );
+    addColumn( tr( "Autonomy\nParked engine Stopped" ) );
+    addColumn( tr( "Consumption\nParked engine running" ) );
+    addColumn( tr( "Autonomy\nParked engine running" ) );
     for( int i = 1; i < columns(); ++i )
         setColumnAlignment( i, Qt::AlignCenter );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_AutomatLog_ListView::BuildBody
 // Created: SBO 2006-01-05

@@ -62,7 +62,7 @@ ADN_Weapon_Wizard_Page0::ADN_Weapon_Wizard_Page0( QWizard* pParent, const char* 
     pCopyRadioButton_ = new QRadioButton( tr( "Create a copy of:" ),    pButtonGroup );
 
     pWeaponList_ = new QListView( pBox );
-    pWeaponList_->addColumn( tr( "Weapons" ) );
+    pWeaponList_->addColumn( tr( "Weapon systems" ) );
     pWeaponList_->setColumnWidth( 0, 350 );
     pWeaponList_->setMultiSelection( false );
     pWeaponList_->setFixedWidth( 350 );

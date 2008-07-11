@@ -100,12 +100,12 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI(QWidget * parent )
     setColumnStretchable(4,true);
     setColumnStretchable(5,true);
 
-    horizontalHeader()->setLabel( 0, tr( "Composantes" ) );
-    horizontalHeader()->setLabel( 1, tr( "Nbr" ) );
+    horizontalHeader()->setLabel( 0, tr( "Equipments" ) );
+    horizontalHeader()->setLabel( 1, tr( "Qty" ) );
     horizontalHeader()->setLabel( 2, tr( "Major" ) );
     horizontalHeader()->setLabel( 3, tr( "Loadable" ) );
     horizontalHeader()->setLabel( 4, tr( "Conveyor" ) );
-    horizontalHeader()->setLabel( 5, tr( "Nbr humans" ) );
+    horizontalHeader()->setLabel( 5, tr( "Crew size" ) );
 
     // connector creation
     pConnector_=new ADN_Units_Composantes_GUI_Connector(*this);
@@ -153,9 +153,9 @@ void ADN_Units_Composantes_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoi
     }
     addMenu.insertItem( &listView );
 
-    popupMenu.insertItem( tr( "Add composante"), &addMenu ,0 );
+    popupMenu.insertItem( tr( "Add equipment"), &addMenu ,0 );
     if ( GetCurrentData() != 0 )
-        popupMenu.insertItem( tr( "Remove composante"), 1 );
+        popupMenu.insertItem( tr( "Remove equipment"), 1 );
     
     bMenuListItemSelected_ = false;
     connect( &listView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( MenuListItemSelected() ) );
