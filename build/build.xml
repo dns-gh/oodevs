@@ -3,10 +3,9 @@
 
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
-    <exec executable="svn" outputproperty="svn.info" failonerror="true">
-        <arg line="info"/>
-    </exec>
-    <propertyregex property="svn.version" input="${svn.info}" regexp="Last Changed Rev: ([0-9]+)" select="\1"/>
+    <svn>
+      <status path="${root.dir}" lastChangedRevisionProperty="svn.version"/>
+    </svn>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword-OT"/>
     <property name="version.version" value="1,0,0,${svn.version}"/>
