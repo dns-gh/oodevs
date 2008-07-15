@@ -52,19 +52,18 @@ AgentExtension::~AgentExtension()
 // -----------------------------------------------------------------------------
 void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 {
-    if(  ( attributes.m.positionPresent || attributes.m.hauteurPresent ) 
-        && simulation_.MustReportPosition( lastUpdate_ ) )
-    {
+    const bool reportPosition = ( attributes.m.positionPresent || attributes.m.hauteurPresent ) && simulation_.MustReportPosition( lastUpdate_ );
+    const bool reportStatus   = ( attributes.m.etat_operationnelPresent || attributes.m.dotation_eff_materielPresent || attributes.m.dotation_eff_personnelPresent ) && simulation_.MustReportStatus( lastUpdate_ );
+    if( reportPosition || reportStatus )
 		try
 		{
-			PositionReport report( holder_ );
+			PositionReport report( holder_, attributes );
 			report.Send( publisher_ );
 		}
 		catch( std::exception& e )
 		{
 			MT_LOG_ERROR_MSG( "BML error sending position report: " << e.what() );
 		}
-    }
 }
 
 // -----------------------------------------------------------------------------

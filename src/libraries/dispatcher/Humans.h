@@ -37,16 +37,16 @@ public:
     void Send  ( ASN1T_HumanDotations& asnMsg ) const ;
     //@}
 
-private:
-   const ASN1T_EnumHumanRank nRank_;
-         unsigned int        nNbrTotal_;
-         unsigned int        nNbrOperational_;
-         unsigned int        nNbrDead_;
-         unsigned int        nNbrWounded_;
-         unsigned int        nNbrMentalDiseased_;
-         unsigned int        nNbrNBC_;
-         unsigned int        nNbrInLogisticMedical_;
-         unsigned int        nNbrInLogisticMaintenance_;
+public:
+    ASN1T_EnumHumanRank nRank_;
+    unsigned int        nNbrTotal_;
+    unsigned int        nNbrOperational_;
+    unsigned int        nNbrDead_;
+    unsigned int        nNbrWounded_;
+    unsigned int        nNbrMentalDiseased_;
+    unsigned int        nNbrNBC_;
+    unsigned int        nNbrInLogisticMedical_;
+    unsigned int        nNbrInLogisticMaintenance_;
 };
 
 }

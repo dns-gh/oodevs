@@ -55,3 +55,13 @@ bool Simulation::MustReportPosition( unsigned long& currentTick ) const
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::MustReportStatus
+// Created: SBO 2008-07-15
+// -----------------------------------------------------------------------------
+bool Simulation::MustReportStatus( unsigned long& currentTick ) const
+{
+    currentTick = currentTick_;
+    return true;
+}

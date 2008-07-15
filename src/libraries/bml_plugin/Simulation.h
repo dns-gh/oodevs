@@ -39,6 +39,7 @@ public:
     //! @name Accessors
     //@{
     bool MustReportPosition( unsigned long& currentTick ) const;
+    bool MustReportStatus( unsigned long& currentTick ) const;
     //@}
 
 private:

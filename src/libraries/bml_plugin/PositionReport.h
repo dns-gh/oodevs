@@ -10,6 +10,13 @@
 #ifndef __PositionReport_h_
 #define __PositionReport_h_
 
+#include "game_asn/Simulation.h"
+
+namespace xml
+{
+    class xostream;
+}
+
 namespace dispatcher
 {
     class Agent;
@@ -22,6 +29,7 @@ namespace bml
 // =============================================================================
 /** @class  PositionReport
     @brief  PositionReport
+    // $$$$ SBO 2008-07-15: Rename, StatusReport
 */
 // Created: SBO 2008-05-22
 // =============================================================================
@@ -31,7 +39,7 @@ class PositionReport
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PositionReport( const dispatcher::Agent& entity );
+             PositionReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitAttributes& attributes );
     virtual ~PositionReport();
     //@}
 
@@ -49,12 +57,15 @@ private:
 
     //! @name Helpers
     //@{
+    void SendEquipmentStatus( xml::xostream& xos ) const;
+    void SendStatus( xml::xostream& xos ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const dispatcher::Agent& entity_;
+    const ASN1T_MsgUnitAttributes& attributes_;
     //@}
 };
 

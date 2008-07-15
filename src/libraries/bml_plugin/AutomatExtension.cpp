@@ -9,7 +9,6 @@
 
 #include "bml_plugin_pch.h"
 #include "AutomatExtension.h"
-#include "PositionReport.h"
 #include "OrderReport.h"
 #include "ReportFactory.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
