@@ -30,16 +30,10 @@ namespace
     static const QString locale = "_en";
 //    static const QString locale = "_fr";
     ////
-
-    void PureHandler()
-    {
-        throw std::exception( "Pure virtual call" );
-    }
 }
 
 int main( int argc, char** argv )
 {   
-    _set_purecall_handler( PureHandler );
     SetConsoleTitle( APP_NAME " - " APP_VERSION " - " __TIMESTAMP__ );
 
     std::auto_ptr< FlexLmLicense > license;
