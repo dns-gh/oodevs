@@ -141,7 +141,6 @@ Section "Terrains"
     File /r /x ".svn" "${DATADIR}\data\terrains\Angers"
     File /r /x ".svn" "${DATADIR}\data\terrains\Mailly"
     File /r /x ".svn" "${DATADIR}\data\terrains\Paris_Est"
-    File /r /x ".svn" "${DATADIR}\data\terrains\main"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
