@@ -306,7 +306,7 @@
     </target>
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
-        <build-app name="gaming_app" excludes="**/**_Gen.*" depends="terrain,xeumeuleu,qt,boost,flexlm"
+        <build-app name="gaming_app" depends="terrain,xeumeuleu,qt,boost,flexlm"
                    libs="masasn,svgl,zipstream,zlib1,shapelib,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
