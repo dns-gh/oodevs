@@ -11,8 +11,10 @@
 #include "AgentExtension.h"
 #include "PositionReport.h"
 #include "OrderReport.h"
+#include "DetectionReport.h"
 #include "ReportFactory.h"
 #include "Simulation.h"
+#include "dispatcher/Model.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include <xeumeuleu/xml.h>
 #pragma warning( push, 1 )
@@ -27,11 +29,12 @@ using namespace bml;
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation )
+AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation, const dispatcher::Model& model )
     : holder_( holder )
     , publisher_( publisher )
     , factory_( factory )
     , simulation_( simulation )
+    , model_( model )
     , lastUpdate_( 0 )
 {
     // NOTHING
@@ -80,5 +83,22 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitOrder& message )
 	catch( std::exception& e )
 	{
 		MT_LOG_ERROR_MSG( "BML error sending agent order report: " << e.what() );
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentExtension::DoUpdate
+// Created: SBO 2008-07-22
+// -----------------------------------------------------------------------------
+void AgentExtension::DoUpdate( const ASN1T_MsgUnitDetection& message )
+{
+    try
+    {
+        DetectionReport report( holder_, model_.GetAgents().Get( message.detected_unit_oid ), message.current_visibility );
+        report.Send( publisher_ );
+    }
+    catch( std::exception& e )
+	{
+		MT_LOG_ERROR_MSG( "BML error sending detection report: " << e.what() );
 	}
 }

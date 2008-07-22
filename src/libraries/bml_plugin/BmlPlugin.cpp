@@ -28,7 +28,7 @@ BmlPlugin::BmlPlugin( dispatcher::Model& model, xml::xistream& xis, dispatcher::
     , publisher_( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
     , simulation_( new Simulation() )
     , reportFactory_( new ReportFactory( model_.GetMissionTypes() ) )
-    , extensionFactory_( new ExtensionFactory( *publisher_, *reportFactory_, *simulation_ ) )
+    , extensionFactory_( new ExtensionFactory( *publisher_, *reportFactory_, *simulation_, model_ ) )
     , listener_( new UpdateListener( *publisher_, model_, simulation ) )
 {
     model_.RegisterFactory( *extensionFactory_ );

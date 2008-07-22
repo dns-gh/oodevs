@@ -20,10 +20,11 @@ using namespace bml;
 // Name: ExtensionFactory constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation )
+ExtensionFactory::ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation, const dispatcher::Model& model )
     : publisher_( publisher )
     , reportFactory_( reportFactory )
     , simulation_( simulation )
+    , model_( model )
 {
     // NOTHING
 }
@@ -43,7 +44,7 @@ ExtensionFactory::~ExtensionFactory()
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
-    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity, publisher_, reportFactory_, simulation_ ) );
+    entity.Attach< BmlExtension_ABC >( *new AgentExtension( entity, publisher_, reportFactory_, simulation_, model_ ) );
 }
 
 // -----------------------------------------------------------------------------

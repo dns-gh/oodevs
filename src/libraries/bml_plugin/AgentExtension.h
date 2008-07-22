@@ -13,11 +13,11 @@
 #include "BmlExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
-#include "Point.h"
 
 namespace dispatcher
 {
     class Agent;
+    class Model;
 }
 
 namespace bml
@@ -35,12 +35,13 @@ namespace bml
 class AgentExtension : public BmlExtension_ABC
                      , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                      , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
+                     , public kernel::Updatable_ABC< ASN1T_MsgUnitDetection >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation );
+             AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation, const dispatcher::Model& model );
     virtual ~AgentExtension();
     //@}
 
@@ -48,6 +49,7 @@ public:
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
     virtual void DoUpdate( const ASN1T_MsgUnitOrder& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitDetection& message );
     //@}
 
 private:
@@ -64,6 +66,7 @@ private:
     Publisher_ABC& publisher_;
     const ReportFactory& factory_;
     const Simulation& simulation_;
+    const dispatcher::Model& model_;
     unsigned long lastUpdate_;
     //@}
 };

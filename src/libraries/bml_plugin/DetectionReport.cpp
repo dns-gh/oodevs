@@ -3,51 +3,52 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2008 MASA Group
 //
 // *****************************************************************************
 
 #include "bml_plugin_pch.h"
-#include "PositionReport.h"
-#include "Publisher_ABC.h"
+#include "DetectionReport.h"
 #include "Who.h"
 #include "Where.h"
+#include "Publisher_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace bml;
 
 // -----------------------------------------------------------------------------
-// Name: PositionReport constructor
-// Created: SBO 2008-05-22
+// Name: DetectionReport constructor
+// Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-PositionReport::PositionReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitAttributes& attributes )
+DetectionReport::DetectionReport( const dispatcher::Agent& entity, const dispatcher::Agent& detected, int level )
     : entity_( entity )
-    , attributes_( attributes )
+    , detected_( detected )
+    , level_( level )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PositionReport destructor
-// Created: SBO 2008-05-22
+// Name: DetectionReport destructor
+// Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-PositionReport::~PositionReport()
+DetectionReport::~DetectionReport()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PositionReport::Send
-// Created: SBO 2008-05-22
+// Name: DetectionReport::Send
+// Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-void PositionReport::Send( Publisher_ABC& publisher ) const
+void DetectionReport::Send( Publisher_ABC& publisher ) const
 {
     Who byWho( entity_ );
-    Who who( entity_, attributes_ );
+    Who who( detected_, level_ );
     xml::xostream& xos = publisher.CreateReport();
     xos << xml::start( "ReportPush" )
             << xml::start( "ReportedByWho" ) << byWho << xml::end()
-            << xml::start( "NewWhere" )      << byWho << Where( entity_ ) << xml::end() // $$$$ SBO 2008-07-22: economy byWho = who with less info
-            << xml::start( "ReportedWho" )   << who   << xml::end();
+            << xml::start( "NewWhere" )      << who << Where( detected_ ) << xml::end()
+            << xml::start( "ReportedWho" )   << who << xml::end();
     xos << xml::end();
 }

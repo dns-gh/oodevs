@@ -16,6 +16,7 @@ namespace dispatcher
 {
     class Agent;
     class Automat;
+    class Model;
 }
 
 namespace bml
@@ -37,7 +38,7 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation );
+             ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation, const dispatcher::Model& model );
     virtual ~ExtensionFactory();
     //@}
 
@@ -60,6 +61,7 @@ private:
     Publisher_ABC& publisher_;
     const ReportFactory& reportFactory_;
     const Simulation& simulation_;
+    const dispatcher::Model& model_;
     //@}
 };
 

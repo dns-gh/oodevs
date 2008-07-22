@@ -10,6 +10,8 @@
 #ifndef __Who_h_
 #define __Who_h_
 
+#include "game_asn/Simulation.h"
+
 namespace xml
 {
     class xostream;
@@ -38,6 +40,8 @@ public:
     //@{
     explicit Who( const dispatcher::Agent& entity );
     explicit Who( const dispatcher::Automat& entity );
+             Who( const dispatcher::Agent& agent, const ASN1T_MsgUnitAttributes& attributes );
+             Who( const dispatcher::Agent& entity, int detectionLevel );
     virtual ~Who();
     //@}
 
@@ -53,11 +57,22 @@ private:
     Who& operator=( const Who& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void SendEquipmentStatus( xml::xostream& xos ) const;
+    void SendStatus( xml::xostream& xos ) const;
+
+    std::string GetFilterHostility() const;
+    std::string GetFilterOperationalState() const;
+    //@}
+
 private:
     //! @name Member data
     //@{
     const dispatcher::Agent* agent_;
     const dispatcher::Automat* automat_;
+    const ASN1T_MsgUnitAttributes* attributes_;
+    int level_;
     //@}
 };
 
