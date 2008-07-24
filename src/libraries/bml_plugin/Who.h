@@ -40,7 +40,7 @@ public:
     //@{
     explicit Who( const dispatcher::Agent& entity );
     explicit Who( const dispatcher::Automat& entity );
-             Who( const dispatcher::Agent& agent, const ASN1T_MsgUnitAttributes& attributes );
+             Who( const dispatcher::Agent& entity, const ASN1T_MsgUnitAttributes& attributes );
              Who( const dispatcher::Agent& entity, int detectionLevel );
     virtual ~Who();
     //@}

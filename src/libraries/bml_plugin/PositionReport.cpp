@@ -36,6 +36,7 @@ PositionReport::~PositionReport()
     // NOTHING
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: PositionReport::Send
 // Created: SBO 2008-05-22
@@ -48,6 +49,6 @@ void PositionReport::Send( Publisher_ABC& publisher ) const
     xos << xml::start( "ReportPush" )
             << xml::start( "ReportedByWho" ) << byWho << xml::end()
             << xml::start( "NewWhere" )      << byWho << Where( entity_ ) << xml::end() // $$$$ SBO 2008-07-22: economy byWho = who with less info
-            << xml::start( "ReportedWho" )   << who   << xml::end();
-    xos << xml::end();
+            << xml::start( "ReportedWho" )   << who   << xml::end()
+        << xml::end();
 }

@@ -58,15 +58,27 @@ Who::Who( const dispatcher::Agent& entity, int detectionLevel )
     // NOTHING
 }
 
+namespace
+{
+    // $$$$ SBO 2008-07-24: hack to force update of real entities
+    int ComputeLevel( const ASN1T_MsgUnitAttributes& attributes )
+    {
+        return attributes.m.etat_operationnelPresent
+            || attributes.m.dotation_eff_materielPresent
+            || attributes.m.dotation_eff_personnelPresent
+            ? EnumUnitVisibility::identified : -1;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Who constructor
 // Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-Who::Who( const dispatcher::Agent& agent, const ASN1T_MsgUnitAttributes& attributes )
-    : agent_( &agent )
+Who::Who( const dispatcher::Agent& entity, const ASN1T_MsgUnitAttributes& attributes )
+    : agent_( &entity )
     , automat_( 0 )
     , attributes_( &attributes )
-    , level_( attributes.m.etat_operationnelPresent == 0 ? int( EnumUnitVisibility::identified ) : -1 ) // $$$$ SBO 2008-07-22: hack
+    , level_( ComputeLevel( attributes ) )
 {
     // NOTHING
 }
@@ -149,6 +161,7 @@ void Who::SendEquipmentStatus( xml::xostream& xos ) const
 {
     if( !agent_ )
         return;
+    xos << xml::start( "jc3iedm:ObjectItemCapabilityInObjectItemList" );
     if( attributes_->m.dotation_eff_materielPresent )
     {
         AvailabilityComputer computer;
@@ -161,6 +174,7 @@ void Who::SendEquipmentStatus( xml::xostream& xos ) const
         agent_->troops_.Apply( boost::bind( &AvailabilityComputer::AddHuman, boost::ref( computer ), _1 ) );
         SerializeAvailability( "PERSVC", xos, computer.Percentage() );
     }
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -216,7 +230,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::string Who::GetFilterHostility() const
 {
-    if( level_ > int( EnumUnitVisibility::detected ) )
+    if( level_ > EnumUnitVisibility::detected )
     {
         if( agent_ )
             return Hostility( agent_->GetAutomat() );
@@ -231,7 +245,7 @@ std::string Who::GetFilterHostility() const
 // -----------------------------------------------------------------------------
 std::string Who::GetFilterOperationalState() const
 {
-    if( agent_ && level_ > int( EnumUnitVisibility::recognized ) )
+    if( agent_ && level_ > EnumUnitVisibility::recognized )
         return OperationalState( agent_->nOperationalState_ );
     return "NKN";
 }
