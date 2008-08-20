@@ -62,7 +62,7 @@ private:
     //@}
 
 private:
-    MIL_ObstacleType( const std::string& strName, E_Type nType, ASN1T_EnumObstacleType nAsnID );
+            MIL_ObstacleType( const std::string& strName, E_Type nType, ASN1T_EnumObstacleType nAsnID );
     virtual ~MIL_ObstacleType();
 
 private:

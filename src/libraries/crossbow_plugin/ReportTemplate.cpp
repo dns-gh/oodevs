@@ -87,6 +87,7 @@ void ReportTemplate::ReadParameter( xml::xistream& xis )
     std::string type;
     xis >> attribute( "type", type );
     std::string lstring;
+    lstring.resize( type.size() );
     std::transform( type.begin(), type.end(), lstring.begin(), tolower );
     if( lstring == "enumeration" )
     {

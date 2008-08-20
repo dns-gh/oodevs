@@ -111,7 +111,7 @@ crossbow::Row_ABC* crossbow::Table::Find( const std::string& query )
         filter.CreateInstance( CLSID_QueryFilter );
         filter->put_WhereClause( CComBSTR( query.c_str() ) );
     }
-    HRESULT res = InTransaction() ? table_->Update( filter, false, &cursor_ ) : table_->Search( filter, true, &cursor_ );    
+    HRESULT res = InTransaction() ? table_->Update( filter, false, &cursor_ ) : table_->Search( filter, false, &cursor_ );    
     if( FAILED( res ) )
     {
         ThrowError();

@@ -7,21 +7,27 @@
 ;
 ; ------------------------------------------------------------------------------
 
-!ifndef OUTDIR
-    !define OUTDIR "..\..\out\"
+;..................................................................................................
+!define APP_NAME "SWORD Urban Emergency - ESRI Arcmap Extension"
+
+!define INSTDIR_REG_ROOT "HKLM"
+!define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
+
+!include AdvUninstLog.nsh
+;..................................................................................................
+
+!ifndef OUT_DIR
+    !define OUT_DIR "..\..\out"
 !endif
+
 !ifndef DISTDIR
     !define DISTDIR "."
 !endif
 
-Name "Sword Urban Emergency - ESRI Plugin"
-OutFile "${DISTDIR}\crossbow_install.exe"
-InstallDir "$PROGRAMFILES\MASA\Sword Urban Emergency"
-InstallDirRegKey HKLM "Software\MASA\Sword Urban Emergency - ESRI Plugin" "Install_Dir"
-
 !ifndef VERSION
     !define VERSION "$$VERSION$$"
 !endif
+
 !ifndef PLUGIN_GUID
     !define PLUGIN_GUID "{62C8FE65-4EBB-45E7-B440-6E39B2CDBF29}"
 !endif
@@ -34,6 +40,16 @@ InstallDirRegKey HKLM "Software\MASA\Sword Urban Emergency - ESRI Plugin" "Insta
     !define COMPANY "MASA"
 !endif
 
+Name "${APP_NAME}"
+OutFile "${DISTDIR}\${APP_NAME}.exe"
+InstallDir "$PROGRAMFILES\${APP_NAME}"
+InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
+
+!insertmacro UNATTENDED_UNINSTALL
+
+LicenseLangString LICENSE ${LANG_ENGLISH} "license-english.txt"
+LicenseLangString LICENSE ${LANG_FRENCH} "license-english.txt"
+
 
 ;--------------------------------
 Function .onInit
@@ -42,6 +58,12 @@ Function .onInit
     StrCmp $R0 0 +3
         MessageBox MB_OK|MB_ICONEXCLAMATION "Installer already running"
         Abort
+    !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
+FunctionEnd
+
+Function .onInstSuccess
+    ;create/update log always within .onInstSuccess function
+    !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 FunctionEnd
 
 Function RegisterComponent 
@@ -49,6 +71,7 @@ Function RegisterComponent
     
     Pop $R0  ;name of the .NET component, ex: Sword.Crossbow.CreateWorkspace
     Pop $R1  ;GUID
+    
     WriteRegStr HKEY_CLASSES_ROOT "$R0" "" "$R0"
     WriteRegStr HKEY_CLASSES_ROOT "$R0\CLSID" "" "$R1"
     
@@ -70,29 +93,22 @@ Function RegisterComponent
     WriteRegStr HKEY_CLASSES_ROOT "CLSID\$R1\ProgId" "" "$R0"
     
     ; Application GUID
-    WriteRegStr HKEY_CLASSES_ROOT "CLSID\$R1\Implemented Categories\${PLUGIN_GUID}" "" ""
-FunctionEnd
-
-Function UnregisterComponent 
-    ;GetDLLVersionLocal "$INSTDIR\Sword.Crossbow.dll"
-    
-    Pop $R0  ;name of the .NET component, ex: Sword.Crossbow.CreateWorkspace
-    Pop $R1  ;GUID
-    DeleteRegKey HKEY_CLASSES_ROOT "$R0"
-    DeleteRegKey HKEY_CLASSES_ROOT "CLSID\$R1"
+    WriteRegStr HKEY_CLASSES_ROOT "CLSID\$R1\Implemented Categories\${PLUGIN_GUID}" "" ""    
 FunctionEnd
 
 ;--------------------------------
 Section "!Basic"
     SectionIn RO
     
-    WriteRegStr HKLM "Software\MASA\Sword Urban Emergency - ESRI Plugin" "Install_Dir" "$INSTDIR"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    WriteRegStr "${INSTDIR_REG_ROOT}" "Software\${APP_NAME}" "Install_Dir" "$INSTDIR"
     CreateDirectory "$INSTDIR"    
     
     SetOutPath "$INSTDIR"
-    File "${OUTDIR}\applications\crossbow_app\vc80\Release\*.dll"
-    File "${OUTDIR}\applications\crossbow_app\vc80\Release\*.tlb"
-    
+    ; ${OUT_DIR}
+    File "${OUT_DIR}\applications\crossbow_app\vc80\Release\*.dll"    
+    File "${OUT_DIR}\applications\crossbow_app\vc80\Release\*.tlb"
+        
     ;Sword.Crossbow.CreateWorkspace
     Push "{987E32AA-8556-4E83-AA40-02C799EE734B}"
     Push "Sword.Crossbow.CreateWorkspace"
@@ -191,16 +207,27 @@ Section "!Basic"
     WriteRegStr HKEY_CLASSES_ROOT "CLSID\{F44A3523-8FAE-4FD8-9895-FA0BDE4EFFF5}\Implemented Categories\{720E21D4-2199-11D6-B2B3-00508BCDDE28}" "" ""
     WriteRegStr HKEY_CLASSES_ROOT "CLSID\{F44A3523-8FAE-4FD8-9895-FA0BDE4EFFF5}\Implemented Categories\{B56A7C42-83D4-11D2-A2E9-080009B6F22B}" "" ""
     
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
-;--------------------------------
-Section "Uninstaller files"
-    SectionIn RO
-    WriteUninstaller "uninstall.exe"
-SectionEnd
+Function UnregisterComponent 
+    ;GetDLLVersionLocal "$INSTDIR\Sword.Crossbow.dll"
+    
+    Pop $R0  ;name of the .NET component, ex: Sword.Crossbow.CreateWorkspace
+    Pop $R1  ;GUID    
+    DeleteRegKey HKEY_CLASSES_ROOT "$R0"
+    DeleteRegKey HKEY_CLASSES_ROOT "CLSID\$R1"    
+FunctionEnd
 
 ;--------------------------------
-Section "Uninstall"
+Section UnInstall
+    !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
+    !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
+    !insertmacro UNINSTALL.LOG_END_UNINSTALL
+    Delete "${UNINST_DAT}"
+    Delete "${UNINST_EXE}"
+    RmDir /r "$SMPROGRAMS\${APP_NAME}"
+    DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
     
     DeleteRegKey HKEY_CLASSES_ROOT "Sword.Crossbow.CreateWorkspace"
     DeleteRegKey HKEY_CLASSES_ROOT "CLSID\{987E32AA-8556-4E83-AA40-02C799EE734B}"
@@ -243,7 +270,7 @@ Section "Uninstall"
     
     DeleteRegKey HKEY_CLASSES_ROOT "Sword.Crossbow.FilterViewTool"
     DeleteRegKey HKEY_CLASSES_ROOT "CLSID\{F44A3523-8FAE-4FD8-9895-FA0BDE4EFFF5}"
-        
-    Delete "$INSTDIR\uninstall.exe"
-    RmDir /r "$INSTDIR"
+    
+    ; unregister .otpak extension association
+    DeleteRegKey HKCR ".otpak"    
 SectionEnd

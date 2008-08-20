@@ -122,11 +122,26 @@ void Database::StopEdit()
 // Name: Database::OpenTable
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-Table_ABC& Database::OpenTable( const std::string& name, bool clear /*=true*/ )
+Table_ABC* Database::OpenTable( const std::string& name )
+{
+    Table_ABC* table = OpenWrappedTable( name );
+    if( !table )
+        throw std::runtime_error( "Unable to open table : " + name );
+
+    // if( table && clear )
+    //     table->Clear();    
+    
+    return table;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Database::OpenBufferedTable
+// Created: JCR 2008-07-28
+// -----------------------------------------------------------------------------
+Table_ABC& Database::OpenBufferedTable( const std::string& name, bool clear /*= true*/ )
 {
     Table_ABC*& table = openedTables_[name];
     if( !table )
-    // Table_ABC* table = OpenWrappedTable( name );
     {
         table = OpenWrappedTable( name );
         if( table && clear )
@@ -135,6 +150,19 @@ Table_ABC& Database::OpenTable( const std::string& name, bool clear /*=true*/ )
     if( !table )
         throw std::runtime_error( "Unable to open table : " + name );
     return *table;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Database::ClearTable
+// Created: SBO 2007-08-30
+// -----------------------------------------------------------------------------
+void Database::ClearTable( const std::string& name )
+{
+    ITablePtr table;
+    IQueryFilterPtr filter;
+    if( !SUCCEEDED( workspace_->OpenTable( CComBSTR( name.c_str() ), &table ) ) )
+        throw std::runtime_error( "Unable to open table : " + name );    
+    table->DeleteSearchedRows( filter );        
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +176,7 @@ Table_ABC* Database::OpenWrappedTable( const std::string& name )
         return new FeatureClass( featureClass, name );
     ITablePtr table;
     if( SUCCEEDED( workspace_->OpenTable( CComBSTR( name.c_str() ), &table ) ) )
-        return new Table( table, name );
+        return new Table( table, name );    
     return 0;
 }
 

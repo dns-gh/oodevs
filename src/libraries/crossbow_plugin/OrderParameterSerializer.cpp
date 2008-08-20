@@ -233,16 +233,18 @@ namespace
 // -----------------------------------------------------------------------------
 void OrderParameterSerializer::SerializeLocation( ASN1T_Location*& asn, unsigned long parameterId, const std::string& tablename ) const
 {
-    Table_ABC& table = database_.OpenTable( tablename, false );
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
     std::stringstream ss;
     ss << "ParameterID=" << parameterId;
-    const Row_ABC* result = table.Find( ss.str() );
+    const Row_ABC* result = table->Find( ss.str() );
     asn = new ASN1T_Location();
     if ( result == 0 )
         throw std::exception( "Cannot instanciate location parameter" );    
     Shape_ABC& shape = result->GetShape();
     GeometrySerializer serializer( *asn );
     shape.Accept( serializer );
+
+//    database_.ReleaseTable( tablename );
     /*
     geocoord::MGRS mgrs( v );
     geocoord::Geodetic geodetic( mgrs );
@@ -257,26 +259,17 @@ void OrderParameterSerializer::SerializeLocation( ASN1T_Location*& asn, unsigned
 // -----------------------------------------------------------------------------
 void OrderParameterSerializer::SerializeLimit( ASN1T_Line*& asn, unsigned long parameterId, const std::string& tablename ) const
 {        
-    Table_ABC& table = database_.OpenTable( tablename, false );
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
     std::stringstream ss;
     ss << "ParameterID=" << parameterId;
-    const Row_ABC* result = table.Find( ss.str() );
+    const Row_ABC* result = table->Find( ss.str() );
     asn = new ASN1T_Line();
     if ( result == 0 )
         throw std::exception( "Cannot instanciate limit parameter" );    
     Shape_ABC& shape = result->GetShape();
     GeometrySerializer serializer( *asn );
     shape.Accept( serializer );
-    /*
-    unsigned long id = 0;
-    std::stringstream ss( value );
-    ss >> id;
-    if( const dispatcher::Limit* limit = model_.GetLimits().Find( id ) )
-    {
-        asn = new ASN1T_Line();
-        limit->Send( *asn );
-    }
-    */
+//    database_.ReleaseTable( tablename );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,7 +284,7 @@ void OrderParameterSerializer::SerializePhaseLines( ASN1T_LimasOrder*& asn, unsi
     asn->elem = 0;
 
     /*
-    Table_ABC& table = database_.OpenTable( tablename, false );
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
     std::stringstream ss;
     ss << "ParameterID=" << parameterId;
     const Row_ABC* result = table.Find( ss.str() );

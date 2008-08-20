@@ -101,6 +101,8 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     case T_MsgsSimToClient_msg_msg_unit_creation:    
     case T_MsgsSimToClient_msg_msg_folk_creation:    
         return true;
+    case T_MsgsSimToClient_msg_msg_automat_attributes:
+        return asn.msg.u.msg_automat_attributes->m.etat_automatePresent == 1;        
     case T_MsgsSimToClient_msg_msg_unit_attributes:
         const ASN1T_MsgUnitAttributes* attributes = asn.msg.u.msg_unit_attributes;
         if( attributes->m.positionPresent || attributes->m.vitessePresent || attributes->m.etat_operationnelPresent )
@@ -152,7 +154,6 @@ void DatabasePublisher::Receive( const ASN1T_MsgsMessengerToClient& asn )
         return;
 
     UpdateDatabase( asn );
-
 }
 
 
@@ -192,6 +193,7 @@ void DatabasePublisher::UpdateDatabase( const ASN1T_MsgsSimToClient& asn )
     {
     case T_MsgsSimToClient_msg_msg_formation_creation:          databaseUpdater_->Update( *asn.msg.u.msg_formation_creation ); break;
     case T_MsgsSimToClient_msg_msg_automat_creation:            databaseUpdater_->Update( *asn.msg.u.msg_automat_creation ); break;
+    case T_MsgsSimToClient_msg_msg_automat_attributes:          databaseUpdater_->Update( *asn.msg.u.msg_automat_attributes ); break;
 
     case T_MsgsSimToClient_msg_msg_unit_creation:               databaseUpdater_->Update( *asn.msg.u.msg_unit_creation ); break;
     case T_MsgsSimToClient_msg_msg_unit_attributes:             databaseUpdater_->Update( *asn.msg.u.msg_unit_attributes ); break;

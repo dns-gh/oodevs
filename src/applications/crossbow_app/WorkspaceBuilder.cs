@@ -25,6 +25,7 @@ namespace Sword
                 document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limits));
                 document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limas));
                 document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.TacticalObjectPoint));
+                document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.KnowledgeUnits));
                 document.RefreshView();
             }
 
@@ -34,6 +35,7 @@ namespace Sword
                 if (featureLayer == null)
                     return null;
                 DynamicMoleLayer dynamicLayer = new DynamicMoleLayer(Tools.GetCSwordExtension().SymbolFactory);
+                dynamicLayer.FeatureLayer = featureLayer;
                 dynamicLayer.FeatureClass = featureLayer.FeatureClass;
                 dynamicLayer.Connect();
                 return MakeGroup(name, featureLayer, dynamicLayer);

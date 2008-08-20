@@ -11,6 +11,7 @@
 #define __CrossbowPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
+#include "dispatcher/ClientPublisher_ABC.h"
 #include "game_asn/Messenger.h"
 
 namespace xml
@@ -23,6 +24,7 @@ namespace dispatcher
     class Model;
     class Config;    
     class SimulationPublisher_ABC;     
+    class LinkResolver_ABC;
 }
 
 namespace tools
@@ -40,20 +42,26 @@ namespace crossbow
 */
 // Created: JCR 2007-08-29
 // =============================================================================
-class CrossbowPlugin : public dispatcher::Plugin_ABC
+class CrossbowPlugin 
+    : public dispatcher::Plugin_ABC
+    , public dispatcher::ClientPublisher_ABC
 {
 
 public:
     //! @name Constructors/Destructor
-    //@{
-             CrossbowPlugin( dispatcher::Model& model, tools::MessageDispatcher_ABC&, const dispatcher::Config& config, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis );
+    //@{             
+             CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links );
     virtual ~CrossbowPlugin();
     //@}
 
     //! @name Operations
-    //@{
+    //@{    
     virtual void Receive                    ( const ASN1T_MsgsSimToClient& asnMsg );
-            void OnReceiveMessengerToClient (const std::string&, const ASN1T_MsgsMessengerToClient&);
+//            void OnReceiveMessengerToClient ( const std::string&, const ASN1T_MsgsMessengerToClient& );
+//            void OnReceiveClientToMessenger ( const std::string&, const ASN1T_MsgsClientToMessenger& );
+        
+    virtual void Send( const ASN1T_MsgsMessengerToClient& msg ); 
+
     virtual void NotifyClientAuthenticated  ( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft           ( dispatcher::ClientPublisher_ABC& client );
     //@}
@@ -65,10 +73,19 @@ private:
     CrossbowPlugin& operator=( const CrossbowPlugin& ); //!< Assignement operator
     //@}
 
+    //! @name From ClientPublisher_ABC
+    //@{
+    virtual void Send( const ASN1T_MsgsSimToClient&            msg ) {}
+    virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg ) {}
+    virtual void Send( const ASN1T_MsgsReplayToClient&         msg ) {}
+    virtual void Send( const ASN1T_MsgsAarToClient&            msg ) {}
+    //@}
+
 private:
     //! @name Member data
     //@{
     std::auto_ptr< DatabasePublisher > databasePublisher_;
+    std::auto_ptr< dispatcher::Plugin_ABC > messenger_;
     //@}
 };
 }

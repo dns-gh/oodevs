@@ -109,6 +109,18 @@ crossbow::FieldVariant crossbow::Row::GetField( const std::string& name ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Row::GetID
+// Created: JCR 2008-07-25
+// -----------------------------------------------------------------------------
+long crossbow::Row::GetID() const
+{
+    long id;
+    
+    row_->get_OID( &id );
+    return id;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Row::GetShape
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
@@ -144,7 +156,7 @@ void crossbow::Row::BindRow( IRowPtr row )
 // -----------------------------------------------------------------------------
 long crossbow::Row::GetFieldIndex( const std::string& name ) const
 {
-    IFieldsPtr fields;
+    IFieldsPtr fields; 
     row_->get_Fields( &fields );
 
     long index;

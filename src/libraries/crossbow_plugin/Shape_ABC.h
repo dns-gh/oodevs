@@ -14,13 +14,13 @@ namespace crossbow
 {
     class Point;
     class PointCollection;
-    
+        
     class ShapeVisitor_ABC
     {
     public:
                  ShapeVisitor_ABC() {}
         virtual ~ShapeVisitor_ABC() {}
-
+        
         virtual void Visit( const PointCollection& ) {}
         virtual void Visit( const Point& ) {}
     };

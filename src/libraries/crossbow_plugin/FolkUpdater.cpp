@@ -102,7 +102,8 @@ namespace
 // -----------------------------------------------------------------------------
 void FolkUpdater::Update( const ASN1T_MsgFolkGraphUpdate& msg )
 {    
-    Update( database_.OpenTable( "Population", false ), msg );
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "Population" ) );
+    Update( *table, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +113,7 @@ void FolkUpdater::Update( const ASN1T_MsgFolkGraphUpdate& msg )
 void FolkUpdater::Drop()
 {
     // LockedScopeEditor   lock( database_ );    
-    database_.ReleaseTable( "Population" );
+//    database_.ReleaseTable( "Population" );
 }
 
 // -----------------------------------------------------------------------------

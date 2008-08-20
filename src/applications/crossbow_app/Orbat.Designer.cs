@@ -169,8 +169,9 @@ namespace Sword
                     string symbol = Tools.GetValue<string>(pFeature, "Symbol_ID");
                     string name = Tools.GetValue<string>(pFeature, "Name");
 
-                    TreeNode newNode = node[0].Nodes.Add(oid.ToString(), name, symbol);
+                    TreeNode newNode = node[0].Nodes.Add(oid.ToString(), name + " [" + oid + "]", symbol);
                     newNode.SelectedImageKey = symbol;
+                    newNode.ForeColor = node[0].ForeColor;
                     pFeature = pCursor.NextFeature();
                 }
                 pCursor = null;
@@ -192,7 +193,8 @@ namespace Sword
 
                     TreeNode[] node = m_symbolTree.Nodes.Find(oidParent.ToString(), true);
                     TreeNode newNode = node[0].Nodes.Add(oid.ToString(), name, symbol);
-                    newNode.SelectedImageKey = symbol;
+                    newNode.ForeColor = node[0].ForeColor;
+                    newNode.SelectedImageKey = symbol;                
                     RunAgentCursorOnSubordinate(pFeatureClass, oidParent.ToString(), oid.ToString());
                     pFeature = pCursor.NextFeature();
                 }
@@ -210,6 +212,8 @@ namespace Sword
                     int oid = Tools.GetValue<int>(pRow, "Public_OID");
                     string name = Tools.GetValue<string>(pRow, "Name");
                     string symbolID = Tools.GetValue<string>(pRow, "Symbol_ID");
+                    int type = Tools.GetValue<int>(pRow, "Type");
+                    bool engaged = Tools.GetValue<short>(pRow, "Engaged") < 0;
 
                     TreeNodeCollection parentNode = m_symbolTree.Nodes;
                     TreeNode[] query = m_symbolTree.Nodes.Find(oidParent.ToString(), true);
@@ -219,6 +223,8 @@ namespace Sword
                         parentNode = query[0].Nodes;
                     TreeNode newNode = parentNode.Add(oid.ToString(), name, symbolID);
                     newNode.SelectedImageKey = symbolID;
+                    if (type > 0 && engaged)
+                        newNode.ForeColor = Color.Blue;
                     pRow = pCursor.NextRow();
                 }
                 pCursor = null;

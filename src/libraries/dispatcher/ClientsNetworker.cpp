@@ -89,7 +89,7 @@ void ClientsNetworker::ConnectionError( const std::string& link , const std::str
     if( it != clients_.end() && it->second )
     {
         Client* client = it->second;
-        plugin_.NotifyClientLeft( *client);
+        plugin_.NotifyClientLeft( *client );
         clients_.erase( it );
         delete client;
     }

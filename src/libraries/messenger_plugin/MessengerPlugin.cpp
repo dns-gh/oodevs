@@ -31,16 +31,16 @@ using namespace messenger;
 // Name: MessengerPlugin constructor
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-MessengerPlugin::MessengerPlugin( dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& links, const dispatcher::Config& config)
-    : config_(config)
-    , clients_(clients)
-    , links_(links)
-    , idManager_(new IdManager)
-    , converter_(new kernel::CoordinateConverter(config))
+MessengerPlugin::MessengerPlugin( dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& links, const dispatcher::Config& config )
+    : config_ ( config )
+    , clients_ ( clients )
+    , links_ ( links )
+    , idManager_ ( new IdManager )
+    , converter_ ( new kernel::CoordinateConverter( config ) )
 {
-    tacticalLineManager_.reset(new TacticalLineManager(*idManager_,*converter_));
-    intelligenceManager_.reset(new IntelligenceManager(*idManager_,*converter_));
-    Load(config);
+    tacticalLineManager_.reset( new TacticalLineManager( *idManager_, *converter_ ) );
+    intelligenceManager_.reset( new IntelligenceManager( *idManager_, *converter_ ) );
+    Load( config );
     dispatcher.RegisterMessage( *this, &MessengerPlugin::OnReceiveClientToMessenger );
 }
 
@@ -59,7 +59,7 @@ MessengerPlugin::~MessengerPlugin()
 // -----------------------------------------------------------------------------
 void MessengerPlugin::Load(const tools::SessionConfig& config)
 {
-    if( config.HasCheckpoint())
+    if( config.HasCheckpoint() )
     {
         xml::xifstream xis(GetCheckPointFileName(config.GetCheckpointDirectory()));
         xis >> xml::start( "messenger" )
@@ -193,8 +193,8 @@ void MessengerPlugin::SaveCheckPoint(const std::string& name)
 // -----------------------------------------------------------------------------
 void MessengerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& /*profile*/ )
 {
-    tacticalLineManager_->SendStateToNewClient(client);
-    intelligenceManager_->SendStateToNewClient(client);
+    tacticalLineManager_->SendStateToNewClient( client );
+    intelligenceManager_->SendStateToNewClient( client );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,8 +9,8 @@
 
 #include "crossbow_plugin_pch.h"
 #include "FeatureRow.h"
-#include "Line.h"
 #include "Point.h"
+#include "Line.h"
 #include "Area.h"
 
 using namespace crossbow;
@@ -37,21 +37,23 @@ FeatureRow::~FeatureRow()
 
 namespace
 {
-    struct GeometryConverter : public ShapeVisitor_ABC
+    class GeometryConverter : public ShapeVisitor_ABC
     {
+    public:
         GeometryConverter( IGeometryPtr geometry, ISpatialReferencePtr spatialReference )
             : geometry_( geometry )
             , spatialReference_( spatialReference )
-        {}
-        virtual void Visit( const crossbow::Line& line )
         {
-            line.UpdateGeometry( geometry_, spatialReference_ );
+        }
+        virtual void Visit( const crossbow::PointCollection& points )
+        {
+            points.UpdateGeometry( geometry_, spatialReference_ );
         }
         virtual void Visit( const crossbow::Point& point )
         {
             point.UpdateGeometry( geometry_, spatialReference_ );
         }
-
+    private:
         IGeometryPtr geometry_;
         ISpatialReferencePtr spatialReference_;
     };

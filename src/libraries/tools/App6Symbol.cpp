@@ -105,7 +105,7 @@ std::string GetAffiliation( const std::string& symbol )
 {
     if( symbol.length() < 2 )
         return "U";
-    return symbol.substr( 1, 1 );;
+    return symbol.substr( 1, 1 );
 }
 
 // -----------------------------------------------------------------------------

@@ -38,6 +38,11 @@ public:
     virtual void Serialize( ASN1T_Location& asn ) const;
     //@}
 
+    //! @name 
+    //@{
+    virtual void UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;    
+    //@}
+
 protected:
     //! @name Constructors/Destructor
     //@{
@@ -45,12 +50,7 @@ protected:
     explicit PointCollection( const ASN1T_CoordLatLongList& asn );
     explicit PointCollection( IGeometryPtr geometry );    
     //@}
-
-    //! @name 
-    //@{
-    void UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;    
-    //@}
-
+    
 private:
     //! @name Copy/Assignement
     //@{

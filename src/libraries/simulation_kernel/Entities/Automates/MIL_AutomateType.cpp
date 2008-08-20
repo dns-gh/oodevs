@@ -247,9 +247,6 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
     {
         const MIL_AgentPion& pion = **it;
 
-        if( pion == automate.GetPionPC() )
-            continue;
-
         ++currentComposition[ &pion.GetType() ];
         if( composition_.find( &pion.GetType() ) == composition_.end() )
             return false;

@@ -41,7 +41,7 @@ public:
     virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg ) = 0;
     virtual void Send( const ASN1T_MsgsReplayToClient&         msg ) = 0;
     virtual void Send( const ASN1T_MsgsAarToClient&            msg ) = 0;
-    virtual void Send( const ASN1T_MsgsMessengerToClient&      msg ) = 0 ; 
+    virtual void Send( const ASN1T_MsgsMessengerToClient&      msg ) = 0; 
     //@}
 };
 

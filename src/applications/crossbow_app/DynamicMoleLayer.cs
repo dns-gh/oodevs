@@ -30,6 +30,7 @@ namespace Sword
         {
             private bool m_selectable = true;
             private IFeatureClass m_featureClass;
+            private IFeatureLayer m_featureLayer;
             private int m_featureClassId = -1;
             private Hashtable m_elements = new Hashtable();
             private SymbolFactory m_symbolFactory;
@@ -136,16 +137,24 @@ namespace Sword
             #region Drawing feature
             private void DrawFeatureClass(IDisplay display, IDynamicDisplay dynamicDisplay)
             {
-                if (m_featureClass == null)
-                    if (m_featureClassId == -1)
+                if (FeatureClass == null)
+                {                    
+                    m_featureLayer = Tools.GetFeatureClassFromId(m_featureClassId);
+                    FeatureClass = m_featureLayer.FeatureClass;
+                    if (FeatureClass == null)
                         return;
-                    else
-                    {
-                        FeatureClass = Tools.GetFeatureClassFromId(m_featureClassId);
-                        if (FeatureClass == null)
-                            return;
-                    }
-                IFeatureCursor cursor = m_featureClass.Search(null, true);
+                }
+                
+                // Get Geo Size from Points Size
+                // double geoSize = display.DisplayTransformation.FromPoints(this.SymbolSize * 50.0);
+                IFeatureLayerDefinition definition = (IFeatureLayerDefinition)m_featureLayer;
+                IQueryFilter filter = null;
+                if (definition.DefinitionExpression != "")
+                {
+                    filter = new QueryFilterClass();
+                    filter.WhereClause = definition.DefinitionExpression;                    
+                }
+                IFeatureCursor cursor = m_featureClass.Search(filter, true);
                 IFeature feature = cursor.NextFeature();
                 while (feature != null)
                 {
@@ -161,7 +170,13 @@ namespace Sword
                 IDynamicElement symbol = GetSymbol(display, dynamicDisplay, feature);
                 if (symbol == null)
                     return;
+
+                // Get Geo Size from Points Size
+                
+
                 FeatureDrawer.Draw(dynamicDisplay, symbol, feature, IsSelected(feature));
+                
+                // symbol.CachedGraphic.IsDirty = true;
             }
 
             private bool IsSelected(IFeature feature)
@@ -184,12 +199,15 @@ namespace Sword
             {
                 string symbolId = Tools.GetValue<string>(feature, "Symbol_ID");
                 IDynamicElement element = (IDynamicElement)m_elements[feature.OID];
-                if (element != null)
-                    return element;
-                if (m_symbolFactory.SpatialReference == null)
-                    m_symbolFactory.SpatialReference = display.DisplayTransformation.SpatialReference;
-                element = m_symbolFactory.CreateElement(display, dynamicDisplay, feature, symbolId); // throw something
-                m_elements[feature.OID] = element;
+                if (element == null)
+                {
+                    if (m_symbolFactory.SpatialReference == null)
+                        m_symbolFactory.SpatialReference = display.DisplayTransformation.SpatialReference;
+                    element = m_symbolFactory.CreateElement(display, dynamicDisplay, feature, symbolId); // throw something
+                    m_elements[feature.OID] = element;
+                }
+                if ( element != null && element.CachedGraphic != null )
+                    element.CachedGraphic.Size = display.DisplayTransformation.FromPoints(0.35 * 50.0); // SymbolSize * 50
                 return element;
             }
             #endregion
@@ -234,6 +252,18 @@ namespace Sword
             #endregion
 
             #region IFeatureLayer Members
+
+            public IFeatureLayer FeatureLayer
+            {
+                get
+                {
+                    return m_featureLayer;
+                }
+                set
+                {
+                    m_featureLayer = value;                    
+                }
+            }
 
             public IFeatureClass FeatureClass
             {

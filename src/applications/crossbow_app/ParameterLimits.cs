@@ -9,9 +9,25 @@ namespace Sword
     {
         public sealed class ParameterLimit : OrderParameter
         {
+            IFeature m_potential;
+
+            public IFeature Feature
+            {
+                set
+                {
+                    m_potential = value;
+                }
+            }
+
             public ParameterLimit(String name)
                 : base(name, ParameterTypeFactory.Create("Line"))
             {
+            }
+
+            public override void SetValue(string value)
+            {
+                if (m_potential != null)
+                    base.SetValue(m_potential.Shape);
             }
 
             public void UpdateGeometry(IGeometry geometry)
@@ -24,8 +40,8 @@ namespace Sword
                 IPolyline line = new PolylineClass();
                 line.FromPoint = first;
                 line.ToPoint = second;
-                base.SetValue(line as IGeometry);
-            }
+                base.SetValue(line as IGeometry);                
+            }            
         }
 
         public sealed class ParameterLimits : IOrderParameter
@@ -44,7 +60,7 @@ namespace Sword
                 IFeatureWorkspace ws = (IFeatureWorkspace)Tools.OpenWorkspace(Tools.GetCSwordExtension().Config.PopulationFile);
                 IGeoDataset dataset = (IGeoDataset)ws.OpenFeatureClass("Population");
                 m_limits.first.UpdateGeometry(dataset.Extent.UpperLeft, dataset.Extent.LowerLeft);
-                m_limits.second.UpdateGeometry(dataset.Extent.UpperRight, dataset.Extent.LowerRight);
+                m_limits.second.UpdateGeometry(dataset.Extent.UpperRight, dataset.Extent.LowerRight);                
             }
 
             public void Serialize(ITable table, int id)
@@ -58,8 +74,19 @@ namespace Sword
                 if (menu == null || selected == null || selected.Class.AliasName != "BoundaryLimits")
                     return;
                 m_potential = selected;
+                m_limits.first.Feature = m_potential;
+                m_limits.second.Feature = m_potential;
                 menu.Add("Set limit 1", m_limits.first);
                 menu.Add("Set limit 2", m_limits.second);
+            }
+
+            public bool IsSet(string value)
+            {
+                if (value == "Set limit 1")
+                    return m_limits.first.IsSet(value);
+                if (value == "Set limit 1")
+                    return m_limits.first.IsSet(value);
+                return false;
             }
 
             public void SetValue(string value)

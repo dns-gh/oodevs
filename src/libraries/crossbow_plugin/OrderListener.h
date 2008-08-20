@@ -57,6 +57,7 @@ private:
     //! @name Helpers
     //@{    
     void MarkProcessed( Row_ABC& row ) const;
+    void Copy( Row_ABC& row );
     //@}
 
 private:
@@ -64,7 +65,9 @@ private:
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
     std::auto_ptr< OrderDispatcher >     dispatcher_;
-    Table_ABC&                           table_;
+//    Table_ABC&                           table_;
+    Table_ABC&                           validation_;
+    long                                 ref_;
     Database_ABC&                        database_;
     //@}
 };

@@ -38,6 +38,7 @@ public:
     virtual void SetShape( const Shape_ABC& value ) = 0;
     virtual FieldVariant GetField( const std::string& name ) const = 0;
     virtual Shape_ABC& GetShape() const = 0;
+    virtual long GetID() const = 0;
     //@}
 };
 

@@ -37,7 +37,15 @@ DatabaseUpdater::DatabaseUpdater( Database_ABC& database, const dispatcher::Mode
     , model_        ( model )
     , reportFactory_( reportFactory )
 {
-    // NOTHING
+    database.ClearTable( "UnitForces" );
+    database.ClearTable( "KnowledgeUnits" );
+    database.ClearTable( "BoundaryLimits" );
+    database.ClearTable( "TacticalLines" );
+    database.ClearTable( "TacticalObjectArea" );
+    database.ClearTable( "TacticalObjectLine" );
+    database.ClearTable( "TacticalObjectPoint" );
+    database.ClearTable( "Reports" );
+    database.ClearTable( "Formations" );    
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +81,9 @@ namespace
     {
         std::string result( symbol.size(), '*' );
         std::transform( symbol.begin(), symbol.end(), result.begin(), toupper );
-        std::replace( result.begin(), result.end(), '*', '-' );
+        std::replace( result.begin(), result.end(), '*', '-' );        
+        if ( result.size() < 15 )        
+            result.append( std::string( 15 - symbol.size(), '-' ) );        
         return result;
     }
 
@@ -92,14 +102,26 @@ namespace
 void DatabaseUpdater::Update( const ASN1T_MsgUnitCreation& msg )
 {
     ScopeEditor editor( database_ );
-    Table_ABC&  table = database_.OpenTable( "UnitForces" );
+    Table_ABC& table = database_.OpenBufferedTable( "UnitForces" );
+
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
     row.SetField( "Parent_OID", FieldVariant( msg.oid_automate ) );
     row.SetField( "Name"      , FieldVariant( std::string( msg.nom ) ) );
+    row.SetField( "Type"      , FieldVariant( msg.type_pion ) );
     UpdateSymbol( row, model_.GetAgents(), msg.oid );
     row.SetShape( Point() );
     table.UpdateRow( row );
+}
+
+namespace 
+{
+    std::string InverseAffiliation( const std::string& affiliation )
+    {
+        if ( affiliation == "H" ) return "F";
+        if ( affiliation == "F" ) return "H";
+        return affiliation;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -109,17 +131,20 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitCreation& msg )
 void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeCreation& msg )
 {
     ScopeEditor editor( database_ );
-    Table_ABC& table = database_.OpenTable( "KnowledgeUnits" );    
-    Row_ABC& row = table.CreateRow();
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "KnowledgeUnits" ) );
+    Row_ABC& row = table->CreateRow();
     row.SetField( "Public_OID"  , FieldVariant( msg.oid ) );
     row.SetField( "Group_OID"   , FieldVariant( msg.oid_groupe_possesseur ) );
     row.SetField( "RealUnit_OID", FieldVariant( msg.oid_unite_reelle ) );
-
+        
     if( const dispatcher::Agent* realAgent = model_.GetAgents().Find( msg.oid_unite_reelle ) )
-        row.SetField( "ObserverAffiliation", FieldVariant( tools::app6::GetAffiliation( realAgent->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ) ) );
+    {
+        std::string a = tools::app6::GetAffiliation( realAgent->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() );
+        row.SetField( "ObserverAffiliation", FieldVariant( InverseAffiliation( a ) ) );
+    }
     row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( "SUZP********---" ) ) ); // $$$$ SBO 2007-09-27: hard coded...
     row.SetShape( Point() );
-    table.UpdateRow( row );
+    table->UpdateRow( row );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,12 +154,13 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeCreation& msg )
 void DatabaseUpdater::Update( const ASN1T_MsgLimitCreation& msg )
 {
     ScopeEditor editor( database_ );
-    Table_ABC& table = database_.OpenTable( "BoundaryLimits" );
-    Row_ABC& row = table.CreateRow();
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "BoundaryLimits" ) );
+    Row_ABC& row = table->CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
     row.SetField( "Name"      , FieldVariant( std::string( msg.tactical_line.name ) ) );
+    row.SetField( "Symbol_ID" , FieldVariant( std::string( "G-GPGLB----H--X" ) ) ); // default
     row.SetShape( Line( msg.tactical_line.geometry.coordinates ) );
-    table.UpdateRow( row );
+    table->UpdateRow( row );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,12 +170,12 @@ void DatabaseUpdater::Update( const ASN1T_MsgLimitCreation& msg )
 void DatabaseUpdater::Update( const ASN1T_MsgLimaCreation& msg )
 {
     ScopeEditor editor( database_ );
-    Table_ABC& table = database_.OpenTable( "TacticalLines" );    
-    Row_ABC& row = table.CreateRow();
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "TacticalLines" ) );
+    Row_ABC& row = table->CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
     row.SetField( "Name"      , FieldVariant( std::string( msg.tactical_line.name ) ) );
     row.SetShape( Line( msg.tactical_line.geometry.coordinates ) );
-    table.UpdateRow( row );
+    table->UpdateRow( row );
 }
 
 namespace
@@ -173,8 +199,8 @@ namespace
 void DatabaseUpdater::Update( const ASN1T_MsgObjectCreation& msg )
 {
     ScopeEditor editor( database_ );
-    Table_ABC& table = database_.OpenTable( GetObjectTable( msg.location ) );
-    Row_ABC& row = table.CreateRow();
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( GetObjectTable( msg.location ) ) );
+    Row_ABC& row = table->CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
     row.SetField( "Name"      , FieldVariant( std::string( msg.name ) ) );
     UpdateSymbol( row, model_.GetObjects(), msg.oid );
@@ -184,7 +210,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgObjectCreation& msg )
     case EnumLocationType::line:  row.SetShape( Line( msg.location.coordinates ) ); break;
     default:                      /*row.SetShape( Location( asn.location ) );*/ break; // $$$$ SBO 2007-08-31: TODO
     }
-    table.UpdateRow( row );
+    table->UpdateRow( row );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,11 +220,11 @@ void DatabaseUpdater::Update( const ASN1T_MsgObjectCreation& msg )
 void DatabaseUpdater::Update( const ASN1T_MsgReport& msg )
 {
     ScopeEditor editor( database_ );
-    Table_ABC& table = database_.OpenTable( "Reports" );
-    Row_ABC& row = table.CreateRow();
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "Reports" ) );
+    Row_ABC& row = table->CreateRow();
     row.SetField( "unit_id", FieldVariant( msg.oid ) );
     row.SetField( "message", FieldVariant( reportFactory_.CreateMessage( msg ) ) );
-    table.UpdateRow( row );
+    table->UpdateRow( row );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,11 +234,16 @@ void DatabaseUpdater::Update( const ASN1T_MsgReport& msg )
 void DatabaseUpdater::Update( const ASN1T_MsgFormationCreation& asn )
 {
     ScopeEditor editor( database_ );
-    Table_ABC& table = database_.OpenTable( "Formations" );
+    Table_ABC& table = database_.OpenBufferedTable( "Formations" );
     Row_ABC& row = table.CreateRow();
     row.SetField( "Public_OID", FieldVariant( asn.oid ) );
-    row.SetField( "Parent_OID", FieldVariant( asn.oid_formation_parente ) );
-    row.SetField( "Name"      , FieldVariant( std::string( asn.nom ) ) );
+    if ( asn.m.oid_formation_parentePresent )
+        row.SetField( "Parent_OID", FieldVariant( asn.oid_formation_parente ) );
+    else
+        row.SetField( "Parent_OID", FieldVariant( 0 ) );
+    row.SetField( "Name", FieldVariant( std::string( asn.nom ) ) );
+    row.SetField( "Type", FieldVariant( -1 ) );
+    row.SetField( "Engaged", FieldVariant( 0 ) );
     UpdateSymbol( row, model_.GetFormations(), asn.oid );
     table.UpdateRow( row );
 }
@@ -224,16 +255,36 @@ void DatabaseUpdater::Update( const ASN1T_MsgFormationCreation& asn )
 void DatabaseUpdater::Update( const ASN1T_MsgAutomatCreation& asn )
 {
     ScopeEditor editor( database_ );
-    Table_ABC& table = database_.OpenTable( "Formations" );
-    Row_ABC& row = table.CreateRow();
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "Formations" ) );
+    Row_ABC& row = table->CreateRow();
     row.SetField( "Public_OID", FieldVariant( asn.oid ) );
     if( asn.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation )
         row.SetField( "Parent_OID", FieldVariant( asn.oid_parent.u.formation ) );
     else
         row.SetField( "Parent_OID", FieldVariant( asn.oid_parent.u.automate ) );
     row.SetField( "Name", FieldVariant( std::string( asn.nom ) ) );
+    row.SetField( "Type", FieldVariant( asn.type_automate ) );
     UpdateSymbol( row, model_.GetAutomats(), asn.oid );
-    table.UpdateRow( row );
+    table->UpdateRow( row );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Update
+// Created: JCR 2008-07-30
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::Update( const ASN1T_MsgAutomatAttributes& msg )
+{
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "Formations" ) );
+    std::stringstream query;
+    query << "Public_OID=" << msg.oid;    
+    Row_ABC* row = table->Find( query.str() );
+    if( row != 0 )
+    {
+        ScopeEditor editor( database_ );
+        if( msg.m.etat_automatePresent )
+            row->SetField( "Engaged", FieldVariant( ( msg.etat_automate == EnumAutomatMode::embraye ) ? -1 : 0 ) );        
+        table->UpdateRow( *row );
+    }  
 }
 
 namespace 
@@ -273,11 +324,11 @@ namespace
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgUnitAttributes& msg )
 {    
-    Table_ABC& table = database_.OpenTable( "UnitForces" );    
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "UnitForces" ) );
     std::stringstream query;
     query << "Public_OID=" << msg.oid;
-    ScopeTransaction transaction( table );
-    if( Row_ABC* row = table.Find( query.str() ) )
+    ScopeTransaction transaction( *table );
+    if( Row_ABC* row = table->Find( query.str() ) )
     {
         ScopeEditor editor( database_ );
         if( msg.m.vitessePresent )
@@ -286,7 +337,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitAttributes& msg )
             row->SetField( "OpsState", FieldVariant( msg.etat_operationnel_brut ) );
         if( msg.m.positionPresent )
             row->SetShape( Point( msg.position ) );
-        table.UpdateRow( *row );
+        table->UpdateRow( *row );
     }    
 }
 
@@ -296,11 +347,11 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitAttributes& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeUpdate& msg )
 {    
-    Table_ABC& table = database_.OpenTable( "KnowledgeUnits" );
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "KnowledgeUnits" ) );
     std::stringstream query;
     query << "Public_OID=" << msg.oid;
-    ScopeTransaction transaction( table );
-    if( Row_ABC* row = table.Find( query.str() ) )
+    ScopeTransaction transaction( *table );
+    if( Row_ABC* row = table->Find( query.str() ) )
     {
         ScopeEditor editor( database_ );        
         if( msg.m.speedPresent )
@@ -311,7 +362,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeUpdate& msg )
             UpdateSymbol( *row, model_.GetAgentKnowledges(), msg.oid );
         if( msg.m.positionPresent )
             row->SetShape( Point( msg.position ) );
-        table.UpdateRow( *row );
+        table->UpdateRow( *row );
     }    
 }
 
@@ -322,10 +373,10 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeUpdate& msg )
 void DatabaseUpdater::DestroyUnit( const ASN1T_MsgUnitDestruction& msg )
 {
     ScopeEditor editor( database_ );
-    Table_ABC& table = database_.OpenTable( "UnitForces" );
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "UnitForces" ) );
     std::stringstream query;
     query << "Public_OID=" << msg;
-    table.DeleteRows( query.str() );
+    table->DeleteRows( query.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -335,10 +386,10 @@ void DatabaseUpdater::DestroyUnit( const ASN1T_MsgUnitDestruction& msg )
 void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeDestruction& msg )
 {
     ScopeEditor editor( database_ );
-    Table_ABC& table = database_.OpenTable( "KnowledgeUnits" );
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "KnowledgeUnits" ) );
     std::stringstream query;
     query << "Public_OID=" << msg.oid;
-    table.DeleteRows( query.str() );
+    table->DeleteRows( query.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -350,7 +401,16 @@ void DatabaseUpdater::DestroyObject( const ASN1T_MsgObjectDestruction& msg )
     ScopeEditor editor( database_ );
     std::stringstream ss;
     ss << "Public_OID=" << msg;
-    database_.OpenTable( "TacticalObjectPoint" ).DeleteRows( ss.str() );
-    database_.OpenTable( "TacticalObjectLine" ) .DeleteRows( ss.str() );
-    database_.OpenTable( "TacticalObjectArea" ) .DeleteRows( ss.str() );
+    {
+        std::auto_ptr< Table_ABC > table( database_.OpenTable( "TacticalObjectPoint" ) );
+        table->DeleteRows( ss.str() );
+    }
+    {
+        std::auto_ptr< Table_ABC > table( database_.OpenTable( "TacticalObjectLine" ) );
+        table->DeleteRows( ss.str() );
+    }
+    {
+        std::auto_ptr< Table_ABC > table( database_.OpenTable( "TacticalObjectArea" ) );
+        table->DeleteRows( ss.str() );
+    }
 }

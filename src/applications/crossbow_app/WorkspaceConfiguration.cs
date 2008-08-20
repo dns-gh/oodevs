@@ -129,6 +129,7 @@ namespace Sword
         public sealed class LayersConfiguration
         {
             private string m_units = "UnitForces";
+            private string m_knowledgeUnits = "KnowledgeUnits";
             private string m_limits = "BoundaryLimits";
             private string m_limas = "TacticalLines";
             private string m_reports = "Reports";
@@ -147,6 +148,22 @@ namespace Sword
                 set
                 {
                     m_units = value;
+                }
+            }
+
+            [DescriptionAttribute("Layer containing knowledge units")]
+            [CategoryAttribute("Layer bindings")]
+            [TypeConverterAttribute(typeof(FeatureLayerList))]
+            [DefaultValue("KnowledgeUnits")]
+            public string KnowledgeUnits
+            {
+                get
+                {
+                    return m_knowledgeUnits;
+                }
+                set
+                {
+                    m_knowledgeUnits = value;
                 }
             }
 

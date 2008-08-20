@@ -31,10 +31,11 @@ using namespace crossbow;
 OrderDispatcher::OrderDispatcher( Database_ABC& database, const OrderTypes& types, const dispatcher::Model& model )
     : types_( types )
     , model_( model )
-    , paramTable_( database.OpenTable( "OrderParameters" ) )
+    , database_ ( database )
+//    , paramTable_( database.OpenTable( "OrderParameters" ) )
     , serializer_( new OrderParameterSerializer( database, model ) )
 {
-    // NOTHING
+    database.ClearTable( "OrderParameters" );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +90,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         return;
     }
 
-    const long orderId = GetField< long >( row, "OBJECTID" );
+    const long orderId = GetField< long >( row, "OrderID" );
 
     dispatcher::AsnMsgClientToSimUnitOrder asn;
     asn().oid = agent.GetID();
@@ -112,8 +113,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         return;
     }
 
-    const long orderId = GetField< long >( row, "OBJECTID" );
-    
+    const long orderId = GetField< long >( row, "OrderID" );
     
     dispatcher::AsnMsgClientToSimAutomatOrder asn;
     asn().oid = automat.GetID();
@@ -189,17 +189,19 @@ const kernel::OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row 
 // -----------------------------------------------------------------------------
 void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type )
 {
+    std::auto_ptr< Table_ABC > params_( database_.OpenTable( "OrderParameters" ) );
+
     parameters.n = type.Count();
     parameters.elem = new ASN1T_MissionParameter[ parameters.n ];
 
     std::stringstream ss;
     ss << "OrderID=" << orderId;
-    Row_ABC* result = paramTable_.Find( ss.str() );
+    Row_ABC* result = params_->Find( ss.str() );
     unsigned int i ; 
 	for( i = 0; result != 0 && i < parameters.n; ++i )
     {
         SetParameter( parameters.elem[i], *result, type );
-        result = paramTable_.GetNextRow();
+        result = params_->GetNextRow();
     }
     // TODO : if ( i < parameters.n )
 }

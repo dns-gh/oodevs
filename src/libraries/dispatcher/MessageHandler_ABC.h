@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& message ) = 0;    
+    virtual void Receive( const ASN1T_MsgsSimToClient& message ) = 0;
     //@}
 };
 

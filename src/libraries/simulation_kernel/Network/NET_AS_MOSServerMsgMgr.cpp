@@ -46,15 +46,6 @@ NET_AS_MOSServerMsgMgr::~NET_AS_MOSServerMsgMgr()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::AddClient
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::AddClient( const std::string& client )
-{
-    clients_.insert( client );
-}
-
-// -----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr::RemoveClient
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
@@ -136,6 +127,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const ASN
 void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( const std::string& from )
 {
     MT_LOG_INFO_MSG( "Announcement from client " << from );
+    clients_.insert( from );
 
     simulation_.SendControlInformation();
 

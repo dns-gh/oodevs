@@ -110,8 +110,10 @@ namespace Sword
             #endregion
 
             #region "Get FeatureClass from Class Id"
-            public static IFeatureClass GetFeatureClassFromId(int featureClassId)
+            public static IFeatureLayer GetFeatureClassFromId(int featureClassId)
             {
+                if (featureClassId == -1)
+                    return null;
                 DocumentProxy layers = GetDocument();
                 for (int i = 0; i < layers.LayerCount; ++i)
                 {
@@ -120,7 +122,7 @@ namespace Sword
                     if (featureLayer != null)
                     {
                         if (featureLayer.FeatureClass.FeatureClassID == featureClassId)
-                            return featureLayer.FeatureClass;
+                            return featureLayer;
                     }
                     else
                     {
@@ -130,7 +132,7 @@ namespace Sword
                             {
                                 featureLayer = composite.get_Layer(j) as IFeatureLayer;
                                 if (featureLayer != null && featureLayer.FeatureClass != null && featureLayer.FeatureClass.FeatureClassID == featureClassId)
-                                    return featureLayer.FeatureClass;
+                                    return featureLayer;
                             }
                     }
                 }
@@ -220,7 +222,10 @@ namespace Sword
             {
                 int id = row.Fields.FindField(field);
                 if (id >= 0)
-                    return (T)row.get_Value(id);
+                {
+                    object elt = row.get_Value(id);                    
+                    return (T)elt;
+                }
                 return default(T);
             }
 
@@ -230,25 +235,38 @@ namespace Sword
             /// <param name="table">Name of the output table</param>
             /// <param name="value">Input geometry</param>
             /// <remarks>Input geometry should be zAwared according to the table</remarks>
+            /*
             public static void Store(string table, IGeometry value)
             {
                 try
                 {
                     IFeatureWorkspace ws = (IFeatureWorkspace)OpenWorkspace(Tools.GetCSwordExtension().Config.SharedFile);
-                    ScopeLockEditor locker = new ScopeLockEditor(ws);
 
-                    locker.Lock();
                     IFeatureClass features = ws.OpenFeatureClass(table);
-                    IFeature feature = features.CreateFeature();
+                    ScopeLockEditor locker = new ScopeLockEditor((IDataset)features);
+                    locker.Lock();                    
+
+                    // IFeature feature = features.CreateFeature();
+                    // feature.Shape = value;
+                    // feature.Store();
+
+
+                    IFeatureBuffer feature = features.CreateFeatureBuffer();
+                    IFeatureCursor cursor = features.Insert(true);
                     feature.Shape = value;
-                    feature.Store();
+                    cursor.InsertFeature(feature);
+                    cursor.Flush();
+
                     locker.Unlock();
+
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(cursor);
                 }
                 catch (System.Exception e)
                 {
                     System.Diagnostics.Trace.WriteLine(e.Message);
                 }
             }
+            */
 
             /// <summary>
             ///  Remove all features of the specified feature class
@@ -262,11 +280,14 @@ namespace Sword
                     IFeatureWorkspace ws = (IFeatureWorkspace)OpenWorkspace(workspace);
                     if (ws == null)
                         return;
-                    ITable table = (ITable)ws.OpenFeatureClass(name);
+                    IFeatureClass table = ws.OpenFeatureClass(name);
                     if (table != null)
                     {
+                        ScopeLockEditor locker = new ScopeLockEditor((IDataset)table);
+                        locker.Lock();    
                         IQueryFilter filter = null;
-                        table.DeleteSearchedRows(filter);
+                        ((ITable)table).DeleteSearchedRows(filter);
+                        locker.Unlock(); 
                     }
                 }
                 catch (System.Exception e)

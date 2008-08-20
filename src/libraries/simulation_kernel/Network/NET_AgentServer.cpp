@@ -66,7 +66,6 @@ void NET_AgentServer::ConnectionSucceeded( const std::string& endpoint )
 {
     MT_LOG_INFO_MSG( "Connection received from client '" << endpoint << "'" );
     ServerNetworker::ConnectionSucceeded( endpoint );
-    pMsgMgr_->AddClient( endpoint );
 }
 
 // -----------------------------------------------------------------------------

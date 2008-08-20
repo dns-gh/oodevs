@@ -38,7 +38,6 @@ public:
     //! @name Message sending
     //@{
     virtual void Send( ASN1T_MsgsSimToClient& asnMsg );
-    void AddClient   ( const std::string& client );
     void RemoveClient( const std::string& client );
     //@}
 

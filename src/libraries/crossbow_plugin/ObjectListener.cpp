@@ -25,10 +25,10 @@ using namespace crossbow;
 // -----------------------------------------------------------------------------
 ObjectListener::ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher )
     : publisher_( publisher )
-    , table_    ( database.OpenTable( "TacticalObjectPoint", false ) )
+//    , table_    ( database.OpenTable( "TacticalObjectPoint", false ) )
     , database_  ( database )
 {
-    // NOTHING
+    database_.ClearTable( "TacticalObjectPoint" ); // Clear table row data    
 }
 
 // -----------------------------------------------------------------------------
@@ -46,19 +46,20 @@ ObjectListener::~ObjectListener()
 // -----------------------------------------------------------------------------
 void ObjectListener::Listen()
 {
-    static const std::string query = "Info <> ''";
-    
-    Row_ABC* row = table_.Find( query );
+    static const std::string query = "Info <> ''";    
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "TacticalObjectPoint" ) );
+
+    Row_ABC* row = table->Find( query );
     bool bHasUpdates = row != 0;
     while( row )
     {
         SendCreation( *row );
-        row = table_.GetNextRow();
+        row = table->GetNextRow();
     }
     if ( bHasUpdates )
     {
         ScopeEditor editor( database_ );
-        table_.DeleteRows( query );
+        table->DeleteRows( query );
     }
 }
 
@@ -69,10 +70,10 @@ namespace
         GeometrySerializer( ASN1T_Location& asn )
             : asn_( &asn )
         {}
-        virtual void Visit( const crossbow::Line& line )
+        virtual void Visit( const crossbow::PointCollection& points )
         {
-            line.Serialize( *asn_ );
-        }
+            points.Serialize( *asn_ );
+        }        
         virtual void Visit( const crossbow::Point& point )
         {
             point.Serialize( *asn_ );

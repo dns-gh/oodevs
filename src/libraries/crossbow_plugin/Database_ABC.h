@@ -10,6 +10,7 @@
 #ifndef __Database_ABC_h_
 #define __Database_ABC_h_
 
+
 namespace crossbow
 {
     class Table_ABC;
@@ -36,8 +37,10 @@ public:
     virtual void UnLock() = 0;
     virtual void StartEdit() = 0;
     virtual void StopEdit() = 0;
-    virtual Table_ABC& OpenTable( const std::string& name, bool clear = true ) = 0;
-    virtual void ReleaseTable( const std::string& name ) = 0;
+    virtual Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true ) = 0;
+    virtual Table_ABC*  OpenTable( const std::string& name ) = 0;
+    virtual void        ClearTable( const std::string& name ) = 0;
+    // virtual void ReleaseTable( const std::string& name ) = 0;
     //@}
 };
 

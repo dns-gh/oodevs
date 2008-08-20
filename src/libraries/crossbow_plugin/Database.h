@@ -43,7 +43,10 @@ public:
     virtual void UnLock();
     virtual void StartEdit();
     virtual void StopEdit();
-    virtual Table_ABC& OpenTable( const std::string& name, bool clear = true );
+    // virtual Table_ABC& OpenTable( const std::string& name, bool clear = true );
+    virtual Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true );
+    virtual Table_ABC*  OpenTable( const std::string& name );        
+    virtual void        ClearTable( const std::string& name );
     virtual void ReleaseTable( const std::string& name );
     //@}
 

@@ -80,7 +80,8 @@ private:
     //@{    
     const OrderTypes& types_;
     const dispatcher::Model& model_;
-    Table_ABC& paramTable_;
+//    Table_ABC& paramTable_;
+    Database_ABC& database_;
     std::auto_ptr< OrderParameterSerializer > serializer_;
     //@}
 };

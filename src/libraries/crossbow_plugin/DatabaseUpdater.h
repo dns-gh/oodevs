@@ -56,6 +56,7 @@ public:
 
     void Update( const ASN1T_MsgUnitAttributes& msg );
     void Update( const ASN1T_MsgUnitKnowledgeUpdate& msg );
+    void Update( const ASN1T_MsgAutomatAttributes& msg );
 
     void DestroyUnit( const ASN1T_MsgUnitDestruction& msg );
     void Update( const ASN1T_MsgUnitKnowledgeDestruction& msg );

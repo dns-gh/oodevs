@@ -60,7 +60,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
-    Table_ABC& table_;
+//    Table_ABC& table_;
     Database_ABC& database_;
     //@}
 };

@@ -23,7 +23,8 @@ using namespace crossbow;
 // -----------------------------------------------------------------------------
 StatusListener::StatusListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher )
     : publisher_      ( publisher )
-    , propertiesTable_( database.OpenTable( "SimulationProperties" ) )
+//    , propertiesTable_( database.OpenTable( "SimulationProperties" ) )
+    , database_       ( database )
     , paused_         ( false )
 {
     // NOTHING
@@ -53,7 +54,8 @@ namespace
 // -----------------------------------------------------------------------------
 void StatusListener::Listen()
 {
-    Row_ABC* result = propertiesTable_.Find( "Property='Status'" );
+    std::auto_ptr< Table_ABC > properties( database_.OpenTable( "SimulationProperties" ) );
+    Row_ABC* result = properties->Find( "Property='Status'" );
     if( result )
         ChangeStatus( GetField< std::string >( *result, "PropertyValue" ) );
 }

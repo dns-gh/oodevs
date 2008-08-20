@@ -40,6 +40,7 @@ public:
     virtual void SetShape( const Shape_ABC& value );
     virtual FieldVariant GetField( const std::string& name ) const;
     virtual Shape_ABC& GetShape() const;
+    virtual long GetID() const;
 
     void BindRow( IRowPtr row );
     void Commit( ICursorPtr cursor = NULL );

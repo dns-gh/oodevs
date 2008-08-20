@@ -37,7 +37,7 @@ public:
     virtual void UpdateRow( const Row_ABC& row ) = 0;
     virtual void Clear() = 0;
 
-    virtual Row_ABC* Find( const std::string& query ) = 0;
+    virtual Row_ABC* Find( const std::string& query ) = 0;    
     virtual Row_ABC* GetNextRow() = 0;
 
     virtual void BeginTransaction() = 0;
