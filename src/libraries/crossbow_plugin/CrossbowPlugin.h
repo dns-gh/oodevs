@@ -75,10 +75,10 @@ private:
 
     //! @name From ClientPublisher_ABC
     //@{
-    virtual void Send( const ASN1T_MsgsSimToClient&            msg ) {}
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg ) {}
-    virtual void Send( const ASN1T_MsgsReplayToClient&         msg ) {}
-    virtual void Send( const ASN1T_MsgsAarToClient&            msg ) {}
+    virtual void Send( const ASN1T_MsgsSimToClient&            /*msg*/ ) {}
+    virtual void Send( const ASN1T_MsgsAuthenticationToClient& /*msg*/ ) {}
+    virtual void Send( const ASN1T_MsgsReplayToClient&         /*msg*/ ) {}
+    virtual void Send( const ASN1T_MsgsAarToClient&            /*msg*/ ) {}
     //@}
 
 private:

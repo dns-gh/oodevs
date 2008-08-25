@@ -24,11 +24,11 @@ using namespace crossbow;
 CrossbowPlugin::CrossbowPlugin( const Config& config, xml::xistream& xis, Model& model, 
                                 SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& client, 
                                 LinkResolver_ABC& links )
-    : databasePublisher_( new DatabasePublisher( config, model, publisher, xis ) )
+    : databasePublisher_ ( new DatabasePublisher( config, model, publisher, xis ) )
     , messenger_ ( new messenger::MessengerPlugin( *this, client, links, config ) )
 {    
-    DefaultProfile default;
-    messenger_->NotifyClientAuthenticated( *this, default );
+    DefaultProfile defaultProfile;
+    messenger_->NotifyClientAuthenticated( *this, defaultProfile );
 }
     
 // -----------------------------------------------------------------------------
