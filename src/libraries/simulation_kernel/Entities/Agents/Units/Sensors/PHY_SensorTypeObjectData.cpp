@@ -46,7 +46,7 @@ void PHY_SensorTypeObjectData::InitializeFactors( const PHY_Posture::T_PostureMa
     LoadingWrapper loader;
 
     xis >> xml::start( strTagName )
-            >> xml::list( "source-posture-modifier", loader, &LoadingWrapper::ReadPosture, container, factors )
+            >> xml::list( "distance-modifier", loader, &LoadingWrapper::ReadPosture, container, factors )
         >> xml::end();
 }
 
