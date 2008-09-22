@@ -25,7 +25,7 @@ class AfterActionFunction;
 class AfterActionModel;
 class AfterActionRequest;
 class Publisher_ABC;
-class Simulation;
+class Services;
 class StaticModel;
 
 // =============================================================================
@@ -36,7 +36,7 @@ class StaticModel;
 // =============================================================================
 class AfterAction : public QObject
                   , public kernel::Observer_ABC
-                  , public kernel::ElementObserver_ABC< Simulation >
+                  , public kernel::ElementObserver_ABC< Services >
                   , public kernel::ElementObserver_ABC< AfterActionRequest >
 {
 
@@ -64,7 +64,7 @@ private:
     //@{
     void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher,
                                 gui::ParametersLayer& layer, const StaticModel& staticModel );
-    virtual void NotifyUpdated( const Simulation& simu );
+    virtual void NotifyUpdated( const Services& services );
     virtual void NotifyCreated( const AfterActionRequest& );
     //@}
 
@@ -76,7 +76,7 @@ private:
     AfterActionModel& model_;
     QDockWindow* aarDock_;
     QTabWidget* functionsTab_;
-    bool replay_;
+    bool aar_;
     //@}
 };
 

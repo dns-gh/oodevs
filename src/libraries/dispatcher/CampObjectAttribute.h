@@ -10,13 +10,16 @@
 #ifndef __CampObjectAttribute_h_
 #define __CampObjectAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
+
+namespace kernel
+{
+    class Automat_ABC;
+}
 
 namespace dispatcher
 {
     class Model;
-    class Automat;
 
 // =============================================================================
 /** @class  CampObjectAttribute
@@ -29,8 +32,8 @@ class CampObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     CampObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
-    ~CampObjectAttribute();
+             CampObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
+    virtual ~CampObjectAttribute();
     //@}
 
     //! @name Operations
@@ -42,7 +45,7 @@ public:
 
 private:
     const Model&   model_;
-    const Automat* pTC2_;
+    const kernel::Automat_ABC* pTC2_;
 };
 
 }

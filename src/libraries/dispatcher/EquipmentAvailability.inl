@@ -15,7 +15,7 @@ namespace dispatcher
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 template< typename T > inline
-EquipmentAvailability< T >::EquipmentAvailability( Model& /*model*/, const T& asn )
+EquipmentAvailability< T >::EquipmentAvailability( const T& asn )
     : nEquipmentType_( asn.type_equipement  )
     , nNbrTotal_     ( asn.nbr_total        )
     , nNbrAvailable_ ( asn.nbr_disponibles  )

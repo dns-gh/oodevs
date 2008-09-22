@@ -37,7 +37,7 @@ namespace bfs = boost::filesystem;
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
 InstallPackagePanel::InstallPackagePanel( QWidgetStack* widget, QAction& action, const frontend::Config& config, ActionsContext& context )
-    : Panel_ABC( widget, action, context )
+    : Panel_ABC( widget, action, context, "InstallPackagePanel" )
     , config_( config )
 {
     QVBox* box = new QVBox( this );

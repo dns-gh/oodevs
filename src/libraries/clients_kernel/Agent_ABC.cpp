@@ -13,6 +13,8 @@
 
 using namespace kernel;
 
+const QString Agent_ABC::typeName_ = "agent";
+
 // -----------------------------------------------------------------------------
 // Name: Agent_ABC constructor
 // Created: AGE 2006-02-13
@@ -29,6 +31,15 @@ Agent_ABC::Agent_ABC()
 Agent_ABC::~Agent_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent_ABC::GetTypeName
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+QString Agent_ABC::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,4 +68,3 @@ void Agent_ABC::Activate( ActionController& controller ) const
 {
     controller.Activate( *this, *(const Entity_ABC*)this );
 }
-

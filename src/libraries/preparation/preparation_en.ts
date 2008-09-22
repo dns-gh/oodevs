@@ -85,49 +85,6 @@
     </message>
 </context>
 <context>
-    <name>E_FuncLimaType</name>
-    <message>
-        <source>LD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LCA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LO</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LCAR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LDM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LFM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LIA</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Formation</name>
     <message>
         <source>Info/Identifier</source>

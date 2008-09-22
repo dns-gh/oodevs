@@ -13,6 +13,7 @@
 #include "CompositePlugin.h"
 #include <memory>
 #include <boost/shared_ptr.hpp>
+#include "dispatcher/CompositeRegistrable.h"
 
 namespace dispatcher
 {
@@ -22,6 +23,7 @@ namespace dispatcher
     class SimulationDispatcher;
     class Loader;
     class ReplayPlugin;
+    class Services;
 
 // =============================================================================
 /** @class  Replayer
@@ -55,6 +57,8 @@ private:
     //! @name Member data
     //@{
     CompositePlugin                            handler_;
+    dispatcher::CompositeRegistrable           registrables_;
+    std::auto_ptr< Services >                  services_;
     boost::shared_ptr< Model >                 model_;
     boost::shared_ptr< ClientsNetworker >      clientsNetworker_;
     boost::shared_ptr< SimulationDispatcher >  simulation_;

@@ -15,6 +15,7 @@
 #include "LogisticSupplyPushFlowDialog.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "ChangeHumanFactorsDialog.h"
+#include "BriefingDialog.h"
 #include "gaming/Model.h"
 #include "gaming/AgentsModel.h"
 
@@ -24,7 +25,7 @@ using namespace kernel;
 // Name: Dialogs constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const kernel::Profile_ABC& profile )
+Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, publisher, profile );
@@ -33,6 +34,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model,
     new LogisticSupplyPushFlowDialog( parent, controllers, publisher, model.agents_, profile  );
     new LogisticSupplyRecompletionDialog( parent, controllers, publisher, staticModel, profile );
     new ChangeHumanFactorsDialog( parent, controllers, publisher, profile );
+    new BriefingDialog( parent, controllers, publisher, handler, config );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ParamIntelligence.h"
 #include "clients_kernel/Intelligence_ABC.h"
-#include "gaming/ActionParameterIntelligence.h"
+#include "actions/Intelligence.h"
 
 using namespace kernel;
 
@@ -39,9 +39,9 @@ ParamIntelligence::~ParamIntelligence()
 // Name: ParamIntelligence::CommitTo
 // Created: SBO 2007-10-24
 // -----------------------------------------------------------------------------
-void ParamIntelligence::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamIntelligence::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameterIntelligence > param( new ActionParameterIntelligence( parameter_, converter_ ) );
+    std::auto_ptr< actions::parameters::Intelligence > param( new actions::parameters::Intelligence( parameter_, converter_ ) );
     EntityParameter< Intelligence_ABC >::CommitTo( *param );
     param->CommitToChildren();
     action.AddParameter( *param.release() );

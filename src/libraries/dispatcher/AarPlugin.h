@@ -18,7 +18,6 @@ namespace tools
     class MessageDispatcher_ABC;
 }
 
-class FunctionFactory;
 class Task;
 
 namespace dispatcher
@@ -48,6 +47,7 @@ public:
     virtual void Receive( const ASN1T_MsgsSimToClient& message );
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
     virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
+    virtual void Register                 ( dispatcher::Services& services );
     //@}
 
 private:
@@ -60,14 +60,13 @@ private:
     //! @name Helpers
     //@{
     void OnReceive( const std::string&, const ASN1T_MsgsClientToAar& message );
-    void OnReceiveIndicatorRequest( const std::string& client, const ASN1T_MsgIndicatorRequest& request );
+    void OnReceiveIndicatorRequest( const std::string& client, const ASN1T_MsgPlotRequest& request );
     //@}
 
 private:
     //! @name Member data
     //@{
     LinkResolver_ABC& resolver_;
-    std::auto_ptr< FunctionFactory > factory_;
     std::auto_ptr< MessageLoader >   messages_;
     //@}
 };

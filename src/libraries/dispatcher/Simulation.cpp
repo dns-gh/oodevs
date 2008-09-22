@@ -11,10 +11,12 @@
 
 #include "Simulation.h"
 
-#include "Network_Def.h"
-#include "game_asn/Simulation.h"
+#include "ClientPublisher_ABC.h"
+#include "game_asn/DispatcherSenders.h"
 #include "tools/MessageSender_ABC.h"
 #include "MessageHandler_ABC.h"
+#include "game_asn/SimulationSenders.h"
+#include "game_asn/DispatcherSenders.h"
 
 using namespace dispatcher;
 using namespace tools;
@@ -28,7 +30,7 @@ Simulation::Simulation( MessageHandler_ABC& handler, MessageSender_ABC& messageS
     , messageService_( messageService )
     , endpoint_      ( endpoint )
 {
-    AsnMsgMiddleToSimCtrlClientAnnouncement().Send( *this );    
+    dispatcher::CtrlClientAnnouncement().Send( *this );    
 }
 
 //-----------------------------------------------------------------------------
@@ -53,7 +55,7 @@ void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
 // Name: Simulation::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void Simulation::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
+void Simulation::Send( const ASN1T_MsgsDispatcherToSim& asnMsg )
 {
     messageService_.Send( endpoint_, asnMsg );
 }

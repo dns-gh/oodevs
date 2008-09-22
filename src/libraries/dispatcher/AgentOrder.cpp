@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "AgentOrder.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 #include "Agent.h"
 
 using namespace dispatcher;
@@ -44,8 +44,8 @@ AgentOrder::~AgentOrder()
 // -----------------------------------------------------------------------------
 void AgentOrder::Send( ClientPublisher_ABC& publisher )
 {
-    AsnMsgSimToClientUnitOrder asn;
-    asn().oid     = agent_.GetID();
+    client::UnitOrder asn;
+    asn().oid     = agent_.GetId();
     asn().mission = missionID_;
     Order_ABC::Send( asn().parametres );
     asn.Send( publisher );
@@ -58,8 +58,8 @@ void AgentOrder::Send( ClientPublisher_ABC& publisher )
 // -----------------------------------------------------------------------------
 void AgentOrder::SendNoMission( const Agent& agent, ClientPublisher_ABC& publisher )
 {
-    AsnMsgSimToClientUnitOrder asn;
-    asn().oid          = agent.GetID();
+    client::UnitOrder asn;
+    asn().oid          = agent.GetId();
     asn().mission      = 0;
     asn().parametres.n = 0;
     asn.Send( publisher );

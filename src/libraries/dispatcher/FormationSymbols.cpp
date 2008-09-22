@@ -9,10 +9,11 @@
 
 #include "dispatcher_pch.h"
 #include "FormationSymbols.h"
-#include "Automat.h"
 #include "Formation.h"
-#include "Side.h"
 #include "tools/App6Symbol.h"
+#include "dispatcher/Automat.h"
+#include "dispatcher/Side.h"
+#include <boost/bind.hpp>
 
 using namespace dispatcher;
 
@@ -39,11 +40,11 @@ namespace
 {
     struct SymbolAggregator
     {
-        void operator()( Automat& automat )
+        void AddAutomat( const dispatcher::Automat& automat )
         {
             symbol_ = tools::app6::FilterSymbol( automat.Get< EntitySymbols_ABC >().BuildSymbol( false ), symbol_ );
         }
-        void operator()( Formation& formation )
+        void AddFormation( const dispatcher::Formation& formation )
         {
             symbol_ = tools::app6::FilterSymbol( formation.Get< EntitySymbols_ABC >().BuildSymbol( false ), symbol_ );
         }
@@ -58,17 +59,17 @@ namespace
 std::string FormationSymbols::BuildSymbol( bool up /*= true*/ ) const
 {
     SymbolAggregator aggregator;
-    holder_.automats_.Apply< SymbolAggregator& >( aggregator );
-    holder_.subordinates_.Apply< SymbolAggregator& >( aggregator );
+    holder_.automats_.Apply( boost::bind( &SymbolAggregator::AddAutomat, boost::ref( aggregator ), _1 ) );
+    holder_.formations_.Apply( boost::bind( &SymbolAggregator::AddFormation, boost::ref( aggregator ), _1 ) );
     if( up )
     {
         const EntitySymbols_ABC* symbols;
-        if( holder_.pParent_ )
-            symbols = &holder_.pParent_->Get< EntitySymbols_ABC >();
+        if( holder_.parent_ )
+            symbols = &holder_.parent_->Get< EntitySymbols_ABC >();
         else
-            symbols = &holder_.side_.Get< EntitySymbols_ABC >();
+            symbols = &holder_.team_.Get< EntitySymbols_ABC >();
         aggregator.symbol_ = tools::app6::MergeSymbol( symbols->BuildSymbol(), aggregator.symbol_ );
     }
-    tools::app6::SetLevel( aggregator.symbol_, (unsigned int)holder_.nLevel_ );
+    tools::app6::SetLevel( aggregator.symbol_, (unsigned int)holder_.level_ );
     return aggregator.symbol_;
 }

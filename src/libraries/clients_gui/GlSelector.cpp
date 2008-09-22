@@ -43,6 +43,7 @@ GlSelector::GlSelector( QMainWindow* parent, GlProxy& proxy, Controllers& contro
     , widget3d_     ( 0 )
     , glPlaceHolder_( 0 )
     , b3d_          ( false )
+    , bDragMapWithWheel      ( false )
 
 {
     displayTimer_ = new QTimer( this );
@@ -84,6 +85,7 @@ void GlSelector::Load()
     parent_->setCentralWidget( widget2d_ );
     b3d_ = false;
     controllers_.options_.Change( "3D", b3d_ );
+    controllers_.options_.Change( "MapDraggingType", static_cast <int> ( !bDragMapWithWheel ));
     connect( displayTimer_, SIGNAL(timeout()), widget2d_, SLOT(updateGL()) );
     displayTimer_->start( 50 );
     connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
@@ -158,6 +160,10 @@ void GlSelector::OptionChanged( const std::string& name, const OptionVariant& va
             connect( displayTimer_, SIGNAL( timeout()), parent_->centralWidget(), SLOT( updateGL() ) );
             b3d_ = new3d;
         }
+    }
+    else if( name == "MapDraggingType" )
+    {
+        bDragMapWithWheel = value.To< int >() == 0 ? false : true;
     }
 }
 

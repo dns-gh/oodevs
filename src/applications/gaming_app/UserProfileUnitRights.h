@@ -27,6 +27,7 @@ namespace
 // =============================================================================
 class UserProfileUnitRights : public ::T_Parent
                             , public UserProfileRights_ABC
+                            , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
 
@@ -61,6 +62,7 @@ private:
     virtual void setColumnWidth( int column, int w );
     virtual void showEvent( QShowEvent* event );
     virtual void hideEvent( QHideEvent* event );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     //@}
 };
 

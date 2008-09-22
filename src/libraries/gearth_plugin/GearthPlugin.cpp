@@ -11,7 +11,7 @@
 #include "GearthPlugin.h"
 #include "ConnectorFacade.h"
 #include "dispatcher/Config.h"
-#include "game_asn/Messenger.h"
+#include "game_asn/MessengerSenders.h"
 #include "tools/MessageDispatcher_ABC.h"
 
 using namespace gearth;
@@ -24,7 +24,6 @@ GearthPlugin::GearthPlugin( dispatcher::Model& model, tools::MessageDispatcher_A
     : facade_ ( new ConnectorFacade( config, model, xis ) )
 {
     dispatcher.RegisterMessage( *this, &GearthPlugin::OnReceiveMessengerToClient );
-    // NOTHING
 }
     
 // -----------------------------------------------------------------------------

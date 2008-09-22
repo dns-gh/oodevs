@@ -23,6 +23,11 @@ namespace kernel
 // =============================================================================
 class PopulationFlow_ABC : public PopulationPart_ABC
 {
+public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -33,6 +38,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual QString GetTypeName() const;
+
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;

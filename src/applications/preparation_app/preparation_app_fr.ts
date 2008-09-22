@@ -40,10 +40,33 @@
     </message>
 </context>
 <context>
+    <name>Application</name>
+    <message>
+        <source>Sword Officer Training</source>
+        <translation type="obsolete">SCALPED</translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation>SCALPED</translation>
+    </message>
+    <message>
+        <source>sword-ot@masagroup.net</source>
+        <translation>scalped@masagroup.net</translation>
+    </message>
+    <message>
+        <source>Unhandled error</source>
+        <translation>Erreur irrécupérable</translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training - Preparation</source>
+        <translation>SCALPED - Préparation</translation>
+    </message>
+</context>
+<context>
     <name>ChangeDiplomacyDialog</name>
     <message>
         <source>Diplomacy</source>
-        <translation>Diplomacie</translation>
+        <translation>Diplomatie</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -101,6 +124,10 @@
     <message>
         <source>Save</source>
         <translation>Sauvegarder</translation>
+    </message>
+    <message>
+        <source>Standard</source>
+        <translation>Standard</translation>
     </message>
 </context>
 <context>
@@ -227,11 +254,11 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
     <message>
         <source>Error reading xml file: </source>
-        <translation>Erreur au chargement du fichier xml: </translation>
+        <translation type="obsolete">Erreur au chargement du fichier xml: </translation>
     </message>
     <message>
         <source>Save modifications?</source>
-        <translation>Enregistrer les modifications ?</translation>
+        <translation type="obsolete">Enregistrer les modifications ?</translation>
     </message>
     <message>
         <source>New ORBAT</source>
@@ -239,7 +266,7 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
     <message>
         <source>Intelligences</source>
-        <translation>Renseignement</translation>
+        <translation>Renseignements</translation>
     </message>
     <message>
         <source>Intelligence</source>
@@ -248,6 +275,16 @@ Merci de sélectionner un autre fichier à importer.</translation>
     <message>
         <source>Properties</source>
         <translation>Propriétés</translation>
+    </message>
+    <message>
+        <source>
+Do you want to save anyway?</source>
+        <translation>
+Voulez-vous sauvegarder malgré tout?</translation>
+    </message>
+    <message>
+        <source>Preparation - [%1]</source>
+        <translation>Préparation - [%1]</translation>
     </message>
 </context>
 <context>
@@ -370,7 +407,7 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Aide</translation>
+        <translation type="obsolete">&amp;Aide</translation>
     </message>
     <message>
         <source>2D</source>
@@ -395,6 +432,14 @@ Merci de sélectionner un autre fichier à importer.</translation>
     <message>
         <source>&amp;Import...</source>
         <translation>&amp;Importer...</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Aide</translation>
+    </message>
+    <message>
+        <source>&amp;?</source>
+        <translation>&amp;?</translation>
     </message>
 </context>
 <context>
@@ -558,7 +603,7 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
     <message>
         <source>Disengage</source>
-        <translation>Désembrayer</translation>
+        <translation>Débrayer</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -569,18 +614,18 @@ Merci de sélectionner un autre fichier à importer.</translation>
     <name>TemplateListView</name>
     <message>
         <source>Template</source>
-        <translation>Patron</translation>
+        <translation>Modèle</translation>
     </message>
 </context>
 <context>
     <name>TemplatesPanel</name>
     <message>
         <source>Templates</source>
-        <translation>Patrons</translation>
+        <translation>Modèles</translation>
     </message>
     <message>
         <source>Create template</source>
-        <translation>Créer un patron</translation>
+        <translation>Créer un modèle</translation>
     </message>
 </context>
 <context>
@@ -645,11 +690,68 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
     <message>
         <source>Invalid profile information</source>
-        <translation>Information de profile invalide</translation>
+        <translation>Information de profil invalide</translation>
     </message>
     <message>
         <source>Permissions</source>
         <translation>Droits</translation>
+    </message>
+    <message>
+        <source>&apos;Read&apos; permission allows you to see an unit.
+&apos;Write&apos; permission allows you to control an unit.</source>
+        <translation>&apos;Lecture&apos; permet de voir une unité.
+&apos;Ecriture&apos; permet de contrôler une unité.</translation>
+    </message>
+</context>
+<context>
+    <name>WeatherPanel</name>
+    <message>
+        <source>Weather</source>
+        <translation>Météo</translation>
+    </message>
+    <message>
+        <source>Exercise date:</source>
+        <translation>Date de l&apos;exercice:</translation>
+    </message>
+    <message>
+        <source>Ephemerides</source>
+        <translation>Ephéméride</translation>
+    </message>
+    <message>
+        <source>Sunrise:</source>
+        <translation>Lever du soleil:</translation>
+    </message>
+    <message>
+        <source>Sunset:</source>
+        <translation>Coucher du soleil:</translation>
+    </message>
+    <message>
+        <source>Lighting:</source>
+        <translation>Eclairage:</translation>
+    </message>
+    <message>
+        <source>Global weather</source>
+        <translation>Météo du théatre</translation>
+    </message>
+    <message>
+        <source>Local weather</source>
+        <translation>Zones météo locales</translation>
+    </message>
+    <message>
+        <source>Weather parameters</source>
+        <translation>Paramètres météo</translation>
+    </message>
+    <message>
+        <source>Set location</source>
+        <translation>Définir la position</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -660,7 +762,7 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
     <message>
         <source>Clouds floor/ceiling/density:</source>
-        <translation>Plancher/Plafond/Densité de la couverture nuageuse:</translation>
+        <translation>Plancher/plafond/densité nuages:</translation>
     </message>
     <message>
         <source>Weather type:</source>
@@ -679,51 +781,51 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
     <message>
         <source>Weather</source>
-        <translation>Météorologie</translation>
+        <translation type="obsolete">Météo</translation>
     </message>
     <message>
         <source>Ephemerides</source>
-        <translation>Ephémérides</translation>
+        <translation type="obsolete">Ephéméride</translation>
     </message>
     <message>
         <source>Sunrise:</source>
-        <translation>Lever du soleil:</translation>
+        <translation type="obsolete">Lever du soleil:</translation>
     </message>
     <message>
         <source>Sunset:</source>
-        <translation>Coucher du soleil:</translation>
+        <translation type="obsolete">Coucher du soleil:</translation>
     </message>
     <message>
         <source>Lighting:</source>
-        <translation>Eclairage:</translation>
+        <translation type="obsolete">Eclairage:</translation>
     </message>
     <message>
         <source>Global weather</source>
-        <translation>Météorologie du théatre</translation>
+        <translation type="obsolete">Météo du théatre</translation>
     </message>
     <message>
         <source>Local weather</source>
-        <translation>Zones météorologiques locales</translation>
+        <translation type="obsolete">Zones météo locales</translation>
     </message>
     <message>
         <source>Weather parameters</source>
-        <translation>Paramètres météo</translation>
+        <translation type="obsolete">Paramètres météo</translation>
     </message>
     <message>
         <source>Set location</source>
-        <translation>Ajouter la localisation</translation>
+        <translation type="obsolete">Définir la position</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Sauvegarder</translation>
+        <translation type="obsolete">Enregistrer</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="obsolete">Annuler</translation>
     </message>
     <message>
         <source>Exercise date:</source>
-        <translation>Date de l&apos;exercice:</translation>
+        <translation type="obsolete">Date de l&apos;exercice:</translation>
     </message>
 </context>
 <context>
@@ -731,6 +833,21 @@ Merci de sélectionner un autre fichier à importer.</translation>
     <message>
         <source>None</source>
         <translation type="obsolete">Aucun</translation>
+    </message>
+</context>
+<context>
+    <name>tools</name>
+    <message>
+        <source>Error reading xml file: </source>
+        <translation>Erreur au chargement du fichier xml: </translation>
+    </message>
+    <message>
+        <source>Save modifications?</source>
+        <translation>Enregistrer les modifications ?</translation>
+    </message>
+    <message>
+        <source>Error loading exercise: </source>
+        <translation>Erreur lors du chargement de l&apos;exercice: </translation>
     </message>
 </context>
 </TS>

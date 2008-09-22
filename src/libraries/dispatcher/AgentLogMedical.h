@@ -11,16 +11,18 @@
 #define __AgentLogMedical_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelRefsContainer.h"
-#include "ModelsContainer.h"
 #include "EquipmentAvailability.h"
+
+namespace kernel
+{
+    class Automat_ABC;
+    class Agent_ABC;
+}
 
 namespace dispatcher
 {
-class Model;
-class Agent;
-class Automat;
-class ClientPublisher_ABC;
+    class Model;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  AgentLogMedical
@@ -33,8 +35,8 @@ class AgentLogMedical
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentLogMedical( Model& model, const Agent& agent, const ASN1T_MsgLogMedicalState& asnMsg );
-    ~AgentLogMedical();
+             AgentLogMedical( const Model& model, const kernel::Agent_ABC& agent, const ASN1T_MsgLogMedicalState& asnMsg );
+    virtual ~AgentLogMedical();
     //@}
 
     //! @name Main
@@ -44,28 +46,31 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< ASN1T_EnumHumanWound > T_HumanWoundVector;
-    //@}
-
-private:
     //! @name Copy/Assignement
     //@{
     AgentLogMedical( const AgentLogMedical& );            //!< Copy constructor
     AgentLogMedical& operator=( const AgentLogMedical& ); //!< Assignement operator
     //@}
 
-private:
-    const Agent&                          agent_;
-          Model&                          model_;
-          bool                            bSystemEnabled_;
-          T_HumanWoundVector              priorities_;
-          ModelRefsContainer< Automat >   tacticalPriorities_;
+    //! @name Types
+    //@{
+    typedef EquipmentAvailability< ASN1T_LogMedicalEquipmentAvailability > T_Availability;
+    //@}
 
-    ModelsContainer< EquipmentAvailability< ASN1T_LogMedicalEquipmentAvailability > > evacuationAmbulancesAvailability_;
-    ModelsContainer< EquipmentAvailability< ASN1T_LogMedicalEquipmentAvailability > > collectionAmbulancesAvailability_;
-    ModelsContainer< EquipmentAvailability< ASN1T_LogMedicalEquipmentAvailability > > doctorsAvailability_;
+private:
+    //! @name Member data
+    //@{
+    const Model&             model_;
+    const kernel::Agent_ABC& agent_;
+    bool                     bSystemEnabled_;
+
+    std::vector< ASN1T_EnumHumanWound >       priorities_;
+    std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
+
+    std::vector< T_Availability > evacuationAmbulancesAvailability_;
+    std::vector< T_Availability > collectionAmbulancesAvailability_;
+    std::vector< T_Availability > doctorsAvailability_;
+    //@}
 };
 
 }

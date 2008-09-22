@@ -27,7 +27,7 @@ class JoinAnalysis : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinAnalysis( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, unsigned port );
+             JoinAnalysis( const tools::GeneralConfig& config, const QString& exercise, unsigned port, bool attach = false );
     virtual ~JoinAnalysis();
     //@}
 

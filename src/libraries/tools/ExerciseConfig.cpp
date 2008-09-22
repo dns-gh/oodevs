@@ -61,27 +61,47 @@ void ExerciseConfig::Parse( int argc, char** argv )
 // -----------------------------------------------------------------------------
 void ExerciseConfig::LoadExercise( const std::string& file )
 {
-    xml::xifstream xis( file );
-    xis >> start( "exercise" )
-            >> start( "terrain" )
-                >> attribute( "name", terrain_ )
-            >> end()
-            >> start( "model" )
-                >> attribute( "dataset", dataset_ )
-                >> attribute( "physical", physical_ )
-            >> end()
-            >> start( "weather" )
-                >> attribute( "file", weather_ )
-            >> end()
-            >> start( "orbat" )
-                >> attribute( "file", orbat_ )
-            >> end()
-            >> start( "profiles" )
-                >> attribute( "file", profiles_ )
-            >> end()
-            >> optional() >> start( "population" )
-                >> attribute( "name", population_ )
-            >> end();
+    try
+    {
+        xml::xifstream xis( file );
+        xis >> start( "exercise" )
+                >> start( "terrain" )
+                    >> attribute( "name", terrain_ )
+                >> end()
+                >> start( "model" )
+                    >> attribute( "dataset", dataset_ )
+                    >> attribute( "physical", physical_ )
+                >> end()
+                >> start( "weather" )
+                    >> attribute( "file", weather_ )
+                >> end()
+                >> start( "orbat" )
+                    >> attribute( "file", orbat_ )
+                >> end()
+                >> start( "profiles" )
+                    >> attribute( "file", profiles_ )
+                >> end()
+                >> optional() >> start( "population" )
+                    >> attribute( "name", population_ )
+                >> end();
+        if( GetExerciseFile() != file )
+            SetExerciseName( file );
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::SetExerciseName
+// Created: SBO 2008-08-21
+// -----------------------------------------------------------------------------
+void ExerciseConfig::SetExerciseName( const std::string& file )
+{
+    bfs::path p( file, bfs::native );
+    exerciseName_ = p.branch_path().leaf();
+    GeneralConfig::LoadExercise( file );
 }
 
 // -----------------------------------------------------------------------------

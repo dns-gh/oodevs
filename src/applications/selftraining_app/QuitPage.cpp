@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "QuitPage.h"
 #include "moc_QuitPage.cpp"
+#include "clients_gui/Tools.h"
 #include <qapplication.h>
 
 // -----------------------------------------------------------------------------
@@ -17,10 +18,10 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 QuitPage::QuitPage( QWidgetStack* pages, Page_ABC& previous )
-    : MenuPage( pages )
+    : MenuPage( pages, tr( "Please confirm" )  )
 {
-    AddLink( tr( "Yes" ), *this, SLOT( OnQuit() ) );
-    AddLink( tr( "No" ) , previous );
+    AddLink( tools::translate( "QuitPage", "Yes" ), *this, true, " ", SLOT( OnQuit() ) );
+    AddLink( tools::translate( "QuitPage", "No" ) , previous );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,5 +39,5 @@ QuitPage::~QuitPage()
 // -----------------------------------------------------------------------------
 void QuitPage::OnQuit()
 {
-    qApp->quit();
+    qApp->closeAllWindows();
 }

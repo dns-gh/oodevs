@@ -79,11 +79,22 @@
     <name>DisplayToolbar</name>
     <message>
         <source>Display toolbar</source>
-        <translation>Barre d&apos;outils Affichage</translation>
+        <translation>Affichage</translation>
     </message>
     <message>
         <source>3D</source>
         <translation>3D</translation>
+    </message>
+</context>
+<context>
+    <name>DrawerLayer</name>
+    <message>
+        <source>Edit drawing...</source>
+        <translation>Editer le dessin...</translation>
+    </message>
+    <message>
+        <source>Erase drawing</source>
+        <translation>Effacer le dessin</translation>
     </message>
 </context>
 <context>
@@ -244,6 +255,17 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>HighlightColorModifier</name>
+    <message>
+        <source>Highlight</source>
+        <translation>Mettre en surbrillance</translation>
+    </message>
+    <message>
+        <source>Remove highlight</source>
+        <translation>Supprimer la surbrillance</translation>
+    </message>
+</context>
+<context>
     <name>IntelligencesPanel</name>
     <message>
         <source>Intelligence</source>
@@ -355,6 +377,13 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>LocationCreator</name>
+    <message>
+        <source>Add drawing as &apos;%1&apos;</source>
+        <translation>Ajouter le dessin en tant que &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>LocationEditorToolbar</name>
     <message>
         <source>Location editor</source>
@@ -454,7 +483,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Equipped:</source>
-        <translation>Equippé:</translation>
+        <translation>Equipé:</translation>
     </message>
 </context>
 <context>
@@ -465,7 +494,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Activity time:</source>
-        <translation>Temps d&apos;activité:</translation>
+        <translation>Durée d&apos;activité:</translation>
     </message>
     <message>
         <source>Density:</source>
@@ -616,7 +645,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Alive people:</source>
-        <translation>Personnes en vie:</translation>
+        <translation>Personnes vivantes:</translation>
     </message>
     <message>
         <source>Dead people:</source>
@@ -628,11 +657,11 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Alive</source>
-        <translation>En vie</translation>
+        <translation>Vivants</translation>
     </message>
     <message>
         <source>Dead</source>
-        <translation>Décedés</translation>
+        <translation>Décédés</translation>
     </message>
     <message>
         <source>Mood</source>
@@ -640,7 +669,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Alive density</source>
-        <translation>Densité des personnes en vie</translation>
+        <translation>Densité des vivants</translation>
     </message>
 </context>
 <context>
@@ -829,7 +858,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation> © 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
+        <translation type="obsolete"> © 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;br&gt;License will expire on </source>
@@ -839,16 +868,28 @@ Voulez-vous le supprimer?</translation>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
+    <message>
+        <source>images/gui/splash_swordot.png</source>
+        <translation type="obsolete">images/gui/splash_astec.png</translation>
+    </message>
+    <message>
+        <source>images/gui/splash_swordot.jpg</source>
+        <translation>images/gui/splash_scalped.jpg</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;&#xa9; 2008 MasaGroup &lt;a href=&quot;http://www.masagroup.net&quot;&gt;www.masagroup.net&lt;/a&gt;</source>
+        <translation>&lt;br&gt;© 2008 MasaGroup &lt;a href=&quot;http://www.masagroup.net&quot;&gt;www.masagroup.net&lt;/a&gt;</translation>
+    </message>
 </context>
 <context>
     <name>gui::AutomatsLayer</name>
     <message>
         <source>Aggregate</source>
-        <translation>Aggréger</translation>
+        <translation>Agréger</translation>
     </message>
     <message>
         <source>Disaggregate</source>
-        <translation>Désaggréger</translation>
+        <translation>Désagréger</translation>
     </message>
 </context>
 <context>
@@ -897,35 +938,43 @@ Voulez-vous le supprimer?</translation>
 Please check access permissions or write protection.</source>
         <translation>Impossible de sauvegarder les dessins dans le fichier &apos;%1&apos;.</translation>
     </message>
+    <message>
+        <source>Drawings</source>
+        <translation>Dessins</translation>
+    </message>
+    <message>
+        <source>Start drawing</source>
+        <translation>Dessiner</translation>
+    </message>
 </context>
 <context>
     <name>gui::DrawerToolbar</name>
     <message>
         <source>Drawing tools</source>
-        <translation>Outils de dessin</translation>
+        <translation type="obsolete">Outils de dessin</translation>
     </message>
     <message>
         <source>Drawing</source>
-        <translation>Dessin</translation>
+        <translation type="obsolete">Dessin</translation>
     </message>
     <message>
         <source>Draw</source>
-        <translation>Dessiner</translation>
+        <translation type="obsolete">Dessiner</translation>
     </message>
     <message>
         <source>Display drawings</source>
-        <translation>Afficher les dessins</translation>
+        <translation type="obsolete">Afficher les dessins</translation>
     </message>
 </context>
 <context>
     <name>gui::ElevationPanel</name>
     <message>
         <source>Elevation colors</source>
-        <translation>Couleurs de l&apos;ipsométrie</translation>
+        <translation>Couleurs de l&apos;hypsométrie</translation>
     </message>
     <message>
         <source>Fit color gradient to viewport</source>
-        <translation>Adapter le gradient de couleur à la zone affichée</translation>
+        <translation>Adapter le dégradé à la zone affichée</translation>
     </message>
     <message>
         <source>Gradient map</source>
@@ -941,7 +990,7 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Strength</source>
-        <translation>Force</translation>
+        <translation>Intensité</translation>
     </message>
 </context>
 <context>
@@ -967,11 +1016,11 @@ Please check access permissions or write protection.</source>
     <name>gui::GradientWidget</name>
     <message>
         <source>Copy preset</source>
-        <translation>Copier le jeu de couleur</translation>
+        <translation>Copier le dégradé</translation>
     </message>
     <message>
         <source>Delete preset</source>
-        <translation>Supprimer le jeu de couleur</translation>
+        <translation>Supprimer le dégradé</translation>
     </message>
 </context>
 <context>
@@ -1016,19 +1065,48 @@ Please check access permissions or write protection.</source>
     <name>gui::LayersPanel</name>
     <message>
         <source>Layer</source>
-        <translation>Couche</translation>
+        <translation>Calque
+</translation>
     </message>
     <message>
         <source>Transparency</source>
-        <translation>Transparence</translation>
+        <translation type="obsolete">Transparence</translation>
     </message>
     <message>
         <source>Fog of war</source>
-        <translation type="unfinished"></translation>
+        <translation>Brouillard de guerre</translation>
     </message>
     <message>
         <source>Display fog of war</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher le brouillard de guerre</translation>
+    </message>
+    <message>
+        <source> (background)</source>
+        <translation> (arrière plan)</translation>
+    </message>
+    <message>
+        <source> (foreground)</source>
+        <translation> (premier plan)</translation>
+    </message>
+    <message>
+        <source>Move the selected layer forwards</source>
+        <translation>Déplacer le calque sélectionné vers le premier plan</translation>
+    </message>
+    <message>
+        <source>Move the selected layer backwards</source>
+        <translation>Déplacer le calque sélectionné vers l&apos;arrière plan</translation>
+    </message>
+    <message>
+        <source>Layer display order and transparency</source>
+        <translation>Ordre et transparence des calques</translation>
+    </message>
+    <message>
+        <source>Transparency </source>
+        <translation>Transparence </translation>
+    </message>
+    <message>
+        <source>for %1:</source>
+        <translation>de %1:</translation>
     </message>
 </context>
 <context>
@@ -1070,11 +1148,11 @@ Please check access permissions or write protection.</source>
     <name>gui::LocationEditorToolbar</name>
     <message>
         <source>Location editor</source>
-        <translation>Editeur de position</translation>
+        <translation>Localisation</translation>
     </message>
     <message>
         <source>Location: </source>
-        <translation>Position: </translation>
+        <translation>Localiser: </translation>
     </message>
     <message>
         <source>Enter UTM coordinate</source>
@@ -1086,23 +1164,23 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Add point to current location</source>
-        <translation>Ajouter le point à la localisation courante</translation>
+        <translation>Ajouter le point à la localisation en cours de création</translation>
     </message>
     <message>
         <source>Set special point</source>
-        <translation>Définir en tant que point spécial</translation>
+        <translation>Utiliser la position pour un point spécial</translation>
     </message>
     <message>
         <source>Create bookmark</source>
-        <translation>Créer un favoris</translation>
+        <translation>Créer un signet</translation>
     </message>
     <message>
         <source>Enter text to name the bookmark: </source>
-        <translation>Entrez le nom à associer à ce favoris: </translation>
+        <translation>Entrez le nom de ce signet: </translation>
     </message>
     <message>
         <source>Clear bookmarks</source>
-        <translation>Vider les favoris</translation>
+        <translation>Effacer les signets</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1111,12 +1189,12 @@ Please check access permissions or write protection.</source>
     <message>
         <source>The bookmark location is not valid.
 Do you want to remove it?</source>
-        <translation>La position du favoris n&apos;est pas valide.
+        <translation>La position du signet n&apos;est pas valide.
 Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>No bookmark defined</source>
-        <translation>Aucun favori n&apos;est défini</translation>
+        <translation>Aucun signet</translation>
     </message>
     <message>
         <source> is not a valid coordinate.</source>
@@ -1124,11 +1202,11 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Bookmark location</source>
-        <translation>Ajouter la position en tant que favori</translation>
+        <translation>Créer un signet à cette position</translation>
     </message>
     <message>
         <source>Enter UTM coordinate, local coordinate or feature name</source>
-        <translation type="unfinished"></translation>
+        <translation>Saisissez des coordonnées (UTM ou locales) ou un nom d&apos;élément (ville, route...)</translation>
     </message>
 </context>
 <context>
@@ -1276,7 +1354,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Général</translation>
+        <translation type="obsolete">Général</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1284,7 +1362,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Appliquer</translation>
+        <translation type="obsolete">Appliquer</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1293,6 +1371,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>2D/Elevation</source>
         <translation>2D/Elevation</translation>
+    </message>
+    <message>
+        <source>User controls</source>
+        <translation>Contrôles</translation>
     </message>
 </context>
 <context>
@@ -1326,6 +1408,21 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Display type: </source>
         <translation>Type d&apos;affichage: </translation>
+    </message>
+</context>
+<context>
+    <name>gui::UserControlPanel</name>
+    <message>
+        <source>Map dragging control</source>
+        <translation>Contrôle du déplacement de la carte</translation>
+    </message>
+    <message>
+        <source>Use left click</source>
+        <translation>Utiliser le clic gauche</translation>
+    </message>
+    <message>
+        <source>Use wheel click</source>
+        <translation>Utiliser le clic du milieu (molette)</translation>
     </message>
 </context>
 </TS>

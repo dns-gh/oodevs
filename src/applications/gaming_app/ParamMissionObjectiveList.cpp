@@ -11,8 +11,8 @@
 #include "ParamMissionObjectiveList.h"
 #include "ParamMissionObjective.h"
 #include "clients_kernel/OrderParameter.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterObjectiveList.h"
+#include "actions/Action_ABC.h"
+#include "actions/ObjectiveList.h"
 #include "gaming/Tools.h"
 
 using namespace kernel;
@@ -46,9 +46,9 @@ ParamMissionObjectiveList::~ParamMissionObjectiveList()
 // Name: ParamMissionObjectiveList::CommitTo
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-void ParamMissionObjectiveList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamMissionObjectiveList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObjectiveList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ObjectiveList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

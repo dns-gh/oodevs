@@ -13,6 +13,7 @@
 namespace kernel
 {
     class Location_ABC;
+    class GlTools_ABC;
 }
 
 namespace gui
@@ -30,13 +31,14 @@ class ShapeHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ShapeHandler_ABC() {};
-    virtual ~ShapeHandler_ABC() {};
+             ShapeHandler_ABC();
+    virtual ~ShapeHandler_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual void Handle( kernel::Location_ABC& location ) = 0;
+    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 };
 

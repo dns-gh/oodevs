@@ -15,12 +15,15 @@
 class AgentServerMsgMgr;
 class Model;
 class Simulation;
-class Profile;
 
 namespace kernel
 {
+    class Controller;
     class Logger_ABC;
 }
+
+class CommandHandler;
+class Services;
 
 // =============================================================================
 /** @class  Network
@@ -34,7 +37,7 @@ class Network : public tools::ClientNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-             Network( Simulation& simu, Profile& profile, kernel::Logger_ABC& logger );
+             Network( Services& services, Simulation& simu, kernel::Logger_ABC& logger );
     virtual ~Network();
     //@}
 
@@ -48,6 +51,7 @@ public:
     using tools::ClientNetworker::Update;
 
     AgentServerMsgMgr& GetMessageMgr();
+    CommandHandler& GetCommands();
     //@}
 
     //! @name Statistics
@@ -73,10 +77,11 @@ private:
 private:
     //! @name Member data
     //@{
+    Services& services_;
     Simulation& simu_;
-    Profile& profile_;
     kernel::Logger_ABC& logger_;
     std::string session_;
+    CommandHandler* commands_;
     AgentServerMsgMgr* manager_;
     //@}
 };

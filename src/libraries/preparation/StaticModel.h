@@ -25,6 +25,11 @@ namespace tools
     class ExerciseConfig;
 }
 
+namespace gui
+{
+    class DrawingTypes;
+}
+
 class TeamKarmas;
 class IntelligenceKarmas;
 
@@ -62,6 +67,7 @@ public:
     kernel::FormationLevels&         levels_;
     TeamKarmas&                      teamKarmas_;
     IntelligenceKarmas&              intelligenceKarmas_;
+    gui::DrawingTypes&               drawings_;
     //@}
 
 private:

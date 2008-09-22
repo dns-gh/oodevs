@@ -12,9 +12,14 @@
 
 #include "ExtensionFactory_ABC.h"
 
-namespace dispatcher
+namespace kernel
 {
     class Entity_ABC;
+}
+
+namespace dispatcher
+{
+    
     class ReplayModel_ABC;
 
 // =============================================================================
@@ -23,7 +28,7 @@ namespace dispatcher
 */
 // Created: SBO 2008-02-14
 // =============================================================================
-class ReplayExtensionFactory : public ExtensionFactory_ABC< Entity_ABC >
+class ReplayExtensionFactory : public ExtensionFactory_ABC< kernel::Entity_ABC >
 {
 
 public:
@@ -35,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Create( Entity_ABC& entity );
+    virtual void Create( kernel::Entity_ABC& entity );
     //@}
 
 private:

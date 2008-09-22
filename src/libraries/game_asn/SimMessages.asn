@@ -216,13 +216,4 @@ MsgsClientToSim ::= SEQUENCE
     }
 }
 
-MsgsMiddleToSim ::= SEQUENCE
-{
-    context INTEGER DEFAULT 0,
-    msg     CHOICE
-    {
-        msg-control-client-announcement MsgControlClientAnnouncement
-    }
-}
-
 END

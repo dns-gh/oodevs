@@ -10,8 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ObjectsLayer.h"
 #include "clients_kernel/Object_ABC.h"
-#include "gaming/Publisher_ABC.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectsLayer constructor

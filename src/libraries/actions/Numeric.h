@@ -1,0 +1,58 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef __ActionParameterNumeric_h_
+#define __ActionParameterNumeric_h_
+
+#include "Parameter.h"
+
+namespace actions {
+    namespace parameters {
+
+// =============================================================================
+/** @class  Numeric
+    @brief  Numeric
+*/
+// Created: SBO 2007-05-21
+// =============================================================================
+class Numeric : public Parameter< float >
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             Numeric( const kernel::OrderParameter& parameter, float value );
+             Numeric( const kernel::OrderParameter& parameter, xml::xistream& xis );
+    virtual ~Numeric();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    void CommitTo( ASN1REAL& asn ) const;
+    virtual void Accept( ParameterVisitor_ABC& visitor ) const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    Numeric( const Numeric& );            //!< Copy constructor
+    Numeric& operator=( const Numeric& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void Serialize( xml::xostream& xos ) const;
+    //@}
+};
+
+    }
+}
+
+#endif // __ActionParameterNumeric_h_

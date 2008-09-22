@@ -14,9 +14,10 @@
 #include "EquipmentType.h"
 #include "NBCAgent.h"
 #include "BreakdownType.h"
+#include "WeaponSystemType.h"
 #include "tools.h"
 #include "tools/ExerciseConfig.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;
@@ -28,6 +29,15 @@ using namespace xml;
 ObjectTypes::ObjectTypes()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes constructor
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+ObjectTypes::ObjectTypes( const tools::ExerciseConfig& config )
+{
+    Load( config );
 }
 
 namespace
@@ -53,17 +63,19 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
     Purge();
 
     xml::xifstream scipio( config.GetPhysicalFile() );
-    std::string dotations, equipments, nbc, pannes, objects;
+    std::string dotations, weaponsystems, equipments, nbc, pannes, objects;
     scipio >> start( "physical" );
     FileReader( scipio )
         .Read( "dotations", dotations )
         .Read( "components", equipments )
+        .Read( "weapon-systems", weaponsystems )
         .Read( "nbc", nbc )
         .Read( "breakdowns", pannes )
         .Read( "objects", objects );
    
     ReadObjectTypes( config.BuildPhysicalChildFile( objects ) );
     ReadDotations( config.BuildPhysicalChildFile( dotations ) );
+    ReadWeaponSystems( config.BuildPhysicalChildFile( weaponsystems ) );
     ReadEquipments( config.BuildPhysicalChildFile( equipments ) );
     ReadNBC( config.BuildPhysicalChildFile( nbc ) );
     ReadBreakdowns( config.BuildPhysicalChildFile( pannes ) );
@@ -75,11 +87,12 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void ObjectTypes::Purge()
 {
-    Resolver2< ObjectType >::DeleteAll();
-    Resolver2< DotationType >::DeleteAll();
-    Resolver< EquipmentType >::DeleteAll();
-    Resolver2< NBCAgent >::DeleteAll();
     Resolver< BreakdownType >::DeleteAll();
+    Resolver2< NBCAgent >::DeleteAll();
+    Resolver< EquipmentType >::DeleteAll();
+    Resolver< WeaponSystemType, std::string >::DeleteAll();
+    Resolver2< DotationType >::DeleteAll();
+    Resolver2< ObjectType >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -137,6 +150,27 @@ void ObjectTypes::ReadDotation( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadWeaponSystems
+// Created: SBO 2008-08-06
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadWeaponSystems( const std::string& file )
+{
+    xifstream xis( file );
+    xis >> start( "weapons" )
+            >> list( "weapon-system", *this, &ObjectTypes::ReadWeaponSystem );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadWeaponSystem
+// Created: SBO 2008-08-06
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadWeaponSystem( xml::xistream& xis )
+{
+    WeaponSystemType* type = new WeaponSystemType( xis );
+    Resolver< WeaponSystemType, std::string >::Register( type->GetId(), *type );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectTypes::ReadEquipments
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
@@ -153,7 +187,7 @@ void ObjectTypes::ReadEquipments( const std::string& equipments )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadEquipment( xml::xistream& xis )
 {
-    EquipmentType* equipment = new EquipmentType( xis );
+    EquipmentType* equipment = new EquipmentType( xis, *this );
     Resolver< EquipmentType >::Register( equipment->GetId(), *equipment );
 }
 

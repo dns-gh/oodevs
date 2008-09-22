@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ParamAutomatList.h"
 #include "ParamAutomat.h"
-#include "gaming/ActionParameterAutomatList.h"
+#include "actions/AutomatList.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/OrderParameter.h"
@@ -60,9 +60,9 @@ EntityParameter< kernel::Automat_ABC >* ParamAutomatList::CreateElement( const k
 // Name: ParamAutomatList::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamAutomatList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamAutomatList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterAutomatList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::AutomatList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

@@ -63,6 +63,16 @@ void Circle::AddPoint( const geometry::Point2f& point )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Circle::Translate
+// Created: SBO 2008-05-30
+// -----------------------------------------------------------------------------
+void Circle::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
+{
+    if( IsValid() && center_.SquareDistance( from ) < precision * precision )
+        center_ += translation;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Circle::IsValid
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
@@ -90,19 +100,6 @@ void Circle::Accept( LocationVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Circle::Draw
-// Created: AGE 2006-08-09
-// -----------------------------------------------------------------------------
-void Circle::Draw( const GlTools_ABC& tools ) const
-{
-    if( IsValid() )
-    {
-        tools.DrawCross( center_ );
-        tools.DrawCircle( center_, radius_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: Circle::GetName
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
@@ -119,4 +116,13 @@ QString Circle::GetName() const
 Location_ABC& Circle::Clone() const
 {
     return *new Circle( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Circle::IsAt
+// Created: SBO 2008-05-30
+// -----------------------------------------------------------------------------
+bool Circle::IsAt( const geometry::Point2f& point, float precision ) const
+{
+    return IsValid() && center_.SquareDistance( point ) < ( radius_ + precision ) * ( radius_ + precision );
 }

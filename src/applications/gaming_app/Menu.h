@@ -19,15 +19,19 @@ class QDialog;
 namespace kernel
 {
     class Controllers;
+    class Logger_ABC;
 }
 
 namespace gui
 {
     class ItemFactory_ABC;
+    class HelpSystem;
+    class LinkInterpreter_ABC;
 }
 
 class UserProfileDialog;
 class Profile;
+class Network;
 
 // =============================================================================
 /** @class  Menu
@@ -44,7 +48,9 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, gui::ItemFactory_ABC& factory, const QString& license );
+             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog
+                 , UserProfileDialog& profileDialog, gui::ItemFactory_ABC& factory, const QString& license
+                 , const gui::HelpSystem& help, gui::LinkInterpreter_ABC& interpreter, Network& network, kernel::Logger_ABC& logger );
     virtual ~Menu();
     //@}
 

@@ -14,30 +14,104 @@
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "icons.h"
 
 using namespace kernel;
+
+namespace
+{
+    class InstallationProgress : public QProgressBar
+    {
+    public:
+        explicit InstallationProgress( QWidget* parent )
+            : QProgressBar( 100, parent )
+            , reflection_( new QImage( "resources/images/gaming/lifebarmask.png" ) )
+        {
+            setProgress( 0 );
+            setPercentageVisible( false );
+        }
+        virtual ~InstallationProgress() {}
+
+    protected:
+        void drawContents( QPainter* painter )
+        {
+            const QRect bar = contentsRect();
+            painter->fillRect( bar, QColor( 200, 200, 200 ) );
+            QRect progBar = bar;
+            progBar.setRight( bar.left() + int( float( bar.width() ) * float( progress() ) / 100.f ) );
+            QColor color;
+            color.setHsv( 225, progress() * 255 / 100, 200 );
+            painter->fillRect( progBar, color );
+            if( reflection_ )
+                painter->drawImage( bar, *reflection_ );
+            for( int i = 1; i < 4; ++i )
+            {
+                const int x = bar.left() + i * width() / 4;
+                painter->drawLine( x, bar.top(), x, bar.bottom() );
+            }
+            painter->drawRect( bar );
+        }
+
+        QImage* reflection_;
+    };
+
+    class MovementProgress : public QProgressBar
+    {
+    public:
+        explicit MovementProgress( QWidget* parent )
+            : QProgressBar( 100, parent )
+            , reflection_( new QImage( "resources/images/gaming/lifebarmask.png" ) )
+        {
+            setProgress( 0 );
+            setPercentageVisible( false );
+        }
+        virtual ~MovementProgress() {}
+
+    protected:
+        void drawContents( QPainter* painter )
+        {
+            static const QColor colors[] = { QColor( 255,  50, 50 ), QColor( 255, 50, 50 )
+                                           , QColor( 255, 255, 50 ), QColor( 50, 255, 50 ) };
+            const QRect bar = contentsRect();
+            painter->fillRect( bar, colors[ progress() / 33 ] );
+            if( reflection_ )
+                painter->drawImage( bar, *reflection_ );
+            painter->drawRect( bar );
+        }
+
+        QImage* reflection_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: InfoStancesWidget constructor
 // Created: SBO 2007-02-09
 // -----------------------------------------------------------------------------
 InfoStancesWidget::InfoStancesWidget( QWidget* parent, kernel::Controllers& controllers )
-    : QHBox( parent )
+    : QVBox( parent, "InfoStancesWidget" )
     , controllers_( controllers )
     , selected_( controllers )
 {
-    layout()->setAlignment( Qt::AlignCenter );
-    previous_ = new QPushButton( this );
-    previous_->setFixedSize( 32, 32 );
-    QLabel* label = new QLabel( this );
-    label->setPixmap( MAKE_PIXMAP( stance_arrow ) );
-    label->setFixedSize( 10, 32 );
-    next_ = new QPushButton( this );
-    next_->setFixedSize( 32, 32 );
-    progress_ = new QLabel( this );
-    progress_->setFixedWidth( 29 );
-    InitializeIcons();
+    setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+    QHBox* box = new QHBox( this );
+    {
+        QFont font( "Arial", 7 );
+        QLabel* label = new QLabel( tools::translate( "InfoStancesWidget", "Movement" ), box );
+        label->setFixedSize( 100, 12 );
+        label->setFont( font );
+        label = new QLabel( tools::translate( "InfoStancesWidget", "Installation" ), box );
+        label->setFixedSize( 150, 12 );
+        label->setFont( font );
+        label->setAlignment( Qt::AlignRight );
+    }
+    box = new QHBox( this );
+    {
+        movement_ = new MovementProgress( box );
+        movement_->setFixedSize( 50, 8 );
+    }
+    {
+        installation_ = new InstallationProgress( box );
+        installation_->setFixedSize( 200, 8 );
+    }
     controllers_.Register( *this );
     hide();
 }
@@ -58,33 +132,15 @@ InfoStancesWidget::~InfoStancesWidget()
 void InfoStancesWidget::Update( const Attributes& attributes )
 {
     show();
-    previous_->setPixmap( pixmaps_.at( attributes.nOldPosture_ ) );
-    QToolTip::add( previous_, tools::translate( "InfoStancesWidget", "Stance: previous was: '%1'" )
-        .arg( tools::ToString( attributes.nOldPosture_ ) ) );
-    next_->setPixmap( pixmaps_.at( attributes.nCurrentPosture_ ) );
-    if( attributes.nPostureCompletionPourcentage_ < 100 )
-        QToolTip::add( next_, tools::translate( "InfoStancesWidget", "Stance: next is: '%1'" )
-            .arg( tools::ToString( attributes.nCurrentPosture_ ) ) );
+    const int installation = attributes.nCurrentPosture_ - eUnitPosture_PosturePosteReflexe;
+    movement_->setProgress( std::max< int >( -installation * 33, 0 ) );
+    if( installation < 1 )
+        installation_->setProgress( 0 );
     else
-        QToolTip::add( next_, tools::translate( "InfoStancesWidget", "Stance: current is: '%1'" )
-            .arg( tools::ToString( attributes.nCurrentPosture_ ) ) );
-    progress_->setText( QString::number( attributes.nPostureCompletionPourcentage_ ) + Units::percentage );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoStancesWidget::InitializeIcons
-// Created: SBO 2007-02-14
-// -----------------------------------------------------------------------------
-void InfoStancesWidget::InitializeIcons()
-{
-    pixmaps_.resize( eNbrUnitPosture );
-    pixmaps_[eUnitPosture_PostureMouvement]         = MAKE_PIXMAP( stance_move );
-    pixmaps_[eUnitPosture_PostureMouvementDiscret]  = MAKE_PIXMAP( stance_discreet );
-    pixmaps_[eUnitPosture_PostureArret]             = MAKE_PIXMAP( stance_stop );
-    pixmaps_[eUnitPosture_PosturePosteReflexe]      = MAKE_PIXMAP( stance_reflex );
-    pixmaps_[eUnitPosture_PosturePoste]             = MAKE_PIXMAP( stance_posted );
-    pixmaps_[eUnitPosture_PosturePosteAmenage]      = MAKE_PIXMAP( stance_equipped );
-    pixmaps_[eUnitPosture_PosturePostePrepareGenie] = MAKE_PIXMAP( stance_engineered );
+        installation_->setProgress( std::max< int >( int( float( installation * 100 + attributes.nPostureCompletionPourcentage_ ) / 4.f ), 0 ) );
+    QToolTip::add( installation_, tools::translate( "InfoStancesWidget", "Stance '%1' at %2" )
+                                    .arg( tools::ToString( attributes.nCurrentPosture_ ) )
+                                    .arg( QString::number( attributes.nPostureCompletionPourcentage_ ) + Units::percentage ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,4 +168,13 @@ void InfoStancesWidget::NotifyUpdated( const kernel::Attributes_ABC& extension )
 {
     if( selected_ && selected_->Retrieve< kernel::Attributes_ABC >() == &extension )
         Update( static_cast< const Attributes& >( extension ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoStancesWidget::sizeHint
+// Created: SBO 2008-07-23
+// -----------------------------------------------------------------------------
+QSize InfoStancesWidget::sizeHint() const
+{
+    return QSize( 250, 22 );
 }

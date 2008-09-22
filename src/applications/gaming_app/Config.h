@@ -32,6 +32,7 @@ public:
     //! @name Operations
     //@{
     void Connect( Network& network ) const;
+    std::string GetLogin() const;
     //@}
 
 private:
@@ -44,6 +45,7 @@ private:
     //! @name Member data
     //@{
     std::string host_;
+    std::string login_;
     //@}
 };
 

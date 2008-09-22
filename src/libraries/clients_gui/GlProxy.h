@@ -51,6 +51,7 @@ public:
     void Register( TooltipsLayer_ABC& layer );
 
     virtual void CenterOn( const geometry::Point2f& point );
+    virtual void Zoom( float width );
 
     virtual std::pair< bool, bool > UnSelect() const; 
     virtual void Select( bool, bool ) const;

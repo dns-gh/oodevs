@@ -10,7 +10,7 @@
 #ifndef __Platform_h_
 #define __Platform_h_
 
-#include "dispatcher/Entity_ABC.h"
+#include "dispatcher/SimpleEntity.h"
 #include "game_asn/Simulation.h"
 #include "Movable_ABC.h"
 #include "Platform_ABC.h"
@@ -31,7 +31,7 @@ namespace tic
 */
 // Created: AGE 2008-03-31
 // =============================================================================
-class Platform : public dispatcher::Entity_ABC
+class Platform : public dispatcher::SimpleEntity< >
                , public Movable_ABC
                , public Platform_ABC
 {
@@ -71,8 +71,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void SendFullUpdate( dispatcher::ClientPublisher_ABC& ) const {};
-    virtual void SendCreation  ( dispatcher::ClientPublisher_ABC& ) const {};
     void Apply( ASN1T_EquipmentDotations& updateMessage );
     bool SetStatus( int& number, E_State state );
     void ComputeHeading( const geometry::Point2f& to ); 

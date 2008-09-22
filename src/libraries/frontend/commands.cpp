@@ -59,9 +59,9 @@ namespace frontend
                 && bfs::exists( dir / "exercise.xml" );
         }
 
-        QStringList ListExercises( const tools::GeneralConfig& config )
+        QStringList ListExercises( const tools::GeneralConfig& config, const std::string& subDirs )
         {
-            return ListDirectories( config.GetExercisesDir(), &IsValidExercise );
+            return ListDirectories( config.GetExercisesDir()+"/"+subDirs, &IsValidExercise );
         }
 
         bool IsValidReplay( const bfs::path& session )

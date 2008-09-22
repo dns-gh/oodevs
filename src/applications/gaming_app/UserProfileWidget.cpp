@@ -19,7 +19,7 @@
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
-    : QTabWidget( parent )
+    : QTabWidget( parent, "UserProfileWidget" )
     , selectedProfile_( controllers )
 {
     QVBox* box = new QVBox( this );
@@ -45,6 +45,8 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( tabs, controllers, itemFactory, profile );
     tabs->addTab( populationRights, tr( "Populations" ) );
     populationRights_ = populationRights;
+    new QLabel( tr( "'Read' permission allows you to see an unit.\n"
+                    "'Write' permission allows you to control an unit." ), group );
 
     addTab( box, tr( "Permissions" ) );
 }

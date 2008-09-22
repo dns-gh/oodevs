@@ -11,7 +11,7 @@
 #include "TacticalListView.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"

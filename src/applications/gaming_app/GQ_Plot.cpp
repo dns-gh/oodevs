@@ -40,8 +40,8 @@
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
-GQ_Plot::GQ_Plot( QWidget* pParent )
-: QWidget           ( pParent, 0, Qt::WNoAutoErase )
+GQ_Plot::GQ_Plot( QWidget* pParent, const char* name )
+: QWidget           ( pParent, name, Qt::WNoAutoErase )
 , bShowPlotFrame_   ( true )
 , x_                ( this, Qt::Horizontal )
 , y_                ( this, Qt::Vertical   )

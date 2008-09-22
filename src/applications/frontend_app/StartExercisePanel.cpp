@@ -41,8 +41,8 @@ using namespace frontend;
 // Name: StartExercisePanel constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
-    : Panel_ABC( widget, action, context )
+StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context, const char* name )
+    : Panel_ABC( widget, action, context, name ? name : "StartExercisePanel" )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -125,7 +125,7 @@ void StartExercisePanel::StartExercise()
                               exerciseNumber_->value() );
         hlaConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
         disConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
-        new ::StartExercise( this, config_, list_->selectedItem()->text(), session_.c_str() );
+        Start( new ::StartExercise( config_, list_->selectedItem()->text(), session_.c_str() ) ) ;
         context_.Save( "exercise", list_ );
         context_.Save( "session", session_.c_str() );
         Update();

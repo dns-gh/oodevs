@@ -10,7 +10,8 @@
 #include "dispatcher_pch.h"
 #include "Report.h"
 #include "MissionParameter_ABC.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -18,8 +19,9 @@ using namespace dispatcher;
 // Name: Report constructor
 // Created: AGE 2007-10-19
 // -----------------------------------------------------------------------------
-Report::Report( Model& model, const ASN1T_MsgReport& report )
-    : id_     ( report.cr_oid )
+Report::Report( Model&, const ASN1T_MsgReport& report )
+    : SimpleEntity< >( report.cr_oid )
+    , id_     ( report.cr_oid )
     , emitter_( report.oid )
     , report_ ( report.cr )
     , type_   ( report.type )
@@ -27,7 +29,7 @@ Report::Report( Model& model, const ASN1T_MsgReport& report )
 {
     parameters_.resize( report.parametres.n );
     for( unsigned i = 0; i < report.parametres.n; ++i )
-        parameters_[i] = MissionParameter_ABC::Create( model, report.parametres.elem[i] );
+        parameters_[i] = MissionParameter_ABC::Create( report.parametres.elem[i] );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +57,7 @@ void Report::SendFullUpdate( ClientPublisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void Report::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientReport asn;
+    client::Report asn;
     asn().cr_oid = id_;
     asn().oid    = emitter_;
     asn().cr     = report_;
@@ -82,8 +84,17 @@ void Report::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Report::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientInvalidateReport asn;
+    client::InvalidateReport asn;
     asn().oid    = emitter_;
     asn().cr_oid = id_;
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Report::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void Report::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

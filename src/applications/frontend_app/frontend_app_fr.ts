@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>Change exercise Order of Battle, User Profiles and Weather settings</source>
-        <translation>Modifie l&apos;ODB, les profiles utilisateurs et les paramètres météorologiques d&apos;un exercice</translation>
+        <translation>Modifie l&apos;ODB, les profils utilisateurs et les paramètres météorologiques d&apos;un exercice</translation>
     </message>
     <message>
         <source>Start exercise</source>
@@ -51,7 +51,7 @@
     </message>
     <message>
         <source>Start analysis</source>
-        <translation>Démarre une analyse</translation>
+        <translation>Démarrer une analyse</translation>
     </message>
     <message>
         <source>Start the analysis of a previous simulation session</source>
@@ -67,11 +67,11 @@
     </message>
     <message>
         <source>Install package</source>
-        <translation>Installer un package</translation>
+        <translation>Installer un paquetage</translation>
     </message>
     <message>
         <source>Install a data package</source>
-        <translation>Installe un package de données</translation>
+        <translation>Installe un paquetage de données</translation>
     </message>
 </context>
 <context>
@@ -82,7 +82,18 @@
     </message>
     <message>
         <source>Simple view &lt;&lt;</source>
-        <translation>Vus simple &lt;&lt;</translation>
+        <translation>Vue simple &lt;&lt;</translation>
+    </message>
+</context>
+<context>
+    <name>Application</name>
+    <message>
+        <source>sword-ot@masagroup.net</source>
+        <translation>scalped@masagroup.net</translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation>SCALPED</translation>
     </message>
 </context>
 <context>
@@ -146,7 +157,7 @@
     </message>
     <message>
         <source>Disaggregate units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Désagréger les unités:</translation>
     </message>
 </context>
 <context>
@@ -220,15 +231,15 @@
     </message>
     <message>
         <source>Pathfind threads:</source>
-        <translation>Threads de cherche-chemin:</translation>
+        <translation>Threads cherche-chemin:</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation>Profile</translation>
+        <translation>Profil</translation>
     </message>
     <message>
         <source>Check ODB Composition</source>
-        <translation>Vérifier la composition de l&apos;ODB</translation>
+        <translation>Vérifier composition ODB</translation>
     </message>
 </context>
 <context>
@@ -250,7 +261,7 @@
     <name>InstallPackagePanel</name>
     <message>
         <source>Package to be installed:</source>
-        <translation>Package à installer:</translation>
+        <translation>Paquetage à installer:</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -258,21 +269,21 @@
     </message>
     <message>
         <source>Package content:</source>
-        <translation>Contenu du package:</translation>
+        <translation>Contenu du paquetage:</translation>
     </message>
     <message>
         <source>Select a package</source>
-        <translation>Sélectionnez un package</translation>
+        <translation>Sélectionnez un paquetage</translation>
     </message>
     <message>
         <source>Click &quot;Install package&quot; button to install the content of the package.
 Package will be installed to: %1</source>
-        <translation>Cliquez sur le bouton &quot;Install package&quot; pour installer le contenu du package.
-Le package sera installé dans: %1</translation>
+        <translation>Cliquez sur le bouton &quot;Installer paquetage&quot; pour installer le contenu du paquetage.
+Le paquetage sera installé dans: %1</translation>
     </message>
     <message>
         <source>Selected file is not a valid SWORD Officer Training package.</source>
-        <translation>Le fichier sélectionné n&apos;est pas un package SWORD Officer Training valide.</translation>
+        <translation>Le fichier sélectionné n&apos;est pas un paquetage SWORD Officer Training valide.</translation>
     </message>
 </context>
 <context>
@@ -318,6 +329,10 @@ Le package sera installé dans: %1</translation>
     <message>
         <source>Manage</source>
         <translation>Administrer</translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation>SCALPED</translation>
     </message>
 </context>
 <context>

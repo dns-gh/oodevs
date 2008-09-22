@@ -16,13 +16,22 @@
 #include "InfoMaintenanceDialog.h"
 #include "InfoMedicalDialog.h"
 #include "InfoSupplyDialog.h"
+#include "tools/GeneralConfig.h"
+
+namespace
+{
+    QPixmap MakePixmap( const std::string& name )
+    {
+        return QImage( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gaming/" ) + name + ".png" ).c_str() );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: InfoButtonsWidget constructor
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
 InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : QGroupBox( 2, Qt::Horizontal, widget )
+    : QGroupBox( 2, Qt::Horizontal, widget, "InfoButtonsWidget" )
 {
     setFlat( true );
     setFixedWidth( 100 );
@@ -30,12 +39,12 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
     layout()->setMargin( 0 );
     setInsideMargin( 0 );
     setInsideSpacing( 0 );
-    AddButton< InfoCompositionDialog >( MAKE_PIXMAP( components ) , controllers, factory );
-    AddButton< InfoMaintenanceDialog >( MAKE_PIXMAP( maintenance ), controllers, factory );
-    AddButton< InfoDotationsDialog >  ( MAKE_PIXMAP( dotations )  , controllers, factory );
-    AddButton< InfoMedicalDialog >    ( MAKE_PIXMAP( medical )    , controllers, factory );
-    AddButton< InfoLendingsDialog >   ( MAKE_PIXMAP( lendborrow ) , controllers, factory );
-    AddButton< InfoSupplyDialog >     ( MAKE_PIXMAP( supply )     , controllers, factory );
+    AddButton< InfoCompositionDialog >( MakePixmap( "composition" ), controllers, factory );
+    AddButton< InfoMaintenanceDialog >( MakePixmap( "maintenance" ), controllers, factory );
+    AddButton< InfoDotationsDialog >  ( MakePixmap( "ordnance"    ), controllers, factory );
+    AddButton< InfoMedicalDialog >    ( MakePixmap( "health"      ), controllers, factory );
+    AddButton< InfoLendingsDialog >   ( MakePixmap( "lend"        ), controllers, factory );
+    AddButton< InfoSupplyDialog >     ( MakePixmap( "supply"      ), controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

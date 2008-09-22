@@ -17,7 +17,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "gaming/AgentKnowledge_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "gaming/AgentKnowledges.h"
 #include "gaming/PerceptionMap.h"
 #include "clients_gui/DisplayBuilder.h"

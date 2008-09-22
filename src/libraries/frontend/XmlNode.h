@@ -12,6 +12,7 @@
 
 #include <map>
 #include <sstream>
+#include <boost/lexical_cast.hpp>
 
 namespace xml
 {
@@ -43,6 +44,8 @@ public:
     void Serialize( xml::xostream& xos ) const;
     template< typename T >
     void SetValue( const std::string& path, const T& value );
+    template< typename T >
+    T GetValue( const std::string& path ) const ; 
     //@}
 
 private:
@@ -68,7 +71,8 @@ private:
     //@{
     void ReadAttribute( const std::string& name, xml::xistream& xis );
     void ReadChild( const std::string& name, xml::xistream& xis );
-    void SetStringValue( const std::string& path, const std::string& value );
+    void SetStringValue( const std::string& path, const std::string& value );    
+    bool GetStringValue( const std::string& path, std::string& value ) const;    
     //@}
 
 private:
@@ -91,6 +95,25 @@ void XmlNode::SetValue( const std::string& path, const T& value )
     ss << std::boolalpha << value;
     SetStringValue( path, ss.str() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: XmlNode::GetValue
+// Created: RDS 2008-08-19
+// -----------------------------------------------------------------------------
+template< typename T >
+T XmlNode::GetValue( const std::string& path ) const
+{
+    std::string str ; 
+    if ( GetStringValue( path, str ) )      
+        return boost::lexical_cast<T>(str) ;  
+    else
+        throw ( std::exception( "XmlNode impossible to find path" ) ) ; 
+}
+
+
+template<>
+bool XmlNode::GetValue<bool>( const std::string& path ) const; 
+
 
 }
 

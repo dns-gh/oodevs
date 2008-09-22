@@ -11,7 +11,7 @@
 #define __Trace_h_
 
 #include "Report.h"
-#include "SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 
 class Simulation;
 

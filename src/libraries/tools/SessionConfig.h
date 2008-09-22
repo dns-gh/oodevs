@@ -51,7 +51,6 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    SessionConfig( const SessionConfig& );            //!< Copy constructor
     SessionConfig& operator=( const SessionConfig& ); //!< Assignment operator
     //@}
 

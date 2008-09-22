@@ -20,12 +20,13 @@
 #include "DispatcherPlugin.h"
 #include "NoopPublisher.h"
 #include "AarPlugin.h"
+#include "Services.h"
 
 #include "xeumeuleu/xml.h"
 
 using namespace dispatcher;
 
-namespace 
+namespace
 {
     boost::shared_ptr< Model > CreateModel( CompositePlugin& handler, const Config& config )
     {
@@ -46,8 +47,10 @@ namespace
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 Replayer::Replayer( const Config& config )
-    : model_           ( CreateModel( handler_, config ) )
-    , clientsNetworker_( new ClientsNetworker( config, handler_ ) )
+    : registrables_    ()
+    , services_        ( new Services() )
+    , model_           ( CreateModel( handler_, config ) )
+    , clientsNetworker_( new ClientsNetworker( config, handler_, *services_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config ) )
     , plugin_          ( new ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
@@ -55,13 +58,14 @@ Replayer::Replayer( const Config& config )
     handler_.AddHandler( clientsNetworker_ );
 
     // $$$$ AGE 2007-08-27: utiliser la PluginFactory => replay ESRI
-    RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_ );
+    RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_, registrables_ );
     handler_.Add( rights  );
     handler_.Add( plugin_ );
     handler_.Add( new AarPlugin( *clientsNetworker_, *rights, config ) );
+    handler_.Register( *services_ );
     loader_->Start();
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: Replayer destructor
 // Created: AGE 2007-04-10
@@ -78,5 +82,5 @@ Replayer::~Replayer()
 void Replayer::Update()
 {
     clientsNetworker_->Update();
-    plugin_->Update();
+    handler_.Update();
 }

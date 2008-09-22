@@ -20,7 +20,7 @@
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileDialog::UserProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, UserProfileFactory_ABC& factory )
-    : QDialog( parent )
+    : QDialog( parent, "UserProfileDialog" )
 {
     setCaption( tr( "User profiles" ) );
     QGridLayout* grid = new QGridLayout( this, 3, 2 );

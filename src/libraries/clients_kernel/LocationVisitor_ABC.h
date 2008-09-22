@@ -10,6 +10,8 @@
 #ifndef __LocationFunctor_ABC_h_
 #define __LocationFunctor_ABC_h_
 
+#include "Types.h"
+
 namespace kernel
 {
 
@@ -35,6 +37,7 @@ public:
     virtual void VisitPolygon( const T_PointVector& points ) = 0;
     virtual void VisitCircle ( const geometry::Point2f& center, float radius ) = 0;
     virtual void VisitPoint  ( const geometry::Point2f& point ) = 0;
+    virtual void VisitPath   ( const geometry::Point2f& first, const T_PointVector& points ) = 0;
     //@}
 };
 

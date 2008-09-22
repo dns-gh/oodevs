@@ -39,6 +39,12 @@ public:
     virtual void Send( const ASN1T_MsgsReplayToClient&            ) {};
     virtual void Send( const ASN1T_MsgsAarToClient& ) {};
     virtual void Send( const ASN1T_MsgsMessengerToClient& ) {};
+    virtual void Send( const ASN1T_MsgsDispatcherToClient& ) {};
+    //@}
+
+    //! @name Accesors
+    //@{
+    virtual std::string GetEndpoint() const { return ""; }
     //@}
 };
 
@@ -61,7 +67,7 @@ public:
     //! @name Operations
     //@{
     virtual void Send( const ASN1T_MsgsClientToSim& ) {};
-    virtual void Send( const ASN1T_MsgsMiddleToSim& ) {};
+    virtual void Send( const ASN1T_MsgsDispatcherToSim& ) {};
     //@}
 };
 

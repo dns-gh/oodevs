@@ -81,7 +81,6 @@ public:
     //! @name Accessors
     //@{
     const kernel::PopulationType& GetType() const;
-    virtual QString GetTypeName() const;
     //@}
     
 private:

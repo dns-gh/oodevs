@@ -15,7 +15,6 @@
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  PopulationFlowPart
@@ -28,8 +27,8 @@ class PopulationFlowPart
 public:
     //! @name Constructors/Destructor
     //@{
-     PopulationFlowPart( const Model& model, const ASN1T_FlowPart& asnMsg );
-    ~PopulationFlowPart();
+    explicit PopulationFlowPart( const ASN1T_FlowPart& asnMsg );
+    virtual ~PopulationFlowPart();
     //@}
 
     //! @name Operations
@@ -38,8 +37,8 @@ public:
     //@}
 
 private:
-    const Localisation localisation_;
-    const unsigned int nRelevance_;
+    Localisation localisation_;
+    unsigned int nRelevance_;
 };
 
 }

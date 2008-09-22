@@ -11,16 +11,18 @@
 #define __AgentLogSupply_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelsContainer.h"
 #include "EquipmentAvailability.h"
-#include "Dotation.h"
+#include "clients_kernel/Resolver.h"
+
+namespace kernel
+{
+    class Agent_ABC;
+}
 
 namespace dispatcher
 {
-class Model;
-class Agent;
-class Automat;
-class ClientPublisher_ABC;
+    class ClientPublisher_ABC;
+    class Dotation;
 
 // =============================================================================
 /** @class  AgentLogSupply
@@ -33,8 +35,8 @@ class AgentLogSupply
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentLogSupply( Model& model, const Agent& agent, const ASN1T_MsgLogSupplyState& asnMsg );
-    ~AgentLogSupply();
+             AgentLogSupply( const kernel::Agent_ABC& agent, const ASN1T_MsgLogSupplyState& asnMsg );
+    virtual ~AgentLogSupply();
     //@}
 
     //! @name Main
@@ -50,13 +52,16 @@ private:
     AgentLogSupply& operator=( const AgentLogSupply& ); //!< Assignement operator
     //@}
 
-private:
-    const Agent&                          agent_;
-          Model&                          model_;
-          bool                            bSystemEnabled_;
-          ModelsContainer< Dotation  >    stocks_;
+    //! @name Types
+    //@{
+    typedef EquipmentAvailability< ASN1T_LogSupplyEquimentAvailability > T_Availability;
+    //@}
 
-    ModelsContainer< EquipmentAvailability< ASN1T_LogSupplyEquimentAvailability > > convoyersAvailability_;
+private:
+    const kernel::Agent_ABC&      agent_;
+    bool                          bSystemEnabled_;
+    kernel::Resolver< Dotation >  stocks_;
+    std::vector< T_Availability > convoyersAvailability_;
 };
 
 }

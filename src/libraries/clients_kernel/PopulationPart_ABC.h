@@ -23,7 +23,6 @@ namespace kernel
 // Created: SBO 2006-08-23
 // =============================================================================
 class PopulationPart_ABC : public Entity_ABC
-                         , public kernel::Positions
 {
 
 public:

@@ -11,20 +11,22 @@
 #define __Automat_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelRefsContainer.h"
-#include "ModelsContainer.h"
-#include "Entity_ABC.h"
+#include "clients_kernel/Resolver.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "SimpleEntity.h"
 #include "DecisionalState.h"
 
 namespace dispatcher
 {
-    class Side;
-    class KnowledgeGroup;
     class Model;
-    class Formation;
-    class Agent;
     class DotationQuota;
     class AutomatOrder;
+    class ModelVisitor_ABC;
+    class Formation;
+    class Agent;
+    class Automat;
+    class KnowledgeGroup;
+    class Side;
 
 // =============================================================================
 /** @class  Automat
@@ -32,7 +34,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Automat : public Entity_ABC
+class Automat : public SimpleEntity< kernel::Automat_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -43,13 +45,12 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned long                  GetID      () const;
-    ModelRefsContainer< Agent >&   GetAgents  ();
-    ModelRefsContainer< Automat >& GetAutomats();
+    virtual const kernel::AutomatType& GetType() const;
     bool IsEngaged() const;
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
-    //! @name Main
+    //! @name Operations
     //@{
     void Update( const ASN1T_MsgAutomatCreation&             msg );
     void Update( const ASN1T_MsgDecisionalState&             msg );
@@ -60,9 +61,9 @@ public:
     void Update( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg );
     void Update( const ASN1T_MsgAutomatOrder&                msg );
 
-    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
-    virtual void Accept        ( ModelVisitor_ABC& visitor );
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:
@@ -72,37 +73,45 @@ private:
     Automat& operator=( const Automat& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void ChangeKnowledgeGroup( unsigned long id );
+    template< typename Superior >
+    void ChangeSuperior( const Superior& superior );
+    //@}
+
 public:
-          Model&                              model_;
-    const unsigned long                       nID_;
-    const unsigned long                       nType_; // XML reference - no resolved by dispatcher
-    const std::string                         strName_;
-          Side&                               side_;
-          Formation*                          pParentFormation_;
-          Automat*                            pParentAutomat_;
-          KnowledgeGroup*                     pKnowledgeGroup_;
-          ModelRefsContainer< Agent   >       agents_;
-          ModelRefsContainer< Automat >       automats_;
-          ModelsContainer   < DotationQuota > quotas_;
+    //! @name Member data
+    //@{
+    Model&              model_;
+    const unsigned long type_; // XML reference - no resolved by dispatcher
+    const std::string   name_;
+    Side&               team_;
+    Formation*          parentFormation_;
+    Automat*            parentAutomat_;
+    KnowledgeGroup*     knowledgeGroup_;
+    kernel::Resolver< DotationQuota > quotas_;
 
     ASN1T_EnumAutomatMode             nAutomatState_;
     ASN1T_EnumForceRatioStatus        nForceRatioState_;
     ASN1T_EnumMeetingEngagementStatus nCloseCombatState_;
-    ASN1T_EnumOperationalStatus        nOperationalState_;
+    ASN1T_EnumOperationalStatus       nOperationalState_;
     ASN1T_EnumRoe                     nRoe_;
 
-    Automat* pTC2_;
-    Automat* pLogMaintenance_;
-    Automat* pLogMedical_;
-    Automat* pLogSupply_;
+    kernel::Automat_ABC* pTC2_;
+    kernel::Automat_ABC* pLogMaintenance_;
+    kernel::Automat_ABC* pLogMedical_;
+    kernel::Automat_ABC* pLogSupply_;
 
-    AutomatOrder* pOrder_;
+    std::auto_ptr< AutomatOrder > order_;
 
     DecisionalState decisionalInfos_;
+
+    kernel::Resolver< Agent >   agents_;
+    kernel::Resolver< Automat > automats_;
+    //@}
 };
 
 }
-
-#include "Automat.inl"
 
 #endif // __Automat_h_

@@ -9,51 +9,24 @@
 
 #include "selftraining_app_pch.h"
 #include "ScenarioPage.h"
-#include "moc_ScenarioPage.cpp"
-#include "SideList.h"
-#include "frontend/commands.h"
-#include "frontend/StartExercise.h"
-#include "frontend/JoinExercise.h"
-#include "frontend/CreateSession.h"
-#include <qlistbox.h>
-#include <qtextedit.h>
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4511 4512 )
-#include <boost/date_time/posix_time/posix_time.hpp>
-#pragma warning( pop )
-
-namespace bpt = boost::posix_time;
+#include "ScenarioLauncherPage.h"
+#include "ScenarioEditPage.h" 
+#include "TutorialPage.h" 
+#include "ReplayPage.h"
+#include "SessionRunningPage.h" 
+#include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioPage::ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config )
-    : ContentPage( pages, tr( "Scenario" ), previous )
-    , config_( config )
+ScenarioPage::ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, SessionRunningPage& running,  boost::shared_ptr< SessionStatus > sessionStatus )
+    : MenuPage( pages )
 {
-    QHBox* box = new QHBox( this );
-    box->setSpacing( 50 );
-    box->setMargin( 40 );
-    
-    QVBox* vBox = new QVBox( box );
-    vBox->setSpacing( 10 );
-    exercises_ = new QListBox( vBox );
-    SideList* sides = new SideList( vBox, config );
-    vBox->setStretchFactor( exercises_, 3 );
-    vBox->setStretchFactor( sides, 1 );
-    box->setStretchFactor( vBox, 5 );
-    
-    briefing_ = new QTextEdit( box );
-    briefing_->setText( "Briefing" );
-    briefing_->setReadOnly( true );
-    box->setStretchFactor( briefing_, 4 );
-    
-    AddContent( box );    
-    AddNextButton( tr( "Start" ), *this, SLOT( OnStart() ) );
-
-    connect( exercises_, SIGNAL( highlighted( const QString& ) ), sides, SLOT( Update( const QString& ) ) );
+    AddLink( tools::translate( "ScenarioPage", "Play" ),   *new ScenarioLauncherPage( pages, *this, running, config, sessionStatus ), true, tools::translate( "ScenarioPage", "Start scenarios" ) );
+    AddLink( tools::translate( "ScenarioPage", "Edit" ),   *new ScenarioEditPage( pages, *this, config, sessionStatus ),              true, tools::translate( "ScenarioPage", "Edit scenario" ) );
+    AddLink( tools::translate( "ScenarioPage", "Replay" ), *new ReplayPage( pages, *this , config, sessionStatus ),                   true, tools::translate( "ScenarioPage", "Replay scenario" ) );
+    AddLink( tools::translate( "ScenarioPage", "Back" ),   previous );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,49 +36,4 @@ ScenarioPage::ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools
 ScenarioPage::~ScenarioPage()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioPage::Update
-// Created: SBO 2008-02-21
-// -----------------------------------------------------------------------------
-void ScenarioPage::Update()
-{
-    exercises_->clear();
-    exercises_->insertStringList( frontend::commands::ListExercises( config_ ) );
-    exercises_->setSelected( 0, true );
-}
-
-namespace
-{
-    std::string BuildSessionName()
-    {
-        return bpt::to_iso_string( bpt::second_clock::local_time() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioPage::OnStart
-// Created: SBO 2008-02-21
-// -----------------------------------------------------------------------------
-void ScenarioPage::OnStart()
-{
-    if( exercises_->selectedItem() )
-    {
-        const QString exercise = exercises_->selectedItem()->text();
-        const QString session  = BuildSessionName().c_str();
-        CreateSession( exercise, session );
-        new frontend::StartExercise( this, config_, exercise, session );
-        new frontend::JoinExercise ( this, config_, exercise, session );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioPage::CreateSession
-// Created: SBO 2008-02-27
-// -----------------------------------------------------------------------------
-void ScenarioPage::CreateSession( const QString& exercise, const QString& session )
-{
-    frontend::CreateSession action( config_, exercise.ascii(), session.ascii() );
-    action.SetDefaultValues();
 }

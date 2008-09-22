@@ -22,7 +22,7 @@
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
 InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
-    : QIconView( parent )
+    : QIconView( parent, "InfoSubordinatesWidget" )
     , controllers_( controllers )
     , profile_( profile )
     , icons_( icons )

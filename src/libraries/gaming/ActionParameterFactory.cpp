@@ -9,38 +9,38 @@
 
 #include "gaming_pch.h"
 #include "ActionParameterFactory.h"
-#include "ActionParameterLimit.h"
-#include "ActionParameterLimaList.h"
-#include "ActionParameterObstacle.h"
-#include "ActionParameterObstacleList.h"
-#include "ActionParameterObjective.h"
-#include "ActionParameterObjectiveList.h"
-#include "ActionParameterDirection.h"
-#include "ActionParameterLocation.h"
-#include "ActionParameterPoint.h"
-#include "ActionParameterPolygon.h"
-#include "ActionParameterPointList.h"
-#include "ActionParameterPolygonList.h"
-#include "ActionParameterLocationList.h"
-#include "ActionParameterPathList.h"
-#include "ActionParameterPath.h"
-#include "ActionParameterAgent.h"
-#include "ActionParameterAutomat.h"
-#include "ActionParameterAgentList.h"
-#include "ActionParameterAutomatList.h"
-#include "ActionParameterAgentKnowledge.h"
-#include "ActionParameterPopulationKnowledge.h"
-#include "ActionParameterObjectKnowledge.h"
-#include "ActionParameterAgentKnowledgeList.h"
-#include "ActionParameterObjectKnowledgeList.h"
-#include "ActionParameterEnumeration.h"
-#include "ActionParameterBool.h"
-#include "ActionParameterNumeric.h"
-#include "ActionParameterDotationType.h"
-#include "ActionParameterAtlasNature.h"
-#include "ActionParameterMaintenancePriorities.h"
-#include "ActionParameterMedicalPriorities.h"
-#include "ActionParameterIntelligenceList.h"
+#include "actions/Limit.h"
+#include "actions/LimaList.h"
+#include "actions/Obstacle.h"
+#include "actions/ObstacleList.h"
+#include "actions/Objective.h"
+#include "actions/ObjectiveList.h"
+#include "actions/Direction.h"
+#include "actions/Location.h"
+#include "actions/Point.h"
+#include "actions/Polygon.h"
+#include "actions/PointList.h"
+#include "actions/PolygonList.h"
+#include "actions/LocationList.h"
+#include "actions/PathList.h"
+#include "actions/Path.h"
+#include "actions/Agent.h"
+#include "actions/Automat.h"
+#include "actions/AgentList.h"
+#include "actions/AutomatList.h"
+#include "actions/AgentKnowledge.h"
+#include "actions/PopulationKnowledge.h"
+#include "actions/ObjectKnowledge.h"
+#include "actions/AgentKnowledgeList.h"
+#include "actions/ObjectKnowledgeList.h"
+#include "actions/Enumeration.h"
+#include "actions/Bool.h"
+#include "actions/Numeric.h"
+#include "actions/DotationType.h"
+#include "actions/AtlasNature.h"
+#include "actions/MaintenancePriorities.h"
+#include "actions/MedicalPriorities.h"
+#include "actions/IntelligenceList.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
@@ -88,83 +88,83 @@ ActionParameterFactory::~ActionParameterFactory()
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_MissionParameter& asn, const Entity_ABC& entity ) const
+actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_MissionParameter& asn, const Entity_ABC& entity ) const
 {
     // $$$$ SBO 2007-10-11: we should create a parameter of the real type in order to be able (later) to edit parameters
     if( asn.null_value )
-        return new ActionParameter< QString >( parameter, tools::translate( "ActionParameterFactory", "not set" ) );
+        return new actions::parameters::Parameter< QString >( parameter, tools::translate( "ActionParameterFactory", "not set" ) );
     switch( asn.value.t )
     {
     case T_MissionParameter_value_aBool:
-        return new ActionParameterBool( parameter, asn.value.u.aBool != 0 );
+        return new actions::parameters::Bool( parameter, asn.value.u.aBool != 0 );
     case T_MissionParameter_value_aCharStr:
-        return new ActionParameter< QString >( parameter, asn.value.u.aCharStr );
+        return new actions::parameters::Parameter< QString >( parameter, asn.value.u.aCharStr );
     case T_MissionParameter_value_unit:
-        return new ActionParameterAgent( parameter, asn.value.u.unit, model_.agents_ );
+        return new actions::parameters::Agent( parameter, asn.value.u.unit, model_.agents_ );
     case T_MissionParameter_value_aReal:
-        return new ActionParameterNumeric( parameter, asn.value.u.aReal );
+        return new actions::parameters::Numeric( parameter, asn.value.u.aReal );
     case T_MissionParameter_value_automat:
-        return new ActionParameterAutomat( parameter, asn.value.u.automat, model_.agents_ );
+        return new actions::parameters::Automat( parameter, asn.value.u.automat, model_.agents_ );
     case T_MissionParameter_value_heading:
-        return new ActionParameter< float >( parameter, asn.value.u.heading );
+        return new actions::parameters::Parameter< float >( parameter, asn.value.u.heading );
     case T_MissionParameter_value_enumeration:
-        return new ActionParameterEnumeration( parameter, asn.value.u.enumeration );
+        return new actions::parameters::Enumeration( parameter, asn.value.u.enumeration );
     case T_MissionParameter_value_path:
-        return new ActionParameterPath( parameter, converter_, *asn.value.u.path );
+        return new actions::parameters::Path( parameter, converter_, *asn.value.u.path );
     case T_MissionParameter_value_unitKnowledge:
-        return new ActionParameterAgentKnowledge( parameter, asn.value.u.unitKnowledge, agentKnowledgeConverter_, entity );
+        return new actions::parameters::AgentKnowledge( parameter, asn.value.u.unitKnowledge, agentKnowledgeConverter_, entity );
     case T_MissionParameter_value_objectKnowledge:
-        return new ActionParameterObjectKnowledge( parameter, asn.value.u.objectKnowledge, objectKnowledgeConverter_, entity );
+        return new actions::parameters::ObjectKnowledge( parameter, asn.value.u.objectKnowledge, objectKnowledgeConverter_, entity );
     case T_MissionParameter_value_populationKnowledge:
-        return new ActionParameterPopulationKnowledge( parameter, asn.value.u.populationKnowledge, agentKnowledgeConverter_, entity );
+        return new actions::parameters::PopulationKnowledge( parameter, asn.value.u.populationKnowledge, agentKnowledgeConverter_, entity );
     case T_MissionParameter_value_unitList:
-        return new ActionParameterAgentList( parameter, *asn.value.u.unitList, model_.agents_ );
+        return new actions::parameters::AgentList( parameter, *asn.value.u.unitList, model_.agents_ );
     case T_MissionParameter_value_automatList:
-        return new ActionParameterAutomatList( parameter, *asn.value.u.automatList, model_.agents_ );
+        return new actions::parameters::AutomatList( parameter, *asn.value.u.automatList, model_.agents_ );
     case T_MissionParameter_value_pathList:
-        return new ActionParameterPathList( parameter, converter_, *asn.value.u.pathList );
+        return new actions::parameters::PathList( parameter, converter_, *asn.value.u.pathList );
     case T_MissionParameter_value_unitKnowledgeList:
-        return new ActionParameterAgentKnowledgeList( parameter, *asn.value.u.unitKnowledgeList, agentKnowledgeConverter_, entity );
+        return new actions::parameters::AgentKnowledgeList( parameter, *asn.value.u.unitKnowledgeList, agentKnowledgeConverter_, entity );
     case T_MissionParameter_value_objectKnowledgeList:
-        return new ActionParameterObjectKnowledgeList( parameter, *asn.value.u.objectKnowledgeList, objectKnowledgeConverter_, entity );
+        return new actions::parameters::ObjectKnowledgeList( parameter, *asn.value.u.objectKnowledgeList, objectKnowledgeConverter_, entity );
     case T_MissionParameter_value_locationList:
-        return new ActionParameterLocationList( parameter, converter_, *asn.value.u.locationList );
+        return new actions::parameters::LocationList( parameter, converter_, *asn.value.u.locationList );
     case T_MissionParameter_value_plannedWorkList:
-        return new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWorkList );
+        return new actions::parameters::ObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWorkList );
     case T_MissionParameter_value_pointList:
-        return new ActionParameterPointList( parameter, converter_, *asn.value.u.pointList );
+        return new actions::parameters::PointList( parameter, converter_, *asn.value.u.pointList );
     case T_MissionParameter_value_polygonList:
-        return new ActionParameterPolygonList( parameter, converter_, *asn.value.u.polygonList );
+        return new actions::parameters::PolygonList( parameter, converter_, *asn.value.u.polygonList );
     case T_MissionParameter_value_location:
-        return new ActionParameterLocation( parameter, converter_, *asn.value.u.location );
+        return new actions::parameters::Location( parameter, converter_, *asn.value.u.location );
     case T_MissionParameter_value_plannedWork:
-        return new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWork );
+        return new actions::parameters::Obstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWork );
     case T_MissionParameter_value_atlasNature:
-        return new ActionParameterAtlasNature( parameter, *asn.value.u.atlasNature, staticModel_.atlasNatures_ );
+        return new actions::parameters::AtlasNature( parameter, *asn.value.u.atlasNature, staticModel_.atlasNatures_ );
     case T_MissionParameter_value_missionObjective:
-        return new ActionParameterObjective( parameter, converter_, *asn.value.u.missionObjective );
+        return new actions::parameters::Objective( parameter, converter_, *asn.value.u.missionObjective );
     case T_MissionParameter_value_missionObjectiveList:
-        return new ActionParameterObjectiveList( parameter, converter_, *asn.value.u.missionObjectiveList );
+        return new actions::parameters::ObjectiveList( parameter, converter_, *asn.value.u.missionObjectiveList );
     case T_MissionParameter_value_point:
-        return new ActionParameterPoint( parameter, converter_, *asn.value.u.point );
+        return new actions::parameters::Point( parameter, converter_, *asn.value.u.point );
     case T_MissionParameter_value_polygon:
-        return new ActionParameterPolygon( parameter, converter_, *asn.value.u.polygon );
+        return new actions::parameters::Polygon( parameter, converter_, *asn.value.u.polygon );
     case T_MissionParameter_value_dotationType:
-        return new ActionParameterDotationType( parameter, asn.value.u.dotationType, staticModel_.objectTypes_ );
+        return new actions::parameters::DotationType( parameter, asn.value.u.dotationType, staticModel_.objectTypes_ );
     case T_MissionParameter_value_equipmentType:
         break;
     case T_MissionParameter_value_logMaintenancePriorities:
-        return new ActionParameterMaintenancePriorities( parameter, staticModel_.objectTypes_, *asn.value.u.logMaintenancePriorities );
+        return new actions::parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, *asn.value.u.logMaintenancePriorities );
     case T_MissionParameter_value_logMedicalPriorities:
-        return new ActionParameterMedicalPriorities( parameter, *asn.value.u.logMedicalPriorities );
+        return new actions::parameters::MedicalPriorities( parameter, *asn.value.u.logMedicalPriorities );
     case T_MissionParameter_value_tirIndirect: // $$$$ SBO 2007-05-21: reports only, not to be used!
         break;
     case T_MissionParameter_value_line:
-        return new ActionParameterLimit( parameter, converter_, *asn.value.u.line );
+        return new actions::parameters::Limit( parameter, converter_, *asn.value.u.line );
     case T_MissionParameter_value_limasOrder:
-        return new ActionParameterLimaList( parameter, converter_, *asn.value.u.limasOrder );
+        return new actions::parameters::LimaList( parameter, converter_, *asn.value.u.limasOrder );
     case T_MissionParameter_value_intelligenceList:
-        return new ActionParameterIntelligenceList( parameter, converter_, *asn.value.u.intelligenceList, model_.teams_, staticModel_.levels_ );
+        return new actions::parameters::IntelligenceList( parameter, converter_, *asn.value.u.intelligenceList, model_.teams_, staticModel_.levels_ );
     }
     return 0;
 }
@@ -182,79 +182,79 @@ namespace
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-ActionParameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const
+actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const
 {
     std::string expected = boost::algorithm::to_lower_copy( parameter.GetType() );
     std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
     if( type != expected )
         ThrowUnexpected( parameter, xis );
-    std::auto_ptr< ActionParameter_ABC > param;
+    std::auto_ptr< actions::Parameter_ABC > param;
     if( type == "bool" )
-        param.reset( new ActionParameterBool( parameter, xis ) );
+        param.reset( new actions::parameters::Bool( parameter, xis ) );
     else if( type == "numeric" )
-        param.reset( new ActionParameterNumeric( parameter, xis ) );
+        param.reset( new actions::parameters::Numeric( parameter, xis ) );
     else if( type == "path" )
-        param.reset( new ActionParameterPath( parameter, converter_, xis ) );
+        param.reset( new actions::parameters::Path( parameter, converter_, xis ) );
     else if( type == "point" )
-        param.reset( new ActionParameterPoint( parameter, converter_, xis ) );
+        param.reset( new actions::parameters::Point( parameter, converter_, xis ) );
     else if( type == "polygon" )
-        param.reset( new ActionParameterPolygon( parameter, converter_, xis ) );
+        param.reset( new actions::parameters::Polygon( parameter, converter_, xis ) );
     else if( type == "location" )
-        param.reset( new ActionParameterLocation( parameter, converter_, xis ) );
+        param.reset( new actions::parameters::Location( parameter, converter_, xis ) );
     else if( type == "pathlist" )
-        param.reset( new ActionParameterPathList( parameter, converter_, xis ) );
+        param.reset( new actions::parameters::PathList( parameter, converter_, xis ) );
     else if( type == "pointlist" )
-        param.reset( new ActionParameterPointList( parameter, converter_, xis ) );
+        param.reset( new actions::parameters::PointList( parameter, converter_, xis ) );
     else if( type == "polygonlist" )
-        param.reset( new ActionParameterPolygonList( parameter, converter_, xis ) );
+        param.reset( new actions::parameters::PolygonList( parameter, converter_, xis ) );
     else if( type == "locationlist" )
-        param.reset( new ActionParameterLocationList( parameter, converter_, xis ) );
+        param.reset( new actions::parameters::LocationList( parameter, converter_, xis ) );
     else if( type == "direction" )
-        param.reset( new ActionParameterDirection( parameter, xis ) );
+        param.reset( new actions::parameters::Direction( parameter, xis ) );
     else if( type == "phaselinelist" )
-        param.reset( new ActionParameterLimaList( parameter, converter_, xis ) );
+        param.reset( new actions::parameters::LimaList( parameter, converter_, xis ) );
     else if( type == "intelligencelist" )
-        param.reset( new ActionParameterIntelligenceList( parameter, converter_, xis, model_.teams_, staticModel_.levels_ ) );
+        param.reset( new actions::parameters::IntelligenceList( parameter, converter_, xis, model_.teams_, staticModel_.levels_ ) );
     else if( type == "limit" )
-        param.reset( new ActionParameterLimit( parameter, converter_, xis ) );
+        param.reset( new actions::parameters::Limit( parameter, converter_, xis ) );
     else if( type == "enumeration" )
-        param.reset( new ActionParameterEnumeration( parameter, xis ) );
+        param.reset( new actions::parameters::Enumeration( parameter, xis ) );
     else if( type == "agent" )
-        param.reset( new ActionParameterAgent( parameter, xis, model_.agents_ ) );
+        param.reset( new actions::parameters::Agent( parameter, xis, model_.agents_ ) );
     else if( type == "automate" )
-        param.reset( new ActionParameterAutomat( parameter, xis, model_.agents_ ) );
+        param.reset( new actions::parameters::Automat( parameter, xis, model_.agents_ ) );
     else if( type == "agentlist" )
-        param.reset( new ActionParameterAgentList( parameter, xis, model_.agents_ ) );
+        param.reset( new actions::parameters::AgentList( parameter, xis, model_.agents_ ) );
     else if( type == "automatelist" )
-        param.reset( new ActionParameterAutomatList( parameter, xis, model_.agents_ ) );
+        param.reset( new actions::parameters::AutomatList( parameter, xis, model_.agents_ ) );
     else if( type == "dotationtype" )
-        param.reset( new ActionParameterDotationType( parameter, xis, staticModel_.objectTypes_ ) );
+        param.reset( new actions::parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
     else if( type == "genobject" )
-        param.reset( new ActionParameterObstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis ) );
+        param.reset( new actions::parameters::Obstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis ) );
     else if( type == "genobjectlist" )
-        param.reset( new ActionParameterObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis ) );
+        param.reset( new actions::parameters::ObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis ) );
     else if( type == "agentknowledge" )
-        param.reset( new ActionParameterAgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
+        param.reset( new actions::parameters::AgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
     else if( type == "populationknowledge" )
-        param.reset( new ActionParameterPopulationKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
+        param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
     else if( type == "objectknowledge" )
-        param.reset( new ActionParameterObjectKnowledge( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity ) );
+        param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity ) );
     else if( type == "agentknowledgelist" )
-        param.reset( new ActionParameterAgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
+        param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
     else if( type == "objectknowledgelist" )
-        param.reset( new ActionParameterObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity ) );
-    else if( type == "atlasnature" )
-        param.reset( new ActionParameterAtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
+        param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity ) );
+    else if( type == "natureatlas" )
+        param.reset( new actions::parameters::AtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
     else if( type == "objective" )
-        param.reset( new ActionParameterObjective( parameter, xis, converter_ ) );
+        param.reset( new actions::parameters::Objective( parameter, xis, converter_ ) );
     else if( type == "objectivelist" )
-        param.reset( new ActionParameterObjectiveList( parameter, xis, converter_ ) );
+        param.reset( new actions::parameters::ObjectiveList( parameter, xis, converter_ ) );
     else if( type == "medicalpriorities" )
-        param.reset( new ActionParameterMedicalPriorities( parameter, xis ) );
+        param.reset( new actions::parameters::MedicalPriorities( parameter, xis ) );
     else if( type == "maintenancepriorities" )
-        param.reset( new ActionParameterMaintenancePriorities( parameter, staticModel_.objectTypes_, xis ) );
+        param.reset( new actions::parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, xis ) );
     else
-        param.reset( new ActionParameter< QString >( parameter ) ); // $$$$ SBO 2007-05-16: default not yet implemented parameters...
+        throw std::runtime_error( "Unknown parameter type '" + type + "'" );
     param->Set( true ); // $$$$ SBO 2007-10-11: ...
     return param.release();
 }

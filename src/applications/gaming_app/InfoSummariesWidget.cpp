@@ -21,7 +21,7 @@ using namespace kernel;
 // Created: SBO 2007-02-28
 // -----------------------------------------------------------------------------
 InfoSummariesWidget::InfoSummariesWidget( QWidget* parent, Controllers& controllers )
-    : QVBox( parent )
+    : QVBox( parent, "InfoSummariesWidget" )
     , controllers_( controllers )
     , selected_( controllers )
 {

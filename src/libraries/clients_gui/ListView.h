@@ -29,8 +29,8 @@ class ListView : public QListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ListView( QWidget* parent, ConcreteList& list, ItemFactory_ABC& factory )
-                 : QListView( parent )
+             ListView( QWidget* parent, ConcreteList& list, ItemFactory_ABC& factory, const char* name = 0 )
+                 : QListView( parent, name )
                  , list_( list )
                  , factory_( factory )
                  , toSkip_( 0 ) {}

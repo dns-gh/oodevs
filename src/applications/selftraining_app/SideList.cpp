@@ -25,7 +25,7 @@ SideList::SideList( QWidget* parent, const tools::GeneralConfig& config )
     : QListBox( parent )
     , config_( config )
 {
-    // NOTHING
+    setSelectionMode( QListBox::NoSelection ) ; 
 }
 
 // -----------------------------------------------------------------------------
@@ -44,14 +44,22 @@ SideList::~SideList()
 void SideList::Update( const QString& exercise )
 {
     clear();
-    if( !exercise.isEmpty() )
+    try
     {
-        xifstream xis( config_.GetExerciseFile( exercise.ascii() ) );
-        std::string orbatFile;
-        xis >> start( "exercise" )
-                >> start( "orbat" )
-                    >> attribute( "file", orbatFile );
-        UpdateSides( config_.BuildChildPath( config_.GetExerciseFile( exercise.ascii() ), orbatFile ) );
+        if( !exercise.isEmpty() )
+        {
+            xifstream xis( config_.GetExerciseFile( exercise.ascii() ) );
+            std::string orbatFile;
+            xis >> start( "exercise" )
+                    >> start( "orbat" )
+                        >> attribute( "file", orbatFile );
+            UpdateSides( config_.BuildChildPath( config_.GetExerciseFile( exercise.ascii() ), orbatFile ) );
+        }
+    }
+    catch(...)
+    {
+        // something wrong appened ... don't crash , but clear 
+        clear(); 
     }
 }
 
@@ -62,7 +70,7 @@ void SideList::Update( const QString& exercise )
 void SideList::UpdateSides( const std::string& orbat )
 {
     xifstream xis( orbat );
-    xis >> start( "orbat" )
+     xis >> start( "orbat" )
             >> start( "sides" )
                 >> list( "side", *this, &SideList::ReadSide );
 }

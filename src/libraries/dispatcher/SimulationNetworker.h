@@ -42,7 +42,7 @@ public:
     //! @name Dispatching
     //@{
     virtual void Send( const ASN1T_MsgsClientToSim& asnMsg );
-    virtual void Send( const ASN1T_MsgsMiddleToSim& asnMsg );
+    virtual void Send( const ASN1T_MsgsDispatcherToSim& asnMsg );
     //@}
 
 private:

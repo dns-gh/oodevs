@@ -11,6 +11,9 @@
 #define __MenuPage_h_
 
 #include "Page_ABC.h"
+#include <map>
+
+class MenuButton ; 
 
 // =============================================================================
 /** @class  MenuPage
@@ -20,18 +23,30 @@
 // =============================================================================
 class MenuPage : public Page_ABC
 {
+    
+    Q_OBJECT ;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MenuPage( QWidgetStack* pages );
+    explicit MenuPage( QWidgetStack* pages, const QString& title = "" );
     virtual ~MenuPage();
     //@}
 
+
 protected:
+    
     //! @name Operations
     //@{
-    void AddLink( const QString& title, Page_ABC& page, const char* slot = 0 );
+    void AddLink( const QString& title, Page_ABC& page, bool enabled = true, const QString& subtitle="" ,const char* slot = 0 );
+    //@}
+
+protected slots:
+
+    //! @name 
+    //@{
+    void OnSelectedItem( MenuButton* ) ; 
+    void OnUnSelectedItem( MenuButton* ) ; 
     //@}
 
 private:
@@ -48,6 +63,10 @@ private:
 private:
     //! @name Member data
     //@{
+    QLabel* title_ ; 
+    QHBox* container_;
+    QLabel* subTitle_ ; 
+    std::map< QWidget*, QString > subTitles_ ; 
     //@}
 };
 

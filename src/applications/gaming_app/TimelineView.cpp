@@ -12,13 +12,15 @@
 #include "TimelineMarker.h"
 #include "TimelineActionItem.h"
 #include "TimelineRuler.h"
-#include "gaming/Action_ABC.h"
+#include "actions/Action_ABC.h"
 #include "gaming/Simulation.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "icons.h"
 #include <qpainter.h>
 
 using namespace kernel;
+using namespace actions;
 
 const unsigned int TimelineView::rowHeight_ = 25;
 
@@ -27,7 +29,7 @@ const unsigned int TimelineView::rowHeight_ = 25;
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
 TimelineView::TimelineView( QWidget* parent, QCanvas* canvas, Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler )
-    : QCanvasView  ( canvas, parent )
+    : QCanvasView  ( canvas, parent, "TimelineView" )
     , controllers_ ( controllers )
     , model_       ( model )
     , ruler_       ( ruler )
@@ -226,8 +228,8 @@ void TimelineView::contentsContextMenuEvent( QContextMenuEvent* event )
         selectedItem_->DisplayContextMenu( menu );
         menu->insertSeparator();
     }
-    menu->insertItem( tr( "Zoom In" ), &ruler_, SLOT( ZoomIn() ), Qt::Key_Plus );
-    menu->insertItem( tr( "Zoom Out" ), &ruler_, SLOT( ZoomOut() ), Qt::Key_Minus );
+    menu->insertItem( tools::translate( "TimelineView", "Zoom In" ), &ruler_, SLOT( ZoomIn() ), Qt::Key_Plus );
+    menu->insertItem( tools::translate( "TimelineView", "Zoom Out" ), &ruler_, SLOT( ZoomOut() ), Qt::Key_Minus );
     menu->popup( event->globalPos() );
     event->accept();
 }

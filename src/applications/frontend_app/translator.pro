@@ -15,5 +15,6 @@ RestartExercisePanel.cpp \
 StartAnalysisPanel.cpp \
 StartExercisePanel.cpp \
 TerrainCreationPanel.cpp \
+main.cpp \
 
 TRANSLATIONS = frontend_app_fr.ts frontend_app_en.ts

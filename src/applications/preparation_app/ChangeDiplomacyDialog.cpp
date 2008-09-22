@@ -36,7 +36,7 @@ namespace
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& controllers )
-    : QDialog( parent, 0, true )
+    : QDialog( parent, "ChangeDiplomacyDialog", true )
     , controllers_( controllers )
 {
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );

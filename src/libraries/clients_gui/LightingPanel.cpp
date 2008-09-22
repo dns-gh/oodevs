@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "LightingPanel.h"
 #include "moc_LightingPanel.cpp"
+#include "ButtonGroup.h"
 #include "ColorButton.h"
 #include "DirectionWidget.h"
 #include "LightingProxy.h"
@@ -25,7 +26,7 @@ using namespace gui;
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
 LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::Controllers& controllers )
-    : PreferencePanel_ABC( parent )
+    : PreferencePanel_ABC( parent, "LightingPanel" )
     , controllers_( controllers )
     , options_( controllers.options_ )
     , lighting_( lighting )
@@ -35,13 +36,13 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     lighting_.SetLightDirection( geometry::Vector3f( 0, 0, 1 ) );
 
     // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
-    QButtonGroup* lightingType = new QButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), this );
-    lightingType->insert( new QRadioButton( tr( "Fixed" ), lightingType ) );
-    lightingType->insert( new QRadioButton( tr( "Camera fixed" ), lightingType ) );
-    lightingType->insert( new QRadioButton( tr( "Simulation time" ), lightingType ) );
-    lightingType->setButton( 0 );
+    lightingType_ = new ButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), this );
+    lightingType_->insert( new QRadioButton( tr( "Fixed" ), lightingType_ ) );
+    lightingType_->insert( new QRadioButton( tr( "Camera fixed" ), lightingType_ ) );
+    lightingType_->insert( new QRadioButton( tr( "Simulation time" ), lightingType_ ) );
+    lightingType_->setButton( 0 );
 
-    connect( lightingType, SIGNAL( clicked( int ) ), this, SLOT( OnLightingType( int ) ) );
+    connect( lightingType_, SIGNAL( clicked( int ) ), this, SLOT( OnLightingType( int ) ) );
 
     fixedLightBox_ = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), this );
     new QLabel( tr( "Source position" ), fixedLightBox_ );
@@ -73,10 +74,12 @@ LightingPanel::~LightingPanel()
 // -----------------------------------------------------------------------------
 void LightingPanel::Commit()
 {
+    lightingType_->Commit();
     direction_->Commit();
     ambient_  ->Commit();
     diffuse_  ->Commit();
 
+    options_.Change( "Lighting/Type", lightingType_->selectedId() );
     options_.Change( "Lighting/Ambient", ambient_->GetColor().name() );
     options_.Change( "Lighting/Diffuse", diffuse_->GetColor().name() );
     options_.Change( "Lighting/Direction", direction_->GetValue() );
@@ -88,6 +91,8 @@ void LightingPanel::Commit()
 // -----------------------------------------------------------------------------
 void LightingPanel::Reset()
 {
+    lightingType_->Revert();
+    OnLightingType(lightingType_->selectedId());
     direction_->Revert();
     ambient_  ->Revert();
     diffuse_  ->Revert();
@@ -144,7 +149,12 @@ void LightingPanel::OptionChanged( const std::string& name, const kernel::Option
     const QStringList option = QStringList::split( "/", name.c_str() );
     if( !( option[0] == "Lighting" ) )
         return;
-    if( option[1] == "Ambient" )
+    if ( option[1] == "Type" )
+    {
+        lightingType_->setButton( value.To< int >());
+        lightingType_->Commit();
+    }
+    else if( option[1] == "Ambient" )
     {
         ambient_->SetColor( QColor( value.To< QString >() ) );
         ambient_->Commit();

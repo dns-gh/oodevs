@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "LogisticRoutePrototype.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 
 using namespace gui;
 

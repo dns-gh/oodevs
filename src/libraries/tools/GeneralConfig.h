@@ -26,7 +26,7 @@ class GeneralConfig : public CommandLineConfig_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GeneralConfig();
+    explicit GeneralConfig( const std::string& defaultRoot = "../" );
     virtual ~GeneralConfig();
     //@}
 
@@ -35,6 +35,7 @@ public:
     static std::string BuildChildPath( const std::string& parent, const std::string& child );
     static std::string BuildDirectoryFile( const std::string& directory, const std::string& file );
     static std::string BuildWorkingDirectoryChildFile( const std::string& file );
+    static std::string BuildResourceChildFile( const std::string& file );
 
     std::string GetRootDir() const;
 
@@ -67,18 +68,13 @@ protected:
     //! @name Operations
     //@{
     static void ResolveRelativePath( const std::string& root, std::string& path );
+    void LoadExercise( const std::string& file );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    GeneralConfig( const GeneralConfig& );            //!< Copy constructor
     GeneralConfig& operator=( const GeneralConfig& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadExerciseConfig();
     //@}
 
 private:
@@ -92,7 +88,6 @@ private:
 
     const std::string terrainConfigFile_;
     const std::string exerciseConfigFile_;
-    const std::string sessionConfigFile_;
     //@}
 };
 

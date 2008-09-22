@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-
 #include "DisconnectDialog.h"
 #include "moc_DisconnectDialog.cpp"
 #include "gaming/Network.h"

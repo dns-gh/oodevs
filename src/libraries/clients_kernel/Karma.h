@@ -12,6 +12,7 @@
 
 namespace kernel
 {
+    class Team_ABC;
 
 // =============================================================================
 /** @class  Karma
@@ -31,6 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Karma();
+    explicit Karma( const Team_ABC& team );
              Karma( const std::string& identifier, const QString& name );
     virtual ~Karma();
     //@}
@@ -39,6 +41,8 @@ public:
     //@{
     std::string GetId() const;
     QString GetName() const;
+
+    const Karma& RelativeTo( const Karma& rhs ) const;
 
     const Karma& operator!() const;
     bool operator<( const Karma& rhs ) const;

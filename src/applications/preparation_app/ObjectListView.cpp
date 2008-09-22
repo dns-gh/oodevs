@@ -40,6 +40,7 @@ void ObjectListView::keyPressEvent( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
         delete (const kernel::Entity_ABC*)selected_;
+    gui::ObjectListView::keyPressEvent( key );
 }
 
 // -----------------------------------------------------------------------------

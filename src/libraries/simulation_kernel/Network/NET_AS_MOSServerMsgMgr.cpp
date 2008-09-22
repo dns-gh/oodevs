@@ -21,6 +21,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
+#include "game_asn/ClientSenders.h"
 
 using namespace DIN;
 
@@ -110,11 +111,11 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& from, const ASN
 // Name: NET_AS_MOSServerMsgMgr::OnReceiveMiddle
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const ASN1T_MsgsMiddleToSim& asnMsg )
+void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const ASN1T_MsgsDispatcherToSim& asnMsg )
 {
-    switch( asnMsg.msg.t )
+    switch( asnMsg.t )
     {
-        case T_MsgsMiddleToSim_msg_msg_control_client_announcement : OnReceiveMsgCtrlClientAnnouncement( from ); break;
+        case T_MsgsDispatcherToSim_msg_control_client_announcement : OnReceiveMsgCtrlClientAnnouncement( from ); break;
         default:
             assert( false );
     }

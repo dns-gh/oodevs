@@ -25,7 +25,7 @@ class InfoPanel_ABC : public QScrollView
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanel_ABC( QWidget* parent, PanelStack_ABC& panel, const QString& name );
+             InfoPanel_ABC( QWidget* parent, PanelStack_ABC& panel, const QString& name, const char* qtName = 0 );
     virtual ~InfoPanel_ABC();
     //@}
 

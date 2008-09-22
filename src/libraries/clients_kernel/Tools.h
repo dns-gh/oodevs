@@ -27,6 +27,8 @@ namespace tools
     QString ToString( kernel::E_PerceptionResult nResult );
     QString ToString( kernel::E_LightingType lighting );
     QString ToString( kernel::E_WeatherType weather );
+    QString ToString( kernel::E_FuncLimaType nType );
+    QString ToShortString( kernel::E_FuncLimaType nType );
 
     QString ToString( E_PopulationAttitude nType );
     QString ToString( E_ObstacleType nType );
@@ -46,6 +48,7 @@ namespace tools
     QString ToString( E_LogMedicalHandlingStatus nType );
     QString ToString( E_LogMaintenanceHandlingStatus nType );
     QString ToString( E_DotationFamily nType );
+    QString ToString( E_LocationType nType );
 
     QString Unknown();
 
@@ -53,9 +56,14 @@ namespace tools
     const char* GetXmlSection( kernel::E_WeatherType nWeatherType );
     const char* GetXmlSection( kernel::E_LightingType nLightingType );
 
-    E_ObjectType       ObjectTypeFromString    ( const std::string& type );
-    E_DotationFamily   DotationFamilyFromString( const std::string& type );
-    E_NatureLevel      NatureLevelFromString   ( const std::string& type );
+    E_ObjectType            ObjectTypeFromString    ( const std::string& type );
+    E_DotationFamily        DotationFamilyFromString( const std::string& type );
+    E_NatureLevel           NatureLevelFromString   ( const std::string& type );
+    E_LocationType          LocationFromString      ( const std::string& type );
+    
+    kernel::E_FuncLimaType  LimaTypeFromShortString ( const QString& type );
+    kernel::E_FuncLimaType  LimaTypeFromXmlString   ( const QString& type );
+    QString                 LimaTypeShortToXmlString( const QString& shortType );
 
     QString TranslateObjectType( const std::string& xmlType );
 }

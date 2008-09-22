@@ -234,7 +234,7 @@ unsigned int ListParameter::Count() const
 // Name: ListParameter::CommitChildrenTo
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void ListParameter::CommitChildrenTo( ActionParameterContainer_ABC& parent ) const
+void ListParameter::CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const
 {
     if( !list_ )
         return;

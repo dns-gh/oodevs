@@ -14,8 +14,10 @@
 #include "tools/InterfaceContainer.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
+#include <geometry/types.h>
 
 class QPoint;
+class QString;
 
 namespace xml 
 {

@@ -9,13 +9,13 @@
 
 #include "gaming_pch.h"
 #include "UserProfile.h"
-#include "Publisher_ABC.h"
+#include "game_asn/Publisher_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "AuthenticationMessages.h"
+#include "game_asn/AuthenticationSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor

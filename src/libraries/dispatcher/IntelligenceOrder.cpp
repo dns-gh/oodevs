@@ -16,7 +16,7 @@ using namespace dispatcher;
 // Name: IntelligenceOrder constructor
 // Created: SBO 2007-10-30
 // -----------------------------------------------------------------------------
-IntelligenceOrder::IntelligenceOrder( Model& /*model*/, const ASN1T_Intelligence& asn )
+IntelligenceOrder::IntelligenceOrder( const ASN1T_Intelligence& asn )
     : name_     ( asn.name )
     , nature_   ( asn.nature )
     , level_    ( asn.level )

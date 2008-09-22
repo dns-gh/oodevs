@@ -20,9 +20,9 @@ namespace kernel
 {
     class Controller;
     class KnowledgeGroup_ABC;
+    class PopulationKnowledge_ABC;
 }
 
-class PopulationKnowledge_ABC;
 class PopulationKnowledgeFactory_ABC;
 
 // =============================================================================
@@ -41,7 +41,7 @@ class PopulationKnowledges : public kernel::Extension_ABC
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeCreation >
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeUpdate >
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeDestruction >
-                           , public kernel::Resolver< PopulationKnowledge_ABC >
+                           , public kernel::Resolver< kernel::PopulationKnowledge_ABC >
                            , public kernel::Creatable< PopulationKnowledges >
 {
 

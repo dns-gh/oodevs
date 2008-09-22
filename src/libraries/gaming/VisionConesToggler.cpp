@@ -12,8 +12,8 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
-#include "SimulationMessages.h"
-#include "Simulation.h"
+#include "game_asn/SimulationSenders.h"
+#include "Services.h"
 
 using namespace kernel;
 
@@ -28,7 +28,7 @@ VisionConesToggler::VisionConesToggler( Controllers& controllers, Publisher_ABC&
     , displayCones_   ( false )
     , displaySurfaces_( false )
     , displayFog_     ( false )
-    , replay_         ( true )
+    , simulation_     ( false )
 {
     controllers_.Register( *this );
 }
@@ -48,7 +48,7 @@ VisionConesToggler::~VisionConesToggler()
 // -----------------------------------------------------------------------------
 void VisionConesToggler::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    bool* pDummy = 
+    bool* pDummy =
         name == "VisionCones" ? &displayCones_
       : name == "VisionSurfaces" ? &displaySurfaces_
       : 0;
@@ -79,11 +79,11 @@ void VisionConesToggler::NotifyUpdated( const Profile_ABC& )
 
 // -----------------------------------------------------------------------------
 // Name: VisionConesToggler::NotifyUpdated
-// Created: AGE 2007-09-26
+// Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void VisionConesToggler::NotifyUpdated( const Simulation& simulation)
+void VisionConesToggler::NotifyUpdated( const Services& services )
 {
-    replay_ = simulation.IsReplayer();
+    simulation_ = services.HasService< simulation::Service >();
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void VisionConesToggler::NotifyUpdated( const Simulation& simulation)
 // -----------------------------------------------------------------------------
 void VisionConesToggler::ToggleVisionCones()
 {
-    if( ! replay_ )
+    if( simulation_ )
     {
         simulation::ControlToggleVisionCones msg;
         msg() = displayCones_ || displaySurfaces_ || displayFog_;

@@ -12,19 +12,15 @@
 
 #include <string>
 #include <boost/shared_ptr.hpp>
-
-namespace dispatcher
-{
-    class ClientPublisher_ABC;
-}
+#include <boost/ptr_container/ptr_vector.hpp>
 
 namespace xml
 {
     class xistream;
-    class xostream;
 }
 
 class Task;
+class ElementFactory_ABC;
 
 // =============================================================================
 /** @class  FunctionFactory
@@ -44,8 +40,9 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< Task > CreateTask( int context, xml::xistream& xis );
-    void Describe( xml::xostream& xos );
+    void Add( std::auto_ptr< ElementFactory_ABC > factory );
+
+    boost::shared_ptr< Task > CreateTask( xml::xistream& xis );
     //@}
 
 private:
@@ -58,50 +55,12 @@ private:
     //! @name Helpers
     //@{
     void CreateFunction( const std::string& type, xml::xistream& xis, Task& result );
-
-    void Extract( xml::xistream& xis, Task& result );
-    template< typename Value >
-    void Extract( const std::string& name, xml::xistream& xis, Task& result );
-
-    void Reduce( xml::xistream& xis, Task& result );
-    template< typename T >
-    void Reduce( const std::string& name, xml::xistream& xis, Task& result );
-    template< typename F >
-    void ReduceFunction( const std::string& name, xml::xistream& xis, Task& result );
-
-    void Transform( xml::xistream& xis, Task& result );
-    template< typename T >
-    void Transform( const std::string& name, xml::xistream& xis, Task& result );
-    template< typename T >
-    void Transform1( const std::string& name, xml::xistream& xis, Task& result );
-    template< typename T >
-    void Transform2( const std::string& name, xml::xistream& xis, Task& result );
-
-    template< typename T >
-    void Compose( const std::string& name, xml::xistream& xis, Task& result );
-
-    void MakeConstant( xml::xistream& xis, Task& result );
-    template< typename T >
-    void MakeConstant( const std::string& name, xml::xistream& xis, Task& result );
-
-    void Plot( xml::xistream& xis, Task& result );
-    template< typename T >
-    void Plot( const std::string& name, xml::xistream& xis, Task& result );
-
-    void ValueError( const std::string& name );
-    void ReductionError( const std::string& name );
-    void TransformationError( const std::string& name );
-
-    struct ReduceDispatcher;
-    struct TransformDispatcher;
-    struct PlotDispatcher;
-    struct MakeConstantDispatcher;
     //@}
 
 private:
     //! @name Member data
     //@{
-    int currentContext_;
+    boost::ptr_vector< ElementFactory_ABC > factories_;
     //@}
 };
 

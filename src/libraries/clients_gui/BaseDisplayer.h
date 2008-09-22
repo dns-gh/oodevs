@@ -37,6 +37,9 @@ namespace kernel
     class KnowledgeGroupType;
     class HierarchyLevel_ABC;
     class Karma;
+    class AgentKnowledge_ABC;
+    class PopulationKnowledge_ABC;
+    class ObjectKnowledge_ABC;
 }
 
 namespace gui
@@ -73,6 +76,9 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< kernel::KnowledgeGroupType >
                     , public tools::Caller< kernel::HierarchyLevel_ABC >
                     , public tools::Caller< kernel::Karma >
+                    , public tools::Caller< kernel::AgentKnowledge_ABC >
+                    , public tools::Caller< kernel::PopulationKnowledge_ABC >
+                    , public tools::Caller< kernel::ObjectKnowledge_ABC >
 {
 
 public:
@@ -115,6 +121,9 @@ private:
     virtual void Call( const kernel::KnowledgeGroupType& value );
     virtual void Call( const kernel::HierarchyLevel_ABC& value );
     virtual void Call( const kernel::Karma& value );
+    virtual void Call( const kernel::AgentKnowledge_ABC& value );
+    virtual void Call( const kernel::PopulationKnowledge_ABC& value );
+    virtual void Call( const kernel::ObjectKnowledge_ABC& value );
     //@}
 };
 

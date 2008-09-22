@@ -26,7 +26,7 @@
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
 WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, WeatherLayer& layer )
-    : gui::InfoPanel_ABC( parent, panel, tr( "Weather" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Weather" ), "WeatherPanel" )
     , controllers_( controllers )
     , layer_( layer )
     , currentModel_( 0 )

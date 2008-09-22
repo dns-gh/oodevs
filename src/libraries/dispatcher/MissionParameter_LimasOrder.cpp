@@ -17,11 +17,11 @@ using namespace dispatcher;
 // Name: MissionParameter_LimasOrder constructor
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-MissionParameter_LimasOrder::MissionParameter_LimasOrder( Model& model, const ASN1T_MissionParameter& asn )
+MissionParameter_LimasOrder::MissionParameter_LimasOrder( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
     for( unsigned int i = 0; i < asn.value.u.limasOrder->n; ++i )
-        limaOrders_.Create( model, i, asn.value.u.limasOrder->elem[ i ] );
+        limaOrders_.push_back( LimaOrder( asn.value.u.limasOrder->elem[ i ] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,9 +40,13 @@ MissionParameter_LimasOrder::~MissionParameter_LimasOrder()
 void MissionParameter_LimasOrder::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = bNullValue_;
-    asn.value.t    = T_MissionParameter_value_limasOrder;
+    asn.value.t = T_MissionParameter_value_limasOrder;
     asn.value.u.limasOrder = new ASN1T_LimasOrder();
-    limaOrders_.Send< ASN1T_LimasOrder, ASN1T_LimaOrder >( *asn.value.u.limasOrder );
+    asn.value.u.limasOrder->n = limaOrders_.size();
+    asn.value.u.limasOrder->elem = limaOrders_.empty() ? 0 : new ASN1T_LimaOrder[ asn.value.u.limasOrder->n ];
+    unsigned int i = 0;
+    for( std::vector< LimaOrder >::const_iterator it = limaOrders_.begin(); it != limaOrders_.end(); ++it, ++i )
+        it->Send( asn.value.u.limasOrder->elem[i] );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,11 +55,7 @@ void MissionParameter_LimasOrder::Send( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MissionParameter_LimasOrder::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.limasOrder->n > 0 )
-    {
-        for( unsigned i = 0; i < asn.value.u.limasOrder->n; ++i )
-            LimaOrder::AsnDelete( asn.value.u.limasOrder->elem[i] );
+    if( asn.value.u.limasOrder->n )
         delete[] asn.value.u.limasOrder->elem;
-    }
     delete asn.value.u.limasOrder;
 }

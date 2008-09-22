@@ -19,7 +19,7 @@ Page_ABC::Page_ABC( QWidgetStack* pages )
     : QVBox ( pages )
     , pages_( pages )
 {
-    // NOTHING
+    setBackgroundOrigin( QWidget::WindowOrigin );
 }
 
 // -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model )
-    : QDialog( parent )
+    : QDialog( parent, "ProfileDialog" )
     , model_( model )
 {
     setCaption( tr( "User profiles" ) );

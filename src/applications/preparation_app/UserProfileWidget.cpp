@@ -19,7 +19,7 @@
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons )
-    : QTabWidget( parent )
+    : QTabWidget( parent, "UserProfileWidget" )
     , profile_( 0 )
 {
     {
@@ -37,7 +37,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     }
     {
         QVBox* box = new QVBox( this );
-        QGroupBox* group = new QGroupBox( 2, Qt::Vertical, tr( "Access permissions" ), box );
+        QGroupBox* group = new QGroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
         group->setMargin( 5 );
         QHBox* holder = new QHBox( group );
         new QLabel( tr( "Supervisor actions:" ), holder );
@@ -51,6 +51,8 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
         populationRights_ = populationRights;
         addTab( box, tr( "Permissions" ) );
         connect( supervisor_, SIGNAL( toggled( bool ) ), SLOT( OnSupervisorChanged( bool ) ) );
+        new QLabel( tr( "'Read' permission allows you to see an unit.\n"
+                        "'Write' permission allows you to control an unit." ), group );
     }
     SetEnabled( false );
 }

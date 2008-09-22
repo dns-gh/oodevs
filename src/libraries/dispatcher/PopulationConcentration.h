@@ -11,12 +11,14 @@
 #define __PopulationConcentration_h_
 
 #include "game_asn/Simulation.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+#include "clients_kernel/PopulationConcentration_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
     class Population;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  PopulationConcentration
@@ -24,26 +26,29 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class PopulationConcentration : public Entity_ABC
+class PopulationConcentration : public SimpleEntity< kernel::PopulationConcentration_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration( Model& model, Population& population, const ASN1T_MsgPopulationConcentrationCreation& msg );
+             PopulationConcentration( const Population& population, const ASN1T_MsgPopulationConcentrationCreation& msg );
     virtual ~PopulationConcentration();
-    //@}
-
-    //! @name Accessors
-    //@{
-    unsigned long GetID() const;
     //@}
 
     //! @name Operations
     //@{
     void Update( const ASN1T_MsgPopulationConcentrationUpdate& msg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    virtual unsigned int GetDeadHumans() const;
+    virtual unsigned int GetLivingHumans() const;
+    virtual unsigned int GetDensity() const;
+    virtual QString      GetAttitude() const;
+
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -54,7 +59,7 @@ private:
     //@}
 
 private:
-          Population&   population_;
+    const Population&   population_;
     const unsigned long nID_;
     const ASN1T_CoordLatLong position_;
 
@@ -64,7 +69,5 @@ private:
 };
 
 }
-
-#include "PopulationConcentration.inl"
 
 #endif // __PopulationConcentration_h_

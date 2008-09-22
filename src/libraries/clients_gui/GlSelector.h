@@ -110,7 +110,7 @@ private:
     Gl3dWidget*               widget3d_;
     GlPlaceHolder*            glPlaceHolder_;
 
-    bool b3d_;
+    bool b3d_, bDragMapWithWheel;
     //@}
 };
 

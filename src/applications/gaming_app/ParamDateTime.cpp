@@ -11,7 +11,7 @@
 #include "ParamDateTime.h"
 #include "moc_ParamDateTime.cpp"
 #include "gaming/Simulation.h"
-#include "gaming/ActionParameterDateTime.h"
+#include "actions/DateTime.h"
 #include "clients_kernel/GlTools_ABC.h"
 
 using namespace kernel;
@@ -63,9 +63,9 @@ bool ParamDateTime::CheckValidity()
 // Name: ParamDateTime::CommitTo
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-void ParamDateTime::CommitTo( ActionParameterContainer_ABC& parameter ) const
+void ParamDateTime::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
-    parameter.AddParameter( *new ActionParameterDateTime( OrderParameter( GetName().ascii(), "datetime", false ), date_ ) );
+    parameter.AddParameter( *new actions::parameters::DateTime( OrderParameter( GetName().ascii(), "datetime", false ), date_ ) );
 }
 
 // -----------------------------------------------------------------------------

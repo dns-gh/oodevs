@@ -29,6 +29,7 @@ public:
 public:
     //! @name Operations
     //@{
+    virtual QString GetLogin() const;
     virtual bool IsVisible   ( const kernel::Entity_ABC& entity ) const;
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic  ( const kernel::Entity_ABC& entity ) const;

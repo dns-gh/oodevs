@@ -14,6 +14,13 @@ namespace kernel
 {
     class Controllers;
     class Workers;
+    class AgentKnowledgeConverter_ABC;
+    class ObjectKnowledgeConverter_ABC;
+}
+
+namespace actions
+{
+    class ActionsModel;
 }
 
 class AgentsModel;
@@ -26,8 +33,6 @@ class AgentFactory_ABC;
 class ObjectFactory_ABC;
 class AgentKnowledgeFactory;
 class ObjectKnowledgeFactory;
-class AgentKnowledgeConverter_ABC;
-class ObjectKnowledgeConverter_ABC;
 class TeamFactory_ABC;
 class LogisticConsignFactory_ABC;
 class Simulation;
@@ -41,13 +46,14 @@ class RcEntityResolver_ABC;
 class TacticalLineFactory;
 class UserProfilesModel;
 class UserProfileFactory_ABC;
-class ActionsModel;
-class ActionParameterFactory_ABC;
-class ActionFactory_ABC;
 class FolkModel;
 class AfterActionModel;
 class IntelligenceFactory;
 class IntelligencesModel;
+class DrawingFactory;
+class DrawingsModel;
+class ActionFactory_ABC;
+class ParameterFactory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -78,8 +84,8 @@ public:
 
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
     ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
-    AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
-    ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
+    kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
+    kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
 
     TeamFactory_ABC&            teamFactory_;
     AgentFactory_ABC&           agentFactory_;
@@ -89,9 +95,10 @@ public:
     TacticalLineFactory&        tacticalLineFactory_;
     FireResultFactory&          fireResultsFactory_;
     UserProfileFactory_ABC&     userProfileFactory_;
-    ActionParameterFactory_ABC& actionParameterFactory_;
+    ::ParameterFactory_ABC&     actionParameterFactory_;
     ActionFactory_ABC&          actionFactory_;
     IntelligenceFactory&        intelligenceFactory_;
+    DrawingFactory&             drawingFactory_;
 
     AgentsModel&          agents_;
     ObjectsModel&         objects_;
@@ -102,10 +109,11 @@ public:
     FiresModel&           fires_;
     WeatherModel&         weather_;
     UserProfilesModel&    profiles_;
-    ActionsModel&         actions_;
+    actions::ActionsModel& actions_;
     FolkModel&            folk_;
     AfterActionModel&     aar_;
     IntelligencesModel&   intelligences_;
+    DrawingsModel&        drawings_;
     //@}
 
 private:

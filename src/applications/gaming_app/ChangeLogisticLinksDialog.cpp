@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "moc_ChangeLogisticLinksDialog.cpp"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "gaming/LogisticLinks.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"

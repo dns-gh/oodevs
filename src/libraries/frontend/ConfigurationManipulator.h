@@ -19,6 +19,11 @@ namespace xml
     class cdata;
 }
 
+namespace tools
+{
+    class GeneralConfig ; 
+}
+
 namespace frontend
 {
     class XmlNode;
@@ -36,6 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ConfigurationManipulator( const std::string& filename );
+    explicit ConfigurationManipulator( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session ); 
     virtual ~ConfigurationManipulator();
     //@}
 
@@ -43,6 +49,8 @@ public:
     //@{
     template< typename T >
     void SetValue( const std::string& path, const T& value );
+    template< typename T >
+    T GetValue ( const std::string& path ) const ;      
     //@}
 
 private:
@@ -51,6 +59,12 @@ private:
     ConfigurationManipulator( const ConfigurationManipulator& );            //!< Copy constructor
     ConfigurationManipulator& operator=( const ConfigurationManipulator& ); //!< Assignment operator
     //@}
+
+    //! @name Helpers
+    //@{
+    static std::string GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session ); 
+    //@}
+
 
 private:
     //! @name Member data
@@ -70,6 +84,17 @@ void ConfigurationManipulator::SetValue( const std::string& path, const T& value
 {
     document_->SetValue( path, value );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ConfigurationManipulator::GetValue
+// Created: RDS 2008-08-19
+// -----------------------------------------------------------------------------
+template< typename T >
+T ConfigurationManipulator::GetValue( const std::string& path ) const
+{
+    return document_->GetValue<T>(path); 
+}
+
 
 }
 

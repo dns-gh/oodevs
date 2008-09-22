@@ -1,5 +1,24 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>Application</name>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sword-ot@masagroup.net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unhandled error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training - Preparation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChangeDiplomacyDialog</name>
     <message>
         <source>Diplomacy</source>
@@ -60,6 +79,10 @@
     </message>
     <message>
         <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Standard</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -181,14 +204,6 @@ Please select an other orbat file to import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error reading xml file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save modifications?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New ORBAT</source>
         <translation type="unfinished"></translation>
     </message>
@@ -202,6 +217,15 @@ Please select an other orbat file to import.</source>
     </message>
     <message>
         <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Do you want to save anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preparation - [%1]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -316,10 +340,6 @@ Please select an other orbat file to import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>2D</source>
         <translation type="unfinished"></translation>
     </message>
@@ -341,6 +361,14 @@ Please select an other orbat file to import.</source>
     </message>
     <message>
         <source>&amp;Import...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -587,26 +615,20 @@ Please select an other orbat file to import.</source>
         <source>Invalid profile information</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>WeatherWidget</name>
     <message>
-        <source>Wind direction/speed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clouds floor/ceiling/density:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weather type:</source>
+        <source>&apos;Read&apos; permission allows you to see an unit.
+&apos;Write&apos; permission allows you to control an unit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>gui</name>
+    <name>WeatherPanel</name>
     <message>
         <source>Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exercise date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -649,8 +671,34 @@ Please select an other orbat file to import.</source>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>WeatherWidget</name>
     <message>
-        <source>Exercise date:</source>
+        <source>Wind direction/speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clouds floor/ceiling/density:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>tools</name>
+    <message>
+        <source>Error reading xml file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save modifications?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading exercise: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -10,7 +10,7 @@
 #ifndef __ObjectKnowledgeConverter_h_
 #define __ObjectKnowledgeConverter_h_
 
-#include "ObjectKnowledgeConverter_ABC.h"
+#include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
@@ -24,9 +24,9 @@ namespace kernel
 */
 // Created: AGE 2006-09-15
 // =============================================================================
-class ObjectKnowledgeConverter : public ObjectKnowledgeConverter_ABC
+class ObjectKnowledgeConverter : public kernel::ObjectKnowledgeConverter_ABC
                                , public kernel::Observer_ABC
-                               , public kernel::ElementObserver_ABC< ObjectKnowledge_ABC >
+                               , public kernel::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
 {
 
 public:
@@ -38,9 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual const ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Team_ABC& owner );
-    virtual const ObjectKnowledge_ABC* Find( const ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner );
-    virtual const ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner );
+    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Team_ABC& owner );
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner );
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner );
     //@}
 
 private:
@@ -52,14 +52,14 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const ObjectKnowledge_ABC& );
-    virtual void NotifyDeleted( const ObjectKnowledge_ABC& );
+    virtual void NotifyCreated( const kernel::ObjectKnowledge_ABC& );
+    virtual void NotifyDeleted( const kernel::ObjectKnowledge_ABC& );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Object_ABC*, const ObjectKnowledge_ABC* >    T_KnowledgeMap;
-    typedef std::map< const kernel::Team_ABC*, T_KnowledgeMap >                  T_Knowledges;
+    typedef std::map< const kernel::Object_ABC*, const kernel::ObjectKnowledge_ABC* >    T_KnowledgeMap;
+    typedef std::map< const kernel::Team_ABC*, T_KnowledgeMap >                          T_Knowledges;
     //@}
 
 private:

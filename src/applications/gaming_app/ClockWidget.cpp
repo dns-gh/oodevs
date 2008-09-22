@@ -19,7 +19,7 @@
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
 ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation )
-    : QHBox( parent )
+    : QHBox( parent, "ClockWidget" )
     , controllers_( controllers )
 {
     setMinimumSize( 200, 80 );

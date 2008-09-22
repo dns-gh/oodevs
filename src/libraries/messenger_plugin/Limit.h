@@ -54,7 +54,7 @@ public:
 
     //! @name xml read / write
     //@{
-    virtual void Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) ;
+    virtual void Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
     //@}
 
 

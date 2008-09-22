@@ -16,8 +16,8 @@ using namespace gui;
 // Name: PreferencePanel_ABC constructor
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-PreferencePanel_ABC::PreferencePanel_ABC( QWidget* parent )
-    : QScrollView( parent )
+PreferencePanel_ABC::PreferencePanel_ABC( QWidget* parent, const char* name )
+    : QScrollView( parent, name )
     , pBox_( new QVBox( viewport() ) )
 {
     setHScrollBarMode( QScrollView::AlwaysOff );

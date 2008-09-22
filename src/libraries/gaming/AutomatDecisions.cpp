@@ -16,7 +16,7 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "Tools.h"
 
 using namespace kernel;

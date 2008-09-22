@@ -14,7 +14,7 @@
 
 namespace frontend
 {
-
+    class ExerciseListener; 
 // =============================================================================
 /** @class  StartExercise
     @brief  StartExercise
@@ -27,9 +27,15 @@ class StartExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             StartExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session );
-             StartExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint );
+             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach = false );
+             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach = false );
     virtual ~StartExercise();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool Wait(); 
+    virtual unsigned int GetPercentage() ;     
     //@}
 
 private:
@@ -38,6 +44,14 @@ private:
     StartExercise( const StartExercise& );            //!< Copy constructor
     StartExercise& operator=( const StartExercise& ); //!< Assignment operator
     //@}
+
+    //! @name Member data 
+    //@{
+    std::string exercise_ ; 
+    std::string session_ ; 
+    std::auto_ptr<ExerciseListener> listener_ ; 
+    //@}
+    
 };
 
 }

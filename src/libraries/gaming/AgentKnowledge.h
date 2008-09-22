@@ -17,7 +17,7 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
-#include "AgentKnowledge_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 
 namespace kernel
 {
@@ -33,7 +33,7 @@ namespace kernel
 */
 // Created: APE 2004-03-10
 // =============================================================================
-class AgentKnowledge : public kernel::EntityImplementation< AgentKnowledge_ABC >
+class AgentKnowledge : public kernel::EntityImplementation< kernel::AgentKnowledge_ABC >
                      , public kernel::Extension_ABC
                      , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
                      , public kernel::Drawable_ABC

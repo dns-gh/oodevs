@@ -10,12 +10,10 @@
 #ifndef __NBCObjectAttribute_h_
 #define __NBCObjectAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  NBCObjectAttribute
@@ -28,8 +26,8 @@ class NBCObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     NBCObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
-    ~NBCObjectAttribute();
+    explicit NBCObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg );
+    virtual ~NBCObjectAttribute();
     //@}
 
     //! @name Operations

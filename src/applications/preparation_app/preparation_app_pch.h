@@ -12,9 +12,6 @@
 #ifndef __preparation_app_pch_h_
 #define __preparation_app_pch_h_
 
-#define APP_NAME "SWORD Officer Training - Preparation"
-#define APP_VERSION "1.0"
-
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #undef min

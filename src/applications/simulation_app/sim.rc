@@ -85,6 +85,30 @@ BEGIN
     END
 END
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+LEMENU MENU 
+BEGIN
+    POPUP "TrayMenu"
+    BEGIN
+        MENUITEM "Quitter",                     IDM_QUIT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON                    "res\\sword-ot.ico"
+IDI_ICON2               ICON                    "res\\sword-ot-blink.ico"
 #endif    // French (France) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -99,4 +123,5 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
+
 

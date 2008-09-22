@@ -10,13 +10,18 @@
 #include "gaming_app_pch.h"
 #include "Menu.h"
 #include "UserProfileDialog.h"
+#include "ExerciseMenu.h"
+#include "ConnectionMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/FourStateOption.h"
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/AboutDialog.h"
+#include "clients_gui/HelpSystem.h"
 #include "gaming/Tools.h"
+#include "tools/GeneralConfig.h"
+#include "tools/Version.h"
 
 using namespace kernel;
 using namespace gui;
@@ -50,20 +55,25 @@ namespace
         Populate( *optionMenu );
         parent->insertItem( iconSet, label, optionMenu );
     }
+
+    QPixmap MakePixmap( const std::string& name )
+    {
+        return QImage( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, ItemFactory_ABC& factory, const QString& license )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help, gui::LinkInterpreter_ABC& interpreter, Network& network, kernel::Logger_ABC& logger )
     : QMenuBar( pParent )
     , controllers_( controllers )
     , profileDialog_( profileDialog )
 {
     QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open exercice..." ), parent(), SLOT( Open() ), CTRL + Key_O );
-    menu->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ) );
+    new ConnectionMenu( menu, controllers, network, logger );
+
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
     insertItem( tools::translate( "Menu", "&File" ), menu );
@@ -71,24 +81,25 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu = new QPopupMenu( this );
     QPopupMenu* subMenu = new QPopupMenu( menu );
 
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Vision lines" )   , MAKE_ICON( visionlines )   , controllers.options_, "VisionLines" );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Vision cones" )   , MAKE_ICON( visioncones )   , controllers.options_, "VisionCones" );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Vision surfaces" ), MAKE_ICON( visionsurfaces ), controllers.options_, "VisionSurfaces" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Vision lines" )   , MakePixmap( "vision_lines" )   , controllers.options_, "VisionLines" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Vision cones" )   , MakePixmap( "vision_cones" )   , controllers.options_, "VisionCones" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces" );
     subMenu->insertSeparator();
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Routes" )        , MAKE_ICON( path )          , controllers.options_, "Paths" );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Covered routes" ), MAKE_ICON( oldpath )       , controllers.options_, "OldPaths" );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Direction" )     , MAKE_ICON( oldpath )       , controllers.options_, "Direction" ); // $$$$ AGE 2007-12-17: Icon
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges" );
     subMenu->insertSeparator();
-    // $$$$ AGE 2007-05-30: icons
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Convex hulls" ),     MAKE_ICON( oldpath )       , controllers.options_, "ConvexHulls" );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Current Mission" ),  MAKE_ICON( oldpath )       , controllers.options_, "MissionParameters" );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Decisional State" ), MAKE_ICON( oldpath )       , controllers.options_, "DecisionalState" );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Formations" ),       MAKE_ICON( oldpath )       , controllers.options_, "Formations" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Covered routes" ), MakePixmap( "path_behind" ), controllers.options_, "OldPaths" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Direction" )     , MakePixmap( "direction" )  , controllers.options_, "Direction" );
+    subMenu->insertSeparator();
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Convex hulls" ),     MakePixmap( "convex_hulls" )    , controllers.options_, "ConvexHulls" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Current Mission" ),  MakePixmap( "current_mission" ) , controllers.options_, "MissionParameters" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Decisional State" ), MakePixmap( "decisional_state" ), controllers.options_, "DecisionalState" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Formations" ),       MakePixmap( "formations" )      , controllers.options_, "Formations" );
     menu->insertItem( tools::translate( "Menu", "Units..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Missing links" )    , MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" )        , controllers.options_, "LogisticLinks" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
     AddSubMenu4( subMenu, tools::translate( "Menu", "Real time actions" ), MAKE_ICON( realtimelog ), controllers.options_, "RealTimeLogistic" );
     menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
 
@@ -132,12 +143,17 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     profileMenu_ = insertItem( tools::translate( "Menu", "Profi&les" ), menu );
     setItemVisible( profileMenu_, false );
 
+    menu = new ExerciseMenu( this, controllers, interpreter );
+    insertItem( tools::translate( "Menu", "&Exercise" ), menu );
+
     menu = pParent->createDockWindowMenu();
     insertItem( tools::translate( "Menu", "&Windows" ), menu );
 
     menu = new QPopupMenu( this );
-    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, QString( APP_NAME ) + " " + QString( APP_VERSION ), license ), SLOT( exec() ) );
-    insertItem( tools::translate( "Menu", "&Help" ), menu );
+    menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Key_F1 );
+    menu->insertSeparator();
+    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "SWORD Officer Training - Gaming" ) + " " + QString( tools::AppVersion() ), license ), SLOT( exec() ) );
+    insertItem( tools::translate( "Menu", "&?" ), menu );
 
     controllers_.Register( *this );
 }

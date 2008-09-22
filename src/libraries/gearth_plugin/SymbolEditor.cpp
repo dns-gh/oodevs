@@ -68,7 +68,7 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgUnitCreation& asn ) const
     if ( name.substr( 0, 2 ) == "HS" )
         return styles_.GetStyle( name );
 
-    if( const dispatcher::Agent* agent = model_.GetAgents().Find( asn.oid ) )
+    if( const dispatcher::Agent* agent = model_.agents_.Find( asn.oid ) )
         return FormatSymbol( agent->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ).c_str();
     return "";
 }
@@ -80,7 +80,7 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgUnitCreation& asn ) const
 std::string SymbolEditor::GetSymbol( const ASN1T_MsgUnitKnowledgeCreation& asn ) const
 {    
     std::string symbol( "SUZP********---" );
-    if( const dispatcher::AgentKnowledge* knowledge = model_.GetAgentKnowledges().Find( asn.oid ) )
+    if( const dispatcher::AgentKnowledge* knowledge = model_.agentKnowledges_.Find( asn.oid ) )
         return FormatSymbol( knowledge->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ).c_str();
     return "";
 }
@@ -104,7 +104,7 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgObjectCreation& asn ) const
     case EnumObjectType::emergency_shelter:
         return styles_.GetStyle( "HS - EmergencyShelter" );
     }
-    if( const dispatcher::Object* object = model_.GetObjects().Find( asn.oid ) )
+    if( const dispatcher::Object* object = model_.objects_.Find( asn.oid ) )
         return FormatSymbol( object->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ).c_str();
     return "";
 }
@@ -121,7 +121,7 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgFormationCreation& asn ) con
     if ( name.substr( 0, 2 ) == "HS" )
         return styles_.GetStyle( name );
 
-    if( const dispatcher::Formation* formation = model_.GetFormations().Find( asn.oid ) )
+    if( const dispatcher::Formation* formation = model_.formations_.Find( asn.oid ) )
         FormatSymbol( formation->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ).c_str();
     return "";
 }

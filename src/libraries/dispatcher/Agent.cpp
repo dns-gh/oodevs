@@ -20,8 +20,9 @@
 #include "AgentLogMaintenance.h"
 #include "AgentLogSupply.h"
 #include "AgentOrder.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 #include "clients_kernel/AgentType.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -30,20 +31,17 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
-    : model_                        ( model )
-    , nID_                          ( msg.oid )
-    , nType_                        ( msg.type_pion )
-    , type_                         ( model.GetAgentTypes().Get( nType_ ) )
-    , strName_                      ( msg.nom )
-    , pAutomat_                     ( &model.GetAutomats().Get( msg.oid_automate ) )
-    , bPC_                          ( msg.pc )
-    , position_                     ()
+    : SimpleEntity< kernel::Agent_ABC >( msg.oid, msg.nom )
+    , model_                        ( model )
+    , type_                         ( model.GetAgentTypes().Get( msg.type_pion ) )
+    , name_                         ( msg.nom )
+    , automat_                      ( &model.automats_.Get( msg.oid_automate ) )
+    , bPC_                          ( msg.pc != 0 )
     , nDirection_                   ( 0 )
     , nHeight_                      ( 0 )
     , nAltitude_                    ( 0 )
     , nSpeed_                       ( 0 )
     , nOperationalStateValue_       ( 100 )
-    , reinforcements_               ( )
     , pReinforced_                  ( 0 )
     , bDead_                        ( false )
     , bNeutralized_                 ( false )
@@ -60,7 +58,6 @@ Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     , bCommunicationJammed_         ( false )
     , bBlackoutEnabled_             ( false )
     , bRadarEnabled_                ( false )
-    , transportedAgents_            ()
     , pTransporter_                 ( 0 )
     , nForceRatioState_             ( EnumForceRatioStatus       ::neutre )
     , nCloseCombatState_            ( EnumMeetingEngagementStatus::etat_esquive )
@@ -82,9 +79,9 @@ Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     , pLogMedical_                  ()
     , pLogMaintenance_              ()
     , pLogSupply_                   ()
-    , pOrder_                       ( 0 )
+    , order_                        ( 0 )
 {
-    pAutomat_->GetAgents().Register( *this );
+    automat_->agents_.Register( msg.oid, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,23 +90,36 @@ Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
 // -----------------------------------------------------------------------------
 Agent::~Agent()
 {
-    pAutomat_->GetAgents().Unregister( *this );
+    equipments_.DeleteAll();
+    troops_.DeleteAll();
+    dotations_.DeleteAll();
+    borrowings_.DeleteAll();
+    lendings_.DeleteAll();
+    automat_->agents_.Remove( GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ChangeAutomat
+// Created: SBO 2008-07-10
+// -----------------------------------------------------------------------------
+void Agent::ChangeAutomat( unsigned long id )
+{
+    if( automat_ )
+        automat_->agents_.Remove( GetId() );
+    automat_ = &model_.automats_.Get( id );
+    automat_->agents_.Register( GetId(), *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgUnitCreation& asnMsg )
+void Agent::Update( const ASN1T_MsgUnitCreation& msg )
 {
-    if( pAutomat_->GetID() != asnMsg.oid_automate )
-    {
-        pAutomat_->GetAgents().Unregister( *this );
-        pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
-        pAutomat_->GetAgents().Register( *this );
-    }
+    if( automat_->GetId() != msg.oid_automate )
+        ChangeAutomat( msg.oid_automate );
     decisionalInfos_.Clear();
-    ApplyUpdate( asnMsg );
+    ApplyUpdate( msg );
 }
 
 #define UPDATE_ASN_ATTRIBUTE( ASN, CPP ) \
@@ -133,11 +143,14 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     {
         reinforcements_.Clear();
         for( unsigned int i = 0; i < asnMsg.pions_renforcant.n; ++i )
-            reinforcements_.Register( model_.GetAgents().Get( asnMsg.pions_renforcant.elem[ i ] ) );
+        {
+            const kernel::Agent_ABC& agent = model_.agents_.Get( asnMsg.pions_renforcant.elem[ i ] );
+            reinforcements_.Register( agent.GetId(), agent );
+        }
     }
 
     if( asnMsg.m.pion_renforcePresent )
-        pReinforced_ = asnMsg.pion_renforce == 0 ? 0 : &model_.GetAgents().Get( asnMsg.pion_renforce );
+        pReinforced_ = asnMsg.pion_renforce == 0 ? 0 : &model_.agents_.Get( asnMsg.pion_renforce );
 
     UPDATE_ASN_ATTRIBUTE( mort, bDead_ );
     UPDATE_ASN_ATTRIBUTE( neutralise,  bNeutralized_ );
@@ -166,11 +179,14 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     {
         transportedAgents_.Clear();
         for( unsigned int i = 0; i < asnMsg.pions_transportes.n; ++i )
-            transportedAgents_.Register( model_.GetAgents().Get( asnMsg.pions_transportes.elem[ i ] ) );
+        {
+            const kernel::Agent_ABC& agent = model_.agents_.Get( asnMsg.pions_transportes.elem[ i ] );
+            transportedAgents_.Register( agent.GetId(), agent );
+        }
     }
 
     if( asnMsg.m.pion_transporteurPresent )
-        pTransporter_ = asnMsg.pion_transporteur == 0 ? 0 : &model_.GetAgents().Get( asnMsg.pion_transporteur );
+        pTransporter_ = asnMsg.pion_transporteur == 0 ? 0 : &model_.agents_.Get( asnMsg.pion_transporteur );
 
     UPDATE_ASN_ATTRIBUTE( rapport_de_force, nForceRatioState_ );
     UPDATE_ASN_ATTRIBUTE( combat_de_rencontre, nCloseCombatState_ );
@@ -183,7 +199,7 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     UPDATE_ASN_ATTRIBUTE( experience, nExperience_ );
 
     if( asnMsg.m.renduPresent )
-        pSideSurrenderedTo_ = asnMsg.rendu == 0 ? 0 : &model_.GetSides().Get( asnMsg.rendu );
+        pSideSurrenderedTo_ = asnMsg.rendu == 0 ? 0 : &model_.sides_.Get( asnMsg.rendu );
 
     UPDATE_ASN_ATTRIBUTE( prisonnier, bPrisonner_ );
     UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte, bRefugeeManaged_ );
@@ -197,7 +213,10 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
             if( pEquipment )
                 pEquipment->Update( asn );
             else
-                pEquipment = &equipments_.Create( model_, asn.type_equipement, asn );
+            {
+                pEquipment = new Equipment( model_, asn );
+                equipments_.Register( asn.type_equipement, *pEquipment );
+            }
         }
     }
 
@@ -207,10 +226,13 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
         {
             const ASN1T_HumanDotations& asn = asnMsg.dotation_eff_personnel.elem[ i ];
             Humans* pHumans = troops_.Find( asn.rang );
-            if( pHumans  )
-                pHumans ->Update( asn );
+            if( pHumans )
+                pHumans->Update( asn );
             else
-                pHumans  = &troops_.Create( model_, asn.rang, asn );
+            {
+                pHumans = new Humans( model_, asn );
+                troops_.Register( asn.rang, *pHumans );
+            }
         }
     }
 
@@ -223,22 +245,31 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
             if( pDotation )
                 pDotation->Update( asn );
             else
-                pDotation = &dotations_.Create( model_, asn.ressource_id, asn );
+            {
+                pDotation = new Dotation( asn );
+                dotations_.Register( asn.ressource_id, *pDotation );
+            }
         }
     }
 
     if( asnMsg.m.equipements_pretesPresent )
     {
-        lendings_.Clear();
+        lendings_.DeleteAll();
         for( unsigned int i = 0; i < asnMsg.equipements_pretes.n; ++i )
-            lendings_.Create( model_, i, asnMsg.equipements_pretes.elem[ i ] );
+        {
+            Loan* loan = new Loan( model_, asnMsg.equipements_pretes.elem[ i ] );
+            lendings_.Register( i, *loan );
+        }
     }
 
     if( asnMsg.m.equipements_empruntesPresent )
     {
-        borrowings_.Clear();
+        borrowings_.DeleteAll();
         for( unsigned int i = 0; i < asnMsg.equipements_empruntes.n; ++i )
-            borrowings_.Create( model_, i, asnMsg.equipements_empruntes.elem[ i ] );
+        {
+            Loan* loan = new Loan( model_, asnMsg.equipements_empruntes.elem[ i ] );
+            borrowings_.Register( i, *loan );
+        }
     }
 
     ApplyUpdate( asnMsg );
@@ -284,7 +315,7 @@ void Agent::Update( const ASN1T_MsgLogMaintenanceState& asnMsg )
 void Agent::Update( const ASN1T_MsgLogSupplyState& asnMsg )
 {
     if( !pLogSupply_ )
-        pLogSupply_ = new AgentLogSupply( model_, *this, asnMsg );
+        pLogSupply_ = new AgentLogSupply( *this, asnMsg );
     else
         pLogSupply_->Update( asnMsg );
 }
@@ -295,9 +326,7 @@ void Agent::Update( const ASN1T_MsgLogSupplyState& asnMsg )
 // -----------------------------------------------------------------------------
 void Agent::Update( const ASN1T_MsgUnitChangeSuperior& asnMsg )
 {
-    pAutomat_->GetAgents().Unregister( *this );
-    pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
-    pAutomat_->GetAgents().Register( *this );
+    ChangeAutomat( asnMsg.oid_automate );
 }
 
 // -----------------------------------------------------------------------------
@@ -306,10 +335,9 @@ void Agent::Update( const ASN1T_MsgUnitChangeSuperior& asnMsg )
 // -----------------------------------------------------------------------------
 void Agent::Update( const ASN1T_MsgUnitOrder& asnMsg )
 {
-    delete pOrder_;
-    pOrder_ = 0;
+    order_.reset();
     if( asnMsg.mission != 0 )
-        pOrder_ = new AgentOrder( model_, *this, asnMsg );
+        order_.reset( new AgentOrder( model_, *this, asnMsg ) );
     ApplyUpdate( asnMsg );
 }
 
@@ -319,11 +347,11 @@ void Agent::Update( const ASN1T_MsgUnitOrder& asnMsg )
 // -----------------------------------------------------------------------------
 void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientUnitCreation asn;
-    asn().oid           = nID_;
-    asn().type_pion     = nType_;
-    asn().nom           = strName_.c_str(); // !! pointeur sur const char*
-    asn().oid_automate  = pAutomat_->GetID();
+    client::UnitCreation asn;
+    asn().oid           = GetId();
+    asn().type_pion     = type_.GetId();
+    asn().nom           = name_.c_str();
+    asn().oid_automate  = automat_->GetId();
     asn().pc            = bPC_;
     asn.Send( publisher );
 }
@@ -335,9 +363,9 @@ void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
 void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     { // Attributes $$$
-        AsnMsgSimToClientUnitAttributes asn;
+        client::UnitAttributes asn;
 
-        asn().oid = nID_;
+        asn().oid = GetId();
 
         asn().m.dotation_eff_materielPresent = 1;
         asn().m.dotation_eff_personnelPresent = 1;
@@ -390,9 +418,15 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().vitesse = nSpeed_;
         asn().etat_operationnel_brut = nOperationalStateValue_;
 
-        reinforcements_.Send< ASN1T_UnitList, ASN1T_Unit >( asn().pions_renforcant );
+        {
+            asn().pions_renforcant.n = reinforcements_.Count();
+            asn().pions_renforcant.elem = asn().pions_renforcant.n > 0 ? new ASN1T_Unit[ asn().pions_renforcant.n ] : 0;
+            unsigned int i = 0;
+            for( kernel::Iterator< const kernel::Agent_ABC& > it = reinforcements_.CreateIterator(); it.HasMoreElements(); )
+                asn().pions_renforcant.elem[i++] = it.NextElement().GetId();
+        }
 
-        asn().pion_renforce = pReinforced_ ? pReinforced_->GetID() : 0 ;
+        asn().pion_renforce = pReinforced_ ? pReinforced_->GetId() : 0 ;
         asn().mort = bDead_;
         asn().neutralise =  bNeutralized_;
         asn().mode_furtif_actif = bStealthModeEnabled_;
@@ -404,16 +438,28 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().etat_installation = nInstallationState_;
         asn().en_tenue_de_protection_nbc = bNbcProtectionSuitEnabled_;
 
-        SendContainerValues< ASN1T_ListOID, ASN1T_OID, T_OIDVector >( nbcAgentTypesContaminating_, asn().contamine_par_agents_nbc ); 
+        {
+            asn().contamine_par_agents_nbc.n = nbcAgentTypesContaminating_.size();
+            asn().contamine_par_agents_nbc.elem = asn().contamine_par_agents_nbc.n > 0 ? new ASN1T_OID[ asn().contamine_par_agents_nbc.n ] : 0;
+            unsigned int i = 0;
+            for( std::vector< unsigned int >::const_iterator it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
+                asn().contamine_par_agents_nbc.elem[i++] = *it;
+        }
 
         asn().etat_contamination = nContaminationState_;
         asn().communications_brouillees = bCommunicationJammed_;
         asn().silence_radio = bBlackoutEnabled_;
         asn().radar_actif = bRadarEnabled_;
 
-        transportedAgents_.Send< ASN1T_UnitList, ASN1T_Unit >( asn().pions_transportes );
+        {
+            asn().pions_transportes.n = transportedAgents_.Count();
+            asn().pions_transportes.elem = asn().pions_transportes.n > 0 ? new ASN1T_Unit[ asn().pions_transportes.n ] : 0;
+            unsigned int i = 0;
+            for( kernel::Iterator< const kernel::Agent_ABC& > it = transportedAgents_.CreateIterator(); it.HasMoreElements(); )
+                asn().pions_transportes.elem[i++] = it.NextElement().GetId();
+        }
 
-        asn().pion_transporteur = pTransporter_ ? pTransporter_->GetID() : 0;
+        asn().pion_transporteur = pTransporter_ ? pTransporter_->GetId() : 0;
 
         asn().rapport_de_force = nForceRatioState_;
         asn().combat_de_rencontre = nCloseCombatState_;
@@ -424,15 +470,45 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().fatigue = nTiredness_;
         asn().moral = nMorale_;
         asn().experience = nExperience_;
-        asn().rendu = pSideSurrenderedTo_ ? pSideSurrenderedTo_->GetID() : 0;
+        asn().rendu = pSideSurrenderedTo_ ? pSideSurrenderedTo_->GetId() : 0;
         asn().prisonnier = bPrisonner_;
         asn().refugie_pris_en_compte = bRefugeeManaged_;
 
-        equipments_ .Send< ASN1T__SeqOfEquipmentDotations, ASN1T_EquipmentDotations >( asn().dotation_eff_materiel  );
-        troops_     .Send< ASN1T__SeqOfHumanDotations , ASN1T_HumanDotations  >( asn().dotation_eff_personnel );
-        dotations_  .Send< ASN1T__SeqOfResourceDotations , ASN1T_ResourceDotations  >( asn().dotation_eff_ressource );
-        borrowings_ .Send< ASN1T__SeqOfBorrowedEquipment, ASN1T_BorrowedEquipment >( asn().equipements_empruntes  );
-        lendings_   .Send< ASN1T__SeqOfLentEquipment   , ASN1T_LentEquipment    >( asn().equipements_pretes     );
+        {
+            asn().dotation_eff_materiel.n = equipments_.Count();
+            asn().dotation_eff_materiel.elem = asn().dotation_eff_materiel.n > 0 ? new ASN1T_EquipmentDotations[ asn().dotation_eff_materiel.n ] : 0;
+            unsigned int i = 0;
+            for( kernel::Iterator< const Equipment& > it = equipments_.CreateIterator(); it.HasMoreElements(); )
+                it.NextElement().Send( asn().dotation_eff_materiel.elem[i++] );
+        }
+        {
+            asn().dotation_eff_personnel.n = troops_.Count();
+            asn().dotation_eff_personnel.elem = asn().dotation_eff_personnel.n > 0 ? new ASN1T_HumanDotations[ asn().dotation_eff_personnel.n ] : 0;
+            unsigned int i = 0;
+            for( kernel::Iterator< const Humans& > it = troops_.CreateIterator(); it.HasMoreElements(); )
+                it.NextElement().Send( asn().dotation_eff_personnel.elem[i++] );
+        }
+        {
+            asn().dotation_eff_ressource.n = dotations_.Count();
+            asn().dotation_eff_ressource.elem = asn().dotation_eff_ressource.n > 0 ? new ASN1T_ResourceDotations[ asn().dotation_eff_ressource.n ] : 0;
+            unsigned int i = 0;
+            for( kernel::Iterator< const Dotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
+                it.NextElement().Send( asn().dotation_eff_ressource.elem[i++] );
+        }
+        {
+            asn().equipements_empruntes.n = borrowings_.Count();
+            asn().equipements_empruntes.elem = asn().equipements_empruntes.n > 0 ? new ASN1T_BorrowedEquipment[ asn().equipements_empruntes.n ] : 0;
+            unsigned int i = 0;
+            for( kernel::Iterator< const Loan& > it = borrowings_.CreateIterator(); it.HasMoreElements(); )
+                it.NextElement().Send( asn().equipements_empruntes.elem[i++] );
+        }
+        {
+            asn().equipements_pretes.n = lendings_.Count();
+            asn().equipements_pretes.elem = asn().equipements_pretes.n > 0 ? new ASN1T_LentEquipment[ asn().equipements_pretes.n ] : 0;
+            unsigned int i = 0;
+            for( kernel::Iterator< const Loan& > it = lendings_.CreateIterator(); it.HasMoreElements(); )
+                it.NextElement().Send( asn().equipements_pretes.elem[i++] );
+        }
 
         asn.Send( publisher );
 
@@ -454,11 +530,11 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             delete [] asn().equipements_pretes.elem;
     }
 
-    if( pAutomat_ )
+    if( automat_ )
     {
-        AsnMsgSimToClientUnitChangeSuperior asn;
-        asn().oid = nID_;
-        asn().oid_automate = pAutomat_->GetID();
+        client::UnitChangeSuperior asn;
+        asn().oid = GetId();
+        asn().oid_automate = automat_->GetId();
         asn.Send( publisher );
     }
 
@@ -472,12 +548,12 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( pLogSupply_ )
         pLogSupply_->Send( publisher );
 
-    if( pOrder_ )
-        pOrder_->Send( publisher );
+    if( order_.get() )
+        order_->Send( publisher );
     else
         AgentOrder::SendNoMission( *this, publisher );
 
-    decisionalInfos_.Send( nID_, publisher );
+    decisionalInfos_.Send( GetId(), publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -486,7 +562,34 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Agent::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientUnitDestruction asn;
-    asn() = nID_;
+    client::UnitDestruction asn;
+    asn() = GetId();
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void Agent::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetType
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+const kernel::AgentType& Agent::GetType() const
+{
+    return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::IsCommandPost
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+bool Agent::IsCommandPost() const
+{
+    return bPC_;
 }

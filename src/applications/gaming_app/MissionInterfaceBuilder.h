@@ -20,6 +20,8 @@ namespace kernel
     class CoordinateConverter_ABC;
     class OrderType;
     class OrderParameter;
+    class AgentKnowledgeConverter_ABC;
+    class ObjectKnowledgeConverter_ABC;
 }
 
 namespace gui
@@ -29,8 +31,6 @@ namespace gui
 
 class StaticModel;
 class MissionInterface_ABC;
-class AgentKnowledgeConverter_ABC;
-class ObjectKnowledgeConverter_ABC;
 class Param_ABC;
 class Simulation;
 
@@ -52,7 +52,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MissionInterfaceBuilder( kernel::Controllers& controllers, gui::ParametersLayer& layer
-                                    , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
+                                    , kernel::AgentKnowledgeConverter_ABC& knowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
                                     , const StaticModel& staticModel, const Simulation& simulation );
     virtual ~MissionInterfaceBuilder();
     //@}
@@ -128,8 +128,8 @@ private:
     kernel::Controllers&                   controllers_;
     gui::ParametersLayer&                  layer_;
     const kernel::CoordinateConverter_ABC& converter_;
-    AgentKnowledgeConverter_ABC&           knowledgeConverter_;
-    ObjectKnowledgeConverter_ABC&          objectKnowledgeConverter_;
+    kernel::AgentKnowledgeConverter_ABC&   knowledgeConverter_;
+    kernel::ObjectKnowledgeConverter_ABC&  objectKnowledgeConverter_;
     const StaticModel&                     staticModel_;
     const Simulation&                      simulation_;
     MissionInterface_ABC*                  missionInterface_;

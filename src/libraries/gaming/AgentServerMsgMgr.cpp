@@ -11,7 +11,13 @@
 #include "AgentServerMsgMgr.h"
 #include "Lima.h"
 #include "Limit.h"
-#include "SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
+#include "game_asn/ClientSenders.h"
+#include "game_asn/DispatcherSenders.h"
+#include "game_asn/ReplaySenders.h"
+#include "game_asn/MessengerSenders.h"
+#include "game_asn/AuthenticationSenders.h"
+#include "game_asn/AarSenders.h"
 #include "Tools.h"
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
@@ -19,6 +25,7 @@
 #include "Simulation.h"
 #include "Profile.h"
 #include "Model.h"
+#include "Services.h"
 #include "AgentsModel.h"
 #include "FiresModel.h"
 #include "KnowledgeGroupsModel.h"
@@ -33,6 +40,8 @@
 #include "FolkModel.h"
 #include "AfterActionModel.h"
 #include "IntelligencesModel.h"
+#include "DrawingsModel.h"
+#include "CommandHandler.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Object_ABC.h"
@@ -40,6 +49,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Logger_ABC.h"
+#include "clients_gui/Drawing_ABC.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "tools/MessageSender_ABC.h"
 #include <ctime>
@@ -52,18 +62,22 @@ using namespace tools;
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, MessageSender_ABC& sender, Simulation& simu, Profile& profile, kernel::Logger_ABC& logger )
+AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, MessageSender_ABC& sender, Services& services, Simulation& simu, kernel::Logger_ABC& logger, CommandHandler& commands )
     : dispatcher_      ( dispatcher )
     , sender_          ( sender )
+    , model_           ( 0 )
+    , profile_         ( 0 )
+    , services_        ( services )
     , simulation_      ( simu )
-    , profile_         ( profile )
     , logger_          ( logger )
+    , commands_        ( commands )
 {
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgSimToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgReplayToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgAarToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgMessengerToClient );
+    dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgDispatcherToClient );
 }
 
 //-----------------------------------------------------------------------------
@@ -97,9 +111,9 @@ void AgentServerMsgMgr::Disconnect()
 // Name: AgentServerMsgMgr::Send
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( ASN1T_MsgsClientToSim& message )
+void AgentServerMsgMgr::Send( const ASN1T_MsgsClientToSim& message )
 {
-    if( ! host_.empty() )
+    if( ! host_.empty() && services_.RequireService< simulation::Service >() )
         sender_.Send( host_, message );
 }
 
@@ -107,9 +121,9 @@ void AgentServerMsgMgr::Send( ASN1T_MsgsClientToSim& message )
 // Name: AgentServerMsgMgr::Send
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( ASN1T_MsgsClientToAuthentication& message )
+void AgentServerMsgMgr::Send( const ASN1T_MsgsClientToAuthentication& message )
 {
-    if( ! host_.empty() )
+    if( ! host_.empty() && services_.RequireService< authentication::Service >())
         sender_.Send( host_, message );
 }
 
@@ -117,9 +131,9 @@ void AgentServerMsgMgr::Send( ASN1T_MsgsClientToAuthentication& message )
 // Name: AgentServerMsgMgr::Send
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( ASN1T_MsgsClientToReplay& message )
+void AgentServerMsgMgr::Send( const ASN1T_MsgsClientToReplay& message )
 {
-    if( ! host_.empty() )
+    if( ! host_.empty() && services_.RequireService< replay::Service >() )
         sender_.Send( host_, message );
 }
 
@@ -127,9 +141,9 @@ void AgentServerMsgMgr::Send( ASN1T_MsgsClientToReplay& message )
 // Name: AgentServerMsgMgr::Send
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( ASN1T_MsgsClientToAar& message )
+void AgentServerMsgMgr::Send( const ASN1T_MsgsClientToAar& message )
 {
-    if( ! host_.empty() )
+    if( ! host_.empty() && services_.RequireService< aar::Service >() )
         sender_.Send( host_, message );
 }
 
@@ -137,12 +151,11 @@ void AgentServerMsgMgr::Send( ASN1T_MsgsClientToAar& message )
 // Name: AgentServerMsgMgr::Send
 // Created: RDS 2008-04-04
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Send( ASN1T_MsgsClientToMessenger& message )
+void AgentServerMsgMgr::Send( const ASN1T_MsgsClientToMessenger& message )
 {
-    if( ! host_.empty() )
+    if( ! host_.empty() && services_.RequireService< messenger::Service >() )
         sender_.Send( host_, message );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomatCreation
@@ -364,8 +377,8 @@ void AgentServerMsgMgr::OnReceiveMsgProfileDestructionRequestAck( const ASN1T_Ms
 void AgentServerMsgMgr::OnReceiveMsgProfileUpdate( const ASN1T_MsgProfileUpdate& message )
 {
     GetModel().profiles_.Get( message.login ).DoUpdate( message );
-    if( message.login == profile_.GetLogin().ascii() )
-        profile_.Update( message );
+    if( message.login == GetProfile().GetLogin() )
+        GetProfile().Update( GetModel(), message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1287,7 +1300,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationOrder( const ASN1T_MsgPopulationOr
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAuthenticationResponse( const ASN1T_MsgAuthenticationResponse& message )
 {
-    profile_.Update( message );
+    GetProfile().Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1363,6 +1376,60 @@ void AgentServerMsgMgr::OnReceiveMsgIntelligenceDestructionRequestAck( const ASN
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgShapeCreation
+// Created: SBO 2008-06-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgShapeCreation( const ASN1T_MsgShapeCreation& message )
+{
+    GetModel().drawings_.Create( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgShapeUpdate
+// Created: SBO 2008-06-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgShapeUpdate( const ASN1T_MsgShapeUpdate& message )
+{
+    GetModel().drawings_.Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgShapeDestruction
+// Created: SBO 2008-06-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgShapeDestruction( const ASN1T_MsgShapeDestruction& message )
+{
+    GetModel().drawings_.Delete( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgShapeCreationRequestAck
+// Created: SBO 2008-06-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgShapeCreationRequestAck( const ASN1T_MsgShapeCreationRequestAck& message )
+{
+    CheckAcknowledge( logger_, message, "ShapeCreationRequestAck" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgShapeUpdateRequestAck
+// Created: SBO 2008-06-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgShapeUpdateRequestAck( const ASN1T_MsgShapeUpdateRequestAck& message )
+{
+    CheckAcknowledge( logger_, message, "ShapeUpdateRequestAck" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgShapeDestructionRequestAck
+// Created: SBO 2008-06-05
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgShapeDestructionRequestAck( const ASN1T_MsgShapeDestructionRequestAck& message )
+{
+    CheckAcknowledge( logger_, message, "ShapeDestructionRequestAck" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAarInformation
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
@@ -1375,10 +1442,30 @@ void AgentServerMsgMgr::OnReceiveMsgAarInformation( const ASN1T_MsgAarInformatio
 // Name: AgentServerMsgMgr::OnReceiveMsgAarResult
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAarResult( const ASN1T_MsgIndicatorResult& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgAarResult( const ASN1T_MsgPlotResult& asnMsg )
 {
     GetModel().aar_.Update( asnMsg );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAarIndicator
+// Created: AGE 2008-08-04
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAarIndicator( const ASN1T_MsgIndicator& asnMsg )
+{
+
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgTextMessage
+// Created: AGE 2008-06-12
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgTextMessage( const ASN1T_MsgTextMessage& message )
+{
+    commands_.Receive( message.source.profile, message.target.profile, message.message );
+}
+
 
 namespace
 {
@@ -1587,7 +1674,8 @@ void AgentServerMsgMgr::OnReceiveMsgAarToClient( const std::string&, const ASN1T
     switch( message.msg.t )
     {
     case T_MsgsAarToClient_msg_msg_aar_information:  OnReceiveMsgAarInformation( *message.msg.u.msg_aar_information ); break;
-    case T_MsgsAarToClient_msg_msg_indicator_result: OnReceiveMsgAarResult     ( *message.msg.u.msg_indicator_result ); break;
+    case T_MsgsAarToClient_msg_msg_plot_result:      OnReceiveMsgAarResult     ( *message.msg.u.msg_plot_result ); break;
+    case T_MsgsAarToClient_msg_msg_indicator:        OnReceiveMsgAarIndicator  ( *message.msg.u.msg_indicator ); break;
     default:
         UnhandledMessage( message.msg.t );
     }
@@ -1603,28 +1691,50 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
         return;
     switch( message.t )
     {
-        case T_MsgsMessengerToClient_msg_limit_creation_request_ack:             OnReceiveMsgLimitCreationRequestAck            ( message.u.msg_limit_creation_request_ack); break;
-        case T_MsgsMessengerToClient_msg_limit_update_request_ack:               OnReceiveMsgLimitUpdateRequestAck              ( message.u.msg_limit_update_request_ack); break;
-        case T_MsgsMessengerToClient_msg_limit_destruction_request_ack:          OnReceiveMsgLimitDestructionRequestAck         ( message.u.msg_limit_destruction_request_ack); break;
-        case T_MsgsMessengerToClient_msg_lima_creation_request_ack:              OnReceiveMsgLimaCreationRequestAck             ( message.u.msg_lima_creation_request_ack); break;
-        case T_MsgsMessengerToClient_msg_lima_update_request_ack:                OnReceiveMsgLimaUpdateRequestAck               ( message.u.msg_lima_update_request_ack); break;
-        case T_MsgsMessengerToClient_msg_lima_destruction_request_ack:           OnReceiveMsgLimaDestructionRequestAck          ( message.u.msg_lima_destruction_request_ack); break;
+        case T_MsgsMessengerToClient_msg_limit_creation_request_ack:    OnReceiveMsgLimitCreationRequestAck   ( message.u.msg_limit_creation_request_ack    ); break;
+        case T_MsgsMessengerToClient_msg_limit_update_request_ack:      OnReceiveMsgLimitUpdateRequestAck     ( message.u.msg_limit_update_request_ack      ); break;
+        case T_MsgsMessengerToClient_msg_limit_destruction_request_ack: OnReceiveMsgLimitDestructionRequestAck( message.u.msg_limit_destruction_request_ack ); break;
+        case T_MsgsMessengerToClient_msg_lima_creation_request_ack:     OnReceiveMsgLimaCreationRequestAck    ( message.u.msg_lima_creation_request_ack     ); break;
+        case T_MsgsMessengerToClient_msg_lima_update_request_ack:       OnReceiveMsgLimaUpdateRequestAck      ( message.u.msg_lima_update_request_ack       ); break;
+        case T_MsgsMessengerToClient_msg_lima_destruction_request_ack:  OnReceiveMsgLimaDestructionRequestAck ( message.u.msg_lima_destruction_request_ack  ); break;
         
-        case T_MsgsMessengerToClient_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.u.msg_limit_creation                      ); break;
-        case T_MsgsMessengerToClient_msg_limit_update:                         OnReceiveMsgLimitUpdate               ( *message.u.msg_limit_update                        ); break;
-        case T_MsgsMessengerToClient_msg_limit_destruction:                    OnReceiveMsgLimitDestruction          ( message.u.msg_limit_destruction                    ); break;
-        case T_MsgsMessengerToClient_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *message.u.msg_lima_creation                       ); break;
-        case T_MsgsMessengerToClient_msg_lima_update:                          OnReceiveMsgLimaUpdate                ( *message.u.msg_lima_update                         ); break;
-        case T_MsgsMessengerToClient_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( message.u.msg_lima_destruction                     ); break;
+        case T_MsgsMessengerToClient_msg_limit_creation:    OnReceiveMsgLimitCreation   ( *message.u.msg_limit_creation   ); break;
+        case T_MsgsMessengerToClient_msg_limit_update:      OnReceiveMsgLimitUpdate     ( *message.u.msg_limit_update     ); break;
+        case T_MsgsMessengerToClient_msg_limit_destruction: OnReceiveMsgLimitDestruction( message.u.msg_limit_destruction ); break;
+        case T_MsgsMessengerToClient_msg_lima_creation:     OnReceiveMsgLimaCreation    ( *message.u.msg_lima_creation    ); break;
+        case T_MsgsMessengerToClient_msg_lima_update:       OnReceiveMsgLimaUpdate      ( *message.u.msg_lima_update      ); break;
+        case T_MsgsMessengerToClient_msg_lima_destruction:  OnReceiveMsgLimaDestruction ( message.u.msg_lima_destruction  ); break;
 
         case T_MsgsMessengerToClient_msg_intelligence_creation_request_ack:    OnReceiveMsgIntelligenceCreationRequestAck   ( message.u.msg_intelligence_creation_request_ack    ); break;
         case T_MsgsMessengerToClient_msg_intelligence_update_request_ack:      OnReceiveMsgIntelligenceUpdateRequestAck     ( message.u.msg_intelligence_update_request_ack      ); break;
         case T_MsgsMessengerToClient_msg_intelligence_destruction_request_ack: OnReceiveMsgIntelligenceDestructionRequestAck( message.u.msg_intelligence_destruction_request_ack ); break;
-
-        case T_MsgsMessengerToClient_msg_intelligence_creation:                OnReceiveMsgIntelligenceCreation             ( *message.u.msg_intelligence_creation                ); break;
-        case T_MsgsMessengerToClient_msg_intelligence_update:                  OnReceiveMsgIntelligenceUpdate               ( *message.u.msg_intelligence_update                  ); break;
-        case T_MsgsMessengerToClient_msg_intelligence_destruction:             OnReceiveMsgIntelligenceDestruction          ( *message.u.msg_intelligence_destruction             ); break;
+        case T_MsgsMessengerToClient_msg_intelligence_creation:                OnReceiveMsgIntelligenceCreation             ( *message.u.msg_intelligence_creation               ); break;
+        case T_MsgsMessengerToClient_msg_intelligence_update:                  OnReceiveMsgIntelligenceUpdate               ( *message.u.msg_intelligence_update                 ); break;
+        case T_MsgsMessengerToClient_msg_intelligence_destruction:             OnReceiveMsgIntelligenceDestruction          ( *message.u.msg_intelligence_destruction            ); break;
         
+        case T_MsgsMessengerToClient_msg_shape_creation_request_ack:    OnReceiveMsgShapeCreationRequestAck   ( message.u.msg_shape_creation_request_ack    ); break;
+        case T_MsgsMessengerToClient_msg_shape_update_request_ack:      OnReceiveMsgShapeUpdateRequestAck     ( message.u.msg_shape_update_request_ack      ); break;
+        case T_MsgsMessengerToClient_msg_shape_destruction_request_ack: OnReceiveMsgShapeDestructionRequestAck( message.u.msg_shape_destruction_request_ack ); break;
+        case T_MsgsMessengerToClient_msg_shape_creation:                OnReceiveMsgShapeCreation             ( *message.u.msg_shape_creation               ); break;
+        case T_MsgsMessengerToClient_msg_shape_update:                  OnReceiveMsgShapeUpdate               ( *message.u.msg_shape_update                 ); break;
+        case T_MsgsMessengerToClient_msg_shape_destruction:             OnReceiveMsgShapeDestruction          ( *message.u.msg_shape_destruction            ); break;
+
+        case T_MsgsMessengerToClient_msg_text_message:                  OnReceiveMsgTextMessage( *message.u.msg_text_message ); break;
+        
+    default:
+        UnhandledMessage( message.t );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgDispatcherToClient
+// Created: AGE 2008-08-13
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgDispatcherToClient( const std::string& , const ASN1T_MsgsDispatcherToClient& message )
+{
+    switch( message.t )
+    {
+    case T_MsgsDispatcherToClient_msg_services_description: services_.Update( *message.u.msg_services_description ); break;
     default:
         UnhandledMessage( message.t );
     }
@@ -1635,9 +1745,10 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
 // Name: AgentServerMsgMgr::SetModel
 // Created: SBO 2006-07-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SetModel( Model& model )
+void AgentServerMsgMgr::SetElements( Model& model, Profile& profile )
 {
     model_ = &model;
+    profile_ = &profile;
 }
 
 // -----------------------------------------------------------------------------
@@ -1649,4 +1760,15 @@ Model& AgentServerMsgMgr::GetModel() const
     if( !model_ )
         throw std::runtime_error( "No model set for AgentServerMsgMgr" );
     return *model_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::GetProfile
+// Created: AGE 2008-08-13
+// -----------------------------------------------------------------------------
+Profile& AgentServerMsgMgr::GetProfile() const
+{
+    if( !profile_ )
+        throw std::runtime_error( "No profile set for AgentServerMsgMgr" );
+    return *profile_;
 }

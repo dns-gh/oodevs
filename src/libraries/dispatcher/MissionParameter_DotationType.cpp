@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MissionParameter_DotationType.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 

@@ -14,11 +14,9 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
     class SensorType;
     class Agent_ABC;
     class Workers;

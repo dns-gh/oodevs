@@ -19,6 +19,7 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/FormationLevels.h"
+#include "clients_gui/DrawingTypes.h"
 #include "tools/ExerciseConfig.h"
 
 using namespace kernel;
@@ -36,6 +37,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , levels_             ( *new FormationLevels() )
     , teamKarmas_         ( *new TeamKarmas() )
     , intelligenceKarmas_ ( *new IntelligenceKarmas() )
+    , drawings_           ( *new gui::DrawingTypes( controllers.controller_ ) )
 {
     // NOTHING
 }
@@ -46,6 +48,7 @@ StaticModel::StaticModel( Controllers& controllers )
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &drawings_;
     delete &intelligenceKarmas_;
     delete &teamKarmas_;
     delete &levels_;
@@ -66,6 +69,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     objectTypes_.Load( config );
     static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( config );
     detection_.Load( config );
+    drawings_.Load( tools::GeneralConfig::BuildResourceChildFile( "DrawingTemplates.xml" ) );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
 
@@ -75,6 +79,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void StaticModel::Purge()
 {
+    drawings_.Purge();
     types_.Purge();
     objectTypes_.Purge();
     controllers_.controller_.Update( ModelUnLoaded() );

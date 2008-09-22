@@ -12,9 +12,19 @@
 #include "TooltipsLayer_ABC.h"
 #include "clients_kernel/Styles.h"
 #include <qpainter.h>
+#include <boost/bind.hpp>
 
 using namespace gui;
 using namespace kernel;
+
+namespace
+{
+    void DrawFrame( QPainter& painter, const QRect& rect )
+    {
+        painter.setPen( Qt::black );
+        painter.drawRect( rect );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: GlTooltip constructor
@@ -22,6 +32,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 GlTooltip::GlTooltip( TooltipsLayer_ABC& layer )
     : layer_( layer )
+    , frameDrawer_( boost::bind( &::DrawFrame, _1, _2 ) )
 {
     // NOTHING
 }
@@ -42,6 +53,16 @@ GlTooltip::~GlTooltip()
 void GlTooltip::Call( const QColor& value )
 {
     color_ = value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlTooltip::Call
+// Created: SBO 2008-07-04
+// -----------------------------------------------------------------------------
+void GlTooltip::Call( const QFont& font )
+{
+    font_ = font;
+    font_.setStyleStrategy( QFont::NoAntialias );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,6 +130,7 @@ void GlTooltip::StartDisplay()
 {
     color_ = Qt::black;
     font_  = QFont();
+    font_.setStyleStrategy( QFont::NoAntialias );
     message_ = "";
 }
 
@@ -121,6 +143,33 @@ void GlTooltip::DisplayFormatted( const QString& formatted )
     message_ += formatted;
 }
 
+namespace
+{
+    struct Style
+    {
+        explicit Style( const QFont& font ) : font_( font ) {}
+        void Push( const QString& style )
+        {
+            styles_ += style;
+        }
+        void Pop()
+        {
+            styles_.truncate( styles_.length() ? styles_.length() - 1 : 0 );
+        }
+        QFont Font()
+        {
+            QFont result( font_ );
+            result.setBold( result.bold() || styles_.contains( 'b' ) );
+            result.setItalic( result.italic() || styles_.contains( 'i' ) );
+            result.setUnderline( result.underline() || styles_.contains( 'u' ) );
+            return result;
+        }
+        QColor color_;
+        QFont font_;
+        QString styles_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlTooltip::EndDisplay
 // Created: AGE 2006-06-29
@@ -128,9 +177,22 @@ void GlTooltip::DisplayFormatted( const QString& formatted )
 void GlTooltip::EndDisplay()
 {
     if( ! currentItem_.isEmpty() )
-        new_.push_back( T_Message( currentItem_ + " " + message_, T_Style( color_, font_ ) ) );
+        message_ = currentItem_ + " " + message_ + "\n";
     else if( ! message_.isEmpty() )
-        new_.push_back( T_Message( message_, T_Style( color_, font_ ) ) );
+        message_ += "\n";
+
+    QRegExp rx( "[<>]" );
+    const QStringList list = QStringList::split( rx, message_ );
+    ::Style style( font_ );
+    for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it )
+    {
+        if( *it == "i" || *it == "b" || *it == "u" )
+            style.Push( *it );
+        else if( *it == "/i" || *it == "/b" || *it == "/u" )
+            style.Pop();
+        else
+            new_.push_back( T_Message( *it, T_Style( color_, style.Font() ) ) );
+    }
     DirtyImage();
 }
 
@@ -149,19 +211,24 @@ void GlTooltip::DirtyImage()
 // Name: GlTooltip::Draw
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void GlTooltip::Draw( const geometry::Point2f& position )
+void GlTooltip::Draw( const geometry::Point2f& position, int width /*= 0*/, int height /*= 0*/, float factor /*= 1.f*/ )
 {
     if( image_.isNull() )
-        GenerateImage();
+        GenerateImage( std::abs( width ), std::abs( height ) );
     new_.clear();
-    layer_.Draw( position, image_ );
+    geometry::Point2f point = position;
+    if( width < 0 )
+        point.Set( point.X() - image_.width() * factor, point.Y() );
+    if( height < 0 )
+        point.Set( point.X(), point.Y() - image_.height() * factor );
+    layer_.Draw( point, image_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlTooltip::GenerateImage
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void GlTooltip::GenerateImage()
+void GlTooltip::GenerateImage( unsigned int width, unsigned int height )
 {
     if( new_.empty() )
         return;
@@ -169,11 +236,11 @@ void GlTooltip::GenerateImage()
     QFontMetrics metrics( p.font() );
     int fontHeight = metrics.height();
     
-    QPixmap pixmap( CreatePixmap() );
+    QPixmap pixmap( CreatePixmap( width, height ) );
     pixmap.fill( Qt::magenta );
     p.begin( &pixmap );
-        p.setPen( Qt::black );
-        p.drawRect( pixmap.rect() );
+        frameDrawer_( p, pixmap.rect() );
+        int x = 4;
         int y = fontHeight;
         for( CIT_Messages it = new_.begin(); it != new_.end(); ++it )
         {
@@ -181,11 +248,23 @@ void GlTooltip::GenerateImage()
             if( p.font() != it->second.second )
             {
                 p.setFont( it->second.second );
-                fontHeight = QFontMetrics( p.font() ).height();
+                metrics = QFontMetrics( p.font() );
+                y += metrics.height() - fontHeight;
+                fontHeight = metrics.height();
             }
-            p.drawText( 4, y, it->first );
-            
-            y += fontHeight;
+            const QStringList list = QStringList::split( '\n', it->first, true );
+            for( QStringList::const_iterator itLine = list.begin(); itLine != list.end(); ++itLine )
+            {
+                if( !(*itLine).isEmpty() )
+                    p.drawText( x, y, *itLine );
+                if( itLine == list.fromLast() )
+                    x += metrics.width( *itLine );
+                else
+                {
+                    x = 4;
+                    y += fontHeight;
+                }
+            }
         }
     p.end();
     image_ = pixmap.convertToImage().mirror();
@@ -228,18 +307,35 @@ void GlTooltip::RestoreAlpha()
 // Name: GlTooltip::CreatePixmap
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-QPixmap GlTooltip::CreatePixmap()
+QPixmap GlTooltip::CreatePixmap( unsigned int width, unsigned int height )
 {
     int w = 0;
     int h = 0;
+    int x = 0;
     for( CIT_Messages it = new_.begin(); it != new_.end(); ++it )
     {
         const QFontMetrics metrics( it->second.second );
-        const QRect bounds = metrics.boundingRect( it->first );
-        w = std::max( w, bounds.width() );
-        h += bounds.height() + 2;
+        int fontHeight = metrics.height();
+
+        const QStringList list = QStringList::split( '\n', it->first, true );
+        for( QStringList::const_iterator itLine = list.begin(); itLine != list.end(); ++itLine )
+        {
+            if( itLine == list.fromLast() )
+            {
+                x += metrics.width( *itLine );
+                w = std::max( w, x );
+            }
+            else
+            {
+                x = 0;
+                w = std::max( w, metrics.width( *itLine ) );
+                h += fontHeight + 2;
+            }
+        }
     }
-    return QPixmap( w + 8, h + 4, 32 );
+    w = std::max< int >( w + 8, width );
+    h = std::max< int >( h + 4, height );
+    return QPixmap( w, h, 32 );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,4 +356,22 @@ void GlTooltip::Hide()
 GlTooltip::operator kernel::Displayer_ABC&()
 {
     return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlTooltip::SetFrameDrawer
+// Created: SBO 2008-07-04
+// -----------------------------------------------------------------------------
+void GlTooltip::SetFrameDrawer( const FrameDrawer& frameDrawer )
+{
+    frameDrawer_ = frameDrawer;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlTooltip::BoundingBox
+// Created: SBO 2008-07-04
+// -----------------------------------------------------------------------------
+QSize GlTooltip::Size() const
+{
+    return image_.size();
 }

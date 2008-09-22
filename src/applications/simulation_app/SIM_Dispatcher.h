@@ -10,8 +10,6 @@
 #ifndef __SIM_Dispatcher_h_
 #define __SIM_Dispatcher_h_
 
-#undef Yield // $$$$ AGE 2005-03-02: ....
-#include "tools/thread/Thread.h"
 #include "dispatcher_dll/DispatcherFacade.h"
 
 class SIM_Config;
@@ -22,13 +20,19 @@ class SIM_Config;
 */
 // Created: NLD 2006-10-04
 // =============================================================================
-class SIM_Dispatcher : public tools::thread::Thread
+class SIM_Dispatcher 
 {
 public:
     //! @name Constructors/Destructor
     //@{
              SIM_Dispatcher( int argc, char** argv );
     virtual ~SIM_Dispatcher();
+    //@}
+
+    //! @name Operations 
+    //@{
+	void Run();
+	void Stop(); 
     //@}
 
 private:
@@ -38,16 +42,13 @@ private:
     SIM_Dispatcher& operator=( const SIM_Dispatcher& ); //!< Assignement operator
     //@}
 
-    //! @name Thread Main Loop
-    //@{
-    virtual void Run();
-    virtual void OnUnexpected( Win32Exception& e );
-    virtual void OnUnexpected( std::exception& e );
-    virtual void OnUnexpected();
-    //@}
-
 private:
-    DispatcherFacade dispatcher_;
+
+    //! @name 
+    //@{
+    DispatcherFacade               dispatcher_;	//!< embedded dispatcher 
+	bool						   bRunning_ ;  //!< running status 
+	//@}
 };
 
 

@@ -71,7 +71,7 @@ Iterator< const AfterActionRequest& > AfterActionRequests::CreateIterator()
 // Name: AfterActionRequests::Update
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequests::Update( const ASN1T_MsgIndicatorResult& asnMsg )
+void AfterActionRequests::Update( const ASN1T_MsgPlotResult& asnMsg )
 {
     std::for_each( requests_.begin(), requests_.end(), 
                    boost::bind( &AfterActionRequest::Update, _1, boost::ref( asnMsg ) ) );

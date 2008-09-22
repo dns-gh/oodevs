@@ -13,6 +13,8 @@
 
 using namespace kernel;
 
+const QString Automat_ABC::typeName_ = "automat";
+
 // -----------------------------------------------------------------------------
 // Name: Automat_ABC constructor
 // Created: AGE 2006-10-06
@@ -29,6 +31,15 @@ Automat_ABC::Automat_ABC()
 Automat_ABC::~Automat_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat_ABC::GetTypeName
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+QString Automat_ABC::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------

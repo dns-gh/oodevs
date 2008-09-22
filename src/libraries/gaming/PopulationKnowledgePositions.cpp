@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "PopulationKnowledgePositions.h"
-#include "PopulationKnowledge_ABC.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 
 using namespace kernel;

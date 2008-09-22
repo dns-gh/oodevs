@@ -39,8 +39,13 @@ Polygon::~Polygon()
 // -----------------------------------------------------------------------------
 void Polygon::PopPoint()
 {
-    if( ! points_.empty() )
+    if( points_.size() > 2 )
+    {
+        std::swap( *( points_.end() - 2 ), points_.back() );
         points_.pop_back();
+    }
+    else if( points_.size() == 2 )
+        points_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,9 +54,32 @@ void Polygon::PopPoint()
 // -----------------------------------------------------------------------------
 void Polygon::AddPoint( const geometry::Point2f& point )
 {
+    if( points_.empty() )
+        points_.push_back( point );
     points_.push_back( point );
+    if( points_.size() > 2 )
+        std::swap( *( points_.end() - 2 ), points_.back() );
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: Polygon::Translate
+// Created: SBO 2008-05-30
+// -----------------------------------------------------------------------------
+void Polygon::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
+{
+    const float squarePrecision = precision * precision;
+    for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        if( it->SquareDistance( from ) < squarePrecision )
+        {
+            *it += translation;
+            return;
+        }
+    for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        *it += translation;
+    if( ! points_.empty() )
+        points_.back() = points_.front();
+}
+
 // -----------------------------------------------------------------------------
 // Name: Polygon::IsValid
 // Created: AGE 2006-08-09
@@ -79,19 +107,6 @@ void Polygon::Accept( LocationVisitor_ABC& visitor ) const
     visitor.VisitPolygon( points_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Polygon::Draw
-// Created: AGE 2006-08-09
-// -----------------------------------------------------------------------------
-void Polygon::Draw( const GlTools_ABC& tools ) const
-{
-    if( ! points_.empty() )
-    {
-        tools.DrawLines( points_ );
-        tools.DrawLine( points_.back(), points_.front() );
-    }
-}
- 
 // -----------------------------------------------------------------------------
 // Name: Polygon::GetName
 // Created: AGE 2006-08-09

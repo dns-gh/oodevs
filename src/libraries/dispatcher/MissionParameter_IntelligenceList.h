@@ -11,11 +11,10 @@
 #define __MissionParameter_IntelligenceList_h_
 
 #include "MissionParameter_ABC.h"
-#include "ModelsContainer.h"
+#include "IntelligenceOrder.h"
 
 namespace dispatcher
 {
-    class IntelligenceOrder;
 
 // =============================================================================
 /** @class  MissionParameter_IntelligenceList
@@ -29,7 +28,7 @@ class MissionParameter_IntelligenceList : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_IntelligenceList( Model& model, const ASN1T_MissionParameter& asn );
+    explicit MissionParameter_IntelligenceList( const ASN1T_MissionParameter& asn );
     virtual ~MissionParameter_IntelligenceList();
     //@}
 
@@ -46,14 +45,10 @@ private:
     MissionParameter_IntelligenceList& operator=( const MissionParameter_IntelligenceList& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-    ModelsContainer< IntelligenceOrder >  intelligenceOrders_;
+    std::vector< IntelligenceOrder > intelligenceOrders_;
     //@}
 };
 

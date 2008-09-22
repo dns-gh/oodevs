@@ -8,13 +8,11 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "AgentLogMaintenance.h"
-
 #include "Model.h"
+#include "ClientPublisher_ABC.h"
 #include "Automat.h"
 #include "Agent.h"
-#include "Network_Def.h"
 
 using namespace dispatcher;
 
@@ -22,14 +20,10 @@ using namespace dispatcher;
 // Name: AgentLogMaintenance constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMaintenance::AgentLogMaintenance( Model& model, const Agent& agent, const ASN1T_MsgLogMaintenanceState& asnMsg )
-    : agent_                ( agent )
-    , model_                ( model )
-    , bSystemEnabled_       ( false )
-    , priorities_           ()
-    , tacticalPriorities_   ()
-    , haulersAvailability_  ()
-    , repairersAvailability_()
+AgentLogMaintenance::AgentLogMaintenance( const Model& model, const kernel::Agent_ABC& agent, const ASN1T_MsgLogMaintenanceState& asnMsg )
+    : model_         ( model )
+    , agent_         ( agent )
+    , bSystemEnabled_( false )
 {
     Update( asnMsg );
 }
@@ -40,12 +34,8 @@ AgentLogMaintenance::AgentLogMaintenance( Model& model, const Agent& agent, cons
 // -----------------------------------------------------------------------------
 AgentLogMaintenance::~AgentLogMaintenance()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: AgentLogMaintenance::Update
@@ -54,27 +44,27 @@ AgentLogMaintenance::~AgentLogMaintenance()
 void AgentLogMaintenance::Update( const ASN1T_MsgLogMaintenanceState& asnMsg )
 {
     if( asnMsg.m.chaine_activeePresent )
-        bSystemEnabled_ = asnMsg.chaine_activee;
+        bSystemEnabled_ = asnMsg.chaine_activee != 0;
 
     if( asnMsg.m.disponibilites_remorqueursPresent )
     {
-        haulersAvailability_.Clear();
+        haulersAvailability_.clear();
         for( unsigned int i = 0; i < asnMsg.disponibilites_remorqueurs.n; ++i )
-            haulersAvailability_.Create( model_, i, asnMsg.disponibilites_remorqueurs.elem[ i ] );
+            haulersAvailability_.push_back( T_Availability( asnMsg.disponibilites_remorqueurs.elem[ i ] ) );
     }
 
     if( asnMsg.m.disponibilites_reparateursPresent )
     {
-        repairersAvailability_.Clear();
+        repairersAvailability_.clear();
         for( unsigned int i = 0; i < asnMsg.disponibilites_reparateurs.n; ++i )
-            repairersAvailability_.Create( model_, i, asnMsg.disponibilites_reparateurs.elem[ i ] );
+            repairersAvailability_.push_back( T_Availability( asnMsg.disponibilites_remorqueurs.elem[ i ] ) );
     }
 
     if( asnMsg.m.priorites_tactiquesPresent )
     {
-        tacticalPriorities_.Clear();
+        tacticalPriorities_.clear();
         for( unsigned int i = 0; i < asnMsg.priorites_tactiques.n; ++i )
-            tacticalPriorities_.Register( model_.GetAutomats().Get( asnMsg.priorites_tactiques.elem[ i ] ) );
+            tacticalPriorities_.push_back( &model_.automats_.Get( asnMsg.priorites_tactiques.elem[ i ] ) );
     }
 
     if( asnMsg.m.prioritesPresent )
@@ -91,9 +81,9 @@ void AgentLogMaintenance::Update( const ASN1T_MsgLogMaintenanceState& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMaintenanceState asn;
+    client::LogMaintenanceState asn;
 
-    asn().oid_pion = agent_.GetID();
+    asn().oid_pion = agent_.GetId();
 
     asn().m.chaine_activeePresent             = 1;
     asn().m.disponibilites_remorqueursPresent = 1;
@@ -103,12 +93,34 @@ void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
 
     asn().chaine_activee = bSystemEnabled_;
 
-    repairersAvailability_.Send< ASN1T__SeqOfLogMaintenanceEquipmentAvailability, ASN1T_LogMaintenanceEquipmentAvailability >( asn().disponibilites_reparateurs );
-    haulersAvailability_  .Send< ASN1T__SeqOfLogMaintenanceEquipmentAvailability, ASN1T_LogMaintenanceEquipmentAvailability >( asn().disponibilites_remorqueurs );
-
-    tacticalPriorities_.Send< ASN1T_AutomatList, ASN1T_Automat >( asn().priorites_tactiques );
-    SendContainerValues< ASN1T_LogMaintenancePriorities, ASN1T_EquipmentType, T_EquipmentTypeVector >( priorities_, asn().priorites );
-
+    {
+        asn().disponibilites_reparateurs.n = repairersAvailability_.size();
+        asn().disponibilites_reparateurs.elem = asn().disponibilites_reparateurs.n > 0 ? new ASN1T_LogMaintenanceEquipmentAvailability[ asn().disponibilites_reparateurs.n ] : 0;
+        unsigned int i = 0;
+        for( std::vector< T_Availability >::const_iterator it = repairersAvailability_.begin(); it != repairersAvailability_.end(); ++it )
+            it->Send( asn().disponibilites_reparateurs.elem[i++] );
+    }
+    {
+        asn().disponibilites_remorqueurs.n = haulersAvailability_.size();
+        asn().disponibilites_remorqueurs.elem = asn().disponibilites_remorqueurs.n > 0 ? new ASN1T_LogMaintenanceEquipmentAvailability[ asn().disponibilites_remorqueurs.n ] : 0;
+        unsigned int i = 0;
+        for( std::vector< T_Availability >::const_iterator it = haulersAvailability_.begin(); it != haulersAvailability_.end(); ++it )
+            it->Send( asn().disponibilites_remorqueurs.elem[i++] );
+    }
+    {
+        asn().priorites_tactiques.n = tacticalPriorities_.size();
+        asn().priorites_tactiques.elem = asn().priorites_tactiques.n > 0 ? new ASN1T_Automat[ asn().priorites_tactiques.n ] : 0;
+        unsigned int i = 0;
+        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it, ++i )
+            asn().priorites_tactiques.elem[i] = (*it)->GetId();
+    }
+    {
+        asn().priorites.n = priorities_.size();
+        asn().priorites.elem = asn().priorites.n > 0 ? new ASN1T_EquipmentType[ asn().priorites.n ] : 0;
+        unsigned int i = 0;
+        for( std::vector< ASN1T_EquipmentType >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
+            asn().priorites.elem[i++] = *it;
+    }
     asn.Send( publisher );
 
     if( asn().disponibilites_reparateurs.n > 0 )

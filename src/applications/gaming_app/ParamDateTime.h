@@ -13,8 +13,11 @@
 #include "game_asn/Simulation.h"
 #include "Param_ABC.h"
 
+namespace actions
+{
+    class Parameter_ABC;
+}
 class Simulation;
-class ActionParameter_ABC;
 
 // =============================================================================
 /** @class  ParamDateTime
@@ -37,7 +40,7 @@ public:
     //@{
     virtual void BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 

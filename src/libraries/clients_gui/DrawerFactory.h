@@ -10,28 +10,16 @@
 #ifndef __DrawerFactory_h_
 #define __DrawerFactory_h_
 
+#include "DrawingFactory_ABC.h"
+
 namespace kernel
 {
-    class GlTools_ABC;
-    class Controllers;
-}
-
-namespace xml
-{
-    class xistream;
-}
-
-namespace svg
-{
-    class TextRenderer;
+    class Controller;
 }
 
 namespace gui
 {
-    class DrawerCategory;
-    class DrawerShape;
-    class DrawerStyle;
-    class DrawerModel;
+    class DrawingTypes;
 
 // =============================================================================
 /** @class  DrawerFactory
@@ -39,22 +27,20 @@ namespace gui
 */
 // Created: SBO 2007-03-22
 // =============================================================================
-class DrawerFactory
+class DrawerFactory : public DrawingFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerFactory( QWidget* parent, kernel::GlTools_ABC& tools, kernel::Controllers& controllers );
+             DrawerFactory( kernel::Controller& controller, const DrawingTypes& types );
     virtual ~DrawerFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual DrawerCategory* CreateCategory( xml::xistream& xis ) const;
-    
-    virtual DrawerShape* CreateShape( const DrawerStyle& style, const QColor& color ) const;
-    virtual DrawerShape* CreateShape( xml::xistream& xis, const DrawerModel& model ) const;
+    virtual Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color ) const;
+    virtual Drawing_ABC* CreateShape( xml::xistream& xis ) const;
     //@}
 
 private:
@@ -67,10 +53,14 @@ private:
 private:
     //! @name Member data
     //@{
-    QWidget* parent_;
-    kernel::Controllers& controllers_;
-    kernel::GlTools_ABC& tools_;
-    svg::TextRenderer& renderer_;
+    kernel::Controller& controller_;
+    const DrawingTypes& types_;
+    //@}
+
+private:
+    //! @name Static members
+    //@{
+    static unsigned long idManager_;
     //@}
 };
 

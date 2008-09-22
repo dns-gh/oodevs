@@ -90,7 +90,7 @@ void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn ) const
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityParameter< ConcreteEntity >::CommitTo( ActionParameterEntity< ConcreteEntity >& parameter ) const
+void EntityParameter< ConcreteEntity >::CommitTo( actions::parameters::Entity< ConcreteEntity >& parameter ) const
 {
     parameter.SetValue( selected_ );
 }

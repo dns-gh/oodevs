@@ -9,7 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "Synchroniser.h"
-#include "Entity_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "EntityPublisher_ABC.h"
 #include "ClientPublisher_ABC.h"
 #include "Model.h"
 
@@ -37,7 +38,7 @@ Synchroniser::~Synchroniser()
 // Name: Synchroniser::FlagForCreation
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Synchroniser::FlagForCreation( Entity_ABC& entity )
+void Synchroniser::FlagForCreation( kernel::Entity_ABC& entity )
 {
     toCreate_.push_back( &entity );
 }
@@ -46,7 +47,7 @@ void Synchroniser::FlagForCreation( Entity_ABC& entity )
 // Name: Synchroniser::FlagForUpdate
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Synchroniser::FlagForUpdate( Entity_ABC& entity )
+void Synchroniser::FlagForUpdate( kernel::Entity_ABC& entity )
 {
     toUpdate_.push_back( &entity );
 }
@@ -55,7 +56,7 @@ void Synchroniser::FlagForUpdate( Entity_ABC& entity )
 // Name: Synchroniser::FlagForDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Synchroniser::FlagForDestruction( Entity_ABC& entity )
+void Synchroniser::FlagForDestruction( kernel::Entity_ABC& entity )
 {
     toDestroy_.push_back( &entity );
 }
@@ -76,6 +77,8 @@ namespace
         virtual void Send( const ASN1T_MsgsReplayToClient& ) {}
         virtual void Send( const ASN1T_MsgsAarToClient& ) {}
         virtual void Send( const ASN1T_MsgsMessengerToClient& ) {}
+        virtual void Send( const ASN1T_MsgsDispatcherToClient& ) {}
+        virtual std::string GetEndpoint() const { return ""; }
         ClientPublisher_ABC* forward_;
         Model* model_;
     };
@@ -88,12 +91,21 @@ namespace
 void Synchroniser::Commit( ClientPublisher_ABC& publisher, Model& model )
 {
     for( CIT_Entities it = toCreate_.begin(); it != toCreate_.end(); ++it )
-        (*it)->SendCreation( publisher );
+        (*it)->Apply( &EntityPublisher_ABC::SendCreation, publisher );
 
     for( CIT_Entities it = toUpdate_.begin(); it != toUpdate_.end(); ++it )
-        (*it)->SendFullUpdate( publisher );
+        (*it)->Apply( &EntityPublisher_ABC::SendFullUpdate, publisher );
 
     Publisher p( publisher, model );
-    for( std::vector< Entity_ABC* >::reverse_iterator it = toDestroy_.rbegin(); it != toDestroy_.rend(); ++it )
-        (*it)->SendDestruction( p );
+    for( std::vector< kernel::Entity_ABC* >::reverse_iterator it = toDestroy_.rbegin(); it != toDestroy_.rend(); ++it )
+    {
+        // $$$$ AGE 2008-06-20: 
+//        (*it)->Apply( &EntityPublisher_ABC::SendDestruction, p );
+        // $$$$ AGE 2008-06-20: causes reentrances in the destructor...
+        // $$$$ AGE 2008-06-20: Change the whole thing (see SimulationDispatcher::EndSynchronisation)
+
+        const EntityPublisher_ABC* publisher = (*it)->Retrieve< EntityPublisher_ABC >();
+        if( publisher )
+            publisher->SendDestruction( p );
+    }
 }

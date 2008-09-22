@@ -54,6 +54,16 @@ void Point::AddPoint( const geometry::Point2f& point )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Point::Translate
+// Created: SBO 2008-05-30
+// -----------------------------------------------------------------------------
+void Point::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
+{
+    if( IsValid() && point_.SquareDistance( from ) < precision * precision )
+        point_ += translation;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Point::IsValid
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
@@ -78,16 +88,6 @@ bool Point::IsDone() const
 void Point::Accept( LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitPoint( point_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Point::Draw
-// Created: AGE 2006-08-09
-// -----------------------------------------------------------------------------
-void Point::Draw( const GlTools_ABC& tools ) const
-{
-    if( IsValid() )
-        tools.DrawCross( point_ );
 }
 
 // -----------------------------------------------------------------------------

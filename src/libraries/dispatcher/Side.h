@@ -11,16 +11,19 @@
 #define __Side_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelRefsContainer.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Resolver.h"
 
 namespace dispatcher
 {
+    class Model;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
     class KnowledgeGroup;
     class Formation;
-    class Model;
-	class Object;
-	class Population;
+    class Object;
+    class Population;
 
 // =============================================================================
 /** @class  Side
@@ -28,32 +31,29 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Side : public Entity_ABC
+class Side : public SimpleEntity< kernel::Team_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Side( Model& model, const ASN1T_MsgTeamCreation& msg );
+             Side( const Model& model, const ASN1T_MsgTeamCreation& msg );
     virtual ~Side();
-    //@}
-
-    //! @name Accessors
-    //@{
-    ModelRefsContainer< KnowledgeGroup >& GetKnowledgeGroups();
-    ModelRefsContainer< Formation      >& GetFormations     ();
-	ModelRefsContainer< Object         >& GetObjects        ();
-	ModelRefsContainer< Population     >& GetPopulations    ();
-    unsigned long                         GetID             () const;
     //@}
 
     //! @name Operations
     //@{
-    using Entity_ABC::Update;
+    using kernel::Entity_ABC::Update;
     void Update( const ASN1T_MsgChangeDiplomacy&    asnMsg );
     void Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg );
-    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
-    virtual void Accept        ( ModelVisitor_ABC& visitor );
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    void Accept( ModelVisitor_ABC& visitor ) const;
+
+    virtual bool IsFriend () const;
+    virtual bool IsEnemy  () const;
+    virtual bool IsNeutral() const;
     //@}
 
 private:
@@ -63,27 +63,27 @@ private:
     Side& operator=( const Side& ); //!< Assignement operator
     //@}
 
-private:
     //! @name Types
     //@{
-    typedef std::map< Side*, ASN1T_EnumDiplomacy >    T_DiplomacyMap;
-    typedef T_DiplomacyMap::const_iterator          CIT_DiplomacyMap;
+    typedef std::map< const kernel::Team_ABC*, ASN1T_EnumDiplomacy > T_Diplomacies;
     //@}
 
+private:
+    //! @name Member data
+    //@{
+    const Model&        model_;
+
 public:
-          Model&                               model_;
-    const unsigned long                        nID_;
-          std::string                          strName_;
-          ASN1T_EnumDiplomacy                  nType_;
-          ModelRefsContainer< KnowledgeGroup > knowledgeGroups_;
-          ModelRefsContainer< Formation      > formations_;
-		  ModelRefsContainer< Object		 > objects_;
-		  ModelRefsContainer< Population     > populations_;
-          T_DiplomacyMap                       diplomacies_;
+    const std::string   name_;
+    ASN1T_EnumDiplomacy nType_;
+    T_Diplomacies       diplomacies_;
+    kernel::Resolver< KnowledgeGroup > knowledgeGroups_;
+    kernel::Resolver< Formation >      formations_;
+    kernel::Resolver< Object >         objects_;
+    kernel::Resolver< Population >     populations_;
+    //@}
 };
 
 }
-
-#include "Side.inl"
 
 #endif // __Side_h_

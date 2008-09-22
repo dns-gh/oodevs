@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
     //@}

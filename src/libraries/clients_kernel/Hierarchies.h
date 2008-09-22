@@ -61,7 +61,6 @@ public:
     void Accept( ExtensionVisitor_ABC< T >& visitor ) const;
     //@}
 
-protected:
     //! @name Helpers
     //@{
     virtual const Hierarchies* RetrieveHierarchies( const Entity_ABC& entity ) const = 0;

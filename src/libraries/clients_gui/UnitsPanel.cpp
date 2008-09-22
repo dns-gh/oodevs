@@ -39,7 +39,7 @@ namespace
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
 UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const AgentTypes& types, ItemFactory_ABC& factory, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy )
-    : InfoPanel_ABC( parent, panel, tr( "Units" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Units" ), "UnitsPanel" )
     , controllers_( controllers )
 {
     {

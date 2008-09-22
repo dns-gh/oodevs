@@ -76,7 +76,7 @@ void DisExtension::AddPlatform( const tic::Platform_ABC& platform )
         it = ids_.insert( std::make_pair( &platform, id_.CreateNewIdentifier() ) ).first;
 
     EntityStatePDU pdu( time_.GetTime(), exercise_, it->second );
-    pdu.SetEntityName( holder_.GetName() );
+    pdu.SetEntityName( holder_.GetName().ascii() );
     pdu.SetEntityType( resolver_.Find( platform.GetType() ) );
     switch( platform.GetState() )
     {

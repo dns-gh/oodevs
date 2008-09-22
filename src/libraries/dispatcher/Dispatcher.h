@@ -11,6 +11,7 @@
 #define __Dispatcher_h_
 
 #include "CompositePlugin.h"
+#include "CompositeRegistrable.h"
 #include "boost/shared_ptr.hpp"
 
 namespace dispatcher
@@ -21,6 +22,7 @@ namespace dispatcher
     class ClientsNetworker;
     class PluginFactory_ABC;
     class PluginFactory;
+    class Services;
 
 // =============================================================================
 /** @class  Dispatcher
@@ -54,6 +56,8 @@ private:
 private:
     const Config&                             config_;
     CompositePlugin                           handler_;
+    CompositeRegistrable                      registrables_;
+    std::auto_ptr< Services >                 services_;
     boost::shared_ptr< Model >                model_;
     boost::shared_ptr< ClientsNetworker >     clientsNetworker_;
     boost::shared_ptr< SimulationNetworker >  simulationNetworker_;

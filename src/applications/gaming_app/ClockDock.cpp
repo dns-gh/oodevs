@@ -17,7 +17,7 @@
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
 ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation )
-    : QDockWindow( parent )
+    : QDockWindow( parent, "clock" )
 {
     setOrientation( Qt::Horizontal );
     setWidget( new ClockWidget( this, controllers, simulation ) );

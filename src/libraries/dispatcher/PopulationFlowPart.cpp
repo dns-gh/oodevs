@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "PopulationFlowPart.h"
 
 using namespace dispatcher;
@@ -17,10 +16,11 @@ using namespace dispatcher;
 // Name: PopulationFlowPart constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-PopulationFlowPart::PopulationFlowPart( const Model& /*model*/, const ASN1T_FlowPart& asn )
+PopulationFlowPart::PopulationFlowPart( const ASN1T_FlowPart& asn )
     : localisation_( asn.forme )
     , nRelevance_  ( asn.pertinence )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ PopulationFlowPart::PopulationFlowPart( const Model& /*model*/, const ASN1T_Flow
 // -----------------------------------------------------------------------------
 PopulationFlowPart::~PopulationFlowPart()
 {
-
+    // NOTHING
 }
        
 // -----------------------------------------------------------------------------

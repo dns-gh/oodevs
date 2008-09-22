@@ -17,8 +17,8 @@
 // Name: ActionsPanel constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsPanel::ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config )
-    : QDockWindow( parent )
+ActionsPanel::ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, actions::ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config )
+    : QDockWindow( parent, "actions" )
 {
     setResizeEnabled( true );
     setCaption( tr( "Actions" ) );

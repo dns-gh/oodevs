@@ -19,8 +19,11 @@ namespace kernel
     class Entity_ABC;
 }
 
-class ActionsModel;
-class Action_ABC;
+namespace actions
+{
+    class ActionsModel;
+    class Action_ABC;
+}
 class ActionsScheduler;
 class Simulation;
 class TimelineItem_ABC;
@@ -36,14 +39,14 @@ class TimelineMarker;
 // =============================================================================
 class TimelineView : public QCanvasView
                    , public kernel::Observer_ABC
-                   , public kernel::ElementObserver_ABC< Action_ABC >
+                   , public kernel::ElementObserver_ABC< actions::Action_ABC >
                    , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineView( QWidget* parent, QCanvas* canvas, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler );
+             TimelineView( QWidget* parent, QCanvas* canvas, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler );
     virtual ~TimelineView();
     //@}
 
@@ -66,8 +69,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Action_ABC& action );
-    virtual void NotifyDeleted( const Action_ABC& action );
+    virtual void NotifyCreated( const actions::Action_ABC& action );
+    virtual void NotifyDeleted( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
 
     void Update();
@@ -78,9 +81,9 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const Action_ABC*, TimelineActionItem* > T_Actions;
-    typedef std::map< const kernel::Entity_ABC*, T_Actions >   T_EntityActions;
-    typedef std::vector< const kernel::Entity_ABC* >           T_Entities;
+    typedef std::map< const actions::Action_ABC*, TimelineActionItem* > T_Actions;
+    typedef std::map< const kernel::Entity_ABC*, T_Actions >            T_EntityActions;
+    typedef std::vector< const kernel::Entity_ABC* >                    T_Entities;
     //@}
 
 private:
@@ -91,15 +94,15 @@ private:
 
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    ActionsModel&        model_;
-    T_EntityActions      actions_;
-    T_Entities           entities_;
-    TimelineRuler&       ruler_;
-    TimelineMarker*      marker_;
-    TimelineItem_ABC*    selectedItem_;
-    QPoint               grabPoint_;
-    QPalette             actionPalette_;
+    kernel::Controllers&   controllers_;
+    actions::ActionsModel& model_;
+    T_EntityActions        actions_;
+    T_Entities             entities_;
+    TimelineRuler&         ruler_;
+    TimelineMarker*        marker_;
+    TimelineItem_ABC*      selectedItem_;
+    QPoint                 grabPoint_;
+    QPalette               actionPalette_;
     //@}
 };
 

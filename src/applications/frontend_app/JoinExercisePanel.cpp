@@ -28,7 +28,7 @@ using namespace frontend;
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 JoinExercisePanel::JoinExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
-    : Panel_ABC( widget, action, context )
+    : Panel_ABC( widget, action, context, "JoinExercisePanel" )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -76,7 +76,7 @@ JoinExercisePanel::~JoinExercisePanel()
 void JoinExercisePanel::StartExercise()
 {
     if( sessionList_->selectedItem() )
-        new ::JoinExercise( this, config_, list_->selectedItem()->text(), sessionList_->selectedItem()->text() );
+        Start( new ::JoinExercise( config_, list_->selectedItem()->text(), sessionList_->selectedItem()->text() ) );
     Update();
     ShowNext();
 }

@@ -11,8 +11,8 @@
 #define __Population_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelsContainer.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+#include "clients_kernel/Population_ABC.h"
 #include "DecisionalState.h"
 
 namespace dispatcher
@@ -22,6 +22,7 @@ namespace dispatcher
     class PopulationConcentration;
     class PopulationFlow;
     class PopulationOrder;
+    class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  Population
@@ -29,20 +30,13 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Population : public Entity_ABC
+class Population : public SimpleEntity< kernel::Population_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              Population( Model& model, const ASN1T_MsgPopulationCreation& msg );
     virtual ~Population();
-    //@}
-
-    //! @name Accessors
-    //@{
-          unsigned long                               GetID            () const;
-    const ModelsContainer< PopulationConcentration >& GetConcentrations() const;
-    const ModelsContainer< PopulationFlow          >& GetFlows         () const;
     //@}
 
     //! @name Operations
@@ -58,9 +52,15 @@ public:
     void Update( const ASN1T_MsgPopulationOrder&                    msg );
     void Update( const ASN1T_MsgDecisionalState&                    msg );
 
-    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
-    virtual void Accept        ( ModelVisitor_ABC& visitor );
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    void Accept( ModelVisitor_ABC& visitor ) const;
+
+    virtual const kernel::PopulationType& GetType() const;
+    virtual unsigned int GetLivingHumans() const;
+    virtual unsigned int GetDeadHumans() const;
     //@}
 
 private:
@@ -71,23 +71,24 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
           Model&        model_;
-    const unsigned long nID_;
     const unsigned long nType_;
     const std::string   strName_;
           Side&         side_;
     
     unsigned int        nDominationState_;
-    PopulationOrder*    pOrder_;
-
-    ModelsContainer< PopulationConcentration > concentrations_;
-    ModelsContainer< PopulationFlow          > flows_;
-
+    std::auto_ptr< PopulationOrder > order_;
     DecisionalState decisionalInfos_;
+    //@}
+
+public:
+    kernel::Resolver< PopulationConcentration > concentrations_;
+    kernel::Resolver< PopulationFlow          > flows_;
+
 };
 
 }
-
-#include "Population.inl"
 
 #endif // __Population_h_

@@ -32,8 +32,8 @@ class ListDisplayer : public ListView< ListDisplayer< ConcreteDisplayer > >
 public:
     //! @name Constructors/Destructor
     //@{
-             ListDisplayer( QWidget* parent, ConcreteDisplayer& displayer, ItemFactory_ABC& factory )
-                 : T_Parent( parent, *this, factory )
+             ListDisplayer( QWidget* parent, ConcreteDisplayer& displayer, ItemFactory_ABC& factory, const char* name = 0 )
+                 : T_Parent( parent, *this, factory, name )
                  , displayer_( displayer )
              {
                 setSorting( -1 );

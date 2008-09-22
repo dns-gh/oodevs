@@ -85,6 +85,8 @@ namespace
 // -----------------------------------------------------------------------------
 bool TerrainFeatureSearcher::Search( const QString& name, geometry::Point2f& point, QString& hint )
 {
+    if( !pendingSourceFile_.empty() )
+        LoadFeatures();
     const T_Feature* feature = nameLocations_->Find( Cleanup( name.ascii() ) );
     if( feature != current_ )
         index_ = 0;
@@ -131,14 +133,22 @@ void TerrainFeatureSearcher::NotifyUpdated( const kernel::ModelLoaded& model )
     {
         const bfs::path dump = bfs::path( parameters.graphicsDirectory_, bfs::native ) / "shapes.dump";
         if( bfs::exists( dump ) )
-        {
-            NameShapeLayer layer( dump.native_file_string() );
-            const float inf = std::numeric_limits< float >::infinity();
-            const geometry::Rectangle2f universe( -inf, -inf, inf, inf );
-            layer.Initialize( universe );
-            layer.Paint( universe );
-            for( std::map< std::string, T_PointVector >::const_iterator it = layer.names_.begin(); it != layer.names_.end(); ++it )
-                nameLocations_->Add( it->first, T_Feature( it->first.c_str(), it->second ) );
-        }
+            pendingSourceFile_ = dump.native_file_string();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainFeatureSearcher::LoadFeatures
+// Created: SBO 2008-08-07
+// -----------------------------------------------------------------------------
+void TerrainFeatureSearcher::LoadFeatures()
+{
+    NameShapeLayer layer( pendingSourceFile_ );
+    const float inf = std::numeric_limits< float >::infinity();
+    const geometry::Rectangle2f universe( -inf, -inf, inf, inf );
+    layer.Initialize( universe );
+    layer.Paint( universe );
+    for( std::map< std::string, T_PointVector >::const_iterator it = layer.names_.begin(); it != layer.names_.end(); ++it )
+            nameLocations_->Add( it->first, T_Feature( it->first.c_str(), it->second ) );
+    pendingSourceFile_ = "";
 }

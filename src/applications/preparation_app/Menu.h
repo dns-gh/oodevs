@@ -23,6 +23,7 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
+    class HelpSystem;
 }
 
 // =============================================================================
@@ -38,7 +39,7 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, gui::ItemFactory_ABC& factory, const QString& license );
+             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
     virtual ~Menu();
     //@}
 };

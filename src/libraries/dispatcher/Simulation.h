@@ -42,7 +42,7 @@ public:
     //@{
     void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
 
-    virtual void Send( const ASN1T_MsgsMiddleToSim& asnMsg );
+    virtual void Send( const ASN1T_MsgsDispatcherToSim& asnMsg );
     virtual void Send( const ASN1T_MsgsClientToSim& asnMsg );
     //@}
 

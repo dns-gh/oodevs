@@ -15,7 +15,10 @@ namespace kernel
     class Controllers;
 }
 
-class ActionsModel;
+namespace actions
+{
+    class ActionsModel;
+}
 class ActionsScheduler;
 
 // =============================================================================
@@ -30,7 +33,7 @@ class TimelineWidget : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler );
+             TimelineWidget( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler );
     virtual ~TimelineWidget();
     //@}
 

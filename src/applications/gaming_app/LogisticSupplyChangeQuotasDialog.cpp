@@ -11,7 +11,7 @@
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "moc_LogisticSupplyChangeQuotasDialog.cpp"
 #include "gaming/AgentsModel.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "gaming/Dotation.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/Model.h"

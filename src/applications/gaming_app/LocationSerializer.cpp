@@ -113,6 +113,16 @@ void LocationSerializer::VisitPolygon( const T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationSerializer::VisitPath
+// Created: AGE 2008-06-26
+// -----------------------------------------------------------------------------
+void LocationSerializer::VisitPath( const geometry::Point2f& , const T_PointVector& points )
+{
+    VisitLines( points );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: LocationSerializer::VisitCircle
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------

@@ -9,11 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "ObjectKnowledge.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 #include "Model.h"
-#include "Side.h"
-#include "Object.h"
-#include "Automat.h"
 #include "NBCObjectAttribute.h"
 #include "LogisticRouteObjectAttribute.h"
 #include "CrossingSiteObjectAttribute.h"
@@ -22,6 +19,10 @@
 #include "MineJamObjectAttribute.h"
 #include "LinearMinedAreaObjectAttribute.h"
 #include "DispersedMinedAreaObjectAttribute.h"
+#include "ModelVisitor_ABC.h"
+#include "Side.h"
+#include "Automat.h"
+#include "Object.h"
 
 using namespace dispatcher;
 
@@ -29,24 +30,22 @@ using namespace dispatcher;
 // Name: ObjectKnowledge constructor
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( Model& model, const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
-    : model_                        ( model )
-    , nID_                          ( asnMsg.oid )
-    , side_                         ( model.GetSides().Get( asnMsg.team ) )
-    , pObject_                      ( model.GetObjects().Find( asnMsg.real_object ) )
+ObjectKnowledge::ObjectKnowledge( const Model& model, const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
+    : SimpleEntity< kernel::ObjectKnowledge_ABC >( asnMsg.oid )
+    , model_                        ( model )
+    , team_                         ( model.sides_.Get( asnMsg.team ) )
+    , pObject_                      ( model.objects_.Find( asnMsg.real_object ) )
     , nType_                        ( asnMsg.type )
     , nObstacleType_                ( asnMsg.m.obstacle_typePresent ? asnMsg.obstacle_type : EnumObstacleType::initial )
     , nTypeDotationForConstruction_ ( asnMsg.m.construction_dotation_typePresent ? asnMsg.construction_dotation_type : std::numeric_limits< unsigned int >::max() )
     , nTypeDotationForMining_       ( asnMsg.m.mining_dotation_typePresent ? asnMsg.mining_dotation_type : std::numeric_limits< unsigned int >::max() )
     , pAttributes_                  ( 0 )
     , nRelevance_                   ( std::numeric_limits< unsigned int >::max() )
-    , localisation_                 ()
     , nConstructionPercentage_      ( std::numeric_limits< unsigned int >::max() )
     , nMiningPercentage_            ( std::numeric_limits< unsigned int >::max() )
     , nBypassingPercentage_         ( std::numeric_limits< unsigned int >::max() )
     , bReservedObstacleActivated_   ( asnMsg.m.reserved_obstacle_activatedPresent ? asnMsg.reserved_obstacle_activated : false )
     , bPerceived_                   ( false )
-    , automatPerceptions_           ()
     , nNbrDotationForConstruction_  ( std::numeric_limits< unsigned int >::max() )
     , nNbrDotationForMining_        ( std::numeric_limits< unsigned int >::max() )
 {
@@ -81,9 +80,9 @@ ObjectKnowledge::~ObjectKnowledge()
 void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
     bool realObjectChanged = ( message.real_object && ! pObject_ )
-                          || ( pObject_ && pObject_->GetID() != message.real_object );
+                          || ( pObject_ && pObject_->GetId() != message.real_object );
     if( realObjectChanged )
-        pObject_ = model_.GetObjects().Find( message.real_object );
+        pObject_ = model_.objects_.Find( message.real_object );
 
     ApplyUpdate( message );
 }
@@ -116,26 +115,26 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
                     pAttributes_ = new CampObjectAttribute( model_, asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::itineraire_logistique:
-                    pAttributes_ = new LogisticRouteObjectAttribute( model_, asnMsg.specific_attributes );
+                    pAttributes_ = new LogisticRouteObjectAttribute( asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::nuage_nbc:
                 case EnumObjectType::zone_nbc:
-                    pAttributes_ = new NBCObjectAttribute( model_, asnMsg.specific_attributes );
+                    pAttributes_ = new NBCObjectAttribute( asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::rota:
-                    pAttributes_ = new RotaObjectAttribute( model_, asnMsg.specific_attributes );
+                    pAttributes_ = new RotaObjectAttribute( asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::site_franchissement:
-                    pAttributes_ = new CrossingSiteObjectAttribute( model_, asnMsg.specific_attributes );
+                    pAttributes_ = new CrossingSiteObjectAttribute( asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::bouchon_mines:
-                    pAttributes_ = new MineJamObjectAttribute( model_, asnMsg.specific_attributes );
+                    pAttributes_ = new MineJamObjectAttribute( asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::zone_minee_lineaire:
-                    pAttributes_ = new LinearMinedAreaObjectAttribute( model_, asnMsg.specific_attributes );
+                    pAttributes_ = new LinearMinedAreaObjectAttribute( asnMsg.specific_attributes );
                     break;
                 case EnumObjectType::zone_minee_par_dispersion:
-                    pAttributes_ = new DispersedMinedAreaObjectAttribute( model_, asnMsg.specific_attributes );
+                    pAttributes_ = new DispersedMinedAreaObjectAttribute( asnMsg.specific_attributes );
                     break;
                 default:
                     pAttributes_ = 0;
@@ -144,7 +143,7 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
         pAttributes_->Update( asnMsg.specific_attributes );
         optionals_.specific_attributesPresent = 1;
     }
-   
+
     if( asnMsg.m.locationPresent )
     {
         localisation_.Update( asnMsg.location );
@@ -154,13 +153,13 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
     if( asnMsg.m.automat_perceptionPresent )
     {
         optionals_.automat_perceptionPresent = 1;
-        automatPerceptions_.Clear();
+        automatPerceptions_.clear();
         for( unsigned int i = 0; i < asnMsg.automat_perception.n; ++i )
-            automatPerceptions_.Register( model_.GetAutomats().Get( asnMsg.automat_perception.elem[ i ]) );
+            automatPerceptions_.push_back( &model_.automats_.Get( asnMsg.automat_perception.elem[ i ]) );
     }
 
     if( asnMsg.m.real_objectPresent )
-        pObject_ = model_.GetObjects().Find( asnMsg.real_object );
+        pObject_ = model_.objects_.Find( asnMsg.real_object );
 
     UPDATE_ASN_ATTRIBUTE( relevance                     , nRelevance_                   );
     UPDATE_ASN_ATTRIBUTE( construction_percentage       , nConstructionPercentage_      );
@@ -185,11 +184,11 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientObjectKnowledgeCreation asn;
+    client::ObjectKnowledgeCreation asn;
 
-    asn().oid         = nID_;
-    asn().team        = side_.GetID();
-    asn().real_object = pObject_ ? pObject_->GetID() : 0;
+    asn().oid         = GetId();
+    asn().team        = team_.GetId();
+    asn().real_object = pObject_ ? pObject_->GetId() : 0;
     asn().type        = nType_;
 
     if( nTypeDotationForConstruction_ != std::numeric_limits< unsigned int >::max() )
@@ -216,13 +215,13 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientObjectKnowledgeUpdate asn;
+    client::ObjectKnowledgeUpdate asn;
 
-    asn().oid    = nID_;
-    asn().team   = side_.GetID();
+    asn().oid  = GetId();
+    asn().team = team_.GetId();
 
     asn().m.real_objectPresent = 1;
-    asn().real_object          = pObject_ ? pObject_->GetID() : 0;
+    asn().real_object          = pObject_ ? pObject_->GetId() : 0;
 
     if( optionals_.specific_attributesPresent && pAttributes_ )
     {
@@ -239,7 +238,11 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.automat_perceptionPresent )
     {
         asn().m.automat_perceptionPresent = 1;
-        automatPerceptions_.Send< ASN1T_ListOID, ASN1T_OID >( asn().automat_perception );
+        asn().automat_perception.n = automatPerceptions_.size();
+        asn().automat_perception.elem = asn().automat_perception.n > 0 ? new ASN1T_OID[ asn().automat_perception.n ] : 0;
+        unsigned int i = 0;
+        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it, ++i )
+            asn().automat_perception.elem[i] = (*it)->GetId();
     }
 
     SEND_ASN_ATTRIBUTE( relevance                     , nRelevance_                   );
@@ -266,8 +269,62 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientObjectKnowledgeDestruction asn;
-    asn().oid  = nID_;
-    asn().team = side_.GetID();
+    client::ObjectKnowledgeDestruction asn;
+    asn().oid  = GetId();
+    asn().team = team_.GetId();
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetRecognizedEntity
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* ObjectKnowledge::GetRecognizedEntity() const
+{
+    return pObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetEntity
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+const kernel::Object_ABC* ObjectKnowledge::GetEntity() const
+{
+    return pObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetOwner
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+const kernel::Team_ABC& ObjectKnowledge::GetOwner() const
+{
+    return team_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::Display
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Display( kernel::Displayer_ABC& ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::DisplayInList
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::DisplayInList( kernel::Displayer_ABC& ) const
+{
+    // NOTHING
 }

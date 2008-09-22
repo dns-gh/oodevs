@@ -60,8 +60,12 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    ExerciseConfig( const ExerciseConfig& );            //!< Copy constructor
     ExerciseConfig& operator=( const ExerciseConfig& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void SetExerciseName( const std::string& file );
     //@}
 
 private:

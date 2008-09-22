@@ -53,11 +53,11 @@
     </message>
     <message>
         <source>MM-dd hh:mm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>MM-d hh:mm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -71,7 +71,7 @@
     <name>ActionsToolbar</name>
     <message>
         <source>Order files (*.ord)</source>
-        <translation>Fichier d&apos;ordres</translation>
+        <translation>Fichier d&apos;ordres (*.ord)</translation>
     </message>
     <message>
         <source>Load</source>
@@ -87,27 +87,27 @@
     </message>
     <message>
         <source>Load order file</source>
-        <translation type="unfinished"></translation>
+        <translation>Charger un fichier d&apos;ordres</translation>
     </message>
     <message>
         <source>Save orders to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder les ordres</translation>
     </message>
     <message>
         <source>Toggle order recording on/off</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer/Désactiver l&apos;enregistrement des ordres</translation>
     </message>
     <message>
         <source>Delete recorded orders</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer les ordres enregistrés</translation>
     </message>
     <message>
         <source>Actions recorder</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistreur d&apos;actions</translation>
     </message>
     <message>
         <source>Delete recorded orders?</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer les ordres enregistrés ?</translation>
     </message>
 </context>
 <context>
@@ -194,7 +194,7 @@
     </message>
     <message>
         <source>Associated agent:</source>
-        <translation>Agent associé:</translation>
+        <translation>Unité associée:</translation>
     </message>
     <message>
         <source>Location:</source>
@@ -285,6 +285,25 @@
     </message>
 </context>
 <context>
+    <name>Application</name>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation>SCALPED</translation>
+    </message>
+    <message>
+        <source>sword-ot@masagroup.net</source>
+        <translation>scalped@masagroup.net</translation>
+    </message>
+    <message>
+        <source>Unhandled error</source>
+        <translation>Erreur irrécupérable</translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training - Gaming</source>
+        <translation>SCALPED - Gaming</translation>
+    </message>
+</context>
+<context>
     <name>BorrowingsListView</name>
     <message>
         <source>Lender</source>
@@ -300,10 +319,21 @@
     </message>
 </context>
 <context>
+    <name>BriefingDialog</name>
+    <message>
+        <source>Briefing</source>
+        <translation>Briefing</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+</context>
+<context>
     <name>ChangeDiplomacyDialog</name>
     <message>
         <source>Diplomacy</source>
-        <translation>Diplomacie</translation>
+        <translation>Diplomatie</translation>
     </message>
     <message>
         <source>Side</source>
@@ -354,7 +384,7 @@
     </message>
     <message>
         <source>Human factors</source>
-        <translation>Facteur humains</translation>
+        <translation>Facteurs humains</translation>
     </message>
     <message>
         <source>Tiredness:</source>
@@ -413,6 +443,31 @@
     </message>
 </context>
 <context>
+    <name>ChatDock</name>
+    <message>
+        <source>Chat</source>
+        <translation>Messagerie</translation>
+    </message>
+</context>
+<context>
+    <name>ChatRoom</name>
+    <message>
+        <source>Send</source>
+        <translation>Envoyer</translation>
+    </message>
+    <message>
+        <source>Me</source>
+        <translation>Moi</translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>General</source>
+        <translation>Général</translation>
+    </message>
+</context>
+<context>
     <name>ClockDock</name>
     <message>
         <source>Clock</source>
@@ -454,6 +509,21 @@
     </message>
 </context>
 <context>
+    <name>ConnectionMenu</name>
+    <message>
+        <source>&amp;Connect...</source>
+        <translation>&amp;Connexion...</translation>
+    </message>
+    <message>
+        <source>Recents</source>
+        <translation>Récents</translation>
+    </message>
+    <message>
+        <source>&amp;Disconnect...</source>
+        <translation>&amp;Déconnexion...</translation>
+    </message>
+</context>
+<context>
     <name>DisconnectDialog</name>
     <message>
         <source>Disconnect</source>
@@ -491,7 +561,7 @@
     </message>
     <message>
         <source>Unavailable</source>
-        <translation>Undisponible</translation>
+        <translation>Indisponible</translation>
     </message>
     <message>
         <source>Repairable</source>
@@ -510,7 +580,7 @@
     <name>EventToolbar</name>
     <message>
         <source>0</source>
-        <translation>0</translation>
+        <translation type="obsolete">0</translation>
     </message>
     <message>
         <source>Messages</source>
@@ -523,6 +593,10 @@
     <message>
         <source>Conflicts</source>
         <translation>Prises à partie</translation>
+    </message>
+    <message>
+        <source>%1 pending messages</source>
+        <translation>%1 message(s) en attente</translation>
     </message>
 </context>
 <context>
@@ -685,14 +759,14 @@
     </message>
     <message>
         <source>NBC: contamination of type &apos;%1&apos; level &apos;%2&apos;</source>
-        <translation>NBC: Contamination de type &apos;%1&apos; de niveau &apos;%2&apos;</translation>
+        <translation>NBC: contamination de type &apos;%1&apos; de niveau &apos;%2&apos;</translation>
     </message>
 </context>
 <context>
     <name>InfoLendingsDialog</name>
     <message>
         <source>Lendings</source>
-        <translation>Prêts</translation>
+        <translation>Prêts d&apos;équipements</translation>
     </message>
     <message>
         <source>Lent equipment(s)</source>
@@ -748,26 +822,73 @@
     <name>InfoStancesWidget</name>
     <message>
         <source>Stance: previous was: &apos;%1&apos;</source>
-        <translation>Posture précédente: &apos;%1&apos;</translation>
+        <translation type="obsolete">Posture précédente: &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Stance: next is: &apos;%1&apos;</source>
-        <translation>Posture suivante: &apos;%1&apos;</translation>
+        <translation type="obsolete">Posture suivante: &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Stance: current is: &apos;%1&apos;</source>
-        <translation>Posture courrante: &apos;%1&apos;</translation>
+        <translation type="obsolete">Posture courrante: &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Movement</source>
+        <translation>Déplacement</translation>
+    </message>
+    <message>
+        <source>Installation</source>
+        <translation>Installation</translation>
+    </message>
+    <message>
+        <source>Stance &apos;%1&apos; at %2</source>
+        <translation>Posture &apos;%1&apos; à %2</translation>
     </message>
 </context>
 <context>
     <name>InfoStatusBar</name>
     <message>
         <source>Morale: </source>
-        <translation>Morale: </translation>
+        <translation type="obsolete">Morale: </translation>
+    </message>
+    <message>
+        <source>Experience: </source>
+        <translation type="obsolete">Expérience: </translation>
+    </message>
+    <message>
+        <source>Tiredness: </source>
+        <translation type="obsolete">Fatigue: </translation>
+    </message>
+    <message>
+        <source>Reinforcing unit &apos;%1&apos;.</source>
+        <translation type="obsolete">Renforce l&apos;unité &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Reinforced by: </source>
+        <translation type="obsolete">Renforcé par: </translation>
+    </message>
+</context>
+<context>
+    <name>InfoStatusWidget</name>
+    <message>
+        <source>Goto parent unit</source>
+        <translation>Remonter dans la hiérarchie</translation>
+    </message>
+    <message>
+        <source>morale</source>
+        <translation>moral</translation>
+    </message>
+    <message>
+        <source>tiredness</source>
+        <translation>fatigue</translation>
     </message>
     <message>
         <source>Experience: </source>
         <translation>Expérience: </translation>
+    </message>
+    <message>
+        <source>Morale: </source>
+        <translation>Moral: </translation>
     </message>
     <message>
         <source>Tiredness: </source>
@@ -780,13 +901,6 @@
     <message>
         <source>Reinforced by: </source>
         <translation>Renforcé par: </translation>
-    </message>
-</context>
-<context>
-    <name>InfoStatusWidget</name>
-    <message>
-        <source>Goto parent unit</source>
-        <translation>Remonter dans la hiérarchie</translation>
     </message>
 </context>
 <context>
@@ -812,7 +926,7 @@
     <name>InfoWidget</name>
     <message>
         <source>Reports</source>
-        <translation>Rapports</translation>
+        <translation>Compte-rendus</translation>
     </message>
     <message>
         <source>Conflicts</source>
@@ -850,7 +964,7 @@
     </message>
     <message>
         <source>Set &apos;%1&apos; function</source>
-        <translation>Ajoute la fonction &apos;%1&apos;</translation>
+        <translation>Ajouter la fonction &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Schedule</source>
@@ -861,7 +975,7 @@
     <name>LimitParameter</name>
     <message>
         <source>Set %1</source>
-        <translation>Ajoute &apos;%1&apos;</translation>
+        <translation>Ajouter &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1145,7 +1259,7 @@
     </message>
     <message>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation type="obsolete">Information</translation>
     </message>
     <message>
         <source>Log</source>
@@ -1185,751 +1299,779 @@
     </message>
     <message>
         <source>Intelligences</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignement</translation>
     </message>
     <message>
         <source>Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Création</translation>
     </message>
     <message>
         <source>Folk</source>
-        <translation type="unfinished"></translation>
+        <translation>Foule</translation>
     </message>
     <message>
         <source>Intelligence</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignement</translation>
+    </message>
+    <message>
+        <source>Knowledge</source>
+        <translation>Connaissance</translation>
+    </message>
+    <message>
+        <source>Error loading exercise: </source>
+        <translation>Erreur lors du chargement de l&apos;exercice: </translation>
     </message>
 </context>
 <context>
     <name>MaintenanceConsignsWidget</name>
     <message>
         <source>Equipment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Equipement:</translation>
     </message>
     <message>
         <source>Breakdown:</source>
-        <translation type="unfinished"></translation>
+        <translation>Panne:</translation>
     </message>
     <message>
         <source>State:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat:</translation>
     </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
     <message>
         <source>Tow trucks</source>
-        <translation type="unfinished"></translation>
+        <translation>Remorqueurs</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation type="unfinished"></translation>
+        <translation>En repos</translation>
     </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>
     <message>
         <source>Repairers</source>
-        <translation type="unfinished"></translation>
+        <translation>Réparateurs</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation type="unfinished"></translation>
+        <translation>En repos</translation>
     </message>
 </context>
 <context>
     <name>MedicalCollectAmbulancesListView</name>
     <message>
         <source>Collect ambulances</source>
-        <translation type="unfinished"></translation>
+        <translation>Ambulances de collecte</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation type="unfinished"></translation>
+        <translation>En repos</translation>
     </message>
 </context>
 <context>
     <name>MedicalConsignsWidget</name>
     <message>
         <source>Injury:</source>
-        <translation type="unfinished"></translation>
+        <translation>Blessure:</translation>
     </message>
     <message>
         <source>Mentally injured:</source>
-        <translation type="unfinished"></translation>
+        <translation>Réac. mentale:</translation>
     </message>
     <message>
         <source>NBC contaminated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Contamination NBC:</translation>
     </message>
     <message>
         <source>State:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat:</translation>
     </message>
 </context>
 <context>
     <name>MedicalDoctorsListView</name>
     <message>
         <source>Doctors</source>
-        <translation type="unfinished"></translation>
+        <translation>Docteurs</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation type="unfinished"></translation>
+        <translation>En repos</translation>
     </message>
 </context>
 <context>
     <name>MedicalReliefAmbulancesListView</name>
     <message>
         <source>Relief ambulances</source>
-        <translation type="unfinished"></translation>
+        <translation>Ambulances de relève</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation type="unfinished"></translation>
+        <translation>En repos</translation>
     </message>
 </context>
 <context>
     <name>Menu</name>
     <message>
         <source>&amp;Open exercice...</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">&amp;Ouvrir un exercice...</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation type="obsolete">Fermer</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Quitter</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fichier</translation>
     </message>
     <message>
         <source>Vision lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Lignes de vision</translation>
     </message>
     <message>
         <source>Vision cones</source>
-        <translation type="unfinished"></translation>
+        <translation>Secteurs d&apos;observation</translation>
     </message>
     <message>
         <source>Vision surfaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Surfaces de vision</translation>
     </message>
     <message>
         <source>Routes</source>
-        <translation type="unfinished"></translation>
+        <translation>Itinéraires</translation>
     </message>
     <message>
         <source>Covered routes</source>
-        <translation type="unfinished"></translation>
+        <translation>Itinéraires parcourus</translation>
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direction</translation>
     </message>
     <message>
         <source>Convex hulls</source>
-        <translation type="unfinished"></translation>
+        <translation>Enveloppes convexes</translation>
     </message>
     <message>
         <source>Current Mission</source>
-        <translation type="unfinished"></translation>
+        <translation>Mission courante</translation>
     </message>
     <message>
         <source>Decisional State</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat décisionnel</translation>
     </message>
     <message>
         <source>Formations</source>
-        <translation type="unfinished"></translation>
+        <translation>Formations</translation>
     </message>
     <message>
         <source>Units...</source>
-        <translation type="unfinished"></translation>
+        <translation>Unités...</translation>
     </message>
     <message>
         <source>Links</source>
-        <translation type="unfinished"></translation>
+        <translation>Liens</translation>
     </message>
     <message>
         <source>Missing links</source>
-        <translation type="unfinished"></translation>
+        <translation>Liens manquants</translation>
     </message>
     <message>
         <source>Real time actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Actions</translation>
     </message>
     <message>
         <source>Logistic...</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique...</translation>
     </message>
     <message>
         <source>Small texts</source>
-        <translation type="unfinished"></translation>
+        <translation>Petits noms</translation>
     </message>
     <message>
         <source>Large texts</source>
-        <translation type="unfinished"></translation>
+        <translation>Gros noms</translation>
     </message>
     <message>
         <source>Tactical lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Lignes tactiques</translation>
     </message>
     <message>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>On</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Off</translation>
     </message>
     <message>
         <source>Weather</source>
-        <translation type="unfinished"></translation>
+        <translation>Météo</translation>
     </message>
     <message>
         <source>100m</source>
-        <translation type="unfinished"></translation>
+        <translation>100m</translation>
     </message>
     <message>
         <source>250m</source>
-        <translation type="unfinished"></translation>
+        <translation>250m</translation>
     </message>
     <message>
         <source>500m</source>
-        <translation type="unfinished"></translation>
+        <translation>500m</translation>
     </message>
     <message>
         <source>1km</source>
-        <translation type="unfinished"></translation>
+        <translation>1km</translation>
     </message>
     <message>
         <source>2.5km</source>
-        <translation type="unfinished"></translation>
+        <translation>2.5km</translation>
     </message>
     <message>
         <source>5km</source>
-        <translation type="unfinished"></translation>
+        <translation>5km</translation>
     </message>
     <message>
         <source>10km</source>
-        <translation type="unfinished"></translation>
+        <translation>10km</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Grille</translation>
     </message>
     <message>
         <source>Terrain...</source>
-        <translation type="unfinished"></translation>
+        <translation>Terrain...</translation>
     </message>
     <message>
         <source>2D</source>
-        <translation type="unfinished"></translation>
+        <translation>2D</translation>
     </message>
     <message>
         <source>3D</source>
-        <translation type="unfinished"></translation>
+        <translation>3D</translation>
     </message>
     <message>
         <source>Display mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode d&apos;affichage</translation>
     </message>
     <message>
         <source>&amp;Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Préférences...</translation>
     </message>
     <message>
         <source>&amp;Display</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Affichage</translation>
     </message>
     <message>
         <source>Profiles...</source>
-        <translation type="unfinished"></translation>
+        <translation>Profils...</translation>
     </message>
     <message>
         <source>Profi&amp;les</source>
-        <translation type="unfinished"></translation>
+        <translation>Profi&amp;ls</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fenêtres</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">A propos</translation>
+        <translation>A propos</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">&amp;Aide</translation>
+    </message>
+    <message>
+        <source>Weapon ranges</source>
+        <translation>Portée des armes</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Aide</translation>
+    </message>
+    <message>
+        <source>&amp;?</source>
+        <translation>&amp;?</translation>
+    </message>
+    <message>
+        <source>&amp;Open exercise...</source>
+        <translation type="obsolete">&amp;Ouvrir exercice...</translation>
+    </message>
+    <message>
+        <source>&amp;Exercise</source>
+        <translation>&amp;Exercice</translation>
     </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>
     <message>
         <source>Unknown mission parameter: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètre de mission inconnu : %1</translation>
     </message>
 </context>
 <context>
     <name>MissionInterface_ABC</name>
     <message>
         <source>Mandatory</source>
-        <translation type="unfinished"></translation>
+        <translation>Obligatoire</translation>
     </message>
     <message>
         <source>Optional</source>
-        <translation type="unfinished"></translation>
+        <translation>Optionnel</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
     <name>MissionPanel</name>
     <message>
         <source>Mission</source>
-        <translation type="unfinished"></translation>
+        <translation>Mission</translation>
     </message>
     <message>
         <source>Agent missions</source>
-        <translation type="unfinished"></translation>
+        <translation>Missions pions</translation>
     </message>
     <message>
         <source>Automat missions</source>
-        <translation type="unfinished"></translation>
+        <translation>Missions automate</translation>
     </message>
     <message>
         <source>Engage</source>
-        <translation type="unfinished"></translation>
+        <translation>Embrayer</translation>
     </message>
     <message>
         <source>Disengage</source>
-        <translation type="unfinished"></translation>
+        <translation>Débrayer</translation>
     </message>
     <message>
         <source>Population missions</source>
-        <translation type="unfinished"></translation>
+        <translation>Missions population</translation>
     </message>
     <message>
         <source>Fragmentary orders</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordres de conduite</translation>
     </message>
 </context>
 <context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
-        <translation type="unfinished">Objets</translation>
+        <translation>Objets</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Créer</translation>
+        <translation>Créer</translation>
     </message>
 </context>
 <context>
     <name>ObjectKnowledgePanel</name>
     <message>
         <source>Object knowledges</source>
-        <translation type="unfinished"></translation>
+        <translation>Connaissances d&apos;objet</translation>
     </message>
     <message>
         <source>Known objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Objets connus</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation type="unfinished">Détails</translation>
+        <translation>Détails</translation>
     </message>
     <message>
         <source>Identifier:</source>
-        <translation type="unfinished">Identifiant:</translation>
+        <translation>Identifiant:</translation>
     </message>
     <message>
         <source>Associated object:</source>
-        <translation type="unfinished"></translation>
+        <translation>Objet associé:</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation type="unfinished">Position:</translation>
+        <translation>Position:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <source>Construction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Construction:</translation>
     </message>
     <message>
         <source>Mining:</source>
-        <translation type="unfinished"></translation>
+        <translation>Valorisation:</translation>
     </message>
     <message>
         <source>Bypass:</source>
-        <translation type="unfinished"></translation>
+        <translation>Contournement:</translation>
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;obstacle:</translation>
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Obstacle de manoeuvre activé:</translation>
     </message>
     <message>
         <source>Prepared:</source>
-        <translation type="unfinished"></translation>
+        <translation>Préparé:</translation>
     </message>
     <message>
         <source>Perceived:</source>
-        <translation type="unfinished"></translation>
+        <translation>Perçu:</translation>
     </message>
     <message>
         <source>Relevance:</source>
-        <translation type="unfinished">Pertinence:</translation>
+        <translation>Pertinence:</translation>
     </message>
     <message>
         <source>Crossing site</source>
-        <translation type="unfinished"></translation>
+        <translation>Site de franchissement</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur:</translation>
     </message>
     <message>
         <source>Depth:</source>
-        <translation type="unfinished"></translation>
+        <translation>Profondeur:</translation>
     </message>
     <message>
         <source>Stream speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Débit du courant:</translation>
     </message>
     <message>
         <source>Build river banks:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aménagement des rives:</translation>
     </message>
     <message>
         <source>Camp</source>
-        <translation type="unfinished"></translation>
+        <translation>Camp</translation>
     </message>
     <message>
         <source>TC2:</source>
-        <translation type="unfinished"></translation>
+        <translation>TC2:</translation>
     </message>
     <message>
         <source>NBC cloud/zone</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuage/zone NBC</translation>
     </message>
     <message>
         <source>NBC agent:</source>
-        <translation type="unfinished"></translation>
+        <translation>Agent NBC:</translation>
     </message>
     <message>
         <source>ROTA</source>
-        <translation type="unfinished"></translation>
+        <translation>ROTA</translation>
     </message>
     <message>
         <source>Danger level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau de danger:</translation>
     </message>
     <message>
         <source>NBC agent(s):</source>
-        <translation type="unfinished"></translation>
+        <translation>Agent(s) NBC:</translation>
     </message>
     <message>
         <source>Logistic route</source>
-        <translation type="unfinished"></translation>
+        <translation>Itinéraire logistique</translation>
     </message>
     <message>
         <source>Equipped:</source>
-        <translation type="unfinished"></translation>
+        <translation>Equipé:</translation>
     </message>
     <message>
         <source>Flow:</source>
-        <translation type="unfinished"></translation>
+        <translation>Débit:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Longueur:</translation>
     </message>
     <message>
         <source>Maximum weight:</source>
-        <translation type="unfinished"></translation>
+        <translation>Poids maximum:</translation>
     </message>
     <message>
         <source>Mine parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres des mines</translation>
     </message>
     <message>
         <source>Activity time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps d&apos;activité:</translation>
     </message>
     <message>
         <source>Density:</source>
-        <translation type="unfinished"></translation>
+        <translation>Densité:</translation>
     </message>
     <message>
         <source>Agent</source>
-        <translation type="unfinished"></translation>
+        <translation>Agent</translation>
     </message>
 </context>
 <context>
     <name>ObjectMagicOrdersInterface</name>
     <message>
         <source>Magic orders</source>
-        <translation type="unfinished">Actions magiques</translation>
+        <translation>Actions magiques</translation>
     </message>
     <message>
         <source>Build</source>
-        <translation type="unfinished"></translation>
+        <translation>Construire</translation>
     </message>
     <message>
         <source>Destroy</source>
-        <translation type="unfinished"></translation>
+        <translation>Détruire</translation>
     </message>
     <message>
         <source>Mine</source>
-        <translation type="unfinished"></translation>
+        <translation>Valoriser</translation>
     </message>
     <message>
         <source>Sweep mines</source>
-        <translation type="unfinished"></translation>
+        <translation>Déminer</translation>
     </message>
     <message>
         <source>Deactivate reserved obstacle</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactiver l&apos;obstacle de manoeuvre</translation>
     </message>
     <message>
         <source>Activate reserved obstacle</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer l&apos;obstacle de manoeuvre</translation>
     </message>
 </context>
 <context>
     <name>ObjectPanel</name>
     <message>
         <source>Information</source>
-        <translation type="unfinished">Information</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Identifier:</source>
-        <translation type="unfinished">Identifiant:</translation>
+        <translation>Identifiant:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation type="unfinished">Position:</translation>
+        <translation>Position:</translation>
     </message>
     <message>
         <source>Construction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Construction:</translation>
     </message>
     <message>
         <source>Mining:</source>
-        <translation type="unfinished"></translation>
+        <translation>Valorisation:</translation>
     </message>
     <message>
         <source>Bypass:</source>
-        <translation type="unfinished"></translation>
+        <translation>Contournement:</translation>
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;obstacle:</translation>
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Obstacle de manoeuvre activé:</translation>
     </message>
     <message>
         <source>Construction dotation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotation de construction:</translation>
     </message>
     <message>
         <source>Development dotation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotation de valorisation:</translation>
     </message>
     <message>
         <source>Crossing site</source>
-        <translation type="unfinished"></translation>
+        <translation>Site de franchissement</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur:</translation>
     </message>
     <message>
         <source>Depth:</source>
-        <translation type="unfinished"></translation>
+        <translation>Profondeur:</translation>
     </message>
     <message>
         <source>Stream speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Débit du courant:</translation>
     </message>
     <message>
         <source>Build river banks:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aménagement des rives:</translation>
     </message>
     <message>
         <source>Camp</source>
-        <translation type="unfinished"></translation>
+        <translation>Camp</translation>
     </message>
     <message>
         <source>TC2:</source>
-        <translation type="unfinished"></translation>
+        <translation>TC2:</translation>
     </message>
     <message>
         <source>NBC cloud/zone</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuage/zone NBC</translation>
     </message>
     <message>
         <source>NBC agent:</source>
-        <translation type="unfinished"></translation>
+        <translation>Agent NBC:</translation>
     </message>
     <message>
         <source>ROTA</source>
-        <translation type="unfinished"></translation>
+        <translation>ROTA</translation>
     </message>
     <message>
         <source>Danger level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau de danger:</translation>
     </message>
     <message>
         <source>NBC agent(s):</source>
-        <translation type="unfinished"></translation>
+        <translation>Agent(s) NBC:</translation>
     </message>
     <message>
         <source>Logistic route</source>
-        <translation type="unfinished"></translation>
+        <translation>Itinéraire logistique</translation>
     </message>
     <message>
         <source>Equipped:</source>
-        <translation type="unfinished"></translation>
+        <translation>Equipé:</translation>
     </message>
     <message>
         <source>Flow:</source>
-        <translation type="unfinished"></translation>
+        <translation>Débit:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Longueur:</translation>
     </message>
     <message>
         <source>Maximum weight:</source>
-        <translation type="unfinished"></translation>
+        <translation>Poids maximum:</translation>
     </message>
     <message>
         <source>Mine parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres des mines</translation>
     </message>
     <message>
         <source>Activity time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps d&apos;activité:</translation>
     </message>
     <message>
         <source>Density:</source>
-        <translation type="unfinished"></translation>
+        <translation>Densité:</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Appliquer</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
     <name>OrbatToolbar</name>
     <message>
         <source>Aggregate all automats</source>
-        <translation type="unfinished"></translation>
+        <translation>Agréger tous les automates</translation>
     </message>
     <message>
         <source>Disaggregate all automats</source>
-        <translation type="unfinished"></translation>
+        <translation>Désagréger tous les automates</translation>
     </message>
     <message>
         <source>Remove filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le filtre</translation>
     </message>
     <message>
         <source>Filter view</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrer la vue</translation>
     </message>
 </context>
 <context>
@@ -1947,651 +2089,701 @@
     <name>ParamAgentKnowledgeList</name>
     <message>
         <source>Add agent knowledge</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter la connaissance</translation>
     </message>
     <message>
         <source>Agent knowledge %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Connaissance %1</translation>
     </message>
 </context>
 <context>
     <name>ParamAgentList</name>
     <message>
         <source>Add agent</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter l&apos;unité</translation>
     </message>
     <message>
         <source>Agent %1:%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Unité %1 : %2</translation>
     </message>
     <message>
         <source>Add hierarchy</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter la hiérarchie</translation>
     </message>
 </context>
 <context>
     <name>ParamAutomatList</name>
     <message>
         <source>Add automat</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter l&apos;automate</translation>
     </message>
     <message>
         <source>Automat %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate %1</translation>
     </message>
 </context>
 <context>
     <name>ParamHumanWoundList</name>
     <message>
         <source>Add...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter...</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>ParamIntelligenceList</name>
     <message>
         <source>Add intelligence</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter le renseignement</translation>
     </message>
     <message>
         <source>Intelligence %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignement %1</translation>
     </message>
 </context>
 <context>
     <name>ParamLimaList</name>
     <message>
         <source>Phase line %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Lima %1</translation>
     </message>
     <message>
         <source>Add line as</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter la lima en tant que</translation>
     </message>
 </context>
 <context>
     <name>ParamLocationList</name>
     <message>
         <source>Location %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Position %1</translation>
     </message>
 </context>
 <context>
     <name>ParamMissionObjective</name>
     <message>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Position</translation>
     </message>
     <message>
         <source>Schedule</source>
-        <translation type="unfinished">Horaire</translation>
+        <translation>Horaire</translation>
     </message>
 </context>
 <context>
     <name>ParamMissionObjectiveList</name>
     <message>
         <source>Objective %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Objectif %1</translation>
     </message>
 </context>
 <context>
     <name>ParamObjectKnowledgeList</name>
     <message>
         <source>Add object knowledge</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter la connaissance d&apos;objet</translation>
     </message>
     <message>
         <source>Object knowledge %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Connaissance d&apos;objet %1</translation>
     </message>
 </context>
 <context>
     <name>ParamObstacle</name>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;obstacle:</translation>
     </message>
     <message>
         <source>Density</source>
-        <translation type="unfinished"></translation>
+        <translation>Densité</translation>
     </message>
     <message>
         <source>TC2</source>
-        <translation type="unfinished">TC2</translation>
+        <translation>TC2</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Position</translation>
     </message>
     <message>
         <source>Obstacle type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;obstacle</translation>
     </message>
 </context>
 <context>
     <name>ParamObstacleList</name>
     <message>
         <source>Obstacle %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Obstacle %1</translation>
     </message>
 </context>
 <context>
     <name>ParamPathList</name>
     <message>
         <source>Route %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Itinéraire %1</translation>
     </message>
 </context>
 <context>
     <name>PopulationKnowledgePanel</name>
     <message>
         <source>Population knowledges</source>
-        <translation type="unfinished"></translation>
+        <translation>Connaissances de population</translation>
     </message>
     <message>
         <source>Known populations</source>
-        <translation type="unfinished"></translation>
+        <translation>Populations connues</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation type="unfinished">Détails</translation>
+        <translation>Détails</translation>
     </message>
     <message>
         <source>Identifier:</source>
-        <translation type="unfinished">Identifiant:</translation>
+        <translation>Identifiant:</translation>
     </message>
     <message>
         <source>Associated population:</source>
-        <translation type="unfinished"></translation>
+        <translation>Population associée:</translation>
     </message>
     <message>
         <source>Side:</source>
-        <translation type="unfinished">Camp:</translation>
+        <translation>Camp:</translation>
     </message>
     <message>
         <source>Concentration</source>
-        <translation type="unfinished"></translation>
+        <translation>Concentration</translation>
     </message>
     <message>
         <source>Associated concentration:</source>
-        <translation type="unfinished"></translation>
+        <translation>Concentration associée:</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation type="unfinished">Position:</translation>
+        <translation>Position:</translation>
     </message>
     <message>
         <source>Alive people:</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnes en vie:</translation>
     </message>
     <message>
         <source>Dead people:</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnes décédées:</translation>
     </message>
     <message>
         <source>Mood:</source>
-        <translation type="unfinished"></translation>
+        <translation>Attitude:</translation>
     </message>
     <message>
         <source>Perceived:</source>
-        <translation type="unfinished"></translation>
+        <translation>Perçue:</translation>
     </message>
     <message>
         <source>Relevance:</source>
-        <translation type="unfinished">Pertinence:</translation>
+        <translation>Pertinence:</translation>
     </message>
     <message>
         <source>Flow</source>
-        <translation type="unfinished"></translation>
+        <translation>Flux</translation>
     </message>
     <message>
         <source>Associated flow:</source>
-        <translation type="unfinished"></translation>
+        <translation>Flux associé:</translation>
     </message>
     <message>
         <source>Heading:</source>
-        <translation type="unfinished">Direction:</translation>
+        <translation>Direction:</translation>
     </message>
     <message>
         <source>Speed:</source>
-        <translation type="unfinished">Vitesse:</translation>
+        <translation>Vitesse:</translation>
     </message>
     <message>
         <source>Known chunks:</source>
-        <translation type="unfinished"></translation>
+        <translation>Portions connues:</translation>
     </message>
 </context>
 <context>
     <name>PopulationMagicOrdersInterface</name>
     <message>
         <source>Magic orders</source>
-        <translation type="unfinished">Actions magiques</translation>
+        <translation>Actions magiques</translation>
     </message>
     <message>
         <source>Teleport</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléporter</translation>
     </message>
     <message>
         <source>Kill all</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuer la population</translation>
     </message>
     <message>
         <source>Kill people:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuer des personnes:</translation>
     </message>
     <message>
         <source>Resurect people:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ressusciter des personnes:</translation>
     </message>
     <message>
         <source>Change population attitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer l&apos;attitude</translation>
     </message>
     <message>
         <source>Enter value</source>
-        <translation type="unfinished"></translation>
+        <translation>Saisir une valeur</translation>
     </message>
     <message>
         <source>Type-in value then press &apos;Enter&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
     </message>
 </context>
 <context>
     <name>ProfilingPanel</name>
     <message>
         <source>Incoming: </source>
-        <translation type="unfinished"></translation>
+        <translation>Entrant: </translation>
     </message>
     <message>
         <source>Outgoing: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sortant: </translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Réseau</translation>
     </message>
     <message>
         <source>Memory: </source>
-        <translation type="unfinished"></translation>
+        <translation>Mémoire: </translation>
     </message>
     <message>
         <source>Usage (MiB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisation (Mo)</translation>
     </message>
     <message>
         <source>Virtual memory: </source>
-        <translation type="unfinished"></translation>
+        <translation>Mémoire virtuelle: </translation>
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Mémoire</translation>
     </message>
     <message>
         <source>Shorts: </source>
-        <translation type="unfinished"></translation>
+        <translation>Courts: </translation>
     </message>
     <message>
         <source>Count</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Longs: </source>
-        <translation type="unfinished"></translation>
+        <translation>Longs: </translation>
     </message>
     <message>
         <source>Pathfinds</source>
-        <translation type="unfinished"></translation>
+        <translation>Calculs d&apos;itinéraires</translation>
     </message>
 </context>
 <context>
     <name>RcEntityResolver</name>
     <message>
         <source>[Unknown]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Inconnu]</translation>
     </message>
 </context>
 <context>
     <name>ReplayerToolbar</name>
     <message>
         <source>Replay control</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôle du rejeu</translation>
     </message>
     <message>
         <source>Tick %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tick %1</translation>
     </message>
 </context>
 <context>
     <name>ReportFilterOptions</name>
     <message>
         <source>Display reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les compte-rendus</translation>
     </message>
     <message>
         <source>Display traces</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les traces</translation>
     </message>
     <message>
         <source>Display events</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les évènements</translation>
     </message>
     <message>
         <source>Display messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les messages</translation>
     </message>
     <message>
         <source>Display warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les avertissements</translation>
     </message>
     <message>
         <source>Show reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les compte-rendus</translation>
     </message>
     <message>
         <source>Show traces</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les traces</translation>
     </message>
     <message>
         <source>Show events</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les évènements</translation>
     </message>
     <message>
         <source>Show messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les messages</translation>
     </message>
     <message>
         <source>Show warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les avertissements</translation>
     </message>
 </context>
 <context>
     <name>ReportListView</name>
     <message>
         <source>Received</source>
-        <translation type="unfinished"></translation>
+        <translation>Reçu</translation>
     </message>
     <message>
         <source>Report</source>
-        <translation type="unfinished"></translation>
+        <translation>Compte-rendu</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout effacer</translation>
     </message>
     <message>
         <source>Clear traces</source>
-        <translation type="unfinished"></translation>
+        <translation>Effacer les traces</translation>
     </message>
 </context>
 <context>
     <name>SIMControlToolbar</name>
     <message>
         <source>Simulation control</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôle de la simulation</translation>
     </message>
     <message>
         <source>Connect (C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Connexion (C)</translation>
     </message>
     <message>
         <source>Pause (P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pause (P)</translation>
     </message>
     <message>
         <source>Speed factor:</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Accélération: </translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Save checkpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer une sauvegarde</translation>
     </message>
     <message>
         <source>Checkpoint name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de la sauvegarde: </translation>
     </message>
     <message>
         <source>Connecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Connexion en cours</translation>
     </message>
     <message>
         <source>Disconnect (C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Déconnexion (C)</translation>
     </message>
     <message>
         <source>Unpause (P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Reprendre (P)</translation>
+    </message>
+    <message>
+        <source>Speed factor: </source>
+        <translation>Jeu accéléré: </translation>
     </message>
 </context>
 <context>
     <name>StatisticsWidget</name>
     <message>
         <source>Rate (B)</source>
-        <translation type="unfinished">Taux (B)</translation>
+        <translation>Taux (B)</translation>
     </message>
     <message>
         <source>Time (Tick)</source>
-        <translation type="unfinished">Temps (ticks)</translation>
+        <translation>Temps (ticks)</translation>
     </message>
 </context>
 <context>
     <name>StatusBar</name>
     <message>
         <source>Saving checkpoint...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde en cours...</translation>
     </message>
 </context>
 <context>
     <name>SupplyConsignsWidget</name>
     <message>
         <source>Supplier:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fournisseur:</translation>
     </message>
     <message>
         <source>Convoyer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Convoyeur:</translation>
     </message>
     <message>
         <source>State:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat:</translation>
     </message>
     <message>
         <source>Dotations requested/granted/convoyed</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotations demandées/accordées/convoyées</translation>
     </message>
 </context>
 <context>
     <name>SupplyQuotasListView</name>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Quota</source>
-        <translation type="unfinished">Quota</translation>
+        <translation>Quota</translation>
     </message>
 </context>
 <context>
     <name>SupplyStocksListView</name>
     <message>
         <source>Stock</source>
-        <translation type="unfinished"></translation>
+        <translation>Stock</translation>
     </message>
     <message>
         <source>Quantity</source>
-        <translation type="unfinished">Quantité</translation>
+        <translation>Quantité</translation>
     </message>
 </context>
 <context>
     <name>SupplyTransportersListView</name>
     <message>
         <source>Transporters</source>
-        <translation type="unfinished">Transporteurs</translation>
+        <translation>Transporteurs</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisé</translation>
     </message>
     <message>
         <source>Resting</source>
-        <translation type="unfinished"></translation>
+        <translation>En repos</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActionItem</name>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Renommer</translation>
+    </message>
+    <message>
+        <source>Press enter to rename, unfocus field to cancel</source>
+        <translation>Appuyez sur [Entrée] pour valider, cliquez en dehors du champ pour annuler</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineListView</name>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
     </message>
 </context>
 <context>
     <name>TimelinePanel</name>
     <message>
         <source>Actions timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Chronologie des actions</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineView</name>
+    <message>
+        <source>Zoom In</source>
+        <translation>Zoomer</translation>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation>Dézoomer</translation>
     </message>
 </context>
 <context>
     <name>UnitMagicOrdersInterface</name>
     <message>
         <source>Magic orders</source>
-        <translation type="unfinished">Actions magiques</translation>
+        <translation>Actions magiques</translation>
     </message>
     <message>
         <source>Teleport</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléporter</translation>
     </message>
     <message>
         <source>Recover - Transporters</source>
-        <translation type="unfinished"></translation>
+        <translation>Recompléter - Transporteurs</translation>
     </message>
     <message>
         <source>Destroy - Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Détruire - Composante</translation>
     </message>
     <message>
         <source>Recover - All</source>
-        <translation type="unfinished"></translation>
+        <translation>Recompléter - Tout</translation>
     </message>
     <message>
         <source>Recover - Troops</source>
-        <translation type="unfinished"></translation>
+        <translation>Recompléter - Troupes</translation>
     </message>
     <message>
         <source>Recover - Equipments</source>
-        <translation type="unfinished"></translation>
+        <translation>Recompléter - Composantes</translation>
     </message>
     <message>
         <source>Recover - Resources</source>
-        <translation type="unfinished"></translation>
+        <translation>Recompléter - Ressources</translation>
     </message>
     <message>
         <source>Destroy - All</source>
-        <translation type="unfinished"></translation>
+        <translation>Détruire - Entièrement</translation>
     </message>
     <message>
         <source>Cancel surrender</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler la rédition</translation>
     </message>
     <message>
         <source>Surrender to</source>
-        <translation type="unfinished"></translation>
+        <translation>Rédition</translation>
     </message>
 </context>
 <context>
     <name>UserProfileDialog</name>
     <message>
         <source>User profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Profils utilisateur</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
     <name>UserProfileList</name>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Créer</translation>
+        <translation>Créer</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>UserProfileRights</name>
     <message>
         <source>Read</source>
-        <translation type="unfinished"></translation>
+        <translation>Lecture</translation>
     </message>
     <message>
         <source>Write</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecriture</translation>
     </message>
 </context>
 <context>
     <name>UserProfileWidget</name>
     <message>
         <source>Profile information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information sur le profil</translation>
     </message>
     <message>
         <source>Login:</source>
-        <translation type="unfinished"></translation>
+        <translation>Login:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mot de passe:</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Access permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Droits d&apos;accès</translation>
     </message>
     <message>
         <source>Supervisor actions:</source>
-        <translation type="unfinished"></translation>
+        <translation>Actions de supervision:</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished">Unités</translation>
+        <translation>Unités</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished">Populations</translation>
+        <translation>Populations</translation>
     </message>
     <message>
         <source>Permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Droits</translation>
     </message>
     <message>
         <source>Profile edition</source>
-        <translation type="unfinished"></translation>
+        <translation>Edition du profil</translation>
     </message>
     <message>
         <source>Profile has changed, commit modifications?</source>
-        <translation type="unfinished"></translation>
+        <translation>Le profil a changé, sauvegarder les modifications ?</translation>
+    </message>
+    <message>
+        <source>&apos;Read&apos; permission allows you to see an unit.
+&apos;Write&apos; permission allows you to control an unit.</source>
+        <translation>&apos;Lecture&apos; permet de voir une unité.
+&apos;Ecriture&apos; permet de contrôler une unité.</translation>
+    </message>
+</context>
+<context>
+    <name>tools</name>
+    <message>
+        <source> - Not connected</source>
+        <translation> - Non connecté</translation>
     </message>
 </context>
 </TS>

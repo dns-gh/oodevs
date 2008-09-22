@@ -11,12 +11,12 @@
 #include "ReplayPlugin.h"
 #include "Loader.h"
 #include "ClientPublisher_ABC.h"
-#include "network_def.h"
 #include "Model.h"
 #include "ReplayExtensionFactory.h"
-#include "game_asn/Simulation.h"
+#include "game_asn/ReplaySenders.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "tools/MessageDispatcher_ABC.h"
+#include "Services.h"
 
 using namespace dispatcher;
 
@@ -46,6 +46,15 @@ ReplayPlugin::ReplayPlugin( Model& model, ClientPublisher_ABC& clients, tools::M
 ReplayPlugin::~ReplayPlugin()
 {
     model_.UnregisterFactory( *factory_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayPlugin::Register
+// Created: AGE 2008-08-13
+// -----------------------------------------------------------------------------
+void ReplayPlugin::Register( dispatcher::Services& services )
+{
+    services.Declare< replay::Service >();
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +150,7 @@ void ReplayPlugin::OnReceive( const std::string& , const ASN1T_MsgsClientToRepla
 // -----------------------------------------------------------------------------
 void ReplayPlugin::ChangeTimeFactor( unsigned factor )
 {
-    AsnMsgReplayToClientControlChangeTimeFactorAck asn;
+    replay::ControlChangeTimeFactorAck asn;
     if( factor )
     {
         factor_ = factor;
@@ -161,7 +170,7 @@ void ReplayPlugin::ChangeTimeFactor( unsigned factor )
 // -----------------------------------------------------------------------------
 void ReplayPlugin::Pause()
 {
-    AsnMsgReplayToClientControlPauseAck asn;
+    replay::ControlPauseAck asn;
     asn() = running_ ? EnumControlErrorCode::no_error : EnumControlErrorCode::error_already_paused;
     asn.Send( clients_ );
     running_ = false;
@@ -173,7 +182,7 @@ void ReplayPlugin::Pause()
 // -----------------------------------------------------------------------------
 void ReplayPlugin::Resume()
 {
-    AsnMsgReplayToClientControlResumeAck asn;
+    replay::ControlResumeAck asn;
     asn() = running_ ? EnumControlErrorCode::error_not_paused :  EnumControlErrorCode::no_error;
     asn.Send( clients_ );
     running_ = true;
@@ -185,7 +194,7 @@ void ReplayPlugin::Resume()
 // -----------------------------------------------------------------------------
 void ReplayPlugin::SkipToFrame( unsigned frame )
 {
-    AsnMsgReplayToClientControlSkipToTickAck asn;
+    replay::ControlSkipToTickAck asn;
     asn().tick = loader_.GetCurrentTick();
     if( frame < loader_.GetTickNumber() )
     {

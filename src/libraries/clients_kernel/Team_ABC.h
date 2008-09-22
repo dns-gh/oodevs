@@ -25,6 +25,11 @@ namespace kernel
 // =============================================================================
 class Team_ABC : public Entity_ABC
 {
+public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -38,6 +43,8 @@ public:
     virtual bool IsFriend () const = 0;
     virtual bool IsEnemy  () const = 0;
     virtual bool IsNeutral() const = 0;
+
+    virtual QString GetTypeName() const;
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;

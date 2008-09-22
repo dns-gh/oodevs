@@ -20,8 +20,11 @@ namespace kernel
     class Entity_ABC;
 }
 
-class Action_ABC;
-class ActionParameter_ABC;
+namespace actions
+{
+    class Action_ABC;
+    class Parameter_ABC;
+}
 class MissionParameters;
 
 // =============================================================================
@@ -45,8 +48,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( const Action_ABC& action, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
-    virtual void Display( const ActionParameter_ABC& param, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    virtual void Display( const actions::Action_ABC& action, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    virtual void Display( const actions::Parameter_ABC& param, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
 private:

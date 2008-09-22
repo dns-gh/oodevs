@@ -9,9 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "ReplaySynchronisations.h"
-#include "Entity_ABC.h"
 #include "Synchroniser.h"
 #include "ReplayModel_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 
 using namespace dispatcher;
 
@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: ReplaySynchronisations constructor
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-ReplaySynchronisations::ReplaySynchronisations( const ReplayModel_ABC& model, Entity_ABC& holder )
+ReplaySynchronisations::ReplaySynchronisations( const ReplayModel_ABC& model, kernel::Entity_ABC& holder )
     : model_   ( model )
     , holder_  ( holder )
     , created_ ( false )
@@ -53,7 +53,7 @@ void ReplaySynchronisations::StartSynchronisation( bool create )
 // Name: ReplaySynchronisations::EndSynchronisation
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-void ReplaySynchronisations::EndSynchronisation( Synchroniser& synch )
+void ReplaySynchronisations::EndSynchronisation( Synchroniser& synch ) const
 {
     assert( synching_ );
     if( created_ )
@@ -68,7 +68,7 @@ void ReplaySynchronisations::EndSynchronisation( Synchroniser& synch )
 // Name: ReplaySynchronisations::StartSynchronisation
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-void ReplaySynchronisations::StartSynchronisation( Entity_ABC& next, bool create )
+void ReplaySynchronisations::StartSynchronisation( kernel::Entity_ABC& next, bool create )
 {
     if( synching_ )
         next.Get< ReplaySynchronisations >().StartSynchronisation( create );

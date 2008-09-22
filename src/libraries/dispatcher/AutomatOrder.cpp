@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "AutomatOrder.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 #include "Automat.h"
 
 using namespace dispatcher;
@@ -41,8 +41,8 @@ AutomatOrder::~AutomatOrder()
 // -----------------------------------------------------------------------------
 void AutomatOrder::Send( ClientPublisher_ABC& publisher )
 {
-    AsnMsgSimToClientAutomatOrder asn;
-    asn().oid       = automat_.GetID();
+    client::AutomatOrder asn;
+    asn().oid       = automat_.GetId();
     asn().mission   = missionID_;
     asn().formation = formation_;       
     Order_ABC::Send( asn().parametres );
@@ -57,8 +57,8 @@ void AutomatOrder::Send( ClientPublisher_ABC& publisher )
 // static
 void AutomatOrder::SendNoMission( const Automat& automat, ClientPublisher_ABC& publisher )
 {
-    AsnMsgSimToClientAutomatOrder asn;
-    asn().oid          = automat.GetID();
+    client::AutomatOrder asn;
+    asn().oid          = automat.GetId();
     asn().mission      = 0;
     asn().formation    = EnumAutomatOrderFormation::un_echelon;
     asn().parametres.n = 0;

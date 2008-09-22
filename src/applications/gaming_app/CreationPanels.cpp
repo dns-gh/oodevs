@@ -14,7 +14,10 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/UnitsPanel.h"
 #include "clients_gui/IntelligencesPanel.h"
-#include "gaming/Simulation.h"
+#include "clients_gui/DrawerPanel.h"
+#include "gaming/DrawingsModel.h"
+#include "gaming/Services.h"
+#include "game_asn/SimulationSenders.h"
 #include "ObjectCreationPanel.h"
 
 using namespace kernel;
@@ -24,7 +27,7 @@ using namespace gui;
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, ItemFactory_ABC& factory, Publisher_ABC& publisher, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy )
+CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, ItemFactory_ABC& factory, Publisher_ABC& publisher, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings )
     : Panels( parent )
     , controllers_( controllers )
     , shown_( true )
@@ -33,6 +36,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, publisher, staticModel, paramLayer, tools ) );
     controllers_.Register( *this );
     AddPanel( intel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
+    AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, drawings ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,17 +61,17 @@ void CreationPanels::Draw( Viewport_ABC& viewport ) const
 // Name: CreationPanels::NotifyUpdated
 // Created: AGE 2007-10-18
 // -----------------------------------------------------------------------------
-void CreationPanels::NotifyUpdated( const Simulation& simu )
+void CreationPanels::NotifyUpdated( const Services& services )
 {
-    if( simu.IsReplayer() )
-    {
-        Remove( units_ );
-        Remove( objects_ );
-        Remove( intel_ );
-    } else 
+    if( services.HasService< simulation::Service >() )
     {
         Add( units_ );
         Add( objects_ );
         Add( intel_ );
+    } else 
+    {
+        Remove( units_ );
+        Remove( objects_ );
+        Remove( intel_ );
     }
 }

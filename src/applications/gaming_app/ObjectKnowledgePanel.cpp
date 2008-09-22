@@ -15,7 +15,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "gaming/ObjectKnowledges.h"
-#include "gaming/ObjectKnowledge_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "gaming/ObjectPerceptions.h"
 #include "clients_gui/ListDisplayer.h"
 #include "clients_gui/DisplayBuilder.h"

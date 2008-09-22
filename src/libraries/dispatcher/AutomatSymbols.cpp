@@ -9,10 +9,11 @@
 
 #include "dispatcher_pch.h"
 #include "AutomatSymbols.h"
-#include "Agent.h"
 #include "Automat.h"
 #include "Formation.h"
 #include "tools/App6Symbol.h"
+#include "dispatcher/Agent.h"
+#include <boost/bind.hpp>
 
 using namespace dispatcher;
 
@@ -40,7 +41,7 @@ namespace
     struct SymbolAggregator
     {
         SymbolAggregator() : level_( 0 ) {}
-        void operator()( Agent& agent )
+        void AddAgent( const kernel::Agent_ABC& agent )
         {
             const std::string agentSymbol = agent.Get< EntitySymbols_ABC >().BuildSymbol( false );
             level_ = std::max( level_, tools::app6::GetLevel( agentSymbol ) );
@@ -58,14 +59,14 @@ namespace
 std::string AutomatSymbols::BuildSymbol( bool up /*= true*/ ) const
 {
     SymbolAggregator aggregator;
-    holder_.agents_.Apply< SymbolAggregator& >( aggregator );
+    holder_.agents_.Apply( boost::bind( &SymbolAggregator::AddAgent, boost::ref( aggregator ), _1 ) );
     if( up )
     {
         const EntitySymbols_ABC* symbols;
-        if( holder_.pParentFormation_ )
-            symbols = &holder_.pParentFormation_->Get< EntitySymbols_ABC >();
+        if( holder_.parentFormation_ )
+            symbols = &holder_.parentFormation_->Get< EntitySymbols_ABC >();
         else
-            symbols = &holder_.pParentAutomat_->Get< EntitySymbols_ABC >();
+            symbols = &holder_.parentAutomat_->Get< EntitySymbols_ABC >();
         aggregator.symbol_ = tools::app6::MergeSymbol( symbols->BuildSymbol(), aggregator.symbol_ );
     }
     tools::app6::SetLevel( aggregator.symbol_, aggregator.level_ + 1 );

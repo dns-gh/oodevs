@@ -12,7 +12,6 @@
 #include "graphics/MapLayer_ABC.h"
 #include "graphics/Scale.h"
 #include "IconLayout.h"
-#include "DrawerStyle.h"
 #include "GlRenderPass_ABC.h"
 #include "graphics/extensions.h"
 #include <xeumeuleu/xml.h>
@@ -21,24 +20,6 @@
 using namespace geometry;
 using namespace kernel;
 using namespace gui;
-
-namespace
-{
-    struct SpyLayer : public MapLayer_ABC
-    {
-        SpyLayer( Rectangle2f& viewport, unsigned int& frame )
-            : viewport_( &viewport )
-            , frame_( &frame )
-        {}
-        virtual void Paint( const Rectangle2f& viewport )
-        {
-            * viewport_ = viewport;
-            ++ *frame_;
-        }
-        Rectangle2f* viewport_;
-        unsigned int* frame_;
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::passLess::operator()
@@ -69,7 +50,6 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const tools::Exe
     , baseFont_( 0 )
 {
     setAcceptDrops( true );
-    Register( *new SpyLayer( viewport_, frame_ ) );
     if( context() != context_ || ! context_->isValid() )
         throw std::runtime_error( "Unable to create context" );
 }
@@ -206,6 +186,7 @@ void GlWidget::RemovePass( GlRenderPass_ABC& pass )
 // -----------------------------------------------------------------------------
 void GlWidget::RenderPass( GlRenderPass_ABC& pass )
 {
+    ++frame_;
     currentPass_ = pass.GetName();
     const geometry::Rectangle2f viewport = GetViewport();
     const int windowHeight = windowHeight_;
@@ -654,6 +635,16 @@ void GlWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center,
 void GlWidget::CenterOn( const Point2f& point )
 {
     Center( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::Zoom
+// Created: SBO 2008-07-07
+// -----------------------------------------------------------------------------
+void GlWidget::Zoom( float w )
+{
+    if( width() )
+        MapWidget::Zoom( w * height() / width() );
 }
 
 // -----------------------------------------------------------------------------

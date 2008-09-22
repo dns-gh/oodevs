@@ -17,14 +17,20 @@ MsgAarInformation ::= SEQUENCE
     information VisibleString -- $$$$ XmlOverAsn pattern
 }
 
-MsgIndicatorResult ::= SEQUENCE
+MsgIndicator ::= SEQUENCE
+{
+    name VisibleString,
+    value REAL
+}
+
+MsgPlotResult ::= SEQUENCE
 {
     identifier INTEGER,      -- $$$$ Context
     error VisibleString, 
     values SEQUENCE OF REAL
 }
 
-MsgIndicatorRequest ::= SEQUENCE
+MsgPlotRequest ::= SEQUENCE
 {
     identifier INTEGER,    -- $$$$ Context 
     request VisibleString  -- $$$$ XmlOverAsn pattern again

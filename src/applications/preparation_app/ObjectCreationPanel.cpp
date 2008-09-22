@@ -24,7 +24,7 @@ using namespace gui;
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer, const GlTools_ABC& tools )
-    : InfoPanel_ABC( parent, panel, tr( "Objects" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Objects" ), "ObjectCreationPanel" )
     , controllers_( controllers )
     , tools_( tools )
     , created_( new ObjectPrototype( this, controllers, model, teamsModel, layer ) )

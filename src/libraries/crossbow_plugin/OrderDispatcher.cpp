@@ -17,7 +17,6 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/OrderParameter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "dispatcher/Network_Def.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
@@ -54,9 +53,9 @@ OrderDispatcher::~OrderDispatcher()
 void OrderDispatcher::Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const Row_ABC& row )
 {
     const unsigned long id = GetTargetId( row );
-    if( const dispatcher::Agent* agent = model_.GetAgents().Find( id ) )
+    if( const dispatcher::Agent* agent = model_.agents_.Find( id ) )
         DispatchMission( publisher, *agent, row );
-    else if( const dispatcher::Automat* automat = model_.GetAutomats().Find( id ) )
+    else if( const dispatcher::Automat* automat = model_.automats_.Find( id ) )
         DispatchMission( publisher, *automat, row );
     else
         MT_LOG_ERROR_MSG( "Unable to resolve order target unit : " << id );
@@ -77,23 +76,23 @@ namespace
 // -----------------------------------------------------------------------------
 void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const Row_ABC& row )
 {
-    if( agent.GetAutomat().IsEngaged() )
+    if( agent.automat_->IsEngaged() )
     {
-        DispatchMission( publisher, agent.GetAutomat(), row );
+        DispatchMission( publisher, *agent.automat_, row );
         return;
     }
 
     const kernel::OrderType* type = GetAgentMission( row );
     if( !type )
     {
-        // DispatchFragOrder( publisher, agent.GetID(), row );
+        // DispatchFragOrder( publisher, agent.GetId(), row );
         return;
     }
 
     const long orderId = GetField< long >( row, "OrderID" );
 
-    dispatcher::AsnMsgClientToSimUnitOrder asn;
-    asn().oid = agent.GetID();
+    simulation::UnitOrder asn;
+    asn().oid = agent.GetId();
     asn().mission = type->GetId();
     SetParameters( asn().parametres, orderId, *type );
     asn.Send( publisher );
@@ -109,14 +108,14 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
     const kernel::OrderType* type = GetAutomatMission( row );
     if( !type )
     {
-        // DispatchFragOrder( publisher, automat.GetID(), row );
+        // DispatchFragOrder( publisher, automat.GetId(), row );
         return;
     }
 
     const long orderId = GetField< long >( row, "OrderID" );
     
-    dispatcher::AsnMsgClientToSimAutomatOrder asn;
-    asn().oid = automat.GetID();
+    simulation::AutomatOrder asn;
+    asn().oid = automat.GetId();
     asn().mission = type->GetId();
     asn().formation = EnumAutomatOrderFormation::deux_echelons; // $$$$ SBO 2007-06-01:
     try  
@@ -141,7 +140,7 @@ void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& pu
     if( !type )
         return; // $$$$ SBO 2007-06-07:
 
-    dispatcher::AsnMsgClientToSimFragOrder asn;
+    simulation::FragOrder asn;
     asn().oid = targetId;
     asn().frag_order = type->GetId();
     asn().parametres.n = 0; // $$$$ SBO 2007-06-07: parameters not supported !

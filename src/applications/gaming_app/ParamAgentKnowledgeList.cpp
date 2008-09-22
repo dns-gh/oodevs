@@ -10,9 +10,9 @@
 #include "gaming_app_pch.h"
 #include "ParamAgentKnowledgeList.h"
 #include "ParamAgentKnowledge.h"
-#include "gaming/ActionParameterAgentKnowledgeList.h"
-#include "gaming/AgentKnowledge_ABC.h"
-#include "gaming/AgentKnowledgeConverter_ABC.h"
+#include "actions/AgentKnowledgeList.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Agent_ABC.h"
 
@@ -22,7 +22,7 @@ using namespace kernel;
 // Name: ParamAgentKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledgeList::ParamAgentKnowledgeList( QObject* parent, const OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
+ParamAgentKnowledgeList::ParamAgentKnowledgeList( QObject* parent, const OrderParameter& parameter, ActionController& actions, Controller& controller, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
     : EntityListParameter< AgentKnowledge_ABC >( parent, parameter, actions, controller )
     , parameter_( parameter )
     , converter_( converter )
@@ -74,9 +74,9 @@ void ParamAgentKnowledgeList::NotifyContextMenu( const Agent_ABC& entity, Contex
 // Name: ParamAgentKnowledgeList::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamAgentKnowledgeList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamAgentKnowledgeList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterAgentKnowledgeList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::AgentKnowledgeList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

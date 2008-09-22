@@ -13,7 +13,12 @@
 namespace xml 
 {
     class xistream;
-    class xostream;
+}
+
+namespace kernel
+{
+    class Options;
+    class OptionVariant;
 }
 
 namespace gui
@@ -43,6 +48,7 @@ public:
     //@{
              Gradient();
     explicit Gradient( xml::xistream& xis );
+             Gradient( const QString& name, const QString& colors );
     virtual ~Gradient();
     //@}
 
@@ -58,8 +64,9 @@ public:
     void MakeGlTexture( float alpha );
     unsigned Length() const;
     float UsedRatio() const;
-    void Save( xml::xostream& xos ) const;
+    void Save( kernel::Options& options ) const;
     void Accept( GradientVisitor_ABC& visitor ) const;
+    void LoadValues( const QString& values );
     Gradient& operator=( const Gradient& rhs );
     //@}
 

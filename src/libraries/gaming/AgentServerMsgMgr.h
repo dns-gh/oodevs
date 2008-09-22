@@ -13,7 +13,12 @@
 #include "clients_kernel/Types.h"
 #include "game_asn/Simulation.h"
 #include "game_asn/Messenger.h"
-#include "Publisher_ABC.h"
+#include "game_asn/Aar.h"
+#include "game_asn/Messenger.h"
+#include "game_asn/Dispatcher.h"
+#include "game_asn/Replay.h"
+#include "game_asn/Authentication.h"
+#include "game_asn/Publisher_ABC.h"
 
 namespace tools
 {
@@ -28,8 +33,10 @@ namespace kernel
 }
 
 class Model;
+class Services;
 class Simulation;
 class Profile;
+class CommandHandler;
 
 //=============================================================================
 // Created: NLD 2002-07-12
@@ -40,7 +47,8 @@ class AgentServerMsgMgr : public Publisher_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             AgentServerMsgMgr( tools::MessageDispatcher_ABC& dispatcher, tools::MessageSender_ABC& sender, Simulation& simu, Profile& profile, kernel::Logger_ABC& logger ); 
+             AgentServerMsgMgr( tools::MessageDispatcher_ABC& dispatcher, tools::MessageSender_ABC& sender, 
+                 Services& services, Simulation& simu, kernel::Logger_ABC& logger, CommandHandler& commands ); 
     virtual ~AgentServerMsgMgr();
     //@}
 
@@ -49,14 +57,14 @@ public:
     void Connect( const std::string& host );
     void Disconnect();
 
-    virtual void Send( ASN1T_MsgsClientToSim& message );
-    virtual void Send( ASN1T_MsgsClientToAuthentication& message );
-    virtual void Send( ASN1T_MsgsClientToReplay& message );
-    virtual void Send( ASN1T_MsgsClientToAar& message );
-    virtual void Send( ASN1T_MsgsClientToMessenger& message ) ;
+    virtual void Send( const ASN1T_MsgsClientToSim& message );
+    virtual void Send( const ASN1T_MsgsClientToAuthentication& message );
+    virtual void Send( const ASN1T_MsgsClientToReplay& message );
+    virtual void Send( const ASN1T_MsgsClientToAar& message );
+    virtual void Send( const ASN1T_MsgsClientToMessenger& message ) ;
 
 
-    void SetModel( Model& model );
+    void SetElements( Model& model, Profile& profile );
     //@}
 
 private:
@@ -68,6 +76,7 @@ private:
     void OnReceiveMsgReplayToClient        ( const std::string& from, const ASN1T_MsgsReplayToClient& message );
     void OnReceiveMsgAarToClient           ( const std::string& from, const ASN1T_MsgsAarToClient& message );
     void OnReceiveMsgMessengerToClient     ( const std::string& from, const ASN1T_MsgsMessengerToClient& message );
+    void OnReceiveMsgDispatcherToClient    ( const std::string& from, const ASN1T_MsgsDispatcherToClient& message );
 
     void OnReceiveMsgUnitVisionCones                       ( const ASN1T_MsgUnitVisionCones& message );
     void OnReceiveMsgUnitInterVisibility                   ( const ASN1T_MsgUnitDetection& message );
@@ -242,14 +251,27 @@ private:
     void OnReceiveMsgIntelligenceUpdateRequestAck     ( const ASN1T_MsgIntelligenceUpdateRequestAck&      message );
     void OnReceiveMsgIntelligenceDestructionRequestAck( const ASN1T_MsgIntelligenceDestructionRequestAck& message );
 
+    // Drawings
+    void OnReceiveMsgShapeCreation             ( const ASN1T_MsgShapeCreation&              message );
+    void OnReceiveMsgShapeUpdate               ( const ASN1T_MsgShapeUpdate&                message );
+    void OnReceiveMsgShapeDestruction          ( const ASN1T_MsgShapeDestruction&           message );
+    void OnReceiveMsgShapeCreationRequestAck   ( const ASN1T_MsgShapeCreationRequestAck&    message );
+    void OnReceiveMsgShapeUpdateRequestAck     ( const ASN1T_MsgShapeUpdateRequestAck&      message );
+    void OnReceiveMsgShapeDestructionRequestAck( const ASN1T_MsgShapeDestructionRequestAck& message );
+
+    // Chat
+    void OnReceiveMsgTextMessage( const ASN1T_MsgTextMessage& message );
+
     // 3a
     void OnReceiveMsgAarInformation( const ASN1T_MsgAarInformation& asnMsg );
-    void OnReceiveMsgAarResult     ( const ASN1T_MsgIndicatorResult& asnMsg );
+    void OnReceiveMsgAarResult     ( const ASN1T_MsgPlotResult& asnMsg );
+    void OnReceiveMsgAarIndicator  ( const ASN1T_MsgIndicator& asnMsg );
     //@}
 
     //! @name Helpers
     //@{
     Model& GetModel() const;
+    Profile& GetProfile() const;
     //@}
 
     //! @name Copy / Assignment
@@ -266,9 +288,11 @@ private:
 
     std::string          host_;
     Model*               model_;
+    Profile*             profile_;
+    Services&            services_;
     Simulation&          simulation_;
-    Profile&             profile_;
     kernel::Logger_ABC&  logger_;
+    CommandHandler&      commands_;
     //@}
 };
 

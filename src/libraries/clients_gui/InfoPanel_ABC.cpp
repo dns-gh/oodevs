@@ -17,8 +17,8 @@ using namespace gui;
 // Name: InfoPanel_ABC constructor
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-InfoPanel_ABC::InfoPanel_ABC( QWidget* parent, PanelStack_ABC& panel, const QString& name )
-    : QScrollView( parent )
+InfoPanel_ABC::InfoPanel_ABC( QWidget* parent, PanelStack_ABC& panel, const QString& name, const char* qtName )
+    : QScrollView( parent, qtName )
     , stack_( panel )
     , name_( name )
     , pBox_( new QVBox( viewport() ) )

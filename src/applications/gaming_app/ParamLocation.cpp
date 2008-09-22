@@ -17,8 +17,8 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Point.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterLocation.h"
+#include "actions/Action_ABC.h"
+#include "actions/Location.h"
 
 using namespace kernel;
 using namespace gui;
@@ -107,18 +107,18 @@ bool ParamLocation::CheckValidity()
 // Name: ParamLocation::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void ParamLocation::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamLocation::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param;
+    std::auto_ptr< actions::Parameter_ABC > param;
     if( location_.get() )
     {
-        param.reset( new ActionParameterLocation( parameter_, converter_, *location_ ) );
+        param.reset( new actions::parameters::Location( parameter_, converter_, *location_ ) );
         param->Set( location_->IsValid() );
     }
     else
     {
         kernel::Point stub;
-        param.reset( new ActionParameterLocation( parameter_, converter_, stub ) );
+        param.reset( new actions::parameters::Location( parameter_, converter_, stub ) );
         param->Set( false );
     }
     action.AddParameter( *param.release() );
@@ -155,7 +155,7 @@ void ParamLocation::SetShapeFilter( bool point, bool line, bool polygon, bool ci
 void ParamLocation::Draw( const geometry::Point2f& , const Viewport_ABC& , const GlTools_ABC& tools ) const
 {
     if( location_.get() )
-        location_->Draw( tools );
+        ShapeHandler_ABC::Draw( *location_, geometry::Rectangle2f(), tools ); // $$$$ SBO 2008-06-03: 
 }
 
 // -----------------------------------------------------------------------------

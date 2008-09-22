@@ -22,6 +22,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Iterator.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/SimpleLocationDrawer.h"
 
 #include "LocationCreator.h"
 #include "ParametersLayer.h"
@@ -340,9 +341,10 @@ void ObjectPrototype_ABC::Draw( const GlTools_ABC& tools ) const
 {
     if( isVisible() && location_ )
     {
+        kernel::SimpleLocationDrawer drawer( tools );
         glPushAttrib( GL_LINE_BIT );
             glLineWidth( 3.f );
-            location_->Draw( tools );
+            location_->Accept( drawer );
         glPopAttrib();
     }
 }

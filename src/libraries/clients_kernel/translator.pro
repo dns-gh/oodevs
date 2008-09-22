@@ -1,6 +1,7 @@
 HEADERS = 
 
-SOURCES = Circle.cpp \
+SOURCES = AtlasNatures.cpp \
+Circle.cpp \
 EntityHierarchies.inl \
 Formatter.cpp \
 FourStateOption.cpp \

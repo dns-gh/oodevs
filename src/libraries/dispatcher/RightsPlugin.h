@@ -24,6 +24,7 @@ namespace dispatcher
     class ProfileManager;
     class Model;
     class Config;
+    class CompositeRegistrable;
 
 // =============================================================================
 /** @class  RightsPlugin
@@ -38,7 +39,7 @@ class RightsPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base );
+             RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables );
     virtual ~RightsPlugin();
     //@}
 
@@ -47,6 +48,7 @@ public:
     virtual void Receive( const ASN1T_MsgsSimToClient& message );
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
     virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
+    virtual void Register                 ( dispatcher::Services& );
 
     virtual Profile_ABC&         GetProfile  ( const std::string& link );
     virtual ClientPublisher_ABC& GetPublisher( const std::string& link );

@@ -15,9 +15,9 @@
 namespace kernel
 {
     class KnowledgeGroup_ABC;
+    class PopulationKnowledge_ABC;
 }
 
-class PopulationKnowledge_ABC;
 
 // =============================================================================
 /** @class  PopulationKnowledgeFactory_ABC
@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual PopulationKnowledge_ABC* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message ) = 0;
+    virtual kernel::PopulationKnowledge_ABC* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message ) = 0;
     //@}
 };
 

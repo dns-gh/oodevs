@@ -17,8 +17,8 @@ using namespace dispatcher;
 // Name: NBCObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-NBCObjectAttribute::NBCObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
+NBCObjectAttribute::NBCObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg )
+    : ObjectAttribute_ABC( asnMsg )
     , nNBCAgentType_     ( std::numeric_limits< unsigned int >::max() )
 {
     if( asnMsg.t == T_ObjectAttributesSpecific_nbc_cloud )
@@ -33,7 +33,7 @@ NBCObjectAttribute::NBCObjectAttribute( const Model& model, const ASN1T_ObjectAt
 // -----------------------------------------------------------------------------
 NBCObjectAttribute::~NBCObjectAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------

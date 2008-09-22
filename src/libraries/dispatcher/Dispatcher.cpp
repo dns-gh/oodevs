@@ -14,6 +14,7 @@
 #include "ClientsNetworker.h"
 #include "PluginFactory.h"
 #include "Config.h"
+#include "Services.h"
 
 using namespace dispatcher;
 
@@ -24,14 +25,22 @@ using namespace dispatcher;
 Dispatcher::Dispatcher( const Config& config )
     : config_( config )
     , handler_()
+    , registrables_()
+    , services_( new Services() )
     , model_( new Model( config_ ) )
-    , clientsNetworker_( new ClientsNetworker( config_, handler_ ) )
+    , clientsNetworker_( new ClientsNetworker( config_, handler_, *services_ ) )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, handler_, config_ ) )
-    , factory_( new PluginFactory( config_, *model_, *simulationNetworker_, *clientsNetworker_, handler_ ) )
+    , factory_( new PluginFactory( config_, *model_, *simulationNetworker_, *clientsNetworker_, handler_, registrables_ ) )
 {
     handler_.AddHandler( clientsNetworker_ );
     handler_.AddHandler( model_ );
 }
+
+// $$$$ AGE 2008-07-16: Les plugins / MessageHandlers doivent être enregistrés dans un certain ordre
+// $$$$ AGE 2008-07-16: Typiquement : 
+// $$$$ AGE 2008-07-16:  * DispatcherPlugin pour forwarder aux clients
+// $$$$ AGE 2008-07-16:  * Model pour les plugins l'utilisant, mais peut déclencher des évènements sur Entity_ABC::Update
+// $$$$ AGE 2008-07-16:  * SaverPlugin (justement car utilise le model)
 
 // -----------------------------------------------------------------------------
 // Name: Dispatcher destructor
@@ -50,6 +59,7 @@ void Dispatcher::Update()
 {
     clientsNetworker_   ->Update();
     simulationNetworker_->Update();
+    handler_.Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -68,4 +78,5 @@ void Dispatcher::RegisterPluginFactory( PluginFactory_ABC& factory )
 void Dispatcher::CreatePlugins()
 {
     factory_->Instanciate();
+    handler_.Register( *services_ );
 }

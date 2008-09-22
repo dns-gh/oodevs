@@ -13,6 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "game_asn/Authentication.h"
 #include "game_asn/Replay.h"
+#include "game_asn/Messenger.h"
 
 namespace dispatcher
 {
@@ -38,6 +39,12 @@ public:
     virtual bool CheckRights( const ASN1T_MsgsClientToSim& msg ) const = 0;
     virtual bool CheckRights( const ASN1T_MsgsClientToAuthentication& msg ) const = 0;
     virtual bool CheckRights( const ASN1T_MsgsClientToReplay& msg ) const = 0;
+    virtual bool CheckRights( const ASN1T_ChatTarget& source, const ASN1T_ChatTarget& target ) const = 0;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual std::string GetName() const = 0;
     //@}
 };
 

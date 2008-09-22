@@ -1,0 +1,172 @@
+ACCORD DE LICENCE LOGICIELLE
+
+ENTRE
+
+MASA Group, une Société Anonyme de droit français, au capital de 1.835.770 euros, dont le siège social est situé au 8 rue de la Michodière, F-75002 Paris, France (immatriculée au RCS PARIS sous le numéro B 408 953 271) ;
+ci-après dénommé le Fournisseur,
+
+ET
+
+tout utilisateur du Logiciel comme défini ci-après ;
+ci-après dénommé le Client,
+
+
+PREAMBULE
+
+Le logiciel SWORD Officer Training est un outil dédié à l'entraînement et l'auto-entraînement des officiers et des postes de commandement.
+Le Client reconnaît qu'il a été en mesure d'apprécier les fonctionnalités du Logiciel et son adéquation à ses besoins sur la base de la documentation communiquée par le Fournisseur.
+
+1. DEFINITIONS
+
+Dans le présent contrat :
+- Logiciel désigne les modules du logiciel SWORD Officer Training qui ont été achetés ou loués par le Client ou ont été prêtés au Client pour un nombre donné d'utilisateurs et pour une durée particulière.
+- Documentation désigne l'ensemble des fichiers d'aide en ligne et des documents imprimés fournis avec le Logiciel pour expliquer son fonctionnement et pour en faciliter sa compréhension.
+- Version désigne l'ensemble formé par les caractéristiques techniques et fonctionnelles du Logiciel, mis à la disposition des utilisateurs à un moment donné. Elle comprend des corrections, des améliorations et des ajouts fonctionnels par rapport à la version précédente. Elle est repérée par un changement de numérotation du 1er indice. Ex. : V 5.0.0 & V 6.0.0.
+- Edition désigne les formulations successives d'une même version, réalisées à la suite d'évolutions et de corrections. Elle est repérée par un changement de numérotation du 2ème indice. Ex. : V 5.3.0 & V 5.4.0. 
+- Correction désigne les formulations successives d'une même édition, réalisées à la suite de corrections. Elle est repérée par un changement de numérotation du 3ème indice. Ex. : V 5.3.5 & V 5.3.6.
+- Site désigne le bâtiment de production, de R&D, ou de test ou une entité administrative à laquelle est affecté le Logiciel pour son utilisation.
+
+2. CONCESSION DE LICENCE
+
+Sous réserve d'acceptation sans réserve de tous les termes et les conditions du présent contrat, le Fournisseur concède au Client un droit d'utilisation du Logiciel personnel, non exclusif, non transférable et aux seules fins de réaliser les travaux pour lesquels le Logiciel a été acheté, loué ou prêté.
+
+3. NATURE DU CONTRAT
+
+La concession du droit d'utilisation du Logiciel n'entraîne le transfert d'aucun droit de propriété. le Fournisseur conserve la totalité des droits afférents au Logiciel concédé (reproduction, distribution, adaptation, etc.)
+En conséquence, le Client s'engage à n'apporter aucune modification aux éléments remis par le Fournisseur. En particulier, le Client s'interdit de procéder ou de faire procéder à la transcription du Logiciel dans un autre langage ou de l'adapter pour être mis en œuvre sur un matériel non supporté ou fonctionnant avec un logiciel de base différent. Sous réserve de dispositions légales impératives contraires, toute décompilation du Logiciel objet des présentes est formellement prohibée.
+Le Client s'interdit d’extraire des parties du Logiciel et plus généralement d’utiliser tout ou partie du Logiciel aux fins de développer des programmes informatiques qui incorporeraient tout ou partie de celui-ci.
+Le Client s’interdit de céder, prêter, louer le Logiciel ou permettre à un tiers d’accéder directement au Logiciel, aux supports optiques et/ou magnétiques ainsi qu’à toute reproduction totale ou partielle du Logiciel, aux fins d’exécution, d’utilisation ou de reproduction de celui-ci.
+Toutefois, le Client peut réaliser, sous réserve des stipulations de l’article 6.1. du présent contrat, une copie de sécurité du Logiciel.
+
+4. LIVRAISON ET INSTALLATION
+
+Le Fournisseur livre le Logiciel au Client à une adresse désignée par écrit, comme Site d'utilisation. Le terme "livraison" désigne l'opération qui consiste exclusivement à remettre au Client, par des moyens physiques ou électroniques, le Logiciel et la Documentation lui permettant l'exercice du droit d'utilisation. Sauf disposition contraire définie par écrit, le Logiciel sera toujours livré dans sa version code "objet".
+Il est convenu entre les Parties que Le Fournisseur ne saurait voir sa responsabilité engagée dans l’hypothèse d’une mauvaise installation du Logiciel effectuée par le Client ou tout autre tiers non agréé préalablement par Le Fournisseur.
+
+5. RECEPTION
+
+Toute livraison du Logiciel est considérée comme ferme et définitive. Le Client est réputé avoir accepté le Logiciel à la livraison.
+
+6. GARANTIE
+
+Le Fournisseur garantit que, pour une période de quatre-vingt dix (90) jours à compter de la date de livraison par le Fournisseur au Client (la "Période de Garantie"), le Logiciel fonctionnera en conformité avec la documentation fournie au client par le fournisseur, à condition d’une utilisation normale. La garantie est applicable (i) sur la version courante du Logiciel ; (ii) si le Client n’a pas modifié le Logiciel et ne l’utilise pas avec un autre produit non fourni pas le Fournisseur à l’exception de ceux décrits comme supportés dans la Documentation, ou autorisés par écrit par le Fournisseur ; (iii) la plateforme matérielle sur laquelle le Logiciel est utilisé fonctionne correctement ; et (iv) la non-conformité n’est pas causée par une source extérieure, incluant, mais non limitée à, des problèmes d’alimentation électrique. La seule obligation du Fournisseur, dans le cadre de cette garantie, sera, selon le choix du Fournisseur, de (i) corriger ou modifier le Logiciel pour remédier au défaut, ou (ii) de rembourser les paiements reçus par le Fournisseur au regard du Logiciel, moins la dépréciation linéairement calculée sur une période de trois (3) ans.
+
+Le Clients perdra tous les droits relatifs à cette garantie à moins de reporter, par écrit, tout défaut ou non-conformité, au plus tard huit (8) jours après l’expiration de la Période de Garantie.
+
+7. OBLIGATIONS DU CLIENT
+7.1. LIMITE DU DROIT D'UTILISATION
+
+Le Client s’engage à n’utiliser le Logiciel que pour les seuls objectifs pour lesquels le Logiciel a été acheté, loué ou prêté.
+Sauf accord préalable et écrit du Fournisseur, le Client s’interdit d'utiliser le Logiciel sur un autre site que celui où le Logiciel a été livré.
+Le Client ne doit utiliser le Logiciel que pour ses besoins propres.
+A cet égard, le Client s’interdit de retirer ou d’altérer tout sigle de propriété ou confidentialité contenus dans le Logiciel. En outre, le Client s’engage à reproduire et à inclure sur toutes les copies du Logiciel, toutes les mentions de droits de propriété et tout autre sigle de propriété ou confidentialité contenus dans la copie originale ainsi qu’à conserver un registre, régulièrement mis à jour, du lieu où sont localisées toutes les copies du Logiciel.
+
+7.2. CONDITIONS FINANCIERES
+
+En contrepartie du droit d'utilisation concédé, le Client s'oblige à régler le montant de la redevance convenue avec le Fournisseur. Le droit d'utilisation n'est concédé qu'après paiement intégral du prix convenu.
+
+8. MAINTENANCE
+
+La maintenance du Fournisseur porte uniquement sur la conformité substantielle du Logiciel aux spécifications décrites dans la Documentation. Elle est définie dans le contrat de maintenance et ne peut intervenir qu'après signature du contrat de maintenance.
+
+9. LIMITE DE RESPONSABILITE ET INDEMNISATION
+
+9.1. LIMITE DE RESPONSABILITE
+
+Le Client reconnaît expressément avoir reçu du Fournisseur toutes les informations nécessaires lui permettant d'apprécier l'adéquation du Logiciel à ses besoins et de prendre toutes précautions utiles pour sa mise en œuvre et son utilisation.
+Le Client et le Fournisseur conviennent expressément qu'en aucun cas la responsabilité de l'une ou l'autre des Parties ne pourra être retenue pour tout perte de bénéfice ou de commande, coût direct ou indirect, dommages direct ou indirect ou perte de données en relation ou survenant lors de la fourniture, l'exécution ou l'utilisation du Logiciel.
+Dans l'éventualité où la responsabilité de l'une ou l'autre des Parties serait retenue, pour une cause quelconque, il est convenu que les indemnités et pénalités mises à sa charge ne pourraient en aucun cas excéder le montant des sommes effectivement perçues au titre du présent contrat durant la période d'un an précédent l'incident ou la difficulté ayant entraîné sa responsabilité.
+La limite de responsabilité décrite ci-dessus ne s'applique pas en cas de responsabilité consécutive à une fraude ou à une grave négligence et/ou au non-respect de la loi.
+
+9.2. INDEMNISATION A LA CHARGE DU CLIENT
+
+Le Client doit indemniser et protéger le Fournisseur contre tous coûts, pertes, responsabilités et frais (y compris des frais de justice raisonnables) survenant à la suite de, ou en relation avec les éventuels dommages causées à un tiers lors de l'utilisation du Logiciel par le Client.
+
+9.3. INDEMNISATION POUR ACTION EN CONTREFAÇON
+
+En cas d'action en contrefaçon, procès, action intentée par tout tiers contre le Client au motif que le Logiciel constituerait une contrefaçon de brevets ou de droits d'auteur protégés, les obligations du Fournisseur sont expressément subordonnées aux conditions suivantes :
+- que le Client avise le Fournisseur immédiatement et par lettre recommandée avec accusé de réception de toute réclamation ou action fondée sur la contrefaçon d'un brevet ou d'un droit d'auteur, et
+- que le Client communique au Fournisseur tous les renseignements à sa disposition relatifs à cette réclamation, et
+- que le Client confie au Fournisseur le contrôle exclusif de son règlement et/ou du contentieux en découlant, et
+- que le Client coopère complètement et à ses frais avec le Fournisseur sur tout ce qui concerne la défense, le contentieux ou le règlement de la réclamation.
+Le Client ne dispose d'aucun autre recours au titre du présent article. Le Fournisseur prend en charge les frais, dommages et intérêts et honoraires d'avocat que le Client a à payer aux termes de toute décision ayant acquis l'autorité de la chose jugée. Toutefois, le Client est seul responsable de tout règlement ou de toute transaction conclue sans l'accord préalable écrit du Fournisseur.
+En cas de jugement définitif, comme au cas où le Fournisseur estime que l'utilisation du Logiciel est susceptible de motiver une action en contrefaçon, le Fournisseur peut, à tout moment et à ses frais :
+- remplacer le Logiciel par un Logiciel non-contrefaisant, ou le modifier afin d'éliminer tout risque de contrefaçon, ou
+- reprendre le Logiciel contrefaisant et rembourser le Client de la redevance correspondante, ou
+- obtenir pour le Client, auprès du tiers propriétaire, le droit d'utiliser le Logiciel déclaré ou estimé contrefaisant.
+Le Fournisseur n'offre aucune autre garantie en matière de contrefaçon de brevets ou de droits d'auteur, ou de tout autre droit de propriété industrielle et intellectuelle.
+Le Fournisseur ne reconnait aucune responsabilité vis-à-vis du Client dans le cas d'une réclamation ou d'une contrefaçon fondée sur les actions suivantes, de la part du Client ou d'un tiers :
+- intégration du Logiciel avec un matériel, système ou programme non compatible, ou
+- toute modification ou altération du Logiciel par le Fournisseur sur spécifications du Client, ou
+- l'utilisation du Logiciel à des fins autres que celles auxquelles il est destiné.
+Le Client indemnise intégralement le Fournisseur de toutes pertes, coûts et frais de quelque nature qu'ils soient, engagés ou encourus par le Fournisseur dans le cadre de toutes réclamations, procès et actions intentés par tout tiers au motif que le Logiciel fourni par le Fournisseur constitue une contrefaçon de droit de propriété intellectuelle dans les trois cas énumérés ci-dessus.
+Le Client doit informer le Fournisseur, dès qu'il a connaissance, de tout fait de contrefaçon par des tiers relatif au Logiciel.
+
+10. EVOLUTION DU LOGICIEL
+
+Le Fournisseur tient le Client informé de la disponibilité des nouvelles Versions, Editions et Corrections du Logiciel ainsi que des diverses options (ou extensions).
+Le Fournisseur s'engage à donner la possibilité au Client de signer un contrat de maintenance annuelle, lui permettant de bénéficier du support et des nouvelles Versions, Editions et Corrections du Logiciel.
+Le montant de la redevance annuelle due au titre de la maintenance est défini dans le contrat de maintenance.
+
+11. DUREE ET RESILIATION
+11.1. DUREE
+
+Le présent contrat prend effet à la date de sa signature et reste en vigueur pendant la durée de protection des droits de propriété intellectuelle garantis par la loi.
+Le présent contrat reste en vigueur même au cas ou le contrat de maintenance associé est résilié.
+
+11.2. RESILIATION
+
+En cas de manquement aux obligations contractuelles de l'une ou l'autre des Parties, le présent contrat peut être résilié un mois après l'envoi d'une lettre recommandée avec accusé de réception adressée à la partie défaillante et demeurée sans effet.
+Cette lettre recommandée doit viser expressément le présent article et indiquer clairement la volonté de son expéditeur de se prévaloir, le cas échéant, de la faculté de résiliation qui lui est ouverte.
+Passé le délai indiqué au paragraphe précédent, la résiliation devient effective de plein droit après l'envoi d'une seconde lettre recommandée avec accusé de réception par la partie qui entend se prévaloir de cette résiliation et adressée à la partie défaillante.
+Dans le cas où le présent contrat prend fin, pour quelque raison que ce soit, le Client se trouve dans l'obligation de :
+a) cesser immédiatement toute utilisation du Logiciel,
+b) restituer le Logiciel au Fournisseur avec la Documentation, tous les supports et fournitures correspondants.
+c) attester que toutes les copies du Logiciel ont été rendues au Fournisseur ou détruites.
+En cas de résiliation du présent contrat, les articles suivants restent en vigueur : article 3 (Nature du contrat), article 6.1 (Limites du droit d'utilisation), article 8 (Limite de responsabilité et indemnisation), article 11 (Confidentialité), article 13 (Notification) et article 14 (Divers).
+
+12. CONFIDENTIALITE
+
+Les Parties s’engagent à considérer comme strictement confidentielles et à traiter comme telles toutes les informations, quelle que soit leur nature et leur support, recueillies pendant exécution du présent Contrat (désignées ci-après "Informations Confidentielles").
+Toutes les informations connues du public sont réputées non confidentielles sauf si elles sont compilées sous une forme non connue du public. 
+Les Parties s'engagent à ne pas divulguer ou laisser divulguer, directement ou par personne interposée, en totalité ou en partie, les Informations Confidentielles dont elles auraient eu ainsi connaissance, à quelque tiers que ce soit, à l’exception des employés et/ou prestataires et/ou sous-traitants ayant besoin des informations pour l’exécution de leurs obligations.
+Les Parties s’engagent, à cet égard, à prendre toutes les mesures nécessaires auprès de leurs employés et/ou prestataires et/ou sous-traitants afin que ceux ci soient soumis à cette même obligation de confidentialité.
+Les Parties s'engagent à ne pas utiliser les Informations Confidentielles dans un cadre autre que celui du présent Contrat. La présente clause ne fait pas obstacle à l’utilisation par le Fournisseur du nom du Client à titre de référence commerciale.
+Chaque Partie s'engage à restituer à la première demande de l’autre partie tous documents, ou autres supports contenant des Informations Confidentielles que celle-ci aurait été amenée à lui remettre dans le cadre de l'exécution du présent Contrat ainsi que toutes leurs reproductions.
+
+13. INTUITU PERSONAE
+
+Le présent contrat est conclu intuitu personae. En conséquence, le Client ne peut céder et/ou transférer tout ou partie des droits et obligations découlant du présent contrat qu'avec l'autorisation préalable et écrite du Fournisseur.
+
+14. NOTIFICATION
+
+Toute notification exigée ou autorisée selon les termes du présent contrat ou exigée par la loi doit être faite par écrit et doit être (a) délivrée en personne, (b) envoyée par courrier recommandé, ou par avion, comme approprié, (c) envoyée par courrier express, ou (d) par fac-similé, aux adresses préalablement définies. Tout changement d'adresse d'une partie doit être notifié à l'autre conformément au présent article. Les notifications sont considérées comme réellement délivrées, trois (3) jours ouvrables après la date de dépôt pour un courrier, un (1) jour après livraison à un service de courrier express, ou un (1) jour après le moment de transmission par fac-similé.
+
+15. DIVERS
+15.1. FORCE MAJEURE
+
+Au sens du contrat, la Force Majeure s'entend de tout événement extérieur échappant au contrôle raisonnable de l'une des Parties et ne résultant pas de sa faute ou de sa négligence, et stoppant ou perturbant gravement l'exécution du contrat. Notamment les incendies, l'état de guerre déclarée ou non, les grèves de toutes natures, les inondations, les calamités naturelles, les troubles civils, les actes de terrorisme.
+Dans cette hypothèse, la partie invoquant cet événement, en informera l'autre par lettre recommandée avec accusé de réception dans un délai de trois jours après la survenance de celui-ci. La fin de cet événement doit être communiquée dans les mêmes conditions.
+La survenue d’un événement de Force Majeure a pour effet de suspendre l'exécution des obligations de la partie le subissant pendant la durée où cette exécution est momentanément rendue impossible sans qu'elle soit redevable d'une quelconque indemnité de ce chef. Les délais contractuels sont prolongés à due concurrence.
+Dans l'éventualité où la Force Majeure se manifesterait pendant une durée supérieure à trois mois, chacune des parties peut résilier le contrat de plein droit et sans formalité par lettre recommandée avec accusé de réception, à moins que les Parties, après s'être concertées, conviennent de modifier celui-ci pour l'adapter aux circonstances nouvelles nées de la Force Majeure.
+Dans le cas d'une résiliation, les sommes versées au titre du présent contrat ne peuvent pas faire l'objet d'une demande de restitution totale ou partielle.
+
+15.2. AUTONOMIE
+
+Si l'une quelconque des dispositions du présent contrat s'avère, de quelque manière que ce soit, être nulle aux termes d'une réglementation et/ou d'une législation, les Parties essaieront de bonne foi, de modifier la disposition concernée pour l'adapter en conséquence tout en respectant autant que possible l'intention initiale. Dans l'éventualité ou les Parties ne parviendraient pas à un accord, il est convenu que la disposition invalide est supprimée du contrat qui continue à être valide et applicable dans les limites de la loi.
+
+15.3. TERMES STANDARDS
+
+Aucune disposition d'une commande, d'un accusé de réception de commande ou d'un autre document commercial que le Client pourrait utiliser pour l'acquisition du droit d'utilisation du Logiciel, ne peut modifier les droits et/ou les obligations d'une des Parties prévus dans le présent contrat même si la partie concernée ne notifie pas ces modifications.
+
+15.4. NON-SOLLICATION
+
+Chacune des Parties s'engage à ne pas débaucher le personnel technique ou commercial de son cocontractant, directement ou indirectement, notamment par le biais de l'une de ses filiales, sauf accord exprès de l'autre partie et ce pendant la durée du présent contrat et pendant deux ans après la fin de celui-ci.
+
+15.5. ENTIER ACCORD DES PARTIES
+
+Le présent contrat constitue l’intégralité des accords entre les parties et ne pourra être modifié ou complété que par voie d'avenants écrits, datés et signés de celles-ci.
+
+15.6. LOI APPLICABLE ET LITIGE
+
+Le présent contrat est régi par la loi française. En cas de différend sur son interprétation ou son exécution, les parties tenteront de se concilier. A défaut, celui-ci sera soumis à la compétence exclusive du tribunal de commerce de Paris , le Fournisseur se réservant la faculté de saisir tout autre Tribunal compétent.

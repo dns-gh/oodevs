@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "PopulationKnowledges.h"
-#include "PopulationKnowledge_ABC.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "PopulationKnowledgeFactory_ABC.h"
 

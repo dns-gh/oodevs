@@ -19,7 +19,8 @@
 #include "MineJamObjectAttribute.h"
 #include "DispersedMinedAreaObjectAttribute.h"
 #include "LinearMinedAreaObjectAttribute.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -28,12 +29,12 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
-    : nID_                         ( msg.oid  )
+    : SimpleEntity< kernel::Object_ABC >( msg.oid, msg.name )
     , nType_                       ( msg.type )
     , nObstacleType_               ( msg.m.obstacle_typePresent ? msg.obstacle_type : EnumObstacleType::initial )
-    , strName_                     ( msg.name  )
+    , strName_                     ( msg.name )
     , localisation_                ( msg.location )
-    , side_                        ( model.GetSides().Get( msg.team ) )
+    , side_                        ( model.sides_.Get( msg.team ) )
     , nTypeDotationForConstruction_( msg.m.construction_dotation_typePresent ? msg.construction_dotation_type : std::numeric_limits< unsigned int >::max() )
     , nTypeDotationForMining_      ( msg.m.mining_dotation_typePresent       ? msg.mining_dotation_type       : std::numeric_limits< unsigned int >::max() )
     , nPercentageConstruction_     ( std::numeric_limits< unsigned int >::max() )
@@ -56,32 +57,32 @@ Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
                 pAttributes_ = new CampObjectAttribute( model, msg.specific_attributes );
                 break;
             case EnumObjectType::itineraire_logistique:
-                pAttributes_ = new LogisticRouteObjectAttribute( model, msg.specific_attributes );
+                pAttributes_ = new LogisticRouteObjectAttribute( msg.specific_attributes );
                 break;
             case EnumObjectType::nuage_nbc:
             case EnumObjectType::zone_nbc:
-                pAttributes_ = new NBCObjectAttribute( model, msg.specific_attributes );
+                pAttributes_ = new NBCObjectAttribute( msg.specific_attributes );
                 break;
             case EnumObjectType::rota:
-                pAttributes_ = new RotaObjectAttribute( model, msg.specific_attributes );
+                pAttributes_ = new RotaObjectAttribute( msg.specific_attributes );
                 break;
             case EnumObjectType::site_franchissement:
-                pAttributes_ = new CrossingSiteObjectAttribute( model, msg.specific_attributes );
+                pAttributes_ = new CrossingSiteObjectAttribute( msg.specific_attributes );
                 break;
             case EnumObjectType::bouchon_mines:
-                pAttributes_ = new MineJamObjectAttribute( model, msg.specific_attributes );
+                pAttributes_ = new MineJamObjectAttribute( msg.specific_attributes );
                 break;
             case EnumObjectType::zone_minee_lineaire:
-                pAttributes_ = new LinearMinedAreaObjectAttribute( model, msg.specific_attributes );
+                pAttributes_ = new LinearMinedAreaObjectAttribute( msg.specific_attributes );
                 break;
             case EnumObjectType::zone_minee_par_dispersion:
-                pAttributes_ = new DispersedMinedAreaObjectAttribute( model, msg.specific_attributes );
+                pAttributes_ = new DispersedMinedAreaObjectAttribute( msg.specific_attributes );
                 break;
             default:
                 pAttributes_ = 0;
         }
     }
-	side_.GetObjects().Register( *this );
+	side_.objects_.Register( msg.oid, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +91,7 @@ Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
-	side_.GetObjects().Unregister( *this );
+    side_.objects_.Remove( GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +109,7 @@ void Object::Update( const ASN1T_MsgObjectUpdate& msg )
     if( msg.m.reserved_obstacle_activatedPresent )
     {
         optionals_.obstacle_de_manoeuvre_activePresent = 1;
-        bReservedObstacleActivated_ = msg.reserved_obstacle_activated;
+        bReservedObstacleActivated_ = msg.reserved_obstacle_activated != 0;
     }
     if( msg.m.construction_dotation_nbrPresent )
         nNbrDotationForConstruction_ = msg.construction_dotation_nbr;
@@ -128,12 +129,12 @@ void Object::Update( const ASN1T_MsgObjectUpdate& msg )
 // -----------------------------------------------------------------------------
 void Object::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientObjectCreation asn;
+    client::ObjectCreation asn;
 
-    asn().oid  = nID_;
+    asn().oid  = GetId();
     asn().type = nType_;
     asn().name = strName_.c_str();
-    asn().team = side_.GetID();
+    asn().team = side_.GetId();
 
     if( optionals_.obstacle_de_manoeuvre_activePresent )
     {
@@ -178,9 +179,9 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientObjectUpdate asn;
+    client::ObjectUpdate asn;
 
-    asn().oid = nID_;
+    asn().oid = GetId();
 
     if( nPercentageConstruction_ != std::numeric_limits< unsigned int >::max() )
     {
@@ -239,7 +240,34 @@ void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Object::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientObjectDestruction destruction;
-    destruction() = nID_;
+    client::ObjectDestruction destruction;
+    destruction() = GetId();
     destruction.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void Object::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::Display
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void Object::Display( kernel::Displayer_ABC& ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::GetType
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+const kernel::ObjectType& Object::GetType() const
+{
+    throw std::runtime_error( "Not implemented" );
 }

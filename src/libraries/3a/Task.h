@@ -28,7 +28,6 @@ class Result_ABC;
 
 namespace dispatcher
 {
-    class ClientPublisher_ABC;
     class MessageLoader_ABC;
 }
 
@@ -64,8 +63,9 @@ public:
     void Connect( xml::xistream& xis );
 
     virtual void Receive( const ASN1T_MsgsSimToClient& message );
-    void Commit( dispatcher::ClientPublisher_ABC& publisher );
-    void Process( dispatcher::MessageLoader_ABC& loader, dispatcher::ClientPublisher_ABC& publisher );
+
+    void Commit();
+    void Process( dispatcher::MessageLoader_ABC& loader );
     //@}
 
 private:

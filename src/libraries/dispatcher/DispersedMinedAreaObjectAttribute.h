@@ -10,12 +10,10 @@
 #ifndef __DispersedMinedAreaObjectAttribute_h_
 #define __DispersedMinedAreaObjectAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  DispersedMinedAreaObjectAttribute
@@ -28,8 +26,8 @@ class DispersedMinedAreaObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     DispersedMinedAreaObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
-    ~DispersedMinedAreaObjectAttribute();
+    explicit DispersedMinedAreaObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg );
+    virtual ~DispersedMinedAreaObjectAttribute();
     //@}
 
     //! @name Operations

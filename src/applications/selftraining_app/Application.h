@@ -12,7 +12,18 @@
 
 #include <qapplication.h>
 
+namespace tools
+{
+    class ApplicationMutex ; 
+}
+
+namespace kernel
+{
+    class Controllers; 
+}
+
 class QMainWindow;
+class TrayIcon; 
 
 // =============================================================================
 /** @class  Application
@@ -26,7 +37,7 @@ class Application : public QApplication
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int argc, char** argv );
+             Application( int argc, char** argv, const QString& locale );
     virtual ~Application();
     //@}
 
@@ -37,11 +48,21 @@ private:
     Application& operator=( const Application& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void AddTranslator( const char* t, const QString& locale );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    QMainWindow* mainWindow_;
+    QMainWindow*                             mainWindow_;
+    std::auto_ptr< tools::ApplicationMutex > appMutex_ ; 
+    std::auto_ptr< QPopupMenu >              trayMenu_ ; 
+    std::auto_ptr<TrayIcon>                  trayIcon_ ; 
+    std::auto_ptr<kernel::Controllers>       controllers_ ; 
     //@}
+
 };
 
 #endif // __Application_h_

@@ -21,6 +21,7 @@ namespace kernel
     class KnowledgeGroup_ABC;
     class Displayer_ABC;
     class Entity_ABC;
+    class AgentKnowledge_ABC;
 }
 
 namespace gui
@@ -32,7 +33,6 @@ namespace gui
 }
 
 class AgentKnowledges;
-class AgentKnowledge_ABC;
 class PerceptionMap;
 class Perception;
 
@@ -45,9 +45,9 @@ class Perception;
 class AgentKnowledgePanel : public gui::InfoPanel_ABC
                           , public kernel::Observer_ABC
                           , public kernel::ElementObserver_ABC< AgentKnowledges >
-                          , public kernel::ElementObserver_ABC< AgentKnowledge_ABC >
+                          , public kernel::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
                           , public kernel::ElementObserver_ABC< PerceptionMap >
-                          , public kernel::SelectionObserver_Base< AgentKnowledge_ABC >
+                          , public kernel::SelectionObserver_Base< kernel::AgentKnowledge_ABC >
                           , public KnowledgeGroupSelectionObserver
 {
     Q_OBJECT;
@@ -60,7 +60,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const AgentKnowledge_ABC& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const kernel::AgentKnowledge_ABC& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     void Display( const Perception& perception, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
@@ -75,13 +75,13 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const AgentKnowledges& knowledges );
-    virtual void NotifyUpdated( const AgentKnowledge_ABC& knowledge );
+    virtual void NotifyUpdated( const kernel::AgentKnowledge_ABC& knowledge );
     virtual void NotifyUpdated( const PerceptionMap& perceptions );
-    virtual void Select( const AgentKnowledge_ABC& k );
+    virtual void Select( const kernel::AgentKnowledge_ABC& k );
     virtual void BeforeSelection();
     virtual void AfterSelection();
     void Select( const kernel::KnowledgeGroup_ABC* group );
-    void Display( const AgentKnowledge_ABC& k );
+    void Display( const kernel::AgentKnowledge_ABC& k );
     void showEvent( QShowEvent* );
     //@}
 
@@ -103,8 +103,8 @@ private:
     gui::ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
     kernel::SafePointer< AgentKnowledges >     selected_;
-    kernel::SafePointer< AgentKnowledge_ABC >  subSelected_;
-    kernel::SafePointer< AgentKnowledge_ABC >  selectionCandidate_;
+    kernel::SafePointer< kernel::AgentKnowledge_ABC >  subSelected_;
+    kernel::SafePointer< kernel::AgentKnowledge_ABC >  selectionCandidate_;
     //@}
 };
 

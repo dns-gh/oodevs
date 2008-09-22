@@ -15,7 +15,7 @@
 #include "clients_gui/LabelDisplayer.h"
 #include "clients_gui/CheckBoxDisplayer.h"
 #include "clients_gui/SpinBoxDisplayer.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Object_ABC.h"
 
 using namespace kernel;

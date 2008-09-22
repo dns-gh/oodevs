@@ -13,13 +13,15 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "ActionFactory_ABC.h"
-#include "Action_ABC.h"
+#include "actions/Action_ABC.h"
+
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameters constructor
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
-MissionParameters::MissionParameters( kernel::Controller& controller, const ActionFactory_ABC& factory )
+MissionParameters::MissionParameters( kernel::Controller& controller, const ::ActionFactory_ABC& factory )
     : controller_( controller )
     , factory_( factory )
 {

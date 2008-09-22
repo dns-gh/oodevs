@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MissionParameter_MaintenancePriorities.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -20,8 +20,8 @@ using namespace dispatcher;
 MissionParameter_MaintenancePriorities::MissionParameter_MaintenancePriorities( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    for( unsigned i = 0; i != asn.value.u.logMaintenancePriorities->n; ++i )
-        maintenancePriorities_.push_back( asn.value.u.logMaintenancePriorities->elem[i] );
+    std::copy( asn.value.u.logMaintenancePriorities->elem, asn.value.u.logMaintenancePriorities->elem + asn.value.u.logMaintenancePriorities->n
+             , std::back_inserter( maintenancePriorities_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,20 +33,19 @@ MissionParameter_MaintenancePriorities::~MissionParameter_MaintenancePriorities(
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_MaintenancePriorities::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_MaintenancePriorities::Send( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value                   = bNullValue_;
-    asn.value.t                      = T_MissionParameter_value_logMaintenancePriorities;
+    asn.null_value = bNullValue_;
+    asn.value.t = T_MissionParameter_value_logMaintenancePriorities;
     asn.value.u.logMaintenancePriorities = new ASN1T_LogMaintenancePriorities();
-    SendContainerValues< ASN1T_LogMaintenancePriorities, ASN1T_EquipmentType, T_OIDVector >( maintenancePriorities_, *asn.value.u.logMaintenancePriorities ); 
+    {
+        asn.value.u.logMaintenancePriorities->n = maintenancePriorities_.size();
+        asn.value.u.logMaintenancePriorities->elem = (ASN1T_EquipmentType*)( maintenancePriorities_.empty() ? 0 : &maintenancePriorities_.front() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +54,5 @@ void MissionParameter_MaintenancePriorities::Send( ASN1T_MissionParameter& asn )
 // -----------------------------------------------------------------------------
 void MissionParameter_MaintenancePriorities::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.logMaintenancePriorities->n > 0 )
-        delete [] asn.value.u.logMaintenancePriorities->elem;
     delete asn.value.u.logMaintenancePriorities;
 }

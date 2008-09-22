@@ -19,11 +19,10 @@ namespace kernel
     class Entity_ABC;
     class Agent_ABC;
     class Controllers;
+    class ObjectKnowledge_ABC;
+    class AgentKnowledge_ABC;
+    class PopulationKnowledge_ABC;
 }
-
-class ObjectKnowledge_ABC;
-class AgentKnowledge_ABC;
-class PopulationKnowledge_ABC;
 
 // =============================================================================
 /** @class  RcEntityResolver
@@ -34,14 +33,14 @@ class PopulationKnowledge_ABC;
 class RcEntityResolver : public QObject
                        , public RcEntityResolver_ABC
                        , public kernel::Resolver< kernel::Agent_ABC >
-                       , public kernel::Resolver< ObjectKnowledge_ABC >
-                       , public kernel::Resolver< AgentKnowledge_ABC >
-                       , public kernel::Resolver< PopulationKnowledge_ABC >
+                       , public kernel::Resolver< kernel::ObjectKnowledge_ABC >
+                       , public kernel::Resolver< kernel::AgentKnowledge_ABC >
+                       , public kernel::Resolver< kernel::PopulationKnowledge_ABC >
                        , public kernel::Observer_ABC
                        , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
-                       , public kernel::ElementObserver_ABC< ObjectKnowledge_ABC >
-                       , public kernel::ElementObserver_ABC< AgentKnowledge_ABC >
-                       , public kernel::ElementObserver_ABC< PopulationKnowledge_ABC >
+                       , public kernel::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
+                       , public kernel::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
+                       , public kernel::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
 {
 
 public:
@@ -67,12 +66,12 @@ private:
     //@{
     virtual void NotifyCreated( const kernel::Agent_ABC& element );
     virtual void NotifyDeleted( const kernel::Agent_ABC& element );
-    virtual void NotifyCreated( const ObjectKnowledge_ABC& element );
-    virtual void NotifyDeleted( const ObjectKnowledge_ABC& element );
-    virtual void NotifyCreated( const AgentKnowledge_ABC& element );
-    virtual void NotifyDeleted( const AgentKnowledge_ABC& element );
-    virtual void NotifyCreated( const PopulationKnowledge_ABC& element );
-    virtual void NotifyDeleted( const PopulationKnowledge_ABC& element );
+    virtual void NotifyCreated( const kernel::ObjectKnowledge_ABC& element );
+    virtual void NotifyDeleted( const kernel::ObjectKnowledge_ABC& element );
+    virtual void NotifyCreated( const kernel::AgentKnowledge_ABC& element );
+    virtual void NotifyDeleted( const kernel::AgentKnowledge_ABC& element );
+    virtual void NotifyCreated( const kernel::PopulationKnowledge_ABC& element );
+    virtual void NotifyDeleted( const kernel::PopulationKnowledge_ABC& element );
 
     template< typename T >
     QString CreateLink( unsigned long id ) const;

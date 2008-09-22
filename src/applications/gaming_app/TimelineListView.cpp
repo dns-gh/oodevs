@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "TimelineListView.h"
 #include "moc_TimelineListView.cpp"
-#include "gaming/Action_ABC.h"
+#include "actions/Action_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_gui/ValuedListItem.h"
@@ -40,12 +40,14 @@ namespace
     };
 }
 
+using namespace actions;
+
 // -----------------------------------------------------------------------------
 // Name: TimelineListView constructor
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
 TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& controllers )
-    : QListView( parent )
+    : QListView( parent, "TimelineListView" )
     , controllers_( controllers )
 {
     setMinimumWidth( 200 );

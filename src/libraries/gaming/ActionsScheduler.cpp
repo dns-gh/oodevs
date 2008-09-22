@@ -10,10 +10,10 @@
 #include "gaming_pch.h"
 #include "ActionsScheduler.h"
 #include "Simulation.h"
-#include "Action_ABC.h"
-#include "ActionsModel.h"
+#include "actions/Action_ABC.h"
+#include "actions/ActionsModel.h"
 #include "ActionTiming.h"
-#include "SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace kernel;
@@ -22,7 +22,7 @@ using namespace kernel;
 // Name: ActionsScheduler constructor
 // Created: SBO 2007-07-13
 // -----------------------------------------------------------------------------
-ActionsScheduler::ActionsScheduler( QObject* parent, Controllers& controllers, const Simulation& simulation, const ActionsModel& actions, Publisher_ABC& publisher )
+ActionsScheduler::ActionsScheduler( QObject* parent, Controllers& controllers, const Simulation& simulation, const actions::ActionsModel& actions, Publisher_ABC& publisher )
     : QObject( parent )
     , controllers_( controllers )
     , simulation_( simulation )
@@ -49,10 +49,10 @@ ActionsScheduler::~ActionsScheduler()
 void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )
 {
     currentTime_ = simulation_.GetDateTime();
-    Iterator< const Action_ABC& > it( actions_.CreateIterator() );
+    Iterator< const actions::Action_ABC& > it( actions_.CreateIterator() );
     while( it.HasMoreElements() )
     {
-        const Action_ABC& action = it.NextElement();
+        const actions::Action_ABC& action = it.NextElement();
         if( const ActionTiming* timing = action.Retrieve< ActionTiming >() )
         {
             const QDateTime dateTime = timing->GetTime();

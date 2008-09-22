@@ -15,6 +15,11 @@
 #include <string>
 #include <exception>
 #include <memory>
+#include <map>
+
+#include <boost/shared_ptr.hpp>
+
+#include "clients_kernel/Resolver_ABC.h" 
 
 #pragma warning( push, 0 )
 #include <qapplication.h>
@@ -34,6 +39,13 @@
 #include <qtextedit.h>
 #include <qvbox.h>
 #include <qwidgetstack.h>
+#include <qmessagebox.h>
+#include <qpopmenu.h> 
+#include <qurl.h> 
+#include <qlineedit.h> 
+#include <qcursor.h>
+#include <qgroupbox.h>
+
 #pragma warning( pop )
 
 #endif // __selftraining_app_pch_h_

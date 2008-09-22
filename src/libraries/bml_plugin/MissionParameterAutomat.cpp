@@ -41,7 +41,7 @@ void MissionParameterAutomat::Serialize( ASN1T_MissionParameter& parameter ) con
 {
     parameter.null_value = 0;
     parameter.value.t = T_MissionParameter_value_automat;
-    parameter.value.u.automat = automat_.GetID();
+    parameter.value.u.automat = automat_.GetId();
 }
 
 // -----------------------------------------------------------------------------

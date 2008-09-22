@@ -12,22 +12,27 @@
 #include "ColorButton.h"
 #include "SizeButton.h"
 #include "Tools.h"
-#include "xeumeuleu/xml.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/Controllers.h"
+#include <xeumeuleu/xml.h>
 
-using namespace xml;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: TerrainPreference constructor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-TerrainPreference::TerrainPreference( xml::xistream& xis )
+TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& controllers )
+    : controllers_( controllers )
+    , options_( controllers_.options_ )
+    , type_( xml::attribute< std::string >( xis, "type" ) )
+    , name_( xml::attribute< std::string >( xis, "name" ) )
 {
     std::string color;
-    xis >> attribute( "name", name_ )
-        >> content( "width", lineWidth_ )
-        >> content( "color", color );
+    xis >> xml::content( "color", color )
+        >> xml::content( "width", lineWidth_ );
     color_ = QColor( color.c_str() );
+    controllers_.Register( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -36,7 +41,7 @@ TerrainPreference::TerrainPreference( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 TerrainPreference::~TerrainPreference()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,11 +99,33 @@ void TerrainPreference::Revert()
 
 // -----------------------------------------------------------------------------
 // Name: TerrainPreference::Save
-// Created: AGE 2006-04-05
+// Created: SBO 2008-08-18
 // -----------------------------------------------------------------------------
-void TerrainPreference::Save( xml::xostream& xos ) const
+void TerrainPreference::Save() const
 {
-    xos << attribute( "name", name_ )
-        << content( "width", sizeButton_->GetSize() )
-        << content( "color", colorButton_->GetColor().name() );
+    options_.Change( "Terrains/" + type_ + "/width", sizeButton_->GetSize() );
+    options_.Change( "Terrains/" + type_ + "/color", colorButton_->GetColor().name() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainPreference::OptionChanged
+// Created: SBO 2008-08-18
+// -----------------------------------------------------------------------------
+void TerrainPreference::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    const QString root( QString( "Terrains/" ) + type_.c_str() );
+    QString option( name.c_str() );
+    if( !option.startsWith( root ) )
+        return;
+    option.remove( root );
+    if( option == "/width" )
+    {
+        sizeButton_->SetSize( value.To< float >() );
+        sizeButton_->Commit();
+    }
+    else if( option == "/color" )
+    {
+        colorButton_->SetColor( QColor( value.To< QString >() ) );
+        colorButton_->Commit();
+    }
 }

@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "CrossingSiteObjectAttribute.h"
 
 using namespace dispatcher;
@@ -17,8 +16,8 @@ using namespace dispatcher;
 // Name: CrossingSiteObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-CrossingSiteObjectAttribute::CrossingSiteObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
+CrossingSiteObjectAttribute::CrossingSiteObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg )
+    : ObjectAttribute_ABC( asnMsg )
     , nWidth_            ( 0 )
     , nDepth_            ( 0 )
     , nSpeed_            ( 0 )
@@ -33,7 +32,7 @@ CrossingSiteObjectAttribute::CrossingSiteObjectAttribute( const Model& model, co
 // -----------------------------------------------------------------------------
 CrossingSiteObjectAttribute::~CrossingSiteObjectAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------

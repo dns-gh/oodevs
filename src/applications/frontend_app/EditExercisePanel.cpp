@@ -26,7 +26,7 @@ using namespace frontend;
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 EditExercisePanel::EditExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
-    : Panel_ABC( widget, action, context )
+    : Panel_ABC( widget, action, context, "EditExercisePanel" )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -66,7 +66,7 @@ void EditExercisePanel::EditExercise()
 {
     if( list_->selectedItem() )
     {
-        new ::EditExercise( this, config_, list_->selectedItem()->text() );
+        Start ( new ::EditExercise( config_, list_->selectedItem()->text() ) );
         context_.Save( "exercise", list_ );
     }
     Update();

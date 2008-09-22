@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Dotation.h"
 
 using namespace dispatcher;
@@ -17,20 +16,22 @@ using namespace dispatcher;
 // Name: Dotation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Dotation::Dotation( const Model& /*model*/, const ASN1T_ResourceDotations& asnMsg )
+Dotation::Dotation( const ASN1T_ResourceDotations& asnMsg )
    : nDotationType_( asnMsg.ressource_id )
    , nNbr_         ( asnMsg.quantite_disponible )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Dotation constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-Dotation::Dotation( const Model& /*model*/, const ASN1T_DotationStock & asnMsg )
+Dotation::Dotation( const ASN1T_DotationStock & asnMsg )
    : nDotationType_( asnMsg.ressource_id )
    , nNbr_         ( asnMsg.quantite_disponible )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +40,7 @@ Dotation::Dotation( const Model& /*model*/, const ASN1T_DotationStock & asnMsg )
 // -----------------------------------------------------------------------------
 Dotation::~Dotation()
 {
-
+    // NOTHING
 }
        
 // -----------------------------------------------------------------------------

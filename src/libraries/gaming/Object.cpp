@@ -25,8 +25,6 @@
 
 using namespace kernel;
 
-const QString Object::typeName_ = "object";
-
 // -----------------------------------------------------------------------------
 // Name: Object::Object
 // Created: SBO 2005-09-02
@@ -72,15 +70,6 @@ Object::~Object()
 ObjectType& Object::GetType() const
 {
     return type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::GetTypeName
-// Created: SBO 2006-10-12
-// -----------------------------------------------------------------------------
-QString Object::GetTypeName() const
-{
-    return typeName_;
 }
 
 // -----------------------------------------------------------------------------

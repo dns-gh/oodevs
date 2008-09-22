@@ -10,12 +10,10 @@
 #ifndef __RotaObjectAttribute_h_
 #define __RotaObjectAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  RotaObjectAttribute
@@ -28,8 +26,8 @@ class RotaObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     RotaObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
-    ~RotaObjectAttribute();
+    explicit RotaObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg );
+    virtual ~RotaObjectAttribute();
     //@}
 
     //! @name Operations
@@ -40,14 +38,8 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< unsigned int > T_IDVector;
-    //@}
-
-private:
     unsigned int nDanger_;
-    T_IDVector   nbcAgents_;
+    std::vector< unsigned int > nbcAgents_;
 };
 
 }

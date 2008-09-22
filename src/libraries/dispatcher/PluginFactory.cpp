@@ -18,6 +18,8 @@
 #include "RightsPlugin.h"
 #include "PluginFactory_ABC.h"
 #include "messenger_plugin/MessengerPlugin.h"
+#include "script_plugin/ScriptPlugin.h"
+#include "score_plugin/ScorePlugin.h"
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
@@ -26,14 +28,18 @@ using namespace dispatcher;
 // Name: PluginFactory constructor
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-PluginFactory::PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler )
-    : handler_   ( handler )
-    , config_    ( config )
-    , model_     ( model )
-    , simulation_( simulation )
-    , clients_   ( clients )
+PluginFactory::PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler, CompositeRegistrable& registrables )
+    : config_      ( config )
+    , model_       ( model )
+    , simulation_  ( simulation )
+    , clients_     ( clients )
+    , handler_     ( handler )
+    , registrables_( registrables )
+    , rights_      ( new RightsPlugin( model_, clients_, config_, clients_, handler_, clients_, registrables ) )
 {
-    // NOTHING
+    
+    handler_.Add( rights_ );
+    handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,10 +67,10 @@ void PluginFactory::Register( PluginFactory_ABC& factory )
 // -----------------------------------------------------------------------------
 void PluginFactory::Instanciate()
 {
-    RightsPlugin* rights = new RightsPlugin( model_, clients_, config_, clients_, handler_, clients_ );
-    handler_.Add( rights );
-    handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights ) );
-    handler_.Add( new messenger::MessengerPlugin( clients_, clients_, clients_, config_) );
+    // $$$$ AGE 2008-08-04: retirer la dépendance...
+    handler_.Add( new messenger::MessengerPlugin( clients_, clients_, clients_, config_, registrables_ ) );
+    handler_.Add( new script::ScriptPlugin( model_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
+    handler_.Add( new score::ScorePlugin( clients_, config_ ) );
 
     xml::xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" ) >> xml::start( "config" ) >> xml::start( "dispatcher" ) >> xml::start( "plugins" )
@@ -84,7 +90,7 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis ) co
     }
     for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )
     {
-        std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, simulation_, clients_, clients_ , clients_ ) );
+        std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, simulation_, clients_, clients_ , clients_, registrables_ ) );
         if( plugin.get() )
             handler_.Add( plugin.release() );
     }

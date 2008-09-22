@@ -33,6 +33,7 @@ public:
 
 public:
     ADN_MainWindow* GetMainWindow();
+    void AddTranslator( const char* name );
 
 public:
     static ADN_App* pApplication_;

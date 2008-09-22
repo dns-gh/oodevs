@@ -3,11 +3,11 @@
     <name>Action</name>
     <message>
         <source>Action</source>
-        <translation>Action</translation>
+        <translation type="obsolete">Action</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valeur</translation>
+        <translation type="obsolete">Valeur</translation>
     </message>
 </context>
 <context>
@@ -30,42 +30,42 @@
     </message>
     <message>
         <source>Parameter mismatch in action &apos;%1&apos; (id: %2): missing parameter &apos;%3&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètre incorrect dans l&apos;action &apos;%1&apos; (id: %2) : paramètre manquant &apos;%3&apos;.</translation>
     </message>
     <message>
         <source>Unable to find executing entity &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>too much parameters provided</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver l&apos;unité &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètre incorrect dans l&apos;action &apos;%1&apos; (id: %2) : %3.</translation>
+    </message>
+    <message>
+        <source>too many parameters provided</source>
+        <translation>Trop de paramètres</translation>
     </message>
 </context>
 <context>
     <name>ActionParameter</name>
     <message>
         <source>Action</source>
-        <translation>Action</translation>
+        <translation type="obsolete">Action</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valeur</translation>
+        <translation type="obsolete">Valeur</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Position</translation>
+        <translation type="obsolete">Position</translation>
     </message>
     <message>
         <source>Location %1</source>
-        <translation>Position %1</translation>
+        <translation type="obsolete">Position %1</translation>
     </message>
     <message>
         <source>Obstacle %1</source>
-        <translation>Obstacle %1</translation>
+        <translation type="obsolete">Obstacle %1</translation>
     </message>
     <message>
         <source>Lima %1</source>
@@ -77,19 +77,19 @@
     </message>
     <message>
         <source>TC2</source>
-        <translation>TC2</translation>
+        <translation type="obsolete">TC2</translation>
     </message>
     <message>
         <source>Obstacle type</source>
-        <translation>Type d&apos;obstacle</translation>
+        <translation type="obsolete">Type d&apos;obstacle</translation>
     </message>
     <message>
         <source>Density</source>
-        <translation>Densité</translation>
+        <translation type="obsolete">Densité</translation>
     </message>
     <message>
         <source>Schedule</source>
-        <translation>Horaire</translation>
+        <translation type="obsolete">Horaire</translation>
     </message>
     <message>
         <source>Error loading mission parameters. Non-optional parameter &apos;%1&apos; is not set.</source>
@@ -97,91 +97,91 @@
     </message>
     <message>
         <source>Agent knowledge not found.</source>
-        <translation>La connaissance d&apos;agent n&apos;existe pas.</translation>
+        <translation type="obsolete">La connaissance d&apos;agent n&apos;existe pas.</translation>
     </message>
     <message>
         <source>Invalid agent knowledge.</source>
-        <translation>Connaissance d&apos;agent non valide.</translation>
+        <translation type="obsolete">Connaissance d&apos;agent non valide.</translation>
     </message>
     <message>
         <source>Agent knowledge %1</source>
-        <translation>Connaissance %1</translation>
+        <translation type="obsolete">Connaissance %1</translation>
     </message>
     <message>
         <source>Agent %1</source>
-        <translation>Agent %1</translation>
+        <translation type="obsolete">Agent %1</translation>
     </message>
     <message>
         <source>Automat %1</source>
-        <translation>Automate %1</translation>
+        <translation type="obsolete">Automate %1</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation type="obsolete">Nom</translation>
     </message>
     <message>
         <source>Nature</source>
-        <translation>Nature</translation>
+        <translation type="obsolete">Nature</translation>
     </message>
     <message>
         <source>Karma</source>
-        <translation>Karma</translation>
+        <translation type="obsolete">Karma</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation>Niveau</translation>
+        <translation type="obsolete">Niveau</translation>
     </message>
     <message>
         <source>Mounted</source>
-        <translation>Embarqué</translation>
+        <translation type="obsolete">Embarqué</translation>
     </message>
     <message>
         <source>Formation</source>
-        <translation>Formation</translation>
+        <translation type="obsolete">Formation</translation>
     </message>
     <message>
         <source>Point</source>
-        <translation>Point</translation>
+        <translation type="obsolete">Point</translation>
     </message>
     <message>
         <source>Intelligence %1</source>
-        <translation>Renseignement %1</translation>
+        <translation type="obsolete">Renseignement %1</translation>
     </message>
     <message>
         <source>Object knowledge not found.</source>
-        <translation>Connaissance d&apos;objet non trouvée.</translation>
+        <translation type="obsolete">Connaissance d&apos;objet non trouvée.</translation>
     </message>
     <message>
         <source>Invalid object knowledge.</source>
-        <translation>Connaissance d&apos;objet invalide.</translation>
+        <translation type="obsolete">Connaissance d&apos;objet invalide.</translation>
     </message>
     <message>
         <source>Object knowledge %1</source>
-        <translation>Connaissance d&apos;objet %1</translation>
+        <translation type="obsolete">Connaissance d&apos;objet %1</translation>
     </message>
     <message>
         <source>Objective %1</source>
-        <translation>Objectif %1</translation>
+        <translation type="obsolete">Objectif %1</translation>
     </message>
     <message>
         <source>Destination</source>
-        <translation>Destination</translation>
+        <translation type="obsolete">Destination</translation>
     </message>
     <message>
         <source>Way point %1</source>
-        <translation>Point de passage %1</translation>
+        <translation type="obsolete">Point de passage %1</translation>
     </message>
     <message>
         <source>Route %1</source>
-        <translation>Itinéraire %1</translation>
+        <translation type="obsolete">Itinéraire %1</translation>
     </message>
     <message>
         <source>Population knowledge not found.</source>
-        <translation>La connaissance de population n&apos;existe pas.</translation>
+        <translation type="obsolete">La connaissance de population n&apos;existe pas.</translation>
     </message>
     <message>
         <source>Phase line %1</source>
-        <translation>Lima %1</translation>
+        <translation type="obsolete">Lima %1</translation>
     </message>
 </context>
 <context>
@@ -192,7 +192,7 @@
     </message>
     <message>
         <source>Expecting &apos;%1&apos; found &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%2&apos; trouvé, &apos;%1&apos; attendu</translation>
     </message>
 </context>
 <context>
@@ -229,7 +229,7 @@
     </message>
     <message>
         <source>Associated agent:</source>
-        <translation>Agent associé:</translation>
+        <translation>Unité associée:</translation>
     </message>
     <message>
         <source>Location:</source>
@@ -265,7 +265,7 @@
     </message>
     <message>
         <source>Prisoner:</source>
-        <translation>Prisionnier:</translation>
+        <translation>Prisonnier:</translation>
     </message>
     <message>
         <source>Refugees picked up:</source>
@@ -292,47 +292,47 @@
     <name>AtlasNature</name>
     <message>
         <source>Armored</source>
-        <translation>Blindé</translation>
+        <translation type="obsolete">Blindé</translation>
     </message>
     <message>
         <source>SSA</source>
-        <translation>ASS</translation>
+        <translation type="obsolete">ASS</translation>
     </message>
     <message>
         <source>Command post</source>
-        <translation>Poste de commande</translation>
+        <translation type="obsolete">Poste de commande</translation>
     </message>
     <message>
         <source>Logistic</source>
-        <translation>Logistique</translation>
+        <translation type="obsolete">Logistique</translation>
     </message>
     <message>
         <source>Mortar</source>
-        <translation>Mortier</translation>
+        <translation type="obsolete">Mortier</translation>
     </message>
     <message>
         <source>Rocket launcher</source>
-        <translation>Lance roquettes</translation>
+        <translation type="obsolete">Lance roquettes</translation>
     </message>
     <message>
         <source>Vehicle</source>
-        <translation>Véhicule</translation>
+        <translation type="obsolete">Véhicule</translation>
     </message>
     <message>
         <source>Footman</source>
-        <translation>Infanterie</translation>
+        <translation type="obsolete">Infanterie</translation>
     </message>
     <message>
         <source>Helicopter</source>
-        <translation>Hélicoptère</translation>
+        <translation type="obsolete">Hélicoptère</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation>Non défini</translation>
+        <translation type="obsolete">Non défini</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Aucun</translation>
+        <translation type="obsolete">Aucun</translation>
     </message>
 </context>
 <context>
@@ -554,43 +554,43 @@
     <name>E_FuncLimaType</name>
     <message>
         <source>LD</source>
-        <translation>Ligne de débouché (LD)</translation>
+        <translation type="obsolete">Ligne de débouché (LD)</translation>
     </message>
     <message>
         <source>LCA</source>
-        <translation>Ligne de changement d&apos;attitude (LCA)</translation>
+        <translation type="obsolete">Ligne de changement d&apos;attitude (LCA)</translation>
     </message>
     <message>
         <source>LC</source>
-        <translation>Ligne de coordination (LC)</translation>
+        <translation type="obsolete">Ligne de coordination (LC)</translation>
     </message>
     <message>
         <source>LI</source>
-        <translation>Ligne interdire (LI)</translation>
+        <translation type="obsolete">Ligne interdire (LI)</translation>
     </message>
     <message>
         <source>LO</source>
-        <translation>Ligne d&apos;objectif (LO)</translation>
+        <translation type="obsolete">Ligne d&apos;objectif (LO)</translation>
     </message>
     <message>
         <source>LCAR</source>
-        <translation>Ligne de coup d&apos;arrêt (LCAR)</translation>
+        <translation type="obsolete">Ligne de coup d&apos;arrêt (LCAR)</translation>
     </message>
     <message>
         <source>LR</source>
-        <translation>Ligne de recueil (LR)</translation>
+        <translation type="obsolete">Ligne de recueil (LR)</translation>
     </message>
     <message>
         <source>LDM</source>
-        <translation>Ligne de début de mission (LDM)</translation>
+        <translation type="obsolete">Ligne de début de mission (LDM)</translation>
     </message>
     <message>
         <source>LFM</source>
-        <translation>Ligne de fin de mission (LFM)</translation>
+        <translation type="obsolete">Ligne de fin de mission (LFM)</translation>
     </message>
     <message>
         <source>LIA</source>
-        <translation>Ligne d&apos;identification accueil (LIA)</translation>
+        <translation type="obsolete">Ligne d&apos;identification accueil (LIA)</translation>
     </message>
 </context>
 <context>
@@ -1045,7 +1045,7 @@
     </message>
     <message>
         <source>Equipped:</source>
-        <translation>Equippé:</translation>
+        <translation>Equipé:</translation>
     </message>
     <message>
         <source>Flow:</source>
@@ -1239,7 +1239,7 @@
     <name>Profile</name>
     <message>
         <source>login</source>
-        <translation>login</translation>
+        <translation type="obsolete">login</translation>
     </message>
 </context>
 <context>
@@ -1273,7 +1273,7 @@
     </message>
     <message>
         <source>Report</source>
-        <translation>Rapport</translation>
+        <translation>Compte-rendu</translation>
     </message>
 </context>
 <context>

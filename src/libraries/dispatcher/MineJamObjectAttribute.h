@@ -10,12 +10,10 @@
 #ifndef __MineJamObjectAttribute_h_
 #define __MineJamObjectAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  MineJamObjectAttribute
@@ -28,8 +26,8 @@ class MineJamObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MineJamObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
-    ~MineJamObjectAttribute();
+    explicit MineJamObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg );
+    virtual ~MineJamObjectAttribute();
     //@}
 
     //! @name Operations

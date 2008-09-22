@@ -27,6 +27,7 @@ Config::Config( int argc, char** argv )
     po::options_description desc( "Replayer options" );
     desc.add_options()
         ( "host", po::value< std::string >( &host_ ), "specify host to join" )
+        ( "login", po::value< std::string >( &login_ ), "specify login" )
     ;
     AddOptions( desc );
 
@@ -79,4 +80,13 @@ void Config::LoadSession( Network& network ) const
     {
         // NOTHING
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetLogin
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+std::string Config::GetLogin() const
+{
+    return login_;
 }

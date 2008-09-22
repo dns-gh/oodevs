@@ -37,11 +37,12 @@ public:
     void Add( const boost::shared_ptr< Plugin_ABC >& plugin )
     {
         plugins_.push_back( plugin );
+        handlers_.push_back( plugin );
     }
 
     void Add( Plugin_ABC* plugin )
     {
-        plugins_.push_back( boost::shared_ptr< Plugin_ABC >( plugin ) );
+        Add( boost::shared_ptr< Plugin_ABC >( plugin ) );
     }
 
     void AddHandler( const boost::shared_ptr< MessageHandler_ABC >& handler )
@@ -58,8 +59,12 @@ public:
     {
         for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
             (*it)->Receive( message );
+    }
+
+    virtual void Register( dispatcher::Services& services )
+    {
         for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
-            (*it)->Receive( message );
+            (*it)->Register( services );
     }
 
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile )
@@ -72,6 +77,12 @@ public:
     {
         for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
             (*it)->NotifyClientLeft( client );
+    }
+
+    virtual void Update()
+    {
+        for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
+            (*it)->Update();
     }
     //@}
 

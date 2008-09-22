@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "AgentKnowledge.h"
 
-#include "SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Displayer_ABC.h"

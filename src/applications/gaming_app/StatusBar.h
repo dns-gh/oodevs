@@ -37,7 +37,7 @@ class StatusBar : public gui::StatusBar
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusBar( QStatusBar* bar, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter, kernel::Controllers& controllers );
+             StatusBar( QStatusBar* bar, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter, kernel::Controllers& controllers, QDockWindow* profilingDock );
     virtual ~StatusBar();
     //@}
 
@@ -68,9 +68,9 @@ private:
     //@{
     kernel::Controllers& controllers_;
     bool lastSimulationStatus_;
-    QLabel* pSpeed_;
-    QLabel* pTime_;
-    QLabel* pTick_;
+    QPushButton* pSpeed_;
+    QPushButton* pTime_;
+    QPushButton* pTick_;
     QTimer* pLagTimer_;
     QLabel* checkPoint_;
     QTimer* checkPointTimer_;

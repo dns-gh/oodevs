@@ -60,11 +60,11 @@ QString FourStateOption::SuperiorSelectedName() {
 FourStateOption::FourStateOption( const QString& state /*= OffName()*/ )
     : state_( '0' )
 {
-    if( state == OnName() )
+    if( state == OnName() || state == "1" )
         state_ = '1';
-    else if( state == SelectedName() )
+    else if( state == SelectedName() || state == "s" )
         state_ = 's';
-    else if( state == SuperiorSelectedName() )
+    else if( state == SuperiorSelectedName() || state == "+" )
         state_ = '+';
 }
 
@@ -85,7 +85,7 @@ bool FourStateOption::IsSet( bool selected, bool superior ) const
 {
     return state_ == '1'
         || ( state_ == 's' && selected )
-        || ( state_ == '+' && superior );
+        || ( state_ == '+' && ( superior || superior ) );
 }
 
 // -----------------------------------------------------------------------------

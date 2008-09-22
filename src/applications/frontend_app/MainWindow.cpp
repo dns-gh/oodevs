@@ -24,6 +24,7 @@
 #include "frontend/Config.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/Tools.h"
+#include "clients_gui/HelpSystem.h"
 
 #include <qapplication.h>
 #include <qaction.h>
@@ -39,7 +40,7 @@ MainWindow::MainWindow()
     , config_( new frontend::Config() )
 {
     config_->Parse( qApp->argc(), qApp->argv() );
-    setCaption( APP_NAME );
+    setCaption( tools::translate( "MainWindow", "SWORD Officer Training" ) );
     setIcon( MAKE_PIXMAP( csword ) );
     setMinimumSize( 800, 600 );
 
@@ -79,6 +80,8 @@ MainWindow::MainWindow()
 
     if( !config_->GetPackageFile().empty() )
         QTimer::singleShot( 0, &installAction, SLOT( toggle() ) );
+
+    new gui::HelpSystem( this, config_->BuildResourceChildFile( "help/frontend.xml" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 #include "SerializationTools.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
+#include <boost/bind.hpp>
 
 using namespace bml;
 
@@ -35,15 +36,16 @@ namespace
     {
         PositionComputer() : latitude_( 0 ), longitude_( 0 ), count_( 0 ) {}
 
-        void operator()( const dispatcher::Agent& entity )
+        void AddAgent( const dispatcher::Agent& entity )
         {
             latitude_  += entity.position_.latitude;
             longitude_ += entity.position_.longitude;
             ++count_;
         }
-        void operator()( const dispatcher::Automat& entity )
+        void AddAutomat( const dispatcher::Automat& entity )
         {
-            const_cast< dispatcher::Automat& >( entity ).GetAgents().Apply< PositionComputer& >( *this );
+            entity.automats_.Apply( boost::bind( &PositionComputer::AddAutomat, boost::ref( *this ), _1 ) );
+            entity.agents_.Apply( boost::bind( &PositionComputer::AddAgent, boost::ref( *this ), _1 ) );
         }
         
         double latitude_;
@@ -60,10 +62,9 @@ MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kern
     : MissionParameter_ABC( type )
     , angle_( 0 )
 {
-    dispatcher::Automat& entity = const_cast< dispatcher::Automat& >( automat );
     PositionComputer computer;
-    entity.GetAutomats().Apply< PositionComputer& >( computer );
-    entity.GetAgents().Apply< PositionComputer& >( computer );
+    automat.automats_.Apply( boost::bind( &PositionComputer::AddAutomat, boost::ref( computer ), _1 ) );
+    automat.agents_.Apply( boost::bind( &PositionComputer::AddAgent, boost::ref( computer ), _1 ) );
     if( computer.count_ > 0 )
     {
         const Point entityPosition( computer.latitude_ / computer.count_, computer.longitude_ / computer.count_ );

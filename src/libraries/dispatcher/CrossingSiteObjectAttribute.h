@@ -10,12 +10,10 @@
 #ifndef __CrossingSiteObjectAttribute_h_
 #define __CrossingSiteObjectAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  CrossingSiteObjectAttribute
@@ -28,8 +26,8 @@ class CrossingSiteObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     CrossingSiteObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
-    ~CrossingSiteObjectAttribute();
+    explicit CrossingSiteObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg );
+    virtual ~CrossingSiteObjectAttribute();
     //@}
 
     //! @name Operations

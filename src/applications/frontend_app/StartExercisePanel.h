@@ -16,6 +16,7 @@ namespace tools
 {
     class GeneralConfig;
 }
+
 class InfoBubble;
 class GameConfigPanel;
 class HlaPluginConfigPanel;
@@ -25,6 +26,8 @@ class QSpinBox;
 class QLineEdit;
 class QTextEdit;
 class QPushButton;
+
+
 
 // =============================================================================
 /** @class  StartExercisePanel
@@ -39,7 +42,7 @@ class StartExercisePanel : public Panel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context );
+             StartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context, const char* name = 0 );
     virtual ~StartExercisePanel();
     //@}
 

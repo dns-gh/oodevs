@@ -11,14 +11,15 @@
 #define __Agent_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelRefsContainer.h"
-#include "ModelsContainer.h"
-#include "Entity_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "SimpleEntity.h"
 #include "DecisionalState.h"
+#include "clients_kernel/Resolver.h"
 
 namespace kernel
 {
     class AgentType;
+    class Team_ABC;
 }
 
 namespace dispatcher
@@ -32,8 +33,8 @@ namespace dispatcher
     class AgentLogMedical;
     class AgentLogMaintenance;
     class AgentLogSupply;
-    class Side;
     class AgentOrder;
+    class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  Agent
@@ -41,7 +42,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Agent : public Entity_ABC
+class Agent : public SimpleEntity< kernel::Agent_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -52,7 +53,7 @@ public:
 
     //! @name Main
     //@{
-    using Entity_ABC::Update;
+    using kernel::Entity_ABC::Update;
     void Update( const ASN1T_MsgUnitCreation&        asnMsg );
     void Update( const ASN1T_MsgUnitAttributes&      asnMsg );
     void Update( const ASN1T_MsgDecisionalState&     asnMsg );
@@ -62,16 +63,16 @@ public:
     void Update( const ASN1T_MsgUnitChangeSuperior&  asnMsg );
     void Update( const ASN1T_MsgUnitOrder&           asnMsg );
 
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Accessors
     //@{
-    unsigned long GetID() const;
-    std::string GetName() const;
-    const Automat& GetAutomat() const;
+    virtual const kernel::AgentType& GetType() const;
+    virtual bool IsCommandPost() const;
     //@}
 
 private:
@@ -81,20 +82,17 @@ private:
     Agent& operator=( const Agent& ); //!< Assignement operator
     //@}
 
-private:
-    //! @name Types
+    //! @name Helpers
     //@{
-    typedef std::vector< unsigned int > T_OIDVector;
+    void ChangeAutomat( unsigned long id );
     //@}
 
 public:
-          Model&         model_;
-    const unsigned long  nID_;
-    const unsigned long  nType_; // XML reference - no resolved by dispatcher
+    Model&                   model_;
     const kernel::AgentType& type_;
-    const std::string    strName_;
-          Automat*       pAutomat_;
-    const bool           bPC_;
+    const std::string        name_;
+    Automat*                 automat_;
+    const bool               bPC_;
 
     ASN1T_CoordLatLong            position_;
     unsigned int                  nDirection_;
@@ -102,8 +100,8 @@ public:
     unsigned int                  nAltitude_;
     unsigned int                  nSpeed_;
     unsigned int                  nOperationalStateValue_;
-    ModelRefsContainer< Agent >   reinforcements_;
-    Agent*                        pReinforced_;
+    kernel::Resolver< const kernel::Agent_ABC > reinforcements_;
+    kernel::Agent_ABC*            pReinforced_;
     bool                          bDead_;
     bool                          bNeutralized_;
     bool                          bStealthModeEnabled_;
@@ -114,14 +112,14 @@ public:
     unsigned int                  nPostureCompletion_;
     unsigned int                  nInstallationState_;
     bool                          bNbcProtectionSuitEnabled_;
-    T_OIDVector                   nbcAgentTypesContaminating_;
+    std::vector< unsigned int >   nbcAgentTypesContaminating_;
     unsigned int                  nContaminationState_;
     bool                          bCommunicationJammed_;
     bool                          bBlackoutEnabled_;
     bool                          bRadarEnabled_;
-    ModelRefsContainer< Agent >   transportedAgents_;
-    Agent*                        pTransporter_;
-    ASN1T_EnumForceRatioStatus          nForceRatioState_;
+    kernel::Resolver< const kernel::Agent_ABC >   transportedAgents_;
+    kernel::Agent_ABC*                pTransporter_;
+    ASN1T_EnumForceRatioStatus    nForceRatioState_;
     ASN1T_EnumMeetingEngagementStatus nCloseCombatState_;
     ASN1T_EnumOperationalStatus    nOperationalState_;
     ASN1T_EnumFireAvailability    nIndirectFireAvailability_;
@@ -130,26 +128,24 @@ public:
     ASN1T_EnumUnitTiredness       nTiredness_;
     ASN1T_EnumUnitMorale          nMorale_;
     ASN1T_EnumUnitExperience      nExperience_;
-    const Side*                   pSideSurrenderedTo_;
+    const kernel::Team_ABC*       pSideSurrenderedTo_;
     bool                          bPrisonner_;
     bool                          bRefugeeManaged_;
     DecisionalState               decisionalInfos_;
 
-    ModelsContainer< Equipment >  equipments_;
-    ModelsContainer< Humans    >  troops_;
-    ModelsContainer< Dotation  >  dotations_;
-    ModelsContainer< Loan      >  borrowings_;
-    ModelsContainer< Loan      >  lendings_;
+    kernel::Resolver< Equipment > equipments_;
+    kernel::Resolver< Humans >    troops_;
+    kernel::Resolver< Dotation >  dotations_;
+    kernel::Resolver< Loan >      borrowings_;
+    kernel::Resolver< Loan >      lendings_;
 
     AgentLogMedical*              pLogMedical_;
     AgentLogMaintenance*          pLogMaintenance_;
     AgentLogSupply*               pLogSupply_;
 
-    AgentOrder*                   pOrder_;
+    std::auto_ptr< AgentOrder >   order_;
 };
 
 }
-
-#include "Agent.inl"
 
 #endif // __Agent_h_

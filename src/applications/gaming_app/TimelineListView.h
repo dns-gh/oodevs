@@ -19,7 +19,10 @@ namespace kernel
     class Entity_ABC;
 }
 
-class Action_ABC;
+namespace actions
+{
+    class Action_ABC;
+}
 
 // =============================================================================
 /** @class  TimelineListView
@@ -29,7 +32,7 @@ class Action_ABC;
 // =============================================================================
 class TimelineListView : public QListView
                        , public kernel::Observer_ABC
-                       , public kernel::ElementObserver_ABC< Action_ABC >
+                       , public kernel::ElementObserver_ABC< actions::Action_ABC >
                        , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
@@ -56,8 +59,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Action_ABC& action );
-    virtual void NotifyDeleted( const Action_ABC& action );
+    virtual void NotifyCreated( const actions::Action_ABC& action );
+    virtual void NotifyDeleted( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     virtual void setContentsPos( int x, int y );
     //@}

@@ -9,12 +9,14 @@
 
 #include "dispatcher_pch.h"
 #include "AarPlugin.h"
-#include "network_def.h"
 #include "MessageLoader.h"
 #include "LinkResolver_ABC.h"
-#include "3a/FunctionFactory.h"
+#include "3a/AarFacade.h"
 #include "3a/Task.h"
 #include "tools/MessageDispatcher_ABC.h"
+#include "game_asn/AarSenders.h"
+#include "ClientPublisher_ABC.h"
+#include "Services.h"
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
@@ -25,7 +27,6 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, LinkResolver_ABC& resolver, const Config& config )
     : resolver_( resolver )
-    , factory_ ( new FunctionFactory() )
     , messages_( new MessageLoader( config, true ) )
 {
     dispatcher.RegisterMessage( *this, &AarPlugin::OnReceive );
@@ -50,15 +51,22 @@ void AarPlugin::Receive( const ASN1T_MsgsSimToClient& )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AarPlugin::Register
+// Created: AGE 2008-08-13
+// -----------------------------------------------------------------------------
+void AarPlugin::Register( dispatcher::Services& services )
+{
+    services.Declare< aar::Service >();
+}
+
+// -----------------------------------------------------------------------------
 // Name: AarPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
 void AarPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& )
 {
-    xml::xostringstream xos;
-    factory_->Describe( xos );
-    AsnMsgAarToClientAarInformation info;
-    const std::string description = xos.str();
+    aar::AarInformation info;
+    const std::string description = "<functions/>"; // $$$$ AGE 2008-08-04: 
     info().information = description.c_str();
     info.Send( client );
 }
@@ -80,8 +88,8 @@ void AarPlugin::OnReceive( const std::string& client, const ASN1T_MsgsClientToAa
 {
     switch( asnMsg.msg.t )
     {
-    case T_MsgsClientToAar_msg_msg_indicator_request:
-        OnReceiveIndicatorRequest( client, *asnMsg.msg.u.msg_indicator_request );
+    case T_MsgsClientToAar_msg_msg_plot_request:
+        OnReceiveIndicatorRequest( client, *asnMsg.msg.u.msg_plot_request );
         break;
     };
 }
@@ -90,25 +98,22 @@ void AarPlugin::OnReceive( const std::string& client, const ASN1T_MsgsClientToAa
 // Name: AarPlugin::OnReceiveIndicatorRequest
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const ASN1T_MsgIndicatorRequest& request )
+void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const ASN1T_MsgPlotRequest& request )
 {
     messages_->ReloadIndices();
     try
     {
         xml::xistringstream xis( request.request );
-        boost::shared_ptr< Task > task( factory_->CreateTask( request.identifier, xis ) );
-        task->Process( *messages_, resolver_.GetPublisher( client ) ); // $$$$ AGE 2007-09-17: deconnexion en route=>crash
+        AarFacade factory( resolver_.GetPublisher( client ), request.identifier );
+        boost::shared_ptr< Task > task( factory.CreateTask( xis ) );
+        task->Process( *messages_ ); // $$$$ AGE 2007-09-17: deconnexion en route=>crash
     } 
     catch( std::exception& e )
     {
-        ASN1T_MsgIndicatorResult result;
-        result.values.n = 0; result.values.elem = 0;
-        result.identifier = request.identifier;
-        result.error = e.what();
-        ASN1T_MsgsAarToClient message;
-        message.msg.t = T_MsgsAarToClient_msg_msg_indicator_result;
-        message.msg.u.msg_indicator_result = &result;
-
-        resolver_.GetPublisher( client ).Send( message );
+        aar::PlotResult message;
+        message().values.n = 0; message().values.elem = 0;
+        message().identifier = request.identifier;
+        message().error = e.what();
+        message.Send( resolver_.GetPublisher( client ) );
     }
 }

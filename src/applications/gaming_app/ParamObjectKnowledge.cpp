@@ -9,9 +9,9 @@
 
 #include "gaming_app_pch.h"
 #include "ParamObjectKnowledge.h"
-#include "gaming/ObjectKnowledge_ABC.h"
-#include "gaming/ObjectKnowledgeConverter_ABC.h"
-#include "gaming/ActionParameterObjectKnowledge.h"
+#include "actions/ObjectKnowledge.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
@@ -69,9 +69,9 @@ void ParamObjectKnowledge::NotifyContextMenu( const Object_ABC& entity, ContextM
 // Name: ParamObjectKnowledge::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamObjectKnowledge::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamObjectKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameterEntity< ObjectKnowledge_ABC > > param( new ActionParameterObjectKnowledge( parameter_ ) );
+    std::auto_ptr< actions::parameters::Entity< ObjectKnowledge_ABC > > param( new actions::parameters::ObjectKnowledge( parameter_ ) );
     EntityParameter< ObjectKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

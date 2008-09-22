@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "LinearMinedAreaObjectAttribute.h"
 
 using namespace dispatcher;
@@ -17,8 +16,8 @@ using namespace dispatcher;
 // Name: LinearMinedAreaObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LinearMinedAreaObjectAttribute::LinearMinedAreaObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
+LinearMinedAreaObjectAttribute::LinearMinedAreaObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg )
+    : ObjectAttribute_ABC( asnMsg )
     , nMinesActivityTime_( 0 )
     , rMinesDensity_     ( 0. )
 {
@@ -31,7 +30,7 @@ LinearMinedAreaObjectAttribute::LinearMinedAreaObjectAttribute( const Model& mod
 // -----------------------------------------------------------------------------
 LinearMinedAreaObjectAttribute::~LinearMinedAreaObjectAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------

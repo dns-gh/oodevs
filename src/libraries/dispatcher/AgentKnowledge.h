@@ -11,7 +11,8 @@
 #define __AgentKnowledge_h_
 
 #include "game_asn/Simulation.h"
-#include "Entity_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
+#include "SimpleEntity.h"
 
 namespace dispatcher
 {
@@ -19,6 +20,8 @@ namespace dispatcher
     class KnowledgeGroup;
     class Agent;
     class Side;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledge
@@ -26,7 +29,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class AgentKnowledge : public Entity_ABC
+class AgentKnowledge : public SimpleEntity< kernel::AgentKnowledge_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -37,17 +40,20 @@ public:
 
     //! @name Operations
     //@{
-    using Entity_ABC::Update;
+    using kernel::Entity_ABC::Update;
     void Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
-    //! @name Accessors
+    //! @name Operations
     //@{
-    unsigned int GetID() const;
-    std::string GetName() const;
+    virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
+    virtual const kernel::Agent_ABC* GetEntity() const;
+    virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -76,11 +82,12 @@ private:
     //@}
 
 public:
-          Model&          model_;
-    const unsigned int    nID_;
-    const KnowledgeGroup& knowledgeGroup_;
-    const Agent&          agent_;
-    const ASN1T_UnitType  nTypeAgent_;
+    //! @name Member data
+    //@{
+    const Model&                        model_;
+    const KnowledgeGroup&               knowledgeGroup_;
+    const Agent&                        agent_;
+    const ASN1T_UnitType                type_;
 
     unsigned int                        nRelevance_;
     ASN1T_EnumUnitIdentificationLevel   nPerceptionLevel_;
@@ -90,7 +97,7 @@ public:
     ASN1T_CoordLatLong                  position_;
     unsigned int                        nDirection_;
     unsigned int                        nSpeed_;
-    Side*                               pSide_;
+    const kernel::Team_ABC*             team_;
     bool                                bPC_; //$$$ A VIRER
     T_AutomatePerceptionVector          automatePerceptions_;
     bool                                bSurrendered_;
@@ -98,6 +105,7 @@ public:
     bool                                bRefugeeManaged_;
 
     T_Optionals                         optionals_;
+    //@}
 };
 
 }

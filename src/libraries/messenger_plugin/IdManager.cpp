@@ -16,8 +16,8 @@ using namespace messenger;
 // Name: IdManager constructor
 // Created: RDS 2008-04-04
 // -----------------------------------------------------------------------------
-IdManager::IdManager():
-    nextId_(0)
+IdManager::IdManager()
+    : nextId_( 0 )
 {
     // NOTHING
 }
@@ -38,5 +38,5 @@ IdManager::~IdManager()
 // -----------------------------------------------------------------------------
 unsigned int IdManager::nextId()
 {
-    return nextId_++;
+    return ++nextId_;
 }

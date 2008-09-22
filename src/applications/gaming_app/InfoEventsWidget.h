@@ -30,7 +30,7 @@ class Contaminations;
 */
 // Created: SBO 2007-02-05
 // =============================================================================
-class InfoEventsWidget : public QGroupBox
+class InfoEventsWidget : public QVBox
                        , public kernel::Observer_ABC
                        , public kernel::SelectionObserver< kernel::Entity_ABC >
                        , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
@@ -57,10 +57,10 @@ private:
     virtual void NotifyUpdated( const kernel::Attributes_ABC& element );
     virtual void NotifyUpdated( const Contaminations& element );
 
-    void AddEventButton( const std::string& event, bool add );
-    QButton* MakeButton( QWidget* parent, const QPixmap& pixmap, const QString& text );
+    void InitializeEvents( QWidget* parent );
+    QLabel* CreateEvent( QWidget* parent, const QPixmap& pixmap, const QString& text );
+    void ToggleEvent( const std::string& event, bool toggle );
 
-    void InitializeEventButtons( QWidget* parent );
     void SetAttributes( const Attributes& attributes );
     void SetContaminations( const Contaminations& attributes );
     void SetShown();
@@ -69,8 +69,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, QButton* > T_EventButtons;
-    typedef T_EventButtons::const_iterator  CIT_EventButtons;
+    typedef std::map< std::string, QLabel* > T_Events;
     //@}
 
 private:
@@ -78,7 +77,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    T_EventButtons eventButtons_;
+    T_Events events_;
     //@}
 };
 

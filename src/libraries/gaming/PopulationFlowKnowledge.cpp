@@ -21,7 +21,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
-#include "PopulationKnowledge_ABC.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
 
 using namespace kernel;
 

@@ -14,6 +14,7 @@
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/GlTooltip_ABC.h"
 #include <qimage.h>
+#include <boost/function.hpp>
 
 namespace gui
 {
@@ -28,6 +29,7 @@ namespace gui
 class GlTooltip : public kernel::GlTooltip_ABC
                 , public NoLinkDisplayer
                 , public tools::Caller< QColor >
+                , public tools::Caller< QFont >
                 , public tools::Caller< kernel::Styles::Style >
                 , public tools::Caller< E_OperationalStatus >
                 , public tools::Caller< E_ForceRatioStatus >
@@ -44,8 +46,16 @@ public:
     //! @name Operations
     //@{
     virtual operator kernel::Displayer_ABC& ();
-    virtual void Draw( const geometry::Point2f& position );
+    virtual void Draw( const geometry::Point2f& position, int width = 0, int height = 0, float factor = 1.f );
     virtual void Hide();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    typedef boost::function< void ( QPainter&, const QRect& ) > FrameDrawer;
+    void SetFrameDrawer( const FrameDrawer& frameDrawer );
+    QSize Size() const;
     //@}
 
 private:
@@ -58,6 +68,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Call( const QColor& value );
+    virtual void Call( const QFont& font );
     virtual void Call( const kernel::Styles::Style& value );
     virtual void Call( const E_OperationalStatus& value );
     virtual void Call( const E_ForceRatioStatus& value );
@@ -68,8 +79,8 @@ private:
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
 
-    void GenerateImage();
-    QPixmap CreatePixmap();
+    void GenerateImage( unsigned int width, unsigned int height );
+    QPixmap CreatePixmap( unsigned int width, unsigned int height );
     void RestoreAlpha();
     void DirtyImage();
     //@}
@@ -92,6 +103,7 @@ private:
     QString message_;
     T_Messages current_, new_;
     QImage image_;
+    FrameDrawer frameDrawer_;
     //@}
 };
 

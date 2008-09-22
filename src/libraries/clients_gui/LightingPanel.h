@@ -24,6 +24,7 @@ namespace gui
     class LightingProxy;
     class DirectionWidget;
     class ColorButton;
+    class ButtonGroup;
 
 // =============================================================================
 /** @class  LightingPanel
@@ -80,6 +81,7 @@ private:
     LightingProxy& lighting_;
 
     QGroupBox* fixedLightBox_;
+    ButtonGroup* lightingType_;
     DirectionWidget* direction_;
     ColorButton* ambient_;
     ColorButton* diffuse_;

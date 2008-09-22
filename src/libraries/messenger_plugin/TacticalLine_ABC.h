@@ -26,6 +26,7 @@ namespace xml
 
 namespace messenger
 {
+
 // =============================================================================
 /** @class  TacticalLine_ABC
     @brief  TacticalLine_ABC
@@ -39,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLine_ABC( unsigned int id, const ASN1T_TacticalLine& asn );
-             TacticalLine_ABC( unsigned int id, xml::xistream&, const ASN1T_TacticalLinesDiffusion& diffusion, const kernel::CoordinateConverter_ABC& converter);
+             TacticalLine_ABC( unsigned int id, xml::xistream&, const ASN1T_TacticalLinesDiffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -52,7 +53,7 @@ public:
     //! @name Accessors
     //@{
     unsigned int                         GetID() const;
-    const ASN1T_TacticalLinesDiffusion&  GetDiffusion() const { return diffusion_ ; }
+    const ASN1T_TacticalLinesDiffusion&  GetDiffusion() const { return diffusion_; }
     //@}
 
 protected:

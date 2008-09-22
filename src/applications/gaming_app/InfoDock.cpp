@@ -18,7 +18,7 @@
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
 InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, gui::ItemFactory_ABC& itemFactory )
-    : QDockWindow( parent )
+    : QDockWindow( parent, "info" )
     , controllers_( controllers )
 {
     setOrientation( Qt::Horizontal );

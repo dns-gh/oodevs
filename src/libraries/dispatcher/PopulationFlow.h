@@ -12,12 +12,14 @@
 
 #include "game_asn/Simulation.h"
 #include "Localisation.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+#include "clients_kernel/PopulationFlow_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
     class Population;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  PopulationFlow
@@ -25,26 +27,28 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class PopulationFlow : public Entity_ABC
+class PopulationFlow : public SimpleEntity< kernel::PopulationFlow_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlow( Model& model, Population& population, const ASN1T_MsgPopulationFlowCreation& msg );
+             PopulationFlow( const Population& population, const ASN1T_MsgPopulationFlowCreation& msg );
     virtual ~PopulationFlow();
-    //@}
-
-    //! @name Accessors
-    //@{
-    unsigned long GetID() const;
     //@}
 
     //! @name Operations
     //@{
     void Update( const ASN1T_MsgPopulationFlowUpdate& msg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor ) const;
+
+    virtual unsigned int GetDeadHumans() const;
+    virtual unsigned int GetLivingHumans() const;
+    virtual unsigned int GetDensity() const;
+    virtual QString      GetAttitude() const;
     //@}
 
 private:
@@ -55,7 +59,7 @@ private:
     //@}
 
 private:
-          Population&   population_;
+    const Population&   population_;
     const unsigned long nID_;
 
     Localisation                 path_;
@@ -68,7 +72,5 @@ private:
 };
 
 }
-
-#include "PopulationFlow.inl"
 
 #endif // __PopulationFlow_h_

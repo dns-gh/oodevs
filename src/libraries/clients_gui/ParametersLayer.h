@@ -48,13 +48,14 @@ public:
     void StartPolygon( ShapeHandler_ABC& handler );
     void StartCircle ( ShapeHandler_ABC& handler );
     void StartPath   ( ShapeHandler_ABC& handler, const kernel::Positions& position );
-    void Start       ( ShapeHandler_ABC& handler, kernel::Location_ABC& location );
+    void Start       ( ShapeHandler_ABC& handler, const kernel::Location_ABC& location );
     void Reset       ();
 
     void AddPoint( const geometry::Point2f& point );
 
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( const geometry::Rectangle2f& viewport );
     //@}
 
 private:
@@ -83,6 +84,7 @@ private:
     ShapeHandler_ABC* handler_;
     kernel::Location_ABC* current_;
     geometry::Rectangle2f world_;
+    geometry::Rectangle2f viewport_;
     geometry::Point2f lastPoint_;
     //@}
 };

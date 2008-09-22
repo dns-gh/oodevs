@@ -23,17 +23,23 @@ namespace kernel
 // =============================================================================
 class TacticalLine_ABC : public Entity_ABC
 {
+public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC() {}
-    virtual ~TacticalLine_ABC() {}
+             TacticalLine_ABC();
+    virtual ~TacticalLine_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual bool IsLimit() const = 0;
+    virtual QString GetTypeName() const;
     //@}
 
 private:

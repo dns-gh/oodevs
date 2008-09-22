@@ -41,7 +41,7 @@ void MissionParameterAgent::Serialize( ASN1T_MissionParameter& parameter ) const
 {
     parameter.null_value = 0;
     parameter.value.t = T_MissionParameter_value_unit;
-    parameter.value.u.unit = agent_.GetID();
+    parameter.value.u.unit = agent_.GetId();
 }
 
 // -----------------------------------------------------------------------------

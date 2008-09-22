@@ -10,10 +10,11 @@ MessengerMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 IMPORTS BaseExports                   FROM Base
         LimaLimiteExports             FROM LimaLimite
         IntelligenceExports           FROM Intelligence
-        DrawingExports                FROM Drawing;
+        DrawingExports                FROM Drawing
+        ChatExports                   FROM Chat;
 
 MessengerMessagesIncludes ::= SEQUENCE
-{ BaseExports, LimaLimiteExports, IntelligenceExports, DrawingExports }
+{ BaseExports, LimaLimiteExports, IntelligenceExports, DrawingExports, ChatExports }
 MessengerMessagesExports  ::= NULL
 -- END includes
 
@@ -57,8 +58,9 @@ MsgsMessengerToClient ::= CHOICE
 
     msg-shape-creation-request-ack                           MsgShapeCreationRequestAck,
     msg-shape-destruction-request-ack                        MsgShapeDestructionRequestAck,
-    msg-shape-update-request-ack                             MsgShapeUpdateRequestAck
+    msg-shape-update-request-ack                             MsgShapeUpdateRequestAck,
    
+    msg-text-message                                         MsgTextMessage
 }
 
 MsgsClientToMessenger ::= CHOICE
@@ -78,9 +80,9 @@ MsgsClientToMessenger ::= CHOICE
 
     msg-shape-creation-request              MsgShapeCreationRequest,
     msg-shape-destruction-request           MsgShapeDestructionRequest,
-    msg-shape-update-request                MsgShapeUpdateRequest
+    msg-shape-update-request                MsgShapeUpdateRequest,
   
-  
+    msg-text-message                        MsgTextMessage
 }
 
 END

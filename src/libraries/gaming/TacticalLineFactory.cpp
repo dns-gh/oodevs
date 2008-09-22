@@ -12,7 +12,7 @@
 #include "TacticalLine_ABC.h"
 #include "Lima.h"
 #include "Limit.h"
-#include "Publisher_ABC.h"
+#include "game_asn/Publisher_ABC.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "TeamsModel.h"

@@ -10,9 +10,9 @@
 #include "gaming_app_pch.h"
 #include "ParamAtlasNature.h"
 #include "moc_ParamAtlasNature.cpp"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterAtlasNature.h"
-#include "gaming/AtlasNatures.h"
+#include "actions/Action_ABC.h"
+#include "actions/AtlasNature.h"
+#include "clients_kernel/AtlasNatures.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/Tools.h"
 
@@ -61,9 +61,9 @@ void ParamAtlasNature::BuildInterface( QWidget* parent )
 // Name: ParamAtlasNature::CommitTo
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void ParamAtlasNature::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamAtlasNature::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new ActionParameterAtlasNature( parameter_, nature_ ) );
+    action.AddParameter( *new actions::parameters::AtlasNature( parameter_, nature_ ) );
 }
 
 // -----------------------------------------------------------------------------

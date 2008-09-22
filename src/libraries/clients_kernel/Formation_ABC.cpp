@@ -13,6 +13,8 @@
 
 using namespace kernel;
 
+const QString Formation_ABC::typeName_ = "formation";
+
 // -----------------------------------------------------------------------------
 // Name: Formation_ABC constructor
 // Created: SBO 2006-09-20
@@ -29,6 +31,15 @@ Formation_ABC::Formation_ABC()
 Formation_ABC::~Formation_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation_ABC::GetTypeName
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+QString Formation_ABC::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------

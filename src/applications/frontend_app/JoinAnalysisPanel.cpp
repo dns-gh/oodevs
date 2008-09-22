@@ -27,7 +27,7 @@
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 JoinAnalysisPanel::JoinAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
-    : Panel_ABC( widget, action, context )
+    : Panel_ABC( widget, action, context, "JoinAnalysisPanel" )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -71,7 +71,7 @@ void JoinAnalysisPanel::StartExercise()
 {
     if( list_->selectedItem() )
     {
-        new frontend::JoinAnalysis( this, config_, list_->selectedItem()->text(), frontend::DispatcherPort( exerciseNumber_->value() ) );
+        Start( new frontend::JoinAnalysis( config_, list_->selectedItem()->text(), frontend::DispatcherPort( exerciseNumber_->value() ) ) );
         context_.Save( "exercise", list_ );
     }
     Update();

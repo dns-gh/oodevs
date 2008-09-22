@@ -29,7 +29,8 @@ namespace dispatcher
     class Plugin_ABC;
     class SimulationPublisher_ABC;
     class ClientPublisher_ABC;
-    class LinkResolver_ABC; 
+    class LinkResolver_ABC;
+    class CompositeRegistrable;
 
 // =============================================================================
 /** @class  PluginFactory_ABC
@@ -49,7 +50,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< Plugin_ABC > Create( const std::string& name, xml::xistream& xis, const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client, LinkResolver_ABC& resolver) const = 0;
+    virtual std::auto_ptr< dispatcher::Plugin_ABC > Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config, dispatcher::Model& model, 
+                                                dispatcher::SimulationPublisher_ABC& simulation, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client,
+                                                dispatcher::LinkResolver_ABC& resolver, dispatcher::CompositeRegistrable& registrables ) const = 0;
     //@}
 };
 

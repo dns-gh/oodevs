@@ -27,7 +27,7 @@ class EditExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             EditExercise( QObject* parent, const tools::GeneralConfig& config, const QString& name );
+             EditExercise( const tools::GeneralConfig& config, const QString& name, bool attach = false );
     virtual ~EditExercise();
     //@}
 

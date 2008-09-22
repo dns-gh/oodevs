@@ -20,6 +20,7 @@
 #include "dispatcher/Equipment.h"
 #include "hla/UpdateFunctor_ABC.h"
 #include "hla/AttributeIdentifier.h"
+#include <boost/bind.hpp>
 
 using namespace hla;
 
@@ -133,7 +134,7 @@ void AgentExtension::UpdateSpatial( UpdateFunctor_ABC& functor ) const
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateAggregateMarking( UpdateFunctor_ABC& functor ) const
 {
-    AggregateMarking marking( holder_.strName_ );
+    AggregateMarking marking( holder_.name_ );
     Serializer archive;
     marking.Serialize( archive );
     functor.Visit( AttributeIdentifier( "AggregateMarking" ), archive );
@@ -158,7 +159,7 @@ void AgentExtension::UpdateAggregateState( UpdateFunctor_ABC& functor ) const
 void AgentExtension::UpdateForceIdentifier( UpdateFunctor_ABC& functor ) const
 {
     unsigned char force = 0; // Other
-    const dispatcher::Side& side = holder_.pAutomat_->side_;
+    const dispatcher::Side& side = holder_.automat_->team_;
     switch( side.nType_ )
     {
     case EnumDiplomacy::ami:    force = 1; break;
@@ -176,7 +177,7 @@ namespace
     struct SilentEntitiesSerializer
     {
         SilentEntitiesSerializer() : count_( 0 ) {}
-        void operator()( const dispatcher::Equipment& e )
+        void SerializeEquipment( const dispatcher::Equipment& e )
         {
             ++count_;
             EntityType type( "1 1 225 1" );
@@ -205,6 +206,6 @@ namespace
 void AgentExtension::UpdateComposition( UpdateFunctor_ABC& functor ) const
 {
     SilentEntitiesSerializer serializer;
-    holder_.equipments_.Apply( serializer );
+    holder_.equipments_.Apply( boost::bind( &SilentEntitiesSerializer::SerializeEquipment, boost::ref( serializer ), _1 ) );
     serializer.Commit( functor );
 }

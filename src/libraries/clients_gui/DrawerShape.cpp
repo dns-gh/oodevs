@@ -9,60 +9,69 @@
 
 #include "clients_gui_pch.h"
 #include "DrawerShape.h"
-#include "DrawerStyle.h"
+#include "SvgLocationDrawer.h"
+#include "DrawingTypes.h"
+#include "DrawingCategory.h"
+#include "DrawingTemplate.h"
+#include "ParametersLayer.h"
+#include "clients_kernel/LocationProxy.h"
 #include "clients_kernel/Controller.h"
-#include "svgl/svgl.h"
-#include "xeumeuleu/xml.h"
+#include "clients_kernel/Positions.h"
+#include <svgl/svgl.h>
+#include <xeumeuleu/xml.h>
 
 using namespace gui;
-using namespace xml;
-
-namespace
-{
-    QColor Complement( const QColor& color )
-    {
-        int h, s, v;
-        color.getHsv( &h, &s, &v );
-        if( h == -1 )
-            v = 255 - v;
-        else
-            h += 180;
-        QColor complement;
-        complement.setHsv( h, s, v );
-        return complement;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: DrawerShape constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerShape::DrawerShape( kernel::Controller& controller, const DrawerStyle& style, const QColor& color )
-    : controller_( controller )
-    , style_( style )
-    , context_( new svg::RenderingContext() )
-    , color_( color )
-    , complement_( Complement( color ) )
+DrawerShape::DrawerShape( kernel::Controller& controller, unsigned long id, const DrawingTemplate& style, const QColor& color, kernel::LocationProxy& location )
+    : kernel::EntityImplementation< Drawing_ABC >( controller, id, style.GetName() )
+    , controller_( controller )
+    , style_     ( style )
+    , location_  ( location )
+    , color_     ( color )
+    , drawer_    ( new SvgLocationDrawer( style ) )
 {
-    // NOTHING
+    RegisterSelf( *this );
+}
+
+namespace
+{
+    const DrawingTemplate& ReadStyle( xml::xistream& xis, const DrawingTypes& types )
+    {
+        std::string category, style;
+        xis >> xml::attribute( "category", category )
+            >> xml::attribute( "template", style );
+        return types.Get( category.c_str() ).Get( style.c_str() );
+    }
+
+    QColor ReadColor( xml::xistream& xis )
+    {
+        const std::string name = xml::attribute< std::string >( xis, "color" );
+        return QColor( name.c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerShape constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerShape::DrawerShape( kernel::Controller& controller, const DrawerStyle& style, xml::xistream& xis )
-    : controller_( controller )
-    , style_( style )
-    , context_( new svg::RenderingContext() )
+DrawerShape::DrawerShape( kernel::Controller& controller, unsigned long id, xml::xistream& xis, const DrawingTypes& types, kernel::LocationProxy& proxy )
+    : kernel::EntityImplementation< Drawing_ABC >( controller, id, ReadStyle( xis, types ).GetName() )
+    , controller_( controller )
+    , style_     ( ReadStyle( xis, types ) )
+    , location_  ( proxy )
+    , color_     ( ReadColor( xis ) )
+    , drawer_    ( new SvgLocationDrawer( style_ ) )
 {
-    std::string color;
-    xis >> attribute( "color", color )
-        >> list( "point", *this, &DrawerShape::ReadPoint );
-    color_.setNamedColor( color.c_str() );
-    complement_ = Complement( color_ );
-
-    controller_.Create( *this );
+    std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
+    location_.SetLocation( location );
+    location.release();
+    xis >> xml::list( "point", *this, &DrawerShape::ReadPoint );
+    RegisterSelf( *this );
+    Create();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,8 +80,16 @@ DrawerShape::DrawerShape( kernel::Controller& controller, const DrawerStyle& sty
 // -----------------------------------------------------------------------------
 DrawerShape::~DrawerShape()
 {
-    controller_.Delete( *this );
-    delete context_;
+    Destroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::GetColor
+// Created: SBO 2008-06-02
+// -----------------------------------------------------------------------------
+QColor DrawerShape::GetColor() const
+{
+    return color_;
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +98,16 @@ DrawerShape::~DrawerShape()
 // -----------------------------------------------------------------------------
 void DrawerShape::Create()
 {
-    controller_.Create( *this );
+    controller_.Create( (Drawing_ABC&)*this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::Update
+// Created: SBO 2008-06-05
+// -----------------------------------------------------------------------------
+void DrawerShape::Update()
+{
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -91,88 +117,38 @@ void DrawerShape::Create()
 void DrawerShape::ReadPoint( xml::xistream& xis )
 {
     float x, y;
-    xis >> attribute( "x", x )
-        >> attribute( "y", y );
+    xis >> xml::attribute( "x", x )
+        >> xml::attribute( "y", y );
     geometry::Point2f point( x, y );
-    AddPoint( point );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerShape::PopPoint
-// Created: AGE 2006-09-01
-// -----------------------------------------------------------------------------
-void DrawerShape::PopPoint()
-{
-    if( ! points_.empty() )
-        points_.pop_back();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerShape::AddPoint
-// Created: AGE 2006-09-01
-// -----------------------------------------------------------------------------
-void DrawerShape::AddPoint( const geometry::Point2f& point )
-{
-    points_.push_back( point );
+    location_.AddPoint( point );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerShape::Translate
 // Created: AGE 2006-09-05
 // -----------------------------------------------------------------------------
-void DrawerShape::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision  )
+void DrawerShape::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
 {
-    const float squarePrecision = precision * precision;
-    for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
-        if( it->SquareDistance( from ) < squarePrecision )
-        {
-            *it += translation;
-            return;
-        }
-    for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
-        *it += translation;
+    location_.Translate( from, translation, precision );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerShape::Draw
-// Created: AGE 2006-09-01
+// Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-void DrawerShape::Draw( const geometry::Rectangle2f& viewport, bool overlined ) const
+void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, bool overlined ) const
 {
-    Draw( viewport, color_, overlined );
+    drawer_->Draw( location_, viewport, tools, color_, overlined );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerShape::Draw
-// Created: AGE 2006-09-04
+// Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------
-void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const QColor& color, bool overlined ) const
+void DrawerShape::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( points_.empty() )// $$$$ SBO 2008-05-17: check viewport
-        return;
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-    glLineWidth( 1 );
-
-    const geometry::BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
-    context_->SetViewport( box, 320, 200 ); // $$$$ AGE 2006-09-04: 
-    svg::Color svgColor( color.name().ascii() );
-    context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
-    style_.Draw( points_, *context_ );
-    context_->PopProperty( svg::RenderingContext_ABC::color );
-
-    if( overlined )
-    {
-        glLineWidth( 1 );
-        glColor3f( complement_.red()   / 255.f,
-                   complement_.green() / 255.f,
-                   complement_.blue()  / 255.f );
-        glPointSize( 4 );
-        glVertexPointer( 2, GL_FLOAT, 0, &points_.front() );
-        glDrawArrays( GL_LINE_STRIP, 0, points_.size() );
-        glDrawArrays( GL_POINTS, 0, points_.size() );
-    }
-
-    glPopAttrib();
+    // $$$$ SBO 2008-06-03: check viewport
+    drawer_->Draw( location, viewport, tools, color_, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,27 +158,44 @@ void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const QColor& col
 void DrawerShape::ChangeColor( const QColor& color )
 {
     color_ = color;
-    complement_ = Complement( color );
+    Update();
 }
 
-// -----------------------------------------------------------------------------
-// Name: DrawerShape::IsAt
-// Created: AGE 2006-09-04
-// -----------------------------------------------------------------------------
-bool DrawerShape::IsAt( const geometry::Point2f& point, float precision ) const
+namespace
 {
-    const float squarePrecision = precision * precision;
-    if( points_.empty() )
-        return false;
-    if( points_.size() == 1 )
-        return points_.front().SquareDistance( point ) < squarePrecision;
-    for( CIT_PointVector it = points_.begin(); it != points_.end() - 1; ++it )
+    struct XmlSerializer : public kernel::LocationVisitor_ABC
     {
-        const geometry::Segment2f segment( *it, *(it+1) );
-        if( segment.SquareDistance( point ) < squarePrecision )
-            return true;
-    }
-    return false;
+        explicit XmlSerializer( xml::xostream& xos ) : xos_( &xos ) {}
+        virtual void VisitLines( const T_PointVector& points )
+        {
+            for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+                VisitPoint( *it );
+        }
+        virtual void VisitPolygon( const T_PointVector& points )
+        {
+            T_PointVector copy( points );
+            copy.pop_back();
+            VisitLines( copy );
+        }
+        virtual void VisitPath( const geometry::Point2f& start, const T_PointVector& points )
+        {
+            VisitPoint( start );
+            VisitLines( points );
+        }
+        virtual void VisitCircle( const geometry::Point2f& center, float radius )
+        {
+            // $$$$ SBO 2008-05-30: TODO
+        }
+        virtual void VisitPoint( const geometry::Point2f& point )
+        {
+            *xos_ << xml::start( "point" )
+                    << xml::attribute( "x", point.X() )
+                    << xml::attribute( "y", point.Y() )
+                  << xml::end();
+        }
+        
+        xml::xostream* xos_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -211,13 +204,46 @@ bool DrawerShape::IsAt( const geometry::Point2f& point, float precision ) const
 // -----------------------------------------------------------------------------
 void DrawerShape::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "shape" )
-            << attribute( "color", color_.name() );
-    style_.Serialize( xos );
-    for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
-        xos << start( "point" ) // $$$$ SBO 2007-03-21: UTM ?
-                << attribute( "x", it->X() )
-                << attribute( "y", it->Y() )
-            << end();
-    xos << end();
+    if( location_.IsValid() )
+    {
+        xos << xml::start( "shape" )
+                << xml::attribute( "color", color_.name() );
+        style_.Serialize( xos );
+        XmlSerializer serializer( xos );
+        location_.Accept( serializer );
+        xos << xml::end();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::Handle
+// Created: SBO 2008-05-30
+// -----------------------------------------------------------------------------
+void DrawerShape::Handle( kernel::Location_ABC& location )
+{
+    if( location.IsValid() )
+    {
+        std::auto_ptr< kernel::Location_ABC > ptr( &location );
+        location_.SetLocation( ptr );
+        Create();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::Edit
+// Created: SBO 2008-06-03
+// -----------------------------------------------------------------------------
+void DrawerShape::Edit( ParametersLayer& parameters )
+{
+    controller_.Delete( (Drawing_ABC&)*this );
+    parameters.Start( *this, location_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::GetLocation
+// Created: AGE 2008-08-19
+// -----------------------------------------------------------------------------
+const kernel::Location_ABC& DrawerShape::GetLocation() const
+{
+    return location_;
 }

@@ -11,16 +11,18 @@
 #define __Model_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelsContainer.h"
 #include "MessageHandler_ABC.h"
 #include "CompositeFactory.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "EntityPublisher.h"
+#include "clients_kernel/Resolver.h"
 
 namespace kernel
 {
     class AgentTypes;
     class AgentType;
     class MissionType;
+    class FragOrderType;
+    class Entity_ABC;
 }
 
 namespace tools
@@ -30,32 +32,30 @@ namespace tools
 
 namespace dispatcher
 {
+    class ModelVisitor_ABC;
+    class LogConsignMaintenance;
+    class LogConsignSupply;
+    class LogConsignMedical;
+    class SimulationModel;
+    class ClientPublisher_ABC;
+    class Fire;
+    class PopulationFire;
+    class FireEffect;
+    class FolkModel;
+    class Report;
+    class CompositeFactory;
+    class Factory_ABC;
 
-class ModelVisitor_ABC;
-class Side;
-class KnowledgeGroup;
-class Formation;
-class Automat;
-class Agent;    
-class Object;
-class AgentKnowledge;
-class ObjectKnowledge;
-class LogConsignMaintenance;
-class LogConsignSupply;
-class LogConsignMedical;
-class Population;
-class PopulationKnowledge;
-class SimulationModel;
-class ClientPublisher_ABC;
-class Entity_ABC;
-class Fire;
-class PopulationFire;
-class FireEffect;
-class FolkModel;
-class Intelligence;
-class Report;
-class CompositeFactory;
-class Factory_ABC;
+    class Side;
+    class KnowledgeGroup;
+    class Formation;
+    class Automat;
+    class Agent;
+    class Object;
+    class Population;
+    class AgentKnowledge;
+    class ObjectKnowledge;
+    class PopulationKnowledge;
 
 // =============================================================================
 /** @class  Model
@@ -78,7 +78,7 @@ public:
 
     virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
     void Update( const ASN1T_MsgsSimToClient& asnMsg );
-    void Send  ( ClientPublisher_ABC& publisher ) const;
+    void Send( ClientPublisher_ABC& publisher ) const;
 
     void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const;
     void SendFirstTick( ClientPublisher_ABC& publisher ) const;
@@ -86,50 +86,33 @@ public:
 
     //! @name Operations
     //@{
-    void Accept( ModelVisitor_ABC& visitor ) const;
-    //@}
-
-    //! @name Accessors
-    //@{
-          ModelsContainer< Side           >& GetSides          ();
-    const ModelsContainer< Side           >& GetSides          () const;
-          ModelsContainer< KnowledgeGroup >& GetKnowledgeGroups();
-    const ModelsContainer< KnowledgeGroup >& GetKnowledgeGroups() const;
-          ModelsContainer< AgentKnowledge >& GetAgentKnowledges();
-    const ModelsContainer< AgentKnowledge >& GetAgentKnowledges() const;
-          ModelsContainer< Formation      >& GetFormations     ();
-    const ModelsContainer< Formation      >& GetFormations     () const;
-          ModelsContainer< Automat        >& GetAutomats       ();
-    const ModelsContainer< Automat        >& GetAutomats       () const;
-          ModelsContainer< Agent          >& GetAgents         ();
-    const ModelsContainer< Agent          >& GetAgents         () const;
-          ModelsContainer< Object         >& GetObjects        ();
-    const ModelsContainer< Object         >& GetObjects        () const;
-          ModelsContainer< Population     >& GetPopulations    ();
-
-    const kernel::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
-    const kernel::Resolver_ABC< kernel::MissionType >& GetMissionTypes() const;
-
-    void RegisterFactory( Factory_ABC& factory )
-    {
-        compositeFactory_->Register( factory );
-    }
-    void UnregisterFactory( Factory_ABC& factory )
-    {
-        compositeFactory_->Unregister( factory );
-    }
+    void RegisterFactory( Factory_ABC& factory );
+    void UnregisterFactory( Factory_ABC& factory );
 
     template< typename T >
     void AddExtensions( T& entity )
     {
-        AddExtensions( &entity );
-        compositeFactory_->Apply( &ExtensionFactory_ABC< T >::Create, entity );
+        AddExtensions( entity, &entity );
+        
     }
-    void AddExtensions( Entity_ABC* entity )
+    template< typename T >
+    void AddExtensions( T& entity, kernel::Entity_ABC* )
     {
-        compositeFactory_->Apply( &ExtensionFactory_ABC< Entity_ABC >::Create, *entity );
+        // $$$$ AGE 2008-06-20: 
+        entity.Attach< EntityPublisher_ABC >( *new EntityPublisher< T >( entity ) );
+        compositeFactory_->Apply( &ExtensionFactory_ABC< T >::Create, entity );
+        compositeFactory_->Apply( &ExtensionFactory_ABC< kernel::Entity_ABC >::Create, entity );
     }
-    void AddExtensions( void* ) {}
+    template< typename T >
+    void AddExtensions( T& , void* ) {}
+    //@}
+
+    //! @name Accessors
+    //@{
+    void Accept( ModelVisitor_ABC& visitor ) const;
+    const kernel::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
+    const kernel::Resolver_ABC< kernel::MissionType >& GetMissionTypes() const;
+    const kernel::Resolver_ABC< kernel::FragOrderType >& GetFragOrderTypes() const;
     //@}
 
 private:
@@ -142,41 +125,48 @@ private:
     //! @name Helpers
     //@{
     template< typename T, typename P >
-    void CreateUpdate( ModelsContainer< T >& container, unsigned id, const P& parameter );
+    void CreateUpdate( kernel::Resolver< T >& resolver, const P& parameter );
+    template< typename T, typename P >
+    void CreateUpdate( kernel::Resolver< T >& resolver, unsigned id, const P& parameter );
     template< typename T >
     void UpdateAnyAgent( unsigned id, const T& message );
+    template< typename T >
+    void Destroy( kernel::Resolver< T >& resolver, unsigned id );
     //@}
 
 private:
-    SimulationModel*    pSimulationModel_;
-    std::auto_ptr< FolkModel > folkModel_;
+    //! @name Member data
+    //@{
+    std::auto_ptr< SimulationModel >    simulation_;
+    std::auto_ptr< CompositeFactory >   compositeFactory_;
 
-    std::auto_ptr< CompositeFactory >         compositeFactory_;
+    std::auto_ptr< FolkModel >          folk_;
+    std::auto_ptr< kernel::AgentTypes > agentTypes_;
+    //@}
 
-    ModelsContainer< Side                   > sides_;
-    ModelsContainer< KnowledgeGroup         > knowledgeGroups_;
-    ModelsContainer< Formation              > formations_;
-    ModelsContainer< Automat                > automats_;
-    ModelsContainer< Agent                  > agents_;
-    ModelsContainer< Object                 > objects_;
-    ModelsContainer< AgentKnowledge         > agentKnowledges_;
-    ModelsContainer< ObjectKnowledge        > objectKnowledges_;
-    ModelsContainer< LogConsignMaintenance  > logConsignsMaintenance_;
-    ModelsContainer< LogConsignSupply       > logConsignsSupply_;
-    ModelsContainer< LogConsignMedical      > logConsignsMedical_;
-    ModelsContainer< Population             > populations_;
-    ModelsContainer< PopulationKnowledge    > populationKnowledges_;
-    ModelsContainer< Fire                   > fires_;
-    ModelsContainer< PopulationFire         > populationFires_;
-    ModelsContainer< FireEffect             > fireEffects_;
-    ModelsContainer< Intelligence           > intelligences_;
-    ModelsContainer< Report                 > reports_;
-
-    std::auto_ptr< kernel::AgentTypes >     agentTypes_;
+public:
+    //! @name Dynamic model
+    //@{
+    kernel::Resolver< Side >                   sides_;
+    kernel::Resolver< KnowledgeGroup >         knowledgeGroups_;
+    kernel::Resolver< Formation >              formations_;
+    kernel::Resolver< Automat >                automats_;
+    kernel::Resolver< Agent >                  agents_;
+    kernel::Resolver< Object >                 objects_;
+    kernel::Resolver< Population >             populations_;
+    kernel::Resolver< AgentKnowledge >         agentKnowledges_;
+    kernel::Resolver< ObjectKnowledge >        objectKnowledges_;
+    kernel::Resolver< PopulationKnowledge >    populationKnowledges_;
+    kernel::Resolver< LogConsignMaintenance >  logConsignsMaintenance_;
+    kernel::Resolver< LogConsignSupply >       logConsignsSupply_;
+    kernel::Resolver< LogConsignMedical >      logConsignsMedical_;
+    kernel::Resolver< Fire >                   fires_;
+    kernel::Resolver< PopulationFire >         populationFires_;
+    kernel::Resolver< FireEffect >             fireEffects_;
+    kernel::Resolver< Report >                 reports_;
+    //@}
 };
 
 }
-
-#include "Model.inl"
 
 #endif // __Model_h_

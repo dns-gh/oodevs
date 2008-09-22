@@ -11,18 +11,26 @@
 #include "SpawnCommand.h"
 #include "tools/GeneralConfig.h"
 #include <windows.h>
+#include <tlhelp32.h>
 
 using namespace frontend;
+
+struct SpawnCommand::InternalData 
+{
+    PROCESS_INFORMATION pid_ ; 
+    InternalData() { ZeroMemory( &pid_ , sizeof(pid_ ) ); } 
+}; 
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-SpawnCommand::SpawnCommand( QObject* parent, const tools::GeneralConfig& config, const char* exe )
-    : QObject( parent )
-    , config_( config )
+SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach )
+    : config_( config )
+    , internal_ ( new InternalData ) 
+    , attach_ ( attach ) 
 {
-    // $$$$ AGE 2007-10-09: 
+// $$$$ AGE 2007-10-09: 
 //    connect( this, SIGNAL( processExited() ), parent, SLOT( OnExit() ) );
 //    connect( this, SIGNAL( processExited() ), SLOT( deleteLater() ) );
     addArgument( exe );
@@ -34,7 +42,8 @@ SpawnCommand::SpawnCommand( QObject* parent, const tools::GeneralConfig& config,
 // -----------------------------------------------------------------------------
 SpawnCommand::~SpawnCommand()
 {
-    // NOTHING
+    if ( attach_ ) 
+        Stop() ; 
 }
 
 // -----------------------------------------------------------------------------
@@ -77,11 +86,60 @@ void SpawnCommand::Start()
         0, 0, 0,
         0, 0, 0
     };
-    PROCESS_INFORMATION pid;
+    std::string debug( commandLine_.local8Bit().data() ) ; 
     if( !CreateProcessA( 0, commandLine_.local8Bit().data(),
                 0, 0, TRUE, CREATE_NEW_CONSOLE, 0,
-                ".", &startupInfo, &pid ) )
+                ".", &startupInfo, &internal_->pid_) )
         throw std::runtime_error( "Could not start process" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::End
+// Created: RDS 2008-09-05
+// -----------------------------------------------------------------------------
+void SpawnCommand::End()
+{
+    Stop(); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::Stop
+// Created: RDS 2008-08-19
+// -----------------------------------------------------------------------------
+void SpawnCommand::Stop()
+{
+    if ( internal_->pid_.hProcess ) 
+        TerminateProcess( internal_->pid_.hProcess, 1 ); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::Wait
+// Created: RDS 2008-08-25
+// -----------------------------------------------------------------------------
+bool SpawnCommand::Wait()  
+{
+    if ( internal_->pid_.hProcess ) 
+        WaitForSingleObject( internal_->pid_.hProcess, INFINITE ); 
+    return true ; 
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::IsRunning
+// Created: RDS 2008-08-22
+// -----------------------------------------------------------------------------
+bool SpawnCommand::IsRunning() const 
+{
+    return ( CreateToolhelp32Snapshot( TH32CS_SNAPMODULE, internal_->pid_.dwProcessId ) != INVALID_HANDLE_VALUE ); 
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::GetPercentage
+// Created: RDS 2008-09-10
+// -----------------------------------------------------------------------------
+unsigned int SpawnCommand::GetPercentage()
+{
+    return ( IsRunning() ? 100 : 0 ) ; 
 }
 
 // -----------------------------------------------------------------------------

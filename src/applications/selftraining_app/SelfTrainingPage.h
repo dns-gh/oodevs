@@ -17,6 +17,13 @@ namespace tools
     class GeneralConfig;
 }
 
+namespace gui 
+{
+    class LinkInterpreter_ABC ; 
+}
+
+class SessionStatus; 
+
 // =============================================================================
 /** @class  SelfTrainingPage
     @brief  SelfTrainingPage
@@ -29,7 +36,7 @@ class SelfTrainingPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config );
+             SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< SessionStatus > sessionStatus );
     virtual ~SelfTrainingPage();
     //@}
 

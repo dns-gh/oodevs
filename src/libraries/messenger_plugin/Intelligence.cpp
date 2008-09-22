@@ -10,7 +10,7 @@
 #include "messenger_plugin_pch.h"
 #include "Intelligence.h"
 
-#include "ASN_Messages.h"
+#include "dispatcher/ClientPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter.h"
 
 #include <xeumeuleu/xml.h>
@@ -155,7 +155,7 @@ void Intelligence::Update( const ASN1T_MsgIntelligenceUpdateRequest& message )
 // -----------------------------------------------------------------------------
 void Intelligence::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    ASN_MsgIntelligenceUpdate message;
+    messenger::IntelligenceUpdate message;
     message().oid       = id_;
     message().formation = formation_ ;
     message().m.namePresent      = 1; message().name      = name_.c_str();
@@ -173,7 +173,7 @@ void Intelligence::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) cons
 // -----------------------------------------------------------------------------
 void Intelligence::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    ASN_MsgIntelligenceCreation message;
+    messenger::IntelligenceCreation message;
     message().oid = id_;
     message().intelligence.name      = name_.c_str();
     message().intelligence.nature    = nature_.c_str();
@@ -191,7 +191,7 @@ void Intelligence::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) co
 // -----------------------------------------------------------------------------
 void Intelligence::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    ASN_MsgIntelligenceDestruction message;
+    messenger::IntelligenceDestruction message;
     message().oid = id_;
     message.Send( publisher );
 }

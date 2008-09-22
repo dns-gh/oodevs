@@ -9,10 +9,11 @@
 
 #include "clients_gui_pch.h"
 #include "Gradient.h"
-#include "xeumeuleu/xml.h"
+#include "clients_kernel/Options.h"
 #include "graphics/extensions.h"
+#include <xeumeuleu/xml.h>
+#include <boost/lexical_cast.hpp>
 
-using namespace xml;
 using namespace gui;
 
 namespace 
@@ -31,13 +32,25 @@ namespace
 // Created: AGE 2007-07-02
 // -----------------------------------------------------------------------------
 Gradient::Gradient( xml::xistream& xis )
-     : usedRatio_( 1 )
-     , textureSize_( 0 )
+    : usedRatio_( 1 )
+    , textureSize_( 0 )
 {
     std::string name;
-    xis >> attribute( "name", name )
-            >> list( "color", *this, &Gradient::LoadValue );
+    xis >> xml::attribute( "name", name )
+            >> xml::list( "color", *this, &Gradient::LoadValue );
     name_ = name.c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient constructor
+// Created: SBO 2008-08-18
+// -----------------------------------------------------------------------------
+Gradient::Gradient( const QString& name, const QString& colors )
+    : name_( name )
+    , usedRatio_( 1 )
+    , textureSize_( 0 )
+{
+    LoadValues( colors );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,13 +199,35 @@ void Gradient::LoadValue( xml::xistream& xis )
 {
     float ratio;
     std::string colorName;
-    xis >> attribute( "position", ratio )
-        >> attribute( "color", colorName );
+    xis >> xml::attribute( "position", ratio )
+        >> xml::attribute( "color", colorName );
     QColor color( colorName.c_str() );
     if( color.isValid() )
         colors_.push_back( T_Color( ratio, color ) );
     else 
         throw std::runtime_error( "Invalid color '" + colorName + "'" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient::LoadValues
+// Created: SBO 2008-08-18
+// -----------------------------------------------------------------------------
+void Gradient::LoadValues( const QString& values )
+{
+    QStringList colors = QStringList::split( ";", values );
+    T_Colors result;
+    for( QStringList::const_iterator it = colors.begin(); it != colors.end(); ++it )
+    {
+        const QStringList item = QStringList::split( ",", *it );
+        if( item.size() == 2 )
+        {
+            const float ratio = boost::lexical_cast< float >( item[0].ascii() );
+            const QColor color( item[1] );
+            result.push_back( T_Color( ratio, color ) );
+        }
+    }
+    if( !result.empty() )
+        std::swap( colors_, result );
 }
 
 namespace
@@ -237,16 +272,12 @@ unsigned Gradient::FindBaseDistance() const
 // Name: Gradient::Save
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void Gradient::Save( xml::xostream& xos ) const
+void Gradient::Save( kernel::Options& options ) const
 {
-    xos << start( "gradient" )
-            << attribute( "name", name_.ascii() );
+    QStringList colors;
     for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
-        xos << start( "color" )
-                << attribute( "position", it->first )
-                << attribute( "color", it->second.name() )
-            << end();
-    xos << end();
+        colors.append( QString::number( it->first ) + "," + it->second.name() );
+    options.Change( std::string( "Gradients/" ) + name_.ascii(), colors.join( ";" ) );
 }
 
 // -----------------------------------------------------------------------------

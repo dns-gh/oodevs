@@ -3,12 +3,12 @@
 #include "masalloc/masalloc.h"
 
 #include "SIM_App.h"
+#include "SIM_NetWorkLogger.h"
 
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_CrashHandler.h"
 
-#include "MT/MT_Logger/MT_ConsoleLogger.h"
 #include "MT/MT_Logger/MT_FileLogger.h"
 #include "tools/win32/FlexLm.h"
 #include "xeumeuleu/exception.h"
@@ -71,68 +71,6 @@ LONG WriteMiniDump( EXCEPTION_POINTERS* pExp )
     return EXCEPTION_CONTINUE_SEARCH;
 }
 
-
-//-----------------------------------------------------------------------------
-// Name: GetConsoleHwnd()
-// Created: NLD 2003-10-13
-//-----------------------------------------------------------------------------
-HWND GetConsoleHwnd()
-{
-#define MY_BUFSIZE 1024 // Buffer size for console window titles.
-
-   char pszNewWindowTitle[MY_BUFSIZE]; // Contains fabricated WindowTitle.
-   char pszOldWindowTitle[MY_BUFSIZE]; // Contains original WindowTitle.
-
-   // Fetch current window title.
-   GetConsoleTitle( pszOldWindowTitle, MY_BUFSIZE );
-
-   // Format a "unique" NewWindowTitle.
-   wsprintf( pszNewWindowTitle, "%d/%d", GetTickCount(), GetCurrentProcessId() );
-
-   // Change current window title.
-   SetConsoleTitle( pszNewWindowTitle );
-
-   // Ensure window title has been updated.
-   Sleep(40);
-
-   // Look for NewWindowTitle.
-   HWND hwndFound = FindWindow( NULL, pszNewWindowTitle );
-
-   // Restore original window title.
-   SetConsoleTitle( pszOldWindowTitle );
-   return hwndFound;
-}
-
-//-----------------------------------------------------------------------------
-// Name: InitConsole()
-// Created: NLD 2003-10-13
-//-----------------------------------------------------------------------------
-void InitConsole()
-{
-    HANDLE hStdHandle = GetStdHandle( STD_OUTPUT_HANDLE );;
-    CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
-    GetConsoleScreenBufferInfo( hStdHandle, &screenBufferInfo );
-
-    COORD coord = GetLargestConsoleWindowSize( hStdHandle );
-
-    coord.X = coord.X * 3 / 4;
-    coord.Y = 9999;
-
-    SetConsoleScreenBufferSize( hStdHandle, coord );
-
-    HWND hCurWin = GetConsoleHwnd();
-
-    SetConsoleTitle( "SIM - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
-
-    ShowWindow( hCurWin, SW_MAXIMIZE );
-
-//#if !defined( _DEBUG ) 
-//    // Remove the close button
-//    HMENU hmenu = GetSystemMenu( hCurWin, FALSE );
-//    DeleteMenu( hmenu, SC_CLOSE, MF_BYCOMMAND );
-//#endif
-}
-
 //-----------------------------------------------------------------------------
 // Name: SetLowFragmentationHeapAlgorithm
 // Created: NLD 2006-01-20
@@ -140,24 +78,21 @@ void InitConsole()
 void SetLowFragmentationHeapAlgorithm()
 {
     ULONG ulHeapCompatibilityInformation = 2;
-    if( HeapSetInformation( GetProcessHeap(), HeapCompatibilityInformation, &ulHeapCompatibilityInformation, sizeof(ulHeapCompatibilityInformation) ) )
-        MT_LOG_INFO_MSG( "Low fragmentation heap algorithm enabled" );
+    HeapSetInformation( GetProcessHeap(), HeapCompatibilityInformation, &ulHeapCompatibilityInformation, sizeof(ulHeapCompatibilityInformation) );
 }
 
 //-----------------------------------------------------------------------------
 // Name: Run()
 // Created: NLD 2004-02-04
 //-----------------------------------------------------------------------------
-int Run( uint nArgc, char* pArgv[] )
+int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
 {
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
 #endif
     _mkdir( "./Debug" );
-    MT_ConsoleLogger        consoleLogger;
-    MT_FileLogger           fileLogger     ( "./Debug/SIM " VERSION ".log", MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ); // 'true' is for 'clear previous log'
+    MT_FileLogger           fileLogger     ( "./Debug/Sim.log" );
     MT_FileLogger           crashFileLogger( "./Debug/Crash " VERSION ".log", MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError, MT_Logger_ABC::eLogLayer_All );
-    MT_LOG_REGISTER_LOGGER( consoleLogger );
     MT_LOG_REGISTER_LOGGER( fileLogger );
     MT_LOG_REGISTER_LOGGER( crashFileLogger );
 
@@ -175,14 +110,18 @@ int Run( uint nArgc, char* pArgv[] )
     _set_new_handler( NoMoreMemoryHandler );
 
     // Init the console window size and appearance
-    InitConsole();
+    // InitConsole();
 
     int nResult = EXIT_FAILURE;
     try
     {
-        SIM_App app( nArgc, pArgv );
+        SIM_App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
+        MT_LOG_UNREGISTER_LOGGER( fileLogger );
         nResult = app.Execute();
     }
+    catch( SIM_App::QuitException& e ) 
+    {
+    } 
     catch( MT_ScipioException& exception )
     {
         std::stringstream strMsg;
@@ -221,23 +160,29 @@ int Run( uint nArgc, char* pArgv[] )
 
     MT_LOG_UNREGISTER_LOGGER( crashFileLogger );
     MT_LOG_UNREGISTER_LOGGER( fileLogger );
-    MT_LOG_UNREGISTER_LOGGER( consoleLogger );
 
     return nResult;
 }
 
-//-----------------------------------------------------------------------------
-// Name: main constructor
-// Created: FBD 02-11-22
-//-----------------------------------------------------------------------------
-int main( uint nArgc, char* pArgv[] )
+int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
 {
     __try
     {
-        return Run( nArgc, pArgv );
+        return Run( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
     }
-//    __except( WriteMiniDump( GetExceptionInformation() ) )
     __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
     {
     }
+    return 0;
 }
+ /*
+
+#ifdef _MSC_VER
+INT WINAPI WinMain( HINSTANCE /current/, HINSTANCE /previous/, LPSTR cmdline, int /showcmd/ )
+{
+bpo::command_line_parser parser( bpo::split_winmain( cmdline ) );
+return Main( parser );
+}
+#endif
+
+*/

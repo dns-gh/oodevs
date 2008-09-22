@@ -9,20 +9,36 @@
 
 #include "frontend_pch.h"
 #include "Config.h"
+#include "clients_gui/Tools.h"
+#include <shlobj.h>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4511 4512 )
 #include <boost/program_options.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 
 namespace po = boost::program_options;
+namespace bfs = boost::filesystem;
 using namespace frontend;
+
+namespace
+{
+    std::string GetDefaultRoot( const std::string& appName )
+    {
+        char myDocuments[ MAX_PATH ];
+        SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
+        return ( bfs::path( myDocuments, bfs::native ) / appName ).native_file_string();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Config constructor
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
 Config::Config()
+    : GeneralConfig( GetDefaultRoot( tools::translate( "Config", "SWORD Officer Training" ).ascii() ) )
 {
     po::options_description desc( "Frontend options" );
     desc.add_options()

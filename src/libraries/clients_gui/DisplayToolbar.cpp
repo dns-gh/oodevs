@@ -25,7 +25,11 @@ DisplayToolbar::DisplayToolbar( QMainWindow* pParent, kernel::Controllers& contr
     : QToolBar( pParent, "display toolbar" )
 {
     setLabel( tools::translate( "DisplayToolbar", "Display toolbar" ) );
+    //QButtonGroup* group = new QButtonGroup(this);
+    //group->setExclusive(TRUE);
     new BooleanOptionButton( MAKE_ICON( threed ), tools::translate( "DisplayToolbar", "3D" ), this, controllers.options_, "3D" );
+    // $$$$ SBO 2008-08-19: uncomment when there is something connected to the button
+//    new BooleanOptionButton( MAKE_ICON( twodnoterrain ), tools::translate( "DisplayToolbar", "2D no terrain" ), this, controllers.options_, "2DnoTerrain" );
 }
 
 // -----------------------------------------------------------------------------

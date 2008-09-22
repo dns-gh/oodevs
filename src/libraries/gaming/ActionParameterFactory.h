@@ -10,17 +10,17 @@
 #ifndef __ActionParameterFactory_h_
 #define __ActionParameterFactory_h_
 
-#include "ActionParameterFactory_ABC.h"
+#include "ParameterFactory_ABC.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class AgentKnowledgeConverter_ABC;
+    class ObjectKnowledgeConverter_ABC;
 }
 
 class Model;
 class StaticModel;
-class AgentKnowledgeConverter_ABC;
-class ObjectKnowledgeConverter_ABC;
 
 // =============================================================================
 /** @class  ActionParameterFactory
@@ -28,21 +28,21 @@ class ObjectKnowledgeConverter_ABC;
 */
 // Created: SBO 2007-04-13
 // =============================================================================
-class ActionParameterFactory : public ActionParameterFactory_ABC
+class ActionParameterFactory : public ParameterFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel
-                                   , AgentKnowledgeConverter_ABC& agentKnowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter );
+                                   , kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter );
     virtual ~ActionParameterFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_MissionParameter& asn, const kernel::Entity_ABC& entity ) const;
-    virtual ActionParameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const;
+    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_MissionParameter& asn, const kernel::Entity_ABC& entity ) const;
+    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -52,18 +52,14 @@ private:
     ActionParameterFactory& operator=( const ActionParameterFactory& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const Model& model_;
     const StaticModel& staticModel_;
-    AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
-    ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
+    kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
+    kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
     //@}
 };
 

@@ -11,12 +11,18 @@
 #define __LogConsignMedical_h_
 
 #include "game_asn/Simulation.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+
+namespace kernel
+{
+    class Agent_ABC;
+}
 
 namespace dispatcher
 {
-    class Agent;
     class Model;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  LogConsignMedical
@@ -24,27 +30,24 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class LogConsignMedical : public Entity_ABC
+class LogConsignMedical : public SimpleEntity< >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LogConsignMedical( Model& model, const ASN1T_MsgLogMedicalHandlingCreation& msg );
+             LogConsignMedical( const Model& model, const ASN1T_MsgLogMedicalHandlingCreation& msg );
     virtual ~LogConsignMedical();
-    //@}
-
-    //! @name Accessors
-    //@{
-    unsigned long GetID() const;
     //@}
 
     //! @name Operations
     //@{
-    using Entity_ABC::Update;
+    using kernel::Entity_ABC::Update;
     void Update( const ASN1T_MsgLogMedicalHandlingUpdate& msg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -55,12 +58,11 @@ private:
     //@}
 
 private:
-          Model&        model_;
-    const unsigned long nID_;
-    const Agent&        agent_;
-    const unsigned long nTickCreation_;
+    const Model&             model_;
+    const kernel::Agent_ABC& agent_;
+    const unsigned long      nTickCreation_;
 
-    Agent*                           pTreatingAgent_;
+    const kernel::Agent_ABC*         pTreatingAgent_;
     ASN1T_EnumHumanRank              nRank_;
     ASN1T_EnumHumanWound             nWound_;
     bool                             bMentalDiseased_;
@@ -70,7 +72,5 @@ private:
 };
 
 }
-
-#include "LogConsignMedical.inl"
 
 #endif // __LogConsignMedical_h_

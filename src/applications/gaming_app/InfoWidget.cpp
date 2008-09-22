@@ -13,7 +13,6 @@
 #include "InfoStatusWidget.h"
 #include "InfoSubordinatesWidget.h"
 #include "InfoStancesWidget.h"
-#include "InfoStatusBar.h"
 #include "InfoSummariesWidget.h"
 #include "InfoEventsWidget.h"
 #include "InfoButtonsWidget.h"
@@ -27,21 +26,19 @@
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
 InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, gui::ItemFactory_ABC& itemFactory )
-    : QHBox( parent )
+    : QHBox( parent, "InfoWidget" )
 {
     layout()->setSpacing( 10 );
     layout()->setAlignment( Qt::AlignTop | Qt::AlignLeft );
     new InfoStatusWidget( this, controllers, profile, icons );
     new InfoSubordinatesWidget( this, controllers, profile, icons );
+    new InfoEventsWidget( this, controllers );
 
     QVBox* box = new QVBox( this );
     box->setSpacing( 5 );
-    box->layout()->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
-    new InfoStatusBar( box, controllers );
+    box->layout()->setAlignment( Qt::AlignTop | Qt::AlignLeft );
     new InfoSummariesWidget( box, controllers );
-    new InfoEventsWidget( box, controllers );
     new InfoStancesWidget( box, controllers );
-
     new InfoButtonsWidget( this, controllers, itemFactory );
 
     QTabWidget* tabs = new QTabWidget( this );

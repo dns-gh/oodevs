@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MissionParameter_MedicalPriorities.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -20,8 +20,8 @@ using namespace dispatcher;
 MissionParameter_MedicalPriorities::MissionParameter_MedicalPriorities( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    for( unsigned i = 0; i != asn.value.u.logMedicalPriorities->n; ++i )
-        medicalPriorities_.push_back( asn.value.u.logMedicalPriorities->elem[i] );
+    std::copy( asn.value.u.logMedicalPriorities->elem, asn.value.u.logMedicalPriorities->elem + asn.value.u.logMedicalPriorities->n
+             , std::back_inserter( medicalPriorities_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,20 +33,19 @@ MissionParameter_MedicalPriorities::~MissionParameter_MedicalPriorities()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_MedicalPriorities::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_MedicalPriorities::Send( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value             = bNullValue_;
-    asn.value.t                = T_MissionParameter_value_logMedicalPriorities;
+    asn.null_value = bNullValue_;
+    asn.value.t = T_MissionParameter_value_logMedicalPriorities;
     asn.value.u.logMedicalPriorities = new ASN1T_LogMedicalPriorities();
-    SendContainerValues< ASN1T_LogMedicalPriorities, ASN1T_EnumHumanWound, T_OIDVector >( medicalPriorities_, *asn.value.u.logMedicalPriorities ); 
+    {
+        asn.value.u.logMedicalPriorities->n = medicalPriorities_.size();
+        asn.value.u.logMedicalPriorities->elem = (ASN1T_EnumHumanWound*)( medicalPriorities_.empty() ? 0 : &medicalPriorities_.front() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +54,5 @@ void MissionParameter_MedicalPriorities::Send( ASN1T_MissionParameter& asn ) con
 // -----------------------------------------------------------------------------
 void MissionParameter_MedicalPriorities::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.logMedicalPriorities->n > 0 )
-        delete [] asn.value.u.logMedicalPriorities->elem;
     delete asn.value.u.logMedicalPriorities;
 }

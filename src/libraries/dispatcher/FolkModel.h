@@ -11,10 +11,11 @@
 #define __FolkModel_h_
 
 #include "game_asn/Simulation.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
 
 namespace dispatcher
 {
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  FolkModel
@@ -22,7 +23,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-09-04
 // =============================================================================
-class FolkModel : public Entity_ABC
+class FolkModel : public SimpleEntity< >
 {
 
 public:
@@ -35,8 +36,10 @@ public:
     //! @name Operations
     //@{
     void Update( const ASN1T_MsgFolkCreation& message );
-    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
-    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
+
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:

@@ -28,6 +28,12 @@ namespace xml
     class xostream;
 }
 
+namespace gui
+{
+    class DrawingFactory_ABC;
+    class DrawerModel;
+}
+
 class StaticModel;
 class TeamsModel;
 class TeamFactory_ABC;
@@ -85,6 +91,7 @@ private:
     AgentFactory_ABC& agentFactory_;
     FormationFactory_ABC& formationFactory_;
     ProfileFactory_ABC& profileFactory_;
+    gui::DrawingFactory_ABC& drawingFactory_;
     std::string orbatFile_;
     QString name_;
     //@}
@@ -100,6 +107,7 @@ public:
     WeatherModel& weather_;
     ProfilesModel& profiles_;
     IntelligencesModel& intelligences_;
+    gui::DrawerModel& drawings_;
     //@}
 
 private:

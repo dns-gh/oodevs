@@ -12,8 +12,8 @@
 #include "moc_ParamEquipmentList.cpp"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_gui/ValuedListItem.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterMaintenancePriorities.h"
+#include "actions/Action_ABC.h"
+#include "actions/MaintenancePriorities.h"
 #include "icons.h"
 
 using namespace kernel;
@@ -106,9 +106,9 @@ void ParamEquipmentList::BuildInterface( QWidget* parent )
 // Name: ParamEquipmentList::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void ParamEquipmentList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamEquipmentList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameterMaintenancePriorities > param( new ActionParameterMaintenancePriorities( parameter_ ) );
+    std::auto_ptr< actions::parameters::MaintenancePriorities > param( new actions::parameters::MaintenancePriorities( parameter_ ) );
     for( QListViewItemIterator it( list_ ); it.current(); ++it )
         param->AddPriority( *static_cast< const ValuedListItem* >( it.current() )->GetValue< EquipmentType >() );
     action.AddParameter( *param.release() );

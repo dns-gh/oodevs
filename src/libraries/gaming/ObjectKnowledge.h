@@ -11,7 +11,7 @@
 #define __ObjectKnowledge_h_
 
 #include "game_asn/Simulation.h"
-#include "ObjectKnowledge_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Extension_ABC.h"
@@ -35,7 +35,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectKnowledge : public kernel::EntityImplementation< ObjectKnowledge_ABC >
+class ObjectKnowledge : public kernel::EntityImplementation< kernel::ObjectKnowledge_ABC >
                       , public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                       , public kernel::Drawable_ABC
@@ -54,7 +54,6 @@ public:
     //! @name Operations
     //@{
     virtual QString GetName() const;
-    virtual QString GetTypeName() const;
     virtual const kernel::Object_ABC* GetEntity() const;
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::Team_ABC&   GetOwner() const;

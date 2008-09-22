@@ -11,14 +11,17 @@
 #define __Formation_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelRefsContainer.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Resolver.h"
 
 namespace dispatcher
 {
-    class Automat;
     class Model;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
     class Side;
+    class Automat;
 
 // =============================================================================
 /** @class  Formation
@@ -26,27 +29,24 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Formation : public Entity_ABC
+class Formation : public SimpleEntity< kernel::Formation_ABC > 
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( Model& model, const ASN1T_MsgFormationCreation& msg );
+             Formation( const Model& model, const ASN1T_MsgFormationCreation& msg );
     virtual ~Formation();
-    //@}
-
-    //! @name Accessors
-    //@{
-    ModelRefsContainer< Formation >& GetSubordinates();
-    ModelRefsContainer< Automat   >& GetAutomats    ();
-    unsigned long                    GetID          () const;
     //@}
 
     //! @name Operations
     //@{
-    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
-    virtual void Accept        ( ModelVisitor_ABC& visitor );
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    void Accept( ModelVisitor_ABC& visitor ) const;
+
+    virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
     //@}
 
 private:
@@ -56,19 +56,21 @@ private:
     Formation& operator=( const Formation& ); //!< Assignement operator
     //@}
 
+private:
+    //! @name Member data
+    //@{
+    const Model&                model_;
+    const std::string           name_;
+
 public:
-          Model&                               model_;
-    const unsigned long                        nID_;
-          Side&                                side_;
-    const ASN1T_EnumNatureLevel                nLevel_;
-          std::string                          strName_;
-          Formation*                           pParent_;
-          ModelRefsContainer< Automat >        automats_;
-          ModelRefsContainer< Formation >      subordinates_;
+    Side&           team_;
+    const ASN1T_EnumNatureLevel level_;
+    Formation*      parent_;
+    kernel::Resolver< Formation > formations_;
+    kernel::Resolver< Automat > automats_;
+    //@}
 };
 
 }
-
-#include "Formation.inl"
 
 #endif // __Formation_h_

@@ -17,6 +17,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Workers.h"
 #include "ENT/ENT_Tr.h"
+#include "preparation/Tools.h"
 
 using namespace kernel;
 
@@ -59,7 +60,7 @@ Application::~Application()
 void Application::AddTranslator( const QString& locale, const char* t )
 {
     std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
-    if( trans->load( t + locale, "." ) )
+    if( trans->load( t + locale, "." ) || trans->load( t + locale, "resources/locales" ) )
        installTranslator( trans.release() );
 }
 
@@ -75,7 +76,7 @@ void Application::Initialize()
     }
     catch( std::exception& e )
     {
-        QMessageBox::critical( 0, APP_NAME, e.what() );
+        QMessageBox::critical( 0, tools::translate( "Application", "SWORD Officer Training" ), e.what() );
         throw CatchMeIfYouCan();
     }
 }

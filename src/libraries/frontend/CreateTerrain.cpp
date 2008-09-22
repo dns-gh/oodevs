@@ -23,14 +23,13 @@ using namespace frontend;
 // Name: CreateTerrain constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-CreateTerrain::CreateTerrain( QObject* parent, const tools::GeneralConfig& config, const QString& name )
-    : SpawnCommand( parent, config, "generation_app.exe" )
+CreateTerrain::CreateTerrain( const tools::GeneralConfig& config, const QString& name, bool attach )
+    : SpawnCommand( config, "generation_app.exe", attach )
 {
     const std::string directory = config.GetTerrainDir( name.ascii() );
     bfs::create_directories( directory );
 
     addArgument( directory.c_str() );
-    Start();
 }
 
 // -----------------------------------------------------------------------------

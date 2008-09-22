@@ -38,7 +38,7 @@ Viewport2d::~Viewport2d()
 // -----------------------------------------------------------------------------
 bool Viewport2d::IsVisible( const geometry::Point2f& point ) const
 {
-    return viewport_.IsInside( point );
+    return ! viewport_.IsOutside( point );
 }
 
 // -----------------------------------------------------------------------------

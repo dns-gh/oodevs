@@ -13,7 +13,7 @@
 #include "ParamDateTime.h"
 #include "gaming/Lima.h"
 #include "gaming/Tools.h"
-#include "gaming/ActionParameterLima.h"
+#include "actions/Lima.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
@@ -69,7 +69,7 @@ void LimaParameter::BuildInterface( QWidget* parent )
     functions_ = new QListBox( group );
     functions_->setSelectionMode( QListBox::Multi );
     for( unsigned int i = 0; i < eLimaFuncNbr; ++i )
-        functions_->insertItem( tools::ToString( (E_FuncLimaType)i ), i );
+        functions_->insertItem( tools::ToShortString( (E_FuncLimaType)i ), i );
     functions_->setRowMode( QListBox::FitToHeight );
     functions_->setFixedSize( 150, functions_->itemHeight( 0 ) * 4 );
     schedule_ = new ParamDateTime( this, tr( "Schedule" ), simulation_, true ); // $$$$ SBO 2007-05-14: optional
@@ -90,7 +90,7 @@ void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport
         QStringList functions;
         for( unsigned int i = 0; i < functions_->count(); ++i )
             if( functions_->isSelected( i ) )
-                functions.append( tools::ToString( (E_FuncLimaType)i ) );
+                functions.append( tools::ToShortString( (E_FuncLimaType)i ) );
         const geometry::Point2f position = lima_->Get< kernel::Positions >().GetPosition();
         const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
         if( ! functions.isEmpty() )
@@ -131,11 +131,11 @@ void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
 // Name: LimaParameter::CommitTo
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-void LimaParameter::CommitTo( ActionParameterContainer_ABC& parameter ) const
+void LimaParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
     kernel::Lines lines;
     lima_->CopyTo( lines );
-    std::auto_ptr< ActionParameterLima > param( new ActionParameterLima( OrderParameter( GetName().ascii(), "lima", false ), converter_, lines ) );
+    std::auto_ptr< actions::parameters::Lima > param( new actions::parameters::Lima( OrderParameter( GetName().ascii(), "lima", false ), converter_, lines ) );
     for( unsigned int i = 0; i < functions_->count(); ++i )
         if( functions_->isSelected( i ) )
             param->AddFunction( i );

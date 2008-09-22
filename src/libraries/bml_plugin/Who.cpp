@@ -101,7 +101,7 @@ xml::xostream& bml::operator<<( xml::xostream& xos, const Who& who )
     xos << xml::start( "C_BML_Who" )
             << xml::start( "WhoRef" )
                 << xml::start( "UnitRef" )
-                    << xml::content( "jc3iedm:OID", who.agent_ ? who.agent_->strName_ : who.automat_->strName_ );
+                    << xml::content( "jc3iedm:OID", who.agent_ ? who.agent_->name_ : who.automat_->name_ );
     if( who.attributes_ )
         who.SendEquipmentStatus( xos );
     if( who.level_ != -1 )
@@ -197,7 +197,7 @@ namespace
 {
     std::string Hostility( const dispatcher::Automat& entity )
     {
-        const ASN1T_EnumDiplomacy karma = entity.side_.nType_;
+        const ASN1T_EnumDiplomacy karma = entity.team_.nType_;
         switch( karma )
         {
         case EnumDiplomacy::ami:    return "FR";
@@ -233,7 +233,7 @@ std::string Who::GetFilterHostility() const
     if( level_ > EnumUnitVisibility::detected )
     {
         if( agent_ )
-            return Hostility( agent_->GetAutomat() );
+            return Hostility( *agent_->automat_ );
         return Hostility( *automat_ );
     }
     return "UNK";

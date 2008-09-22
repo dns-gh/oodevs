@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "IntelligencePositions.h"
-#include "MessengerMessages.h"
+#include "game_asn/MessengerSenders.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"

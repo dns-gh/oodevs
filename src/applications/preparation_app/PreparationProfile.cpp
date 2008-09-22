@@ -21,6 +21,15 @@ const kernel::Profile_ABC& PreparationProfile::GetProfile()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PreparationProfile::GetLogin
+// Created: SBO 2008-06-11
+// -----------------------------------------------------------------------------
+QString PreparationProfile::GetLogin() const
+{
+    return "Preparation"; // $$$$ SBO 2008-06-11: 
+}
+
+// -----------------------------------------------------------------------------
 // Name: PreparationProfile::IsVisible
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------

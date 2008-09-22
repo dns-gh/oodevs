@@ -11,6 +11,7 @@
 #include "UserProfileUnitRights.h"
 #include "moc_UserProfileUnitRights.cpp"
 #include "PreparationProfile.h"
+#include "clients_kernel/Entity_ABC.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
 
@@ -63,4 +64,14 @@ void UserProfileUnitRights::setColumnWidth( int column, int w )
 void UserProfileUnitRights::OnItemClicked( QListViewItem* item, const QPoint& point, int column )
 {
     UserProfileRights_ABC::OnItemClicked( item, point, column );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::NotifyUpdated
+// Created: SBO 2008-08-26
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    if( gui::ValuedListItem* item = FindItem( &entity, firstChild() ) )
+        item->SetNamed( entity );
 }

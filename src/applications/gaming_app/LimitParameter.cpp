@@ -11,8 +11,8 @@
 #include "LimitParameter.h"
 #include "moc_LimitParameter.cpp"
 #include "gaming/Limit.h"
-#include "gaming/ActionParameterLimit.h"
-#include "gaming/Action_ABC.h"
+#include "actions/Limit.h"
+#include "actions/Action_ABC.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/Controller.h"
@@ -140,12 +140,12 @@ void LimitParameter::Draw( const geometry::Point2f& point, const Viewport_ABC& v
 // Name: LimitParameter::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void LimitParameter::CommitTo( ActionParameterContainer_ABC& parameter ) const
+void LimitParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
     Lines lines;
     if( selected_ )
         selected_->CopyTo( lines );
-    std::auto_ptr< ActionParameterLimit > param( new ActionParameterLimit( parameter_, converter_, lines ) );
+    std::auto_ptr< actions::parameters::Limit > param( new actions::parameters::Limit( parameter_, converter_, lines ) );
     parameter.AddParameter( *param.release() );
 }
 

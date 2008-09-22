@@ -136,17 +136,14 @@ void ConnectDialog::SaveConfig()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConnectDialog::SetContextMenu
-// Created: SBO 2007-03-26
+// Name: ConnectDialog::FillPopupMenu
+// Created: SBO 2008-09-18
 // -----------------------------------------------------------------------------
-void ConnectDialog::SetContextMenu( QToolButton* btn )
+void ConnectDialog::FillPopupMenu( QPopupMenu* menu )
 {
-    QPopupMenu* popup = new QPopupMenu( btn );
-    btn->setPopup( popup );
-    btn->setPopupDelay( 0 );
     const QString port = QString::number( pPortSpinBox_->value() );
     for( int n = 0; n < pHostNameComboBox_->count(); ++n )
-        popup->insertItem( pHostNameComboBox_->text( n ) + ":" + port, this, SLOT( QuickConnect( int ) ) );
+        menu->insertItem( pHostNameComboBox_->text( n ) + ":" + port, this, SLOT( QuickConnect( int ) ) );
 }
 
 // -----------------------------------------------------------------------------

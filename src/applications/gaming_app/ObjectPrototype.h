@@ -11,7 +11,7 @@
 #define __ObjectPrototype_h_
 
 #include "clients_gui/ObjectPrototype_ABC.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "LocationSerializer.h"
 
 namespace kernel

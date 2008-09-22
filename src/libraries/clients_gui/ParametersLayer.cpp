@@ -57,17 +57,27 @@ void ParametersLayer::Initialize( const geometry::Rectangle2f& extent )
 
 // -----------------------------------------------------------------------------
 // Name: ParametersLayer::Paint
+// Created: SBO 2008-06-03
+// -----------------------------------------------------------------------------
+void ParametersLayer::Paint( const geometry::Rectangle2f& viewport )
+{
+    viewport_ = viewport;
+    Layer_ABC::Paint( viewport );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParametersLayer::Paint
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 void ParametersLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
 {
-    if( ! current_ )
+    if( ! current_ || !handler_ )
         return;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor4f( COLOR_UNDERCONST );
         glLineWidth( 3.f );
         current_->AddPoint( lastPoint_ );
-        current_->Draw( tools_ );
+        handler_->Draw( *current_, viewport_, tools_ );
         current_->PopPoint();
     glPopAttrib();
 }
@@ -162,7 +172,7 @@ bool ParametersLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry
 void ParametersLayer::StartPoint( ShapeHandler_ABC& handler )
 {
     cursors_->SelectTool( MAKE_PIXMAP( point_cursor ), true );
-    Start( handler, *new Point() );
+    Start( handler, Point() );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +182,7 @@ void ParametersLayer::StartPoint( ShapeHandler_ABC& handler )
 void ParametersLayer::StartLine( ShapeHandler_ABC& handler )
 {
     cursors_->SelectTool( MAKE_PIXMAP( line_cursor ), true );
-    Start( handler, *new Lines() );
+    Start( handler, Lines() );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,7 +192,7 @@ void ParametersLayer::StartLine( ShapeHandler_ABC& handler )
 void ParametersLayer::StartPolygon( ShapeHandler_ABC& handler )
 {
     cursors_->SelectTool( MAKE_PIXMAP( polygon_cursor ), true );
-    Start( handler, *new class Polygon() );
+    Start( handler, class Polygon() );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +202,7 @@ void ParametersLayer::StartPolygon( ShapeHandler_ABC& handler )
 void ParametersLayer::StartCircle( ShapeHandler_ABC& handler )
 {
     cursors_->SelectTool( MAKE_PIXMAP( circle_cursor ), true );
-     Start( handler, *new Circle() );
+    Start( handler, Circle() );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,18 +212,18 @@ void ParametersLayer::StartCircle( ShapeHandler_ABC& handler )
 void ParametersLayer::StartPath( ShapeHandler_ABC& handler, const Positions& position )
 {
     cursors_->SelectTool( MAKE_PIXMAP( path_cursor ), true );
-    Start( handler, *new Path( position ) );
+    Start( handler, Path( position ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParametersLayer::Start
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-void ParametersLayer::Start( ShapeHandler_ABC& handler, Location_ABC& location )
+void ParametersLayer::Start( ShapeHandler_ABC& handler, const Location_ABC& location )
 {
     editor_.StartEdit( *this );
     handler_ = &handler;
-    current_ = &location;
+    current_ = &location.Clone();
 }
 
 // -----------------------------------------------------------------------------

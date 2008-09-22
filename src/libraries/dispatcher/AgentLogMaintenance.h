@@ -11,16 +11,18 @@
 #define __AgentLogMaintenance_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelRefsContainer.h"
-#include "ModelsContainer.h"
 #include "EquipmentAvailability.h"
+
+namespace kernel
+{
+    class Agent_ABC;
+    class Automat_ABC;
+}
 
 namespace dispatcher
 {
-class Model;
-class Automat;
-class Agent;
-class ClientPublisher_ABC;
+    class Model;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  AgentLogMaintenance
@@ -33,8 +35,8 @@ class AgentLogMaintenance
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentLogMaintenance( Model& model, const Agent& agent, const ASN1T_MsgLogMaintenanceState& asnMsg );
-    ~AgentLogMaintenance();
+             AgentLogMaintenance( const Model& model, const kernel::Agent_ABC& agent, const ASN1T_MsgLogMaintenanceState& asnMsg );
+    virtual ~AgentLogMaintenance();
     //@}
 
     //! @name Main
@@ -46,7 +48,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< ASN1T_EquipmentType > T_EquipmentTypeVector;
+    typedef EquipmentAvailability< ASN1T_LogMaintenanceEquipmentAvailability > T_Availability;
     //@}
 
 private:
@@ -57,14 +59,14 @@ private:
     //@}
 
 private:
-    const Agent&                          agent_;
-          Model&                          model_;
-          bool                            bSystemEnabled_;
-          T_EquipmentTypeVector           priorities_;
-          ModelRefsContainer< Automat >   tacticalPriorities_;
+    const Model&             model_;
+    const kernel::Agent_ABC& agent_;
+    bool                     bSystemEnabled_;
+    std::vector< ASN1T_EquipmentType >        priorities_;
+    std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
 
-    ModelsContainer< EquipmentAvailability< ASN1T_LogMaintenanceEquipmentAvailability > > haulersAvailability_;
-    ModelsContainer< EquipmentAvailability< ASN1T_LogMaintenanceEquipmentAvailability > > repairersAvailability_;
+    std::vector< T_Availability > haulersAvailability_;
+    std::vector< T_Availability > repairersAvailability_;
 };
 
 }

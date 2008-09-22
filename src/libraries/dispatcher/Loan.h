@@ -12,10 +12,14 @@
 
 #include "game_asn/Simulation.h"
 
+namespace kernel
+{
+    class Agent_ABC;
+}
+
 namespace dispatcher
 {
     class Model;
-    class Agent;
 
 // =============================================================================
 /** @class  Loan
@@ -28,8 +32,8 @@ class Loan
 public:
     //! @name Constructors/Destructor
     //@{
-     Loan( const Model& model, ASN1T_BorrowedEquipment& asnMsg );
-     Loan( const Model& model, ASN1T_LentEquipment&    asnMsg );
+     Loan( const Model& model, const ASN1T_BorrowedEquipment& asnMsg );
+     Loan( const Model& model, const ASN1T_LentEquipment&    asnMsg );
     ~Loan();
     //@}
 
@@ -40,9 +44,9 @@ public:
     //@}
 
 private:
-    Agent*       pAgent_;         // Borrower / lender
-    unsigned int nEquipmentType_; // XML reference - no resolved by dispatcher
-    unsigned int nQuantity_;
+    const kernel::Agent_ABC* agent_;         // Borrower / lender
+    unsigned int equipmentType_; // XML reference - no resolved by dispatcher
+    unsigned int quantity_;
 };
 
 }

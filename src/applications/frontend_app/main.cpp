@@ -11,19 +11,15 @@
 #include "Application.h"
 #include "tools/win32/FlexLm.h"
 #include "tools/Win32/BugTrap.h"
+#include "tools/Version.h"
+#include "clients_gui/Tools.h"
 
 namespace
 {
     ////
-    static const QString locale = "_en";
-//    static const QString locale = "_fr";
+//    static const QString locale = "_en";
+    static const QString locale = "_fr";
     ////
-
-    void Run( int argc, char** argv )
-    {
-        Application app( argc, argv, locale );
-        app.exec();
-    }
 }
 
 int main( int argc, char* argv[] )
@@ -32,9 +28,11 @@ int main( int argc, char* argv[] )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
 #endif
 
-    BugTrap::Setup( "Sword Officer Training" )
-        .SetEmail( "sword-ot@masagroup.net" )
-        .SetVersion( __TIMESTAMP__ );
-    Run( argc, argv );
+    QApplication::setStyle( "windowsxp" );
+    Application app( argc, argv, locale );
+    BugTrap::Setup( tools::translate( "Application", "SWORD Officer Training" ).ascii() )
+        .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).ascii() )
+        .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
+    app.exec();
     return 0;
 }

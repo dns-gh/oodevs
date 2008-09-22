@@ -16,12 +16,11 @@ using namespace frontend;
 // Name: EditExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-EditExercise::EditExercise( QObject* parent, const tools::GeneralConfig& config, const QString& name )
-    : SpawnCommand( parent, config, "preparation_app.exe" )
+EditExercise::EditExercise( const tools::GeneralConfig& config, const QString& name, bool attach )
+    : SpawnCommand( config, "preparation_app.exe", attach )
 {
     AddRootDirArgument();
     AddExerciseArgument( name );
-    Start();
 }
 
 // -----------------------------------------------------------------------------

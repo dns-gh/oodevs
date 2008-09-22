@@ -85,8 +85,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    GQ_Plot( QWidget* pParent = 0 );
-
+    explicit GQ_Plot( QWidget* pParent = 0, const char* name = 0 );
     virtual ~GQ_Plot();
     //@}
 

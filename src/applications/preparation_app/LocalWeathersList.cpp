@@ -18,7 +18,7 @@
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 LocalWeathersList::LocalWeathersList( QWidget* parent, const kernel::CoordinateConverter_ABC& converter )
-    : QListView( parent )
+    : QListView( parent, "LocalWeathersList" )
     , converter_( converter )
 {
     addColumn( tr( "Local patch" ) );

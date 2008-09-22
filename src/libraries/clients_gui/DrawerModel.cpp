@@ -9,21 +9,19 @@
 
 #include "clients_gui_pch.h"
 #include "DrawerModel.h"
-#include "DrawerFactory.h"
-#include "DrawerCategory.h"
+#include "DrawingFactory_ABC.h"
 #include "DrawerShape.h"
 #include "clients_kernel/Controllers.h"
 #include <boost/bind.hpp>
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace gui;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerModel::DrawerModel(  kernel::Controllers& controllers, const DrawerFactory& factory )
+DrawerModel::DrawerModel( kernel::Controllers& controllers, const DrawingFactory_ABC& factory )
     : controllers_( controllers )
     , factory_( factory )
 {
@@ -42,46 +40,14 @@ DrawerModel::~DrawerModel()
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::Load
-// Created: SBO 2007-03-22
+// Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
 void DrawerModel::Load( const std::string& filename )
 {
-    xml::xifstream input( filename );
-    input >> xml::start( "templates" )
-            >> xml::list( "category", *this, &DrawerModel::ReadCategory )
-        >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerModel::ReadCategory
-// Created: SBO 2007-03-22
-// -----------------------------------------------------------------------------
-void DrawerModel::ReadCategory( xml::xistream& xis )
-{
-    std::auto_ptr< DrawerCategory > category( factory_.CreateCategory( xis ) );
-    Register( category->GetName(), *category );
-    category.release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerModel::Purge
-// Created: SBO 2007-03-22
-// -----------------------------------------------------------------------------
-void DrawerModel::Purge()
-{
-    Clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerModel::LoadDrawings
-// Created: SBO 2007-03-21
-// -----------------------------------------------------------------------------
-void DrawerModel::LoadDrawings( const std::string& filename )
-{
     xml::xifstream xis( filename );
-    xis >> start( "shapes" )
-            >> list( "shape", *this, &DrawerModel::ReadShape )
-        >> end();
+    xis >> xml::start( "shapes" )
+            >> xml::list( "shape", *this, &DrawerModel::ReadShape )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,52 +56,69 @@ void DrawerModel::LoadDrawings( const std::string& filename )
 // -----------------------------------------------------------------------------
 void DrawerModel::ReadShape( xml::xistream& xis )
 {
-    factory_.CreateShape( xis, *this );
+    try
+    {
+        factory_.CreateShape( xis );
+    }
+    catch( ... )
+    {
+        // $$$$ SBO 2008-06-04: invalid drawing
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::Save
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::SaveDrawings( const std::string& filename ) const
+void DrawerModel::Save( const std::string& filename ) const
 {
     xml::xofstream xos( filename );
-    xos << start( "shapes" );
-    std::for_each( shapes_.begin(), shapes_.end(), boost::bind( &DrawerShape::Serialize, _1, boost::ref( xos ) ) );
-    xos << end();
+    xos << xml::start( "shapes" );
+    std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing_ABC::Serialize, boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerModel::ClearDrawings
+// Name: DrawerModel::Purge
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-void DrawerModel::ClearDrawings()
+void DrawerModel::Purge()
 {
-    T_Shapes shapes( shapes_ );
-    for( IT_Shapes it = shapes.begin(); it != shapes.end(); ++it )
-        delete *it;
-    shapes_.clear();
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::NotifyCreated
 // Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-void DrawerModel::NotifyCreated( const DrawerShape& shape )
+void DrawerModel::NotifyCreated( const Drawing_ABC& shape )
 {
-    shapes_.push_back( &shape );
+    Register( shape.GetId(), const_cast< Drawing_ABC& >( shape ) ); // $$$$ SBO 2008-06-05: bof
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::NotifyDeleted
 // Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-void DrawerModel::NotifyDeleted( const DrawerShape& shape )
+void DrawerModel::NotifyDeleted( const Drawing_ABC& shape )
 {
-    IT_Shapes it = std::find( shapes_.begin(), shapes_.end(), &shape );
-    if( it != shapes_.end() )
-    {
-        std::swap( *it, shapes_.back() );
-        shapes_.pop_back();
-    }
+    Delete( shape.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerModel::Create
+// Created: SBO 2008-06-05
+// -----------------------------------------------------------------------------
+Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QColor& color ) const
+{
+    return factory_.CreateShape( style, color );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerModel::Delete
+// Created: SBO 2008-06-05
+// -----------------------------------------------------------------------------
+void DrawerModel::Delete( unsigned long id )
+{
+    Remove( id );
 }

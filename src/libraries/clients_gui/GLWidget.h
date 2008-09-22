@@ -92,6 +92,7 @@ public:
     virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center, float ratio = 1.f ) const;
 
     virtual void CenterOn( const geometry::Point2f& point );
+    virtual void Zoom( float width );
     virtual void SetCurrentCursor( const QCursor& cursor );
     //@}
 

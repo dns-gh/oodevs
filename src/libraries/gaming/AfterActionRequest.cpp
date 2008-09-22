@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "AfterActionRequest.h"
 #include "AfterActionFunction.h"
-#include "AarMessages.h"
+#include "game_asn/AarSenders.h"
 #include "clients_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ void AfterActionRequest::SetParameter( const std::string& name, const std::strin
 // -----------------------------------------------------------------------------
 void AfterActionRequest::Commit()
 {
-    aar::IndicatorRequest request;
+    aar::PlotRequest request;
     const std::string xmlRequest = function_.Commit( parameters_ );
     request().identifier = reinterpret_cast< int >( this );
     request().request = xmlRequest.c_str();
@@ -61,7 +61,7 @@ void AfterActionRequest::Commit()
 // Name: AfterActionRequest::Update
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequest::Update( const ASN1T_MsgIndicatorResult& message )
+void AfterActionRequest::Update( const ASN1T_MsgPlotResult& message )
 {
     if( message.identifier == reinterpret_cast< int >( this ) )
     {

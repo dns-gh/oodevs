@@ -58,6 +58,11 @@ private:
     TerrainFeatureSearcher& operator=( const TerrainFeatureSearcher& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void LoadFeatures();
+    //@}
+
     //! @name Types
     //@{
     typedef std::pair< QString, T_PointVector >   T_Feature;
@@ -71,6 +76,7 @@ private:
     std::auto_ptr< T_NameLocations > nameLocations_;
     const T_Feature* current_;
     unsigned index_;
+    std::string pendingSourceFile_;
     //@}
 };
 

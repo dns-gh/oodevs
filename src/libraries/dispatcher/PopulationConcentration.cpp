@@ -10,7 +10,9 @@
 #include "dispatcher_pch.h"
 #include "PopulationConcentration.h"
 #include "Population.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
+#include "ModelVisitor_ABC.h"
+#include "EntityPublisher.h"
 
 using namespace dispatcher;
 
@@ -18,15 +20,16 @@ using namespace dispatcher;
 // Name: PopulationConcentration constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationConcentration::PopulationConcentration( Model& /*model*/, Population& population, const ASN1T_MsgPopulationConcentrationCreation& msg )
-    : population_     ( population )
+PopulationConcentration::PopulationConcentration( const Population& population, const ASN1T_MsgPopulationConcentrationCreation& msg )
+    : SimpleEntity< kernel::PopulationConcentration_ABC >( msg.oid )
+    , population_     ( population )
     , nID_            ( msg.oid )
     , position_       ( msg.position )
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
     , nAttitude_      ( EnumPopulationAttitude::agressive )    
 {
-    // NOTHING
+    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationConcentration >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,10 +65,10 @@ void PopulationConcentration::Update( const ASN1T_MsgPopulationConcentrationUpda
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationConcentrationCreation asn;
+    client::PopulationConcentrationCreation asn;
 
     asn().oid = nID_;
-    asn().oid_population    = population_.GetID();
+    asn().oid_population    = population_.GetId();
     asn().position = position_;
 
     asn.Send( publisher );
@@ -77,14 +80,14 @@ void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) con
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationConcentrationUpdate asn;
+    client::PopulationConcentrationUpdate asn;
 
     asn().m.attitudePresent           = 1;
     asn().m.nb_humains_mortsPresent   = 1;
     asn().m.nb_humains_vivantsPresent = 1;
 
     asn().oid = nID_;
-    asn().oid_population     = population_.GetID();
+    asn().oid_population     = population_.GetId();
     asn().attitude           = nAttitude_;
     asn().nb_humains_morts   = nNbrDeadHumans_;
     asn().nb_humains_vivants = nNbrAliveHumans_;
@@ -98,10 +101,53 @@ void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) c
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationConcentrationDestruction destruction;
-    destruction().oid_population    = population_.GetID();
+    client::PopulationConcentrationDestruction destruction;
+    destruction().oid_population    = population_.GetId();
     destruction().oid               = nID_;
     destruction.Send( publisher );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void PopulationConcentration::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
 
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetDeadHumans
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+unsigned int PopulationConcentration::GetDeadHumans() const
+{
+    return nNbrDeadHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetLivingHumans
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+unsigned int PopulationConcentration::GetLivingHumans() const
+{
+    return nNbrAliveHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetDensity
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+unsigned int PopulationConcentration::GetDensity() const
+{
+    throw std::runtime_error( "Not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetAttitude
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+QString PopulationConcentration::GetAttitude() const
+{
+    throw std::runtime_error( "Not implemented" );
+}

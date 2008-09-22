@@ -12,10 +12,12 @@
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "AgentServerMsgMgr.h"
-#include "SimulationMessages.h"
+#include "CommandHandler.h"
+#include "game_asn/SimulationSenders.h"
 #include "Simulation.h"
 #include "Profile.h"
 #include "Tools.h"
+#include "Services.h"
 
 #pragma warning( disable: 4127 4355 4511 4512 )
 #include <boost/lexical_cast.hpp>
@@ -27,11 +29,12 @@ using namespace tools;
 // Name: Network constructor
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
-Network::Network( Simulation& simu, Profile& profile, kernel::Logger_ABC& logger )
-    : simu_   ( simu )
-    , profile_( profile )
-    , logger_ ( logger )
-    , manager_( new AgentServerMsgMgr( *this, *this, simu, profile, logger ) )
+Network::Network( Services& services, Simulation& simu, kernel::Logger_ABC& logger )
+    : services_( services )
+    , simu_    ( simu )
+    , logger_  ( logger )
+    , commands_( new CommandHandler() )
+    , manager_  ( new AgentServerMsgMgr( *this, *this, services_, simu_, logger_, *commands_ ) )
 {
     // NOTHING
 }
@@ -42,6 +45,7 @@ Network::Network( Simulation& simu, Profile& profile, kernel::Logger_ABC& logger
 // -----------------------------------------------------------------------------
 Network::~Network()
 {
+    // $$$$ AGE 2008-06-12: deletes....
     // NOTHING
 }
 
@@ -101,6 +105,15 @@ AgentServerMsgMgr& Network::GetMessageMgr()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Network::GetCommands
+// Created: AGE 2008-06-12
+// -----------------------------------------------------------------------------
+CommandHandler& Network::GetCommands()
+{
+    return *commands_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Network::GetReceivedAmount
 // Created: SBO 2007-01-04
 // -----------------------------------------------------------------------------
@@ -129,7 +142,6 @@ void Network::ConnectionSucceeded( const std::string& endpoint )
     logger_.Info() << tools::translate( "Network", "Connected to " ) << endpoint;
     manager_->Connect( session_ );
     simu_.Connect( session_ );
-    profile_.Login( *manager_ );
 }
 
 // -----------------------------------------------------------------------------

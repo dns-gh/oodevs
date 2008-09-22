@@ -9,13 +9,11 @@
 
 #include "clients_gui_pch.h"
 #include "GraphicPreferences.h"
-
 #include "TerrainPreference.h"
 #include "graphics/GraphicData.h"
 #include "clients_kernel/Tools.h"
-
-#include "xeumeuleu/xml.h"
-using namespace xml;
+#include <xeumeuleu/xml.h>
+#include <boost/bind.hpp>
 
 using namespace gui;
 
@@ -23,8 +21,9 @@ using namespace gui;
 // Name: GraphicPreferences constructor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-GraphicPreferences::GraphicPreferences()
-    : alpha_( 1 )
+GraphicPreferences::GraphicPreferences( kernel::Controllers& controllers )
+    : controllers_( controllers )
+    , alpha_( 1 )
 {
     InitializeTerrainPreferences();
 }
@@ -46,9 +45,9 @@ GraphicPreferences::~GraphicPreferences()
 void GraphicPreferences::InitializeTerrainPreferences()
 {
     xml::xifstream xis( "preferences.xml" ); // $$$$ AGE 2006-04-05: 
-    xis >> start( "preferences" )
-            >> start( "terrains" )
-				>> list( "terrain", *this, & GraphicPreferences::ReadTerrainPreference );
+    xis >> xml::start( "preferences" )
+            >> xml::start( "terrains" )
+				>> xml::list( "terrain", *this, & GraphicPreferences::ReadTerrainPreference );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,9 +56,8 @@ void GraphicPreferences::InitializeTerrainPreferences()
 // -----------------------------------------------------------------------------
 void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 {
-    std::string type;
-    xis >> attribute( "type", type );
-    displays_.push_back( new TerrainPreference( xis ) );
+    const std::string type = xml::attribute< std::string >( xis, "type" );
+    displays_.push_back( new TerrainPreference( xis, controllers_ ) );
     terrainPrefs_[ TerrainData( type ) ] = displays_.back();
 }
 
@@ -89,9 +87,8 @@ void GraphicPreferences::SetAlpha( float a )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Commit()
 {
-     for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
-        (*it)->Commit();
-     Save();
+    std::for_each( displays_.begin(), displays_.end(), boost::bind( &TerrainPreference::Commit, _1 ) );
+    Save();
 }
 
 // -----------------------------------------------------------------------------
@@ -100,36 +97,7 @@ void GraphicPreferences::Commit()
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Save() const
 {
-    try
-    {
-        xml::xofstream xos( "preferences.xml" ); // $$$$ AGE 2006-04-05: 
-        xos << start( "preferences" )
-                << start( "terrains" );
-        for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
-            Save( xos, **it );
-        xos     << end()
-            << end();
-    }
-    catch( ... )
-    {
-        // $$$$ SBO 2007-01-05: 
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicPreferences::Save
-// Created: AGE 2006-04-05
-// -----------------------------------------------------------------------------
-void GraphicPreferences::Save( xostream& xos, const TerrainPreference& preference ) const
-{
-    for( CIT_TerrainPreferences it = terrainPrefs_.begin(); it != terrainPrefs_.end(); ++it )
-        if( it->second == &preference )
-        {
-            xos << start( "terrain" )
-                << attribute( "type", it->first.ToString() );
-            preference.Save( xos );
-            xos << end();
-        }
+    std::for_each( displays_.begin(), displays_.end(), boost::bind( &TerrainPreference::Save, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,8 +106,7 @@ void GraphicPreferences::Save( xostream& xos, const TerrainPreference& preferenc
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Revert()
 {
-    for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
-        (*it)->Revert();
+    std::for_each( displays_.begin(), displays_.end(), boost::bind( &TerrainPreference::Revert, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

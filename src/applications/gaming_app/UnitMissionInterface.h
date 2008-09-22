@@ -16,10 +16,13 @@ namespace kernel
 {
     class MissionType;
 }
+namespace actions
+{
+    class ActionsModel;
+}
 
 class Publisher_ABC;
 class MissionInterfaceBuilder;
-class ActionsModel;
 
 // =============================================================================
 /** @class  MissionInterfaceBuilder
@@ -33,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UnitMissionInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::ActionController& controller
-                                 , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model );
+                 , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, actions::ActionsModel& model );
     virtual ~UnitMissionInterface();
     //@}
 
@@ -52,7 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionsModel& model_;
+    actions::ActionsModel& model_;
     Publisher_ABC& publisher_;
     const kernel::MissionType& mission_;
     //@}

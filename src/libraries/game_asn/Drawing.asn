@@ -34,7 +34,6 @@ MsgShapeUpdate ::= SEQUENCE
     category    VisibleString OPTIONAL,
     color      	VisibleString OPTIONAL,
     template    VisibleString OPTIONAL,
-    type    	EnumLocationType OPTIONAL,
 	points		CoordLatLongList OPTIONAL
 }
 
@@ -54,7 +53,6 @@ MsgShapeUpdateRequest ::= SEQUENCE
     category    VisibleString OPTIONAL,
     color      	VisibleString OPTIONAL,
     template    VisibleString OPTIONAL,
-    type    	EnumLocationType OPTIONAL,
 	points		CoordLatLongList OPTIONAL
 }
 

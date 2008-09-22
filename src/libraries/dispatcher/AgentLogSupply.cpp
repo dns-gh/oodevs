@@ -8,13 +8,10 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "AgentLogSupply.h"
-
-#include "Model.h"
-#include "Automat.h"
-#include "Agent.h"
-#include "Network_Def.h"
+#include "Dotation.h"
+#include "ClientPublisher_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 
 using namespace dispatcher;
 
@@ -22,12 +19,9 @@ using namespace dispatcher;
 // Name: AgentLogSupply constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogSupply::AgentLogSupply( Model& model, const Agent& agent, const ASN1T_MsgLogSupplyState& asnMsg )
+AgentLogSupply::AgentLogSupply( const kernel::Agent_ABC& agent, const ASN1T_MsgLogSupplyState& asnMsg )
     : agent_                ( agent )
-    , model_                ( model )
     , bSystemEnabled_       ( false )
-    , stocks_               ()
-    , convoyersAvailability_()
 {
     Update( asnMsg );
 }
@@ -38,12 +32,8 @@ AgentLogSupply::AgentLogSupply( Model& model, const Agent& agent, const ASN1T_Ms
 // -----------------------------------------------------------------------------
 AgentLogSupply::~AgentLogSupply()
 {
-
+    stocks_.DeleteAll();
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: AgentLogSupply::Update
@@ -56,22 +46,23 @@ void AgentLogSupply::Update( const ASN1T_MsgLogSupplyState& asnMsg )
 
     if( asnMsg.m.disponibilites_transporteurs_convoisPresent )
     {
-        convoyersAvailability_.Clear();
+        convoyersAvailability_.clear();
         for( unsigned int i = 0; i < asnMsg.disponibilites_transporteurs_convois.n; ++i )
-            convoyersAvailability_.Create( model_, i, asnMsg.disponibilites_transporteurs_convois.elem[ i ] );
+            convoyersAvailability_.push_back( T_Availability( asnMsg.disponibilites_transporteurs_convois.elem[ i ] ) );
     }
 
     if( asnMsg.m.stocksPresent )
-    {
-        for( unsigned i = 0; i < asnMsg.stocks.n; ++i )
+        for( unsigned int i = 0; i < asnMsg.stocks.n; ++i )
         {
             Dotation* pDotation = stocks_.Find( asnMsg.stocks.elem[ i ].ressource_id );
             if( pDotation )
                 pDotation->Update( asnMsg.stocks.elem[ i ] );
             else
-                pDotation = &stocks_.Create( model_, asnMsg.stocks.elem[ i ].ressource_id, asnMsg.stocks.elem[ i ] );
+            {
+                pDotation = new Dotation( asnMsg.stocks.elem[ i ] );
+                stocks_.Register( asnMsg.stocks.elem[ i ].ressource_id, *pDotation );
+            }
         }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -80,9 +71,9 @@ void AgentLogSupply::Update( const ASN1T_MsgLogSupplyState& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogSupplyState asn;
+    client::LogSupplyState asn;
 
-    asn().oid_pion = agent_.GetID();
+    asn().oid_pion = agent_.GetId();
 
     asn().m.chaine_activeePresent                       = 1;
     asn().m.disponibilites_transporteurs_convoisPresent = 1;
@@ -90,15 +81,24 @@ void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
 
     asn().chaine_activee = bSystemEnabled_;
 
-    convoyersAvailability_.Send< ASN1T__SeqOfLogSupplyEquimentAvailability, ASN1T_LogSupplyEquimentAvailability >( asn().disponibilites_transporteurs_convois );
-
-    stocks_.Send< ASN1T__SeqOfDotationStock, ASN1T_DotationStock >( asn().stocks );
-
+    {
+        asn().disponibilites_transporteurs_convois.n = convoyersAvailability_.size();
+        asn().disponibilites_transporteurs_convois.elem = asn().disponibilites_transporteurs_convois.n > 0 ? new ASN1T_LogSupplyEquimentAvailability[ asn().disponibilites_transporteurs_convois.n ] : 0;
+        unsigned int i = 0;
+        for( std::vector< T_Availability >::const_iterator it = convoyersAvailability_.begin(); it != convoyersAvailability_.end(); ++it )
+            it->Send( asn().disponibilites_transporteurs_convois.elem[i++] );
+    }
+    {
+        asn().stocks.n = stocks_.Count();
+        asn().stocks.elem = asn().stocks.n > 0 ? new ASN1T_DotationStock[ asn().stocks.n ] : 0;
+        unsigned int i = 0;
+        for( kernel::Iterator< const Dotation& > it = stocks_.CreateIterator(); it.HasMoreElements(); )
+            it.NextElement().Send( asn().stocks.elem[i++] );
+    }
     asn.Send( publisher );
 
     if( asn().disponibilites_transporteurs_convois.n > 0 )
         delete [] asn().disponibilites_transporteurs_convois.elem;
     if( asn().stocks.n > 0 )
         delete [] asn().stocks.elem;
-
 }

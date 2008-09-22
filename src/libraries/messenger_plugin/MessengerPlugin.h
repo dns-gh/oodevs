@@ -15,35 +15,27 @@
 
 namespace dispatcher
 {
-    class Model;
     class Config;
     class ClientPublisher_ABC;
     class LinkResolver_ABC;
-}
-
-namespace kernel
-{
-    class CoordinateConverter_ABC;
+    class CompositeRegistrable;
 }
 
 namespace tools
 {
     class MessageDispatcher_ABC;
-    class SessionConfig ;
+    class SessionConfig;
 }
 
 namespace xml
 {
-    class xistream ;
+    class xistream;
 }
 
 namespace messenger
 {
-
-    class ExtensionFactory;
-    class TacticalLineManager;
-    class IntelligenceManager;
-    class IdManager;
+    class Model;
+    class Chat;
 
 // =============================================================================
 /** @class  MessengerPlugin
@@ -57,7 +49,7 @@ class MessengerPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MessengerPlugin( dispatcher::ClientPublisher_ABC& client, tools::MessageDispatcher_ABC&, dispatcher::LinkResolver_ABC& links, const dispatcher::Config& config );
+             MessengerPlugin( dispatcher::ClientPublisher_ABC& client, tools::MessageDispatcher_ABC&, dispatcher::LinkResolver_ABC& links, const dispatcher::Config& config, dispatcher::CompositeRegistrable& registrables );
     virtual ~MessengerPlugin();
     //@}
 
@@ -66,6 +58,7 @@ public:
     virtual void Receive                  ( const ASN1T_MsgsSimToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
+    virtual void Register                 ( dispatcher::Services& );
     //@}
 
 private:
@@ -77,34 +70,17 @@ private:
 
     //! @name Network
     //@{
-    void OnReceiveClientToMessenger (const std::string&, const ASN1T_MsgsClientToMessenger&);
-    //@}
-
-    //! @name xml read / write
-    //@{
-    void Load(const tools::SessionConfig& config);
-    void ReadSide(xml::xistream& xis);
-    void ReadFormation(xml::xistream& xis);
-    void ReadAutomat(xml::xistream& xis);
-    void ReadIntelligence(xml::xistream& xis, unsigned int sideId, unsigned int formationId );
-    //@}
-
-    //! @name Checkpoint
-    //@{
-    std::string GetCheckPointFileName(const std::string& dir);
-    void        SaveCheckPoint(const std::string& name);
+    void OnReceiveClientToMessenger( const std::string&, const ASN1T_MsgsClientToMessenger& );
     //@}
 
 private:
     //! @name Member data
     //@{
     const dispatcher::Config& config_ ;
-          dispatcher::ClientPublisher_ABC& clients_;
-          dispatcher::LinkResolver_ABC& links_;
-          std::auto_ptr< TacticalLineManager > tacticalLineManager_;
-          std::auto_ptr< IntelligenceManager > intelligenceManager_;
-          std::auto_ptr< IdManager > idManager_;
-          std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    dispatcher::ClientPublisher_ABC& clients_;
+    dispatcher::LinkResolver_ABC& links_;
+    Model& model_;
+    std::auto_ptr< Chat > chat_;
     //@}
 };
 

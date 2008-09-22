@@ -1,6 +1,7 @@
 HEADERS = 
 
-SOURCES = ChangeDiplomacyDialog.cpp \
+SOURCES = Application.cpp \
+ChangeDiplomacyDialog.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
 FileToolbar.cpp \
@@ -26,5 +27,6 @@ UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \
 WeatherPanel.cpp \
 WeatherWidget.cpp \
+main.cpp \
 
 TRANSLATIONS = preparation_app_fr.ts preparation_app_en.ts

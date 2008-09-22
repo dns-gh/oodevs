@@ -21,7 +21,7 @@
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, kernel::Controllers& controllers, UserProfileFactory_ABC& factory )
-    : QVBox( parent )
+    : QVBox( parent, "UserProfileList" )
     , controllers_( controllers )
     , pages_( pages )
     , factory_( factory )

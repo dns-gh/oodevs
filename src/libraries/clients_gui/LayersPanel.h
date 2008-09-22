@@ -22,6 +22,7 @@ namespace kernel
 namespace gui
 {
     class Layer_ABC;
+    class CheckBox;
 
 // =============================================================================
 /** @class  LayersPanel
@@ -48,6 +49,7 @@ public:
 
     virtual void Commit();
     virtual void Reset();
+    void UpdateLeastAndMostVisible();
     //@}
 
 private slots:
@@ -88,9 +90,10 @@ private:
     T_Alphas current_;
     T_Alphas new_;
     T_Names  names_;
-    QCheckBox* fogOfWar_;
+    CheckBox* fogOfWar_;
     QListView* layersList_;
     QSlider* transparency_;
+    QLabel* transparencyLabel_;
     int currentLayer_;
     T_Layers currentLayers_;
     T_Layers newLayers_;

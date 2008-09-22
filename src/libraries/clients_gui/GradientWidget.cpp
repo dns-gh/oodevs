@@ -148,12 +148,16 @@ void GradientWidget::OnPresetCopied()
 // -----------------------------------------------------------------------------
 void GradientWidget::OnPresetDeleted()
 {
+    if( presets_.size() == 1 )
+        return;
     if( Gradient* current = CurrentPreset() )
     {
         const int position = presetCombo_->currentItem();
         presetCombo_->removeItem( position );
         presets_.erase( std::find( presets_.begin(), presets_.end(), current ) );
         delete current;
+        presetCombo_->setCurrentItem( 0 );
+        OnPresetChanged();
     }
 }
 

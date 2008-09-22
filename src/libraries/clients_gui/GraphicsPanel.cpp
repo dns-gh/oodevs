@@ -17,9 +17,9 @@ using namespace gui;
 // Name: GraphicsPanel constructor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-GraphicsPanel::GraphicsPanel( QWidget* parent )
-    : PreferencePanel_ABC( parent )
-    , preferences_( *new GraphicPreferences() )
+GraphicsPanel::GraphicsPanel( QWidget* parent, kernel::Controllers& controllers )
+    : PreferencePanel_ABC( parent, "GraphicsPanel" )
+    , preferences_( *new GraphicPreferences( controllers ) )
 {
     preferences_.Display( this );
 }

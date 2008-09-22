@@ -10,8 +10,8 @@
 #ifndef __DrawerModel_h_
 #define __DrawerModel_h_
 
-#include "clients_kernel/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/Resolver.h"
 
 namespace xml
 {
@@ -25,9 +25,9 @@ namespace kernel
 
 namespace gui
 {
-    class DrawerCategory;
-    class DrawerFactory;
-    class DrawerShape;
+    class Drawing_ABC;
+    class DrawingTemplate;
+    class DrawingFactory_ABC;
 
 // =============================================================================
 /** @class  DrawerModel
@@ -35,26 +35,26 @@ namespace gui
 */
 // Created: SBO 2007-03-22
 // =============================================================================
-class DrawerModel : public kernel::Resolver< DrawerCategory, QString >
-                  , public kernel::Observer_ABC
-                  , public kernel::ElementObserver_ABC< DrawerShape >
+class DrawerModel : public kernel::Observer_ABC
+                  , public kernel::ElementObserver_ABC< Drawing_ABC >
+                  , public kernel::Resolver< Drawing_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerModel( kernel::Controllers& controllers, const DrawerFactory& factory );
+             DrawerModel( kernel::Controllers& controllers, const DrawingFactory_ABC& factory );
     virtual ~DrawerModel();
     //@}
 
     //! @name Operations
     //@{
     void Load( const std::string& filename );
+    void Save( const std::string& filename ) const;
     void Purge();
 
-    void LoadDrawings( const std::string& filename );
-    void SaveDrawings( const std::string& filename ) const;
-    void ClearDrawings();
+    Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color ) const;
+    void Delete( unsigned long id );
     //@}
 
 private:
@@ -66,25 +66,16 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadCategory( xml::xistream& xis );
-    void ReadShape   ( xml::xistream& xis );
-    virtual void NotifyCreated( const DrawerShape& );
-    virtual void NotifyDeleted( const DrawerShape& );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< const DrawerShape* > T_Shapes;
-    typedef T_Shapes::iterator               IT_Shapes;
-    
+    void ReadShape( xml::xistream& xis );
+    virtual void NotifyCreated( const Drawing_ABC& );
+    virtual void NotifyDeleted( const Drawing_ABC& );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const DrawerFactory& factory_;
-    T_Shapes shapes_;
+    const DrawingFactory_ABC& factory_;
     //@}
 };
 

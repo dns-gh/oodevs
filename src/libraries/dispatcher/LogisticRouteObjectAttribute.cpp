@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "LogisticRouteObjectAttribute.h"
 
 using namespace dispatcher;
@@ -17,8 +16,8 @@ using namespace dispatcher;
 // Name: LogisticRouteObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LogisticRouteObjectAttribute::LogisticRouteObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
+LogisticRouteObjectAttribute::LogisticRouteObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg )
+    : ObjectAttribute_ABC( asnMsg )
     , bEquipped_         ( false )
     , nMaxWeight_        ( 0 )
     , nWidth_            ( 0 )
@@ -34,7 +33,7 @@ LogisticRouteObjectAttribute::LogisticRouteObjectAttribute( const Model& model, 
 // -----------------------------------------------------------------------------
 LogisticRouteObjectAttribute::~LogisticRouteObjectAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------

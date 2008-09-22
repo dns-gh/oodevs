@@ -65,6 +65,7 @@ void PreferencesList::AddPage( const QString& name, QWidget* widget )
 // -----------------------------------------------------------------------------
 void PreferencesList::setCurrentItem( QListViewItem* item )
 {
+    QListView::setCurrentItem( item );
     if( item )
     {
         QString name = item->text( 0 );

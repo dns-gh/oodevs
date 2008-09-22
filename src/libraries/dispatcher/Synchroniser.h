@@ -10,9 +10,13 @@
 #ifndef __Synchroniser_h_
 #define __Synchroniser_h_
 
-namespace dispatcher
+namespace kernel
 {
     class Entity_ABC;
+}
+
+namespace dispatcher
+{
     class ClientPublisher_ABC;
     class Model;
 
@@ -34,9 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    void FlagForCreation     ( Entity_ABC& entity );
-    void FlagForUpdate       ( Entity_ABC& entity );
-    void FlagForDestruction  ( Entity_ABC& entity );
+    void FlagForCreation     ( kernel::Entity_ABC& entity );
+    void FlagForUpdate       ( kernel::Entity_ABC& entity );
+    void FlagForDestruction  ( kernel::Entity_ABC& entity );
 
     void Commit( ClientPublisher_ABC& publisher, Model& model );
     //@}
@@ -50,8 +54,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Entity_ABC* >   T_Entities;
-    typedef T_Entities::const_iterator CIT_Entities;
+    typedef std::vector< kernel::Entity_ABC* >   T_Entities;
+    typedef T_Entities::const_iterator         CIT_Entities;
     //@}
 
 private:

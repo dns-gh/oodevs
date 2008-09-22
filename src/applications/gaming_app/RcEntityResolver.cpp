@@ -10,9 +10,9 @@
 #include "gaming_app_pch.h"
 #include "RcEntityResolver.h"
 #include "gaming/Agent.h"
-#include "gaming/ObjectKnowledge_ABC.h"
-#include "gaming/AgentKnowledge_ABC.h"
-#include "gaming/PopulationKnowledge_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/InternalLinks.h"
@@ -24,7 +24,7 @@ using namespace gui;
 // Name: RcEntityResolver constructor
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-RcEntityResolver::RcEntityResolver( QObject* parent, kernel::Controllers& controllers )
+RcEntityResolver::RcEntityResolver( QObject* parent, Controllers& controllers )
     : QObject( parent )
     , controllers_( controllers )
 {
@@ -44,7 +44,7 @@ RcEntityResolver::~RcEntityResolver()
 // Name: RcEntityResolver::NotifyCreated
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyCreated( const kernel::Agent_ABC& element )
+void RcEntityResolver::NotifyCreated( const Agent_ABC& element )
 {
     Resolver< Agent_ABC >::Register( element.GetId(), const_cast< Agent_ABC& >( element ) );
 }
@@ -53,7 +53,7 @@ void RcEntityResolver::NotifyCreated( const kernel::Agent_ABC& element )
 // Name: RcEntityResolver::NotifyDeleted
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyDeleted( const kernel::Agent_ABC& element )
+void RcEntityResolver::NotifyDeleted( const Agent_ABC& element )
 {
     Resolver< Agent_ABC >::Remove( element.GetId() );
 }

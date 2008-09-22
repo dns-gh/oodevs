@@ -46,7 +46,7 @@ public:
     //! @name Operations
     //@{
     void Update( const ASN1T_MsgAarInformation& asnMsg );
-    void Update( const ASN1T_MsgIndicatorResult& asnMsg );
+    void Update( const ASN1T_MsgPlotResult& asnMsg );
 
     AfterActionRequest& CreateRequest( const AfterActionFunction& function );
     //@}

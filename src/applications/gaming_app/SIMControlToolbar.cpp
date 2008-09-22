@@ -14,9 +14,10 @@
 
 #include "ConnectDialog.h"
 #include "DisconnectDialog.h"
-#include "gaming/SimulationMessages.h"
-#include "gaming/ReplayMessages.h"
+#include "game_asn/SimulationSenders.h"
+#include "game_asn/ReplaySenders.h"
 #include "gaming/Simulation.h"
+#include "gaming/Services.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/resources.h"
@@ -24,7 +25,7 @@
 
 using namespace kernel;
 
-namespace 
+namespace
 {
     class SpinBox : public QSpinBox
     {
@@ -81,7 +82,8 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     , speed_( 4212 )
     , connected_( false )
     , paused_( false )
-    , replay_( false )
+    , hasReplay_( false )
+    , hasSimulation_( true )
     , connectPix_   ( MAKE_ICON( notconnected ) )
     , disconnectPix_( MAKE_ICON( connected ) )
     , playPix_      ( MAKE_ICON( play ) )
@@ -93,7 +95,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pConnectButton_->setAccel( Key_C );
     pConnectButton_->setIconSet( disconnectPix_ );
     pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
-    
+
     pPlayButton_ = new QToolButton( this );
     pPlayButton_->setAccel( Key_P );
     pPlayButton_->setIconSet( MAKE_ICON( stop ) );
@@ -101,12 +103,13 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pPlayButton_->setEnabled( false );
 
     new QLabel( " ", this );
-    new QLabel( tr( "Speed factor:" ), this );
+    new QLabel( tr( "Speed factor: " ), this );
 
     pSpeedSpinBox_ = new SpinBox( 1, 100000, 1, this, *this );
     pSpeedSpinBox_->setButtonSymbols( QSpinBox::PlusMinus );
     pSpeedSpinBox_->setValue( 1 );
     pSpeedSpinBox_->setEnabled( false );
+    pSpeedSpinBox_->setSuffix( "x" );
 
     pSpeedButton_ = new QToolButton( this );
     pSpeedButton_->setText( tr( "Ok" ) );
@@ -131,7 +134,12 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     }
 
     pConnectDlg_ = new ConnectDialog( this, network, logger );
-    pConnectDlg_->SetContextMenu( pConnectButton_ );
+    {
+        QPopupMenu* popup = new QPopupMenu( pConnectButton_ );
+        pConnectDlg_->FillPopupMenu( popup );
+        pConnectButton_->setPopup( popup );
+        pConnectButton_->setPopupDelay( 0 );
+    }
     pConnectDlg_->hide();
 
     pDisconnectDlg_ = new DisconnectDialog( this, network );
@@ -161,7 +169,7 @@ SIMControlToolbar::~SIMControlToolbar()
 //-----------------------------------------------------------------------------
 void SIMControlToolbar::SlotConnectDisconnect()
 {
-    if ( connected_ )
+    if( connected_ )
     {
         pDisconnectDlg_->show();
     }
@@ -181,15 +189,15 @@ void SIMControlToolbar::SlotConnectDisconnect()
 //-----------------------------------------------------------------------------
 void SIMControlToolbar::SlotPlayPause()
 {
-    // $$$$ AGE 2007-08-24: 
-    if ( paused_ )
+    // $$$$ AGE 2007-08-24:
+    if( paused_ )
     {
-        if( replay_ )
+        if( hasReplay_ )
         {
             replay::ControlResume asnMsg;
             asnMsg.Send( publisher_ );
         }
-        else
+        if( hasSimulation_ )
         {
             simulation::ControlResume  asnMsg;
             asnMsg.Send( publisher_ );
@@ -197,12 +205,12 @@ void SIMControlToolbar::SlotPlayPause()
     }
     else
     {
-        if( replay_ )
+        if( hasReplay_ )
         {
             replay::ControlPause asnMsg;
             asnMsg.Send( publisher_ );
         }
-        else
+        if( hasSimulation_ )
         {
             simulation::ControlPause asnMsg;
             asnMsg.Send( publisher_ );
@@ -218,13 +226,13 @@ void SIMControlToolbar::SlotSpeedChange()
 {
     if( connected_ )
     {
-        if( replay_ )
+        if( hasReplay_ )
         {
             replay::ControlChangeTimeFactor asnMsg;
             asnMsg() = pSpeedSpinBox_->value();
             asnMsg.Send( publisher_ );
         }
-        else
+        if( hasSimulation_ )
         {
             simulation::ControlChangeTimeFactor asnMsg;
             asnMsg() = pSpeedSpinBox_->value();
@@ -244,12 +252,20 @@ void SIMControlToolbar::SlotOnSpinBoxChange( int value )
 
 // -----------------------------------------------------------------------------
 // Name: SIMControlToolbar::NotifyUpdated
+// Created: AGE 2008-08-13
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::NotifyUpdated( const Services& services )
+{
+    hasReplay_     = services.HasService< replay::Service >();
+    hasSimulation_ = services.HasService< simulation::Service >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::NotifyUpdated
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    replay_ = simulation.IsReplayer();
-
     if( simulation.IsConnected() != connected_ )
     {
         connected_ = simulation.IsConnected();
@@ -268,7 +284,13 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         {
             pConnectButton_->setIconSet( disconnectPix_ );
             pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
-            pConnectDlg_->SetContextMenu( pConnectButton_ );
+            pConnectButton_->setFocus();
+            {
+                QPopupMenu* popup = new QPopupMenu( pConnectButton_ );
+                pConnectDlg_->FillPopupMenu( popup );
+                pConnectButton_->setPopup( popup );
+                pConnectButton_->setPopupDelay( 0 );
+            }
             pPlayButton_->setEnabled( false );
             pSpeedSpinBox_->setEnabled( false );
             pSpeedButton_->setEnabled( false );

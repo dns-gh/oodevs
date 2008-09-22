@@ -11,6 +11,7 @@
 #define __LocationCreator_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -22,6 +23,7 @@ namespace gui
 {
     class ParametersLayer;
     class ShapeHandler_ABC;
+    class Drawing_ABC;
 
 // =============================================================================
 /** @class  LocationCreator
@@ -33,6 +35,8 @@ class LocationCreator : public QObject
                       , public kernel::Observer_ABC
                       , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
+                      , public kernel::ContextMenuObserver_ABC< Drawing_ABC >
+                      , public kernel::ElementObserver_ABC    < Drawing_ABC >
 {
     Q_OBJECT;
 
@@ -57,6 +61,7 @@ public slots:
     void StartLine();
     void StartPolygon();
     void StartCircle();
+    void AddDrawing();
     //@}
 
 private:
@@ -64,6 +69,8 @@ private:
     //@{
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
+    virtual void NotifyContextMenu( const Drawing_ABC&, kernel::ContextMenu& );
+    virtual void NotifyDeleted( const Drawing_ABC& );
     //@}
 
 private:
@@ -81,6 +88,8 @@ private:
     
     QString menu_;
     geometry::Point2f popupPoint_;
+
+    const Drawing_ABC* drawing_;
 
     bool pointAllowed_;
     bool lineAllowed_;

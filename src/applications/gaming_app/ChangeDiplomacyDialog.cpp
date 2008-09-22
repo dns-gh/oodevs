@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChangeDiplomacyDialog.h"
 #include "moc_ChangeDiplomacyDialog.cpp"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "gaming/Diplomacies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"

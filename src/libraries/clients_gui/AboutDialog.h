@@ -42,6 +42,11 @@ private:
     AboutDialog& operator=( const AboutDialog& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    QPixmap GetSplashScreen() const;
+    //@}
+
 private:
     //! @name Member Data
     //@{

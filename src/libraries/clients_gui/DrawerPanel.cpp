@@ -12,15 +12,17 @@
 #include "clients_gui_pch.h"
 #include "DrawerPanel.h"
 #include "moc_DrawerPanel.cpp"
-#include "xeumeuleu/xml.h"
-#include <qtoolbox.h>
-#include "DrawerCategory.h"
-#include "DrawerLayer.h"
+#include "ParametersLayer.h"
 #include "ColorButton.h"
-#include "DrawerFactory.h"
 #include "DrawerModel.h"
+#include "Drawing_ABC.h"
+#include "DrawingCategory.h"
+#include "DrawingTemplate.h"
+#include "DrawingCategoryItem.h"
 #include "clients_kernel/Controllers.h"
 #include "resources.h"
+#include <xeumeuleu/xml.h>
+#include <qtoolbox.h>
 
 #pragma warning( disable : 4355 )
 
@@ -30,12 +32,13 @@ using namespace gui;
 // Name: DrawerPanel constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_ABC& tools, kernel::Controllers& controllers )
-    : QVBox( parent, "Drawer" )
-    , controllers_( controllers )
-    , layer_( layer )
-    , factory_( *new DrawerFactory( this, tools, controllers_ ) )
-    , model_( *new DrawerModel( controllers, factory_ ) )
+DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers, DrawerModel& model )
+    : InfoPanel_ABC   ( parent, panel, tr( "Drawings" ) )
+    , controllers_    ( controllers )
+    , layer_          ( layer )
+    , model_          ( model )
+    , selectedStyle_  ( 0 )
+    , selectedDrawing_( controllers )
 {
     QHBox* box = new QHBox( this );
     box->layout()->setAlignment( Qt::AlignCenter );
@@ -67,10 +70,15 @@ DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_A
     toolBox_->setMargin( 0 );
     toolBox_->setBackgroundColor( Qt::white );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChange( const QColor& ) ) );
-    
-    controllers_.Register( *this );
 
-    model_.Load( "DrawingTemplates.xml" ); // $$$$ SBO 2007-03-22: 
+    btn = new QToolButton( box );
+    btn->setAutoRaise( true );
+    btn->setIconSet( MAKE_PIXMAP( pencil ) );
+    btn->setFixedSize( 25, 25 );
+    QToolTip::add( btn, tr( "Start drawing" ) );
+    connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
+
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,31 +88,61 @@ DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_A
 DrawerPanel::~DrawerPanel()
 {
     controllers_.Unregister( *this );
-    // $$$$ SBO 2007-03-22: renderer ?
-    delete &factory_;
-    delete &model_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerPanel::NotifyCreated
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-void DrawerPanel::NotifyCreated( const DrawerCategory& category )
+void DrawerPanel::NotifyCreated( const DrawingCategory& category )
 {
-    DrawerCategory* cat = const_cast< DrawerCategory* >( &category );
-    connect( cat, SIGNAL( Selected( DrawerStyle& ) ), SLOT( OnSelect( DrawerStyle& ) ) );
-    int id = toolBox_->addItem( cat, MAKE_PIXMAP( drawings ), category.GetName() );
-    toolBox_->setItemToolTip ( id, category.GetDescription() );
+    DrawingCategoryItem* item = new DrawingCategoryItem( this, category );
+    connect( item, SIGNAL( Selected( const DrawingTemplate& ) ), SLOT( OnSelect( const DrawingTemplate& ) ) );
+    const int id = toolBox_->addItem( item, MAKE_PIXMAP( drawings ), category.GetName() );
+    toolBox_->setItemToolTip( id, category.GetDescription() );
+    categories_[ &category ] = item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::NotifyDeleted
+// Created: SBO 2008-05-30
+// -----------------------------------------------------------------------------
+void DrawerPanel::NotifyDeleted( const DrawingCategory& category )
+{
+    T_CategoryItems::const_iterator it = categories_.find( &category );
+    if( it != categories_.end() )
+    {
+        toolBox_->removeItem( it->second );
+        delete it->second;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::NotifyUpdated
+// Created: SBO 2008-05-30
+// -----------------------------------------------------------------------------
+void DrawerPanel::NotifyUpdated( const kernel::ModelLoaded& )
+{
+    Show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::NotifySelected
+// Created: SBO 2008-06-09
+// -----------------------------------------------------------------------------
+void DrawerPanel::NotifySelected( const Drawing_ABC* drawing )
+{
+    selectedDrawing_ = drawing;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerPanel::OnSelect
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-void DrawerPanel::OnSelect( DrawerStyle& style )
+void DrawerPanel::OnSelect( const DrawingTemplate& style )
 {
     color_->Commit();
-    layer_.StartShape( style, color_->GetColor() );
+    selectedStyle_ = &style;
 }
 
 // -----------------------------------------------------------------------------
@@ -113,16 +151,28 @@ void DrawerPanel::OnSelect( DrawerStyle& style )
 // -----------------------------------------------------------------------------
 void DrawerPanel::OnColorChange( const QColor& color )
 {
-    layer_.ChangeColor( color );
+    if( selectedDrawing_ )
+        selectedDrawing_.ConstCast()->ChangeColor( color );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerPanel::hideEvent
-// Created: AGE 2006-09-07
+// Name: DrawerPanel::StartDrawing
+// Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-void DrawerPanel::hideEvent( QHideEvent* )
+void DrawerPanel::StartDrawing()
 {
-    emit Closed();
+    if( selectedStyle_ )
+    {
+        Drawing_ABC* shape = model_.Create( *selectedStyle_, color_->GetColor() );
+        if( selectedStyle_->GetType() == "line" )
+            layer_.StartLine( *shape );
+        else if( selectedStyle_->GetType() == "polygon" )
+            layer_.StartPolygon( *shape );
+        else if( selectedStyle_->GetType() == "point" )
+            layer_.StartPoint( *shape );
+        else
+            throw std::runtime_error( __FUNCTION__ " Unhandled shape geometry." );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +188,7 @@ void DrawerPanel::Open()
         filename.replace( "/", "\\" );
     try
     {
-        model_.LoadDrawings( filename.ascii() );
+        model_.Load( filename.ascii() );
     }
     catch( xml::exception& )
     {
@@ -161,7 +211,7 @@ void DrawerPanel::Save()
         filename.append( ".xml" );
     try
     {
-        model_.SaveDrawings( filename.ascii() );
+        model_.Save( filename.ascii() );
     }
     catch( xml::exception& )
     {
@@ -175,5 +225,5 @@ void DrawerPanel::Save()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Clear()
 {
-    model_.ClearDrawings();
+    model_.Purge();
 }

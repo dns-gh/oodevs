@@ -11,7 +11,7 @@
 #define __MissionParameter_LimasOrder_h_
 
 #include "MissionParameter_ABC.h"
-#include "ModelsContainer.h"
+#include "clients_kernel/Resolver.h"
 
 namespace dispatcher
 {
@@ -29,7 +29,7 @@ class MissionParameter_LimasOrder : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_LimasOrder( Model& model, const ASN1T_MissionParameter& asn );
+    explicit MissionParameter_LimasOrder( const ASN1T_MissionParameter& asn );
     virtual ~MissionParameter_LimasOrder();
     //@}
 
@@ -49,7 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ModelsContainer< LimaOrder > limaOrders_;
+    std::vector< LimaOrder > limaOrders_;
     //@}
 };
 

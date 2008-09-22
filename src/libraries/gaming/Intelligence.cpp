@@ -20,7 +20,7 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Styles.h"
-#include "MessengerMessages.h"
+#include "game_asn/MessengerSenders.h"
 #include "Tools.h"
 
 using namespace kernel;

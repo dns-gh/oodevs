@@ -9,7 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "Visitors.h"
-#include "Entity_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "EntityPublisher_ABC.h"
+#include <boost/bind.hpp>
 
 using namespace dispatcher;
 
@@ -27,9 +29,9 @@ FullUpdateVisitor::FullUpdateVisitor( ClientPublisher_ABC& publisher )
 // Name: FullUpdateVisitor::Visit
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void FullUpdateVisitor::Visit( Entity_ABC& entity )
+void FullUpdateVisitor::Visit( const kernel::Entity_ABC& entity )
 {
-    entity.SendFullUpdate( *publisher_ );
+    const_cast< kernel::Entity_ABC& >( entity ).Apply( &EntityPublisher_ABC::SendFullUpdate, *publisher_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +48,7 @@ CreationVisitor::CreationVisitor( ClientPublisher_ABC& publisher )
 // Name: CreationVisitor::Visit
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void CreationVisitor::Visit( Entity_ABC& entity )
+void CreationVisitor::Visit( const kernel::Entity_ABC& entity )
 {
-    entity.SendCreation( *publisher_ );
+    const_cast< kernel::Entity_ABC& >( entity ).Apply( &EntityPublisher_ABC::SendCreation, *publisher_ );
 }

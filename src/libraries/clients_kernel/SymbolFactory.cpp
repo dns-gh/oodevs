@@ -22,7 +22,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 SymbolFactory::SymbolFactory()
 {
-    xml::xifstream xis( tools::GeneralConfig::BuildWorkingDirectoryChildFile( "symbols.xml" ) );
+    xml::xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "symbols.xml" ) );
 
     xis >> start( "app6" );
         symbolRule_.reset( ReadRule( xis, "symbols", symbolBase_ ) );

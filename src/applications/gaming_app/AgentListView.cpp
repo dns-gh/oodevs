@@ -15,7 +15,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/CommandPostAttributes.h"
 #include "gaming/AutomatDecisions.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "icons.h"
 
 using namespace kernel;

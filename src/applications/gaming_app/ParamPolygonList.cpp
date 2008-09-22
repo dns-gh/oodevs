@@ -10,8 +10,8 @@
 #include "gaming_app_pch.h"
 #include "ParamPolygonList.h"
 #include "ParamLocation.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterPolygonList.h"
+#include "actions/Action_ABC.h"
+#include "actions/PolygonList.h"
 
 using namespace kernel;
 
@@ -39,9 +39,9 @@ ParamPolygonList::~ParamPolygonList()
 // Name: ParamPolygonList::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void ParamPolygonList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamPolygonList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterPolygonList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::PolygonList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

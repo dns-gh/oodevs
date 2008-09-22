@@ -111,7 +111,7 @@ void OptionsPanel::OptionChanged( const std::string& name, const OptionVariant& 
 // -----------------------------------------------------------------------------
 void OptionsPanel::FontSizeChanged( int value )
 {
-    options_.Change( "FontSize", value );
+    options_.Change( "FontSize", value ); // $$$$ SBO 2008-08-12: not used
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ void OptionsPanel::FontSizeChanged( int value )
 // -----------------------------------------------------------------------------
 void OptionsPanel::DrawObjectsChanged( bool value )
 {
-    options_.Change( "DrawObjectsIcons", value );
+    options_.Change( "DrawObjectsIcons", value ); // $$$$ SBO 2008-08-12: not used
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +129,7 @@ void OptionsPanel::DrawObjectsChanged( bool value )
 // -----------------------------------------------------------------------------
 void OptionsPanel::DrawHoveredInfoChanged( bool value )
 {
-    options_.Change( "DrawHoveredInfos", value );
+    options_.Change( "DrawHoveredInfos", value ); // $$$$ SBO 2008-08-12: not used
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +138,7 @@ void OptionsPanel::DrawHoveredInfoChanged( bool value )
 // -----------------------------------------------------------------------------
 void OptionsPanel::DrawRCsChanged( bool value )
 {
-    options_.Change( "DrawRCs", value );
+    options_.Change( "DrawRCs", value ); // $$$$ SBO 2008-08-12: not used
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ void OptionsPanel::DrawRCsChanged( bool value )
 // -----------------------------------------------------------------------------
 void OptionsPanel::DrawSubscribedRCsOnlyChanged( bool value )
 {
-    options_.Change( "DrawSubscribedRCsOnly", value );
+    options_.Change( "DrawSubscribedRCsOnly", value ); // $$$$ SBO 2008-08-12: not used
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +156,7 @@ void OptionsPanel::DrawSubscribedRCsOnlyChanged( bool value )
 // -----------------------------------------------------------------------------
 void OptionsPanel::DrawMessagesChanged( bool value )
 {
-    options_.Change( "DrawMessages", value );
+    options_.Change( "DrawMessages", value ); // $$$$ SBO 2008-08-12: not used
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ void OptionsPanel::DrawMessagesChanged( bool value )
 // -----------------------------------------------------------------------------
 void OptionsPanel::DrawTracesChanged( bool value )
 {
-    options_.Change( "DrawTraces", value );
+    options_.Change( "DrawTraces", value ); // $$$$ SBO 2008-08-12: not used
 }
 
 // -----------------------------------------------------------------------------
@@ -174,5 +174,5 @@ void OptionsPanel::DrawTracesChanged( bool value )
 // -----------------------------------------------------------------------------
 void OptionsPanel::DrawIdentificationsChanged( bool value )
 {
-    options_.Change( "DrawIdentifications", value );
+    options_.Change( "DrawIdentifications", value ); // $$$$ SBO 2008-08-12: not used
 }   

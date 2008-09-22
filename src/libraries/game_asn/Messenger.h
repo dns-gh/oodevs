@@ -20,6 +20,7 @@
 #include "generated/LimaLimite.h"
 #include "generated/Intelligence.h"
 #include "generated/Drawing.h"
+#include "generated/Chat.h"
 #include "generated/MessengerMessages.h"
 
 #pragma warning( pop ) 

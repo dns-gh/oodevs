@@ -1,16 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>Action</name>
-    <message>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ActionFactory</name>
     <message>
         <source>Parameter mismatch in action &apos;%1&apos; (id: %2): missing parameter &apos;%3&apos;.</source>
@@ -21,138 +10,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>too much parameters provided</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ActionParameter</name>
     <message>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Obstacle %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Obstacle type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Schedule</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agent knowledge not found.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid agent knowledge.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agent knowledge %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agent %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automat %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Karma</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mounted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Formation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Intelligence %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Object knowledge not found.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid object knowledge.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Object knowledge %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objective %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Destination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Way point %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Route %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population knowledge not found.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Phase line %1</source>
+        <source>too many parameters provided</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -181,7 +43,7 @@
 <context>
     <name>AgentKnowledge</name>
     <message>
-        <source>Nature:</source>
+        <source>Unknown unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -194,6 +56,10 @@
     </message>
     <message>
         <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heading:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -221,6 +87,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Nature:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Surrender:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -240,61 +110,6 @@
         <source>Relevance:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Heading:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown unit</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AtlasNature</name>
-    <message>
-        <source>Armored</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SSA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command post</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mortar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rocket launcher</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vehicle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Footman</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Helicopter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Undefined</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Attributes</name>
@@ -304,6 +119,10 @@
     </message>
     <message>
         <source>Info/Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Heading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -364,6 +183,10 @@
     </message>
     <message>
         <source>Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heading:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -462,14 +285,6 @@
         <source>Refugees picked up:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Info/Heading</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Heading:</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Automat</name>
@@ -492,65 +307,22 @@
 <context>
     <name>Decisions</name>
     <message>
-        <source>Mission:</source>
+        <source>Automat mission:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automat mission:</source>
+        <source>Mission:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Dotations</name>
     <message>
-        <source>Dotations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dotations/Out of gas</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>E_FuncLimaType</name>
     <message>
-        <source>LD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LCA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LO</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LCAR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LDM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LFM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LIA</source>
+        <source>Dotations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -569,15 +341,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Repairable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>In maintenance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Prisoner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repairable</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -626,6 +398,18 @@
 <context>
     <name>Intelligence</name>
     <message>
+        <source>Level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Karma:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mounted:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Info/Identifier</source>
         <translation type="unfinished"></translation>
     </message>
@@ -653,18 +437,6 @@
         <source>Intelligence [%1]</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mounted:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Karma:</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>KnowledgeGroup</name>
@@ -683,15 +455,11 @@
 <context>
     <name>Localisation</name>
     <message>
-        <source>Ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -700,6 +468,10 @@
     </message>
     <message>
         <source>Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -722,6 +494,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Equipment:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdown:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>State:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -734,7 +514,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Injury:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Not diagnosed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supplier:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -775,22 +563,6 @@
     </message>
     <message>
         <source>Supply superior:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Breakdown:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Injury:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supplier:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -887,11 +659,7 @@
 <context>
     <name>NBC</name>
     <message>
-        <source>NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROTA</source>
+        <source>NBC/NBC suit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -900,6 +668,10 @@
     </message>
     <message>
         <source>NBC/Contamination level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -923,7 +695,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>NBC cloud/zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>NBC agent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ROTA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -934,27 +714,11 @@
         <source>NBC agent(s):</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>NBC cloud/zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC/NBC suit</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Network</name>
     <message>
         <source>Connected to </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connection to </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> lost (cause :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -965,19 +729,23 @@
         <source> (cause :</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Connection to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> lost (cause :</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Object</name>
     <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>TC2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1021,6 +789,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Mine parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1033,11 +813,35 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Location:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Construction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mining:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Bypass:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction dotation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1068,51 +872,11 @@
         <source>Unknown object</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction dotation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mine parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activity time:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Density:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mining:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Population</name>
     <message>
-        <source>Concentration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Concentration - </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flow - </source>
+        <source>Alive:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1120,7 +884,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alive:</source>
+        <source>Dead:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concentration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1160,6 +928,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Concentration - </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Flow</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1168,11 +940,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Heading:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Known chunks:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flow - </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1185,21 +965,6 @@
     </message>
     <message>
         <source>Side:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Heading:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dead:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Profile</name>
-    <message>
-        <source>login</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1255,15 +1020,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>System status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>System status</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

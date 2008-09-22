@@ -9,7 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "PopulationFire.h"
-#include "network_def.h"
+#include "ClientPublisher_ABC.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -18,7 +19,8 @@ using namespace dispatcher;
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
 PopulationFire::PopulationFire( Model& , const ASN1T_MsgStartPopulationFire& msg )
-    : msg_( msg )
+    : SimpleEntity < >( msg.fire_oid )
+    , msg_( msg )
 {
     // NOTHING
 }
@@ -47,7 +49,7 @@ void PopulationFire::SendFullUpdate( ClientPublisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void PopulationFire::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientStartPopulationFire asn;
+    client::StartPopulationFire asn;
     asn() = msg_;
     asn.Send( publisher );
 }
@@ -58,10 +60,19 @@ void PopulationFire::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFire::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientStopPopulationFire asn;
+    client::StopPopulationFire asn;
     asn().fire_oid = msg_.fire_oid;
     asn().units_damages.n    = 0;
     asn().units_damages.elem = 0;
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFire::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void PopulationFire::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }
 

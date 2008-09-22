@@ -50,7 +50,7 @@ void AfterActionModel::Update( const ASN1T_MsgAarInformation& asnMsg )
 // Name: AfterActionModel::Update
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AfterActionModel::Update( const ASN1T_MsgIndicatorResult& asnMsg )
+void AfterActionModel::Update( const ASN1T_MsgPlotResult& asnMsg )
 {
     requests_->Update( asnMsg );
 }

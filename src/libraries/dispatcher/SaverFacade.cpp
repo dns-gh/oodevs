@@ -14,7 +14,6 @@
 #include "Model.h"
 #include "Side.h"
 #include "Visitors.h"
-#include "network_def.h"
 #include "tools/OutputBinaryWrapper.h"
 #include "ClientPublisher_ABC.h"
 
@@ -120,6 +119,8 @@ namespace
         virtual void Send( const ASN1T_MsgsReplayToClient& ) {}
         virtual void Send( const ASN1T_MsgsAarToClient& ) {}
         virtual void Send( const ASN1T_MsgsMessengerToClient& ) {}
+        virtual void Send( const ASN1T_MsgsDispatcherToClient& ) {}
+        virtual std::string GetEndpoint() const { return ""; }
         Model* model_;
         tools::OutputBinaryWrapper* output_;
         ASN1OCTET* buffer_;

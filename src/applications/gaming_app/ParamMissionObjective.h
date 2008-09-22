@@ -25,9 +25,13 @@ namespace gui
     class ParametersLayer;
 }
 
+namespace actions
+{
+    class Parameter_ABC;
+}
+
 class ParamLocation;
 class ParamDateTime;
-class ActionParameter_ABC;
 class Simulation;
 
 // =============================================================================
@@ -53,7 +57,7 @@ public:
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 private:

@@ -27,7 +27,7 @@ class MissionParameter_AutomatList : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_AutomatList( const ASN1T_MissionParameter& asn );
+    explicit MissionParameter_AutomatList( const ASN1T_MissionParameter& asn );
     virtual ~MissionParameter_AutomatList();
     //@}
 
@@ -45,15 +45,9 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< unsigned int > T_OIDVector;
-    //@}
-
-private:
     //! @name Member data
     //@{
-    T_OIDVector automats_;
+    std::vector< int > automats_;
     //@}
 };
 

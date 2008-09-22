@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "gaming/Dotation.h"
 #include "gaming/SupplyStates.h"
 #include "clients_kernel/Automat_ABC.h"

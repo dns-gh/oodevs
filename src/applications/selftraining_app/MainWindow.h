@@ -14,10 +14,23 @@
 
 class QWidgetStack;
 
+namespace gui 
+{
+    class LinkInterpreter_ABC ; 
+}
+
 namespace tools
 {
     class GeneralConfig;
 }
+
+namespace kernel
+{
+    class Controllers ; 
+}
+
+
+class SessionStatus ; 
 
 // =============================================================================
 /** @class  MainWindow
@@ -27,13 +40,19 @@ namespace tools
 // =============================================================================
 class MainWindow : public QMainWindow
 {
+   
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MainWindow();
+    MainWindow( kernel::Controllers& controllers, boost::shared_ptr< SessionStatus > sessionStatus );
     virtual ~MainWindow();
     //@}
+
+public slots:
+
+    void Maximize(); 
 
 private:
     //! @name Copy/Assignment
@@ -45,12 +64,14 @@ private:
     //! @name Helpers
     //@{
     void SetStyle();
+    void CenterWindow();
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< tools::GeneralConfig > config_;
+    std::auto_ptr< tools::GeneralConfig >       config_;
+    std::auto_ptr< gui::LinkInterpreter_ABC >   interpreter_; 
     QWidgetStack* pages_;
     //@}
 };

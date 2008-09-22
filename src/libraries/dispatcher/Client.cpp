@@ -14,6 +14,12 @@
 #include "game_asn/Simulation.h"
 #include "Profile.h"
 #include "tools/MessageSender_ABC.h"
+#include "game_asn/ClientSenders.h"
+#include "game_asn/AuthenticationSenders.h"
+#include "game_asn/ReplaySenders.h"
+#include "game_asn/AarSenders.h"
+#include "game_asn/MessengerSenders.h"
+#include "game_asn/DispatcherSenders.h"
 
 using namespace dispatcher;
 using namespace tools;
@@ -83,3 +89,21 @@ void Client::Send( const ASN1T_MsgsMessengerToClient& msg )
     sender_.Send( endpoint_, msg );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Client::Send
+// Created: AGE 2008-08-13
+// -----------------------------------------------------------------------------
+void Client::Send( const ASN1T_MsgsDispatcherToClient& msg )
+{
+    sender_.Send( endpoint_, msg );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Client::GetEndpoint
+// Created: AGE 2008-06-17
+// -----------------------------------------------------------------------------
+std::string Client::GetEndpoint() const
+{
+    return endpoint_;
+}

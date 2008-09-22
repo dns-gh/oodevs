@@ -9,7 +9,7 @@
 
 #include "messenger_plugin_pch.h"
 #include "Limit.h"
-#include "ASN_Messages.h"
+#include "dispatcher/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace messenger;
@@ -28,8 +28,8 @@ Limit::Limit( unsigned int id, const ASN1T_MsgLimitCreationRequest& message )
 // Name: Limit constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-Limit::Limit( unsigned int id, xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion, const kernel::CoordinateConverter_ABC& converter)
-    : TacticalLine_ABC( id, xis, diffusion, converter)
+Limit::Limit( unsigned int id, xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC( id, xis, diffusion, converter )
 {
     // NOTHING
 }
@@ -56,26 +56,26 @@ void Limit::Update( const ASN1T_MsgLimitUpdateRequest& message )
 // Name: Limit::SendCreation
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void Limit::SendCreation( dispatcher::ClientPublisher_ABC& client) const
+void Limit::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 {
     ASN1T_MsgLimitCreation creation ;
     creation.oid = GetID();
-    TacticalLine_ABC::Send(creation.tactical_line);
-    ASN_MsgLimitCreation message(creation);
-    message.Send(client);
+    TacticalLine_ABC::Send( creation.tactical_line );
+    messenger::LimitCreation message( creation );
+    message.Send( client );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Limit::SendUpdate
 // Created: RDS 2008-04-07
 // -----------------------------------------------------------------------------
-void Limit::SendUpdate( dispatcher::ClientPublisher_ABC& client) const
+void Limit::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 {
     ASN1T_MsgLimitUpdate update;
     update.oid = GetID();
-    TacticalLine_ABC::Send(update.tactical_line);
-    ASN_MsgLimitUpdate message(update);
-    message.Send(client);
+    TacticalLine_ABC::Send( update.tactical_line );
+    messenger::LimitUpdate message( update );
+    message.Send( client );
 }
 
 
@@ -86,26 +86,26 @@ void Limit::SendUpdate( dispatcher::ClientPublisher_ABC& client) const
 void Limit::SendDestruction( dispatcher::ClientPublisher_ABC& client ) const
 {
     ASN1T_MsgLimitDestruction destruction = GetID() ;
-    ASN_MsgLimitDestruction message(destruction);
-    message.Send(client);
+    messenger::LimitDestruction message( destruction );
+    message.Send( client );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Limit::SendFullState
 // Created: RDS 2008-04-04
 // -----------------------------------------------------------------------------
-void Limit::SendFullState( dispatcher::ClientPublisher_ABC& client) const
+void Limit::SendFullState( dispatcher::ClientPublisher_ABC& client ) const
 {
-    SendCreation(client);
+    SendCreation( client );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Limit::Write
 // Created: RDS 2008-04-09
 // -----------------------------------------------------------------------------
-void Limit::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter )
+void Limit::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const
 {
-    xos << xml::start("limit") ;
-        TacticalLine_ABC::Write(xos,converter);
+    xos << xml::start( "limit" ) ;
+        TacticalLine_ABC::Write( xos, converter );
     xos << xml::end();
 }

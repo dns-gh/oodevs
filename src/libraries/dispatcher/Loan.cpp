@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Loan.h"
-
 #include "Model.h"
 #include "Agent.h"
 
@@ -20,22 +18,24 @@ using namespace dispatcher;
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model& model, ASN1T_BorrowedEquipment& asnMsg )
-    : pAgent_        ( &model.GetAgents().Get( asnMsg.oid_pion_preteur ) )
-    , nEquipmentType_( asnMsg.type_equipement )
-    , nQuantity_     ( asnMsg.nombre          )
+Loan::Loan( const Model& model, const ASN1T_BorrowedEquipment& asnMsg )
+    : agent_        ( &model.agents_.Get( asnMsg.oid_pion_preteur ) )
+    , equipmentType_( asnMsg.type_equipement )
+    , quantity_     ( asnMsg.nombre )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model& model, ASN1T_LentEquipment& asnMsg )
-    : pAgent_        ( &model.GetAgents().Get( asnMsg.oid_pion_emprunteur ) )
-    , nEquipmentType_( asnMsg.type_equipement )
-    , nQuantity_     ( asnMsg.nombre          )
+Loan::Loan( const Model& model, const ASN1T_LentEquipment& asnMsg )
+    : agent_        ( &model.agents_.Get( asnMsg.oid_pion_emprunteur ) )
+    , equipmentType_( asnMsg.type_equipement )
+    , quantity_     ( asnMsg.nombre )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ Loan::Loan( const Model& model, ASN1T_LentEquipment& asnMsg )
 // -----------------------------------------------------------------------------
 Loan::~Loan()
 {
-
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -53,9 +53,9 @@ Loan::~Loan()
 // -----------------------------------------------------------------------------
 void Loan::Send( ASN1T_BorrowedEquipment& asnMsg ) const
 {
-    asnMsg.type_equipement  = nEquipmentType_;
-    asnMsg.oid_pion_preteur = pAgent_->GetID();
-    asnMsg.nombre           = nQuantity_;
+    asnMsg.type_equipement  = equipmentType_;
+    asnMsg.oid_pion_preteur = agent_->GetId();
+    asnMsg.nombre           = quantity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ void Loan::Send( ASN1T_BorrowedEquipment& asnMsg ) const
 // -----------------------------------------------------------------------------
 void Loan::Send( ASN1T_LentEquipment& asnMsg ) const
 {
-    asnMsg.type_equipement     = nEquipmentType_;
-    asnMsg.oid_pion_emprunteur = pAgent_->GetID();
-    asnMsg.nombre              = nQuantity_;
+    asnMsg.type_equipement     = equipmentType_;
+    asnMsg.oid_pion_emprunteur = agent_->GetId();
+    asnMsg.nombre              = quantity_;
 }

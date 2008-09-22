@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "ParamAutomat.h"
-#include "gaming/ActionParameterAutomat.h"
+#include "actions/Automat.h"
 #include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
@@ -49,9 +49,9 @@ ParamAutomat::~ParamAutomat()
 // Name: ParamAutomat::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamAutomat::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamAutomat::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameterEntity< Automat_ABC > > param( new ActionParameterAutomat( parameter_ ) );
+    std::auto_ptr< actions::parameters::Entity< Automat_ABC > > param( new actions::parameters::Automat( parameter_ ) );
     EntityParameter< Automat_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

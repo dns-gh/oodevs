@@ -51,6 +51,10 @@
 #include "IntelligencesLayer.h"
 #include "Properties.h"
 #include "LoggerProxy.h"
+#include "ChatDock.h"
+#include "CommandFacade.h"
+#include "ClientCommandFacade.h"
+#include "TextLayer.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -69,6 +73,7 @@
 #include "gaming/VisionConesToggler.h"
 #include "gaming/ActionsScheduler.h"
 #include "gaming/IntelligencesModel.h"
+#include "gaming/Tools.h"
 
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/GlSelector.h"
@@ -99,9 +104,7 @@
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/DrawerLayer.h"
-#include "clients_gui/DrawerFactory.h"
 #include "clients_gui/LogoLayer.h"
-#include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/LocationEditorToolbar.h"
@@ -109,6 +112,7 @@
 #include "clients_gui/FormationLayer.h"
 #include "clients_gui/IntelligenceList.h"
 #include "clients_gui/TooltipsLayer.h"
+#include "clients_gui/HelpSystem.h"
 
 #include "tools/ExerciseConfig.h"
 
@@ -141,7 +145,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , glProxy_      ( 0 )
 {
     setIcon( MAKE_PIXMAP( csword ) );
-    setCaption( APP_NAME + tr( " - Not connected" ) );
+    setCaption( tools::translate( "Application", "SWORD Officer Training" ) + tr( " - Not connected" ) );
 
     ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr // $$$$ AGE 2007-06-19: tégé !
 
@@ -149,7 +153,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     lighting_ = new SimulationLighting( controllers, this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_ );
-    new Dialogs( this, controllers, model_, staticModel, publisher, profile );
+    new Dialogs( this, controllers, model_, staticModel, publisher, profile, network.GetCommands(), config );
     new VisionConesToggler( controllers, publisher, this );
 
     glProxy_ = new GlProxy();
@@ -179,7 +183,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, publisher, staticModel_.coordinateConverter_ );
 
     // Agent list panel
-    QDockWindow* pListDockWnd_ = new QDockWindow( this );
+    QDockWindow* pListDockWnd_ = new QDockWindow( this, "orbat" );
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QVBox* box = new QVBox( pListDockWnd_ );
     new OrbatToolbar( box, controllers, profile, *automatsLayer );
@@ -207,7 +211,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     miniviews->hide();
 
     // Properties
-    QDockWindow* pPropertiesWnd = new QDockWindow( this );
+    QDockWindow* pPropertiesWnd = new QDockWindow( this, "properties" );
     moveDockWindow( pPropertiesWnd, Qt::DockLeft );
     Properties* properties = new Properties( pPropertiesWnd, controllers );
     pPropertiesWnd->setWidget( properties );
@@ -218,13 +222,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pPropertiesWnd->hide();
 
     // Info panel
-    QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
+    QDockWindow* pInfoDockWnd_ = new QDockWindow( this, "oldinfo" );
     moveDockWindow( pInfoDockWnd_, Qt::DockRight );
     InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory, publisher );
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
-    pInfoDockWnd_->setCaption( tr( "Information" ) );
+    pInfoDockWnd_->setCaption( tr( "Knowledge" ) );
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
     pInfoDockWnd_->hide();
 
@@ -247,7 +251,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     timelinePanel->hide();
 
     // Logger
-    QDockWindow* pLogDockWnd_ = new QDockWindow( this );
+    QDockWindow* pLogDockWnd_ = new QDockWindow( this, "log" );
     moveDockWindow( pLogDockWnd_, Qt::DockBottom );
     Logger* pLogPanel_ = new Logger( pLogDockWnd_, *factory );
     pLogDockWnd_->setWidget( pLogPanel_ );
@@ -258,6 +262,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     connect( pLogPanel_, SIGNAL( EmitError() ), pLogDockWnd_, SLOT( show() ) );
     pLogDockWnd_->hide();
     logger.SetLogger( *pLogPanel_ );
+
+    // Chat
+    QDockWindow* chatDock = new ChatDock( this, controllers_, publisher, network.GetCommands() );
+    moveDockWindow( chatDock, Qt::DockBottom );
+
+    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_ );
+    new ClientCommandFacade( this, controllers_, publisher );
 
     // Info
     QDockWindow* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory );
@@ -270,7 +281,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( clockWnd, Qt::DockTop, false );
 
     // Profiler
-    QDockWindow* pProfilerDockWnd_ = new QDockWindow( this );
+    QDockWindow* pProfilerDockWnd_ = new QDockWindow( this, "profiler" );
     moveDockWindow( pProfilerDockWnd_, Qt::DockRight );
     ProfilingPanel* profilingPanel_ = new ProfilingPanel( pProfilerDockWnd_, controllers_, network_, simulation );
     pProfilerDockWnd_->setWidget( profilingPanel_ );
@@ -278,13 +289,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pProfilerDockWnd_->setCloseMode( QDockWindow::Always );
     pProfilerDockWnd_->setCaption( tr( "Profiling" ) );
     setDockEnabled( pProfilerDockWnd_, Qt::DockTop, false );
+    setAppropriate( pProfilerDockWnd_, false );
     pProfilerDockWnd_->hide();
 
     // object/unit creation window
-    QDockWindow* pCreationWnd = new QDockWindow( this );
+    QDockWindow* pCreationWnd = new QDockWindow( this, "creation" );
     moveDockWindow( pCreationWnd, Qt::DockRight );
     pCreationWnd->hide();
-    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, publisher, *paramLayer, *glProxy_, *symbols, *strategy_ );
+    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, publisher, *paramLayer, *glProxy_, *symbols, *strategy_, model_.drawings_ );
     pCreationWnd->setWidget( creationPanels );
     pCreationWnd->setResizeEnabled( true );
     pCreationWnd->setCloseMode( QDockWindow::Always );
@@ -298,19 +310,15 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new EventToolbar( this, controllers, profile );
     FolkToolbar* folkToolbar = new FolkToolbar( this, controllers, model.folk_ );
 
-    // Drawer
-    DrawerFactory* drawerFactory = new DrawerFactory( this, *glProxy_, controllers_ );
-    DrawerLayer* drawer = new DrawerLayer( controllers_, *glProxy_, *drawerFactory );
-    new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
-
     AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, publisher, *paramLayer, staticModel_ );
 
-    new Menu( this, controllers, *prefDialog, *profileDialog, *factory, license );
+    gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *drawer, *prefDialog, profile, publisher );
+    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *prefDialog, profile, publisher );
 
-    ::StatusBar* pStatus = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
+    ::StatusBar* pStatus = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
@@ -324,7 +332,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     aar->hide();
 
     new XPSPlayer( this, controllers_ );
-
     if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) )
         Load();
 }
@@ -333,7 +340,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
+void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
 {
     TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
@@ -353,10 +360,12 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
-    Layer_ABC& logoLayer            = *new LogoLayer( *glProxy_, QImage( "logo.png" ), 0.7f );
+    Layer_ABC& logoLayer            = *new LogoLayer( *glProxy_, QImage( config_.BuildResourceChildFile( "logo.png" ).c_str() ), 0.7f );
     Layer_ABC& formationLayer       = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& folkLayer            = *new ::FolkLayer( controllers_.controller_, staticModel_.coordinateConverter_, model_.folk_ );
     Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    Layer_ABC& drawerLayer          = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
+    Layer_ABC& text                 = *new TextLayer( controllers_, publisher, *glProxy_, network_.GetCommands() );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
@@ -382,12 +391,14 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );
     glProxy_->Register( metrics );                                                                                  metrics             .SetPasses( "main" );
     glProxy_->Register( locationsLayer );                                                                           locationsLayer      .SetPasses( "main" );
-    glProxy_->Register( drawer );                                                                                   drawer              .SetPasses( "main,miniviews" );
+    glProxy_->Register( drawerLayer );                                                                              drawerLayer         .SetPasses( "main,miniviews" );
     glProxy_->Register( fogLayer );                                                                                 fogLayer            .SetPasses( "fog" );
+    glProxy_->Register( text );                                                                                     text                .SetPasses( "tooltip" );
     glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );
     glProxy_->Register( logoLayer );                preferences.AddLayer( tr( "Logo" ), logoLayer );                logoLayer           .SetPasses( "main" );
     
     // ordre des evenements
+    forward_->Register( text );
     forward_->Register( parameters );
     forward_->Register( agents );
     forward_->Register( automats );
@@ -398,6 +409,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( populationKnowledges );
     forward_->Register( objectKnowledges );
     forward_->Register( limits );
+    forward_->Register( drawerLayer );
     forward_->Register( metrics );
     forward_->Register( elevation3d );
     forward_->SetDefault( defaultLayer );
@@ -424,11 +436,21 @@ void MainWindow::Open()
 // -----------------------------------------------------------------------------
 void MainWindow::Load()
 {
-    WriteOptions();
-    model_.Purge();
-    selector_->Load();
-    staticModel_.Load( config_ );
-    ReadOptions();
+    try
+    {
+        WriteOptions();
+        model_.Purge();
+        selector_->Close();
+        selector_->Load();
+        staticModel_.Load( config_ );
+        ReadOptions();
+    }
+    catch( xml::exception& e )
+    {
+        Close();
+        QMessageBox::critical( this, tools::translate( "Application", "SWORD Officer Training" )
+                                   , ( tools::translate( "MainWindow", "Error loading exercise: " ) + e.what() ).ascii() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -559,28 +581,27 @@ namespace
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
+    const QString appName = tools::translate( "Application", "SWORD Officer Training" );
     if( simulation.IsConnected() )
-        setCaption( APP_NAME + QString( " - [%1@%2][%3]" )
-                                      .arg( profile_ )
-                                      .arg( simulation.GetSimulationHost().c_str() )
-                                      .arg( ExtractExerciceName( "" ) ) ); //$$$$$ POURRI
+        setCaption( appName + QString( " - [%1@%2][%3]" )
+                                     .arg( profile_ )
+                                     .arg( simulation.GetSimulationHost().c_str() )
+                                     .arg( ExtractExerciceName( "" ) ) ); //$$$$$ POURRI
     else
-        setCaption( APP_NAME + tr( " - Not connected" ) );
+    {
+        setCaption( appName + tr( " - Not connected" ) );
+        controllers_.actions_.Select( SelectionStub() );
+        Close();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::NotifyUpdated
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-void MainWindow::NotifyUpdated( const Simulation::sConnection& connection )
+void MainWindow::NotifyUpdated( const Services& services )
 {
-    if( connection.connected_ )
-        Load();
-    else
-    {
-        controllers_.actions_.Select( SelectionStub() );
-        Close();
-    }
+    Load();
 }
 
 // -----------------------------------------------------------------------------
@@ -592,7 +613,7 @@ void MainWindow::NotifyUpdated( const Profile& profile )
     if( ! profile.IsLoggedIn() )
     {
         profile_ = profile.GetLogin();
-        static LoginDialog* dialog = new LoginDialog( this, profile, network_.GetMessageMgr(), network_ );
+        static LoginDialog* dialog = new LoginDialog( this, profile, network_ );
         // $$$$ AGE 2006-10-11: exec would create a reentrance...
         QTimer::singleShot( 0, dialog, SLOT(exec()) );
     }
@@ -611,4 +632,3 @@ std::string MainWindow::BuildRemotePath( std::string server, std::string path )
     path = path.substr( 2 );
     return "\\\\" + server + "\\" + drive + '$' + path;
 }
-

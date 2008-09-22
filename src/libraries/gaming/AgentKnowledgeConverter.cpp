@@ -13,9 +13,9 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "PopulationKnowledge_ABC.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "AgentKnowledges.h"
-#include "AgentKnowledge_ABC.h"
 
 using namespace kernel;
 

@@ -28,7 +28,7 @@
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
 GameConfigPanel::GameConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
-    : QVBox( parent )
+    : QVBox( parent, "GameConfigPanel" )
     , config_( config )
 {
     setSpacing( 5 );

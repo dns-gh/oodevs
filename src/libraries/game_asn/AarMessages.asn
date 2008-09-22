@@ -24,7 +24,8 @@ MsgsAarToClient ::= SEQUENCE
     msg     CHOICE
     {
         msg-aar-information             MsgAarInformation,
-        msg-indicator-result            MsgIndicatorResult
+        msg-plot-result                 MsgPlotResult,
+        msg-indicator                   MsgIndicator
     }
 }
 
@@ -33,7 +34,7 @@ MsgsClientToAar ::= SEQUENCE
     context INTEGER DEFAULT 0,
     msg     CHOICE
     {
-        msg-indicator-request           MsgIndicatorRequest
+        msg-plot-request                MsgPlotRequest
     }
 }
 

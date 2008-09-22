@@ -27,25 +27,40 @@ namespace frontend
 */
 // Created: AGE 2007-10-04
 // =============================================================================
-class SpawnCommand : public QObject
+class SpawnCommand 
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SpawnCommand( QObject* parent, const tools::GeneralConfig& config, const char* exe );
+             SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach = false  );
     virtual ~SpawnCommand();
+    //@}
+
+    //! @name accessors
+    //@{
+    bool IsRunning() const; 
+    virtual bool Wait() ; 
+    virtual void Start();
+    virtual void End(); 
+    virtual unsigned int GetPercentage() ; 
     //@}
 
 protected:
     //! @name Operations
     //@{
-    void Start();
+    void Stop(); 
     void AddRootDirArgument();
     void AddExerciseArgument( const QString& exercise );
     void AddSessionArgument ( const QString& session );
     void addArgument( QString arg );
     //@}
+
+    //! @name Member data 
+    //@{
+    const tools::GeneralConfig&     config_;
+    //@}
+
 
 private:
     //! @name Copy/Assignment
@@ -55,10 +70,17 @@ private:
     //@}
 
 private:
+    
+    //! @name forward definition
+    //@{
+    struct InternalData ;    //!< obscure data structure to hide OS implementation 
+    //@}
+
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    QString commandLine_;
+    QString                         commandLine_;
+    std::auto_ptr<InternalData>     internal_ ;         //!< obscure data structure to hide OS implementation
+    bool                            attach_ ;           //!< if set to true , kill the attached process on exit 
     //@}
 };
 

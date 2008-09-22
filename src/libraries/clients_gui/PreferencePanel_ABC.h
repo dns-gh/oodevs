@@ -25,7 +25,7 @@ class PreferencePanel_ABC : public QScrollView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PreferencePanel_ABC( QWidget* parent );
+    explicit PreferencePanel_ABC( QWidget* parent, const char* name = 0 );
     virtual ~PreferencePanel_ABC();
     //@}
 

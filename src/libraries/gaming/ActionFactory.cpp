@@ -9,14 +9,15 @@
 
 #include "gaming_pch.h"
 #include "ActionFactory.h"
-#include "ActionAgentMission.h"
-#include "ActionAutomatMission.h"
-#include "ActionPopulationMission.h"
-#include "ActionFragOrder.h"
+#include "actions/AgentMission.h"
+#include "actions/AutomatMission.h"
+#include "actions/PopulationMission.h"
+#include "actions/FragOrder.h"
+#include "actions/Parameter_ABC.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ActionTiming.h"
-#include "ActionParameter_ABC.h"
+#include "ParameterFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -24,7 +25,6 @@
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/OrderParameter.h"
-#include "ActionParameterFactory_ABC.h"
 #include "Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -35,7 +35,7 @@ using namespace xml;
 // Name: ActionFactory constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionFactory::ActionFactory( Controllers& controllers, const ActionParameterFactory_ABC& factory, const Model& model
+ActionFactory::ActionFactory( Controllers& controllers, const ParameterFactory_ABC& factory, const Model& model
                             , const Resolver_ABC< MissionType >& missions, const Resolver_ABC< FragOrderType >& fragOrders, const Simulation& simulation )
     : controllers_( controllers )
     , factory_( factory )
@@ -60,15 +60,15 @@ ActionFactory::~ActionFactory()
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const MissionType& mission ) const
+actions::Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const MissionType& mission ) const
 {
-    std::auto_ptr< Action_ABC > action;
-    if( model_.agents_.FindAgent( target.GetId() ) ) 
-        action.reset( new ActionAgentMission( target, mission, controllers_.controller_, true ) );
-    else if( model_.agents_.FindAutomat( target.GetId() ) )
-        action.reset( new ActionAutomatMission( target, mission, controllers_.controller_, true ) );
-    else if( model_.agents_.FindPopulation( target.GetId() ) )
-        action.reset( new ActionPopulationMission( target, mission, controllers_.controller_, true ) );
+    std::auto_ptr< actions::Action_ABC > action;
+    if( target.GetTypeName() == Agent_ABC::typeName_ ) 
+        action.reset( new actions::AgentMission( target, mission, controllers_.controller_, true ) );
+    else if( target.GetTypeName() == Automat_ABC::typeName_ )
+        action.reset( new actions::AutomatMission( target, mission, controllers_.controller_, true ) );
+    else if( target.GetTypeName() == Population_ABC::typeName_ )
+        action.reset( new actions::PopulationMission( target, mission, controllers_.controller_, true ) );
     else
         throw std::runtime_error( __FUNCTION__ " Cannot resolve executing entity" );
 
@@ -81,9 +81,9 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const Mission
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrderType& fragOrder ) const
+actions::Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrderType& fragOrder ) const
 {
-    std::auto_ptr< Action_ABC > action( new ActionFragOrder( target, fragOrder, controllers_.controller_, true ) );
+    std::auto_ptr< actions::Action_ABC > action( new actions::FragOrder( target, fragOrder, controllers_.controller_, true ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
     return action.release();
@@ -93,10 +93,10 @@ Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, const FragOrd
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionAgentMission( model_.agents_.GetAgent( message.oid ), mission, controllers_.controller_, false ) );
+    std::auto_ptr< actions::Action_ABC > action( new actions::AgentMission( model_.agents_.GetAgent( message.oid ), mission, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
@@ -108,10 +108,10 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) con
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionAutomatMission( model_.agents_.GetAutomat( message.oid ), mission, controllers_.controller_, false ) );
+    std::auto_ptr< actions::Action_ABC > action( new actions::AutomatMission( model_.agents_.GetAutomat( message.oid ), mission, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
@@ -123,10 +123,10 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& message ) 
 // Name: ActionFactory::CreateAction
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPopulationOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPopulationOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< Action_ABC > action( new ActionPopulationMission( model_.agents_.GetPopulation( message.oid ), mission, controllers_.controller_, false ) );
+    std::auto_ptr< actions::Action_ABC > action( new actions::PopulationMission( model_.agents_.GetPopulation( message.oid ), mission, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
@@ -139,14 +139,14 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPopulationOrder& message
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgFragOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgFragOrder& message ) const
 {
     const FragOrderType& order = fragOrders_.Get( message.frag_order );
-    std::auto_ptr< Action_ABC > action;
+    std::auto_ptr< actions::Action_ABC > action;
     if( const Agent_ABC* agent = model_.agents_.FindAgent( message.oid ) )
-        action.reset( new ActionFragOrder( *agent, order, controllers_.controller_, false ) );
+        action.reset( new actions::FragOrder( *agent, order, controllers_.controller_, false ) );
     else if( const Automat_ABC* automat = model_.agents_.FindAutomat( message.oid ) )
-        action.reset( new ActionFragOrder( *automat, order, controllers_.controller_, false ) );
+        action.reset( new actions::FragOrder( *automat, order, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
@@ -158,7 +158,7 @@ Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgFragOrder& message ) con
 // Name: ActionFactory::AddParameters
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
-void ActionFactory::AddParameters( Action_ABC& action, const OrderType& order, const ASN1T_MissionParameters& asn ) const
+void ActionFactory::AddParameters( actions::Action_ABC& action, const OrderType& order, const ASN1T_MissionParameters& asn ) const
 {
     Iterator< const OrderParameter& > it = order.CreateIterator();
     unsigned int i = 0;
@@ -166,7 +166,7 @@ void ActionFactory::AddParameters( Action_ABC& action, const OrderType& order, c
     {
         if( i >= asn.n )
             throw std::runtime_error( __FUNCTION__ " Mission parameter count does not match mission definition" );
-        if( ActionParameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), asn.elem[i++], action.GetEntity() ) )
+        if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), asn.elem[i++], action.GetEntity() ) )
             action.AddParameter( *newParam );
     }
 }
@@ -175,7 +175,7 @@ void ActionFactory::AddParameters( Action_ABC& action, const OrderType& order, c
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
+actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
 {
     std::string type;
     xis >> attribute( "type", type );
@@ -188,7 +188,7 @@ Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
 
 namespace
 {
-    void ThrowMissingParameter( const Action_ABC& action, const OrderParameter& param )
+    void ThrowMissingParameter( const actions::Action_ABC& action, const OrderParameter& param )
     {
         throw std::exception( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): missing parameter '%3'." )
                                 .arg( action.GetName() ).arg( action.GetId() ).arg( param.GetName().c_str() ) );
@@ -204,16 +204,16 @@ namespace
 // Name: ActionFactory::CreateMission
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
+actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
 {
     const unsigned long id = xml::attribute< unsigned long >( xis, "target" );
 
-    std::auto_ptr< ActionMission > action;
+    std::auto_ptr< actions::Mission > action;
     const kernel::Entity_ABC* target = model_.agents_.FindAgent( id );
     if( target )
-        action.reset( new ActionAgentMission( xis, controllers_.controller_, missions_, *target ) );
+        action.reset( new actions::AgentMission( xis, controllers_.controller_, missions_, *target ) );
     else if( target = model_.agents_.FindAutomat( id ) )
-        action.reset( new ActionAutomatMission( xis, controllers_.controller_, missions_, *target ) );
+        action.reset( new actions::AutomatMission( xis, controllers_.controller_, missions_, *target ) );
     else
         ThrowTargetNotFound( id );
 
@@ -231,17 +231,17 @@ Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
 // Name: ActionFactory::CreateFragOrder
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
+actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
 {
     const unsigned long id = xml::attribute< unsigned long >( xis, "target" );
 
-    std::auto_ptr< ActionFragOrder > action;
+    std::auto_ptr< actions::FragOrder > action;
     const kernel::Entity_ABC* target = model_.agents_.FindAgent( id );
     if( !target )
         target = model_.agents_.FindAutomat( id );
     if( !target )
         ThrowTargetNotFound( id );
-    action.reset( new ActionFragOrder( xis, controllers_.controller_, fragOrders_, *target ) );
+    action.reset( new actions::FragOrder( xis, controllers_.controller_, fragOrders_, *target ) );
 
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
     action->Polish();
@@ -257,13 +257,13 @@ Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
 // Name: ActionFactory::ReadParameter
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void ActionFactory::ReadParameter( xml::xistream& xis, Action_ABC& action, Iterator< const OrderParameter& >& it, const Entity_ABC& entity ) const
+void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& action, Iterator< const OrderParameter& >& it, const Entity_ABC& entity ) const
 {
     try
     {
         if( !it.HasMoreElements() )
-            throw std::exception( tools::translate( "ActionFactory", "too much parameters provided" ) );
-        std::auto_ptr< ActionParameter_ABC > param( factory_.CreateParameter( it.NextElement(), xis, entity ) );
+            throw std::exception( tools::translate( "ActionFactory", "too many parameters provided" ) );
+        std::auto_ptr< actions::Parameter_ABC > param( factory_.CreateParameter( it.NextElement(), xis, entity ) );
         action.AddParameter( *param );
         param.release();
     }

@@ -9,8 +9,8 @@
 
 #include "gaming_app_pch.h"
 #include "ParamPolygon.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterPolygon.h"
+#include "actions/Action_ABC.h"
+#include "actions/Polygon.h"
 
 using namespace kernel;
 
@@ -37,7 +37,7 @@ ParamPolygon::~ParamPolygon()
 // Name: ParamPolygon::CommitTo
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void ParamPolygon::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamPolygon::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *CreateParameter< ActionParameterPolygon >() );
+    action.AddParameter( *CreateParameter< actions::parameters::Polygon >() );
 }

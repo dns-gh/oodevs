@@ -26,6 +26,7 @@ namespace kernel
     class DotationType;
     class EquipmentType;
     class NBCAgent;
+    class WeaponSystemType;
 
 // =============================================================================
 /** @class  ObjectTypes
@@ -36,6 +37,7 @@ namespace kernel
 class ObjectTypes
     : public Resolver2< ObjectType >
     , public Resolver2< DotationType > // $$$$ AGE 2006-04-05: pas du tout des objets...
+    , public Resolver< WeaponSystemType, std::string >
     , public Resolver< EquipmentType >
     , public Resolver2< NBCAgent >
     , public Resolver< BreakdownType >
@@ -45,6 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ObjectTypes();
+    explicit ObjectTypes( const tools::ExerciseConfig& config );
     virtual ~ObjectTypes();
     //@}
 
@@ -67,6 +70,8 @@ private:
     void ReadObjectType( xml::xistream& xis );
     void ReadDotations( const std::string& dotations );
     void ReadDotation( xml::xistream& xis );
+    void ReadWeaponSystems( const std::string& file );
+    void ReadWeaponSystem( xml::xistream& xis );
     void ReadEquipments( const std::string& equipments );
     void ReadEquipment( xml::xistream& xis );
     void ReadNBC( const std::string& nbc );

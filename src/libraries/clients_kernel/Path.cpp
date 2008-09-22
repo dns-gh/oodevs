@@ -55,6 +55,23 @@ void Path::AddPoint( const geometry::Point2f& point )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Path::Translate
+// Created: SBO 2008-05-30
+// -----------------------------------------------------------------------------
+void Path::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
+{
+    const float squarePrecision = precision * precision;
+    for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        if( it->SquareDistance( from ) < squarePrecision )
+        {
+            *it += translation;
+            return;
+        }
+    for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        *it += translation;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Path::IsValid
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
@@ -78,21 +95,7 @@ bool Path::IsDone() const
 // -----------------------------------------------------------------------------
 void Path::Accept( LocationVisitor_ABC& visitor ) const
 {
-    // le point d'origine n'est pas passé. Bien noter.
-    visitor.VisitLines( points_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Path::Draw
-// Created: AGE 2006-08-09
-// -----------------------------------------------------------------------------
-void Path::Draw( const GlTools_ABC& tools ) const
-{
-    if( IsValid() )
-    {
-        tools.DrawLine( position_.GetPosition(), points_.front() );
-        tools.DrawLines( points_ );
-    }
+    visitor.VisitPath( position_.GetPosition(), points_ );
 }
 
 // -----------------------------------------------------------------------------

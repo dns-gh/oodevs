@@ -11,8 +11,8 @@
 #include "ParamObstacle.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/OrderParameter.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterObstacleList.h"
+#include "actions/Action_ABC.h"
+#include "actions/ObstacleList.h"
 #include "gaming/Tools.h"
 
 using namespace kernel;
@@ -46,9 +46,9 @@ ParamObstacleList::~ParamObstacleList()
 // Name: ParamObstacleList::CommitTo
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void ParamObstacleList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamObstacleList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObstacleList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ObstacleList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

@@ -10,9 +10,13 @@
 #ifndef __ModelVisitor_ABC_h_
 #define __ModelVisitor_ABC_h_
 
-namespace dispatcher
+namespace kernel
 {
     class Entity_ABC;
+}
+
+namespace dispatcher
+{
 
 // =============================================================================
 /** @class  ModelVisitor_ABC
@@ -32,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Visit( Entity_ABC& entity ) = 0;
+    virtual void Visit( const kernel::Entity_ABC& entity ) = 0;
     //@}
 };
 

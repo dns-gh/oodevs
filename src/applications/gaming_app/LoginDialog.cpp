@@ -17,10 +17,9 @@
 // Name: LoginDialog constructor
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-LoginDialog::LoginDialog( QWidget* pParent, const Profile& profile, Publisher_ABC& publisher, Network& network )
+LoginDialog::LoginDialog( QWidget* pParent, const Profile& profile, Network& network )
     : QDialog( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title )
     , profile_( profile )
-    , publisher_( publisher )
     , network_( network )
 {
     setCaption( tr("Profile parameters") );
@@ -34,6 +33,8 @@ LoginDialog::LoginDialog( QWidget* pParent, const Profile& profile, Publisher_AB
     // Login
     pMainLayout->addWidget( new QLabel( tr("User login"), this ), nCurRow, 0 );
     login_ = new QLineEdit( this );
+    if ( profile.GetLogin() != "" ) 
+        login_->setText( profile.GetLogin() ) ; 
     pMainLayout->addWidget( login_, nCurRow, 1 );
 
     // Password
@@ -72,7 +73,7 @@ LoginDialog::~LoginDialog()
 // -----------------------------------------------------------------------------
 void LoginDialog::Validate()
 {
-    profile_.Login( publisher_, login_->text().ascii(), password_->text().ascii() );
+    profile_.Login( login_->text().ascii(), password_->text().ascii() );
     accept();
 }
 

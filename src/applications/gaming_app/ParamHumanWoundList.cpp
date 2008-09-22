@@ -13,8 +13,8 @@
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/OrderParameter.h"
 #include "gaming/tools.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterMedicalPriorities.h"
+#include "actions/Action_ABC.h"
+#include "actions/MedicalPriorities.h"
 #include "icons.h"
 
 using namespace gui;
@@ -72,9 +72,9 @@ void ParamHumanWoundList::BuildInterface( QWidget* parent )
 // Name: ParamHumanWoundList::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void ParamHumanWoundList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamHumanWoundList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameterMedicalPriorities > param( new ActionParameterMedicalPriorities( parameter_ ) );
+    std::auto_ptr< actions::parameters::MedicalPriorities > param( new actions::parameters::MedicalPriorities( parameter_ ) );
     for( QListViewItemIterator it( list_ ); it.current(); ++it )
         param->AddMedicalPriority( E_HumanWound( it.current()->text( 0 ).toUInt() ) );
     action.AddParameter( *param.release() );

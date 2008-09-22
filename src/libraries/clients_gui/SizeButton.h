@@ -34,6 +34,7 @@ public:
 
     //! @name Operations
     //@{
+    void SetSize( float value );
     float GetSize() const;
     void EnableValueLabel( const QString& prefix = "" );
     void Revert();

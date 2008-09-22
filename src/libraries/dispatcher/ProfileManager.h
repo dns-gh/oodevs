@@ -12,6 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "MessageHandler_ABC.h"
+#include "Registrable_ABC.h"
 
 namespace xml{ class xistream; };
 
@@ -30,6 +31,7 @@ class ClientsNetworker;
 // Created: NLD 2006-09-19
 // =============================================================================
 class ProfileManager : public MessageHandler_ABC
+                     , public dispatcher::Registrable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -58,9 +60,12 @@ private:
     ProfileManager& operator=( const ProfileManager& ); //!< Assignement operator
     //@}
 
-    //! @name Tools
+    //! @name Helpers
     //@{
     void ReadProfile( xml::xistream& xis );
+
+    virtual void RegisterIn( directia::Brain& brain );
+    void SetAutomatRight( const std::string& profile, unsigned int automat, bool readonly, bool readwrite );
     //@}
 
 private:

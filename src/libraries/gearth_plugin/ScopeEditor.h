@@ -56,6 +56,9 @@ public:
     virtual void Send( const ASN1T_MsgsReplayToClient&         ) {};
     virtual void Send( const ASN1T_MsgsAarToClient& ) {};
     virtual void Send( const ASN1T_MsgsMessengerToClient&); 
+    virtual void Send( const ASN1T_MsgsDispatcherToClient& ) {};
+
+    virtual std::string GetEndpoint() const { return ""; }
     //@}
         
 private:

@@ -21,7 +21,7 @@ using namespace kernel;
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
-    : QGroupBox( 2, Qt::Horizontal, title, parent )
+    : QGroupBox( 2, Qt::Horizontal, title, parent, "WeatherWidget" )
 {
     new QLabel( tr( "Wind direction/speed:" ), this );
     QHBox* box = new QHBox( this );

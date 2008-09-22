@@ -10,12 +10,13 @@
 #include "gaming_app_pch.h"
 #include "PopulationMissionInterface.h"
 #include "MissionInterfaceBuilder.h"
-#include "gaming/SimulationMessages.h"
-#include "gaming/ActionsModel.h"
+#include "game_asn/SimulationSenders.h"
+#include "actions/ActionsModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/MissionType.h"
 
 using namespace kernel;
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationMissionInterface constructor

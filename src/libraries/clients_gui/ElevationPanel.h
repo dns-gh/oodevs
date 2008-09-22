@@ -11,10 +11,12 @@
 #define __ElevationPanel_h_
 
 #include "PreferencePanel_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
+    class Options;
 }
 
 namespace gui
@@ -24,6 +26,7 @@ namespace gui
     class ColorButton;
     class GradientPreferences;
     class GradientWidget;
+    class CheckBox;
 
 // =============================================================================
 /** @class  ElevationPanel
@@ -32,6 +35,8 @@ namespace gui
 // Created: AGE 2007-01-17
 // =============================================================================
 class ElevationPanel : public PreferencePanel_ABC
+                     , public kernel::Observer_ABC
+                     , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 
@@ -52,7 +57,7 @@ private slots:
     //! @name Slots
     //@{
     void OnGradientChanged( const Gradient& gradient );
-    void OnEnableVariable( bool );
+    void OnEnableVariableGradient( bool );
     void OnEnableHillshade( bool );
     void OnHillShadeDirection( int );
     void OnStrengthChanged( int value );
@@ -65,14 +70,23 @@ private:
     ElevationPanel& operator=( const ElevationPanel& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    //@}
+
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
+    kernel::Options& options_;
     Elevation2dLayer& layer_;
     GradientPreferences& preferences_;
 
     QGroupBox* hsBox_;
+    CheckBox* fitColorGradienttoViewPort_;
     QDial* hsDial_;
+    QSlider* hillShadeStrength_;
     bool enableHs_, previousEnableHs_;
     int  directionHs_, previousDirectionHs_;
     float strengthHs_, previousStrengthHs_;

@@ -10,12 +10,14 @@
 #ifndef __FireEffect_h_
 #define __FireEffect_h_
 
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
 #include "game_asn/Simulation.h"
 #include "Localisation.h"
 
 namespace dispatcher
 {
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  FireEffect
@@ -23,7 +25,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-18
 // =============================================================================
-class FireEffect : public Entity_ABC
+class FireEffect : public SimpleEntity< >
 {
 
 public:
@@ -35,9 +37,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

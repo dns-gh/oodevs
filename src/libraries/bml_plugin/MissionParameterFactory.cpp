@@ -88,26 +88,26 @@ namespace
     struct NameFinder
     {
         explicit NameFinder( const std::string& name ) : name_( name ), result_( 0 ) {}
-        void operator()( const Entity& entity )
+        void operator()( const Entity& entity ) const
         {
-            if( entity.strName_ == name_ )
+            if( entity.name_ == name_ )
                 result_ = &entity;
         }
         std::string name_;
-        const Entity* result_;
+        mutable const Entity* result_;
     };
 
     const dispatcher::Automat* FindAutomat( const dispatcher::Model& model, const std::string& name )
     {
         NameFinder< dispatcher::Automat > automatFinder( name );
-        model.GetAutomats().Apply< NameFinder< dispatcher::Automat >& >( automatFinder );
+        model.automats_.Apply( automatFinder );
         return automatFinder.result_;
     }
 
     const dispatcher::Agent* FindAgent( const dispatcher::Model& model, const std::string& name )
     {
         NameFinder< dispatcher::Agent > agentFinder( name );
-        model.GetAgents().Apply< NameFinder< dispatcher::Agent >& >( agentFinder );
+        model.agents_.Apply( agentFinder );
         return agentFinder.result_;
     }
 }

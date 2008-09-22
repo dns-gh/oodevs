@@ -28,7 +28,7 @@ class IntelligenceOrder
 public:
     //! @name Constructors/Destructor
     //@{
-             IntelligenceOrder( Model& model, const ASN1T_Intelligence& asn );
+    explicit IntelligenceOrder( const ASN1T_Intelligence& asn );
     virtual ~IntelligenceOrder();
     //@}
 
@@ -38,22 +38,15 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    IntelligenceOrder( const IntelligenceOrder& );            //!< Copy constructor
-    IntelligenceOrder& operator=( const IntelligenceOrder& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    const std::string name_;
-    const std::string nature_;
-    const ASN1T_EnumNatureLevel level_;
-    const bool embarked_;
-    const ASN1T_CoordLatLong position_;
-    const ASN1T_EnumDiplomacy diplomacy_;
-    const unsigned int formation_;
+    std::string name_;
+    std::string nature_;
+    ASN1T_EnumNatureLevel level_;
+    bool embarked_;
+    ASN1T_CoordLatLong position_;
+    ASN1T_EnumDiplomacy diplomacy_;
+    unsigned int formation_;
     //@}
 };
 

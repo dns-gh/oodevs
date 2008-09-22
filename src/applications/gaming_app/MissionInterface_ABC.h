@@ -18,8 +18,12 @@ namespace kernel
     class Entity_ABC;
 }
 
+namespace actions 
+{
+    class Action_ABC;
+}
+
 class Param_ABC;
-class Action_ABC;
 class QTabWidget;
 
 // =============================================================================
@@ -40,6 +44,7 @@ public:
 
     //! @name Operations
     //@{
+    QString Title() const;
     void Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter );
@@ -57,7 +62,7 @@ protected:
     const kernel::Entity_ABC& GetEntity() const;
     void CreateTitle( const QString& title );
     void CreateOkCancelButtons();
-    void CommitTo( Action_ABC& action ) const;
+    void CommitTo( actions::Action_ABC& action ) const;
     //@}
 
 private:
@@ -83,6 +88,7 @@ private:
 private:
     //! @name Member data
     //@{
+    QString title_;
     kernel::ActionController& controller_;
     kernel::Entity_ABC& entity_;
     T_Parameters parameters_;

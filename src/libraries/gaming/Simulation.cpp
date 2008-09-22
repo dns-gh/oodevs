@@ -49,8 +49,6 @@ void Simulation::Connect( const std::string& host )
     profiling_.Clear();
     connected_ = true;
     simulationHost_ = host;
-    connection_.connected_ = connected_;
-    controller_.Update( connection_ );
     controller_.Update( *this );
 }
 
@@ -65,8 +63,6 @@ void Simulation::Disconnect()
     time_ = 0;
     profiling_.Clear();
     connected_ = false;
-    connection_.connected_ = connected_;
-    controller_.Update( connection_ );
     controller_.Update( *this );
 }
 
@@ -343,13 +339,4 @@ unsigned long Simulation::GetShortPathfinds() const
 unsigned long Simulation::GetLongPathfinds() const
 {
     return profiling_.GetLongPathfinds();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::IsReplayer
-// Created: AGE 2007-09-28
-// -----------------------------------------------------------------------------
-bool Simulation::IsReplayer() const
-{
-    return GetTickCount() != unsigned( -1 );
 }

@@ -27,7 +27,10 @@ namespace gui
     class LocationCreator;
 }
 
-class ActionParameter_ABC;
+namespace actions
+{
+    class Parameter_ABC;
+}
 
 // =============================================================================
 /** @class  ParamLocation
@@ -54,7 +57,7 @@ public:
     virtual void Handle( kernel::Location_ABC& location );
     void SetShapeFilter( bool point, bool line, bool polygon, bool circle );
 
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 protected:

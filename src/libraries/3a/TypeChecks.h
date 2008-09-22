@@ -11,6 +11,7 @@
 #define __TypeConstraints_h_
 
 #include <boost/type_traits/integral_constant.hpp>
+#include <boost/type_traits/is_arithmetic.hpp>
 #include <stdexcept>
 
 #pragma warning( push )

@@ -10,8 +10,8 @@
 #include "gaming_app_pch.h"
 #include "ParamBool.h"
 #include "moc_ParamBool.cpp"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterBool.h"
+#include "actions/Action_ABC.h"
+#include "actions/Bool.h"
 #include "clients_kernel/OrderParameter.h"
 
 // -----------------------------------------------------------------------------
@@ -51,9 +51,9 @@ void ParamBool::BuildInterface( QWidget* parent )
 // Name: ParamBool::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamBool::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamBool::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new ActionParameterBool( parameter_, value_ ) );
+    action.AddParameter( *new actions::parameters::Bool( parameter_, value_ ) );
 }
 
 // -----------------------------------------------------------------------------

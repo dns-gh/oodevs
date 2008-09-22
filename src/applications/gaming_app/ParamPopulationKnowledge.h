@@ -16,10 +16,9 @@ namespace kernel
 {
     class Population_ABC;
     class Entity_ABC;
+    class PopulationKnowledge_ABC;
+    class AgentKnowledgeConverter_ABC;
 }
-
-class PopulationKnowledge_ABC;
-class AgentKnowledgeConverter_ABC;
 
 // =============================================================================
 /** @class  ParamPopulationKnowledge
@@ -27,20 +26,20 @@ class AgentKnowledgeConverter_ABC;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamPopulationKnowledge : public EntityParameter< PopulationKnowledge_ABC >
+class ParamPopulationKnowledge : public EntityParameter< kernel::PopulationKnowledge_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPopulationKnowledge( QObject* parent, const kernel::OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamPopulationKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamPopulationKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 private:
@@ -59,7 +58,7 @@ private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;
-    AgentKnowledgeConverter_ABC& converter_;
+    kernel::AgentKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& agent_;
     //@}
 };

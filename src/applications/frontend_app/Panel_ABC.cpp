@@ -10,6 +10,7 @@
 #include "frontend_app_pch.h"
 #include "Panel_ABC.h"
 #include "resources.h"
+#include "frontend/SpawnCommand.h" 
 #include <qaction.h>
 #include <qregion.h>
 #include <qwidgetstack.h>
@@ -18,8 +19,8 @@
 // Name: Panel_ABC constructor
 // Created: SBO 2007-10-05
 // -----------------------------------------------------------------------------
-Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action, ActionsContext& context )
-    : QVBox   ( widget )
+Panel_ABC::Panel_ABC( QWidgetStack* widget, QAction& action, ActionsContext& context, const char* name )
+    : QVBox   ( widget, name )
     , context_( context )
     , stack_  ( widget )
     , action_ ( action )
@@ -115,4 +116,14 @@ void Panel_ABC::ShowNext()
 void Panel_ABC::Update()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Panel_ABC::Start
+// Created: RDS 2008-08-25
+// -----------------------------------------------------------------------------
+void Panel_ABC::Start( frontend::SpawnCommand* command )
+{
+    commands_.push_back( command ) ; 
+    command->Start(); 
 }

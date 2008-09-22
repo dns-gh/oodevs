@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void SetContextMenu( QToolButton* btn );
+    void FillPopupMenu( QPopupMenu* menu );
     //@}
 
 private slots:

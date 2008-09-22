@@ -27,7 +27,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "gaming/AutomatDecisions.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "gaming/Attributes.h"
 
 using namespace kernel;

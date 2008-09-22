@@ -10,9 +10,9 @@
 #include "gaming_app_pch.h"
 #include "ParamPopulationKnowledge.h"
 #include "clients_kernel/Population_ABC.h"
-#include "gaming/ActionParameterPopulationKnowledge.h"
-#include "gaming/PopulationKnowledge_ABC.h"
-#include "gaming/AgentKnowledgeConverter_ABC.h"
+#include "actions/PopulationKnowledge.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
+#include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 
 using namespace kernel;
 
@@ -53,9 +53,9 @@ void ParamPopulationKnowledge::NotifyContextMenu( const Population_ABC& entity, 
 // Name: ParamPopulationKnowledge::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamPopulationKnowledge::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamPopulationKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameterEntity< PopulationKnowledge_ABC > > param( new ActionParameterPopulationKnowledge( parameter_ ) );
+    std::auto_ptr< actions::parameters::Entity< PopulationKnowledge_ABC > > param( new actions::parameters::PopulationKnowledge( parameter_ ) );
     EntityParameter< PopulationKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

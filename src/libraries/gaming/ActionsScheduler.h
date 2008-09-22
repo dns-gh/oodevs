@@ -17,8 +17,10 @@ namespace kernel
 {
     class Controllers;
 }
-
-class ActionsModel;
+namespace actions
+{
+    class ActionsModel;
+}
 class Publisher_ABC;
 class Simulation;
 
@@ -36,7 +38,7 @@ class ActionsScheduler : public QObject // $$$$ AGE 2008-05-19: why ?
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsScheduler( QObject* parent, kernel::Controllers& controllers, const Simulation& simulation, const ActionsModel& actions, Publisher_ABC& publisher );
+             ActionsScheduler( QObject* parent, kernel::Controllers& controllers, const Simulation& simulation, const actions::ActionsModel& actions, Publisher_ABC& publisher );
     virtual ~ActionsScheduler();
     //@}
 
@@ -63,7 +65,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const Simulation& simulation_;
-    const ActionsModel& actions_;
+    const actions::ActionsModel& actions_;
     Publisher_ABC& publisher_;
     QDateTime currentTime_;
     //@}

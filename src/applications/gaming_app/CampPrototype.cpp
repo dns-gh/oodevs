@@ -11,7 +11,7 @@
 #include "CampPrototype.h"
 
 #include "clients_kernel/Automat_ABC.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 
 using namespace kernel;
 using namespace gui;

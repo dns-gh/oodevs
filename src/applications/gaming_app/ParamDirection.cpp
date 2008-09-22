@@ -10,8 +10,8 @@
 #include "gaming_app_pch.h"
 #include "ParamDirection.h"
 #include "moc_ParamDirection.cpp"
-#include "gaming/ActionParameterDirection.h"
-#include "gaming/Action_ABC.h"
+#include "actions/Direction.h"
+#include "actions/Action_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
 // -----------------------------------------------------------------------------
@@ -55,9 +55,9 @@ void ParamDirection::BuildInterface( QWidget* parent )
 // Name: ParamDirection::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamDirection::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamDirection::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new ActionParameterDirection( parameter_, value_ ) );
+    action.AddParameter( *new actions::parameters::Direction( parameter_, value_ ) );
 }
 
 // -----------------------------------------------------------------------------

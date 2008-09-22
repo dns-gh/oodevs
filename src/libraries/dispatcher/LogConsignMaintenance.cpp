@@ -10,8 +10,9 @@
 #include "dispatcher_pch.h"
 #include "LogConsignMaintenance.h"
 #include "Model.h"
+#include "ClientPublisher_ABC.h"
+#include "ModelVisitor_ABC.h"
 #include "Agent.h"
-#include "Network_Def.h"
 
 using namespace dispatcher;
 
@@ -19,10 +20,10 @@ using namespace dispatcher;
 // Name: LogConsignMaintenance constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-LogConsignMaintenance::LogConsignMaintenance( Model& model, const ASN1T_MsgLogMaintenanceHandlingCreation& msg )
-    : model_            ( model )
-    , nID_              ( msg.oid_consigne )
-    , agent_            ( model.GetAgents().Get( msg.oid_pion ) )
+LogConsignMaintenance::LogConsignMaintenance( const Model& model, const ASN1T_MsgLogMaintenanceHandlingCreation& msg )
+    : SimpleEntity< >   ( msg.oid_consigne )
+    , model_            ( model )
+    , agent_            ( model.agents_.Get( msg.oid_pion ) )
     , nTickCreation_    ( msg.tick_creation )
     , nEquipmentType_   ( msg.type_equipement )
     , nBreakdownType_   ( msg.type_panne )
@@ -49,10 +50,10 @@ LogConsignMaintenance::~LogConsignMaintenance()
 void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceHandlingUpdate& msg )
 {
     if( msg.m.diagnostique_effectuePresent )
-        bDiagnosed_ = msg.diagnostique_effectue;
+        bDiagnosed_ = msg.diagnostique_effectue != 0;
     if( msg.m.etatPresent )
         nState_ = msg.etat;
-    pTreatingAgent_ = ( msg.oid_pion_log_traitant == 0 ) ? 0 : &model_.GetAgents().Get( msg.oid_pion_log_traitant );
+    pTreatingAgent_ = ( msg.oid_pion_log_traitant == 0 ) ? 0 : &model_.agents_.Get( msg.oid_pion_log_traitant );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,10 +62,10 @@ void LogConsignMaintenance::Update( const ASN1T_MsgLogMaintenanceHandlingUpdate&
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMaintenanceHandlingCreation asn;
+    client::LogMaintenanceHandlingCreation asn;
     
-    asn().oid_consigne  = nID_;
-    asn().oid_pion      = agent_.GetID();
+    asn().oid_consigne  = GetId();
+    asn().oid_pion      = agent_.GetId();
     asn().tick_creation = nTickCreation_;
 
     asn().type_equipement = nEquipmentType_;
@@ -79,15 +80,15 @@ void LogConsignMaintenance::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMaintenanceHandlingUpdate asn;
+    client::LogMaintenanceHandlingUpdate asn;
 
-    asn().oid_consigne = nID_;
-    asn().oid_pion     = agent_.GetID();
+    asn().oid_consigne = GetId();
+    asn().oid_pion     = agent_.GetId();
 
     asn().m.diagnostique_effectuePresent = 1;
     asn().m.etatPresent                  = 1;
 
-    asn().oid_pion_log_traitant = pTreatingAgent_ ? pTreatingAgent_->GetID() : 0;
+    asn().oid_pion_log_traitant = pTreatingAgent_ ? pTreatingAgent_->GetId() : 0;
     asn().etat                  = nState_;
     asn().diagnostique_effectue = bDiagnosed_;
 
@@ -100,9 +101,17 @@ void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) con
 // -----------------------------------------------------------------------------
 void LogConsignMaintenance::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMaintenanceHandlingDestruction asn;
-    asn().oid_consigne = nID_;
-    asn().oid_pion     = agent_.GetID();
+    client::LogMaintenanceHandlingDestruction asn;
+    asn().oid_consigne = GetId();
+    asn().oid_pion     = agent_.GetId();
     asn.Send( publisher );
 }
 
+// -----------------------------------------------------------------------------
+// Name: LogConsignMaintenance::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void LogConsignMaintenance::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}

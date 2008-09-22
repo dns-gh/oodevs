@@ -9,7 +9,12 @@
 
 #include "frontend_pch.h"
 #include "ConfigurationManipulator.h"
+#include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.h>
+
+#include <boost/filesystem.hpp>
+
+namespace bfs = boost::filesystem;
 
 using namespace frontend;
 
@@ -25,10 +30,33 @@ ConfigurationManipulator::ConfigurationManipulator( const std::string& filename 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ConfigurationManipulator constructor
+// Created: RDS 2008-08-21
+// -----------------------------------------------------------------------------
+ConfigurationManipulator::ConfigurationManipulator( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
+    : document_( new XmlNode( GetSessionXml( config, exercise, session ) ) )
+    , output_  ( new xml::xofstream( GetSessionXml( config, exercise, session ) ) )
+{
+    // NOTHING   
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: ConfigurationManipulator destructor
 // Created: SBO 2008-02-25
 // -----------------------------------------------------------------------------
 ConfigurationManipulator::~ConfigurationManipulator()
 {
     document_->Serialize( *output_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConfigurationManipulator::GetSessionXml
+// Created: AGE 2007-10-09
+// -----------------------------------------------------------------------------
+std::string ConfigurationManipulator::GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
+{
+    const bfs::path dir( config.BuildSessionDir( exercise, session ), bfs::native );
+    bfs::create_directories( dir );
+    return ( dir / "session.xml" ).native_file_string();
 }

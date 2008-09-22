@@ -9,7 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "FireEffect.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -18,9 +19,10 @@ using namespace dispatcher;
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
 FireEffect::FireEffect( Model& , const ASN1T_MsgStartFireEffect& message )
-    : id_          ( message.effect_oid )
-    , localisation_( message.location )
-    , type_        ( message.type )
+    : SimpleEntity< >( message.effect_oid )
+    , id_            ( message.effect_oid )
+    , localisation_  ( message.location )
+    , type_          ( message.type )
 {
     // NOTHING
 }
@@ -49,7 +51,7 @@ void FireEffect::SendFullUpdate( ClientPublisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void FireEffect::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientStartFireEffect asn;
+    client::StartFireEffect asn;
     asn().effect_oid = id_;
     localisation_.Send( asn().location );
     asn().type = type_;
@@ -62,7 +64,16 @@ void FireEffect::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void FireEffect::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientStopFireEffect asn;
+    client::StopFireEffect asn;
     asn() = id_;
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireEffect::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void FireEffect::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

@@ -15,7 +15,8 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "gaming/PopulationKnowledges.h"
-#include "gaming/PopulationKnowledge_ABC.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
+#include "gaming/PopulationKnowledge.h"
 #include "gaming/PopulationConcentrationKnowledge.h"
 #include "gaming/PopulationFlowKnowledge.h"
 #include "clients_gui/DisplayBuilder.h"
@@ -165,8 +166,9 @@ void PopulationKnowledgePanel::Display( const PopulationKnowledge_ABC& knowledge
 {
     item->SetValue( &knowledge );
     knowledge.DisplayInList( displayer );
-    ValuedListItem* subItem = knowledgeList_->DisplayList( knowledge.Resolver< PopulationConcentrationKnowledge >::CreateIterator(), item );
-    subItem = knowledgeList_->DisplayList( knowledge.Resolver< PopulationFlowKnowledge >::CreateIterator(), item, subItem );
+    const PopulationKnowledge& k = dynamic_cast< const PopulationKnowledge& >( knowledge );  // $$$$ AGE 2008-06-19: 
+    ValuedListItem* subItem = knowledgeList_->DisplayList( k.Resolver< PopulationConcentrationKnowledge >::CreateIterator(), item );
+    subItem = knowledgeList_->DisplayList( k.Resolver< PopulationFlowKnowledge >::CreateIterator(), item, subItem );
     knowledgeList_->DeleteTail( subItem );
 }
 

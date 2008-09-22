@@ -1,0 +1,27 @@
+--
+-- file name : Intelligence.asn
+--
+-- Messages relatifs aux chats
+--
+
+Chat DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base;
+ChatIncludes ::= SEQUENCE { BaseExports }
+ChatExports  ::= NULL
+-- END includes
+
+ChatTarget ::= SEQUENCE
+{
+    profile VisibleString
+}
+
+MsgTextMessage ::= SEQUENCE
+{
+    source ChatTarget,
+    target ChatTarget,
+    message VisibleString
+}
+
+END -- Chat

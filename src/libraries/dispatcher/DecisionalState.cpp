@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "DecisionalState.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -58,7 +58,7 @@ void DecisionalState::Send( unsigned id, ClientPublisher_ABC& publisher ) const
 {
     for( std::map< std::string, std::string >::const_iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
     {
-        AsnMsgSimToClientDecisionalState asn;
+        client::DecisionalState asn;
         asn().oid   = id;
         asn().key   = it->first.c_str();
         asn().value = it->second.c_str();

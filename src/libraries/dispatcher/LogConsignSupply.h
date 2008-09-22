@@ -11,15 +11,23 @@
 #define __LogConsignSupply_h_
 
 #include "game_asn/Simulation.h"
-#include "LogSupplyDotation.h"
-#include "ModelsContainer.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+#include "clients_kernel/Resolver.h"
+
+namespace kernel
+{
+    class Automat_ABC;
+    class Agent_ABC;
+}
 
 namespace dispatcher
 {
     class Agent;
     class Automat;
     class Model;
+    class ModelVisitor_ABC;
+    class LogSupplyDotation;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  LogConsignSupply
@@ -27,27 +35,23 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class LogConsignSupply : public Entity_ABC
+class LogConsignSupply : public SimpleEntity< >
 {
 public:
     //! @name Constructors/Destructor
-    //@{
-             LogConsignSupply( Model& model, const ASN1T_MsgLogSupplyHandlingCreation& msg );
+    //@{F
+             LogConsignSupply( const Model& model, const ASN1T_MsgLogSupplyHandlingCreation& msg );
     virtual ~LogConsignSupply();
-    //@}
-
-    //! @name Accessors
-    //@{
-    unsigned long GetID() const;
     //@}
 
     //! @name Operations
     //@{
-    using Entity_ABC::Update;
+    using kernel::Entity_ABC::Update;
     void Update( const ASN1T_MsgLogSupplyHandlingUpdate& msg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -58,20 +62,17 @@ private:
     //@}
 
 private:
-          Model&        model_;
-    const unsigned long nID_;
-    const Automat&      automat_;
-    const unsigned long nTickCreation_;
+    const Model&               model_;
+    const kernel::Automat_ABC& automat_;
+    const unsigned long        nTickCreation_;
           
-    Automat*                                  pTreatingAutomat_;
-    Automat*                                  pConvoyingAutomat_;
-    Agent*                                    pConvoy_;
-    ASN1T_EnumLogSupplyHandlingStatus         nState_;
-    ModelsContainer< LogSupplyDotation >      dotations_;
+    const kernel::Automat_ABC*        pTreatingAutomat_;
+    const kernel::Automat_ABC*        pConvoyingAutomat_;
+    const kernel::Agent_ABC*          pConvoy_;
+    ASN1T_EnumLogSupplyHandlingStatus nState_;
+    kernel::Resolver< LogSupplyDotation > dotations_;
 };
 
 }
-
-#include "LogConsignSupply.inl"
 
 #endif // __LogConsignSupply_h_

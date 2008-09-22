@@ -191,8 +191,8 @@ void OrderParameterSerializer::SerializeAutomat( ASN1T_Automat& asn, const std::
     std::stringstream ss( value );
     unsigned long id;
     ss >> id;
-    if( const dispatcher::Agent* agent = model_.GetAgents().Find( id ) )
-        asn = agent->GetAutomat().GetID();
+    if( const dispatcher::Agent* agent = model_.agents_.Find( id ) )
+        asn = agent->automat_->GetId();
      // $$$$ SBO 2007-06-07: else...
 }
 

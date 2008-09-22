@@ -25,15 +25,15 @@
     <name>AgentsModelChecker</name>
     <message>
         <source>Units model</source>
-        <translation>Modèle d&apos;unités</translation>
+        <translation>Modèles d&apos;unités</translation>
     </message>
     <message>
         <source>Automat &apos;%1&apos; [%2] has no command post.</source>
-        <translation>L&apos;automate &apos;%1&apos; [%2] n&apos;a pas de poste de commande.</translation>
+        <translation>L&apos;automate &apos;%1&apos; [%2] n&apos;a pas de poste de commandement.</translation>
     </message>
     <message>
         <source>Automat &apos;%1&apos; [%2] has &apos;%3&apos; command posts.</source>
-        <translation>L&apos;automate &apos;%1&apos; [%2] a %3 postes de commande.</translation>
+        <translation>L&apos;automate &apos;%1&apos; [%2] a &apos;%3&apos; postes de commandement.</translation>
     </message>
 </context>
 <context>
@@ -88,43 +88,43 @@
     <name>E_FuncLimaType</name>
     <message>
         <source>LD</source>
-        <translation>LD</translation>
+        <translation type="obsolete">LD</translation>
     </message>
     <message>
         <source>LCA</source>
-        <translation>LCA</translation>
+        <translation type="obsolete">LCA</translation>
     </message>
     <message>
         <source>LC</source>
-        <translation>LC</translation>
+        <translation type="obsolete">LC</translation>
     </message>
     <message>
         <source>LI</source>
-        <translation>LI</translation>
+        <translation type="obsolete">LI</translation>
     </message>
     <message>
         <source>LO</source>
-        <translation>LO</translation>
+        <translation type="obsolete">LO</translation>
     </message>
     <message>
         <source>LCAR</source>
-        <translation>LCAR</translation>
+        <translation type="obsolete">LCAR</translation>
     </message>
     <message>
         <source>LR</source>
-        <translation>LR</translation>
+        <translation type="obsolete">LR</translation>
     </message>
     <message>
         <source>LDM</source>
-        <translation>LDM</translation>
+        <translation type="obsolete">LDM</translation>
     </message>
     <message>
         <source>LFM</source>
-        <translation>LFM</translation>
+        <translation type="obsolete">LFM</translation>
     </message>
     <message>
         <source>LIA</source>
-        <translation>LIA</translation>
+        <translation type="obsolete">LIA</translation>
     </message>
 </context>
 <context>
@@ -214,7 +214,7 @@
     <name>LocalWeather</name>
     <message>
         <source>Local weather %1</source>
-        <translation>Zone météorologique locale %1</translation>
+        <translation>Zone météo locale %1</translation>
     </message>
 </context>
 <context>
@@ -448,7 +448,7 @@
     </message>
     <message>
         <source>Info/Humans</source>
-        <translation>Info/Peronnes</translation>
+        <translation>Info/Personnes</translation>
     </message>
     <message>
         <source>Info/Mood</source>
@@ -496,16 +496,16 @@
         <source>Some units in the orbat are not &quot;readable&quot; to any user profile.
 You will not be able to see these units on the game.
 </source>
-        <translation>Certaines unités de l&apos;ODB ne sont &quot;lisibles&quot; par aucun profile utilisateur.
-Vous ne pourrez pas voir ces unités lors de la simulation.
+        <translation>Certaines unités de l&apos;ODB ne sont &quot;lisibles&quot; par aucun profil utilisateur.
+Vous ne pourrez pas voir ces unités en phase de conduite.
 </translation>
     </message>
     <message>
         <source>Some units in the orbat are not &quot;writeable&quot; to any user profile.
 You will not be able to give orders to these units.
 </source>
-        <translation>Certaines unités de l&apos;ODB ne sont &quot;en écriture&quot; pour aucun profile utilisateur.
-Vous ne pourrez pas donner d&apos;ordres à ces unités lors de la simulation.
+        <translation>Certaines unités de l&apos;ODB ne sont &quot;en écriture&quot; pour aucun profil utilisateur.
+Vous ne pourrez pas donner d&apos;ordres à ces unités en phase de conduite.
 </translation>
     </message>
 </context>

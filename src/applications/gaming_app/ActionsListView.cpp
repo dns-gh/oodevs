@@ -10,19 +10,20 @@
 #include "gaming_app_pch.h"
 #include "ActionsListView.h"
 #include "moc_ActionsListView.cpp"
-#include "GamingListItemDisplayer.h"
 #include "clients_kernel/Controllers.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameter_ABC.h"
+#include "actions/Action_ABC.h"
+#include "actions/Parameter_ABC.h"
 #include "gaming/ActionTiming.h"
 #include "icons.h"
+
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: ActionsListView constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : ActionsListViewBase( parent, *this, factory )
+    : ActionsListViewBase( parent, *this, factory, "ActionsListView" )
     , controllers_( controllers )
     , factory_    ( factory )
     , mission_    ( MAKE_PIXMAP( mission ) )
@@ -30,7 +31,7 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
     , checkboxOff_( MAKE_PIXMAP( checkbox_off ) )
     , parameter_  ( MAKE_PIXMAP( parameter2 ) )
 {
-    sub_ = new GamingListItemDisplayer();
+    sub_ = new gui::ListItemDisplayer();
     AddColumn( tr( "S" ), Qt::AlignHCenter, 20 );
     AddColumn( tr( "Time" ), Qt::AlignHCenter, 60 );
     AddColumn( tr( "Action" ) );
@@ -65,13 +66,11 @@ void ActionsListView::AddColumn( const QString& column, int alignment /*=AlignAu
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsListView::NotifyCreated
-// Created: SBO 2007-03-19
+// Name: ActionsListView::Display
+// Created: SBO 2008-08-20
 // -----------------------------------------------------------------------------
-void ActionsListView::NotifyCreated( const Action_ABC& action )
+void ActionsListView::Display( QListViewItem* item, const actions::Action_ABC& action )
 {
-    gui::ValuedListItem* item = factory_.CreateItem( this, firstChild() );
-    item->SetValue( &action );
     if( const ActionTiming* timing = action.Retrieve< ActionTiming >() )
     {
         item->setPixmap( 0, timing->IsEnabled() ? checkboxOn_ : checkboxOff_ );
@@ -83,13 +82,27 @@ void ActionsListView::NotifyCreated( const Action_ABC& action )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsListView::NotifyCreated
+// Created: SBO 2007-03-19
+// -----------------------------------------------------------------------------
+void ActionsListView::NotifyCreated( const Action_ABC& action )
+{
+    gui::ValuedListItem* item = factory_.CreateItem( this, firstChild() );
+    item->SetValue( &action );
+    Display( item, action );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsListView::NotifyUpdated
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 void ActionsListView::NotifyUpdated( const Action_ABC& action )
 {
     if( gui::ValuedListItem* item = gui::FindItem( &action, firstChild() ) )
+    {
         DeleteTail( gui::ListView< ActionsListView >::Display( action.CreateIterator(), item ) );
+        Display( item, action );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +131,7 @@ void ActionsListView::NotifyUpdated( const ActionTiming& extension )
 // Name: ActionsListView::Display
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ActionsListView::Display( const ActionParameter_ABC& param, gui::ValuedListItem* item )
+void ActionsListView::Display( const actions::Parameter_ABC& param, gui::ValuedListItem* item )
 {
     item->setPixmap( 2, parameter_ );
     param.Display( (*sub_)( item ) );

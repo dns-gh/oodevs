@@ -28,7 +28,8 @@ class Plotter : public Function1_ABC< K, T >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Plotter( int context ) : context_( context ) {};
+             Plotter( dispatcher::ClientPublisher_ABC& publisher, int context ) 
+                 : publisher_( publisher ), context_( context ) {};
     virtual ~Plotter() {};
     //@}
 
@@ -43,23 +44,17 @@ public:
     }
     virtual void EndTick() {};
 
-    virtual void Send( dispatcher::ClientPublisher_ABC& publisher ) const
+    virtual void Commit() const
     {
         std::vector< double > values; values.reserve( values_.size() );
         std::copy( values_.begin(), values_.end(), std::back_inserter( values ) );
 
-        ASN1T_MsgIndicatorResult result;
-        result.identifier = context_;
-        result.error = "";
-        result.values.n    =  values.size();
-        result.values.elem = &values.front();
-
-        ASN1T_MsgsAarToClient message;
-        message.context = context_;
-        message.msg.t = T_MsgsAarToClient_msg_msg_indicator_result;
-        message.msg.u.msg_indicator_result = &result;
-
-        publisher.Send( message );
+        aar::PlotResult result;
+        result().identifier = context_;
+        result().error      = "";
+        result().values.n    = values.size();
+        result().values.elem = &values.front();
+        result.Send( publisher_ );
     }
     //@}
 
@@ -78,6 +73,7 @@ private:
 private:
     //! @name Member data
     //@{
+    dispatcher::ClientPublisher_ABC& publisher_;
     int context_;
     T_Values values_;
     //@}

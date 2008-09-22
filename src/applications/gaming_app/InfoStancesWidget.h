@@ -29,7 +29,7 @@ class Attributes;
 */
 // Created: SBO 2007-02-09
 // =============================================================================
-class InfoStancesWidget : public QHBox
+class InfoStancesWidget : public QVBox
                         , public kernel::Observer_ABC
                         , public kernel::SelectionObserver< kernel::Entity_ABC >
                         , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
@@ -51,15 +51,10 @@ private:
 
     //! @name Helpers
     //@{
-    void InitializeIcons();
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const kernel::Attributes_ABC& extension );
     void Update( const Attributes& attributes );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< QPixmap > T_Pixmaps;
+    virtual QSize sizeHint() const;
     //@}
 
 private:
@@ -68,10 +63,8 @@ private:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
 
-    QButton* previous_;
-    QButton* next_;
-    QLabel*  progress_;
-    T_Pixmaps pixmaps_;
+    QProgressBar* movement_;
+    QProgressBar* installation_;
     //@}
 };
 

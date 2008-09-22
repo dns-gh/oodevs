@@ -16,10 +16,9 @@ namespace kernel
 {
     class Agent_ABC;
     class Entity_ABC;
+    class AgentKnowledge_ABC;
+    class AgentKnowledgeConverter_ABC;
 }
-
-class AgentKnowledge_ABC;
-class AgentKnowledgeConverter_ABC;
 
 // =============================================================================
 /** @class  ParamAgentKnowledge
@@ -27,21 +26,21 @@ class AgentKnowledgeConverter_ABC;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamAgentKnowledge : public EntityParameter< AgentKnowledge_ABC >
+class ParamAgentKnowledge : public EntityParameter< kernel::AgentKnowledge_ABC >
                           , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
-             ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const AgentKnowledge_ABC& potential );
+             ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const kernel::AgentKnowledge_ABC& potential );
     virtual ~ParamAgentKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 private:
@@ -60,7 +59,7 @@ private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;
-    AgentKnowledgeConverter_ABC& converter_;
+    kernel::AgentKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& agent_;
     //@}
 };

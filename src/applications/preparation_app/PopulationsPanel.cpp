@@ -20,7 +20,7 @@ using namespace kernel;
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
 PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory )
-    : gui::InfoPanel_ABC( parent, panel, tools::translate( "PopulationsPanel", "Populations" ) )
+    : InfoPanel_ABC( parent, panel, tools::translate( "PopulationsPanel", "Populations" ), "PopulationsPanel" )
     , controllers_( controllers )
 {
     list_ = new PopulationTypesListView( this, controllers_, types, factory );

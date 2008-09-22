@@ -11,15 +11,19 @@
 #define __PopulationFlowKnowledge_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelsContainer.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+#include "PopulationFlowPart.h"
+
+namespace kernel
+{
+    class PopulationKnowledge_ABC;
+    class PopulationFlow_ABC;
+}
 
 namespace dispatcher
 {
-    class Model;
-    class PopulationKnowledge;
-    class PopulationFlow;
-    class PopulationFlowPart;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  PopulationFlowKnowledge
@@ -27,26 +31,22 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class PopulationFlowKnowledge : public Entity_ABC
+class PopulationFlowKnowledge : public SimpleEntity< >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlowKnowledge( Model& model, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationFlowKnowledgeCreation& msg );
+             PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const ASN1T_MsgPopulationFlowKnowledgeCreation& msg );
     virtual ~PopulationFlowKnowledge();
-    //@}
-
-    //! @name Accessors
-    //@{
-    unsigned long GetID() const;
     //@}
 
     //! @name Operations
     //@{
     void Update( const ASN1T_MsgPopulationFlowKnowledgeUpdate& msg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -56,10 +56,8 @@ private:
     PopulationFlowKnowledge& operator=( const PopulationFlowKnowledge& ); //!< Assignement operator
     //@}
 
-private:
     //! @name Types
     //@{
-
     //$$$ bullshit
     struct T_Optionals 
     {
@@ -74,24 +72,21 @@ private:
     //@}
 
 private:
-          Model&                model_;
-          PopulationKnowledge&  populationKnowledge_;
-    const unsigned long         nID_;
-
-    const PopulationFlow*                       pFlow_;
-          ModelsContainer< PopulationFlowPart > flowParts_;
-          unsigned int                          nDirection_;
-          unsigned int                          nSpeed_;
-          unsigned long                         nNbrAliveHumans_;
-          unsigned long                         nNbrDeadHumans_;
-          ASN1T_EnumPopulationAttitude          nAttitude_;    
-          bool                                  bPerceived_;
-
-          T_Optionals                           optionals_;
+    //! @name Member data
+    //@{
+    const kernel::PopulationKnowledge_ABC& populationKnowledge_;
+    const kernel::PopulationFlow_ABC*      pFlow_;
+    std::vector< PopulationFlowPart >      flowParts_;
+    unsigned int                           nDirection_;
+    unsigned int                           nSpeed_;
+    unsigned long                          nNbrAliveHumans_;
+    unsigned long                          nNbrDeadHumans_;
+    ASN1T_EnumPopulationAttitude           nAttitude_;    
+    bool                                   bPerceived_;
+    T_Optionals                            optionals_;
+    //@}
 };
 
 }
-
-#include "PopulationFlowKnowledge.inl"
 
 #endif // __PopulationFlowKnowledge_h_

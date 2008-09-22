@@ -12,12 +12,14 @@
 #include "TimelineWidget.h"
 #include "gaming/Tools.h"
 
+using namespace actions;
+
 // -----------------------------------------------------------------------------
 // Name: TimelinePanel constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
 TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler )
-    : QDockWindow( parent )
+    : QDockWindow( parent, "timeline" )
 {
     setResizeEnabled( true );
     setCaption( tools::translate( "TimelinePanel", "Actions timeline" ) );

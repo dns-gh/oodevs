@@ -12,9 +12,9 @@
 #include "clients_gui_pch.h"
 #include "AboutDialog.h"
 #include "moc_AboutDialog.cpp"
-#include "splashscreen.cpp"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ItemFactory_ABC.h"
+#include "tools/GeneralConfig.h"
 
 using namespace gui;
 
@@ -26,7 +26,7 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
     : QDialog( parent, 0, FALSE, WStyle_Splash )
 {
     setCaption( tr( "About" ) );
-    QPixmap pixmap( qembed_findData( "csword.jpg" ) );
+    QPixmap pixmap( GetSplashScreen() );
     sizeHint_.setWidth ( pixmap.width() );
     sizeHint_.setHeight( pixmap.height() + 50 );
     setMaximumSize( sizeHint_ );
@@ -38,12 +38,12 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
     box->layout()->setAlignment( Qt::AlignBottom | Qt::AlignRight );
     QHBox* hbox = new QHBox( box );
     QString message;
-    message += line + tr( " © 2007 Masa-SCI <a href=\"http://www.masa-sci.com\">www.masa-sci.com</a>" );
+    message += line + tr( "<br>© 2008 MasaGroup <a href=\"http://www.masagroup.net\">www.masagroup.net</a>" );
 
     if( ! license.isNull() )
         message += tr( "<br>License will expire on " ) + license;
     RichLabel* label = factory.CreateLabel( message, hbox );
-    label->setAlignment( Qt::SingleLine );
+    label->setAlignment( Qt::SingleLine | Qt::AlignCenter );
     label->setBackgroundPixmap( pixmap );
     label->setBackgroundOrigin( QWidget::AncestorOrigin );
     QPushButton* button = new QPushButton( tr( "Close" ), hbox );
@@ -66,4 +66,16 @@ AboutDialog::~AboutDialog()
 QSize AboutDialog::sizeHint() const
 {
     return sizeHint_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AboutDialog::GetSplashScreen
+// Created: SBO 2008-08-19
+// -----------------------------------------------------------------------------
+QPixmap AboutDialog::GetSplashScreen() const
+{
+    const QString filename = tr( "images/gui/splash_swordot.jpg" );
+    if( filename.isNull() || filename.isEmpty() )
+        return QImage( tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash_swordot.jpg" ).c_str() );
+    return QImage( tools::GeneralConfig::BuildResourceChildFile( filename.ascii() ).c_str() );
 }

@@ -9,22 +9,23 @@
 
 #include "gaming_app_pch.h"
 #include "InfoMissionsTab.h"
-#include "GamingListItemDisplayer.h"
 #include "clients_kernel/Controllers.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameter_ABC.h"
+#include "actions/Action_ABC.h"
+#include "actions/Parameter_ABC.h"
 #include "gaming/MissionParameters.h"
 #include "gaming/Tools.h"
 #include "icons.h"
+
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: InfoMissionsTab constructor
 // Created: SBO 2007-04-18
 // -----------------------------------------------------------------------------
 InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : gui::ListDisplayer< InfoMissionsTab >( parent, *this, factory )
+    : gui::ListDisplayer< InfoMissionsTab >( parent, *this, factory, "InfoMissionsTab" )
     , controllers_( controllers )
-    , sub_ ( new GamingListItemDisplayer() )
+    , sub_ ( new gui::ListItemDisplayer() )
     , selected_( controllers )
     , parent_( parent )
 {
@@ -61,7 +62,7 @@ void InfoMissionsTab::Display( const Action_ABC& action, kernel::Displayer_ABC& 
 // Name: InfoMissionsTab::Display
 // Created: SBO 2007-04-18
 // -----------------------------------------------------------------------------
-void InfoMissionsTab::Display( const ActionParameter_ABC& param, kernel::Displayer_ABC& /*displayer*/, gui::ValuedListItem* item )
+void InfoMissionsTab::Display( const actions::Parameter_ABC& param, kernel::Displayer_ABC& /*displayer*/, gui::ValuedListItem* item )
 {
     item->setPixmap( 0, MAKE_PIXMAP( parameter2 ) );
     param.Display( (*sub_)( item ) );

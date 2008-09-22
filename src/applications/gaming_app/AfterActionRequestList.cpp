@@ -45,7 +45,7 @@ namespace
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
 AfterActionRequestList::AfterActionRequestList( QWidget* parent, QMainWindow* mainWindow, Controllers& controllers, ItemFactory_ABC& factory, Publisher_ABC& publisher )
-    : QVBox( parent )
+    : QVBox( parent, "AfterActionRequestList" )
     , mainWindow_( mainWindow )
     , controllers_( controllers )
     , factory_( factory )
@@ -97,7 +97,7 @@ void AfterActionRequestList::OnDoubleClicked( QListViewItem * i )
 // -----------------------------------------------------------------------------
 AfterActionPlot* AfterActionRequestList::CreateNewPlot()
 {
-    QDockWindow* plotDock = new QDockWindow( mainWindow_, "plot", WDestructiveClose );
+    QDockWindow* plotDock = new QDockWindow( mainWindow_, "aarplot", WDestructiveClose );
     QVBox* box = new QVBox( plotDock );
     AfterActionPlot* plot = new AfterActionPlot( box, controllers_, publisher_, plotDock );
     plotDock->setWidget( box );

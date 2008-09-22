@@ -11,11 +11,16 @@
 #define __GradientPreferences_h_
 
 #include "clients_kernel/Resolver.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace xml
 {
     class xistream;
-    class xostream;
+}
+
+namespace kernel
+{
+    class Options;
 }
 
 namespace gui
@@ -34,7 +39,7 @@ class GradientPreferences : public kernel::Resolver< Gradient, QString >
 public:
     //! @name Constructors/Destructor
     //@{
-             GradientPreferences();
+    explicit GradientPreferences( kernel::Options& options );
     virtual ~GradientPreferences();
     //@}
 
@@ -42,6 +47,7 @@ public:
     //@{
     void Commit( const std::vector< Gradient* >& presets );
     void Reset();
+    void SetGradient( const QString& name, const QString& values );
     //@}
 
 private:
@@ -55,12 +61,13 @@ private:
     //@{
     void ReadGradient( xml::xistream& xis );
     void Load( xml::xistream& xis );
-    void Save( xml::xostream& xos ) const;
+    void Save() const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Options& options_;
     //@}
 };
 

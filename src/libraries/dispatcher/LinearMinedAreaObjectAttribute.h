@@ -10,12 +10,10 @@
 #ifndef __LinearMinedAreaObjectAttribute_h_
 #define __LinearMinedAreaObjectAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  LinearMinedAreaObjectAttribute
@@ -28,8 +26,8 @@ class LinearMinedAreaObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     LinearMinedAreaObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
-    ~LinearMinedAreaObjectAttribute();
+    explicit LinearMinedAreaObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg );
+    virtual ~LinearMinedAreaObjectAttribute();
     //@}
 
     //! @name Operations

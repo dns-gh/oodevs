@@ -96,14 +96,8 @@ std::string Wrap( const std::string& content, const std::string& prefix )
 //-----------------------------------------------------------------------------
 bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile )
 {
-    // Set the translator files.
-    QTranslator* pADNTranslator = new QTranslator( this );
-    pADNTranslator->load( QString( "adn_" ) + QTextCodec::locale() + QString( ".qm" ), "." );
-    installTranslator( pADNTranslator );
-
-    QTranslator* pENTTranslator = new QTranslator( this );
-    pENTTranslator->load( QString( "ENT_" ) + QTextCodec::locale() + QString( ".qm" ), "." );
-    installTranslator( pENTTranslator );
+    AddTranslator( "adn_" );
+    AddTranslator( "ENT_" );
 
     // Initialize all the translations.
     ADN_Tr::InitTranslations();
@@ -142,4 +136,16 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
         return false;
     }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_App::AddTranslator
+// Created: SBO 2008-08-08
+// -----------------------------------------------------------------------------
+void ADN_App::AddTranslator( const char* name )
+{
+    const QString t = QString( name ) + QTextCodec::locale() + QString( ".qm" );
+    std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
+    if( trans->load( t, "." ) || trans->load( t, "resources/locales" ) )
+        installTranslator( trans.release() );
 }

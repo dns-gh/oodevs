@@ -26,7 +26,7 @@ using namespace frontend;
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
 CreateSession::CreateSession( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
-    : setter_( new ConfigurationManipulator( GetSessionXml( config, exercise, session ) ) )
+    : setter_( new ConfigurationManipulator( config, exercise, session ) )
     , session_( session )
 {
     // NOTHING
@@ -84,15 +84,4 @@ void CreateSession::SetDefaultValues()
         setter_->SetValue( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09: 
                                     boost::lexical_cast< std::string >( DispatcherPort( 1 ) ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: CreateSession::GetSessionXml
-// Created: AGE 2007-10-09
-// -----------------------------------------------------------------------------
-std::string CreateSession::GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
-{
-    const bfs::path dir( config.BuildSessionDir( exercise, session ), bfs::native );
-    bfs::create_directories( dir );
-    return ( dir / "session.xml" ).native_file_string();
 }

@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "ParamAgent.h"
-#include "gaming/ActionParameterAgent.h"
+#include "actions/Agent.h"
 #include "clients_kernel/Agent_ABC.h"
 
 using namespace kernel;
@@ -49,9 +49,9 @@ ParamAgent::~ParamAgent()
 // Name: ParamAgent::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void ParamAgent::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamAgent::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameterEntity< Agent_ABC > > param( new ActionParameterAgent( parameter_ ) );
+    std::auto_ptr< actions::parameters::Entity< Agent_ABC > > param( new actions::parameters::Agent( parameter_ ) );
     EntityParameter< Agent_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

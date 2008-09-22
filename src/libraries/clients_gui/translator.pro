@@ -6,8 +6,8 @@ BaseDisplayer.cpp \
 CampPrototype_ABC.cpp \
 CrossingSitePrototype_ABC.cpp \
 DisplayToolbar.cpp \
+DrawerLayer.cpp \
 DrawerPanel.cpp \
-DrawerToolbar.cpp \
 EditorFactory.cpp \
 ElevationExtrema.cpp \
 ElevationPanel.cpp \
@@ -15,6 +15,7 @@ FixedLightWidget.cpp \
 GradientWidget.cpp \
 GraphicPreferences.cpp \
 HierarchyListView_ABC.cpp \
+HighlightColorModifier.cpp \
 IntelligencesPanel.cpp \
 LayersPanel.cpp \
 LightingPanel.cpp \
@@ -43,5 +44,6 @@ TerrainPreference.cpp \
 UnitListView.cpp \
 UnitPreviewIcon.cpp \
 UnitsPanel.cpp \
+UserControlPanel.cpp \
 
 TRANSLATIONS = clients_gui_fr.ts clients_gui_en.ts

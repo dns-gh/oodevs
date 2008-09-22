@@ -15,6 +15,11 @@
 
 namespace xml { class xistream; class xostream; };
 
+namespace kernel
+{
+    class Controllers;
+}
+
 namespace gui
 {
     class TerrainPreference;
@@ -30,7 +35,7 @@ class GraphicPreferences : public GraphicSetup_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GraphicPreferences();
+    explicit GraphicPreferences( kernel::Controllers& controllers );
     virtual ~GraphicPreferences();
     //@}
 
@@ -75,6 +80,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     T_TerrainPreferences terrainPrefs_;
     T_Displays displays_;
     float alpha_;

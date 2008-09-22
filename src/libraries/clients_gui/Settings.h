@@ -13,8 +13,6 @@
 #include "clients_kernel/Settings_ABC.h"
 #include <qsettings.h>
 
-class QDockWindow;
-class QMainWindow;
 class QWidget;
 
 namespace kernel

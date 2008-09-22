@@ -15,8 +15,8 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/OrderParameter.h"
-#include "gaming/ActionParameterEntity.h"
-#include "gaming/Action_ABC.h"
+#include "actions/Entity.h"
+#include "actions/Action_ABC.h"
 
 namespace gui
 {
@@ -93,7 +93,7 @@ public:
     //@{
     virtual bool CheckValidity();
     void CommitTo( ASN1T_OID& asn ) const;
-    void CommitTo( ActionParameterEntity< ConcreteEntity >& parameter ) const;
+    void CommitTo( actions::parameters::Entity< ConcreteEntity >& parameter ) const;
     virtual void MenuItemValidated();
     //@}
 

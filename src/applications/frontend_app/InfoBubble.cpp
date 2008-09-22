@@ -23,6 +23,7 @@ InfoBubble::InfoBubble( QWidget* parent )
     icon_->setFixedSize( 60, 48 );
 
     message_ = new QLabel( this );
+    message_->setAlignment( Qt::WordBreak );
 //    hide();
 }
 

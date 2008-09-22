@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "ObjectKnowledges.h"
 #include "clients_kernel/Controller.h"
-#include "ObjectKnowledge_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "ObjectKnowledgeFactory.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list

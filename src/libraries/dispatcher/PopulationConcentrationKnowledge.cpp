@@ -10,11 +10,12 @@
 #include "dispatcher_pch.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "Population.h"
+#include "ClientPublisher_ABC.h"
 #include "PopulationConcentration.h"
-#include "PopulationKnowledge.h"
-#include "KnowledgeGroup.h"
-#include "Model.h"
-#include "Network_Def.h"
+#include "ModelVisitor_ABC.h"
+#include "EntityPublisher.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 
 using namespace dispatcher;
 
@@ -22,11 +23,11 @@ using namespace dispatcher;
 // Name: PopulationConcentrationKnowledge constructor
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Model& /*model*/, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg )
-    : populationKnowledge_( populationKnowledge )
-    , nID_                ( msg.oid_connaissance_concentration )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg )
+    : SimpleEntity< >     ( msg.oid_connaissance_concentration )
+    , populationKnowledge_( populationKnowledge )
+    , pConcentration_     ( msg.oid_concentration_reelle == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->concentrations_.Get( msg.oid_concentration_reelle ) ) // $$$$ SBO 2008-07-11: 
     , position_           ( msg.position )
-    , pConcentration_     ( msg.oid_concentration_reelle == 0 ? 0 : &populationKnowledge_.GetPopulation().GetConcentrations().Get( msg.oid_concentration_reelle ) )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
     , nAttitude_          ( EnumPopulationAttitude::agressive ) 
@@ -38,6 +39,7 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Model& /*mod
     optionals_.attitudePresent           = 0;
     optionals_.pertinencePresent         = 0;
     optionals_.est_percuPresent          = 0;
+    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationConcentrationKnowledge >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,12 +58,7 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& msg )
 {
     if( msg.m.oid_concentration_reellePresent )
-    {
-        if( msg.oid_concentration_reelle == 0 )
-            pConcentration_ = 0;
-        else
-            pConcentration_ = &populationKnowledge_.GetPopulation().GetConcentrations().Get( msg.oid_concentration_reelle );
-    }
+        pConcentration_ = msg.oid_concentration_reelle == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->concentrations_.Get( msg.oid_concentration_reelle ); // $$$$ SBO 2008-07-11: 
 
     if( msg.m.attitudePresent )
     {
@@ -85,7 +82,7 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
     }
     if( msg.m.est_percuPresent )
     {
-        bPerceived_ = msg.est_percu;
+        bPerceived_ = msg.est_percu != 0;
         optionals_.est_percuPresent = 1;
     }
 }
@@ -96,12 +93,12 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationConcentrationKnowledgeCreation asn;
+    client::PopulationConcentrationKnowledgeCreation asn;
 
-    asn().oid_connaissance_concentration = nID_;
-    asn().oid_connaissance_population    = populationKnowledge_.GetID();
-    asn().oid_concentration_reelle       = pConcentration_ ? pConcentration_->GetID() : 0;
-    asn().oid_groupe_possesseur          = populationKnowledge_.GetKnowledgeGroup().GetID();
+    asn().oid_connaissance_concentration = GetId();
+    asn().oid_connaissance_population    = populationKnowledge_.GetId();
+    asn().oid_concentration_reelle       = pConcentration_ ? pConcentration_->GetId() : 0;
+    asn().oid_groupe_possesseur          = populationKnowledge_.GetOwner().GetId();
     asn().position = position_;
 
     asn.Send( publisher );
@@ -113,14 +110,14 @@ void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publis
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationConcentrationKnowledgeUpdate asn;
+    client::PopulationConcentrationKnowledgeUpdate asn;
 
-    asn().oid_connaissance_concentration = nID_;
-    asn().oid_connaissance_population    = populationKnowledge_.GetID();
-    asn().oid_groupe_possesseur          = populationKnowledge_.GetKnowledgeGroup().GetID();
+    asn().oid_connaissance_concentration = GetId();
+    asn().oid_connaissance_population    = populationKnowledge_.GetId();
+    asn().oid_groupe_possesseur          = populationKnowledge_.GetOwner().GetId();
 
     asn().m.oid_concentration_reellePresent = 1;
-    asn().oid_concentration_reelle          = pConcentration_ ? pConcentration_->GetID() : 0;
+    asn().oid_concentration_reelle          = pConcentration_ ? pConcentration_->GetId() : 0;
 
     if( optionals_.nb_humains_mortsPresent )
     {
@@ -161,9 +158,18 @@ void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publ
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationConcentrationKnowledgeDestruction asn;
-    asn().oid_connaissance_concentration = nID_;
-    asn().oid_connaissance_population    = populationKnowledge_.GetID();
-    asn().oid_groupe_possesseur          = populationKnowledge_.GetKnowledgeGroup().GetID();
+    client::PopulationConcentrationKnowledgeDestruction asn;
+    asn().oid_connaissance_concentration = GetId();
+    asn().oid_connaissance_population    = populationKnowledge_.GetId();
+    asn().oid_groupe_possesseur          = populationKnowledge_.GetOwner().GetId();
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void PopulationConcentrationKnowledge::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

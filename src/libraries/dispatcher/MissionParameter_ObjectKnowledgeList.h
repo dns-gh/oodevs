@@ -27,7 +27,7 @@ class MissionParameter_ObjectKnowledgeList : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_ObjectKnowledgeList( const ASN1T_MissionParameter& asn );
+    explicit MissionParameter_ObjectKnowledgeList( const ASN1T_MissionParameter& asn );
     virtual ~MissionParameter_ObjectKnowledgeList();
     //@}
 
@@ -45,15 +45,9 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< unsigned int > T_OIDVector;
-    //@}
-
-private:
     //! @name Member data
     //@{
-    T_OIDVector objectKnowledges_;
+    std::vector< int > objectKnowledges_;
     //@}
 };
 

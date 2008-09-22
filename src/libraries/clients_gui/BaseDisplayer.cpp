@@ -32,6 +32,9 @@
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -270,6 +273,33 @@ void BaseDisplayer::Call( const kernel::HierarchyLevel_ABC& value )
 // Created: SBO 2007-11-26
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const kernel::Karma& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2008-06-19
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::AgentKnowledge_ABC& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2008-06-19
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::PopulationKnowledge_ABC& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2008-06-19
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::ObjectKnowledge_ABC& value )
 {
     AddToDisplay( value.GetName() );
 }

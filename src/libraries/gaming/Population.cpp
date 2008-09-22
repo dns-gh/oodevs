@@ -9,22 +9,20 @@
 
 #include "gaming_pch.h"
 #include "Population.h"
+#include "PopulationFlow.h"
+#include "PopulationConcentration.h"
+#include "PopulationPartPositionsProxy.h"
+#include "Tools.h"
 #include "clients_kernel/PropertiesDictionary.h"
-
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Styles.h"
 
-#include "PopulationFlow.h"
-#include "PopulationConcentration.h"
-#include "Tools.h"
-
 using namespace geometry;
 using namespace kernel;
 
-const QString Population::typeName_ = "population";
 unsigned long Population::nMaxId_ = 200;
 
 // -----------------------------------------------------------------------------
@@ -124,7 +122,9 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFlowCreation& asnMsg )
 {
     if( ! Resolver< PopulationFlow_ABC >::Find( asnMsg.oid ) )
     {
-        Resolver< PopulationFlow_ABC >::Register( asnMsg.oid , *new PopulationFlow( asnMsg, converter_ ) );
+        PopulationFlow* entity = new PopulationFlow( asnMsg, converter_ );
+        entity->Attach< kernel::Positions >( *new PopulationPartPositionsProxy( *entity ) );
+        Resolver< PopulationFlow_ABC >::Register( asnMsg.oid , *entity );
         ComputeCenter();
         Touch();
     }
@@ -138,7 +138,9 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMs
 {
     if( ! Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid ) )
     {
-        Resolver< PopulationConcentration_ABC >::Register( asnMsg.oid, *new PopulationConcentration( asnMsg, converter_, type_.GetDensity() ) );
+        PopulationConcentration* entity = new PopulationConcentration( asnMsg, converter_, type_.GetDensity() );
+        entity->Attach< kernel::Positions >( *new PopulationPartPositionsProxy( *entity ) );
+        Resolver< PopulationConcentration_ABC >::Register( asnMsg.oid, *entity );
         ComputeCenter();
         Touch();
     }
@@ -317,15 +319,6 @@ geometry::Rectangle2f Population::GetBoundingBox() const
 const PopulationType& Population::GetType() const
 {
     return type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetTypeName
-// Created: SBO 2006-10-12
-// -----------------------------------------------------------------------------
-QString Population::GetTypeName() const
-{
-    return typeName_;
 }
 
 // -----------------------------------------------------------------------------

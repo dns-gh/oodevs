@@ -18,7 +18,7 @@
 #include "gaming/AfterActionParameter.h"
 #include "gaming/AfterActionRequest.h"
 #include "gaming/AfterActionModel.h"
-#include "gaming/ActionParameterContainer_ABC.h"
+#include "actions/ParameterContainer_ABC.h"
 #include "gaming/StaticModel.h"
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
@@ -38,7 +38,7 @@ using namespace gui;
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
 AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const StaticModel& staticModel )
-    : QVBox( parent )
+    : QVBox( parent, "AfterActionFunctionList" )
     , controllers_( controllers )
     , model_( model )
     , layer_( layer )
@@ -119,11 +119,11 @@ void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
 
 namespace
 {
-    struct Serializer : public ActionParameterContainer_ABC
+    struct Serializer : public actions::ParameterContainer_ABC
     {
         Serializer( AfterActionRequest& request )
             : request_( &request ) {}
-        virtual void AddParameter( ActionParameter_ABC& parameter )
+        virtual void AddParameter( actions::Parameter_ABC& parameter )
         {
             std::string result;
             parameter.CommitTo( result );

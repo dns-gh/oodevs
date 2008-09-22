@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ParamIntelligenceList.h"
 #include "ParamIntelligence.h"
-#include "gaming/ActionParameterIntelligenceList.h"
+#include "actions/IntelligenceList.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/OrderParameter.h"
@@ -43,9 +43,9 @@ ParamIntelligenceList::~ParamIntelligenceList()
 // Name: ParamIntelligenceList::CommitTo
 // Created: SBO 2007-10-24
 // -----------------------------------------------------------------------------
-void ParamIntelligenceList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamIntelligenceList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterIntelligenceList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::IntelligenceList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );    
 }

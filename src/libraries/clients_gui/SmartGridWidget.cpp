@@ -16,8 +16,8 @@ using namespace gui;
 // Name: SmartGridWidget constructor
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-SmartGridWidget::SmartGridWidget( QWidget* parent, int strips, Orientation o )
-    : QWidget( parent )
+SmartGridWidget::SmartGridWidget( QWidget* parent, int strips, Orientation o, const char* name )
+    : QWidget( parent, name )
     , strips_( strips )
     , o_( o )
     , childCount_( 0 )

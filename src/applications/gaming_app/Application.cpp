@@ -18,8 +18,11 @@
 #include "gaming/Network.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Model.h"
+#include "gaming/Services.h"
 #include "gaming/Simulation.h"
 #include "gaming/Profile.h"
+#include "gaming/CommandHandler.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Workers.h"
 #include "gaming/AgentServerMsgMgr.h"
@@ -46,6 +49,7 @@ Application::Application( int argc, char** argv, const QString& locale, const QS
     AddTranslator( locale, "clients_kernel" );
     AddTranslator( locale, "clients_gui" );
     AddTranslator( locale, "gaming" );
+    AddTranslator( locale, "actions" );
     AddTranslator( locale, "gaming_app" );
     ENT_Tr::InitTranslations();
 }
@@ -68,9 +72,10 @@ Application::~Application()
 void Application::AddTranslator( const QString& locale, const char* t )
 {
     QTranslator* trans = new QTranslator( this );
-    if( ! trans->load( t + locale, "." ) )
+    if( trans->load( t + locale, "." ) || trans->load( t + locale, "resources/locales" ) )
+        installTranslator( trans );
+    else
         std::cerr << "Error loading " << t << std::endl; // $$$$ AGE 2007-12-18: 
-    installTranslator( trans );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +90,7 @@ void Application::Initialize()
     }
     catch( std::exception& e )
     {
-        QMessageBox::critical( 0, APP_NAME, e.what() );
+        QMessageBox::critical( 0, tools::translate( "Application", "SWORD Officer Training" ), e.what() );
         throw CatchMeIfYouCan();
     }
 }
@@ -98,26 +103,23 @@ void Application::Initialize( int argc, char** argv )
 {
     config_      = new Config( argc, argv );
     controllers_ = new Controllers();
-    simulation_  = new Simulation( controllers_->controller_  );
-    profile_     = new Profile( *controllers_ );
-    workers_     = new Workers();
     logger_      = new LoggerProxy();
-    network_     = new Network( *simulation_, *profile_, *logger_ );
+    services_    = new Services( controllers_->controller_, *logger_ );
+    simulation_  = new Simulation( controllers_->controller_  );
+    workers_     = new Workers();
+    network_     = new Network( *services_, *simulation_, *logger_ );
     RcEntityResolver_ABC* rcResolver = new RcEntityResolver( this, *controllers_ );
     staticModel_ = new StaticModel( *controllers_, *rcResolver, *simulation_ );
     model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver );
-    network_->GetMessageMgr().SetModel( *model_ );
+    profile_     = new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin() );
+    network_->GetMessageMgr().SetElements( *model_, *profile_ );
     mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, *logger_, expiration_ );
     mainWindow_->show();
 
-    // Make sure the application exits when the main window is closed.
     connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
-
-    // The following 2 timers will roughly emulate two threads.
-    // This one reads the network to refresh the local data and is called as often as possible.
     networkTimer_ = new QTimer( this );
     connect( networkTimer_, SIGNAL( timeout()), SLOT( UpdateData() ) );
-    networkTimer_->start(0);
+    networkTimer_->start(10);
 
     config_->Connect( *network_ );
 }
@@ -136,6 +138,6 @@ void Application::UpdateData()
     catch( std::exception& e )
     {
         network_->Disconnect();
-        QMessageBox::critical( 0, APP_NAME, e.what(), QMessageBox::Abort, QMessageBox::Abort );
+        QMessageBox::critical( 0, tools::translate( "Application", "SWORD Officer Training" ), e.what(), QMessageBox::Abort, QMessageBox::Abort );
     }
 }

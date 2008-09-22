@@ -25,7 +25,10 @@ namespace tools
     class ExerciseConfig;
 }
 
-class ActionsModel;
+namespace actions
+{
+    class ActionsModel;
+}
 class ActionsScheduler;
 
 // =============================================================================
@@ -41,7 +44,7 @@ class ActionsPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config );
+             ActionsPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, actions::ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config );
     virtual ~ActionsPanel();
     //@}
 

@@ -10,16 +10,18 @@
 #include "clients_gui_pch.h"
 #include "GradientPreferences.h"
 #include "Gradient.h"
-#include "xeumeuleu/xml.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionVariant.h"
+#include <xeumeuleu/xml.h>
 
-using namespace xml;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: GradientPreferences constructor
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-GradientPreferences::GradientPreferences()
+GradientPreferences::GradientPreferences( kernel::Options& options )
+    : options_( options )
 {
     Reset();
 }
@@ -42,9 +44,7 @@ void GradientPreferences::Commit( const std::vector< Gradient* >& presets )
     DeleteAll();
     for( std::vector< Gradient* >::const_iterator it = presets.begin(); it != presets.end(); ++it )
         Register( (*it)->GetName(), *new Gradient( **it ) );
-
-    xml::xofstream xos( "gradients.xml" ); // $$$$ SBO 2007-07-03: 
-    Save( xos );
+    Save();
 }
 
 // -----------------------------------------------------------------------------
@@ -64,21 +64,19 @@ void GradientPreferences::Reset()
 void GradientPreferences::Load( xml::xistream& xis )
 {
     DeleteAll();
-    xis >> start( "gradients" )
-            >> list( "gradient", *this, &GradientPreferences::ReadGradient )
-        >> end();
+    xis >> xml::start( "gradients" )
+            >> xml::list( "gradient", *this, &GradientPreferences::ReadGradient )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GradientPreferences::Save
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void GradientPreferences::Save( xml::xostream& xos ) const
+void GradientPreferences::Save() const
 {
-    xos << start( "gradients" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->Save( xos );
-    xos << end();            
+        it->second->Save( options_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,4 +87,20 @@ void GradientPreferences::ReadGradient( xml::xistream& xis )
 {
     Gradient* gradient = new Gradient( xis );
     Register( gradient->GetName(), *gradient );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientPreferences::SetGradient
+// Created: SBO 2008-08-18
+// -----------------------------------------------------------------------------
+void GradientPreferences::SetGradient( const QString& name, const QString& values )
+{
+    Gradient* gradient = Find( name );
+    if( !gradient )
+    {
+        gradient = new Gradient( name, values );
+        Register( gradient->GetName(), *gradient );
+    }
+    else
+        gradient->LoadValues( values );
 }

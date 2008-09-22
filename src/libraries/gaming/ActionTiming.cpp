@@ -13,6 +13,8 @@
 #include "clients_kernel/Controller.h"
 #include "xeumeuleu/xml.h"
 
+using namespace actions;
+
 // -----------------------------------------------------------------------------
 // Name: ActionTiming constructor
 // Created: SBO 2007-06-19
@@ -68,7 +70,7 @@ ActionTiming::~ActionTiming()
 // Name: ActionTiming::Serialize
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-void ActionTiming::Serialize( xml::xostream& xos ) const
+void ActionTiming::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "time", time_.toString( Qt::ISODate ) );
 }

@@ -51,7 +51,24 @@ void Lines::AddPoint( const geometry::Point2f& point )
 {
     points_.push_back( point );
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: Lines::Translate
+// Created: SBO 2008-05-30
+// -----------------------------------------------------------------------------
+void Lines::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
+{
+    const float squarePrecision = precision * precision;
+    for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        if( it->SquareDistance( from ) < squarePrecision )
+        {
+            *it += translation;
+            return;
+        }
+    for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        *it += translation;
+}
+
 // -----------------------------------------------------------------------------
 // Name: Lines::IsValid
 // Created: AGE 2006-08-09
@@ -77,16 +94,6 @@ bool Lines::IsDone() const
 void Lines::Accept( LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitLines( points_ );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Lines::Draw
-// Created: AGE 2006-08-09
-// -----------------------------------------------------------------------------
-void Lines::Draw( const GlTools_ABC& tools ) const
-{
-    if( IsValid() )
-        tools.DrawLines( points_ );
 }
     
 // -----------------------------------------------------------------------------

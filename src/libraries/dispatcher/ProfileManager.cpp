@@ -8,13 +8,15 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "ProfileManager.h"
 #include "Profile.h"
 #include "Config.h"
 #include "Client.h"
+#include "Model.h"
+#include "Automat.h"
 #include "xeumeuleu/xml.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
+#include "directia/Brain.h"
 
 using namespace dispatcher;
 
@@ -187,4 +189,25 @@ ASN1T_MsgProfileDestructionRequestAck_error_code ProfileManager::Destroy( const 
     delete it->second;
     profiles_.erase( it );
     return MsgProfileDestructionRequestAck_error_code::success;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::RegisterIn
+// Created: SBO 2008-07-24
+// -----------------------------------------------------------------------------
+void ProfileManager::RegisterIn( directia::Brain& brain )
+{
+    brain.RegisterObject( "profiles", this );
+    brain.RegisterFunction( "SetAutomatRight", &ProfileManager::SetAutomatRight );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::SetAutomatRight
+// Created: SBO 2008-07-24
+// -----------------------------------------------------------------------------
+void ProfileManager::SetAutomatRight( const std::string& profile, unsigned int automat, bool readonly, bool readwrite )
+{
+    T_ProfileMap::iterator it = profiles_.find( profile );
+    if( it != profiles_.end() )
+        it->second->SetRight( model_.automats_.Get( automat ), readonly, readwrite );
 }

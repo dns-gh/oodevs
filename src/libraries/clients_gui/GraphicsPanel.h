@@ -12,6 +12,11 @@
 
 #include "PreferencePanel_ABC.h"
 
+namespace kernel
+{
+    class Controllers;
+}
+
 namespace gui
 {
     class GraphicPreferences;
@@ -27,7 +32,7 @@ class GraphicsPanel : public PreferencePanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GraphicsPanel( QWidget* parent );
+             GraphicsPanel( QWidget* parent, kernel::Controllers& controllers );
     virtual ~GraphicsPanel();
     //@}
 

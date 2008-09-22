@@ -11,7 +11,7 @@
 #include "ParamAgentList.h"
 #include "moc_ParamAgentList.cpp"
 #include "ParamAgent.h"
-#include "gaming/ActionParameterAgentList.h"
+#include "actions/AgentList.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -64,9 +64,9 @@ EntityParameter< Agent_ABC >* ParamAgentList::CreateElement( const Agent_ABC& po
 // Name: ParamAgentList::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamAgentList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamAgentList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterAgentList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::AgentList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

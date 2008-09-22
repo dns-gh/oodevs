@@ -28,7 +28,7 @@
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 StartAnalysisPanel::StartAnalysisPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
-    : Panel_ABC( widget, action, context )
+    : Panel_ABC( widget, action, context, "StartAnalysisPanel" )
     , config_( config )
 {
     QVBox* box = new QVBox( this );
@@ -139,7 +139,7 @@ void StartAnalysisPanel::StartReplay()
 {
     if( exercises_->selectedItem() && replays_->selectedItem() )
     {
-        new frontend::StartReplay( this, config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text(), frontend::DispatcherPort( exerciseNumber_->value() ) );
+        Start( new frontend::StartReplay( config_, exercises_->selectedItem()->text(), replays_->selectedItem()->text(), frontend::DispatcherPort( exerciseNumber_->value() ) ) );
         context_.Save( "exercise", exercises_ );
         context_.Save( "session", replays_ );
     }

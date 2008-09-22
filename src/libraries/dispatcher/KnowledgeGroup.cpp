@@ -11,7 +11,9 @@
 #include "KnowledgeGroup.h"
 #include "Side.h"
 #include "Model.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
+#include "ModelVisitor_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 
 using namespace dispatcher;
 
@@ -20,11 +22,10 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreation& msg )
-    : nID_     ( msg.oid )
-    , side_    ( model.GetSides().Get( msg.oid_camp ) )
-    , automats_()
+    : SimpleEntity< kernel::KnowledgeGroup_ABC >( msg.oid )
+    , team_( model.sides_.Get( msg.oid_camp ) )
 {
-    side_.GetKnowledgeGroups().Register( *this );
+    team_.knowledgeGroups_.Register( msg.oid, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +34,7 @@ KnowledgeGroup::KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreat
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
-    side_.GetKnowledgeGroups().Unregister( *this );
+    team_.knowledgeGroups_.Remove( GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,10 +43,10 @@ KnowledgeGroup::~KnowledgeGroup()
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientKnowledgeGroupCreation asn;
+    client::KnowledgeGroupCreation asn;
     
-    asn().oid      = nID_;
-    asn().oid_camp = side_.GetID();
+    asn().oid      = GetId();
+    asn().oid_camp = team_.GetId();
 
     asn.Send( publisher );
 }
@@ -57,4 +58,22 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& /*publisher*/ ) const
 {
 	// NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::SendDestruction
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::SendDestruction( ClientPublisher_ABC& ) const
+{
+    throw std::runtime_error( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

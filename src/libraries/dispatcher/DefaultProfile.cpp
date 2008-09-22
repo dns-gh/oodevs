@@ -56,3 +56,21 @@ bool DefaultProfile::CheckRights( const ASN1T_MsgsClientToReplay& ) const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DefaultProfile::CheckRights
+// Created: AGE 2008-06-10
+// -----------------------------------------------------------------------------
+bool DefaultProfile::CheckRights( const ASN1T_ChatTarget& , const ASN1T_ChatTarget& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultProfile::GetName
+// Created: AGE 2008-06-17
+// -----------------------------------------------------------------------------
+std::string DefaultProfile::GetName() const
+{
+    return "";
+}

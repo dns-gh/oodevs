@@ -9,12 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "DrawerLayer.h"
-#include "DrawerShape.h"
-#include "CursorStrategy.h"
-#include "resources.h"
-#include "DrawerFactory.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Controllers.h"
+#include "moc_DrawerLayer.cpp"
+#include "Tools.h"
 
 using namespace gui;
 
@@ -22,19 +18,13 @@ using namespace gui;
 // Name: DrawerLayer constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerLayer::DrawerLayer( kernel::Controllers& controllers, kernel::GlTools_ABC& tools, DrawerFactory& factory )
-    : controllers_( controllers )
+DrawerLayer::DrawerLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
+    : EntityLayer< Drawing_ABC >( controllers, tools, strategy, view, profile )
+    , parameters_( parameters )
     , tools_( tools )
-    , cursors_( new CursorStrategy( tools ) )
-    , factory_( factory )
-    , show_( true )
-    , current_( controllers )
-    , selected_( controllers )
-    , overlined_( controllers )
-    , selectedStyle_( 0 )
-    , selectedColor_()
+    , selected_( 0 )
 {
-    controllers_.Register( *this );
+    controllers.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,207 +33,92 @@ DrawerLayer::DrawerLayer( kernel::Controllers& controllers, kernel::GlTools_ABC&
 // -----------------------------------------------------------------------------
 DrawerLayer::~DrawerLayer()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerLayer::TakeFocus
-// Created: AGE 2006-09-05
+// Name: DrawerLayer::NotifyContextMenu
+// Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void DrawerLayer::TakeFocus( bool take )
+void DrawerLayer::NotifyContextMenu( const Drawing_ABC& drawing, kernel::ContextMenu& menu )
 {
-    if( ! take )
-        overlined_ = selected_ = 0;
-    cursors_->SelectTool( QCursor( MAKE_PIXMAP( pen_cursor ) ), take );
+    if( selected_ != &drawing )
+        NotifySelected( &drawing );
+    menu.InsertItem( "Creation", tools::translate( "DrawerLayer", "Edit drawing..." ), this, SLOT( OnEditDrawing() ) );
+    menu.InsertItem( "Creation", tools::translate( "DrawerLayer", "Erase drawing" )  , this, SLOT( OnDeleteDrawing() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerLayer::Show
-// Created: AGE 2006-09-04
+// Name: DrawerLayer::OnEditDrawing
+// Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------
-void DrawerLayer::Show( bool show )
+void DrawerLayer::OnEditDrawing()
 {
-    show_ = show;
+    if( selected_ )
+        const_cast< Drawing_ABC* >( selected_ )->Edit( parameters_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerLayer::ChangeColor
-// Created: AGE 2008-01-16
+// Name: DrawerLayer::OnDeleteDrawing
+// Created: SBO 2008-06-10
 // -----------------------------------------------------------------------------
-void DrawerLayer::ChangeColor( const QColor& color )
+void DrawerLayer::OnDeleteDrawing()
 {
-    selectedColor_ = color;
-    if( current_ )
-        current_.ConstCast()->ChangeColor( color );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::StartShape
-// Created: AGE 2006-09-01
-// -----------------------------------------------------------------------------
-void DrawerLayer::StartShape( const DrawerStyle& style, const QColor& color )
-{
-    selectedStyle_ = &style;
-    selectedColor_ = color;
+    delete selected_;
+    selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerLayer::Paint
-// Created: AGE 2006-09-01
+// Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------
 void DrawerLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( !ShouldDrawPass() && show_ )
-    {
-        for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
-        {
-            if( *it == selected_ )
-                (*it)->Draw( viewport, Qt::red, true );
-            else
-                (*it)->Draw( viewport, *it == overlined_ );
-        }
-        if( current_ )
-            current_->Draw( viewport, true );
-    }
+    viewport_ = viewport;
+    Layer_ABC::Paint( viewport );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::ShouldDisplay
+// Created: SBO 2008-06-03
+// -----------------------------------------------------------------------------
+bool DrawerLayer::ShouldDisplay( const kernel::Entity_ABC& )
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::NotifySelected
+// Created: SBO 2008-06-03
+// -----------------------------------------------------------------------------
+void DrawerLayer::NotifySelected( const Drawing_ABC* selected )
+{
+    EntityLayer< Drawing_ABC >::NotifySelected( selected );
+    selected_ = selected;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::Draw
+// Created: SBO 2008-06-03
+// -----------------------------------------------------------------------------
+void DrawerLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& )
+{
+    static_cast< const Drawing_ABC& >( entity ).Draw( viewport_, tools_, &entity == selected_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerLayer::HandleKeyPress
-// Created: AGE 2006-09-01
+// Created: SBO 2008-06-10
 // -----------------------------------------------------------------------------
-bool DrawerLayer::HandleKeyPress( QKeyEvent* key )
+bool DrawerLayer::HandleKeyPress( QKeyEvent* k )
 {
-    switch( key->key() )
+    if( !selected_ )
+        return false;
+    const int key = k->key();
+    if( key == Qt::Key_BackSpace || key == Qt::Key_Delete )
     {
-        case Qt::Key_BackSpace:
-        case Qt::Key_Delete:
-            if( current_ ) 
-                current_.ConstCast()->PopPoint();
-            else 
-                delete selected_;
-            return true;
-        case Qt::Key_Return:
-        case Qt::Key_Enter:
-            Done();
-            return true;
-        case Qt::Key_Escape:
-            delete current_;
-            return true;
-    };
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::Done
-// Created: AGE 2006-09-01
-// -----------------------------------------------------------------------------
-void DrawerLayer::Done()
-{
-    if( current_ )
-    {
-        current_.ConstCast()->Create();
-        current_ = 0;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::Precision
-// Created: AGE 2006-09-05
-// -----------------------------------------------------------------------------
-float DrawerLayer::Precision() const
-{
-    return 5.f * tools_.Pixels();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::HandleMouseMove
-// Created: AGE 2006-09-01
-// -----------------------------------------------------------------------------
-bool DrawerLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
-{
-    overlined_ = 0;
-    const float precision = Precision();
-    for( CIT_Shapes it = shapes_.begin(); it != shapes_.end() && ! overlined_; ++it )
-        if( (*it)->IsAt( point, precision ) )
-            overlined_ = *it;
-
-    if( selected_ && mouse->state() == Qt::LeftButton && ! dragPoint_.IsZero() )
-    {
-        const geometry::Vector2f translation( dragPoint_, point );
-        selected_.ConstCast()->Translate( dragPoint_, translation, precision );
-        dragPoint_ = point;
-        cursors_->SelectContext( QCursor( Qt::SizeAllCursor ), true );
-    }
-    else
-        cursors_->SelectContext( QCursor( Qt::PointingHandCursor ), overlined_ != 0 );
-
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::HandleMousePress
-// Created: AGE 2006-09-01
-// -----------------------------------------------------------------------------
-bool DrawerLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
-{
-    const bool leftDown     = mouse->button() == Qt::LeftButton  && mouse->state() == Qt::NoButton;
-    const bool leftRelease  = mouse->button() == Qt::LeftButton  && mouse->state() == Qt::LeftButton;
-    const bool rightRelease = mouse->button() == Qt::RightButton && mouse->state() == Qt::RightButton;
-
-    dragPoint_ = leftDown ? point : geometry::Point2f();
-    if( overlined_ )
-    {
-        selected_ = overlined_;
+        OnDeleteDrawing();
         return true;
     }
-    if( !current_ && leftDown )
-    {
-        if( !selectedStyle_ )
-            return false;
-        delete current_;
-        current_ = factory_.CreateShape( *selectedStyle_, selectedColor_ );
-    }
-    if( current_ && leftRelease )
-        current_.ConstCast()->AddPoint( point );
-    else if( current_ && rightRelease )
-        current_.ConstCast()->PopPoint();
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::HandleMouseDoubleClick
-// Created: AGE 2006-09-04
-// -----------------------------------------------------------------------------
-bool DrawerLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& )
-{
-    if( ! current_ )
-        return false;
-    if( mouse->button() == Qt::RightButton )
-        current_.ConstCast()->PopPoint();
-    if( mouse->button() == Qt::LeftButton )
-        Done();
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::NotifyCreated
-// Created: AGE 2008-05-19
-// -----------------------------------------------------------------------------
-void DrawerLayer::NotifyCreated( const DrawerShape& shape )
-{
-    shapes_.push_back( const_cast< DrawerShape* >( &shape ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::NotifyDeleted
-// Created: AGE 2008-05-19
-// -----------------------------------------------------------------------------
-void DrawerLayer::NotifyDeleted( const DrawerShape& shape )
-{
-    IT_Shapes it = std::find( shapes_.begin(), shapes_.end(), &shape );
-    if( it != shapes_.end() )
-    {
-        std::swap( *it, shapes_.back() );
-        shapes_.pop_back();
-    }
+    return EntityLayer< Drawing_ABC >::HandleKeyPress( k );
 }

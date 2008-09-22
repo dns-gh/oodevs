@@ -27,7 +27,8 @@ class JoinExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session );
+             JoinExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach = false );
+             JoinExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& profile, bool attach = false );
     virtual ~JoinExercise();
     //@}
 
@@ -37,6 +38,7 @@ private:
     JoinExercise( const JoinExercise& );            //!< Copy constructor
     JoinExercise& operator=( const JoinExercise& ); //!< Assignment operator
     //@}
+
 };
 
 }

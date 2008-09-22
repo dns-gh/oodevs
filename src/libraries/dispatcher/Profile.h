@@ -13,16 +13,20 @@
 #include "game_asn/Simulation.h"
 #include "Profile_ABC.h"
 
-namespace xml{ class xistream; };
+namespace xml{ class xistream; }
+
+namespace kernel
+{
+    class Automat_ABC;
+    class Team_ABC;
+    class Formation_ABC;
+    class Population_ABC;
+}
 
 namespace dispatcher
 {
-    class Automat;
-    class Side;
-    class Formation;
-    class Population;
-    class ClientPublisher_ABC;
     class Model;
+    class ClientPublisher_ABC;
     class ClientsNetworker;
 
 // =============================================================================
@@ -36,8 +40,8 @@ class Profile : public Profile_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Profile( Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, xml::xistream& xis );
-             Profile( Model& model, ClientPublisher_ABC& clients, const ASN1T_MsgProfileCreationRequest& message );
+             Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, xml::xistream& xis );
+             Profile( const Model& model, ClientPublisher_ABC& clients, const ASN1T_MsgProfileCreationRequest& message );
     virtual ~Profile();
     //@}
 
@@ -47,6 +51,12 @@ public:
     bool CheckRights  ( const ASN1T_MsgsClientToSim&            msg ) const;
     bool CheckRights  ( const ASN1T_MsgsClientToAuthentication& msg ) const;
     bool CheckRights  ( const ASN1T_MsgsClientToReplay&         msg ) const;
+    bool CheckRights  ( const ASN1T_ChatTarget& source, const ASN1T_ChatTarget& target ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual std::string GetName() const;
     //@}
 
     //! @name Network
@@ -59,15 +69,7 @@ public:
     //! @name Operations
     //@{
     void Update( const ASN1T_MsgProfileUpdateRequest& message );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::set< Automat* >    T_AutomatSet;
-    typedef std::set< Side* >       T_SideSet;
-    typedef std::set< Formation* >  T_FormationSet;
-    typedef std::set< Population* > T_PopulationSet;
+    void SetRight( const kernel::Automat_ABC& entity, bool readonly, bool readwrite );
     //@}
 
 private:
@@ -77,21 +79,25 @@ private:
     Profile& operator=( const Profile& ); //!< Assignement operator
     //@}
 
-    //! @name Initialization
+    //! @name Types
+    //@{
+    typedef std::set< const kernel::Automat_ABC* >    T_AutomatSet;
+    typedef std::set< const kernel::Team_ABC* >       T_SideSet;
+    typedef std::set< const kernel::Formation_ABC* >  T_FormationSet;
+    typedef std::set< const kernel::Population_ABC* > T_PopulationSet;
+    //@}
+
+    //! @name Helpers
     //@{
     void ReadAutomatRights   ( xml::xistream& xis, T_AutomatSet&    container );
     void ReadSideRights      ( xml::xistream& xis, T_SideSet&       container );
     void ReadFormationRights ( xml::xistream& xis, T_FormationSet&  container );
     void ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container );
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadRights( const ASN1T_Profile& message );
+    void ReadRights          ( const ASN1T_Profile& message );
     //@}
 
 private:
-    Model& model_;
+    const Model& model_;
     ClientPublisher_ABC& clients_;
 
     std::string     strLogin_;

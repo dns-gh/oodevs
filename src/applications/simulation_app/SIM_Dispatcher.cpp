@@ -10,18 +10,19 @@
 #include "simulation_app_pch.h"
 
 #include "SIM_Dispatcher.h"
-#include "bml_plugin/BmlPluginFactory.h"
-#include "tools/win32/Win32Exception.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
+
+#include <boost/thread.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: SIM_Dispatcher constructor
 // Created: NLD 2006-10-04
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv )
-    : dispatcher_( argc, argv )
+    : bRunning_  ( true ) 
+	, dispatcher_( argc, argv )
 {
-    Thread::Start();
+	// thread_.reset( new boost::thread( boost::bind( &SIM_Dispatcher::Run, this ) ) ); 
 }
     
 // -----------------------------------------------------------------------------
@@ -30,7 +31,7 @@ SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv )
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::~SIM_Dispatcher()
 {
-    Thread::Kill();
+	Stop(); 
 }
 
 // =============================================================================
@@ -43,36 +44,19 @@ SIM_Dispatcher::~SIM_Dispatcher()
 // -----------------------------------------------------------------------------
 void SIM_Dispatcher::Run()
 {
-    while( 1 )
-    {
-        dispatcher_.Update();
-        Sleep( 25 ); 
-    }
+	while( bRunning_ )
+	{
+		dispatcher_.Update();
+        boost::this_thread::sleep( boost::posix_time::milliseconds( 25 ) ) ; 
+	}
 }
 
 // -----------------------------------------------------------------------------
-// Name: SIM_Dispatcher::OnUnexpected
-// Created: AGE 2005-08-22
+// Name: SIM_Dispatcher::Stop
+// Created: RDS 2008-07-24
 // -----------------------------------------------------------------------------
-void SIM_Dispatcher::OnUnexpected( Win32Exception& e )
+void SIM_Dispatcher::Stop()
 {
-    MT_LOG_ERROR_MSG( "Win32 Exception caught in dispatcher thread : " << e.what() );
+	bRunning_ = false ; 
 }
 
-// -----------------------------------------------------------------------------
-// Name: SIM_Dispatcher::OnUnexpected
-// Created: AGE 2005-08-22
-// -----------------------------------------------------------------------------
-void SIM_Dispatcher::OnUnexpected( std::exception& e )
-{
-    MT_LOG_ERROR_MSG( "Exception caught in dispatcher thread : " << e.what() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_Dispatcher::OnUnexpected
-// Created: AGE 2005-08-22
-// -----------------------------------------------------------------------------
-void SIM_Dispatcher::OnUnexpected()
-{
-    MT_LOG_ERROR_MSG( "Unknown exception caught in dispatcher thread" );
-}

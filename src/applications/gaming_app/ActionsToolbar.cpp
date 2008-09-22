@@ -11,8 +11,8 @@
 #include "ActionsToolbar.h"
 #include "moc_ActionsToolbar.cpp"
 #include "gaming/ActionsScheduler.h"
-#include "gaming/ActionsModel.h"
-#include "gaming/Action_ABC.h"
+#include "actions/ActionsModel.h"
+#include "actions/Action_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include "icons.h"
 #include <boost/function.hpp>
@@ -43,12 +43,14 @@ namespace
     };
 }
 
+using namespace actions;
+
 // -----------------------------------------------------------------------------
 // Name: ActionsToolbar constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config )
-    : QHBox     ( parent )
+    : QHBox     ( parent, "ActionsToolbar" )
     , actions_  ( actions )
     , scheduler_( scheduler )
     , config_   ( config )

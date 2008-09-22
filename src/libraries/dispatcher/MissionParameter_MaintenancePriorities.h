@@ -27,7 +27,7 @@ class MissionParameter_MaintenancePriorities : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_MaintenancePriorities( const ASN1T_MissionParameter& asn );
+    explicit MissionParameter_MaintenancePriorities( const ASN1T_MissionParameter& asn );
     virtual ~MissionParameter_MaintenancePriorities();
     //@}
 
@@ -45,15 +45,9 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< unsigned int > T_OIDVector;
-    //@}
-
-private:
     //! @name Member data
     //@{
-    T_OIDVector maintenancePriorities_;
+    std::vector< int > maintenancePriorities_;
     //@}
 };
 

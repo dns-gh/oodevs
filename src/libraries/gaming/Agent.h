@@ -36,12 +36,6 @@ class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
 {
 
 public:
-    //! @name Static
-    //@{
-    static const QString typeName_;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              Agent( const ASN1T_MsgUnitCreation& message,
@@ -54,7 +48,6 @@ public:
     //@{
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual const kernel::AgentType& GetType() const;
-    virtual QString GetTypeName() const;
     virtual bool IsCommandPost() const;
     //@}
 

@@ -8,9 +8,8 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "RotaObjectAttribute.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -18,10 +17,9 @@ using namespace dispatcher;
 // Name: RotaObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-RotaObjectAttribute::RotaObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
+RotaObjectAttribute::RotaObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg )
+    : ObjectAttribute_ABC( asnMsg )
     , nDanger_           ( 0 )
-    , nbcAgents_         ()
 {
     if( asnMsg.t == T_ObjectAttributesSpecific_rota )
     {
@@ -38,7 +36,7 @@ RotaObjectAttribute::RotaObjectAttribute( const Model& model, const ASN1T_Object
 // -----------------------------------------------------------------------------
 RotaObjectAttribute::~RotaObjectAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------
@@ -65,10 +63,14 @@ void RotaObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
 {
     asnMsg.t = nType_;
     asnMsg.u.rota = new ASN1T_ObjectAttributesRota();
-
     asnMsg.u.rota->danger_level = nDanger_;
-
-    SendContainerValues< ASN1T_ListOID, ASN1T_OID, T_IDVector >( nbcAgents_, asnMsg.u.rota->nbc_agents );
+    {
+        asnMsg.u.rota->nbc_agents.n = nbcAgents_.size();
+        asnMsg.u.rota->nbc_agents.elem = asnMsg.u.rota->nbc_agents.n > 0 ? new ASN1T_OID[ asnMsg.u.rota->nbc_agents.n ] : 0;
+        unsigned int i = 0;
+        for( std::vector< unsigned int >::const_iterator it = nbcAgents_.begin(); it != nbcAgents_.end(); ++it, ++i )
+            asnMsg.u.rota->nbc_agents.elem[i] = *it;
+    }
 }
 
 // -----------------------------------------------------------------------------

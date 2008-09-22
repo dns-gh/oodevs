@@ -26,6 +26,7 @@ namespace gui
 // =============================================================================
 /** @class  InfoDotationsDialog
     @brief  InfoDotationsDialog
+    // $$$$ SBO 2008-07-08: Ordnance seems to be more correct than Dotations (which doesn't exists...)
 */
 // Created: SBO 2007-02-19
 // =============================================================================

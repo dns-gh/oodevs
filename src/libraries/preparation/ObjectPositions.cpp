@@ -192,7 +192,6 @@ void ObjectPositions::VisitLines( const T_PointVector& points )
 void ObjectPositions::VisitPolygon( const T_PointVector& points )
 {
     points_ = points;
-    points_.push_back( points.front() );
 }
     
 // -----------------------------------------------------------------------------
@@ -216,6 +215,17 @@ void ObjectPositions::VisitPoint( const geometry::Point2f& point )
 {
     points_.clear();
     points_.push_back( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::VisitPath
+// Created: AGE 2008-06-26
+// -----------------------------------------------------------------------------
+void ObjectPositions::VisitPath( const geometry::Point2f& first, const T_PointVector& points )
+{
+    points_.resize( points.size() + 1 );
+    points_.front() = first;
+    std::copy( points.begin(), points.end(), points_.begin() + 1 );
 }
 
 // -----------------------------------------------------------------------------

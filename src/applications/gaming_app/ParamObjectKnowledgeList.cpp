@@ -13,9 +13,9 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
-#include "gaming/ActionParameterObjectKnowledgeList.h"
-#include "gaming/ObjectKnowledge_ABC.h"
-#include "gaming/ObjectKnowledgeConverter_ABC.h"
+#include "actions/ObjectKnowledgeList.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "gaming/Tools.h"
 
 using namespace kernel;
@@ -24,7 +24,7 @@ using namespace kernel;
 // Name: ParamObjectKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamObjectKnowledgeList::ParamObjectKnowledgeList( QObject* parent, const OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
+ParamObjectKnowledgeList::ParamObjectKnowledgeList( QObject* parent, const OrderParameter& parameter, ActionController& actions, Controller& controller, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
     : EntityListParameter< ObjectKnowledge_ABC >( parent, parameter, actions, controller )
     , parameter_( parameter )
     , converter_( converter )
@@ -77,9 +77,9 @@ void ParamObjectKnowledgeList::NotifyContextMenu( const Object_ABC& entity, Cont
 // Name: ParamObjectKnowledgeList::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void ParamObjectKnowledgeList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamObjectKnowledgeList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObjectKnowledgeList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ObjectKnowledgeList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

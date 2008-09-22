@@ -11,7 +11,6 @@
 #define __LoginDialog_h_
 
 class Profile;
-class Publisher_ABC;
 class Network;
 
 // =============================================================================
@@ -27,7 +26,7 @@ class LoginDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LoginDialog( QWidget* pParent, const Profile& profile, Publisher_ABC& publisher, Network& network );
+             LoginDialog( QWidget* pParent, const Profile& profile, Network& network );
     virtual ~LoginDialog();
     //@}
 
@@ -49,7 +48,6 @@ private:
     //! @name Member data
     //@{
     const Profile& profile_;
-    Publisher_ABC& publisher_;
     Network& network_;
     QLineEdit* login_;
     QLineEdit* password_;

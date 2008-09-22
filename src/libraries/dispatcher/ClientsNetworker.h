@@ -23,6 +23,7 @@ namespace dispatcher
     class Client;
     class Config;
     class Plugin_ABC;
+    class Services;
 
 // =============================================================================
 /** @class  ClientsNetworker
@@ -38,7 +39,7 @@ class ClientsNetworker : public tools::ServerNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientsNetworker( const Config& config, Plugin_ABC& plugin );
+             ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services );
     virtual ~ClientsNetworker();
     //@}
 
@@ -49,9 +50,12 @@ public:
     virtual void Send( const ASN1T_MsgsReplayToClient& );
     virtual void Send( const ASN1T_MsgsAarToClient& msg );
     virtual void Send( const ASN1T_MsgsMessengerToClient& msg );
+    virtual void Send( const ASN1T_MsgsDispatcherToClient& msg );
 
     virtual Profile_ABC&         GetProfile  ( const std::string& link );
     virtual ClientPublisher_ABC& GetPublisher( const std::string& link );
+
+    virtual std::string GetEndpoint() const;
     //@}
 
 protected:
@@ -85,6 +89,7 @@ private:
     //! @name Member data
     //@{
     Plugin_ABC& plugin_;
+    const Services& services_;
     T_Clients clients_;
     //@}
 };

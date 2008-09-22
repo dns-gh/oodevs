@@ -11,9 +11,8 @@
 #include "ParamMissionObjective.h"
 #include "ParamLocation.h"
 #include "ParamDateTime.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameter.h"
-#include "gaming/ActionParameterObjective.h"
+#include "actions/Action_ABC.h"
+#include "actions/Objective.h"
 
 using namespace kernel;
 using namespace gui;
@@ -98,9 +97,9 @@ bool ParamMissionObjective::CheckValidity()
 // Name: ParamMissionObjective::CommitTo
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-void ParamMissionObjective::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamMissionObjective::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterObjective( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::Objective( parameter_ ) );
     location_->CommitTo( *param );
     schedule_->CommitTo( *param );
     action.AddParameter( *param.release() );

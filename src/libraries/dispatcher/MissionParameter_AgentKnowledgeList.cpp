@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MissionParameter_AgentKnowledgeList.h"
-#include "Network_Def.h"
+#include "game_asn/Simulation.h"
 
 using namespace dispatcher;
 
@@ -20,8 +20,8 @@ using namespace dispatcher;
 MissionParameter_AgentKnowledgeList::MissionParameter_AgentKnowledgeList( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    for( unsigned i = 0; i != asn.value.u.unitKnowledgeList->n; ++i )
-        agentKnowledges_.push_back( asn.value.u.unitKnowledgeList->elem[i] );
+    std::copy( asn.value.u.unitKnowledgeList->elem, asn.value.u.unitKnowledgeList->elem + asn.value.u.unitKnowledgeList->n
+             , std::back_inserter( agentKnowledges_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,20 +33,17 @@ MissionParameter_AgentKnowledgeList::~MissionParameter_AgentKnowledgeList()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_AgentKnowledgeList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_AgentKnowledgeList::Send( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value                 = bNullValue_;
-    asn.value.t                    = T_MissionParameter_value_unitKnowledgeList;
+    asn.null_value = bNullValue_;
+    asn.value.t = T_MissionParameter_value_unitKnowledgeList;
     asn.value.u.unitKnowledgeList = new ASN1T_UnitKnowledgeList();
-    SendContainerValues< ASN1T_UnitKnowledgeList, ASN1T_UnitKnowledge, T_OIDVector >( agentKnowledges_, *asn.value.u.unitKnowledgeList ); 
+    asn.value.u.unitKnowledgeList->n = agentKnowledges_.size();
+    asn.value.u.unitKnowledgeList->elem = agentKnowledges_.empty() ? 0 : (int*)&agentKnowledges_.front();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +52,5 @@ void MissionParameter_AgentKnowledgeList::Send( ASN1T_MissionParameter& asn ) co
 // -----------------------------------------------------------------------------
 void MissionParameter_AgentKnowledgeList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.unitKnowledgeList->n > 0 )
-        delete [] asn.value.u.unitKnowledgeList->elem;
     delete asn.value.u.unitKnowledgeList;
 }

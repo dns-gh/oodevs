@@ -9,7 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "Fire.h"
-#include "network_def.h"
+#include "ClientPublisher_ABC.h"
+#include "ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -18,7 +19,8 @@ using namespace dispatcher;
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
 Fire::Fire( Model& , const ASN1T_MsgStartUnitFire& msg )
-    : oid_tir         ( msg.fire_oid )
+    : SimpleEntity< > ( msg.fire_oid )
+    , oid_tir         ( msg.fire_oid )
     , tireur          ( msg.firer_oid )
     , type            ( msg.type )
     , munitionPresent_( msg.m.ammunitionPresent != 0 )
@@ -55,7 +57,7 @@ void Fire::SendFullUpdate( ClientPublisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void Fire::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientStartUnitFire asn;
+    client::StartUnitFire asn;
     asn().fire_oid  = oid_tir;
     asn().firer_oid = tireur;
     asn().type      = type;
@@ -79,10 +81,20 @@ void Fire::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Fire::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientStopUnitFire asn;
+    client::StopUnitFire asn;
     asn().fire_oid = oid_tir;
     asn().units_damages.n    = asn().populations_damages.n    = 0;
     asn().units_damages.elem = 0;
     asn().populations_damages.elem = 0;
     asn.Send( publisher );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Fire::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void Fire::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+

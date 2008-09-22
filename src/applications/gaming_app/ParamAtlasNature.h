@@ -11,14 +11,13 @@
 #define __ParamAtlasNature_h_
 
 #include "Param_ABC.h"
-#include "gaming/AtlasNature.h"
+#include "clients_kernel/AtlasNature.h"
 
 namespace kernel
 {
     class OrderParameter;
+    class AtlasNatures;
 }
-
-class AtlasNatures;
 
 // =============================================================================
 /** @class  ParamAtlasNature
@@ -34,14 +33,14 @@ class ParamAtlasNature : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAtlasNature( QObject* parent, const kernel::OrderParameter& parameter, const AtlasNatures& natures );
+             ParamAtlasNature( QObject* parent, const kernel::OrderParameter& parameter, const kernel::AtlasNatures& natures );
     virtual ~ParamAtlasNature();
     //@}
 
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 private slots:
@@ -65,15 +64,15 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const AtlasNature* > T_NatureFields;
+    typedef std::vector< const kernel::AtlasNature* > T_NatureFields;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::OrderParameter& parameter_;
-    const AtlasNatures& natures_;
-    AtlasNature nature_;
+    const kernel::AtlasNatures& natures_;
+    kernel::AtlasNature nature_;
     T_NatureFields fields_;
     //@}
 };

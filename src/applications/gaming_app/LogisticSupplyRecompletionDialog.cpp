@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "moc_LogisticSupplyRecompletionDialog.cpp"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "gaming/Dotations.h"
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"

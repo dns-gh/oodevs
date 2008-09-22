@@ -11,14 +11,21 @@
 #define __KnowledgeGroup_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelRefsContainer.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Resolver.h"
+
+namespace kernel
+{
+    class Automat_ABC;
+}
 
 namespace dispatcher
 {
     class Model;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
     class Side;
-    class Automat;
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -26,7 +33,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class KnowledgeGroup : public Entity_ABC
+class KnowledgeGroup : public SimpleEntity< kernel::KnowledgeGroup_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -35,16 +42,12 @@ public:
     virtual ~KnowledgeGroup();
     //@}
 
-    //! @name Accessors
-    //@{
-    unsigned long                  GetID      () const;
-    ModelRefsContainer< Automat >& GetAutomats();
-    //@}
-
     //! @name Operations
     //@{
-    virtual void SendCreation  ( ClientPublisher_ABC& publisher ) const;
-	virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void Accept         ( ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -54,14 +57,14 @@ private:
     KnowledgeGroup& operator=( const KnowledgeGroup& ); //!< Assignement operator
     //@}
 
-private:
-    const unsigned long                 nID_;
-          Side&                         side_;
-          ModelRefsContainer< Automat > automats_;
+public:
+    //! @name Member data
+    //@{
+    Side& team_;
+    kernel::Resolver< kernel::Automat_ABC > automats_;
+    //@}
 };
 
 }
-
-#include "KnowledgeGroup.inl"
 
 #endif // __KnowledgeGroup_h_

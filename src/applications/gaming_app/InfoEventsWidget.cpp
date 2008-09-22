@@ -18,65 +18,36 @@
 #include "clients_kernel/NBCAgent.h"
 #include "icons.h"
 #include <qimage.h>
-#include <qgrid.h>
-#include <qobjectlist.h>
 #include <qpainter.h>
 
 namespace
 {
-    class MinimalBox : public QHBox
+    class EventWidget : public QLabel
     {
     public:
-        explicit MinimalBox( QWidget* parent )
-            : QHBox( parent )
+        EventWidget( QWidget* parent, const QPixmap& pixmap, const QString& text )
+            : QLabel( parent )
         {
-            setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
-        }
-
-    protected:
-        virtual QSize sizeHint() const
-        {
-            QObjectList* list = queryList( "QButton" );
-            QObjectListIt it( *list );
-            int width = 0;
-            while( QObject* obj = it.current() )
-            {
-                QButton* btn = static_cast< QButton* >( obj );
-                if( btn->isShown() )
-                    width += btn->width() + 2;
-                ++it;
-            }
-            return QSize( width, height() );
-        }
-    };
-
-    class TransparentButton : public QButton
-    {
-    public:
-        TransparentButton( QWidget* parent, const QPixmap& pixmap, const QString& text )
-            : QButton( parent )
-        {
-            parent->setFixedSize( 27, 27 );
             QImage img; // $$$$ SBO 2007-02-09: TODO: make new icons instead of resizing
             img = pixmap;
             img = img.smoothScale( 26, 26, QImage::ScaleMax );
             QPixmap pix( img );
-            parent->setPaletteBackgroundPixmap( pix );
+            setPixmap( pix );
             QFont font;
             font.setPointSize( 9 );
             setFont( font );
-            setBackgroundOrigin( QWidget::ParentOrigin );
             setFixedSize( 27, 27 );
             QToolTip::add( this, text );
             hide();
         }
 
     protected:
-        virtual void drawButton( QPainter* paint )
+        virtual void drawContents( QPainter* paint )
         {
             QPen pen( QColor( 100, 100, 100 ) );
             paint->setPen( pen );
             paint->drawRoundRect( 0, 0, width(), height() );
+            paint->drawPixmap( 0, 0, *pixmap() );
             if( text().isEmpty() )
                 return;
             const QRect rect = paint->boundingRect( QRect( 0, 0, width() - 2, height() - 1 ), Qt::AlignRight | Qt::AlignBottom, text() );
@@ -87,18 +58,6 @@ namespace
             paint->setPen( pen );
             paint->drawText( rect, Qt::AlignRight | Qt::AlignBottom, text() );
         }
-        
-        virtual void show()
-        {
-            QButton::show();
-            parentWidget()->show();
-        }
-
-        virtual void hide()
-        {
-            QButton::hide();
-            parentWidget()->hide();
-        }
     };
 }
 
@@ -107,17 +66,14 @@ namespace
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
 InfoEventsWidget::InfoEventsWidget( QWidget* parent, kernel::Controllers& controllers )
-    : QGroupBox( 1, Qt::Horizontal, parent )
+    : QVBox( parent, "InfoEventsWidget" )
     , controllers_( controllers )
     , selected_( controllers )
 {
-    setFixedHeight( 31 );
+    setFixedWidth( 27 );
     setMargin( 0 );
-    setInsideMargin( 2 );
-    setAlignment( Qt::AlignLeft );
-    QHBox* box = new MinimalBox( this );
-    box->setMargin( 0 );
-    InitializeEventButtons( box );
+    InitializeEvents( this );
+    layout()->setAlignment( Qt::AlignTop );
     controllers_.Register( *this );
     hide();
 }
@@ -132,36 +88,36 @@ InfoEventsWidget::~InfoEventsWidget()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoEventsWidget::InitializeEventButtons
+// Name: InfoEventsWidget::InitializeEvents
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void InfoEventsWidget::InitializeEventButtons( QWidget* parent )
+void InfoEventsWidget::InitializeEvents( QWidget* parent )
 {
-    eventButtons_["jammed"]        = MakeButton( parent, MAKE_PIXMAP( brouillage )     , tools::translate( "InfoEventsWidget", "Communication: jammed" ) );
-    eventButtons_["silence"]       = MakeButton( parent, MAKE_PIXMAP( talkie_interdit ), tools::translate( "InfoEventsWidget", "Communication: radio silence" ) );
-    eventButtons_["radar"]         = MakeButton( parent, MAKE_PIXMAP( radars_on )      , tools::translate( "InfoEventsWidget", "Communication: radar enabled" ) );
-    eventButtons_["stealth"]       = MakeButton( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Communication: stealth mode" ) );
-    eventButtons_["nbc suit"]      = MakeButton( parent, MAKE_PIXMAP( nbc )            , tools::translate( "InfoEventsWidget", "NBC: suit on" ) );
-    eventButtons_["contamination"] = MakeButton( parent, MAKE_PIXMAP( nbc )            , "" );
-    eventButtons_["refugees"]      = MakeButton( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Refugees handled" ) );
+    events_["jammed"]        = CreateEvent( parent, MAKE_PIXMAP( brouillage )     , tools::translate( "InfoEventsWidget", "Communication: jammed" ) );
+    events_["silence"]       = CreateEvent( parent, MAKE_PIXMAP( talkie_interdit ), tools::translate( "InfoEventsWidget", "Communication: radio silence" ) );
+    events_["radar"]         = CreateEvent( parent, MAKE_PIXMAP( radars_on )      , tools::translate( "InfoEventsWidget", "Communication: radar enabled" ) );
+    events_["stealth"]       = CreateEvent( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Communication: stealth mode" ) );
+    events_["nbc suit"]      = CreateEvent( parent, MAKE_PIXMAP( nbc )            , tools::translate( "InfoEventsWidget", "NBC: suit on" ) );
+    events_["contamination"] = CreateEvent( parent, MAKE_PIXMAP( nbc )            , "" );
+    events_["refugees"]      = CreateEvent( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Refugees handled" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoEventsWidget::MakeButton
+// Name: InfoEventsWidget::CreateEvent
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-QButton* InfoEventsWidget::MakeButton( QWidget* parent, const QPixmap& pixmap, const QString& text )
+QLabel* InfoEventsWidget::CreateEvent( QWidget* parent, const QPixmap& pixmap, const QString& text )
 {
-    return new TransparentButton( new QWidget( parent ), pixmap, text );
+    return new EventWidget( parent, pixmap, text );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoEventsWidget::AddEventButton
+// Name: InfoEventsWidget::ToggleEvent
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
-void InfoEventsWidget::AddEventButton( const std::string& event, bool add )
+void InfoEventsWidget::ToggleEvent( const std::string& event, bool toggle )
 {
-    eventButtons_[event]->setShown( add );
+    events_[event]->setShown( toggle );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,11 +126,11 @@ void InfoEventsWidget::AddEventButton( const std::string& event, bool add )
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::SetAttributes( const Attributes& attributes )
 {
-    AddEventButton( "jammed"  , attributes.bCommJammed_ );
-    AddEventButton( "silence" , attributes.bRadioSilence_ );
-    AddEventButton( "radar"   , attributes.bRadarEnabled_ );
-    AddEventButton( "stealth" , attributes.bStealthModeEnabled_ );
-    AddEventButton( "refugees", attributes.bRefugeesManaged_ );
+    ToggleEvent( "jammed"  , attributes.bCommJammed_ );
+    ToggleEvent( "silence" , attributes.bRadioSilence_ );
+    ToggleEvent( "radar"   , attributes.bRadarEnabled_ );
+    ToggleEvent( "stealth" , attributes.bStealthModeEnabled_ );
+    ToggleEvent( "refugees", attributes.bRefugeesManaged_ );
     SetShown();
 }
 
@@ -184,16 +140,16 @@ void InfoEventsWidget::SetAttributes( const Attributes& attributes )
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::SetContaminations( const Contaminations& attributes )
 {
-    AddEventButton( "nbc suit", attributes.bNbcProtectionSuitWorn_ );
-    AddEventButton( "contamination", !attributes.contaminatingNbcAgents_.empty() );
+    ToggleEvent( "nbc suit", attributes.bNbcProtectionSuitWorn_ );
+    ToggleEvent( "contamination", !attributes.contaminatingNbcAgents_.empty() );
     if( !attributes.contaminatingNbcAgents_.empty() )
     {
-        QButton* btn = eventButtons_["contamination"];
+        QLabel* label = events_["contamination"];
         QStringList agents;
         for( unsigned int i = 0; i < attributes.contaminatingNbcAgents_.size(); ++i )
             agents.append( attributes.contaminatingNbcAgents_[i]->GetName().c_str() );
-        btn->setText( QString::number( attributes.nContamination_ ) );
-        QToolTip::add( btn, tools::translate( "InfoEventsWidget", "NBC: contamination of type '%1' level '%2'" ).arg( agents.join( ", " ) ).arg( attributes.nContamination_ ) );
+        label->setText( QString::number( attributes.nContamination_ ) );
+        QToolTip::add( label, tools::translate( "InfoEventsWidget", "NBC: contamination of type '%1' level '%2'" ).arg( agents.join( ", " ) ).arg( attributes.nContamination_ ) );
     }
     SetShown();
 }
@@ -250,7 +206,7 @@ void InfoEventsWidget::NotifyUpdated( const Contaminations& element )
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::SetShown()
 {
-    for( CIT_EventButtons it = eventButtons_.begin(); it != eventButtons_.end(); ++it )
+    for( T_Events::const_iterator it = events_.begin(); it != events_.end(); ++it )
         if( it->second->isShown() )
         {
             show();
@@ -265,6 +221,6 @@ void InfoEventsWidget::SetShown()
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::Reset()
 {
-    for( CIT_EventButtons it = eventButtons_.begin(); it != eventButtons_.end(); ++it )
+    for( T_Events::const_iterator it = events_.begin(); it != events_.end(); ++it )
         it->second->hide();
 }

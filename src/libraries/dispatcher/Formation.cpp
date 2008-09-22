@@ -9,11 +9,12 @@
 
 #include "dispatcher_pch.h"
 #include "Formation.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 #include "Model.h"
 #include "Side.h"
 #include "Automat.h"
 #include "ModelVisitor_ABC.h"
+#include <boost/bind.hpp>
 
 using namespace dispatcher;
 
@@ -21,20 +22,18 @@ using namespace dispatcher;
 // Name: Formation constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Formation::Formation( Model& model, const ASN1T_MsgFormationCreation& msg )
-    : model_          ( model )
-    , nID_            ( msg.oid )
-    , side_           ( model.GetSides().Get( msg.oid_camp ) )
-    , nLevel_         ( msg.niveau )
-    , pParent_        ( msg.m.oid_formation_parentePresent ? &model.GetFormations().Get( msg.oid_formation_parente ) : 0 )
-    , strName_        ( msg.nom )
-    , automats_       ()
-    , subordinates_   ()
+Formation::Formation( const Model& model, const ASN1T_MsgFormationCreation& msg )
+    : SimpleEntity< kernel::Formation_ABC >( msg.oid, msg.nom )
+    , model_ ( model )
+    , name_  ( msg.nom )
+    , team_  ( model.sides_.Get( msg.oid_camp ) )
+    , level_ ( msg.niveau )
+    , parent_( msg.m.oid_formation_parentePresent ? &model.formations_.Get( msg.oid_formation_parente ) : 0 )
 {
-    if( pParent_ )
-        pParent_->GetSubordinates().Register( *this );
+    if( parent_ )
+        parent_->formations_.Register( msg.oid, *this );
     else
-        side_.GetFormations().Register( *this );
+        team_.formations_.Register( msg.oid, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,15 +42,12 @@ Formation::Formation( Model& model, const ASN1T_MsgFormationCreation& msg )
 // -----------------------------------------------------------------------------
 Formation::~Formation()
 {
-    if( pParent_ )
-        pParent_->GetSubordinates().Unregister( *this );
+	// $$$ RDS : completement invalide si la formation parente a déja été detruite !!! 
+	if( parent_ )
+        parent_->formations_.Remove( GetId() );
     else
-        side_.GetFormations().Unregister( *this );
+        team_.formations_.Remove( GetId() );
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: Formation::SendCreation
@@ -59,17 +55,17 @@ Formation::~Formation()
 // -----------------------------------------------------------------------------
 void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientFormationCreation asn;
+    client::FormationCreation asn;
 
-    asn().oid      = nID_;
-    asn().oid_camp = side_.GetID();
-    asn().nom      = strName_.c_str();
-    asn().niveau   = nLevel_;
+    asn().oid      = GetId();
+    asn().oid_camp = team_.GetId();
+    asn().nom      = name_.c_str();
+    asn().niveau   = level_;
 
-    if( pParent_ )
+    if( parent_ )
     {
         asn().m.oid_formation_parentePresent = 1;
-        asn().oid_formation_parente          = pParent_->GetID();
+        asn().oid_formation_parente = parent_->GetId();
     }
 
     asn.Send( publisher );
@@ -85,12 +81,30 @@ void Formation::SendFullUpdate( ClientPublisher_ABC& ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Formation::SendDestruction
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void Formation::SendDestruction( ClientPublisher_ABC& ) const
+{
+    throw std::runtime_error( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Formation::Accept
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Formation::Accept( ModelVisitor_ABC& visitor )
+void Formation::Accept( ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    subordinates_ .Apply( std::mem_fun_ref( &Formation   ::Accept ), visitor );
-    automats_     .Apply( std::mem_fun_ref( &Automat     ::Accept ), visitor );
+    formations_.Apply( boost::bind( &Formation::Accept, _1, boost::ref( visitor ) ) );
+    automats_.Apply( boost::bind( &Automat::Accept, _1, boost::ref( visitor ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetLevel
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+const kernel::HierarchyLevel_ABC& Formation::GetLevel() const
+{
+    throw std::runtime_error( "Not implemented" ); // $$$$ AGE 2008-06-20: 
 }

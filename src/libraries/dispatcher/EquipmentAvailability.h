@@ -11,7 +11,6 @@
 #define __EquipmentAvailability_h_
 
 #include "game_asn/Simulation.h"
-#include "ModelRefsContainer.h"
 
 namespace dispatcher
 {
@@ -29,8 +28,8 @@ class EquipmentAvailability
 public:
     //! @name Constructors/Destructor
     //@{
-     EquipmentAvailability( Model& model, const T& asn );
-    ~EquipmentAvailability();
+    explicit EquipmentAvailability( const T& asn );
+    virtual ~EquipmentAvailability();
     //@}
 
     //! @name Operations
@@ -39,19 +38,12 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
-    //@{
-    EquipmentAvailability( const EquipmentAvailability& );            //!< Copy constructor
-    EquipmentAvailability& operator=( const EquipmentAvailability& ); //!< Assignement operator
-    //@}
-
-private:
-    const unsigned int nEquipmentType_;
-    const unsigned int nNbrTotal_;
-    const unsigned int nNbrAvailable_;
-    const unsigned int nNbrWorking_;
-    const unsigned int nNbrLent_;
-    const unsigned int nNbrResting_;
+    unsigned int nEquipmentType_;
+    unsigned int nNbrTotal_;
+    unsigned int nNbrAvailable_;
+    unsigned int nNbrWorking_;
+    unsigned int nNbrLent_;
+    unsigned int nNbrResting_;
 };
 
 }

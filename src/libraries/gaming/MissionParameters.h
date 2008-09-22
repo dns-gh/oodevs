@@ -21,7 +21,11 @@ namespace kernel
     class Controller;
 }
 
-class Action_ABC;
+namespace actions
+{
+    class Action_ABC;
+}
+
 class ActionFactory_ABC;
 
 // =============================================================================
@@ -34,7 +38,7 @@ class MissionParameters : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
                         , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
                         , public kernel::Updatable_ABC< ASN1T_MsgPopulationOrder >
-                        , public kernel::Resolver< Action_ABC >
+                        , public kernel::Resolver< actions::Action_ABC >
                         , public kernel::Drawable_ABC
 {
 

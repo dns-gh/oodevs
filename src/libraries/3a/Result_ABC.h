@@ -11,10 +11,6 @@
 #define __Result_ABC_h_
 
 #include "Slots.h"
-namespace dispatcher
-{
-    class ClientPublisher_ABC;
-}
 
 // =============================================================================
 /** @class  Result_ABC
@@ -35,7 +31,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetName() const = 0;
-    virtual void Send( dispatcher::ClientPublisher_ABC& publisher ) const = 0;
+    virtual void Commit() const = 0;
     //@}
 };
 

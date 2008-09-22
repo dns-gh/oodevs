@@ -10,8 +10,9 @@
 #include "dispatcher_pch.h"
 #include "LogConsignMedical.h"
 #include "Model.h"
+#include "ClientPublisher_ABC.h"
+#include "ModelVisitor_ABC.h"
 #include "Agent.h"
-#include "Network_Def.h"
 
 using namespace dispatcher;
 
@@ -19,16 +20,16 @@ using namespace dispatcher;
 // Name: LogConsignMedical constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-LogConsignMedical::LogConsignMedical( Model& model, const ASN1T_MsgLogMedicalHandlingCreation& msg )
-    : model_            ( model )
-    , nID_              ( msg.oid_consigne )
-    , agent_            ( model.GetAgents().Get( msg.oid_pion ) )
+LogConsignMedical::LogConsignMedical( const Model& model, const ASN1T_MsgLogMedicalHandlingCreation& msg )
+    : SimpleEntity< >   ( msg.oid_consigne )
+    , model_            ( model )
+    , agent_            ( model.agents_.Get( msg.oid_pion ) )
     , nTickCreation_    ( msg.tick_creation )
     , pTreatingAgent_   ( 0 )
     , nRank_            ( msg.rang )
     , nWound_           ( msg.blessure )
-    , bMentalDiseased_  ( msg.blesse_mental )
-    , bContaminated_    ( msg.contamine_nbc )
+    , bMentalDiseased_  ( msg.blesse_mental != 0 )
+    , bContaminated_    ( msg.contamine_nbc != 0 )
     , nState_           ( EnumLogMedicalHandlingStatus::ambulance_ramassage_dechargement )
     , bDiagnosed_       ( false )
 {
@@ -51,22 +52,22 @@ LogConsignMedical::~LogConsignMedical()
 void LogConsignMedical::Update( const ASN1T_MsgLogMedicalHandlingUpdate& msg )
 {
     if( msg.m.oid_pion_log_traitantPresent )
-        pTreatingAgent_ = ( msg.oid_pion_log_traitant == 0 ) ? 0 : &model_.GetAgents().Get( msg.oid_pion_log_traitant );
+        pTreatingAgent_ = ( msg.oid_pion_log_traitant == 0 ) ? 0 : &model_.agents_.Get( msg.oid_pion_log_traitant );
 
     if( msg.m.blessurePresent )
         nWound_ = msg.blessure;
 
     if( msg.m.blesse_mentalPresent )
-        bMentalDiseased_ = msg.blesse_mental;
+        bMentalDiseased_ = msg.blesse_mental != 0;
 
     if( msg.m.contamine_nbcPresent )
-        bContaminated_ = msg.contamine_nbc;
+        bContaminated_ = msg.contamine_nbc != 0;
 
     if( msg.m.etatPresent )
         nState_ = msg.etat;
 
     if( msg.m.diagnostique_effectuePresent )
-        bDiagnosed_ = msg.diagnostique_effectue;
+        bDiagnosed_ = msg.diagnostique_effectue != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -75,10 +76,10 @@ void LogConsignMedical::Update( const ASN1T_MsgLogMedicalHandlingUpdate& msg )
 // -----------------------------------------------------------------------------
 void LogConsignMedical::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMedicalHandlingCreation asn;
+    client::LogMedicalHandlingCreation asn;
 
-    asn().oid_consigne  = nID_;
-    asn().oid_pion      = agent_.GetID();
+    asn().oid_consigne  = GetId();
+    asn().oid_pion      = agent_.GetId();
     asn().tick_creation = nTickCreation_;
     asn().rang          = nRank_;
     asn().blessure      = nWound_;
@@ -94,10 +95,10 @@ void LogConsignMedical::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMedicalHandlingUpdate asn;
+    client::LogMedicalHandlingUpdate asn;
 
-    asn().oid_consigne = nID_;
-    asn().oid_pion     = agent_.GetID();
+    asn().oid_consigne = GetId();
+    asn().oid_pion     = agent_.GetId();
 
     asn().m.oid_pion_log_traitantPresent = 1;
     asn().m.blesse_mentalPresent         = 1;
@@ -106,7 +107,7 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().m.diagnostique_effectuePresent = 1;
     asn().m.etatPresent                  = 1;
 
-    asn().oid_pion_log_traitant = pTreatingAgent_ ? pTreatingAgent_->GetID() : 0;
+    asn().oid_pion_log_traitant = pTreatingAgent_ ? pTreatingAgent_->GetId() : 0;
     asn().blesse_mental         = bMentalDiseased_;
     asn().blessure              = nWound_;
     asn().contamine_nbc         = bContaminated_;
@@ -122,8 +123,17 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void LogConsignMedical::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientLogMedicalHandlingDestruction asn;
-    asn().oid_consigne = nID_;
-    asn().oid_pion     = agent_.GetID();
+    client::LogMedicalHandlingDestruction asn;
+    asn().oid_consigne = GetId();
+    asn().oid_pion     = agent_.GetId();
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignMedical::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void LogConsignMedical::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

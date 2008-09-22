@@ -28,7 +28,7 @@ using namespace frontend;
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
 CreateExercisePanel::CreateExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
-    : Panel_ABC         ( widget, action, context )
+    : Panel_ABC         ( widget, action, context, "CreateExercisePanel" )
     , config_           ( config )
     , existingExercises_( commands::ListExercises( config ) )
 {

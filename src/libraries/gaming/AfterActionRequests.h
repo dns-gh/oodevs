@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Update( const ASN1T_MsgIndicatorResult& asnMsg );
+    void Update( const ASN1T_MsgPlotResult& asnMsg );
 
     AfterActionRequest& CreateRequest( const AfterActionFunction& function );
     kernel::Iterator< const AfterActionRequest& > CreateIterator();

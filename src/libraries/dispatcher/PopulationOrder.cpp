@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "PopulationOrder.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 #include "Population.h"
 
 using namespace dispatcher;
@@ -44,8 +44,8 @@ PopulationOrder::~PopulationOrder()
 // -----------------------------------------------------------------------------
 void PopulationOrder::Send( ClientPublisher_ABC& publisher )
 {
-    AsnMsgSimToClientPopulationOrder asn;
-    asn().oid       = population_.GetID();
+    client::PopulationOrder asn;
+    asn().oid       = population_.GetId();
     asn().mission   = missionID_;
     
     Order_ABC::Send( asn().parametres );
@@ -62,9 +62,9 @@ void PopulationOrder::Send( ClientPublisher_ABC& publisher )
 // static
 void PopulationOrder::SendNoMission( const Population& population, ClientPublisher_ABC& publisher )
 {
-    AsnMsgSimToClientPopulationOrder asn;
+    client::PopulationOrder asn;
 
-    asn().oid          = population.GetID();
+    asn().oid          = population.GetId();
     asn().mission      = 0;
     asn().parametres.n = 0;
     asn.Send( publisher );

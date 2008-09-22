@@ -17,9 +17,7 @@
 namespace tools
 {
     QString ToString( ASN1T_EnumLocationType nType );
-    QString ToString( E_FuncLimaType nType );
 
-    E_FuncLimaType     LimaTypeFromString        ( const QString& type );
     E_LocationType     LocationFromString        ( const QString& type );
     E_AmmunitionFamily AmmunitionFamilyFromString( const QString& type );
     E_DotationFamily   DotationFamilyFromString  ( const QString& type );

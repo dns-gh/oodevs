@@ -20,10 +20,10 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 QString tools::translate( const char* context, const char* what )
 {
-    if ( qApp )
-	    return qApp->translate( context, what );
+    if( qApp )
+        return qApp->translate( context, what );
     else
-    	return QString::fromLatin1( what );
+        return QString::fromLatin1( what );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ QString tools::Unknown()
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_TroopHealthState nState )
 {
-    static const QString healthStates[] = 
+    static const QString healthStates[] =
     {
         tools::translate( "E_TroopHealthState", "Total" ),
         tools::translate( "E_TroopHealthState", "Operational" ),
@@ -64,7 +64,7 @@ QString tools::ToString( E_TroopHealthState nState )
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_PerceptionResult nResult )
 {
-    static const QString perceptions[] = 
+    static const QString perceptions[] =
     {
         tools::translate( "E_PerceptionResult", "Not seen" ),
         tools::translate( "E_PerceptionResult", "Detection" ),
@@ -82,7 +82,7 @@ QString tools::ToString( E_PerceptionResult nResult )
 // -----------------------------------------------------------------------------
 QString tools::ToString( kernel::E_LightingType lighting )
 {
-    static const QString lightings[] = 
+    static const QString lightings[] =
     {
         tools::translate( "E_PerceptionResult", "JourSansNuage" ),
         tools::translate( "E_PerceptionResult", "JourPeuNuageux" ),
@@ -107,7 +107,7 @@ QString tools::ToString( kernel::E_LightingType lighting )
 // -----------------------------------------------------------------------------
 QString tools::ToString( kernel::E_WeatherType weather )
 {
-    static const QString weathers[] = 
+    static const QString weathers[] =
     {
         tools::translate( "E_PerceptionResult", "PasDePrecipitation" ),
         tools::translate( "E_PerceptionResult", "TempeteDeSable" ),
@@ -350,6 +350,15 @@ QString tools::ToString( E_DotationFamily nType )
 }
 
 // -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2008-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_LocationType nType )
+{
+    return ENT_Tr::ConvertFromLocationType( nType ).c_str();
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::ObjectTypeFromString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
@@ -377,12 +386,130 @@ E_NatureLevel tools::NatureLevelFromString( const std::string& type )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Tools::tools
+// Created: AGE 2008-06-19
+// -----------------------------------------------------------------------------
+E_LocationType tools::LocationFromString( const std::string& type )
+{
+    return ENT_Tr::ConvertToLocationType( type );
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::TranslateObjectType
 // Created: AGE 2008-02-06
 // -----------------------------------------------------------------------------
 QString tools::TranslateObjectType( const std::string& xmlType )
 {
-    return ENT_Tr::ConvertFromObjectType( 
+    return ENT_Tr::ConvertFromObjectType(
                 ENT_Tr::ConvertToObjectType( xmlType ), ENT_Tr::eToTr
                 ).c_str();
+}
+
+namespace 
+{
+    // $$$$ SBO 2008-08-11: create a phase line type into static model
+    struct PhaseLineType
+    {
+        PhaseLineType( kernel::E_FuncLimaType type, const QString& fullName, const QString& shortName, const QString& xmlName )
+            : type_( type )
+            , fullName_( fullName )
+            , shortName_( shortName )
+            , xmlName_( xmlName )
+        {}
+        kernel::E_FuncLimaType type_;
+        QString fullName_;
+        QString shortName_;
+        QString xmlName_;
+    };
+
+    std::vector< PhaseLineType > InitializePhaseLines()
+    {
+        std::vector< PhaseLineType > lines;
+        // $$$$ SBO 2008-08-11: LD
+        lines.push_back( PhaseLineType( eLimaFuncLD, tools::translate( "E_FuncLimaType", "Line of departure (LD)" ), tools::translate( "E_FuncLimaType", "LD" ), "LD" ) );
+        // $$$$ SBO 2008-08-11: not operational (should probably be "phase line")
+        lines.push_back( PhaseLineType( eLimaFuncLCA, tools::translate( "E_FuncLimaType", "Attitude change line (ACL)" ), tools::translate( "E_FuncLimaType", "ACL" ), "LCA" ) );
+        // $$$$ SBO 2008-08-11: coordination should be "phase line"
+        // $$$$ SBO 2008-08-11: or FSCL "Fire support coordination line"
+        lines.push_back( PhaseLineType( eLimaFuncLC, tools::translate( "E_FuncLimaType", "Coordination line (CL)" ), tools::translate( "E_FuncLimaType", "CL" ), "LC" ) );
+        // $$$$ SBO 2008-08-11: not operational (should probably be "phase line")
+        lines.push_back( PhaseLineType( eLimaFuncLI, tools::translate( "E_FuncLimaType", "Denial line (DL)" ), tools::translate( "E_FuncLimaType", "DL" ), "LI" ) );
+        // $$$$ SBO 2008-08-11: should be "phase line"
+        lines.push_back( PhaseLineType( eLimaFuncLO, tools::translate( "E_FuncLimaType", "Objective line (OL)" ), tools::translate( "E_FuncLimaType", "OL" ), "LO" ) );
+        // $$$$ SBO 2008-08-11: not operational
+        lines.push_back( PhaseLineType( eLimaFuncLCAR, tools::translate( "E_FuncLimaType", "Blocking line (BL)" ), tools::translate( "E_FuncLimaType", "BL" ), "LCAR" ) );
+        // $$$$ SBO 2008-08-11: LRCL
+        lines.push_back( PhaseLineType( eLimaFuncLR, tools::translate( "E_FuncLimaType", "Handover line (HL)" ), tools::translate( "E_FuncLimaType", "HL" ), "LR" ) );
+        // $$$$ SBO 2008-08-11: should be "LD"
+        lines.push_back( PhaseLineType( eLimaFuncLDM, tools::translate( "E_FuncLimaType", "Start of mission line (SML)" ), tools::translate( "E_FuncLimaType", "SML" ), "LDM" ) );
+        // $$$$ SBO 2008-08-11: should not exist
+        lines.push_back( PhaseLineType( eLimaFuncLFM, tools::translate( "E_FuncLimaType", "End of mission line (EML)" ), tools::translate( "E_FuncLimaType", "EML" ), "LFM" ) );
+        // $$$$ SBO 2008-08-11: LIA
+        lines.push_back( PhaseLineType( eLimaFuncLIA, tools::translate( "E_FuncLimaType", "Recognition and reception line (RRL)" ), tools::translate( "E_FuncLimaType", "RRL" ), "LIA" ) );
+        return lines;
+    }
+
+    const std::vector< PhaseLineType >& PhaseLines()
+    {
+        static const std::vector< PhaseLineType > lines = InitializePhaseLines();
+        return lines;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: AGE 2008-06-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_FuncLimaType nType )
+{
+    if( nType >= 0 && nType < eLimaFuncNbr )
+        return PhaseLines()[ nType ].fullName_;
+    return Unknown();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToShortString
+// Created: SBO 2008-08-11
+// -----------------------------------------------------------------------------
+QString tools::ToShortString( kernel::E_FuncLimaType nType )
+{
+    if( nType >= 0 && nType < eLimaFuncNbr )
+        return PhaseLines()[ nType ].shortName_;
+    return Unknown();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::LimaTypeFromShortString
+// Created: AGE 2008-06-19
+// -----------------------------------------------------------------------------
+E_FuncLimaType tools::LimaTypeFromShortString( const QString& type )
+{
+    for( int i = 0; i < int( eLimaFuncNbr ); ++i )
+        if( PhaseLines()[i].shortName_ == type )
+            return (E_FuncLimaType)i;
+    return (E_FuncLimaType)-1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::LimaTypeFromXmlString
+// Created: SBO 2008-08-11
+// -----------------------------------------------------------------------------
+kernel::E_FuncLimaType tools::LimaTypeFromXmlString( const QString& type )
+{
+    for( int i = 0; i < int( eLimaFuncNbr ); ++i )
+        if( PhaseLines()[i].xmlName_ == type )
+            return (E_FuncLimaType)i;
+    return (E_FuncLimaType)-1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::LimaTypeShortToXmlString
+// Created: SBO 2008-08-11
+// -----------------------------------------------------------------------------
+QString tools::LimaTypeShortToXmlString( const QString& shortType )
+{
+    for( int i = 0; i < int( eLimaFuncNbr ); ++i )
+        if( PhaseLines()[i].shortName_ == shortType )
+            return PhaseLines()[i].xmlName_;
+    return "";
 }

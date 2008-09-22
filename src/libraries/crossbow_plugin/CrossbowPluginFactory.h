@@ -12,11 +12,6 @@
 
 #include "dispatcher/PluginFactory_ABC.h"
 
-namespace 
-{
-
-}
-
 namespace crossbow
 {
 
@@ -37,8 +32,10 @@ public:
     //@}
 
     //! @name Operations
-    //@{                                                    
-    virtual std::auto_ptr< dispatcher::Plugin_ABC > Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& resolver ) const;
+    //@{
+    virtual std::auto_ptr< dispatcher::Plugin_ABC > Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config,
+            dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::ClientPublisher_ABC& clients,
+            tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& resolver, dispatcher::CompositeRegistrable& registrables ) const ;
     //@}
 
 private:

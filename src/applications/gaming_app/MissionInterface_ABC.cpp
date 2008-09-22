@@ -10,13 +10,13 @@
 #include "gaming_app_pch.h"
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
-
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "icons.h"
 
 using namespace kernel;
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC constructor
@@ -24,6 +24,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const QString& title, Entity_ABC& entity, ActionController& controller )
     : QVBox      ( parent )
+    , title_     ( title )
     , controller_( controller )
     , entity_    ( entity )
 {
@@ -180,4 +181,13 @@ void MissionInterface_ABC::OnOk()
         return;
     Publish();
     parentWidget()->hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::Title
+// Created: AGE 2008-07-15
+// -----------------------------------------------------------------------------
+QString MissionInterface_ABC::Title() const
+{
+    return title_;
 }

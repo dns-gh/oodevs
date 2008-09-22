@@ -9,7 +9,6 @@
 
 #include "dispatcher_pch.h"
 #include "MissionParameter_IntelligenceList.h"
-#include "IntelligenceOrder.h"
 
 using namespace dispatcher;
 
@@ -17,11 +16,11 @@ using namespace dispatcher;
 // Name: MissionParameter_IntelligenceList constructor
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-MissionParameter_IntelligenceList::MissionParameter_IntelligenceList( Model& model, const ASN1T_MissionParameter& asn )
+MissionParameter_IntelligenceList::MissionParameter_IntelligenceList( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
     for( unsigned int i = 0; i < asn.value.u.intelligenceList->n; ++i )
-        intelligenceOrders_.Create( model, i, asn.value.u.intelligenceList->elem[ i ] );
+        intelligenceOrders_.push_back( IntelligenceOrder( asn.value.u.intelligenceList->elem[ i ] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,9 +39,13 @@ MissionParameter_IntelligenceList::~MissionParameter_IntelligenceList()
 void MissionParameter_IntelligenceList::Send( ASN1T_MissionParameter& asn ) const
 {
     asn.null_value = bNullValue_;
-    asn.value.t    = T_MissionParameter_value_intelligenceList;
+    asn.value.t = T_MissionParameter_value_intelligenceList;
     asn.value.u.intelligenceList = new ASN1T_IntelligenceList();
-    intelligenceOrders_.Send< ASN1T_IntelligenceList, ASN1T_Intelligence >( *asn.value.u.intelligenceList );
+    asn.value.u.intelligenceList->n = intelligenceOrders_.size();
+    asn.value.u.intelligenceList->elem = intelligenceOrders_.empty() ? 0 : new ASN1T_Intelligence[ asn.value.u.intelligenceList->n ];
+    unsigned int i = 0;
+    for( std::vector< IntelligenceOrder >::const_iterator it = intelligenceOrders_.begin(); it != intelligenceOrders_.end(); ++it, ++i )
+        it->Send( asn.value.u.intelligenceList->elem[i] );
 }
 
 // -----------------------------------------------------------------------------

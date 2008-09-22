@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "FolkModel.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -18,7 +18,8 @@ using namespace dispatcher;
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
 FolkModel::FolkModel()
-    : container_size( 0 )
+    : SimpleEntity< >( 0 )
+    , container_size( 0 )
     , edge_number   ( 0 )
 {
     // NOTHING
@@ -70,7 +71,7 @@ void FolkModel::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     if( container_size > 0 && edge_number > 0 )
     {
-        AsnMsgSimToClientFolkCreation asn;
+        client::FolkCreation asn;
         asn().container_size = container_size;
         asn().edge_number    = edge_number;
         std::vector< ASN1TDynOctStr > act, pro;
@@ -86,4 +87,13 @@ void FolkModel::SendCreation( ClientPublisher_ABC& publisher ) const
 
         asn.Send( publisher );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkModel::SendDestruction
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void FolkModel::SendDestruction( ClientPublisher_ABC& ) const
+{
+    throw std::runtime_error( __FUNCTION__ );
 }

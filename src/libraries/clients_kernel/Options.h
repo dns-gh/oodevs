@@ -69,6 +69,7 @@ private:
     //@{
     template< typename T >
     void Load( Settings_ABC& settings, const std::string& name, T defaultValue );
+    void CreateOption( Settings_ABC& settings, const std::string& name, char type );
     //@}
 
 private:

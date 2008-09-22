@@ -14,7 +14,7 @@
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "Config.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 #include "tools/AsnMessageDecoder.h"
 #include "tools/AsnMessageEncoder.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
@@ -89,14 +89,7 @@ void SimulationNetworker::ConnectionError( const std::string& address, const std
 // -----------------------------------------------------------------------------
 void SimulationNetworker::OnReceiveMsgSimToClient( const std::string& /*linkFrom*/, const ASN1T_MsgsSimToClient& message )
 {
-    try
-    {
-        simulation_->OnReceive( message );
-    }
-    catch( std::runtime_error& exception )
-    {
-        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
-    }
+    simulation_->OnReceive( message );
 }
 
 // =============================================================================
@@ -123,7 +116,7 @@ void SimulationNetworker::Send( const ASN1T_MsgsClientToSim& asnMsg )
 // Name: SimulationNetworker::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void SimulationNetworker::Send( const ASN1T_MsgsMiddleToSim& asnMsg )
+void SimulationNetworker::Send( const ASN1T_MsgsDispatcherToSim& asnMsg )
 {
     try
     {

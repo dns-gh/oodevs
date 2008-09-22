@@ -10,12 +10,14 @@
 #ifndef __PopulationFire_h_
 #define __PopulationFire_h_
 
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
 #include "game_asn/Simulation.h"
 
 namespace dispatcher
 {
     class Model;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  PopulationFire
@@ -23,7 +25,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-18
 // =============================================================================
-class PopulationFire : public Entity_ABC
+class PopulationFire : public SimpleEntity< >
 {
 
 public:
@@ -35,9 +37,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

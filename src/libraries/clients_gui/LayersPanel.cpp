@@ -13,6 +13,7 @@
 #include "LayersPanel.h"
 #include "moc_LayersPanel.cpp"
 #include "Layer_ABC.h"
+#include "CheckBox.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
@@ -26,18 +27,21 @@ using namespace gui;
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
 LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
-    : PreferencePanel_ABC( parent )
+    : PreferencePanel_ABC( parent, "LayersPanel" )
     , controllers_       ( controllers )
     , options_           ( controllers.options_ )
     , currentLayer_      ( -1 )
 {
     {
         QGroupBox* box = new QGroupBox( 1, Qt::Vertical, tr( "Fog of war" ), this );
-        fogOfWar_ = new QCheckBox( tr( "Display fog of war" ), box );
+        fogOfWar_ = new CheckBox( tr( "Display fog of war" ), box );
         connect( fogOfWar_, SIGNAL( toggled( bool ) ), SLOT( OnFogOfWarChanged( bool ) ) );
     }
     {
-        QHBox* box = new QHBox( this );
+        QGroupBox* groupBox = new QGroupBox( 1, Qt::Vertical, tr( "Layer display order and transparency" ), this );
+        QVBox* vBox = new QVBox( groupBox );
+        vBox->setSpacing( 6 );
+        QHBox* box = new QHBox( vBox );
         box->setSpacing( 5 );
         layersList_ = new QListView( box );
         layersList_->addColumn( tr( "Layer" ) );
@@ -50,14 +54,16 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
         buttonBox->layout()->setAlignment( Qt::AlignVCenter );
         QPushButton* up   = new QPushButton( MAKE_PIXMAP( arrow_up ), QString::null, buttonBox );
         up->setFixedSize( 32, 32 );
+        QToolTip::add( up, tr( "Move the selected layer forwards" ) );
         connect( up, SIGNAL( clicked() ), SLOT( OnUp() ) );
         QPushButton* down = new QPushButton( MAKE_PIXMAP( arrow_down ), QString::null, buttonBox );
         down->setFixedSize( 32, 32 );
+        QToolTip::add( down, tr( "Move the selected layer backwards" ) );
         connect( down, SIGNAL( clicked() ), SLOT( OnDown() ) );
-    }
-    {
-        QGroupBox* group = new QGroupBox( 1, Qt::Vertical, tr( "Transparency" ), this );
-        transparency_ = new QSlider( 0, 100, 1, 100, Qt::Horizontal, group );
+        
+        transparencyLabel_ = new QLabel( tr( "Transparency " ), vBox );
+        transparency_ = new QSlider( 0, 100, 1, 100, Qt::Horizontal, vBox );
+        transparency_->setMaximumWidth( 258 );
         connect( transparency_, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged() ) );
     }
     controllers_.Register( *this );
@@ -80,7 +86,7 @@ void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer )
 {
     ValuedListItem* item = new ValuedListItem( layersList_ );
     item->SetValue( &layer );
-    item->setText( 0, name );
+    item->setText( 0, "  "+name );
 
     layers_       .push_back( &layer );
     currentLayers_.push_back( &layer );
@@ -96,6 +102,7 @@ void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer )
 // -----------------------------------------------------------------------------
 void LayersPanel::Commit()
 {
+    fogOfWar_->Commit();
     current_       = new_;
     currentLayers_ = newLayers_;
     for( unsigned i = 0; i < layers_.size(); ++i )
@@ -113,6 +120,7 @@ void LayersPanel::Commit()
 // -----------------------------------------------------------------------------
 void LayersPanel::Reset()
 {
+    fogOfWar_->Revert();
     new_       = current_;
     newLayers_ = currentLayers_;
     for( unsigned i = 0; i < layers_.size(); ++i )
@@ -126,7 +134,28 @@ void LayersPanel::Reset()
         item->SetValue( *it );
         T_Layers::const_iterator lit = std::find( layers_.begin(), layers_.end(), *it );
         if( lit != layers_.end() )
-            item->setText( 0, names_[ lit - layers_.begin() ] );
+        {
+            item->setText( 0, "  "+names_[ lit - layers_.begin() ]);
+        }
+    }
+    UpdateLeastAndMostVisible();
+    layersList_->setCurrentItem( layersList_-> firstChild() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::Reset
+// Created: RPD 2008-08-13
+// -----------------------------------------------------------------------------
+void LayersPanel::UpdateLeastAndMostVisible()
+{
+    if( layersList_->childCount() > 1 )
+    {
+        for( QListViewItem* item = layersList_->firstChild(); item; item = item->nextSibling() )
+            for( T_Names::const_iterator it = names_.begin(); it != names_.end(); ++it )
+                if( item->text( 0 ).contains( *it ) )
+                    item->setText( 0, "  " + *it );
+        layersList_->firstChild()->setText( 0, layersList_->firstChild()->text( 0 ) + tr( " (foreground)" ) );
+        layersList_->lastItem()->setText( 0, layersList_->lastItem()->text( 0 ) + tr( " (background)" ) );
     }
 }
 
@@ -152,11 +181,20 @@ void LayersPanel::OnSelectionChanged( QListViewItem* i )
     currentLayer_ = -1;
     ValuedListItem* item = static_cast< ValuedListItem* >( i );
     T_Layers::const_iterator it = std::find( layers_.begin(), layers_.end(), item->GetValue< Layer_ABC >() );
+    
+    QString transparencyLabelText( tr( "Transparency " ) );
     if( it != layers_.end() )
     {
         currentLayer_ = it - layers_.begin();
         transparency_->setValue( int( new_[ currentLayer_ ] * 100 ) );
+        for( T_Names::const_iterator nIT = names_.begin(); nIT != names_.end(); ++nIT )
+            if( i->text( 0 ).contains( *nIT ) )
+            {
+                transparencyLabelText += tr( "for %1:" ).arg( *nIT );
+                break;
+            }
     }
+    transparencyLabel_->setText( transparencyLabelText );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,6 +219,7 @@ void LayersPanel::OnUp()
             }
         }
     }
+    UpdateLeastAndMostVisible();
 }
 
 // -----------------------------------------------------------------------------
@@ -206,6 +245,7 @@ void LayersPanel::OnDown()
             }
         }
     }
+    UpdateLeastAndMostVisible();
 }
 
 // -----------------------------------------------------------------------------

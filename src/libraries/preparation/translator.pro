@@ -30,6 +30,5 @@ TacticalLine_ABC.cpp \
 Tc2States.cpp \
 Team.cpp \
 TeamsModel.cpp \
-Tools.cpp \
 
 TRANSLATIONS = preparation_fr.ts preparation_en.ts

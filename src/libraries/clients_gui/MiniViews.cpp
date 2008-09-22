@@ -29,7 +29,7 @@ using namespace gui;
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
 MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers )
-    : QDockWindow( parent )
+    : QDockWindow( parent, "miniviews" )
     , controllers_( controllers )
     , widget_( 0 )
     , selected_( controllers_ )
@@ -39,7 +39,7 @@ MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers )
     setCloseMode( Always );
     parent->setDockEnabled( this, Qt::DockTop, false );
     setCaption( tr( "Miniviews" ) );
-    grid_ = new SmartGridWidget( this, 2, Qt::Vertical );
+    grid_ = new SmartGridWidget( this, 2, Qt::Vertical, "miniviews" );
     setWidget( grid_ );
    
     controllers_.Register( *this );

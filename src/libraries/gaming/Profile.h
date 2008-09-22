@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "Simulation.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -26,7 +26,10 @@ namespace kernel
     class Formation_ABC;
 }
 
+class Services;
+class Simulation;
 class Publisher_ABC;
+class Model;
 
 // =============================================================================
 /** @class  Profile
@@ -40,23 +43,23 @@ class Profile : public kernel::Profile_ABC
               , public kernel::ElementObserver_ABC< kernel::Population_ABC >
               , public kernel::ElementObserver_ABC< kernel::Team_ABC >
               , public kernel::ElementObserver_ABC< kernel::Formation_ABC >
-              , public kernel::ElementObserver_ABC< Simulation::sEndTick >
               , public kernel::ElementObserver_ABC< Simulation >
+              , public kernel::ElementObserver_ABC< Services >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Profile( kernel::Controllers& controllers );
+             Profile( kernel::Controllers& controllers, Publisher_ABC& publisher, const std::string& profile = "" );
     virtual ~Profile();
     //@}
 
     //! @name Operations
     //@{
-    void Login( Publisher_ABC& publisher ) const;
-    void Login( Publisher_ABC& publisher, const std::string& login, const std::string& password ) const;
+    void Login() const;
+    void Login( const std::string& login, const std::string& password ) const;
     void Update( const ASN1T_MsgAuthenticationResponse& asnMsg );
-    void Update( const ASN1T_MsgProfileUpdate& asnMsg );
+    void Update( const Model& model, const ASN1T_MsgProfileUpdate& asnMsg );
     //@}
     
     //! @name Accessors
@@ -93,6 +96,9 @@ private:
     //@{
     void Update( const ASN1T_Profile& profile );
     void Clean();
+    void ResolveEntities( const Model& model );
+    template< typename Entity >
+    void ResolveEntities( const kernel::Resolver_ABC< Entity >& resolver, const T_Ids& readIds, const T_Ids& readWriteIds );
 
     template< typename T >
     void ReadList( const T& idList, T_Ids& ids );
@@ -104,9 +110,8 @@ private:
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void NotifyCreated( const kernel::Formation_ABC& formation );
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
-
-    virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const Services& services );
     
     void Add   ( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds );
     void Remove( const kernel::Entity_ABC& entity );
@@ -119,12 +124,12 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    Publisher_ABC& publisher_;
     mutable std::string login_;
     mutable std::string password_;
     bool loggedIn_;
     bool supervision_;
-    bool replay_;
-    bool firstTicked_;
+    bool simulation_;
 
     T_Entities readEntities_;
     T_Entities readWriteEntities_;

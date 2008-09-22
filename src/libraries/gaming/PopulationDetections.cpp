@@ -62,7 +62,6 @@ void PopulationDetections::DoUpdate( const ASN1T_MsgPopulationConcentrationDetec
 void PopulationDetections::DoUpdate( const ASN1T_MsgPopulationFlowDetection& message )
 {
     const PopulationPart_ABC* pFlow = & resolver_.Get( message.population_oid ).GetFlow( message.flow_oid );
-
     if( message.visible_flow.coordinates.n )
         perceived_.insert( pFlow );
     else
@@ -81,7 +80,7 @@ void PopulationDetections::Draw( const geometry::Point2f&, const kernel::Viewpor
     glPushAttrib( GL_CURRENT_BIT );
     glColor4f( COLOR_DETECTED );
     for( CIT_Parts it = perceived_.begin(); it != perceived_.end(); ++it )
-        tools.DrawLine( center, (*it)->GetPosition() );
+        tools.DrawLine( center, (*it)->Get< kernel::Positions >().GetPosition() );
     glPopAttrib();
 }
 

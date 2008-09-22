@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MissionParameter_ObjectKnowledgeList.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -20,8 +20,8 @@ using namespace dispatcher;
 MissionParameter_ObjectKnowledgeList::MissionParameter_ObjectKnowledgeList( const ASN1T_MissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    for( unsigned i = 0; i != asn.value.u.objectKnowledgeList->n; ++i )
-        objectKnowledges_.push_back( asn.value.u.objectKnowledgeList->elem[i] );
+    std::copy( asn.value.u.objectKnowledgeList->elem, asn.value.u.objectKnowledgeList->elem + asn.value.u.objectKnowledgeList->n
+             , std::back_inserter( objectKnowledges_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,20 +33,19 @@ MissionParameter_ObjectKnowledgeList::~MissionParameter_ObjectKnowledgeList()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_ObjectKnowledgeList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_ObjectKnowledgeList::Send( ASN1T_MissionParameter& asn ) const
 {
-    asn.null_value                  = bNullValue_;
-    asn.value.t                     = T_MissionParameter_value_objectKnowledgeList;
+    asn.null_value = bNullValue_;
+    asn.value.t = T_MissionParameter_value_objectKnowledgeList;
     asn.value.u.objectKnowledgeList = new ASN1T_ObjectKnowledgeList();
-    SendContainerValues< ASN1T_ObjectKnowledgeList, ASN1T_ObjectKnowledge, T_OIDVector >( objectKnowledges_, *asn.value.u.objectKnowledgeList ); 
+    {
+        asn.value.u.objectKnowledgeList->n = objectKnowledges_.size();
+        asn.value.u.objectKnowledgeList->elem = (int*)( objectKnowledges_.empty() ? 0 : &objectKnowledges_.front() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +54,5 @@ void MissionParameter_ObjectKnowledgeList::Send( ASN1T_MissionParameter& asn ) c
 // -----------------------------------------------------------------------------
 void MissionParameter_ObjectKnowledgeList::AsnDelete( ASN1T_MissionParameter& asn ) const
 {
-    if( asn.value.u.objectKnowledgeList->n > 0 )
-        delete [] asn.value.u.objectKnowledgeList->elem;
     delete asn.value.u.objectKnowledgeList;
 }

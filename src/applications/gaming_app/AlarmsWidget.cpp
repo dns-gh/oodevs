@@ -18,7 +18,7 @@
 // Created: AGE 2007-05-07
 // -----------------------------------------------------------------------------
 AlarmsWidget::AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation )
-    : QDialog     ( parent )
+    : QDialog     ( parent, "AlarmsWidget" )
     , controllers_( controllers )
     , simulation_ ( simulation )
     , remove_     ( 0 )

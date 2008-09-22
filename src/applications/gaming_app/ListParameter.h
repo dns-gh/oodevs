@@ -12,7 +12,10 @@
 
 #include "Param_ABC.h"
 
-class ActionParameter_ABC;
+namespace actions 
+{
+    class Parameter_ABC;
+}
 
 // =============================================================================
 /** @class  ListParameter
@@ -43,7 +46,7 @@ protected:
     //! @name Operations
     //@{
     unsigned int Count() const;
-    void CommitChildrenTo( ActionParameterContainer_ABC& parent ) const;
+    void CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const;
     void Select( const Param_ABC& param );
     virtual void DeleteElement( Param_ABC& param );
     void EnableCreation( bool enabled );

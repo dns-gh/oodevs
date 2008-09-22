@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "AfterActionPlot.h"
 #include "gaming/AfterActionRequest.h"
-#include "gaming/ReplayMessages.h"
+#include "game_asn/ReplaySenders.h"
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
@@ -23,7 +23,7 @@ using namespace kernel;
 // Created: AGE 2007-09-26
 // -----------------------------------------------------------------------------
 AfterActionPlot::AfterActionPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock )
-    : GQ_Plot( parent )
+    : GQ_Plot( parent, "AfterActionPlot" )
     , controllers_( controllers )
     , publisher_( publisher )
     , dock_( dock )

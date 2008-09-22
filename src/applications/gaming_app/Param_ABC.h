@@ -20,7 +20,10 @@ namespace kernel
     class Viewport_ABC;
 }
 
-class ActionParameterContainer_ABC;
+namespace actions
+{
+    class ParameterContainer_ABC;
+}
 
 // =============================================================================
 /** @class  Param_ABC
@@ -46,7 +49,7 @@ public:
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void BuildInterface( QWidget* parent ) = 0;
     virtual bool CheckValidity();
-    virtual void CommitTo( ActionParameterContainer_ABC& ) const = 0;
+    virtual void CommitTo( actions::ParameterContainer_ABC& ) const = 0;
     //@}
 
     //! @name Accessors

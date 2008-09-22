@@ -16,6 +16,10 @@
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/AboutDialog.h"
+#include "clients_gui/HelpSystem.h"
+#include "tools/GeneralConfig.h"
+#include "tools/Version.h"
+#include "preparation/Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -50,75 +54,82 @@ namespace
         Populate( *optionMenu );
         parent->insertItem( iconSet, label, optionMenu );
     }
+
+    QPixmap MakePixmap( const std::string& name )
+    {
+        return QImage( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, gui::ItemFactory_ABC& factory, const QString& license )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( MAKE_ICON( new ) , tr( "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
-    menu->insertItem( MAKE_ICON( open ), tr( "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
-    menu->insertItem( tr( "Close" ), parent(), SLOT( Close() ) );
+    menu->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
+    menu->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
+    menu->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ) );
     menu->insertSeparator();
-    menu->insertItem( tr( "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I );
+    menu->insertItem( tools::translate( "Menu", "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I );
     menu->insertSeparator();
-    menu->insertItem( MAKE_ICON( save )  , tr( "&Save" )      , parent(), SLOT( Save() ), CTRL + Key_S );
+    menu->insertItem( MAKE_ICON( save )  , tools::translate( "Menu", "&Save" )      , parent(), SLOT( Save() ), CTRL + Key_S );
     menu->insertSeparator();
-    menu->insertItem( tr( "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
-    insertItem( tr( "&File" ), menu );
+    menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
+    insertItem( tools::translate( "Menu", "&File" ), menu );
 
     menu = new QPopupMenu( this );
-    menu->insertItem( tr( "View/Edit..." ), &profileDialog, SLOT( exec() ) );
+    menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "View/Edit..." ), &profileDialog, SLOT( exec() ) );
     menu->insertSeparator();
-    menu->insertItem( tr( "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
-    insertItem( tr( "&Profiles" ), menu );
+    menu->insertItem( tools::translate( "Menu", "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
+    insertItem( tools::translate( "Menu", "&Profiles" ), menu );
 
     menu = new QPopupMenu( this );
     QPopupMenu* subMenu = new QPopupMenu( menu );
-    AddSubMenu4( subMenu, tr( "Links" )            , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
-    AddSubMenu4( subMenu, tr( "Missing links" )    , MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
-    menu->insertItem( tr( "Logistic..." ), subMenu );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" ), controllers.options_, "LogisticLinks" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
+    menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );
-    AddSubMenu3( subMenu, tr( "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
-    AddSubMenu3( subMenu, tr( "Large text" )    , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
-    AddSubMenu4( subMenu, tr( "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
+    AddSubMenu3( subMenu, tools::translate( "Menu", "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
+    AddSubMenu3( subMenu, tools::translate( "Menu", "Large text" )    , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
+    AddSubMenu4( subMenu, tools::translate( "Menu", "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
 
     subMenu->insertSeparator();
 
     OptionMenu< float >* gridMenu = new OptionMenu< float >( subMenu, controllers.options_, "GridSize" );
-    gridMenu->AddItem( tr( "Off"    ),  -1 );
-    gridMenu->AddItem( tr( "100m"  ),  0.1f );
-    gridMenu->AddItem( tr( "250m" ),  0.25f );
-    gridMenu->AddItem( tr( "500m"  ),  0.5f );
-    gridMenu->AddItem( tr( "1km"  ),  1.0f );
-    gridMenu->AddItem( tr( "2.5km"  ),  2.5f );
-    gridMenu->AddItem( tr( "5km"  ),  5.0f );
-    gridMenu->AddItem( tr( "10km" ), 10.0f );
-    subMenu->insertItem( tr( "Grid" ), gridMenu );
+    gridMenu->AddItem( tools::translate( "Menu", "Off"    ),  -1 );
+    gridMenu->AddItem( tools::translate( "Menu", "100m"  ),  0.1f );
+    gridMenu->AddItem( tools::translate( "Menu", "250m" ),  0.25f );
+    gridMenu->AddItem( tools::translate( "Menu", "500m"  ),  0.5f );
+    gridMenu->AddItem( tools::translate( "Menu", "1km"  ),  1.0f );
+    gridMenu->AddItem( tools::translate( "Menu", "2.5km"  ),  2.5f );
+    gridMenu->AddItem( tools::translate( "Menu", "5km"  ),  5.0f );
+    gridMenu->AddItem( tools::translate( "Menu", "10km" ), 10.0f );
+    subMenu->insertItem( tools::translate( "Menu", "Grid" ), gridMenu );
 
-    menu->insertItem( tr( "Terrain..." ), subMenu );
+    menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );
     menu->insertSeparator();
 
     OptionMenu< bool >* boolMenu = new OptionMenu< bool >( menu, controllers.options_, "3D" );
-    boolMenu->AddItem( tr( "2D" ), false );
-    boolMenu->AddItem( tr( "3D" ), true );
-    menu->insertItem( MAKE_ICON( threed ), tr( "Display mode" ), boolMenu );
+    boolMenu->AddItem( tools::translate( "Menu", "2D" ), false );
+    boolMenu->AddItem( tools::translate( "Menu", "3D" ), true );
+    menu->insertItem( MAKE_ICON( threed ), tools::translate( "Menu", "Display mode" ), boolMenu );
 
     menu->insertSeparator();
-    menu->insertItem( tr( "&Preferences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
-    insertItem( tr( "&Display" ), menu );
+    menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
+    insertItem( tools::translate( "Menu", "&Display" ), menu );
 
     menu = pParent->createDockWindowMenu();
-    insertItem( tr( "&Windows" ), menu );
+    insertItem( tools::translate( "Menu", "&Windows" ), menu );
 
     menu = new QPopupMenu( this );
-    menu->insertItem( tr( "About" ), new AboutDialog( this, factory, QString( APP_NAME ) + " " + QString( APP_VERSION ), license ), SLOT( exec() ) );
-    insertItem( tr( "&Help" ), menu );
+    menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Key_F1 );
+    menu->insertSeparator();
+    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "SWORD Officer Training - Preparation" ) + " " + QString( tools::AppVersion() ), license ), SLOT( exec() ) );
+    insertItem( tools::translate( "Menu", "&?" ), menu );
 }
     
 // -----------------------------------------------------------------------------

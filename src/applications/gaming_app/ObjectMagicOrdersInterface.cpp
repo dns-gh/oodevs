@@ -14,7 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "gaming/Object.h"
 
 using namespace kernel;

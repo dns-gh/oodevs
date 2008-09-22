@@ -13,7 +13,6 @@
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "dispatcher/Network_Def.h"
 
 using namespace crossbow;
 
@@ -68,13 +67,13 @@ void StatusListener::ChangeStatus( const std::string& status )
 {
     if( paused_ && status == "resumed" )
     {
-        dispatcher::AsnMsgClientToSimControlResume asn;
+        simulation::ControlResume asn;
         asn.Send( publisher_ );
         paused_ = false;
     }
     else if( !paused_ && status == "paused" )
     {
-        dispatcher::AsnMsgClientToSimControlPause asn;
+        simulation::ControlPause asn;
         asn.Send( publisher_ );
         paused_ = true;
     }

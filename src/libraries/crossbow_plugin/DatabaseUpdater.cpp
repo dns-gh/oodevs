@@ -90,7 +90,7 @@ namespace
     template< typename List >
     void UpdateSymbol( Row_ABC& row, List& list, int id )
     {
-        if( const dispatcher::Entity_ABC* element = list.Find( id ) )
+        if( const kernel::Entity_ABC* element = list.Find( id ) )
             row.SetField( "Symbol_ID", FieldVariant( FormatSymbol( element->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ) ) );
     }
 }
@@ -109,7 +109,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitCreation& msg )
     row.SetField( "Parent_OID", FieldVariant( msg.oid_automate ) );
     row.SetField( "Name"      , FieldVariant( std::string( msg.nom ) ) );
     row.SetField( "Type"      , FieldVariant( msg.type_pion ) );
-    UpdateSymbol( row, model_.GetAgents(), msg.oid );
+    UpdateSymbol( row, model_.agents_, msg.oid );
     row.SetShape( Point() );
     table.UpdateRow( row );
 }
@@ -137,7 +137,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeCreation& msg )
     row.SetField( "Group_OID"   , FieldVariant( msg.oid_groupe_possesseur ) );
     row.SetField( "RealUnit_OID", FieldVariant( msg.oid_unite_reelle ) );
         
-    if( const dispatcher::Agent* realAgent = model_.GetAgents().Find( msg.oid_unite_reelle ) )
+    if( const dispatcher::Agent* realAgent = model_.agents_.Find( msg.oid_unite_reelle ) )
     {
         std::string a = tools::app6::GetAffiliation( realAgent->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() );
         row.SetField( "ObserverAffiliation", FieldVariant( InverseAffiliation( a ) ) );
@@ -203,7 +203,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgObjectCreation& msg )
     Row_ABC& row = table->CreateRow();
     row.SetField( "Public_OID", FieldVariant( msg.oid ) );
     row.SetField( "Name"      , FieldVariant( std::string( msg.name ) ) );
-    UpdateSymbol( row, model_.GetObjects(), msg.oid );
+    UpdateSymbol( row, model_.objects_, msg.oid );
     switch ( msg.location.type )
     {
     case EnumLocationType::point: row.SetShape( Point( msg.location.coordinates.elem[ 0 ] ) ); break;
@@ -244,7 +244,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgFormationCreation& asn )
     row.SetField( "Name", FieldVariant( std::string( asn.nom ) ) );
     row.SetField( "Type", FieldVariant( -1 ) );
     row.SetField( "Engaged", FieldVariant( 0 ) );
-    UpdateSymbol( row, model_.GetFormations(), asn.oid );
+    UpdateSymbol( row, model_.formations_, asn.oid );
     table.UpdateRow( row );
 }
 
@@ -264,7 +264,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgAutomatCreation& asn )
         row.SetField( "Parent_OID", FieldVariant( asn.oid_parent.u.automate ) );
     row.SetField( "Name", FieldVariant( std::string( asn.nom ) ) );
     row.SetField( "Type", FieldVariant( asn.type_automate ) );
-    UpdateSymbol( row, model_.GetAutomats(), asn.oid );
+    UpdateSymbol( row, model_.automats_, asn.oid );
     table->UpdateRow( row );
 }
 
@@ -359,7 +359,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeUpdate& msg )
         if( msg.m.identification_levelPresent )
             row->SetField( "IdentificationLevel", FieldVariant( msg.identification_level ) );
         if( msg.m.max_identification_levelPresent )
-            UpdateSymbol( *row, model_.GetAgentKnowledges(), msg.oid );
+            UpdateSymbol( *row, model_.agentKnowledges_, msg.oid );
         if( msg.m.positionPresent )
             row->SetShape( Point( msg.position ) );
         table->UpdateRow( *row );

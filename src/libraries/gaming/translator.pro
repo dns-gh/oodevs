@@ -1,32 +1,9 @@
 HEADERS = 
 
 SOURCES = ActionFactory.cpp \
-ActionParameter.inl \
-ActionParameterAgentKnowledge.cpp \
-ActionParameterAgentKnowledgeList.cpp \
-ActionParameterAgentList.cpp \
-ActionParameterAtlasNature.cpp \
-ActionParameterAutomatList.cpp \
 ActionParameterFactory.cpp \
-ActionParameterIntelligence.cpp \
-ActionParameterIntelligenceList.cpp \
-ActionParameterLima.cpp \
-ActionParameterLimaList.cpp \
-ActionParameterLocationList.cpp \
-ActionParameterObjectKnowledge.cpp \
-ActionParameterObjectKnowledgeList.cpp \
-ActionParameterObjective.cpp \
-ActionParameterObjectiveList.cpp \
-ActionParameterObstacle.cpp \
-ActionParameterObstacleList.cpp \
-ActionParameterPath.cpp \
-ActionParameterPathList.cpp \
-ActionParameterPopulationKnowledge.cpp \
-ActionParameter_ABC.cpp \
-Action_ABC.cpp \
 Agent.cpp \
 AgentKnowledge.cpp \
-AtlasNatures.cpp \
 Attributes.cpp \
 Automat.cpp \
 AutomatDecisions.cpp \

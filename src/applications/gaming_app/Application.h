@@ -26,6 +26,7 @@ class Simulation;
 class Profile;
 class Config;
 class LoggerProxy;
+class Services;
 
 // =============================================================================
 /** @class  Application
@@ -75,6 +76,7 @@ private:
     kernel::Controllers* controllers_;
     StaticModel* staticModel_;
     Model* model_;
+    Services* services_;
     Simulation* simulation_;
     Profile* profile_;
     kernel::Workers* workers_;

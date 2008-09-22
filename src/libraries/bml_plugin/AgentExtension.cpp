@@ -94,7 +94,7 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitDetection& message )
 {
     try
     {
-        DetectionReport report( holder_, model_.GetAgents().Get( message.detected_unit_oid ), message.current_visibility );
+        DetectionReport report( holder_, model_.agents_.Get( message.detected_unit_oid ), message.current_visibility );
         report.Send( publisher_ );
     }
     catch( std::exception& e )

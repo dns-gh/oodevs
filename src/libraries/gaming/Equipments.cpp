@@ -26,7 +26,7 @@ using namespace kernel;
 Equipments::Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, PropertiesDictionary& dico
                        , const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver
                        , const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver
-                       , const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver)
+                       , const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : HierarchicExtension_ABC( automatResolver, formationResolver, teamResolver )
     , controller_( controller )
     , resolver_( resolver )

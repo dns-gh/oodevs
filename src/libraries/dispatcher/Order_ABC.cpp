@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Order_ABC.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 #include "MissionParameter_ABC.h"
 
 using namespace dispatcher;
@@ -43,7 +43,7 @@ Order_ABC::~Order_ABC()
 void Order_ABC::InitializeParameters( const ASN1T_MissionParameters& parameters )
 {
     for( unsigned i = 0; i < parameters.n; ++i )
-        parameters_.push_back( MissionParameter_ABC::Create( model_, parameters.elem[ i ] ) );
+        parameters_.push_back( MissionParameter_ABC::Create( parameters.elem[ i ] ) );
 }
 
 // -----------------------------------------------------------------------------

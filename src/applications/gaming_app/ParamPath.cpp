@@ -18,8 +18,8 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/OrderParameter.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterPath.h"
+#include "actions/Action_ABC.h"
+#include "actions/Path.h"
 
 using namespace kernel;
 using namespace gui;
@@ -72,7 +72,7 @@ void ParamPath::BuildInterface( QWidget* parent )
 void ParamPath::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , const GlTools_ABC& tools ) const
 {
     if( location_.get() )
-        location_->Draw( tools );
+        ShapeHandler_ABC::Draw( *location_, geometry::Rectangle2f(), tools ); // $$$$ SBO 2008-06-03: 
 }
 
 // -----------------------------------------------------------------------------
@@ -93,18 +93,18 @@ bool ParamPath::CheckValidity()
 // Name: ParamPath::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void ParamPath::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamPath::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param;
+    std::auto_ptr< actions::Parameter_ABC > param;
     if( location_.get() )
     {
-        param.reset( new ActionParameterPath( parameter_, converter_, *location_ ) );
+        param.reset( new actions::parameters::Path( parameter_, converter_, *location_ ) );
         param->Set( location_->IsValid() );
     }
     else
     {
         kernel::Point stub;
-        param.reset( new ActionParameterPath( parameter_, converter_, stub ) );
+        param.reset( new actions::parameters::Path( parameter_, converter_, stub ) );
         param->Set( false );
     }
     action.AddParameter( *param.release() );

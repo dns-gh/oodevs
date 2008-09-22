@@ -27,7 +27,11 @@ namespace gui
     class ParametersLayer;
 }
 
-class ActionParameter_ABC;
+namespace actions
+{
+    class Parameter_ABC;
+}
+
 class ParamLocation;
 class ParamNumericField;
 class ParamAutomat;
@@ -56,7 +60,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
 
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 signals:

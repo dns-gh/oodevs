@@ -13,6 +13,8 @@
 
 using namespace kernel;
 
+const QString Team_ABC::typeName_ = "team";
+
 // -----------------------------------------------------------------------------
 // Name: Team_ABC constructor
 // Created: SBO 2006-08-08
@@ -29,6 +31,15 @@ Team_ABC::Team_ABC()
 Team_ABC::~Team_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team_ABC::GetTypeName
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+QString Team_ABC::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------

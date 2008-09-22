@@ -27,7 +27,7 @@ class StartReplay : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             StartReplay( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session, unsigned port );
+             StartReplay( const tools::GeneralConfig& config, const QString& exercise, const QString& session, unsigned port, bool attach = false );
     virtual ~StartReplay();
     //@}
 

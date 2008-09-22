@@ -33,11 +33,13 @@
 #include "UserProfileFactory.h"
 #include "ActionParameterFactory.h"
 #include "ActionFactory.h"
-#include "ActionsModel.h"
+#include "actions/ActionsModel.h"
 #include "FolkModel.h"
 #include "AfterActionModel.h"
 #include "IntelligenceFactory.h"
 #include "IntelligencesModel.h"
+#include "DrawingFactory.h"
+#include "DrawingsModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/FormationLevels.h"
 
@@ -67,6 +69,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , actionParameterFactory_( *new ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_ ) )
     , actionFactory_( *new ActionFactory( controllers, actionParameterFactory_, *this, staticModel.types_, staticModel.types_, simulation ) )
     , intelligenceFactory_( *new IntelligenceFactory( controllers, staticModel.coordinateConverter_, *this, staticModel.levels_, publisher ) )
+    , drawingFactory_( *new DrawingFactory( controllers.controller_, staticModel.drawings_, publisher, staticModel.coordinateConverter_ ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
@@ -76,10 +79,11 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , fires_( *new FiresModel( agents_, agents_ ) )
     , weather_( *new WeatherModel( controllers, *this ) )
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
-    , actions_( *new ActionsModel( actionFactory_, simulation ) )
+    , actions_( *new actions::ActionsModel( actionFactory_ ) )
     , folk_( *new FolkModel( controllers.controller_ ) )
     , aar_( *new AfterActionModel( controllers.controller_, publisher ) )
     , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )
+    , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
 {
     // NOTHING
 }
@@ -90,6 +94,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &drawings_;
     delete &intelligences_;
     delete &aar_;
     delete &folk_;
@@ -103,6 +108,7 @@ Model::~Model()
     delete &teams_;
     delete &objects_;
     delete &agents_;
+    delete &drawingFactory_;
     delete &intelligenceFactory_;
     delete &actionFactory_;
     delete &actionParameterFactory_;
@@ -126,6 +132,7 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
+    drawings_.Purge();
     intelligences_.Purge();
     actions_.Purge();
     profiles_.Purge();

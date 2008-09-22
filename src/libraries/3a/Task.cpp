@@ -146,7 +146,7 @@ void Task::SetResult( boost::shared_ptr< Result_ABC > output )
 // -----------------------------------------------------------------------------
 void Task::Receive( const ASN1T_MsgsSimToClient& message )
 {
-    // $$$$ AGE 2007-10-10: bDummies : 
+    // $$$$ AGE 2007-10-10: bDummies :
     // $$$$ AGE 2007-10-10: le LoadKeyFrame génère un BeginTick mais pas de EndTick()...
     try
     {
@@ -154,7 +154,7 @@ void Task::Receive( const ASN1T_MsgsSimToClient& message )
         {
             if( ! frameEnded_ )
                 composite_.EndTick();
-            composite_.BeginTick(); 
+            composite_.BeginTick();
             frameEnded_ = false;
         }
         else if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
@@ -164,10 +164,10 @@ void Task::Receive( const ASN1T_MsgsSimToClient& message )
         }
         else
             composite_.Receive( message );
-    } 
+    }
     catch( std::exception& e )
     {
-        // $$$$ AGE 2007-09-25:  ? 
+        // $$$$ AGE 2007-09-25:  ?
     }
 }
 
@@ -175,21 +175,21 @@ void Task::Receive( const ASN1T_MsgsSimToClient& message )
 // Name: Task::Commit
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void Task::Commit( dispatcher::ClientPublisher_ABC& publisher )
+void Task::Commit()
 {
     if( result_ )
-        result_->Send( publisher );
+        result_->Commit();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Task::Process
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void Task::Process( dispatcher::MessageLoader_ABC& loader, dispatcher::ClientPublisher_ABC& publisher )
+void Task::Process( dispatcher::MessageLoader_ABC& loader  )
 {
     const unsigned ticks = loader.GetTickNumber();
     loader.LoadKeyFrame( 0, *this );
     for( unsigned i = 0; i < ticks-1; ++i )
         loader.LoadFrame( i, *this );
-    loader.LoadFrame( ticks-1, *this, boost::bind( &Task::Commit, shared_from_this(), boost::ref( publisher ) ) );
+    loader.LoadFrame( ticks-1, *this, boost::bind( &Task::Commit, shared_from_this() ) );
 }

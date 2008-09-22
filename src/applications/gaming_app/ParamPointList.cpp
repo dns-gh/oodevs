@@ -10,8 +10,8 @@
 #include "gaming_app_pch.h"
 #include "ParamPointList.h"
 #include "ParamLocation.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterPointList.h"
+#include "actions/Action_ABC.h"
+#include "actions/PointList.h"
 
 using namespace kernel;
 
@@ -39,9 +39,9 @@ ParamPointList::~ParamPointList()
 // Name: ParamPointList::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void ParamPointList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamPointList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterPointList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::PointList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

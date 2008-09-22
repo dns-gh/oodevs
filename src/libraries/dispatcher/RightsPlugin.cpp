@@ -12,12 +12,15 @@
 #include "tools/MessageDispatcher_ABC.h"
 #include "LinkResolver_ABC.h"
 #include "Profile_ABC.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
+#include "game_asn/AuthenticationSenders.h"
 #include "ProfileManager.h"
 #include "Profile.h"
 #include "DefaultProfile.h"
 #include "Client.h"
 #include "NoopPublisher.h"
+#include "CompositeRegistrable.h"
+#include "Services.h"
 
 using namespace dispatcher;
 
@@ -25,12 +28,13 @@ using namespace dispatcher;
 // Name: RightsPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base )
+RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables )
     : profiles_( new ProfileManager( model, clients, config ) )
     , container_( container )
     , base_( base )
 {
     clientCommands.RegisterMessage( *this, &RightsPlugin::OnReceive );
+    registrables.Add( new dispatcher::RegistrableProxy( *profiles_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +44,15 @@ RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Co
 RightsPlugin::~RightsPlugin()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RightsPlugin::Register
+// Created: AGE 2008-08-13
+// -----------------------------------------------------------------------------
+void RightsPlugin::Register( dispatcher::Services& services )
+{
+    services.Declare< authentication::Service >();
 }
 
 // -----------------------------------------------------------------------------
@@ -107,20 +120,20 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     Profile* profile = profiles_->Authenticate( message.login, message.password );
     if( !profile )
     {
-        AsnMsgAuthenticationToClientAuthenticationResponse ack;
+        authentication::AuthenticationResponse ack;
         ack().error_code = MsgAuthenticationResponse_error_code::invalid_login;
         ack.Send( client );
     }
     else
     {
-        AsnMsgAuthenticationToClientAuthenticationResponse ack;
+        authentication::AuthenticationResponse ack;
         ack().error_code       = MsgAuthenticationResponse_error_code::success;
         ack().m.profilePresent = 1;
         profile->Send( ack().profile );
         ack.Send( client );
         Profile::AsnDelete( ack().profile );
-        container_.NotifyClientAuthenticated( client, *profile );
         authenticated_[ link ] = profile;
+        container_.NotifyClientAuthenticated( client, *profile );
     }
 }
 
@@ -130,7 +143,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
 // -----------------------------------------------------------------------------
 void RightsPlugin::OnReceiveMsgProfileCreationRequest( ClientPublisher_ABC& client, const ASN1T_MsgProfileCreationRequest& message )
 {
-    AsnMsgAuthenticationToClientProfileCreationRequestAck ack;
+    authentication::ProfileCreationRequestAck ack;
     ack().error_code = profiles_->Create( message );
     ack().login       = message.login;
     ack.Send( client );
@@ -142,7 +155,7 @@ void RightsPlugin::OnReceiveMsgProfileCreationRequest( ClientPublisher_ABC& clie
 // -----------------------------------------------------------------------------
 void RightsPlugin::OnReceiveMsgProfileUpdateRequest( ClientPublisher_ABC& client, const ASN1T_MsgProfileUpdateRequest& message )
 {
-    AsnMsgAuthenticationToClientProfileUpdateRequestAck ack;
+    authentication::ProfileUpdateRequestAck ack;
     ack().error_code = profiles_->Update( message );
     ack().login       = message.login;
     ack.Send( client );
@@ -154,7 +167,7 @@ void RightsPlugin::OnReceiveMsgProfileUpdateRequest( ClientPublisher_ABC& client
 // -----------------------------------------------------------------------------
 void RightsPlugin::OnReceiveMsgProfileDestructionRequest( ClientPublisher_ABC& client, const ASN1T_MsgProfileDestructionRequest& message )
 {
-    AsnMsgAuthenticationToClientProfileDestructionRequestAck ack;
+    authentication::ProfileDestructionRequestAck ack;
     ack().error_code = profiles_->Destroy( message );
     ack().login       = message;
     ack.Send( client );

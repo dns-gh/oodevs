@@ -17,6 +17,13 @@ namespace tools
     class GeneralConfig;
 }
 
+namespace gui 
+{
+    class LinkInterpreter_ABC ; 
+}
+
+class SessionStatus ; 
+
 // =============================================================================
 /** @class  HomePage
     @brief  HomePage
@@ -29,7 +36,7 @@ class HomePage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             HomePage( QWidgetStack* pages, const tools::GeneralConfig& config );
+    explicit HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< SessionStatus > sessionStatus );
     virtual ~HomePage();
     //@}
 };

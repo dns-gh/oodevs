@@ -18,7 +18,7 @@
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
 InfoReportsTab::InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : QVBox( parent )
+    : QVBox( parent, "InfoReportsTab" )
     , controllers_( controllers )
     , parent_( parent )
 {

@@ -18,6 +18,12 @@ namespace kernel
     class Controllers;
     class CoordinateConverter_ABC;
     class FormationLevels;
+    class AtlasNatures;
+}
+
+namespace gui
+{
+    class DrawingTypes;
 }
 
 namespace tools
@@ -28,7 +34,6 @@ namespace tools
 class SurfaceFactory;
 class ReportFactory;
 class RcEntityResolver_ABC;
-class AtlasNatures;
 class Simulation;
 
 // =============================================================================
@@ -62,9 +67,10 @@ public:
     kernel::AgentTypes&              types_;
     kernel::ObjectTypes&             objectTypes_;
     kernel::FormationLevels&         levels_;
+    kernel::AtlasNatures&            atlasNatures_;
     SurfaceFactory&                  surfaceFactory_;
     ReportFactory&                   reportFactory_;
-    AtlasNatures&                    atlasNatures_;
+    gui::DrawingTypes&               drawings_;
     //@}
 
 private:

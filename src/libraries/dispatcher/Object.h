@@ -12,13 +12,16 @@
 
 #include "game_asn/Simulation.h"
 #include "Localisation.h"
-#include "Entity_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "SimpleEntity.h"
 
 namespace dispatcher
 {
     class Side;
     class Model;
     class ObjectAttribute_ABC;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  Object
@@ -26,7 +29,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Object : public Entity_ABC
+class Object : public SimpleEntity< kernel::Object_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -35,18 +38,17 @@ public:
     virtual ~Object();
     //@}
 
-    //! @name Accessors
-    //@{
-    unsigned long GetID() const;
-    //@}
-
     //! @name Operations
     //@{
-    using Entity_ABC::Update;
+    using kernel::Entity_ABC::Update;
     void Update( const ASN1T_MsgObjectUpdate&   msg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor ) const;
+
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual const kernel::ObjectType& GetType() const;
     //@}
 
 private:
@@ -68,7 +70,8 @@ private:
     //@}
 
 public:
-    const unsigned long          nID_;
+    //! @name Member data
+    //@{
     const ASN1T_EnumObjectType   nType_; // XML reference - no resolved by dispatcher
     const ASN1T_EnumObstacleType nObstacleType_;
     const std::string            strName_;
@@ -86,10 +89,9 @@ public:
     unsigned int         nNbrDotationForMining_;
 
     T_Optionals          optionals_;
+    //@}
 };
 
 }
-
-#include "Object.inl"
 
 #endif // __Object_h_

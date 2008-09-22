@@ -46,7 +46,7 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     virtual void BuildInterface( QWidget* parent );
     //@}

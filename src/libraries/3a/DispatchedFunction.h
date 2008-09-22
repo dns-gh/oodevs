@@ -13,6 +13,7 @@
 #include "ModelFunction_ABC.h"
 #include "ValueHandler_ABC.h"
 #include <memory>
+#include <boost/shared_ptr.hpp>
 
 // =============================================================================
 /** @class  DispatchedFunction

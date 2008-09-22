@@ -26,7 +26,7 @@ class Network;
 //=============================================================================
 class DisconnectDialog : public QDialog
 {
-    Q_OBJECT
+    Q_OBJECT;
 
 public:
     //! @name Constructor/Destructor
@@ -55,10 +55,5 @@ private:
     Network& network_;
     //@}
 };
-
-
-#ifdef USE_INLINE
-#   include "DisconnectDialog.inl"
-#endif
 
 #endif // __DisconnectDialog_h_

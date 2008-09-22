@@ -20,7 +20,14 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "gaming/Tools.h"
-#include "AuthenticationMessages.h"
+#include "gaming/Model.h"
+#include "gaming/TeamsModel.h"
+#include "gaming/AgentsModel.h"
+#include "game_asn/AuthenticationSenders.h"
+#include "game_asn/SimulationSenders.h"
+#include "Simulation.h"
+#include "Services.h"
+#include <boost/bind.hpp>
 
 using namespace kernel;
 
@@ -28,12 +35,13 @@ using namespace kernel;
 // Name: Profile constructor
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-Profile::Profile( Controllers& controllers )
+Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std::string& profile )
     : controller_ ( controllers.controller_ )
+    , publisher_  ( publisher )
+    , login_      ( profile )
     , loggedIn_   ( false )
     , supervision_( false )
-    , replay_     ( false )
-    , firstTicked_( false )
+    , simulation_ ( true )
 {
     controller_.Register( *this );
 }
@@ -51,23 +59,24 @@ Profile::~Profile()
 // Name: Profile::Login
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void Profile::Login( Publisher_ABC& publisher ) const
+void Profile::Login() const
 {
     authentication::AuthenticationRequest asnMsg;
     asnMsg().login    = login_.c_str();
     asnMsg().password = password_.c_str();
-    asnMsg.Send( publisher );
+    asnMsg.Send( publisher_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Profile::Login
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void Profile::Login( Publisher_ABC& publisher, const std::string& login, const std::string& password ) const
+void Profile::Login( const std::string& login, const std::string& password ) const
 {
     login_    = login;
     password_ = password;
-    Login( publisher );
+    Login();
+    controller_.Update( *(kernel::Profile_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +86,7 @@ void Profile::Login( Publisher_ABC& publisher, const std::string& login, const s
 template< typename T >
 void Profile::ReadList( const T& idList, T_Ids& ids )
 {
+    ids.clear();
     ids.reserve( idList.n );
     for( unsigned i = 0; i < idList.n; ++i )
         ids.push_back( idList.elem[ i ] );
@@ -93,8 +103,7 @@ void Profile::Update( const ASN1T_MsgAuthenticationResponse& message )
     if( message.m.profilePresent )
     {
         Update( message.profile );
-        if( firstTicked_ )
-            controller_.Update( *(Profile_ABC*)this );
+        controller_.Update( *(Profile_ABC*)this );
     }
     controller_.Update( *this );
 }
@@ -103,11 +112,12 @@ void Profile::Update( const ASN1T_MsgAuthenticationResponse& message )
 // Name: Profile::Update
 // Created: SBO 2007-01-23
 // -----------------------------------------------------------------------------
-void Profile::Update( const ASN1T_MsgProfileUpdate& message )
+void Profile::Update( const Model& model, const ASN1T_MsgProfileUpdate& message )
 {
     if( message.login == login_ )
     {
         Update( message.profile );
+        ResolveEntities( model );
         controller_.Update( *this );
         controller_.Update( *(kernel::Profile_ABC*)this );
     }
@@ -146,12 +156,39 @@ void Profile::Update( const ASN1T_Profile& profile )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Profile::ResolveEntities
+// Created: SBO 2008-07-25
+// -----------------------------------------------------------------------------
+template< typename Entity >
+void Profile::ResolveEntities( const kernel::Resolver_ABC< Entity >& resolver, const T_Ids& readIds, const T_Ids& readWriteIds )
+{
+    std::for_each( readIds.begin(), readIds.end()
+                 , boost::bind( &Profile::Add, this, boost::bind( &kernel::Resolver_ABC< Entity >::Get, boost::ref( resolver ), _1 ), readIds, readWriteIds ) );
+    std::for_each( readWriteIds.begin(), readWriteIds.end()
+                 , boost::bind( &Profile::Add, this, boost::bind( &kernel::Resolver_ABC< Entity >::Get, boost::ref( resolver ), _1 ), readIds, readWriteIds ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::ResolveEntities
+// Created: SBO 2008-07-25
+// -----------------------------------------------------------------------------
+void Profile::ResolveEntities( const Model& model )
+{
+    readWriteEntities_.clear();
+    readEntities_.clear();
+    ResolveEntities< kernel::Team_ABC >      ( model.teams_ , readTeams_      , writeTeams_ );
+    ResolveEntities< kernel::Formation_ABC > ( model.teams_ , readFormations_ , writeFormations_ );
+    ResolveEntities< kernel::Automat_ABC >   ( model.agents_, readAutomats_   , writeAutomats_ );
+    ResolveEntities< kernel::Population_ABC >( model.agents_, readPopulations_, writePopulations_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Profile::GetLogin
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
 QString Profile::GetLogin() const
 {
-    return loggedIn_ ? login_.c_str() : tools::translate( "Profile", "login" );
+    return login_.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +224,7 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 {
-    return !replay_ && IsInHierarchy( entity, readWriteEntities_, true );
+    return simulation_ && IsInHierarchy( entity, readWriteEntities_, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +233,7 @@ bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool Profile::CanDoMagic( const kernel::Entity_ABC& entity ) const
 {
-    return supervision_ && !replay_ && CanBeOrdered( entity );
+    return simulation_ && supervision_ && CanBeOrdered( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +265,8 @@ bool Profile::IsInHierarchy( const Entity_ABC& entity, const Hierarchies& hierar
         return true;
     if( childOnly )
         return false;
-    const Hierarchies* otherHierarchies = FindHierarchies( other );
+
+    const Hierarchies* otherHierarchies = hierarchy.RetrieveHierarchies( other );
     return otherHierarchies && otherHierarchies->IsSubordinateOf( entity );
 }
 
@@ -280,7 +318,7 @@ void Profile::NotifyCreated( const Population_ABC& popu )
 void Profile::NotifyDeleted( const Population_ABC& popu )
 {
     Remove( popu );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: Profile::NotifyCreated
@@ -352,7 +390,6 @@ void Profile::Clean()
 {
     login_ = "";
     password_ = "";
-    firstTicked_ = false;
     supervision_ = false;
     loggedIn_ = false;
     readEntities_.clear();
@@ -369,25 +406,22 @@ void Profile::Clean()
 
 // -----------------------------------------------------------------------------
 // Name: Profile::NotifyUpdated
-// Created: AGE 2006-10-13
-// -----------------------------------------------------------------------------
-void Profile::NotifyUpdated( const Simulation::sEndTick& )
-{
-    // $$$$ AGE 2006-10-13: pas terrible...
-    if( ! firstTicked_ )
-    {
-        firstTicked_ = true;
-        controller_.Update( *(Profile_ABC*)this );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::NotifyUpdated
 // Created: SBO 2007-03-20
 // -----------------------------------------------------------------------------
 void Profile::NotifyUpdated( const Simulation& simulation )
 {
-    replay_ = simulation.IsReplayer();
     if( !simulation.IsConnected() )
         Clean();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyUpdated
+// Created: AGE 2008-08-13
+// -----------------------------------------------------------------------------
+void Profile::NotifyUpdated( const Services& services )
+{
+    simulation_ = services.HasService< simulation::Service >();
+    if( services.HasService< authentication::Service >() )
+        Login();
+}
+

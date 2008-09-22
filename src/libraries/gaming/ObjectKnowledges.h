@@ -20,9 +20,9 @@ namespace kernel
 {
     class Controller;
     class Team_ABC;
+    class ObjectKnowledge_ABC;
 }
 
-class ObjectKnowledge_ABC;
 class ObjectKnowledgeFactory;
 
 // =============================================================================
@@ -35,7 +35,7 @@ class ObjectKnowledges : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeDestruction >
-                       , public kernel::Resolver< ObjectKnowledge_ABC >
+                       , public kernel::Resolver< kernel::ObjectKnowledge_ABC >
                        , public kernel::Creatable< ObjectKnowledges >
 {
 

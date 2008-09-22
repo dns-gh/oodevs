@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MissionParameter_ABC.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 
 #include "MissionParameter_Bool.h"
 #include "MissionParameter_Numeric.h"
@@ -50,16 +50,12 @@
 
 using namespace dispatcher;
 
-// =============================================================================
-// STATICS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_ABC::Create
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 // static
-MissionParameter_ABC* MissionParameter_ABC::Create( Model& model, const ASN1T_MissionParameter& asn )
+MissionParameter_ABC* MissionParameter_ABC::Create( const ASN1T_MissionParameter& asn )
 {
     switch( asn.value.t )
     {
@@ -97,23 +93,19 @@ MissionParameter_ABC* MissionParameter_ABC::Create( Model& model, const ASN1T_Mi
         case T_MissionParameter_value_missionObjective          : return new MissionParameter_Objective             ( asn );
         case T_MissionParameter_value_missionObjectiveList      : return new MissionParameter_ObjectiveList         ( asn );
         case T_MissionParameter_value_line                      : return new MissionParameter_Line                  ( asn );
-        case T_MissionParameter_value_limasOrder                : return new MissionParameter_LimasOrder            ( model, asn );
-        case T_MissionParameter_value_intelligenceList          : return new MissionParameter_IntelligenceList      ( model, asn );
+        case T_MissionParameter_value_limasOrder                : return new MissionParameter_LimasOrder            ( asn );
+        case T_MissionParameter_value_intelligenceList          : return new MissionParameter_IntelligenceList      ( asn );
         default:
             throw std::runtime_error( "Invalid mission parameter type" );
     }
 }
-
-// =============================================================================
-// INSTANCES
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_ABC constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 MissionParameter_ABC::MissionParameter_ABC( const ASN1T_MissionParameter& asn )
-    : bNullValue_( asn.null_value )
+    : bNullValue_( asn.null_value != 0 )
 {
     // NOTHING
 }

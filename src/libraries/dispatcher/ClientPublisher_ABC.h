@@ -10,11 +10,12 @@
 #ifndef __ClientPublisher_ABC_h_
 #define __ClientPublisher_ABC_h_
 
-#include "game_asn/Simulation.h"
-#include "game_asn/Authentication.h"
-#include "game_asn/Replay.h"
-#include "game_asn/Aar.h"
-#include "game_asn/Messenger.h" 
+#include "game_asn/ClientSenders.h"
+#include "game_asn/AuthenticationSenders.h"
+#include "game_asn/ReplaySenders.h"
+#include "game_asn/AarSenders.h"
+#include "game_asn/MessengerSenders.h"
+#include "game_asn/DispatcherSenders.h"
 
 namespace dispatcher
 {
@@ -41,7 +42,13 @@ public:
     virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg ) = 0;
     virtual void Send( const ASN1T_MsgsReplayToClient&         msg ) = 0;
     virtual void Send( const ASN1T_MsgsAarToClient&            msg ) = 0;
-    virtual void Send( const ASN1T_MsgsMessengerToClient&      msg ) = 0; 
+    virtual void Send( const ASN1T_MsgsMessengerToClient&      msg ) = 0;
+    virtual void Send( const ASN1T_MsgsDispatcherToClient&     msg ) = 0;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual std::string GetEndpoint() const = 0;
     //@}
 };
 

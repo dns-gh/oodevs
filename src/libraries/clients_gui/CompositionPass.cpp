@@ -15,6 +15,7 @@
 #include "graphics/FragmentShader.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
+#include "tools/GeneralConfig.h"
 #include <fstream>
 
 using namespace gui;
@@ -179,7 +180,7 @@ void CompositionPass::Initialize()
         const unsigned size = 64 * 64 * 64;
         char buffer[ size ];
         ::memset( buffer, 0, size );
-        std::ifstream input( "noise.dds" );
+        std::ifstream input( tools::GeneralConfig::BuildResourceChildFile( "noise.dds" ).c_str() );
         input.seekg( 128, std::ios_base::cur );
         input.read( buffer, size );
         gl::glTexImage3D( gl::GL_TEXTURE_3D, 0, GL_RGB, 64, 64, 64, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, buffer );

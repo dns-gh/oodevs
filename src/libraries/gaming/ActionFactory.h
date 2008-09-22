@@ -12,6 +12,7 @@
 
 #include "ActionFactory_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
+#include "game_asn/simulation.h"
 
 namespace kernel
 {
@@ -21,8 +22,8 @@ namespace kernel
 }
 
 class Model;
-class ActionParameterFactory_ABC;
 class Simulation;
+class ParameterFactory_ABC;
 
 // =============================================================================
 /** @class  ActionFactory
@@ -36,7 +37,7 @@ class ActionFactory : public ActionFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionFactory( kernel::Controllers& controllers, const ActionParameterFactory_ABC& factory, const Model& model
+             ActionFactory( kernel::Controllers& controllers, const ParameterFactory_ABC& factory, const Model& model
                           , const kernel::Resolver_ABC< kernel::MissionType >& missions
                           , const kernel::Resolver_ABC< kernel::FragOrderType >& fragOrders, const Simulation& simulation );
     virtual ~ActionFactory();
@@ -44,15 +45,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const;
+    virtual actions::Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
+    virtual actions::Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const;
 
-    virtual Action_ABC* CreateAction( const ASN1T_MsgUnitOrder& message ) const;
-    virtual Action_ABC* CreateAction( const ASN1T_MsgAutomatOrder& message ) const;
-    virtual Action_ABC* CreateAction( const ASN1T_MsgPopulationOrder& message ) const;
-    virtual Action_ABC* CreateAction( const ASN1T_MsgFragOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgUnitOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgAutomatOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgPopulationOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgFragOrder& message ) const;
 
-    virtual Action_ABC* CreateAction( xml::xistream& xis ) const;
+    virtual actions::Action_ABC* CreateAction( xml::xistream& xis ) const;
     //@}
 
 private:
@@ -64,18 +65,18 @@ private:
 
     //! @name Helpers
     //@{
-    Action_ABC* CreateMission( xml::xistream& xis ) const;
-    Action_ABC* CreateFragOrder( xml::xistream& xis ) const;
+    actions::Action_ABC* CreateMission( xml::xistream& xis ) const;
+    actions::Action_ABC* CreateFragOrder( xml::xistream& xis ) const;
 
-    void AddParameters( Action_ABC& action, const kernel::OrderType& order, const ASN1T_MissionParameters& asn ) const;
-    void ReadParameter( xml::xistream& xis, Action_ABC& action, kernel::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
+    void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const ASN1T_MissionParameters& asn ) const;
+    void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, kernel::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const ActionParameterFactory_ABC& factory_;
+    const ParameterFactory_ABC& factory_;
     const Model& model_;
     const kernel::Resolver_ABC< kernel::MissionType >& missions_;
     const kernel::Resolver_ABC< kernel::FragOrderType >& fragOrders_;

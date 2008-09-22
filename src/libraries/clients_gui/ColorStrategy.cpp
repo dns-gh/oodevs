@@ -24,6 +24,7 @@
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "Drawing_ABC.h"
 #include "ColorModifier_ABC.h"
 #include <numeric>
 #include <boost/bind.hpp>
@@ -207,6 +208,15 @@ void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
 void ColorStrategy::SelectColor( const Intelligence_ABC& intelligence )
 {
     ApplyColor( ApplyModifiers( intelligence, GetKarmaColor( intelligence.GetKarma() ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: SBO 2008-06-02
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const Drawing_ABC& drawing )
+{
+    ApplyColor( drawing.GetColor() );
 }
 
 // -----------------------------------------------------------------------------

@@ -40,6 +40,7 @@
 #include "preparation/FormationModel.h"
 #include "preparation/IntelligencesModel.h"
 #include "preparation/ModelChecker_ABC.h"
+#include "preparation/Tools.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -77,7 +78,7 @@
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/DrawerLayer.h"
 #include "clients_gui/DrawerFactory.h"
-#include "clients_gui/DrawerToolbar.h"
+#include "clients_gui/DrawerPanel.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/RasterLayer.h"
@@ -86,6 +87,8 @@
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/IntelligenceList.h"
 #include "clients_gui/TooltipsLayer.h"
+#include "clients_gui/HelpSystem.h"
+
 #include "graphics/DragMovementLayer.h"
 
 #include "tools/ExerciseConfig.h"
@@ -136,7 +139,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     RichItemFactory* factory = new RichItemFactory( this );
 
     // Agent list panel
-    QDockWindow* pListDockWnd_ = new QDockWindow( this );
+    QDockWindow* pListDockWnd_ = new QDockWindow( this, "orbat" );
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
@@ -174,7 +177,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
     // Creation panel
-    QDockWindow* pCreationDockWnd = new QDockWindow( this );
+    QDockWindow* pCreationDockWnd = new QDockWindow( this, "creation" );
     moveDockWindow( pCreationDockWnd, Qt::DockRight );
     CreationPanels* pCreationPanel = new CreationPanels( pCreationDockWnd, controllers, staticModel_, *factory, *symbols, *strategy_ );
     pCreationDockWnd->setWidget( pCreationPanel );
@@ -185,7 +188,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // Properties panel
     {
-        QDockWindow* pPropertiesDockWnd = new QDockWindow( this );
+        QDockWindow* pPropertiesDockWnd = new QDockWindow( this, "properties" );
         moveDockWindow( pPropertiesDockWnd, Qt::DockRight );
         ::PropertiesPanel* propertiesPanel = new ::PropertiesPanel( pPropertiesDockWnd, controllers, model_, staticModel_ );
         pPropertiesDockWnd->setWidget( propertiesPanel );
@@ -211,19 +214,18 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     TemplatesPanel* templates = new TemplatesPanel( pCreationDockWnd, *pCreationPanel, controllers, model.agents_, model.formations_, staticModel.types_ );
     pCreationPanel->AddPanel( templates );
 
+    gui::DrawerPanel* drawerPanel = new DrawerPanel( pCreationDockWnd, *pCreationPanel, *paramLayer, controllers, model.drawings_ );
+    pCreationPanel->AddPanel( drawerPanel );
+
     QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
     new FileToolbar( this );
     new DisplayToolbar( this, controllers );
 
-    // Drawer
-    DrawerFactory* drawerFactory = new DrawerFactory( this, *glProxy_, controllers_ );
-    DrawerLayer* drawer = new DrawerLayer( controllers_, *glProxy_, *drawerFactory );
-    new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_, controllers_ );
-
-    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *factory, expiration );
+    gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *factory, expiration, *help );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );
+    CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );
 
     StatusBar* pStatus = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -234,20 +236,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ReadOptions();
 
     if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) && Load() )
-        if( bfs::exists( bfs::path( config_.GetOrbatFile(), bfs::native ) ) )
-        {
-            loading_ = true;
-            model_.Load( config_ );
-            loading_ = false;
-            SetWindowTitle( false );
-        }
+        LoadExercise();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locations, WeatherLayer& weather, ::AgentsLayer& agents, DrawerLayer& drawer, GraphicPreferences& setup, PreferencesDialog& preferences, const Profile_ABC& profile )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locations, WeatherLayer& weather, ::AgentsLayer& agents, GraphicPreferences& setup, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
     TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
     Layer_ABC& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, agents );
@@ -263,6 +259,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
+    Layer_ABC& drawerLayer          = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
@@ -282,7 +279,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );
     glProxy_->Register( metrics );                                                                                  metrics             .SetPasses( "main" );
     glProxy_->Register( locations );                                                                                locations           .SetPasses( "main" );
-    glProxy_->Register( drawer );                                                                                   drawer              .SetPasses( "main" );
+    glProxy_->Register( drawerLayer );                                                                              drawerLayer         .SetPasses( "main" );
     glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );
 
     // ordre des evenements
@@ -294,6 +291,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     forward_->Register( intelligences );
     forward_->Register( weather );
     forward_->Register( limits );
+    forward_->Register( drawerLayer );
     forward_->Register( metrics );
     forward_->Register( elevation3d );
     forward_->SetDefault( defaultLayer );
@@ -325,13 +323,8 @@ bool MainWindow::New()
 // -----------------------------------------------------------------------------
 void MainWindow::Open()
 {
-    if( New() && bfs::exists( bfs::path( config_.GetOrbatFile(), bfs::native ) ) )
-    {
-        loading_ = true;
-        model_.Load( config_ );
-        loading_ = false;
-        SetWindowTitle( false );
-    }
+    if( New() )
+        LoadExercise();
 }
 
 // -----------------------------------------------------------------------------
@@ -344,6 +337,7 @@ bool MainWindow::Load()
     try
     {
         model_.Purge();
+        selector_->Close();
         selector_->Load();
         staticModel_.Load( config_ );
         SetWindowTitle( false );
@@ -351,7 +345,8 @@ bool MainWindow::Load()
     catch( xml::exception& e )
     {
         Close();
-        QMessageBox::critical( this, APP_NAME, ( tr( "Error reading xml file: " ) + e.what() ).ascii() );
+        QMessageBox::critical( this, tools::translate( "Application", "SWORD Officer Training" )
+                                   , ( tr( "Error reading xml file: " ) + e.what() ).ascii() );
         return false;
     }
     ReadOptions();
@@ -370,6 +365,26 @@ void MainWindow::Close()
     staticModel_.Purge();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MainWindow::LoadExercise
+// Created: SBO 2008-08-21
+// -----------------------------------------------------------------------------
+void MainWindow::LoadExercise()
+{
+    try
+    {
+        loading_ = true;
+        model_.Load( config_ );
+        loading_ = false;
+        SetWindowTitle( false );
+    }
+    catch( std::exception& e )
+    {
+        QMessageBox::critical( this, tools::translate( "Application", "SWORD Officer Training" )
+                                   , ( tr( "Error loading exercise: " ) + e.what() ).ascii() );
+    }
+}
+
 namespace
 {
     struct SaveModelChecker : public ModelChecker_ABC
@@ -382,13 +397,14 @@ namespace
 
         virtual bool Reject( const QString& reason )
         {
-            QMessageBox::critical( window_, APP_NAME, reason );
+            QMessageBox::critical( window_, tools::translate( "Application", "SWORD Officer Training" ), reason );
             return false;
         }
 
         virtual bool Prompt( const QString& question )
         {
-            if( QMessageBox::question( window_, APP_NAME, question + QString( "\nDo you want to save anyway?" ), QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+            if( QMessageBox::question( window_, tools::translate( "Application", "SWORD Officer Training" )
+                                     , question + tools::translate( "MainWindow", "\nDo you want to save anyway?" ), QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
                 return true;
             return false;
         }
@@ -429,7 +445,9 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
     if( needsSaving_ )
     {
-        int result = QMessageBox::question( this, APP_NAME, tr( "Save modifications?" ), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+        int result = QMessageBox::question( this, tools::translate( "Application", "SWORD Officer Training" )
+                                                , tr( "Save modifications?" )
+                                                , QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
         if( ( result == QMessageBox::Yes && !Save() ) || result == QMessageBox::Cancel )
         {
             pEvent->ignore();
@@ -551,5 +569,5 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     QString filename = model_.GetName().isEmpty() ? tr( "New ORBAT" ) : model_.GetName();
     if( needsSaving )
         filename += "*";
-    setCaption( QString( APP_NAME " - [%1]" ).arg( filename ) );
+    setCaption( tr( "Preparation - [%1]" ).arg( filename ) );
 }

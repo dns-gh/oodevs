@@ -10,6 +10,8 @@
 #ifndef __CoordinateConverter_ABC_h_
 #define __CoordinateConverter_ABC_h_
 
+#include <geometry/Types.h>
+
 namespace kernel
 {
 

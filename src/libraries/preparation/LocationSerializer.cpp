@@ -43,9 +43,7 @@ LocationSerializer::~LocationSerializer()
 void LocationSerializer::Serialize( const Location_ABC& location, xml::xostream& xos )
 {
     xos_ = &xos;
-//    *xos_ << start( "location" );
     location.Accept( *this );
-//    *xos_ << end();
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +63,18 @@ void LocationSerializer::VisitLines( const T_PointVector& points )
 void LocationSerializer::VisitPolygon( const T_PointVector& points )
 {
     *xos_ << attribute( "type", "polygone" );
-    SetPoints( points );
+    T_PointVector copy( points );
+    copy.pop_back();
+    SetPoints( copy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationSerializer::VisitPath
+// Created: AGE 2008-06-26
+// -----------------------------------------------------------------------------
+void LocationSerializer::VisitPath( const geometry::Point2f& , const T_PointVector& points )
+{
+    VisitLines( points );
 }
 
 // -----------------------------------------------------------------------------

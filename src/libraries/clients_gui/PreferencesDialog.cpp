@@ -22,6 +22,7 @@
 #include "resources.h"
 #include "ElevationPanel.h"
 #include "Elevation2dLayer.h"
+#include "UserControlPanel.h"
 
 using namespace kernel;
 using namespace gui;
@@ -31,7 +32,7 @@ using namespace gui;
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
 PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting )
-    : QDialog( parent )
+    : QDialog( parent, "PreferencesDialog" )
     , controllers_( controllers )
     , pGraphicPrefPanel_( 0 )
 {
@@ -66,24 +67,23 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     list_ = new PreferencesList( box, *pages );
     grid->addWidget( box, 1, 0 );
 
-    pGraphicPrefPanel_ = new GraphicsPanel( this );
+    pGraphicPrefPanel_ = new GraphicsPanel( this, controllers );
     layersPanel_       = new LayersPanel( this, controllers );
     AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" )        , *layersPanel_ ); 
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
-    AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) );    
+    AddPage( tr( "User controls" ), *new UserControlPanel( this, controllers ) );
+//    AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) ); // $$$$ SBO 2008-08-12: options not used
 
     box = new QHBox( this );
     box->setMargin( 5 );
     box->setMaximumHeight( 40 );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
-    QButton* applyBtn = new QPushButton( tr( "Apply" ), box );
     QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     okBtn->setDefault( true );
     grid->addWidget( box, 2, 1, Qt::AlignRight );
 
     connect( okBtn, SIGNAL( clicked() ), SLOT( OnOk() ) );
-    connect( applyBtn, SIGNAL( clicked() ), SLOT( OnApply() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnCancel() ) );
 
     hide();
@@ -118,6 +118,25 @@ QSize PreferencesDialog::sizeHint() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PreferencesDialog::show
+// Created: RPD 2008-08-14
+// -----------------------------------------------------------------------------
+void PreferencesDialog::show()
+{
+    QDialog::show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::reject
+// Created: RPD 2008-08-22
+// -----------------------------------------------------------------------------
+void PreferencesDialog::reject()
+{
+    OnCancel();
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: PreferencesDialog::GetPreferences
 // Created: SBO 2006-05-04
 // -----------------------------------------------------------------------------
@@ -134,20 +153,11 @@ GraphicPreferences& PreferencesDialog::GetPreferences() const
 // -----------------------------------------------------------------------------
 void PreferencesDialog::OnOk()
 {
-    OnApply();
-    hide();
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PreferencesDialog::OnApply
-// Created: SBO 2007-01-03
-// -----------------------------------------------------------------------------
-void PreferencesDialog::OnApply()
-{
     for( IT_Pages it = pages_.begin(); it != pages_.end(); ++it )
         (*it)->Commit();    
+    hide();
 }
-    
+  
 // -----------------------------------------------------------------------------
 // Name: PreferencesDialog::OnCancel
 // Created: SBO 2007-01-03

@@ -13,6 +13,8 @@
 
 using namespace kernel;
 
+const QString KnowledgeGroup_ABC::typeName_ = "knowledgeGroup";
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup_ABC constructor
 // Created: SBO 2006-08-09
@@ -29,6 +31,15 @@ KnowledgeGroup_ABC::KnowledgeGroup_ABC()
 KnowledgeGroup_ABC::~KnowledgeGroup_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup_ABC::GetTypeName
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+QString KnowledgeGroup_ABC::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------

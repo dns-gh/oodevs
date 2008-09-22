@@ -35,16 +35,17 @@ public:
     //@{
     virtual void PopPoint();
     virtual void AddPoint( const geometry::Point2f& point );
-    virtual bool IsValid() const;
-    virtual bool IsDone() const;
+    virtual void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision );
     virtual Location_ABC& Clone() const;
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     virtual void Accept( LocationVisitor_ABC& ) const;
-    virtual void Draw( const GlTools_ABC& tools ) const;
     virtual QString GetName() const;
+    virtual bool IsValid() const;
+    virtual bool IsDone() const;
+    virtual bool IsAt( const geometry::Point2f& point, float precision ) const;
     //@}
 
 private:

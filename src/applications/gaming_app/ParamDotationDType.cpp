@@ -11,7 +11,7 @@
 #include "ParamDotationDType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Iterator.h"
-#include "gaming/ActionParameterDotationType.h"
+#include "actions/DotationType.h"
 
 using namespace kernel;
 
@@ -56,9 +56,9 @@ void ParamDotationDType::BuildInterface( QWidget* parent )
 // Name: ParamDotationDType::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ParamDotationDType::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamDotationDType::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new ActionParameterDotationType( parameter_, GetValue(), resolver_ ) );
+    action.AddParameter( *new actions::parameters::DotationType( parameter_, GetValue(), resolver_ ) );
 }
 
 // -----------------------------------------------------------------------------

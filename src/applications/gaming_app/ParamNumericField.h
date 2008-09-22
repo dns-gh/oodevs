@@ -18,7 +18,10 @@ namespace gui
     class RichLabel;
 }
 
-class ActionParameter_ABC;
+namespace actions
+{
+    class Parameter_ABC;
+}
 
 // =============================================================================
 /** @class  ParamNumericField
@@ -43,7 +46,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
 
     virtual bool CheckValidity();
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
 
     void SetLimits( float min, float max );
     //@}

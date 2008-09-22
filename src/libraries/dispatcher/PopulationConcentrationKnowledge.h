@@ -11,13 +11,18 @@
 #define __PopulationConcentrationKnowledge_h_
 
 #include "game_asn/Simulation.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+
+namespace kernel
+{
+    class PopulationKnowledge_ABC;
+    class PopulationConcentration_ABC;
+}
 
 namespace dispatcher
 {
-    class Model;
-    class PopulationKnowledge;
-    class PopulationConcentration;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  PopulationConcentrationKnowledge
@@ -25,26 +30,22 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class PopulationConcentrationKnowledge : public Entity_ABC
+class PopulationConcentrationKnowledge : public SimpleEntity< >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentrationKnowledge( Model& model, PopulationKnowledge& populationKnowledge, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg );
+             PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg );
     virtual ~PopulationConcentrationKnowledge();
-    //@}
-
-    //! @name Accessors
-    //@{
-    unsigned long GetID() const;
     //@}
 
     //! @name Operations
     //@{
     void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& msg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -54,10 +55,8 @@ private:
     PopulationConcentrationKnowledge& operator=( const PopulationConcentrationKnowledge& ); //!< Assignement operator
     //@}
 
-private:
     //! @name Types
     //@{
-
     //$$$ bullshit
     struct T_Optionals 
     {
@@ -70,22 +69,20 @@ private:
     //@}
 
 private:
-          PopulationKnowledge&  populationKnowledge_;
-    const unsigned long         nID_;
-    const ASN1T_CoordLatLong    position_;
-
-    const PopulationConcentration*     pConcentration_;
-          unsigned long                nNbrAliveHumans_;
-          unsigned long                nNbrDeadHumans_;
-          ASN1T_EnumPopulationAttitude nAttitude_;    
-          unsigned int                 nRelevance_;
-          bool                         bPerceived_;
-
-          T_Optionals                  optionals_;
+    //! @name Member data
+    //@{
+    const kernel::PopulationKnowledge_ABC&     populationKnowledge_;
+    const kernel::PopulationConcentration_ABC* pConcentration_;
+    const ASN1T_CoordLatLong                   position_;
+    unsigned long                              nNbrAliveHumans_;
+    unsigned long                              nNbrDeadHumans_;
+    ASN1T_EnumPopulationAttitude               nAttitude_;    
+    unsigned int                               nRelevance_;
+    bool                                       bPerceived_;
+    T_Optionals                                optionals_;
+    //@}
 };
 
 }
-
-#include "PopulationConcentrationKnowledge.inl"
 
 #endif // __PopulationConcentrationKnowledge_h_

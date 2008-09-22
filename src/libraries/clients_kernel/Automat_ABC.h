@@ -25,6 +25,11 @@ namespace kernel
 // =============================================================================
 class Automat_ABC : public Entity_ABC
 {
+public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -37,6 +42,7 @@ public:
     //@{
     virtual const AutomatType& GetType() const = 0;
 
+    virtual QString GetTypeName() const;
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;

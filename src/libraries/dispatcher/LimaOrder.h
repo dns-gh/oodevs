@@ -27,34 +27,20 @@ class LimaOrder
 public:
     //! @name Constructors/Destructor
     //@{
-     LimaOrder( Model& model, const ASN1T_LimaOrder& asn );
-    ~LimaOrder();
+    explicit LimaOrder( const ASN1T_LimaOrder& asn );
+    virtual ~LimaOrder();
     //@}
 
     //! @name Operations
     //@{
-           void Send     ( ASN1T_LimaOrder& asn ) const;
-    static void AsnDelete( ASN1T_LimaOrder& asn );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    LimaOrder( const LimaOrder& );            //!< Copy constructor
-    LimaOrder& operator=( const LimaOrder& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< ASN1T_EnumLimaType > T_Functions;
+    void Send( ASN1T_LimaOrder& asn ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     Localisation location_;
-    T_Functions  functions_;
+    std::vector< ASN1T_EnumLimaType > functions_;
     std::string  schedule_;
     //@}
 };

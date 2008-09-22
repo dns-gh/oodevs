@@ -44,6 +44,7 @@ public:
     virtual void Receive( const ASN1T_MsgsSimToClient& message );
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
     virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
+    virtual void Register                 ( dispatcher::Services& );
     //@}
 
 private:

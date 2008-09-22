@@ -14,7 +14,6 @@
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  Dotation
@@ -27,9 +26,9 @@ class Dotation
 public:
     //! @name Constructors/Destructor
     //@{
-     Dotation( const Model& model, const ASN1T_ResourceDotations& asnMsg );
-     Dotation( const Model& model, const ASN1T_DotationStock    & asnMsg );
-    ~Dotation();
+    explicit Dotation( const ASN1T_ResourceDotations& asnMsg );
+    explicit Dotation( const ASN1T_DotationStock    & asnMsg );
+    virtual ~Dotation();
     //@}
 
     //! @name Operations

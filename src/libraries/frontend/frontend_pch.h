@@ -12,6 +12,7 @@
 
 #include <exception>
 #include <string>
+#include <memory>
 
 #pragma warning( push, 0 )
 #include <qprocess.h>

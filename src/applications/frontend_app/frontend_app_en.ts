@@ -86,6 +86,17 @@
     </message>
 </context>
 <context>
+    <name>Application</name>
+    <message>
+        <source>sword-ot@masagroup.net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CreateExercisePanel</name>
     <message>
         <source>New exercise name:</source>
@@ -311,6 +322,10 @@ Package will be installed to: %1</source>
     </message>
     <message>
         <source>Manage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

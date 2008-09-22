@@ -10,8 +10,8 @@
 #include "gaming_app_pch.h"
 #include "ParamNumericField.h"
 #include "clients_gui/RichLabel.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterNumeric.h"
+#include "actions/Action_ABC.h"
+#include "actions/Numeric.h"
 #include <qvalidator.h>
 
 // -----------------------------------------------------------------------------
@@ -85,9 +85,9 @@ bool ParamNumericField::CheckValidity()
 // Name: ParamNumericField::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamNumericField::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamNumericField::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new ActionParameterNumeric( parameter_, pEdit_->text().toFloat() ) );
+    action.AddParameter( *new actions::parameters::Numeric( parameter_, pEdit_->text().toFloat() ) );
 }
 
 // -----------------------------------------------------------------------------

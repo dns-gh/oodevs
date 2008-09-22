@@ -9,7 +9,7 @@
 
 #include "messenger_plugin_pch.h"
 #include "Lima.h"
-#include "ASN_Messages.h"
+#include "dispatcher/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace messenger;
@@ -56,55 +56,55 @@ void Lima::Update( const ASN1T_MsgLimaUpdateRequest& message )
 // Name: Lima::SendCreation
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client) const
+void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 {
     ASN1T_MsgLimaCreation creation ;
     creation.oid = GetID();
-    TacticalLine_ABC::Send(creation.tactical_line);
-    ASN_MsgLimaCreation message(creation);
-    message.Send(client);
+    TacticalLine_ABC::Send( creation.tactical_line );
+    messenger::LimaCreation message( creation );
+    message.Send( client );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Lima::SendUpdate
 // Created: RDS 2008-04-07
 // -----------------------------------------------------------------------------
-void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client) const
+void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 {
     ASN1T_MsgLimaUpdate update;
     update.oid = GetID();
-    TacticalLine_ABC::Send(update.tactical_line);
-    ASN_MsgLimaUpdate message(update);
-    message.Send(client);
+    TacticalLine_ABC::Send( update.tactical_line );
+    messenger::LimaUpdate message( update );
+    message.Send( client );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Lima::SendDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Lima::SendDestruction( dispatcher::ClientPublisher_ABC& client) const
+void Lima::SendDestruction( dispatcher::ClientPublisher_ABC& client ) const
 {
     ASN1T_MsgLimaDestruction destruction = GetID();
-    ASN_MsgLimaDestruction message(destruction);
-    message.Send(client);
+    messenger::LimaDestruction message( destruction );
+    message.Send( client );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Lima::SendFullUpdate
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void Lima::SendFullState( dispatcher::ClientPublisher_ABC& client) const
+void Lima::SendFullState( dispatcher::ClientPublisher_ABC& client ) const
 {
-    SendCreation(client);
+    SendCreation( client );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Lima::Write
 // Created: RDS 2008-04-09
 // -----------------------------------------------------------------------------
-void Lima::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter )
+void Lima::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const
 {
-    xos << xml::start("lima") ;
-        TacticalLine_ABC::Write(xos,converter);
+    xos << xml::start( "lima" ) ;
+        TacticalLine_ABC::Write( xos, converter );
     xos << xml::end();
 }

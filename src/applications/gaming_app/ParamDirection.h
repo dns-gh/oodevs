@@ -37,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void BuildInterface( QWidget* parent );
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 private slots:

@@ -34,6 +34,17 @@
     </message>
 </context>
 <context>
+    <name>DrawerLayer</name>
+    <message>
+        <source>Edit drawing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Erase drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditorFactory</name>
     <message>
         <source>True</source>
@@ -48,6 +59,17 @@
     <name>GraphicPreferences</name>
     <message>
         <source>Colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HighlightColorModifier</name>
+    <message>
+        <source>Highlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove highlight</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -78,6 +100,13 @@
     </message>
     <message>
         <source>Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LocationCreator</name>
+    <message>
+        <source>Add drawing as &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -290,15 +319,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;br&gt;License will expire on </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>images/gui/splash_swordot.jpg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;&#xa9; 2008 MasaGroup &lt;a href=&quot;http://www.masagroup.net&quot;&gt;www.masagroup.net&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -359,23 +392,12 @@
 Please check access permissions or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>gui::DrawerToolbar</name>
     <message>
-        <source>Drawing tools</source>
+        <source>Drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Drawing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display drawings</source>
+        <source>Start drawing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -481,15 +503,39 @@ Please check access permissions or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Transparency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fog of war</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Display fog of war</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (background)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (foreground)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move the selected layer forwards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move the selected layer backwards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer display order and transparency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transparency </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>for %1:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -728,15 +774,7 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -745,6 +783,10 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>2D/Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User controls</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -778,6 +820,21 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>Display type: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::UserControlPanel</name>
+    <message>
+        <source>Use left click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use wheel click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map dragging control</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

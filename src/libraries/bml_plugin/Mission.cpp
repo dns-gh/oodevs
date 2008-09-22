@@ -18,12 +18,12 @@
 #include "dispatcher/Automat.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "dispatcher/Network_Def.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/OrderParameter.h"
 #include <xeumeuleu/xml.h>
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
+#include <boost/bind.hpp>
 
 using namespace bml;
 
@@ -80,26 +80,26 @@ namespace
     struct NameFinder
     {
         explicit NameFinder( const std::string& name ) : name_( name ), result_( 0 ) {}
-        void operator()( const Entity& entity )
+        void operator()( const Entity& entity ) const
         {
-            if( entity.strName_ == name_ )
+            if( entity.name_ == name_ )
                 result_ = &entity;
         }
         std::string name_;
-        const Entity* result_;
+        mutable const Entity* result_;
     };
 
     const dispatcher::Automat* FindAutomat( const dispatcher::Model& model, const std::string& name )
     {
         NameFinder< dispatcher::Automat > automatFinder( name );
-        model.GetAutomats().Apply< NameFinder< dispatcher::Automat >& >( automatFinder );
+        model.automats_.Apply( automatFinder );
         return automatFinder.result_;
     }
 
     const dispatcher::Agent* FindAgent( const dispatcher::Model& model, const std::string& name )
     {
         NameFinder< dispatcher::Agent > agentFinder( name );
-        model.GetAgents().Apply< NameFinder< dispatcher::Agent >& >( agentFinder );
+        model.agents_.Apply( agentFinder );
         return agentFinder.result_;
     }
 }
@@ -194,8 +194,8 @@ void Mission::Send( dispatcher::SimulationPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Mission::SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher ) const
 {
-    dispatcher::AsnMsgClientToSimAutomatOrder asn;
-    asn().oid = automatTaskee_->GetID();
+    simulation::AutomatOrder asn;
+    asn().oid = automatTaskee_->GetId();
     asn().mission = type_.GetId();
     asn().formation = EnumAutomatOrderFormation::deux_echelons;
     asn().parametres.n = type_.Count();
@@ -212,8 +212,8 @@ void Mission::SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher
 // -----------------------------------------------------------------------------
 void Mission::SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher ) const
 {
-    dispatcher::AsnMsgClientToSimUnitOrder asn;
-    asn().oid = agentTaskee_->GetID();
+    simulation::UnitOrder asn;
+    asn().oid = agentTaskee_->GetId();
     asn().mission = type_.GetId();
     asn().parametres.n = type_.Count();
     if( asn().parametres.n > 0 )

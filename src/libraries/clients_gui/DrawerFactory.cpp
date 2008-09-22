@@ -9,27 +9,23 @@
 
 #include "clients_gui_pch.h"
 #include "DrawerFactory.h"
-#include "DrawerCategory.h"
-#include "clients_kernel/Controllers.h"
-#include "DrawerModel.h"
-#include "DrawerStyle.h"
-#include "DrawerShapePolygon.h"
-#include "DrawerShapePoint.h"
-#include "svgl/TextRenderer.h"
+#include "DrawerShape.h"
+#include "DrawingTypes.h"
+#include "DrawingTemplate.h"
+#include "DrawingPositions.h"
 #include <xeumeuleu/xml.h>
 
 using namespace gui;
-using namespace xml;
+
+unsigned long DrawerFactory::idManager_ = 0; // $$$$ SBO 2008-06-10: bof
 
 // -----------------------------------------------------------------------------
 // Name: DrawerFactory constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerFactory::DrawerFactory( QWidget* parent, kernel::GlTools_ABC& tools, kernel::Controllers& controllers )
-    : parent_( parent )
-    , controllers_( controllers )
-    , tools_( tools )
-    , renderer_( *new svg::TextRenderer() )
+DrawerFactory::DrawerFactory( kernel::Controller& controller, const DrawingTypes& types )
+    : controller_( controller )
+    , types_( types )
 {
     // NOTHING
 }
@@ -40,54 +36,29 @@ DrawerFactory::DrawerFactory( QWidget* parent, kernel::GlTools_ABC& tools, kerne
 // -----------------------------------------------------------------------------
 DrawerFactory::~DrawerFactory()
 {
-    delete &renderer_; 
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerFactory::CreateCategory
-// Created: SBO 2007-03-22
-// -----------------------------------------------------------------------------
-DrawerCategory* DrawerFactory::CreateCategory( xml::xistream& xis ) const
-{
-    return new DrawerCategory( parent_, tools_, xis, renderer_, controllers_.controller_ );
-}
-
-namespace
-{
-    template< typename T >
-    DrawerShape* BuildShape( kernel::Controller& controller, const DrawerStyle& style, T& param )
-    {
-        if( style.GetType() == "line" )
-            return new DrawerShape( controller, style, param );
-        if( style.GetType() == "point" )
-            return new DrawerShapePoint( controller, style, param );
-        if( style.GetType() == "polygon" )
-            return new DrawerShapePolygon( controller, style, param );
-        return 0;
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerFactory::CreateShape
 // Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-DrawerShape* DrawerFactory::CreateShape( const DrawerStyle& style, const QColor& color ) const
+Drawing_ABC* DrawerFactory::CreateShape( const DrawingTemplate& style, const QColor& color ) const
 {
-    return BuildShape( controllers_.controller_, style, color );
+    DrawingPositions* positions = new DrawingPositions();
+    std::auto_ptr< Drawing_ABC > shape( new DrawerShape( controller_, ++idManager_, style, color, *positions ) );
+    shape->Attach< kernel::Positions >( *positions );
+    return shape.release();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerFactory::CreateShape
 // Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-DrawerShape* DrawerFactory::CreateShape( xml::xistream& xis, const DrawerModel& model ) const
+Drawing_ABC* DrawerFactory::CreateShape( xml::xistream& xis ) const
 {
-    std::string categoryName, templateName, typeName;
-    xis >> attribute( "category", categoryName )
-        >> attribute( "template", templateName )
-        >> attribute( "type", typeName );
-    if( const DrawerCategory* category = model.Find( categoryName.c_str() ) )
-        if( const DrawerStyle* style = category->Find( templateName.c_str() ) )
-            return BuildShape( controllers_.controller_, *style, xis );
-    return 0;
+    DrawingPositions* positions = new DrawingPositions();
+    std::auto_ptr< Drawing_ABC > shape( new DrawerShape( controller_, ++idManager_, xis, types_, *positions ) );
+    shape->Attach< kernel::Positions >( *positions );
+    return shape.release();
 }

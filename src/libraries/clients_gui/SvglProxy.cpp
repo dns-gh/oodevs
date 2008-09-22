@@ -12,6 +12,7 @@
 #include "SvglRenderer.h"
 #include "svgl/Node_ABC.h"
 #include "xeumeuleu/xml.h"
+#include "tools/GeneralConfig.h"
 
 using namespace gui;
 
@@ -44,7 +45,7 @@ void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& view
     svg::Node_ABC*& node = symbols_[ name ];
     if( ! node )
     {
-        xml::xifstream input( name );
+        xml::xifstream input( tools::GeneralConfig::BuildResourceChildFile( "images/" + name ) );
         node = renderer_.Compile( input, 100 ); // $$$$ AGE 2007-05-31: 
     }
     if( node )

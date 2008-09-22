@@ -13,8 +13,9 @@
 #include "AfterActionRequestList.h"
 #include "clients_kernel/Controllers.h"
 #include "gaming/AfterActionModel.h"
-#include "gaming/Simulation.h"
+#include "gaming/Services.h"
 #include "gaming/Tools.h"
+#include "game_asn/AarSenders.h"
 #include "icons.h"
 
 using namespace gui;
@@ -30,7 +31,7 @@ AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, ItemFac
     , controllers_ ( controllers )
     , model_       ( model )
     , functionsTab_( 0 )
-    , replay_      ( false )
+    , aar_         ( false )
 {
     CreateAfterActionDock( window, controllers, factory, publisher, layer, staticModel );
     controllers_.Register( *this );
@@ -51,7 +52,7 @@ AfterAction::~AfterAction()
 // -----------------------------------------------------------------------------
 void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, Publisher_ABC& publisher, ParametersLayer& layer, const StaticModel& staticModel )
 {
-    aarDock_ = new QDockWindow( window );
+    aarDock_ = new QDockWindow( window, "aar" );
     QVBox* box = new QVBox( aarDock_ );
     functionsTab_ = new QTabWidget( box );
 
@@ -82,13 +83,13 @@ void AfterAction::NotifyCreated( const AfterActionRequest& )
 // Name: AfterAction::NotifyUpdated
 // Created: AGE 2007-09-28
 // -----------------------------------------------------------------------------
-void AfterAction::NotifyUpdated( const Simulation& simu )
+void AfterAction::NotifyUpdated( const Services& services )
 {
-    const bool replay = simu.IsReplayer();
-    window_->setAppropriate( aarDock_, replay );
+    const bool isAar = services.HasService< aar::Service >();
+    window_->setAppropriate( aarDock_, isAar );
     if( ! aarDock_->isVisible() )
-        aarDock_->setShown( replay && !replay_ );
-    replay_ = replay;
+        aarDock_->setShown( isAar && !aar_ );
+    aar_ = isAar;
 }
 
 // -----------------------------------------------------------------------------

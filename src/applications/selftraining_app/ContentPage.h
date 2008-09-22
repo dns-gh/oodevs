@@ -32,8 +32,10 @@ public:
 
     //! @name Operations
     //@{
-    void AddContent( QWidget* widget );
-    void AddNextButton( const QString& caption, Page_ABC& page, const char* slot = 0 );
+    void     AddContent( QWidget* widget );
+    void     AddNextButton( const QString& caption, Page_ABC& page, const char* slot = 0 );
+    QButton* AddNextButton( const QString& caption );
+    void     Previous(); 
     //@}
 
 private:
@@ -53,6 +55,8 @@ private:
     //! @name Member data
     //@{
     QGridLayout* grid_;
+    Page_ABC& previous_ ; 
+    Page_ABC* next_ ; 
     //@}
 };
 

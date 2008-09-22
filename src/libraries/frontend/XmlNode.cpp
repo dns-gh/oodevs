@@ -11,7 +11,9 @@
 #include "XmlNode.h"
 #include <boost/bind.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.h>
+#include <cctype>
 
 using namespace frontend;
 
@@ -115,7 +117,7 @@ namespace
         const size_t index = path.find_first_of( '/' );
         return index == path.npos ? path : path.substr( 0, index );
     }
-
+   
     bool IsAttribute( const std::string& path )
     {
         return path.length() && path[ 0 ] == '@';
@@ -142,4 +144,57 @@ void XmlNode::SetStringValue( const std::string& path, const std::string& value 
         node = new XmlNode();
     element = element != path ? path.substr( element.length() + 1 ) : "";
     node->SetStringValue( element, value );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: XmlNode::GetStringValue
+// Created: RDS 2008-08-19
+// -----------------------------------------------------------------------------
+bool XmlNode::GetStringValue( const std::string& path, std::string& value ) const
+{
+    if( path.empty() || IsAttribute( path ) )
+    {
+        if( IsAttribute( path ) )
+        {
+            T_Attributes::const_iterator it = attributes_.find( path.substr( 1 ) ) ; 
+            if ( it == attributes_.end() ) 
+                return false ; 
+            else
+               value = (*it).second ;
+        }
+        else
+            value = text_ ;
+        return true ;
+    }
+    std::string element = NextElement( path );
+    T_Nodes::const_iterator it = children_.find( element ) ; 
+    if ( it == children_.end() )
+        return false ; 
+    else
+    {
+        element = element != path ? path.substr( element.length() + 1 ) : "";
+        return (*it).second->GetStringValue( element, value ) ; 
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmlNode::GetValue partial implementation 
+// Created: RDS 2008-08-19
+// -----------------------------------------------------------------------------
+template<>
+bool XmlNode::GetValue<bool>( const std::string& path ) const
+{
+    std::string str ; 
+    if ( GetStringValue( path, str ) )     
+    {
+        std::transform( str.begin(), str.end(), str.begin(), std::tolower ); 
+        if ( str =="false" ) 
+            return false ; 
+        if ( str =="true" ) 
+            return true ;
+        return boost::lexical_cast<bool>(str); 
+    }
+    else
+        throw ( std::exception( "XmlNode impossible to find path" ) ) ; 
 }

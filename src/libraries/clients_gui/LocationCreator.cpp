@@ -13,6 +13,7 @@
 #include "ParametersLayer.h"
 #include "Tools.h"
 #include "ShapeHandler_ABC.h"
+#include "Drawing_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -29,6 +30,7 @@ LocationCreator::LocationCreator( QObject* parent, const QString& menu, Paramete
     , layer_         ( layer )
     , handler_       ( handler )
     , menu_          ( menu )
+    , drawing_       ( 0 )
     , pointAllowed_  ( true )
     , lineAllowed_   ( true )
     , polygonAllowed_( true )
@@ -45,6 +47,7 @@ LocationCreator::LocationCreator( QObject* parent, ParametersLayer& layer, Shape
     : QObject        ( parent )
     , layer_         ( layer )
     , handler_       ( handler )
+    , drawing_       ( 0 )
     , pointAllowed_  ( false )
     , lineAllowed_   ( false )
     , polygonAllowed_( false )
@@ -80,6 +83,10 @@ namespace
         virtual void VisitCircle( const geometry::Point2f&, float )
         {
             valid_ = circleAllowed_;
+        }
+        virtual void VisitPath( const geometry::Point2f& , const T_PointVector& )
+        {
+            valid_ = false;
         }
         virtual void VisitPoint( const geometry::Point2f& )
         {
@@ -147,6 +154,29 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationCreator::NotifyContextMenu
+// Created: AGE 2008-08-19
+// -----------------------------------------------------------------------------
+void LocationCreator::NotifyContextMenu( const Drawing_ABC& drawing, kernel::ContextMenu& menu )
+{
+    if( Allows( drawing.GetLocation() ) )
+    {
+        drawing_ = &drawing;
+        menu.InsertItem( "Creation", tr( "Add drawing as '%1'" ).arg( menu_ ), this, SLOT( AddDrawing() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationCreator::NotifyDeleted
+// Created: AGE 2008-08-19
+// -----------------------------------------------------------------------------
+void LocationCreator::NotifyDeleted( const Drawing_ABC& drawing )
+{
+    if( drawing_ == &drawing )
+        drawing_ = 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: LocationCreator::StartPoint
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
@@ -178,8 +208,8 @@ void LocationCreator::StartLine()
 void LocationCreator::StartPolygon()
 {
     layer_.StartPolygon( handler_ );
-}   
-    
+}
+
 // -----------------------------------------------------------------------------
 // Name: LocationCreator::StartCircle
 // Created: AGE 2006-08-09
@@ -187,4 +217,17 @@ void LocationCreator::StartPolygon()
 void LocationCreator::StartCircle()
 {
     layer_.StartCircle( handler_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationCreator::AddDrawing
+// Created: AGE 2008-08-19
+// -----------------------------------------------------------------------------
+void LocationCreator::AddDrawing()
+{
+    if( drawing_ )
+    {
+        layer_.Reset();
+        handler_.Handle( drawing_->GetLocation().Clone() );
+    }
 }

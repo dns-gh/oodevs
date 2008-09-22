@@ -20,9 +20,9 @@ namespace kernel
 {
     class Controller;
     class KnowledgeGroup_ABC;
+    class AgentKnowledge_ABC;
 }
 
-class AgentKnowledge_ABC;
 class AgentKnowledgeFactory_ABC;
 
 // =============================================================================
@@ -35,7 +35,7 @@ class AgentKnowledges : public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeCreation >
                       , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
                       , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeDestruction >
-                      , public kernel::Resolver< AgentKnowledge_ABC >
+                      , public kernel::Resolver< kernel::AgentKnowledge_ABC >
                       , public kernel::Creatable< AgentKnowledges >
 {
 

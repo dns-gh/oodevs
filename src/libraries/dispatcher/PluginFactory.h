@@ -10,6 +10,8 @@
 #ifndef __PluginFactory_h_
 #define __PluginFactory_h_
 
+#include <boost/shared_ptr.hpp>
+
 namespace xml
 {
     class xistream;
@@ -22,7 +24,9 @@ namespace dispatcher
     class SimulationPublisher_ABC;
     class ClientsNetworker;
     class CompositePlugin;
+    class CompositeRegistrable;
     class PluginFactory_ABC;
+    class RightsPlugin;
 
 // =============================================================================
 /** @class  PluginFactory
@@ -36,7 +40,8 @@ class PluginFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler );
+             PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, 
+                            CompositePlugin& handler, CompositeRegistrable& registrables );
     virtual ~PluginFactory();
     //@}
 
@@ -66,12 +71,14 @@ private:
 private:
     //! @name Member data
     //@{
-    CompositePlugin& handler_;
     const Config& config_;
     Model& model_;
     SimulationPublisher_ABC& simulation_;
     ClientsNetworker& clients_;
+    CompositePlugin& handler_;
+    CompositeRegistrable& registrables_;
     T_Factories factories_;
+    boost::shared_ptr< RightsPlugin > rights_;
     //@}
 };
 

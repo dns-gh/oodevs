@@ -33,7 +33,8 @@ namespace gui
 class StaticModel;
 class Publisher_ABC;
 class ObjectCreationPanel;
-class Simulation;
+class Services;
+class DrawingsModel;
 
 // =============================================================================
 /** @class  CreationPanels
@@ -43,12 +44,12 @@ class Simulation;
 // =============================================================================
 class CreationPanels : public gui::Panels
                      , public kernel::Observer_ABC
-                     , public kernel::ElementObserver_ABC< Simulation >
+                     , public kernel::ElementObserver_ABC< Services >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy );
+             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings );
     virtual ~CreationPanels();
     //@}
 
@@ -60,7 +61,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyUpdated( const Simulation& simu );
+    virtual void NotifyUpdated( const Services& services );
     //@}
 
 private:

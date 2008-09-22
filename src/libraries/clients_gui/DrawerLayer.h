@@ -10,9 +10,9 @@
 #ifndef __DrawerLayer_h_
 #define __DrawerLayer_h_
 
-#include "Layer_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SafePointer.h"
+#include "Drawing_ABC.h"
+#include "EntityLayer.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 
 namespace kernel
 {
@@ -20,17 +20,9 @@ namespace kernel
     class Controllers;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace gui
 {
-    class DrawerShape;
-    class DrawerStyle;
-    class DrawerFactory;
-    class CursorStrategy_ABC;
+    class ParametersLayer;
 
 // =============================================================================
 /** @class  DrawerLayer
@@ -38,27 +30,24 @@ namespace gui
 */
 // Created: AGE 2006-08-31
 // =============================================================================
-class DrawerLayer : public Layer2d_ABC
-                  , public kernel::Observer_ABC
-                  , public kernel::ElementObserver_ABC< DrawerShape >
+class DrawerLayer : public QObject
+                  , public EntityLayer< Drawing_ABC >
+                  , public kernel::ContextMenuObserver_ABC< Drawing_ABC >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerLayer( kernel::Controllers& controllers, kernel::GlTools_ABC& tools, DrawerFactory& factory );
+             DrawerLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~DrawerLayer();
     //@}
 
-    //! @name Operations
+private slots:
+    //! @name Slots
     //@{
-    void TakeFocus( bool take );
-    void Show( bool show );
-
-    void ChangeColor( const QColor& color );
-    void StartShape( const DrawerStyle& style, const QColor& color );
-
-    virtual void Paint( const geometry::Rectangle2f& viewport );
+    void OnEditDrawing();
+    void OnDeleteDrawing();
     //@}
 
 private:
@@ -70,40 +59,21 @@ private:
 
     //! @name Helpers
     //@{
-    virtual bool HandleKeyPress  ( QKeyEvent* key );
-    virtual bool HandleMouseMove ( QMouseEvent* mouse, const geometry::Point2f& point );
-    virtual bool HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point );
-    virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
-    virtual void NotifyCreated( const DrawerShape& );
-    virtual void NotifyDeleted( const DrawerShape& );
-
-    void Done();
-    float Precision() const;
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< DrawerShape* > T_Shapes;
-    typedef T_Shapes::iterator         IT_Shapes;
-    typedef T_Shapes::const_iterator  CIT_Shapes;
+    virtual void Paint( const geometry::Rectangle2f& viewport );
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
+    virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
+    virtual void NotifySelected( const Drawing_ABC* selected );
+    virtual void NotifyContextMenu( const Drawing_ABC& shape, kernel::ContextMenu& menu );
+    virtual bool HandleKeyPress( QKeyEvent* key );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    ParametersLayer& parameters_;
     const kernel::GlTools_ABC& tools_;
-    std::auto_ptr< CursorStrategy_ABC > cursors_;
-    DrawerFactory& factory_;
-    bool         show_;
-    kernel::SafePointer< DrawerShape > current_;
-    kernel::SafePointer< DrawerShape > overlined_;
-    kernel::SafePointer< DrawerShape > selected_;
-    T_Shapes     shapes_;
-    geometry::Point2f dragPoint_;
-
-    const DrawerStyle* selectedStyle_;
-    QColor             selectedColor_;
+    geometry::Rectangle2f viewport_;
+    const Drawing_ABC* selected_;
     //@}
 };
 

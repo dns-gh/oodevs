@@ -40,6 +40,8 @@ public:
     //@{
     template< typename T >
     void SetOption( const std::string& path, const T& value );
+    template< typename T >
+    T GetOption( const std::string& path ) const;
     void SetDefaultValues();
     //@}
 
@@ -48,11 +50,6 @@ private:
     //@{
     CreateSession( const CreateSession& );            //!< Copy constructor
     CreateSession& operator=( const CreateSession& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    std::string GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
     //@}
 
 private:
@@ -71,6 +68,16 @@ template< typename T >
 void CreateSession::SetOption( const std::string& path, const T& value )
 {
     setter_->SetValue( path, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateSession::GetOption
+// Created: RDS 2008-08-19
+// -----------------------------------------------------------------------------
+template< typename T >
+T CreateSession::GetOption( const std::string& path ) const
+{
+    return setter_->GetValue<T>( path ) ; 
 }
 
 }

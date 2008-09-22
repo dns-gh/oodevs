@@ -11,7 +11,7 @@
 #include "ReplayerToolbar.h"
 #include "moc_ReplayerToolbar.cpp"
 #include "gaming/Simulation.h"
-#include "gaming/ReplayMessages.h"
+#include "game_asn/ReplaySenders.h"
 #include "clients_kernel/Controllers.h"
 #include "icons.h"
 

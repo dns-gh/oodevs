@@ -19,6 +19,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Attributes_ABC;
+    class HumanFactors_ABC;
     class Profile_ABC;
 }
 
@@ -29,6 +30,8 @@ namespace gui
 
 class QProgressBar;
 class Attributes;
+class HumanFactors;
+class Reinforcements;
 
 // =============================================================================
 /** @class  InfoStatusWidget
@@ -40,6 +43,8 @@ class InfoStatusWidget : public QVBox
                        , public kernel::Observer_ABC
                        , public kernel::SelectionObserver< kernel::Entity_ABC >
                        , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
+                       , public kernel::ElementObserver_ABC< kernel::HumanFactors_ABC >
+                       , public kernel::ElementObserver_ABC< Reinforcements >
 {
     Q_OBJECT;
 
@@ -68,10 +73,19 @@ private:
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const kernel::Attributes_ABC& element );
+    virtual void NotifyUpdated( const kernel::HumanFactors_ABC& element );
+    virtual void NotifyUpdated( const Reinforcements& element );
 
     void SetDefault();
     void SetLifeBar( const Attributes& attributes );
-    void SetName   ( const Attributes& attributes );
+    void SetName   ( const Attributes* attributes );
+    void SetHumanFactors( const HumanFactors& humans );
+    void SetExperience( const HumanFactors& humans );
+    void SetMorale( const HumanFactors& humans );
+    void SetTiredness( const HumanFactors& humans );
+    void SetReinforcements( const Reinforcements& reinforcements );
+
+    virtual void resizeEvent( QResizeEvent* ev );
     //@}
 
 private:
@@ -82,12 +96,21 @@ private:
     gui::EntitySymbols& icons_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
 
-    QPushButton* gotoParent_;
+    QButton* gotoParent_;
     QLabel* icon_;
     QLabel* name_;
     QProgressBar* lifeBar_;
 
+    QLabel* reinforced_;
+    QLabel* reinforcing_;
+    QLabel* experience_;
+    QLabel* morale_;
+    QLabel* tiredness_;
+
     QPixmap csword_;
+    QImage background_;
+    QImage boost_, warning_, error_;
+    QImage experienced_, veteran_;
     //@}
 };
 

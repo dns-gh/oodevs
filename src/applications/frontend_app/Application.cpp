@@ -47,6 +47,6 @@ Application::~Application()
 void Application::AddTranslator( const char* t, const QString& locale )
 {
     std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
-    if( trans->load( t + locale, "." ) )
+    if( trans->load( t + locale, "." ) || trans->load( t + locale, "resources/locales" ) )
        installTranslator( trans.release() );
 }

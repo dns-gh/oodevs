@@ -18,7 +18,7 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/StaticModel.h"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "gaming/tools.h"
 
 using namespace kernel;

@@ -26,7 +26,7 @@ namespace kernel
 namespace dispatcher
 {
     class Model;
-    class Automat;
+	class Automat;
     class Agent;
     class SimulationPublisher_ABC;
 }

@@ -13,8 +13,8 @@
 #include "LimaParameter.h"
 #include "gaming/Lima.h"
 #include "gaming/Tools.h"
-#include "gaming/ActionParameterLimaList.h"
-#include "gaming/Action_ABC.h"
+#include "actions/LimaList.h"
+#include "actions/Action_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Controller.h"
 
@@ -59,9 +59,9 @@ void ParamLimaList::BuildInterface( QWidget* parent )
 // Name: ParamLimaList::CommitTo
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void ParamLimaList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamLimaList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterLimaList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::LimaList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

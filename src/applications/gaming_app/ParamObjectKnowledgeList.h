@@ -16,10 +16,9 @@ namespace kernel
 {
     class Object_ABC;
     class Entity_ABC;
+    class ObjectKnowledge_ABC;
+    class ObjectKnowledgeConverter_ABC;
 }
-
-class ObjectKnowledge_ABC;
-class ObjectKnowledgeConverter_ABC;
 
 // =============================================================================
 /** @class  ParamObjectKnowledgeList
@@ -27,20 +26,20 @@ class ObjectKnowledgeConverter_ABC;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamObjectKnowledgeList : public EntityListParameter< ObjectKnowledge_ABC >
+class ParamObjectKnowledgeList : public EntityListParameter< kernel::ObjectKnowledge_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC > 
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObjectKnowledgeList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamObjectKnowledgeList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamObjectKnowledgeList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 private:
@@ -53,7 +52,7 @@ private:
     //! @name Helpers
     //@{
     virtual void AddToMenu( kernel::ContextMenu& menu );
-    virtual EntityParameter< ObjectKnowledge_ABC >* CreateElement( const ObjectKnowledge_ABC& potential );
+    virtual EntityParameter< kernel::ObjectKnowledge_ABC >* CreateElement( const kernel::ObjectKnowledge_ABC& potential );
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
@@ -61,7 +60,7 @@ private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;
-    ObjectKnowledgeConverter_ABC& converter_;
+    kernel::ObjectKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& agent_;
     unsigned int count_;
     //@}

@@ -25,7 +25,7 @@ class SmartGridWidget : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             SmartGridWidget( QWidget* parent, int strips, Orientation o );
+             SmartGridWidget( QWidget* parent, int strips, Orientation o, const char* name = 0 );
     virtual ~SmartGridWidget();
     //@}
 

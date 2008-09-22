@@ -27,6 +27,7 @@ namespace gui
     class Layer_ABC;
     class LayersPanel;
     class Elevation2dLayer;
+    class UserControlPanel;
 
 // =============================================================================
 /** @class  PreferencesDialog
@@ -48,6 +49,8 @@ public:
     //! @name Operations
     //@{
     virtual QSize sizeHint () const;
+    virtual void show ();
+    virtual void reject();
     GraphicPreferences& GetPreferences() const; // $$$$ SBO 2006-05-04: 
 
     void AddLayer( const QString& name, gui::Layer_ABC& layer );
@@ -58,7 +61,6 @@ private slots:
     //! @name Slots
     //@{
     void OnOk();
-    void OnApply();
     void OnCancel();
     //@}
 

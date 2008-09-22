@@ -54,7 +54,9 @@ bool LinkInterpreter_ABC::Interprete( const QString& link )
 bool LinkInterpreter_ABC::Interprete( const QUrl& url )
 {
     const QString protocol = url.protocol();
-    if( protocol == "cmd" || protocol == "http" )
+    if( protocol == "cmd" )
+        return ExecuteCommand( url.path( true ) );
+    if( protocol == "http" || protocol == "file" )
         return ExecuteCommand( url );
     if( protocol == "id" )
         return InterpreteId( url );
@@ -71,7 +73,7 @@ bool LinkInterpreter_ABC::ExecuteCommand( const QUrl& url )
     openPage.addArgument( "cmd" );
     openPage.addArgument( "/c" );
     openPage.addArgument( "start" );
-    openPage.addArgument( url );
+    openPage.addArgument( url.toString( true, true ) );
     return openPage.start();
 }
 

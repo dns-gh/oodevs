@@ -12,6 +12,31 @@
 
 #include "ContentPage.h"
 
+class QListBox;
+class QTextBrowser;
+class QTabWidget; 
+class QLineEdit ; 
+
+namespace gui 
+{
+    class LinkInterpreter_ABC ; 
+}
+
+namespace frontend
+{
+    class SpawnCommand ; 
+    class InfoBubble ; 
+}
+
+namespace tools
+{
+    class GeneralConfig;
+}
+
+class SessionStatus ; 
+
+class ExerciseList; 
+
 // =============================================================================
 /** @class  ReplayPage
     @brief  ReplayPage
@@ -20,16 +45,23 @@
 // =============================================================================
 class ReplayPage : public ContentPage
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPage( QWidgetStack* pages, Page_ABC& previous );
+             ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< SessionStatus > sessionStatus  );
     virtual ~ReplayPage();
     //@}
 
+private slots:
+    
     //! @name Operations
     //@{
+    void OnStartExercise  ( const QString& exercise );
+    void OnStart          ( );
+    void OnSelectExercise ( const QString& exercise );
+    void OnSelectSession  ( const QString& session ); 
     //@}
 
 private:
@@ -41,11 +73,21 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Update();
+    void CreateSession( const QString& exercise, const QString& session );
+    void StartSession( SessionStatus* session ); 
     //@}
 
 private:
+    
+    boost::shared_ptr< SessionStatus > sessionStatus_ ; 
+
     //! @name Member data
     //@{
+    const tools::GeneralConfig& config_;
+    ExerciseList*       exercises_ ; 
+    QListBox*           sessionList_;
+    QListBox*           checkpointList_;
     //@}
 };
 

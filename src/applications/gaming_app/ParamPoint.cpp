@@ -16,8 +16,8 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Point.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterPoint.h"
+#include "actions/Action_ABC.h"
+#include "actions/Point.h"
 
 using namespace kernel;
 using namespace gui;
@@ -89,12 +89,12 @@ void ParamPoint::Draw( const geometry::Point2f& /*point*/, const kernel::Viewpor
 // Name: ParamPoint::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void ParamPoint::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamPoint::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     kernel::Point point;
     if( isSet_ )
         point.AddPoint( paramPoint_ );
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterPoint( parameter_, converter_, point ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::Point( parameter_, converter_, point ) );
     param->Set( isSet_ );
     action.AddParameter( *param.release() );
 }

@@ -10,7 +10,9 @@
 #include "dispatcher_pch.h"
 #include "PopulationFlow.h"
 #include "Population.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
+#include "ModelVisitor_ABC.h"
+#include "EntityPublisher.h"
 
 using namespace dispatcher;
 
@@ -18,8 +20,9 @@ using namespace dispatcher;
 // Name: PopulationFlow constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( Model& /*model*/, Population& population, const ASN1T_MsgPopulationFlowCreation& msg )
-    : population_     ( population )
+PopulationFlow::PopulationFlow( const Population& population, const ASN1T_MsgPopulationFlowCreation& msg )
+    : SimpleEntity< kernel::PopulationFlow_ABC >( msg.oid ) 
+    , population_     ( population )
     , nID_            ( msg.oid )
     , path_           ()
     , flow_           ()
@@ -29,7 +32,7 @@ PopulationFlow::PopulationFlow( Model& /*model*/, Population& population, const 
     , nNbrDeadHumans_ ( 0 )
     , nAttitude_      ( EnumPopulationAttitude::agressive )    
 {
-    // NOTHING
+    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationFlow >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,10 +76,10 @@ void PopulationFlow::Update( const ASN1T_MsgPopulationFlowUpdate& msg )
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationFlowCreation asn;
+    client::PopulationFlowCreation asn;
 
     asn().oid            = nID_;
-    asn().oid_population = population_.GetID();
+    asn().oid_population = population_.GetId();
 
     asn.Send( publisher );
 }
@@ -87,7 +90,7 @@ void PopulationFlow::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationFlowUpdate asn;
+    client::PopulationFlowUpdate asn;
 
     asn().m.itinerairePresent         = 1;
     asn().m.fluxPresent               = 1;
@@ -99,7 +102,7 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 
 
     asn().oid                = nID_;
-    asn().oid_population     = population_.GetID();
+    asn().oid_population     = population_.GetId();
     asn().direction          = nDirection_; 
     asn().vitesse            = nSpeed_;
     asn().attitude           = nAttitude_;
@@ -117,9 +120,53 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFlow::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientPopulationFlowDestruction destruction;
+    client::PopulationFlowDestruction destruction;
     destruction().oid            = nID_;
-    destruction().oid_population = population_.GetID();
+    destruction().oid_population = population_.GetId();
     destruction.Send( publisher );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::Accept
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+void PopulationFlow::Accept( ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetDeadHumans
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetDeadHumans() const
+{
+    return nNbrDeadHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetLivingHumans
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetLivingHumans() const
+{
+    return nNbrAliveHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetDensity
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetDensity() const
+{
+    throw std::runtime_error( "Not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetAttitude
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+QString PopulationFlow::GetAttitude() const
+{
+    throw std::runtime_error( "Not implemented" );
+}

@@ -83,14 +83,14 @@ std::string ReportFactory::RenderParameter( const ASN1T_MissionParameter& value 
         break;
     case T_MissionParameter_value_unit:
         {
-            if( const dispatcher::Agent* agent = model_.GetAgents().Find( value.value.u.unit ) )
-                ss << agent->GetName() << " [" << agent->GetID() << "]";
+            if( const dispatcher::Agent* agent = model_.agents_.Find( value.value.u.unit ) )
+                ss << agent->GetName().ascii() << " [" << agent->GetId() << "]";
             break;
         }
     case T_MissionParameter_value_unitKnowledge:
         {
-            if( const dispatcher::AgentKnowledge* knowledge = model_.GetAgentKnowledges().Find( value.value.u.unitKnowledge ) )
-                ss << knowledge->GetName() << " [" << knowledge->GetID() << "]";
+            if( const dispatcher::AgentKnowledge* knowledge = model_.agentKnowledges_.Find( value.value.u.unitKnowledge ) )
+                ss << knowledge->GetName().ascii() << " [" << knowledge->GetId() << "]";
             break;
         }
     case T_MissionParameter_value_objectKnowledge:

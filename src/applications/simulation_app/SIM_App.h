@@ -13,11 +13,15 @@
 #define __SIM_App_h_
 
 #include "Sim.h"
+#include "WinArguments.h" 
 
 #include "simulation_kernel/tools/MIL_Config.h"
 
+#include <boost/thread.hpp>
+
 class SIM_NetworkLogger;
 class SIM_Dispatcher;
+class MT_FileLogger;
 
 //=============================================================================
 // Created: NLD 2002-08-07
@@ -27,8 +31,17 @@ class SIM_App
     MT_COPYNOTALLOWED( SIM_App );
 
 public:
-     SIM_App( int argc, char** argv );
-    ~SIM_App();
+	 
+    class QuitException : public std::exception
+    {
+
+    } ; 
+
+    //! @name Constructors / Destructors 
+    //@{
+    explicit SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow ); //!< win32 
+    virtual ~SIM_App();
+    //@}
     
     int Execute();
 
@@ -38,30 +51,51 @@ private:
     //! @name Tools
     //@{
     void Initialize();
-    void Run       (); 
+	void Run       ();
+	void Stop      (); 
+	bool Tic       (); 
     void Cleanup   ();
     int  Test      ();
 
     std::string Wrap                ( const std::string& content, const std::string& prefix ) const;
     bool        IsAlreadyWrapped    ( const std::string& content ) const;
 
-    static bool ConsoleEventHandler( int nEvent );
     //@}
     
 private:
     //! @name Member data
     //@{
-    MIL_Config startupConfig_;
-    int argc_;
-    char** argv_;
+    MIL_Config		startupConfig_;
     
-    // Error dispatchers
-    SIM_NetworkLogger* pNetworkLogger_;
+	WinArguments	winArguments_ ; 
 
-    static bool     bCrashWithCoreDump_;
-    static bool     bUserInterrupt_;
-    SIM_Dispatcher* pDispatcher_;
+    SIM_NetworkLogger*				pNetworkLogger_;    //<! Error dispatchers
+    MT_FileLogger*                  logger_;
+
+    static bool						bCrashWithCoreDump_;
+    static bool						bUserInterrupt_;
+    SIM_Dispatcher*					pDispatcher_;
     //@}
+
+    //! @name UI members 
+    //@{
+	HWND						   hWnd_ ;
+	HINSTANCE					   hInstance_ ; 
+	NOTIFYICONDATA				   TrayIcon_;
+    unsigned int				   nIconIndex_; 
+	std::auto_ptr< boost::thread > guiThread_ ; 
+	std::auto_ptr< boost::thread > dispatcherThread_ ; 
+	//@}
+
+
+	void RunGUI(); 
+    void RunDispatcher(); 
+	void AnimateIcon() ; 
+    void StartIconAnimation(); 
+    void StopIconAnimation(); 
+
+	static LRESULT CALLBACK	MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam); 
+
 };
 
 #include "SIM_App.inl"

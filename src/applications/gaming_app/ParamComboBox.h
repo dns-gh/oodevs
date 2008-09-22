@@ -12,8 +12,8 @@
 
 #include "Param_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
-#include "gaming/ActionParameterEnumeration.h"
-#include "gaming/Action_ABC.h"
+#include "actions/Enumeration.h"
+#include "actions/Action_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
 // =============================================================================
@@ -37,7 +37,7 @@ public:
     //@{
     virtual void BuildInterface( QWidget* parent );
     void AddItem( const QString& name, T value );
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     T GetValue() const;
     //@}
 
@@ -122,9 +122,9 @@ void ParamComboBox<T>::AddItem( const QString& name, T value )
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 template< typename T >
-void ParamComboBox<T>::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamComboBox<T>::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *new ActionParameterEnumeration( parameter_, GetValue() ) );
+    action.AddParameter( *new actions::parameters::Enumeration( parameter_, GetValue() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,13 +16,14 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "PopulationKnowledge_ABC.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
     class Team_ABC;
     class Displayer_ABC;
+    class PopulationKnowledge_ABC;
 }
 
 class PopulationPartKnowledge_ABC;
@@ -32,7 +33,9 @@ class PopulationFlowKnowledge;
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationKnowledge : public kernel::EntityImplementation< PopulationKnowledge_ABC >
+class PopulationKnowledge : public kernel::EntityImplementation< kernel::PopulationKnowledge_ABC >
+                          , public kernel::Resolver< PopulationFlowKnowledge >
+                          , public kernel::Resolver< PopulationConcentrationKnowledge >
                           , public kernel::Extension_ABC
                           , public kernel::Drawable_ABC
                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationKnowledgeUpdate >
@@ -55,7 +58,6 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
-    virtual QString GetTypeName() const;
     virtual const kernel::Population_ABC* GetEntity() const;
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;

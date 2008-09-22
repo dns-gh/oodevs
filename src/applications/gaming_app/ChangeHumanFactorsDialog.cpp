@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "moc_ChangeHumanFactorsDialog.cpp"
-#include "gaming/SimulationMessages.h"
+#include "game_asn/SimulationSenders.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/tools.h"
 #include "clients_kernel/Agent_ABC.h"

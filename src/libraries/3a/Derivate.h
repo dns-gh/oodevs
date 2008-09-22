@@ -12,6 +12,7 @@
 
 #include "Functions.h"
 #include "TypeChecks.h"
+#include <map>
 
 #pragma warning( push )
 #pragma warning( disable : 4800 4804 )

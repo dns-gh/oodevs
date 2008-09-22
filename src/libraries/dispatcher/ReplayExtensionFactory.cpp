@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "ReplayExtensionFactory.h"
 #include "ReplaySynchronisations.h"
-#include "Entity_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 
 using namespace dispatcher;
 
@@ -37,7 +37,7 @@ ReplayExtensionFactory::~ReplayExtensionFactory()
 // Name: ReplayExtensionFactory::Create
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-void ReplayExtensionFactory::Create( Entity_ABC& entity )
+void ReplayExtensionFactory::Create( kernel::Entity_ABC& entity )
 {
     entity.Attach( *new ReplaySynchronisations( model_, entity ) );
 }

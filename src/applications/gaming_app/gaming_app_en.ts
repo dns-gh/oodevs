@@ -270,6 +270,25 @@
     </message>
 </context>
 <context>
+    <name>Application</name>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sword-ot@masagroup.net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unhandled error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training - Gaming</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BorrowingsListView</name>
     <message>
         <source>Lender</source>
@@ -281,6 +300,17 @@
     </message>
     <message>
         <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BriefingDialog</name>
+    <message>
+        <source>Briefing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -398,6 +428,31 @@
     </message>
 </context>
 <context>
+    <name>ChatDock</name>
+    <message>
+        <source>Chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatRoom</name>
+    <message>
+        <source>Send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Me</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChatWidget</name>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ClockDock</name>
     <message>
         <source>Clock</source>
@@ -435,6 +490,21 @@
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConnectionMenu</name>
+    <message>
+        <source>&amp;Connect...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Disconnect...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -494,10 +564,6 @@
 <context>
     <name>EventToolbar</name>
     <message>
-        <source>0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Messages</source>
         <translation type="unfinished"></translation>
     </message>
@@ -507,6 +573,10 @@
     </message>
     <message>
         <source>Conflicts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 pending messages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -694,26 +764,38 @@
 <context>
     <name>InfoStancesWidget</name>
     <message>
-        <source>Stance: previous was: &apos;%1&apos;</source>
+        <source>Movement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Stance: next is: &apos;%1&apos;</source>
+        <source>Installation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Stance: current is: &apos;%1&apos;</source>
+        <source>Stance &apos;%1&apos; at %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>InfoStatusBar</name>
+    <name>InfoStatusWidget</name>
     <message>
-        <source>Morale: </source>
+        <source>Goto parent unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>morale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tiredness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Experience: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Morale: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -726,13 +808,6 @@
     </message>
     <message>
         <source>Reinforced by: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>InfoStatusWidget</name>
-    <message>
-        <source>Goto parent unit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1091,10 +1166,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> - Not connected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1144,6 +1215,14 @@
     </message>
     <message>
         <source>Intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading exercise: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1347,14 +1426,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Open exercice...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1439,10 +1510,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Profiles...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1472,6 +1539,22 @@
     </message>
     <message>
         <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon ranges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Exercise</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2282,10 +2365,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Speed factor:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2307,6 +2386,10 @@
     </message>
     <message>
         <source>Checkpoint name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed factor: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2393,9 +2476,42 @@
     </message>
 </context>
 <context>
+    <name>TimelineActionItem</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Press enter to rename, unfocus field to cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TimelineListView</name>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TimelinePanel</name>
     <message>
         <source>Actions timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TimelineView</name>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom Out</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2527,6 +2643,18 @@
     </message>
     <message>
         <source>Permissions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;Read&apos; permission allows you to see an unit.
+&apos;Write&apos; permission allows you to control an unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>tools</name>
+    <message>
+        <source> - Not connected</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

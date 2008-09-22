@@ -13,66 +13,62 @@
 #define __SIM_NetworkLogger_h_
 
 #include "SIM.h"
-
-#include "NEK/NEK_Module_ABC.h"
-#include "NEK/NEK_Engine.h"
-
 #include "MT/MT_Logger/MT_Logger_ABC.h"
+
+#include <boost/asio.hpp> 
+
+namespace boost
+{
+    class thread;
+	class mutex; 
+}
+
 
 // =============================================================================
 // Created: NLD 2004-02-11
 // =============================================================================
 class SIM_NetworkLogger : public MT_Logger_ABC
-                        , public NEK::NEK_Module_ABC
 {
     MT_COPYNOTALLOWED( SIM_NetworkLogger );
 
 public:
     //! @name Constructors/Destructor
     //@{
-               SIM_NetworkLogger( uint nPort, uint nLogLevels = eLogLevel_All, uint nLogLayers = eLogLayer_All );
-    /*final*/ ~SIM_NetworkLogger();
-    //@}
-
-    //! @name Main
-    //@{
-    void Update();        
+	explicit SIM_NetworkLogger( uint nPort, uint nLogLevels = eLogLevel_All, uint nLogLayers = eLogLayer_All );
+    virtual ~SIM_NetworkLogger();
     //@}
 
 private:
-    //! @name Log methods 
-    //@{
-    /*final*/ void LogString( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
-    //@}
+    
+	//! @name Log methods 
+	//@{
+	void LogString		( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
+	void WaitForClient	();
+	void StartConnection( boost::shared_ptr< boost::asio::ip::tcp::socket > newClientSocket, const boost::system::error_code& error );
+	void StopConnection ( boost::shared_ptr< boost::asio::ip::tcp::socket > socket ); 
+	void AsyncWrite		( boost::shared_ptr< boost::asio::ip::tcp::socket > socket, const boost::system::error_code& error ); 
+	//@}
 
-    //! @name Events
+private:
+
+	//! @name Types
     //@{
-    /*final*/ void  OnAccept   ( NEK::NEK_Socket_ABC& acceptedSocket, NEK::NEK_Socket_ABC& listeningSocket );
-    /*final*/ void  OnConnected( NEK::NEK_Socket_ABC& socket );
-    /*final*/ void  OnRead     ( NEK::NEK_Socket_ABC& socket, NEK::NEK_Input& input );
-    /*final*/ void  OnWrite    ( NEK::NEK_Socket_ABC& socket, NEK::NEK_Output& output );
-    /*final*/ void  OnClose    ( NEK::NEK_Socket_ABC& socket );
-    /*final*/ void  OnTimeout  ( NEK::NEK_Socket_ABC& socket );
-    /*final*/ void  OnError    ( NEK::NEK_Socket_ABC& socket, const MT_Exception& exception );
+	typedef std::set < boost::shared_ptr< boost::asio::ip::tcp::socket > >  T_SocketSet ; 
+	typedef T_SocketSet::iterator                                          IT_SocketSet ; 
+	typedef T_SocketSet::const_iterator                                   CIT_SocketSet ; 
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::set< NEK::NEK_Socket_ABC* >  T_SocketSet;
-    typedef T_SocketSet::iterator             IT_SocketSet;
-    typedef T_SocketSet::const_iterator       CIT_SocketSet;
-    //@}
 
-private:
-    NEK::NEK_Engine         nekEngine_;
-    NEK::NEK_Socket_ABC*    pServerSocket_;  
-    T_SocketSet             clientSocketSet_;
-    MT_CriticalSection      criticalSection_;
+    //! @name 
+    //@{
+	T_SocketSet						sockets_; 
+	boost::asio::io_service			io_service_;
+	boost::asio::ip::tcp::acceptor	acceptor_ ; 
+	std::auto_ptr< boost::mutex	>	criticalSection_;
+	std::auto_ptr< boost::thread >	thread_ ; 
+    //@}
+	
 };
-
-#ifdef MT_USE_INLINE
-#   include "SIM_NetworkLogger.inl"
-#endif
 
 #endif // __SIM_NetworkLogger_h_

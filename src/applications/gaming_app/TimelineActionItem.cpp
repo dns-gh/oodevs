@@ -12,12 +12,15 @@
 #include "moc_TimelineActionItem.cpp"
 #include "TimelineView.h"
 #include "TimelineRuler.h"
-#include "gaming/Action_ABC.h"
+#include "actions/Action_ABC.h"
+#include "actions/ActionsModel.h"
 #include "gaming/ActionTiming.h"
-#include "gaming/ActionsModel.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include <qpainter.h>
 #include <qfontmetrics.h>
+
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: TimelineActionItem constructor
@@ -32,6 +35,7 @@ TimelineActionItem::TimelineActionItem( QCanvas* canvas, const TimelineRuler& ru
     , action_         ( action )
     , textWidth_      ( 0 )
     , palette_        ( palette )
+    , nameEditor_     ( 0 )
 {
     show();
     controllers_.Register( *this );
@@ -120,6 +124,27 @@ namespace
         painter.setPen( foreground );
         painter.drawRect( rect );
     }
+
+    void DrawHorizontalGradientBox( QPainter& painter, const QRect& rect, const QColor& leftColor, const QColor& rightColor )
+    {
+        const int range = 12; //item2->GetPercentage() - item1->GetPercentage();
+        if( range < 1 )
+            return;
+        const int rStep = ( rightColor.red()   - leftColor.red()   ) / range;
+        const int gStep = ( rightColor.green() - leftColor.green() ) / range;
+        const int bStep = ( rightColor.blue()  - leftColor.blue()  ) / range;
+        const float xStep = float( rect.width() ) / range;
+
+        QColor color( leftColor );
+        QRect region( rect );
+        for( unsigned int i = 0; i < unsigned int( range ); ++i )
+        {
+            color.setRgb( leftColor.red() + rStep * i, leftColor.green() + gStep * i, leftColor.blue() + bStep * i );
+            region.setLeft ( rect.left() + int( xStep * i ) );
+            region.setRight( rect.left() + int( xStep * ( i + 1 ) ) );
+            painter.fillRect( region, color );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -135,9 +160,9 @@ void TimelineActionItem::draw( QPainter& painter )
     const QPalette::ColorGroup colorGroup = isEnabled() ? ( isSelected() ? QPalette::Active : QPalette::Inactive ) : QPalette::Disabled;
     const QPen oldPen = painter.pen();
 
-    painter.fillRect( rect().left(), rect().top() + 1, rect().width(), rect().height() - 2, Qt::white ); // $$$$ SBO 2008-04-22: clear color
-    const QRect bottomRect( rect().left(), rect().bottom() - 3, 30, 4 );
-    DrawBox( painter, bottomRect, palette_.color( colorGroup, QColorGroup::Background ), palette_.color( colorGroup, QColorGroup::Foreground ) );
+    //painter.fillRect( rect().left(), rect().top() + 1, rect().width(), rect().height() - 2, Qt::white ); // $$$$ SBO 2008-04-22: clear color
+    const QRect gradientRect( rect().left(), rect().top(), rect().width() + 40, rect().height() );
+    DrawHorizontalGradientBox( painter, gradientRect, palette_.color( colorGroup, QColorGroup::Background ), Qt::white );
     DrawArrow( painter, rect() );
     painter.setPen( oldPen );
     painter.drawText( rect(), Qt::AlignLeft | Qt::AlignVCenter, " " + action_.GetName() );
@@ -169,8 +194,15 @@ void TimelineActionItem::DisplayToolTip( QWidget* parent ) const
 // -----------------------------------------------------------------------------
 void TimelineActionItem::DisplayContextMenu( QPopupMenu* menu ) const
 {
-//    menu->insertItem( tr( "Rename" ), this, SLOT( OnRename() ), Qt::Key_F2 ); // $$$$ SBO 2008-05-15: TODO
-    menu->insertItem( tr( "Delete" ), this, SLOT( OnDelete() ), Qt::Key_Delete );
+    if( !nameEditor_ )
+    {
+        nameEditor_ = new QLineEdit( menu->parentWidget() );
+        QToolTip::add( nameEditor_, tools::translate( "TimelineActionItem", "Press enter to rename, unfocus field to cancel" ) );
+        connect( nameEditor_, SIGNAL( returnPressed() ), SLOT( DoRename() ) );
+        connect( nameEditor_, SIGNAL( lostFocus() ), nameEditor_, SLOT( hide() ) );
+    }
+    menu->insertItem( tools::translate( "TimelineActionItem", "Rename" ), this, SLOT( OnRename() ), Qt::Key_F2 );
+    menu->insertItem( tools::translate( "TimelineActionItem", "Delete" ), this, SLOT( OnDelete() ), Qt::Key_Delete );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,5 +229,29 @@ void TimelineActionItem::OnDelete()
 // -----------------------------------------------------------------------------
 void TimelineActionItem::OnRename()
 {
-     // $$$$ SBO 2008-04-22: TODO
+    if( !nameEditor_ )
+        return;
+    nameEditor_->setText( action_.GetName() );
+    int vx = int( x() ), vy = int( y() );
+    if( nameEditor_->parentWidget()->inherits( "QScrollView" ) )
+    {
+        QScrollView* view = (QScrollView*)( nameEditor_->parentWidget() );
+        view->contentsToViewport( vx, vy, vx, vy );
+    }
+    nameEditor_->setGeometry( vx + 4, vy + 2, width(), height() - 4 );
+    nameEditor_->selectAll();
+    nameEditor_->setFocus();
+    nameEditor_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineActionItem::DoRename
+// Created: SBO 2008-08-20
+// -----------------------------------------------------------------------------
+void TimelineActionItem::DoRename()
+{
+    const QString name = nameEditor_ ? nameEditor_->text() : "";
+    if( !name.isEmpty() && name != action_.GetName() )
+        const_cast< Action_ABC& >( action_ ).Rename( name );
+    nameEditor_->hide();
 }

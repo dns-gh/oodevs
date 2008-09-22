@@ -26,19 +26,18 @@ using namespace tools;
 // Name: GeneralConfig constructor
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-GeneralConfig::GeneralConfig()
+GeneralConfig::GeneralConfig( const std::string& defaultRoot /*= "../"*/ )
     : CommandLineConfig_ABC()
     , terrainConfigFile_   ( "terrain.xml"  )
     , exerciseConfigFile_  ( "exercise.xml" )
-    , sessionConfigFile_   ( "session.xml"  )
 {
     po::options_description desc( "General options" );
     desc.add_options()
-        ( "root-dir"      , po::value< std::string >( &rootDir_      )->default_value( "../"             ), "specify global root directory"    )
-        ( "terrains-dir"  , po::value< std::string >( &terrainsDir_  )->default_value( "data/terrains/"  ), "specify terrains root directory"  )
-        ( "models-dir"    , po::value< std::string >( &modelsDir_    )->default_value( "data/models/"    ), "specify models root directory"    )
-        ( "population-dir", po::value< std::string >( &populationDir_)->default_value( "data/population/"), "specify population root directory")
-        ( "exercises-dir" , po::value< std::string >( &exercisesDir_ )->default_value( "exercises/"      ), "specify exercises root directory" )
+        ( "root-dir"      , po::value< std::string >( &rootDir_      )->default_value( defaultRoot         ), "specify global root directory"    )
+        ( "terrains-dir"  , po::value< std::string >( &terrainsDir_  )->default_value( "data/terrains/"    ), "specify terrains root directory"  )
+        ( "models-dir"    , po::value< std::string >( &modelsDir_    )->default_value( "data/models/"      ), "specify models root directory"    )
+        ( "population-dir", po::value< std::string >( &populationDir_)->default_value( "data/population/"  ), "specify population root directory")
+        ( "exercises-dir" , po::value< std::string >( &exercisesDir_ )->default_value( "exercises/"        ), "specify exercises root directory" )
     ;
     AddOptions( desc );
 }
@@ -105,6 +104,16 @@ std::string GeneralConfig::BuildDirectoryFile( const std::string& directory, con
 std::string GeneralConfig::BuildWorkingDirectoryChildFile( const std::string& file )
 {
     return BuildDirectoryFile( ".", file );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::BuildResourceChildFile
+// Created: AGE 2008-08-14
+// -----------------------------------------------------------------------------
+// static
+std::string GeneralConfig::BuildResourceChildFile( const std::string& file )
+{
+    return BuildDirectoryFile( "./resources", file );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,4 +261,14 @@ std::string GeneralConfig::BuildPopulationChildFile( const std::string& file ) c
 std::string GeneralConfig::GetCheckpointsDir( const std::string& exercise, const std::string& session ) const
 {
     return ( bfs::path( BuildSessionDir( exercise, session ), bfs::native ) / "checkpoints" ).native_directory_string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::LoadExercise
+// Created: SBO 2008-08-21
+// -----------------------------------------------------------------------------
+void GeneralConfig::LoadExercise( const std::string& file )
+{
+    bfs::path p( file, bfs::native );
+    exercisesDir_ = p.branch_path().branch_path().native_directory_string();
 }

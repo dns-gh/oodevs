@@ -10,13 +10,19 @@ AfterActionPlot.cpp \
 AfterActionRequestList.cpp \
 AgentKnowledgePanel.cpp \
 AlarmsWidget.cpp \
+Application.cpp \
 BorrowingsListView.cpp \
+BriefingDialog.cpp \
 ChangeDiplomacyDialog.cpp \
 ChangeHumanFactorsDialog.cpp \
 ChangeLogisticLinksDialog.cpp \
+ChatDock.cpp \
+ChatRoom.cpp \
+ChatWidget.cpp \
 ClockDock.cpp \
 ClockWidget.cpp \
 ConnectDialog.cpp \
+ConnectionMenu.cpp \
 DisconnectDialog.cpp \
 DotationsListView.cpp \
 EquipmentsListView.cpp \
@@ -33,7 +39,6 @@ InfoMaintenanceDialog.cpp \
 InfoMedicalDialog.cpp \
 InfoMissionsTab.cpp \
 InfoStancesWidget.cpp \
-InfoStatusBar.cpp \
 InfoStatusWidget.cpp \
 InfoSupplyDialog.cpp \
 InfoWidget.cpp \
@@ -90,11 +95,15 @@ SupplyConsignsWidget.cpp \
 SupplyQuotasListView.cpp \
 SupplyStocksListView.cpp \
 SupplyTransportersListView.cpp \
+TimelineActionItem.cpp \
+TimelineListView.cpp \
 TimelinePanel.cpp \
+TimelineView.cpp \
 UnitMagicOrdersInterface.cpp \
 UserProfileDialog.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \
+main.cpp \
 
 TRANSLATIONS = gaming_app_fr.ts gaming_app_en.ts

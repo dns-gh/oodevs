@@ -12,10 +12,16 @@
 #include "simulation_app_pch.h"
 #include "SIM_NetworkLogger.h"
 
-#include "NEK/NEK_AddressINET.h"
-#include "MT/MT_Thread/MT_CriticalSectionLocker.h"
+#ifdef _MSC_VER
+#   pragma warning( push, 0 )
+#endif
 
-using namespace NEK;
+#include <boost/bind.hpp>
+#include <boost/thread.hpp>
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 // -----------------------------------------------------------------------------
 // Name: SIM_NetworkLogger constructor
@@ -23,10 +29,13 @@ using namespace NEK;
 // -----------------------------------------------------------------------------
 SIM_NetworkLogger::SIM_NetworkLogger( uint nPort, uint nLogLevels, uint nLogLayers )
     : MT_Logger_ABC( nLogLevels, nLogLayers )
-    , nekEngine_( )
+	, sockets_   ()
+	, io_service_() 
+	, acceptor_  (io_service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), nPort ) )
+	, criticalSection_ ( new boost::mutex ) 
 {
-    NEK_AddressINET address( nPort );
-    pServerSocket_ = &nekEngine_.AddAListeningSocket( *this, address, NEK_Protocols::eTCP );
+	WaitForClient(); 
+	thread_.reset( new boost::thread( boost::bind( &boost::asio::io_service::run, &io_service_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,10 +44,55 @@ SIM_NetworkLogger::SIM_NetworkLogger( uint nPort, uint nLogLevels, uint nLogLaye
 // -----------------------------------------------------------------------------
 SIM_NetworkLogger::~SIM_NetworkLogger()
 {
-    for( IT_SocketSet itSocket = clientSocketSet_.begin(); itSocket != clientSocketSet_.end(); ++itSocket )
-        (**itSocket).Close();
+	sockets_.clear(); 
+	io_service_.stop();
+	thread_->join();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: SIM_NetworkLogger::WaitForClient
+// Created: RDS 2008-07-11
+// -----------------------------------------------------------------------------
+void SIM_NetworkLogger::WaitForClient()
+{
+    boost::shared_ptr< boost::asio::ip::tcp::socket > socket( new boost::asio::ip::tcp::socket( io_service_ ) );
+    acceptor_.async_accept( *socket, boost::bind( &SIM_NetworkLogger::StartConnection, this, socket, boost::asio::placeholders::error ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIM_NetworkLogger::StartConnection
+// Created: RDS 2008-07-11
+// -----------------------------------------------------------------------------
+void SIM_NetworkLogger::StartConnection( boost::shared_ptr< boost::asio::ip::tcp::socket > newClientSocket, const boost::system::error_code& error )
+{
+    if ( !error )
+    {
+		boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
+		sockets_.insert( newClientSocket ) ; 
+        WaitForClient();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIM_NetworkLogger::StopConnection
+// Created: RDS 2008-07-11
+// -----------------------------------------------------------------------------
+void SIM_NetworkLogger::StopConnection( boost::shared_ptr< boost::asio::ip::tcp::socket > socket )
+{
+	boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
+	sockets_.erase( socket ) ; 
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIM_NetworkLogger::AsyncWrite
+// Created: RDS 2008-07-09
+// -----------------------------------------------------------------------------
+void SIM_NetworkLogger::AsyncWrite( boost::shared_ptr< boost::asio::ip::tcp::socket > socket, const boost::system::error_code& error )
+{
+	if (error) 
+		StopConnection( socket );  
+}
 
 // -----------------------------------------------------------------------------
 // Name: SIM_NetworkLogger::LogString
@@ -46,12 +100,9 @@ SIM_NetworkLogger::~SIM_NetworkLogger()
 // -----------------------------------------------------------------------------
 void SIM_NetworkLogger::LogString( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode )
 {
-    MT_CriticalSectionLocker locker( criticalSection_ );
-
-    if( clientSocketSet_.empty() )
-        return;
-
-    std::stringstream strTmp;
+	boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
+	
+	std::stringstream strTmp;
 
     strTmp << "[" << GetTimestampAsString() << "]";
 
@@ -70,89 +121,11 @@ void SIM_NetworkLogger::LogString( const char* strLayerName, E_LogLevel nLevel, 
         strTmp << " [Context: " << strContext << "]";
 
     strTmp << "\r\n";
-
-
-    for( IT_SocketSet itSocket = clientSocketSet_.begin(); itSocket != clientSocketSet_.end(); ++itSocket )
-    {
-        NEK_Socket_ABC& socket = **itSocket;
-        socket.GetOutput().Append( (const uint8*)( strTmp.str().c_str() ), strTmp.str().size() );
-        socket.NotifyOutputUpdated();
-    }
+		
+	for ( IT_SocketSet it = sockets_.begin(); it != sockets_.end(); it++ ) 
+	{
+		boost::asio::async_write( **it,  boost::asio::buffer( strTmp.str().data() , strTmp.str().size() ) ,
+								  boost::bind(&SIM_NetworkLogger::AsyncWrite, this, *it, boost::asio::placeholders::error) ) ;
+	}
 }
 
-// -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::Update
-// Created: NLD 2004-02-11
-// -----------------------------------------------------------------------------
-void SIM_NetworkLogger::Update()
-{
-    nekEngine_.DispatchEvents();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::OnAccept
-// Created: NLD 2004-02-11
-// -----------------------------------------------------------------------------
-void SIM_NetworkLogger::OnAccept( NEK::NEK_Socket_ABC& acceptedSocket, NEK::NEK_Socket_ABC& /*listeningSocket*/ )
-{
-    MT_CriticalSectionLocker locker( criticalSection_ );
-    acceptedSocket.Accept();
-    clientSocketSet_.insert( &acceptedSocket );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::OnClose
-// Created: NLD 2004-02-11
-// -----------------------------------------------------------------------------
-void SIM_NetworkLogger::OnClose( NEK::NEK_Socket_ABC& socket )
-{
-    MT_CriticalSectionLocker locker( criticalSection_ );
-    clientSocketSet_.erase( &socket );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::OnTimeout
-// Created: NLD 2004-02-11
-// -----------------------------------------------------------------------------
-void SIM_NetworkLogger::OnTimeout( NEK::NEK_Socket_ABC& socket )
-{
-    MT_CriticalSectionLocker locker( criticalSection_ );
-    clientSocketSet_.erase( &socket );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::OnError
-// Created: NLD 2004-02-11
-// -----------------------------------------------------------------------------
-void SIM_NetworkLogger::OnError( NEK::NEK_Socket_ABC& socket, const MT_Exception& /*exception*/ )
-{
-    MT_CriticalSectionLocker locker( criticalSection_ );
-    clientSocketSet_.erase( &socket );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::OnConnected
-// Created: NLD 2004-02-11
-// -----------------------------------------------------------------------------
-void SIM_NetworkLogger::OnConnected( NEK::NEK_Socket_ABC& /*socket*/ )
-{
-    
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::OnRead
-// Created: NLD 2004-02-11
-// -----------------------------------------------------------------------------
-void SIM_NetworkLogger::OnRead( NEK::NEK_Socket_ABC& /*socket*/, NEK::NEK_Input& /*input*/ )
-{
-    
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_NetworkLogger::OnWrite
-// Created: NLD 2004-02-11
-// -----------------------------------------------------------------------------
-void SIM_NetworkLogger::OnWrite( NEK::NEK_Socket_ABC& /*socket*/, NEK::NEK_Output& /*output*/ )
-{
-    
-}

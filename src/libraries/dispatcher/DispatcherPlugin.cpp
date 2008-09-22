@@ -14,6 +14,7 @@
 #include "Profile_ABC.h"
 #include "Model.h"
 #include "ClientPublisher_ABC.h"
+#include "Services.h"
 #include "tools/MessageDispatcher_ABC.h"
 
 using namespace dispatcher;
@@ -37,6 +38,15 @@ DispatcherPlugin::DispatcherPlugin( Model& model, SimulationPublisher_ABC& simul
 DispatcherPlugin::~DispatcherPlugin()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DispatcherPlugin::Register
+// Created: AGE 2008-08-13
+// -----------------------------------------------------------------------------
+void DispatcherPlugin::Register( dispatcher::Services& services )
+{
+    services.Declare< simulation::Service >();
 }
 
 // -----------------------------------------------------------------------------

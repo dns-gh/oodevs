@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "ObjectAttribute_ABC.h"
 
 using namespace dispatcher;
@@ -17,9 +16,10 @@ using namespace dispatcher;
 // Name: ObjectAttribute_ABC constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ObjectAttribute_ABC::ObjectAttribute_ABC( const Model& /*model*/, const ASN1T_ObjectAttributesSpecific& asnMsg )
+ObjectAttribute_ABC::ObjectAttribute_ABC( const ASN1T_ObjectAttributesSpecific& asnMsg )
     : nType_( asnMsg.t )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,6 +28,6 @@ ObjectAttribute_ABC::ObjectAttribute_ABC( const Model& /*model*/, const ASN1T_Ob
 // -----------------------------------------------------------------------------
 ObjectAttribute_ABC::~ObjectAttribute_ABC()
 {
-
+    // NOTHING
 }  
 

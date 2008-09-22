@@ -27,7 +27,7 @@ class CreateTerrain : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateTerrain( QObject* parent, const tools::GeneralConfig& config, const QString& name );
+             CreateTerrain( const tools::GeneralConfig& config, const QString& name, bool attach = false );
     virtual ~CreateTerrain();
     //@}
 

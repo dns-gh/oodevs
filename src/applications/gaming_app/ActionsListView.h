@@ -18,8 +18,12 @@ namespace kernel
     class Controllers;
 }
 
-class Action_ABC;
-class ActionParameter_ABC;
+namespace actions
+{
+    class Action_ABC;
+    class Parameter_ABC;
+}
+
 class ActionsToolbar;
 class ActionTiming;
 
@@ -34,7 +38,7 @@ typedef gui::ListView< ActionsListView > ActionsListViewBase;
 // =============================================================================
 class ActionsListView : public ActionsListViewBase
                       , public kernel::Observer_ABC
-                      , public kernel::ElementObserver_ABC< Action_ABC >
+                      , public kernel::ElementObserver_ABC< actions::Action_ABC >
                       , public kernel::ElementObserver_ABC< ActionTiming >
 {
     Q_OBJECT;
@@ -48,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( const ActionParameter_ABC& param, gui::ValuedListItem* item );
+    virtual void Display( const actions::Parameter_ABC& param, gui::ValuedListItem* item );
     //@}
 
 private slots:
@@ -67,10 +71,11 @@ private:
     //! @name Helpers
     //@{
     void AddColumn( const QString& column, int alignment = AlignAuto, int size = -1 );
-    virtual void NotifyCreated( const Action_ABC& action );
-    virtual void NotifyUpdated( const Action_ABC& action );
-    virtual void NotifyDeleted( const Action_ABC& action );
+    virtual void NotifyCreated( const actions::Action_ABC& action );
+    virtual void NotifyUpdated( const actions::Action_ABC& action );
+    virtual void NotifyDeleted( const actions::Action_ABC& action );
     virtual void NotifyUpdated( const ActionTiming& extension );
+    void Display( QListViewItem* item, const actions::Action_ABC& action );
     //@}
 
 private:

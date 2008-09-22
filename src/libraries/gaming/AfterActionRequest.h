@@ -47,7 +47,7 @@ public:
     void Commit();
 
     QString GetName() const;
-    void Update( const ASN1T_MsgIndicatorResult& asnMsg );
+    void Update( const ASN1T_MsgPlotResult& asnMsg );
     bool IsPending() const;
     bool IsDone() const;
     bool IsFailed() const;

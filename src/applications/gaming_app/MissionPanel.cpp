@@ -25,6 +25,7 @@
 #include "gaming/AutomatDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/PopulationDecisions.h"
+#include "gaming/CommandPublisher.h"
 
 #include "UnitMissionInterface.h"
 #include "AutomateMissionInterface.h"
@@ -35,6 +36,7 @@
 #include "clients_gui/ParametersLayer.h"
 
 using namespace kernel;
+using namespace actions;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -43,7 +45,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, ActionsModel& actionsModel
                           , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const Simulation& simulation )
-    : QDockWindow              ( pParent )
+    : QDockWindow              ( QDockWindow::OutsideDock, pParent, "mission" )
     , controllers_             ( controllers )
     , static_                  ( model )
     , actionsModel_            ( actionsModel )
@@ -52,8 +54,9 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const St
     , converter_               ( static_.coordinateConverter_ )
     , tools_                   ( tools )
     , profile_                 ( profile )
+    , commandPublisher_        ( new CommandPublisher( controllers_, publisher_, profile_ ) )
     , pMissionInterface_       ( 0 )
-    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_, layer_, knowledgeConverter, objectKnowledgeConverter, static_, simulation ) ) 
+    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_, layer_, knowledgeConverter, objectKnowledgeConverter, static_, simulation ) )
     , selectedEntity_          ( controllers )
 {
     setResizeEnabled( true );
@@ -122,6 +125,16 @@ void MissionPanel::NotifyContextMenu( const Population_ABC& entity, ContextMenu&
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionPanel::NotifyDeleted
+// Created: SBO 2008-08-12
+// -----------------------------------------------------------------------------
+void MissionPanel::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    if( &entity == selectedEntity_ || selectedEntity_ == 0 )
+        hide();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionPanel::AddMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -146,7 +159,7 @@ int MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& me
     QPopupMenu& orders = *new QPopupMenu( menu );
     Iterator< const FragOrder& > it = decisions.GetFragOrders();
     AddFragOrders( it, orders, slot );
-    
+
     if( const Mission* mission = decisions.GetCurrentMission() )
     {
         it = static_cast< const Resolver< FragOrder >& >( *mission ).CreateIterator();
@@ -191,7 +204,7 @@ void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextM
 {
     if( !decisions.CanBeOrdered() )
         return;
-    
+
     AddMissions( decisions.GetMissions(), menu, name, slot );
     //menu.SetItemEnabled( id, decisions.CanBeOrdered() );
     AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
@@ -308,6 +321,7 @@ void MissionPanel::SetInterface( MissionInterface_ABC* missionInterface )
     else
     {
         pMissionInterface_ = missionInterface;
+        NotifyMission();
         if( pMissionInterface_->IsEmpty() )
             pMissionInterface_->OnOk();
         else
@@ -315,5 +329,21 @@ void MissionPanel::SetInterface( MissionInterface_ABC* missionInterface )
             setWidget( pMissionInterface_ );
             show();
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::NotifyMission
+// Created: AGE 2008-07-15
+// -----------------------------------------------------------------------------
+void MissionPanel::NotifyMission()
+{
+    if( pMissionInterface_ && selectedEntity_ )
+    {
+        std::stringstream message;
+        message << "/mission " 
+                << selectedEntity_->GetTypeName().ascii() << " " << selectedEntity_->GetId() << " "
+                << "\"" << pMissionInterface_->Title().ascii() << "\"";
+        commandPublisher_->Send( "", message.str() );
     }
 }

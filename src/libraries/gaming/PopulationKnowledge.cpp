@@ -60,15 +60,6 @@ QString PopulationKnowledge::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetTypeName
-// Created: SBO 2006-10-12
-// -----------------------------------------------------------------------------
-QString PopulationKnowledge::GetTypeName() const
-{
-    return typeName_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------

@@ -20,7 +20,10 @@ namespace tools
     class ExerciseConfig;
 }
 
-class ActionsModel;
+namespace actions
+{
+    class ActionsModel;
+}
 class ActionsScheduler;
 class Publisher_ABC;
 class Simulation;
@@ -38,7 +41,7 @@ class ActionsToolbar : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config );
+             ActionsToolbar( QWidget* parent, actions::ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config );
     virtual ~ActionsToolbar();
     //@}
 
@@ -66,7 +69,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ActionsModel& actions_;
+    actions::ActionsModel& actions_;
     ActionsScheduler& scheduler_;
     const tools::ExerciseConfig& config_;
     QToolButton*  loadBtn_;

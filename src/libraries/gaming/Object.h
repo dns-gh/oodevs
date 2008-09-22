@@ -37,11 +37,6 @@ class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
              , public kernel::Drawable_ABC
 {
-public:
-    //! @name Static
-    //@{
-    static const QString typeName_;
-    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -62,7 +57,6 @@ public:
     //! @name Accessors
     //@{
     virtual kernel::ObjectType& GetType           () const;
-    virtual QString             GetTypeName       () const;
             bool                IsReservedObstacle() const;
             bool                IsReservedObstacleActivated() const;
 

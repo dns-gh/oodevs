@@ -12,6 +12,7 @@
 #include "moc_HighlightColorModifier.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ContextMenu.h"
+#include "Tools.h"
 
 using namespace gui;
 
@@ -58,9 +59,9 @@ void HighlightColorModifier::NotifyContextMenu( const kernel::Entity_ABC& entity
 {
     selected_ = &entity;
     if( highlighted_.find( &entity ) == highlighted_.end() )
-        menu.InsertItem( "Interface", tr( "Highlight" ), this, SLOT( Highlight() ) );
+        menu.InsertItem( "Interface", tools::translate( "HighlightColorModifier", "Highlight" ), this, SLOT( Highlight() ) );
     else
-        menu.InsertItem( "Interface", tr( "Remove highlight" ), this, SLOT( Unhighlight() ) );
+        menu.InsertItem( "Interface", tools::translate( "HighlightColorModifier", "Remove highlight" ), this, SLOT( Unhighlight() ) );
 }
 
 // -----------------------------------------------------------------------------

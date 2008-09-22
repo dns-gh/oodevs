@@ -11,9 +11,9 @@
 #include "ParamLocationList.h"
 #include "ParamLocation.h"
 #include "clients_kernel/OrderParameter.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameterLocation.h"
-#include "gaming/ActionParameterLocationList.h"
+#include "actions/Action_ABC.h"
+#include "actions/Location.h"
+#include "actions/LocationList.h"
 #include "gaming/Tools.h"
 
 using namespace kernel;
@@ -46,9 +46,9 @@ ParamLocationList::~ParamLocationList()
 // Name: ParamLocationList::CommitTo
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void ParamLocationList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamLocationList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterLocationList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::LocationList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

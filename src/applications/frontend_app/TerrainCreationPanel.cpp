@@ -27,7 +27,7 @@ using namespace frontend;
 // Created: SBO 2007-10-04
 // -----------------------------------------------------------------------------
 TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
-    : Panel_ABC( widget, action, context )
+    : Panel_ABC( widget, action, context, "TerrainCreationPanel" )
     , config_  ( config )
 {
     QVBox* box = new QVBox( this );
@@ -77,7 +77,7 @@ void TerrainCreationPanel::showEvent( QShowEvent* event )
 // -----------------------------------------------------------------------------
 void TerrainCreationPanel::CreateTerrain()
 {
-    new ::CreateTerrain( this, config_, name_->text() );
+    Start( new ::CreateTerrain( config_, name_->text() ));
     context_.Save( "terrain", name_->text() );
     Update();
     ShowNext();

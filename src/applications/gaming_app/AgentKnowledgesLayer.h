@@ -11,7 +11,7 @@
 #define __AgentKnowledgesLayer_h_
 
 #include "KnowledgeLayer.h"
-#include "gaming/AgentKnowledge_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 
 // =============================================================================
 /** @class  AgentKnowledgesLayer
@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-05-17
 // =============================================================================
-class AgentKnowledgesLayer : public KnowledgeLayer< AgentKnowledge_ABC >
+class AgentKnowledgesLayer : public KnowledgeLayer< kernel::AgentKnowledge_ABC >
 {
 
 public:

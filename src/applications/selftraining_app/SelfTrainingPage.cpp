@@ -10,18 +10,21 @@
 #include "selftraining_app_pch.h"
 #include "SelfTrainingPage.h"
 #include "ScenarioPage.h"
-#include "ReplayPage.h"
+#include "TutorialPage.h" 
+#include "SessionRunningPage.h" 
+#include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: SelfTrainingPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-SelfTrainingPage::SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config )
+SelfTrainingPage::SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< SessionStatus > sessionStatus )
     : MenuPage( pages )
 {
-    AddLink( tr( "Scenario" ), *new ScenarioPage( pages, *this, config ) );
-    AddLink( tr( "Replay" ), *new ReplayPage( pages, *this ) );
-    AddLink( tr( "Back" ), previous );
+    SessionRunningPage* running = new SessionRunningPage( pages, *this, config, sessionStatus ) ; 
+    AddLink( tools::translate( "SelfTrainingPage", "Scenario" ), *new ScenarioPage( pages, *this, config, *running, sessionStatus ), true, tools::translate( "SelfTrainingPage", "Start scenarios" ) );
+    AddLink( tools::translate( "SelfTrainingPage", "Tutorials" ), *new TutorialPage( pages, *this, *running, config, interpreter, sessionStatus ), true, tools::translate( "SelfTrainingPage", "Start tutorials" ) );
+    AddLink( tools::translate( "SelfTrainingPage", "Back" ), previous );
 }
 
 // -----------------------------------------------------------------------------

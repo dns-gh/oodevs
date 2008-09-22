@@ -10,7 +10,7 @@
 #ifndef __MenuButton_h_
 #define __MenuButton_h_
 
-#include <qpushbutton.h>
+#include <qbutton.h>
 
 // =============================================================================
 /** @class  MenuButton
@@ -18,14 +18,24 @@
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class MenuButton : public QPushButton
+class MenuButton : public QButton
 {
+
+    Q_OBJECT; 
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MenuButton( const QString& text, QWidget* parent );
+             MenuButton( const QString& text, QWidget* parent, bool enabled = true );
     virtual ~MenuButton();
+    //@}
+
+signals:
+
+    //! @name signals 
+    //@{
+    void Selected( MenuButton* ); 
+    void UnSelected( MenuButton* ); 
     //@}
 
 private:
@@ -37,14 +47,21 @@ private:
 
     //! @name Operations
     //@{
+    virtual void enterEvent( QEvent* ev );
+    virtual void leaveEvent( QEvent* ev );
     virtual void drawButton( QPainter* painter );
+    virtual QSize sizeHint() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    QPixmap pixmap_;
-    QSize size_;
+    QImage mask_;
+    QFont baseFont_;
+    QFont selectedFont_;
+    QFont disabledFont_;
+    bool hasMouse_;
+    bool enabled_ ; 
     //@}
 };
 

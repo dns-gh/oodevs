@@ -45,6 +45,7 @@ bool UtmParser::Parse( QString content, geometry::Point2f& result, QString& hint
     // "31 NEA 00000 00000"
     try
     {
+        content.remove( ' ' );
         bool bOk = false;
         content.left( 2 ).toInt( &bOk );
         if( !bOk )

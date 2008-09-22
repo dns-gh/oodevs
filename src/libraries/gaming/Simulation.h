@@ -31,7 +31,6 @@ public:
     struct sStartTick{};
     struct sEndTick{};
     struct sCheckPoint { bool start_; };
-    struct sConnection { bool connected_; };
     
 public:
     //! @name Constructors/Destructor
@@ -58,8 +57,6 @@ public:
     
     void BeginCheckPoint();
     void EndCheckPoint();
-    
-    bool IsReplayer() const;
     //@}
 
     //! @name Accessors
@@ -108,7 +105,6 @@ private:
     std::string date_;
     bool paused_;
     bool connected_;
-    sConnection connection_;
     sStartTick startTick_;
     sEndTick endTick_;
     sCheckPoint checkPoint_;

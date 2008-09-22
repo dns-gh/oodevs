@@ -17,10 +17,9 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "gaming/Action_ABC.h"
-#include "gaming/ActionParameter.h"
-#include "gaming/ActionParameterObstacle.h"
-#include "gaming/ActionParameterObstacleType.h"
+#include "actions/Action_ABC.h"
+#include "actions/Obstacle.h"
+#include "actions/ObstacleType.h"
 
 using namespace kernel;
 using namespace gui;
@@ -153,12 +152,12 @@ bool ParamObstacle::CheckValidity()
 // Name: ParamObstacle::CommitTo
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-void ParamObstacle::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type )
         return;
-    std::auto_ptr< ActionParameterObstacle > param( new ActionParameterObstacle( parameter_, *type ) );
+    std::auto_ptr< actions::parameters::Obstacle > param( new actions::parameters::Obstacle( parameter_, *type ) );
     switch( type->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:
@@ -171,7 +170,7 @@ void ParamObstacle::CommitTo( ActionParameterContainer_ABC& action ) const
         break;
     };
     if( type->CanBeReservedObstacle() )
-        param->AddParameter( *new ActionParameterObstacleType( OrderParameter( tr( "Obstacle type" ).ascii(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
+        param->AddParameter( *new actions::parameters::ObstacleType( OrderParameter( tr( "Obstacle type" ).ascii(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
     location_->CommitTo( *param );
     action.AddParameter( *param.release() );
 }

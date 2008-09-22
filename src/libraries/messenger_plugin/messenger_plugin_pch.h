@@ -13,5 +13,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <map>
+#include <set>
 
 #endif // __messenger_plugin_pch_h_

@@ -26,6 +26,8 @@
 #include "OrbatReIndexer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_gui/DrawerFactory.h"
+#include "clients_gui/DrawerModel.h"
 #include "tools/ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
@@ -52,6 +54,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
     , formationFactory_( *new FormationFactory( controllers, idManager_ ) )
     , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
+    , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) ) 
     , orbatFile_( "" )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
@@ -61,6 +64,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
     , profiles_( *new ProfilesModel( profileFactory_ ) )
     , intelligences_( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
+    , drawings_( *new gui::DrawerModel( controllers, drawingFactory_ ) )
 {
     // NOTHING
 }
@@ -110,11 +114,32 @@ void Model::Purge()
 // -----------------------------------------------------------------------------
 void Model::Load( const tools::ExerciseConfig& config )
 {
-    UpdateName( config.GetOrbatFile() );
-    xml::xifstream xis( config.GetOrbatFile() );
-    teams_.Load( xis, *this );
-    weather_.Load( config.GetWeatherFile() );
-    profiles_.Load( config.GetProfilesFile() );
+    {
+        const std::string orbatFile = config.GetOrbatFile() ; 
+        if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
+        {
+            UpdateName( config.GetOrbatFile() );
+            xml::xifstream xis( config.GetOrbatFile() );
+            teams_.Load( xis, *this );
+        }
+    }
+    {
+        const std::string weatherFile = config.GetWeatherFile();
+        if( bfs::exists( weatherFile ) )
+            weather_.Load( weatherFile );
+        else
+        {
+            weather_.Serialize( weatherFile );
+            controllers_.controller_.Update(weather_); 
+        }
+    }
+    {
+        const std::string profileFile = config.GetProfilesFile();
+        if( bfs::exists( profileFile ) )
+            profiles_.Load( profileFile );
+        else
+            profiles_.Serialize( profileFile );
+    }
 }
 
 // -----------------------------------------------------------------------------

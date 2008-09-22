@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "Karma.h"
 #include "Tools.h"
+#include "Team_ABC.h"
 
 using namespace kernel;
 
@@ -38,6 +39,22 @@ Karma::Karma( const std::string& identifier, const QString& name )
     , name_( name )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Karma constructor
+// Created: AGE 2008-06-19
+// -----------------------------------------------------------------------------
+Karma::Karma( const Team_ABC& team )
+    : identifier_( unknown_.identifier_ )
+    , name_( unknown_.name_ )
+{
+    if( team.IsFriend() )
+        *this = friend_;
+    else if( team.IsEnemy() )
+        *this = enemy_;
+    else if( team.IsNeutral() )
+        *this = neutral_;
 }
 
 // -----------------------------------------------------------------------------
@@ -126,4 +143,19 @@ const Karma& Karma::ResolveName( const QString& name )
     if( name == neutral_.GetName() )
         return neutral_;
     return unknown_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Karma::RelativeTo
+// Created: AGE 2008-06-19
+// -----------------------------------------------------------------------------
+const Karma& Karma::RelativeTo( const Karma& rhs ) const
+{
+    if( *this == rhs )
+        return friend_;
+    if( *this == !rhs )
+        return enemy_;
+    if( *this == unknown_ || rhs == unknown_ )
+        return unknown_;
+    return neutral_;
 }

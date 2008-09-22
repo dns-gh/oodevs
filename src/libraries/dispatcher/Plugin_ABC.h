@@ -16,6 +16,7 @@ namespace dispatcher
 {
     class Profile_ABC;
     class ClientPublisher_ABC;
+    class Services;
 
 // =============================================================================
 /** @class  Plugin_ABC
@@ -36,8 +37,10 @@ public:
     //! @name Operations
     //@{
     virtual void Receive                  ( const ASN1T_MsgsSimToClient& message ) = 0;
-    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile ) = 0;
-    virtual void NotifyClientLeft         ( ClientPublisher_ABC& client ) = 0;
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile ) = 0;
+    virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client ) = 0;
+    virtual void Register                 ( dispatcher::Services& ) {}
+    virtual void Update() {}
     //@}
 };
 

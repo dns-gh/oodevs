@@ -25,28 +25,12 @@ namespace tools
     };
 }
 
-#define DECLARE( m )                            \
+#define DECLARE_ASN_CONTROLLER( m )             \
     struct ASN1T_##m; class ASN1C_##m;          \
     template< >                                 \
     struct tools::AsnControllers< ASN1T_##m >   \
     {                                           \
         typedef ASN1C_##m C;                    \
     };
-
-DECLARE( MsgsClientToSim )
-DECLARE( MsgsSimToClient )
-DECLARE( MsgsClientToAuthentication )
-DECLARE( MsgsAuthenticationToClient )
-DECLARE( MsgsClientToReplay )
-DECLARE( MsgsReplayToClient )
-DECLARE( MsgsMiddleToSim )
-DECLARE( MsgsOutMaster )
-DECLARE( MsgsInMaster )
-DECLARE( MsgsClientToAar )
-DECLARE( MsgsAarToClient )
-DECLARE( MsgsMessengerToClient )
-DECLARE( MsgsClientToMessenger )
-
-#undef DECLARE
 
 #endif // __AsnControllers_h_

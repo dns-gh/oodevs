@@ -10,7 +10,7 @@
 #ifndef __AgentKnowledgeConverter_h_
 #define __AgentKnowledgeConverter_h_
 
-#include "AgentKnowledgeConverter_ABC.h"
+#include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
@@ -25,10 +25,10 @@ namespace kernel
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class AgentKnowledgeConverter : public AgentKnowledgeConverter_ABC
+class AgentKnowledgeConverter : public kernel::AgentKnowledgeConverter_ABC
                               , public kernel::Observer_ABC
-                              , public kernel::ElementObserver_ABC< AgentKnowledge_ABC >
-                              , public kernel::ElementObserver_ABC< PopulationKnowledge_ABC >
+                              , public kernel::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
+                              , public kernel::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
 {
 
 public:
@@ -40,12 +40,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual const AgentKnowledge_ABC*      FindAgent( unsigned long id, const kernel::Entity_ABC& owner );
-    virtual const PopulationKnowledge_ABC* FindPopulation( unsigned long id, const kernel::Entity_ABC& owner );
-    virtual const AgentKnowledge_ABC*      Find( const AgentKnowledge_ABC& base, const kernel::Entity_ABC& owner );
-    virtual const AgentKnowledge_ABC*      Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner );
-    virtual const PopulationKnowledge_ABC* Find( const PopulationKnowledge_ABC& base, const kernel::Entity_ABC& owner );
-    virtual const PopulationKnowledge_ABC* Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner );
+    virtual const kernel::AgentKnowledge_ABC*      FindAgent( unsigned long id, const kernel::Entity_ABC& owner );
+    virtual const kernel::PopulationKnowledge_ABC* FindPopulation( unsigned long id, const kernel::Entity_ABC& owner );
+    virtual const kernel::AgentKnowledge_ABC*      Find( const kernel::AgentKnowledge_ABC& base, const kernel::Entity_ABC& owner );
+    virtual const kernel::AgentKnowledge_ABC*      Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner );
+    virtual const kernel::PopulationKnowledge_ABC* Find( const kernel::PopulationKnowledge_ABC& base, const kernel::Entity_ABC& owner );
+    virtual const kernel::PopulationKnowledge_ABC* Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner );
     //@}
 
 private:
@@ -57,20 +57,20 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const AgentKnowledge_ABC& );
-    virtual void NotifyDeleted( const AgentKnowledge_ABC& );
-    virtual void NotifyCreated( const PopulationKnowledge_ABC& );
-    virtual void NotifyDeleted( const PopulationKnowledge_ABC& );
+    virtual void NotifyCreated( const kernel::AgentKnowledge_ABC& );
+    virtual void NotifyDeleted( const kernel::AgentKnowledge_ABC& );
+    virtual void NotifyCreated( const kernel::PopulationKnowledge_ABC& );
+    virtual void NotifyDeleted( const kernel::PopulationKnowledge_ABC& );
 
     const kernel::Entity_ABC* FindKnowledgeGroup( const kernel::Entity_ABC& owner ) const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Agent_ABC*, const AgentKnowledge_ABC* >           T_KnowledgeMap;
-    typedef std::map< const kernel::Entity_ABC* , T_KnowledgeMap >                    T_Knowledges;
-    typedef std::map< const kernel::Population_ABC*, const PopulationKnowledge_ABC* > T_PopulationKnowledgeMap;
-    typedef std::map< const kernel::Entity_ABC* , T_PopulationKnowledgeMap >          T_PopulationKnowledges;
+    typedef std::map< const kernel::Agent_ABC*, const kernel::AgentKnowledge_ABC* >           T_KnowledgeMap;
+    typedef std::map< const kernel::Entity_ABC* , T_KnowledgeMap >                            T_Knowledges;
+    typedef std::map< const kernel::Population_ABC*, const kernel::PopulationKnowledge_ABC* > T_PopulationKnowledgeMap;
+    typedef std::map< const kernel::Entity_ABC* , T_PopulationKnowledgeMap >                  T_PopulationKnowledges;
     //@}
 
 private:

@@ -1,0 +1,35 @@
+--
+-- file name : DispatcherMessages.asn
+--
+-- Liste des messages
+--
+
+DispatcherMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS ControlExports                FROM Control;
+
+DispatcherMessagesIncludes ::= SEQUENCE
+{ ControlExports }
+DispatcherMessagesExports  ::= NULL
+-- END includes
+
+
+--
+--
+MsgServicesDescription ::= SEQUENCE
+{
+    services SEQUENCE OF VisibleString
+}
+--
+MsgsDispatcherToSim ::= CHOICE
+{
+    msg-control-client-announcement MsgControlClientAnnouncement
+}
+
+MsgsDispatcherToClient ::= CHOICE
+{
+    msg-services-description MsgServicesDescription
+}
+
+END

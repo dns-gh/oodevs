@@ -13,7 +13,14 @@
 #include "Client.h"
 #include "Config.h"
 #include "Plugin_ABC.h"
+#include "Services.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
+#include "game_asn/ClientSenders.h"
+#include "game_asn/AuthenticationSenders.h"
+#include "game_asn/ReplaySenders.h"
+#include "game_asn/AarSenders.h"
+#include "game_asn/MessengerSenders.h"
+#include "game_asn/DispatcherSenders.h"
 
 using namespace dispatcher;
 
@@ -23,9 +30,10 @@ static const unsigned int magicCookie_ = 10;
 // Name: ClientsNetworkerc constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin )
+ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services )
     : ServerNetworker( config.GetNetworkClientsParameters() )
     , plugin_( plugin )
+    , services_( services )
 {
     // NOTHING
 }
@@ -64,7 +72,8 @@ void ClientsNetworker::ConnectionSucceeded( const std::string& link  )
 {
     MT_LOG_INFO_MSG( "Connection received from client '" << link << "'" );
     ServerNetworker::ConnectionSucceeded( link  );
-    clients_[link] = new Client( *this, link  );
+    Client* newClient = clients_[link] = new Client( *this, link );
+    services_.Send( *newClient );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +92,7 @@ void ClientsNetworker::ConnectionFailed( const std::string& address, const std::
 // -----------------------------------------------------------------------------
 void ClientsNetworker::ConnectionError( const std::string& link , const std::string& reason )
 {
-    MT_LOG_INFO_MSG( "Connection to '" << link << "' lost (" << reason << ")" );    
+    MT_LOG_INFO_MSG( "Connection to '" << link << "' lost (" << reason << ")" );
     ServerNetworker::ConnectionError( link, reason );
     T_Clients::iterator it = clients_.find( link );
     if( it != clients_.end() && it->second )
@@ -184,6 +193,22 @@ void ClientsNetworker::Send( const ASN1T_MsgsMessengerToClient& asnMsg )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Send
+// Created: AGE 2008-08-13
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Send( const ASN1T_MsgsDispatcherToClient& msg )
+{
+    try
+    {
+        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+            it->second->Send( msg );
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::GetProfile
@@ -204,4 +229,13 @@ ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
     if( it == clients_.end() || !it->second )
         throw std::runtime_error( link + " is not a valid client" );
     return *it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::GetEndpoint
+// Created: AGE 2008-06-17
+// -----------------------------------------------------------------------------
+std::string ClientsNetworker::GetEndpoint() const
+{
+    return "";
 }

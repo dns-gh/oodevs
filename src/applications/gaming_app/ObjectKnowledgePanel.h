@@ -27,6 +27,7 @@ namespace kernel
     class LogisticRouteAttributes_ABC;
     class RotaAttributes_ABC;
     class MineAttributes_ABC;
+    class ObjectKnowledge_ABC;
 }
 
 namespace gui
@@ -38,7 +39,6 @@ namespace gui
 }
 
 class ObjectKnowledges;
-class ObjectKnowledge_ABC;
 class ObjectKnowledges;
 class ObjectPerceptions;
 
@@ -51,8 +51,8 @@ class ObjectPerceptions;
 class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public kernel::Observer_ABC
                            , public kernel::ElementObserver_ABC< ObjectKnowledges >
-                           , public kernel::ElementObserver_ABC< ObjectKnowledge_ABC >
                            , public kernel::ElementObserver_ABC< ObjectPerceptions >
+                           , public kernel::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
                            , public kernel::ElementObserver_ABC< kernel::CampAttributes_ABC >
                            , public kernel::ElementObserver_ABC< kernel::CrossingSiteAttributes_ABC >
                            , public kernel::ElementObserver_ABC< kernel::LogisticRouteAttributes_ABC >
@@ -71,7 +71,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const ObjectKnowledge_ABC& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const kernel::ObjectKnowledge_ABC& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     void Display( const kernel::Automat_ABC* agent, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
@@ -94,8 +94,8 @@ private:
     //@{
     void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const ObjectKnowledges& element );
-    virtual void NotifyUpdated( const ObjectKnowledge_ABC& element );
     virtual void NotifyUpdated( const ObjectPerceptions& element );
+    virtual void NotifyUpdated( const kernel::ObjectKnowledge_ABC& element );
     virtual void NotifyUpdated( const kernel::CampAttributes_ABC& element );
     virtual void NotifyUpdated( const kernel::CrossingSiteAttributes_ABC& element );
     virtual void NotifyUpdated( const kernel::LogisticRouteAttributes_ABC& element );
@@ -105,7 +105,7 @@ private:
     template< typename T >
     void DisplayExtension( const T& extension );
     template< typename T >
-    void UpdateExtension( const ObjectKnowledge_ABC& k );
+    void UpdateExtension( const kernel::ObjectKnowledge_ABC& k );
     virtual void Select( const kernel::Team_ABC* );
     //@}
 
@@ -117,7 +117,7 @@ private:
     kernel::SafePointer< ObjectKnowledges > selected_;
     gui::ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
 
-    kernel::SafePointer< ObjectKnowledge_ABC > subSelected_;
+    kernel::SafePointer< kernel::ObjectKnowledge_ABC > subSelected_;
     gui::DisplayBuilder* display_;
 
     gui::ListDisplayer< ObjectKnowledgePanel >* pPerceptionListView_;

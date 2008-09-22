@@ -31,7 +31,10 @@ namespace gui
     class RichLabel;
 }
 
-class ActionParameter_ABC;
+namespace actions
+{
+    class Parameter_ABC;
+}
 
 // =============================================================================
 /** @class  ParamPath
@@ -59,7 +62,7 @@ public:
     virtual bool CheckValidity();
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
-    virtual void CommitTo( ActionParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 private slots:

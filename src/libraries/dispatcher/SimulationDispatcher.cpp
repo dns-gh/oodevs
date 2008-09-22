@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "SimulationDispatcher.h"
 #include "Model.h"
-#include "Entity_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "Synchroniser.h"
 #include "ReplaySynchronisations.h"
 #include "ModelVisitor_ABC.h"
@@ -90,9 +90,9 @@ namespace
     class StartSynchVisitor : public ModelVisitor_ABC
     {
     public:
-        virtual void Visit( Entity_ABC& entity )
+        virtual void Visit( const kernel::Entity_ABC& entity )
         {
-            entity.Get< ReplaySynchronisations >().StartSynchronisation( false );
+            const_cast< kernel::Entity_ABC& >( entity ).Get< ReplaySynchronisations >().StartSynchronisation( false );
         }
     };
 
@@ -101,7 +101,7 @@ namespace
     public:
         EndSynchVisitor( Synchroniser& model )
             : model_( &model ) {}
-        virtual void Visit( Entity_ABC& entity )
+        virtual void Visit( const kernel::Entity_ABC& entity )
         {
             entity.Get< ReplaySynchronisations >().EndSynchronisation( *model_ );
         }

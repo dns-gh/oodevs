@@ -11,12 +11,18 @@
 #define __LogConsignMaintenance_h_
 
 #include "game_asn/Simulation.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+
+namespace kernel
+{
+    class Agent_ABC;
+}
 
 namespace dispatcher
 {
-    class Agent;
     class Model;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  LogConsignMaintenance
@@ -24,27 +30,25 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class LogConsignMaintenance : public Entity_ABC
+class LogConsignMaintenance : public SimpleEntity< >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LogConsignMaintenance( Model& model, const ASN1T_MsgLogMaintenanceHandlingCreation& msg );
+             LogConsignMaintenance( const Model& model, const ASN1T_MsgLogMaintenanceHandlingCreation& msg );
     virtual ~LogConsignMaintenance();
-    //@}
-
-    //! @name Accessors
-    //@{
-    unsigned long GetID() const;
     //@}
 
     //! @name Operations
     //@{
-    using Entity_ABC::Update;
+    using kernel::Entity_ABC::Update;
     void Update( const ASN1T_MsgLogMaintenanceHandlingUpdate& msg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    void Accept( ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -55,20 +59,17 @@ private:
     //@}
 
 private:
-          Model&        model_;
-    const unsigned long nID_;
-    const Agent&        agent_;
+    const Model&        model_;
+    const kernel::Agent_ABC&        agent_;
     const unsigned long nTickCreation_;
     const unsigned int  nEquipmentType_; // XML reference - not resolved by dispatcher
     const unsigned int  nBreakdownType_; // XML reference - not resolved by dispatcher
 
-    Agent*                                 pTreatingAgent_;
+    const kernel::Agent_ABC*               pTreatingAgent_;
     ASN1T_EnumLogMaintenanceHandlingStatus nState_;
     bool                                   bDiagnosed_;
 };
 
 }
-
-#include "LogConsignMaintenance.inl"
 
 #endif // __LogConsignMaintenance_h_

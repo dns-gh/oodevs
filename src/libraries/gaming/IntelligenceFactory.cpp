@@ -12,7 +12,7 @@
 #include "Intelligence.h"
 #include "Model.h"
 #include "TeamsModel.h"
-#include "MessengerMessages.h"
+#include "game_asn/MessengerSenders.h"
 #include "IntelligencePositions.h"
 #include "EntityIntelligences.h"
 #include "Diplomacies.h"

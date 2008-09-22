@@ -11,6 +11,7 @@
 #define __ActionTiming_h_
 
 #include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace xml
 {
@@ -23,7 +24,11 @@ namespace kernel
     class Controller;
 }
 
-class Action_ABC;
+namespace actions 
+{
+    class Action_ABC;
+}
+
 class Simulation;
 
 // =============================================================================
@@ -33,26 +38,27 @@ class Simulation;
 // Created: SBO 2007-06-19
 // =============================================================================
 class ActionTiming : public kernel::Extension_ABC
+                   , public kernel::Serializable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionTiming( kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner );
-             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner );
+             ActionTiming( kernel::Controller& controller, const Simulation& simulation, const actions::Action_ABC& owner );
+             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Simulation& simulation, const actions::Action_ABC& owner );
     virtual ~ActionTiming();
     //@}
 
     //! @name Operations
     //@{
     void ToggleEnabled();
-    void Serialize( xml::xostream& xos ) const;
+    virtual void SerializeAttributes( xml::xostream& ) const;
     void Shift( long secs );
     //@}
 
     //! @name Accessors
     //@{
-    const Action_ABC& GetAction() const;
+    const actions::Action_ABC& GetAction() const;
     bool IsEnabled() const;
     QDateTime GetTime() const;
     //@}
@@ -69,7 +75,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const Simulation& simulation_;
-    const Action_ABC& owner_;
+    const actions::Action_ABC& owner_;
     bool enabled_;
     QDateTime time_;
     //@}

@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "CampObjectAttribute.h"
-
 #include "Model.h"
 #include "Automat.h"
 
@@ -21,7 +19,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 CampObjectAttribute::CampObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
+    : ObjectAttribute_ABC( asnMsg )
     , model_             ( model )
     , pTC2_              ( 0 )
 {
@@ -34,7 +32,7 @@ CampObjectAttribute::CampObjectAttribute( const Model& model, const ASN1T_Object
 // -----------------------------------------------------------------------------
 CampObjectAttribute::~CampObjectAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------
@@ -44,9 +42,9 @@ CampObjectAttribute::~CampObjectAttribute()
 void CampObjectAttribute::Update( const ASN1T_ObjectAttributesSpecific& asnMsg )
 {
     if( asnMsg.t == T_ObjectAttributesSpecific_prisoner_camp )
-        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.prisoner_camp->tc2 );
+        pTC2_ = &model_.automats_.Get( asnMsg.u.prisoner_camp->tc2 );
     else if( asnMsg.t == T_ObjectAttributesSpecific_refugee_camp )
-        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.refugee_camp->tc2 );
+        pTC2_ = &model_.automats_.Get( asnMsg.u.refugee_camp->tc2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,11 +60,11 @@ void CampObjectAttribute::Send( ASN1T_ObjectAttributesSpecific& asnMsg ) const
     {
         case T_ObjectAttributesSpecific_prisoner_camp: 
             asnMsg.u.prisoner_camp = new ASN1T_ObjectAttributesPrisonerCamp();
-            asnMsg.u.prisoner_camp->tc2 = pTC2_->GetID(); 
+            asnMsg.u.prisoner_camp->tc2 = pTC2_->GetId(); 
             break;
         case T_ObjectAttributesSpecific_refugee_camp: 
             asnMsg.u.refugee_camp = new ASN1T_ObjectAttributesRefugeeCamp();
-            asnMsg.u.refugee_camp->tc2 = pTC2_->GetID(); 
+            asnMsg.u.refugee_camp->tc2 = pTC2_->GetId(); 
             break;
         default:
             throw std::runtime_error( "object specific attributes inconsistency" );

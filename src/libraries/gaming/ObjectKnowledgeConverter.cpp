@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "ObjectKnowledgeConverter.h"
 #include "clients_kernel/Controllers.h"
-#include "ObjectKnowledge_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 
 using namespace kernel;
 

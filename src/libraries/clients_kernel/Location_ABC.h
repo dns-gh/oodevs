@@ -14,7 +14,6 @@
 
 namespace kernel
 {
-    class GlTools_ABC;
     class LocationVisitor_ABC;
 
 // =============================================================================
@@ -33,20 +32,20 @@ public:
     virtual ~Location_ABC() {};
     //@}
 
-    //! @name Construction
+    //! @name Operations
     //@{
     virtual void PopPoint() = 0;
     virtual void AddPoint( const geometry::Point2f& point ) = 0;
-    virtual bool IsValid() const = 0;
-    virtual bool IsDone() const = 0;
+    virtual void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision ) = 0;
     virtual Location_ABC& Clone() const = 0;
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     virtual void Accept( LocationVisitor_ABC& ) const = 0;
-    virtual void Draw( const GlTools_ABC& tools ) const = 0;
     virtual QString GetName() const = 0;
+    virtual bool IsValid() const = 0;
+    virtual bool IsDone() const = 0;
     //@}
 };
 

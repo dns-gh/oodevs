@@ -49,12 +49,14 @@ namespace
     };
 }
 
+using namespace actions;
+
 // -----------------------------------------------------------------------------
 // Name: TimelineWidget constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
 TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler )
-    : QHBox( parent )
+    : QHBox( parent, "TimelineWidget" )
 {
     QSplitter* splitter = new QSplitter( this );
     QListView* list = new TimelineListView( splitter, controllers );

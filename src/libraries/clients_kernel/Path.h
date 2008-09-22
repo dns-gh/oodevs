@@ -19,6 +19,8 @@ namespace kernel
 // =============================================================================
 /** @class  Path
     @brief  Path
+    // $$$$ SBO 2008-05-30: origin point not included into points_...
+    // $$$$ SBO 2008-05-30: watch for consequences in drawing, IsAt, Translate...
 */
 // Created: AGE 2006-08-09
 // =============================================================================
@@ -32,20 +34,20 @@ public:
     virtual ~Path();
     //@}
 
-    //! @name Construction
+    //! @name Operations
     //@{
     virtual void PopPoint();
     virtual void AddPoint( const geometry::Point2f& point );
-    virtual bool IsValid() const;
-    virtual bool IsDone() const;
+    virtual void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision );
+    virtual Location_ABC& Clone() const;
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     virtual void Accept( LocationVisitor_ABC& ) const;
-    virtual void Draw( const GlTools_ABC& tools ) const;
     virtual QString GetName() const;
-    virtual Location_ABC& Clone() const;
+    virtual bool IsValid() const;
+    virtual bool IsDone() const;
     //@}
 
 private:

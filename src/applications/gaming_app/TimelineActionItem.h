@@ -18,8 +18,18 @@ namespace kernel
     class Controllers;
 }
 
-class Action_ABC;
-class ActionsModel;
+namespace actions
+{
+    class Action_ABC;
+    class ActionsModel;
+}
+
+namespace gui
+{    
+    class Gradient;
+    class GradientItem;
+}
+
 class ActionTiming;
 class TimelineRuler;
 
@@ -39,7 +49,7 @@ class TimelineActionItem : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineActionItem( QCanvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, ActionsModel& model, const Action_ABC& action, const QPalette& palette );
+             TimelineActionItem( QCanvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, actions::ActionsModel& model, const actions::Action_ABC& action, const QPalette& palette );
     virtual ~TimelineActionItem();
     //@}
 
@@ -57,6 +67,7 @@ private slots:
     //@{
     void OnDelete();
     void OnRename();
+    void DoRename();
     //@}
 
 private:
@@ -80,10 +91,11 @@ private:
     //@{
     const TimelineRuler& ruler_;
     kernel::Controllers& controllers_;
-    ActionsModel& model_;
-    const Action_ABC& action_;
+    actions::ActionsModel& model_;
+    const actions::Action_ABC& action_;
     unsigned int textWidth_;
     const QPalette& palette_;
+    mutable QLineEdit* nameEditor_;
     //@}
 };
 

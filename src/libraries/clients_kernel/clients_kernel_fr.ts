@@ -1,5 +1,171 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>AtlasNature</name>
+    <message>
+        <source>Armored</source>
+        <translation>Blindé</translation>
+    </message>
+    <message>
+        <source>SSA</source>
+        <translation>ASS</translation>
+    </message>
+    <message>
+        <source>Command post</source>
+        <translation>PC</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
+    </message>
+    <message>
+        <source>Mortar</source>
+        <translation>Mortier</translation>
+    </message>
+    <message>
+        <source>Rocket launcher</source>
+        <translation>Lance roquette</translation>
+    </message>
+    <message>
+        <source>Vehicle</source>
+        <translation>Véhicule</translation>
+    </message>
+    <message>
+        <source>Footman</source>
+        <translation>Fantassin</translation>
+    </message>
+    <message>
+        <source>Helicopter</source>
+        <translation>Hélicoptère</translation>
+    </message>
+    <message>
+        <source>Undefined</source>
+        <translation>Non-défini</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+</context>
+<context>
+    <name>E_FuncLimaType</name>
+    <message>
+        <source>LD</source>
+        <translation>LD</translation>
+    </message>
+    <message>
+        <source>LCA</source>
+        <translation type="obsolete">Ligne de Changement d&apos;Attitude</translation>
+    </message>
+    <message>
+        <source>LC</source>
+        <translation type="obsolete">Ligne de Coordination</translation>
+    </message>
+    <message>
+        <source>LI</source>
+        <translation type="obsolete">Ligne à Interdire</translation>
+    </message>
+    <message>
+        <source>LO</source>
+        <translation type="obsolete">Ligne d&apos;Objectif</translation>
+    </message>
+    <message>
+        <source>LCAR</source>
+        <translation type="obsolete">Ligne de Coup d&apos;Arrêt</translation>
+    </message>
+    <message>
+        <source>LR</source>
+        <translation type="obsolete">Ligne de Recueil</translation>
+    </message>
+    <message>
+        <source>LDM</source>
+        <translation type="obsolete">Ligne de Début de Mission</translation>
+    </message>
+    <message>
+        <source>LFM</source>
+        <translation type="obsolete">Ligne de Fin de Mission</translation>
+    </message>
+    <message>
+        <source>LIA</source>
+        <translation type="obsolete">Ligne d&apos;Identification Accueil</translation>
+    </message>
+    <message>
+        <source>Line of departure (LD)</source>
+        <translation>Ligne de débouché (LD)</translation>
+    </message>
+    <message>
+        <source>ACL</source>
+        <translation>LCA</translation>
+    </message>
+    <message>
+        <source>Attitude change line (ACL)</source>
+        <translation>Ligne de Changement d&apos;Attitude (LCA)</translation>
+    </message>
+    <message>
+        <source>CL</source>
+        <translation>LC</translation>
+    </message>
+    <message>
+        <source>Coordination line (CL)</source>
+        <translation>Ligne de Coordination (LC)</translation>
+    </message>
+    <message>
+        <source>DL</source>
+        <translation>LI</translation>
+    </message>
+    <message>
+        <source>Denial line (DL)</source>
+        <translation>Ligne à Interdire (LI)</translation>
+    </message>
+    <message>
+        <source>OL</source>
+        <translation>LO</translation>
+    </message>
+    <message>
+        <source>Objective line (OL)</source>
+        <translation>Ligne d&apos;Objectif</translation>
+    </message>
+    <message>
+        <source>BL</source>
+        <translation>LCAR</translation>
+    </message>
+    <message>
+        <source>Blocking line (BL)</source>
+        <translation>Ligne de Coup d&apos;Arrêt (LCAR)</translation>
+    </message>
+    <message>
+        <source>HL</source>
+        <translation>LR</translation>
+    </message>
+    <message>
+        <source>Handover line (HL)</source>
+        <translation>Ligne de Recueil (LR)</translation>
+    </message>
+    <message>
+        <source>SML</source>
+        <translation>LDM</translation>
+    </message>
+    <message>
+        <source>Start of mission line (SML)</source>
+        <translation>Ligne de Début de Mission (LDM)</translation>
+    </message>
+    <message>
+        <source>EML</source>
+        <translation>LFM</translation>
+    </message>
+    <message>
+        <source>End of mission line (EML)</source>
+        <translation>Ligne de Fin de Mission (LFM)</translation>
+    </message>
+    <message>
+        <source>RRL</source>
+        <translation>LIA</translation>
+    </message>
+    <message>
+        <source>Recognition and reception line (RRL)</source>
+        <translation>Ligne d&apos;Identification et d&apos;Accueil (LIA)</translation>
+    </message>
+</context>
+<context>
     <name>E_PerceptionResult</name>
     <message>
         <source>Identification</source>

@@ -9,10 +9,11 @@
 
 #include "dispatcher_pch.h"
 #include "AgentKnowledge.h"
-#include "KnowledgeGroup.h"
-#include "Agent.h"
-#include "Network_Def.h"
 #include "Model.h"
+#include "ModelVisitor_ABC.h"
+#include "ClientPublisher_ABC.h"
+#include "Agent.h"
+#include "KnowledgeGroup.h"
 #include "Side.h"
 
 using namespace dispatcher;
@@ -22,22 +23,20 @@ using namespace dispatcher;
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
-    : model_                ( model )
-    , nID_                  ( asnMsg.oid )
-    , knowledgeGroup_       ( model.GetKnowledgeGroups().Get( asnMsg.oid_groupe_possesseur ) )
-    , agent_                ( model.GetAgents().Get( asnMsg.oid_unite_reelle ) )
-    , nTypeAgent_           ( asnMsg.type_unite )
+    : SimpleEntity< kernel::AgentKnowledge_ABC >( asnMsg.oid )
+    , model_                ( model )
+    , knowledgeGroup_       ( model.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ) )
+    , agent_                ( model.agents_.Get( asnMsg.oid_unite_reelle ) )
+    , type_                 ( asnMsg.type_unite )
     , nRelevance_           ( 0 )
     , nPerceptionLevel_     ( EnumUnitIdentificationLevel::signale )
     , nMaxPerceptionLevel_  ( EnumUnitIdentificationLevel::signale )
     , nOperationalState_    ( 0 )
     , bDead_                ( false )
-    , position_             ()
     , nDirection_           ( 0 )
     , nSpeed_               ( 0 )
-    , pSide_                ( 0 )
+    , team_                 ( 0 )
     , bPC_                  ( false )
-    , automatePerceptions_  ( )
     , bSurrendered_         ( false )
     , bPrisoner_            ( false )
     , bRefugeeManaged_      ( false )
@@ -81,7 +80,7 @@ AgentKnowledge::~AgentKnowledge()
 // -----------------------------------------------------------------------------
 void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 {
-    UPDATE_ASN_ATTRIBUTE( pertinence               , nRelevance_            ); 
+    UPDATE_ASN_ATTRIBUTE( pertinence               , nRelevance_            );
     UPDATE_ASN_ATTRIBUTE( identification_level     , nPerceptionLevel_      );
     UPDATE_ASN_ATTRIBUTE( max_identification_level , nMaxPerceptionLevel_   );
     UPDATE_ASN_ATTRIBUTE( etat_op                  , nOperationalState_     );
@@ -89,14 +88,14 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
     UPDATE_ASN_ATTRIBUTE( position                 , position_              );
     UPDATE_ASN_ATTRIBUTE( direction                , nDirection_            );
     UPDATE_ASN_ATTRIBUTE( speed                    , nSpeed_                );
-    
+
     if( asnMsg.m.campPresent )
     {
         optionals_.campPresent = 1;
-        pSide_ = &model_.GetSides().Get( asnMsg.camp );
+        team_ = &model_.sides_.Get( asnMsg.camp );
     }
-        
-    UPDATE_ASN_ATTRIBUTE( nature_pc, bPC_ ); 
+
+    UPDATE_ASN_ATTRIBUTE( nature_pc, bPC_ );
 
     if( asnMsg.m.perception_par_compagniePresent )
     {
@@ -109,6 +108,8 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
     UPDATE_ASN_ATTRIBUTE( rendu                    , bDead_                 );
     UPDATE_ASN_ATTRIBUTE( prisonnier               , bPrisoner_             );
     UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte   , bRefugeeManaged_       );
+
+    ApplyUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,12 +118,12 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientUnitKnowledgeCreation asn;
+    client::UnitKnowledgeCreation asn;
 
-    asn().oid                   = nID_;
-    asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
-    asn().oid_unite_reelle      = agent_.GetID();
-    asn().type_unite            = nTypeAgent_;
+    asn().oid                   = GetId();
+    asn().oid_groupe_possesseur = knowledgeGroup_.GetId();
+    asn().oid_unite_reelle      = agent_.GetId();
+    asn().type_unite            = type_;
 
     asn.Send( publisher );
 }
@@ -140,17 +141,17 @@ void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientUnitKnowledgeUpdate asn;
+    client::UnitKnowledgeUpdate asn;
 
-    asn().oid                   = nID_;
-    asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
+    asn().oid                   = GetId();
+    asn().oid_groupe_possesseur = knowledgeGroup_.GetId();
 
-    SEND_ASN_ATTRIBUTE( pertinence               , nRelevance_            ); 
+    SEND_ASN_ATTRIBUTE( pertinence               , nRelevance_            );
     SEND_ASN_ATTRIBUTE( identification_level     , nPerceptionLevel_      );
     SEND_ASN_ATTRIBUTE( max_identification_level , nMaxPerceptionLevel_   );
     SEND_ASN_ATTRIBUTE( etat_op                  , nOperationalState_     );
     SEND_ASN_ATTRIBUTE( mort                     , bDead_                 );
-    
+
     if( optionals_.positionPresent )
     {
         asn().m.positionPresent = 1;
@@ -159,15 +160,15 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 
     SEND_ASN_ATTRIBUTE( direction, nDirection_ );
     SEND_ASN_ATTRIBUTE( speed    , nSpeed_     );
-    
+
     if( optionals_.campPresent )
     {
-        assert( pSide_ );
+        assert( team_ );
         asn().m.campPresent = 1;
-        asn().camp = pSide_->GetID();
+        asn().camp = team_->GetId();
     }
-        
-    SEND_ASN_ATTRIBUTE( nature_pc, bPC_ ); 
+
+    SEND_ASN_ATTRIBUTE( nature_pc, bPC_ );
 
     if( optionals_.perception_par_compagniePresent )
     {
@@ -177,7 +178,7 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         {
             asn().perception_par_compagnie.elem = new ASN1T_AutomatPerception[ automatePerceptions_.size() ];
             for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
-                asn().perception_par_compagnie.elem[ i ] = automatePerceptions_[ i ];                
+                asn().perception_par_compagnie.elem[ i ] = automatePerceptions_[ i ];
         }
     }
 
@@ -198,26 +199,53 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientUnitKnowledgeDestruction asn;
-    asn().oid                   = nID_;
-    asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
+    client::UnitKnowledgeDestruction asn;
+    asn().oid                   = GetId();
+    asn().oid_groupe_possesseur = knowledgeGroup_.GetId();
     asn.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::GetID
-// Created: SBO 2007-08-27
+// Name: AgentKnowledge::Accept
+// Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-unsigned int AgentKnowledge::GetID() const
+void AgentKnowledge::Accept( ModelVisitor_ABC& visitor ) const
 {
-    return nID_;
+    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::GetName
-// Created: SBO 2007-08-27
+// Name: AgentKnowledge::GetRecognizedEntity
+// Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-std::string AgentKnowledge::GetName() const
+const kernel::Entity_ABC* AgentKnowledge::GetRecognizedEntity() const
 {
-    return agent_.GetName();
+    return &agent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetEntity
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+const kernel::Agent_ABC* AgentKnowledge::GetEntity() const
+{
+    return &agent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetOwner
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+const kernel::KnowledgeGroup_ABC& AgentKnowledge::GetOwner() const
+{
+    return knowledgeGroup_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::Display
+// Created: SBO 2008-07-11
+// -----------------------------------------------------------------------------
+void AgentKnowledge::Display( kernel::Displayer_ABC& ) const
+{
+    // NOTHING
 }

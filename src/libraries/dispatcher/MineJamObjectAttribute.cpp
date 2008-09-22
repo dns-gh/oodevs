@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "MineJamObjectAttribute.h"
 
 using namespace dispatcher;
@@ -17,8 +16,8 @@ using namespace dispatcher;
 // Name: MineJamObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-MineJamObjectAttribute::MineJamObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
+MineJamObjectAttribute::MineJamObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg )
+    : ObjectAttribute_ABC( asnMsg )
     , nMinesActivityTime_( 0 )
 {
     if( asnMsg.t == T_ObjectAttributesSpecific_mine_jam )
@@ -31,7 +30,7 @@ MineJamObjectAttribute::MineJamObjectAttribute( const Model& model, const ASN1T_
 // -----------------------------------------------------------------------------
 MineJamObjectAttribute::~MineJamObjectAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------

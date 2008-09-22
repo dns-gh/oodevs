@@ -12,17 +12,20 @@
 
 #include "game_asn/Simulation.h"
 #include "Localisation.h"
-#include "ModelRefsContainer.h"
-#include "Entity_ABC.h"
+#include "SimpleEntity.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
+
+namespace kernel
+{
+    class Automat_ABC;
+}
 
 namespace dispatcher
 {
     class Model;
-    class KnowledgeGroup;
-    class Object;
-    class Automat;
-    class Side;
     class ObjectAttribute_ABC;
+    class ModelVisitor_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  ObjectKnowledge
@@ -30,13 +33,13 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class ObjectKnowledge : public Entity_ABC
+class ObjectKnowledge : public SimpleEntity< kernel::ObjectKnowledge_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( Model& model, const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
+             ObjectKnowledge( const Model& model, const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
     virtual ~ObjectKnowledge();
     //@}
 
@@ -44,9 +47,16 @@ public:
     //@{
     void Update( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
     void Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    void Accept( ModelVisitor_ABC& visitor ) const;
+
+    virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
+    virtual const kernel::Object_ABC* GetEntity() const;
+    virtual const kernel::Team_ABC&   GetOwner() const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -70,11 +80,10 @@ private:
     };
     //@}
 
-private:
-          Model&                 model_;
-    const unsigned int           nID_;
-    const Side&                  side_;
-    const Object*                pObject_;
+public:
+    const Model&                 model_;
+    const kernel::Team_ABC&      team_;
+    const kernel::Object_ABC*    pObject_;
     const ASN1T_EnumObjectType   nType_;
     const ASN1T_EnumObstacleType nObstacleType_;
     const unsigned int           nTypeDotationForConstruction_;
@@ -88,7 +97,7 @@ private:
     unsigned int                   nBypassingPercentage_;
     bool                           bReservedObstacleActivated_;
     bool                           bPerceived_;
-    ModelRefsContainer< Automat >  automatPerceptions_;
+    std::vector< const kernel::Automat_ABC* >  automatPerceptions_;
     unsigned int                   nNbrDotationForConstruction_;
     unsigned int                   nNbrDotationForMining_;
 

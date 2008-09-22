@@ -25,6 +25,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "tools/GeneralConfig.h"
 
 using namespace gui;
 using namespace kernel;
@@ -34,7 +35,7 @@ using namespace kernel;
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
 IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const FormationLevels& levels, SymbolIcons& icons )
-    : InfoPanel_ABC( parent, panel, tr( "Intelligence" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Intelligence" ), "IntelligencesPanel" )
     , controllers_( controllers )
     , icons_( icons )
     , symbolFactory_( new SymbolFactory() )
@@ -71,7 +72,7 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
         mounted_ = new QCheckBox( group );
     }
     {
-        NatureSelectionWidget* nature = new NatureSelectionWidget( this, "symbols.xml" );
+        NatureSelectionWidget* nature = new NatureSelectionWidget( this, tools::GeneralConfig::BuildResourceChildFile( "symbols.xml" ) );
         connect( nature, SIGNAL( NatureSelected( const QString& ) ), SLOT( OnNatureChanged( const QString& ) ) );
         connect( nature, SIGNAL( StartDrag() ), SLOT( OnNatureDragged() ) );
     }

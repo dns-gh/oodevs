@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "SimulationModel.h"
-#include "Network_Def.h"
+#include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
 
@@ -54,6 +54,7 @@ void SimulationModel::Reset()
 void SimulationModel::Update( const ASN1T_MsgControlInformation& msg )
 {
     initialDate_          = std::string( (const char*)msg.initial_date_time.data, 15 );
+    date_                 = initialDate_;
     nCurrentTick_         = msg.current_tick;
     nTickDuration_        = msg.tick_duration;
     nTimeFactor_          = msg.time_factor;
@@ -145,7 +146,7 @@ void SimulationModel::Update( const ASN1T_MsgControlEndTick& msg )
 // -----------------------------------------------------------------------------
 void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientControlInformation asn;
+    client::ControlInformation asn;
     asn().current_tick         = nCurrentTick_;
     asn().initial_date_time    = initialDate_.c_str();
     asn().date_time            = date_.c_str();
@@ -164,7 +165,7 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const
 {
-    AsnMsgReplayToClientControlReplayInformation asn;
+    replay::ControlReplayInformation asn;
     asn().current_tick      = nCurrentTick_;
     asn().initial_date_time = initialDate_.c_str();
     asn().date_time         = date_.c_str();
@@ -181,7 +182,7 @@ void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned t
 // -----------------------------------------------------------------------------
 void SimulationModel::SendFirstTick( ClientPublisher_ABC& publisher ) const
 {
-    AsnMsgSimToClientControlBeginTick asn;
+    client::ControlBeginTick asn;
     asn().current_tick = 0;
     asn().date_time    = date_.c_str();
     asn.Send( publisher );

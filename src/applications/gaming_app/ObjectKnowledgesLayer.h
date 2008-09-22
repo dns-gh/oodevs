@@ -11,7 +11,7 @@
 #define __ObjectKnowledgesLayer_h_
 
 #include "KnowledgeLayer.h"
-#include "gaming/ObjectKnowledge_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 
 // =============================================================================
 /** @class  ObjectKnowledgesLayer
@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class ObjectKnowledgesLayer : public KnowledgeLayer< ObjectKnowledge_ABC >
+class ObjectKnowledgesLayer : public KnowledgeLayer< kernel::ObjectKnowledge_ABC >
 {
 
 public:

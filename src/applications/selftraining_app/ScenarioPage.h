@@ -10,15 +10,16 @@
 #ifndef __ScenarioPage_h_
 #define __ScenarioPage_h_
 
-#include "ContentPage.h"
-
-class QListBox;
-class QTextEdit;
+#include "MenuPage.h"
 
 namespace tools
 {
     class GeneralConfig;
 }
+
+
+class SessionStatus; 
+class SessionRunningPage; 
 
 // =============================================================================
 /** @class  ScenarioPage
@@ -26,21 +27,18 @@ namespace tools
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class ScenarioPage : public ContentPage
+class ScenarioPage : public MenuPage
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config );
+             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, SessionRunningPage& running, boost::shared_ptr< SessionStatus > sessionStatus );
     virtual ~ScenarioPage();
     //@}
 
-private slots:
     //! @name Operations
     //@{
-    void OnStart();
     //@}
 
 private:
@@ -52,16 +50,11 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update();
-    void CreateSession( const QString& exercise, const QString& session );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    QListBox* exercises_;
-    QTextEdit* briefing_;
     //@}
 };
 

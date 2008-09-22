@@ -1,5 +1,135 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>AtlasNature</name>
+    <message>
+        <source>Armored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mortar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rocket launcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Footman</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Helicopter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undefined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>E_FuncLimaType</name>
+    <message>
+        <source>LD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line of departure (LD)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ACL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attitude change line (ACL)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coordination line (CL)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Denial line (DL)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objective line (OL)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocking line (BL)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Handover line (HL)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start of mission line (SML)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End of mission line (EML)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RRL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recognition and reception line (RRL)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>E_PerceptionResult</name>
     <message>
         <source>Identification</source>

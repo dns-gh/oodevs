@@ -14,7 +14,6 @@
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  ObjectAttribute_ABC
@@ -27,8 +26,8 @@ class ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ObjectAttribute_ABC( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
-    ~ObjectAttribute_ABC();
+    explicit ObjectAttribute_ABC( const ASN1T_ObjectAttributesSpecific& asnMsg );
+    virtual ~ObjectAttribute_ABC();
     //@}
 
     //! @name Operations

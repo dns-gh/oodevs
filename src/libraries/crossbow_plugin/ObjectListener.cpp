@@ -14,8 +14,9 @@
 #include "Row_ABC.h"
 #include "Line.h"
 #include "Point.h"
-#include "dispatcher/Network_Def.h"
 #include "ScopeEditor.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
+#include "game_asn/SimulationSenders.h"
 
 using namespace crossbow;
 
@@ -100,7 +101,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ObjectListener::SendCreation( const Row_ABC& row )
 {
-    dispatcher::AsnMsgClientToSimObjectMagicAction asn;
+    simulation::ObjectMagicAction asn;
     asn().action.t = T_MsgObjectMagicAction_action_create_object;
     ASN1T_MagicActionCreateObject*& creation = asn().action.u.create_object = new ASN1T_MagicActionCreateObject();
     creation->m.namePresent = 0;

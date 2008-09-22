@@ -18,7 +18,8 @@ using namespace tic;
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
 Platform::Platform( const kernel::ComponentType& type, float timeStep )
-    : type_    ( type )
+    : dispatcher::SimpleEntity< >( 0 )
+    , type_    ( type )
     , timeStep_( timeStep )
     , state_   ( okay )
     , speed_   ( 0 )

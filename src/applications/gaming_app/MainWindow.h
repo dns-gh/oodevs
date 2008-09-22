@@ -35,7 +35,6 @@ namespace gui
     class AutomatsLayer;
     class ColorStrategy;
     class GlProxy;
-    class DrawerLayer;
     class ExclusiveEventStrategy;
     class CircularEventStrategy;
     class PreferencesDialog;
@@ -44,6 +43,7 @@ namespace gui
     class LocationsLayer;
 }
 
+class Services;
 class Model;
 class StaticModel;
 class Profile;
@@ -63,7 +63,7 @@ class LoggerProxy;
 class MainWindow : public QMainWindow
                  , public kernel::Observer_ABC
                  , public kernel::ElementObserver_ABC< Simulation >
-                 , public kernel::ElementObserver_ABC< Simulation::sConnection >
+                 , public kernel::ElementObserver_ABC< Services >
                  , public kernel::ElementObserver_ABC< Profile >
 {
     Q_OBJECT;
@@ -101,13 +101,13 @@ private:
     void ReadOptions();
 
     virtual void NotifyUpdated( const Simulation& simulation );
-    virtual void NotifyUpdated( const Simulation::sConnection& connection );
+    virtual void NotifyUpdated( const Services& connection );
     virtual void NotifyUpdated( const Profile& profile );
 
     static std::string BuildRemotePath( std::string server, std::string path );
 
     void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::LocationsLayer& locationsLayer,
-                       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::DrawerLayer& drawer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+                       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
     //@}
 
     //! @name Copy/Assignment

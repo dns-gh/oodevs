@@ -9,7 +9,10 @@
 
 #include "preparation_app_pch.h"
 #include "Application.h"
+#include "tools/WinArguments.h"
+#include "tools/Version.h"
 #include "tools/Win32/BugTrap.h"
+#include "preparation/Tools.h"
 
 //#define NO_LICENSE_CHECK
 
@@ -27,15 +30,13 @@ class FlexLmLicense {};
 namespace
 {
     ////
-    static const QString locale = "_en";
-//    static const QString locale = "_fr";
+//    static const QString locale = "_en";
+    static const QString locale = "_fr";
     ////
 }
 
 int main( int argc, char** argv )
 {   
-    SetConsoleTitle( APP_NAME " - " APP_VERSION " - " __TIMESTAMP__ );
-
     std::auto_ptr< FlexLmLicense > license;
     QString expiration;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
@@ -45,11 +46,12 @@ int main( int argc, char** argv )
         expiration = boost::gregorian::to_simple_string( expirationDate ).c_str();
 #endif
 
-    BugTrap::Setup( "Sword Officer Training" )
-            .SetEmail( "sword-ot@masagroup.net" )
-            .SetVersion( APP_VERSION " - " __TIMESTAMP__ );
-
+    QApplication::setStyle( "windowsxp" );
     Application app( argc, argv, locale, expiration );
+
+    BugTrap::Setup( tools::translate( "Application", "SWORD Officer Training" ).ascii() )
+            .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).ascii() )
+            .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
     try
     {
         app.Initialize();
@@ -57,9 +59,15 @@ int main( int argc, char** argv )
     }
     catch( std::exception& e )
     {
-        QMessageBox::critical( 0, APP_NAME " has crashed.", e.what() );
+        QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
         throw;
     }
     
     return 0;
+}
+
+int WINAPI WinMain( HINSTANCE /*hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
+{
+    WinArguments winArgs(lpCmdLine) ; 
+    return main( winArgs.Argc(), const_cast<char**>( winArgs.Argv() ) ); 
 }

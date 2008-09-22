@@ -51,9 +51,9 @@ QString TristateOption::AutoName() {
 TristateOption::TristateOption( const QString& state )
     : state_( '0' )
 {
-    if( state == OnName() )
+    if( state == OnName() || state == "1" )
         state_ = '1';
-    else if( state == AutoName() )
+    else if( state == AutoName() || state == "a" )
         state_ = 'a';
 }
             

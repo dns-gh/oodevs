@@ -30,7 +30,7 @@ using namespace frontend;
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 RestartExercisePanel::RestartExercisePanel( QWidgetStack* widget, QAction& action, const tools::GeneralConfig& config, ActionsContext& context )
-    : StartExercisePanel( widget, action, config, context )
+    : StartExercisePanel( widget, action, config, context, "RestartExercisePanel" )
 {
     {
         new QLabel( tr( "Choose the session to restart:" ), listBox_ );

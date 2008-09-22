@@ -10,12 +10,10 @@
 #ifndef __LogisticRouteObjectAttribute_h_
 #define __LogisticRouteObjectAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  LogisticRouteObjectAttribute
@@ -28,8 +26,8 @@ class LogisticRouteObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     LogisticRouteObjectAttribute( const Model& model, const ASN1T_ObjectAttributesSpecific& asnMsg );
-    ~LogisticRouteObjectAttribute();
+    explicit LogisticRouteObjectAttribute( const ASN1T_ObjectAttributesSpecific& asnMsg );
+    virtual ~LogisticRouteObjectAttribute();
     //@}
 
     //! @name Operations

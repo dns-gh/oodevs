@@ -45,9 +45,9 @@ std::string AgentSymbols::BuildSymbol( bool up /* = true */ ) const
     symbol = symbol.substr( symbol.find_last_of( "/" ) + 1 );
     tools::app6::SetCommandPost( symbol, holder_.bPC_ );
     tools::app6::SetLevel( symbol, holder_.type_.GetLevelSymbol() );
-    if( up && holder_.pAutomat_ )
+    if( up && holder_.automat_ )
     {
-        const EntitySymbols_ABC& symbols = holder_.pAutomat_->Get< EntitySymbols_ABC >();
+        const EntitySymbols_ABC& symbols = holder_.automat_->Get< EntitySymbols_ABC >();
         return tools::app6::MergeSymbol( symbol, symbols.BuildSymbol() );
     }
     return symbol;

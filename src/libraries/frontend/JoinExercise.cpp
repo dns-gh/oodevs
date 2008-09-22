@@ -9,8 +9,10 @@
 
 #include "frontend_pch.h"
 #include "JoinExercise.h"
+#include "tools/GeneralConfig.h"
 #pragma warning( disable: 4127 4511 4512 )
-#include <boost/lexical_cast.hpp>
+#include <boost/thread.hpp>
+#include <boost/bind.hpp>
 
 using namespace frontend;
 
@@ -18,13 +20,25 @@ using namespace frontend;
 // Name: JoinExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( QObject* parent, const tools::GeneralConfig& config, const QString& exercise, const QString& session )
-    : SpawnCommand( parent, config, "gaming_app.exe" )
+JoinExercise::JoinExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach )
+    : SpawnCommand( config, "gaming_app.exe", attach )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument ( session );
-    Start();
+}
+
+// -----------------------------------------------------------------------------
+// Name: JoinExercise constructor
+// Created: RDS 2008-09-08
+// -----------------------------------------------------------------------------
+JoinExercise::JoinExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& profile, bool attach /*= false*/ )
+    : SpawnCommand( config, "gaming_app.exe", attach )
+{
+    AddRootDirArgument();
+    AddExerciseArgument( exercise );
+    AddSessionArgument ( session );
+    addArgument( "--login=\"" + profile +"\"" );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,5 +47,5 @@ JoinExercise::JoinExercise( QObject* parent, const tools::GeneralConfig& config,
 // -----------------------------------------------------------------------------
 JoinExercise::~JoinExercise()
 {
-    // NOTHING
 }
+

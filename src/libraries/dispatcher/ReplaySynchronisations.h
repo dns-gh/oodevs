@@ -14,10 +14,14 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
 
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 namespace dispatcher
 {
     class Synchroniser;
-    class Entity_ABC;
     class ReplayModel_ABC;
 
 // =============================================================================
@@ -58,15 +62,15 @@ class ReplaySynchronisations : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplaySynchronisations( const ReplayModel_ABC& model, Entity_ABC& holder );
+             ReplaySynchronisations( const ReplayModel_ABC& model, kernel::Entity_ABC& holder );
     virtual ~ReplaySynchronisations();
     //@}
 
     //! @name Operations
     //@{
     void StartSynchronisation( bool create );
-    void EndSynchronisation  ( Synchroniser& synch );
-    void StartSynchronisation( Entity_ABC& next, bool create );
+    void EndSynchronisation  ( Synchroniser& synch ) const;
+    void StartSynchronisation( kernel::Entity_ABC& next, bool create );
 
     virtual void DoUpdate( const ASN1T_MsgUnitCreation& msg );
     virtual void DoUpdate( const ASN1T_MsgAutomatCreation& msg );
@@ -114,7 +118,7 @@ private:
     //! @name Member data
     //@{
     const ReplayModel_ABC& model_;
-    Entity_ABC& holder_;
+    kernel::Entity_ABC& holder_;
     bool created_  : 1;
     bool updated_  : 1;
     bool synching_ : 1;

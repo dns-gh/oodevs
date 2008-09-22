@@ -24,6 +24,7 @@ class ConnectDialog;
 class DisconnectDialog;
 class QMainWindow;
 class Simulation;
+class Services;
 class Network;
 class Publisher_ABC;
 
@@ -36,6 +37,7 @@ class Publisher_ABC;
 class SIMControlToolbar : public QToolBar
                         , public kernel::Observer_ABC
                         , public kernel::ElementObserver_ABC< Simulation >
+                        , public kernel::ElementObserver_ABC< Services >
                         , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
 {
     Q_OBJECT
@@ -73,6 +75,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const Services& services );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     void RequestCheckpoint( const std::string& name );
     //@}
@@ -91,7 +94,7 @@ private:
     DisconnectDialog*   pDisconnectDlg_;
     int speed_;
     bool connected_, paused_;
-    bool replay_; // $$$$ AGE 2007-08-24: 
+    bool hasReplay_, hasSimulation_;
 
     QIconSet connectPix_, disconnectPix_;
     QIconSet playPix_, stopPix_;

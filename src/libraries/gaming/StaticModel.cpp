@@ -17,9 +17,11 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/FormationLevels.h"
+#include "clients_kernel/AtlasNatures.h"
+#include "clients_gui/DrawingTypes.h"
+#include "tools/GeneralConfig.h"
 #include "SurfaceFactory.h"
 #include "ReportFactory.h"
-#include "AtlasNatures.h"
 
 using namespace kernel;
 
@@ -37,6 +39,7 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , surfaceFactory_     ( *new SurfaceFactory( coordinateConverter_, detection_, types_ ) )
     , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_, simu ) )
     , atlasNatures_       ( *new AtlasNatures() )
+    , drawings_           ( *new gui::DrawingTypes( controllers_.controller_ ) )
 {
     // NOTHING
 }
@@ -47,6 +50,7 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &drawings_;
     delete &atlasNatures_;
     delete &reportFactory_;
     delete &surfaceFactory_;
@@ -69,6 +73,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( config );
     detection_.Load( config );
     reportFactory_.Load( config );
+    drawings_.Load( tools::GeneralConfig::BuildResourceChildFile( "DrawingTemplates.xml" ) );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
 
@@ -78,6 +83,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void StaticModel::Purge()
 {
+    drawings_.Purge();
     reportFactory_.Purge();
     types_.Purge();
     objectTypes_.Purge();

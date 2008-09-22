@@ -10,6 +10,13 @@
 #ifndef __Panel_ABC_h_
 #define __Panel_ABC_h_
 
+#include <boost/ptr_container/ptr_vector.hpp>
+
+namespace frontend
+{
+    class SpawnCommand; 
+} 
+
 class QAction;
 class QWidgetStack;
 class ActionsContext;
@@ -26,7 +33,7 @@ class Panel_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             Panel_ABC( QWidgetStack* widget, QAction& action, ActionsContext& context );
+             Panel_ABC( QWidgetStack* widget, QAction& action, ActionsContext& context, const char* name );
     virtual ~Panel_ABC();
     //@}
 
@@ -49,6 +56,7 @@ protected:
     virtual void showEvent( QShowEvent* event );
     virtual void Update();
     void ShowNext();
+    void Start ( frontend::SpawnCommand* command ) ; 
     //@}
 
 protected:
@@ -63,6 +71,7 @@ private:
     QWidgetStack* stack_;
     QAction& action_;
     QAction* next_;
+    boost::ptr_vector< frontend::SpawnCommand > commands_ ; 
     //@}
 };
 

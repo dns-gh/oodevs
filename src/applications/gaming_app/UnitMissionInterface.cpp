@@ -10,12 +10,16 @@
 #include "gaming_app_pch.h"
 #include "UnitMissionInterface.h"
 #include "MissionInterfaceBuilder.h"
-#include "gaming/SimulationMessages.h"
-#include "gaming/ActionsModel.h"
+#include "game_asn/SimulationSenders.h"
+#include "actions/ActionsModel.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "gaming/AutomatDecisions.h"
 
 using namespace kernel;
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: UnitMissionInterface constructor
@@ -48,6 +52,10 @@ void UnitMissionInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
     CommitTo( *action );
+    if( const Automat_ABC* automat = static_cast< const Automat_ABC* >( GetEntity().Get< kernel::TacticalHierarchies >().GetSuperior() ) )
+        if( const AutomatDecisions* decisions = automat->Retrieve< AutomatDecisions >() )
+            if( decisions->IsEmbraye() )
+                decisions->Disengage();
     action->Publish( publisher_ );
     if( ! model_.IsRecording() )
         model_.Destroy( *action );

@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14
 // -----------------------------------------------------------------------------
-StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers )
+StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers, QDockWindow* profilingDock )
     : gui::StatusBar( parent, detection, converter )
     , lastSimulationStatus_( false )
     , controllers_( controllers )
@@ -31,17 +31,20 @@ StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const C
     checkPoint_->setMinimumWidth( 20 );
     checkPoint_->setAlignment( Qt::AlignCenter );
 
-    pSpeed_ = new QLabel( "---", parent );
+    pSpeed_ = new QPushButton( "---", parent );
     pSpeed_->setMinimumWidth( 50 );
-    pSpeed_->setAlignment( Qt::AlignCenter );
+    pSpeed_->setFlat( true );
+    connect( pSpeed_, SIGNAL( clicked() ), profilingDock, SLOT( show() ) );
 
-    pTime_ = new QLabel( "---", parent );
+    pTime_ = new QPushButton( "---", parent );
     pTime_->setMinimumWidth( 50 );
-    pTime_->setAlignment( Qt::AlignCenter );
+    pTime_->setFlat( true );
+    connect( pTime_, SIGNAL( clicked() ), profilingDock, SLOT( show() ) );
 
-    pTick_ = new QLabel( parent );
-    pTick_->setAlignment( Qt::AlignCenter );
+    pTick_ = new QPushButton( parent );
     pTick_->setPixmap( MAKE_PIXMAP( tickoff ) );
+    pTick_->setFlat( true );
+    connect( pTick_, SIGNAL( clicked() ), profilingDock, SLOT( show() ) );
 
     pLagTimer_ = new QTimer( this );
     checkPointTimer_ = new QTimer( this );

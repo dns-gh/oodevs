@@ -12,8 +12,8 @@
 #include "moc_ParamDotationTypeList.cpp"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Iterator.h"
-#include "gaming/ActionParameterDotationTypeList.h"
-#include "gaming/ActionParameterDotationType.h"
+#include "actions/DotationTypeList.h"
+#include "actions/DotationType.h"
 
 using namespace kernel;
 
@@ -101,19 +101,19 @@ void ParamDotationTypeList::AddItem( const QString& parent, const QString& child
 // Name: ParamDotationTypeList::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ParamDotationTypeList::CommitTo( ActionParameterContainer_ABC& action ) const
+void ParamDotationTypeList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     if( ! list_ )
         return;
 
-    std::auto_ptr< ActionParameter_ABC > param( new ActionParameterDotationTypeList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::DotationTypeList( parameter_ ) );
     QListViewItemIterator it( list_ );
     while( it.current() )
     {
         if( it.current()->isSelected() )
         {
             const unsigned id = it.current()->text( 1 ).toUInt();
-            param->AddParameter( *new ActionParameterDotationType( parameter_, id, resolver_ ) );
+            param->AddParameter( *new actions::parameters::DotationType( parameter_, id, resolver_ ) );
         }
         ++it;
     }
