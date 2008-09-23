@@ -194,14 +194,6 @@ SectionGroup "Exercises" s_exo
 !insertmacro EXERCISES.Install "Egypt" "Nord egypt"
 !insertmacro EXERCISES.Install "Paris" "Paris_Est"
 
-    CreateDirectory "$SMPROGRAMS\${APP_NAME}\Egypt Scenario Readme"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Egypt Scenario Readme\Readme.lnk" "${INSTDATADIR}\exercises\Egypt\doc\Egypt scenario.txt"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Egypt Scenario Readme\Screenshot.lnk" "${INSTDATADIR}\exercises\Egypt\doc\Egypt scenario.png"
-
-    CreateDirectory "$SMPROGRAMS\${APP_NAME}\Paris Scenario Readme"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Paris Scenario Readme\Readme.lnk" "${INSTDATADIR}\exercises\Paris\doc\Paris scenario.txt"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Paris Scenario Readme\Screenshot.lnk" "${INSTDATADIR}\exercises\Paris\doc\Paris scenario.png"
-
 SectionGroupEnd
 
 ;--------------------------------
@@ -211,6 +203,16 @@ Section "Documentation" s_doc
     File /r /x ".svn" "${DOCDIR}\*.pdf"
     File /r /x ".svn" "third party"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\User Guide.lnk" "$INSTDIR\doc\User Guide.pdf"
+
+    ; use online gaming resources
+    CreateDirectory "$SMPROGRAMS\${APP_NAME}\Egypt Scenario Readme"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Egypt Scenario Readme\Readme.lnk" "${INSTDATADIR}\exercises\Egypt\doc\Egypt scenario.txt"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Egypt Scenario Readme\Screenshot.lnk" "${INSTDATADIR}\exercises\Egypt\doc\Egypt scenario.png"
+
+    CreateDirectory "$SMPROGRAMS\${APP_NAME}\Paris Scenario Readme"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Paris Scenario Readme\Readme.lnk" "${INSTDATADIR}\exercises\Paris\doc\Paris scenario.txt"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Paris Scenario Readme\Screenshot.lnk" "${INSTDATADIR}\exercises\Paris\doc\Paris scenario.png"
+
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
