@@ -11,7 +11,7 @@
 #define __CrossbowPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "dispatcher/NoopPublisher.h"
 #include "game_asn/Messenger.h"
 
 namespace xml
@@ -25,6 +25,7 @@ namespace dispatcher
     class Config;    
     class SimulationPublisher_ABC;     
     class LinkResolver_ABC;
+    class CompositeRegistrable;
 }
 
 namespace tools
@@ -42,28 +43,24 @@ namespace crossbow
 */
 // Created: JCR 2007-08-29
 // =============================================================================
-class CrossbowPlugin 
-    : public dispatcher::Plugin_ABC
-    , public dispatcher::ClientPublisher_ABC
+class CrossbowPlugin : public dispatcher::Plugin_ABC
+                     , public dispatcher::NoopClientPublisher
 {
 
 public:
     //! @name Constructors/Destructor
     //@{             
-             CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links );
+             CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables );
     virtual ~CrossbowPlugin();
     //@}
 
     //! @name Operations
     //@{    
-    virtual void Receive                    ( const ASN1T_MsgsSimToClient& asnMsg );
-//            void OnReceiveMessengerToClient ( const std::string&, const ASN1T_MsgsMessengerToClient& );
-//            void OnReceiveClientToMessenger ( const std::string&, const ASN1T_MsgsClientToMessenger& );
-        
-    virtual void Send( const ASN1T_MsgsMessengerToClient& msg ); 
+    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
+    virtual void Send   ( const ASN1T_MsgsMessengerToClient& msg ); 
 
-    virtual void NotifyClientAuthenticated  ( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
-    virtual void NotifyClientLeft           ( dispatcher::ClientPublisher_ABC& client );
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
+    virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     //@}
 
 private:
@@ -71,14 +68,6 @@ private:
     //@{
     CrossbowPlugin( const CrossbowPlugin& );            //!< Copy constructor
     CrossbowPlugin& operator=( const CrossbowPlugin& ); //!< Assignement operator
-    //@}
-
-    //! @name From ClientPublisher_ABC
-    //@{
-    virtual void Send( const ASN1T_MsgsSimToClient&            /*msg*/ ) {}
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient& /*msg*/ ) {}
-    virtual void Send( const ASN1T_MsgsReplayToClient&         /*msg*/ ) {}
-    virtual void Send( const ASN1T_MsgsAarToClient&            /*msg*/ ) {}
     //@}
 
 private:
