@@ -163,7 +163,7 @@ SectionGroup "Models" s_mod
         SectionIn RO
         SetOutPath "${INSTDATADIR}\data\models\ada\physical"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\models\ada\physical\wordwide"
+        File /r /x ".svn" "${DATADIR}\data\models\ada\physical\worldwide"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
 
