@@ -10,11 +10,11 @@
 #include "hla_plugin_pch.h"
 #include "AggregateEntityClass.h"
 #include "HlaExtension_ABC.h"
-#include "hla/ObjectRegistration_ABC.h"
-#include "hla/Class.h"
-#include "hla/Federate.h"
-#include "hla/ClassIdentifier.h"
-#include "hla/Deserializer.h"
+#include <hla/ObjectRegistration_ABC.h>
+#include <hla/Class.h>
+#include <hla/Federate.h>
+#include <hla/ClassIdentifier.h>
+#include <hla/Deserializer.h>
 
 using namespace plugins::hla;
 

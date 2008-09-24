@@ -29,8 +29,8 @@ class ObjectClass_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectClass_ABC() {};
-    virtual ~ObjectClass_ABC() {};
+             ObjectClass_ABC() {}
+    virtual ~ObjectClass_ABC() {}
     //@}
 
     //! @name Operations

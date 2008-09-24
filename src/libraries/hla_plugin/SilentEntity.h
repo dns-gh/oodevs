@@ -12,6 +12,11 @@
 
 #include "EntityType.h"
 
+namespace plugins
+{
+namespace hla
+{
+
 // =============================================================================
 /** @class  SilentEntity
     @brief  SilentEntity
@@ -55,5 +60,8 @@ private:
     unsigned long entityAppearance_;
     //@}
 };
+
+}
+}
 
 #endif // __SilentEntity_h_

@@ -10,6 +10,11 @@
 #ifndef __AggregateMarking_h_
 #define __AggregateMarking_h_
 
+namespace plugins
+{
+namespace hla
+{
+
 // =============================================================================
 /** @class  AggregateMarking
     @brief  AggregateMarking
@@ -50,5 +55,8 @@ private:
     unsigned char markingData_[31];
     //@}
 };
+
+}
+}
 
 #endif // __AggregateMarking_h_

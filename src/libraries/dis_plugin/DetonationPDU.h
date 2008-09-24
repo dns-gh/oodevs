@@ -37,7 +37,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DetonationPDU( const plugins::hla::EntityIdentifier& firer, unsigned long time, unsigned char exercise );
+             DetonationPDU( const hla::EntityIdentifier& firer, unsigned long time, unsigned char exercise );
     virtual ~DetonationPDU();
     //@}
 
@@ -75,18 +75,18 @@ private:
 private:
     //! @name Member data
     //@{
-    DisHeader                      header_;                               // 12
-    plugins::hla::EntityIdentifier firer_;                                // 6    18
-    plugins::hla::EntityIdentifier target_;                               // 6    24
-    plugins::hla::EntityIdentifier munition_;                             // 6    30
-    plugins::hla::EntityIdentifier event_;                                // 6    36
-    plugins::hla::VelocityVector   velocity_;                             // 12   48
-    plugins::hla::WorldLocation    location_;                             // 24   72
-    BurstDescriptor                burst_;                                // 16   88
-    float                          locInEntityCoords_[3];                 // 12   100
-    unsigned char                  detonationResult_;                     // 1
-    unsigned char                  numberOfArticulationParameters_;       // 1
-    unsigned short                 padding_;                              // 2    104
+    DisHeader             header_;                               // 12
+    hla::EntityIdentifier firer_;                                // 6    18
+    hla::EntityIdentifier target_;                               // 6    24
+    hla::EntityIdentifier munition_;                             // 6    30
+    hla::EntityIdentifier event_;                                // 6    36
+    hla::VelocityVector   velocity_;                             // 12   48
+    hla::WorldLocation    location_;                             // 24   72
+    BurstDescriptor       burst_;                                // 16   88
+    float                 locInEntityCoords_[3];                 // 12   100
+    unsigned char         detonationResult_;                     // 1
+    unsigned char         numberOfArticulationParameters_;       // 1
+    unsigned short        padding_;                              // 2    104
     //@}
 };
 

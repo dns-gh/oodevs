@@ -12,10 +12,10 @@
 #include "AgentExtension.h"
 #include "dispatcher/Agent.h"
 #include "ObjectClass_ABC.h"
-#include "hla/hla_lib.h"
-#include "hla/SimpleTimeFactory.h"
-#include "hla/SimpleTimeIntervalFactory.h"
-#include "hla/SimpleTimeInterval.h"
+#include <hla/hla_lib.h>
+#include <hla/SimpleTimeFactory.h>
+#include <hla/SimpleTimeIntervalFactory.h>
+#include <hla/SimpleTimeInterval.h>
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 
 using namespace plugins::hla;

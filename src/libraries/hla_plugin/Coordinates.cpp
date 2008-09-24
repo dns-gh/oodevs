@@ -9,13 +9,13 @@
 
 #include "hla_plugin_pch.h"
 #include "Coordinates.h"
-
 #include <geocoord/MGRS.h>
 #include <geocoord/geodetic.h>
 #include <geocoord/geocentric.h>
 #include <geometry/types.h>
-
 #include <cmath>
+
+using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: WorldLocation::WorldLocation

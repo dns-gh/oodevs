@@ -10,6 +10,11 @@
 #ifndef __Dimension_h_
 #define __Dimension_h_
 
+namespace plugins
+{
+namespace hla
+{
+
 // =============================================================================
 /** @class  Dimension
     @brief  Dimension
@@ -48,5 +53,8 @@ private:
     float xAxisLength_, yAxisLength_, zAxisLength_;
     //@}
 };
+
+}
+}
 
 #endif // __Dimension_h_

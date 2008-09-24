@@ -10,6 +10,8 @@
 #include "hla_plugin_pch.h"
 #include "EntityIdentifier.h"
 
+using namespace plugins::hla;
+
 // -----------------------------------------------------------------------------
 // Name: EntityIdentifier constructor
 // Created: AGE 2008-04-30

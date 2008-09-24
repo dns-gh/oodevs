@@ -10,6 +10,8 @@
 #include "hla_plugin_pch.h"
 #include "SilentEntity.h"
 
+using namespace plugins::hla;
+
 // -----------------------------------------------------------------------------
 // Name: SilentEntity constructor
 // Created: AGE 2008-02-21

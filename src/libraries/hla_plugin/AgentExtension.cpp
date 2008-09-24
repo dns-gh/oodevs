@@ -18,8 +18,8 @@
 #include "dispatcher/Automat.h"
 #include "dispatcher/Side.h"
 #include "dispatcher/Equipment.h"
-#include "hla/UpdateFunctor_ABC.h"
-#include "hla/AttributeIdentifier.h"
+#include <hla/UpdateFunctor_ABC.h>
+#include <hla/AttributeIdentifier.h>
 #include <boost/bind.hpp>
 
 using namespace plugins::hla;

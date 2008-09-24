@@ -56,7 +56,7 @@ public:
     //! @name Operations
     //@{
     virtual void Create( dispatcher::Agent& entity );
-    virtual plugins::hla::EntityIdentifier CreateNewIdentifier();
+    virtual hla::EntityIdentifier CreateNewIdentifier();
     //@}
 
 private:

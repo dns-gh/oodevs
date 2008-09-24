@@ -10,10 +10,10 @@
 #ifndef __FederateFacade_h_
 #define __FederateFacade_h_
 
-class RtiAmbassador_ABC;
-class Federate;
 class TimeFactory_ABC;
 class TimeIntervalFactory_ABC;
+class RtiAmbassador_ABC;
+class Federate;
 
 namespace plugins
 {

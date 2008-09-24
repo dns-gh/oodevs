@@ -10,6 +10,11 @@
 #ifndef __Hla_Coordinates_h_
 #define __Hla_Coordinates_h_
 
+namespace plugins
+{
+namespace hla
+{
+
 // =============================================================================
 /** @class  WorldLocation
     @brief  WorldLocation
@@ -136,5 +141,7 @@ private:
     //@}
 };
 
+}
+}
 
 #endif // __Hla_Coordinates_h_

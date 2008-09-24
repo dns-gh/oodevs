@@ -12,6 +12,11 @@
 
 #include "Coordinates.h"
 
+namespace plugins
+{
+namespace hla
+{
+
 // =============================================================================
 /** @class  Spatial
     @brief  Spatial
@@ -68,5 +73,8 @@ private:
     SpatialFPW fpw_;
     //@}
 };
+
+}
+}
 
 #endif // __Spatial_h_

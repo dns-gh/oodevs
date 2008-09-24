@@ -13,6 +13,8 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 
+using namespace plugins::hla;
+
 // -----------------------------------------------------------------------------
 // Name: EntityType constructor
 // Created: AGE 2008-02-21
@@ -29,7 +31,7 @@ EntityType::EntityType()
     // NOTHING
 }
 
-namespace 
+namespace
 {
     template< typename T >
     void Assign( const std::string& s, T& v )

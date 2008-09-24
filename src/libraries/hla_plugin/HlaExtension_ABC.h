@@ -13,7 +13,6 @@
 #include "clients_kernel/Extension_ABC.h"
 #include <stdexcept>
 
-class ObjectIdentifier;
 class AttributeIdentifier;
 class Deserializer;
 class UpdateFunctor_ABC;
@@ -35,8 +34,8 @@ class HlaExtension_ABC : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HlaExtension_ABC() {};
-    virtual ~HlaExtension_ABC() {};
+             HlaExtension_ABC() {}
+    virtual ~HlaExtension_ABC() {}
     //@}
 
     //! @name Operations

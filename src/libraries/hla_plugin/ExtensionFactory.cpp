@@ -13,7 +13,6 @@
 #include "AggregateEntityClass.h"
 #include "EntityIdentifier.h"
 #include "dispatcher/Agent.h"
-#include "hla/ObjectIdentifier.h"
 
 using namespace plugins::hla;
 

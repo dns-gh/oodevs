@@ -10,6 +10,11 @@
 #ifndef __EntityIdentifier_h_
 #define __EntityIdentifier_h_
 
+namespace plugins
+{
+namespace hla
+{
+
 // =============================================================================
 /** @class  EntityIdentifier
     @brief  EntityIdentifierStruct complex data type
@@ -61,5 +66,8 @@ private:
     unsigned short entityNumber_;
     //@}
 };
+
+}
+}
 
 #endif // __EntityIdentifier_h_

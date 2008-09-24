@@ -10,6 +10,8 @@
 #include "hla_plugin_pch.h"
 #include "Dimension.h"
 
+using namespace plugins::hla;
+
 // -----------------------------------------------------------------------------
 // Name: Dimension constructor
 // Created: AGE 2008-02-21

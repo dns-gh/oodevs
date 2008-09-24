@@ -10,6 +10,8 @@
 #include "hla_plugin_pch.h"
 #include "Spatial.h"
 
+using namespace plugins::hla;
+
 // -----------------------------------------------------------------------------
 // Name: Spatial constructor
 // Created: AGE 2008-02-21

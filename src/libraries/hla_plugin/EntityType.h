@@ -10,6 +10,11 @@
 #ifndef __EntityType_h_
 #define __EntityType_h_
 
+namespace plugins
+{
+namespace hla
+{
+
 // =============================================================================
 /** @class  EntityType
     @brief  EntityTypeStruct complex data type
@@ -54,5 +59,8 @@ private:
     unsigned char extra_;
     //@}
 };
+
+}
+}
 
 #endif // __EntityType_h_

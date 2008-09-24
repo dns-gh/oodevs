@@ -10,6 +10,8 @@
 #include "hla_plugin_pch.h"
 #include "AggregateMarking.h"
 
+using namespace plugins::hla;
+
 // -----------------------------------------------------------------------------
 // Name: AggregateMarking constructor
 // Created: AGE 2008-02-21
