@@ -23,6 +23,7 @@
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
+using namespace plugins;
 
 // -----------------------------------------------------------------------------
 // Name: PluginFactory constructor
