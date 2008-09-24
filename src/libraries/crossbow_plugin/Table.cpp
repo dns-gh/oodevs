@@ -12,6 +12,8 @@
 #include "Row.h"
 #include <boost/lexical_cast.hpp>
 
+using namespace plugins::crossbow;
+
 // -----------------------------------------------------------------------------
 // Name: Table constructor
 // Created: SBO 2007-08-30

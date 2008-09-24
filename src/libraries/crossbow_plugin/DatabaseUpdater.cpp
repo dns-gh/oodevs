@@ -9,7 +9,6 @@
 
 #include "crossbow_plugin_pch.h"
 #include "DatabaseUpdater.h"
-
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"

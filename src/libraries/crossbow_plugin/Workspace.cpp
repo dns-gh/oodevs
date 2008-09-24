@@ -10,6 +10,8 @@
 #include "crossbow_plugin_pch.h"
 #include "Workspace.h"
 
+using namespace plugins::crossbow;
+
 // -----------------------------------------------------------------------------
 // Name: Workspace constructor
 // Created: SBO 2007-09-27

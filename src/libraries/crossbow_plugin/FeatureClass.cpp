@@ -12,6 +12,8 @@
 #include "FeatureRow.h"
 #include <boost/lexical_cast.hpp>
 
+using namespace plugins::crossbow;
+
 namespace
 {
     ITablePtr GetTable( IFeatureClassPtr featureClass )

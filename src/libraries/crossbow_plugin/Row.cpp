@@ -10,6 +10,8 @@
 #include "crossbow_plugin_pch.h"
 #include "Row.h"
 
+using namespace plugins::crossbow;
+
 // -----------------------------------------------------------------------------
 // Name: Row constructor
 // Created: SBO 2007-08-30
