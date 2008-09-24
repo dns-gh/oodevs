@@ -12,6 +12,8 @@
 
 class Federate;
 
+namespace plugins
+{
 namespace hla
 {
 
@@ -37,6 +39,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Hla_Plugin_Class_ABC_h_

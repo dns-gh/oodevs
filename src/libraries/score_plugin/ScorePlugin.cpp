@@ -17,7 +17,7 @@
 #include <xeumeuleu/xml.h>
 
 namespace bfs = boost::filesystem;
-using namespace score;
+using namespace plugins::score;
 
 // -----------------------------------------------------------------------------
 // Name: ScorePlugin constructor
@@ -28,7 +28,7 @@ ScorePlugin::ScorePlugin( dispatcher::ClientPublisher_ABC& clients, const tools:
 {
     LoadIndicators( config.BuildExerciseChildFile( "scripts/resources/scores.xml" ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ScorePlugin destructor
 // Created: AGE 2008-08-04
@@ -90,4 +90,3 @@ void ScorePlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
 {
     // NOTHING
 }
-

@@ -13,7 +13,7 @@
 #include "dispatcher/Agent.h"
 #include <xeumeuleu/xml.h>
 
-using namespace dis;
+using namespace plugins::dis;
 
 // -----------------------------------------------------------------------------
 // Name: DisExtensionFactory constructor

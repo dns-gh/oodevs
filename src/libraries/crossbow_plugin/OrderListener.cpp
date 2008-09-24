@@ -17,7 +17,7 @@
 #include <sstream>
 
 using namespace dispatcher;
-using namespace crossbow;
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: OrderListener constructor

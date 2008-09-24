@@ -14,7 +14,7 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: ExtensionFactory constructor

@@ -27,6 +27,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace tic
 {
     class Platform;
@@ -90,6 +92,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __TicExtension_h_

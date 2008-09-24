@@ -11,7 +11,7 @@
 #include "HlaPluginFactory.h"
 #include "HlaPlugin.h"
 
-using namespace hla;
+using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: HlaPluginFactory constructor

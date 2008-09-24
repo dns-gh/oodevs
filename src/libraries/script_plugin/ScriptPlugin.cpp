@@ -30,13 +30,12 @@
 #include "ExtensionFactory.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "dispatcher/CompositeRegistrable.h"
-
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include <boost/filesystem.hpp>
 #include <boost/bind.hpp>
 
 namespace bfs = boost::filesystem;
-using namespace script;
+using namespace plugins::script;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

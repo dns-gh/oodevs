@@ -10,7 +10,7 @@
 #include "dis_plugin_pch.h"
 #include "EntityStatePDU.h"
 
-using namespace dis;
+using namespace plugins::dis;
 
 // -----------------------------------------------------------------------------
 // Name: EntityStatePDU constructor

@@ -18,6 +18,8 @@ namespace dispatcher
     class Config;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
 
@@ -77,6 +79,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Database_h_

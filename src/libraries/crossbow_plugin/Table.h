@@ -13,6 +13,8 @@
 #include "Table_ABC.h"
 #include "ESRI.h"
 
+namespace plugins
+{
 namespace crossbow
 {
     class Database;
@@ -70,11 +72,12 @@ private:
     const std::string name_;
     ITablePtr table_;
     ICursorPtr cursor_;
-    std::auto_ptr< crossbow::Row > row_;
+    std::auto_ptr< Row > row_;
     bool inTransaction_;
     //@}
 };
 
+}
 }
 
 #endif // __Table_h_

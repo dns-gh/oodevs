@@ -10,7 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "Simulation.h"
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: Simulation constructor

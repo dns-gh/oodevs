@@ -15,7 +15,7 @@
 #include "tools/thread/ThreadPool.h"
 #include <boost/bind.hpp>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: PublisherActor constructor

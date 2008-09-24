@@ -12,6 +12,8 @@
 
 #include "hla_plugin/EntityType.h"
 
+namespace plugins
+{
 namespace dis
 {
 
@@ -64,6 +66,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __BurstDescriptor_h_

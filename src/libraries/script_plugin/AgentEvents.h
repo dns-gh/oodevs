@@ -21,6 +21,8 @@ namespace dispatcher
     class Automat;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -45,6 +47,7 @@ namespace script
 
         DECLARE_AUTOMAT_EVENT( AutomatMissionStarted );
     }
+}
 }
 
 #endif // __AgentEvents_h_

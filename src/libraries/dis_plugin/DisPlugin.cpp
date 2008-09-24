@@ -18,7 +18,7 @@
 #include <xeumeuleu/xml.h>
 #include "UdpNetwork.h"
 
-using namespace dis;
+using namespace plugins::dis;
 using namespace dispatcher;
 
 namespace

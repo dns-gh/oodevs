@@ -12,6 +12,8 @@
 
 #include "game_asn/Simulation.h"
 
+namespace plugins
+{
 namespace bml
 {
 
@@ -61,6 +63,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Simulation_h_

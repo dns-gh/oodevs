@@ -16,7 +16,7 @@
 #include "hla/ClassIdentifier.h"
 #include "hla/Deserializer.h"
 
-using namespace hla;
+using namespace plugins::hla;
 
 struct AggregateEntityClass::UnitRegistration : public ObjectRegistration_ABC< HlaExtension_ABC >
 {

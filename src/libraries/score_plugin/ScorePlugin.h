@@ -26,6 +26,8 @@ namespace tools
 
 class Task;
 
+namespace plugins
+{
 namespace score
 {
 

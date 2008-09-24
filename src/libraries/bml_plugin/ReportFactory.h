@@ -24,6 +24,8 @@ namespace dispatcher
     class Automat;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class OrderReport;
@@ -64,6 +66,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ReportFactory_h_

@@ -17,7 +17,7 @@
 #include "Simulation.h"
 #include "dispatcher/Model.h"
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: BmlPlugin constructor

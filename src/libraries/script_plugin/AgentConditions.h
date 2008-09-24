@@ -25,6 +25,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace script
 {
     class Condition_ABC;
@@ -76,6 +78,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __AgentConditions_h_

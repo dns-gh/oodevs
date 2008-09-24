@@ -12,6 +12,8 @@
 
 #include "Row.h"
 
+namespace plugins
+{
 namespace crossbow
 {
 
@@ -21,7 +23,7 @@ namespace crossbow
 */
 // Created: SBO 2007-08-30
 // =============================================================================
-class FeatureRow : public crossbow::Row
+class FeatureRow : public Row
 {
 
 public:
@@ -59,6 +61,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __FeatureRow_h_

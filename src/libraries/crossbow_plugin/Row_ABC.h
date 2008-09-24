@@ -12,6 +12,8 @@
 
 #include "FieldVariant.h"
 
+namespace plugins
+{
 namespace crossbow
 {
     class Shape_ABC;
@@ -42,6 +44,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Row_ABC_h_

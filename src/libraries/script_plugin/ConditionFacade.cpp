@@ -19,7 +19,7 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "directia/Brain.h"
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: ConditionFacade constructor

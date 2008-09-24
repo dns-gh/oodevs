@@ -16,7 +16,7 @@
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/Automat.h"
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: EntityConditionBase::Trigger

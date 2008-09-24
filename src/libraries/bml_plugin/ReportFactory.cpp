@@ -11,7 +11,7 @@
 #include "ReportFactory.h"
 #include "OrderReport.h"
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: ReportFactory constructor

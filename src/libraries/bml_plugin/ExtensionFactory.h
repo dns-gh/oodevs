@@ -19,6 +19,8 @@ namespace dispatcher
     class Model;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class Publisher_ABC;
@@ -65,6 +67,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ExtensionFactory_h_

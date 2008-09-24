@@ -23,6 +23,8 @@ namespace xml
     class xistream;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class Publisher_ABC;
@@ -75,6 +77,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __UpdateListener_h_

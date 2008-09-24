@@ -11,7 +11,7 @@
 #include "BmlPluginFactory.h"
 #include "BmlPlugin.h"
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: BmlPluginFactory constructor

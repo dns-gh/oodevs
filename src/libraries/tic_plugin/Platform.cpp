@@ -11,7 +11,7 @@
 #include "Platform.h"
 #include "clients_kernel/ComponentType.h"
 
-using namespace tic;
+using namespace plugins::tic;
 
 // -----------------------------------------------------------------------------
 // Name: Platform constructor

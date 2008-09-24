@@ -22,7 +22,7 @@
 #include <xeumeuleu/xml.h>
 
 namespace bfs = boost::filesystem;
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: DrawingsModel constructor
@@ -82,7 +82,7 @@ void DrawingsModel::Load( const dispatcher::Config& config )
 // -----------------------------------------------------------------------------
 void DrawingsModel::ReadShape( xml::xistream& xis )
 {
-    std::auto_ptr< Drawing > drawing( new Drawing( idManager_.nextId(), xis, converter_ ) );
+    std::auto_ptr< Drawing > drawing( new Drawing( idManager_.NextId(), xis, converter_ ) );
     drawing->SendCreation( clients_ );
     Register( drawing->GetId(), *drawing );
     drawing.release();
@@ -107,11 +107,11 @@ void DrawingsModel::Save( const std::string& directory ) const
 // -----------------------------------------------------------------------------
 void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgShapeCreationRequest& message )
 {
-    messenger::ShapeCreationRequestAck ack ;
+    ShapeCreationRequestAck ack ;
     ack() = EnumShapeErrorCode::no_error;
     try
     {
-        std::auto_ptr< Drawing > drawing( new Drawing( idManager_.nextId(), message, converter_ ) );
+        std::auto_ptr< Drawing > drawing( new Drawing( idManager_.NextId(), message, converter_ ) );
         Register( drawing->GetId(), *drawing );
         drawing->SendCreation( clients_ );
         drawing.release();
@@ -129,7 +129,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
 // -----------------------------------------------------------------------------
 void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgShapeUpdateRequest& message )
 {
-    messenger::ShapeUpdateRequestAck ack ;
+    ShapeUpdateRequestAck ack ;
     ack() = EnumShapeErrorCode::no_error;
 
     Drawing* drawing = Find( message.oid );
@@ -149,7 +149,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
 // -----------------------------------------------------------------------------
 void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgShapeDestructionRequest& message )
 {
-    messenger::ShapeDestructionRequestAck ack ;
+    ShapeDestructionRequestAck ack ;
     ack() = EnumShapeErrorCode::no_error;
 
     Drawing* drawing = Find( message.oid );
@@ -208,7 +208,7 @@ boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::strin
 // -----------------------------------------------------------------------------
 void DrawingsModel::Publish( const Drawing& drawing )
 {
-    std::auto_ptr< Drawing > copy( new Drawing( idManager_.nextId(), drawing ) );
+    std::auto_ptr< Drawing > copy( new Drawing( idManager_.NextId(), drawing ) );
     copy->SendCreation( clients_ );
     Register( copy->GetId(), *copy );
     copy.release();
@@ -222,5 +222,5 @@ void DrawingsModel::Publish( const Drawing& drawing )
 void DrawingsModel::ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >& result, const std::string& name )
 {
     if( xml::attribute( xis, "name", std::string() ) == name )
-        result.reset( new Drawing( idManager_.nextId(), xis, converter_ ) );
+        result.reset( new Drawing( idManager_.NextId(), xis, converter_ ) );
 }

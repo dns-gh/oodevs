@@ -14,7 +14,7 @@
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 
-using namespace tic;
+using namespace plugins::tic;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

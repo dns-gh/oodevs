@@ -15,6 +15,8 @@ namespace directia
     class WrappedScriptFunction;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -41,6 +43,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Condition_ABC_h_

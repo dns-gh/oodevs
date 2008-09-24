@@ -10,9 +10,11 @@
 #ifndef __ResponseHandler_ABC_h_
 #define __ResponseHandler_ABC_h_
 
+namespace plugins
+{
 namespace bml
 {
-    
+
 // =============================================================================
 /** @class  ResponseHandler_ABC
     @brief  ResponseHandler_ABC
@@ -35,6 +37,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __ResponseHandler_ABC_h_

@@ -23,6 +23,8 @@ namespace dispatcher
     class Automat;
 }
 
+namespace plugins
+{
 namespace script
 {
     class Condition_ABC;
@@ -67,6 +69,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __AutomatConditions_h_

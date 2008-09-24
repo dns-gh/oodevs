@@ -14,7 +14,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
-using namespace script;
+using namespace plugins::script;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

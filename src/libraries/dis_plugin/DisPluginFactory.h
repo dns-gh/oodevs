@@ -12,6 +12,8 @@
 
 #include "dispatcher/PluginFactory_ABC.h"
 
+namespace plugins
+{
 namespace dis
 {
 
@@ -42,17 +44,9 @@ private:
     DisPluginFactory( const DisPluginFactory& );            //!< Copy constructor
     DisPluginFactory& operator=( const DisPluginFactory& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
+}
 }
 
 #endif // __DisPluginFactory_h_

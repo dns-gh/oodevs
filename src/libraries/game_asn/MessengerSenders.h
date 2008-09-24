@@ -17,6 +17,8 @@
 DECLARE_ASN_CONTROLLER( MsgsMessengerToClient )
 DECLARE_ASN_CONTROLLER( MsgsClientToMessenger )
 
+namespace plugins
+{
 namespace messenger
 {
     struct Service {};
@@ -69,6 +71,7 @@ GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, ShapeCreation,    shape_
 GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, ShapeUpdate,      shape_update )
 GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, ShapeDestruction, shape_destruction )
 
+}
 }
 
 #endif // __MessengerMessages_h_

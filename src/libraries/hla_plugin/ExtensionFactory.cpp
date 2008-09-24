@@ -15,7 +15,7 @@
 #include "dispatcher/Agent.h"
 #include "hla/ObjectIdentifier.h"
 
-using namespace hla;
+using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: ExtensionFactory constructor

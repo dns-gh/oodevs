@@ -23,6 +23,8 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -71,6 +73,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __SimulationCommands_h_

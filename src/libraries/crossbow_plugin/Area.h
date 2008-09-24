@@ -12,6 +12,8 @@
 
 #include "PointCollection.h"
 
+namespace plugins
+{
 namespace crossbow
 {
 
@@ -46,4 +48,6 @@ private:
 };
 
 }
+}
+
 #endif // __Area_h_

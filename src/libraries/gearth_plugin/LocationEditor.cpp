@@ -12,7 +12,7 @@
 #include "xeumeuleu/xml.h"
 #include <sstream>
 
-using namespace gearth;
+using namespace plugins::gearth;
 
 // -----------------------------------------------------------------------------
 // Name: LocationEditor::LocationEditor

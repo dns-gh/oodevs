@@ -20,6 +20,8 @@ namespace dispatcher
     class Model;
 }
 
+namespace plugins
+{
 namespace script
 {
     class CommandString;
@@ -60,6 +62,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ModelResolver_h_

@@ -10,6 +10,8 @@
 #ifndef __Time_ABC_h_
 #define __Time_ABC_h_
 
+namespace plugins
+{
 namespace dis
 {
 
@@ -25,8 +27,8 @@ class Time_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Time_ABC() {};
-    virtual ~Time_ABC() {};
+             Time_ABC() {}
+    virtual ~Time_ABC() {}
     //@}
 
     //! @name Operations
@@ -35,6 +37,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Time_ABC_h_

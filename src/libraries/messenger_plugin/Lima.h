@@ -14,15 +14,17 @@
 
 namespace dispatcher
 {
-    class ClientPublisher_ABC; 
+    class ClientPublisher_ABC;
 }
 
 namespace xml
 {
-    class xistream; 
-    class xostream; 
+    class xistream;
+    class xostream;
 }
 
+namespace plugins
+{
 namespace messenger
 {
 
@@ -66,6 +68,6 @@ private:
 };
 
 }
+}
 
 #endif // __Lima_h_
-

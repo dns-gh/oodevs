@@ -12,7 +12,7 @@
 #include "dispatcher/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.h>
 
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
@@ -61,7 +61,7 @@ void Limit::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
     ASN1T_MsgLimitCreation creation ;
     creation.oid = GetID();
     TacticalLine_ABC::Send( creation.tactical_line );
-    messenger::LimitCreation message( creation );
+    LimitCreation message( creation );
     message.Send( client );
 }
 
@@ -74,7 +74,7 @@ void Limit::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
     ASN1T_MsgLimitUpdate update;
     update.oid = GetID();
     TacticalLine_ABC::Send( update.tactical_line );
-    messenger::LimitUpdate message( update );
+    LimitUpdate message( update );
     message.Send( client );
 }
 
@@ -86,7 +86,7 @@ void Limit::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 void Limit::SendDestruction( dispatcher::ClientPublisher_ABC& client ) const
 {
     ASN1T_MsgLimitDestruction destruction = GetID() ;
-    messenger::LimitDestruction message( destruction );
+    LimitDestruction message( destruction );
     message.Send( client );
 }
 

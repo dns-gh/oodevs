@@ -10,7 +10,7 @@
 #include "messenger_plugin_pch.h"
 #include "IdManager.h"
 
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: IdManager constructor
@@ -36,7 +36,7 @@ IdManager::~IdManager()
 // Name: IdManager::nexId
 // Created: RDS 2008-04-04
 // -----------------------------------------------------------------------------
-unsigned int IdManager::nextId()
+unsigned int IdManager::NextId()
 {
     return ++nextId_;
 }

@@ -23,12 +23,14 @@ namespace xml
 namespace dispatcher
 {
     class Model;
-    class Config;    
+    class Config;
     class SimulationPublisher_ABC;
     class ClientPublisher_ABC;
     class Profile_ABC;
 }
 
+namespace plugins
+{
 namespace gearth
 {
     class ReportFactory;
@@ -36,7 +38,7 @@ namespace gearth
 
 // =============================================================================
 /** @class  ConnectorFacade
-    @brief  ConnectorFacade    
+    @brief  ConnectorFacade
 */
 // Created: JCR 2007-04-30
 // =============================================================================
@@ -82,6 +84,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __gearth_ConnectorFacade_h_

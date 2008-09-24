@@ -14,7 +14,7 @@
 #include "Row_ABC.h"
 #include "ScopeEditor.h"
 
-using namespace crossbow;
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: FolkUpdater constructor
@@ -186,15 +186,15 @@ void FolkUpdater::CommitEdge( Row_ABC& row, const Edge& edge )
 // -----------------------------------------------------------------------------
 void FolkUpdater::Update( Edge& edge, const ASN1T_MsgFolkGraphEdgeUpdate& msg ) const
 {
-	const unsigned size = activities_.size() * profiles_.size();
+    const unsigned size = activities_.size() * profiles_.size();
     int c = -1;
     edge.population_ = 0;
-	for ( unsigned i = 0; i < msg.population_occupation.n; ++i )
+    for ( unsigned i = 0; i < msg.population_occupation.n; ++i )
     {
         const int individuals = msg.population_occupation.elem[i];
         if ( i % size == 0 )
             ++c;
         edge.population_    += individuals;
-        edge.containers_[c] += individuals;		
+        edge.containers_[c] += individuals;        
     }
 }

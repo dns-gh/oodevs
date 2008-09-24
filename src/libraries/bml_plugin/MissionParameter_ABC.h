@@ -17,6 +17,8 @@ namespace kernel
     class OrderParameter;
 }
 
+namespace plugins
+{
 namespace bml
 {
 
@@ -61,6 +63,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __MissionParameter_ABC_h_

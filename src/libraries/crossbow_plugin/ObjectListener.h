@@ -17,6 +17,8 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
     class Database_ABC;
@@ -65,6 +67,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ObjectListener_h_

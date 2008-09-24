@@ -17,7 +17,7 @@
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: Who constructor
@@ -96,7 +96,7 @@ Who::~Who()
 // Name: Who::operator<<
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-xml::xostream& bml::operator<<( xml::xostream& xos, const Who& who )
+xml::xostream& plugins::bml::operator<<( xml::xostream& xos, const Who& who )
 {
     xos << xml::start( "C_BML_Who" )
             << xml::start( "WhoRef" )

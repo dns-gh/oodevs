@@ -22,8 +22,8 @@ namespace xml
 namespace dispatcher
 {
     class Model;
-    class Config;    
-    class SimulationPublisher_ABC;     
+    class Config;
+    class SimulationPublisher_ABC;
     class LinkResolver_ABC;
     class CompositeRegistrable;
 }
@@ -33,6 +33,8 @@ namespace tools
     class MessageDispatcher_ABC;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
     class DatabasePublisher;
@@ -77,5 +79,8 @@ private:
     std::auto_ptr< dispatcher::Plugin_ABC > messenger_;
     //@}
 };
+
 }
+}
+
 #endif // __CrossbowPlugin_h_

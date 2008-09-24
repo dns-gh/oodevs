@@ -15,7 +15,7 @@
 #include "dispatcher/Side.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 
-using namespace script;
+using namespace plugins::script;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

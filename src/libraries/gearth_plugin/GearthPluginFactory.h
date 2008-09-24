@@ -12,6 +12,8 @@
 
 #include "dispatcher/PluginFactory_ABC.h"
 
+namespace plugins
+{
 namespace gearth
 {
 
@@ -44,6 +46,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __GearthPluginFactory_h_

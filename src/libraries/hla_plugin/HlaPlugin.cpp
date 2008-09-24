@@ -16,7 +16,7 @@
 #include "dispatcher/Model.h"
 #include <xeumeuleu/xml.h>
 
-using namespace hla;
+using namespace plugins::hla;
 
 namespace
 {

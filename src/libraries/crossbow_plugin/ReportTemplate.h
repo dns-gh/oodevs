@@ -17,10 +17,11 @@ namespace xml
 
 struct ASN1T_MissionParameters;
 
+namespace plugins
+{
 namespace crossbow
 {
-
-class ReportFactory;
+    class ReportFactory;
 
 // =============================================================================
 /** @class  ReportTemplate
@@ -73,6 +74,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ReportTemplate_h_

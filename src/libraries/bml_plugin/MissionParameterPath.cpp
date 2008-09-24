@@ -13,7 +13,7 @@
 #include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPath constructor

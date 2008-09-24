@@ -10,7 +10,7 @@
 #include "dis_plugin_pch.h"
 #include "DetonationPDU.h"
 
-using namespace dis;
+using namespace plugins::dis;
 
 // -----------------------------------------------------------------------------
 // Name: DetonationPDU constructor

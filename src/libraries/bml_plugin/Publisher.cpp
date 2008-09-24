@@ -18,7 +18,7 @@
 #include <boost/lexical_cast.hpp>
 #include <fstream>
 
-using namespace bml;
+using namespace plugins::bml;
 
 namespace
 {

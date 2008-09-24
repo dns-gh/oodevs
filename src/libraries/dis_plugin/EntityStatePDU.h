@@ -16,6 +16,8 @@
 #include "hla_plugin/EntityType.h"
 #include "hla_plugin/Coordinates.h"
 
+namespace plugins
+{
 namespace dis
 {
 
@@ -95,6 +97,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __EntityStatePDU_h_

@@ -18,6 +18,8 @@ namespace xml
     class xostream;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class Point;
@@ -69,6 +71,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __PointList_h_

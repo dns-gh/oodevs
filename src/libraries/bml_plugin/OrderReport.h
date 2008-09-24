@@ -24,6 +24,8 @@ namespace dispatcher
     class Automat;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class Publisher_ABC;
@@ -68,6 +70,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __OrderReport_h_

@@ -23,6 +23,8 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace plugins
+{
 namespace bml
 {
 
@@ -69,6 +71,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __OrderProcessor_h_

@@ -14,7 +14,7 @@
 // Name: Row constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Row::Row()
+Row::Row()
 {
     // NOTHING
 }
@@ -23,7 +23,7 @@ crossbow::Row::Row()
 // Name: Row destructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Row::~Row()
+Row::~Row()
 {
     // NOTHING
 }
@@ -58,7 +58,7 @@ namespace
 // Name: Row::SetField
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::Row::SetField( const std::string& name, const crossbow::FieldVariant& value )
+void Row::SetField( const std::string& name, const FieldVariant& value )
 {
     const long index = GetFieldIndex( name );
     if( index < 0 )
@@ -70,25 +70,25 @@ void crossbow::Row::SetField( const std::string& name, const crossbow::FieldVari
 // Name: Row::SetShape
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::Row::SetShape( const Shape_ABC& /*value*/ )
+void Row::SetShape( const Shape_ABC& /*value*/ )
 {
     throw std::runtime_error( "Trying to set shape for table." );
 }
 
 namespace
 {
-    crossbow::FieldVariant ConvertVariant( const CComVariant& value )
+    FieldVariant ConvertVariant( const CComVariant& value )
     {
         switch( value.vt )
         {
         case VT_I2:
-            return crossbow::FieldVariant( (int)value.iVal );
+            return FieldVariant( (int)value.iVal );
         case VT_I4:
-            return crossbow::FieldVariant( value.lVal );
+            return FieldVariant( value.lVal );
         case VT_BSTR:
-            return crossbow::FieldVariant( std::string( _bstr_t( value.bstrVal ) ) ); // $$$$ SBO 2007-05-31: !!
+            return FieldVariant( std::string( _bstr_t( value.bstrVal ) ) ); // $$$$ SBO 2007-05-31: !!
         case VT_BOOL:
-            return crossbow::FieldVariant( value.bVal != 0 );
+            return FieldVariant( value.bVal != 0 );
         }
         throw;
     }
@@ -98,7 +98,7 @@ namespace
 // Name: Row::GetField
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::FieldVariant crossbow::Row::GetField( const std::string& name ) const
+FieldVariant Row::GetField( const std::string& name ) const
 {
     const long index = GetFieldIndex( name );
     if( index < 0 )
@@ -112,7 +112,7 @@ crossbow::FieldVariant crossbow::Row::GetField( const std::string& name ) const
 // Name: Row::GetID
 // Created: JCR 2008-07-25
 // -----------------------------------------------------------------------------
-long crossbow::Row::GetID() const
+long Row::GetID() const
 {
     long id;
     
@@ -124,7 +124,7 @@ long crossbow::Row::GetID() const
 // Name: Row::GetShape
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-crossbow::Shape_ABC& crossbow::Row::GetShape() const
+Shape_ABC& Row::GetShape() const
 {
     throw std::runtime_error( "Trying to get shape from a table" );
 }
@@ -133,7 +133,7 @@ crossbow::Shape_ABC& crossbow::Row::GetShape() const
 // Name: Row::Commit
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::Row::Commit( ICursorPtr cursor /*=NULL*/)
+void Row::Commit( ICursorPtr cursor /*=NULL*/)
 {
     if( cursor != NULL )
         cursor->UpdateRow( row_ );
@@ -145,7 +145,7 @@ void crossbow::Row::Commit( ICursorPtr cursor /*=NULL*/)
 // Name: Row::BindRow
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::Row::BindRow( IRowPtr row )
+void Row::BindRow( IRowPtr row )
 {
     row_ = row;
 }
@@ -154,7 +154,7 @@ void crossbow::Row::BindRow( IRowPtr row )
 // Name: Row::GetFieldIndex
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-long crossbow::Row::GetFieldIndex( const std::string& name ) const
+long Row::GetFieldIndex( const std::string& name ) const
 {
     IFieldsPtr fields; 
     row_->get_Fields( &fields );

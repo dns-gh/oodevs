@@ -12,7 +12,7 @@
 #include "AgentEvents.h"
 #include "clients_kernel/Controller.h"
 
-using namespace script;
+using namespace plugins::script;
 using namespace events;
 
 // -----------------------------------------------------------------------------

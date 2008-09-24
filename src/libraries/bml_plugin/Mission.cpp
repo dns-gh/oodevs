@@ -25,7 +25,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: Mission constructor
@@ -237,15 +237,15 @@ namespace
         return -1;
     }
 
-	void MarkParameters( ASN1T_MissionParameters& asn )
-	{
-		for( unsigned i = 0; i < asn.n; ++i )
-		{
-			asn.elem[i].null_value = 1;
-			asn.elem[i].value.t = 0;
-			asn.elem[i].value.u.aBool = 0;
-		}
-	}
+    void MarkParameters( ASN1T_MissionParameters& asn )
+    {
+        for( unsigned i = 0; i < asn.n; ++i )
+        {
+            asn.elem[i].null_value = 1;
+            asn.elem[i].value.t = 0;
+            asn.elem[i].value.u.aBool = 0;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -254,9 +254,9 @@ namespace
 // -----------------------------------------------------------------------------
 void Mission::Serialize( ASN1T_MissionParameters& asn ) const
 {
-	MarkParameters( asn );
+    MarkParameters( asn );
 
-	SerializeDummyParameters( asn );
+    SerializeDummyParameters( asn );
     for( T_Parameters::const_iterator it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         const unsigned int index = GetParameterIndex( type_, (*it)->GetType() );
@@ -264,7 +264,7 @@ void Mission::Serialize( ASN1T_MissionParameters& asn ) const
             (*it)->Serialize( asn.elem[index] );
     }
 
-	FillEmptyParameters( asn );
+    FillEmptyParameters( asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,27 +273,27 @@ void Mission::Serialize( ASN1T_MissionParameters& asn ) const
 // -----------------------------------------------------------------------------
 void Mission::FillEmptyParameters( ASN1T_MissionParameters& asn ) const
 {
-	kernel::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
-	for( unsigned int i = 0; it.HasMoreElements(); ++i )
-	{
-		const kernel::OrderParameter& parameter = it.NextElement();
-		ASN1T_MissionParameter& asnParam = asn.elem[i];
-		if( asnParam.value.t == 0 )
-		{
-			const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
-			if( type == "phaselinelist" )
-			{
-				static ASN1T_LimasOrder limas;
-				limas.elem = 0; limas.n = 0;
+    kernel::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
+    for( unsigned int i = 0; it.HasMoreElements(); ++i )
+    {
+        const kernel::OrderParameter& parameter = it.NextElement();
+        ASN1T_MissionParameter& asnParam = asn.elem[i];
+        if( asnParam.value.t == 0 )
+        {
+            const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
+            if( type == "phaselinelist" )
+            {
+                static ASN1T_LimasOrder limas;
+                limas.elem = 0; limas.n = 0;
 
-				asnParam.null_value = 0;
-				asnParam.value.t = T_MissionParameter_value_limasOrder;
-				asnParam.value.u.limasOrder = &limas;
-			}
+                asnParam.null_value = 0;
+                asnParam.value.t = T_MissionParameter_value_limasOrder;
+                asnParam.value.u.limasOrder = &limas;
+            }
             else
                 throw std::runtime_error( "Missing parameter: " + type + " for mission " + type_.GetName() );
-		}
-	}
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -302,46 +302,46 @@ void Mission::FillEmptyParameters( ASN1T_MissionParameters& asn ) const
 // -----------------------------------------------------------------------------
 void Mission::SerializeDummyParameters( ASN1T_MissionParameters& asn ) const
 {
-	kernel::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
-	for( unsigned int i = 0; it.HasMoreElements(); ++i )
-	{
-		const kernel::OrderParameter& parameter = it.NextElement();
-		ASN1T_MissionParameter& asnParam = asn.elem[i];
-		asnParam.null_value = parameter.IsOptional() ? 1 : 0;
-		const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
-		if( type == "bool" )
-		{
+    kernel::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
+    for( unsigned int i = 0; it.HasMoreElements(); ++i )
+    {
+        const kernel::OrderParameter& parameter = it.NextElement();
+        ASN1T_MissionParameter& asnParam = asn.elem[i];
+        asnParam.null_value = parameter.IsOptional() ? 1 : 0;
+        const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
+        if( type == "bool" )
+        {
             asnParam.null_value = 0; // $$$$ SBO 2008-05-26: FIXME: simulation bug
-			asnParam.value.t = T_MissionParameter_value_aBool;
-			asnParam.value.u.aBool = false;
-		}
-		else if( type == "intelligencelist" )
-		{
-			asnParam.value.t = T_MissionParameter_value_intelligenceList;
-			asnParam.value.u.intelligenceList = new ASN1T_IntelligenceList();
-			asnParam.value.u.intelligenceList->n = 0;
-			asnParam.value.u.intelligenceList->elem = 0;
-		}
-		else if( type == "objectivelist" )
-		{
-			asnParam.value.t = T_MissionParameter_value_missionObjectiveList;
-			asnParam.value.u.missionObjectiveList = new ASN1T_MissionObjectiveList();
-			asnParam.value.u.missionObjectiveList->n = 0;
-			asnParam.value.u.missionObjectiveList->elem = 0;
-		}
-		else if( type == "genobjectlist" )
-		{
-			asnParam.value.t = T_MissionParameter_value_plannedWorkList;
-			asnParam.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
-			asnParam.value.u.plannedWorkList->n = 0;
-			asnParam.value.u.plannedWorkList->elem = 0;
-		}
-		else if( type == "direction" )
-		{
-			asnParam.value.t = T_MissionParameter_value_heading;
-			asnParam.value.u.heading = 0;
-		}
-	}
+            asnParam.value.t = T_MissionParameter_value_aBool;
+            asnParam.value.u.aBool = false;
+        }
+        else if( type == "intelligencelist" )
+        {
+            asnParam.value.t = T_MissionParameter_value_intelligenceList;
+            asnParam.value.u.intelligenceList = new ASN1T_IntelligenceList();
+            asnParam.value.u.intelligenceList->n = 0;
+            asnParam.value.u.intelligenceList->elem = 0;
+        }
+        else if( type == "objectivelist" )
+        {
+            asnParam.value.t = T_MissionParameter_value_missionObjectiveList;
+            asnParam.value.u.missionObjectiveList = new ASN1T_MissionObjectiveList();
+            asnParam.value.u.missionObjectiveList->n = 0;
+            asnParam.value.u.missionObjectiveList->elem = 0;
+        }
+        else if( type == "genobjectlist" )
+        {
+            asnParam.value.t = T_MissionParameter_value_plannedWorkList;
+            asnParam.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
+            asnParam.value.u.plannedWorkList->n = 0;
+            asnParam.value.u.plannedWorkList->elem = 0;
+        }
+        else if( type == "direction" )
+        {
+            asnParam.value.t = T_MissionParameter_value_heading;
+            asnParam.value.u.heading = 0;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -356,7 +356,7 @@ void Mission::Clean( ASN1T_MissionParameters& asn ) const
         if( index >= 0 )
             (*it)->Clean( asn.elem[index] );
     }
-	CleanDummyParameters( asn );
+    CleanDummyParameters( asn );
     delete[] asn.elem;
 }
 
@@ -366,16 +366,16 @@ void Mission::Clean( ASN1T_MissionParameters& asn ) const
 // -----------------------------------------------------------------------------
 void Mission::CleanDummyParameters( ASN1T_MissionParameters& asn ) const
 {
-	for( unsigned int i = 0; i < asn.n; ++i )
-		switch( asn.elem[i].value.t )
-		{
-		case T_MissionParameter_value_intelligenceList:
-			delete asn.elem[i].value.u.intelligenceList; break;
-		case T_MissionParameter_value_missionObjectiveList:
-			delete asn.elem[i].value.u.missionObjectiveList; break;
-		case T_MissionParameter_value_plannedWorkList:
-			delete asn.elem[i].value.u.plannedWorkList; break;
-		}
+    for( unsigned int i = 0; i < asn.n; ++i )
+        switch( asn.elem[i].value.t )
+        {
+        case T_MissionParameter_value_intelligenceList:
+            delete asn.elem[i].value.u.intelligenceList; break;
+        case T_MissionParameter_value_missionObjectiveList:
+            delete asn.elem[i].value.u.missionObjectiveList; break;
+        case T_MissionParameter_value_plannedWorkList:
+            delete asn.elem[i].value.u.plannedWorkList; break;
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -386,6 +386,6 @@ bool Mission::IsSet( const kernel::OrderParameter& parameter ) const
 {
     for( T_Parameters::const_iterator it = parameters_.begin(); it != parameters_.end(); ++it )
         if( &(*it)->GetType() == &parameter )
-			return boost::algorithm::to_lower_copy( parameter.GetType() ) != "phaselinelist";
+            return boost::algorithm::to_lower_copy( parameter.GetType() ) != "phaselinelist";
     return false;
 }

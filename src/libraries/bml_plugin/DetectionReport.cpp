@@ -14,7 +14,7 @@
 #include "Publisher_ABC.h"
 #include <xeumeuleu/xml.h>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: DetectionReport constructor

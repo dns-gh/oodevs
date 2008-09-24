@@ -11,6 +11,8 @@
 #define __Database_ABC_h_
 
 
+namespace plugins
+{
 namespace crossbow
 {
     class Table_ABC;
@@ -44,6 +46,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Database_ABC_h_

@@ -11,7 +11,7 @@
 #include "MissionParameterAgent.h"
 #include "dispatcher/Agent.h"
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterAgent constructor

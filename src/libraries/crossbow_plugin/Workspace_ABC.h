@@ -10,6 +10,8 @@
 #ifndef __Workspace_ABC_h_
 #define __Workspace_ABC_h_
 
+namespace plugins
+{
 namespace crossbow
 {
 
@@ -30,6 +32,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Workspace_ABC_h_

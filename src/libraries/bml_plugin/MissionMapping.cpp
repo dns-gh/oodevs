@@ -11,27 +11,29 @@
 #include "MissionMapping.h"
 #include "clients_kernel/MissionType.h"
 
+namespace
+{
+    // -----------------------------------------------------------------------------
+    // Name: GetMissionId
+    // Created: SBO 2008-05-23
+    // -----------------------------------------------------------------------------
+    unsigned long GetMissionId( const kernel::Resolver_ABC< kernel::MissionType >& missions, const std::string& name1, const std::string& name2 )
+    {
+        kernel::Iterator< const kernel::MissionType& > it( missions.CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            const kernel::MissionType& type = it.NextElement();
+            if( type.IsAutomat() && ( type.GetName() == name1 || type.GetName() == name2 ) )
+                return type.GetId();
+        }
+        throw std::runtime_error( __FUNCTION__ ": Unable to resolve Mission" );
+    }
+}
+
+namespace plugins
+{
 namespace bml
 {
-	namespace
-	{
-		// -----------------------------------------------------------------------------
-		// Name: GetMissionId
-		// Created: SBO 2008-05-23
-		// -----------------------------------------------------------------------------
-		unsigned long GetMissionId( const kernel::Resolver_ABC< kernel::MissionType >& missions, const std::string& name1, const std::string& name2 )
-		{
-			kernel::Iterator< const kernel::MissionType& > it( missions.CreateIterator() );
-			while( it.HasMoreElements() )
-			{
-				const kernel::MissionType& type = it.NextElement();
-				if( type.IsAutomat() && ( type.GetName() == name1 || type.GetName() == name2 ) )
-					return type.GetId();
-			}
-			throw std::runtime_error( __FUNCTION__ ": Unable to resolve Mission" );
-		}
-	}
-
     // -----------------------------------------------------------------------------
     // Name: GetMissionIdFromCode
     // Created: SBO 2008-05-23
@@ -123,4 +125,5 @@ namespace bml
             return "agent";
         throw std::runtime_error( __FUNCTION__ ": Unsupported parameter type " + code );
     }
+}
 }

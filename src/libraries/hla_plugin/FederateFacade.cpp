@@ -18,7 +18,7 @@
 #include "hla/SimpleTimeInterval.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 
-using namespace hla;
+using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: FederateFacade constructor

@@ -14,7 +14,7 @@
 #include "directia/Brain.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: Script constructor

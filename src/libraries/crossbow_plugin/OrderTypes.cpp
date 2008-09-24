@@ -16,7 +16,7 @@
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
-using namespace crossbow;
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: OrderTypes constructor

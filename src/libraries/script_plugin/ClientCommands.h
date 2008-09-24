@@ -23,6 +23,8 @@ namespace xml
     class xistream;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -69,6 +71,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ClientCommands_h_

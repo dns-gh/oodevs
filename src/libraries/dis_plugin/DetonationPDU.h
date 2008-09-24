@@ -15,6 +15,8 @@
 #include "hla_plugin/EntityIdentifier.h"
 #include "hla_plugin/Coordinates.h"
 
+namespace plugins
+{
 namespace dis
 {
 
@@ -88,6 +90,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __DetonationPDU_h_

@@ -23,7 +23,7 @@
 #include <iostream>
 
 namespace bpt = boost::posix_time;
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension constructor
@@ -58,15 +58,15 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
     const bool reportPosition = ( attributes.m.positionPresent || attributes.m.hauteurPresent ) && simulation_.MustReportPosition( lastUpdate_ );
     const bool reportStatus   = ( attributes.m.etat_operationnelPresent || attributes.m.dotation_eff_materielPresent || attributes.m.dotation_eff_personnelPresent ) && simulation_.MustReportStatus( lastUpdate_ );
     if( reportPosition || reportStatus )
-		try
-		{
-			PositionReport report( holder_, attributes );
-			report.Send( publisher_ );
-		}
-		catch( std::exception& e )
-		{
-			MT_LOG_ERROR_MSG( "BML error sending position report: " << e.what() );
-		}
+        try
+        {
+            PositionReport report( holder_, attributes );
+            report.Send( publisher_ );
+        }
+        catch( std::exception& e )
+        {
+            MT_LOG_ERROR_MSG( "BML error sending position report: " << e.what() );
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -75,15 +75,15 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 // -----------------------------------------------------------------------------
 void AgentExtension::DoUpdate( const ASN1T_MsgUnitOrder& message )
 {
-	try
-	{
-		std::auto_ptr< OrderReport > report( factory_.CreateOrderReport( holder_, message ) );
-		report->Send( publisher_ );
-	}
-	catch( std::exception& e )
-	{
-		MT_LOG_ERROR_MSG( "BML error sending agent order report: " << e.what() );
-	}
+    try
+    {
+        std::auto_ptr< OrderReport > report( factory_.CreateOrderReport( holder_, message ) );
+        report->Send( publisher_ );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "BML error sending agent order report: " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitDetection& message )
         report.Send( publisher_ );
     }
     catch( std::exception& e )
-	{
-		MT_LOG_ERROR_MSG( "BML error sending detection report: " << e.what() );
-	}
+    {
+        MT_LOG_ERROR_MSG( "BML error sending detection report: " << e.what() );
+    }
 }

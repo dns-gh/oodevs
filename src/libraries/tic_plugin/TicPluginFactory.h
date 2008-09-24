@@ -12,6 +12,8 @@
 
 #include "dispatcher/PluginFactory_ABC.h"
 
+namespace plugins
+{
 namespace tic
 {
 
@@ -44,6 +46,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __TicPluginFactory_h_

@@ -13,7 +13,7 @@
 #include "clients_kernel/Controller.h"
 #include "AgentEvents.h"
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeNotifier constructor

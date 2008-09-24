@@ -13,7 +13,7 @@
 #include "dispatcher/LinkResolver_ABC.h"
 #include "directia/Brain.h"
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: ClientCommands constructor

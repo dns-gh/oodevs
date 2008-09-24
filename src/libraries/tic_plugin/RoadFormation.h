@@ -13,6 +13,8 @@
 #include "Formation_ABC.h"
 #include <vector>
 
+namespace plugins
+{
 namespace tic
 {
 
@@ -65,6 +67,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __RoadFormation_h_

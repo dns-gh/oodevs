@@ -20,9 +20,10 @@ namespace kernel
     class ComponentType;
 }
 
+namespace plugins
+{
 namespace tic
 {
-
     class PlatformVisitor_ABC;
 
 // =============================================================================
@@ -92,6 +93,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Platform_h_

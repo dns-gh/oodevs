@@ -15,7 +15,7 @@
 #include <xeumeuleu/xml.h>
 #include <iostream>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: AutomatExtension constructor
@@ -44,13 +44,13 @@ AutomatExtension::~AutomatExtension()
 // -----------------------------------------------------------------------------
 void AutomatExtension::DoUpdate( const ASN1T_MsgAutomatOrder& message )
 {
-	try
-	{
-		std::auto_ptr< OrderReport > report( factory_.CreateOrderReport( holder_, message ) );
-		report->Send( publisher_ );
-	}
-	catch( std::exception& e )
-	{
-		MT_LOG_ERROR_MSG( "BML error sending automat order report: " << e.what() );
-	}
+    try
+    {
+        std::auto_ptr< OrderReport > report( factory_.CreateOrderReport( holder_, message ) );
+        report->Send( publisher_ );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "BML error sending automat order report: " << e.what() );
+    }
 }

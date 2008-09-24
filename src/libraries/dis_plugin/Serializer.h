@@ -10,6 +10,8 @@
 #ifndef __Serializer_h_
 #define __Serializer_h_
 
+namespace plugins
+{
 namespace dis
 {
 
@@ -75,6 +77,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Serializer_h_

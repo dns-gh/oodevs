@@ -10,6 +10,8 @@
 #ifndef __DisHeader_h_
 #define __DisHeader_h_
 
+namespace plugins
+{
 namespace dis
 {
 
@@ -59,6 +61,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __DisHeader_h_

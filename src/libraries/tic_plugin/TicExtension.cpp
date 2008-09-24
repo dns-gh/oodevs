@@ -20,7 +20,7 @@
 #include "pathfind/TerrainData.h"
 #include <boost/bind.hpp>
 
-using namespace tic;
+using namespace plugins::tic;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

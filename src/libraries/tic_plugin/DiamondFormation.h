@@ -13,6 +13,8 @@
 #include "Formation_ABC.h"
 #include <vector>
 
+namespace plugins
+{
 namespace tic
 {
 
@@ -57,6 +59,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __DiamondFormation_h_

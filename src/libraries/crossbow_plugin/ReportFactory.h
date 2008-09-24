@@ -23,10 +23,11 @@ namespace dispatcher
     class Model;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
-
-class ReportTemplate;
+    class ReportTemplate;
 
 // =============================================================================
 /** @class  ReportFactory
@@ -77,6 +78,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ReportFactory_h_

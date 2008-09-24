@@ -11,7 +11,7 @@
 #include "TicPluginFactory.h"
 #include "TicPlugin.h"
 
-using namespace tic;
+using namespace plugins::tic;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

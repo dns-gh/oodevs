@@ -19,6 +19,8 @@ namespace directia
     class WrappedScriptFunction;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -70,6 +72,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __FiniteStateMachine_h_

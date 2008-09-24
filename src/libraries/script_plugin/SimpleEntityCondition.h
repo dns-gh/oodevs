@@ -20,6 +20,8 @@ namespace dispatcher
     class Automat;
 }
 
+namespace plugins
+{
 namespace script
 {
 // =============================================================================
@@ -89,6 +91,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __SimpleEntityCondition_h_

@@ -26,7 +26,7 @@
 #include "dispatcher/AgentKnowledge.h"
 #include "tools/App6Symbol.h"
 
-using namespace crossbow;
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: DatabaseUpdater constructor

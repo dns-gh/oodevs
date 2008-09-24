@@ -17,6 +17,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace bml
 {
 
@@ -56,6 +58,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __MissionParameterAgent_h_

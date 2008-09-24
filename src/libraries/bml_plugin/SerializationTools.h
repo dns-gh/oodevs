@@ -15,11 +15,14 @@ namespace xml
     class xostream;
 }
 
+namespace plugins
+{
 namespace bml
 {
     struct Namespaces {};
     xml::xostream& operator<<( xml::xostream& xos, const Namespaces& );
     std::string NS( const std::string& tag, const std::string& preferred );
+}
 }
 
 #endif // __SerializationTools_h_

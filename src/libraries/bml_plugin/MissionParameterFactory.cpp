@@ -29,7 +29,7 @@
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterFactory constructor
@@ -153,7 +153,7 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
             >> xml::start( NS( "C_BML_Where", "cbml" ) )
                 >> xml::start( NS( "WhereInstance", "cbml" ) );
     MissionParameter_ABC* param = 0;
-	std::string type = boost::algorithm::to_lower_copy( definition->GetType() );
+    std::string type = boost::algorithm::to_lower_copy( definition->GetType() );
     if( type == "limit" )
         param = new MissionParameterLimit( xis, *definition );
     else if( type == "phaselinelist" )

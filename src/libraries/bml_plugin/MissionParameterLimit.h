@@ -17,6 +17,8 @@ namespace xml
     class xistream;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class PointList;
@@ -57,6 +59,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __MissionParameterLimit_h_

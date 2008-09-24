@@ -24,6 +24,8 @@ namespace dispatcher
     class AgentKnowledge;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
 
@@ -66,6 +68,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ExtensionFactory_h_

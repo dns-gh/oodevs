@@ -21,6 +21,8 @@ namespace dispatcher
     class Automat;
 }
 
+namespace plugins
+{
 namespace bml
 {
 
@@ -61,6 +63,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ReportingData_h_

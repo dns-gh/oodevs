@@ -12,13 +12,13 @@
 #include "geocoord/Lib.h"
 #include "geometry/Types.h"
 
-using namespace gearth;
+using namespace plugins::gearth;
 
 // -----------------------------------------------------------------------------
 // Name: GeometryEditor::GeometryEditor
 // Created: JCR 2007-05-15
 // -----------------------------------------------------------------------------
-GeometryEditor::GeometryEditor()    
+GeometryEditor::GeometryEditor()
 {
     // NOTHING
 }
@@ -39,9 +39,7 @@ GeometryEditor::~GeometryEditor()
 geometry::Point2d GeometryEditor::ConvertPosition( const std::string& stMGRS ) const
 {
     static const double convert_rad_deg = 180. / 3.14159265358979;
-    
-    geocoord::MGRS      mgrs( stMGRS );
-    geocoord::Geodetic  geo( mgrs );
-
+    geocoord::MGRS mgrs( stMGRS );
+    geocoord::Geodetic geo( mgrs );
     return geometry::Point2d( geo.GetLongitude() * convert_rad_deg, geo.GetLatitude() * convert_rad_deg );
 }

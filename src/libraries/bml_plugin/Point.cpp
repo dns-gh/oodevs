@@ -13,7 +13,7 @@
 #include <xeumeuleu/xml.h>
 #include <cmath>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: Point constructor

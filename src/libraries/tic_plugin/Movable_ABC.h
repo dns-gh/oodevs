@@ -12,6 +12,8 @@
 
 #include <geometry/Types.h>
 
+namespace plugins
+{
 namespace tic
 {
 
@@ -27,8 +29,8 @@ class Movable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Movable_ABC() {};
-    virtual ~Movable_ABC() {};
+             Movable_ABC() {}
+    virtual ~Movable_ABC() {}
     //@}
 
     //! @name Operations
@@ -38,6 +40,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Movable_ABC_h_

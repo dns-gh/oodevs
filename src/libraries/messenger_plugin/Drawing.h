@@ -29,6 +29,8 @@ namespace dispatcher
     class ClientPublisher_ABC;
 }
 
+namespace plugins
+{
 namespace messenger
 {
 
@@ -92,6 +94,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Drawing_h_

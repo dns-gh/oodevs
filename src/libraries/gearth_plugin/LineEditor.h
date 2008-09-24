@@ -18,6 +18,8 @@ namespace xml
     class xobufferstream;
 }
 
+namespace plugins
+{
 namespace gearth
 {
 // =============================================================================
@@ -57,6 +59,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __gearth_LineEditor_h_

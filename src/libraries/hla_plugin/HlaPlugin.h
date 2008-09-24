@@ -23,6 +23,8 @@ namespace dispatcher
     class Config;
 }
 
+namespace plugins
+{
 namespace hla
 {
     class AggregateEntityClass;
@@ -73,6 +75,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __HlaPlugin_h_

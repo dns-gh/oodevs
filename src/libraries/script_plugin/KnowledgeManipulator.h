@@ -24,6 +24,8 @@ namespace dispatcher
     class AgentKnowledge;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -49,8 +51,8 @@ public:
     {
         virtual void RegisterIn( directia::Brain& brain );
     };
-    void UsedByDIA    () {};
-    void ReleasedByDIA() {};
+    void UsedByDIA    () {}
+    void ReleasedByDIA() {}
     //@}
 
 private:
@@ -75,6 +77,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __KnowledgeManipulator_h_

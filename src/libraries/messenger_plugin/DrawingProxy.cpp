@@ -12,7 +12,7 @@
 #include "Drawing.h"
 #include "DrawingsModel.h"
 
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: DrawingProxy constructor

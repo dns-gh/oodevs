@@ -14,7 +14,7 @@
 #include "directia/Brain.h"
 #include <boost/bind.hpp>
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: FiniteStateMachine constructor

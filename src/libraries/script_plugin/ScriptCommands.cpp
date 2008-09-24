@@ -13,7 +13,7 @@
 #include "directia/Brain.h"
 #include "clients_kernel/Controller.h"
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: ScriptCommands constructor

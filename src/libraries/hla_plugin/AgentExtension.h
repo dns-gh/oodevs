@@ -21,6 +21,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace hla
 {
 
@@ -79,6 +81,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __AgentExtension_h_

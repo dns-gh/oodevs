@@ -14,6 +14,8 @@
 #include "game_asn/Simulation.h"
 #include "ESRI.h"
 
+namespace plugins
+{
 namespace crossbow
 {
 
@@ -51,6 +53,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Point_h_

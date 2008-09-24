@@ -11,7 +11,7 @@
 #include "GearthPluginFactory.h"
 #include "GearthPlugin.h"
 
-using namespace gearth;
+using namespace plugins::gearth;
 
 // -----------------------------------------------------------------------------
 // Name: GearthPluginFactory constructor

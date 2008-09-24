@@ -16,7 +16,7 @@
 // Name: Table constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Table::Table( ITablePtr table, const std::string& name )
+Table::Table( ITablePtr table, const std::string& name )
     : name_( name )
     , table_( table )
     , cursor_()
@@ -30,7 +30,7 @@ crossbow::Table::Table( ITablePtr table, const std::string& name )
 // Name: Table destructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Table::~Table()
+Table::~Table()
 {
     // NOTHING
 }
@@ -53,7 +53,7 @@ namespace
 // Name: Table::CreateRow
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC& crossbow::Table::CreateRow()
+Row_ABC& Table::CreateRow()
 {
     IRowPtr row;
     HRESULT res = table_->CreateRow( &row ); // $$$$ SBO 2007-08-30: check
@@ -67,7 +67,7 @@ crossbow::Row_ABC& crossbow::Table::CreateRow()
 // Name: Table::DeleteRows
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-void crossbow::Table::DeleteRows( const std::string& query )
+void Table::DeleteRows( const std::string& query )
 {
     IQueryFilterPtr filter;
     if ( query != "" )
@@ -82,7 +82,7 @@ void crossbow::Table::DeleteRows( const std::string& query )
 // Name: Table::Clear
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::Table::Clear()
+void Table::Clear()
 {
     DeleteRows( "" );
 }
@@ -91,7 +91,7 @@ void crossbow::Table::Clear()
 // Name: Table::UpdateRow
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Table::UpdateRow( const Row_ABC& row )
+void Table::UpdateRow( const Row_ABC& row )
 {
     if( &row != row_.get() )
         return;
@@ -102,7 +102,7 @@ void crossbow::Table::UpdateRow( const Row_ABC& row )
 // Name: Table::Find
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC* crossbow::Table::Find( const std::string& query )
+Row_ABC* Table::Find( const std::string& query )
 {
     IQueryFilterPtr filter;
     
@@ -124,7 +124,7 @@ crossbow::Row_ABC* crossbow::Table::Find( const std::string& query )
 // Name: Table::GetNextRow
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC* crossbow::Table::GetNextRow()
+Row_ABC* Table::GetNextRow()
 {
     IRowPtr row;
     if( cursor_ != NULL && ( FAILED( cursor_->NextRow( &row ) ) || row == NULL ) )
@@ -137,7 +137,7 @@ crossbow::Row_ABC* crossbow::Table::GetNextRow()
 // Name: Table::BeginTransaction
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Table::BeginTransaction()
+void Table::BeginTransaction()
 {
     inTransaction_ = true;
 }
@@ -146,7 +146,7 @@ void crossbow::Table::BeginTransaction()
 // Name: Table::EndTransaction
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Table::EndTransaction()
+void Table::EndTransaction()
 {
     inTransaction_ = false;
 }
@@ -155,7 +155,7 @@ void crossbow::Table::EndTransaction()
 // Name: Table::InTransaction
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-bool crossbow::Table::InTransaction() const
+bool Table::InTransaction() const
 {
     return inTransaction_;
 }

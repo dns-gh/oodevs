@@ -22,7 +22,7 @@
 #include <sstream>
 #include "xeumeuleu/xml.h"
 
-using namespace gearth;
+using namespace plugins::gearth;
 
 // -----------------------------------------------------------------------------
 // Name: ScopeEditor constructor

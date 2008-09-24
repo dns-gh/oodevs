@@ -15,6 +15,8 @@ class Federate;
 class TimeFactory_ABC;
 class TimeIntervalFactory_ABC;
 
+namespace plugins
+{
 namespace hla
 {
     class ObjectClass_ABC;
@@ -68,6 +70,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __FederateFacade_h_

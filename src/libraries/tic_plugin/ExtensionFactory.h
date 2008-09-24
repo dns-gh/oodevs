@@ -22,6 +22,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace tic
 {
 
@@ -60,6 +62,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ExtensionFactory_h_

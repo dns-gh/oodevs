@@ -7,19 +7,17 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "crossbow_plugin_pch.h"
 #include "PointCollection.h"
 #include "Point.h"
+
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: PointCollection constructor
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-crossbow::PointCollection::PointCollection()
+PointCollection::PointCollection()
 {
     // NOTHING
 }
@@ -28,17 +26,17 @@ crossbow::PointCollection::PointCollection()
 // Name: PointCollection constructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::PointCollection::PointCollection( const ASN1T_CoordLatLongList& asn )
+PointCollection::PointCollection( const ASN1T_CoordLatLongList& asn )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        points_.push_back( crossbow::Point( asn.elem[i] ) );
+        points_.push_back( Point( asn.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PointCollection constructor
 // Created: JCR 2007-11-06
 // -----------------------------------------------------------------------------
-crossbow::PointCollection::PointCollection( IGeometryPtr geometry )
+PointCollection::PointCollection( IGeometryPtr geometry )
 {
     IPointCollectionPtr points;
     if( SUCCEEDED( geometry.QueryInterface( IID_IPointCollection, &points ) ) )
@@ -58,7 +56,7 @@ crossbow::PointCollection::PointCollection( IGeometryPtr geometry )
 // Name: PointCollection destructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::PointCollection::~PointCollection()
+PointCollection::~PointCollection()
 {
     // NOTHING
 }
@@ -67,7 +65,7 @@ crossbow::PointCollection::~PointCollection()
 // Name: PointCollection::Accept
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::PointCollection::Accept( ShapeVisitor_ABC& visitor ) const
+void PointCollection::Accept( ShapeVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
@@ -76,7 +74,7 @@ void crossbow::PointCollection::Accept( ShapeVisitor_ABC& visitor ) const
 // Name: PointCollection::UpdateGeometry
 // Created: JCR 2007-08-31
 // -----------------------------------------------------------------------------
-void crossbow::PointCollection::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+void PointCollection::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
 {
     geometry->putref_SpatialReference( spatialReference );
     
@@ -98,7 +96,7 @@ void crossbow::PointCollection::UpdateGeometry( IGeometryPtr geometry, ISpatialR
 // Name: PointCollection::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::PointCollection::Serialize( ASN1T_Location& asn ) const
+void PointCollection::Serialize( ASN1T_Location& asn ) const
 {
     asn.coordinates.n = points_.size();
     asn.coordinates.elem = new ASN1T_CoordLatLong[asn.coordinates.n];

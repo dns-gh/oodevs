@@ -10,6 +10,8 @@
 #ifndef __Shape_ABC_h_
 #define __Shape_ABC_h_
 
+namespace plugins
+{
 namespace crossbow
 {
     class Point;
@@ -47,6 +49,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Shape_ABC_h_

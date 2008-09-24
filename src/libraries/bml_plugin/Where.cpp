@@ -13,7 +13,7 @@
 #include "dispatcher/Agent.h"
 #include <xeumeuleu/xml.h>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: Where constructor
@@ -38,7 +38,7 @@ Where::~Where()
 // Name: operator<<
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-xml::xostream& bml::operator<<( xml::xostream& xos, const Where& data )
+xml::xostream& plugins::bml::operator<<( xml::xostream& xos, const Where& data )
 {
     xos << xml::start( "C_BML_Where" )
             << xml::start( "WhereInstance" );

@@ -15,7 +15,7 @@
 
 #include <xeumeuleu/xml.h>
 
-using namespace messenger;
+using namespace plugins::messenger;
 
 namespace
 {
@@ -155,7 +155,7 @@ void Intelligence::Update( const ASN1T_MsgIntelligenceUpdateRequest& message )
 // -----------------------------------------------------------------------------
 void Intelligence::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    messenger::IntelligenceUpdate message;
+    IntelligenceUpdate message;
     message().oid       = id_;
     message().formation = formation_ ;
     message().m.namePresent      = 1; message().name      = name_.c_str();
@@ -173,7 +173,7 @@ void Intelligence::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) cons
 // -----------------------------------------------------------------------------
 void Intelligence::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    messenger::IntelligenceCreation message;
+    IntelligenceCreation message;
     message().oid = id_;
     message().intelligence.name      = name_.c_str();
     message().intelligence.nature    = nature_.c_str();
@@ -191,7 +191,7 @@ void Intelligence::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) co
 // -----------------------------------------------------------------------------
 void Intelligence::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    messenger::IntelligenceDestruction message;
+    IntelligenceDestruction message;
     message().oid = id_;
     message.Send( publisher );
 }

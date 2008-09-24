@@ -19,7 +19,7 @@
 #include "dispatcher/Services.h"
 #include "tools/MessageDispatcher_ABC.h"
 
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: MessengerPlugin constructor
@@ -50,7 +50,7 @@ MessengerPlugin::~MessengerPlugin()
 // -----------------------------------------------------------------------------
 void MessengerPlugin::Register( dispatcher::Services& services )
 {
-    services.Declare< messenger::Service >();
+    services.Declare< Service >();
 }
 
 // -----------------------------------------------------------------------------

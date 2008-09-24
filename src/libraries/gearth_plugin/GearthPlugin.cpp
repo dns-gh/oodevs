@@ -14,7 +14,7 @@
 #include "game_asn/MessengerSenders.h"
 #include "tools/MessageDispatcher_ABC.h"
 
-using namespace gearth;
+using namespace plugins::gearth;
 
 // -----------------------------------------------------------------------------
 // Name: GearthPlugin constructor

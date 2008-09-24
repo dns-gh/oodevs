@@ -15,10 +15,12 @@
 #include <boost/variant.hpp>
 #pragma warning( pop )
 
+namespace plugins
+{
 namespace crossbow
 {
     typedef boost::variant< int, long, std::string, bool > FieldVariant;
-
+}
 }
 
 #endif // __Variant_h_

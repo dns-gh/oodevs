@@ -11,7 +11,7 @@
 #include "DisPluginFactory.h"
 #include "DisPlugin.h"
 
-using namespace dis;
+using namespace plugins::dis;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

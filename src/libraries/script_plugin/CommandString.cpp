@@ -11,7 +11,7 @@
 #include "CommandString.h"
 #include <boost/regex.hpp>
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: CommandString constructor

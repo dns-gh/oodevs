@@ -22,7 +22,7 @@
 #include "hla/AttributeIdentifier.h"
 #include <boost/bind.hpp>
 
-using namespace hla;
+using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension constructor

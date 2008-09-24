@@ -17,6 +17,8 @@ namespace kernel
     class ComponentType;
 }
 
+namespace plugins
+{
 namespace tic
 {
 
@@ -58,6 +60,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Platform_ABC_h_

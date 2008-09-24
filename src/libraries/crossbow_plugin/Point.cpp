@@ -10,11 +10,13 @@
 #include "crossbow_plugin_pch.h"
 #include "Point.h"
 
+using namespace plugins::crossbow;
+
 // -----------------------------------------------------------------------------
 // Name: Point constructor
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-crossbow::Point::Point()
+Point::Point()
     : x_( 0 )
     , y_( 0 )
 {
@@ -25,7 +27,7 @@ crossbow::Point::Point()
 // Name: Point constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Point::Point( const ASN1T_CoordLatLong& coord )
+Point::Point( const ASN1T_CoordLatLong& coord )
     : x_( coord.longitude )
     , y_( coord.latitude )
 {
@@ -36,7 +38,7 @@ crossbow::Point::Point( const ASN1T_CoordLatLong& coord )
 // Name: Point constructor
 // Created: SBO 2007-11-06
 // -----------------------------------------------------------------------------
-crossbow::Point::Point( IGeometryPtr geometry )
+Point::Point( IGeometryPtr geometry )
 {
     IPointPtr point;
     if( SUCCEEDED( geometry.QueryInterface( IID_IPoint, &point ) ) )
@@ -47,7 +49,7 @@ crossbow::Point::Point( IGeometryPtr geometry )
 // Name: Point destructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Point::~Point()
+Point::~Point()
 {
     // NOTHING
 }
@@ -56,7 +58,7 @@ crossbow::Point::~Point()
 // Name: Point::Accept
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::Point::Accept( ShapeVisitor_ABC& visitor ) const
+void Point::Accept( ShapeVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
@@ -65,7 +67,7 @@ void crossbow::Point::Accept( ShapeVisitor_ABC& visitor ) const
 // Name: Point::UpdateGeometry
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-void crossbow::Point::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+void Point::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
 {
     if( geometry == NULL )
         geometry.CreateInstance( CLSID_Point );
@@ -85,7 +87,7 @@ void crossbow::Point::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePt
 // Name: Point::Serialize
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Point::Serialize( ASN1T_CoordLatLong& asn ) const
+void Point::Serialize( ASN1T_CoordLatLong& asn ) const
 {
     asn.latitude = y_;
     asn.longitude = x_;
@@ -95,7 +97,7 @@ void crossbow::Point::Serialize( ASN1T_CoordLatLong& asn ) const
 // Name: Point::Serialize
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Point::Serialize( ASN1T_Location& asn ) const
+void Point::Serialize( ASN1T_Location& asn ) const
 {
     asn.type = EnumLocationType::point;
     asn.coordinates.n = 1;

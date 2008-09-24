@@ -11,7 +11,7 @@
 #include "MissionParameterAutomat.h"
 #include "dispatcher/Automat.h"
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterAutomat constructor

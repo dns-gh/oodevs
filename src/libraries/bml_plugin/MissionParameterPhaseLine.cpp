@@ -17,7 +17,7 @@
 #pragma warning( pop )
 
 namespace bpt = boost::posix_time;
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPhaseLine constructor

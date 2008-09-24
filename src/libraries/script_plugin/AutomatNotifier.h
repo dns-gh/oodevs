@@ -24,6 +24,8 @@ namespace dispatcher
     class Automat;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -64,6 +66,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __AutomatNotifier_h_

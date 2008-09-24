@@ -11,7 +11,7 @@
 #include "MissionParameterPhaseLines.h"
 #include "MissionParameterPhaseLine.h"
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPhaseLines constructor

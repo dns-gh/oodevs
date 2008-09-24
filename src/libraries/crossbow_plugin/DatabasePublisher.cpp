@@ -23,7 +23,7 @@
 #include "dispatcher/Model.h"
 #include <xeumeuleu/xml.h>
 
-using namespace crossbow;
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher constructor

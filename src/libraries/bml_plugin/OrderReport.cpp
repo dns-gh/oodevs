@@ -16,7 +16,7 @@
 #include "MissionMapping.h"
 #include <xeumeuleu/xml.h>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: OrderReport constructor
@@ -65,17 +65,17 @@ void OrderReport::Send( Publisher_ABC& publisher ) const
                 << xml::start( "C_BML_WhatWhen" )
                     << xml::start( "WhatWhenInstance" )
                         << xml::start( "ActionTask" )
-							<< xml::attribute( "xsi:type", "jc3iedm:ActionTask" )
+                            << xml::attribute( "xsi:type", "jc3iedm:ActionTask" )
                             << xml::content( "jc3iedm:ActivityCode", activityCode_ )
-							<< xml::start( "jc3iedm:StatusList" )
-								<< xml::start( "jc3iedm:Status" )
-									<< xml::attribute( "xsi:type", "jc3iedm:ActionTaskStatus" )
-									<< xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
-									<< xml::content("jc3iedm:ReportingDataRef", "" )
-								<< xml::end()
-							<< xml::end()
+                            << xml::start( "jc3iedm:StatusList" )
+                                << xml::start( "jc3iedm:Status" )
+                                    << xml::attribute( "xsi:type", "jc3iedm:ActionTaskStatus" )
+                                    << xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
+                                    << xml::content("jc3iedm:ReportingDataRef", "" )
+                                << xml::end()
+                            << xml::end()
                             << xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
-						<< xml::end()
+                        << xml::end()
                     << xml::end()
                 << xml::end()
             << xml::end()

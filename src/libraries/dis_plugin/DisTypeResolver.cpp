@@ -12,7 +12,7 @@
 #include "clients_kernel/ComponentType.h"
 #include <xeumeuleu/xml.h>
 
-using namespace dis;
+using namespace plugins::dis;
 
 // -----------------------------------------------------------------------------
 // Name: DisTypeResolver constructor

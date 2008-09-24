@@ -12,7 +12,7 @@
 #include "dispatcher/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.h>
 
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
@@ -61,7 +61,7 @@ void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
     ASN1T_MsgLimaCreation creation ;
     creation.oid = GetID();
     TacticalLine_ABC::Send( creation.tactical_line );
-    messenger::LimaCreation message( creation );
+    LimaCreation message( creation );
     message.Send( client );
 }
 
@@ -74,7 +74,7 @@ void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
     ASN1T_MsgLimaUpdate update;
     update.oid = GetID();
     TacticalLine_ABC::Send( update.tactical_line );
-    messenger::LimaUpdate message( update );
+    LimaUpdate message( update );
     message.Send( client );
 }
 
@@ -85,7 +85,7 @@ void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 void Lima::SendDestruction( dispatcher::ClientPublisher_ABC& client ) const
 {
     ASN1T_MsgLimaDestruction destruction = GetID();
-    messenger::LimaDestruction message( destruction );
+    LimaDestruction message( destruction );
     message.Send( client );
 }
 

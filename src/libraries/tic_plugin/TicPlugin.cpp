@@ -16,7 +16,7 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include <xeumeuleu/xml.h>
 
-using namespace tic;
+using namespace plugins::tic;
 
 namespace
 {

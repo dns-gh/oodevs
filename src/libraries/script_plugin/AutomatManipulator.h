@@ -18,6 +18,8 @@ namespace dispatcher
     class Automat;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -66,6 +68,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __AutomatManipulator_h_

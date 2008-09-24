@@ -12,7 +12,7 @@
 #include "Movable_ABC.h"
 #include <algorithm>
 
-using namespace tic;
+using namespace plugins::tic;
 
 // -----------------------------------------------------------------------------
 // Name: RoadFormation constructor

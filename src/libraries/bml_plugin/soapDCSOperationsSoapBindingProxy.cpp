@@ -9,293 +9,293 @@
 #include "soapDCSOperationsSoapBindingProxy.h"
 
 DCSOperationsSoapBindingProxy::DCSOperationsSoapBindingProxy()
-{	DCSOperationsSoapBindingProxy_init(SOAP_IO_DEFAULT, SOAP_IO_DEFAULT);
+{    DCSOperationsSoapBindingProxy_init(SOAP_IO_DEFAULT, SOAP_IO_DEFAULT);
 }
 
 DCSOperationsSoapBindingProxy::DCSOperationsSoapBindingProxy(const struct soap &soap)
-{	DCSOperationsSoapBindingProxy_init(SOAP_IO_DEFAULT, SOAP_IO_DEFAULT);
-	soap_copy_context(this, &soap);
+{    DCSOperationsSoapBindingProxy_init(SOAP_IO_DEFAULT, SOAP_IO_DEFAULT);
+    soap_copy_context(this, &soap);
 }
 
 DCSOperationsSoapBindingProxy::DCSOperationsSoapBindingProxy(soap_mode iomode)
-{	DCSOperationsSoapBindingProxy_init(iomode, iomode);
+{    DCSOperationsSoapBindingProxy_init(iomode, iomode);
 }
 
 DCSOperationsSoapBindingProxy::DCSOperationsSoapBindingProxy(soap_mode imode, soap_mode omode)
-{	DCSOperationsSoapBindingProxy_init(imode, omode);
+{    DCSOperationsSoapBindingProxy_init(imode, omode);
 }
 
 void DCSOperationsSoapBindingProxy::DCSOperationsSoapBindingProxy_init(soap_mode imode, soap_mode omode)
-{	soap_imode(this, imode);
-	soap_omode(this, omode);
-	soap_endpoint = NULL;
-	static const struct Namespace namespaces[] =
+{    soap_imode(this, imode);
+    soap_omode(this, omode);
+    soap_endpoint = NULL;
+    static const struct Namespace namespaces[] =
 {
-	{"SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/", "http://www.w3.org/*/soap-envelope", NULL},
-	{"SOAP-ENC", "http://schemas.xmlsoap.org/soap/encoding/", "http://www.w3.org/*/soap-encoding", NULL},
-	{"xsi", "http://www.w3.org/2001/XMLSchema-instance", "http://www.w3.org/*/XMLSchema-instance", NULL},
-	{"xsd", "http://www.w3.org/2001/XMLSchema", "http://www.w3.org/*/XMLSchema", NULL},
-	{"ns1", "http://DefaultNamespace", NULL, NULL},
-	{NULL, NULL, NULL, NULL}
+    {"SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/", "http://www.w3.org/*/soap-envelope", NULL},
+    {"SOAP-ENC", "http://schemas.xmlsoap.org/soap/encoding/", "http://www.w3.org/*/soap-encoding", NULL},
+    {"xsi", "http://www.w3.org/2001/XMLSchema-instance", "http://www.w3.org/*/XMLSchema-instance", NULL},
+    {"xsd", "http://www.w3.org/2001/XMLSchema", "http://www.w3.org/*/XMLSchema", NULL},
+    {"ns1", "http://DefaultNamespace", NULL, NULL},
+    {NULL, NULL, NULL, NULL}
 };
-	if (!this->namespaces)
-		this->namespaces = namespaces;
+    if (!this->namespaces)
+        this->namespaces = namespaces;
 }
 
 DCSOperationsSoapBindingProxy::~DCSOperationsSoapBindingProxy()
 { }
 
 void DCSOperationsSoapBindingProxy::soap_noheader()
-{	header = NULL;
+{    header = NULL;
 }
 
 const SOAP_ENV__Fault *DCSOperationsSoapBindingProxy::soap_fault()
-{	return this->fault;
+{    return this->fault;
 }
 
 const char *DCSOperationsSoapBindingProxy::soap_fault_string()
-{	return *soap_faultstring(this);
+{    return *soap_faultstring(this);
 }
 
 const char *DCSOperationsSoapBindingProxy::soap_fault_detail()
-{	return *soap_faultdetail(this);
+{    return *soap_faultdetail(this);
 }
 
 int DCSOperationsSoapBindingProxy::soap_close_socket()
-{	return soap_closesock(this);
+{    return soap_closesock(this);
 }
 
 void DCSOperationsSoapBindingProxy::soap_print_fault(FILE *fd)
-{	::soap_print_fault(this, fd);
+{    ::soap_print_fault(this, fd);
 }
 
 #ifndef WITH_LEAN
 void DCSOperationsSoapBindingProxy::soap_stream_fault(std::ostream& os)
-{	return ::soap_stream_fault(this, os);
+{    return ::soap_stream_fault(this, os);
 }
 
 char *DCSOperationsSoapBindingProxy::soap_sprint_fault(char *buf, size_t len)
-{	return ::soap_sprint_fault(this, buf, len);
+{    return ::soap_sprint_fault(this, buf, len);
 }
 #endif
 
 int DCSOperationsSoapBindingProxy::pushOrder(std::string _orderPush, std::string &_pushOrderReturn)
-{	struct soap *soap = this;
-	struct ns1__pushOrder soap_tmp_ns1__pushOrder;
-	struct ns1__pushOrderResponse *soap_tmp_ns1__pushOrderResponse;
-	const char *soap_action = NULL;
-	if (!soap_endpoint)
-		soap_endpoint = "http://localhost:8080/axis/DCSOperations.jws";
-	soap_action = "";
-	soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
-	soap_tmp_ns1__pushOrder._orderPush = _orderPush;
-	soap_begin(soap);
-	soap_serializeheader(soap);
-	soap_serialize_ns1__pushOrder(soap, &soap_tmp_ns1__pushOrder);
-	if (soap_begin_count(soap))
-		return soap->error;
-	if (soap->mode & SOAP_IO_LENGTH)
-	{	if (soap_envelope_begin_out(soap)
-		 || soap_putheader(soap)
-		 || soap_body_begin_out(soap)
-		 || soap_put_ns1__pushOrder(soap, &soap_tmp_ns1__pushOrder, "ns1:pushOrder", "")
-		 || soap_body_end_out(soap)
-		 || soap_envelope_end_out(soap))
-			 return soap->error;
-	}
-	if (soap_end_count(soap))
-		return soap->error;
-	if (soap_connect(soap, soap_endpoint, soap_action)
-	 || soap_envelope_begin_out(soap)
-	 || soap_putheader(soap)
-	 || soap_body_begin_out(soap)
-	 || soap_put_ns1__pushOrder(soap, &soap_tmp_ns1__pushOrder, "ns1:pushOrder", "")
-	 || soap_body_end_out(soap)
-	 || soap_envelope_end_out(soap)
-	 || soap_end_send(soap))
-		return soap_closesock(soap);
-	soap_default_std__string(soap, &_pushOrderReturn);
-	if (soap_begin_recv(soap)
-	 || soap_envelope_begin_in(soap)
-	 || soap_recv_header(soap)
-	 || soap_body_begin_in(soap))
-		return soap_closesock(soap);
-	soap_tmp_ns1__pushOrderResponse = soap_get_ns1__pushOrderResponse(soap, NULL, "ns1:pushOrderResponse", "");
-	if (soap->error)
-	{	if (soap->error == SOAP_TAG_MISMATCH && soap->level == 2)
-			return soap_recv_fault(soap);
-		return soap_closesock(soap);
-	}
-	if (soap_body_end_in(soap)
-	 || soap_envelope_end_in(soap)
-	 || soap_end_recv(soap))
-		return soap_closesock(soap);
-	_pushOrderReturn = soap_tmp_ns1__pushOrderResponse->_pushOrderReturn;
-	return soap_closesock(soap);
+{    struct soap *soap = this;
+    struct ns1__pushOrder soap_tmp_ns1__pushOrder;
+    struct ns1__pushOrderResponse *soap_tmp_ns1__pushOrderResponse;
+    const char *soap_action = NULL;
+    if (!soap_endpoint)
+        soap_endpoint = "http://localhost:8080/axis/DCSOperations.jws";
+    soap_action = "";
+    soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
+    soap_tmp_ns1__pushOrder._orderPush = _orderPush;
+    soap_begin(soap);
+    soap_serializeheader(soap);
+    soap_serialize_ns1__pushOrder(soap, &soap_tmp_ns1__pushOrder);
+    if (soap_begin_count(soap))
+        return soap->error;
+    if (soap->mode & SOAP_IO_LENGTH)
+    {    if (soap_envelope_begin_out(soap)
+         || soap_putheader(soap)
+         || soap_body_begin_out(soap)
+         || soap_put_ns1__pushOrder(soap, &soap_tmp_ns1__pushOrder, "ns1:pushOrder", "")
+         || soap_body_end_out(soap)
+         || soap_envelope_end_out(soap))
+             return soap->error;
+    }
+    if (soap_end_count(soap))
+        return soap->error;
+    if (soap_connect(soap, soap_endpoint, soap_action)
+     || soap_envelope_begin_out(soap)
+     || soap_putheader(soap)
+     || soap_body_begin_out(soap)
+     || soap_put_ns1__pushOrder(soap, &soap_tmp_ns1__pushOrder, "ns1:pushOrder", "")
+     || soap_body_end_out(soap)
+     || soap_envelope_end_out(soap)
+     || soap_end_send(soap))
+        return soap_closesock(soap);
+    soap_default_std__string(soap, &_pushOrderReturn);
+    if (soap_begin_recv(soap)
+     || soap_envelope_begin_in(soap)
+     || soap_recv_header(soap)
+     || soap_body_begin_in(soap))
+        return soap_closesock(soap);
+    soap_tmp_ns1__pushOrderResponse = soap_get_ns1__pushOrderResponse(soap, NULL, "ns1:pushOrderResponse", "");
+    if (soap->error)
+    {    if (soap->error == SOAP_TAG_MISMATCH && soap->level == 2)
+            return soap_recv_fault(soap);
+        return soap_closesock(soap);
+    }
+    if (soap_body_end_in(soap)
+     || soap_envelope_end_in(soap)
+     || soap_end_recv(soap))
+        return soap_closesock(soap);
+    _pushOrderReturn = soap_tmp_ns1__pushOrderResponse->_pushOrderReturn;
+    return soap_closesock(soap);
 }
 
 int DCSOperationsSoapBindingProxy::pushReport(std::string _reportPush, std::string &_pushReportReturn)
-{	struct soap *soap = this;
-	struct ns1__pushReport soap_tmp_ns1__pushReport;
-	struct ns1__pushReportResponse *soap_tmp_ns1__pushReportResponse;
-	const char *soap_action = NULL;
-	if (!soap_endpoint)
-		soap_endpoint = "http://localhost:8080/axis/DCSOperations.jws";
-	soap_action = "";
-	soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
-	soap_tmp_ns1__pushReport._reportPush = _reportPush;
-	soap_begin(soap);
-	soap_serializeheader(soap);
-	soap_serialize_ns1__pushReport(soap, &soap_tmp_ns1__pushReport);
-	if (soap_begin_count(soap))
-		return soap->error;
-	if (soap->mode & SOAP_IO_LENGTH)
-	{	if (soap_envelope_begin_out(soap)
-		 || soap_putheader(soap)
-		 || soap_body_begin_out(soap)
-		 || soap_put_ns1__pushReport(soap, &soap_tmp_ns1__pushReport, "ns1:pushReport", "")
-		 || soap_body_end_out(soap)
-		 || soap_envelope_end_out(soap))
-			 return soap->error;
-	}
-	if (soap_end_count(soap))
-		return soap->error;
-	if (soap_connect(soap, soap_endpoint, soap_action)
-	 || soap_envelope_begin_out(soap)
-	 || soap_putheader(soap)
-	 || soap_body_begin_out(soap)
-	 || soap_put_ns1__pushReport(soap, &soap_tmp_ns1__pushReport, "ns1:pushReport", "")
-	 || soap_body_end_out(soap)
-	 || soap_envelope_end_out(soap)
-	 || soap_end_send(soap))
-		return soap_closesock(soap);
-	soap_default_std__string(soap, &_pushReportReturn);
-	if (soap_begin_recv(soap)
-	 || soap_envelope_begin_in(soap)
-	 || soap_recv_header(soap)
-	 || soap_body_begin_in(soap))
-		return soap_closesock(soap);
-	soap_tmp_ns1__pushReportResponse = soap_get_ns1__pushReportResponse(soap, NULL, "ns1:pushReportResponse", "");
-	if (soap->error)
-	{	if (soap->error == SOAP_TAG_MISMATCH && soap->level == 2)
-			return soap_recv_fault(soap);
-		return soap_closesock(soap);
-	}
-	if (soap_body_end_in(soap)
-	 || soap_envelope_end_in(soap)
-	 || soap_end_recv(soap))
-		return soap_closesock(soap);
-	_pushReportReturn = soap_tmp_ns1__pushReportResponse->_pushReportReturn;
-	return soap_closesock(soap);
+{    struct soap *soap = this;
+    struct ns1__pushReport soap_tmp_ns1__pushReport;
+    struct ns1__pushReportResponse *soap_tmp_ns1__pushReportResponse;
+    const char *soap_action = NULL;
+    if (!soap_endpoint)
+        soap_endpoint = "http://localhost:8080/axis/DCSOperations.jws";
+    soap_action = "";
+    soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
+    soap_tmp_ns1__pushReport._reportPush = _reportPush;
+    soap_begin(soap);
+    soap_serializeheader(soap);
+    soap_serialize_ns1__pushReport(soap, &soap_tmp_ns1__pushReport);
+    if (soap_begin_count(soap))
+        return soap->error;
+    if (soap->mode & SOAP_IO_LENGTH)
+    {    if (soap_envelope_begin_out(soap)
+         || soap_putheader(soap)
+         || soap_body_begin_out(soap)
+         || soap_put_ns1__pushReport(soap, &soap_tmp_ns1__pushReport, "ns1:pushReport", "")
+         || soap_body_end_out(soap)
+         || soap_envelope_end_out(soap))
+             return soap->error;
+    }
+    if (soap_end_count(soap))
+        return soap->error;
+    if (soap_connect(soap, soap_endpoint, soap_action)
+     || soap_envelope_begin_out(soap)
+     || soap_putheader(soap)
+     || soap_body_begin_out(soap)
+     || soap_put_ns1__pushReport(soap, &soap_tmp_ns1__pushReport, "ns1:pushReport", "")
+     || soap_body_end_out(soap)
+     || soap_envelope_end_out(soap)
+     || soap_end_send(soap))
+        return soap_closesock(soap);
+    soap_default_std__string(soap, &_pushReportReturn);
+    if (soap_begin_recv(soap)
+     || soap_envelope_begin_in(soap)
+     || soap_recv_header(soap)
+     || soap_body_begin_in(soap))
+        return soap_closesock(soap);
+    soap_tmp_ns1__pushReportResponse = soap_get_ns1__pushReportResponse(soap, NULL, "ns1:pushReportResponse", "");
+    if (soap->error)
+    {    if (soap->error == SOAP_TAG_MISMATCH && soap->level == 2)
+            return soap_recv_fault(soap);
+        return soap_closesock(soap);
+    }
+    if (soap_body_end_in(soap)
+     || soap_envelope_end_in(soap)
+     || soap_end_recv(soap))
+        return soap_closesock(soap);
+    _pushReportReturn = soap_tmp_ns1__pushReportResponse->_pushReportReturn;
+    return soap_closesock(soap);
 }
 
 int DCSOperationsSoapBindingProxy::pullOrder(std::string _orderPull, std::string &_pullOrderReturn)
-{	struct soap *soap = this;
-	struct ns1__pullOrder soap_tmp_ns1__pullOrder;
-	struct ns1__pullOrderResponse *soap_tmp_ns1__pullOrderResponse;
-	const char *soap_action = NULL;
-	if (!soap_endpoint)
-		soap_endpoint = "http://localhost:8080/axis/DCSOperations.jws";
-	soap_action = "";
-	soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
-	soap_tmp_ns1__pullOrder._orderPull = _orderPull;
-	soap_begin(soap);
-	soap_serializeheader(soap);
-	soap_serialize_ns1__pullOrder(soap, &soap_tmp_ns1__pullOrder);
-	if (soap_begin_count(soap))
-		return soap->error;
-	if (soap->mode & SOAP_IO_LENGTH)
-	{	if (soap_envelope_begin_out(soap)
-		 || soap_putheader(soap)
-		 || soap_body_begin_out(soap)
-		 || soap_put_ns1__pullOrder(soap, &soap_tmp_ns1__pullOrder, "ns1:pullOrder", "")
-		 || soap_body_end_out(soap)
-		 || soap_envelope_end_out(soap))
-			 return soap->error;
-	}
-	if (soap_end_count(soap))
-		return soap->error;
-	if (soap_connect(soap, soap_endpoint, soap_action)
-	 || soap_envelope_begin_out(soap)
-	 || soap_putheader(soap)
-	 || soap_body_begin_out(soap)
-	 || soap_put_ns1__pullOrder(soap, &soap_tmp_ns1__pullOrder, "ns1:pullOrder", "")
-	 || soap_body_end_out(soap)
-	 || soap_envelope_end_out(soap)
-	 || soap_end_send(soap))
-		return soap_closesock(soap);
-	soap_default_std__string(soap, &_pullOrderReturn);
-	if (soap_begin_recv(soap)
-	 || soap_envelope_begin_in(soap)
-	 || soap_recv_header(soap)
-	 || soap_body_begin_in(soap))
-		return soap_closesock(soap);
-	soap_tmp_ns1__pullOrderResponse = soap_get_ns1__pullOrderResponse(soap, NULL, "ns1:pullOrderResponse", "");
-	if (soap->error)
-	{	if (soap->error == SOAP_TAG_MISMATCH && soap->level == 2)
-			return soap_recv_fault(soap);
-		return soap_closesock(soap);
-	}
-	if (soap_body_end_in(soap)
-	 || soap_envelope_end_in(soap)
-	 || soap_end_recv(soap))
-		return soap_closesock(soap);
-	_pullOrderReturn = soap_tmp_ns1__pullOrderResponse->_pullOrderReturn;
-	return soap_closesock(soap);
+{    struct soap *soap = this;
+    struct ns1__pullOrder soap_tmp_ns1__pullOrder;
+    struct ns1__pullOrderResponse *soap_tmp_ns1__pullOrderResponse;
+    const char *soap_action = NULL;
+    if (!soap_endpoint)
+        soap_endpoint = "http://localhost:8080/axis/DCSOperations.jws";
+    soap_action = "";
+    soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
+    soap_tmp_ns1__pullOrder._orderPull = _orderPull;
+    soap_begin(soap);
+    soap_serializeheader(soap);
+    soap_serialize_ns1__pullOrder(soap, &soap_tmp_ns1__pullOrder);
+    if (soap_begin_count(soap))
+        return soap->error;
+    if (soap->mode & SOAP_IO_LENGTH)
+    {    if (soap_envelope_begin_out(soap)
+         || soap_putheader(soap)
+         || soap_body_begin_out(soap)
+         || soap_put_ns1__pullOrder(soap, &soap_tmp_ns1__pullOrder, "ns1:pullOrder", "")
+         || soap_body_end_out(soap)
+         || soap_envelope_end_out(soap))
+             return soap->error;
+    }
+    if (soap_end_count(soap))
+        return soap->error;
+    if (soap_connect(soap, soap_endpoint, soap_action)
+     || soap_envelope_begin_out(soap)
+     || soap_putheader(soap)
+     || soap_body_begin_out(soap)
+     || soap_put_ns1__pullOrder(soap, &soap_tmp_ns1__pullOrder, "ns1:pullOrder", "")
+     || soap_body_end_out(soap)
+     || soap_envelope_end_out(soap)
+     || soap_end_send(soap))
+        return soap_closesock(soap);
+    soap_default_std__string(soap, &_pullOrderReturn);
+    if (soap_begin_recv(soap)
+     || soap_envelope_begin_in(soap)
+     || soap_recv_header(soap)
+     || soap_body_begin_in(soap))
+        return soap_closesock(soap);
+    soap_tmp_ns1__pullOrderResponse = soap_get_ns1__pullOrderResponse(soap, NULL, "ns1:pullOrderResponse", "");
+    if (soap->error)
+    {    if (soap->error == SOAP_TAG_MISMATCH && soap->level == 2)
+            return soap_recv_fault(soap);
+        return soap_closesock(soap);
+    }
+    if (soap_body_end_in(soap)
+     || soap_envelope_end_in(soap)
+     || soap_end_recv(soap))
+        return soap_closesock(soap);
+    _pullOrderReturn = soap_tmp_ns1__pullOrderResponse->_pullOrderReturn;
+    return soap_closesock(soap);
 }
 
 int DCSOperationsSoapBindingProxy::pullReport(std::string _reportPull, std::string &_pullReportReturn)
-{	struct soap *soap = this;
-	struct ns1__pullReport soap_tmp_ns1__pullReport;
-	struct ns1__pullReportResponse *soap_tmp_ns1__pullReportResponse;
-	const char *soap_action = NULL;
-	if (!soap_endpoint)
-		soap_endpoint = "http://localhost:8080/axis/DCSOperations.jws";
-	soap_action = "";
-	soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
-	soap_tmp_ns1__pullReport._reportPull = _reportPull;
-	soap_begin(soap);
-	soap_serializeheader(soap);
-	soap_serialize_ns1__pullReport(soap, &soap_tmp_ns1__pullReport);
-	if (soap_begin_count(soap))
-		return soap->error;
-	if (soap->mode & SOAP_IO_LENGTH)
-	{	if (soap_envelope_begin_out(soap)
-		 || soap_putheader(soap)
-		 || soap_body_begin_out(soap)
-		 || soap_put_ns1__pullReport(soap, &soap_tmp_ns1__pullReport, "ns1:pullReport", "")
-		 || soap_body_end_out(soap)
-		 || soap_envelope_end_out(soap))
-			 return soap->error;
-	}
-	if (soap_end_count(soap))
-		return soap->error;
-	if (soap_connect(soap, soap_endpoint, soap_action)
-	 || soap_envelope_begin_out(soap)
-	 || soap_putheader(soap)
-	 || soap_body_begin_out(soap)
-	 || soap_put_ns1__pullReport(soap, &soap_tmp_ns1__pullReport, "ns1:pullReport", "")
-	 || soap_body_end_out(soap)
-	 || soap_envelope_end_out(soap)
-	 || soap_end_send(soap))
-		return soap_closesock(soap);
-	soap_default_std__string(soap, &_pullReportReturn);
-	if (soap_begin_recv(soap)
-	 || soap_envelope_begin_in(soap)
-	 || soap_recv_header(soap)
-	 || soap_body_begin_in(soap))
-		return soap_closesock(soap);
-	soap_tmp_ns1__pullReportResponse = soap_get_ns1__pullReportResponse(soap, NULL, "ns1:pullReportResponse", "");
-	if (soap->error)
-	{	if (soap->error == SOAP_TAG_MISMATCH && soap->level == 2)
-			return soap_recv_fault(soap);
-		return soap_closesock(soap);
-	}
-	if (soap_body_end_in(soap)
-	 || soap_envelope_end_in(soap)
-	 || soap_end_recv(soap))
-		return soap_closesock(soap);
-	_pullReportReturn = soap_tmp_ns1__pullReportResponse->_pullReportReturn;
-	return soap_closesock(soap);
+{    struct soap *soap = this;
+    struct ns1__pullReport soap_tmp_ns1__pullReport;
+    struct ns1__pullReportResponse *soap_tmp_ns1__pullReportResponse;
+    const char *soap_action = NULL;
+    if (!soap_endpoint)
+        soap_endpoint = "http://localhost:8080/axis/DCSOperations.jws";
+    soap_action = "";
+    soap->encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/";
+    soap_tmp_ns1__pullReport._reportPull = _reportPull;
+    soap_begin(soap);
+    soap_serializeheader(soap);
+    soap_serialize_ns1__pullReport(soap, &soap_tmp_ns1__pullReport);
+    if (soap_begin_count(soap))
+        return soap->error;
+    if (soap->mode & SOAP_IO_LENGTH)
+    {    if (soap_envelope_begin_out(soap)
+         || soap_putheader(soap)
+         || soap_body_begin_out(soap)
+         || soap_put_ns1__pullReport(soap, &soap_tmp_ns1__pullReport, "ns1:pullReport", "")
+         || soap_body_end_out(soap)
+         || soap_envelope_end_out(soap))
+             return soap->error;
+    }
+    if (soap_end_count(soap))
+        return soap->error;
+    if (soap_connect(soap, soap_endpoint, soap_action)
+     || soap_envelope_begin_out(soap)
+     || soap_putheader(soap)
+     || soap_body_begin_out(soap)
+     || soap_put_ns1__pullReport(soap, &soap_tmp_ns1__pullReport, "ns1:pullReport", "")
+     || soap_body_end_out(soap)
+     || soap_envelope_end_out(soap)
+     || soap_end_send(soap))
+        return soap_closesock(soap);
+    soap_default_std__string(soap, &_pullReportReturn);
+    if (soap_begin_recv(soap)
+     || soap_envelope_begin_in(soap)
+     || soap_recv_header(soap)
+     || soap_body_begin_in(soap))
+        return soap_closesock(soap);
+    soap_tmp_ns1__pullReportResponse = soap_get_ns1__pullReportResponse(soap, NULL, "ns1:pullReportResponse", "");
+    if (soap->error)
+    {    if (soap->error == SOAP_TAG_MISMATCH && soap->level == 2)
+            return soap_recv_fault(soap);
+        return soap_closesock(soap);
+    }
+    if (soap_body_end_in(soap)
+     || soap_envelope_end_in(soap)
+     || soap_end_recv(soap))
+        return soap_closesock(soap);
+    _pullReportReturn = soap_tmp_ns1__pullReportResponse->_pullReportReturn;
+    return soap_closesock(soap);
 }
 /* End of client proxy code */

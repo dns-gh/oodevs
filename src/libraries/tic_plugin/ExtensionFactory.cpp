@@ -12,7 +12,7 @@
 #include "TicExtension.h"
 #include "dispatcher/Agent.h"
 
-using namespace tic;
+using namespace plugins::tic;
 
 // -----------------------------------------------------------------------------
 // Name: ExtensionFactory constructor

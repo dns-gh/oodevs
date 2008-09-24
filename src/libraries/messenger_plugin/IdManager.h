@@ -10,9 +10,10 @@
 #ifndef __IdManager_h_
 #define __IdManager_h_
 
+namespace plugins
+{
 namespace messenger
 {
-
 // =============================================================================
 /** @class  IdManager
     @brief  IdManager
@@ -31,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    unsigned int nextId(); 
+    unsigned int NextId();
     //@}
 
 private:
@@ -44,10 +45,11 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int nextId_ ;   
+    unsigned int nextId_;
     //@}
 };
 
-}   // namespace messenger
+}
+}
 
 #endif // __IdManager_h_

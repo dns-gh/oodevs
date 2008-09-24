@@ -13,6 +13,8 @@
 #include "game_asn/Simulation.h"
 class UpdateFunctor_ABC;
 
+namespace plugins
+{
 namespace hla
 {
 
@@ -60,6 +62,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Formation_h_

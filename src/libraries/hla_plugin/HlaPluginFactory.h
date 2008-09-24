@@ -12,6 +12,8 @@
 
 #include "dispatcher/PluginFactory_ABC.h"
 
+namespace plugins
+{
 namespace hla
 {
 
@@ -46,6 +48,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __HlaPluginFactory_h_

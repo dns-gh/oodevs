@@ -22,6 +22,8 @@ namespace dispatcher
     class Model;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
     class Database_ABC;
@@ -77,6 +79,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __OrderParameterSerializer_h_

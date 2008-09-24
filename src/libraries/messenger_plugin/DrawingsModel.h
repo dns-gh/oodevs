@@ -31,6 +31,8 @@ namespace dispatcher
     class Config;
 }
 
+namespace plugins
+{
 namespace messenger
 {
     class Drawing;
@@ -95,6 +97,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __DrawingsModel_h_

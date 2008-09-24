@@ -12,8 +12,10 @@
 
 #include "game_asn/Simulation.h"
 
+namespace plugins
+{
 namespace crossbow
-{    
+{
     class Table_ABC;
     class Row_ABC;
     class Database_ABC;
@@ -25,7 +27,7 @@ namespace crossbow
 // Created: JCR 2007-08-29
 // =============================================================================
 class FolkUpdater
-{	
+{    
 public:
     //! @name Constructors/Destructor
     //@{
@@ -56,11 +58,11 @@ private:
     //! @name Types
     //@{
     struct Edge
-	{
-		Edge() : population_( 0 ), containers_( 5, 0 ) {}
-		unsigned population_;
-		std::vector< unsigned > containers_;
-	};
+    {
+        Edge() : population_( 0 ), containers_( 5, 0 ) {}
+        unsigned population_;
+        std::vector< unsigned > containers_;
+    };
 
     typedef std::vector< Edge > T_Edges;
     typedef T_Edges::const_iterator CIT_Edges;
@@ -86,10 +88,11 @@ private:
 
     //! @name Folk Database
     //@{
-    Database_ABC&                database_;
+    Database_ABC& database_;
     //@}
 };
 
+}
 }
 
 #endif // __crossbow_FolkUpdater_h_

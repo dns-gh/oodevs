@@ -20,6 +20,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace bml
 {
 
@@ -58,6 +60,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Where_h_

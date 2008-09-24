@@ -20,10 +20,12 @@ namespace kernel
 
 namespace xml
 {
-    class xistream ;
-    class xostream ;
+    class xistream;
+    class xostream;
 }
 
+namespace plugins
+{
 namespace messenger
 {
 
@@ -96,6 +98,7 @@ private:
 
 };
 
+}
 }
 
 #endif // __TacticalLine_ABC_h_

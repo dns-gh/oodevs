@@ -17,6 +17,8 @@ namespace kernel
     class Controller;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -60,6 +62,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ScriptCommands_h_

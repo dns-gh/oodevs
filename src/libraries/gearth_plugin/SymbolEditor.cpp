@@ -22,7 +22,7 @@
 
 #include "clients_kernel/AgentType.h"
 
-using namespace gearth;
+using namespace plugins::gearth;
 
 namespace
 {

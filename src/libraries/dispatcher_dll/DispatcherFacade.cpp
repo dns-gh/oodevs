@@ -20,6 +20,8 @@
 #endif
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
+using namespace plugins;
+
 // -----------------------------------------------------------------------------
 // Name: DispatcherFacade constructor
 // Created: AGE 2008-05-21

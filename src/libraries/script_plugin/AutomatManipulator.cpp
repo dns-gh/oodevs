@@ -12,7 +12,7 @@
 #include "directia/Brain.h"
 #include "dispatcher/Automat.h"
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: AutomatManipulator constructor

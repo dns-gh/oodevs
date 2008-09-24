@@ -18,6 +18,8 @@ namespace kernel
     class Controller;
 }
 
+namespace plugins
+{
 namespace script
 {
     class Condition_ABC;
@@ -63,6 +65,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ScriptConditions_h_

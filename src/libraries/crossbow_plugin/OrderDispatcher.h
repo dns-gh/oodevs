@@ -25,6 +25,8 @@ namespace dispatcher
     class Automat;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
     class Database_ABC;
@@ -86,6 +88,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __OrderDispatcher_h_

@@ -24,6 +24,8 @@ namespace dispatcher
     class AgentKnowledge;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -65,6 +67,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __KnowledgeNotifier_h_

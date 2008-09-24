@@ -27,6 +27,8 @@ namespace dispatcher
     class Model;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class MissionParameter_ABC;
@@ -71,6 +73,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __MissionParameterFactory_h_

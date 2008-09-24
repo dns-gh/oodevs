@@ -21,6 +21,8 @@ namespace xml
 
 class DCSOperationsSoapBindingProxy;
 
+namespace plugins
+{
 namespace bml
 {
     class ResponseHandler_ABC;
@@ -43,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-	void PushReports();
+    void PushReports();
     xml::xostream& CreateReport();
     void PullOrder( const std::string& message, ResponseHandler_ABC& handler );
     //@}
@@ -72,6 +74,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Publisher_h_

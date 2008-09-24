@@ -22,8 +22,8 @@ namespace xml
 namespace dispatcher
 {
     class Model;
-    class Config;    
-    class SimulationPublisher_ABC;     
+    class Config;
+    class SimulationPublisher_ABC;
 }
 
 namespace tools
@@ -31,6 +31,8 @@ namespace tools
     class MessageDispatcher_ABC; 
 }
 
+namespace plugins
+{
 namespace gearth
 {
     class ConnectorFacade;
@@ -72,5 +74,8 @@ private:
     std::auto_ptr< ConnectorFacade > facade_;
     //@}
 };
+
 }
+}
+
 #endif // __gearth_GearthPlugin_h_

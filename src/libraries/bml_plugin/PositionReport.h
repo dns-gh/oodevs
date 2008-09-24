@@ -22,6 +22,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class Publisher_ABC;
@@ -69,6 +71,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __PositionReport_h_

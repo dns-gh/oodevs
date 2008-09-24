@@ -12,7 +12,7 @@
 #include "EntityStatePDU.h"
 #include "DetonationPDU.h"
 
-using namespace dis;
+using namespace plugins::dis;
 
 // -----------------------------------------------------------------------------
 // Name: DisHeader constructor

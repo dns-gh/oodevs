@@ -29,9 +29,10 @@ namespace xml
     class xostream;
 }
 
+namespace plugins
+{
 namespace messenger
 {
-
     class Lima;
     class Limit;
     class IdManager;
@@ -104,6 +105,7 @@ private:
 
 };
 
+}
 }
 
 #endif // __TacticalLinesModel_h_

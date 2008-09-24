@@ -17,6 +17,8 @@ namespace xml
     class xostream;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class ResponseHandler_ABC;
@@ -45,6 +47,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Publisher_ABC_h_

@@ -27,6 +27,8 @@ namespace dispatcher
     class CompositeRegistrable;
 }
 
+namespace plugins
+{
 namespace messenger
 {
     class IdManager;
@@ -88,6 +90,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Model_h_

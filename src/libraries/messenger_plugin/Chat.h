@@ -23,6 +23,8 @@ namespace tools
     class MessageDispatcher_ABC;
 }
 
+namespace plugins
+{
 namespace messenger
 {
 
@@ -73,6 +75,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Chat_h_

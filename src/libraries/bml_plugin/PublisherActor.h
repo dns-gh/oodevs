@@ -13,12 +13,16 @@
 #include "Publisher_ABC.h"
 #include <boost/thread/recursive_mutex.hpp>
 
-namespace tools { 
-    namespace thread {
-        class ThreadPool;
-    }
+namespace tools
+{
+namespace thread
+{
+    class ThreadPool;
+}
 }
 
+namespace plugins
+{
 namespace bml
 {
 
@@ -76,6 +80,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __PublisherActor_h_

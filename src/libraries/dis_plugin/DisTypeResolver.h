@@ -24,6 +24,8 @@ namespace xml
     class xistream;
 }
 
+namespace plugins
+{
 namespace dis
 {
 
@@ -69,6 +71,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __DisTypeResolver_h_

@@ -26,6 +26,8 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
     class Workspace_ABC;
@@ -107,6 +109,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __DatabasePublisher_h_

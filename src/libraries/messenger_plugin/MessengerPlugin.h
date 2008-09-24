@@ -32,6 +32,8 @@ namespace xml
     class xistream;
 }
 
+namespace plugins
+{
 namespace messenger
 {
     class Model;
@@ -84,6 +86,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __MessengerPlugin_h_

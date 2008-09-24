@@ -15,6 +15,8 @@
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 
+namespace plugins
+{
 namespace dis
 {
     class Message;
@@ -58,7 +60,7 @@ private:
     //@{
     void Start();
     void Stop();
-    void Sent( const boost::system::error_code& ) {};
+    void Sent( const boost::system::error_code& ) {}
     //@}
 
 protected:
@@ -73,6 +75,7 @@ protected:
     //@}
 };
 
+}
 }
 
 #endif // __UdpNetwork_h_

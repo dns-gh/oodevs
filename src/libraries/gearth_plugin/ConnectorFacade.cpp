@@ -17,7 +17,7 @@
 #include "dispatcher/Visitors.h"
 #include <xeumeuleu/xml.h>
 
-using namespace gearth;
+using namespace plugins::gearth;
 
 // -----------------------------------------------------------------------------
 // Name: ConnectorFacade constructor

@@ -19,7 +19,7 @@
 #include <iostream>
 
 namespace bpt = boost::posix_time;
-using namespace bml;
+using namespace plugins::bml;
 
 namespace
 {
@@ -70,11 +70,11 @@ void UpdateListener::PullOrders()
 // -----------------------------------------------------------------------------
 void UpdateListener::PullOrders( const std::string& time )
 {
-	xml::xostringstream xos;
-	xos << xml::start( "OrderPull" ) << Namespaces()
-			<< xml::content( "PostedTimeCutoff", time )
-		<< xml::end();
-	publisher_.PullOrder( xos.str(), *this );
+    xml::xostringstream xos;
+    xos << xml::start( "OrderPull" ) << Namespaces()
+            << xml::content( "PostedTimeCutoff", time )
+        << xml::end();
+    publisher_.PullOrder( xos.str(), *this );
 }
 
 // -----------------------------------------------------------------------------

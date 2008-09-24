@@ -13,6 +13,8 @@
 #include "game_asn/simulation.h"
 #include "hla_plugin/EntityIdentifier.h"
 
+namespace plugins
+{
 namespace dis
 {
     class UdpNetwork;
@@ -71,6 +73,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __FireManager_h_

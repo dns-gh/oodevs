@@ -14,7 +14,7 @@
 #include "Row_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 
-using namespace crossbow;
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: StatusListener constructor

@@ -10,6 +10,8 @@
 #ifndef __crossbow_ScopeEditor_h_
 #define __crossbow_ScopeEditor_h_
 
+namespace plugins
+{
 namespace crossbow
 {
     class Database_ABC;
@@ -24,7 +26,7 @@ class ScopeEditor
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit ScopeEditor( crossbow::Database_ABC& database );
+    explicit ScopeEditor( Database_ABC& database );
             ~ScopeEditor();
     //@}
           
@@ -38,10 +40,11 @@ private:
 private:
     //! @name Member data
     //@{
-    crossbow::Database_ABC& database_;
+    Database_ABC& database_;
     //@}
 };
 
+}
 }
 
 #endif // __crossbow_ScopeEditor_h_

@@ -13,6 +13,8 @@
 #include "Table.h"
 #include "ESRI.h"
 
+namespace plugins
+{
 namespace crossbow
 {
     class FeatureRow;
@@ -60,10 +62,11 @@ private:
     IFeatureClassPtr featureClass_;
     ISpatialReferencePtr spatialReference_;
     IFeatureCursorPtr cursor_;
-    std::auto_ptr< crossbow::FeatureRow > feature_;
+    std::auto_ptr< FeatureRow > feature_;
     //@}
 };
 
+}
 }
 
 #endif // __FeatureClass_h_

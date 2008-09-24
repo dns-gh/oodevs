@@ -21,7 +21,7 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 
-using namespace crossbow;
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher constructor
@@ -197,7 +197,7 @@ void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsign
     ss << "OrderID=" << orderId;
     Row_ABC* result = params_->Find( ss.str() );
     unsigned int i ; 
-	for( i = 0; result != 0 && i < parameters.n; ++i )
+    for( i = 0; result != 0 && i < parameters.n; ++i )
     {
         SetParameter( parameters.elem[i], *result, type );
         result = params_->GetNextRow();

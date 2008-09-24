@@ -14,7 +14,7 @@
 #include "dispatcher/ClientPublisher_ABC.h"
 #include <boost/bind.hpp>
 
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: IntelligencesModel constructor
@@ -43,7 +43,7 @@ IntelligencesModel::~IntelligencesModel()
 // -----------------------------------------------------------------------------
 void IntelligencesModel::ReadIntelligence( xml::xistream& xis, const ASN1T_Formation& formation )
 {
-    std::auto_ptr< Intelligence > intelligence( new Intelligence( idManager_.nextId(), xis, formation, converter_ ) );
+    std::auto_ptr< Intelligence > intelligence( new Intelligence( idManager_.NextId(), xis, formation, converter_ ) );
     Register( intelligence->GetID(), *intelligence );
     intelligence.release();
 }
@@ -64,11 +64,11 @@ void IntelligencesModel::Write( xml::xostream& xos )
 // -----------------------------------------------------------------------------
 void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgIntelligenceCreationRequest& asn )
 {
-    messenger::IntelligenceCreationRequestAck ack ;
+    IntelligenceCreationRequestAck ack ;
     ack() = EnumIntelligenceErrorCode::no_error;
     try
     {
-        std::auto_ptr< Intelligence > intelligence( new Intelligence( idManager_.nextId(), asn ) );
+        std::auto_ptr< Intelligence > intelligence( new Intelligence( idManager_.NextId(), asn ) );
         Register( intelligence->GetID(), *intelligence );
         intelligence->SendCreation( clients_ );
         intelligence.release();
@@ -86,7 +86,7 @@ void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
 // -----------------------------------------------------------------------------
 void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgIntelligenceUpdateRequest& asn )
 {
-    messenger::IntelligenceUpdateRequestAck ack ;
+    IntelligenceUpdateRequestAck ack ;
     ack() = EnumIntelligenceErrorCode::no_error;
 
     Intelligence* intelligence = Find( asn.oid );
@@ -106,7 +106,7 @@ void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
 // -----------------------------------------------------------------------------
 void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgIntelligenceDestructionRequest& asn )
 {
-    messenger::IntelligenceDestructionRequestAck ack ;
+    IntelligenceDestructionRequestAck ack ;
     ack() = EnumIntelligenceErrorCode::no_error;
 
     Intelligence* intelligence = Find( asn.oid );

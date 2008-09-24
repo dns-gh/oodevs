@@ -11,7 +11,7 @@
 #include "UdpNetwork.h"
 #include <boost/lexical_cast.hpp>
 
-using namespace dis;
+using namespace plugins::dis;
 
 namespace i = boost::asio::ip;
 

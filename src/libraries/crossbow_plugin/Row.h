@@ -14,6 +14,8 @@
 #include "Row_ABC.h"
 #include "ESRI.h"
 
+namespace plugins
+{
 namespace crossbow
 {
     class Shape_ABC;
@@ -65,6 +67,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Row_h_

@@ -24,7 +24,7 @@
 #include <geocoord/Geodetic.h>
 #include "DetonationPDU.h"
 
-using namespace dis;
+using namespace plugins::dis;
 
 // -----------------------------------------------------------------------------
 // Name: DisExtension constructor
@@ -39,7 +39,7 @@ DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, con
     , holder_   ( holder )
     , exercise_ ( exercise )
     , lagAFrame_( lagAFrame )
-    , adapted_  ( new tic::PlatformAdapter( holder_, converter ) )
+    , adapted_  ( new plugins::tic::PlatformAdapter( holder_, converter ) )
 {
     // NOTHING
 }

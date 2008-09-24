@@ -35,6 +35,8 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -88,6 +90,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Actions_h_

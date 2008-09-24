@@ -12,6 +12,8 @@
 
 #include "clients_kernel/Extension_ABC.h"
 
+namespace plugins
+{
 namespace tic
 {
     class PlatformVisitor_ABC;
@@ -38,6 +40,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __TicExtension_ABC_h_

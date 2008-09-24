@@ -14,6 +14,8 @@
 #include "directia/LuaBinder.h"
 #include "directia/ScriptFunctionWrappersTemplates.h"
 
+namespace plugins
+{
 namespace script
 {
 
@@ -106,6 +108,7 @@ void BaseCondition::Trigger( T1 p1, T2 p2 )
     }
 }
 
+}
 }
 
 #endif // __BaseCondition_h_

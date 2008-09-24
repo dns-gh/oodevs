@@ -22,6 +22,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace tic
 {
 
@@ -67,6 +69,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __PlatformAdapter_h_

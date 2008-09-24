@@ -21,6 +21,8 @@ namespace dispatcher
     class AgentKnowledge;
 }
 
+namespace plugins
+{
 namespace gearth
 {
 
@@ -61,6 +63,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ExtensionFactory_h_

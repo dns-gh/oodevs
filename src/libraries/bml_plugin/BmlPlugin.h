@@ -23,6 +23,8 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class ExtensionFactory;
@@ -78,6 +80,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __BmlPlugin_h_

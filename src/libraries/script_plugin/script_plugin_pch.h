@@ -17,7 +17,7 @@
 #include <set>
 
 #pragma warning( push )
-#pragma warning( disable : 4996 )
+#pragma warning( disable : 4996 4512 )
 #include <qstring.h>
 #include <qstringlist.h>
 #include <game_asn/generated/base.h>

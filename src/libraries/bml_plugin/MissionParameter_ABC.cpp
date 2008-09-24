@@ -10,7 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "MissionParameter_ABC.h"
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_ABC constructor

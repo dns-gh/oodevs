@@ -29,6 +29,8 @@ namespace dispatcher
     class Config;
 }
 
+namespace plugins
+{
 namespace dis
 {
     class UdpNetwork;
@@ -85,6 +87,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __DisPlugin_h_

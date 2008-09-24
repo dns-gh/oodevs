@@ -28,6 +28,8 @@ namespace dispatcher
     class ModelVisitor_ABC;
 }
 
+namespace plugins
+{
 namespace gearth
 {
     class ReportFactory;
@@ -106,6 +108,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __gearth_ScopeEditor_h_

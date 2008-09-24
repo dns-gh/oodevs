@@ -14,7 +14,7 @@
 #include "tools/MessageDispatcher_ABC.h"
 #include "dispatcher/DefaultProfile.h"
 
-using namespace crossbow;
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: CrossbowPlugin constructor
@@ -24,12 +24,12 @@ CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream&
                                 dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& client, 
                                 dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables )
     : databasePublisher_ ( new DatabasePublisher( config, model, publisher, xis ) )
-    , messenger_ ( new messenger::MessengerPlugin( *this, client, links, config, registrables ) )
-{    
+    , messenger_ ( new plugins::messenger::MessengerPlugin( *this, client, links, config, registrables ) )
+{
     dispatcher::DefaultProfile defaultProfile;
     messenger_->NotifyClientAuthenticated( *this, defaultProfile );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossbowPlugin destructor
 // Created: JCR 2007-08-29

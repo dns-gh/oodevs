@@ -20,7 +20,7 @@
 #include "dispatcher/Object.h"
 #include "dispatcher/AgentKnowledge.h"
 
-using namespace gearth;
+using namespace plugins::gearth;
 
 // -----------------------------------------------------------------------------
 // Name: ExtensionFactory constructor

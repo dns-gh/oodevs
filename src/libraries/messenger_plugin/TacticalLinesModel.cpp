@@ -19,7 +19,7 @@
 #include "clients_kernel/Iterator.h"
 #include <xeumeuleu/xml.h>
 
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLinesModel constructor
@@ -49,7 +49,7 @@ TacticalLinesModel::~TacticalLinesModel()
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::ReadLimit( xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion)
 {
-    std::auto_ptr< Limit > limit( new Limit( idManager_.nextId(), xis, diffusion, converter_ ) );
+    std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), xis, diffusion, converter_ ) );
     limits_.Register( limit->GetID(), *limit );
     limit.release();
 }
@@ -60,7 +60,7 @@ void TacticalLinesModel::ReadLimit( xml::xistream& xis, const ASN1T_TacticalLine
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::ReadLima( xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion)
 {
-    std::auto_ptr< Lima > lima( new Lima( idManager_.nextId(), xis, diffusion, converter_ ) );
+    std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), xis, diffusion, converter_ ) );
     limas_.Register( lima->GetID(), *lima );
     lima.release();
 }
@@ -91,9 +91,9 @@ void TacticalLinesModel::Write( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimitCreationRequest& asn )
 {
-    messenger::LimitCreationRequestAck ack ;
+    LimitCreationRequestAck ack ;
     ack() = EnumInfoContextErrorCode::no_error;
-    std::auto_ptr< Limit > limit( new Limit( idManager_.nextId(), asn ) );
+    std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), asn ) );
     limits_.Register( limit->GetID(), *limit );
     limit->SendCreation( clients_ );
     limit.release();
@@ -106,7 +106,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimitUpdateRequest& asn )
 {
-    messenger::LimitUpdateRequestAck ack ;
+    LimitUpdateRequestAck ack ;
     ack() = EnumInfoContextErrorCode::no_error;
 
     Limit* limit = limits_.Find( asn.oid );
@@ -126,7 +126,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimitDestructionRequest& asn )
 {
-    messenger::LimitDestructionRequestAck ack ;
+    LimitDestructionRequestAck ack ;
     ack() = EnumInfoContextErrorCode::no_error;
 
     Limit* limit = limits_.Find( asn );
@@ -147,9 +147,9 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimaCreationRequest& asn )
 {
-    messenger::LimaCreationRequestAck ack ;
+    LimaCreationRequestAck ack ;
     ack() = EnumInfoContextErrorCode::no_error;
-    std::auto_ptr< Lima > lima( new Lima( idManager_.nextId(), asn ) );
+    std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), asn ) );
     limas_.Register( lima->GetID(), *lima );
     lima->SendCreation( clients_ );
     lima.release();
@@ -162,7 +162,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimaUpdateRequest& asn )
 {
-    messenger::LimaUpdateRequestAck ack ;
+    LimaUpdateRequestAck ack ;
     ack() = EnumInfoContextErrorCode::no_error;
 
     Lima* lima = limas_.Find( asn.oid );
@@ -182,7 +182,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimaDestructionRequest& asn)
 {
-    messenger::LimaDestructionRequestAck ack ;
+    LimaDestructionRequestAck ack ;
     ack() = EnumInfoContextErrorCode::no_error;
 
     Lima* lima = limas_.Find( asn );

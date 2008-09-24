@@ -17,6 +17,8 @@ namespace dispatcher
     class Model;
 }
 
+namespace plugins
+{
 namespace gearth
 {
     class StyleEditor;
@@ -62,6 +64,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __gearth_SymbolEditor_h_

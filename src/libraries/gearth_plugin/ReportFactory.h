@@ -23,10 +23,11 @@ namespace dispatcher
     class Model;
 }
 
+namespace plugins
+{
 namespace gearth
 {
-
-class ReportTemplate;
+    class ReportTemplate;
 
 // =============================================================================
 /** @class  ReportFactory
@@ -77,6 +78,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __gearth_ReportFactory_h_

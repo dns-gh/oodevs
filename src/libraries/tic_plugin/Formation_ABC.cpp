@@ -11,7 +11,7 @@
 #include "Formation_ABC.h"
 #include <boost/bind.hpp>
 
-using namespace tic;
+using namespace plugins::tic;
 
 // -----------------------------------------------------------------------------
 // Name: Formation_ABC::Compare

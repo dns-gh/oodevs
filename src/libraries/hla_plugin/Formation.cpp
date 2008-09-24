@@ -15,7 +15,7 @@
 #include "hla/AttributeIdentifier.h"
 #include "pathfind/TerrainData.h"
 
-using namespace hla;
+using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: Formation constructor

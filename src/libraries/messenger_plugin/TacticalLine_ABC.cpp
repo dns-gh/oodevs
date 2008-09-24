@@ -15,7 +15,7 @@
 
 #include <xeumeuleu/xml.h>
 
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor

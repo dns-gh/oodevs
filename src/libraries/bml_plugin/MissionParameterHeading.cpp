@@ -15,7 +15,7 @@
 #include "dispatcher/Automat.h"
 #include <boost/bind.hpp>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterHeading constructor

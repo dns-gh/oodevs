@@ -18,8 +18,10 @@ namespace xml
     class xobufferstream;
 }
 
+namespace plugins
+{
 namespace gearth
-{    
+{
 // =============================================================================
 /** @class  PositionEditor
     @brief  PositionEditor
@@ -55,6 +57,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __gearth_PositionEditor_h_

@@ -13,6 +13,8 @@
 #include <boost/shared_ptr.hpp>
 #include "directia/ScriptFunctionWrappers.h"
 
+namespace plugins
+{
 namespace script
 {
     class Condition_ABC;
@@ -54,6 +56,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Event_h_

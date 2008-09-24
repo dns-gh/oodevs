@@ -17,6 +17,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace hla
 {
     class AggregateEntityClass;
@@ -57,6 +59,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ExtensionFactory_h_

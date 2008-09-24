@@ -13,6 +13,8 @@
 #include "ESRI.h"
 #include "Workspace_ABC.h"
 
+namespace plugins
+{
 namespace crossbow
 {
 
@@ -51,6 +53,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Workspace_h_

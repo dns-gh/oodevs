@@ -14,7 +14,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/path.hpp>
 
-using namespace gearth;
+using namespace plugins::gearth;
 
 namespace fs = boost::filesystem;
 namespace po = boost::program_options;

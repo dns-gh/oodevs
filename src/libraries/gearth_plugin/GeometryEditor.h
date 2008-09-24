@@ -13,6 +13,8 @@
 #include "game_asn/Simulation.h"
 #include "geometry/Types.h"
 
+namespace plugins
+{
 namespace gearth
 {
 
@@ -33,7 +35,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     geometry::Point2d ConvertPosition( const std::string& stMGRS ) const;
 //    void Create     ( ILinePtr& spLine );
 //    void Create     ( IPolylinePtr& spPolyline );
@@ -49,6 +51,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __gearth_GeometryEditor_h_

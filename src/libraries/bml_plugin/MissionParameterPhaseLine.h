@@ -17,6 +17,8 @@ namespace xml
     class xistream;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class PointList;
@@ -65,6 +67,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __MissionParameterPhaseLine_h_

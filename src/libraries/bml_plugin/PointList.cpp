@@ -13,7 +13,7 @@
 #include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 
-using namespace bml;
+using namespace plugins::bml;
 
 // -----------------------------------------------------------------------------
 // Name: PointList constructor
@@ -47,7 +47,7 @@ void PointList::ReadPoint( xml::xistream& xis )
         throw std::runtime_error( __FUNCTION__ ": jc3iedm:SequenceOrdinal out of range [1 +inf)" );
     if( index + 1 > points_.size() )
         points_.resize( index );
-	points_[--index] = Point( xis, NS( "Point", "jc3iedm" ) );
+    points_[--index] = Point( xis, NS( "Point", "jc3iedm" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +75,8 @@ void PointList::Serialize( ASN1T_CoordLatLongList& asn ) const
     asn.n = points_.size();
     if( asn.n > 0 )
         asn.elem = new ASN1T_CoordLatLong[asn.n];
-	else 
-		asn.elem = 0;
+    else 
+        asn.elem = 0;
     unsigned int i = 0;
     for( T_Points::const_iterator it = points_.begin(); it != points_.end(); ++it, ++i )
         it->Serialize( asn.elem[i] );

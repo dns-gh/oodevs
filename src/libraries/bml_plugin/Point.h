@@ -18,6 +18,8 @@ namespace xml
     class xostream;
 }
 
+namespace plugins
+{
 namespace bml
 {
 
@@ -34,14 +36,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              Point();
-			 Point( xml::xistream& xis, const std::string& fieldname );
+             Point( xml::xistream& xis, const std::string& fieldname );
              Point( double latitude, double longitude );
     virtual ~Point();
     //@}
 
     //! @name Operations
     //@{
-	void Serialize( xml::xostream& xos, const std::string& fieldname ) const;
+    void Serialize( xml::xostream& xos, const std::string& fieldname ) const;
     void Serialize( ASN1T_CoordLatLong& asn ) const;
     unsigned short ComputeBearing( const Point& rhs ) const;
     //@}
@@ -55,6 +57,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Point_h_

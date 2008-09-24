@@ -26,6 +26,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace dis
 {
     class UdpNetwork;
@@ -90,6 +92,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __DisExtension_h_

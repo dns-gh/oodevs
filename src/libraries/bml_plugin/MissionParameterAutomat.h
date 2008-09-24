@@ -17,6 +17,8 @@ namespace dispatcher
     class Automat;
 }
 
+namespace plugins
+{
 namespace bml
 {
 
@@ -56,6 +58,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __MissionParameterAutomat_h_

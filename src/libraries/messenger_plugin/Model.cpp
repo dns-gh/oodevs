@@ -22,7 +22,7 @@
 #include <xeumeuleu/xml.h>
 
 namespace bfs = boost::filesystem;
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor

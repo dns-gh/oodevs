@@ -24,6 +24,8 @@ namespace dispatcher
     class Agent;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -66,6 +68,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __AgentNotifier_h_

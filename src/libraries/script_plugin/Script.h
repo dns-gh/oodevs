@@ -20,10 +20,11 @@ namespace dispatcher
     class Registrable_ABC;
 }
 
+namespace plugins
+{
 namespace script
 {
-
-class FiniteStateMachine;
+    class FiniteStateMachine;
 
 // =============================================================================
 /** @class  Script
@@ -57,6 +58,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Script_h_

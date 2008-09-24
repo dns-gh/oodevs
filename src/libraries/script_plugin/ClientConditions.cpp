@@ -20,7 +20,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: ClientConditions constructor

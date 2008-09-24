@@ -10,6 +10,8 @@
 #ifndef __CommandString_h_
 #define __CommandString_h_
 
+namespace plugins
+{
 namespace script
 {
 
@@ -53,6 +55,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __CommandString_h_

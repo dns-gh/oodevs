@@ -11,26 +11,27 @@
 #define __Intelligence_h_
 
 #include "Entity_ABC.h"
-
 #include "game_asn/Messenger.h"
 
 namespace dispatcher
 {
-    class ClientPublisher_ABC ; 
+    class ClientPublisher_ABC;
 }
 
 namespace kernel
 {   
-    class CoordinateConverter_ABC ; 
+    class CoordinateConverter_ABC;
 }
 
 namespace xml
 {
-    class xistream ; 
-    class xostream ; 
+    class xistream;
+    class xostream;
 }
 
 
+namespace plugins
+{
 namespace messenger
 {
 
@@ -99,6 +100,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Intelligence_h_

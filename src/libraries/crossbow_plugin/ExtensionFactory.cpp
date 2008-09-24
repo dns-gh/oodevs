@@ -22,7 +22,7 @@
 #include "dispatcher/Object.h"
 #include "dispatcher/AgentKnowledge.h"
 
-using namespace crossbow;
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: ExtensionFactory constructor

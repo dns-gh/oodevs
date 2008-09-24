@@ -10,6 +10,8 @@
 #ifndef __EntityMarking_h_
 #define __EntityMarking_h_
 
+namespace plugins
+{
 namespace dis
 {
 
@@ -46,6 +48,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __EntityMarking_h_

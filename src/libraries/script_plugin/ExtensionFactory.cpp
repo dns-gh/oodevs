@@ -19,7 +19,7 @@
 #include "AutomatNotifier.h"
 #include "AutomatManipulator.h"
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: ExtensionFactory constructor

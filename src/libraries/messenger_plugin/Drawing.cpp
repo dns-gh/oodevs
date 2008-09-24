@@ -15,7 +15,7 @@
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
-using namespace messenger;
+using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
 // Name: Drawing constructor
@@ -117,7 +117,7 @@ void Drawing::Update( const ASN1T_MsgShapeUpdateRequest& asn )
 // -----------------------------------------------------------------------------
 void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    messenger::ShapeCreation message;
+    ShapeCreation message;
     message().oid = id_;
     message().shape.category    = category_.c_str();
     message().shape.color       = color_.c_str();
@@ -134,7 +134,7 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     // $$$$ SBO 2008-06-09: keep track of updated fields...
-    messenger::ShapeUpdate message;
+    ShapeUpdate message;
     message().oid = id_;
     message().m.categoryPresent  = 1; message().category  = category_.c_str();
     message().m.colorPresent     = 1; message().color     = color_.c_str();
@@ -160,7 +160,7 @@ void Drawing::SendFullState( dispatcher::ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Drawing::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    messenger::ShapeDestruction message;
+    ShapeDestruction message;
     message().oid = id_;
     message.Send( publisher );
 }

@@ -29,6 +29,8 @@ namespace xml
     class xostream;
 }
 
+namespace plugins
+{
 namespace messenger
 {
     class Intelligence;
@@ -85,6 +87,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __IntelligencesModel_h_

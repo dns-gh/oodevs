@@ -26,11 +26,13 @@ namespace kernel
 namespace dispatcher
 {
     class Model;
-	class Automat;
+    class Automat;
     class Agent;
     class SimulationPublisher_ABC;
 }
 
+namespace plugins
+{
 namespace bml
 {
     class MissionParameterFactory;
@@ -76,11 +78,11 @@ private:
     void SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher ) const;
 
     void Serialize( ASN1T_MissionParameters& asn ) const;
-	void Clean( ASN1T_MissionParameters& asn ) const;
-	void SerializeDummyParameters( ASN1T_MissionParameters& asn ) const;
-	void FillEmptyParameters( ASN1T_MissionParameters& asn ) const;
-	void CleanDummyParameters( ASN1T_MissionParameters& asn ) const;
-	
+    void Clean( ASN1T_MissionParameters& asn ) const;
+    void SerializeDummyParameters( ASN1T_MissionParameters& asn ) const;
+    void FillEmptyParameters( ASN1T_MissionParameters& asn ) const;
+    void CleanDummyParameters( ASN1T_MissionParameters& asn ) const;
+    
     const kernel::MissionType& ResolveMission( xml::xistream& xis );
     void AddParameter( MissionParameter_ABC& parameter );
 
@@ -101,6 +103,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Mission_h_

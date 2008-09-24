@@ -12,6 +12,8 @@
 
 #include "Events.h"
 
+namespace plugins
+{
 namespace script
 {
     namespace events
@@ -26,6 +28,7 @@ namespace script
         struct Reset {};
     }
 
+}
 }
 
 #endif // __MiscEvents_h_

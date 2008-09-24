@@ -11,6 +11,8 @@
 #include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 
+namespace plugins
+{
 namespace bml
 {
     xml::xostream& operator<<( xml::xostream& xos, const Namespaces& )
@@ -38,5 +40,5 @@ namespace bml
             return "xsi:" + tag;
         return tag;
     }
-
+}
 }

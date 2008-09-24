@@ -20,7 +20,7 @@
 #include "game_asn/Publisher_ABC.h"
 #include <xeumeuleu/xml.h>
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: Actions Publisher

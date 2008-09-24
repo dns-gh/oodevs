@@ -24,6 +24,8 @@ namespace dispatcher
     class Model;
 }
 
+namespace plugins
+{
 namespace script
 {
     class Condition_ABC;
@@ -63,6 +65,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ConditionFacade_h_

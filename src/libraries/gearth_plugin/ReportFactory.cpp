@@ -17,7 +17,7 @@
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
-using namespace gearth;
+using namespace plugins::gearth;
 
 // -----------------------------------------------------------------------------
 // Name: ReportFactory constructor

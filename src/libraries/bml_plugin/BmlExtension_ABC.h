@@ -12,6 +12,8 @@
 
 #include "clients_kernel/Extension_ABC.h"
 
+namespace plugins
+{
 namespace bml
 {
 
@@ -30,12 +32,9 @@ public:
              BmlExtension_ABC() {}
     virtual ~BmlExtension_ABC() {}
     //@}
-
-    //! @name Operations
-    //@{
-    //@}
 };
 
+}
 }
 
 #endif // __BmlExtension_ABC_h_

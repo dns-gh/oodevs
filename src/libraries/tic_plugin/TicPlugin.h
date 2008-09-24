@@ -23,6 +23,8 @@ namespace kernel
     class CoordinateConverter;
 }
 
+namespace plugins
+{
 namespace tic
 {
     class ExtensionFactory;
@@ -66,6 +68,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __TicPlugin_h_

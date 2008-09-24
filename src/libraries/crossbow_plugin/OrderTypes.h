@@ -26,6 +26,8 @@ namespace kernel
     class OrderContext;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
 
@@ -82,6 +84,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __OrderTypes_h_

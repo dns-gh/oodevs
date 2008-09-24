@@ -18,6 +18,8 @@ class AttributeIdentifier;
 class Deserializer;
 class UpdateFunctor_ABC;
 
+namespace plugins
+{
 namespace hla
 {
 
@@ -47,6 +49,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __HlaExtension_ABC_h_

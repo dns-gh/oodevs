@@ -66,7 +66,7 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterFactory::Adapters

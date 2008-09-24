@@ -38,6 +38,8 @@ namespace tools
     class MessageDispatcher_ABC;
 }
 
+namespace plugins
+{
 namespace script
 {
     class Script;
@@ -109,6 +111,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ScriptPlugin_h_

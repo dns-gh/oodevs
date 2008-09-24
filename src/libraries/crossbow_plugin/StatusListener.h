@@ -17,6 +17,8 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
     class Database_ABC;
@@ -25,7 +27,7 @@ namespace crossbow
 
 // =============================================================================
 /** @class  StatusListener
-    @brief  StatusListener    
+    @brief  StatusListener
 */
 // Created: JCR 2007-06-13
 // =============================================================================
@@ -66,6 +68,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __StatusListener_h_

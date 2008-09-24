@@ -21,7 +21,7 @@
 #include "actions/ParameterFactory_ABC.h"
 #include <xeumeuleu/xml.h>
 
-using namespace script;
+using namespace plugins::script;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

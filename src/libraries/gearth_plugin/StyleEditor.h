@@ -23,12 +23,14 @@ namespace dispatcher
     class Config;
 }
 
+namespace plugins
+{
 namespace gearth
 {
 
 // =============================================================================
 /** @class  StyleEditor
-    @brief  StyleEditor    
+    @brief  StyleEditor
 */
 // Created: JCR 2007-09-04
 // =============================================================================
@@ -85,6 +87,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __gearth_StyleEditor_h_

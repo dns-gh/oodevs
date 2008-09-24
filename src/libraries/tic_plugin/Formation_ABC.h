@@ -12,6 +12,8 @@
 
 #include <geometry/Types.h>
 
+namespace plugins
+{
 namespace tic
 {
     class Movable_ABC;
@@ -46,6 +48,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Formation_ABC_h_

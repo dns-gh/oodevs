@@ -11,7 +11,7 @@
 #include "DiamondFormation.h"
 #include "Movable_ABC.h"
 
-using namespace tic;
+using namespace plugins::tic;
 
 // -----------------------------------------------------------------------------
 // Name: DiamondFormation constructor

@@ -12,6 +12,8 @@
 
 #include "PointCollection.h"
 
+namespace plugins
+{
 namespace crossbow
 {
     class Point;
@@ -47,6 +49,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __Line_h_

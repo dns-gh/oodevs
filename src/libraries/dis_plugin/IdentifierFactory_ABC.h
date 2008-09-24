@@ -12,6 +12,8 @@
 
 #include "hla_plugin/EntityIdentifier.h"
 
+namespace plugins
+{
 namespace dis
 {
 
@@ -37,6 +39,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __IdentifierFactory_ABC_h_

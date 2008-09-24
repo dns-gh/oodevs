@@ -11,7 +11,7 @@
 #include "Event.h"
 #include "Condition_ABC.h"
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: Event constructor

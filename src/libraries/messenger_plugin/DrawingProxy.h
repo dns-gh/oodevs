@@ -12,6 +12,8 @@
 
 #include "dispatcher/Position.h"
 
+namespace plugins
+{
 namespace messenger
 {
     class Drawing;
@@ -54,6 +56,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __DrawingProxy_h_

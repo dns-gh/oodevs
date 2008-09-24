@@ -31,6 +31,8 @@ namespace dispatcher
     class Model;
 }
 
+namespace plugins
+{
 namespace script
 {
 
@@ -83,6 +85,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __ActionFactory_h_

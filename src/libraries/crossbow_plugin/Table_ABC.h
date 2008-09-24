@@ -10,6 +10,8 @@
 #ifndef __Table_ABC_h_
 #define __Table_ABC_h_
 
+namespace plugins
+{
 namespace crossbow
 {
     class Row_ABC;
@@ -45,6 +47,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Table_ABC_h_

@@ -11,7 +11,7 @@
 #include "Serializer.h"
 #include <winsock2.h>
 
-using namespace dis;
+using namespace plugins::dis;
 
 // -----------------------------------------------------------------------------
 // Name: Serializer destructor

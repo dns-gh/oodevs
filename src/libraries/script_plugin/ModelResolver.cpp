@@ -15,7 +15,7 @@
 #include "dispatcher/Automat.h"
 #include <boost/lexical_cast.hpp>
 
-using namespace script;
+using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
 // Name: ModelResolver constructor

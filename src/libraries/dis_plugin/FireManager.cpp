@@ -13,7 +13,7 @@
 #include "UdpNetwork.h"
 #include "Time_ABC.h"
 
-using namespace dis;
+using namespace plugins::dis;
 
 // -----------------------------------------------------------------------------
 // Name: FireManager constructor

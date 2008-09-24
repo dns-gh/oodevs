@@ -12,15 +12,17 @@
 
 namespace kernel
 {
-    class CoordinateConverter_ABC; 
+    class CoordinateConverter_ABC;
 }
 
 namespace xml
 {
-    class xostream; 
+    class xostream;
 }
 
-namespace messenger 
+namespace plugins
+{
+namespace messenger
 {
 
 // =============================================================================
@@ -45,6 +47,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Entity_ABC_h_

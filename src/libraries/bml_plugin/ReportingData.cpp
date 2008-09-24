@@ -18,7 +18,7 @@
 #pragma warning( pop )
 
 namespace bpt = boost::posix_time;
-using namespace bml;
+using namespace plugins::bml;
 
 namespace
 {
@@ -63,7 +63,7 @@ ReportingData::~ReportingData()
 // Name: operator<<
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-xml::xostream& bml::operator<<( xml::xostream& xos, const ReportingData& data )
+xml::xostream& plugins::bml::operator<<( xml::xostream& xos, const ReportingData& data )
 {
     xos << xml::start( "jc3iedm:ReportingData" )
             << xml::attribute( "xsi:type", "jc3iedm:ReportingData" )

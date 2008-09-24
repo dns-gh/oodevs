@@ -15,6 +15,8 @@
 #include "Shape_ABC.h"
 #include "ESRI.h"
 
+namespace plugins
+{
 namespace crossbow
 {
     class Point;
@@ -71,6 +73,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __PointCollection_h_

@@ -15,12 +15,14 @@ namespace dispatcher
     class Publisher_ABC;
 }
 
+namespace plugins
+{
 namespace crossbow
 {
 
 // =============================================================================
 /** @class  Listener_ABC
-    @brief  Listener_ABC    
+    @brief  Listener_ABC
 */
 // Created: JCR 2007-06-14
 // =============================================================================
@@ -39,6 +41,7 @@ public:
     //@}
 };
 
+}
 }
 
 #endif // __Listener_ABC_h_

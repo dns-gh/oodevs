@@ -15,6 +15,8 @@
 template< typename T > class Class;
 class Federate;
 
+namespace plugins
+{
 namespace hla
 {
     class HlaExtension_ABC;
@@ -61,6 +63,7 @@ private:
     //@}
 };
 
+}
 }
 
 #endif // __AggregateEntityClass_h_

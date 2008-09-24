@@ -10,6 +10,8 @@
 #ifndef __Events_h_
 #define __Events_h_
 
+namespace plugins
+{
 namespace script
 {
 
@@ -17,7 +19,7 @@ namespace script
     struct name                                     \
     {                                               \
         name( type data )                           \
-            : member( data ) {};                    \
+            : member( data ) {}                     \
         type member;                                \
     private:                                        \
         name& operator=( const name& );             \
@@ -28,13 +30,14 @@ namespace script
     {                                                                  \
         name( type1 data1, type2 data2 )                               \
             : member1( data1 )                                         \
-            , member2( data2 ) {};                                     \
+            , member2( data2 ) {}                                      \
         type1 member1;                                                 \
         type2 member2;                                                 \
     private:                                                           \
         name& operator=( const name& );                                \
     }
 
+}
 }
 
 #endif // __Events_h_
