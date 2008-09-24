@@ -23,7 +23,7 @@ namespace crossbow
 */
 // Created: SBO 2007-08-30
 // =============================================================================
-class FeatureRow : public Row
+class FeatureRow : public crossbow::Row
 {
 
 public:

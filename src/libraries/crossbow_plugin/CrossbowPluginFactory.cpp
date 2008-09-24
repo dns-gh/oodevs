@@ -11,6 +11,7 @@
 #include "CrossbowPluginFactory.h"
 #include "CrossbowPlugin.h"
 
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------

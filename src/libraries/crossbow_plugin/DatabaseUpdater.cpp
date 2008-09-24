@@ -25,6 +25,7 @@
 #include "dispatcher/AgentKnowledge.h"
 #include "tools/App6Symbol.h"
 
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------

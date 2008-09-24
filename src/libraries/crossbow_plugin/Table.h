@@ -72,7 +72,7 @@ private:
     const std::string name_;
     ITablePtr table_;
     ICursorPtr cursor_;
-    std::auto_ptr< Row > row_;
+    std::auto_ptr< crossbow::Row > row_;
     bool inTransaction_;
     //@}
 };

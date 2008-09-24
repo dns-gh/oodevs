@@ -21,6 +21,7 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------

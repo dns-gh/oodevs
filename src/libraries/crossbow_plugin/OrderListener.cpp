@@ -17,6 +17,7 @@
 #include <sstream>
 
 using namespace dispatcher;
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------

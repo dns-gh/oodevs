@@ -13,6 +13,7 @@
 #include "Line.h"
 #include "Area.h"
 
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
@@ -45,11 +46,11 @@ namespace
             , spatialReference_( spatialReference )
         {
         }
-        virtual void Visit( const PointCollection& points )
+        virtual void Visit( const crossbow::PointCollection& points )
         {
             points.UpdateGeometry( geometry_, spatialReference_ );
         }
-        virtual void Visit( const Point& point )
+        virtual void Visit( const crossbow::Point& point )
         {
             point.UpdateGeometry( geometry_, spatialReference_ );
         }
@@ -106,7 +107,7 @@ void FeatureRow::BindFeature( IFeaturePtr feature )
     shape_.reset();
     IRowPtr row;
     feature.QueryInterface( IID_IRow, &row ); // $$$$ SBO 2007-08-30: check
-    Row::BindRow( row );
+    crossbow::Row::BindRow( row );
 }
 
 // -----------------------------------------------------------------------------

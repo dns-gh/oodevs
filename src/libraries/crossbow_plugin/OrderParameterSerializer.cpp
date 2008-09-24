@@ -24,6 +24,7 @@
 // #include <geocoord/MGRS.h>
 // #include <cmath>
 
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
@@ -207,18 +208,18 @@ void OrderParameterSerializer::SerializeBool( ASN1BOOL& asn, const std::string& 
 
 namespace 
 {
-    class GeometrySerializer : public ShapeVisitor_ABC
+    class GeometrySerializer : public crossbow::ShapeVisitor_ABC
     {
     public:
         explicit GeometrySerializer( ASN1T_Location& asn ) 
             : asn_ ( asn ) 
         {
         }
-        void Visit( const PointCollection& points )
+        void Visit( const crossbow::PointCollection& points )
         {
             points.Serialize( asn_ );
         }
-        void Visit( const Point& point )
+        void Visit( const crossbow::Point& point )
         {
             point.Serialize( asn_ );
         }

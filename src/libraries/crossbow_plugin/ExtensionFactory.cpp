@@ -22,6 +22,7 @@
 #include "dispatcher/Object.h"
 #include "dispatcher/AgentKnowledge.h"
 
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------

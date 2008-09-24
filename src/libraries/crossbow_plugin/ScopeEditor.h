@@ -26,7 +26,7 @@ class ScopeEditor
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit ScopeEditor( Database_ABC& database );
+    explicit ScopeEditor( crossbow::Database_ABC& database );
             ~ScopeEditor();
     //@}
           
@@ -40,7 +40,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Database_ABC& database_;
+    crossbow::Database_ABC& database_;
     //@}
 };
 

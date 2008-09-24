@@ -14,6 +14,7 @@
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------

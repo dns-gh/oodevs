@@ -10,7 +10,6 @@
 #ifndef __PointCollection_h_
 #define __PointCollection_h_
 
-
 #include "game_asn/Simulation.h"
 #include "Shape_ABC.h"
 #include "ESRI.h"

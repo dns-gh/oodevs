@@ -14,6 +14,7 @@
 #include "Row_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------

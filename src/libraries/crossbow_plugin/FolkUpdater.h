@@ -15,7 +15,7 @@
 namespace plugins
 {
 namespace crossbow
-{
+{    
     class Table_ABC;
     class Row_ABC;
     class Database_ABC;

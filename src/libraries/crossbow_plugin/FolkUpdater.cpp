@@ -14,6 +14,7 @@
 #include "Row_ABC.h"
 #include "ScopeEditor.h"
 
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------

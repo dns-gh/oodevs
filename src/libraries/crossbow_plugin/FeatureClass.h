@@ -62,7 +62,7 @@ private:
     IFeatureClassPtr featureClass_;
     ISpatialReferencePtr spatialReference_;
     IFeatureCursorPtr cursor_;
-    std::auto_ptr< FeatureRow > feature_;
+    std::auto_ptr< crossbow::FeatureRow > feature_;
     //@}
 };
 

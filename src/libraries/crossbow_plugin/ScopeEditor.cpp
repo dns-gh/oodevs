@@ -11,13 +11,13 @@
 #include "ScopeEditor.h"
 #include "Database_ABC.h"
 
-using namespace plugins::crossbow;
+using namespace plugins;
 
 // -----------------------------------------------------------------------------
 // Name: ScopeEditor constructor
 // Created: JCR 2007-12-06
 // -----------------------------------------------------------------------------
-ScopeEditor::ScopeEditor( Database_ABC& database )
+crossbow::ScopeEditor::ScopeEditor( crossbow::Database_ABC& database )
     : database_ ( database )
 {
     // database_.Lock();
@@ -28,7 +28,7 @@ ScopeEditor::ScopeEditor( Database_ABC& database )
 // Name: ScopeEditor destructor
 // Created: JCR 2007-12-06
 // -----------------------------------------------------------------------------
-ScopeEditor::~ScopeEditor()
+crossbow::ScopeEditor::~ScopeEditor()
 {
     database_.StopEdit();
 }

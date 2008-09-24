@@ -13,6 +13,7 @@
 #include "Table.h"
 #include "dispatcher/Config.h"
 
+using namespace plugins;
 using namespace plugins::crossbow;
 
 namespace 

@@ -23,6 +23,7 @@
 #include "dispatcher/Model.h"
 #include <xeumeuleu/xml.h>
 
+using namespace plugins;
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------

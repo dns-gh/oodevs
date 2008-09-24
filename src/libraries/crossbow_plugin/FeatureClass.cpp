@@ -12,7 +12,7 @@
 #include "FeatureRow.h"
 #include <boost/lexical_cast.hpp>
 
-using namespace plugins::crossbow;
+using namespace plugins;
 
 namespace
 {
@@ -28,7 +28,7 @@ namespace
 // Name: FeatureClass constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-FeatureClass::FeatureClass( IFeatureClassPtr featureClass, const std::string& name )
+crossbow::FeatureClass::FeatureClass( IFeatureClassPtr featureClass, const std::string& name )
     : Table( GetTable( featureClass ), name )
     , name_( name )
     , featureClass_( featureClass )
@@ -43,7 +43,7 @@ FeatureClass::FeatureClass( IFeatureClassPtr featureClass, const std::string& na
 // Name: FeatureClass destructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-FeatureClass::~FeatureClass()
+crossbow::FeatureClass::~FeatureClass()
 {
     // NOTHING
 }
@@ -52,7 +52,7 @@ FeatureClass::~FeatureClass()
 // Name: FeatureClass::InitializeSpatialReference
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void FeatureClass::InitializeSpatialReference()
+void crossbow::FeatureClass::InitializeSpatialReference()
 {
     ISpatialReferenceFactoryPtr factory( CLSID_SpatialReferenceEnvironment );
     IGeographicCoordinateSystemPtr geoCoordSystem;
@@ -75,7 +75,7 @@ void FeatureClass::InitializeSpatialReference()
 // Name: FeatureClass::CreateRow
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-Row_ABC& FeatureClass::CreateRow()
+crossbow::Row_ABC& crossbow::FeatureClass::CreateRow()
 {
     IFeaturePtr feature;
     featureClass_->CreateFeature( &feature ); // $$$$ SBO 2007-08-30: check
@@ -87,7 +87,7 @@ Row_ABC& FeatureClass::CreateRow()
 // Name: FeatureClass::UpdateRow
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void FeatureClass::UpdateRow( const Row_ABC& row )
+void crossbow::FeatureClass::UpdateRow( const Row_ABC& row )
 {
     if( &row != feature_.get() )
         return;
@@ -113,7 +113,7 @@ namespace
 // Name: FeatureClass::Find
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-Row_ABC* FeatureClass::Find( const std::string& query )
+crossbow::Row_ABC* crossbow::FeatureClass::Find( const std::string& query )
 {
     IQueryFilterPtr filter;
 
@@ -135,7 +135,7 @@ Row_ABC* FeatureClass::Find( const std::string& query )
 // Name: FeatureClass::GetNextRow
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-Row_ABC* FeatureClass::GetNextRow()
+crossbow::Row_ABC* crossbow::FeatureClass::GetNextRow()
 {
     IFeaturePtr feature;
     if( FAILED( cursor_->NextFeature( &feature ) ) || feature == NULL )

@@ -10,7 +10,6 @@
 #ifndef __Database_ABC_h_
 #define __Database_ABC_h_
 
-
 namespace plugins
 {
 namespace crossbow
