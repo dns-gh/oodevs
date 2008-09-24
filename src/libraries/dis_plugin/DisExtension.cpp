@@ -69,7 +69,7 @@ void DisExtension::DoUpdate( const ASN1T_MsgUnitAttributes& )
 // Name: DisExtension::AddPlatform
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void DisExtension::AddPlatform( const tic::Platform_ABC& platform )
+void DisExtension::AddPlatform( const plugins::tic::Platform_ABC& platform )
 {
     IT_Identifiers it = ids_.find( &platform );
     if( it == ids_.end() )

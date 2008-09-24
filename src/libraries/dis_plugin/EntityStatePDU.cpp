@@ -11,6 +11,7 @@
 #include "EntityStatePDU.h"
 
 using namespace plugins::dis;
+using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: EntityStatePDU constructor

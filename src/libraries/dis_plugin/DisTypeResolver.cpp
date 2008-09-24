@@ -13,6 +13,7 @@
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::dis;
+using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: DisTypeResolver constructor

@@ -11,6 +11,7 @@
 #include "DetonationPDU.h"
 
 using namespace plugins::dis;
+using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: DetonationPDU constructor

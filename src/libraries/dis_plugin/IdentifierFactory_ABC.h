@@ -29,13 +29,13 @@ class IdentifierFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IdentifierFactory_ABC() {};
-    virtual ~IdentifierFactory_ABC() {};
+             IdentifierFactory_ABC() {}
+    virtual ~IdentifierFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual EntityIdentifier CreateNewIdentifier() = 0;
+    virtual hla::EntityIdentifier CreateNewIdentifier() = 0;
     //@}
 };
 

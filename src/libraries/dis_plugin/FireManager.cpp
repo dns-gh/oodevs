@@ -14,6 +14,7 @@
 #include "Time_ABC.h"
 
 using namespace plugins::dis;
+using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: FireManager constructor

@@ -72,8 +72,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const tic::Platform_ABC*, EntityIdentifier > T_Identifiers;
-    typedef T_Identifiers::iterator                               IT_Identifiers;
+    typedef std::map< const plugins::tic::Platform_ABC*, hla::EntityIdentifier > T_Identifiers;
+    typedef T_Identifiers::iterator                                             IT_Identifiers;
     //@}
 
 private:
