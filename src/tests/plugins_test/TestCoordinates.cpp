@@ -10,6 +10,8 @@
 #include "plugins_test_pch.h"
 #include "hla_plugin/Coordinates.h"
 
+using namespace plugins::hla;
+
 namespace
 {
     static const double tolerance = 1.; // percent

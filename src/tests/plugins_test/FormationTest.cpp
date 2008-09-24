@@ -11,7 +11,7 @@
 #include "tic_plugin/RoadFormation.h"
 #include "tic_plugin/Movable_ABC.h"
 
-using namespace tic;
+using namespace plugins::tic;
 using namespace geometry;
 using namespace mockpp;
 
