@@ -76,5 +76,6 @@ private:
 };
 
 }
+}
 
 #endif // __ScorePlugin_h_

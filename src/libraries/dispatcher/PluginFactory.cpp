@@ -37,7 +37,6 @@ PluginFactory::PluginFactory( const Config& config, Model& model, SimulationPubl
     , registrables_( registrables )
     , rights_      ( new RightsPlugin( model_, clients_, config_, clients_, handler_, clients_, registrables ) )
 {
-    
     handler_.Add( rights_ );
     handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights_ ) );
 }
