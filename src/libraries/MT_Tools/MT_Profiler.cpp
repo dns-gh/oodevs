@@ -88,7 +88,7 @@ double MT_Profiler::Stop()
 
     QueryPerformanceCounter( (LARGE_INTEGER*)&nCounterStop );
 
-	double rTime = ( nCounterStop - nCounterStart_ ) / (double)nFrequency_;
+    double rTime = ( nCounterStop - nCounterStart_ ) / (double)nFrequency_;
 
     rLastTime_   = rTime;
     rTotalTime_ += rTime;

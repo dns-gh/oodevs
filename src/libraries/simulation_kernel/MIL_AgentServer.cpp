@@ -406,7 +406,7 @@ void MIL_AgentServer::SendControlInformation() const
     message().current_tick         = GetCurrentTimeStep();
     NET_ASN_Tools::WriteGDH( nInitialRealTime_, message().initial_date_time );
     NET_ASN_Tools::WriteGDH( nRealTime_       , message().date_time );
-	message().tick_duration        = GetTimeStepDuration();
+    message().tick_duration        = GetTimeStepDuration();
     message().time_factor          = nTimeFactor_;
     message().status               = (ASN1T_EnumSimulationState)GetSimState();
     message().checkpoint_frequency = GetCheckPointManager().GetCheckPointFrequency();

@@ -50,7 +50,7 @@ inline
 MIL_EffectManager& MIL_AgentServer::GetEffectManager() const
 {
     assert( pEffectManager_ );
-	return *pEffectManager_;
+    return *pEffectManager_;
 }
 
 //-----------------------------------------------------------------------------

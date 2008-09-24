@@ -30,7 +30,7 @@ template < class coeffType, class valuesType >
 class MT_Polynome
 {
 public:
-    typedef			 std::vector< coeffType >        T_CoeffVector;
+    typedef             std::vector< coeffType >        T_CoeffVector;
     typedef typename T_CoeffVector::const_iterator   CIT_CoeffVector;
 
 public:
@@ -101,7 +101,7 @@ protected:
 
 
 #ifdef USE_INLINE
-#	include "MT_Polynome.inl"
+#    include "MT_Polynome.inl"
 #endif
 
 

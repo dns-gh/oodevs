@@ -19,7 +19,7 @@ INLINE
 const MT_Vector2D& MT_Triangle::GetPos1() const
 {
     assert( pPos1_ );
-	return *pPos1_;
+    return *pPos1_;
 }
 
 
@@ -31,7 +31,7 @@ INLINE
 const MT_Vector2D& MT_Triangle::GetPos2() const
 {
     assert( pPos2_ );
-	return *pPos2_;
+    return *pPos2_;
 }
 
 
@@ -43,7 +43,7 @@ INLINE
 const MT_Vector2D& MT_Triangle::GetPos3() const
 {
     assert( pPos3_ );
-	return *pPos3_;
+    return *pPos3_;
 }
 
 

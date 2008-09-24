@@ -68,8 +68,8 @@ namespace
         */
         union 
         {
-	        unsigned char b[200];
-	        unsigned long w[50];
+            unsigned char b[200];
+            unsigned long w[50];
         };
 
         CoMatrix()
@@ -78,32 +78,32 @@ namespace
         }
         CoMatrix( const char* text )
         {
-	        char c = '\0', d;
+            char c = '\0', d;
             ::memset( b, 0, 200 );
-	    
+        
             while ( (d = *text) != '\0' )
             {
-	            setCoocc( c, d );
-	            if ( (c = *++text) != '\0' )
+                setCoocc( c, d );
+                if ( (c = *++text) != '\0' )
                 {
-		            setCoocc( d, c );
-		            text++;
-	            }
-    	    }
+                    setCoocc( d, c );
+                    text++;
+                }
+            }
         }
 
         void setCoocc( char c, char d )
         {
-	        int k = indexOf[(unsigned char) c] + 40 * indexOf[(unsigned char) d];
-	        b[k >> 3] |= k & 0x7;
+            int k = indexOf[(unsigned char) c] + 40 * indexOf[(unsigned char) d];
+            b[k >> 3] |= k & 0x7;
         }
 
         int worth() const
         {
-	        int w = 0;
-	        for ( int i = 0; i < 200; i++ )
-	            w += bitCount[ b[i] ];
-	        return w;
+            int w = 0;
+            for ( int i = 0; i < 200; i++ )
+                w += bitCount[ b[i] ];
+            return w;
         }
     };
 
@@ -111,7 +111,7 @@ namespace
     {
         CoMatrix p;
         for ( int i = 0; i < 50; i++ )
-	        p.w[i] = m.w[i] | n.w[i];
+            p.w[i] = m.w[i] | n.w[i];
         return p;
     }
 
@@ -119,7 +119,7 @@ namespace
     {
         CoMatrix p;
         for ( int i = 0; i < 50; i++ )
-	        p.w[i] = m.w[i] & n.w[i];
+            p.w[i] = m.w[i] & n.w[i];
         return p;
     }
 

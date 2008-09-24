@@ -31,7 +31,7 @@ class SIM_App
     MT_COPYNOTALLOWED( SIM_App );
 
 public:
-	 
+     
     class QuitException : public std::exception
     {
 
@@ -51,9 +51,9 @@ private:
     //! @name Tools
     //@{
     void Initialize();
-	void Run       ();
-	void Stop      (); 
-	bool Tic       (); 
+    void Run       ();
+    void Stop      (); 
+    bool Tic       (); 
     void Cleanup   ();
     int  Test      ();
 
@@ -65,36 +65,36 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_Config		startupConfig_;
+    MIL_Config        startupConfig_;
     
-	WinArguments	winArguments_ ; 
+    WinArguments    winArguments_ ; 
 
-    SIM_NetworkLogger*				pNetworkLogger_;    //<! Error dispatchers
+    SIM_NetworkLogger*                pNetworkLogger_;    //<! Error dispatchers
     MT_FileLogger*                  logger_;
 
-    static bool						bCrashWithCoreDump_;
-    static bool						bUserInterrupt_;
-    SIM_Dispatcher*					pDispatcher_;
+    static bool                        bCrashWithCoreDump_;
+    static bool                        bUserInterrupt_;
+    SIM_Dispatcher*                    pDispatcher_;
     //@}
 
     //! @name UI members 
     //@{
-	HWND						   hWnd_ ;
-	HINSTANCE					   hInstance_ ; 
-	NOTIFYICONDATA				   TrayIcon_;
-    unsigned int				   nIconIndex_; 
-	std::auto_ptr< boost::thread > guiThread_ ; 
-	std::auto_ptr< boost::thread > dispatcherThread_ ; 
-	//@}
+    HWND                           hWnd_ ;
+    HINSTANCE                       hInstance_ ; 
+    NOTIFYICONDATA                   TrayIcon_;
+    unsigned int                   nIconIndex_; 
+    std::auto_ptr< boost::thread > guiThread_ ; 
+    std::auto_ptr< boost::thread > dispatcherThread_ ; 
+    //@}
 
 
-	void RunGUI(); 
+    void RunGUI(); 
     void RunDispatcher(); 
-	void AnimateIcon() ; 
+    void AnimateIcon() ; 
     void StartIconAnimation(); 
     void StopIconAnimation(); 
 
-	static LRESULT CALLBACK	MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam); 
+    static LRESULT CALLBACK    MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam); 
 
 };
 

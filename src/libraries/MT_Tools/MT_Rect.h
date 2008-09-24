@@ -37,10 +37,10 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-	MT_Float           GetTop   () const;
-	MT_Float           GetBottom() const;
-	MT_Float           GetLeft  () const;
-	MT_Float           GetRight () const;
+    MT_Float           GetTop   () const;
+    MT_Float           GetBottom() const;
+    MT_Float           GetLeft  () const;
+    MT_Float           GetRight () const;
                         
     MT_Float           GetWidth () const;
     MT_Float           GetHeight() const;

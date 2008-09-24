@@ -20,7 +20,7 @@
 namespace boost
 {
     class thread;
-	class mutex; 
+    class mutex; 
 }
 
 
@@ -34,41 +34,41 @@ class SIM_NetworkLogger : public MT_Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-	explicit SIM_NetworkLogger( uint nPort, uint nLogLevels = eLogLevel_All, uint nLogLayers = eLogLayer_All );
+    explicit SIM_NetworkLogger( uint nPort, uint nLogLevels = eLogLevel_All, uint nLogLayers = eLogLayer_All );
     virtual ~SIM_NetworkLogger();
     //@}
 
 private:
     
-	//! @name Log methods 
-	//@{
-	void LogString		( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
-	void WaitForClient	();
-	void StartConnection( boost::shared_ptr< boost::asio::ip::tcp::socket > newClientSocket, const boost::system::error_code& error );
-	void StopConnection ( boost::shared_ptr< boost::asio::ip::tcp::socket > socket ); 
-	void AsyncWrite		( boost::shared_ptr< boost::asio::ip::tcp::socket > socket, const boost::system::error_code& error ); 
-	//@}
+    //! @name Log methods 
+    //@{
+    void LogString        ( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
+    void WaitForClient    ();
+    void StartConnection( boost::shared_ptr< boost::asio::ip::tcp::socket > newClientSocket, const boost::system::error_code& error );
+    void StopConnection ( boost::shared_ptr< boost::asio::ip::tcp::socket > socket ); 
+    void AsyncWrite        ( boost::shared_ptr< boost::asio::ip::tcp::socket > socket, const boost::system::error_code& error ); 
+    //@}
 
 private:
 
-	//! @name Types
+    //! @name Types
     //@{
-	typedef std::set < boost::shared_ptr< boost::asio::ip::tcp::socket > >  T_SocketSet ; 
-	typedef T_SocketSet::iterator                                          IT_SocketSet ; 
-	typedef T_SocketSet::const_iterator                                   CIT_SocketSet ; 
+    typedef std::set < boost::shared_ptr< boost::asio::ip::tcp::socket > >  T_SocketSet ; 
+    typedef T_SocketSet::iterator                                          IT_SocketSet ; 
+    typedef T_SocketSet::const_iterator                                   CIT_SocketSet ; 
     //@}
 
 private:
 
     //! @name 
     //@{
-	T_SocketSet						sockets_; 
-	boost::asio::io_service			io_service_;
-	boost::asio::ip::tcp::acceptor	acceptor_ ; 
-	std::auto_ptr< boost::mutex	>	criticalSection_;
-	std::auto_ptr< boost::thread >	thread_ ; 
+    T_SocketSet                        sockets_; 
+    boost::asio::io_service            io_service_;
+    boost::asio::ip::tcp::acceptor    acceptor_ ; 
+    std::auto_ptr< boost::mutex    >    criticalSection_;
+    std::auto_ptr< boost::thread >    thread_ ; 
     //@}
-	
+    
 };
 
 #endif // __SIM_NetworkLogger_h_

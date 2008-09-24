@@ -57,7 +57,7 @@ const MT_Vector2D& MT_Rect::GetPointDownLeft() const
 inline
 MT_Float MT_Rect::GetTop() const
 {
-	return rPosY2_;
+    return rPosY2_;
 }
 
 //-----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ MT_Float MT_Rect::GetTop() const
 inline
 MT_Float MT_Rect::GetBottom() const
 {
-	return rPosY1_;
+    return rPosY1_;
 }
 
 
@@ -78,7 +78,7 @@ MT_Float MT_Rect::GetBottom() const
 inline
 MT_Float MT_Rect::GetLeft() const
 {
-	return rPosX1_;
+    return rPosX1_;
 }
 
 
@@ -89,7 +89,7 @@ MT_Float MT_Rect::GetLeft() const
 inline
 MT_Float MT_Rect::GetRight() const
 {
-	return rPosX2_;
+    return rPosX2_;
 }
 
 
@@ -159,7 +159,7 @@ MT_Rect& MT_Rect::operator=( const MT_Rect& rhs )
 inline
 bool MT_Rect::IsInside( const MT_Vector2D& point ) const
 {
-	return( point.rX_ >= rPosX1_ && point.rX_ <= rPosX2_ && point.rY_ >= rPosY1_ && point.rY_ <= rPosY2_  );
+    return( point.rX_ >= rPosX1_ && point.rX_ <= rPosX2_ && point.rY_ >= rPosY1_ && point.rY_ <= rPosY2_  );
 }
 
 //-----------------------------------------------------------------------------

@@ -45,9 +45,9 @@ Line       ::= Location (WITH COMPONENTS {...,type(line)})
 Path       ::= Location (WITH COMPONENTS {...,type(line)})
 Polygon    ::= Location (WITH COMPONENTS {...,type(polygon)})
 Segment    ::= Location (WITH COMPONENTS {type(line)   , coordinates (SIZE(2))})
-Circle	   ::= Location (WITH COMPONENTS {type(circle) , coordinates (SIZE(2))}) -- Format : centre, point sur le cercle
-Ellipse	   ::= Location (WITH COMPONENTS {type(ellipse), coordinates (SIZE(3))}) -- Format : centre, point petit axe, point grand axe
-Sector	   ::= Location (WITH COMPONENTS {type(sector) , coordinates (SIZE(3))}) -- Format : centre, point 1, point 2 dans le sens trigo
+Circle     ::= Location (WITH COMPONENTS {type(circle) , coordinates (SIZE(2))}) -- Format : centre, point sur le cercle
+Ellipse    ::= Location (WITH COMPONENTS {type(ellipse), coordinates (SIZE(3))}) -- Format : centre, point petit axe, point grand axe
+Sector     ::= Location (WITH COMPONENTS {type(sector) , coordinates (SIZE(3))}) -- Format : centre, point 1, point 2 dans le sens trigo
 
 LocationList ::= SEQUENCE OF Location
 PolygonList  ::= SEQUENCE OF Polygon

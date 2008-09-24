@@ -27,9 +27,9 @@
 DispatcherFacade::DispatcherFacade( int argc, char** argv )
     : config_  ( new dispatcher::Config() )
 {
-	MT_LOG_REGISTER_LOGGER( *new MT_ConsoleLogger() );
+    MT_LOG_REGISTER_LOGGER( *new MT_ConsoleLogger() );
     config_->Parse( argc, argv );
-	MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ) );
+    MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ) );
 
     dispatcher_.reset( new dispatcher::Dispatcher( *config_ ) );
     dispatcher_->RegisterPluginFactory( *new hla::HlaPluginFactory() );

@@ -25,8 +25,8 @@ class MT_Role_ABC
 public:
              MT_Role_ABC( MT_RoleContainer& roleContainer );
              MT_Role_ABC();
-	virtual ~MT_Role_ABC() = 0;
-	
+    virtual ~MT_Role_ABC() = 0;
+    
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
@@ -43,7 +43,7 @@ protected:
     //@}
 
 private:
-	MT_RoleContainer* pRoleContainer_;
+    MT_RoleContainer* pRoleContainer_;
 };
 
 #include "MT_Role_ABC.inl"

@@ -10,7 +10,7 @@
 INLINE
 const MT_Vector2D& MT_Line::GetPosStart() const
 {
-	return *pPosStart_;
+    return *pPosStart_;
 }
 
 
@@ -21,7 +21,7 @@ const MT_Vector2D& MT_Line::GetPosStart() const
 INLINE
 const MT_Vector2D& MT_Line::GetPosEnd() const
 {
-	return *pPosEnd_;
+    return *pPosEnd_;
 }
 
 //-----------------------------------------------------------------------------
@@ -42,10 +42,10 @@ MT_Vector2D MT_Line::GetCenter() const
 INLINE
 bool MT_Line::IsInside( const MT_Vector2D& vPos, MT_Float rSize ) const
 {
-	MT_Vector2D vPosNear = ClosestPointOnLine( vPos );
+    MT_Vector2D vPosNear = ClosestPointOnLine( vPos );
     MT_Float rDist = vPos.SquareDistance( vPosNear );
     MT_Float rDist2 = ( rSize * rSize );
-	return( rDist <= rDist2 );
+    return( rDist <= rDist2 );
 }
 
 //-----------------------------------------------------------------------------
@@ -55,8 +55,8 @@ bool MT_Line::IsInside( const MT_Vector2D& vPos, MT_Float rSize ) const
 INLINE
 bool MT_Line::IsInside( const MT_Vector2D& vPos, MT_Float rSize, MT_Vector2D& vPosNear ) const
 {
-	vPosNear = ClosestPointOnLine( vPos );
-	return( vPos.SquareDistance( vPosNear ) < ( rSize * rSize ) );
+    vPosNear = ClosestPointOnLine( vPos );
+    return( vPos.SquareDistance( vPosNear ) < ( rSize * rSize ) );
 }
 
 
@@ -72,15 +72,15 @@ MT_Vector2D MT_Line::ClosestPointOnLine( const MT_Vector2D& vPoint ) const
     if( MT_IsZero( rLenDeltaSqr ) )
         return *pPosStart_;
 
-	const MT_Vector2D vDeltaPoint = vPoint - *pPosStart_;
-	const MT_Vector2D vDelta = *pPosEnd_ - *pPosStart_;
+    const MT_Vector2D vDeltaPoint = vPoint - *pPosStart_;
+    const MT_Vector2D vDelta = *pPosEnd_ - *pPosStart_;
 
-	const MT_Float rDot = DotProduct( vDelta, vDeltaPoint );
-	if ( rDot <= 0.f ) 
-		return *pPosStart_;
+    const MT_Float rDot = DotProduct( vDelta, vDeltaPoint );
+    if ( rDot <= 0.f ) 
+        return *pPosStart_;
 
     if ( rDot >= rLenDeltaSqr )
-		return *pPosEnd_;
+        return *pPosEnd_;
 
     return *pPosStart_ + vDelta * ( rDot / rLenDeltaSqr );
 }
@@ -90,7 +90,7 @@ MT_Vector2D MT_Line::ClosestPointOnLine( const MT_Vector2D& vPoint ) const
 // -----------------------------------------------------------------------------
 // Name: MT_Line::DistancePointToLine
 /*
- *	Let the point be C (Cx,Cy) and the line be AB (Ax,Ay) to (Bx,By).
+ *    Let the point be C (Cx,Cy) and the line be AB (Ax,Ay) to (Bx,By).
     Let P be the point of perpendicular projection of C on AB.  The parameter
     r, which indicates P's position along AB, is computed by the dot product 
     of AC and AB divided by the square of the length of AB:

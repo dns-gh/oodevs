@@ -16,12 +16,12 @@
 #include "MT_Memory.h"
 
 typedef int32       MT_COORD;
-typedef double		MT_Float;
+typedef double        MT_Float;
 #define MT_Epsilon  1e-8
 #define MT_PI 3.14159265358979323 
-inline	MT_Float	 MT_flabs( MT_Float rF )	{ return ( rF >= 0. ? rF : -rF ); }
-inline	bool	     MT_IsZero( MT_Float rF )	{ return MT_flabs( rF ) < MT_Epsilon; }
-inline  bool	     MT_IsSameSigns( MT_Float rA, MT_Float rB ) { return ( rA * rB ) >= 0.; }
+inline    MT_Float     MT_flabs( MT_Float rF )    { return ( rF >= 0. ? rF : -rF ); }
+inline    bool         MT_IsZero( MT_Float rF )    { return MT_flabs( rF ) < MT_Epsilon; }
+inline  bool         MT_IsSameSigns( MT_Float rA, MT_Float rB ) { return ( rA * rB ) >= 0.; }
 #define MT_UNUSED(x) (void)x;
 
 //-------------------------------------------------------------------------

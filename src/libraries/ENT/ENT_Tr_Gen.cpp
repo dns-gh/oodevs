@@ -503,7 +503,7 @@ ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
 //-----------------------------------------------------------------------------
 void ENT_Tr::InitTranslations()
 {
-	InitTr( ChangeHierarchyErrorCodeConverter_, "ENT_Tr" );
+    InitTr( ChangeHierarchyErrorCodeConverter_, "ENT_Tr" );
     InitTr( LocationTypeConverter_, "ENT_Tr" );
     InitTr( DotationFamilyConverter_, "ENT_Tr" );
     InitTr( AmmunitionFamilyConverter_, "ENT_Tr" );
@@ -880,8 +880,8 @@ const std::string& ENT_Tr::ConvertFromObjectErrorCode( E_ObjectErrorCode nValue,
 //-----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromObjectType( E_ObjectType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-	const std::string& strOut = ENT_Tr::InverseFindInConverter( ObjectTypeConverter_, nValue, nConverterType );
-	return strOut;
+    const std::string& strOut = ENT_Tr::InverseFindInConverter( ObjectTypeConverter_, nValue, nConverterType );
+    return strOut;
 }
 
 //-----------------------------------------------------------------------------

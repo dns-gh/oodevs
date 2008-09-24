@@ -29,13 +29,13 @@
 // -----------------------------------------------------------------------------
 SIM_NetworkLogger::SIM_NetworkLogger( uint nPort, uint nLogLevels, uint nLogLayers )
     : MT_Logger_ABC( nLogLevels, nLogLayers )
-	, sockets_   ()
-	, io_service_() 
-	, acceptor_  (io_service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), nPort ) )
-	, criticalSection_ ( new boost::mutex ) 
+    , sockets_   ()
+    , io_service_() 
+    , acceptor_  (io_service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), nPort ) )
+    , criticalSection_ ( new boost::mutex ) 
 {
-	WaitForClient(); 
-	thread_.reset( new boost::thread( boost::bind( &boost::asio::io_service::run, &io_service_ ) ) );
+    WaitForClient(); 
+    thread_.reset( new boost::thread( boost::bind( &boost::asio::io_service::run, &io_service_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,9 +44,9 @@ SIM_NetworkLogger::SIM_NetworkLogger( uint nPort, uint nLogLevels, uint nLogLaye
 // -----------------------------------------------------------------------------
 SIM_NetworkLogger::~SIM_NetworkLogger()
 {
-	sockets_.clear(); 
-	io_service_.stop();
-	thread_->join();
+    sockets_.clear(); 
+    io_service_.stop();
+    thread_->join();
 }
 
 
@@ -68,8 +68,8 @@ void SIM_NetworkLogger::StartConnection( boost::shared_ptr< boost::asio::ip::tcp
 {
     if ( !error )
     {
-		boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
-		sockets_.insert( newClientSocket ) ; 
+        boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
+        sockets_.insert( newClientSocket ) ; 
         WaitForClient();
     }
 }
@@ -80,8 +80,8 @@ void SIM_NetworkLogger::StartConnection( boost::shared_ptr< boost::asio::ip::tcp
 // -----------------------------------------------------------------------------
 void SIM_NetworkLogger::StopConnection( boost::shared_ptr< boost::asio::ip::tcp::socket > socket )
 {
-	boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
-	sockets_.erase( socket ) ; 
+    boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
+    sockets_.erase( socket ) ; 
 }
 
 // -----------------------------------------------------------------------------
@@ -90,8 +90,8 @@ void SIM_NetworkLogger::StopConnection( boost::shared_ptr< boost::asio::ip::tcp:
 // -----------------------------------------------------------------------------
 void SIM_NetworkLogger::AsyncWrite( boost::shared_ptr< boost::asio::ip::tcp::socket > socket, const boost::system::error_code& error )
 {
-	if (error) 
-		StopConnection( socket );  
+    if (error) 
+        StopConnection( socket );  
 }
 
 // -----------------------------------------------------------------------------
@@ -100,9 +100,9 @@ void SIM_NetworkLogger::AsyncWrite( boost::shared_ptr< boost::asio::ip::tcp::soc
 // -----------------------------------------------------------------------------
 void SIM_NetworkLogger::LogString( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode )
 {
-	boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
-	
-	std::stringstream strTmp;
+    boost::lock_guard< boost::mutex>  locker( *criticalSection_ );
+    
+    std::stringstream strTmp;
 
     strTmp << "[" << GetTimestampAsString() << "]";
 
@@ -121,11 +121,11 @@ void SIM_NetworkLogger::LogString( const char* strLayerName, E_LogLevel nLevel, 
         strTmp << " [Context: " << strContext << "]";
 
     strTmp << "\r\n";
-		
-	for ( IT_SocketSet it = sockets_.begin(); it != sockets_.end(); it++ ) 
-	{
-		boost::asio::async_write( **it,  boost::asio::buffer( strTmp.str().data() , strTmp.str().size() ) ,
-								  boost::bind(&SIM_NetworkLogger::AsyncWrite, this, *it, boost::asio::placeholders::error) ) ;
-	}
+        
+    for ( IT_SocketSet it = sockets_.begin(); it != sockets_.end(); it++ ) 
+    {
+        boost::asio::async_write( **it,  boost::asio::buffer( strTmp.str().data() , strTmp.str().size() ) ,
+                                  boost::bind(&SIM_NetworkLogger::AsyncWrite, this, *it, boost::asio::placeholders::error) ) ;
+    }
 }
 

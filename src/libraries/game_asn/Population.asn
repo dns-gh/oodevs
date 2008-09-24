@@ -100,17 +100,17 @@ MsgPopulationFlowDestruction ::= SEQUENCE
 
 MagicActionPopulationChangeAttitude ::= SEQUENCE
 {
-	attitude        EnumPopulationAttitude,	-- nouvelle attitude
-	beneficiaire    CHOICE					-- cible
-	{
+    attitude        EnumPopulationAttitude, -- nouvelle attitude
+    beneficiaire    CHOICE                  -- cible
+    {
         flux            OID,
         concentration   OID,
         global          NULL
     }
 }
 
-MagicActionPopulationMoveTo				::= CoordLatLong    -- Position
-MagicActionPopulationTotalDestruction	::= NULL
+MagicActionPopulationMoveTo             ::= CoordLatLong    -- Position
+MagicActionPopulationTotalDestruction   ::= NULL
 MagicActionPopulationKill               ::= INTEGER     -- nombre de personne tuées
 MagicActionPopulationResurrect          ::= INTEGER     -- nombre de personne ressuscitées
 

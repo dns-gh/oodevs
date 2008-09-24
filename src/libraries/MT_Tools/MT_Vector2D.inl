@@ -17,10 +17,10 @@
 //-----------------------------------------------------------------------------
 inline
 MT_Vector2D::MT_Vector2D( void )
-:	rX_( 0 )
-,	rY_( 0 )
+:    rX_( 0 )
+,    rY_( 0 )
 
-{	
+{    
 }
 
 
@@ -30,8 +30,8 @@ MT_Vector2D::MT_Vector2D( void )
 //-----------------------------------------------------------------------------
 inline
 MT_Vector2D::MT_Vector2D( MT_Float rX, MT_Float rY )
-:	rX_( rX )
-,	rY_( rY )
+:    rX_( rX )
+,    rY_( rY )
 {
 }
 
@@ -66,7 +66,7 @@ MT_Vector2D::~MT_Vector2D( void )
 inline
 MT_Float MT_Vector2D::SquareMagnitude( void ) const
 { 
-	return rX_ * rX_ + rY_ * rY_; 
+    return rX_ * rX_ + rY_ * rY_; 
 }
 
 
@@ -78,7 +78,7 @@ MT_Float MT_Vector2D::SquareMagnitude( void ) const
 inline
 MT_Float MT_Vector2D::Magnitude( void ) const
 { 
-	return (MT_Float)sqrt( SquareMagnitude() );
+    return (MT_Float)sqrt( SquareMagnitude() );
 }
 
 
@@ -157,7 +157,7 @@ MT_Vector2D& MT_Vector2D::Normalize()
 inline
 MT_Vector2D operator* ( MT_Float rScalar, const MT_Vector2D& v )
 {
-	return MT_Vector2D( rScalar * v.rX_, rScalar * v.rY_ );
+    return MT_Vector2D( rScalar * v.rX_, rScalar * v.rY_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ MT_Vector2D operator* ( MT_Float rScalar, const MT_Vector2D& v )
 inline
 MT_Vector2D operator* ( const MT_Vector2D& v, MT_Float rScalar )
 {
-	return MT_Vector2D( rScalar * v.rX_, rScalar * v.rY_ );
+    return MT_Vector2D( rScalar * v.rX_, rScalar * v.rY_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -179,7 +179,7 @@ MT_Vector2D operator* ( const MT_Vector2D& v, MT_Float rScalar )
 inline
 MT_Vector2D operator+ ( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 {
-	return MT_Vector2D( v1.rX_ + v2.rX_, v1.rY_ + v2.rY_ );
+    return MT_Vector2D( v1.rX_ + v2.rX_, v1.rY_ + v2.rY_ );
 }
 
 
@@ -197,7 +197,7 @@ MT_Vector2D operator- ( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 //-----------------------------------------------------------------------------
 //  Name  :  operator <
 //  Warning: Attention operator< sert par defaut aux map et donc pas de distance 
-//	pour l'operation < en math
+//    pour l'operation < en math
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
@@ -205,7 +205,7 @@ inline
 bool operator <( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 { 
     return (v1.rX_ < v2.rX_ ||
-		  !(v2.rX_ < v1.rX_) && v1.rY_ < v2.rY_);
+          !(v2.rX_ < v1.rX_) && v1.rY_ < v2.rY_);
 }
 
 //-----------------------------------------------------------------------------

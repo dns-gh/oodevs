@@ -47,19 +47,19 @@ class MT_Synchronized
 {
 public:
 
-	MT_Synchronized(){ }
+    MT_Synchronized(){ }
 
     /**
-	 * This class give you a thread safe access to the MT_Synchronized Value. Look at the example in MT_Synchronized.
-	 */
-	class MT_Accessor
-	{
-	public:
+     * This class give you a thread safe access to the MT_Synchronized Value. Look at the example in MT_Synchronized.
+     */
+    class MT_Accessor
+    {
+    public:
 
-		/// get the mutex or wait
-		MT_Accessor(MT_Synchronized<T> *cs)
-		{
-			synchronized_ = cs;
+        /// get the mutex or wait
+        MT_Accessor(MT_Synchronized<T> *cs)
+        {
+            synchronized_ = cs;
 #ifdef MT_USE_MUTEX
             const_cast<MT_Mutex&>(synchronized_->ms_).Lock();
 #else
@@ -67,44 +67,44 @@ public:
 #endif
         }
 
-		/// release the mutex
-		~MT_Accessor()
-		{
+        /// release the mutex
+        ~MT_Accessor()
+        {
 #ifdef MT_USE_MUTEX
             const_cast<MT_Mutex&>(synchronized_->ms_).Unlock();
 #else
             const_cast<MT_CriticalSection&>(synchronized_->cs_).Leave();
 #endif
-			
-		}
+            
+        }
 
-		/// access to the Value
-		T &value()
-		{
-			return const_cast<T&>(synchronized_->value_);
-		}
+        /// access to the Value
+        T &value()
+        {
+            return const_cast<T&>(synchronized_->value_);
+        }
     
     private:
         MT_Synchronized<T> *synchronized_;
-	};
+    };
 
     class MT_Locker
     {
         public:
 
-		/// get the mutex or wait
-		MT_Locker(MT_Synchronized<T> *cs)
-		{
+        /// get the mutex or wait
+        MT_Locker(MT_Synchronized<T> *cs)
+        {
             bIsLocked_    =false;
-			synchronized_ = cs;
+            synchronized_ = cs;
         }
 
-		/// release the mutex
-		~MT_Locker()
-		{
+        /// release the mutex
+        ~MT_Locker()
+        {
             Unlock();
             synchronized_=0;
-		    
+            
         }
         
         void Lock()
@@ -130,11 +130,11 @@ public:
             bIsLocked_=false;
         }
 
-		/// access to the Value
-		T &value()
-		{
-			return const_cast<T&>(synchronized_->value_);
-		}
+        /// access to the Value
+        T &value()
+        {
+            return const_cast<T&>(synchronized_->value_);
+        }
     
     private:
         bool                bIsLocked_;
@@ -143,18 +143,18 @@ public:
 
 private:
 
-	friend class MT_Synchronized::MT_Accessor;
+    friend class MT_Synchronized::MT_Accessor;
     friend class MT_Synchronized::MT_Locker;
 
-	/// The mutex of the synchronized value.
+    /// The mutex of the synchronized value.
 #ifdef MT_USE_MUTEX
-    volatile MT_Mutex	ms_;
+    volatile MT_Mutex    ms_;
 #else
     volatile MT_CriticalSection cs_;
 #endif
 
     /// The synchronized value.
-	volatile T			value_;
+    volatile T            value_;
 
 };
 

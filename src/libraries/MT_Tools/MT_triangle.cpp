@@ -25,9 +25,9 @@
 // Created: FBD 02-07-01
 //-----------------------------------------------------------------------------
 MT_Triangle::MT_Triangle( const MT_Vector2D& vPos1, const MT_Vector2D& vPos2, const MT_Vector2D& vPos3 )
-:	pPos1_( &vPos1 )
-,	pPos2_( &vPos2 )
-,	pPos3_( &vPos3 )
+:    pPos1_( &vPos1 )
+,    pPos2_( &vPos2 )
+,    pPos3_( &vPos3 )
 {
 }
 
@@ -36,11 +36,11 @@ MT_Triangle::MT_Triangle( const MT_Vector2D& vPos1, const MT_Vector2D& vPos2, co
 // Created: FBD 02-07-01
 //-----------------------------------------------------------------------------
 MT_Triangle::MT_Triangle()
-:	pPos1_()
-,	pPos2_()
-,	pPos3_()
+:    pPos1_()
+,    pPos2_()
+,    pPos3_()
 {
-	
+    
 }
 
 

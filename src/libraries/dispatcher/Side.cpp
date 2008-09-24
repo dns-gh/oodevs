@@ -119,7 +119,7 @@ void Side::Accept( ModelVisitor_ABC& visitor ) const
     knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
     formations_.Apply( boost::bind( &Formation::Accept, _1, boost::ref( visitor ) ) );
     objects_.Apply( boost::bind( &Object::Accept, _1, boost::ref( visitor ) ) );
-	populations_.Apply( boost::bind( &Population::Accept, _1, boost::ref( visitor ) ) );
+    populations_.Apply( boost::bind( &Population::Accept, _1, boost::ref( visitor ) ) );
 }
 
 // -----------------------------------------------------------------------------

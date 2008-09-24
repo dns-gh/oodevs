@@ -40,7 +40,7 @@ enum E_PerceptionResult
     eNotSeen        = 0,
     eDetection      = 1,
     eRecognition    = 2,
-	eIdentification = 3,
+    eIdentification = 3,
 };
 
 enum E_WeatherType

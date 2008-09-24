@@ -82,7 +82,7 @@ Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
                 pAttributes_ = 0;
         }
     }
-	side_.objects_.Register( msg.oid, *this );
+    side_.objects_.Register( msg.oid, *this );
 }
 
 // -----------------------------------------------------------------------------

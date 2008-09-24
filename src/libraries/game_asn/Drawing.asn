@@ -15,9 +15,9 @@ DrawingExports  ::= NULL
 Shape ::= SEQUENCE
 {
     category        VisibleString,
-    color      		VisibleString,
-    template      	VisibleString,
-	points			CoordLatLongList 
+    color           VisibleString,
+    template        VisibleString,
+    points          CoordLatLongList 
 }
 
 ShapeList ::= SEQUENCE OF Shape
@@ -25,16 +25,16 @@ ShapeList ::= SEQUENCE OF Shape
 MsgShapeCreation ::= SEQUENCE
 {
     oid          OID,
-    shape 	     Shape
+    shape        Shape
 }
 
 MsgShapeUpdate ::= SEQUENCE
 {
     oid         OID,
     category    VisibleString OPTIONAL,
-    color      	VisibleString OPTIONAL,
+    color       VisibleString OPTIONAL,
     template    VisibleString OPTIONAL,
-	points		CoordLatLongList OPTIONAL
+    points      CoordLatLongList OPTIONAL
 }
 
 MsgShapeDestruction ::= SEQUENCE
@@ -44,16 +44,16 @@ MsgShapeDestruction ::= SEQUENCE
 
 MsgShapeCreationRequest ::= SEQUENCE
 {
-    shape 		Shape
+    shape       Shape
 }
 
 MsgShapeUpdateRequest ::= SEQUENCE
 {
     oid         OID,
     category    VisibleString OPTIONAL,
-    color      	VisibleString OPTIONAL,
+    color       VisibleString OPTIONAL,
     template    VisibleString OPTIONAL,
-	points		CoordLatLongList OPTIONAL
+    points      CoordLatLongList OPTIONAL
 }
 
 MsgShapeDestructionRequest ::= SEQUENCE

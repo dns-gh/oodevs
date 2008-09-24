@@ -57,7 +57,7 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& /*publisher*/ ) const
 {
-	// NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

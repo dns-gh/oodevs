@@ -31,8 +31,8 @@ public:
 
     //! @name Operations 
     //@{
-	void Run();
-	void Stop(); 
+    void Run();
+    void Stop(); 
     //@}
 
 private:
@@ -46,9 +46,9 @@ private:
 
     //! @name 
     //@{
-    DispatcherFacade               dispatcher_;	//!< embedded dispatcher 
-	bool						   bRunning_ ;  //!< running status 
-	//@}
+    DispatcherFacade               dispatcher_;    //!< embedded dispatcher 
+    bool                           bRunning_ ;  //!< running status 
+    //@}
 };
 
 

@@ -30,8 +30,8 @@ public:
     //-------------------------------------------------------------------------
     //@{
     const MT_Vector2D& GetPos1  () const;
-	const MT_Vector2D& GetPos2  () const;
-	const MT_Vector2D& GetPos3  () const;
+    const MT_Vector2D& GetPos2  () const;
+    const MT_Vector2D& GetPos3  () const;
     MT_Vector2D        GetCenter() const;
     MT_Float           GetArea  () const;
     //@}    
@@ -48,9 +48,9 @@ public:
     //@}
 
 private:
-	const MT_Vector2D* pPos1_;
-	const MT_Vector2D* pPos2_;
-	const MT_Vector2D* pPos3_;
+    const MT_Vector2D* pPos1_;
+    const MT_Vector2D* pPos2_;
+    const MT_Vector2D* pPos3_;
 };
 
 

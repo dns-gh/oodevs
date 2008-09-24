@@ -34,7 +34,7 @@ bool SIM_App::bUserInterrupt_     = false;
 #include "resource.h"
 
 static const int NUM_ICON_FOR_ANIMATION = 2 ;
-static int	IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
+static int    IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
 
 // -----------------------------------------------------------------------------
 // Name: SIM_App constructor
@@ -43,7 +43,7 @@ static int	IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
 SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
     : pNetworkLogger_( 0 )
     , logger_        ( 0 )
-    , hWnd_			 ( NULL )
+    , hWnd_             ( NULL )
     , hInstance_     ( hinstance )
     , pDispatcher_   ( 0 )
     , nIconIndex_    ( 0 )
@@ -112,7 +112,7 @@ void SIM_App::Initialize()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SIM_App::CALLBACK	MainWndProc
+// Name: SIM_App::CALLBACK    MainWndProc
 // Created: RDS 2008-07-10
 // -----------------------------------------------------------------------------
 LRESULT SIM_App::MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -198,7 +198,7 @@ void SIM_App::RunGUI()
 
     if(!RegisterClass(&wc)) return;
 
-    hWnd_ = CreateWindow("MaWinClass", "CSword", WS_OVERLAPPEDWINDOW,	
+    hWnd_ = CreateWindow("MaWinClass", "CSword", WS_OVERLAPPEDWINDOW,    
                           CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
                           NULL, NULL, hInstance_, NULL);
 

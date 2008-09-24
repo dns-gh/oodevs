@@ -42,8 +42,8 @@ Formation::Formation( const Model& model, const ASN1T_MsgFormationCreation& msg 
 // -----------------------------------------------------------------------------
 Formation::~Formation()
 {
-	// $$$ RDS : completement invalide si la formation parente a déja été detruite !!! 
-	if( parent_ )
+    // $$$ RDS : completement invalide si la formation parente a déja été detruite !!! 
+    if( parent_ )
         parent_->formations_.Remove( GetId() );
     else
         team_.formations_.Remove( GetId() );

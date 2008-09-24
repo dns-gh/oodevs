@@ -23,8 +23,8 @@ class MT_Role_ABC;
 class MT_RoleContainer
 {
 public:
-	         MT_RoleContainer();
-	virtual ~MT_RoleContainer();
+             MT_RoleContainer();
+    virtual ~MT_RoleContainer();
     
     //! @name CheckPoints
     //@{

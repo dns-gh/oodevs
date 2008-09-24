@@ -147,39 +147,39 @@ bool MT_Rect::Intersect2D( const MT_Vector2D& vPosSrc, const MT_Vector2D& vPosDe
     if ( line.IsClipped( lineUp_ ) )
     {
         // Upper Line of Patch
-	    if ( line.Intersect2D( lineUp_ ) )
-	    {
-		    return true;
-	    }
+        if ( line.Intersect2D( lineUp_ ) )
+        {
+            return true;
+        }
     }
 
     if ( line.IsClipped( lineRight_ ) )
     {
         // Righter Line of Patch
-	    if ( line.Intersect2D( lineRight_ ) )
-	    {
-		    return true;
-	    }
+        if ( line.Intersect2D( lineRight_ ) )
+        {
+            return true;
+        }
     }
     
     // Lower Line of Patch
     if ( line.IsClipped( lineDown_ ) )
     {
-	    if ( line.Intersect2D( lineDown_ ) )
-	    {
-		    return true;
-	    }
+        if ( line.Intersect2D( lineDown_ ) )
+        {
+            return true;
+        }
     }
 
     // Lefter Line of Patch
     if ( line.IsClipped( lineLeft_ ) )
     {
-	    if ( line.Intersect2D( lineLeft_ ) )
-	    {
-		    return true;
-	    }
+        if ( line.Intersect2D( lineLeft_ ) )
+        {
+            return true;
+        }
     }
-	return false;
+    return false;
 }
 
 

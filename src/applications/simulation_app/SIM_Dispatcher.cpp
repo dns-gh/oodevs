@@ -20,9 +20,9 @@
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv )
     : bRunning_  ( true ) 
-	, dispatcher_( argc, argv )
+    , dispatcher_( argc, argv )
 {
-	// thread_.reset( new boost::thread( boost::bind( &SIM_Dispatcher::Run, this ) ) ); 
+    // thread_.reset( new boost::thread( boost::bind( &SIM_Dispatcher::Run, this ) ) ); 
 }
     
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv )
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::~SIM_Dispatcher()
 {
-	Stop(); 
+    Stop(); 
 }
 
 // =============================================================================
@@ -44,11 +44,11 @@ SIM_Dispatcher::~SIM_Dispatcher()
 // -----------------------------------------------------------------------------
 void SIM_Dispatcher::Run()
 {
-	while( bRunning_ )
-	{
-		dispatcher_.Update();
+    while( bRunning_ )
+    {
+        dispatcher_.Update();
         boost::this_thread::sleep( boost::posix_time::milliseconds( 25 ) ) ; 
-	}
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +57,6 @@ void SIM_Dispatcher::Run()
 // -----------------------------------------------------------------------------
 void SIM_Dispatcher::Stop()
 {
-	bRunning_ = false ; 
+    bRunning_ = false ; 
 }
 
