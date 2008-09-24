@@ -39,14 +39,14 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     EntityStatePDU( unsigned long time, unsigned char exercise, const hla::EntityIdentifier& id );
+     EntityStatePDU( unsigned long time, unsigned char exercise, const plugins::hla::EntityIdentifier& id );
     ~EntityStatePDU();
     //@}
 
     //! @name Modifiers
     //@{
     void SetEntityName( const std::string& name );
-    void SetEntityType( const hla::EntityType& type );
+    void SetEntityType( const plugins::hla::EntityType& type );
     void SetPosition( double latitude, double longitude, float altitude, float speed, float heading );
 
     void SetAppearance( unsigned damageLevel, bool smoking, bool flaming );
@@ -78,22 +78,22 @@ public:
 private:
     //! @name Member data
     //@{
-    DisHeader             header_;                          // 12
-    hla::EntityIdentifier id_;                              // 6
-    unsigned char         forceID_;                         // 1
-    unsigned char         numberOfArticulationParameters_;  // 1    20
-    hla::EntityType       entityType_;                      // 8
-    hla::EntityType       alternativeType_;                 // 8    36
-    hla::VelocityVector   entityLinearVelocity_;            // 12   48
-    hla::WorldLocation    entityLocation_;                  // 24   72
-    hla::Orientation      entityOrientation_;               // 12   84
-    unsigned long         appearance_;                      // 4    88
-    unsigned char         deadReckoningAlgorithm_;          // 1
-    unsigned char         otherParameters_[15];             // 15   104
-    hla::VelocityVector   DRentityLinearAcceleration_;      // 12   116
-    hla::VelocityVector   DRentityAngularVelocity_;         // 12   128
-    EntityMarking         entityMarking_;                   // 12   140
-    unsigned long         capabilities_;                    // 4    144
+    DisHeader                      header_;                          // 12
+    plugins::hla::EntityIdentifier id_;                              // 6
+    unsigned char                  forceID_;                         // 1
+    unsigned char                  numberOfArticulationParameters_;  // 1    20
+    plugins::hla::EntityType       entityType_;                      // 8
+    plugins::hla::EntityType       alternativeType_;                 // 8    36
+    plugins::hla::VelocityVector   entityLinearVelocity_;            // 12   48
+    plugins::hla::WorldLocation    entityLocation_;                  // 24   72
+    plugins::hla::Orientation      entityOrientation_;               // 12   84
+    unsigned long                  appearance_;                      // 4    88
+    unsigned char                  deadReckoningAlgorithm_;          // 1
+    unsigned char                  otherParameters_[15];             // 15   104
+    plugins::hla::VelocityVector   DRentityLinearAcceleration_;      // 12   116
+    plugins::hla::VelocityVector   DRentityAngularVelocity_;         // 12   128
+    EntityMarking                  entityMarking_;                   // 12   140
+    unsigned long                  capabilities_;                    // 4    144
     //@}
 };
 

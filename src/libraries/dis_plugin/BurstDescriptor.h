@@ -58,11 +58,11 @@ public:
 private:
     //! @name Member data
     //@{
-    hla::EntityType type_;
-    unsigned short  warhead_;
-    unsigned short  fuse_;
-    unsigned short  quantity_;
-    unsigned short  rate_;
+    plugins::hla::EntityType type_;
+    unsigned short           warhead_;
+    unsigned short           fuse_;
+    unsigned short           quantity_;
+    unsigned short           rate_;
     //@}
 };
 

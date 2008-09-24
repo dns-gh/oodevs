@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    hla::EntityType Find( const kernel::ComponentType& component ) const;
+    plugins::hla::EntityType Find( const kernel::ComponentType& component ) const;
     //@}
 
 private:
@@ -65,9 +65,9 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::ApproximativeMap< hla::EntityType > types_;
-    mutable std::map< const kernel::ComponentType*, hla::EntityType > resolved_;
-    hla::EntityType default_;
+    kernel::ApproximativeMap< plugins::hla::EntityType > types_;
+    mutable std::map< const kernel::ComponentType*, plugins::hla::EntityType > resolved_;
+    plugins::hla::EntityType default_;
     //@}
 };
 

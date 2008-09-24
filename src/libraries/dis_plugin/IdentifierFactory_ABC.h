@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual hla::EntityIdentifier CreateNewIdentifier() = 0;
+    virtual plugins::hla::EntityIdentifier CreateNewIdentifier() = 0;
     //@}
 };
 
