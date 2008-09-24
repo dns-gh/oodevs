@@ -10,13 +10,11 @@
 #include "crossbow_plugin_pch.h"
 #include "Row.h"
 
-using namespace plugins::crossbow;
-
 // -----------------------------------------------------------------------------
 // Name: Row constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-Row::Row()
+plugins::crossbow::Row::Row()
 {
     // NOTHING
 }
@@ -25,7 +23,7 @@ Row::Row()
 // Name: Row destructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-Row::~Row()
+plugins::crossbow::Row::~Row()
 {
     // NOTHING
 }
@@ -60,7 +58,7 @@ namespace
 // Name: Row::SetField
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void Row::SetField( const std::string& name, const FieldVariant& value )
+void plugins::crossbow::Row::SetField( const std::string& name, const FieldVariant& value )
 {
     const long index = GetFieldIndex( name );
     if( index < 0 )
@@ -72,7 +70,7 @@ void Row::SetField( const std::string& name, const FieldVariant& value )
 // Name: Row::SetShape
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void Row::SetShape( const Shape_ABC& /*value*/ )
+void plugins::crossbow::Row::SetShape( const Shape_ABC& /*value*/ )
 {
     throw std::runtime_error( "Trying to set shape for table." );
 }
@@ -100,7 +98,7 @@ namespace
 // Name: Row::GetField
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-FieldVariant Row::GetField( const std::string& name ) const
+FieldVariant plugins::crossbow::Row::GetField( const std::string& name ) const
 {
     const long index = GetFieldIndex( name );
     if( index < 0 )
@@ -114,7 +112,7 @@ FieldVariant Row::GetField( const std::string& name ) const
 // Name: Row::GetID
 // Created: JCR 2008-07-25
 // -----------------------------------------------------------------------------
-long Row::GetID() const
+long plugins::crossbow::Row::GetID() const
 {
     long id;
     
@@ -126,7 +124,7 @@ long Row::GetID() const
 // Name: Row::GetShape
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-Shape_ABC& Row::GetShape() const
+Shape_ABC& plugins::crossbow::Row::GetShape() const
 {
     throw std::runtime_error( "Trying to get shape from a table" );
 }
@@ -135,7 +133,7 @@ Shape_ABC& Row::GetShape() const
 // Name: Row::Commit
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void Row::Commit( ICursorPtr cursor /*=NULL*/)
+void plugins::crossbow::Row::Commit( ICursorPtr cursor /*=NULL*/)
 {
     if( cursor != NULL )
         cursor->UpdateRow( row_ );
@@ -147,7 +145,7 @@ void Row::Commit( ICursorPtr cursor /*=NULL*/)
 // Name: Row::BindRow
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void Row::BindRow( IRowPtr row )
+void plugins::crossbow::Row::BindRow( IRowPtr row )
 {
     row_ = row;
 }
@@ -156,7 +154,7 @@ void Row::BindRow( IRowPtr row )
 // Name: Row::GetFieldIndex
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-long Row::GetFieldIndex( const std::string& name ) const
+long plugins::crossbow::Row::GetFieldIndex( const std::string& name ) const
 {
     IFieldsPtr fields; 
     row_->get_Fields( &fields );

@@ -11,13 +11,11 @@
 #include "Line.h"
 #include "Point.h"
 
-using namespace plugins::crossbow;
-
 // -----------------------------------------------------------------------------
 // Name: Line constructor
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-Line::Line()
+plugins::crossbow::Line::Line()
 {
     // NOTHING
 }
@@ -26,7 +24,7 @@ Line::Line()
 // Name: Line constructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-Line::Line( const ASN1T_CoordLatLongList& asn )
+plugins::crossbow::Line::Line( const ASN1T_CoordLatLongList& asn )
     : PointCollection( asn )
 {
     // NOTHING
@@ -36,7 +34,7 @@ Line::Line( const ASN1T_CoordLatLongList& asn )
 // Name: Line constructor
 // Created: JCR 2007-11-06
 // -----------------------------------------------------------------------------
-Line::Line( IGeometryPtr geometry )
+plugins::crossbow::Line::Line( IGeometryPtr geometry )
     : PointCollection( geometry )
 {
     // NOTHING
@@ -46,7 +44,7 @@ Line::Line( IGeometryPtr geometry )
 // Name: Line destructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-Line::~Line()
+plugins::crossbow::Line::~Line()
 {
     // NOTHING
 }
@@ -55,7 +53,7 @@ Line::~Line()
 // Name: Line::UpdateGeometry
 // Created: JCR 2007-08-31
 // -----------------------------------------------------------------------------
-void Line::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+void plugins::crossbow::Line::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
 {
     if( geometry == NULL )
         geometry.CreateInstance( CLSID_Polyline );
@@ -66,7 +64,7 @@ void Line::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialRe
 // Name: Line::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void Line::Serialize( ASN1T_Location& asn ) const
+void plugins::crossbow::Line::Serialize( ASN1T_Location& asn ) const
 {
     asn.type = EnumLocationType::line;
     PointCollection::Serialize( asn );

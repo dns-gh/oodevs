@@ -12,13 +12,11 @@
 #include "Row.h"
 #include <boost/lexical_cast.hpp>
 
-using namespace plugins::crossbow;
-
 // -----------------------------------------------------------------------------
 // Name: Table constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-Table::Table( ITablePtr table, const std::string& name )
+plugins::crossbow::Table::Table( ITablePtr table, const std::string& name )
     : name_( name )
     , table_( table )
     , cursor_()
@@ -32,7 +30,7 @@ Table::Table( ITablePtr table, const std::string& name )
 // Name: Table destructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-Table::~Table()
+plugins::crossbow::Table::~Table()
 {
     // NOTHING
 }
@@ -55,7 +53,7 @@ namespace
 // Name: Table::CreateRow
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-Row_ABC& Table::CreateRow()
+Row_ABC& plugins::crossbow::Table::CreateRow()
 {
     IRowPtr row;
     HRESULT res = table_->CreateRow( &row ); // $$$$ SBO 2007-08-30: check
@@ -69,7 +67,7 @@ Row_ABC& Table::CreateRow()
 // Name: Table::DeleteRows
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-void Table::DeleteRows( const std::string& query )
+void plugins::crossbow::Table::DeleteRows( const std::string& query )
 {
     IQueryFilterPtr filter;
     if ( query != "" )
@@ -84,7 +82,7 @@ void Table::DeleteRows( const std::string& query )
 // Name: Table::Clear
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void Table::Clear()
+void plugins::crossbow::Table::Clear()
 {
     DeleteRows( "" );
 }
@@ -93,7 +91,7 @@ void Table::Clear()
 // Name: Table::UpdateRow
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void Table::UpdateRow( const Row_ABC& row )
+void plugins::crossbow::Table::UpdateRow( const Row_ABC& row )
 {
     if( &row != row_.get() )
         return;
@@ -104,7 +102,7 @@ void Table::UpdateRow( const Row_ABC& row )
 // Name: Table::Find
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-Row_ABC* Table::Find( const std::string& query )
+Row_ABC* plugins::crossbow::Table::Find( const std::string& query )
 {
     IQueryFilterPtr filter;
     
@@ -126,7 +124,7 @@ Row_ABC* Table::Find( const std::string& query )
 // Name: Table::GetNextRow
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-Row_ABC* Table::GetNextRow()
+Row_ABC* plugins::crossbow::Table::GetNextRow()
 {
     IRowPtr row;
     if( cursor_ != NULL && ( FAILED( cursor_->NextRow( &row ) ) || row == NULL ) )
@@ -139,7 +137,7 @@ Row_ABC* Table::GetNextRow()
 // Name: Table::BeginTransaction
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void Table::BeginTransaction()
+void plugins::crossbow::Table::BeginTransaction()
 {
     inTransaction_ = true;
 }
@@ -148,7 +146,7 @@ void Table::BeginTransaction()
 // Name: Table::EndTransaction
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void Table::EndTransaction()
+void plugins::crossbow::Table::EndTransaction()
 {
     inTransaction_ = false;
 }
@@ -157,8 +155,7 @@ void Table::EndTransaction()
 // Name: Table::InTransaction
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-bool Table::InTransaction() const
+bool plugins::crossbow::Table::InTransaction() const
 {
     return inTransaction_;
 }
-
