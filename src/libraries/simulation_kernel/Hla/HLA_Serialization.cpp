@@ -30,7 +30,7 @@ using namespace hla;
 // Name: operator<<
 // Created: AGE 2004-11-10
 // -----------------------------------------------------------------------------
-Serializer& operator<<( Serializer& serializer, const MT_Vector2D& v )
+Serializer& hla::operator<<( Serializer& serializer, const MT_Vector2D& v )
 {
     return serializer << v.rX_ << v.rY_;
 }
@@ -39,7 +39,7 @@ Serializer& operator<<( Serializer& serializer, const MT_Vector2D& v )
 // Name: operator>>
 // Created: AGE 2004-11-10
 // -----------------------------------------------------------------------------
-Deserializer& operator>>( Deserializer& deserializer, MT_Vector2D& v )
+Deserializer& hla::operator>>( Deserializer& deserializer, MT_Vector2D& v )
 {
     return deserializer >> v.rX_ >> v.rY_;
 }
@@ -48,7 +48,7 @@ Deserializer& operator>>( Deserializer& deserializer, MT_Vector2D& v )
 // Name: operator<<
 // Created: AGE 2004-11-24
 // -----------------------------------------------------------------------------
-Serializer& operator<<( Serializer& serializer, const ObjectIdentifier& id )
+Serializer& hla::operator<<( Serializer& serializer, const ObjectIdentifier& id )
 {
     return serializer << id.ToLong();
 }
@@ -57,7 +57,7 @@ Serializer& operator<<( Serializer& serializer, const ObjectIdentifier& id )
 // Name: operator>>
 // Created: AGE 2004-11-24
 // -----------------------------------------------------------------------------
-Deserializer& operator>>( Deserializer& deserializer, ObjectIdentifier& id )
+Deserializer& hla::operator>>( Deserializer& deserializer, ObjectIdentifier& id )
 {
     unsigned long nId;
     deserializer >> nId;
@@ -69,7 +69,7 @@ Deserializer& operator>>( Deserializer& deserializer, ObjectIdentifier& id )
 // Name: operator<<
 // Created: AGE 2004-11-30
 // -----------------------------------------------------------------------------
-Serializer& operator<<( Serializer& serializer, const TER_Localisation& localisation )
+Serializer& hla::operator<<( Serializer& serializer, const TER_Localisation& localisation )
 {
     serializer << TER_Localisation::ConvertLocalisationType( localisation.GetType() );
     std::vector< std::string > coordinates; coordinates.reserve( localisation.GetPoints().size() );
@@ -82,7 +82,7 @@ Serializer& operator<<( Serializer& serializer, const TER_Localisation& localisa
 // Name: operator>>
 // Created: AGE 2004-11-30
 // -----------------------------------------------------------------------------
-Deserializer& operator>>( Deserializer& deserializer, TER_Localisation& localisation )
+Deserializer& hla::operator>>( Deserializer& deserializer, TER_Localisation& localisation )
 {
     std::string strLocalisationType;
     deserializer >> strLocalisationType;
