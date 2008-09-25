@@ -25,11 +25,11 @@
 #include "HLA_Bypassing.h"
 #include "HLA_Construction.h"
 #include "HLA_Mining.h"
+#include <hla/Interaction.h>
+#include <hla/Federate.h>
+#include <hla/InteractionIdentifier.h>
 
-#include "hla/Interaction.h"
-#include "hla/Federate.h"
-#include "hla/InteractionIdentifier.h"
-
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_InteractionManager constructor

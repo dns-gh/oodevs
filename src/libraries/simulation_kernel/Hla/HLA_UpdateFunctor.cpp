@@ -19,6 +19,8 @@
 #include "simulation_kernel_pch.h"
 #include "HLA_UpdateFunctor.h"
 
+using namespace hla;
+
 // -----------------------------------------------------------------------------
 // Name: HLA_UpdateFunctor constructor
 // Created: AGE 2004-11-08

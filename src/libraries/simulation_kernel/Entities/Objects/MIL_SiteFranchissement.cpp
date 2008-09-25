@@ -10,17 +10,14 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_SiteFranchissement.h"
 #include "MIL_RealObjectType.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Knowledge/DEC_Knowledge_ObjectSiteFranchissement.h"
+#include <hla/Deserializer.h>
+#include <xeumeuleu/xml.h>
 
-#include "hla/Deserializer.h"
-
-#include "xeumeuleu/xml.h"
-
-
+using namespace hla;
 
 BOOST_CLASS_EXPORT_GUID( MIL_SiteFranchissement, "MIL_SiteFranchissement" )
 

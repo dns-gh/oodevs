@@ -10,9 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_NuageNBC.h"
-
 #include "MIL_NbcAgent.h"
 #include "MIL_NbcAgentType.h"
 #include "MIL_RealObjectType.h"
@@ -20,18 +18,14 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Knowledge/DEC_Knowledge_ObjectNuageNBC.h"
 #include "Network/NET_ASN_Messages.h"
-
 #include "Tools/MIL_Tools.h"
-
-#include "HLA/AttributeIdentifier.h"
-#include "HLA/Deserializer.h"
-#include "HLA/HLA_UpdateFunctor.h"
-
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include <hla/AttributeIdentifier.h>
+#include <hla/Deserializer.h>
+#include <hla/HLA_UpdateFunctor.h>
+#include <xeumeuleu/xml.h>
 
-#include "xeumeuleu/xml.h"
-
-
+using namespace hla;
 
 BOOST_CLASS_EXPORT_GUID( MIL_NuageNBC, "MIL_NuageNBC" )
 

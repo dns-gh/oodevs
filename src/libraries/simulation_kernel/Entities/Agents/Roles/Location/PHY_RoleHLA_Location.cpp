@@ -20,9 +20,11 @@
 #include "PHY_RoleHLA_Location.h"
 #include "Tools/MIL_Tools.h"
 #include "Hla/HLA_Serialization.h"
-#include "Hla/AttributeIdentifier.h"
 #include "Entities/Agents/MIL_AgentHLA.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include <hla/AttributeIdentifier.h>
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Location constructor
@@ -110,7 +112,6 @@ void PHY_RoleHLA_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
 {
     object.NotifyAgentPutOutside( pion_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Location::Deserialize

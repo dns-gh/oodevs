@@ -21,8 +21,12 @@
 
 #include "HLA_RoleInterface.h"
 
+namespace hla
+{
+    class ObjectIdenfifier;
+}
+
 class MIL_AgentPion;
-class ObjectIdenfifier;
 
 // =============================================================================
 /** @class  HLA_RoleLocalPion
@@ -42,25 +46,25 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-    virtual void Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer );
+    virtual void Serialize( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, const hla::Deserializer& deserializer );
     //@}
 
     //! @name Accessors
     //@{
-    virtual ObjectIdentifier GetId() const;
+    virtual hla::ObjectIdentifier GetId() const;
     //@}
 
     //! @name Modifiers
     //@{
-    void SetId( const ObjectIdentifier& objectId );
+    void SetId( const hla::ObjectIdentifier& objectId );
     //@}
 
 private:
     //! @name Member data
     //@{
     MIL_AgentPion&    pion_;
-    ObjectIdentifier* pObjectId_;
+    hla::ObjectIdentifier* pObjectId_;
     //@}
 };
 

@@ -19,7 +19,7 @@
 #ifndef __Time_h_
 #define __Time_h_
 
-#include "hla/Time_ABC.h"
+#include <hla/Time_ABC.h>
 
 // =============================================================================
 /** @class  HLA_Time
@@ -27,7 +27,7 @@
 */
 // Created: AGE 2004-10-13
 // =============================================================================
-class HLA_Time : public Time_ABC
+class HLA_Time : public hla::Time_ABC
 {
 
 public:
@@ -47,18 +47,18 @@ public:
     virtual HLA_Time& SetFinal();
     virtual bool IsFinal() const;
 
-    virtual HLA_Time& Set( Time_ABC const & rhs );
-    virtual HLA_Time& IncreaseBy( TimeInterval_ABC const & interval );
-    virtual HLA_Time& DecreaseBy( TimeInterval_ABC const & interval );
-    virtual TimeInterval_ABC& Substract( Time_ABC const & rhs ) const; // Create !
+    virtual HLA_Time& Set( hla::Time_ABC const & rhs );
+    virtual HLA_Time& IncreaseBy( hla::TimeInterval_ABC const & interval );
+    virtual HLA_Time& DecreaseBy( hla::TimeInterval_ABC const & interval );
+    virtual hla::TimeInterval_ABC& Substract( hla::Time_ABC const & rhs ) const; // Create !
 
-    virtual bool IsGreaterThan( Time_ABC const & rhs ) const;
-    virtual bool IsLessThan( Time_ABC const & rhs ) const;
-    virtual bool IsEqualTo( Time_ABC const & rhs ) const;
-    virtual bool IsGreaterThanOrEqualTo( Time_ABC const & rhs ) const;
-    virtual bool IsLessThanOrEqualTo( Time_ABC const & rhs ) const;
+    virtual bool IsGreaterThan( hla::Time_ABC const & rhs ) const;
+    virtual bool IsLessThan( hla::Time_ABC const & rhs ) const;
+    virtual bool IsEqualTo( hla::Time_ABC const & rhs ) const;
+    virtual bool IsGreaterThanOrEqualTo( hla::Time_ABC const & rhs ) const;
+    virtual bool IsLessThanOrEqualTo( hla::Time_ABC const & rhs ) const;
 
-    virtual void Encode( Serializer& serializer ) const;
+    virtual void Encode( hla::Serializer& serializer ) const;
     virtual std::string ToString() const;
     //@}
 

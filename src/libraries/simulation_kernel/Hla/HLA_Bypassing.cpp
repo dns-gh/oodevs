@@ -18,10 +18,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_Bypassing.h"
-#include "hla/Interaction.h"
-#include "hla/Attribute.h"
+#include <hla/Interaction.h>
+#include <hla/Attribute.h>
 #include "HLA_Serialization.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_Bypassing constructor

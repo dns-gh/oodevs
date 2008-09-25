@@ -18,12 +18,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_Neutralization.h"
-#include "hla/Interaction.h"
-#include "hla/Attribute.h"
 #include "HLA_Serialization.h"
-
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include <hla/Interaction.h>
+#include <hla/Attribute.h>
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_Neutralization constructor

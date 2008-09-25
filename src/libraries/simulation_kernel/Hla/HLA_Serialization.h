@@ -19,9 +19,13 @@
 #ifndef __HLA_Serialization_h_
 #define __HLA_Serialization_h_
 
-class Serializer;
-class Deserializer;
-class ObjectIdentifier;
+namespace hla
+{
+    class Serializer;
+    class Deserializer;
+    class ObjectIdentifier;
+}
+
 class TER_Localisation;
 
 // =============================================================================
@@ -30,6 +34,8 @@ class TER_Localisation;
 // Created: AGE 2004-11-10
 // =============================================================================
 
+namespace hla
+{
 Serializer&   operator<<( Serializer&   serializer,   const MT_Vector2D& v );
 Deserializer& operator>>( Deserializer& deserializer,       MT_Vector2D& v );
 
@@ -76,6 +82,8 @@ Deserializer& operator>>( Deserializer& deserializer, std::pair< Type1, Type2 >&
     deserializer >> p.first;
     deserializer >> p.second;
     return deserializer;
+}
+
 }
 
 #endif // __HLA_Serialization_h_

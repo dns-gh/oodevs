@@ -64,7 +64,7 @@ public:
     //! @name HLA
     //@{
     virtual bool Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
-    virtual void Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer );
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     virtual void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}
 

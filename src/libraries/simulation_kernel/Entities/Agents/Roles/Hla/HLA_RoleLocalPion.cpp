@@ -18,13 +18,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_RoleLocalPion.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Hla/HLA_UpdateFunctor.h"
-#include "hla/ObjectIdentifier.h"
+#include <hla/ObjectIdentifier.h>
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_RoleLocalPion constructor

@@ -20,7 +20,7 @@
 #define __HLA_RoleDistantPion_h_
 
 #include "HLA_RoleInterface.h"
-#include "Hla/ObjectIdentifier.h"
+#include <hla/ObjectIdentifier.h>
 
 class MIL_AgentHLA;
 
@@ -36,26 +36,26 @@ class HLA_RoleDistantPion : public HLA_RoleInterface
 public:
     //! @name Constructors/Destructor
     //@{
-             HLA_RoleDistantPion( MT_RoleContainer& roleContainer, MIL_AgentHLA& pion, const ObjectIdentifier& objectId );
+             HLA_RoleDistantPion( MT_RoleContainer& roleContainer, MIL_AgentHLA& pion, const hla::ObjectIdentifier& objectId );
     virtual ~HLA_RoleDistantPion();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-    virtual void Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer );
+    virtual void Serialize  ( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, const hla::Deserializer& deserializer );
     //@}
 
     //! @name Accessors
     //@{
-    virtual ObjectIdentifier GetId() const;
+    virtual hla::ObjectIdentifier GetId() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     MIL_AgentHLA& pion_;
-    ObjectIdentifier objectId_;
+    hla::ObjectIdentifier objectId_;
     //@}
 };
 

@@ -37,7 +37,7 @@
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 #include "DIA/DIA_Tool_Archive_lib.h"
 #include "DIA/DIA_SDK_Manager.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 #include "tools/InputBinaryStream.h"
 #include <boost/filesystem/operations.hpp>
 

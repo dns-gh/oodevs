@@ -19,7 +19,9 @@
 #include "simulation_kernel_pch.h"
 #include "HLA_TimeIntervalFactory.h"
 #include "HLA_TimeInterval.h"
-#include "hla/Deserializer.h"
+#include <hla/Deserializer.h>
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_TimeIntervalFactory constructor

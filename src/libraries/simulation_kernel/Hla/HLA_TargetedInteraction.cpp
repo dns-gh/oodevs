@@ -22,6 +22,8 @@
 #include "MIL_AgentServer.h"
 #include "HLA_Federate.h"
 
+using namespace hla;
+
 // -----------------------------------------------------------------------------
 // Name: HLA_TargetedInteraction constructor
 // Created: AGE 2004-11-29

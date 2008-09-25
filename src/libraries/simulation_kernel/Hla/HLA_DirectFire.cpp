@@ -18,10 +18,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_DirectFire.h"
-#include "hla/Interaction.h"
-#include "hla/Attribute.h"
 #include "HLA_Serialization.h"
-
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
@@ -31,6 +28,10 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MIL_AgentServer.h"
+#include <hla/Interaction.h>
+#include <hla/Attribute.h>
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_DirectFire constructor

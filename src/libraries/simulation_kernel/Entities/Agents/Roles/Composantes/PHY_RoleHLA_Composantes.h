@@ -20,9 +20,13 @@
 #define __PHY_RoleHLA_Composantes_h_
 
 #include "PHY_RoleInterface_Composantes.h"
-#include "hla/Deserializer.h"
+#include <hla/Deserializer.h>
 
-class AttributeIdentifier;
+namespace hla
+{
+    class AttributeIdentifier;
+}
+
 class PHY_ComposanteHLA;
 class HLA_InteractionManager_ABC;
 
@@ -49,7 +53,7 @@ public:
     virtual       void                 BuildKnowledgeComposantes  ( T_KnowledgeComposanteVector& knowledge ) const;
     virtual const PHY_Composante_ABC*  GetMajorComposante         () const;
 
-    void Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer );
+    void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     void Destroy();
     //@}
 

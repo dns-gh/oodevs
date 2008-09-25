@@ -23,6 +23,12 @@ namespace xml
     class xistream;
 }
 
+namespace hla
+{
+    class Deserializer;
+    class AttributeIdentifier;
+}
+
 class MIL_PopulationElement_ABC;
 class MIL_RealObjectType;
 class MIL_Army;
@@ -36,8 +42,6 @@ class NET_ASN_MsgObjectCreation;
 class NET_ASN_MsgObjectUpdate;
 class HLA_Object_ABC;
 class HLA_UpdateFunctor;
-class Deserializer;
-class AttributeIdentifier;
 class TER_DynamicData;
 
 //=============================================================================
@@ -153,7 +157,7 @@ public:
     //@{
     HLA_Object_ABC* GetHLAView() const;
     void            SetHLAView( HLA_Object_ABC& view );
-    virtual void Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer );
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     virtual void Serialize  ( HLA_UpdateFunctor& functor ) const;
     //@}
 

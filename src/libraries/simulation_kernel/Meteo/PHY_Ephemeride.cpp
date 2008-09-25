@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Ephemeride.h"
 #include "MIL_AgentServer.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )

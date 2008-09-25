@@ -10,26 +10,21 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Rota.h"
-
 #include "MIL_NbcAgentType.h"
 #include "MIL_RealObjectType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Knowledge/DEC_Knowledge_ObjectRota.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-
 #include "Tools/MIL_Tools.h"
-#include "hla/Deserializer.h"
-#include "hla/AttributeIdentifier.h"
 #include "Hla/HLA_UpdateFunctor.h"
-
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include <hla/Deserializer.h>
+#include <hla/AttributeIdentifier.h>
+#include <xeumeuleu/xml.h>
 
-#include "xeumeuleu/xml.h"
-
-
+using namespace hla;
 
 BOOST_CLASS_EXPORT_GUID( MIL_Rota, "MIL_Rota" )
 

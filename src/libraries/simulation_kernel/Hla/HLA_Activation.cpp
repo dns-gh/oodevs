@@ -18,10 +18,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_Activation.h"
-#include "hla/Interaction.h"
-#include "hla/Attribute.h"
+#include <hla/Interaction.h>
+#include <hla/Attribute.h>
 #include "HLA_Serialization.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_Activation constructor
@@ -31,7 +33,7 @@ HLA_Activation::HLA_Activation()
 {
     //NOTHING
 }
-             
+
 // -----------------------------------------------------------------------------
 // Name: HLA_Activation constructor
 // Created: AGE 2004-12-06

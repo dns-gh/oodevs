@@ -19,7 +19,7 @@
 #ifndef __TimeIntervalFactory_h_
 #define __TimeIntervalFactory_h_
 
-#include "hla/TimeIntervalFactory_ABC.h"
+#include <hla/TimeIntervalFactory_ABC.h>
 
 // =============================================================================
 /** @class  HLA_TimeIntervalFactory
@@ -27,7 +27,7 @@
 */
 // Created: AGE 2004-10-13
 // =============================================================================
-class HLA_TimeIntervalFactory : public TimeIntervalFactory_ABC
+class HLA_TimeIntervalFactory : public hla::TimeIntervalFactory_ABC
 {
 
 public:
@@ -39,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual TimeInterval_ABC& CreateEpsilon();
-    virtual TimeInterval_ABC* Decode( Deserializer& deserializer );
+    virtual hla::TimeInterval_ABC& CreateEpsilon();
+    virtual hla::TimeInterval_ABC* Decode( hla::Deserializer& deserializer );
     //@}
 };
 

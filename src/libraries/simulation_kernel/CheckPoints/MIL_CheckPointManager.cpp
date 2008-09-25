@@ -20,7 +20,7 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 
 

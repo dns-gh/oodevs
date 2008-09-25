@@ -22,7 +22,9 @@
 #include "MIL_AgentServer.h"
 #include "HLA_Federate.h"
 #include "HLA_InteractionManager_ABC.h"
-#include "hla/HLA_UpdateFunctor.h"
+#include <hla/HLA_UpdateFunctor.h>
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_LocalObject constructor

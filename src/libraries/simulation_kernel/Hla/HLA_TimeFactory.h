@@ -19,7 +19,7 @@
 #ifndef __TimeFactory_h_
 #define __TimeFactory_h_
 
-#include "hla/TimeFactory_ABC.h"
+#include <hla/TimeFactory_ABC.h>
 
 // =============================================================================
 /** @class  HLA_TimeFactory
@@ -27,7 +27,7 @@
 */
 // Created: AGE 2004-10-13
 // =============================================================================
-class HLA_TimeFactory : public TimeFactory_ABC
+class HLA_TimeFactory : public hla::TimeFactory_ABC
 {
 
 public:
@@ -39,9 +39,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual Time_ABC& CreateInitial();
+    virtual hla::Time_ABC& CreateInitial();
 
-    virtual Time_ABC* Decode( Deserializer& deserializer );
+    virtual hla::Time_ABC* Decode( hla::Deserializer& deserializer );
     //@}
 };
 

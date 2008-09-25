@@ -19,10 +19,15 @@
 #ifndef __HLA_ObjectInteraction_h_
 #define __HLA_ObjectInteraction_h_
 
-#include "hla/ObjectIdentifier.h"
+#include <hla/ObjectIdentifier.h>
+
+namespace hla
+{
+template < typename T > class Interaction;
+}
+
 class MIL_RealObject_ABC;
 class HLA_Object_ABC;
-template < typename T > class Interaction;
 
 // =============================================================================
 /** @class  HLA_ObjectInteraction
@@ -47,13 +52,13 @@ protected:
     MIL_RealObject_ABC* GetObject() const;
 
     template< typename SubClass >
-    static void RegisterAttributes( Interaction< SubClass >& interaction );
+    static void RegisterAttributes( hla::Interaction< SubClass >& interaction );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ObjectIdentifier objectId_;
+    hla::ObjectIdentifier objectId_;
     //@}
 };
 
@@ -62,9 +67,9 @@ private:
 // Created: AGE 2004-12-06
 // -----------------------------------------------------------------------------
 template< typename SubClass >
-void HLA_ObjectInteraction::RegisterAttributes( Interaction< SubClass >& interaction )
+void HLA_ObjectInteraction::RegisterAttributes( hla::Interaction< SubClass >& interaction )
 {
-    interaction.Register( ParameterIdentifier( "objet" ), *new Attribute< SubClass, ObjectIdentifier >( & HLA_ObjectInteraction::objectId_ ) );
+    interaction.Register( hla::ParameterIdentifier( "objet" ), *new hla::Attribute< SubClass, ObjectIdentifier >( & HLA_ObjectInteraction::objectId_ ) );
 }
 
 #endif // __HLA_ObjectInteraction_h_

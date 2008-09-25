@@ -10,13 +10,10 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_RealObject_ABC.h"
-
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-
 #include "MIL_RealObjectType.h"
 #include "PHY_ObjectExplosionFireResult.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -27,22 +24,18 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_MOSIDManager.h"
-
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
-
 #include "Decision/DEC_Tools.h"
-
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
+#include <hla/HLA_Object_ABC.h>
+#include <hla/HLA_UpdateFunctor.h>
+#include <hla/Deserializer.h>
+#include <hla/AttributeIdentifier.h>
+#include <xeumeuleu/xml.h>
 
-#include "HLA/HLA_Object_ABC.h"
-#include "HLA/HLA_UpdateFunctor.h"
-#include "HLA/Deserializer.h"
-#include "HLA/AttributeIdentifier.h"
-#include "xeumeuleu/xml.h"
-
-
+using namespace hla;
 
 MT_Random MIL_RealObject_ABC::random_;
 

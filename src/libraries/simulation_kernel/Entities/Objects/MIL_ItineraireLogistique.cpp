@@ -10,18 +10,16 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_ItineraireLogistique.h"
 #include "MIL_RealObjectType.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Knowledge/DEC_Knowledge_ObjectItineraireLogistique.h"
+#include <hla/AttributeIdentifier.h>
+#include <hla/Deserializer.h>
+#include <hla/HLA_UpdateFunctor.h>
+#include <xeumeuleu/xml.h>
 
-#include "HLA/AttributeIdentifier.h"
-#include "HLA/Deserializer.h"
-#include "HLA/HLA_UpdateFunctor.h"
-#include "xeumeuleu/xml.h"
-
-
+using namespace hla;
 
 BOOST_CLASS_EXPORT_GUID( MIL_ItineraireLogistique, "MIL_ItineraireLogistique" )
 

@@ -19,10 +19,13 @@
 #ifndef __HLA_Object_ABC_h_
 #define __HLA_Object_ABC_h_
 
-class AttributeIdentifier;
-class UpdateFunctor_ABC;
-class Deserializer;
-class ObjectIdentifier;
+namespace hla
+{
+    class AttributeIdentifier;
+    class UpdateFunctor_ABC;
+    class Deserializer;
+    class ObjectIdentifier;
+}
 
 // =============================================================================
 /** @class  HLA_Object_ABC
@@ -50,8 +53,8 @@ public:
 //    virtual void Prepare   ();
     virtual void Activate  ();
 
-    virtual void Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer ) = 0;
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const = 0;
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, const hla::Deserializer& deserializer ) = 0;
+    virtual void Serialize  ( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const = 0;
 
     virtual void Destroy() = 0;
 
@@ -60,7 +63,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual ObjectIdentifier GetId() const = 0;
+    virtual hla::ObjectIdentifier GetId() const = 0;
     //@}
 };
 

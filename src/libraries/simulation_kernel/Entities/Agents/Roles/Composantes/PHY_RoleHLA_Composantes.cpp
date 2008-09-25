@@ -22,14 +22,14 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Roles/hla/HLA_RoleInterface.h"
-
 #include "Hla/HLA_Serialization.h"
 #include "Hla/HLA_DirectFire.h"
 #include "Hla/HLA_IndirectFire.h"
 #include "Hla/HLA_InteractionManager_ABC.h"
 #include "Hla/HLA_Neutralization.h"
+#include <hla/AttributeIdentifier.h>
 
-#include "hla/AttributeIdentifier.h"
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Composantes constructor

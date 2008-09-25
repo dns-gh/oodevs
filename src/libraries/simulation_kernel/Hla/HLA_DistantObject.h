@@ -21,7 +21,7 @@
 
 #include "HLA_Object_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "hla/ObjectIdentifier.h"
+#include <hla/ObjectIdentifier.h>
 
 class MIL_RealObject_ABC;
 class HLA_InteractionManager_ABC;
@@ -38,7 +38,7 @@ class HLA_DistantObject : public HLA_Object_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HLA_DistantObject( const ObjectIdentifier& objectId, HLA_InteractionManager_ABC& interactionManager );
+             HLA_DistantObject( const hla::ObjectIdentifier& objectId, HLA_InteractionManager_ABC& interactionManager );
     virtual ~HLA_DistantObject();
     //@}
 
@@ -52,8 +52,8 @@ public:
 //    virtual void Prepare   ();
     virtual void Activate  ();
 
-    virtual void Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer );
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, const hla::Deserializer& deserializer );
+    virtual void Serialize  ( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
 
     virtual void Destroy();
 
@@ -62,7 +62,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual ObjectIdentifier GetId() const;
+    virtual hla::ObjectIdentifier GetId() const;
     //@}
 
 private:
@@ -75,7 +75,7 @@ private:
     //! @name Helpers
     //@{
     MIL_RealObject_ABC* InstanciateObject();
-    void DeserializeAttribute( const AttributeIdentifier& attributeID, Deserializer deserializer );
+    void DeserializeAttribute( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}
 
 private:
@@ -91,7 +91,7 @@ private:
     double rMiningPercentage_;
     double rBypassPercentage_;
 
-    ObjectIdentifier id_;
+    hla::ObjectIdentifier id_;
     HLA_InteractionManager_ABC& interactionManager_;
     //@}
 };

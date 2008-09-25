@@ -20,7 +20,7 @@
 #include "PHY_DotationLogisticType.h"
 #include "PHY_DotationNature.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 
 

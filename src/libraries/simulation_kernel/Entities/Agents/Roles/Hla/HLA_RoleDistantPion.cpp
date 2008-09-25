@@ -18,11 +18,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_RoleDistantPion.h"
-
 #include "Entities/Agents/MIL_AgentHLA.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleHLA_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleHLA_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleHLA_Posture.h"
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_RoleDistantPion constructor

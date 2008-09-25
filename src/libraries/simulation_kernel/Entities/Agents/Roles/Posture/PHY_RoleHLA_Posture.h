@@ -20,9 +20,13 @@
 #define __PHY_RoleHLA_Posture_h_
 
 #include "PHY_RoleInterface_Posture.h"
-#include "hla/Deserializer.h"
+#include <hla/Deserializer.h>
 
-class AttributeIdentifier;
+namespace hla
+{
+    class AttributeIdentifier;
+}
+
 class MIL_Agent_ABC;
 
 // =============================================================================
@@ -51,7 +55,7 @@ public:
     virtual       void         UnsetPosturePostePrepareGenie ();
     virtual       void         SetTimingFactor               ( MT_Float rFactor );
     
-    void Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer );
+    void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}
 
     //! @name Modifiers

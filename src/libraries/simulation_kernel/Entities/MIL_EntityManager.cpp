@@ -69,12 +69,12 @@
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
 #include "Network/NET_ASN_Messages.h"
-#include "HLA/HLA_Federate.h"
 #include "Network/NET_AsnException.h"
 #include "MIL_Singletons.h"
-#include "xeumeuleu/xml.h"
+#include <hla/HLA_Federate.h>
+#include <xeumeuleu/xml.h>
 
-
+using namespace hla;
 
 BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 

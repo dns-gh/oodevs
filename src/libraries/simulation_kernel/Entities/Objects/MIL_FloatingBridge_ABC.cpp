@@ -10,12 +10,13 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_FloatingBridge_ABC.h"
 #include "MIL_RealObjectType.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
-#include "HLA/Deserializer.h"
+#include <hla/Deserializer.h>
+
+using namespace hla;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_FloatingBridge_ABC constructor

@@ -22,8 +22,11 @@
 #include "HLA_TargetedInteraction.h"
 #include "HLA_Interaction_ABC.h"
 
-template< typename T > class Interaction;
-template< typename T > class InteractionNotification_ABC;
+namespace hla
+{
+    template< typename T > class Interaction;
+    template< typename T > class InteractionNotification_ABC;
+}
 
 // =============================================================================
 /** @class  HLA_Neutralization
@@ -44,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    static Interaction< HLA_Neutralization >& CreateInteractionClass( InteractionNotification_ABC< HLA_Neutralization >& callback );
+    static hla::Interaction< HLA_Neutralization >& CreateInteractionClass( hla::InteractionNotification_ABC< HLA_Neutralization >& callback );
 
     virtual void Execute() const;
     //@}

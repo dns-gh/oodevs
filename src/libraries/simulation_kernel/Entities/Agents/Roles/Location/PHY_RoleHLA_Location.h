@@ -20,9 +20,13 @@
 #define __PHY_RoleHLA_Location_h_
 
 #include "PHY_RoleInterface_Location.h"
-#include "hla/Deserializer.h"
+#include <hla/Deserializer.h>
 
-class AttributeIdentifier;
+namespace hla
+{
+    class AttributeIdentifier;
+}
+
 class MIL_AgentHLA;
 
 // =============================================================================
@@ -52,7 +56,7 @@ public:
     virtual void NotifyPutInsideObject    ( MIL_Object_ABC& object );
     virtual void NotifyPutOutsideObject   ( MIL_Object_ABC& object );
 
-    void Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer );
+    void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}
 
     //! @name Accessors

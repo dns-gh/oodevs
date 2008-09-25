@@ -19,9 +19,9 @@
 #ifndef __HLA_UpdateFunctor_h_
 #define __HLA_UpdateFunctor_h_
 
-#include "hla/UpdateFunctor_ABC.h"
-#include "hla/AttributeIdentifier.h"
-#include "hla/Serializer.h"
+#include <hla/UpdateFunctor_ABC.h>
+#include <hla/AttributeIdentifier.h>
+#include <hla/Serializer.h>
 #include "HLA_Serialization.h"
 
 // =============================================================================
@@ -36,7 +36,7 @@ class HLA_UpdateFunctor
 public:
     //! @name Constructors/Destructor
     //@{
-             HLA_UpdateFunctor( UpdateFunctor_ABC& functor, bool bUpdateAll );
+             HLA_UpdateFunctor( hla::UpdateFunctor_ABC& functor, bool bUpdateAll );
     virtual ~HLA_UpdateFunctor();
     //@}
 
@@ -61,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    UpdateFunctor_ABC& functor_;
+    hla::UpdateFunctor_ABC& functor_;
     bool bUpdateAll_;
     //@}
 };
@@ -75,9 +75,9 @@ void HLA_UpdateFunctor::Serialize( const std::string& strAttributeName, bool bCh
 {
     if( bChanged || bUpdateAll_ )
     {
-        Serializer serializer;
+        hla::Serializer serializer;
         serializer << attribute;
-        functor_.Visit( AttributeIdentifier( strAttributeName ), serializer );
+        functor_.Visit( hla::AttributeIdentifier( strAttributeName ), serializer );
     }
 }
 

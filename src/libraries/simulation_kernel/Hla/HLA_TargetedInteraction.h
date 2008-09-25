@@ -19,11 +19,15 @@
 #ifndef __HLA_TargetedInteraction_h_
 #define __HLA_TargetedInteraction_h_
 
-#include "hla/ObjectIdentifier.h"
+#include <hla/ObjectIdentifier.h>
+
+namespace hla
+{
+    template < typename T > class Interaction;
+}
 
 class HLA_RoleInterface;
 class MIL_Agent_ABC;
-template < typename T > class Interaction;
 
 // =============================================================================
 /** @class  HLA_TargetedInteraction
@@ -48,13 +52,13 @@ protected:
     MIL_Agent_ABC* GetTarget() const;
 
     template< typename SubClass >
-    static void RegisterAttributes( Interaction< SubClass >& interaction );
+    static void RegisterAttributes( hla::Interaction< SubClass >& interaction );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ObjectIdentifier target_;
+    hla::ObjectIdentifier target_;
     //@}
 };
 
@@ -63,9 +67,9 @@ private:
 // Created: AGE 2004-11-29
 // -----------------------------------------------------------------------------
 template< typename SubClass >
-void HLA_TargetedInteraction::RegisterAttributes( Interaction< SubClass >& interaction )
+void HLA_TargetedInteraction::RegisterAttributes( hla::Interaction< SubClass >& interaction )
 {
-    interaction.Register( ParameterIdentifier( "cible" ), *new Attribute< SubClass, ObjectIdentifier >( & HLA_TargetedInteraction::target_ ) );
+    interaction.Register( ParameterIdentifier( "cible" ), *new Attribute< SubClass, hla::ObjectIdentifier >( & HLA_TargetedInteraction::target_ ) );
 }
 
 #endif // __HLA_TargetedInteraction_h_

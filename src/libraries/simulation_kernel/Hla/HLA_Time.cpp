@@ -19,10 +19,11 @@
 #include "simulation_kernel_pch.h"
 #include "HLA_Time.h"
 #include "HLA_TimeInterval.h"
-
-#include "hla/Serializer.h"
+#include <hla/Serializer.h>
 #include <sstream>
 #include <limits>
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_Time constructor

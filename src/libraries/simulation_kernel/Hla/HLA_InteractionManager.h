@@ -20,10 +20,13 @@
 #define __HLA_InteractionManager_h_
 
 #include "HLA_InteractionManager_ABC.h"
-#include "hla/InteractionNotification_ABC.h"
+#include <hla/InteractionNotification_ABC.h>
 
-class Federate;
-template< typename InteractionClass > class Interaction;
+namespace hla
+{
+    class Federate;
+    template< typename InteractionClass > class Interaction;
+}
 
 // =============================================================================
 /** @class  HLA_InteractionManager
@@ -31,21 +34,20 @@ template< typename InteractionClass > class Interaction;
 */
 // Created: AGE 2004-11-29
 // =============================================================================
-class HLA_InteractionManager
-  : public HLA_InteractionManager_ABC
-  , public InteractionNotification_ABC< HLA_DirectFire >
-  , public InteractionNotification_ABC< HLA_IndirectFire >
-  , public InteractionNotification_ABC< HLA_Neutralization >
-  , public InteractionNotification_ABC< HLA_Activation >
-  , public InteractionNotification_ABC< HLA_Bypassing >
-  , public InteractionNotification_ABC< HLA_Construction >
-  , public InteractionNotification_ABC< HLA_Mining >
+class HLA_InteractionManager : public HLA_InteractionManager_ABC
+                             , public hla::InteractionNotification_ABC< HLA_DirectFire >
+                             , public hla::InteractionNotification_ABC< HLA_IndirectFire >
+                             , public hla::InteractionNotification_ABC< HLA_Neutralization >
+                             , public hla::InteractionNotification_ABC< HLA_Activation >
+                             , public hla::InteractionNotification_ABC< HLA_Bypassing >
+                             , public hla::InteractionNotification_ABC< HLA_Construction >
+                             , public hla::InteractionNotification_ABC< HLA_Mining >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             HLA_InteractionManager( Federate& federate );
+             HLA_InteractionManager( hla::Federate& federate );
     virtual ~HLA_InteractionManager();
     //@}
 
@@ -76,13 +78,13 @@ private:
 private:
     //! @name Member data
     //@{
-    Interaction< HLA_DirectFire >*     pDirectFireInteraction_;
-    Interaction< HLA_IndirectFire >*   pIndirectFireInteraction_;
-    Interaction< HLA_Neutralization >* pNeutralizationInteraction_;
-    Interaction< HLA_Activation >*     pActivationInteraction_;
-    Interaction< HLA_Bypassing >*      pBypassingInteraction_;
-    Interaction< HLA_Construction >*   pConstructionInteraction_;
-    Interaction< HLA_Mining >*         pMiningInteraction_;
+    hla::Interaction< HLA_DirectFire >*     pDirectFireInteraction_;
+    hla::Interaction< HLA_IndirectFire >*   pIndirectFireInteraction_;
+    hla::Interaction< HLA_Neutralization >* pNeutralizationInteraction_;
+    hla::Interaction< HLA_Activation >*     pActivationInteraction_;
+    hla::Interaction< HLA_Bypassing >*      pBypassingInteraction_;
+    hla::Interaction< HLA_Construction >*   pConstructionInteraction_;
+    hla::Interaction< HLA_Mining >*         pMiningInteraction_;
     //@}
 };
 

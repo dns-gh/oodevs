@@ -27,7 +27,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 
 

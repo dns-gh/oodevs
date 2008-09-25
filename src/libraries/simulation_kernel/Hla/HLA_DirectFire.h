@@ -23,8 +23,12 @@
 #include "HLA_TargetedInteraction.h"
 #include "HLA_FireInteraction.h"
 
-template< typename T > class Interaction;
-template< typename T > class InteractionNotification_ABC;
+namespace hla
+{
+    template< typename T > class Interaction;
+    template< typename T > class InteractionNotification_ABC;
+}
+
 class PHY_Composante_ABC;
 class PHY_FireResults_ABC;
 
@@ -47,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    static Interaction< HLA_DirectFire >& CreateInteractionClass( InteractionNotification_ABC< HLA_DirectFire >& callback );
+    static hla::Interaction< HLA_DirectFire >& CreateInteractionClass( hla::InteractionNotification_ABC< HLA_DirectFire >& callback );
 
     virtual void Execute() const;
     //@}

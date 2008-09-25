@@ -26,7 +26,7 @@
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( MIL_Population, "MIL_Population" )
 

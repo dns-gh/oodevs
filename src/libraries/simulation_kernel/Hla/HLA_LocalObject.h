@@ -20,7 +20,7 @@
 #define __HLA_LocalObject_h_
 
 #include "HLA_Object_ABC.h"
-#include "hla/ObjectIdentifier.h"
+#include <hla/ObjectIdentifier.h>
 
 class MIL_RealObject_ABC;
 
@@ -42,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer );
-    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, const hla::Deserializer& deserializer );
+    virtual void Serialize  ( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
 
     virtual void Destroy();
 
@@ -52,12 +52,12 @@ public:
 
     //! @name Accessors
     //@{
-    virtual ObjectIdentifier GetId() const;
+    virtual hla::ObjectIdentifier GetId() const;
     //@}
 
     //! @name Modifiers 
     //@{
-    void SetId( const ObjectIdentifier& objectId );
+    void SetId( const hla::ObjectIdentifier& objectId );
     //@}
 
 private:
@@ -71,7 +71,7 @@ private:
     //! @name Member data
     //@{
     MIL_RealObject_ABC& object_;
-    ObjectIdentifier id_;
+    hla::ObjectIdentifier id_;
     //@}
 };
 

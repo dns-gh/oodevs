@@ -18,8 +18,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_TimeInterval.h"
-#include "hla/Serializer.h"
-#include <strstream>
+#include <hla/Serializer.h>
+#include <sstream>
+
+using namespace hla;
 
 const double HLA_TimeInterval::rEpsilon_ = 0.000000001;
 
@@ -216,7 +218,7 @@ void HLA_TimeInterval::Encode( Serializer& serializer ) const
 // -----------------------------------------------------------------------------
 std::string HLA_TimeInterval::ToString() const
 {
-    std::ostrstream message;
+    std::ostringstream message;
     message << rInterval_;
     return message.str();
 }

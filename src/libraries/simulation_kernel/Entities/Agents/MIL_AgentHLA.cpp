@@ -15,7 +15,6 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-
 #include "Roles/Refugee/PHY_RoleHLA_Refugee.h"
 #include "Roles/Surrender/PHY_RoleHLA_Surrender.h"
 #include "Roles/Dotations/PHY_RoleHLA_Dotations.h"
@@ -27,9 +26,11 @@
 #include "Roles/Perception/PHY_RoleHLA_Perceiver.h"
 #include "Roles/Hla/HLA_RoleDistantPion.h"
 #include "Roles/Population/PHY_RoleHLA_Population.h"
-#include "HLA/HLA_Serialization.h"
-#include "HLA/AttributeIdentifier.h"
-#include "HLA/Deserializer.h"
+#include <hla/HLA_Serialization.h>
+#include <hla/AttributeIdentifier.h>
+#include <hla/Deserializer.h>
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentHLA constructor

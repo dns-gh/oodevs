@@ -19,18 +19,21 @@
 #ifndef __HLA_Federate_h_
 #define __HLA_Federate_h_
 
-#include "hla/ObjectRegistration_ABC.h"
+#include <hla/ObjectRegistration_ABC.h>
+
+namespace hla
+{
+    template< typename ObjectClass > class Class;
+    class ObjectIdentifier;
+    class RtiAmbassador_ABC;
+    class Federate;
+}
 
 class HLA_TimeFactory;
 class HLA_TimeIntervalFactory;
 class HLA_RoleInterface;
 class HLA_Object_ABC;
 class HLA_InteractionManager;
-template< typename ObjectClass > class Class;
-class ObjectIdentifier;
-
-class RtiAmbassador_ABC;
-class Federate;
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
@@ -65,8 +68,8 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_Agent_ABC*      GetLocalAgent ( const ObjectIdentifier& objectId ) const;
-    MIL_RealObject_ABC* GetLocalObject( const ObjectIdentifier& objectId ) const;
+    MIL_Agent_ABC*      GetLocalAgent ( const hla::ObjectIdentifier& objectId ) const;
+    MIL_RealObject_ABC* GetLocalObject( const hla::ObjectIdentifier& objectId ) const;
     //@}
 
 private:
@@ -83,11 +86,11 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< ObjectIdentifier, MIL_Agent_ABC* > T_AgentMap;
-    typedef T_AgentMap::const_iterator                 CIT_AgentMap;
+    typedef std::map< hla::ObjectIdentifier, MIL_Agent_ABC* > T_AgentMap;
+    typedef T_AgentMap::const_iterator                      CIT_AgentMap;
 
-    typedef std::map< ObjectIdentifier, MIL_RealObject_ABC* > T_ObjectMap;
-    typedef T_ObjectMap::const_iterator                     CIT_ObjectMap;
+    typedef std::map< hla::ObjectIdentifier, MIL_RealObject_ABC* > T_ObjectMap;
+    typedef T_ObjectMap::const_iterator                          CIT_ObjectMap;
     //@}
 
 private:
@@ -95,16 +98,16 @@ private:
     //@{
     HLA_TimeFactory*         pTimeFactory_;
     HLA_TimeIntervalFactory* pIntervalFactory_;
-    RtiAmbassador_ABC*       pAmbassador_;
-    Federate*                pFederate_;
+    hla::RtiAmbassador_ABC*  pAmbassador_;
+    hla::Federate*           pFederate_;
 
-    Class< HLA_RoleInterface >*                  pUnitClass_;
-    ObjectRegistration_ABC< HLA_RoleInterface >* pUnitRegistration_;
+    hla::Class< HLA_RoleInterface >*                  pUnitClass_;
+    hla::ObjectRegistration_ABC< HLA_RoleInterface >* pUnitRegistration_;
 
-    Class< HLA_Object_ABC >*                    pObjectClass_;
-    ObjectRegistration_ABC< HLA_Object_ABC >*   pObjectRegistration_;
+    hla::Class< HLA_Object_ABC >*                    pObjectClass_;
+    hla::ObjectRegistration_ABC< HLA_Object_ABC >*   pObjectRegistration_;
 
-    HLA_InteractionManager*     pInteractionManager_;    
+    HLA_InteractionManager*     pInteractionManager_;
 
     T_AgentMap  localAgents_;
     T_ObjectMap localObjects_;

@@ -14,9 +14,13 @@
 
 #include "MIL_Agent_ABC.h"
 
-class Deserializer;
-class AttributeIdentifier;
-class ObjectIdentifier;
+namespace hla
+{
+    class Deserializer;
+    class AttributeIdentifier;
+    class ObjectIdentifier;
+}
+
 class HLA_InteractionManager_ABC;
 
 // =============================================================================
@@ -31,7 +35,7 @@ class MIL_AgentHLA : public MIL_Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AgentHLA( uint nID, const ObjectIdentifier& objectId, HLA_InteractionManager_ABC& interactionManager );
+             MIL_AgentHLA( uint nID, const hla::ObjectIdentifier& objectId, HLA_InteractionManager_ABC& interactionManager );
     virtual ~MIL_AgentHLA();
     //@}
         
@@ -45,7 +49,7 @@ public:
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
 
-    void Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer );
+    void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}
 
     //! @name Operations
@@ -85,7 +89,5 @@ private:
           bool               bPc_;
     //@}
 };
-
-#include "MIL_AgentHLA.inl"
 
 #endif // __MIL_AgentHLA_h_

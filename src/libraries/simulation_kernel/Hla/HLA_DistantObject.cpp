@@ -24,14 +24,15 @@
 #include "HLA_Mining.h"
 #include "HLA_Bypassing.h"
 #include "HLA_Activation.h"
-
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
-#include "hla/Deserializer.h"
-#include "hla/AttributeIdentifier.h"
+#include <hla/Deserializer.h>
+#include <hla/AttributeIdentifier.h>
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_DistantObject constructor

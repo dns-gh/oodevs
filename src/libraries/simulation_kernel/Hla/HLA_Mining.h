@@ -22,8 +22,11 @@
 #include "HLA_Interaction_ABC.h"
 #include "HLA_ObjectInteraction.h"
 
-template< typename T > class Interaction;
-template< typename T > class InteractionNotification_ABC;
+namespace hla
+{
+    template< typename T > class Interaction;
+    template< typename T > class InteractionNotification_ABC;
+}
 
 // =============================================================================
 /** @class  HLA_Mining
@@ -46,7 +49,7 @@ public:
     //@{
     virtual void Execute() const;
 
-    static Interaction< HLA_Mining >& CreateInteractionClass( InteractionNotification_ABC< HLA_Mining >& callback );
+    static hla::Interaction< HLA_Mining >& CreateInteractionClass( hla::InteractionNotification_ABC< HLA_Mining >& callback );
     //@}
 
 private:

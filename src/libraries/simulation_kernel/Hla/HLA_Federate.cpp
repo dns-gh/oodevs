@@ -18,9 +18,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_Federate.h"
-
-#include "hla/hla_lib.h"
-
 #include "HLA_TimeFactory.h"
 #include "HLA_TimeIntervalFactory.h"
 #include "HLA_TimeInterval.h"
@@ -29,7 +26,6 @@
 #include "HLA_InteractionManager.h"
 #include "HLA_LocalObject.h"
 #include "HLA_DistantObject.h"
-
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Hla/HLA_RoleLocalPion.h"
@@ -37,8 +33,10 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Tools/MIL_IDManager.h"
-
+#include <hla/hla_lib.h>
 #include <windows.h> // For ::Sleep()
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_Federate constructor
@@ -102,7 +100,7 @@ namespace
     {
         UnitRegistration( HLA_InteractionManager& interactionManager )
             : interactionManager_( interactionManager )
-        {};
+        {}
         virtual HLA_RoleInterface& Create( const ObjectIdentifier& objectId )
         {
             MIL_AgentHLA* pPion = new MIL_AgentHLA( MIL_IDManager::units_.GetFreeSimID(), objectId, interactionManager_ );

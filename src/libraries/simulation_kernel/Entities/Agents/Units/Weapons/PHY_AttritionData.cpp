@@ -14,7 +14,7 @@
 #include "PHY_AttritionData.h"
 
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 
 

@@ -23,7 +23,7 @@
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "tools/xmlcodecs.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 
 

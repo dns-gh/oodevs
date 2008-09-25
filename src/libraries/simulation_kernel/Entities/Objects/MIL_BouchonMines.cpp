@@ -16,7 +16,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Knowledge/DEC_Knowledge_ObjectBouchonMines.h"
 #include "Tools/MIL_Tools.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( MIL_BouchonMines, "MIL_BouchonMines" )
 

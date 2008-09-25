@@ -17,9 +17,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "hla/Deserializer.h"
+#include <hla/Deserializer.h>
 #include "HLA_TimeFactory.h"
 #include "HLA_Time.h"
+
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: HLA_TimeFactory constructor
@@ -45,7 +47,7 @@ HLA_TimeFactory::~HLA_TimeFactory()
 // -----------------------------------------------------------------------------
 Time_ABC& HLA_TimeFactory::CreateInitial()
 {
-    return *new HLA_Time();    
+    return *new HLA_Time();
 }
 
 // -----------------------------------------------------------------------------

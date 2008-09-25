@@ -20,7 +20,11 @@
 #define __HLA_FireInteraction_h_
 
 class PHY_DotationCategory;
-template < typename T > class Interaction;
+
+namespace hla
+{
+    template < typename T > class Interaction;
+}
 
 // =============================================================================
 /** @class  HLA_FireInteraction
@@ -45,7 +49,7 @@ protected:
     const PHY_DotationCategory* GetAmmunition() const;
 
     template< typename SubClass >
-    static void RegisterAttributes( Interaction< SubClass >& interaction );
+    static void RegisterAttributes( hla::Interaction< SubClass >& interaction );
     //@}
 
 private:
@@ -60,9 +64,9 @@ private:
 // Created: AGE 2004-11-29
 // -----------------------------------------------------------------------------
 template< typename SubClass >
-void HLA_FireInteraction::RegisterAttributes( Interaction< SubClass >& interaction )
+void HLA_FireInteraction::RegisterAttributes( hla::Interaction< SubClass >& interaction )
 {
-    interaction.Register( ParameterIdentifier( "munition" ), *new Attribute< SubClass, std::string >( & HLA_FireInteraction::strAmmunition_ ) );
+    interaction.Register( hla::ParameterIdentifier( "munition" ), *new hla::Attribute< SubClass, std::string >( & HLA_FireInteraction::strAmmunition_ ) );
 }
 
 #endif // __HLA_FireInteraction_h_
