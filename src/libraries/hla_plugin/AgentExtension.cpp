@@ -23,6 +23,7 @@
 #include <boost/bind.hpp>
 
 using namespace plugins::hla;
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension constructor

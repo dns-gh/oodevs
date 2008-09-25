@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
+    virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
     virtual void DoUpdate( const ASN1T_MsgUnitEnvironmentType& attributes );
     //@}
@@ -60,13 +60,13 @@ private:
 
     //! @name Helpers
     //@{
-    void UpdateEntityType      ( UpdateFunctor_ABC& functor ) const;
-    void UpdateEntityIdentifier( UpdateFunctor_ABC& functor ) const;
-    void UpdateSpatial         ( UpdateFunctor_ABC& functor ) const;
-    void UpdateAggregateMarking( UpdateFunctor_ABC& functor ) const;
-    void UpdateAggregateState  ( UpdateFunctor_ABC& functor ) const;
-    void UpdateForceIdentifier ( UpdateFunctor_ABC& functor ) const;
-    void UpdateComposition     ( UpdateFunctor_ABC& functor ) const;
+    void UpdateEntityType      ( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateSpatial         ( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateAggregateMarking( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateAggregateState  ( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateForceIdentifier ( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateComposition     ( ::hla::UpdateFunctor_ABC& functor ) const;
     //@}
 
 private:

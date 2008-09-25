@@ -19,6 +19,7 @@
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 
 using namespace plugins::hla;
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: FederateFacade constructor

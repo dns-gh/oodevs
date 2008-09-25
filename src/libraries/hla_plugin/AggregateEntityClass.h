@@ -12,8 +12,11 @@
 
 #include "ObjectClass_ABC.h"
 
-template< typename T > class Class;
-class Federate;
+namespace hla
+{
+    template< typename T > class Class;
+    class Federate;
+}
 
 namespace plugins
 {
@@ -39,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterTo( Federate& federate );
+    virtual void RegisterTo( ::hla::Federate& federate );
     void Register( HlaExtension_ABC& localObject );
     //@}
 
@@ -59,7 +62,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< UnitRegistration > registration_;
-    std::auto_ptr< Class< HlaExtension_ABC > > hlaClass_;
+    std::auto_ptr< ::hla::Class< HlaExtension_ABC > > hlaClass_;
     //@}
 };
 

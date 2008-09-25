@@ -12,12 +12,15 @@
 
 #include "hla/Serializer.h"
 
-template< unsigned N >
-Serializer& operator<<( Serializer& serializer, const unsigned char (&buffer)[N] )
+namespace hla
 {
-    for( unsigned i = 0; i < N; ++i )
-        serializer << buffer[i];
-    return serializer;
+    template< unsigned N >
+    Serializer& operator<<( Serializer& serializer, const unsigned char (&buffer)[N] )
+    {
+        for( unsigned i = 0; i < N; ++i )
+            serializer << buffer[i];
+        return serializer;
+    }
 }
 
 #endif // __SerializationTools_h_

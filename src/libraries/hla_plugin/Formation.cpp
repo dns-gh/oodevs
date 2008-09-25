@@ -11,11 +11,12 @@
 #include "Formation.h"
 #include "SerializationTools.h"
 #include "Dimension.h"
-#include "hla/UpdateFunctor_ABC.h"
-#include "hla/AttributeIdentifier.h"
-#include "pathfind/TerrainData.h"
+#include <hla/UpdateFunctor_ABC.h>
+#include <hla/AttributeIdentifier.h>
+#include <pathfind/TerrainData.h>
 
 using namespace plugins::hla;
+using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: Formation constructor

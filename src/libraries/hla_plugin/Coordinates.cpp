@@ -39,7 +39,6 @@ WorldLocation::WorldLocation( const std::string mgrs, float altitude )
     geocoord::Geodetic geodetic( base );
     geodetic.SetHeight( altitude );
     geocoord::Geocentric centric( geodetic );
-
     x_ = centric.GetX();
     y_ = centric.GetY();
     z_ = centric.GetZ();
@@ -54,7 +53,6 @@ WorldLocation::WorldLocation( double latitude, double longitude, float altitude 
     static const double rPiOver180 = std::acos( -1. ) / 180.;
     geocoord::Geodetic geodetic( latitude * rPiOver180, longitude * rPiOver180, altitude );
     geocoord::Geocentric centric( geodetic );
-
     x_ = centric.GetX();
     y_ = centric.GetY();
     z_ = centric.GetZ();

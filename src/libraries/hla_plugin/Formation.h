@@ -12,7 +12,10 @@
 
 #include "game_asn/Simulation.h"
 
-class UpdateFunctor_ABC;
+namespace hla
+{
+    class UpdateFunctor_ABC;
+}
 
 namespace plugins
 {
@@ -37,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
+    void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     void Update( const ASN1T_MsgUnitEnvironmentType& message );
     //@}
 
@@ -51,8 +54,8 @@ private:
     //! @name Helpers
     //@{
     static bool IsOnRoad( const ASN1T_MsgUnitEnvironmentType& message );
-    void SerializeFormation( UpdateFunctor_ABC& functor ) const;
-    void SerializeDimension( UpdateFunctor_ABC& functor ) const;
+    void SerializeFormation( ::hla::UpdateFunctor_ABC& functor ) const;
+    void SerializeDimension( ::hla::UpdateFunctor_ABC& functor ) const;
     //@}
 
 private:

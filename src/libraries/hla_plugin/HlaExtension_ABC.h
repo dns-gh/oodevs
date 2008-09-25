@@ -13,9 +13,12 @@
 #include "clients_kernel/Extension_ABC.h"
 #include <stdexcept>
 
-class AttributeIdentifier;
-class Deserializer;
-class UpdateFunctor_ABC;
+namespace hla
+{
+    class AttributeIdentifier;
+    class Deserializer;
+    class UpdateFunctor_ABC;
+}
 
 namespace plugins
 {
@@ -40,11 +43,11 @@ public:
 
     //! @name Operations
     //@{
-    void Deserialize( const AttributeIdentifier& , const Deserializer& )
+    void Deserialize( const ::hla::AttributeIdentifier& , const ::hla::Deserializer& )
     {
         throw std::runtime_error( __FUNCTION__ " not implemented" );
     }
-    virtual void Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const = 0;
+    virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const = 0;
     //@}
 };
 

@@ -10,7 +10,10 @@
 #ifndef __Hla_Plugin_Class_ABC_h_
 #define __Hla_Plugin_Class_ABC_h_
 
-class Federate;
+namespace hla
+{
+    class Federate;
+}
 
 namespace plugins
 {
@@ -35,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterTo( Federate& federate ) = 0;
+    virtual void RegisterTo( ::hla::Federate& federate ) = 0;
     //@}
 };
 
