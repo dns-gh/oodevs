@@ -30,7 +30,7 @@ namespace kernel
 }
 
 
-class SessionStatus ; 
+class Session ; 
 
 // =============================================================================
 /** @class  MainWindow
@@ -46,7 +46,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor
     //@{
-    MainWindow( kernel::Controllers& controllers, boost::shared_ptr< SessionStatus > sessionStatus );
+    MainWindow( kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus );
     virtual ~MainWindow();
     //@}
 

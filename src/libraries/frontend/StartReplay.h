@@ -31,6 +31,11 @@ public:
     virtual ~StartReplay();
     //@}
 
+    //! @name operations
+    //@{
+    bool Wait() ; 
+    //@}
+        
 private:
     //! @name Copy/Assignment
     //@{

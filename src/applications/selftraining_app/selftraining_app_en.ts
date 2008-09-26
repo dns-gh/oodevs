@@ -147,10 +147,6 @@
         <source>Session:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Checkpoint:</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ScenarioEditPage</name>
@@ -268,6 +264,17 @@
     </message>
 </context>
 <context>
+    <name>Session</name>
+    <message>
+        <source>Running Sessions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running session detected. Close ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SessionRunningPage</name>
     <message>
         <source>Running Sessions</source>
@@ -291,17 +298,6 @@
     </message>
     <message>
         <source>Simulation started</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SessionStatus</name>
-    <message>
-        <source>Running Sessions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Running session detected. Close ?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

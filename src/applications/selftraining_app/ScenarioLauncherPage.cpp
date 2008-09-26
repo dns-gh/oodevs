@@ -15,7 +15,7 @@
 #include "moc_ScenarioLauncherPage.cpp"
 #include "ExerciseList.h" 
 #include "SideList.h"
-#include "SessionStatus.h" 
+#include "Session.h" 
 #include "frontend/commands.h"
 #include "frontend/StartExercise.h"
 #include "frontend/JoinExercise.h"
@@ -48,7 +48,7 @@ namespace bfs = boost::filesystem;
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, boost::shared_ptr< SessionStatus > sessionStatus  )
+ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus  )
     : ContentPage( pages, tools::translate( "ScenarioLauncherPage", "Scenario" ), previous )
     , config_( config )
     , sessionStatus_( sessionStatus ) 

@@ -170,7 +170,7 @@
     </message>
     <message>
         <source>Checkpoint:</source>
-        <translation>Sauvegarde : </translation>
+        <translation type="obsolete">Sauvegarde : </translation>
     </message>
 </context>
 <context>
@@ -313,6 +313,17 @@
     </message>
 </context>
 <context>
+    <name>Session</name>
+    <message>
+        <source>Running Sessions</source>
+        <translation type="unfinished">Sessions en cours</translation>
+    </message>
+    <message>
+        <source>Running session detected. Close ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SessionRunningPage</name>
     <message>
         <source>Running Sessions</source>
@@ -341,17 +352,6 @@
     <message>
         <source>Simulation started</source>
         <translation>Simulation démarrée</translation>
-    </message>
-</context>
-<context>
-    <name>SessionStatus</name>
-    <message>
-        <source>Running Sessions</source>
-        <translation>Sessions en cours</translation>
-    </message>
-    <message>
-        <source>Running session detected. Close ?</source>
-        <translation>Une session est en cours d&apos;execution. Fermer ? </translation>
     </message>
 </context>
 <context>

@@ -19,7 +19,7 @@
 // Name: HomePage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-HomePage::HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< SessionStatus > sessionStatus )
+HomePage::HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus )
     : MenuPage( pages )
 {
     AddLink( tools::translate( "HomePage", "Self Training" ), *new SelfTrainingPage( pages, *this, config, interpreter, sessionStatus ), true, tools::translate( "HomePage", "Start Exercises" ) );

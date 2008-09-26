@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __SessionStatus_h_
-#define __SessionStatus_h_
+#ifndef __Session_h_
+#define __Session_h_
 
 namespace frontend
 {
@@ -21,12 +21,12 @@ namespace boost
 }
 
 // =============================================================================
-/** @class  SessionStatus
-    @brief  SessionStatus
+/** @class  Session
+    @brief  Session
 */
 // Created: RDS 2008-08-21
 // =============================================================================
-class SessionStatus : public QObject 
+class Session : public QObject 
 {
 
     Q_OBJECT ; 
@@ -34,8 +34,8 @@ class SessionStatus : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionStatus( frontend::SpawnCommand* simulation=NULL, frontend::SpawnCommand* gui=NULL );
-    virtual ~SessionStatus();
+             Session( frontend::SpawnCommand* simulation=NULL, frontend::SpawnCommand* gui=NULL );
+    virtual ~Session();
     //@}
 
     //! @name Operations
@@ -62,8 +62,8 @@ signals:
 private:
     //! @name Copy/Assignment
     //@{
-    SessionStatus( const SessionStatus& );            //!< Copy constructor
-    SessionStatus& operator=( const SessionStatus& ); //!< Assignment operator
+    Session( const Session& );            //!< Copy constructor
+    Session& operator=( const Session& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -84,4 +84,4 @@ private:
 
 };
 
-#endif // __SessionStatus_h_
+#endif // __Session_h_

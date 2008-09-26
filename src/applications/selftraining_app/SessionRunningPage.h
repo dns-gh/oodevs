@@ -17,7 +17,7 @@ namespace tools
     class GeneralConfig ; 
 }
 
-class SessionStatus; 
+class Session; 
 
 class QProgressBar; 
 class QTimer ; 
@@ -36,13 +36,13 @@ class SessionRunningPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< SessionStatus > sessionStatus);
+             SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus);
     virtual ~SessionRunningPage();
     //@}
 
     //! @name Operations
     //@{
-    void SetSession( SessionStatus* session ) ; 
+    void SetSession( Session* session ) ; 
     //@}
 
 public slots:
@@ -66,7 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< SessionStatus > sessionStatus_ ; 
+    boost::shared_ptr< Session > sessionStatus_ ; 
     const tools::GeneralConfig& config_ ; 
     QLabel* status_ ; 
     QTimer* timer_ ; 

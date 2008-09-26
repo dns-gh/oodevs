@@ -11,7 +11,7 @@
 #include "ScenarioEditPage.h"
 #include "moc_ScenarioEditPage.cpp"
 #include "MenuButton.h" 
-#include "SessionStatus.h" 
+#include "Session.h" 
 #include "clients_gui/Tools.h"
 #include "frontend/commands.h" 
 #include "frontend/CreateExercise.h" 
@@ -21,7 +21,7 @@
 // Name: ScenarioEditPage constructor
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
-ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< SessionStatus > sessionStatus )
+ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus )
     : ContentPage( pages, tools::translate( "ScenarioEditPage", "Scenario" ), previous )
     , config_ ( config ) 
     , sessionStatus_ ( sessionStatus ) 
@@ -79,7 +79,7 @@ void ScenarioEditPage::CreateExercise()
     {
         const std::string terrain  = editTerrainList_->selectedItem()->text().ascii();
         frontend::CreateExercise( config_, editName_->text().ascii(), terrain, "ada", "france" );
-        sessionStatus_.reset( new SessionStatus ( NULL, new frontend::EditExercise( config_, editName_->text(), true )  ) );
+        sessionStatus_.reset( new Session ( NULL, new frontend::EditExercise( config_, editName_->text(), true )  ) );
         sessionStatus_->Start(); 
         Previous();
     }    

@@ -10,7 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "MessageDialog.h" 
 #include "SessionRunningPage.h"
-#include "SessionStatus.h" 
+#include "Session.h" 
 
 #include "moc_SessionRunningPage.cpp" 
 
@@ -21,7 +21,7 @@
 // Name: SessionRunningPage constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-SessionRunningPage::SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< SessionStatus > sessionStatus) 
+SessionRunningPage::SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus) 
     : ContentPage    ( pages, tr( "SessionRunningPage" ) , previous )
     , config_        ( config ) 
     , sessionStatus_ ( sessionStatus ) 
@@ -84,7 +84,7 @@ void SessionRunningPage::UpdateProgress()
 // Name: SessionRunningPage::SetSession
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-void SessionRunningPage::SetSession( SessionStatus* session )
+void SessionRunningPage::SetSession( Session* session )
 {
     if (sessionStatus_->HasRunningProcess()) 
     {

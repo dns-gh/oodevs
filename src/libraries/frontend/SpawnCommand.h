@@ -42,7 +42,6 @@ public:
     bool IsRunning() const; 
     virtual bool Wait() ; 
     virtual void Start();
-    virtual void End(); 
     virtual unsigned int GetPercentage() ; 
     //@}
 

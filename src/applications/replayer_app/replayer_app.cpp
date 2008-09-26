@@ -52,3 +52,15 @@ int main( int argc, char** argv )
     {
     }
 }
+
+int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
+{
+    __try
+    {
+        return Run( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
+    }
+    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
+    {
+    }
+    return 0;
+}

@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "selftraining_app_pch.h"
-#include "SessionStatus.h"
-#include "moc_SessionStatus.cpp" 
+#include "Session.h"
+#include "moc_Session.cpp" 
 #include "MessageDialog.h" 
 #include "clients_kernel/Tools.h" 
 #include "frontend/SpawnCommand.h"
@@ -20,10 +20,10 @@
 #pragma warning( pop )
 
 // -----------------------------------------------------------------------------
-// Name: SessionStatus constructor
+// Name: Session constructor
 // Created: RDS 2008-08-28
 // -----------------------------------------------------------------------------
-SessionStatus::SessionStatus( frontend::SpawnCommand* simulation, frontend::SpawnCommand* gui )
+Session::Session( frontend::SpawnCommand* simulation, frontend::SpawnCommand* gui )
     : simulation_ ( simulation ) 
     , gui_ ( gui ) 
 {
@@ -32,10 +32,10 @@ SessionStatus::SessionStatus( frontend::SpawnCommand* simulation, frontend::Spaw
 
 
 // -----------------------------------------------------------------------------
-// Name: SessionStatus destructor
+// Name: Session destructor
 // Created: RDS 2008-08-21
 // -----------------------------------------------------------------------------
-SessionStatus::~SessionStatus()
+Session::~Session()
 {
     if ( thread_.get() )
     {
@@ -47,19 +47,19 @@ SessionStatus::~SessionStatus()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionStatus::Start
+// Name: Session::Start
 // Created: RDS 2008-08-28
 // -----------------------------------------------------------------------------
-void SessionStatus::Start()
+void Session::Start()
 {
-    thread_.reset( new boost::thread( boost::bind( &SessionStatus::ThreadStart, this ) ) );     
+    thread_.reset( new boost::thread( boost::bind( &Session::ThreadStart, this ) ) );     
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionStatus::Start
+// Name: Session::Start
 // Created: RDS 2008-08-28
 // -----------------------------------------------------------------------------
-void SessionStatus::ThreadStart()
+void Session::ThreadStart()
 {
     try
     {
@@ -98,59 +98,59 @@ void SessionStatus::ThreadStart()
     }
 }
 // -----------------------------------------------------------------------------
-// Name: SessionStatus::IsSimRunning
+// Name: Session::IsSimRunning
 // Created: RDS 2008-08-22
 // -----------------------------------------------------------------------------
-bool SessionStatus::IsSimRunning()
+bool Session::IsSimRunning()
 {
     return ( simulation_.get() && simulation_->IsRunning() )  ; 
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionStatus::IsGUIRunning
+// Name: Session::IsGUIRunning
 // Created: RDS 2008-08-22
 // -----------------------------------------------------------------------------
-bool SessionStatus::IsGUIRunning()
+bool Session::IsGUIRunning()
 {
     return ( gui_.get() && gui_->IsRunning() )  ; 
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionStatus::HasRunningProcess
+// Name: Session::HasRunningProcess
 // Created: RDS 2008-08-22
 // -----------------------------------------------------------------------------
-bool SessionStatus::HasRunningProcess()
+bool Session::HasRunningProcess()
 {
     return ( IsSimRunning() || IsGUIRunning() ) ; 
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionStatus::StopSimulation
+// Name: Session::StopSimulation
 // Created: RDS 2008-08-22
 // -----------------------------------------------------------------------------
-void SessionStatus::StopSimulation( bool confirm )
+void Session::StopSimulation( bool confirm )
 {
     Stop( simulation_, confirm ) ; 
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionStatus::StopGUI
+// Name: Session::StopGUI
 // Created: RDS 2008-08-22
 // -----------------------------------------------------------------------------
-void SessionStatus::StopGUI( bool confirm )
+void Session::StopGUI( bool confirm )
 {
     Stop( gui_, confirm ) ; 
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionStatus::Stop
+// Name: Session::Stop
 // Created: RDS 2008-08-25
 // -----------------------------------------------------------------------------
-void SessionStatus::Stop( std::auto_ptr< frontend::SpawnCommand >& command, bool confirm )
+void Session::Stop( std::auto_ptr< frontend::SpawnCommand >& command, bool confirm )
 {
     if ( command.get() && confirm ) 
     {
-        MessageDialog message( qApp->mainWidget(), tools::translate ( "SessionStatus", "Running Sessions")  , tools::translate( "SessionStatus","Running session detected. Close ?" ) , QMessageBox::Yes, QMessageBox::No );
+        MessageDialog message( qApp->mainWidget(), tools::translate ( "Session", "Running Sessions")  , tools::translate( "Session","Running session detected. Close ?" ) , QMessageBox::Yes, QMessageBox::No );
         if( message.exec() != QMessageBox::Yes )
             return ; 
     }
@@ -158,10 +158,10 @@ void SessionStatus::Stop( std::auto_ptr< frontend::SpawnCommand >& command, bool
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionStatus::GetPercentage
+// Name: Session::GetPercentage
 // Created: RDS 2008-09-10
 // -----------------------------------------------------------------------------
-unsigned int SessionStatus::GetPercentage()
+unsigned int Session::GetPercentage()
 {
     return ( simulation_.get() ? simulation_->GetPercentage() : 0 ) ; 
 }

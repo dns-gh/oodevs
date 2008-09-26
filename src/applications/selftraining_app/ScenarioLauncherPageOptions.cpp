@@ -11,7 +11,7 @@
 #include "ScenarioLauncherPageOptions.h"
 #include "moc_ScenarioLauncherPageOptions.cpp"
 #include "SessionRunningPage.h" 
-#include "SessionStatus.h" 
+#include "Session.h" 
 #include "frontend/StartExercise.h"
 #include "frontend/JoinExercise.h"
 #include "frontend/CreateSession.h"
@@ -108,9 +108,9 @@ void ScenarioLauncherPageOptions::Start()
     const QString session  = BuildSessionName().c_str();
     CreateSession( exercise_, session );
     if ( profiles_->selectedItem() ) 
-        running_.SetSession( new SessionStatus ( new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise ( config_, exercise_, session, profiles_->selectedItem()->text(), true ) ) );    
+        running_.SetSession( new Session ( new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise ( config_, exercise_, session, profiles_->selectedItem()->text(), true ) ) );    
     else
-        running_.SetSession( new SessionStatus ( new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise ( config_, exercise_, session, true ) ) );    
+        running_.SetSession( new Session ( new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise ( config_, exercise_, session, true ) ) );    
     running_.show(); 
 }
 

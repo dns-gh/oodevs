@@ -26,7 +26,7 @@
 // Name: MainWindow constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( kernel::Controllers& controllers, boost::shared_ptr< SessionStatus > sessionStatus )
+MainWindow::MainWindow( kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , config_( new frontend::Config() )
     , interpreter_( new LinkInterpreter( this, controllers ) ) 

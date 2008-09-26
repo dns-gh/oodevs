@@ -33,7 +33,7 @@ namespace tools
     class GeneralConfig;
 }
 
-class SessionStatus ; 
+class Session ; 
 
 class ExerciseList; 
 
@@ -50,7 +50,7 @@ class ReplayPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< SessionStatus > sessionStatus  );
+             ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus  );
     virtual ~ReplayPage();
     //@}
 
@@ -61,7 +61,6 @@ private slots:
     void OnStartExercise  ( const QString& exercise );
     void OnStart          ( );
     void OnSelectExercise ( const QString& exercise );
-    void OnSelectSession  ( const QString& session ); 
     //@}
 
 private:
@@ -75,19 +74,18 @@ private:
     //@{
     virtual void Update();
     void CreateSession( const QString& exercise, const QString& session );
-    void StartSession( SessionStatus* session ); 
+    void StartSession( Session* session ); 
     //@}
 
 private:
     
-    boost::shared_ptr< SessionStatus > sessionStatus_ ; 
+    boost::shared_ptr< Session > sessionStatus_ ; 
 
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
     ExerciseList*       exercises_ ; 
     QListBox*           sessionList_;
-    QListBox*           checkpointList_;
     //@}
 };
 

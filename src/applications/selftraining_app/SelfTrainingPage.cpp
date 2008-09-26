@@ -18,7 +18,7 @@
 // Name: SelfTrainingPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-SelfTrainingPage::SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< SessionStatus > sessionStatus )
+SelfTrainingPage::SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus )
     : MenuPage( pages )
 {
     SessionRunningPage* running = new SessionRunningPage( pages, *this, config, sessionStatus ) ; 

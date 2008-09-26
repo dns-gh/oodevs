@@ -13,7 +13,7 @@ SelfTrainingPage.cpp \
 MessageDialog.cpp \
 TrayIcon.cpp \
 TrayMenu.cpp \
-SessionStatus.cpp \
+Session.cpp \
 MenuPage.cpp \
 ExerciseList.cpp \
 TutorialPage.cpp \

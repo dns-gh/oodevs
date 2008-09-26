@@ -22,7 +22,7 @@ namespace gui
     class LinkInterpreter_ABC ; 
 }
 
-class SessionStatus; 
+class Session; 
 
 // =============================================================================
 /** @class  SelfTrainingPage
@@ -36,7 +36,7 @@ class SelfTrainingPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< SessionStatus > sessionStatus );
+             SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus );
     virtual ~SelfTrainingPage();
     //@}
 

@@ -22,7 +22,7 @@ namespace gui
     class LinkInterpreter_ABC ; 
 }
 
-class SessionStatus ; 
+class Session ; 
 
 // =============================================================================
 /** @class  HomePage
@@ -36,7 +36,7 @@ class HomePage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< SessionStatus > sessionStatus );
+    explicit HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus );
     virtual ~HomePage();
     //@}
 };

@@ -28,7 +28,7 @@ namespace frontend
     class InfoBubble ; 
 }
 
-class SessionStatus ; 
+class Session ; 
 
 class ExerciseList; 
 class ScenarioLauncherPageOptions; 
@@ -47,7 +47,7 @@ class ScenarioLauncherPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, boost::shared_ptr< SessionStatus > sessionStatus  );
+             ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus  );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -66,11 +66,11 @@ private:
 
 private:
     
-    boost::shared_ptr< SessionStatus > sessionStatus_ ; 
+    boost::shared_ptr< Session > sessionStatus_ ; 
 
     //! @name Helpers
     //@{
-    void StartSession( SessionStatus* session ) ; 
+    void StartSession( Session* session ) ; 
     //@}
 
     //! @name Member data

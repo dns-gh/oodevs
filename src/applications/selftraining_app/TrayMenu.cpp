@@ -9,14 +9,14 @@
 
 #include "selftraining_app_pch.h"
 #include "TrayMenu.h"
-#include "SessionStatus.h" 
+#include "Session.h" 
 #include "moc_TrayMenu.cpp" 
 
 // -----------------------------------------------------------------------------
 // Name: TrayMenu constructor
 // Created: RDS 2008-08-21
 // -----------------------------------------------------------------------------
-TrayMenu::TrayMenu( QWidget* mainWindow, boost::shared_ptr< SessionStatus > sessionStatus )
+TrayMenu::TrayMenu( QWidget* mainWindow, boost::shared_ptr< Session > sessionStatus )
     : sessionStatus_ ( sessionStatus ) 
 {
     setPalette( mainWindow->palette() ) ; 

@@ -15,7 +15,7 @@
 #include "ExerciseList.h" 
 #include "SideList.h"
 #include "SessionRunningPage.h" 
-#include "SessionStatus.h" 
+#include "Session.h" 
 #include "frontend/commands.h"
 #include "frontend/CreateSession.h" 
 #include "frontend/StartExercise.h"
@@ -101,7 +101,7 @@ QStringList GetResources( const tools::GeneralConfig& config, const QString& exe
 // Name: TutorialPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< SessionStatus > sessionStatus  )
+TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus  )
     : ContentPage( pages, tools::translate( "TutorialPage", "Tutorials" ), previous )
     , config_( config )
     , sessionStatus_( sessionStatus ) 
@@ -147,7 +147,7 @@ void TutorialPage::OnStartExercise ( const QString& exercise )
 {
      if ( HasODB( config_, exercise ) )
      {
-        running_.SetSession( new SessionStatus ( new frontend::StartExercise( config_, exercise, "default" , true ), new frontend::JoinExercise ( config_, exercise, "default", true ) ) );  
+        running_.SetSession( new Session ( new frontend::StartExercise( config_, exercise, "default" , true ), new frontend::JoinExercise ( config_, exercise, "default", true ) ) );  
         running_.show(); 
      }
      else

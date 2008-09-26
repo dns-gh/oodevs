@@ -14,11 +14,11 @@
 #include "moc_ReplayPage.cpp"
 #include "ExerciseList.h" 
 #include "SideList.h"
-#include "SessionStatus.h" 
+#include "Session.h" 
 #include "frontend/commands.h"
 #include "frontend/CreateSession.h" 
-#include "frontend/StartExercise.h"
-#include "frontend/JoinExercise.h"
+#include "frontend/StartReplay.h"
+#include "frontend/JoinAnalysis.h"
 #include "frontend/commands.h" 
 #include "clients_gui/Tools.h"
 #include "clients_gui/LinkInterpreter_ABC.h" 
@@ -53,7 +53,7 @@ namespace
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< SessionStatus > sessionStatus  )
+ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus  )
     : ContentPage( pages, tools::translate( "ReplayPage", "Replay" ), previous )
     , config_( config )
     , sessionStatus_( sessionStatus ) 
@@ -77,10 +77,6 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::Ge
                 label = new QLabel( tr( "Session:") , vbox ); 
                 label->setBackgroundOrigin( QWidget::WindowOrigin );
                 sessionList_ = new QListBox( vbox);
-                connect( sessionList_, SIGNAL( highlighted ( const QString& ) ), this, SLOT( OnSelectSession( const QString& ) ) ); 
-                label = new QLabel( tr( "Checkpoint:") , vbox ); 
-                label->setBackgroundOrigin( QWidget::WindowOrigin );
-                checkpointList_ = new QListBox( vbox);
             }
         }
        
@@ -122,15 +118,12 @@ void ReplayPage::OnStartExercise ( const QString& exercise )
     }
 
     QString session = "" ;  
-    QString checkpoint = "" ; 
     if( QListBoxItem* sessionItem = sessionList_->selectedItem() )
         session = sessionItem->text() ; 
-    if( QListBoxItem* checkpointItem = checkpointList_->selectedItem() )
-        checkpoint = checkpointItem->text() ; 
-    if ( ( session != "" ) && ( checkpoint != "" ) ) 
+    if ( session != "" ) 
     {
         CreateSession( exercise, session );
-        StartSession( new SessionStatus ( new frontend::StartExercise( config_, exercise, session, checkpoint, true ), new frontend::JoinExercise ( config_, exercise, session, true ) ) );  
+        StartSession( new Session ( new frontend::StartReplay( config_, exercise, session, 20000, true ), new frontend::JoinAnalysis( config_, exercise, 20000 ) ) ); 
     }
 }
 
@@ -156,21 +149,10 @@ void ReplayPage::OnSelectExercise( const QString& exercise )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReplayPage::OnSelectSession
-// Created: RDS 2008-09-02
-// -----------------------------------------------------------------------------
-void ReplayPage::OnSelectSession( const QString& session )
-{
-    checkpointList_->clear();
-    checkpointList_->insertStringList( frontend::commands::ListCheckpoints( config_, exercises_->GetHighlight().ascii(), session.ascii() ) );
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: ScenarioLauncherPage::StartSession
 // Created: RDS 2008-08-28
 // -----------------------------------------------------------------------------
-void ReplayPage::StartSession( SessionStatus* session )
+void ReplayPage::StartSession( Session* session )
 {
     sessionStatus_.reset( session ) ; 
     sessionStatus_->Start(); 

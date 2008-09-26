@@ -10,7 +10,7 @@
 #ifndef __TrayMenu_h_
 #define __TrayMenu_h_
 
-class SessionStatus ; 
+class Session ; 
 
 // =============================================================================
 /** @class  TrayMenu
@@ -26,7 +26,7 @@ class TrayMenu : public QPopupMenu
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TrayMenu( QWidget* mainWindow, boost::shared_ptr< SessionStatus > sessionStatus );
+    explicit TrayMenu( QWidget* mainWindow, boost::shared_ptr< Session > sessionStatus );
     virtual ~TrayMenu();
     //@}
 
@@ -57,7 +57,7 @@ private slots:
 
 private:
 
-    boost::shared_ptr< SessionStatus > sessionStatus_ ;  
+    boost::shared_ptr< Session > sessionStatus_ ;  
     int nSimId_ ; 
     int nGUIId_ ; 
 

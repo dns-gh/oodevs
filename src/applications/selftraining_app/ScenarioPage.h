@@ -18,7 +18,7 @@ namespace tools
 }
 
 
-class SessionStatus; 
+class Session; 
 class SessionRunningPage; 
 
 // =============================================================================
@@ -33,7 +33,7 @@ class ScenarioPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, SessionRunningPage& running, boost::shared_ptr< SessionStatus > sessionStatus );
+             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, SessionRunningPage& running, boost::shared_ptr< Session > sessionStatus );
     virtual ~ScenarioPage();
     //@}
 

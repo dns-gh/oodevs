@@ -33,7 +33,7 @@ namespace tools
     class GeneralConfig;
 }
 
-class SessionStatus ; 
+class Session ; 
 class SessionRunningPage; 
 class ExerciseList; 
 
@@ -50,7 +50,7 @@ class TutorialPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             TutorialPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< SessionStatus > sessionStatus  );
+             TutorialPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus  );
     virtual ~TutorialPage();
     //@}
 
@@ -73,12 +73,12 @@ private:
     //@{
     virtual void Update();
     void CreateSession( const QString& exercise, const QString& session );
-    void StartSession( SessionStatus* session ); 
+    void StartSession( Session* session ); 
     //@}
 
 private:
     
-    boost::shared_ptr< SessionStatus > sessionStatus_ ; 
+    boost::shared_ptr< Session > sessionStatus_ ; 
 
     //! @name Member data
     //@{
