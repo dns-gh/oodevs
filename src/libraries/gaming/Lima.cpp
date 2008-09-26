@@ -61,7 +61,7 @@ void Lima::UpdateToSim( E_State state )
     {
     case eStateCreated:
         {
-            messenger::LimaCreationRequest message;
+            plugins::messenger::LimaCreationRequest message;
             message().name = GetName();
             WriteGeometry ( message().geometry );
             WriteDiffusion( message().diffusion );
@@ -71,7 +71,7 @@ void Lima::UpdateToSim( E_State state )
         break;
     case eStateModified:
         {
-            messenger::LimaUpdateRequest message;
+            plugins::messenger::LimaUpdateRequest message;
             message().oid = GetId();
             message().tactical_line.name= GetName();
             WriteGeometry ( message().tactical_line.geometry );
@@ -81,7 +81,7 @@ void Lima::UpdateToSim( E_State state )
         }
         break;
     case eStateDeleted:
-        messenger::LimaDestructionRequest asnMsg;
+        plugins::messenger::LimaDestructionRequest asnMsg;
         asnMsg() = GetId();
         Send( asnMsg );
         break;

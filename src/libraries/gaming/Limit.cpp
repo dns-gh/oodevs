@@ -58,7 +58,7 @@ void Limit::UpdateToSim( E_State state )
     {
     case eStateCreated:
         {
-            messenger::LimitCreationRequest message;
+            plugins::messenger::LimitCreationRequest message;
             message().name = GetName();
             WriteGeometry ( message().geometry );
             WriteDiffusion( message().diffusion );
@@ -68,7 +68,7 @@ void Limit::UpdateToSim( E_State state )
         break;
     case eStateModified:
         {
-            messenger::LimitUpdateRequest message;
+            plugins::messenger::LimitUpdateRequest message;
             message().oid = GetId();
             message().tactical_line.name  = GetName();
             WriteGeometry ( message().tactical_line.geometry );
@@ -78,7 +78,7 @@ void Limit::UpdateToSim( E_State state )
         }
         break;
     case eStateDeleted:
-        messenger::LimitDestructionRequest asnMsg;
+        plugins::messenger::LimitDestructionRequest asnMsg;
         asnMsg() = GetId();
         Send( asnMsg );
         break;

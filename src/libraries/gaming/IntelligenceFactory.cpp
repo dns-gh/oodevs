@@ -82,7 +82,7 @@ namespace
 Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool mounted, const Karma& karma, const geometry::Point2f& position )
 {
     static unsigned int counter = 0;
-    messenger::IntelligenceCreationRequest asn;
+    plugins::messenger::IntelligenceCreationRequest asn;
     const QString name = tools::translate( "Intelligence", "Intelligence [%1]" ).arg( ++counter );
     asn().intelligence.name = name.ascii();
     asn().intelligence.nature = symbol.c_str();

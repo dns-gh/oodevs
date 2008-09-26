@@ -57,7 +57,7 @@ void CommandPublisher::Send( const std::string& target, const std::string& messa
 {
     if( messenger_ && profile_ && !profile_->GetLogin().isNull() )
     {
-        messenger::TextMessage asn;
+        plugins::messenger::TextMessage asn;
         const std::string source = profile_->GetLogin().ascii();
         asn().source.profile = source.c_str();
         asn().target.profile = target.c_str();
@@ -81,7 +81,7 @@ void CommandPublisher::NotifyUpdated( const kernel::Profile_ABC& profile )
 // -----------------------------------------------------------------------------
 void CommandPublisher::NotifyUpdated( const Services& services )
 {
-    messenger_ = services.HasService< messenger::Service >();
+    messenger_ = services.HasService< plugins::messenger::Service >();
 }
 
 // -----------------------------------------------------------------------------

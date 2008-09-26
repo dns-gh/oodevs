@@ -177,7 +177,7 @@ void Intelligence::CreateDictionary( Controller& controller )
 // -----------------------------------------------------------------------------
 void Intelligence::Delete()
 {
-    messenger::IntelligenceDestructionRequest message;
+    plugins::messenger::IntelligenceDestructionRequest message;
     message().oid = id_;
     message.Send( publisher_ );
 }
@@ -188,7 +188,7 @@ void Intelligence::Delete()
 // -----------------------------------------------------------------------------
 void Intelligence::Rename( const QString& name )
 {
-    messenger::IntelligenceUpdateRequest message;
+    plugins::messenger::IntelligenceUpdateRequest message;
     message().oid = id_;
     message().m.namePresent = 1;
     message().name = name.ascii();

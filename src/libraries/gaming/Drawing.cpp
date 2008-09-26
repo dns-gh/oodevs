@@ -85,7 +85,7 @@ void Drawing::SetLocation( const ASN1T_CoordLatLongList& list )
 // -----------------------------------------------------------------------------
 void Drawing::Create()
 {
-    messenger::ShapeCreationRequest asn;
+    plugins::messenger::ShapeCreationRequest asn;
     asn().shape.category = style_.GetCategory().ascii();
     std::string color = color_.name().ascii();
     asn().shape.color = color.c_str();
@@ -105,7 +105,7 @@ void Drawing::Update()
     DrawerShape::Update();
     if( publishUpdate_ )
     {
-        messenger::ShapeUpdateRequest asn;
+        plugins::messenger::ShapeUpdateRequest asn;
         asn().oid = GetId();
         asn().m.categoryPresent  = 1; asn().category  = style_.GetCategory().ascii();
         asn().m.colorPresent     = 1;

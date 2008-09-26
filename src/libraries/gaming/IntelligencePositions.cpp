@@ -129,7 +129,7 @@ void IntelligencePositions::DoUpdate( const ASN1T_MsgIntelligenceUpdate& message
 // -----------------------------------------------------------------------------
 void IntelligencePositions::Set( const geometry::Point2f& point )
 {
-    messenger::IntelligenceUpdateRequest message;
+    plugins::messenger::IntelligenceUpdateRequest message;
     message().oid = holder_.GetId();
     message().m.locationPresent = 1;
     converter_.ConvertToGeo( point, message().location );

@@ -153,7 +153,7 @@ void AgentServerMsgMgr::Send( const ASN1T_MsgsClientToAar& message )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Send( const ASN1T_MsgsClientToMessenger& message )
 {
-    if( ! host_.empty() && services_.RequireService< messenger::Service >() )
+    if( ! host_.empty() && services_.RequireService< plugins::messenger::Service >() )
         sender_.Send( host_, message );
 }
 
