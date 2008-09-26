@@ -40,10 +40,8 @@ SessionStatus::~SessionStatus()
     if ( thread_.get() )
     {
         thread_->interrupt(); 
-        if ( simulation_.get() ) 
-            simulation_->End(); 
-        if ( gui_.get() ) 
-            gui_->End();
+        simulation_.reset(); 
+        gui_.reset(); 
         thread_->join(); 
     }
 }
