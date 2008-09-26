@@ -11,6 +11,7 @@
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 #include "tools/win32/FlexLm.h"
+#include "tools/WinArguments.h" 
 #include <windows.h>
 
 int Run( int argc, char* argv[] )
@@ -55,12 +56,6 @@ int main( int argc, char** argv )
 
 int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
 {
-    __try
-    {
-        return Run( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
-    }
-    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
-    {
-    }
-    return 0;
+    WinArguments winArgs(lpCmdLine) ; 
+    return Run( winArgs.Argc(), const_cast<char**>( winArgs.Argv() ) ); 
 }
