@@ -11,6 +11,8 @@
 #define __App_h_
 
 #include <string>
+#include <windows.h>
+#include <boost/thread.hpp>
 
 namespace dispatcher
 {
@@ -29,7 +31,7 @@ class App
 public:
     //! @name Constructors/Destructor
     //@{
-             App( int argc, char** argv );
+             App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow );  
     virtual ~App();
     //@}
 
@@ -46,10 +48,32 @@ private:
     //@}
 
 private:
+
+    //! @name Helpers
+    //@{
+    void RunGUI( HINSTANCE hinstance ); 
+    void StartIconAnimation(); 
+    void StopIconAnimation();
+    void AnimateIcon(); 
+    static LRESULT CALLBACK MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam); 
+    //@}
+
     //! @name Member data
     //@{
     dispatcher::Replayer* replayer_;
     //@}
+
+    //! @name GUI Member data 
+    //@{
+    HWND                           hWnd_ ;
+    HINSTANCE                      hInstance_ ; 
+    NOTIFYICONDATA                 TrayIcon_;
+    unsigned int                   nIconIndex_; 
+    std::auto_ptr< boost::thread > guiThread_ ; 
+    //@}
+
+
+
 };
 
 #endif // __App_h_
