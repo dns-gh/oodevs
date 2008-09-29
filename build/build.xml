@@ -328,7 +328,7 @@
                          lib${ant.project.name}_3a-${platform}-mt
                          lib${ant.project.name}_dispatcher-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32"/>
             <includepath path="${include.dir}/masasn"/>
         </build-app>
     </target>
