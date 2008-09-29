@@ -319,7 +319,7 @@
     </target>
 
     <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher,library.3a">
-        <build-app name="replayer_app" subsystem="console" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm,qt"
+        <build-app name="replayer_app" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm,qt"
                    libs="HLA,libFedTime,tools,masasn,directia-${platform}-mt-4_5
                          dispatcher-${platform}-mt@{suffix}
                          lib${ant.project.name}_tools-${platform}-mt
