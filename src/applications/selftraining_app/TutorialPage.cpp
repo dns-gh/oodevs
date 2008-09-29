@@ -23,6 +23,7 @@
 #include "frontend/commands.h" 
 #include "clients_gui/Tools.h"
 #include "clients_gui/LinkInterpreter_ABC.h" 
+#include "clients_kernel/Controllers.h" 
 #include "tools/GeneralConfig.h"
 #include <qlistbox.h>
 #include <qtextedit.h>
@@ -101,9 +102,10 @@ QStringList GetResources( const tools::GeneralConfig& config, const QString& exe
 // Name: TutorialPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus  )
+TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, SessionRunningPage& running, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus  )
     : ContentPage( pages, tools::translate( "TutorialPage", "Tutorials" ), previous )
     , config_( config )
+    , controllers_ ( controllers ) 
     , sessionStatus_( sessionStatus ) 
     , interpreter_ ( interpreter ) 
     , running_ ( running ) 
@@ -147,7 +149,7 @@ void TutorialPage::OnStartExercise ( const QString& exercise )
 {
      if ( HasODB( config_, exercise ) )
      {
-        running_.SetSession( new Session ( new frontend::StartExercise( config_, exercise, "default" , true ), new frontend::JoinExercise ( config_, exercise, "default", true ) ) );  
+        running_.SetSession( new Session ( controllers_.controller_, new frontend::StartExercise( config_, exercise, "default" , true ), new frontend::JoinExercise ( config_, exercise, "default", true ) ) );  
         running_.show(); 
      }
      else

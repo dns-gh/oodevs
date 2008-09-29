@@ -33,6 +33,11 @@ namespace tools
     class GeneralConfig;
 }
 
+namespace kernel
+{
+    class Controllers; 
+}
+
 class Session ; 
 
 class ExerciseList; 
@@ -50,7 +55,7 @@ class ReplayPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus  );
+             ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus  );
     virtual ~ReplayPage();
     //@}
 
@@ -84,8 +89,9 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    ExerciseList*       exercises_ ; 
-    QListBox*           sessionList_;
+    ExerciseList*               exercises_ ; 
+    QListBox*                   sessionList_;
+    kernel::Controllers&        controllers_ ; 
     //@}
 };
 

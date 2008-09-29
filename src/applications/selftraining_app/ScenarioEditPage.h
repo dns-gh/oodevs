@@ -17,6 +17,11 @@ namespace tools
     class GeneralConfig;
 }
 
+namespace kernel
+{
+    class Controllers; 
+}
+
 class Session; 
 
 // =============================================================================
@@ -33,7 +38,7 @@ class ScenarioEditPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus );
+             ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus );
     virtual ~ScenarioEditPage();
     //@}
 
@@ -59,6 +64,7 @@ private:
     QListBox*  editTerrainList_ ; 
     QLineEdit* editName_ ; 
     boost::shared_ptr< Session > sessionStatus_ ; 
+    kernel::Controllers& controllers_ ; 
     //@}
 };
 

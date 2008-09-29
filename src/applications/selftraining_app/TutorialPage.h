@@ -33,6 +33,11 @@ namespace tools
     class GeneralConfig;
 }
 
+namespace kernel
+{
+    class Controllers; 
+}
+
 class Session ; 
 class SessionRunningPage; 
 class ExerciseList; 
@@ -50,7 +55,7 @@ class TutorialPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             TutorialPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus  );
+             TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, SessionRunningPage& running,  gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus  );
     virtual ~TutorialPage();
     //@}
 
@@ -87,6 +92,7 @@ private:
     gui::LinkInterpreter_ABC&   interpreter_ ; 
     QLabel*                     statusLabel_ ; 
     SessionRunningPage&         running_ ; 
+    kernel::Controllers&        controllers_ ; 
     //@}
 };
 

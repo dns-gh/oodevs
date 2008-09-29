@@ -22,6 +22,7 @@
 #include "frontend/commands.h" 
 #include "clients_gui/Tools.h"
 #include "clients_gui/LinkInterpreter_ABC.h" 
+#include "clients_kernel/Controllers.h" 
 #include "tools/GeneralConfig.h"
 #include <qlistbox.h>
 #include <qtextedit.h>
@@ -53,8 +54,9 @@ namespace
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus  )
+ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus  )
     : ContentPage( pages, tools::translate( "ReplayPage", "Replay" ), previous )
+    , controllers_ ( controllers ) 
     , config_( config )
     , sessionStatus_( sessionStatus ) 
 {
@@ -123,7 +125,7 @@ void ReplayPage::OnStartExercise ( const QString& exercise )
     if ( session != "" ) 
     {
         CreateSession( exercise, session );
-        StartSession( new Session ( new frontend::StartReplay( config_, exercise, session, 20000, true ), new frontend::JoinAnalysis( config_, exercise, 20000 ) ) ); 
+        StartSession( new Session ( controllers_.controller_, new frontend::StartReplay( config_, exercise, session, 20000, true ), new frontend::JoinAnalysis( config_, exercise, 20000 ) ) ); 
     }
 }
 

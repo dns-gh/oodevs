@@ -129,11 +129,10 @@ void ProfileList::ReadProfiles( const std::string& exercise )
 void ProfileList::ReadProfile( xml::xistream& xis )
 {
     Profile profile(xis, sides_ ) ;  
-    QString name = ( profile.GetLogin() != "" ) ?  profile.GetLogin() :  tr( "no name" ) ; 
+    QString name = ( profile.GetLogin() != "" ) ?  profile.GetLogin() :  tr( "anonymous" ) ; 
     if ( profile.IsSupervision() ) 
         insertItem( QImage("resources/images/selftraining/commandpost.xpm" ), name  ) ;
     else
         insertItem( name  ) ;
 
 }
-

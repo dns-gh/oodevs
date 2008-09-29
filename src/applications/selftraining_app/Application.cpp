@@ -17,6 +17,7 @@
 #include "TrayIcon.h"
 #include "TrayMenu.h" 
 #include "Session.h" 
+#include "SessionTray.h" 
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
@@ -37,7 +38,7 @@ Application::Application( int argc, char** argv, const QString& locale )
     AddTranslator( "selftraining_app", locale );    
 
     // Child processe status 
-    boost::shared_ptr< Session > sessionStatus( new Session() ) ;  
+    boost::shared_ptr< Session > sessionStatus ;  
 
     mainWindow_  = new MainWindow( *controllers_, sessionStatus ) ; 
     mainWindow_->show();
@@ -69,9 +70,8 @@ Application::Application( int argc, char** argv, const QString& locale )
             processes.KillAll("gaming_app.exe"); 
     }
 
-    trayMenu_.reset( new TrayMenu( mainWindow_, sessionStatus ) ) ;
-    trayIcon_.reset( new TrayIcon( QPixmap( "resources/images/selftraining/csword.png" ), "Show window", trayMenu_.get() ) );
-    QObject::connect(trayIcon_.get(), SIGNAL( clicked( const QPoint&) ), mainWindow_, SLOT( Maximize() ) );
+    sessionTray_.reset( new SessionTray( mainWindow_, *controllers_ ) ) ;  
+
 }
 
 // -----------------------------------------------------------------------------
@@ -80,8 +80,6 @@ Application::Application( int argc, char** argv, const QString& locale )
 // -----------------------------------------------------------------------------
 Application::~Application()
 {
-    if ( trayIcon_.get() ) 
-        trayIcon_->hide(); 
 }
 
 // -----------------------------------------------------------------------------

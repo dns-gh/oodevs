@@ -17,6 +17,10 @@ namespace tools
     class GeneralConfig;
 }
 
+namespace kernel
+{
+    class Controllers; 
+}
 
 class Session; 
 class SessionRunningPage; 
@@ -33,7 +37,7 @@ class ScenarioPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, SessionRunningPage& running, boost::shared_ptr< Session > sessionStatus );
+             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, SessionRunningPage& running, boost::shared_ptr< Session > sessionStatus );
     virtual ~ScenarioPage();
     //@}
 

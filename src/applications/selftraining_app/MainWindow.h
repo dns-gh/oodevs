@@ -29,7 +29,6 @@ namespace kernel
     class Controllers ; 
 }
 
-
 class Session ; 
 
 // =============================================================================

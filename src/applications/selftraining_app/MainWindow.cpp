@@ -38,7 +38,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, boost::shared_ptr< Ses
     setFixedSize( 800, 600 );
     SetStyle();
     pages_ = new QWidgetStack( this );
-    new HomePage( pages_, *config_, *interpreter_, sessionStatus );
+    new HomePage( pages_, *config_, controllers, *interpreter_, sessionStatus );
     setCentralWidget( pages_ );
     CenterWindow();
 }

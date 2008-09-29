@@ -23,7 +23,7 @@ namespace kernel
 }
 
 class QMainWindow;
-class TrayIcon; 
+class SessionTray; 
 
 // =============================================================================
 /** @class  Application
@@ -59,7 +59,7 @@ private:
     QMainWindow*                             mainWindow_;
     std::auto_ptr< tools::ApplicationMutex > appMutex_ ; 
     std::auto_ptr< QPopupMenu >              trayMenu_ ; 
-    std::auto_ptr<TrayIcon>                  trayIcon_ ; 
+    std::auto_ptr<SessionTray>               sessionTray_ ; 
     std::auto_ptr<kernel::Controllers>       controllers_ ; 
     //@}
 

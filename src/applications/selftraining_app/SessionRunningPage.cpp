@@ -11,6 +11,9 @@
 #include "MessageDialog.h" 
 #include "SessionRunningPage.h"
 #include "Session.h" 
+#include "SessionStatus.h" 
+#include "clients_kernel/Controllers.h" 
+#include "clients_kernel/Controller.h" 
 
 #include "moc_SessionRunningPage.cpp" 
 
@@ -21,11 +24,13 @@
 // Name: SessionRunningPage constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-SessionRunningPage::SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus) 
-    : ContentPage    ( pages, tr( "SessionRunningPage" ) , previous )
-    , config_        ( config ) 
+SessionRunningPage::SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus) 
+    : ContentPage( pages, tr( "SessionRunningPage" ) , previous )
+    , config_( config ) 
     , sessionStatus_ ( sessionStatus ) 
+    , controllers_( controllers ) 
 {
+    controllers_.controller_.Register( *this ) ; 
     QVBox* box = new QVBox( this ) ; 
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->layout()->setAlignment( QWidget::AlignCenter ) ; 
@@ -86,7 +91,7 @@ void SessionRunningPage::UpdateProgress()
 // -----------------------------------------------------------------------------
 void SessionRunningPage::SetSession( Session* session )
 {
-    if (sessionStatus_->HasRunningProcess()) 
+    if ( sessionStatus_.get() && sessionStatus_->HasRunningProcess()) 
     {
         MessageDialog message( this, tr( "Running Sessions" ), tr( "Running session detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() != QMessageBox::Yes )
@@ -95,41 +100,42 @@ void SessionRunningPage::SetSession( Session* session )
     sessionStatus_.reset( session ) ; 
     if ( sessionStatus_.get() )
     {
-        connect( sessionStatus_.get(), SIGNAL( Feedback( const QString& ) ), this, SLOT( OnSessionPhase( const QString& ) ) );     
         sessionStatus_->Start(); 
         StartProgressListening(); 
     }
 }
+
 // -----------------------------------------------------------------------------
-// Name: SessionRunningPage::OnSessionPhase
-// Created: RDS 2008-09-08
+// Name: SessionRunningPage::NotifyUpdated
+// Created: RDS 2008-09-29
 // -----------------------------------------------------------------------------
-void SessionRunningPage::OnSessionPhase( const QString& point )
+void SessionRunningPage::NotifyUpdated( const SessionStatus& status )
 {
-    if     ( point == "start_simulation" ) 
+    switch( status.GetStatus() ) 
     {
+    case SessionStatus::SIM_STARTED: 
         status_->setText( tr("Starting simulation") ); 
         setCursor( QCursor( Qt::WaitCursor ) ); 
-    }
-    else if ( point == "end_simulation" ) 
-    {
+        break ; 
+    case SessionStatus::SIM_AVAILABLE: 
         status_->setText( tr("Simulation started") ); 
-    }
-    else if ( point == "start_gui" ) 
-    {
+        break ; 
+    case SessionStatus::GUI_OPENED: 
         StopProgressListening(); 
         status_->setText( tr("Running gaming") ); 
         setCursor( QCursor( Qt::ArrowCursor ) ); 
         Previous(); 
         qApp->mainWidget()->hide(); 
-    }
-    else if ( point == "end_gui" ) 
-    {
+        break ; 
+    case SessionStatus::GUI_CLOSED: 
         status_->setText( "" ); 
         sessionStatus_->StopSimulation(); 
         qApp->mainWidget()->show(); 
         qApp->mainWidget()->setActiveWindow(); 
+        break ; 
     }
 }
+
+
 
 

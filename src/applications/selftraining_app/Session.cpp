@@ -9,9 +9,11 @@
 
 #include "selftraining_app_pch.h"
 #include "Session.h"
+#include "SessionStatus.h" 
 #include "moc_Session.cpp" 
 #include "MessageDialog.h" 
 #include "clients_kernel/Tools.h" 
+#include "clients_kernel/Controller.h" 
 #include "frontend/SpawnCommand.h"
 #pragma warning( push )
 #pragma warning( disable : 4127 4244 4511 4512 )
@@ -23,11 +25,12 @@
 // Name: Session constructor
 // Created: RDS 2008-08-28
 // -----------------------------------------------------------------------------
-Session::Session( frontend::SpawnCommand* simulation, frontend::SpawnCommand* gui )
-    : simulation_ ( simulation ) 
+Session::Session( kernel::Controller& controller, frontend::SpawnCommand* simulation, frontend::SpawnCommand* gui )
+    : controller_ ( controller ) 
+    , simulation_ ( simulation ) 
     , gui_ ( gui ) 
 {
-    // NOTHING
+    controller.Create( *(Session*) this ) ; 
 }
 
 
@@ -44,6 +47,7 @@ Session::~Session()
         gui_.reset(); 
         thread_->join(); 
     }
+    controller_.Delete( *this ) ; 
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +69,8 @@ void Session::ThreadStart()
     {
         if ( simulation_.get() ) 
         {
-            emit ( Feedback ( "start_simulation" ) ) ; 
+            controller_.Update( SessionStatus( SessionStatus::SIM_STARTED, *this ) ) ; 
+            emit ( Feedback ( "start_simulation" ) ) ;
             boost::this_thread::interruption_point(); 
             simulation_->Start(); 
             boost::this_thread::interruption_point(); 
@@ -73,7 +78,8 @@ void Session::ThreadStart()
             boost::this_thread::interruption_point(); 
             emit SimulationStarted(); 
             boost::this_thread::interruption_point(); 
-            emit ( Feedback ( "end_simulation" ) ) ; 
+            emit ( Feedback ( "end_simulation" ) ) ;  
+            controller_.Update( SessionStatus( SessionStatus::SIM_AVAILABLE, *this ) ) ; 
             boost::this_thread::interruption_point(); 
         }
         if ( gui_.get() ) 
@@ -81,6 +87,7 @@ void Session::ThreadStart()
             gui_->Start(); 
             boost::this_thread::interruption_point(); 
             emit GUIStarted(); 
+            controller_.Update( SessionStatus( SessionStatus::GUI_OPENED, *this ) ) ; 
             boost::this_thread::interruption_point(); 
             emit ( Feedback ( "start_gui" ) ) ; 
             boost::this_thread::interruption_point(); 
@@ -89,6 +96,7 @@ void Session::ThreadStart()
             emit GUIClosed(); 
             boost::this_thread::interruption_point(); 
             emit ( Feedback ( "end_gui" ) ) ; 
+            controller_.Update( SessionStatus( SessionStatus::GUI_CLOSED, *this ) ) ; 
             boost::this_thread::interruption_point(); 
         }
     }
@@ -101,7 +109,7 @@ void Session::ThreadStart()
 // Name: Session::IsSimRunning
 // Created: RDS 2008-08-22
 // -----------------------------------------------------------------------------
-bool Session::IsSimRunning()
+bool Session::IsSimRunning() const 
 {
     return ( simulation_.get() && simulation_->IsRunning() )  ; 
 }
@@ -110,7 +118,7 @@ bool Session::IsSimRunning()
 // Name: Session::IsGUIRunning
 // Created: RDS 2008-08-22
 // -----------------------------------------------------------------------------
-bool Session::IsGUIRunning()
+bool Session::IsGUIRunning() const 
 {
     return ( gui_.get() && gui_->IsRunning() )  ; 
 }

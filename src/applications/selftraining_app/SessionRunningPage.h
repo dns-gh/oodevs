@@ -10,6 +10,8 @@
 #ifndef __SessionRunningPage_h_
 #define __SessionRunningPage_h_
 
+#include "clients_kernel/ElementObserver_ABC.h" 
+#include "clients_kernel/Observer_ABC.h" 
 #include "ContentPage.h" 
 
 namespace tools
@@ -17,8 +19,13 @@ namespace tools
     class GeneralConfig ; 
 }
 
-class Session; 
+namespace kernel 
+{
+    class Controllers; 
+}
 
+class Session; 
+class SessionStatus ; 
 class QProgressBar; 
 class QTimer ; 
 
@@ -29,6 +36,8 @@ class QTimer ;
 // Created: RDS 2008-09-08
 // =============================================================================
 class SessionRunningPage : public ContentPage
+                         , public kernel::Observer_ABC
+                         , public kernel::ElementObserver_ABC< SessionStatus > 
 {
 
     Q_OBJECT;
@@ -36,19 +45,19 @@ class SessionRunningPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus);
+             SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus);
     virtual ~SessionRunningPage();
     //@}
 
     //! @name Operations
     //@{
     void SetSession( Session* session ) ; 
+    void NotifyUpdated( const SessionStatus& status ) ; 
     //@}
 
 public slots:
 
     void UpdateProgress(); 
-    void OnSessionPhase ( const QString& ); 
 
 private:
     //! @name Copy/Assignment
@@ -70,7 +79,8 @@ private:
     const tools::GeneralConfig& config_ ; 
     QLabel* status_ ; 
     QTimer* timer_ ; 
-    QProgressBar* progressBar_ ; 
+    QProgressBar* progressBar_ ;
+    kernel::Controllers& controllers_ ; 
     //@}
 };
 

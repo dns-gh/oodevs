@@ -8,56 +8,43 @@
 // *****************************************************************************
 
 #include "selftraining_app_pch.h"
-#include "TrayMenu.h"
-#include "Session.h" 
-#include "moc_TrayMenu.cpp" 
+#include "SessionStatus.h"
 
 // -----------------------------------------------------------------------------
-// Name: TrayMenu constructor
-// Created: RDS 2008-08-21
+// Name: SessionStatus constructor
+// Created: RDS 2008-09-29
 // -----------------------------------------------------------------------------
-TrayMenu::TrayMenu( QWidget* mainWindow )
-    : currentSession_ ( NULL ) 
-{
-    setPalette( mainWindow->palette() ) ; 
-    insertItem( tr( "Show Normal") , mainWindow, SLOT(showNormal()) );
-    insertItem( tr( "Quit") , this , SLOT( OnQuit() ) );
-    QObject::connect(this, SIGNAL( aboutToShow() ), this, SLOT(OnAboutToShow() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TrayMenu destructor
-// Created: RDS 2008-08-21
-// -----------------------------------------------------------------------------
-TrayMenu::~TrayMenu()
+SessionStatus::SessionStatus( Status status, Session& session ) 
+    : session_( session ) 
+    , status_( status )  
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TrayMenu::OnAboutToShow
-// Created: RDS 2008-08-21
+// Name: SessionStatus destructor
+// Created: RDS 2008-09-29
 // -----------------------------------------------------------------------------
-void TrayMenu::OnAboutToShow()
+SessionStatus::~SessionStatus()
 {
-    Update(); 
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TrayMenu::Update
-// Created: RDS 2008-08-21
+// Name: SessionStatus::GetSession
+// Created: RDS 2008-09-29
 // -----------------------------------------------------------------------------
-void TrayMenu::Update()
+Session& SessionStatus::GetSession() const 
 {
-
+    return session_ ; 
 }
 
 // -----------------------------------------------------------------------------
-// Name: TrayMenu::OnQuit
-// Created: RDS 2008-08-22
+// Name: SessionStatus::GetStatus
+// Created: RDS 2008-09-29
 // -----------------------------------------------------------------------------
-void TrayMenu::OnQuit()
+SessionStatus::Status SessionStatus::GetStatus() const
 {
-    qApp->mainWidget()->showNormal();
-    qApp->closeAllWindows(); 
+    return status_ ; 
 }
+

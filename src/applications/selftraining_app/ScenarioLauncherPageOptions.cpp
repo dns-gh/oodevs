@@ -15,6 +15,7 @@
 #include "frontend/StartExercise.h"
 #include "frontend/JoinExercise.h"
 #include "frontend/CreateSession.h"
+#include "clients_kernel/Controllers.h" 
 
 #include <qhgroupbox.h>
 #include <qcheckbox.h>
@@ -34,8 +35,9 @@ namespace bpt = boost::posix_time;
 // Name: ScenarioLauncherPageOptions constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-ScenarioLauncherPageOptions::ScenarioLauncherPageOptions( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config )
+ScenarioLauncherPageOptions::ScenarioLauncherPageOptions( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, SessionRunningPage& running, const tools::GeneralConfig& config )
     : ContentPage( pages, "options", previous )
+    , controllers_ ( controllers ) 
     , running_ ( running )
     , config_ ( config ) 
 {
@@ -108,9 +110,9 @@ void ScenarioLauncherPageOptions::Start()
     const QString session  = BuildSessionName().c_str();
     CreateSession( exercise_, session );
     if ( profiles_->selectedItem() ) 
-        running_.SetSession( new Session ( new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise ( config_, exercise_, session, profiles_->selectedItem()->text(), true ) ) );    
+        running_.SetSession( new Session ( controllers_.controller_, new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise ( config_, exercise_, session, profiles_->selectedItem()->text(), true ) ) );    
     else
-        running_.SetSession( new Session ( new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise ( config_, exercise_, session, true ) ) );    
+        running_.SetSession( new Session ( controllers_.controller_, new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise ( config_, exercise_, session, true ) ) );    
     running_.show(); 
 }
 

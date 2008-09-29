@@ -20,6 +20,11 @@ namespace boost
     class thread ; 
 }
 
+namespace kernel
+{
+    class Controller; 
+}
+
 // =============================================================================
 /** @class  Session
     @brief  Session
@@ -32,17 +37,18 @@ class Session : public QObject
     Q_OBJECT ; 
 
 public:
+
     //! @name Constructors/Destructor
     //@{
-             Session( frontend::SpawnCommand* simulation=NULL, frontend::SpawnCommand* gui=NULL );
+             Session( kernel::Controller& controller, frontend::SpawnCommand* simulation=NULL, frontend::SpawnCommand* gui=NULL );
     virtual ~Session();
     //@}
 
     //! @name Operations
     //@{
     void Start(); 
-    bool IsSimRunning() ; 
-    bool IsGUIRunning() ; 
+    bool IsSimRunning() const ; 
+    bool IsGUIRunning() const ; 
     bool HasRunningProcess() ; 
     void StopSimulation( bool confirm = false ); 
     void StopGUI( bool confirm = false ); 
@@ -78,6 +84,7 @@ private:
     std::auto_ptr< frontend::SpawnCommand > simulation_ ; 
     std::auto_ptr< frontend::SpawnCommand > gui_ ; 
     std::auto_ptr< boost::thread > thread_ ; 
+    kernel::Controller& controller_ ; 
     //@}
 
     void ThreadStart(); 

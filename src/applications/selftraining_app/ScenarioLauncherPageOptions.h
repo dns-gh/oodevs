@@ -17,6 +17,11 @@ namespace tools
     class GeneralConfig; 
 }
 
+namespace kernel
+{
+    class Controllers; 
+}
+
 class ProfileList ; 
 class SessionRunningPage; 
 class QTimeEdit ; 
@@ -35,7 +40,7 @@ class ScenarioLauncherPageOptions : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioLauncherPageOptions( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config );
+             ScenarioLauncherPageOptions( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, SessionRunningPage& running, const tools::GeneralConfig& config );
     virtual ~ScenarioLauncherPageOptions();
     //@}
 
@@ -66,9 +71,10 @@ private:
     SessionRunningPage&         running_ ; 
     const tools::GeneralConfig& config_ ; 
     QString                     exercise_ ; 
-    QLineEdit*                     exerciseLabel_ ; 
+    QLineEdit*                  exerciseLabel_ ; 
     QSpinBox*                   keepSpin_; 
     QTimeEdit*                  checkFrequency_ ; 
+    kernel::Controllers&        controllers_ ; 
     //@}
 };
 

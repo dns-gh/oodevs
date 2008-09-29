@@ -48,12 +48,12 @@ namespace bfs = boost::filesystem;
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, SessionRunningPage& running, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus  )
+ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, SessionRunningPage& running, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus  )
     : ContentPage( pages, tools::translate( "ScenarioLauncherPage", "Scenario" ), previous )
     , config_( config )
     , sessionStatus_( sessionStatus ) 
 {
-    options_ = new ScenarioLauncherPageOptions( pages, *this, running, config ) ; 
+    options_ = new ScenarioLauncherPageOptions( pages, *this, controllers, running, config ) ; 
 
     QVBox* box = new QVBox ( this ) ; 
     box->setBackgroundOrigin( QWidget::WindowOrigin );

@@ -7,52 +7,60 @@
 //
 // *****************************************************************************
 
-#ifndef __TrayMenu_h_
-#define __TrayMenu_h_
+#ifndef __SessionStatus_h_
+#define __SessionStatus_h_
 
 class Session ; 
 
 // =============================================================================
-/** @class  TrayMenu
-    @brief  TrayMenu
+/** @class  SessionStatus
+    @brief  SessionStatus
 */
-// Created: RDS 2008-08-21
+// Created: RDS 2008-09-29
 // =============================================================================
-class TrayMenu : public QPopupMenu
+class SessionStatus
 {
-    
-    Q_OBJECT;
 
 public:
+    
+    enum Status 
+    {
+        GUI_OPENED, 
+        GUI_CLOSED,
+        SIM_STARTED, 
+        SIM_AVAILABLE 
+    }; 
+
     //! @name Constructors/Destructor
     //@{
-    explicit TrayMenu( QWidget* mainWindow );
-    virtual ~TrayMenu();
+    explicit SessionStatus( const Status status, Session& session );
+    virtual ~SessionStatus();
+    //@}
+
+    Session& GetSession() const ;  
+    Status GetStatus() const ; 
+
+    //! @name Operations
+    //@{
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    TrayMenu( const TrayMenu& );            //!< Copy constructor
-    TrayMenu& operator=( const TrayMenu& ); //!< Assignment operator
+    SessionStatus( const SessionStatus& );            //!< Copy constructor
+    SessionStatus& operator=( const SessionStatus& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void Update(); 
-    //@}
-
-private slots:
-    //! @name Member data
-    //@{
-    void OnAboutToShow(); 
-    void OnQuit(); 
     //@}
 
 private:
-
-    const Session*    currentSession_ ;  
-
+    //! @name Member data
+    //@{
+    Session& session_ ; 
+    Status   status_ ; 
+    //@}
 };
 
-#endif // __TrayMenu_h_
+#endif // __SessionStatus_h_

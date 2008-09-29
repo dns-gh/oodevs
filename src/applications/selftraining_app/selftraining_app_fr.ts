@@ -362,15 +362,15 @@
     </message>
     <message>
         <source>Simulation</source>
-        <translation>Simulation</translation>
+        <translation type="obsolete">Simulation</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Fermer</translation>
+        <translation type="obsolete">Fermer</translation>
     </message>
     <message>
         <source>GUI</source>
-        <translation>Interface Utilisateur</translation>
+        <translation type="obsolete">Interface Utilisateur</translation>
     </message>
     <message>
         <source>Quit</source>
