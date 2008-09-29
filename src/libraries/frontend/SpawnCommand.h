@@ -75,6 +75,11 @@ private:
     struct InternalData ;    //!< obscure data structure to hide OS implementation 
     //@}
 
+    //! @name Helpers
+    //@{
+    void CloseWindows(); 
+    //@}
+
     //! @name Member data
     //@{
     QString                         commandLine_;

@@ -94,11 +94,58 @@ void SpawnCommand::Start()
 }
 
 // -----------------------------------------------------------------------------
+// Name: CloseWndProc
+// -----------------------------------------------------------------------------
+BOOL CALLBACK CloseWndProc( HWND hwnd, LPARAM lParam )
+{
+  if ( IsWindow( hwnd ) )
+  {
+    DWORD result;
+    SendMessageTimeout( hwnd, WM_CLOSE, 0, 0, SMTO_ABORTIFHUNG | SMTO_BLOCK, 0, &result );
+  }
+  return TRUE;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::CloseWindows
+// Created: RDS 2008-09-29
+// -----------------------------------------------------------------------------
+void SpawnCommand::CloseWindows()
+{
+  HANDLE hThreadSnap = INVALID_HANDLE_VALUE; 
+  THREADENTRY32 te32; 
+
+  // Take a snapshot of all running threads  
+  hThreadSnap = CreateToolhelp32Snapshot( TH32CS_SNAPTHREAD, internal_->pid_.dwThreadId ); 
+  if( hThreadSnap == INVALID_HANDLE_VALUE ) 
+    return; 
+ 
+  te32.dwSize = sizeof(THREADENTRY32 ); 
+ 
+  if( !Thread32First( hThreadSnap, &te32 ) ) 
+  {
+    CloseHandle( hThreadSnap );     // Must clean up the snapshot object!
+    return;
+  }
+
+  do 
+  { 
+    if( te32.th32OwnerProcessID == internal_->pid_.dwProcessId )
+        EnumThreadWindows( te32.th32ThreadID, CloseWndProc, 0 );
+  } while( Thread32Next(hThreadSnap, &te32 ) ); 
+
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: SpawnCommand::Stop
 // Created: RDS 2008-08-19
 // -----------------------------------------------------------------------------
 void SpawnCommand::Stop()
 {
+
+    CloseWindows(); 
+
     if ( internal_->pid_.hProcess ) 
         TerminateProcess( internal_->pid_.hProcess, 1 ); 
 }

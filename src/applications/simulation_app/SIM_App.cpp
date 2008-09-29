@@ -138,6 +138,7 @@ LRESULT SIM_App::MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
              }
             return 0;
 
+        case WM_CLOSE : 
         case WM_DESTROY:
                 PostQuitMessage(0);
             return 0;
