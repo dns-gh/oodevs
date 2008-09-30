@@ -40,7 +40,7 @@ namespace
 // Created: RDS 2008-08-20
 // -----------------------------------------------------------------------------
 MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 )
-    : QDialog( parent, title, true, WType_Modal  ) 
+    : QDialog( parent, title, true, WStyle_Customize|WStyle_DialogBorder  ) 
 {
     if ( parent ) 
         setPalette( parent->palette() );
