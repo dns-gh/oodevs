@@ -112,7 +112,7 @@ void ReplayPage::Update()
 // -----------------------------------------------------------------------------
 void ReplayPage::OnStartExercise ( const QString& exercise )
 {
-    if (sessionStatus_->HasRunningProcess()) 
+    if (sessionStatus_.get() && sessionStatus_->HasRunningProcess()) 
     {
         MessageDialog message( this, tr( "Running Sessions" ), tr( "Running session detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() != QMessageBox::Yes )
