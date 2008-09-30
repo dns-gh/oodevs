@@ -40,7 +40,6 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     QHBox* box = new QHBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setSpacing( 50 );
-    box->setMargin( 40 );
     
     {   
         // leftBox 
@@ -57,7 +56,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         sides_ = new SideList( leftBox, config );
         leftBox->setStretchFactor( exercises_, 3 );
         leftBox->setStretchFactor( sides_, 1 );
-        box->setStretchFactor( leftBox, 5 );
+        box->setStretchFactor( leftBox, 4);
     
         connect( exercises_, SIGNAL( highlighted( const QString& ) ), this,  SLOT( UpdateExercise( const QString& ) ) );
         connect( exercises_, SIGNAL( doubleClicked( QListBoxItem* ) ), this, SLOT( SelectExercise() ) );
@@ -67,15 +66,15 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     {
         // RightBox 
         QVBox* rightBox = new QVBox( box );
+        box->setStretchFactor( rightBox, 3);       
         rightBox->setBackgroundOrigin( QWidget::WindowOrigin );
-        rightBox->setSpacing( 10 );
+        rightBox->setSpacing( 5 );
         briefingImage_ = new QLabel( rightBox );
         briefingImage_->setBackgroundOrigin( QWidget::WindowOrigin );
         briefingText_ = new QTextEdit( rightBox );
         briefingText_->setBackgroundOrigin( QWidget::WindowOrigin );
         briefingText_->setFont(  QFont( "Georgia", 10, QFont::Normal, true ) ) ; 
     }
-    
 }
 
 // -----------------------------------------------------------------------------
