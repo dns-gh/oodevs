@@ -70,15 +70,11 @@ void Session::ThreadStart()
         if ( simulation_.get() ) 
         {
             controller_.Update( SessionStatus( SessionStatus::SIM_STARTED, *this ) ) ; 
-            emit ( Feedback ( "start_simulation" ) ) ;
             boost::this_thread::interruption_point(); 
             simulation_->Start(); 
             boost::this_thread::interruption_point(); 
             simulation_->Wait(); 
             boost::this_thread::interruption_point(); 
-            emit SimulationStarted(); 
-            boost::this_thread::interruption_point(); 
-            emit ( Feedback ( "end_simulation" ) ) ;  
             controller_.Update( SessionStatus( SessionStatus::SIM_AVAILABLE, *this ) ) ; 
             boost::this_thread::interruption_point(); 
         }
@@ -86,16 +82,10 @@ void Session::ThreadStart()
         {
             gui_->Start(); 
             boost::this_thread::interruption_point(); 
-            emit GUIStarted(); 
             controller_.Update( SessionStatus( SessionStatus::GUI_OPENED, *this ) ) ; 
-            boost::this_thread::interruption_point(); 
-            emit ( Feedback ( "start_gui" ) ) ; 
             boost::this_thread::interruption_point(); 
             gui_->Wait(); 
             boost::this_thread::interruption_point(); 
-            emit GUIClosed(); 
-            boost::this_thread::interruption_point(); 
-            emit ( Feedback ( "end_gui" ) ) ; 
             controller_.Update( SessionStatus( SessionStatus::GUI_CLOSED, *this ) ) ; 
             boost::this_thread::interruption_point(); 
         }

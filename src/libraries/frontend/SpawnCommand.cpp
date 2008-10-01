@@ -143,11 +143,11 @@ void SpawnCommand::CloseWindows()
 // -----------------------------------------------------------------------------
 void SpawnCommand::Stop()
 {
-
-    CloseWindows(); 
-
     if ( internal_->pid_.hProcess ) 
+    {
+        CloseWindows(); 
         TerminateProcess( internal_->pid_.hProcess, 1 ); 
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -129,7 +129,8 @@ void SessionRunningPage::NotifyUpdated( const SessionStatus& status )
         break ; 
     case SessionStatus::GUI_CLOSED: 
         status_->setText( "" ); 
-        sessionStatus_->StopSimulation(); 
+        if ( sessionStatus_.get() ) 
+            sessionStatus_->StopSimulation(); 
         qApp->mainWidget()->show(); 
         qApp->mainWidget()->setActiveWindow(); 
         break ; 

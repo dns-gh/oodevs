@@ -11,6 +11,7 @@
 #include "ReplayPage.h"
 #include "MessageDialog.h" 
 #include "MenuButton.h" 
+#include "SessionRunningPage.h" 
 #include "moc_ReplayPage.cpp"
 #include "ExerciseList.h" 
 #include "SideList.h"
@@ -54,10 +55,11 @@ namespace
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus  )
+ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, SessionRunningPage& running, boost::shared_ptr< Session > sessionStatus  )
     : ContentPage( pages, tools::translate( "ReplayPage", "Replay" ), previous )
     , controllers_ ( controllers ) 
     , config_( config )
+    , running_( running ) 
     , sessionStatus_( sessionStatus ) 
 {
     QVBox* mainBox = new QVBox ( this ); 
@@ -125,7 +127,8 @@ void ReplayPage::OnStartExercise ( const QString& exercise )
     if ( session != "" ) 
     {
         CreateSession( exercise, session );
-        StartSession( new Session ( controllers_.controller_, new frontend::StartReplay( config_, exercise, session, 20000, true ), new frontend::JoinAnalysis( config_, exercise, 20000 ) ) ); 
+        running_.SetSession( new Session ( controllers_.controller_, new frontend::StartReplay( config_, exercise, session, 20000, true ), new frontend::JoinAnalysis( config_, exercise, 20000 ) ) ); 
+        running_.show();  
     }
 }
 

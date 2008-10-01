@@ -59,10 +59,6 @@ signals:
 
     //! @name signals
     //@{
-    void SimulationStarted(); 
-    void GUIStarted(); 
-    void GUIClosed(); 
-    void Feedback ( const QString& ) ; 
     //@}
 
 private:

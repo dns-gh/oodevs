@@ -25,7 +25,7 @@ ScenarioPage::ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools
 {
     AddLink( tools::translate( "ScenarioPage", "Play" ),   *new ScenarioLauncherPage( pages, *this, controllers, running, config, sessionStatus ), true, tools::translate( "ScenarioPage", "Start scenarios" ) );
     AddLink( tools::translate( "ScenarioPage", "Edit" ),   *new ScenarioEditPage( pages, *this, config, controllers, sessionStatus ),              true, tools::translate( "ScenarioPage", "Edit scenario" ) );
-    AddLink( tools::translate( "ScenarioPage", "Replay" ), *new ReplayPage( pages, *this , config, controllers, sessionStatus ),                   true, tools::translate( "ScenarioPage", "Replay scenario" ) );
+    AddLink( tools::translate( "ScenarioPage", "Replay" ), *new ReplayPage( pages, *this , controllers, config, running, sessionStatus ),                   true, tools::translate( "ScenarioPage", "Replay scenario" ) );
     AddLink( tools::translate( "ScenarioPage", "Back" ),   previous );
 }
 
