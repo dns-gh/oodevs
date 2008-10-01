@@ -199,6 +199,7 @@ SectionGroup "Exercises" s_exo
 !insertmacro EXERCISES.Install "tutorials\01 - Preparation" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\02 - Jeu" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\07 - Mission" "Paris_Est"
+!insertmacro EXERCISES.Install "tutorials\08 - Fonctions Avancees" "Paris_Est"
 ;!insertmacro EXERCISES.Install "puma" "larochelle"
 
 SectionGroupEnd
