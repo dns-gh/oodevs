@@ -195,8 +195,8 @@ SectionGroup "Exercises" s_exo
 
 !insertmacro EXERCISES.Install "esag" "Angers"
 !insertmacro EXERCISES.Install "CENTORSEM" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\00 - Généralités" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\01 - Préparation" "Paris_Est"
+!insertmacro EXERCISES.Install "tutorials\00 - Generalites" "Paris_Est"
+!insertmacro EXERCISES.Install "tutorials\01 - Preparation" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\02 - Jeu" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\07 - Mission" "Paris_Est"
 ;!insertmacro EXERCISES.Install "puma" "larochelle"
