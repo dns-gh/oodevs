@@ -125,7 +125,6 @@ Section "${APP_NAME}"
 
     CreateDirectory "$SMPROGRAMS\${APP_NAME}"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     CreateShortcut "$SMPROGRAMS\${APP_NAME}\uninstall.lnk" "${UNINST_EXE}"
 
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
@@ -196,10 +195,10 @@ SectionGroup "Exercises" s_exo
 !insertmacro EXERCISES.Install "esag" "Angers"
 !insertmacro EXERCISES.Install "CENTORSEM" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\00 - Generalites" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\01 - Preparation" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\02 - Jeu" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\07 - Mission" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\08 - Fonctions Avancees" "Paris_Est"
+!insertmacro EXERCISES.Install "tutorials\10 - Preparation" "Paris_Est"
 ;!insertmacro EXERCISES.Install "puma" "larochelle"
 
 SectionGroupEnd

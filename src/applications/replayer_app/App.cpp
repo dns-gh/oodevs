@@ -149,7 +149,7 @@ void App::RunGUI( HINSTANCE hinstance )
 
     if(!RegisterClass(&wc)) return;
 
-    hWnd_ = CreateWindow("MaWinClass", "CSword", WS_OVERLAPPEDWINDOW,    
+    hWnd_ = CreateWindow("MaWinClass", "Replay", WS_OVERLAPPEDWINDOW,    
                           CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
                           NULL, NULL, hInstance_, NULL);
 
@@ -165,7 +165,7 @@ void App::RunGUI( HINSTANCE hinstance )
     TrayIcon_.hIcon = LoadIcon(hInstance_, MAKEINTRESOURCE( IDI_ICON1) ) ;
     TrayIcon_.uCallbackMessage = MY_WM_NOTIFYICON;
     TrayIcon_.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-    strcpy_s(TrayIcon_.szTip, "CSword");
+    strcpy_s(TrayIcon_.szTip, "Replay");
     Shell_NotifyIcon(NIM_ADD,&TrayIcon_);
 
     // Loop

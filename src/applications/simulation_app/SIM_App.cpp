@@ -199,7 +199,7 @@ void SIM_App::RunGUI()
 
     if(!RegisterClass(&wc)) return;
 
-    hWnd_ = CreateWindow("MaWinClass", "CSword", WS_OVERLAPPEDWINDOW,    
+    hWnd_ = CreateWindow("MaWinClass", "Simulation", WS_OVERLAPPEDWINDOW,    
                           CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
                           NULL, NULL, hInstance_, NULL);
 
@@ -215,7 +215,7 @@ void SIM_App::RunGUI()
     TrayIcon_.hIcon = LoadIcon(hInstance_, MAKEINTRESOURCE( IDI_ICON1) ) ;
     TrayIcon_.uCallbackMessage = MY_WM_NOTIFYICON;
     TrayIcon_.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-    strcpy(TrayIcon_.szTip, "CSword");
+    strcpy(TrayIcon_.szTip, "Simulation");
     Shell_NotifyIcon(NIM_ADD,&TrayIcon_);
 
     // Loop
