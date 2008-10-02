@@ -210,8 +210,6 @@ Section "Documentation" s_doc
     File /r /x ".svn" "${DOCDIR}\*.pdf"
     File /r /x ".svn" "third party"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\Manuel Utilisateur.lnk" "$INSTDIR\doc\Manuel Utilisateur.pdf"
-    CreateDirectory "$SMPROGRAMS\${APP_NAME}\Didacticiels"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Didacticiels\Préparation - initiation.lnk" "$INSTDIR\doc\tutorials\preparation-basics.exe" "" "$INSTDIR\applications\sword-ot.ico"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
