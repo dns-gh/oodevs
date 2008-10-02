@@ -53,7 +53,7 @@ signals:
 public slots:
 
     void Update(); 
-    void UpdateExercise( const QString& ) ; 
+    void UpdateExercise( int index ) ; 
     void SelectExercise( ) ; 
 
 private:
@@ -66,6 +66,7 @@ private:
     //! @name Helpers
     //@{
     void ReadBriefingText( xml::xistream& xis );
+    QString GetExerciseDisplayName( const QString& exercise ) const ; 
     //@}
 
 private:
@@ -78,7 +79,9 @@ private:
     QTextEdit*                  briefingText_;
     SideList*                   sides_; 
     bool                        showBrief_; 
-//@}
+    QStringList                 exercisesList_ ; 
+    
+ //@}
 };
 
 #endif // __ExerciseList_h_

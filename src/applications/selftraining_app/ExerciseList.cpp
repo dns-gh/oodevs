@@ -57,7 +57,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         leftBox->setStretchFactor( exercises_, 3 );
         leftBox->setStretchFactor( sides_, 1 );
 
-        connect( exercises_, SIGNAL( highlighted( const QString& ) ), this,  SLOT( UpdateExercise( const QString& ) ) );
+        connect( exercises_, SIGNAL( highlighted( int ) ), this,  SLOT( UpdateExercise( int ) ) );
         connect( exercises_, SIGNAL( doubleClicked( QListBoxItem* ) ), this, SLOT( SelectExercise() ) );
     }
     
@@ -95,12 +95,13 @@ ExerciseList::~ExerciseList()
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
 void ExerciseList::Update()
-{
+{    
+    static const QImage pix( "resources/images/selftraining/mission.png" );
+    exercisesList_ = frontend::commands::ListExercises( config_, subDir_ );
+    // display 
     exercises_->clear();
-    const QImage pix( "resources/images/selftraining/mission.png" );
-    QStringList list = frontend::commands::ListExercises( config_, subDir_ );
-    for( QStringList::iterator it = list.begin(); it != list.end(); ++it )
-        exercises_->insertItem( pix, *it );
+    for( QStringList::iterator it = exercisesList_ .begin(); it != exercisesList_ .end(); ++it )
+        exercises_->insertItem( pix, GetExerciseDisplayName( *it ) );
     exercises_->setSelected( 0, true );
 }
 
@@ -108,17 +109,18 @@ void ExerciseList::Update()
 // Name: ExerciseList::UpdateExercise
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-void ExerciseList::UpdateExercise( const QString& exercise )
+void ExerciseList::UpdateExercise( int index )
 {
-     emit( Highlight( GetHighlight() ) ); 
+    QString exercise = *exercisesList_.at( index ) ; 
+    emit( Highlight( GetHighlight() ) ); 
     // update sides
     sides_->Update( QString( subDir_.c_str() ) + "/"  + exercise ); 
     // update briefing 
     if ( showBrief_ ) 
     {
-        xml::xifstream xis( config_.GetExerciseFile( subDir_ + "/"  + exercise.ascii() ) );
         briefingText_->setText( tr("No available briefing") ); 
         briefingText_->hide(); 
+        xml::xifstream xis( config_.GetExerciseFile( subDir_ + "/"  + exercise.ascii() ) );
         std::string image ; 
         xis >> xml::start( "exercise" )
                 >> xml::optional() >> xml::start( "meta" )
@@ -132,13 +134,28 @@ void ExerciseList::UpdateExercise( const QString& exercise )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseList::GetExerciseDisplayName
+// Created: RDS 2008-10-02
+// -----------------------------------------------------------------------------
+QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
+{
+    std::string displayName( exercise.ascii() );  
+    xml::xifstream xis( config_.GetExerciseFile( subDir_ + "/"  + exercise.ascii() ) );
+    xis >> xml::start( "exercise" )
+            >> xml::optional() >> xml::start( "meta" )
+                >> xml::optional() >> xml::content( "name", displayName ); 
+    return displayName.c_str(); 
+       
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseList::GetHighlight
 // Created: RDS 2008-09-01
 // -----------------------------------------------------------------------------
 const QString ExerciseList::GetHighlight()
 {
     if ( exercises_->selectedItem() ) 
-        return QString( subDir_.c_str() ) + "/" +  exercises_->selectedItem()->text() ; 
+        return QString( subDir_.c_str() ) + "/" +  *exercisesList_.at( exercises_->index( exercises_->selectedItem() ) ) ; 
     else
         return "" ; 
 }

@@ -66,7 +66,8 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
     {
         {
             QHBox* hbox = new QHBox ( mainBox ) ; 
-        
+            hbox->setBackgroundOrigin( QWidget::WindowOrigin ); 
+            hbox->setSpacing( 10 );  
             {
                 exercises_ = new ExerciseList( hbox, config,"",false )  ; 
                 connect( exercises_, SIGNAL( Select( const QString& ) ), this, SLOT( OnStartExercise( const QString& ) ) ); 
@@ -75,8 +76,7 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
             {
                 QLabel* label ; 
                 QVBox* vbox = new QVBox( hbox ) ;
-                vbox->setMargin( 10 );
-                vbox->setSpacing( 10 );
+                vbox->setSpacing( 5 );
                 vbox->setBackgroundOrigin( QWidget::WindowOrigin );
                 label = new QLabel( tr( "Session:") , vbox ); 
                 label->setBackgroundOrigin( QWidget::WindowOrigin );
