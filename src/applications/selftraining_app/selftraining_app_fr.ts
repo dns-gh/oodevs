@@ -128,6 +128,13 @@
     </message>
 </context>
 <context>
+    <name>ProfileList</name>
+    <message>
+        <source>anonymous</source>
+        <translation>sans nom</translation>
+    </message>
+</context>
+<context>
     <name>QuitPage</name>
     <message>
         <source>Yes</source>
@@ -143,7 +150,7 @@
     </message>
     <message>
         <source>Please confirm</source>
-        <translation>Etes vous sûr </translation>
+        <translation>Etes vous sûr ?</translation>
     </message>
 </context>
 <context>
@@ -316,11 +323,11 @@
     <name>Session</name>
     <message>
         <source>Running Sessions</source>
-        <translation type="unfinished">Sessions en cours</translation>
+        <translation>Sessions en cours</translation>
     </message>
     <message>
         <source>Running session detected. Close ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Une session est en cours. Fermer ? </translation>
     </message>
 </context>
 <context>

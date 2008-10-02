@@ -40,18 +40,4 @@ SessionTray::~SessionTray()
     trayIcon_.hide(); 
 }
 
-// -----------------------------------------------------------------------------
-// Name: SessionTray::NotifyUpdated
-// Created: RDS 2008-09-26
-// -----------------------------------------------------------------------------
-void SessionTray::NotifyUpdated( const SessionStatus& status )
-{
-    switch( status.GetStatus() ) 
-    {
-    case SessionStatus::GUI_OPENED: 
-        break ; 
-    case SessionStatus::GUI_CLOSED: 
-        break ; 
-    }
-}
 

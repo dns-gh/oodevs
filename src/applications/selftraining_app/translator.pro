@@ -17,6 +17,7 @@ Session.cpp \
 MenuPage.cpp \
 ExerciseList.cpp \
 TutorialPage.cpp \
+ProfileList.cpp \
 ReplayPage.cpp \
 SessionRunningPage.cpp \
 ScenarioLauncherPage.cpp \

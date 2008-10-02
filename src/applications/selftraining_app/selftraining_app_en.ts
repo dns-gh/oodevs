@@ -115,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>ProfileList</name>
+    <message>
+        <source>anonymous</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QuitPage</name>
     <message>
         <source>No</source>

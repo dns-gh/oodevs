@@ -39,11 +39,6 @@ public:
     virtual ~SessionTray();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void NotifyUpdated( const SessionStatus& status );
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
