@@ -32,7 +32,7 @@ PopulationFlow::PopulationFlow( const Population& population, const ASN1T_MsgPop
     , nNbrDeadHumans_ ( 0 )
     , nAttitude_      ( EnumPopulationAttitude::agressive )    
 {
-    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationFlow >( *this ) );
+//    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationFlow >( *this ) );
 }
 
 // -----------------------------------------------------------------------------

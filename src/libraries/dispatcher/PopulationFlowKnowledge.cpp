@@ -41,7 +41,7 @@ PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowle
     optionals_.nb_humains_mortsPresent   = 0;
     optionals_.attitudePresent           = 0;
     optionals_.est_percuPresent          = 0;
-    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationFlowKnowledge >( *this ) );
+//    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationFlowKnowledge >( *this ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -25,8 +25,9 @@ using namespace dispatcher;
 // Name: PopulationKnowledge constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const Model& model, const ASN1T_MsgPopulationKnowledgeCreation& msg )
+PopulationKnowledge::PopulationKnowledge( Model& model, const ASN1T_MsgPopulationKnowledgeCreation& msg )
     : SimpleEntity< kernel::PopulationKnowledge_ABC >( msg.oid_connaissance )
+    , model_           ( model )
     , knowledgeGroup_  ( model.knowledgeGroups_.Get( msg.oid_groupe_possesseur ) )
     , population_      ( model.populations_.Get( msg.oid_population_reelle ) )
     , team_            ( model.sides_.Get( msg.camp ) )
@@ -60,10 +61,14 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& msg 
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg )
 {
-    std::auto_ptr< PopulationConcentrationKnowledge > concentration( new PopulationConcentrationKnowledge( *this, msg ) );
-    concentrations_.Register( msg.oid_connaissance_concentration, *concentration );
-    concentration->ApplyUpdate( msg );
-    concentration.release();
+    PopulationConcentrationKnowledge* element = concentrations_.Find( msg.oid_connaissance_concentration );
+    if( !element )
+    {
+        element = new PopulationConcentrationKnowledge( *this, msg );
+        model_.AddExtensions( *element );
+        concentrations_.Register( element->GetId(), *element );
+    }
+    element->ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,10 +97,14 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeCreation& msg )
 {
-    std::auto_ptr< PopulationFlowKnowledge > flow( new PopulationFlowKnowledge( *this, msg ) );
-    flows_.Register( msg.oid_connaissance_flux, *flow );
-    flow->ApplyUpdate( msg );
-    flow.release();
+    PopulationFlowKnowledge* element = flows_.Find( msg.oid_connaissance_flux );
+    if( !element )
+    {
+        element = new PopulationFlowKnowledge( *this, msg );
+        model_.AddExtensions( *element );
+        flows_.Register( element->GetId(), *element );
+    }
+    element->ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------

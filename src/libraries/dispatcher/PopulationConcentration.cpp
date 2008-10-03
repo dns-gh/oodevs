@@ -29,7 +29,7 @@ PopulationConcentration::PopulationConcentration( const Population& population, 
     , nNbrDeadHumans_ ( 0 )
     , nAttitude_      ( EnumPopulationAttitude::agressive )    
 {
-    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationConcentration >( *this ) );
+//    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationConcentration >( *this ) );
 }
 
 // -----------------------------------------------------------------------------

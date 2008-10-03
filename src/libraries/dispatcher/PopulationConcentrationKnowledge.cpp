@@ -39,7 +39,7 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel
     optionals_.attitudePresent           = 0;
     optionals_.pertinencePresent         = 0;
     optionals_.est_percuPresent          = 0;
-    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationConcentrationKnowledge >( *this ) );
+//    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationConcentrationKnowledge >( *this ) );
 }
 
 // -----------------------------------------------------------------------------

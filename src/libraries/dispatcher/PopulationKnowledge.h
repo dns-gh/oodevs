@@ -41,7 +41,7 @@ class PopulationKnowledge : public SimpleEntity< kernel::PopulationKnowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledge( const Model& model, const ASN1T_MsgPopulationKnowledgeCreation& msg );
+             PopulationKnowledge( Model& model, const ASN1T_MsgPopulationKnowledgeCreation& msg );
     virtual ~PopulationKnowledge();
     //@}
 
@@ -78,6 +78,7 @@ private:
 public:
     //! @name Member data
     //@{
+          Model&                      model_;
     const kernel::KnowledgeGroup_ABC& knowledgeGroup_;
     const kernel::Population_ABC&     population_;
     const kernel::Team_ABC&           team_;

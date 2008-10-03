@@ -71,10 +71,14 @@ void Population::Update( const ASN1T_MsgPopulationUpdate& msg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& msg )
 {
-    std::auto_ptr< PopulationConcentration > concentration( new PopulationConcentration( *this, msg ) );
-    concentrations_.Register( concentration->GetId(), *concentration );
-    concentration->ApplyUpdate( msg );
-    concentration.release();
+    PopulationConcentration* element = concentrations_.Find( msg.oid );
+    if( !element )
+    {
+        element = new PopulationConcentration( *this, msg );
+        model_.AddExtensions( *element );
+        concentrations_.Register( element->GetId(), *element );
+    }
+    element->ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,10 +109,14 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& msg 
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFlowCreation& msg )
 {
-    std::auto_ptr< PopulationFlow > flow( new PopulationFlow( *this, msg ) );
-    flows_.Register( flow->GetId(), *flow );
-    flow->ApplyUpdate( msg );
-    flow.release();
+    PopulationFlow* element = flows_.Find( msg.oid );
+    if( !element )
+    {
+        element = new PopulationFlow( *this, msg );
+        model_.AddExtensions( *element );
+        flows_.Register( element->GetId(), *element );
+    }
+    element->ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
