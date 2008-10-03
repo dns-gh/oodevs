@@ -62,7 +62,7 @@ IDI_ICON2               ICON                    "res\\sword-ot.ico"
 // Menu
 //
 
-IDR_MENU1 MENU 
+LEMENU MENU 
 BEGIN
     POPUP "TrayMenu"
     BEGIN

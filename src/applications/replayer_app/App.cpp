@@ -98,8 +98,8 @@ LRESULT App::MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
               HMENU hpopup;
               POINT pos;
               GetCursorPos(&pos);
-              hmenu = LoadMenu(application->hInstance_,"MENU");
-              hpopup = GetSubMenu(hmenu, 0);
+              hmenu = LoadMenu(application->hInstance_,"LEMENU");
+               hpopup = GetSubMenu(hmenu, 0);
               SetForegroundWindow(hwnd);
               TrackPopupMenuEx(hpopup, 0, pos.x, pos.y, hwnd, NULL);
               DestroyMenu(hmenu);
