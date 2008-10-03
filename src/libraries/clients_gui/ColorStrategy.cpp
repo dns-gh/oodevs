@@ -21,6 +21,7 @@
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Karma.h"
@@ -128,6 +129,8 @@ QColor ColorStrategy::FindColor( const Entity_ABC& entity )
     if( ! hierarchies )
         hierarchies = entity.Retrieve< CommunicationHierarchies >();
     const Entity_ABC& team = hierarchies ? hierarchies->GetTop() : entity;
+    if( ! dynamic_cast< const kernel::Team_ABC* >( &team ) ) // $$$$ SBO 2008-10-03: depends on extensions polishing order...
+        return Qt::black;
     return FindTeamColor( team );
 }
 
