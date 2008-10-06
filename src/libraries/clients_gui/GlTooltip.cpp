@@ -84,7 +84,7 @@ void GlTooltip::Call( const E_OperationalStatus& value )
     if ( value == eOperationalStatus_DetruitTactiquement )
         color_.setRgb( 255, 128, 0 );
     else if( value == eOperationalStatus_DetruitTotalement )
-        color_.setRgb( 255, 0, 0 );
+        color_.setRgb( 250, 0, 0 );
     Formatter< E_OperationalStatus >()( value, *this );
 }
 
@@ -202,8 +202,10 @@ void GlTooltip::EndDisplay()
 // -----------------------------------------------------------------------------
 void GlTooltip::DirtyImage()
 {
-    if( current_.size() < new_.size()
-     || new_.back() != current_.at( new_.size() - 1 ) )
+    // $$$$ SBO 2008-10-06: optimisation shows a side effect in new_ filling order... fix and uncomment
+//    if( new_.size()  != current_.size() 
+//     || new_.front() != current_.front()
+//     || new_.back()  != current_.at( new_.size() - 1 ) )
         image_ = QImage();
 }
 

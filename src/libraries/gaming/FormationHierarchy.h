@@ -36,6 +36,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual std::string GetLevel() const;
     virtual void DoUpdate( const kernel::InstanciationComplete& ic );
     //@}
