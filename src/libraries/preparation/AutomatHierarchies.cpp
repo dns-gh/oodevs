@@ -171,3 +171,13 @@ std::string AutomatHierarchies::GetLevel() const
 {
     return level_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::GetSuperior
+// Created: SBO 2008-10-06
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* AutomatHierarchies::GetSuperior() const
+{
+    const kernel::Entity_ABC* superior = kernel::MergingTacticalHierarchies::GetSuperior();
+    return superior ? superior : superior_;
+}

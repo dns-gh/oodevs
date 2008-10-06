@@ -121,3 +121,13 @@ void FormationHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
     SetSuperior( superior_ );
     kernel::MergingTacticalHierarchies::DoUpdate( ic );
 }
+
+// -----------------------------------------------------------------------------
+// Name: FormationHierarchies::GetSuperior
+// Created: SBO 2008-10-06
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* FormationHierarchies::GetSuperior() const
+{
+    const kernel::Entity_ABC* superior = kernel::MergingTacticalHierarchies::GetSuperior();
+    return superior ? superior : superior_;
+}

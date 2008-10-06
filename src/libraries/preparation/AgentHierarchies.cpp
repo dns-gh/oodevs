@@ -90,3 +90,13 @@ void AgentHierarchies::UpdateSymbol( bool up /*= true*/ )
         UpdateKarma( *GetSuperior() );
     TacticalHierarchies::UpdateSymbol( up );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::GetSuperior
+// Created: SBO 2008-10-06
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* AgentHierarchies::GetSuperior() const
+{
+    const kernel::Entity_ABC* superior = TacticalHierarchies::GetSuperior();
+    return superior ? superior : superior_;
+}

@@ -87,7 +87,8 @@ const HierarchyLevel_ABC& Formation::GetLevel() const
 // -----------------------------------------------------------------------------
 void Formation::Rename( const QString& name )
 {
-    name_ = name;
+    const QString prefix = level_->GetName() + " - ";
+    name_ = name.startsWith( prefix ) ? name.right( name.length() - prefix.length() ) : name;
     Touch();
 }
 

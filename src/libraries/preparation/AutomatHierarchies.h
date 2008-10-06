@@ -33,6 +33,7 @@ public:
     //! @name Operations
     //@{
     void ChangeSuperior( kernel::Entity_ABC& superior );
+    virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual std::string GetLevel() const;
     virtual void UpdateSymbol( bool up = true );
     //@}
