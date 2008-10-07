@@ -200,7 +200,10 @@ SectionGroup "Exercises" s_exo
 !insertmacro EXERCISES.Install "tutorials\03 - Mission" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\04 - ABC" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\05 - Infanterie" "Paris_Est"
+!insertmacro EXERCISES.Install "tutorials\06 - Genie" "Paris_Est"
+;!insertmacro EXERCISES.Install "tutorials\07 - Artillerie" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\08 - Fonctions Avancees" "Paris_Est"
+;!insertmacro EXERCISES.Install "tutorials\09 - Analyse Apres Action" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\10 - Preparation" "Paris_Est"
 
 SectionGroupEnd
