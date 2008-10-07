@@ -115,7 +115,7 @@ Section "${APP_NAME}"
     File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_5.dll"
     File "${RUNDIR}\shapelib.dll"
-    File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
+    File /r /x ".svn" /x "locales" "${RUNDIR}\resources"
     File /nonfatal "${RUNDIR}\*.manifest"
     File "*.ico"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
