@@ -10,12 +10,6 @@
 #ifndef __ExerciseListener_h_
 #define __ExerciseListener_h_
 
-namespace tools
-{
-    class GeneralConfig;
-}
-
-
 namespace frontend
 {
 
@@ -31,17 +25,15 @@ class ExerciseListener
 public:
     //! @name Constructors/Destructor
     //@{
-    ExerciseListener( const std::string& strHost, unsigned int nPort );
+             ExerciseListener( const std::string& strHost, unsigned int nPort );
     virtual ~ExerciseListener();
     //@}
 
     //! @name Operations
     //@{
-	bool Wait(); 
-    unsigned int GetPercentage() ;     
+	bool Wait();
+    unsigned int GetPercentage() const;
     //@}
-
-
 
 private:
     //! @name Copy/Assignment
@@ -53,9 +45,9 @@ private:
 private:
     //! @name Member data
     //@{
-	const std::string   strHost_ ; 
-	const unsigned int  nPort_ ; 
-    unsigned int percentage_ ; 
+	const std::string strHost_ ;
+	const unsigned int nPort_ ;
+    unsigned int percentage_ ;
     //@}
 };
 

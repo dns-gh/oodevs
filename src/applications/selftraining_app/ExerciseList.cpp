@@ -86,10 +86,6 @@ ExerciseList::~ExerciseList()
     // NOTHING
 }
 
-// =============================================================================
-// SLOTS 
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: ExerciseList::Update
 // Created: RDS 2008-08-27
@@ -116,20 +112,27 @@ void ExerciseList::UpdateExercise( int index )
     // update sides
     sides_->Update( QString( subDir_.c_str() ) + "/"  + exercise ); 
     // update briefing 
-    if ( showBrief_ ) 
+    if( showBrief_ ) 
     {
-        briefingText_->setText( tr("No available briefing") ); 
-        briefingText_->hide(); 
-        xml::xifstream xis( config_.GetExerciseFile( subDir_ + "/"  + exercise.ascii() ) );
-        std::string image ; 
-        xis >> xml::start( "exercise" )
-                >> xml::optional() >> xml::start( "meta" )
-                    >> xml::optional() >> xml::start( "briefing" )
-                        >> xml::optional()  >> xml::content("image", image )
-                            >> xml::list( "text", *this, &ExerciseList::ReadBriefingText );
-        const std::string imagePath = config_.GetExerciseDir( exercise.ascii() ) + "/" + image ; 
-        const QImage pix( imagePath.c_str() ) ; 
-        briefingImage_->setPixmap( pix ) ; 
+        briefingText_->setText( tr( "No available briefing" ) ); 
+        briefingText_->hide();
+        try
+        {
+            xml::xifstream xis( config_.GetExerciseFile( subDir_ + "/"  + exercise.ascii() ) );
+            std::string image;
+            xis >> xml::start( "exercise" )
+                    >> xml::optional() >> xml::start( "meta" )
+                        >> xml::optional() >> xml::start( "briefing" )
+                            >> xml::optional()  >> xml::content("image", image )
+                                >> xml::list( "text", *this, &ExerciseList::ReadBriefingText );
+            const std::string imagePath = config_.GetExerciseDir( exercise.ascii() ) + "/" + image;
+            const QImage pix( imagePath.c_str() );
+            briefingImage_->setPixmap( pix );
+        }
+        catch( ... )
+        {
+            // $$$$ SBO 2008-10-07: error in exercise.xml meta, just don't show briefing
+        }
     }
 }
 
@@ -139,11 +142,18 @@ void ExerciseList::UpdateExercise( int index )
 // -----------------------------------------------------------------------------
 QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
 {
-    std::string displayName( exercise.ascii() );  
-    xml::xifstream xis( config_.GetExerciseFile( subDir_ + "/"  + exercise.ascii() ) );
-    xis >> xml::start( "exercise" )
-            >> xml::optional() >> xml::start( "meta" )
-                >> xml::optional() >> xml::content( "name", displayName ); 
+    std::string displayName( exercise.ascii() );
+    try
+    {
+        xml::xifstream xis( config_.GetExerciseFile( subDir_ + "/"  + exercise.ascii() ) );
+        xis >> xml::start( "exercise" )
+                >> xml::optional() >> xml::start( "meta" )
+                    >> xml::optional() >> xml::content( "name", displayName ); 
+    }
+    catch( ... )
+    {
+        // $$$$ SBO 2008-10-07: error in exercise.xml meta, just show directory name
+    }
     return displayName.c_str(); 
        
 }
@@ -154,10 +164,10 @@ QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
 // -----------------------------------------------------------------------------
 const QString ExerciseList::GetHighlight()
 {
-    if ( exercises_->selectedItem() ) 
-        return QString( subDir_.c_str() ) + "/" +  *exercisesList_.at( exercises_->index( exercises_->selectedItem() ) ) ; 
+    if ( exercises_->selectedItem() )
+        return QString( subDir_.c_str() ) + "/" +  *exercisesList_.at( exercises_->index( exercises_->selectedItem() ) );
     else
-        return "" ; 
+        return "";
 }
 
 // -----------------------------------------------------------------------------
@@ -166,12 +176,12 @@ const QString ExerciseList::GetHighlight()
 // -----------------------------------------------------------------------------
 void ExerciseList::ReadBriefingText( xml::xistream& xis )
 {
-    std::string lang, text ; 
-    xis >> xml::attribute("lang", lang ) 
-        >> text ; 
-    if ( lang == tools::translate( "General", "Lang" ).ascii() ) 
+    std::string lang, text;
+    xis >> xml::attribute( "lang", lang ) 
+        >> text; 
+    if( lang == tools::translate( "General", "Lang" ).ascii() )
     {
-        briefingText_->setText( text.c_str() ) ; 
+        briefingText_->setText( text.c_str() );
         briefingText_->show(); 
     }
 }

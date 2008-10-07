@@ -49,8 +49,8 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // -----------------------------------------------------------------------------
 StartExercise::~StartExercise()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: StartExercise::Start
@@ -73,8 +73,7 @@ bool StartExercise::Wait()
 // Name: StartExercise::GetPercentage
 // Created: RDS 2008-09-10
 // -----------------------------------------------------------------------------
-unsigned int StartExercise::GetPercentage()
+unsigned int StartExercise::GetPercentage() const
 {
-    return ( listener_.get() ? listener_->GetPercentage() : 0 ) ;     
+    return ( listener_.get() ? listener_->GetPercentage() : 0 );
 }
-

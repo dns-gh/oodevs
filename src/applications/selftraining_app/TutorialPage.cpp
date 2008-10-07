@@ -46,31 +46,6 @@
 namespace bpt = boost::posix_time;
 namespace bfs = boost::filesystem;
 
-bool HasODB( const tools::GeneralConfig& config, const QString& exercise ) 
-{
-    const std::string file = config.GetExerciseFile(exercise.ascii());    
-    std::string orbatFile(""); 
-    xml::xifstream xis( file );
-    xis >> xml::start( "exercise" )
-            >> xml::optional() >> xml::start( "orbat" )
-                >> xml::attribute( "file", orbatFile)
-            >> xml::end()
-        >> xml::end(); 
-    return ( orbatFile != "" ) ; 
-}
-
-struct ResourcesLoadingWrapper
-{
-    ResourcesLoadingWrapper( QStringList& list ) : stringList_ ( list ) { }
-    void ReadResource( xml::xistream& xis )
-    {
-        std::string item ; 
-        xis >> xml::attribute( "file", item ) ; 
-        stringList_.append( item.c_str() ) ; 
-    }
-    QStringList& stringList_ ; 
-};
-
 namespace
 {
     std::string MakeLink( const std::string& file )
@@ -79,24 +54,49 @@ namespace
         const QString protocol = info.extension( false ) == "exe" ? "cmd" : "file";
         return QString( "%1://%2" ).arg( protocol ).arg( info.absFilePath() ).ascii();
     }
-}
 
-QStringList GetResources( const tools::GeneralConfig& config, const QString& exercise ) 
-{
-    const std::string file = config.GetExerciseFile(exercise.ascii());    
-    std::string orbatFile(""); 
-    xml::xifstream xis( file );
-    QStringList result ; 
-    ResourcesLoadingWrapper loadingWrapper( result ) ; 
-    xis >> xml::start( "exercise" )
-            >> xml::optional() >> xml::start( "meta" )
-                >> xml::optional() >> xml::start( "resources" )
-                    >> xml::list( "resource", loadingWrapper, &ResourcesLoadingWrapper::ReadResource ) 
+    bool HasODB( const tools::GeneralConfig& config, const QString& exercise ) 
+    {
+        const std::string file = config.GetExerciseFile(exercise.ascii());    
+        std::string orbatFile;
+        xml::xifstream xis( file );
+        xis >> xml::start( "exercise" )
+                >> xml::optional() >> xml::start( "orbat" )
+                    >> xml::attribute( "file", orbatFile )
                 >> xml::end()
-            >> xml::end()
-        >> xml::end(); 
-    return result ; 
- }
+            >> xml::end();
+        return ! orbatFile.empty();
+    }
+
+    struct ResourcesLoadingWrapper
+    {
+        ResourcesLoadingWrapper( QStringList& list ) : stringList_ ( list ) { }
+        void ReadResource( xml::xistream& xis )
+        {
+            std::string item ; 
+            xis >> xml::attribute( "file", item ) ; 
+            stringList_.append( item.c_str() ) ; 
+        }
+    private:
+        ResourcesLoadingWrapper& operator=( const ResourcesLoadingWrapper& );
+        QStringList& stringList_;
+    };
+
+    QStringList GetResources( const tools::GeneralConfig& config, const QString& exercise ) 
+    {
+        xml::xifstream xis( config.GetExerciseFile( exercise.ascii() ) );
+        QStringList result;
+        ResourcesLoadingWrapper loadingWrapper( result );
+        xis >> xml::start( "exercise" )
+                >> xml::optional() >> xml::start( "meta" )
+                    >> xml::optional() >> xml::start( "resources" )
+                        >> xml::list( "resource", loadingWrapper, &ResourcesLoadingWrapper::ReadResource )
+                    >> xml::end()
+                >> xml::end()
+            >> xml::end(); 
+        return result;
+     }
+}
 
 // -----------------------------------------------------------------------------
 // Name: TutorialPage constructor
@@ -105,22 +105,22 @@ QStringList GetResources( const tools::GeneralConfig& config, const QString& exe
 TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, SessionRunningPage& running, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus  )
     : ContentPage( pages, tools::translate( "TutorialPage", "Tutorials" ), previous )
     , config_( config )
-    , controllers_ ( controllers ) 
-    , sessionStatus_( sessionStatus ) 
-    , interpreter_ ( interpreter ) 
+    , controllers_ ( controllers )
+    , sessionStatus_( sessionStatus )
+    , interpreter_ ( interpreter )
     , running_ ( running ) 
 {
-    QVBox* box = new QVBox ( this) ; 
+    QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
-    exercises_ = new ExerciseList( box , config, "tutorials" )  ; ; 
-    connect( exercises_, SIGNAL( Select( const QString& ) ), this, SLOT( OnStartExercise( const QString& ) ) ); 
-    statusLabel_ = new QLabel( box ) ; 
+    exercises_ = new ExerciseList( box , config, "tutorials" );
+    connect( exercises_, SIGNAL( Select( const QString& ) ), this, SLOT( OnStartExercise( const QString& ) ) );
+    statusLabel_ = new QLabel( box );
     statusLabel_->setBackgroundOrigin( QWidget::WindowOrigin );
     QHBox* hbox = new QHBox( box );
     hbox->setBackgroundOrigin( QWidget::WindowOrigin );
     hbox->layout()->setAlignment( Qt::AlignRight );
-    AddContent( box );    
-    AddNextButton( tr( "Start")  , *this, SLOT( OnStart() ) ); 
+    AddContent( box );
+    AddNextButton( tr( "Start"), *this, SLOT( OnStart() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,20 +147,20 @@ void TutorialPage::Update()
 // -----------------------------------------------------------------------------
 void TutorialPage::OnStartExercise ( const QString& exercise )
 {
-     if ( HasODB( config_, exercise ) )
+     if( HasODB( config_, exercise ) )
      {
-        running_.SetSession( new Session ( controllers_.controller_, new frontend::StartExercise( config_, exercise, "default" , true ), new frontend::JoinExercise ( config_, exercise, "default", true ) ) );  
-        running_.show(); 
+        running_.SetSession( new Session( controllers_.controller_, new frontend::StartExercise( config_, exercise, "default" , true ), new frontend::JoinExercise( config_, exercise, "default", true ) ) );
+        running_.show();
      }
      else
      {
-        QStringList resources = GetResources( config_, exercise ) ; 
-        if ( ! resources.empty() ) 
+        QStringList resources = GetResources( config_, exercise );
+        if( ! resources.empty() )
         {
-            std::string file = * resources.begin(); 
-            file = ( bfs::path( config_.GetExerciseDir( exercise.ascii() ) , bfs::native ) / file ).native_file_string(); 
+            std::string file = *resources.begin();
+            file = ( bfs::path( config_.GetExerciseDir( exercise.ascii() ), bfs::native ) / file ).native_file_string();
             // file = config_.BuildDirectoryFile( exercise.ascii(), file );
-            interpreter_.Interprete( MakeLink(file).c_str() ) ; 
+            interpreter_.Interprete( MakeLink( file ).c_str() );
         }
      }
 }
@@ -169,11 +169,9 @@ void TutorialPage::OnStartExercise ( const QString& exercise )
 // Name: TutorialPage::OnStart
 // Created: RDS 2008-09-01
 // -----------------------------------------------------------------------------
-void TutorialPage::OnStart( )
+void TutorialPage::OnStart()
 {
-    QString exercise = exercises_->GetHighlight() ; 
-    if ( exercise != "" ) 
-        OnStartExercise( exercise ) ; 
+    const QString exercise = exercises_->GetHighlight();
+    if ( exercise != "" )
+        OnStartExercise( exercise );
 }
-
-

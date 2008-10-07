@@ -12,17 +12,17 @@
 
 namespace frontend
 {
-    class SpawnCommand ; 
+    class SpawnCommand;
 }
 
-namespace boost 
+namespace boost
 {
-    class thread ; 
+    class thread;
 }
 
 namespace kernel
 {
-    class Controller; 
+    class Controller;
 }
 
 // =============================================================================
@@ -33,32 +33,22 @@ namespace kernel
 // =============================================================================
 class Session : public QObject 
 {
-
-    Q_OBJECT ; 
-
 public:
-
     //! @name Constructors/Destructor
     //@{
-             Session( kernel::Controller& controller, frontend::SpawnCommand* simulation=NULL, frontend::SpawnCommand* gui=NULL );
+             Session( kernel::Controller& controller, frontend::SpawnCommand* simulation = 0, frontend::SpawnCommand* gui = 0 );
     virtual ~Session();
     //@}
 
     //! @name Operations
     //@{
-    void Start(); 
-    bool IsSimRunning() const ; 
-    bool IsGUIRunning() const ; 
-    bool HasRunningProcess() ; 
-    void StopSimulation( bool confirm = false ); 
-    void StopGUI( bool confirm = false ); 
-    unsigned int GetPercentage(); 
-    //@}
-
-signals:
-
-    //! @name signals
-    //@{
+    void Start();
+    bool IsSimRunning() const;
+    bool IsGUIRunning() const;
+    bool HasRunningProcess();
+    void StopSimulation( bool confirm = false );
+    void StopGUI( bool confirm = false );
+    unsigned int GetPercentage() const;
     //@}
 
 private:
@@ -70,21 +60,18 @@ private:
 
     //! @name Helpers
     //@{
-    void Stop ( std::auto_ptr< frontend::SpawnCommand >& command, bool confirm = false ) ; 
+    void Stop( std::auto_ptr< frontend::SpawnCommand >& command, bool confirm = false );
+    void ThreadStart();
     //@}
 
 private:
-
     //! @name Member data
     //@{
-    std::auto_ptr< frontend::SpawnCommand > simulation_ ; 
-    std::auto_ptr< frontend::SpawnCommand > gui_ ; 
-    std::auto_ptr< boost::thread > thread_ ; 
-    kernel::Controller& controller_ ; 
+    std::auto_ptr< frontend::SpawnCommand > simulation_;
+    std::auto_ptr< frontend::SpawnCommand > gui_;
+    std::auto_ptr< boost::thread > thread_;
+    kernel::Controller& controller_;
     //@}
-
-    void ThreadStart(); 
-
 };
 
 #endif // __Session_h_

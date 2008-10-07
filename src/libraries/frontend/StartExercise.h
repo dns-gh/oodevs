@@ -14,7 +14,8 @@
 
 namespace frontend
 {
-    class ExerciseListener; 
+    class ExerciseListener;
+
 // =============================================================================
 /** @class  StartExercise
     @brief  StartExercise
@@ -34,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Wait(); 
-    virtual unsigned int GetPercentage() ;     
+    virtual bool Wait();
+    virtual unsigned int GetPercentage() const;
     //@}
 
 private:
@@ -45,13 +46,13 @@ private:
     StartExercise& operator=( const StartExercise& ); //!< Assignment operator
     //@}
 
+private:
     //! @name Member data 
     //@{
-    std::string exercise_ ; 
-    std::string session_ ; 
-    std::auto_ptr<ExerciseListener> listener_ ; 
+    std::string exercise_;
+    std::string session_ ;
+    std::auto_ptr<ExerciseListener> listener_;
     //@}
-    
 };
 
 }

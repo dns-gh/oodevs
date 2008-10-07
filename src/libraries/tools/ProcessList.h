@@ -10,7 +10,9 @@
 #ifndef __ProcessList_h_
 #define __ProcessList_h_
 
+#pragma warning( push, 0 )
 #include <boost/ptr_container/ptr_map.hpp>
+#pragma warning( pop )
 
 namespace tools
 {
@@ -33,35 +35,32 @@ public:
 
     //! @name Operations
     //@{
-    bool         Contains( const std::string& procName ) const; 
-    unsigned int KillAll ( const std::string& procName ) ;  
+    bool Contains( const std::string& procName ) const;
+    unsigned int KillAll( const std::string& procName );
     //@}
 
 private:
-
-    //! @name 
-    //@{
-    class ProcInfo ;                                      //!< obscure process information class to hide OS imaplementation 
-    typedef boost::ptr_multimap< const std::string, ProcInfo >  T_ProcList ;  
-    //@}
-
     //! @name Copy/Assignment
     //@{
     ProcessList( const ProcessList& );            //!< Copy constructor
     ProcessList& operator=( const ProcessList& ); //!< Assignment operator
     //@}
 
+    //! @name Types
+    //@{
+    class ProcInfo; //!< obscure process information class to hide OS imaplementation 
+    typedef boost::ptr_multimap< const std::string, ProcInfo >  T_ProcList;
+    //@}
+
     //! @name Helpers
     //@{
-    bool Kill( ProcInfo& proc ) ; 
+    bool Kill( ProcInfo& proc );
     //@}
 
 private:
-    
-    
     //! @name Member data
     //@{
-    T_ProcList processes_ ; 
+    T_ProcList processes_;
     //@}
 };
 

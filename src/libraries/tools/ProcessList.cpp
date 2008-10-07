@@ -9,23 +9,21 @@
 
 #include "tools_pch.h"
 #include "ProcessList.h"
-
 #include <windows.h>
 #include <tlhelp32.h>
-
 #include <boost/bind.hpp>
 
 using namespace tools ; 
 
-class ProcessList::ProcInfo : public boost::noncopyable 
+class ProcessList::ProcInfo : public boost::noncopyable
 {
 public:
-    ProcInfo( const DWORD pid ) : pid_ ( pid ) { } 
-    bool Kill() const ; 
-    bool IsCurrentProcess() const ; 
+    ProcInfo( const DWORD pid ) : pid_ ( pid ) {}
+    bool Kill() const;
+    bool IsCurrentProcess() const;
 private:
-    DWORD pid_  ; 
-}; 
+    DWORD pid_;
+};
 
 // -----------------------------------------------------------------------------
 // Name: ProcessList constructor
@@ -36,25 +34,24 @@ ProcessList::ProcessList()
     // Take a snapshot of all processes in the system.
     HANDLE hProcessSnap = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, 0 );
     if( hProcessSnap == INVALID_HANDLE_VALUE )
-        throw ( std::runtime_error("Impossible to get process list") ) ; 
+        throw std::runtime_error( "Unable to retriev process list" );
 
     PROCESSENTRY32 pe32;
     pe32.dwSize = sizeof( PROCESSENTRY32 );
     if( !Process32First( hProcessSnap, &pe32 ) )
     {
-        CloseHandle( hProcessSnap );     
-        throw ( std::runtime_error("Impossible to get process list") ) ; 
+        CloseHandle( hProcessSnap );
+        throw std::runtime_error( "Unable to retrieve process list" );
     }
 
-    DWORD currentProcessID = GetCurrentProcessId(); 
+    DWORD currentProcessID = GetCurrentProcessId();
     do
     {
         if ( pe32.th32ProcessID != currentProcessID )
-            processes_.insert( pe32.szExeFile , new ProcInfo ( pe32.th32ProcessID ) ) ;                 
-    } while( Process32Next( hProcessSnap, &pe32 ) );
-
+            processes_.insert( pe32.szExeFile, new ProcInfo( pe32.th32ProcessID ) );
+    }
+    while( Process32Next( hProcessSnap, &pe32 ) );
     CloseHandle( hProcessSnap );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +69,7 @@ ProcessList::~ProcessList()
 // -----------------------------------------------------------------------------
 bool ProcessList::Contains( const std::string& procName ) const
 {
-    return ( processes_.count( procName ) != 0 ) ; 
+    return processes_.count( procName ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -81,32 +78,31 @@ bool ProcessList::Contains( const std::string& procName ) const
 // -----------------------------------------------------------------------------
 unsigned int ProcessList::KillAll( const std::string& procName )
 {
-    unsigned int killedProcesses = 0 ; 
-    T_ProcList::const_iterator it ; 
-    for ( it = processes_.begin(); it != processes_.end(); it++ )
-        if ( ( *it ).first == procName ) 
-            if (! ( *it ).second->IsCurrentProcess() )
-                if (( *it ).second->Kill())
-                    killedProcesses ++ ; 
-    return killedProcesses  ; 
+    unsigned int killedProcesses = 0;
+    for( T_ProcList::const_iterator it = processes_.begin(); it != processes_.end(); ++it )
+        if(  it->first == procName 
+         && !it->second->IsCurrentProcess()
+         &&  it->second->Kill() )
+            ++killedProcesses;
+    return killedProcesses;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessList::ProcessInfo::Kill
 // Created: RDS 2008-08-20
 // -----------------------------------------------------------------------------
-bool ProcessList::ProcInfo::Kill( ) const
+bool ProcessList::ProcInfo::Kill() const
 {
     // Retrieve the process handle 
-    HANDLE hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, pid_);
-    // Terminates the process 
+    HANDLE hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, pid_ );
+    // Terminates the process
     if( hProcess == NULL )
-        return false ; 
+        return false;
     else
-    {   
-        TerminateProcess(hProcess,1) ;    
+    {
+        TerminateProcess( hProcess, 1 );
         CloseHandle( hProcess );
-        return true ; 
+        return true;
     }
 }
 
@@ -114,9 +110,9 @@ bool ProcessList::ProcInfo::Kill( ) const
 // Name: ProcessList::ProcessInfo::Kill
 // Created: RDS 2008-08-20
 // -----------------------------------------------------------------------------
-bool ProcessList::ProcInfo::IsCurrentProcess( ) const
+bool ProcessList::ProcInfo::IsCurrentProcess() const
 {
-    // Retrieve the process handle 
-    HANDLE hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, pid_);
-    return ( hProcess == GetCurrentProcess() ) ; 
+    // Retrieve the process handle
+    HANDLE hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, pid_ );
+    return hProcess == GetCurrentProcess();
 }
