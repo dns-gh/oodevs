@@ -36,7 +36,6 @@ Population.cpp \
 PopulationConcentrationKnowledge.cpp \
 PopulationFlowKnowledge.cpp \
 PopulationKnowledge.cpp \
-Profile.cpp \
 Reinforcements.cpp \
 Report.cpp \
 ReportFactory.cpp \

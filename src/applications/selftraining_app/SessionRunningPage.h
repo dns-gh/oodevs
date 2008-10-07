@@ -10,24 +10,24 @@
 #ifndef __SessionRunningPage_h_
 #define __SessionRunningPage_h_
 
-#include "clients_kernel/ElementObserver_ABC.h" 
-#include "clients_kernel/Observer_ABC.h" 
-#include "ContentPage.h" 
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/Observer_ABC.h"
+#include "ContentPage.h"
 
 namespace tools
 {
-    class GeneralConfig ; 
+    class GeneralConfig;
 }
 
-namespace kernel 
+namespace kernel
 {
-    class Controllers; 
+    class Controllers;
 }
 
-class Session; 
-class SessionStatus ; 
-class QProgressBar; 
-class QTimer ; 
+class Session;
+class SessionStatus;
+class QProgressBar;
+class QTimer;
 
 // =============================================================================
 /** @class  SessionRunningPage
@@ -56,8 +56,10 @@ public:
     //@}
 
 public slots:
-
-    void UpdateProgress(); 
+    //! @name Slots
+    //@{
+    void UpdateProgress();
+    //@}
 
 private:
     //! @name Copy/Assignment

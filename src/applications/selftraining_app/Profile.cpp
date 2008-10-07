@@ -9,26 +9,25 @@
 
 #include "selftraining_app_pch.h"
 #include "Profile.h"
-
 #include <xeumeuleu/xml.h> 
 
 // -----------------------------------------------------------------------------
 // Name: Profile constructor
 // Created: RDS 2008-09-10
 // -----------------------------------------------------------------------------
-Profile::Profile( xml::xistream& xis, const kernel::Resolver_ABC<Side>& sides )
+Profile::Profile( xml::xistream& xis, const kernel::Resolver_ABC< Side >& sides )
     : name_( xml::attribute< std::string >( xis, "name" ) )
-    , supervisor_ ( false ) 
+    , supervisor_( false )
 {
-    xis >> xml::optional() >> xml::attribute( "supervision", supervisor_ ); 
-    ReadSides( xis, sides  ) ; 
+    xis >> xml::optional() >> xml::attribute( "supervision", supervisor_ );
+    ReadSides( xis, sides );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Profile destructor
 // Created: RDS 2008-09-10
 // -----------------------------------------------------------------------------
-Profile::~Profile( )
+Profile::~Profile()
 {
     // NOTHING
 }
@@ -37,15 +36,16 @@ Profile::~Profile( )
 // Name: Profile::ReadSides
 // Created: RDS 2008-09-10
 // -----------------------------------------------------------------------------
-void Profile::ReadSides( xml::xistream& xis, const kernel::Resolver_ABC<Side>& sides )
+void Profile::ReadSides( xml::xistream& xis, const kernel::Resolver_ABC< Side >& sides )
 {
-    static int ro(READ), rw(READ|WRITE) ;  
+    static int ro = READ;
+    static int rw = READ | WRITE;
     xis >> xml::optional() >> xml::start( "rights")
-            >> xml::start( "readonly")
-                >> xml::list("side", *this, &Profile::ReadSide, sides, ro ) 
+            >> xml::start( "readonly" )
+                >> xml::list( "side", *this, &Profile::ReadSide, sides, ro )
             >> xml::end()
-            >> xml::optional() >> xml::start( "readwrite")
-                >> xml::list("side", *this, &Profile::ReadSide, sides, rw ) 
+            >> xml::optional() >> xml::start( "readwrite" )
+                >> xml::list( "side", *this, &Profile::ReadSide, sides, rw )
             >> xml::end()
         >> xml::end();
 }
@@ -56,10 +56,10 @@ void Profile::ReadSides( xml::xistream& xis, const kernel::Resolver_ABC<Side>& s
 // -----------------------------------------------------------------------------
 void Profile::ReadSide( xml::xistream& xis, const kernel::Resolver_ABC<Side>& sides, int rights )
 {
-    unsigned int id ; 
-    xis >> xml::attribute("id", id ) ; 
-    Side* side = sides.Find( id ) ; 
-    sides_[side] |=  rights   ; 
+    unsigned int id;
+    xis >> xml::attribute( "id", id );
+    Side* side = sides.Find( id );
+    sides_[ side ] |= rights;
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ void Profile::ReadSide( xml::xistream& xis, const kernel::Resolver_ABC<Side>& si
 // -----------------------------------------------------------------------------
 QString Profile::GetLogin() const
 {
-    return name_.c_str(); 
+    return name_.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ QString Profile::GetLogin() const
 // -----------------------------------------------------------------------------
 bool Profile::IsSupervision() const
 {
-    return supervisor_ ; 
+    return supervisor_;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,10 +86,9 @@ bool Profile::IsSupervision() const
 // -----------------------------------------------------------------------------
 const int Profile::GetRights( Side& side ) const
 {
-    CIT_SideRightsList it = sides_.find( &side ) ; 
-    if ( it != sides_.end() ) 
-        return (*it).second ; 
+    CIT_SideRightsList it = sides_.find( &side );
+    if( it != sides_.end() )
+        return it->second;
     else
-        return 0 ; 
+        return 0;
 }
-

@@ -8,15 +8,14 @@
 // *****************************************************************************
 
 #include "selftraining_app_pch.h"
-#include "MessageDialog.h" 
 #include "SessionRunningPage.h"
+#include "moc_SessionRunningPage.cpp" 
+#include "MessageDialog.h" 
 #include "Session.h" 
 #include "SessionStatus.h" 
 #include "clients_kernel/Controllers.h" 
 #include "clients_kernel/Controller.h" 
-
-#include "moc_SessionRunningPage.cpp" 
-
+#include "clients_gui/Tools.h"
 #include <qtimer.h> 
 #include <qprogressbar.h>
 
@@ -25,7 +24,7 @@
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
 SessionRunningPage::SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus) 
-    : ContentPage( pages, tr( "SessionRunningPage" ) , previous )
+    : ContentPage( pages, tools::translate( "SessionRunningPage", "Run Session" ) , previous )
     , config_( config ) 
     , sessionStatus_ ( sessionStatus ) 
     , controllers_( controllers ) 
@@ -93,7 +92,7 @@ void SessionRunningPage::SetSession( Session* session )
 {
     if ( sessionStatus_.get() && sessionStatus_->HasRunningProcess()) 
     {
-        MessageDialog message( this, tr( "Running Sessions" ), tr( "Running session detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
+        MessageDialog message( this, tools::translate( "SessionRunningPage", "Running Sessions" ), tools::translate( "SessionRunningPage", "Running session detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() != QMessageBox::Yes )
             return ; 
     }
@@ -114,15 +113,15 @@ void SessionRunningPage::NotifyUpdated( const SessionStatus& status )
     switch( status.GetStatus() ) 
     {
     case SessionStatus::SIM_STARTED: 
-        status_->setText( tr("Starting simulation") ); 
+        status_->setText( tools::translate( "SessionRunningPage", "Starting simulation" ) ); 
         setCursor( QCursor( Qt::WaitCursor ) ); 
         break ; 
     case SessionStatus::SIM_AVAILABLE: 
-        status_->setText( tr("Simulation started") ); 
+        status_->setText( tools::translate( "SessionRunningPage", "Simulation started" ) );
         break ; 
     case SessionStatus::GUI_OPENED: 
         StopProgressListening(); 
-        status_->setText( tr("Running gaming") ); 
+        status_->setText( tools::translate( "SessionRunningPage", "Running gaming" ) );
         setCursor( QCursor( Qt::ArrowCursor ) ); 
         Previous(); 
         qApp->mainWidget()->hide(); 

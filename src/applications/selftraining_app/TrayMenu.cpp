@@ -9,20 +9,20 @@
 
 #include "selftraining_app_pch.h"
 #include "TrayMenu.h"
+#include "moc_TrayMenu.cpp"
 #include "Session.h" 
-#include "moc_TrayMenu.cpp" 
+#include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: TrayMenu constructor
 // Created: RDS 2008-08-21
 // -----------------------------------------------------------------------------
 TrayMenu::TrayMenu( QWidget* mainWindow )
-    : currentSession_ ( NULL ) 
+    : currentSession_( 0 )
 {
-    setPalette( mainWindow->palette() ) ; 
-    insertItem( tr( "Show Normal") , mainWindow, SLOT(showNormal()) );
-    insertItem( tr( "Quit") , this , SLOT( OnQuit() ) );
-    QObject::connect(this, SIGNAL( aboutToShow() ), this, SLOT(OnAboutToShow() ) );
+    setPalette( mainWindow->palette() );
+    insertItem( tools::translate( "TrayMenu", "Show Normal" ), mainWindow, SLOT( showNormal() ) );
+    insertItem( tools::translate( "TrayMenu", "Quit" ), this, SLOT( OnQuit() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,29 +35,11 @@ TrayMenu::~TrayMenu()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TrayMenu::OnAboutToShow
-// Created: RDS 2008-08-21
-// -----------------------------------------------------------------------------
-void TrayMenu::OnAboutToShow()
-{
-    Update(); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: TrayMenu::Update
-// Created: RDS 2008-08-21
-// -----------------------------------------------------------------------------
-void TrayMenu::Update()
-{
-
-}
-
-// -----------------------------------------------------------------------------
 // Name: TrayMenu::OnQuit
 // Created: RDS 2008-08-22
 // -----------------------------------------------------------------------------
 void TrayMenu::OnQuit()
 {
     qApp->mainWidget()->showNormal();
-    qApp->closeAllWindows(); 
+    qApp->closeAllWindows();
 }

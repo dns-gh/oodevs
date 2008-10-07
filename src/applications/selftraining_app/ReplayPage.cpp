@@ -78,16 +78,14 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
                 QVBox* vbox = new QVBox( hbox ) ;
                 vbox->setSpacing( 5 );
                 vbox->setBackgroundOrigin( QWidget::WindowOrigin );
-                label = new QLabel( tr( "Session:") , vbox ); 
+                label = new QLabel( tools::translate( "ReplayPage", "Session:" ) , vbox ); 
                 label->setBackgroundOrigin( QWidget::WindowOrigin );
                 sessionList_ = new QListBox( vbox);
             }
         }
-       
-    }    
-
+    }
     AddContent( mainBox );    
-    AddNextButton( "Start", *this, SLOT( OnStart() ) ); 
+    AddNextButton( tools::translate( "ReplayPage", "Start" ), *this, SLOT( OnStart() ) ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -112,22 +110,22 @@ void ReplayPage::Update()
 // Name: ReplayPage::OnStartExercise
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-void ReplayPage::OnStartExercise ( const QString& exercise )
+void ReplayPage::OnStartExercise( const QString& exercise )
 {
     if (sessionStatus_.get() && sessionStatus_->HasRunningProcess()) 
     {
-        MessageDialog message( this, tr( "Running Sessions" ), tr( "Running session detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
+        MessageDialog message( this, tools::translate( "ReplayPage", "Running Sessions" ), tools::translate( "ReplayPage", "Running session detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() != QMessageBox::Yes )
             return ; 
     }
 
-    QString session = "" ;  
+    QString session = "";  
     if( QListBoxItem* sessionItem = sessionList_->selectedItem() )
-        session = sessionItem->text() ; 
+        session = sessionItem->text();
     if ( session != "" ) 
     {
         CreateSession( exercise, session );
-        running_.SetSession( new Session ( controllers_.controller_, new frontend::StartReplay( config_, exercise, session, 20000, true ), new frontend::JoinAnalysis( config_, exercise, 20000 ) ) ); 
+        running_.SetSession( new Session( controllers_.controller_, new frontend::StartReplay( config_, exercise, session, 20000, true ), new frontend::JoinAnalysis( config_, exercise, 20000 ) ) ); 
         running_.show();  
     }
 }

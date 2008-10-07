@@ -8,20 +8,18 @@
 // *****************************************************************************
 
 #include "selftraining_app_pch.h"
-#include "frontend/commands.h" 
 #include "ExerciseList.h"
+#include "moc_ExerciseList.cpp"
 #include "MenuButton.h" 
 #include "SideList.h" 
-#include "moc_ExerciseList.cpp" 
+#include "frontend/commands.h" 
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
 
-#include "qtextbrowser.h"
-#include "qfileinfo.h"
-
+#include <qtextbrowser.h>
+#include <qfileinfo.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem.hpp> 
-
 #include <xeumeuleu/xml.h>
 
 namespace bfs = boost::filesystem;
@@ -36,22 +34,19 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     , subDir_ ( subDir )
     , showBrief_ ( showBrief ) 
 {
-    // HBox 
     QHBox* box = new QHBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setSpacing( 50 );
     
     {   
-        // leftBox 
-        QLabel* label ; 
         QVBox* leftBox = new QVBox( box );
         leftBox->setSpacing( 5 );
         leftBox->setBackgroundOrigin( QWidget::WindowOrigin );
-        label = new QLabel(tools::translate("ScenarioLauncherPage","Exercise:") , leftBox); 
+        QLabel* label = new QLabel( tools::translate( "ExerciseList", "Exercise:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
         exercises_ = new QListBox( leftBox );
 
-        label = new QLabel(tools::translate("ScenarioLauncherPage","Sides:") , leftBox ); 
+        label = new QLabel( tools::translate( "ExerciseList", "Sides:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
         sides_ = new SideList( leftBox, config );
         leftBox->setStretchFactor( exercises_, 3 );
@@ -61,19 +56,17 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         connect( exercises_, SIGNAL( doubleClicked( QListBoxItem* ) ), this, SLOT( SelectExercise() ) );
     }
     
-    if ( showBrief ) 
+    if( showBrief ) 
     {
-        // RightBox 
         QVBox* rightBox = new QVBox( box );
-
-        rightBox->setMinimumWidth( 200 ) ; 
+        rightBox->setMinimumWidth( 200 );
         rightBox->setBackgroundOrigin( QWidget::WindowOrigin );
         rightBox->setSpacing( 5 );
         briefingImage_ = new QLabel( rightBox );
         briefingImage_->setBackgroundOrigin( QWidget::WindowOrigin );
         briefingText_ = new QTextEdit( rightBox );
         briefingText_->setBackgroundOrigin( QWidget::WindowOrigin );
-        briefingText_->setFont( QFont( "Georgia", 10, QFont::Normal, true ) ) ; 
+        briefingText_->setFont( QFont( "Georgia", 10, QFont::Normal, true ) );
     }
 }
 
@@ -94,7 +87,6 @@ void ExerciseList::Update()
 {    
     static const QImage pix( "resources/images/selftraining/mission.png" );
     exercisesList_ = frontend::commands::ListExercises( config_, subDir_ );
-    // display 
     exercises_->clear();
     for( QStringList::iterator it = exercisesList_ .begin(); it != exercisesList_ .end(); ++it )
         exercises_->insertItem( pix, GetExerciseDisplayName( *it ) );
@@ -108,13 +100,11 @@ void ExerciseList::Update()
 void ExerciseList::UpdateExercise( int index )
 {
     QString exercise = *exercisesList_.at( index ) ; 
-    emit( Highlight( GetHighlight() ) ); 
-    // update sides
-    sides_->Update( QString( subDir_.c_str() ) + "/"  + exercise ); 
-    // update briefing 
-    if( showBrief_ ) 
+    emit Highlight( GetHighlight() );
+    sides_->Update( QString( subDir_.c_str() ) + "/"  + exercise );
+    if( showBrief_ )
     {
-        briefingText_->setText( tr( "No available briefing" ) ); 
+        briefingText_->setText( tools::translate( "ExerciseList", "No briefing available" ) );
         briefingText_->hide();
         try
         {
@@ -148,21 +138,20 @@ QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
         xml::xifstream xis( config_.GetExerciseFile( subDir_ + "/"  + exercise.ascii() ) );
         xis >> xml::start( "exercise" )
                 >> xml::optional() >> xml::start( "meta" )
-                    >> xml::optional() >> xml::content( "name", displayName ); 
+                    >> xml::optional() >> xml::content( "name", displayName );
     }
     catch( ... )
     {
         // $$$$ SBO 2008-10-07: error in exercise.xml meta, just show directory name
     }
-    return displayName.c_str(); 
-       
+    return displayName.c_str();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseList::GetHighlight
 // Created: RDS 2008-09-01
 // -----------------------------------------------------------------------------
-const QString ExerciseList::GetHighlight()
+const QString ExerciseList::GetHighlight() const
 {
     if ( exercises_->selectedItem() )
         return QString( subDir_.c_str() ) + "/" +  *exercisesList_.at( exercises_->index( exercises_->selectedItem() ) );
@@ -177,12 +166,12 @@ const QString ExerciseList::GetHighlight()
 void ExerciseList::ReadBriefingText( xml::xistream& xis )
 {
     std::string lang, text;
-    xis >> xml::attribute( "lang", lang ) 
-        >> text; 
+    xis >> xml::attribute( "lang", lang )
+        >> text;
     if( lang == tools::translate( "General", "Lang" ).ascii() )
     {
         briefingText_->setText( text.c_str() );
-        briefingText_->show(); 
+        briefingText_->show();
     }
 }
 
@@ -190,9 +179,8 @@ void ExerciseList::ReadBriefingText( xml::xistream& xis )
 // Name: ExerciseList::SelectExercise
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-void ExerciseList::SelectExercise( )
+void ExerciseList::SelectExercise()
 {
     if( exercises_->selectedItem() )
-        emit( Select( GetHighlight() ) ) ; 
+        emit Select( GetHighlight() );
 }
-

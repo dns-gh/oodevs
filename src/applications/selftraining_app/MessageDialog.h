@@ -28,8 +28,11 @@ public:
     virtual ~MessageDialog();
     //@}
 
-    //! @name Operations
+private slots:
+    //! @name Slots
     //@{
+    void OnYes();
+    void OnNo();
     //@}
 
 private:
@@ -42,16 +45,8 @@ private:
     //! @name Helpers
     //@{
     QSize sizeHint() const;
-    QButton* CreateButton( QWidget* parent, int ) ; 
+    QButton* CreateButton( QWidget* parent, int );
     //@}
-
-private slots:
-    //! @name 
-    //@{
-    void OnYes();
-    void OnNo(); 
-    //@}
-
 };
 
 #endif // __MessageDialog_h_

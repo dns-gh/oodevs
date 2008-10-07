@@ -57,6 +57,18 @@
     </message>
     <message>
         <source>No available briefing</source>
+        <translation type="obsolete">Aucun briefing</translation>
+    </message>
+    <message>
+        <source>Exercise:</source>
+        <translation>Exercice:</translation>
+    </message>
+    <message>
+        <source>Sides:</source>
+        <translation>Camps:</translation>
+    </message>
+    <message>
+        <source>No briefing available</source>
         <translation>Aucun briefing</translation>
     </message>
 </context>
@@ -131,7 +143,7 @@
     <name>ProfileList</name>
     <message>
         <source>anonymous</source>
-        <translation>sans nom</translation>
+        <translation type="obsolete">sans nom</translation>
     </message>
 </context>
 <context>
@@ -151,6 +163,13 @@
     <message>
         <source>Please confirm</source>
         <translation>Etes vous sûr ?</translation>
+    </message>
+</context>
+<context>
+    <name>ReadProfile</name>
+    <message>
+        <source>anonymous</source>
+        <translation>anonyme</translation>
     </message>
 </context>
 <context>
@@ -179,6 +198,10 @@
         <source>Checkpoint:</source>
         <translation type="obsolete">Sauvegarde : </translation>
     </message>
+    <message>
+        <source>Start</source>
+        <translation>Démarrer</translation>
+    </message>
 </context>
 <context>
     <name>ScenarioEditPage</name>
@@ -192,7 +215,7 @@
     </message>
     <message>
         <source>Enter exercise name</source>
-        <translation>Saisissez le nom de l&apos;exercice</translation>
+        <translation>Saisir le nom de l&apos;exercice</translation>
     </message>
     <message>
         <source>Choose the terrain:</source>
@@ -208,7 +231,7 @@
     </message>
     <message>
         <source>Create new exercise:</source>
-        <translation>Créer un nouvel exercice:</translation>
+        <translation>Créer un exercice:</translation>
     </message>
     <message>
         <source>Create</source>
@@ -227,11 +250,11 @@
     </message>
     <message>
         <source>Exercise:</source>
-        <translation>Exercice:</translation>
+        <translation type="obsolete">Exercice:</translation>
     </message>
     <message>
         <source>Sides:</source>
-        <translation>Camps:</translation>
+        <translation type="obsolete">Camps:</translation>
     </message>
     <message>
         <source>Status</source>
@@ -275,6 +298,14 @@
     <message>
         <source>Start</source>
         <translation>Démarrer</translation>
+    </message>
+    <message>
+        <source>options</source>
+        <translation type="obsolete">Options</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>Options</translation>
     </message>
 </context>
 <context>
@@ -374,11 +405,15 @@
     </message>
     <message>
         <source>SessionRunningPage</source>
-        <translation>Lancement de la session</translation>
+        <translation type="obsolete">Lancement de la session</translation>
     </message>
     <message>
         <source>Simulation started</source>
         <translation>Simulation démarrée</translation>
+    </message>
+    <message>
+        <source>Run Session</source>
+        <translation>Démarrer une session</translation>
     </message>
 </context>
 <context>

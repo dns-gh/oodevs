@@ -12,10 +12,12 @@
 #include "moc_ScenarioLauncherPageOptions.cpp"
 #include "SessionRunningPage.h" 
 #include "Session.h" 
+#include "ProfileList.h"
 #include "frontend/StartExercise.h"
 #include "frontend/JoinExercise.h"
 #include "frontend/CreateSession.h"
 #include "clients_kernel/Controllers.h" 
+#include "clients_gui/Tools.h"
 
 #include <qhgroupbox.h>
 #include <qcheckbox.h>
@@ -29,14 +31,12 @@
 
 namespace bpt = boost::posix_time;
 
-#include "ProfileList.h"
-
 // -----------------------------------------------------------------------------
 // Name: ScenarioLauncherPageOptions constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
 ScenarioLauncherPageOptions::ScenarioLauncherPageOptions( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, SessionRunningPage& running, const tools::GeneralConfig& config )
-    : ContentPage( pages, "options", previous )
+    : ContentPage( pages, tools::translate( "ScenarioLauncherPageOptions", "Options" ), previous )
     , controllers_ ( controllers ) 
     , running_ ( running )
     , config_ ( config ) 
@@ -46,7 +46,7 @@ ScenarioLauncherPageOptions::ScenarioLauncherPageOptions( QWidgetStack* pages, P
    box->layout()->setAlignment(  Qt::AlignTop ) ; 
    box->setMargin( 5 ) ; 
    exerciseLabel_ = new QLineEdit( box ) ; 
-   QLabel* label = new QLabel(tr("Profile:"), box ); 
+   QLabel* label = new QLabel( tools::translate( "ScenarioLauncherPageOptions", "Profile:" ), box ); 
    label->setBackgroundOrigin( QWidget::WindowOrigin );
    profiles_ = new ProfileList( box, config ) ; 
    profiles_->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -55,7 +55,7 @@ ScenarioLauncherPageOptions::ScenarioLauncherPageOptions( QWidgetStack* pages, P
     checkpoints->setBackgroundOrigin( QWidget::WindowOrigin );
     {
         QHBox* frequencyBox = new QHBox( checkpoints );
-        QLabel* label = new QLabel( tr( "Frequency:" ), frequencyBox );
+        QLabel* label = new QLabel( tools::translate( "ScenarioLauncherPageOptions", "Frequency:" ), frequencyBox );
         label->setAlignment( Qt::AlignRight ) ; 
         label->setBackgroundOrigin( QWidget::WindowOrigin );
         checkFrequency_ = new QTimeEdit( frequencyBox );
@@ -63,14 +63,14 @@ ScenarioLauncherPageOptions::ScenarioLauncherPageOptions( QWidgetStack* pages, P
     }
     {
         QHBox* keepBox = new QHBox( checkpoints );
-        QLabel* label = new QLabel( tr( "Rotations:" ), keepBox );
+        QLabel* label = new QLabel( tools::translate( "ScenarioLauncherPageOptions", "Rotations:" ), keepBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
         label->setAlignment( Qt::AlignRight ) ; 
         keepSpin_ = new QSpinBox( 1, 100, 1, keepBox );
     }
 
    AddContent( box );    
-   AddNextButton( tr( "Start" ) , *this, SLOT( Start() ) ) ; 
+   AddNextButton( tools::translate( "ScenarioLauncherPageOptions", "Start" ) , *this, SLOT( Start() ) ) ; 
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +130,6 @@ void ScenarioLauncherPageOptions::CreateSession( const QString& exercise, const 
         action.SetOption( "session/config/simulation/debug/@networkloggerport" , 20000 );
         action.SetOption( "session/config/simulation/checkpoint/@frequency", QString( "%1s" ).arg( QTime().secsTo( checkFrequency_->time() ) ).ascii() );
         action.SetOption( "session/config/simulation/checkpoint/@keep", keepSpin_->value() );
-
     }
 }
 

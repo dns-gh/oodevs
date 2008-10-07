@@ -10,7 +10,7 @@
 #ifndef __TrayMenu_h_
 #define __TrayMenu_h_
 
-class Session ; 
+class Session;
 
 // =============================================================================
 /** @class  TrayMenu
@@ -20,7 +20,6 @@ class Session ;
 // =============================================================================
 class TrayMenu : public QPopupMenu
 {
-    
     Q_OBJECT;
 
 public:
@@ -30,6 +29,12 @@ public:
     virtual ~TrayMenu();
     //@}
 
+private slots:
+    //! @name Member data
+    //@{
+    void OnQuit();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -37,21 +42,11 @@ private:
     TrayMenu& operator=( const TrayMenu& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    void Update(); 
-    //@}
-
-private slots:
+private:
     //! @name Member data
     //@{
-    void OnAboutToShow(); 
-    void OnQuit(); 
+    const Session* currentSession_;
     //@}
-
-private:
-
-    const Session*    currentSession_ ;  
 
 };
 

@@ -18,7 +18,7 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 QuitPage::QuitPage( QWidgetStack* pages, Page_ABC& previous )
-    : MenuPage( pages, tr( "Please confirm" )  )
+    : MenuPage( pages, tools::translate( "QuitPage", "Please confirm" )  )
 {
     AddLink( tools::translate( "QuitPage", "Yes" ), *this, true, " ", SLOT( OnQuit() ) );
     AddLink( tools::translate( "QuitPage", "No" ) , previous );

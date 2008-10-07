@@ -13,6 +13,7 @@
 #include "ProfileList.h"
 #include "moc_ProfileList.cpp"
 #include "frontend/commands.h"
+#include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h" 
 #include <xeumeuleu/xml.h>
 
@@ -20,9 +21,9 @@
 // Name: ProfileList constructor
 // Created: RDS 2008-09-05
 // -----------------------------------------------------------------------------
-ProfileList::ProfileList( QWidget* parent, const tools::GeneralConfig& config  )
-    : QListBox( parent ) 
-    , config_  ( config )  
+ProfileList::ProfileList( QWidget* parent, const tools::GeneralConfig& config )
+    : QListBox( parent )
+    , config_( config )
 {
     // NOTHING
 }
@@ -36,33 +37,27 @@ ProfileList::~ProfileList()
     // NOTHING
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: ProfileList::Update
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
 void ProfileList::Update( const QString& exercise )
 {
-    clear(); 
+    clear();
     try
     {
         if ( exercise != "" )
         {
-            ReadSides( exercise.ascii() ) ; 
-            ReadProfiles( exercise.ascii() ) ; 
+            ReadSides( exercise.ascii() );
+            ReadProfiles( exercise.ascii() );
         }
     }
-    catch( ... ) 
+    catch( ... )
     {
-        // something went wrong ... don't crash since it may be related to the exercise file, but clear 
-        clear(); 
+        // something went wrong ... don't crash since it may be related to the exercise file, but clear
+        clear();
     }
 }
-
-// =============================================================================
-// Sides 
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ProfileList::ReadSides
@@ -71,20 +66,20 @@ void ProfileList::Update( const QString& exercise )
 void ProfileList::ReadSides( const std::string& exercise )
 {
     sides_.DeleteAll();
-    std::string orbatFile ; 
+    std::string orbatFile;
     {
-        xml::xifstream xis( config_.GetExerciseFile( exercise ) ) ; 
-        xis >> xml::start("exercise")
-                >> xml::start("orbat")
-                    >> xml::attribute("file", orbatFile ); 
+        xml::xifstream xis( config_.GetExerciseFile( exercise ) );
+        xis >> xml::start( "exercise" )
+                >> xml::start( "orbat" )
+                    >> xml::attribute( "file", orbatFile );
     }
     {
-        const std::string file = ( config_.BuildChildPath( config_.GetExerciseFile( exercise ), orbatFile ) ); 
-        xml::xifstream xis( file ); 
-        xis >> xml::start("orbat") 
-                >> xml::start("sides") 
-                    >> xml::list("side", *this, &ProfileList::ReadSide ); 
-    }    
+        const std::string file = ( config_.BuildChildPath( config_.GetExerciseFile( exercise ), orbatFile ) );
+        xml::xifstream xis( file );
+        xis >> xml::start( "orbat" )
+                >> xml::start( "sides" )
+                    >> xml::list( "side", *this, &ProfileList::ReadSide );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -93,13 +88,9 @@ void ProfileList::ReadSides( const std::string& exercise )
 // -----------------------------------------------------------------------------
 void ProfileList::ReadSide( xml::xistream& xis )
 {
-    Side* side = new Side( xis ) ; 
-    sides_.Register( side->GetId(), *side ) ; 
+    Side* side = new Side( xis );
+    sides_.Register( side->GetId(), *side );
 }
-
-// =============================================================================
-// Profiles
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ProfileList::ReadProfiles
@@ -107,18 +98,18 @@ void ProfileList::ReadSide( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ProfileList::ReadProfiles( const std::string& exercise )
 {
-    std::string profilesFile ; 
+    std::string profilesFile; 
     {
-        xml::xifstream xis( config_.GetExerciseFile( exercise ) ) ; 
-        xis >> xml::start("exercise")
-                >> xml::start("profiles")
-                    >> xml::attribute("file", profilesFile ); 
+        xml::xifstream xis( config_.GetExerciseFile( exercise ) ) ;
+        xis >> xml::start( "exercise" )
+                >> xml::start( "profiles" )
+                    >> xml::attribute( "file", profilesFile );
     }
     {
-        const std::string file = ( config_.BuildChildPath( config_.GetExerciseFile( exercise ), profilesFile ) ); 
-        xml::xifstream xis( file ); 
-        xis >> xml::start("profiles") 
-                >> xml::list("profile", *this, &ProfileList::ReadProfile ); 
+        const std::string file = ( config_.BuildChildPath( config_.GetExerciseFile( exercise ), profilesFile ) );
+        xml::xifstream xis( file );
+        xis >> xml::start( "profiles" )
+                >> xml::list( "profile", *this, &ProfileList::ReadProfile );
     }
 }
 
@@ -128,11 +119,10 @@ void ProfileList::ReadProfiles( const std::string& exercise )
 // -----------------------------------------------------------------------------
 void ProfileList::ReadProfile( xml::xistream& xis )
 {
-    Profile profile(xis, sides_ ) ;  
-    QString name = ( profile.GetLogin() != "" ) ?  profile.GetLogin() :  tr( "anonymous" ) ; 
-    if ( profile.IsSupervision() ) 
-        insertItem( QImage("resources/images/selftraining/commandpost.xpm" ), name  ) ;
+    const Profile profile( xis, sides_ );
+    const QString name = profile.GetLogin() != "" ?  profile.GetLogin() : tools::translate( "ReadProfile", "anonymous" );
+    if ( profile.IsSupervision() )
+        insertItem( QImage( "resources/images/selftraining/commandpost.xpm" ), name );
     else
-        insertItem( name  ) ;
-
+        insertItem( name );
 }

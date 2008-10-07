@@ -43,7 +43,15 @@
 <context>
     <name>ExerciseList</name>
     <message>
-        <source>No available briefing</source>
+        <source>Exercise:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sides:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No briefing available</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -115,13 +123,6 @@
     </message>
 </context>
 <context>
-    <name>ProfileList</name>
-    <message>
-        <source>anonymous</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QuitPage</name>
     <message>
         <source>No</source>
@@ -133,6 +134,13 @@
     </message>
     <message>
         <source>Please confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ReadProfile</name>
+    <message>
+        <source>anonymous</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -152,6 +160,10 @@
     </message>
     <message>
         <source>Session:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -189,14 +201,6 @@
 <context>
     <name>ScenarioLauncherPage</name>
     <message>
-        <source>Exercise:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sides:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Scenario</source>
         <translation type="unfinished"></translation>
     </message>
@@ -225,6 +229,10 @@
     </message>
     <message>
         <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -312,11 +320,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SessionRunningPage</source>
+        <source>Simulation started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Simulation started</source>
+        <source>Run Session</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

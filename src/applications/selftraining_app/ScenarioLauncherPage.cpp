@@ -65,7 +65,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
     connect( exercises_, SIGNAL( Select( const QString& ) ), this, SLOT( OnStartExercise( const QString& ) ) );
     connect( exercises_, SIGNAL( Highlight( const QString& ) ), options_,  SLOT( Update( const QString& ) ) );
     AddContent( box );    
-    AddNextButton( tr( "Start" ) , *options_ ) ; 
+    AddNextButton( tools::translate( "ScenarioLauncherPage", "Start" ) , *options_ ) ; 
 }
 
 // -----------------------------------------------------------------------------

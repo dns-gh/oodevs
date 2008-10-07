@@ -11,6 +11,7 @@
 #include "MessageDialog.h"
 #include "moc_MessageDialog.cpp"
 #include "MenuButton.h" 
+#include "clients_gui/Tools.h"
 
 namespace
 {
@@ -40,14 +41,14 @@ namespace
 // Created: RDS 2008-08-20
 // -----------------------------------------------------------------------------
 MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 )
-    : QDialog( parent, title, true, WStyle_Customize|WStyle_DialogBorder  ) 
+    : QDialog( parent, title, true, WStyle_Customize | WStyle_DialogBorder )
 {
-    if ( parent ) 
+    if( parent )
         setPalette( parent->palette() );
     
-    QFont font( "Century Gothic", 14, QFont::Bold ); 
-    font.setItalic(true); 
-    setFont( font); 
+    QFont font( "Century Gothic", 14, QFont::Bold );
+    font.setItalic( true );
+    setFont( font );
 
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
 
@@ -57,19 +58,18 @@ MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QStri
     QLabel* label = new QLabel( vbox );
     label->setBackgroundOrigin( QWidget::WindowOrigin );
     label->setText( message );
-    label->setAlignment( Qt::AlignCenter | Qt::WordBreak ) ; 
-    label->setMinimumHeight( 50 ) ; 
+    label->setAlignment( Qt::AlignCenter | Qt::WordBreak );
+    label->setMinimumHeight( 50 );
     QHBox* hbox = new QHBox( vbox );
     
-    CreateButton( hbox, button1 ) ; 
-    CreateButton( hbox, button2 ) ; 
+    CreateButton( hbox, button1 );
+    CreateButton( hbox, button2 );
 
     mainLayout->addWidget( vbox );
 
-    QWidget* spacer = new QWidget(vbox);
-    spacer->setMinimumHeight( 50 ) ; 
+    QWidget* spacer = new QWidget( vbox );
+    spacer->setMinimumHeight( 50 );
     spacer->setBackgroundOrigin( QWidget::WindowOrigin );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -87,23 +87,23 @@ MessageDialog::~MessageDialog()
 // -----------------------------------------------------------------------------
 QButton* MessageDialog::CreateButton( QWidget* parent, int button )
 {
-    QButton* buttonWidget = NULL ; 
-    switch ( button ) 
+    QButton* buttonWidget = 0;
+    switch( button )
     {
-    case QMessageBox::Ok : 
-        buttonWidget = new MenuButton( tr( "OK" ) , parent ) ; 
-        connect( buttonWidget , SIGNAL( clicked() ), this, SLOT( OnYes() ) ); 
-        break; 
-    case QMessageBox::Yes : 
-        buttonWidget = new MenuButton( tr( "Yes" ), parent ) ; 
-        connect( buttonWidget , SIGNAL( clicked() ), this, SLOT( OnYes() ) ); 
-        break; 
-    case QMessageBox::No: 
-        buttonWidget = new MenuButton( tr( "No" ), parent ) ; 
-        connect( buttonWidget , SIGNAL( clicked() ), this, SLOT( OnNo() ) ); 
-        break; 
+    case QMessageBox::Ok:
+        buttonWidget = new MenuButton( tools::translate( "MessageDialog", "OK" ), parent );
+        connect( buttonWidget, SIGNAL( clicked() ), this, SLOT( OnYes() ) );
+        break;
+    case QMessageBox::Yes:
+        buttonWidget = new MenuButton( tools::translate( "MessageDialog", "Yes" ), parent );
+        connect( buttonWidget, SIGNAL( clicked() ), this, SLOT( OnYes() ) );
+        break;
+    case QMessageBox::No:
+        buttonWidget = new MenuButton( tools::translate( "MessageDialog", "No" ), parent );
+        connect( buttonWidget, SIGNAL( clicked() ), this, SLOT( OnNo() ) );
+        break;
     }
-    return buttonWidget ; 
+    return buttonWidget;
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +112,7 @@ QButton* MessageDialog::CreateButton( QWidget* parent, int button )
 // -----------------------------------------------------------------------------
 void MessageDialog::OnYes()
 {
-    done( QMessageBox::Yes ) ; 
+    done( QMessageBox::Yes );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,9 +121,13 @@ void MessageDialog::OnYes()
 // -----------------------------------------------------------------------------
 void MessageDialog::OnNo()
 {
-    done( QMessageBox::No ) ; 
+    done( QMessageBox::No );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MessageDialog::sizeHint
+// Created: RDS 2008-08-20
+// -----------------------------------------------------------------------------
 QSize MessageDialog::sizeHint() const
 {
     return QSize( 500, 300 );

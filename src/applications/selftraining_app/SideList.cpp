@@ -58,7 +58,7 @@ void SideList::Update( const QString& exercise )
     }
     catch(...)
     {
-        // something wrong appened ... don't crash , but clear 
+        // something went wrong... don't crash, just clear
         clear(); 
     }
 }

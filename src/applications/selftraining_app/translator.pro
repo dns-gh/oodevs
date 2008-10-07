@@ -1,29 +1,24 @@
 HEADERS = 
 
 SOURCES = Application.cpp \
+BattleCenterPage.cpp \
 ContentPage.cpp \
+ExerciseList.cpp \
 HomePage.cpp \
 MainWindow.cpp \
+MessageDialog.cpp \
+OptionsPage.cpp \
+ProfileList.cpp \
 QuitPage.cpp \
 ReplayPage.cpp \
-BattleCenterPage.cpp \
-OptionsPage.cpp \
-ScenarioLauncherPage.cpp \
-SelfTrainingPage.cpp \
-MessageDialog.cpp \
-TrayIcon.cpp \
-TrayMenu.cpp \
-Session.cpp \
-MenuPage.cpp \
-ExerciseList.cpp \
-TutorialPage.cpp \
-ProfileList.cpp \
-ReplayPage.cpp \
-SessionRunningPage.cpp \
-ScenarioLauncherPage.cpp \
-ScenarioPage.cpp \
 ScenarioEditPage.cpp \
+ScenarioLauncherPage.cpp \
 ScenarioLauncherPageOptions.cpp \
-
+ScenarioPage.cpp \
+SelfTrainingPage.cpp \
+Session.cpp \
+SessionRunningPage.cpp \
+TrayMenu.cpp \
+TutorialPage.cpp \
 
 TRANSLATIONS = selftraining_app_fr.ts selftraining_app_en.ts

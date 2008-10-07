@@ -120,7 +120,7 @@ TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools
     hbox->setBackgroundOrigin( QWidget::WindowOrigin );
     hbox->layout()->setAlignment( Qt::AlignRight );
     AddContent( box );
-    AddNextButton( tr( "Start"), *this, SLOT( OnStart() ) );
+    AddNextButton( tools::translate( "TutorialPage", "Start" ), *this, SLOT( OnStart() ) );
 }
 
 // -----------------------------------------------------------------------------

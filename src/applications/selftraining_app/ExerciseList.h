@@ -12,15 +12,15 @@
 
 namespace tools
 {
-    class GeneralConfig ; 
+    class GeneralConfig;
 }
 
 namespace xml
 {
-    class xistream ; 
+    class xistream;
 }
 
-class SideList; 
+class SideList;
 
 // =============================================================================
 /** @class  ExerciseList
@@ -28,33 +28,37 @@ class SideList;
 */
 // Created: RDS 2008-08-27
 // =============================================================================
-class ExerciseList : public QVBox 
+class ExerciseList : public QVBox
 {
 
-    Q_OBJECT ; 
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const std::string& subDir = "", bool showBrief = true );
+             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const std::string& subDir = "", bool showBrief = true );
     virtual ~ExerciseList();
     //@}
 
     //! @name Accessors
     //@{
-    const QString GetHighlight() ; 
+    const QString GetHighlight() const;
     //@}
 
 signals:
-
-    void Select    ( const QString& exercise ) ;      
-    void Highlight ( const QString& exercise ) ;      
+    //! @name Signals
+    //@{
+    void Select   ( const QString& exercise );
+    void Highlight( const QString& exercise );
+    //@}
 
 public slots:
-
-    void Update(); 
-    void UpdateExercise( int index ) ; 
-    void SelectExercise( ) ; 
+    //! @name Slots
+    //@{
+    void Update();
+    void UpdateExercise( int index );
+    void SelectExercise();
+    //@}
 
 private:
     //! @name Copy/Assignment
