@@ -188,7 +188,7 @@
     </message>
     <message>
         <source>New exercise name:</source>
-        <translation>Nom du nouvel exercice:</translation>
+        <translation type="obsolete">Nom du nouvel exercice:</translation>
     </message>
     <message>
         <source>Enter exercise name</source>
@@ -196,7 +196,27 @@
     </message>
     <message>
         <source>Choose the terrain:</source>
-        <translation>Choisissez le terrain:</translation>
+        <translation type="obsolete">Choisissez le terrain:</translation>
+    </message>
+    <message>
+        <source>Select exercise to edit:</source>
+        <translation>Sélectionner l&apos;exercice à éditer:</translation>
+    </message>
+    <message>
+        <source>Select the terrain</source>
+        <translation>Sélectionner le terrain</translation>
+    </message>
+    <message>
+        <source>Create new exercise:</source>
+        <translation>Créer un nouvel exercice:</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation>Créer</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editer</translation>
     </message>
 </context>
 <context>

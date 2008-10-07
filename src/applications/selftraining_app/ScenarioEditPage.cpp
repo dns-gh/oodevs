@@ -17,7 +17,8 @@
 #include "frontend/CreateExercise.h" 
 #include "frontend/EditExercise.h" 
 #include "clients_gui/Tools.h"
-#include "clients_kernel/Controllers.h" 
+#include "clients_kernel/Controllers.h"
+#include <QComboBox.h>
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage constructor
@@ -34,21 +35,26 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
     box->setSpacing( 10 );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     
-    QLabel* label ; 
     {
-        label = new QLabel( tools::translate( "ScenarioEditPage", "New exercise name:" ), box );
+        QGroupBox* hbox = new QGroupBox( 1, Qt::Vertical, box );
+        hbox->setBackgroundOrigin( QWidget::WindowOrigin );
+        QLabel* label = new QLabel( tools::translate( "ScenarioEditPage", "Create new exercise:" ), hbox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        editName_ = new QLineEdit( tools::translate( "ScenarioEditPage", "Enter exercise name" ), box );
+        editName_ = new QLineEdit( tools::translate( "ScenarioEditPage", "Enter exercise name" ), hbox );
         connect( editName_, SIGNAL( textChanged( const QString& ) ), SLOT( EditNameChanged( const QString& ) ) );
+        editTerrainList_ = new QComboBox( hbox );
+        QPushButton* button = new QPushButton( tools::translate( "ScenarioEditPage", "Create" ), hbox );
+        connect( button, SIGNAL( clicked() ), this, SLOT( CreateExercise() ) );
     }
     {
-        label = new QLabel( tools::translate( "ScenarioEditPage", "Choose the terrain:" ), box );
+        QGroupBox* vbox = new QGroupBox( 1, Qt::Horizontal, box );
+        vbox->setBackgroundOrigin( QWidget::WindowOrigin );
+        QLabel* label = new QLabel( tools::translate( "ScenarioEditPage", "Select exercise to edit:" ), vbox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        editTerrainList_ = new QListBox( box );
+        editExerciseList_ = new QListBox( vbox );
     }
-
     AddContent( box ); 
-    AddNextButton( "Create", *this, SLOT( CreateExercise() ) ); 
+    AddNextButton( tools::translate( "ScenarioEditPage", "Edit" ), *this, SLOT( EditExercise() ) );
     Update();
 }
 
@@ -68,7 +74,10 @@ ScenarioEditPage::~ScenarioEditPage()
 void ScenarioEditPage::Update()
 {
     editTerrainList_->clear();
+    editTerrainList_->insertItem( tools::translate( "ScenarioEditPage", "Select the terrain" ) );
     editTerrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+    editExerciseList_->clear();
+    editExerciseList_->insertStringList( frontend::commands::ListExercises( config_ ) );
 }
 
 
@@ -78,12 +87,27 @@ void ScenarioEditPage::Update()
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::CreateExercise()
 {
-    if( editTerrainList_->selectedItem() )
+    if( editTerrainList_->currentItem() > 0 )
     {
-        const std::string terrain  = editTerrainList_->selectedItem()->text().ascii();
+        const std::string terrain  = editTerrainList_->currentText().ascii();
         frontend::CreateExercise( config_, editName_->text().ascii(), terrain, "ada", "france" );
-        sessionStatus_.reset( new Session ( controllers_.controller_, NULL, new frontend::EditExercise( config_, editName_->text(), true )  ) );
+        sessionStatus_.reset( new Session ( controllers_.controller_, 0, new frontend::EditExercise( config_, editName_->text(), true )  ) );
         sessionStatus_->Start(); 
         Previous();
     }    
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::EditExercise
+// Created: SBO 2008-10-07
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::EditExercise()
+{
+    if( editExerciseList_->selectedItem() )
+    {
+        const std::string exercise = editExerciseList_->selectedItem()->text().ascii();
+        sessionStatus_.reset( new Session( controllers_.controller_, 0, new frontend::EditExercise( config_, exercise.c_str(), true )  ) );
+        sessionStatus_->Start(); 
+        Previous();
+    } 
 }

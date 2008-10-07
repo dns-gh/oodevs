@@ -162,15 +162,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New exercise name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enter exercise name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose the terrain:</source>
+        <source>Select exercise to edit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new exercise:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

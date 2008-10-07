@@ -56,14 +56,15 @@ MenuPage::MenuPage( QWidgetStack* pages, const QString& title )
     title_->setFont( titleFont ); 
     title_->setAlignment( Qt::AlignCenter ) ; 
     QWidget* spacer = new QWidget( box ); 
-    spacer->setMinimumHeight(40); 
+    spacer->setMinimumHeight( 40 ); 
     spacer->setBackgroundOrigin( QWidget::WindowOrigin );
     // main container 
     container_ = new TransparentContainer( box);
     // subtitle 
     QFont subTitleFont( "Century Gothic", 12, QFont::Bold );  
-    subTitleFont.setItalic( true ) ; 
-    subTitle_ = new QLabel( box ) ; 
+    subTitleFont.setItalic( true );
+    subTitle_ = new QLabel( box );
+    subTitle_->setMargin( 5 );
     subTitle_->setBackgroundOrigin( QWidget::WindowOrigin );
     subTitle_->setFont( subTitleFont);  
     

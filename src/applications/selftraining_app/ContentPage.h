@@ -32,10 +32,9 @@ public:
 
     //! @name Operations
     //@{
-    void     AddContent( QWidget* widget );
-    void     AddNextButton( const QString& caption, Page_ABC& page, const char* slot = 0 );
-    QButton* AddNextButton( const QString& caption );
-    void     Previous(); 
+    void AddContent( QWidget* widget );
+    void AddNextButton( const QString& caption, Page_ABC& page, const char* slot = 0 );
+    void Previous(); 
     //@}
 
 private:
@@ -49,6 +48,7 @@ private:
     //@{
     void AddTitle( const QString& title );
     void AddBackButton( Page_ABC& previous );
+    QButton* AddNextButton( const QString& caption );
     //@}
 
 private:

@@ -47,6 +47,7 @@ private slots:
     //@{
     void Update(); 
     void CreateExercise(); 
+    void EditExercise();
     //@}
 
 private:
@@ -61,7 +62,8 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_ ; 
-    QListBox*  editTerrainList_ ; 
+    QListBox*  editExerciseList_; 
+    QComboBox* editTerrainList_;
     QLineEdit* editName_ ; 
     boost::shared_ptr< Session > sessionStatus_ ; 
     kernel::Controllers& controllers_ ; 
