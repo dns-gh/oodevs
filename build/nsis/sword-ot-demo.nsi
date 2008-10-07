@@ -177,6 +177,7 @@ SectionGroupEnd
         File /x ".svn" "${DATADIR}\exercises\${ExerciseName}\*.xml"
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\scripts"
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\docs"
+        File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\orders"
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\sessions"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
