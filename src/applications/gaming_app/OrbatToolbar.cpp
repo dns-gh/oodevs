@@ -83,6 +83,7 @@ void OrbatToolbar::OnSetFilter()
         filterBtn_->setTextLabel( entity_->GetName() );
         filter_.SetFilter( *entity_ );
         filterBtn_->show();
+        filterBtn_->repaint();
     }
 }
 
