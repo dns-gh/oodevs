@@ -570,6 +570,16 @@
 
     <!--
     ============================================================================
+      documentation
+    ============================================================================
+    -->
+    <target name="documentation" description="generate the documentation">
+        <setproxy proxyhost="proxy" proxyport="3128"/>
+        <docbook location="file:////install/Masa/common/dev/common/docbook/docbook-xsl" input="${root.dir}/doc" outdir="${root.dir}/out/documentation"/>
+        <htmlhelp input="${root.dir}/out/documentation"/>
+    </target>
+    <!--
+    ============================================================================
       main
     ============================================================================
     -->
