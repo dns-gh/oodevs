@@ -26,7 +26,6 @@
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
 #include <qlistbox.h>
-#include <qtextedit.h>
 #include <qtextbrowser.h> 
 #include <qtabwidget.h> 
 #include <qgroupbox.h>

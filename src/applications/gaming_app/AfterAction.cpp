@@ -54,6 +54,7 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& contr
 {
     aarDock_ = new QDockWindow( window, "aar" );
     QVBox* box = new QVBox( aarDock_ );
+    box->setMinimumSize( 250, 200 );
     functionsTab_ = new QTabWidget( box );
 
     AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory, model_, layer, staticModel );
@@ -68,6 +69,7 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& contr
     aarDock_->setCaption( tools::translate( "AfterAction", "After action review" ) );
     aarDock_->hide();
     window_->setAppropriate( aarDock_, false );
+    window_->setDockEnabled( aarDock_, Qt::DockTop, false );
 }
 
 // -----------------------------------------------------------------------------

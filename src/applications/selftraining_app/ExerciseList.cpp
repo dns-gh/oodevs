@@ -16,7 +16,6 @@
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
 
-#include <qtextbrowser.h>
 #include <qfileinfo.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem.hpp> 
@@ -67,6 +66,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         briefingText_ = new QTextEdit( rightBox );
         briefingText_->setBackgroundOrigin( QWidget::WindowOrigin );
         briefingText_->setFont( QFont( "Georgia", 10, QFont::Normal, true ) );
+        briefingText_->setReadOnly( true );
     }
 }
 

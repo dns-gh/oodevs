@@ -266,6 +266,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     // Chat
     QDockWindow* chatDock = new ChatDock( this, controllers_, publisher, network.GetCommands() );
     moveDockWindow( chatDock, Qt::DockBottom );
+    chatDock->hide();
 
     new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_ );
     new ClientCommandFacade( this, controllers_, publisher );
