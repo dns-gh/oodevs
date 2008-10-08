@@ -195,7 +195,7 @@ SectionGroup "Exercises" s_exo
 
 !insertmacro EXERCISES.Install "esag" "Angers"
 !insertmacro EXERCISES.Install "CENTORSEM" "Paris_Est"
-;!insertmacro EXERCISES.Install "puma" "larochelle"
+!insertmacro EXERCISES.Install "puma" "larochelle"
 !insertmacro EXERCISES.Install "tutorials\01 - Generalites" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\02 - Jeu" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\03 - Mission" "Paris_Est"
@@ -204,7 +204,7 @@ SectionGroup "Exercises" s_exo
 !insertmacro EXERCISES.Install "tutorials\06 - Genie" "Paris_Est"
 ;!insertmacro EXERCISES.Install "tutorials\07 - Artillerie" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\08 - Fonctions Avancees" "Paris_Est"
-;!insertmacro EXERCISES.Install "tutorials\09 - Analyse Apres Action" "Paris_Est"
+;!insertmacro EXERCISES.Install "tutorials\09 - Rejeu et AAA" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\10 - Preparation" "Paris_Est"
 
 SectionGroupEnd
