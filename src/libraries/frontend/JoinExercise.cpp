@@ -47,5 +47,6 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const QString& e
 // -----------------------------------------------------------------------------
 JoinExercise::~JoinExercise()
 {
+    // NOTHING
 }
 

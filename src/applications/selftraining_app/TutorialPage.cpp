@@ -20,6 +20,9 @@
 #include "frontend/CreateSession.h" 
 #include "frontend/StartExercise.h"
 #include "frontend/JoinExercise.h"
+#include "frontend/EditExercise.h"
+#include "frontend/StartReplay.h"
+#include "frontend/JoinAnalysis.h"
 #include "frontend/commands.h" 
 #include "clients_gui/Tools.h"
 #include "clients_gui/LinkInterpreter_ABC.h" 
@@ -54,17 +57,18 @@ namespace
         return QString( "%1://%2" ).arg( protocol ).arg( info.absFilePath() ).ascii();
     }
 
-    bool HasODB( const tools::GeneralConfig& config, const QString& exercise ) 
+    std::string ReadTargetApplication( const tools::GeneralConfig& config, const QString& exercise )
     {
-        const std::string file = config.GetExerciseFile(exercise.ascii());    
-        std::string orbatFile;
+        const std::string file = config.GetExerciseFile( exercise.ascii() );
+        std::string target = "gaming";
         xml::xifstream xis( file );
         xis >> xml::start( "exercise" )
-                >> xml::optional() >> xml::start( "orbat" )
-                    >> xml::attribute( "file", orbatFile )
+                >> xml::optional() >> xml::start( "meta" )
+                    >> xml::optional() >> xml::start( "tutorial" )
+                        >> xml::attribute( "target", target )
                 >> xml::end()
             >> xml::end();
-        return ! orbatFile.empty();
+        return target;
     }
 
     struct ResourcesLoadingWrapper
@@ -146,13 +150,27 @@ void TutorialPage::Update()
 // -----------------------------------------------------------------------------
 void TutorialPage::OnStartExercise ( const QString& exercise )
 {
-     if( HasODB( config_, exercise ) )
-     {
-        running_.SetSession( new Session( controllers_.controller_, new frontend::StartExercise( config_, exercise, "default" , true ), new frontend::JoinExercise( config_, exercise, "default", true ) ) );
+    const std::string target = ReadTargetApplication( config_, exercise );
+    if( target == "gaming" )
+    {
+        running_.SetSession( new Session( controllers_.controller_, new frontend::StartExercise( config_, exercise, "default" , true )
+                                                                  , new frontend::JoinExercise( config_, exercise, "default", true ) ) );
         running_.show();
-     }
-     else
-     {
+    }
+    else if( target == "preparation" )
+    {
+        running_.SetSession( new Session( controllers_.controller_, 0, new frontend::EditExercise( config_, exercise, true ) ) );
+        running_.show();
+    }
+    else if( target == "replayer" )
+    {
+        running_.SetSession( new Session( controllers_.controller_, new frontend::StartReplay( config_, exercise, "default", 20000, true )
+                                                                  , new frontend::JoinAnalysis( config_, exercise, 20000 ) ) );
+        running_.show();
+    }
+
+    if( target != "gaming" )
+    {
         QStringList resources = GetResources( config_, exercise );
         if( ! resources.empty() )
         {
@@ -161,7 +179,7 @@ void TutorialPage::OnStartExercise ( const QString& exercise )
             // file = config_.BuildDirectoryFile( exercise.ascii(), file );
             interpreter_.Interprete( MakeLink( file ).c_str() );
         }
-     }
+    }
 }
 
 // -----------------------------------------------------------------------------

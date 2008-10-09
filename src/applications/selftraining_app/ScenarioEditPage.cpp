@@ -91,7 +91,7 @@ void ScenarioEditPage::CreateExercise()
     {
         const std::string terrain  = editTerrainList_->currentText().ascii();
         frontend::CreateExercise( config_, editName_->text().ascii(), terrain, "ada", "france" );
-        sessionStatus_.reset( new Session ( controllers_.controller_, 0, new frontend::EditExercise( config_, editName_->text(), true )  ) );
+        sessionStatus_.reset( new Session( controllers_.controller_, 0, new frontend::EditExercise( config_, editName_->text(), true )  ) );
         sessionStatus_->Start(); 
         Previous();
     }    

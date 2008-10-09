@@ -57,7 +57,6 @@ private:
     ScenarioEditPage& operator=( const ScenarioEditPage& ); //!< Assignment operator
     //@}
 
-
 private:
     //! @name Member data
     //@{
