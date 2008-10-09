@@ -216,18 +216,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Frequency:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Checkpoints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotations:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>

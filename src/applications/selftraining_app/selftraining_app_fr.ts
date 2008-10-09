@@ -285,15 +285,15 @@
     </message>
     <message>
         <source>Frequency:</source>
-        <translation>Fréquence:</translation>
+        <translation type="obsolete">Fréquence:</translation>
     </message>
     <message>
         <source>Rotations:</source>
-        <translation>Rotations:</translation>
+        <translation type="obsolete">Rotations:</translation>
     </message>
     <message>
         <source>Checkpoints</source>
-        <translation>Sauvegardes auomatiques</translation>
+        <translation type="obsolete">Sauvegardes auomatiques</translation>
     </message>
     <message>
         <source>Start</source>

@@ -12,11 +12,6 @@
 
 #include "ContentPage.h"
 
-class QListBox;
-class QTextBrowser;
-class QTabWidget; 
-class QLineEdit ; 
-
 namespace tools
 {
     class GeneralConfig;
@@ -24,20 +19,19 @@ namespace tools
 
 namespace frontend
 {
-    class SpawnCommand ; 
-    class InfoBubble ; 
+    class SpawnCommand;
+    class InfoBubble;
 }
 
 namespace kernel
 {
-    class Controllers; 
+    class Controllers;
 }
 
-class Session ; 
-
-class ExerciseList; 
-class ScenarioLauncherPageOptions; 
-class SessionRunningPage; 
+class Session;
+class ExerciseList;
+class ScenarioLauncherPageOptions;
+class SessionRunningPage;
 
 // =============================================================================
 /** @class  ScenarioLauncherPage
@@ -67,22 +61,16 @@ private:
     //@{
     virtual void Update();
     void CreateSession( const QString& exercise, const QString& session );
+    void StartSession( Session* session );
     //@}
 
 private:
-    
-    boost::shared_ptr< Session > sessionStatus_ ; 
-
-    //! @name Helpers
-    //@{
-    void StartSession( Session* session ) ; 
-    //@}
-
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    ExerciseList*               exercises_ ; 
-    ScenarioLauncherPageOptions*        options_ ; 
+    const tools::GeneralConfig&  config_;
+    boost::shared_ptr< Session > sessionStatus_;
+    ExerciseList*                exercises_;
+    ScenarioLauncherPageOptions* options_;
     //@}
 };
 

@@ -10,22 +10,21 @@
 #ifndef __ScenarioLauncherPageOptions_h_
 #define __ScenarioLauncherPageOptions_h_
 
-#include "ContentPage.h" 
+#include "ContentPage.h"
 
 namespace tools
 {
-    class GeneralConfig; 
+    class GeneralConfig;
 }
 
 namespace kernel
 {
-    class Controllers; 
+    class Controllers;
 }
 
-class ProfileList ; 
-class SessionRunningPage; 
-class QTimeEdit ; 
-class QSpinBox; 
+class ProfileList;
+class SessionRunningPage;
+
 // =============================================================================
 /** @class  ScenarioLauncherPageOptions
     @brief  ScenarioLauncherPageOptions
@@ -34,22 +33,21 @@ class QSpinBox;
 // =============================================================================
 class ScenarioLauncherPageOptions : public ContentPage
 {
-
-    Q_OBJECT ; 
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioLauncherPageOptions( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, SessionRunningPage& running, const tools::GeneralConfig& config );
+             ScenarioLauncherPageOptions( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers
+                                        , SessionRunningPage& running, const tools::GeneralConfig& config );
     virtual ~ScenarioLauncherPageOptions();
     //@}
 
 public slots:
-
-    //! @name 
+    //! @name Slots
     //@{
-    void Update( const QString& exercise ) ; 
-    void Start (); 
+    void Update( const QString& exercise );
+    void Start();
     //@}
 
 private:
@@ -67,14 +65,11 @@ private:
 private:
     //! @name Member data
     //@{
-    ProfileList*                profiles_ ;  
-    SessionRunningPage&         running_ ; 
-    const tools::GeneralConfig& config_ ; 
-    QString                     exercise_ ; 
-    QLineEdit*                  exerciseLabel_ ; 
-    QSpinBox*                   keepSpin_; 
-    QTimeEdit*                  checkFrequency_ ; 
-    kernel::Controllers&        controllers_ ; 
+    ProfileList*                profiles_;
+    SessionRunningPage&         running_;
+    const tools::GeneralConfig& config_;
+    QString                     exercise_;
+    kernel::Controllers&        controllers_;
     //@}
 };
 
