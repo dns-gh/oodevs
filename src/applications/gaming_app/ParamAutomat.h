@@ -25,8 +25,8 @@ class ParamAutomat : public EntityParameter< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAutomat( QObject* parent, const kernel::OrderParameter& parameter );
-             ParamAutomat( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Automat_ABC& entity );
+             ParamAutomat( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller );
+             ParamAutomat( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Automat_ABC& entity, kernel::Controller& controller );
     virtual ~ParamAutomat();
     //@}
 

@@ -35,7 +35,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel
-                                   , kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter );
+                                   , kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
+                                   , kernel::Controller& controller );
     virtual ~ActionParameterFactory();
     //@}
 
@@ -60,6 +61,7 @@ private:
     const StaticModel& staticModel_;
     kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
+    kernel::Controller& controller_;
     //@}
 };
 

@@ -33,10 +33,10 @@ IntelligenceList::IntelligenceList( const kernel::OrderParameter& parameter )
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 IntelligenceList::IntelligenceList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis
-                                                                , const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels )
+                                                                , const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &IntelligenceList::ReadIntelligence, converter, resolver, levels );
+    xis >> list( "parameter", *this, &IntelligenceList::ReadIntelligence, converter, resolver, levels, controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,11 +44,11 @@ IntelligenceList::IntelligenceList( const OrderParameter& parameter, const Coord
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 IntelligenceList::IntelligenceList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_IntelligenceList& asn
-                                                                , const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels )
+                                                                , const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new Intelligence( OrderParameter( tools::translate( "Parameter", "Intelligence %1" ).arg( i ).ascii(), "intelligence", true ), converter, resolver, levels, asn.elem[i] ) );
+        AddParameter( *new Intelligence( OrderParameter( tools::translate( "Parameter", "Intelligence %1" ).arg( i ).ascii(), "intelligence", true ), converter, resolver, levels, asn.elem[i], controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,9 +64,9 @@ IntelligenceList::~IntelligenceList()
 // Name: IntelligenceList::ReadIntelligence
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void IntelligenceList::ReadIntelligence( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels  )
+void IntelligenceList::ReadIntelligence( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
 {
-    AddParameter( *new Intelligence( converter, xis, resolver, levels ) );
+    AddParameter( *new Intelligence( converter, xis, resolver, levels, controller ) );
 }
 
 namespace

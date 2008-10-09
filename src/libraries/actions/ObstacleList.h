@@ -19,6 +19,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class ObjectType;
     class Automat_ABC;
+    class Controller;
 }
 
 namespace actions {
@@ -37,8 +38,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ObstacleList( const kernel::OrderParameter& parameter );
-             ObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn );
-             ObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis );
+             ObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn, kernel::Controller& controller );
+             ObstacleList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
     virtual ~ObstacleList();
     //@}
 
@@ -64,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadObstacle( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats );
+    void ReadObstacle( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
     //@}
 };
 

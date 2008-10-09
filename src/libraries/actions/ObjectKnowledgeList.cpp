@@ -33,21 +33,21 @@ ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter )
 // Name: ObjectKnowledgeList constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter, const ASN1T_ObjectKnowledgeList& asn, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
+ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter, const ASN1T_ObjectKnowledgeList& asn, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new ObjectKnowledge( OrderParameter( tools::translate( "Parameter", "Object knowledge %1" ).arg( i + 1 ).ascii(), "objectknowledge", false ), asn.elem[i], converter, owner ) );
+        AddParameter( *new ObjectKnowledge( OrderParameter( tools::translate( "Parameter", "Object knowledge %1" ).arg( i + 1 ).ascii(), "objectknowledge", false ), asn.elem[i], converter, owner, controller ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeList constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
+ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &ObjectKnowledgeList::ReadObjectKnowledge, resolver, converter, owner );
+    xis >> list( "parameter", *this, &ObjectKnowledgeList::ReadObjectKnowledge, resolver, converter, owner, controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,9 +63,9 @@ ObjectKnowledgeList::~ObjectKnowledgeList()
 // Name: ObjectKnowledgeList::ReadObjectKnowledge
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgeList::ReadObjectKnowledge( xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
+void ObjectKnowledgeList::ReadObjectKnowledge( xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
 {
-    AddParameter( *new ObjectKnowledge( xis, resolver, converter, owner ) );
+    AddParameter( *new ObjectKnowledge( xis, resolver, converter, owner, controller ) );
 }
 
 namespace

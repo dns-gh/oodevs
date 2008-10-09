@@ -28,13 +28,14 @@ using namespace gui;
 // Name: ParamObstacle constructor
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-ParamObstacle::ParamObstacle( QObject* parent, const kernel::OrderParameter& parameter, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamObstacle::ParamObstacle( QObject* parent, const kernel::OrderParameter& parameter, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, kernel::Controller& controller )
     : QObject     ( parent )
     , Param_ABC   ( parameter.GetName().c_str() )
     , parameter_  ( parameter )
     , objectTypes_( objectTypes )
     , layer_      ( layer )
     , converter_  ( converter )
+    , controller_ ( controller )
     , typeCombo_  ( 0 )
     , obstacleTypeCombo_( 0 )
     , location_   ( 0 )
@@ -91,7 +92,7 @@ void ParamObstacle::BuildInterface( QWidget* parent )
     density_->BuildInterface( group );
     density_->SetLimits( 0.f, 5.f );
 
-    tc2_ = new ParamAutomat( this, OrderParameter( tr( "TC2" ).ascii(), "tc2", false ) );
+    tc2_ = new ParamAutomat( this, OrderParameter( tr( "TC2" ).ascii(), "tc2", false ), controller_ );
     tc2_->BuildInterface( group );
 
     location_ = new ParamLocation( OrderParameter( tr( "Location" ).ascii(), "location", false ), layer_, converter_ );

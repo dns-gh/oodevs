@@ -39,24 +39,24 @@ Obstacle::Obstacle( const OrderParameter& parameter, const ObjectType& type )
 // Name: Obstacle constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-Obstacle::Obstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWork& asn )
+Obstacle::Obstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWork& asn, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
     , type_( types.Get( asn.type ) )
 {
     AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, asn.position ) );
     SetValue( type_.GetName() );
-    SetParameters( asn, automats );
+    SetParameters( asn, automats, controller );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Obstacle constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-Obstacle::Obstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis )
+Obstacle::Obstacle( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
     , type_( types.Get( xml::attribute< unsigned int >( xis, "value" ) ) )
 {
-    xis >> list( "parameter", *this, &Obstacle::ReadParameter, converter, automats );
+    xis >> list( "parameter", *this, &Obstacle::ReadParameter, converter, automats, controller );
     SetValue( type_.GetName() );
 }
 
@@ -64,11 +64,11 @@ Obstacle::Obstacle( const OrderParameter& parameter, const CoordinateConverter_A
 // Name: Obstacle constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-Obstacle::Obstacle( const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis )
+Obstacle::Obstacle( const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& types, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), "obstacle", false ) )
     , type_( types.Get( xml::attribute< unsigned int >( xis, "value" ) ) )
 {
-    xis >> list( "parameter", *this, &Obstacle::ReadParameter, converter, automats );
+    xis >> list( "parameter", *this, &Obstacle::ReadParameter, converter, automats, controller );
     SetValue( type_.GetName() );
 }
 
@@ -85,7 +85,7 @@ Obstacle::~Obstacle()
 // Name: Obstacle::ReadParameter
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-void Obstacle::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Resolver_ABC< Automat_ABC >& automats )
+void Obstacle::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Resolver_ABC< Automat_ABC >& automats, Controller& controller )
 {
     std::string type;
     xis >> attribute( "type", type );
@@ -94,7 +94,7 @@ void Obstacle::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC&
     else if( type == "location" )
         AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "tc2" )
-        AddParameter( *new Automat( xis, automats ) );
+        AddParameter( *new Automat( xis, automats, controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +131,7 @@ void Obstacle::Serialize( xml::xostream& xos ) const
 // Name: Obstacle::SetParameters
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
-void Obstacle::SetParameters( const ASN1T_PlannedWork& asn, const Resolver_ABC< Automat_ABC >& automats )
+void Obstacle::SetParameters( const ASN1T_PlannedWork& asn, const Resolver_ABC< Automat_ABC >& automats, kernel::Controller& controller )
 {
     switch( asn.type )
     {
@@ -139,7 +139,7 @@ void Obstacle::SetParameters( const ASN1T_PlannedWork& asn, const Resolver_ABC< 
     case EnumObjectType::camp_refugies:
         {
             const OrderParameter param( tools::translate( "Parameter", "TC2" ).ascii(), "tc2", false );
-            AddParameter( *new Automat( param, asn.tc2, automats ) );
+            AddParameter( *new Automat( param, asn.tc2, automats, controller ) );
             break;
         }
     case EnumObjectType::zone_minee_lineaire:

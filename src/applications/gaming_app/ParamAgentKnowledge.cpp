@@ -20,8 +20,8 @@ using namespace kernel;
 // Name: ParamAgentKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledge::ParamAgentKnowledge( QObject* pParent, const OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
-    : EntityParameter< AgentKnowledge_ABC >( pParent, parameter )
+ParamAgentKnowledge::ParamAgentKnowledge( QObject* pParent, const OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent, kernel::Controller& controller )
+    : EntityParameter< AgentKnowledge_ABC >( pParent, parameter, controller )
     , parameter_( parameter )
     , converter_( converter )
     , agent_    ( agent )
@@ -33,8 +33,8 @@ ParamAgentKnowledge::ParamAgentKnowledge( QObject* pParent, const OrderParameter
 // Name: ParamAgentKnowledge constructor
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-ParamAgentKnowledge::ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const AgentKnowledge_ABC& potential )
-    : EntityParameter< AgentKnowledge_ABC >( pParent, parameter, potential )
+ParamAgentKnowledge::ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const AgentKnowledge_ABC& potential, kernel::Controller& controller )
+    : EntityParameter< AgentKnowledge_ABC >( pParent, parameter, potential, controller )
     , parameter_( parameter )
     , converter_( converter )
     , agent_    ( agent )
@@ -68,7 +68,7 @@ void ParamAgentKnowledge::NotifyContextMenu( const Agent_ABC& entity, ContextMen
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< AgentKnowledge_ABC > > param( new actions::parameters::AgentKnowledge( parameter_ ) );
+    std::auto_ptr< actions::parameters::Entity< AgentKnowledge_ABC > > param( new actions::parameters::AgentKnowledge( parameter_, controller_ ) );
     EntityParameter< AgentKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

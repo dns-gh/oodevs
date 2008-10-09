@@ -206,8 +206,9 @@ private:
 // Name: ActionParameterFactory constructor
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-ActionParameterFactory::ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const dispatcher::Model& model, const tools::ExerciseConfig& config )
-    : converter_( converter )
+ActionParameterFactory::ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const dispatcher::Model& model, const tools::ExerciseConfig& config, kernel::Controller& controller )
+    : controller_( controller )
+    , converter_( converter )
     , adapters_( new Adapters( model ) )
     , agentsKnowledges_( new AgentConverter( model ) )
     , objectsKnowledges_( new ObjectConverter( model ) )
@@ -263,35 +264,35 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     else if( type == "phaselinelist" )
         param.reset( new actions::parameters::LimaList( parameter, converter_, xis ) );
     else if( type == "intelligencelist" )
-        param.reset( new actions::parameters::IntelligenceList( parameter, converter_, xis, adapters_->formations_, *formations_ ) );
+        param.reset( new actions::parameters::IntelligenceList( parameter, converter_, xis, adapters_->formations_, *formations_, controller_ ) );
     else if( type == "limit" )
         param.reset( new actions::parameters::Limit( parameter, converter_, xis ) );
     else if( type == "enumeration" )
         param.reset( new actions::parameters::Enumeration( parameter, xis ) );
     else if( type == "agent" )
-        param.reset( new actions::parameters::Agent( parameter, xis, adapters_->agents_ ) );
+        param.reset( new actions::parameters::Agent( parameter, xis, adapters_->agents_, controller_ ) );
     else if( type == "automate" )
-        param.reset( new actions::parameters::Automat( parameter, xis, adapters_->automats_ ) );
+        param.reset( new actions::parameters::Automat( parameter, xis, adapters_->automats_, controller_ ) );
     else if( type == "agentlist" )
-        param.reset( new actions::parameters::AgentList( parameter, xis, adapters_->agents_ ) );
+        param.reset( new actions::parameters::AgentList( parameter, xis, adapters_->agents_, controller_ ) );
     else if( type == "automatelist" )
-        param.reset( new actions::parameters::AutomatList( parameter, xis, adapters_->automats_ ) );
+        param.reset( new actions::parameters::AutomatList( parameter, xis, adapters_->automats_, controller_ ) );
     else if( type == "dotationtype" )
         param.reset( new actions::parameters::DotationType( parameter, xis, *objects_ ) );
     else if( type == "genobject" )
-        param.reset( new actions::parameters::Obstacle( parameter, converter_, *objects_, adapters_->automats_, xis ) );
+        param.reset( new actions::parameters::Obstacle( parameter, converter_, *objects_, adapters_->automats_, xis, controller_ ) );
     else if( type == "genobjectlist" )
-        param.reset( new actions::parameters::ObstacleList( parameter, converter_, *objects_, adapters_->automats_, xis ) );
+        param.reset( new actions::parameters::ObstacleList( parameter, converter_, *objects_, adapters_->automats_, xis, controller_ ) );
     else if( type == "agentknowledge" )
-        param.reset( new actions::parameters::AgentKnowledge( parameter, xis, adapters_->agents_, *agentsKnowledges_, entity ) );
+        param.reset( new actions::parameters::AgentKnowledge( parameter, xis, adapters_->agents_, *agentsKnowledges_, entity, controller_ ) );
     else if( type == "populationknowledge" )
-        param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, adapters_->populations_, *agentsKnowledges_, entity ) );
+        param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, adapters_->populations_, *agentsKnowledges_, entity, controller_ ) );
     else if( type == "objectknowledge" )
-        param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, adapters_->objects_, *objectsKnowledges_, entity ) );
+        param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, adapters_->objects_, *objectsKnowledges_, entity, controller_ ) );
     else if( type == "agentknowledgelist" )
-        param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, adapters_->agents_, *agentsKnowledges_, entity ) );
+        param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, adapters_->agents_, *agentsKnowledges_, entity, controller_ ) );
     else if( type == "objectknowledgelist" )
-        param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, adapters_->objects_, *objectsKnowledges_, entity ) );
+        param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, adapters_->objects_, *objectsKnowledges_, entity, controller_ ) );
     else if( type == "natureatlas" )
         param.reset( new actions::parameters::AtlasNature( parameter, xis, *natures_ ) );
     else if( type == "objective" )

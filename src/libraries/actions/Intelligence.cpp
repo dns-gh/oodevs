@@ -32,8 +32,8 @@ using namespace parameters;
 // Name: Intelligence constructor
 // Created: SBO 2007-10-24
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter )
-    : Entity< Intelligence_ABC >( parameter, 0 )
+Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, kernel::Controller& controller )
+    : Entity< Intelligence_ABC >( parameter, 0, controller )
     , converter_( converter )
 {
     // NOTHING
@@ -43,8 +43,8 @@ Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateCon
 // Name: Intelligence constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const CoordinateConverter_ABC& converter, xml::xistream& xis, const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels )
-    : Entity< Intelligence_ABC >( OrderParameter( attribute< std::string >( xis, "name" ).c_str(), "intelligence", false ), 0 )
+Intelligence::Intelligence( const CoordinateConverter_ABC& converter, xml::xistream& xis, const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
+    : Entity< Intelligence_ABC >( OrderParameter( attribute< std::string >( xis, "name" ).c_str(), "intelligence", false ), 0, controller )
     , converter_( converter )
 {
     xis >> list( "parameter", *this, &Intelligence::ReadParameter, resolver, levels );
@@ -64,8 +64,8 @@ namespace
 // Name: Intelligence constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, const ASN1T_Intelligence& asn )
-    : Entity< Intelligence_ABC >( parameter, 0 )
+Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, const ASN1T_Intelligence& asn, kernel::Controller& controller )
+    : Entity< Intelligence_ABC >( parameter, 0, controller )
     , converter_( converter )
 {
     AddParameter( *new String   ( OrderParameter( tools::translate( "Parameter", "Name" ).ascii()     , "name"     , false ), asn.name ) );
@@ -73,7 +73,7 @@ Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateCon
     AddParameter( *new Karma    ( OrderParameter( tools::translate( "Parameter", "Karma" ).ascii()    , "karma"    , false ), asn.diplomacy ) );
     AddParameter( *new Level    ( OrderParameter( tools::translate( "Parameter", "Level" ).ascii()    , "level"    , false ), asn.level, levels ) );
     AddParameter( *new Bool     ( OrderParameter( tools::translate( "Parameter", "Mounted" ).ascii()  , "bool"     , false ), asn.embarked != 0 ) );
-    AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), asn.formation, resolver ) );
+    AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), asn.formation, resolver, controller_ ) );
     AddParameter( *new Point    ( OrderParameter( tools::translate( "Parameter", "Point" ).ascii()    , "point"    , false ), converter, MakePoint( converter, asn.location ) ) );
 }
 
@@ -104,7 +104,7 @@ void Intelligence::ReadParameter( xml::xistream& xis, const Resolver_ABC< Format
     else if( type == "bool" )
         AddParameter( *new Bool( OrderParameter( name.ascii(), type, false ), xis ) );
     else if( type == "formation" )
-        AddParameter( *new Formation( OrderParameter( name.ascii(), type, false ), xis, resolver ) );
+        AddParameter( *new Formation( OrderParameter( name.ascii(), type, false ), xis, resolver, controller_ ) );
     else if( type == "point" )
         AddParameter( *new Point( OrderParameter( name.ascii(), type, false ), converter_, xis ) );
 }
@@ -169,7 +169,7 @@ void Intelligence::CommitToChildren()
     AddParameter( *new Karma    ( OrderParameter( tools::translate( "Parameter", "Karma" ).ascii()    , "karma"    , false ), entity.GetKarma(), *formation ) );
     AddParameter( *new Level    ( OrderParameter( tools::translate( "Parameter", "Level" ).ascii()    , "level"    , false ), entity.GetLevel() ) );
     AddParameter( *new Bool     ( OrderParameter( tools::translate( "Parameter", "Mounted" ).ascii()  , "bool"     , false ), entity.IsMounted() ) );
-    AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), *formation ) );
+    AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), *formation, controller_ ) );
     AddParameter( *new Point    ( OrderParameter( tools::translate( "Parameter", "Point" ).ascii()    , "point"    , false ), converter_, position ) );
 }
 

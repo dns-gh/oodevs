@@ -22,10 +22,11 @@ using namespace gui;
 // Name: ParamObstacleList constructor
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamObstacleList::ParamObstacleList( QObject* parent, const OrderParameter& parameter, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
-    : ListParameter( parent, parameter.GetName().c_str(), controller, parameter.IsOptional() )
+ParamObstacleList::ParamObstacleList( QObject* parent, const OrderParameter& parameter, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& actions, Controller& controller )
+    : ListParameter( parent, parameter.GetName().c_str(), actions, parameter.IsOptional() )
     , parameter_( parameter )
     , converter_( converter )
+    , controller_( controller )
     , objectTypes_( objectTypes )
     , layer_( layer )
     , count_( 0 )
@@ -59,7 +60,7 @@ void ParamObstacleList::CommitTo( actions::ParameterContainer_ABC& action ) cons
 // -----------------------------------------------------------------------------
 Param_ABC* ParamObstacleList::CreateElement()
 {
-    return new ParamObstacle(this, OrderParameter( tools::translate( "ParamObstacleList", "Obstacle %1" ).arg( ++count_ ).ascii(), "obstacle", false ), objectTypes_, layer_, converter_ );
+    return new ParamObstacle(this, OrderParameter( tools::translate( "ParamObstacleList", "Obstacle %1" ).arg( ++count_ ).ascii(), "obstacle", false ), objectTypes_, layer_, converter_, controller_ );
 }
 
 // -----------------------------------------------------------------------------

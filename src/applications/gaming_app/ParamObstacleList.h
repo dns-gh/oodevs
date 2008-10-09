@@ -19,6 +19,7 @@ namespace kernel
     class ObjectTypes;
     class CoordinateConverter_ABC;
     class OrderParameter;
+    class Controller;
 }
 
 namespace gui
@@ -37,7 +38,7 @@ class ParamObstacleList : public ListParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObstacleList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
+             ParamObstacleList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& actions, kernel::Controller& controller );
     virtual ~ParamObstacleList();
     //@}
 
@@ -64,6 +65,7 @@ private:
     //@{
     const kernel::OrderParameter& parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
+    kernel::Controller& controller_;
     const kernel::ObjectTypes& objectTypes_;
     gui::ParametersLayer& layer_;
     unsigned int count_;

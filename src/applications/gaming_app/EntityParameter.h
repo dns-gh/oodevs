@@ -15,6 +15,7 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/Controller.h"
 #include "actions/Entity.h"
 #include "actions/Action_ABC.h"
 
@@ -84,8 +85,8 @@ class EntityParameter : public EntityParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameter( QObject* parent, const kernel::OrderParameter& parameter );
-             EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, const ConcreteEntity& entity );
+             EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller );
+             EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, const ConcreteEntity& entity, kernel::Controller& controller );
     virtual ~EntityParameter();
     //@}
 
@@ -111,6 +112,11 @@ protected:
     virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );
+    //@}
+
+    //! @name Member data
+    //@{
+    kernel::Controller& controller_;
     //@}
 
 private:

@@ -18,8 +18,8 @@ using namespace kernel;
 // Name: ParamAgent constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgent::ParamAgent( QObject* parent, const kernel::OrderParameter& parameter )
-    : EntityParameter< Agent_ABC >( parent, parameter )
+ParamAgent::ParamAgent( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller )
+    : EntityParameter< Agent_ABC >( parent, parameter, controller )
     , parameter_( parameter )
 {
     // NOTHING
@@ -29,8 +29,8 @@ ParamAgent::ParamAgent( QObject* parent, const kernel::OrderParameter& parameter
 // Name: ParamAgent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ParamAgent::ParamAgent( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Agent_ABC& entity )
-    : EntityParameter< Agent_ABC >( parent, parameter, entity )
+ParamAgent::ParamAgent( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Agent_ABC& entity, kernel::Controller& controller )
+    : EntityParameter< Agent_ABC >( parent, parameter, entity, controller )
     , parameter_( parameter )
 {
     // NOTHING
@@ -51,7 +51,7 @@ ParamAgent::~ParamAgent()
 // -----------------------------------------------------------------------------
 void ParamAgent::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< Agent_ABC > > param( new actions::parameters::Agent( parameter_ ) );
+    std::auto_ptr< actions::parameters::Entity< Agent_ABC > > param( new actions::parameters::Agent( parameter_, controller_ ) );
     EntityParameter< Agent_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

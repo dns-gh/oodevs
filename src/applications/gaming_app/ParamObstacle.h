@@ -20,6 +20,7 @@ namespace kernel
     class ObjectTypes;
     class CoordinateConverter_ABC;
     class Automat_ABC;
+    class Controller;
 }
 
 namespace gui
@@ -48,7 +49,7 @@ class ParamObstacle : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObstacle( QObject* parent, const kernel::OrderParameter& parameter, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamObstacle( QObject* parent, const kernel::OrderParameter& parameter, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller );
     virtual ~ParamObstacle();
     //@}
 
@@ -94,6 +95,7 @@ private:
     const kernel::ObjectTypes& objectTypes_;
     gui::ParametersLayer& layer_;
     const kernel::CoordinateConverter_ABC& converter_;
+    kernel::Controller& controller_;
     gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
     gui::ValuedComboBox< unsigned int >* obstacleTypeCombo_;
     ParamLocation* location_;

@@ -19,6 +19,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Formation_ABC;
     class FormationLevels;
+    class Controller;
 }
 
 namespace actions {
@@ -39,10 +40,10 @@ public:
     explicit IntelligenceList( const kernel::OrderParameter& parameter );
              IntelligenceList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis
                                             , const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver
-                                            , const kernel::FormationLevels& levels );
+                                            , const kernel::FormationLevels& levels, kernel::Controller& controller );
              IntelligenceList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_IntelligenceList& asn 
                                             , const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver
-                                            , const kernel::FormationLevels& levels );
+                                            , const kernel::FormationLevels& levels, kernel::Controller& controller );
     virtual ~IntelligenceList();
     //@}
 
@@ -64,7 +65,7 @@ private:
     //@{
     void ReadIntelligence( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter
                          , const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver
-                         , const kernel::FormationLevels& levels  );
+                         , const kernel::FormationLevels& levels, kernel::Controller& controller );
     //@}
 };
 

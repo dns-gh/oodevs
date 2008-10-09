@@ -33,7 +33,7 @@ class ParamPopulationKnowledge : public EntityParameter< kernel::PopulationKnowl
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPopulationKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamPopulationKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::Controller& controller );
     virtual ~ParamPopulationKnowledge();
     //@}
 

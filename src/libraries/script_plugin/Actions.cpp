@@ -48,7 +48,7 @@ struct Actions::Publisher : public Publisher_ABC
 Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& sim )
     : publisher_( new Publisher( sim ) )
     , converter_( new kernel::CoordinateConverter( config ) )
-    , parameters_( new ActionParameterFactory( *converter_, model, config ) )
+    , parameters_( new ActionParameterFactory( *converter_, model, config, controller ) )
     , factory_( new ActionFactory( controller, model, *parameters_ ) )
     , file_   ( config.BuildExerciseChildFile( "scripts/resources/orders.ord" ) )
 {

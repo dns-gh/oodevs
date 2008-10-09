@@ -22,8 +22,8 @@ using namespace kernel;
 // Name: ParamObjectKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamObjectKnowledge::ParamObjectKnowledge( QObject* parent, const OrderParameter& parameter, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
-    : EntityParameter< ObjectKnowledge_ABC >( parent, parameter )
+ParamObjectKnowledge::ParamObjectKnowledge( QObject* parent, const OrderParameter& parameter, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& agent, kernel::Controller& controller )
+    : EntityParameter< ObjectKnowledge_ABC >( parent, parameter, controller )
     , parameter_( parameter )
     , converter_( converter )
     , agent_( agent )
@@ -35,8 +35,8 @@ ParamObjectKnowledge::ParamObjectKnowledge( QObject* parent, const OrderParamete
 // Name: ParamObjectKnowledge constructor
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-ParamObjectKnowledge::ParamObjectKnowledge( QObject* parent, const OrderParameter& parameter, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& agent, const ObjectKnowledge_ABC& potential )
-    : EntityParameter< ObjectKnowledge_ABC >( parent, parameter, potential )
+ParamObjectKnowledge::ParamObjectKnowledge( QObject* parent, const OrderParameter& parameter, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& agent, const ObjectKnowledge_ABC& potential, kernel::Controller& controller )
+    : EntityParameter< ObjectKnowledge_ABC >( parent, parameter, potential, controller )
     , parameter_( parameter )
     , converter_( converter )
     , agent_( agent )
@@ -71,7 +71,7 @@ void ParamObjectKnowledge::NotifyContextMenu( const Object_ABC& entity, ContextM
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< ObjectKnowledge_ABC > > param( new actions::parameters::ObjectKnowledge( parameter_ ) );
+    std::auto_ptr< actions::parameters::Entity< ObjectKnowledge_ABC > > param( new actions::parameters::ObjectKnowledge( parameter_, controller_ ) );
     EntityParameter< ObjectKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

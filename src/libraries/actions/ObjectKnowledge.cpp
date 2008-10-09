@@ -40,8 +40,8 @@ namespace
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter )
-    : Entity< ObjectKnowledge_ABC >( parameter )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, kernel::Controller& controller )
+    : Entity< ObjectKnowledge_ABC >( parameter, controller )
 {
     // NOTHING
 }
@@ -50,8 +50,8 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter )
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, kernel::ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : Entity< ObjectKnowledge_ABC >( parameter )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, kernel::ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+    : Entity< ObjectKnowledge_ABC >( parameter, controller )
 {
     const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
     SetValue( converter.Find( id, team ) );
@@ -63,8 +63,8 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : Entity< ObjectKnowledge_ABC >( OrderParameter( ReadName( xis ), "objectknowledge", false ) )
+ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+    : Entity< ObjectKnowledge_ABC >( OrderParameter( ReadName( xis ), "objectknowledge", false ), controller )
 {
     const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
     SetValue( converter.Find( resolver.Get( ReadId( xis ) ), team ) );
@@ -76,8 +76,8 @@ ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const Resolver_ABC< Object
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : Entity< ObjectKnowledge_ABC >( parameter )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+    : Entity< ObjectKnowledge_ABC >( parameter, controller )
 {
     const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
     SetValue( converter.Find( resolver.Get( ReadId( xis ) ), team ) );

@@ -25,8 +25,8 @@ class ParamAgent : public EntityParameter< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgent( QObject* parent, const kernel::OrderParameter& parameter );
-             ParamAgent( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Agent_ABC& entity );
+             ParamAgent( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller );
+             ParamAgent( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Agent_ABC& entity, kernel::Controller& controller );
     virtual ~ParamAgent();
     //@}
 

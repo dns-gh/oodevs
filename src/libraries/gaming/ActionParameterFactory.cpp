@@ -65,12 +65,14 @@ using namespace kernel;
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
 ActionParameterFactory::ActionParameterFactory( const CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel
-                                              , AgentKnowledgeConverter_ABC& agentKnowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter )
+                                              , AgentKnowledgeConverter_ABC& agentKnowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
+                                              , kernel::Controller& controller )
     : converter_( converter )
     , model_( model )
     , staticModel_( staticModel )
     , agentKnowledgeConverter_( agentKnowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
+    , controller_( controller )
 {
     // NOTHING
 }
@@ -100,11 +102,11 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     case T_MissionParameter_value_aCharStr:
         return new actions::parameters::Parameter< QString >( parameter, asn.value.u.aCharStr );
     case T_MissionParameter_value_unit:
-        return new actions::parameters::Agent( parameter, asn.value.u.unit, model_.agents_ );
+        return new actions::parameters::Agent( parameter, asn.value.u.unit, model_.agents_, controller_ );
     case T_MissionParameter_value_aReal:
         return new actions::parameters::Numeric( parameter, asn.value.u.aReal );
     case T_MissionParameter_value_automat:
-        return new actions::parameters::Automat( parameter, asn.value.u.automat, model_.agents_ );
+        return new actions::parameters::Automat( parameter, asn.value.u.automat, model_.agents_, controller_ );
     case T_MissionParameter_value_heading:
         return new actions::parameters::Parameter< float >( parameter, asn.value.u.heading );
     case T_MissionParameter_value_enumeration:
@@ -112,25 +114,25 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     case T_MissionParameter_value_path:
         return new actions::parameters::Path( parameter, converter_, *asn.value.u.path );
     case T_MissionParameter_value_unitKnowledge:
-        return new actions::parameters::AgentKnowledge( parameter, asn.value.u.unitKnowledge, agentKnowledgeConverter_, entity );
+        return new actions::parameters::AgentKnowledge( parameter, asn.value.u.unitKnowledge, agentKnowledgeConverter_, entity, controller_ );
     case T_MissionParameter_value_objectKnowledge:
-        return new actions::parameters::ObjectKnowledge( parameter, asn.value.u.objectKnowledge, objectKnowledgeConverter_, entity );
+        return new actions::parameters::ObjectKnowledge( parameter, asn.value.u.objectKnowledge, objectKnowledgeConverter_, entity, controller_ );
     case T_MissionParameter_value_populationKnowledge:
-        return new actions::parameters::PopulationKnowledge( parameter, asn.value.u.populationKnowledge, agentKnowledgeConverter_, entity );
+        return new actions::parameters::PopulationKnowledge( parameter, asn.value.u.populationKnowledge, agentKnowledgeConverter_, entity, controller_ );
     case T_MissionParameter_value_unitList:
-        return new actions::parameters::AgentList( parameter, *asn.value.u.unitList, model_.agents_ );
+        return new actions::parameters::AgentList( parameter, *asn.value.u.unitList, model_.agents_, controller_ );
     case T_MissionParameter_value_automatList:
-        return new actions::parameters::AutomatList( parameter, *asn.value.u.automatList, model_.agents_ );
+        return new actions::parameters::AutomatList( parameter, *asn.value.u.automatList, model_.agents_, controller_ );
     case T_MissionParameter_value_pathList:
         return new actions::parameters::PathList( parameter, converter_, *asn.value.u.pathList );
     case T_MissionParameter_value_unitKnowledgeList:
-        return new actions::parameters::AgentKnowledgeList( parameter, *asn.value.u.unitKnowledgeList, agentKnowledgeConverter_, entity );
+        return new actions::parameters::AgentKnowledgeList( parameter, *asn.value.u.unitKnowledgeList, agentKnowledgeConverter_, entity, controller_ );
     case T_MissionParameter_value_objectKnowledgeList:
-        return new actions::parameters::ObjectKnowledgeList( parameter, *asn.value.u.objectKnowledgeList, objectKnowledgeConverter_, entity );
+        return new actions::parameters::ObjectKnowledgeList( parameter, *asn.value.u.objectKnowledgeList, objectKnowledgeConverter_, entity, controller_ );
     case T_MissionParameter_value_locationList:
         return new actions::parameters::LocationList( parameter, converter_, *asn.value.u.locationList );
     case T_MissionParameter_value_plannedWorkList:
-        return new actions::parameters::ObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWorkList );
+        return new actions::parameters::ObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWorkList, controller_ );
     case T_MissionParameter_value_pointList:
         return new actions::parameters::PointList( parameter, converter_, *asn.value.u.pointList );
     case T_MissionParameter_value_polygonList:
@@ -138,7 +140,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     case T_MissionParameter_value_location:
         return new actions::parameters::Location( parameter, converter_, *asn.value.u.location );
     case T_MissionParameter_value_plannedWork:
-        return new actions::parameters::Obstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWork );
+        return new actions::parameters::Obstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWork, controller_ );
     case T_MissionParameter_value_atlasNature:
         return new actions::parameters::AtlasNature( parameter, *asn.value.u.atlasNature, staticModel_.atlasNatures_ );
     case T_MissionParameter_value_missionObjective:
@@ -164,7 +166,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     case T_MissionParameter_value_limasOrder:
         return new actions::parameters::LimaList( parameter, converter_, *asn.value.u.limasOrder );
     case T_MissionParameter_value_intelligenceList:
-        return new actions::parameters::IntelligenceList( parameter, converter_, *asn.value.u.intelligenceList, model_.teams_, staticModel_.levels_ );
+        return new actions::parameters::IntelligenceList( parameter, converter_, *asn.value.u.intelligenceList, model_.teams_, staticModel_.levels_, controller_ );
     }
     return 0;
 }
@@ -214,35 +216,35 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     else if( type == "phaselinelist" )
         param.reset( new actions::parameters::LimaList( parameter, converter_, xis ) );
     else if( type == "intelligencelist" )
-        param.reset( new actions::parameters::IntelligenceList( parameter, converter_, xis, model_.teams_, staticModel_.levels_ ) );
+        param.reset( new actions::parameters::IntelligenceList( parameter, converter_, xis, model_.teams_, staticModel_.levels_, controller_ ) );
     else if( type == "limit" )
         param.reset( new actions::parameters::Limit( parameter, converter_, xis ) );
     else if( type == "enumeration" )
         param.reset( new actions::parameters::Enumeration( parameter, xis ) );
     else if( type == "agent" )
-        param.reset( new actions::parameters::Agent( parameter, xis, model_.agents_ ) );
+        param.reset( new actions::parameters::Agent( parameter, xis, model_.agents_, controller_ ) );
     else if( type == "automate" )
-        param.reset( new actions::parameters::Automat( parameter, xis, model_.agents_ ) );
+        param.reset( new actions::parameters::Automat( parameter, xis, model_.agents_, controller_ ) );
     else if( type == "agentlist" )
-        param.reset( new actions::parameters::AgentList( parameter, xis, model_.agents_ ) );
+        param.reset( new actions::parameters::AgentList( parameter, xis, model_.agents_, controller_ ) );
     else if( type == "automatelist" )
-        param.reset( new actions::parameters::AutomatList( parameter, xis, model_.agents_ ) );
+        param.reset( new actions::parameters::AutomatList( parameter, xis, model_.agents_, controller_ ) );
     else if( type == "dotationtype" )
         param.reset( new actions::parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
     else if( type == "genobject" )
-        param.reset( new actions::parameters::Obstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis ) );
+        param.reset( new actions::parameters::Obstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis, controller_ ) );
     else if( type == "genobjectlist" )
-        param.reset( new actions::parameters::ObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis ) );
+        param.reset( new actions::parameters::ObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis, controller_ ) );
     else if( type == "agentknowledge" )
-        param.reset( new actions::parameters::AgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
+        param.reset( new actions::parameters::AgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "populationknowledge" )
-        param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
+        param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "objectknowledge" )
-        param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity ) );
+        param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity, controller_ ) );
     else if( type == "agentknowledgelist" )
-        param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity ) );
+        param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "objectknowledgelist" )
-        param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity ) );
+        param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity, controller_ ) );
     else if( type == "natureatlas" )
         param.reset( new actions::parameters::AtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
     else if( type == "objective" )

@@ -37,9 +37,9 @@ class PopulationKnowledge : public Entity< kernel::PopulationKnowledge_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationKnowledge( const kernel::OrderParameter& parameter );
-             PopulationKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
-             PopulationKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
+             PopulationKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
+             PopulationKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             PopulationKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~PopulationKnowledge();
     //@}
 

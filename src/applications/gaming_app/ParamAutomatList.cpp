@@ -53,7 +53,7 @@ void ParamAutomatList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< kernel::Automat_ABC >* ParamAutomatList::CreateElement( const kernel::Automat_ABC& potential )
 {
-    return new ParamAutomat( this, OrderParameter( tools::translate( "ParamAutomatList", "Automat %1" ).arg( ++count_ ).ascii(), "automat", false ), potential );
+    return new ParamAutomat( this, OrderParameter( tools::translate( "ParamAutomatList", "Automat %1" ).arg( ++count_ ).ascii(), "automat", false ), potential, controller_ );
 }
 
 // -----------------------------------------------------------------------------

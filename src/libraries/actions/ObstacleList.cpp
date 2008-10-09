@@ -32,21 +32,21 @@ ObstacleList::ObstacleList( const OrderParameter& parameter )
 // Name: ObstacleList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-ObstacleList::ObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn )
+ObstacleList::ObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new Obstacle( OrderParameter( tools::translate( "Parameter", "Obstacle %1" ).arg( i + 1 ).ascii(), "obstacle", false ), converter, resolver, automats, asn.elem[i] ) );
+        AddParameter( *new Obstacle( OrderParameter( tools::translate( "Parameter", "Obstacle %1" ).arg( i + 1 ).ascii(), "obstacle", false ), converter, resolver, automats, asn.elem[i], controller ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleList constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-ObstacleList::ObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis )
+ObstacleList::ObstacleList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
 {
-    xis >> list( "parameter", *this, &ObstacleList::ReadObstacle, converter, resolver, automats );
+    xis >> list( "parameter", *this, &ObstacleList::ReadObstacle, converter, resolver, automats, controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,9 +62,9 @@ ObstacleList::~ObstacleList()
 // Name: ObstacleList::ReadObstacle
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void ObstacleList::ReadObstacle( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats )
+void ObstacleList::ReadObstacle( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType >& resolver, const Resolver_ABC< Automat_ABC >& automats, kernel::Controller& controller )
 {
-    AddParameter( *new Obstacle( converter, resolver, automats, xis ) );
+    AddParameter( *new Obstacle( converter, resolver, automats, xis, controller ) );
 }
 
 namespace

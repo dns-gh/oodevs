@@ -38,14 +38,14 @@ class Intelligence : public Entity< kernel::Intelligence_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Intelligence( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
+             Intelligence( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller );
              Intelligence( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis
                                         , const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver
-                                        , const kernel::FormationLevels& levels );
+                                        , const kernel::FormationLevels& levels, kernel::Controller& controller );
              Intelligence( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter
                                         , const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver
                                         , const kernel::FormationLevels& levels
-                                        , const ASN1T_Intelligence& asn );
+                                        , const ASN1T_Intelligence& asn, kernel::Controller& controller );
     virtual ~Intelligence();
     //@}
 

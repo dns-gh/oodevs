@@ -19,6 +19,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class ObjectType;
     class Automat_ABC;
+    class Controller;
 }
 
 namespace actions {
@@ -37,9 +38,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              Obstacle( const kernel::OrderParameter& parameter, const kernel::ObjectType& type );
-             Obstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWork& asn );
-             Obstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis );
-             Obstacle( const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis );
+             Obstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWork& asn, kernel::Controller& controller );
+             Obstacle( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
+             Obstacle( const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
     virtual ~Obstacle();
     //@}
 
@@ -66,9 +67,9 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats );
+    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
     virtual void Serialize( xml::xostream& xos ) const;
-    void SetParameters( const ASN1T_PlannedWork& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats );
+    void SetParameters( const ASN1T_PlannedWork& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
     //@}
 
 private:

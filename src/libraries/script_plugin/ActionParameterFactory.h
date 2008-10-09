@@ -18,6 +18,7 @@ namespace kernel
     class FormationLevels;
     class ObjectTypes;
     class AtlasNatures;
+    class Controller;
 }
 
 namespace tools
@@ -47,7 +48,7 @@ class ActionParameterFactory : public actions::ParameterFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const dispatcher::Model& model, const tools::ExerciseConfig& config );
+             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const dispatcher::Model& model, const tools::ExerciseConfig& config, kernel::Controller& controller );
     virtual ~ActionParameterFactory();
     //@}
 
@@ -73,7 +74,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::CoordinateConverter_ABC& converter_;
+    kernel::Controller&                      controller_;
+    const kernel::CoordinateConverter_ABC&   converter_;
     std::auto_ptr< Adapters >                adapters_;
     std::auto_ptr< AgentConverter >          agentsKnowledges_;
     std::auto_ptr< ObjectConverter >         objectsKnowledges_;

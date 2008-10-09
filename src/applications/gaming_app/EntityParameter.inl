@@ -12,13 +12,14 @@
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter )
+EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller )
     : EntityParameterBase( parent, parameter.GetName().c_str() )
+    , controller_        ( controller )
     , parameter_         ( parameter )
     , potential_         ( 0 )
     , selected_          ( 0 )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -26,13 +27,14 @@ EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kerne
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, const ConcreteEntity& entity )
+EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, const ConcreteEntity& entity, kernel::Controller& controller )
     : EntityParameterBase( parent, parameter.GetName().c_str() )
+    , controller_        ( controller )
     , parameter_         ( parameter )
     , potential_         ( &entity )
     , selected_          ( 0 )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +44,7 @@ EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kerne
 template< typename ConcreteEntity >
 EntityParameter< ConcreteEntity >::~EntityParameter()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

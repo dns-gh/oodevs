@@ -32,10 +32,10 @@ class Agent : public Entity< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Agent( const kernel::OrderParameter& parameter );
-             Agent( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
-             Agent( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
-             Agent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );;
+             Agent( const kernel::OrderParameter& parameter, kernel::Controller& controller );
+             Agent( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
+             Agent( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
+             Agent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
     virtual ~Agent();
     //@}
 

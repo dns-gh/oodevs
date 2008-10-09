@@ -18,8 +18,8 @@ using namespace kernel;
 // Name: ParamAutomat constructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ParamAutomat::ParamAutomat( QObject* parent, const OrderParameter& parameter )
-    : EntityParameter< Automat_ABC >( parent, parameter )
+ParamAutomat::ParamAutomat( QObject* parent, const OrderParameter& parameter, kernel::Controller& controller )
+    : EntityParameter< Automat_ABC >( parent, parameter, controller )
     , parameter_( parameter )
 {
     // NOTHING
@@ -29,8 +29,8 @@ ParamAutomat::ParamAutomat( QObject* parent, const OrderParameter& parameter )
 // Name: ParamAutomat constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-ParamAutomat::ParamAutomat( QObject* parent, const OrderParameter& parameter, const Automat_ABC& entity )
-    : EntityParameter< Automat_ABC >( parent, parameter, entity )
+ParamAutomat::ParamAutomat( QObject* parent, const OrderParameter& parameter, const Automat_ABC& entity, kernel::Controller& controller )
+    : EntityParameter< Automat_ABC >( parent, parameter, entity, controller )
     , parameter_( parameter )
 {
     // NOTHING
@@ -51,7 +51,7 @@ ParamAutomat::~ParamAutomat()
 // -----------------------------------------------------------------------------
 void ParamAutomat::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< Automat_ABC > > param( new actions::parameters::Automat( parameter_ ) );
+    std::auto_ptr< actions::parameters::Entity< Automat_ABC > > param( new actions::parameters::Automat( parameter_, controller_ ) );
     EntityParameter< Automat_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

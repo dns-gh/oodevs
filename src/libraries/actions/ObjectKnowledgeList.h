@@ -18,6 +18,7 @@ namespace kernel
     class Object_ABC;
     class Entity_ABC;
     class ObjectKnowledgeConverter_ABC;
+    class Controller;
 }
 
 namespace actions {
@@ -36,8 +37,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ObjectKnowledgeList( const kernel::OrderParameter& parameter );
-             ObjectKnowledgeList( const kernel::OrderParameter& parameter, const ASN1T_ObjectKnowledgeList& asn, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
-             ObjectKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
+             ObjectKnowledgeList( const kernel::OrderParameter& parameter, const ASN1T_ObjectKnowledgeList& asn, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             ObjectKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~ObjectKnowledgeList();
     //@}
 
@@ -63,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadObjectKnowledge( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner );
+    void ReadObjectKnowledge( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     //@}
 };
 

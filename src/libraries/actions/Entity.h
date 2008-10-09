@@ -11,6 +11,8 @@
 #define __ActionParameterEntity_h_
 
 #include "Parameter.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/Controller.h"
 #include "xeumeuleu/xml.h"
 #pragma warning (push)
 #pragma warning (disable : 4127 4511 4512 )
@@ -28,13 +30,15 @@ namespace actions {
 // =============================================================================
 template< typename ConcreteEntity >
 class Entity : public Parameter< const ConcreteEntity* >
+             , public kernel::Observer_ABC
+             , public kernel::ElementObserver_ABC< ConcreteEntity >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Entity( const kernel::OrderParameter& parameter );
-             Entity( const kernel::OrderParameter& parameter, const ConcreteEntity* entity );
+             Entity( const kernel::OrderParameter& parameter, kernel::Controller& controller );
+             Entity( const kernel::OrderParameter& parameter, const ConcreteEntity* entity, kernel::Controller& controller );
     virtual ~Entity();
     //@}
 
@@ -54,7 +58,14 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyDeleted( const ConcreteEntity& );
     virtual void Serialize( xml::xostream& xos ) const;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    kernel::Controller& controller_;
     //@}
 };
 
@@ -63,10 +74,11 @@ private:
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-Entity< ConcreteEntity >::Entity( const kernel::OrderParameter& parameter )
+Entity< ConcreteEntity >::Entity( const kernel::OrderParameter& parameter, kernel::Controller& controller )
     : Parameter< const ConcreteEntity* >( parameter )
+    , controller_( controller )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,10 +86,11 @@ Entity< ConcreteEntity >::Entity( const kernel::OrderParameter& parameter )
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-Entity< ConcreteEntity >::Entity( const kernel::OrderParameter& parameter, const ConcreteEntity* entity )
+Entity< ConcreteEntity >::Entity( const kernel::OrderParameter& parameter, const ConcreteEntity* entity, kernel::Controller& controller )
     : Parameter< const ConcreteEntity* >( parameter, entity )
+    , controller_( controller )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +100,7 @@ Entity< ConcreteEntity >::Entity( const kernel::OrderParameter& parameter, const
 template< typename ConcreteEntity >
 Entity< ConcreteEntity >::~Entity()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,6 +126,17 @@ void Entity< ConcreteEntity >::CommitTo( std::string& content ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Entity::NotifyDeleted
+// Created: SBO 2008-10-09
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void Entity< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& entity )
+{
+    if( &entity == GetValue() )
+        SetValue( 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Entity::Serialize
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
@@ -120,7 +144,8 @@ template< typename ConcreteEntity >
 void Entity< ConcreteEntity >::Serialize( xml::xostream& xos ) const
 {
     Parameter< const ConcreteEntity* >::Serialize( xos );
-    xos << xml::attribute( "value", GetValue()->GetId() );
+    if( GetValue() )
+        xos << xml::attribute( "value", GetValue()->GetId() );
 }
 
 // -----------------------------------------------------------------------------

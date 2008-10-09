@@ -113,10 +113,15 @@ private:
     typedef typename T_Entities::const_iterator                                 CIT_Entities;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
     const ConcreteEntity* potential_; // $$$$ SBO 2007-05-23: safe pointer
     T_Entities entities_;
     //@}

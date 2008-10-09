@@ -18,8 +18,8 @@ using namespace kernel;
 // Name: ParamIntelligence constructor
 // Created: SBO 2007-10-24
 // -----------------------------------------------------------------------------
-ParamIntelligence::ParamIntelligence( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Intelligence_ABC& entity )
-    : EntityParameter< Intelligence_ABC >( parent, parameter, entity )
+ParamIntelligence::ParamIntelligence( QObject* parent, const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Intelligence_ABC& entity, kernel::Controller& controller )
+    : EntityParameter< Intelligence_ABC >( parent, parameter, entity, controller )
     , parameter_( parameter )
     , converter_( converter )
 {
@@ -41,7 +41,7 @@ ParamIntelligence::~ParamIntelligence()
 // -----------------------------------------------------------------------------
 void ParamIntelligence::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Intelligence > param( new actions::parameters::Intelligence( parameter_, converter_ ) );
+    std::auto_ptr< actions::parameters::Intelligence > param( new actions::parameters::Intelligence( parameter_, converter_, controller_ ) );
     EntityParameter< Intelligence_ABC >::CommitTo( *param );
     param->CommitToChildren();
     action.AddParameter( *param.release() );

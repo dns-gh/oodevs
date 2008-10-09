@@ -33,21 +33,21 @@ AutomatList::AutomatList( const kernel::OrderParameter& parameter )
 // Name: AutomatList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AutomatList::AutomatList( const OrderParameter& parameter, const ASN1T_AutomatList& asn, const Resolver_ABC< Automat_ABC >& resolver )
+AutomatList::AutomatList( const OrderParameter& parameter, const ASN1T_AutomatList& asn, const Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new Automat( OrderParameter( tools::translate( "Parameter", "Automat %1" ).arg( i + 1 ).ascii(), "automat", false ), asn.elem[i], resolver ) );
+        AddParameter( *new Automat( OrderParameter( tools::translate( "Parameter", "Automat %1" ).arg( i + 1 ).ascii(), "automat", false ), asn.elem[i], resolver, controller ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AutomatList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AutomatList::AutomatList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Automat_ABC >& resolver )
+AutomatList::AutomatList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &AutomatList::ReadAutomat, resolver );
+    xis >> list( "parameter", *this, &AutomatList::ReadAutomat, resolver, controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,9 +63,9 @@ AutomatList::~AutomatList()
 // Name: AutomatList::ReadAutomat
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void AutomatList::ReadAutomat( xml::xistream& xis, const Resolver_ABC< Automat_ABC >& resolver )
+void AutomatList::ReadAutomat( xml::xistream& xis, const Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
 {
-    AddParameter( *new Automat( xis, resolver ) );
+    AddParameter( *new Automat( xis, resolver, controller ) );
 }
 
 namespace

@@ -33,21 +33,21 @@ AgentList::AgentList( const kernel::OrderParameter& parameter )
 // Name: AgentList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AgentList::AgentList( const OrderParameter& parameter, const ASN1T_UnitList& asn, const Resolver_ABC< Agent_ABC >& resolver )
+AgentList::AgentList( const OrderParameter& parameter, const ASN1T_UnitList& asn, const Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new Agent( OrderParameter( tools::translate( "Parameter", "Agent %1" ).arg( i + 1 ).ascii(), "agent", false ), asn.elem[i], resolver ) );
+        AddParameter( *new Agent( OrderParameter( tools::translate( "Parameter", "Agent %1" ).arg( i + 1 ).ascii(), "agent", false ), asn.elem[i], resolver, controller ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AgentList::AgentList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver )
+AgentList::AgentList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &AgentList::ReadAgent, resolver );
+    xis >> list( "parameter", *this, &AgentList::ReadAgent, resolver, controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,9 +63,9 @@ AgentList::~AgentList()
 // Name: AgentList::ReadAgent
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void AgentList::ReadAgent( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver )
+void AgentList::ReadAgent( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
 {
-    AddParameter( *new Agent( xis, resolver ) );
+    AddParameter( *new Agent( xis, resolver, controller ) );
 }
 
 namespace

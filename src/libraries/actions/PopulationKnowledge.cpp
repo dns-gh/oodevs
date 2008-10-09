@@ -22,8 +22,8 @@ using namespace parameters;
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter )
-    : Entity< PopulationKnowledge_ABC >( parameter )
+PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, kernel::Controller& controller )
+    : Entity< PopulationKnowledge_ABC >( parameter, controller )
 {
     // NOTHING
 }
@@ -32,8 +32,8 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter )
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsigned long id, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : Entity< PopulationKnowledge_ABC >( parameter, converter.FindPopulation( id, owner ) )
+PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsigned long id, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+    : Entity< PopulationKnowledge_ABC >( parameter, converter.FindPopulation( id, owner ), controller )
 {
     if( ! GetValue() )
         throw std::runtime_error( tools::translate( "Parameter", "Population knowledge not found." ).ascii() );
@@ -43,8 +43,8 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsig
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Population_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
-    : Entity< PopulationKnowledge_ABC >( parameter, converter.Find( resolver.Get( attribute< unsigned long >( xis, "value" ) ), owner ) )
+PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Population_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+    : Entity< PopulationKnowledge_ABC >( parameter, converter.Find( resolver.Get( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
     // NOTHING
 }

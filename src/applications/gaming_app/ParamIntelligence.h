@@ -30,7 +30,7 @@ class ParamIntelligence : public EntityParameter< kernel::Intelligence_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamIntelligence( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Intelligence_ABC& entity );
+             ParamIntelligence( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Intelligence_ABC& entity, kernel::Controller& controller );
     virtual ~ParamIntelligence();
     //@}
 

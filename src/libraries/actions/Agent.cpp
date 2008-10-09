@@ -21,8 +21,8 @@ using namespace parameters;
 // Name: Agent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Agent::Agent( const OrderParameter& parameter )
-    : Entity< Agent_ABC >( parameter )
+Agent::Agent( const OrderParameter& parameter, kernel::Controller& controller )
+    : Entity< Agent_ABC >( parameter, controller )
 {
     // NOTHING
 }
@@ -31,8 +31,8 @@ Agent::Agent( const OrderParameter& parameter )
 // Name: Agent constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver )
-    : Entity< Agent_ABC >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ) )
+Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
+    : Entity< Agent_ABC >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }
@@ -41,8 +41,8 @@ Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const Resolve
 // Name: Agent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Agent::Agent( const OrderParameter& parameter, unsigned int id, const Resolver_ABC< Agent_ABC >& resolver )
-    : Entity< Agent_ABC >( parameter, &resolver.Get( id ) )
+Agent::Agent( const OrderParameter& parameter, unsigned int id, const Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
+    : Entity< Agent_ABC >( parameter, &resolver.Get( id ), controller )
 {
     // NOTHING
 }
@@ -51,8 +51,8 @@ Agent::Agent( const OrderParameter& parameter, unsigned int id, const Resolver_A
 // Name: Agent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Agent::Agent( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver )
-    : Entity< Agent_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "agent", false ), &resolver.Get( attribute< unsigned long >( xis, "value" ) ) )
+Agent::Agent( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
+    : Entity< Agent_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "agent", false ), &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }

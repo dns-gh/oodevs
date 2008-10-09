@@ -33,9 +33,9 @@ class Formation : public Entity< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const kernel::OrderParameter& parameter, const kernel::Formation_ABC& formation );
-             Formation( const kernel::OrderParameter& parameter, const ASN1T_OID& asn, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver );
-             Formation( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver );
+             Formation( const kernel::OrderParameter& parameter, const kernel::Formation_ABC& formation, kernel::Controller& controller );
+             Formation( const kernel::OrderParameter& parameter, const ASN1T_OID& asn, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver, kernel::Controller& controller );
+             Formation( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver, kernel::Controller& controller );
     virtual ~Formation();
     //@}
 

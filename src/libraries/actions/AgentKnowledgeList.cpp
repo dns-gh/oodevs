@@ -33,21 +33,21 @@ AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter )
 // Name: AgentKnowledgeList constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, const ASN1T_UnitKnowledgeList& asn, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
+AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, const ASN1T_UnitKnowledgeList& asn, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new AgentKnowledge( OrderParameter( tools::translate( "Parameter", "Agent knowledge %1" ).arg( i + 1 ).ascii(), "agentknowledeg", false ), asn.elem[i], converter, owner ) );
+        AddParameter( *new AgentKnowledge( OrderParameter( tools::translate( "Parameter", "Agent knowledge %1" ).arg( i + 1 ).ascii(), "agentknowledeg", false ), asn.elem[i], converter, owner, controller ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeList constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
+AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &AgentKnowledgeList::ReadAgentKnowledge, resolver, converter, owner );
+    xis >> list( "parameter", *this, &AgentKnowledgeList::ReadAgentKnowledge, resolver, converter, owner, controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,9 +63,9 @@ AgentKnowledgeList::~AgentKnowledgeList()
 // Name: AgentKnowledgeList::ReadAgentKnowledge
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AgentKnowledgeList::ReadAgentKnowledge( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner )
+void AgentKnowledgeList::ReadAgentKnowledge( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
 {
-    AddParameter( *new AgentKnowledge( xis, resolver, converter, owner ) );
+    AddParameter( *new AgentKnowledge( xis, resolver, converter, owner, controller ) );
 }
 
 namespace

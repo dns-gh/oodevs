@@ -17,6 +17,7 @@
 namespace kernel
 {
     class Automat_ABC;
+    class Controller;
 }
 
 namespace actions {
@@ -35,8 +36,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AutomatList( const kernel::OrderParameter& parameter );
-             AutomatList( const kernel::OrderParameter& parameter, const ASN1T_AutomatList& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
-             AutomatList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
+             AutomatList( const kernel::OrderParameter& parameter, const ASN1T_AutomatList& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+             AutomatList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
     virtual ~AutomatList();
     //@}
 
@@ -62,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAutomat( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
+    void ReadAutomat( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
     //@}
 };
     }

@@ -159,7 +159,7 @@ void MissionInterfaceBuilder::Build( const OrderParameter& parameter )
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAgent( const OrderParameter& parameter ) const
 {
-    return new ParamAgent( missionInterface_, parameter );
+    return new ParamAgent( missionInterface_, parameter, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +177,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAgentList( const OrderParameter& parame
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAutomat( const OrderParameter& parameter ) const
 {
-    return new ParamAutomat( missionInterface_, parameter );
+    return new ParamAutomat( missionInterface_, parameter, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,7 +240,7 @@ Param_ABC* MissionInterfaceBuilder::BuildNumeric( const OrderParameter& paramete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamAgentKnowledge( missionInterface_, parameter, knowledgeConverter_, *entity_  );
+    return new ParamAgentKnowledge( missionInterface_, parameter, knowledgeConverter_, *entity_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +258,7 @@ Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledgeList( const OrderParamete
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamObjectKnowledge( missionInterface_, parameter, objectKnowledgeConverter_, *entity_ );
+    return new ParamObjectKnowledge( missionInterface_, parameter, objectKnowledgeConverter_, *entity_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,7 +276,7 @@ Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledgeList( const OrderParamet
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildPopulationKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamPopulationKnowledge( missionInterface_, parameter, knowledgeConverter_, *entity_ );
+    return new ParamPopulationKnowledge( missionInterface_, parameter, knowledgeConverter_, *entity_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -357,7 +357,7 @@ Param_ABC* MissionInterfaceBuilder::BuildLocationList( const OrderParameter& par
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderParameter& parameter ) const
 {
-    return new ParamObstacle( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_ );
+    return new ParamObstacle( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controllers_.controller_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -366,7 +366,7 @@ Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderParameter& parame
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& parameter ) const
 {
-    return new ParamObstacleList( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controllers_.actions_ );
+    return new ParamObstacleList( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controllers_.actions_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -17,6 +17,7 @@
 namespace kernel
 {
     class Agent_ABC;
+    class Controller;
 }
 
 namespace actions {
@@ -35,8 +36,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AgentList( const kernel::OrderParameter& parameter );
-             AgentList( const kernel::OrderParameter& parameter, const ASN1T_UnitList& asn, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
-             AgentList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
+             AgentList( const kernel::OrderParameter& parameter, const ASN1T_UnitList& asn, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
+             AgentList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
     virtual ~AgentList();
     //@}
 
@@ -63,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
+    void ReadAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
     //@}
 };
 
