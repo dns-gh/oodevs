@@ -2627,7 +2627,7 @@
     </message>
     <message>
         <source>enemy</source>
-        <translation>enemi</translation>
+        <translation>ennemi</translation>
     </message>
     <message>
         <source>neutral</source>
