@@ -193,7 +193,7 @@ void Obstacle::CommitTo( ASN1T_PlannedWork& asn ) const
             static_cast< const ObstacleType* >( it->second )->CommitTo( asn.type_obstacle );
         else if( type == "density" )
             static_cast< const Numeric* >( it->second )->CommitTo( asn.densite );
-        else if( type == "tc2" )
+        else if( type == "tc2" || type == "automat" )
             static_cast< const Automat* >( it->second )->CommitTo( asn.tc2 );
     }
 }
