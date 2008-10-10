@@ -223,6 +223,10 @@
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The &apos;anonymous&apos; profile is a default profile allowing to play the automated exercise when it is available.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScenarioPage</name>

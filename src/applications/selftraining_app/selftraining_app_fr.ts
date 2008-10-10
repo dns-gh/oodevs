@@ -281,7 +281,7 @@
     <name>ScenarioLauncherPageOptions</name>
     <message>
         <source>Profile:</source>
-        <translation>Profile:</translation>
+        <translation>Profil:</translation>
     </message>
     <message>
         <source>Frequency:</source>
@@ -306,6 +306,10 @@
     <message>
         <source>Options</source>
         <translation>Options</translation>
+    </message>
+    <message>
+        <source>The &apos;anonymous&apos; profile is a default profile allowing to play the automated exercise when it is available.</source>
+        <translation>Le profil &apos;anonyme&apos; est un profil par défaut permettant de jouer l&apos;exercice scénarisé (partiellement automatisé) lorsque celui-ci est disponible.</translation>
     </message>
 </context>
 <context>

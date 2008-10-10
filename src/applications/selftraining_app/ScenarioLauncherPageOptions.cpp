@@ -42,9 +42,17 @@ ScenarioLauncherPageOptions::ScenarioLauncherPageOptions( QWidgetStack* pages, P
     box->setMargin( 5 );
     QLabel* label = new QLabel( tools::translate( "ScenarioLauncherPageOptions", "Profile:" ), box );
     label->setBackgroundOrigin( QWidget::WindowOrigin );
-    profiles_ = new ProfileList( box, config );
-    profiles_->setMaximumWidth( 300 );
-    profiles_->setBackgroundOrigin( QWidget::WindowOrigin );
+    {
+        QHBox* hbox = new QHBox( box );
+        hbox->setBackgroundOrigin( QWidget::WindowOrigin );
+        profiles_ = new ProfileList( hbox, config );
+        profiles_->setMaximumWidth( 300 );
+        profiles_->setBackgroundOrigin( QWidget::WindowOrigin );
+        label = new QLabel( tools::translate( "ScenarioLauncherPageOptions", "The 'anonymous' profile is a default profile allowing to play the automated exercise when it is available." ), hbox );
+        label->setAlignment( Qt::WordBreak );
+        label->setMaximumWidth( 300 );
+        label->setBackgroundOrigin( QWidget::WindowOrigin );
+    }
     AddContent( box );    
     AddNextButton( tools::translate( "ScenarioLauncherPageOptions", "Start" ) , *this, SLOT( Start() ) );
 }
@@ -84,7 +92,7 @@ void ScenarioLauncherPageOptions::Start()
 {
     const QString session  = BuildSessionName().c_str();
     CreateSession( exercise_, session );
-    if ( profiles_->selectedItem() )
+    if ( profiles_->selectedItem() && profiles_->selectedItem()->text() != tools::translate( "ReadProfile", "anonymous" ) )
         running_.SetSession( new Session( controllers_.controller_, new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise( config_, exercise_, session, profiles_->selectedItem()->text(), true ) ) );
     else
         running_.SetSession( new Session( controllers_.controller_, new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise( config_, exercise_, session, true ) ) );
