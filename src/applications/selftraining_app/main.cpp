@@ -13,7 +13,7 @@
 #include "tools/WinArguments.h"
 #include "tools/win32/FlexLm.h"
 #include "tools/Win32/BugTrap.h"
-#include "gaming/Tools.h"
+#include "clients_gui/Tools.h"
 
 #include <windows.h>
 
