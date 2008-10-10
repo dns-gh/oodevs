@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>
-        <translation>scalped@masagroup.net</translation>
+        <translation>support@scalped.fr</translation>
     </message>
 </context>
 <context>

@@ -89,7 +89,7 @@
     <name>Application</name>
     <message>
         <source>sword-ot@masagroup.net</source>
-        <translation>scalped@masagroup.net</translation>
+        <translation>support@scalped.fr</translation>
     </message>
     <message>
         <source>SWORD Officer Training</source>
