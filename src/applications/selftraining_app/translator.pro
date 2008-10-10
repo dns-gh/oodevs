@@ -5,6 +5,7 @@ BattleCenterPage.cpp \
 ContentPage.cpp \
 ExerciseList.cpp \
 HomePage.cpp \
+main.cpp \
 MainWindow.cpp \
 MessageDialog.cpp \
 OptionsPage.cpp \

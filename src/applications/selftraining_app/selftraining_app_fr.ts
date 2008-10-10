@@ -29,6 +29,14 @@
         <source>The FrontEnd is already running. Close ?</source>
         <translation>SCALPED est déjà lancé. Fermer ? </translation>
     </message>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation>SCALPED</translation>
+    </message>
+    <message>
+        <source>sword-ot@masagroup.net</source>
+        <translation>scalped@masagroup.net</translation>
+    </message>
 </context>
 <context>
     <name>BattleCenterPage</name>

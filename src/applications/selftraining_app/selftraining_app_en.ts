@@ -25,6 +25,14 @@
         <source>The FrontEnd is already running. Close ?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sword-ot@masagroup.net</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BattleCenterPage</name>
