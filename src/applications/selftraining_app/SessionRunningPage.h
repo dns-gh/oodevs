@@ -55,7 +55,7 @@ public:
     void NotifyUpdated( const SessionStatus& status ) ; 
     //@}
 
-public slots:
+private slots:
     //! @name Slots
     //@{
     void UpdateProgress();

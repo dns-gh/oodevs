@@ -22,6 +22,7 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     : SpawnCommand( config, "simulation_app.exe", attach )
     , exercise_ ( exercise.ascii() ) 
     , session_ ( session.ascii() ) 
+    , configManipulator_( new ConfigurationManipulator( config_, exercise_, session_ ) )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
@@ -34,8 +35,9 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // -----------------------------------------------------------------------------
 StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach )
     : SpawnCommand( config, "simulation_app.exe", attach )
-    , exercise_ ( exercise.ascii() ) 
-    , session_ ( session.ascii() ) 
+    , exercise_ ( exercise.ascii() )
+    , session_ ( session.ascii() )
+    , configManipulator_( new ConfigurationManipulator( config_, exercise_, session_ ) )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
@@ -59,12 +61,11 @@ StartExercise::~StartExercise()
 bool StartExercise::Wait()
 {
     // if possible ( i.e the session use a logger ) , wait for the simulation to start ticking
-    ConfigurationManipulator configManipulator( config_, exercise_, session_ ); 
-    if ( configManipulator.GetValue<bool>("session/config/simulation/debug/@networklogger") )
+    if ( configManipulator_->GetValue< bool >( "session/config/simulation/debug/@networklogger" ) )
     {
-        unsigned int nPort = configManipulator.GetValue<unsigned int>( "session/config/simulation/debug/@networkloggerport" ) ; 
-        listener_.reset( new ExerciseListener( "localhost",  nPort ) ); 
-        return listener_->Wait(); 
+        unsigned int nPort = configManipulator_->GetValue< unsigned int >( "session/config/simulation/debug/@networkloggerport" );
+        listener_.reset( new ExerciseListener( "localhost",  nPort ) );
+        return listener_->Wait();
     }
     return true; 
 }
@@ -75,5 +76,5 @@ bool StartExercise::Wait()
 // -----------------------------------------------------------------------------
 unsigned int StartExercise::GetPercentage() const
 {
-    return ( listener_.get() ? listener_->GetPercentage() : 0 );
+    return listener_.get() ? listener_->GetPercentage() : 0;
 }

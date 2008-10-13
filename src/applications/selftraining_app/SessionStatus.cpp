@@ -14,9 +14,9 @@
 // Name: SessionStatus constructor
 // Created: RDS 2008-09-29
 // -----------------------------------------------------------------------------
-SessionStatus::SessionStatus( Status status, Session& session ) 
-    : session_( session ) 
-    , status_( status )  
+SessionStatus::SessionStatus( Status status, Session& session )
+    : session_( session )
+    , status_( status )
 {
     // NOTHING
 }
@@ -34,9 +34,9 @@ SessionStatus::~SessionStatus()
 // Name: SessionStatus::GetSession
 // Created: RDS 2008-09-29
 // -----------------------------------------------------------------------------
-Session& SessionStatus::GetSession() const 
+Session& SessionStatus::GetSession() const
 {
-    return session_ ; 
+    return session_;
 }
 
 // -----------------------------------------------------------------------------
@@ -45,6 +45,5 @@ Session& SessionStatus::GetSession() const
 // -----------------------------------------------------------------------------
 SessionStatus::Status SessionStatus::GetStatus() const
 {
-    return status_ ; 
+    return status_;
 }
-

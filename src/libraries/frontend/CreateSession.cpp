@@ -38,7 +38,7 @@ CreateSession::CreateSession( const tools::GeneralConfig& config, const std::str
 // -----------------------------------------------------------------------------
 CreateSession::~CreateSession()
 {
-    // NOTHING
+    setter_->Commit();
 }
 
 // -----------------------------------------------------------------------------

@@ -39,27 +39,21 @@ public:
 
     //! @name accessors
     //@{
-    bool IsRunning() const; 
-    virtual bool Wait() ; 
+    bool IsRunning() const;
+    virtual bool Wait();
     virtual void Start();
-    virtual unsigned int GetPercentage() ; 
+    virtual unsigned int GetPercentage() const;
     //@}
 
 protected:
     //! @name Operations
     //@{
-    void Stop(); 
+    void Stop();
     void AddRootDirArgument();
     void AddExerciseArgument( const QString& exercise );
     void AddSessionArgument ( const QString& session );
     void addArgument( QString arg );
     //@}
-
-    //! @name Member data 
-    //@{
-    const tools::GeneralConfig&     config_;
-    //@}
-
 
 private:
     //! @name Copy/Assignment
@@ -68,11 +62,9 @@ private:
     SpawnCommand& operator=( const SpawnCommand& ); //!< Assignment operator
     //@}
 
-private:
-    
-    //! @name forward definition
+    //! @name Types
     //@{
-    struct InternalData ;    //!< obscure data structure to hide OS implementation 
+    struct InternalData; //!< obscure data structure to hide OS implementation 
     //@}
 
     //! @name Helpers
@@ -80,11 +72,18 @@ private:
     void CloseWindows(); 
     //@}
 
+protected:
     //! @name Member data
     //@{
-    QString                         commandLine_;
-    std::auto_ptr<InternalData>     internal_ ;         //!< obscure data structure to hide OS implementation
-    bool                            attach_ ;           //!< if set to true , kill the attached process on exit 
+    const tools::GeneralConfig& config_;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    QString                     commandLine_;
+    std::auto_ptr<InternalData> internal_; //!< obscure data structure to hide OS implementation
+    bool                        attach_;   //!< if set to true , kill the attached process on exit 
     //@}
 };
 

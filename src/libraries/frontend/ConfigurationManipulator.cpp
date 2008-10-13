@@ -47,7 +47,7 @@ ConfigurationManipulator::ConfigurationManipulator( const tools::GeneralConfig& 
 // -----------------------------------------------------------------------------
 ConfigurationManipulator::~ConfigurationManipulator()
 {
-    document_->Serialize( *output_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -59,4 +59,14 @@ std::string ConfigurationManipulator::GetSessionXml( const tools::GeneralConfig&
     const bfs::path dir( config.BuildSessionDir( exercise, session ), bfs::native );
     bfs::create_directories( dir );
     return ( dir / "session.xml" ).native_file_string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConfigurationManipulator::Commit
+// Created: SBO 2008-10-13
+// -----------------------------------------------------------------------------
+void ConfigurationManipulator::Commit()
+{
+    if( document_.get() && output_.get() )
+        document_->Serialize( *output_ );
 }

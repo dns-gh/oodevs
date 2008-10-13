@@ -15,6 +15,7 @@
 namespace frontend
 {
     class ExerciseListener;
+    class ConfigurationManipulator;
 
 // =============================================================================
 /** @class  StartExercise
@@ -51,7 +52,8 @@ private:
     //@{
     std::string exercise_;
     std::string session_ ;
-    std::auto_ptr<ExerciseListener> listener_;
+    std::auto_ptr< ExerciseListener > listener_;
+    std::auto_ptr< ConfigurationManipulator > configManipulator_;
     //@}
 };
 

@@ -38,7 +38,7 @@ Session::Session( kernel::Controller& controller, frontend::SpawnCommand* simula
 // -----------------------------------------------------------------------------
 Session::~Session()
 {
-    if ( thread_.get() )
+    if( thread_.get() )
     {
         thread_->interrupt();
         simulation_.reset();
@@ -88,7 +88,7 @@ void Session::ThreadStart()
             boost::this_thread::interruption_point();
         }
     }
-    catch(...)
+    catch( ... )
     {
         // NOTHING
     }
@@ -100,7 +100,7 @@ void Session::ThreadStart()
 // -----------------------------------------------------------------------------
 bool Session::IsSimRunning() const
 {
-    return ( simulation_.get() && simulation_->IsRunning() );
+    return simulation_.get() && simulation_->IsRunning();
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ bool Session::IsSimRunning() const
 // -----------------------------------------------------------------------------
 bool Session::IsGUIRunning() const
 {
-    return ( gui_.get() && gui_->IsRunning() );
+    return gui_.get() && gui_->IsRunning();
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ bool Session::IsGUIRunning() const
 // -----------------------------------------------------------------------------
 bool Session::HasRunningProcess()
 {
-    return ( IsSimRunning() || IsGUIRunning() );
+    return IsSimRunning() || IsGUIRunning();
 }
 
 // -----------------------------------------------------------------------------
@@ -160,5 +160,5 @@ void Session::Stop( std::auto_ptr< frontend::SpawnCommand >& command, bool confi
 // -----------------------------------------------------------------------------
 unsigned int Session::GetPercentage() const
 {
-    return ( simulation_.get() ? simulation_->GetPercentage() : 0 );
+    return simulation_.get() ? simulation_->GetPercentage() : 0;
 }

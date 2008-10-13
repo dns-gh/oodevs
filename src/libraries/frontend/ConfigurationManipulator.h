@@ -50,7 +50,8 @@ public:
     template< typename T >
     void SetValue( const std::string& path, const T& value );
     template< typename T >
-    T GetValue ( const std::string& path ) const ;      
+    T GetValue ( const std::string& path ) const;
+    void Commit();
     //@}
 
 private:

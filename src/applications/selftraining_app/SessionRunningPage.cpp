@@ -23,25 +23,25 @@
 // Name: SessionRunningPage constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-SessionRunningPage::SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus) 
+SessionRunningPage::SessionRunningPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus )
     : ContentPage( pages, tools::translate( "SessionRunningPage", "Run Session" ) , previous )
-    , config_( config ) 
-    , sessionStatus_ ( sessionStatus ) 
-    , controllers_( controllers ) 
+    , config_( config )
+    , sessionStatus_( sessionStatus )
+    , controllers_( controllers )
 {
-    controllers_.controller_.Register( *this ) ; 
-    QVBox* box = new QVBox( this ) ; 
+    controllers_.controller_.Register( *this );
+    QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
-    box->layout()->setAlignment( QWidget::AlignCenter ) ; 
-    box->layout()->setSpacing( 10 ) ; 
-    status_  = new QLabel(box); 
-    status_->setAlignment( QWidget::AlignCenter ); 
+    box->layout()->setAlignment( QWidget::AlignCenter );
+    box->layout()->setSpacing( 10 );
+    status_  = new QLabel( box );
+    status_->setAlignment( QWidget::AlignCenter );
     status_->setBackgroundOrigin( QWidget::WindowOrigin );
-    timer_ = new QTimer( this ) ; 
-    connect( timer_, SIGNAL(timeout()), this, SLOT(UpdateProgress()) );
-    progressBar_ = new QProgressBar( 100, box ); 
-    progressBar_->setCenterIndicator( true ) ; 
-    AddContent( box );   
+    timer_ = new QTimer( this );
+    connect( timer_, SIGNAL( timeout() ), this, SLOT( UpdateProgress() ) );
+    progressBar_ = new QProgressBar( 100, box );
+    progressBar_->setCenterIndicator( true );
+    AddContent( box );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,9 +59,9 @@ SessionRunningPage::~SessionRunningPage()
 // -----------------------------------------------------------------------------
 void SessionRunningPage::StartProgressListening()
 {
-    progressBar_->setProgress( 0 ) ;
-    progressBar_->show(); 
-    timer_->start( 200, FALSE); 
+    progressBar_->setProgress( 0 );
+    progressBar_->show();
+    timer_->start( 200, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,9 +70,9 @@ void SessionRunningPage::StartProgressListening()
 // -----------------------------------------------------------------------------
 void SessionRunningPage::StopProgressListening()
 {
-    progressBar_->setProgress( 0 ) ; 
-    progressBar_->hide(); 
-    timer_->stop(); 
+    progressBar_->setProgress( 0 );
+    progressBar_->hide();
+    timer_->stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void SessionRunningPage::StopProgressListening()
 // -----------------------------------------------------------------------------
 void SessionRunningPage::UpdateProgress()
 {
-    progressBar_->setProgress( sessionStatus_.get() ? sessionStatus_->GetPercentage() : 0  ) ; 
+    progressBar_->setProgress( sessionStatus_.get() ? sessionStatus_->GetPercentage() : 0  );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,17 +90,17 @@ void SessionRunningPage::UpdateProgress()
 // -----------------------------------------------------------------------------
 void SessionRunningPage::SetSession( Session* session )
 {
-    if ( sessionStatus_.get() && sessionStatus_->HasRunningProcess()) 
+    if( sessionStatus_.get() && sessionStatus_->HasRunningProcess())
     {
         MessageDialog message( this, tools::translate( "SessionRunningPage", "Running Sessions" ), tools::translate( "SessionRunningPage", "Running session detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() != QMessageBox::Yes )
-            return ; 
+            return;
     }
-    sessionStatus_.reset( session ) ; 
-    if ( sessionStatus_.get() )
+    sessionStatus_.reset( session );
+    if( sessionStatus_.get() )
     {
-        sessionStatus_->Start(); 
-        StartProgressListening(); 
+        sessionStatus_->Start();
+        StartProgressListening();
     }
 }
 
@@ -110,32 +110,28 @@ void SessionRunningPage::SetSession( Session* session )
 // -----------------------------------------------------------------------------
 void SessionRunningPage::NotifyUpdated( const SessionStatus& status )
 {
-    switch( status.GetStatus() ) 
+    switch( status.GetStatus() )
     {
-    case SessionStatus::SIM_STARTED: 
-        status_->setText( tools::translate( "SessionRunningPage", "Starting simulation" ) ); 
-        setCursor( QCursor( Qt::WaitCursor ) ); 
-        break ; 
-    case SessionStatus::SIM_AVAILABLE: 
+    case SessionStatus::SIM_STARTED:
+        status_->setText( tools::translate( "SessionRunningPage", "Starting simulation" ) );
+        setCursor( QCursor( Qt::WaitCursor ) );
+        break;
+    case SessionStatus::SIM_AVAILABLE:
         status_->setText( tools::translate( "SessionRunningPage", "Simulation started" ) );
-        break ; 
-    case SessionStatus::GUI_OPENED: 
-        StopProgressListening(); 
+        break;
+    case SessionStatus::GUI_OPENED:
+        StopProgressListening();
         status_->setText( tools::translate( "SessionRunningPage", "Running gaming" ) );
-        setCursor( QCursor( Qt::ArrowCursor ) ); 
-        Previous(); 
-        qApp->mainWidget()->hide(); 
-        break ; 
-    case SessionStatus::GUI_CLOSED: 
-        status_->setText( "" ); 
-        if ( sessionStatus_.get() ) 
-            sessionStatus_->StopSimulation(); 
-        qApp->mainWidget()->show(); 
-        qApp->mainWidget()->setActiveWindow(); 
-        break ; 
+        setCursor( QCursor( Qt::ArrowCursor ) );
+        Previous();
+        qApp->mainWidget()->hide();
+        break;
+    case SessionStatus::GUI_CLOSED:
+        status_->setText( "" );
+        if ( sessionStatus_.get() )
+            sessionStatus_->StopSimulation();
+        qApp->mainWidget()->show();
+        qApp->mainWidget()->setActiveWindow();
+        break; 
     }
 }
-
-
-
-

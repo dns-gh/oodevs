@@ -50,18 +50,18 @@ bool ExerciseListener::Wait()
     percentage_ = 0;
     for(;;)
 	{
-        boost::asio::ip::tcp::iostream stream(strHost_, boost::lexical_cast<std::string>( nPort_) );
-		if ( stream.good())
+        boost::asio::ip::tcp::iostream stream( strHost_, boost::lexical_cast< std::string >( nPort_ ) );
+		if( stream.good() )
 		{
             unsigned int count = 5 ; //!< tick count
             unsigned int lineCount = 0;
-            while ( count > 0 )
+            while( count > 0 && stream.good() )
             {
                 std::string line;
                 std::getline( stream, line );
                 ++lineCount;
-                percentage_ = lineCount * 100 / 300 ;
-                if ( line.find( "tick" ) != std::string::npos )
+                percentage_ = lineCount * 100 / 300;
+                if( line.find( "tick" ) != std::string::npos )
                     --count;
     		}
             return true;

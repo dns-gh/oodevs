@@ -10,7 +10,7 @@
 #ifndef __SessionStatus_h_
 #define __SessionStatus_h_
 
-class Session ; 
+class Session; 
 
 // =============================================================================
 /** @class  SessionStatus
@@ -33,15 +33,14 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-    explicit SessionStatus( const Status status, Session& session );
+             SessionStatus( const Status status, Session& session );
     virtual ~SessionStatus();
     //@}
 
-    Session& GetSession() const ;  
-    Status GetStatus() const ; 
-
     //! @name Operations
     //@{
+    Session& GetSession() const;
+    Status GetStatus() const;
     //@}
 
 private:
@@ -51,15 +50,11 @@ private:
     SessionStatus& operator=( const SessionStatus& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-    Session& session_ ; 
-    Status   status_ ; 
+    Session& session_;
+    Status   status_;
     //@}
 };
 
