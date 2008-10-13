@@ -67,18 +67,6 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 Section "${APP_NAME}"
     SectionIn RO
 
-    ; resources: localization
-    SetOutPath "$INSTDIR\applications\resources\locales"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${RUNDIR}\*.qm"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
-    ; resources: documentation
-    SetOutPath "$INSTDIR\applications\resources\help"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\*.chm"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-
     SetOutPath "$INSTDIR\applications"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"
@@ -115,7 +103,7 @@ Section "${APP_NAME}"
     File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_5.dll"
     File "${RUNDIR}\shapelib.dll"
-    File /r /x ".svn" /x "locales" "${RUNDIR}\resources"
+    File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File /nonfatal "${RUNDIR}\*.manifest"
     File "*.ico"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
