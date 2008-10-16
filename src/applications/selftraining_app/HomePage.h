@@ -19,15 +19,13 @@ namespace tools
 
 namespace gui 
 {
-    class LinkInterpreter_ABC ; 
+    class LinkInterpreter_ABC;
 }
 
 namespace kernel
 {
-    class Controllers ; 
+    class Controllers;
 }
-
-class Session ; 
 
 // =============================================================================
 /** @class  HomePage
@@ -41,7 +39,7 @@ class HomePage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus );
+             HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter );
     virtual ~HomePage();
     //@}
 };

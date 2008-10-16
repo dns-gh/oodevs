@@ -9,13 +9,11 @@
 
 #include "selftraining_app_pch.h"
 #include "TutorialPage.h"
-#include "MessageDialog.h" 
-#include "MenuButton.h" 
 #include "moc_TutorialPage.cpp"
-#include "ExerciseList.h" 
-#include "SideList.h"
-#include "SessionRunningPage.h" 
-#include "Session.h" 
+#include "ExerciseList.h"
+#include "ProgressPage.h"
+#include "ProcessWrapper.h"
+#include "CompositeProcessWrapper.h"
 #include "frontend/commands.h"
 #include "frontend/CreateSession.h" 
 #include "frontend/StartExercise.h"
@@ -23,29 +21,19 @@
 #include "frontend/EditExercise.h"
 #include "frontend/StartReplay.h"
 #include "frontend/JoinAnalysis.h"
-#include "frontend/commands.h" 
+#include "frontend/CommandLineTools.h"
 #include "clients_gui/Tools.h"
 #include "clients_gui/LinkInterpreter_ABC.h" 
 #include "clients_kernel/Controllers.h" 
 #include "tools/GeneralConfig.h"
-#include <qlistbox.h>
-#include <qtextbrowser.h> 
-#include <qtabwidget.h> 
-#include <qgroupbox.h>
-#include <qlineedit.h>
-#include <qtabbar.h>
-#include <qcursor.h>
+#include <xeumeuleu/xml.h>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4511 4512 )
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem.hpp> 
 #pragma warning( pop )
 
-#include <xeumeuleu/xml.h>
-
-namespace bpt = boost::posix_time;
 namespace bfs = boost::filesystem;
 
 namespace
@@ -105,23 +93,17 @@ namespace
 // Name: TutorialPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, SessionRunningPage& running, gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus  )
+TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter )
     : ContentPage( pages, tools::translate( "TutorialPage", "Tutorials" ), previous )
     , config_( config )
     , controllers_ ( controllers )
-    , sessionStatus_( sessionStatus )
     , interpreter_ ( interpreter )
-    , running_ ( running ) 
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "TutorialPage", "Starting tutorial" ), controllers ) )
 {
     QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     exercises_ = new ExerciseList( box , config, "tutorials" );
     connect( exercises_, SIGNAL( Select( const QString& ) ), this, SLOT( OnStartExercise( const QString& ) ) );
-    statusLabel_ = new QLabel( box );
-    statusLabel_->setBackgroundOrigin( QWidget::WindowOrigin );
-    QHBox* hbox = new QHBox( box );
-    hbox->setBackgroundOrigin( QWidget::WindowOrigin );
-    hbox->layout()->setAlignment( Qt::AlignRight );
     AddContent( box );
     AddNextButton( tools::translate( "TutorialPage", "Start" ), *this, SLOT( OnStart() ) );
 }
@@ -148,30 +130,37 @@ void TutorialPage::Update()
 // Name: TutorialPage::OnStartExercise
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-void TutorialPage::OnStartExercise ( const QString& exercise )
+void TutorialPage::OnStartExercise( const QString& exercise )
 {
     const std::string target = ReadTargetApplication( config_, exercise );
     if( target == "gaming" )
     {
-        running_.SetSession( new Session( controllers_.controller_, new frontend::StartExercise( config_, exercise, "default" , true )
-                                                                  , new frontend::JoinExercise( config_, exercise, "default", true ) ) );
-        running_.show();
+        boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartExercise( config_, exercise, "default", true ) );
+        boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinExercise( config_, exercise, "default", true ) );
+        boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
+        progressPage_->Attach( process );
+        progressPage_->show();
     }
     else if( target == "preparation" )
     {
-        running_.SetSession( new Session( controllers_.controller_, 0, new frontend::EditExercise( config_, exercise, true ) ) );
-        running_.show();
+        boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exercise, true ) );
+        boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+        progressPage_->Attach( process );
+        progressPage_->show();
     }
     else if( target == "replayer" )
     {
-        running_.SetSession( new Session( controllers_.controller_, new frontend::StartReplay( config_, exercise, "default", 20000, true )
-                                                                  , new frontend::JoinAnalysis( config_, exercise, 20000 ) ) );
-        running_.show();
+        const unsigned int port = frontend::DispatcherPort( 1 ); // $$$$ SBO 2008-10-16: hard coded port
+        boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartReplay( config_, exercise, "default", port, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinAnalysis( config_, exercise, port, true ) );
+        boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
+        progressPage_->Attach( process );
+        progressPage_->show();
     }
 
     if( target != "gaming" )
     {
-        QStringList resources = GetResources( config_, exercise );
+        const QStringList resources = GetResources( config_, exercise );
         if( ! resources.empty() )
         {
             std::string file = *resources.begin();

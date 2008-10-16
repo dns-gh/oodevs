@@ -10,31 +10,29 @@
 #include "selftraining_app_pch.h"
 #include "ScenarioEditPage.h"
 #include "moc_ScenarioEditPage.cpp"
-#include "MenuButton.h" 
-#include "Session.h" 
-#include "clients_gui/Tools.h"
+#include "ProgressPage.h"
+#include "ProcessWrapper.h"
 #include "frontend/commands.h" 
 #include "frontend/CreateExercise.h" 
 #include "frontend/EditExercise.h" 
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
-#include <QComboBox.h>
+#include <qcombobox.h>
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage constructor
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
-ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus )
+ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers )
     : ContentPage( pages, tools::translate( "ScenarioEditPage", "Scenario" ), previous )
-    , controllers_ ( controllers ) 
-    , config_ ( config ) 
-    , sessionStatus_ ( sessionStatus ) 
+    , config_( config )
+    , controllers_( controllers )
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioEditPage", "Editing exercise" ), controllers ) )
 {
     QVBox* box = new QVBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
-    
     {
         QGroupBox* hbox = new QGroupBox( 1, Qt::Vertical, box );
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -55,7 +53,6 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
     }
     AddContent( box ); 
     AddNextButton( tools::translate( "ScenarioEditPage", "Edit" ), *this, SLOT( EditExercise() ) );
-    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,13 +84,11 @@ void ScenarioEditPage::Update()
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::CreateExercise()
 {
-    if( editTerrainList_->currentItem() > 0 )
+    if( editTerrainList_->currentItem() > 0 && !editName_->text().isEmpty() )
     {
         const std::string terrain  = editTerrainList_->currentText().ascii();
         frontend::CreateExercise( config_, editName_->text().ascii(), terrain, "ada", "france" );
-        sessionStatus_.reset( new Session( controllers_.controller_, 0, new frontend::EditExercise( config_, editName_->text(), true )  ) );
-        sessionStatus_->Start(); 
-        Previous();
+        Edit( editName_->text() );
     }    
 }
 
@@ -104,10 +99,17 @@ void ScenarioEditPage::CreateExercise()
 void ScenarioEditPage::EditExercise()
 {
     if( editExerciseList_->selectedItem() )
-    {
-        const std::string exercise = editExerciseList_->selectedItem()->text().ascii();
-        sessionStatus_.reset( new Session( controllers_.controller_, 0, new frontend::EditExercise( config_, exercise.c_str(), true )  ) );
-        sessionStatus_->Start(); 
-        Previous();
-    } 
+        Edit( editExerciseList_->selectedItem()->text() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::Edit
+// Created: SBO 2008-10-16
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::Edit( const QString& exercise )
+{
+    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exercise, true ) );
+    boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+    progressPage_->Attach( process );
+    progressPage_->show();
 }

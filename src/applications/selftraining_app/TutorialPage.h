@@ -12,20 +12,9 @@
 
 #include "ContentPage.h"
 
-class QListBox;
-class QTextBrowser;
-class QTabWidget; 
-class QLineEdit ; 
-
 namespace gui 
 {
-    class LinkInterpreter_ABC ; 
-}
-
-namespace frontend
-{
-    class SpawnCommand ; 
-    class InfoBubble ; 
+    class LinkInterpreter_ABC;
 }
 
 namespace tools
@@ -35,11 +24,10 @@ namespace tools
 
 namespace kernel
 {
-    class Controllers; 
+    class Controllers;
 }
 
-class Session ; 
-class SessionRunningPage; 
+class ProgressPage;
 class ExerciseList; 
 
 // =============================================================================
@@ -55,7 +43,7 @@ class TutorialPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, SessionRunningPage& running,  gui::LinkInterpreter_ABC& interpreter, boost::shared_ptr< Session > sessionStatus  );
+             TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter );
     virtual ~TutorialPage();
     //@}
 
@@ -63,8 +51,8 @@ private slots:
     
     //! @name Operations
     //@{
-    void OnStartExercise ( const QString& exercise );
-    void OnStart         ( );
+    void OnStartExercise( const QString& exercise );
+    void OnStart();
     //@}
 
 private:
@@ -78,21 +66,16 @@ private:
     //@{
     virtual void Update();
     void CreateSession( const QString& exercise, const QString& session );
-    void StartSession( Session* session ); 
     //@}
 
 private:
-    
-    boost::shared_ptr< Session > sessionStatus_ ; 
-
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    ExerciseList*               exercises_ ; 
-    gui::LinkInterpreter_ABC&   interpreter_ ; 
-    QLabel*                     statusLabel_ ; 
-    SessionRunningPage&         running_ ; 
-    kernel::Controllers&        controllers_ ; 
+    kernel::Controllers&        controllers_;
+    gui::LinkInterpreter_ABC&   interpreter_;
+    ProgressPage*               progressPage_;
+    ExerciseList*               exercises_;
     //@}
 };
 

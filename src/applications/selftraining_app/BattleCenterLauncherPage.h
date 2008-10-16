@@ -7,58 +7,59 @@
 //
 // *****************************************************************************
 
-#ifndef __ScenarioLauncherPageOptions_h_
-#define __ScenarioLauncherPageOptions_h_
+#ifndef __BattleCenterLauncherPage_h_
+#define __BattleCenterLauncherPage_h_
 
 #include "ContentPage.h"
-
-namespace tools
-{
-    class GeneralConfig;
-}
 
 namespace kernel
 {
     class Controllers;
 }
 
-class ProfileList;
+namespace tools
+{
+    class GeneralConfig;
+}
+
 class ProgressPage;
+class ExerciseList;
+class QSpinBox;
 
 // =============================================================================
-/** @class  ScenarioLauncherPageOptions
-    @brief  ScenarioLauncherPageOptions
+/** @class  BattleCenterLauncherPage
+    @brief  BattleCenterLauncherPage
 */
-// Created: RDS 2008-09-08
+// Created: SBO 2008-10-15
 // =============================================================================
-class ScenarioLauncherPageOptions : public ContentPage
+class BattleCenterLauncherPage : public ContentPage
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioLauncherPageOptions( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config );
-    virtual ~ScenarioLauncherPageOptions();
+             BattleCenterLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config );
+    virtual ~BattleCenterLauncherPage();
     //@}
 
-public slots:
+private slots:
     //! @name Slots
     //@{
-    void Update( const QString& exercise );
-    void Start();
+    void SelectExercise( const QString& name );
+    void StartExercise();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ScenarioLauncherPageOptions( const ScenarioLauncherPageOptions& );            //!< Copy constructor
-    ScenarioLauncherPageOptions& operator=( const ScenarioLauncherPageOptions& ); //!< Assignment operator
+    BattleCenterLauncherPage( const BattleCenterLauncherPage& );            //!< Copy constructor
+    BattleCenterLauncherPage& operator=( const BattleCenterLauncherPage& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void CreateSession( const QString& exercise, const QString& session );
+    virtual void Update();
     //@}
 
 private:
@@ -67,9 +68,11 @@ private:
     const tools::GeneralConfig& config_;
     kernel::Controllers& controllers_;
     ProgressPage* progressPage_;
-    ProfileList* profiles_;
+    QLineEdit* host_;
+    QSpinBox* port_;
+    ExerciseList* exercises_;
     QString exercise_;
     //@}
 };
 
-#endif // __ScenarioLauncherPageOptions_h_
+#endif // __BattleCenterLauncherPage_h_

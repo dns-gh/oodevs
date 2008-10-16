@@ -10,7 +10,17 @@
 #ifndef __BattleCenterPage_h_
 #define __BattleCenterPage_h_
 
-#include "ContentPage.h"
+#include "MenuPage.h"
+
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace tools
+{
+    class GeneralConfig;
+}
 
 // =============================================================================
 /** @class  BattleCenterPage
@@ -18,18 +28,14 @@
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class BattleCenterPage : public ContentPage
+class BattleCenterPage : public MenuPage
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             BattleCenterPage( QWidgetStack* pages, Page_ABC& previous );
+             BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers );
     virtual ~BattleCenterPage();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
@@ -37,15 +43,6 @@ private:
     //@{
     BattleCenterPage( const BattleCenterPage& );            //!< Copy constructor
     BattleCenterPage& operator=( const BattleCenterPage& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

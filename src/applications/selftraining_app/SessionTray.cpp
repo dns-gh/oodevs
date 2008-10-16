@@ -9,26 +9,20 @@
 
 #include "selftraining_app_pch.h"
 #include "SessionTray.h"
-
-#include "TrayIcon.h" 
-#include "TrayMenu.h" 
-#include "Session.h" 
-#include "SessionStatus.h" 
-#include "clients_kernel/Controllers.h" 
-#include "clients_kernel/Controller.h" 
+#include "TrayIcon.h"
+#include "TrayMenu.h"
+#include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: SessionTray constructor
 // Created: RDS 2008-09-26
 // -----------------------------------------------------------------------------
-SessionTray::SessionTray( QWidget *parent, kernel::Controllers& controllers )
-    : controllers_ ( controllers ) 
-    , trayMenu_ ( *new TrayMenu( parent ) )
-    , trayIcon_ ( *new TrayIcon( QPixmap( "resources/images/selftraining/csword.png" ), "Show window", &trayMenu_ ) ) 
+SessionTray::SessionTray( QWidget *parent )
+    : trayMenu_ ( *new TrayMenu( parent ) )
+    , trayIcon_ ( *new TrayIcon( QPixmap( "resources/images/selftraining/csword.png" ), tools::translate( "SessionTray", "Show window" ), &trayMenu_ ) )
 {
-    controllers_.controller_.Register( *this ) ; 
-    trayIcon_.show(); 
-    QObject::connect(&trayIcon_, SIGNAL( clicked( const QPoint&) ), parent, SLOT( Maximize() ) );
+    trayIcon_.show();
+    QObject::connect( &trayIcon_, SIGNAL( clicked( const QPoint& ) ), parent, SLOT( Maximize() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +31,5 @@ SessionTray::SessionTray( QWidget *parent, kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 SessionTray::~SessionTray()
 {
-    trayIcon_.hide(); 
+    trayIcon_.hide();
 }
-
-

@@ -10,9 +10,9 @@
 #include "selftraining_app_pch.h"
 #include "ScenarioLauncherPageOptions.h"
 #include "moc_ScenarioLauncherPageOptions.cpp"
-#include "SessionRunningPage.h" 
-#include "Session.h" 
 #include "ProfileList.h"
+#include "ProgressPage.h"
+#include "CompositeProcessWrapper.h"
 #include "frontend/StartExercise.h"
 #include "frontend/JoinExercise.h"
 #include "frontend/CreateSession.h"
@@ -30,11 +30,11 @@ namespace bpt = boost::posix_time;
 // Name: ScenarioLauncherPageOptions constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-ScenarioLauncherPageOptions::ScenarioLauncherPageOptions( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, SessionRunningPage& running, const tools::GeneralConfig& config )
+ScenarioLauncherPageOptions::ScenarioLauncherPageOptions( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config )
     : ContentPage( pages, tools::translate( "ScenarioLauncherPageOptions", "Options" ), previous )
-    , controllers_ ( controllers )
-    , running_ ( running )
-    , config_ ( config )
+    , config_( config )
+    , controllers_( controllers )
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPageOptions", "Starting session" ), controllers ) )
 {
     QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -90,13 +90,17 @@ namespace
 // -----------------------------------------------------------------------------
 void ScenarioLauncherPageOptions::Start()
 {
-    const QString session  = BuildSessionName().c_str();
+    const QString session = BuildSessionName().c_str();
     CreateSession( exercise_, session );
-    if ( profiles_->selectedItem() && profiles_->selectedItem()->text() != tools::translate( "ReadProfile", "anonymous" ) )
-        running_.SetSession( new Session( controllers_.controller_, new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise( config_, exercise_, session, profiles_->selectedItem()->text(), true ) ) );
+    boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exercise_, session, true ) );
+    boost::shared_ptr< frontend::SpawnCommand > client;
+    if( profiles_->selectedItem() && profiles_->selectedItem()->text() != tools::translate( "ReadProfile", "anonymous" ) )
+        client.reset( new frontend::JoinExercise( config_, exercise_, session, profiles_->selectedItem()->text(), true ) );
     else
-        running_.SetSession( new Session( controllers_.controller_, new frontend::StartExercise( config_, exercise_, session, true ), new frontend::JoinExercise( config_, exercise_, session, true ) ) );
-    running_.show();
+        client.reset( new frontend::JoinExercise( config_, exercise_, session, true ) );
+    boost::shared_ptr< frontend::Process_ABC > process( new CompositeProcessWrapper( controllers_.controller_, simulation, client ) );
+    progressPage_->Attach( process );
+    progressPage_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +113,7 @@ void ScenarioLauncherPageOptions::CreateSession( const QString& exercise, const 
     action.SetDefaultValues();
     {
         // force the networklogger to be used
-        action.SetOption( "session/config/simulation/debug/@networklogger"     , true );
-        action.SetOption( "session/config/simulation/debug/@networkloggerport" , 20000 );
+        action.SetOption( "session/config/simulation/debug/@networklogger", true );
+        action.SetOption( "session/config/simulation/debug/@networkloggerport", 20000 );
     }
 }

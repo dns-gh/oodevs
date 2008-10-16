@@ -47,6 +47,11 @@ private:
     StartExercise& operator=( const StartExercise& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual QString GetStatus() const;
+    //@}
+
 private:
     //! @name Member data 
     //@{

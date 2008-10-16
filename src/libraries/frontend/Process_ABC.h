@@ -7,41 +7,35 @@
 //
 // *****************************************************************************
 
-#ifndef __SessionTray_h_
-#define __SessionTray_h_
+#ifndef __Process_ABC_h_
+#define __Process_ABC_h_
 
-class TrayIcon;
-class TrayMenu;
+namespace frontend
+{
 
 // =============================================================================
-/** @class  SessionTray
-    @brief  SessionTray
+/** @class  Process_ABC
+    @brief  Process_ABC
 */
-// Created: RDS 2008-09-26
+// Created: SBO 2008-10-14
 // =============================================================================
-class SessionTray
+class Process_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SessionTray( QWidget *parent );
-    virtual ~SessionTray();
+             Process_ABC() {}
+    virtual ~Process_ABC() {}
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Operations
     //@{
-    SessionTray( const SessionTray& );            //!< Copy constructorS
-    SessionTray& operator=( const SessionTray& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    TrayMenu& trayMenu_;
-    TrayIcon& trayIcon_;
+    virtual unsigned int GetPercentage() const = 0;
+    virtual QString GetStatus() const = 0;
     //@}
 };
 
-#endif // __SessionTray_h_
+}
+
+#endif // __Process_ABC_h_

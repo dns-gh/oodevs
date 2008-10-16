@@ -35,9 +35,55 @@
     </message>
 </context>
 <context>
+    <name>BattleCenterJoinPage</name>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Joining host</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>localhost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BattleCenterLauncherPage</name>
+    <message>
+        <source>Start multiplayer session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting multiplayer session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BattleCenterPage</name>
     <message>
-        <source>BattleCenter</source>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -81,10 +127,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start Exercises</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -93,7 +135,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start battlecenter mode </source>
+        <source>Start single player training session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start or join a multiplayer training session</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -131,6 +177,17 @@
     </message>
 </context>
 <context>
+    <name>ProcessDialogs</name>
+    <message>
+        <source>Running training sessions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running training session detected. Close ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QuitPage</name>
     <message>
         <source>No</source>
@@ -155,14 +212,6 @@
 <context>
     <name>ReplayPage</name>
     <message>
-        <source>Running Sessions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Running session detected. Close ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Replay</source>
         <translation type="unfinished"></translation>
     </message>
@@ -172,6 +221,10 @@
     </message>
     <message>
         <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting replay session</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -205,6 +258,10 @@
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Editing exercise</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScenarioLauncherPage</name>
@@ -233,6 +290,10 @@
     </message>
     <message>
         <source>The &apos;anonymous&apos; profile is a default profile allowing to play the automated exercise when it is available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting session</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -266,6 +327,14 @@
         <source>Start scenarios</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Join multiplayer training session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start multiplayer training session</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SelfTrainingPage</name>
@@ -291,40 +360,9 @@
     </message>
 </context>
 <context>
-    <name>Session</name>
+    <name>SessionTray</name>
     <message>
-        <source>Running Sessions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Running session detected. Close ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SessionRunningPage</name>
-    <message>
-        <source>Running Sessions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Running session detected. Close ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starting simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Running gaming</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulation started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Run Session</source>
+        <source>Show window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -347,6 +385,10 @@
     </message>
     <message>
         <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting tutorial</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

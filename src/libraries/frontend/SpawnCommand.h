@@ -10,6 +10,7 @@
 #ifndef __SpawnCommand_h_
 #define __SpawnCommand_h_
 
+#include "Process_ABC.h"
 #include <qprocess.h>
 
 namespace tools
@@ -27,7 +28,7 @@ namespace frontend
 */
 // Created: AGE 2007-10-04
 // =============================================================================
-class SpawnCommand 
+class SpawnCommand : public Process_ABC
 {
 
 public:
@@ -43,6 +44,7 @@ public:
     virtual bool Wait();
     virtual void Start();
     virtual unsigned int GetPercentage() const;
+    virtual QString GetStatus() const;
     //@}
 
 protected:

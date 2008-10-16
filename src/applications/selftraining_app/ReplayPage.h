@@ -12,22 +12,6 @@
 
 #include "ContentPage.h"
 
-class QListBox;
-class QTextBrowser;
-class QTabWidget; 
-class QLineEdit ; 
-
-namespace gui 
-{
-    class LinkInterpreter_ABC ; 
-}
-
-namespace frontend
-{
-    class SpawnCommand ; 
-    class InfoBubble ; 
-}
-
 namespace tools
 {
     class GeneralConfig;
@@ -35,12 +19,11 @@ namespace tools
 
 namespace kernel
 {
-    class Controllers; 
+    class Controllers;
 }
 
-class Session ; 
-class SessionRunningPage; 
-class ExerciseList; 
+class ProgressPage;
+class ExerciseList;
 
 // =============================================================================
 /** @class  ReplayPage
@@ -55,7 +38,7 @@ class ReplayPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, SessionRunningPage& running, boost::shared_ptr< Session > sessionStatus  );
+             ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config );
     virtual ~ReplayPage();
     //@}
 
@@ -63,9 +46,9 @@ private slots:
     
     //! @name Operations
     //@{
-    void OnStartExercise  ( const QString& exercise );
-    void OnStart          ( );
-    void OnSelectExercise ( const QString& exercise );
+    void OnStartExercise( const QString& exercise );
+    void OnStart();
+    void OnSelectExercise( const QString& exercise );
     //@}
 
 private:
@@ -78,21 +61,17 @@ private:
     //! @name Helpers
     //@{
     virtual void Update();
-    void CreateSession( const QString& exercise, const QString& session );
-    void StartSession( Session* session ); 
+    void ConfigureSession( const QString& exercise, const QString& session );
     //@}
 
 private:
-    
-    boost::shared_ptr< Session > sessionStatus_ ; 
-
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    ExerciseList*               exercises_ ; 
+    kernel::Controllers&        controllers_;
+    ProgressPage*               progressPage_;
+    ExerciseList*               exercises_;
     QListBox*                   sessionList_;
-    kernel::Controllers&        controllers_ ; 
-    SessionRunningPage&         running_ ; 
     //@}
 };
 

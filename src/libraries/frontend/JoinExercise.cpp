@@ -9,6 +9,7 @@
 
 #include "frontend_pch.h"
 #include "JoinExercise.h"
+#include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
 #pragma warning( disable: 4127 4511 4512 )
 #include <boost/thread.hpp>
@@ -50,3 +51,13 @@ JoinExercise::~JoinExercise()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: JoinExercise::GetStatus
+// Created: SBO 2008-10-14
+// -----------------------------------------------------------------------------
+QString JoinExercise::GetStatus() const
+{
+    if( GetPercentage() < 100 )
+        return tools::translate( "JoinExercise", "Starting user interface..." );
+    return tools::translate( "JoinExercise", "User interface started" );
+}

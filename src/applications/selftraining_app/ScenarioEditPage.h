@@ -22,7 +22,7 @@ namespace kernel
     class Controllers; 
 }
 
-class Session; 
+class ProgressPage;
 
 // =============================================================================
 /** @class  ScenarioEditPage
@@ -38,15 +38,15 @@ class ScenarioEditPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus );
+             ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers );
     virtual ~ScenarioEditPage();
     //@}
 
 private slots:
     //! @name Operations
     //@{
-    void Update(); 
-    void CreateExercise(); 
+    void Update();
+    void CreateExercise();
     void EditExercise();
     //@}
 
@@ -57,15 +57,20 @@ private:
     ScenarioEditPage& operator=( const ScenarioEditPage& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void Edit( const QString& exercise );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_ ; 
-    QListBox*  editExerciseList_; 
+    const tools::GeneralConfig& config_;
+    kernel::Controllers& controllers_;
+    ProgressPage* progressPage_;
+    QListBox*  editExerciseList_;
     QComboBox* editTerrainList_;
-    QLineEdit* editName_ ; 
-    boost::shared_ptr< Session > sessionStatus_ ; 
-    kernel::Controllers& controllers_ ; 
+    QLineEdit* editName_;
     //@}
 };
 

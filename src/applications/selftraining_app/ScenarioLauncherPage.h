@@ -17,21 +17,13 @@ namespace tools
     class GeneralConfig;
 }
 
-namespace frontend
-{
-    class SpawnCommand;
-    class InfoBubble;
-}
-
 namespace kernel
 {
     class Controllers;
 }
 
-class Session;
 class ExerciseList;
 class ScenarioLauncherPageOptions;
-class SessionRunningPage;
 
 // =============================================================================
 /** @class  ScenarioLauncherPage
@@ -41,12 +33,11 @@ class SessionRunningPage;
 // =============================================================================
 class ScenarioLauncherPage : public ContentPage
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, SessionRunningPage& running, const tools::GeneralConfig& config, boost::shared_ptr< Session > sessionStatus  );
+             ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -60,17 +51,12 @@ private:
     //! @name Helpers
     //@{
     virtual void Update();
-    void CreateSession( const QString& exercise, const QString& session );
-    void StartSession( Session* session );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig&  config_;
-    boost::shared_ptr< Session > sessionStatus_;
-    ExerciseList*                exercises_;
-    ScenarioLauncherPageOptions* options_;
+    ExerciseList* exercises_;
     //@}
 };
 

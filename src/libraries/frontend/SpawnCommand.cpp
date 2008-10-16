@@ -9,6 +9,7 @@
 
 #include "frontend_pch.h"
 #include "SpawnCommand.h"
+#include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
 #include <windows.h>
 #include <tlhelp32.h>
@@ -153,7 +154,7 @@ bool SpawnCommand::Wait()
 {
     if( internal_->pid_.hProcess )
         WaitForSingleObject( internal_->pid_.hProcess, INFINITE );
-    return true ; 
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +163,9 @@ bool SpawnCommand::Wait()
 // -----------------------------------------------------------------------------
 bool SpawnCommand::IsRunning() const 
 {
-    return CreateToolhelp32Snapshot( TH32CS_SNAPMODULE, internal_->pid_.dwProcessId ) != INVALID_HANDLE_VALUE;
+    if( internal_->pid_.dwProcessId )
+        return CreateToolhelp32Snapshot( TH32CS_SNAPMODULE, internal_->pid_.dwProcessId ) != INVALID_HANDLE_VALUE;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -183,4 +186,15 @@ void SpawnCommand::addArgument( QString arg )
     if( !commandLine_.isEmpty() )
         commandLine_ += ' ';
     commandLine_ += arg;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::GetStatus
+// Created: SBO 2008-10-14
+// -----------------------------------------------------------------------------
+QString SpawnCommand::GetStatus() const
+{
+    if( !IsRunning() )
+        return tools::translate( "SpawnCommand", "Starting..." );
+    return tools::translate( "SpawnCommand", "Started" );
 }

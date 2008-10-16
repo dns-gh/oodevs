@@ -39,6 +39,10 @@ private:
     JoinExercise& operator=( const JoinExercise& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual QString GetStatus() const;
+    //@}
 };
 
 }

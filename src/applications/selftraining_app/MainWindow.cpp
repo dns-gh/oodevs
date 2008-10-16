@@ -26,19 +26,18 @@
 // Name: MainWindow constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( kernel::Controllers& controllers, boost::shared_ptr< Session > sessionStatus )
+MainWindow::MainWindow( kernel::Controllers& controllers )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , config_( new frontend::Config() )
-    , interpreter_( new LinkInterpreter( this, controllers ) ) 
+    , interpreter_( new LinkInterpreter( this, controllers ) )
 {
-
     config_->Parse( qApp->argc(), qApp->argv() );
     setCaption( tools::translate( "MainWindow", "SWORD Officer Training" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
     setIcon( MAKE_PIXMAP( csword ) );
     setFixedSize( 800, 600 );
     SetStyle();
     pages_ = new QWidgetStack( this );
-    new HomePage( pages_, *config_, controllers, *interpreter_, sessionStatus );
+    new HomePage( pages_, *config_, controllers, *interpreter_ );
     setCentralWidget( pages_ );
     CenterWindow();
 }
@@ -102,6 +101,6 @@ void MainWindow::CenterWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::Maximize()
 {
-    show(); 
-    setActiveWindow(); 
+    show();
+    setActiveWindow();
 }

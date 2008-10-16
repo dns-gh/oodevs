@@ -9,16 +9,20 @@
 
 #include "selftraining_app_pch.h"
 #include "BattleCenterPage.h"
+#include "BattleCenterLauncherPage.h"
+#include "BattleCenterJoinPage.h"
 #include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: BattleCenterPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-BattleCenterPage::BattleCenterPage( QWidgetStack* pages, Page_ABC& previous )
-    : ContentPage( pages, tools::translate( "BattleCenterPage", "BattleCenter" ), previous )
+BattleCenterPage::BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers )
+    : MenuPage( pages )
 {
-    // NOTHING
+    AddLink( tools::translate( "BattleCenterPage", "Start" ), *new BattleCenterLauncherPage( pages, *this, controllers, config ), true, tools::translate( "ScenarioPage", "Start multiplayer training session" ) );
+    AddLink( tools::translate( "BattleCenterPage", "Join" ),  *new BattleCenterJoinPage( pages, *this, controllers, config ), true, tools::translate( "ScenarioPage", "Join multiplayer training session" ) );
+    AddLink( tools::translate( "BattleCenterPage", "Back" ),  previous );
 }
 
 // -----------------------------------------------------------------------------

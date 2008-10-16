@@ -19,11 +19,8 @@ namespace tools
 
 namespace kernel
 {
-    class Controllers; 
+    class Controllers;
 }
-
-class Session; 
-class SessionRunningPage; 
 
 // =============================================================================
 /** @class  ScenarioPage
@@ -37,12 +34,8 @@ class ScenarioPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, SessionRunningPage& running, boost::shared_ptr< Session > sessionStatus );
+             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers );
     virtual ~ScenarioPage();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
@@ -50,15 +43,6 @@ private:
     //@{
     ScenarioPage( const ScenarioPage& );            //!< Copy constructor
     ScenarioPage& operator=( const ScenarioPage& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

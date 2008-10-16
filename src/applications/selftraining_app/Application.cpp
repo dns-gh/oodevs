@@ -16,7 +16,6 @@
 #include "clients_kernel/Tools.h" 
 #include "TrayIcon.h"
 #include "TrayMenu.h" 
-#include "Session.h" 
 #include "SessionTray.h" 
 #include "clients_kernel/Controllers.h"
 
@@ -25,12 +24,10 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv, const QString& locale )
-    : QApplication ( argc, argv )
-    , appMutex_( new tools::ApplicationMutex("SwordSelfTrainingApp") )
+    : QApplication( argc, argv )
+    , appMutex_( new tools::ApplicationMutex( "SwordSelfTrainingApp" ) )
     , controllers_( new kernel::Controllers() )  
-
 {
-
     AddTranslator( "qt", locale );
     AddTranslator( "frontend", locale );
     AddTranslator( "clients_kernel", locale );
@@ -38,40 +35,36 @@ Application::Application( int argc, char** argv, const QString& locale )
     AddTranslator( "selftraining_app", locale );    
 
     // Child processe status 
-    boost::shared_ptr< Session > sessionStatus ;  
-
-    mainWindow_  = new MainWindow( *controllers_, sessionStatus ) ; 
+    mainWindow_ = new MainWindow( *controllers_ );
     mainWindow_->show();
-    setMainWidget( mainWindow_ ) ; 
+    setMainWidget( mainWindow_ );
 
     // check for previous instances running 
-    tools::ProcessList processes ; 
-    if (processes.Contains("selftraining_app.exe"))
+    tools::ProcessList processes;
+    if( processes.Contains( "selftraining_app.exe" ) )
     {
         MessageDialog message( mainWindow_, tools::translate( "Application", "Already running" ), tools::translate( "Application", "The FrontEnd is already running. Close ?"  ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() == QMessageBox::Yes )
-            processes.KillAll("selftraining_app.exe"); 
+            processes.KillAll( "selftraining_app.exe" );
         else
         {
-            closeAllWindows(); 
-            return ; 
+            closeAllWindows();
+            return;
         }
     }
-    if (processes.Contains("simulation_app.exe"))
+    if( processes.Contains( "simulation_app.exe" ) )
     {
         MessageDialog message( mainWindow_, tools::translate( "Application", "Close Simulations" ), tools::translate( "Application", "Running Simulation(s) detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() == QMessageBox::Yes )
-            processes.KillAll("simulation_app.exe"); 
+            processes.KillAll( "simulation_app.exe" );
     }
-    if (processes.Contains("gaming_app.exe"))
+    if( processes.Contains( "gaming_app.exe" ) )
     {
         MessageDialog message( mainWindow_, tools::translate( "Application", "Close GUI" ), tools::translate( "Application", "Running GUI(s) detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() == QMessageBox::Yes )
-            processes.KillAll("gaming_app.exe"); 
+            processes.KillAll( "gaming_app.exe" );
     }
-
-    sessionTray_.reset( new SessionTray( mainWindow_, *controllers_ ) ) ;  
-
+    sessionTray_.reset( new SessionTray( mainWindow_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +73,7 @@ Application::Application( int argc, char** argv, const QString& locale )
 // -----------------------------------------------------------------------------
 Application::~Application()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -11,6 +11,7 @@
 #include "StartExercise.h"
 #include "ExerciseListener.h" 
 #include "ConfigurationManipulator.h" 
+#include "clients_gui/Tools.h"
 
 using namespace frontend;
 
@@ -60,11 +61,11 @@ StartExercise::~StartExercise()
 // -----------------------------------------------------------------------------
 bool StartExercise::Wait()
 {
-    // if possible ( i.e the session use a logger ) , wait for the simulation to start ticking
-    if ( configManipulator_->GetValue< bool >( "session/config/simulation/debug/@networklogger" ) )
+    // if possible (i.e the session use a logger), wait for the simulation to start ticking
+    if( configManipulator_->GetValue< bool >( "session/config/simulation/debug/@networklogger" ) )
     {
         unsigned int nPort = configManipulator_->GetValue< unsigned int >( "session/config/simulation/debug/@networkloggerport" );
-        listener_.reset( new ExerciseListener( "localhost",  nPort ) );
+        listener_.reset( new ExerciseListener( "localhost", nPort ) );
         return listener_->Wait();
     }
     return true; 
@@ -77,4 +78,15 @@ bool StartExercise::Wait()
 unsigned int StartExercise::GetPercentage() const
 {
     return listener_.get() ? listener_->GetPercentage() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartExercise::GetStatus
+// Created: SBO 2008-10-14
+// -----------------------------------------------------------------------------
+QString StartExercise::GetStatus() const
+{
+    if( GetPercentage() < 100 )
+        return tools::translate( "StartExercise", "Starting simulation..." );
+    return tools::translate( "StartExercise", "Simulation started" );
 }

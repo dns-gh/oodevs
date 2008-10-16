@@ -39,11 +39,61 @@
     </message>
 </context>
 <context>
+    <name>BattleCenterJoinPage</name>
+    <message>
+        <source>Join</source>
+        <translation>Rejoindre</translation>
+    </message>
+    <message>
+        <source>Joining host</source>
+        <translation>Connexion à l&apos;hôte</translation>
+    </message>
+    <message>
+        <source>Host:</source>
+        <translation>Hôte: </translation>
+    </message>
+    <message>
+        <source>localhost</source>
+        <translation>localhost</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation>Port: </translation>
+    </message>
+</context>
+<context>
+    <name>BattleCenterLauncherPage</name>
+    <message>
+        <source>Start multiplayer session</source>
+        <translation>Démarrer session multi-joueur</translation>
+    </message>
+    <message>
+        <source>Starting multiplayer session</source>
+        <translation>Démarrage session multi-joueur</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation>Démarrer</translation>
+    </message>
+</context>
+<context>
     <name>BattleCenterPage</name>
     <message>
         <source>BattleCenter</source>
-        <translation>Multi-joueur
+        <translation type="obsolete">Multi-joueur
 </translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation>Démarrer</translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Rejoindre</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Retour</translation>
     </message>
 </context>
 <context>
@@ -107,11 +157,19 @@
     </message>
     <message>
         <source>Start Exercises</source>
-        <translation>Démarrer un exercice</translation>
+        <translation type="obsolete">Démarrer un exercice</translation>
     </message>
     <message>
         <source>Start battlecenter mode </source>
-        <translation>Démarrer le mode multi-joueurs</translation>
+        <translation type="obsolete">Démarrer le mode multi-joueurs</translation>
+    </message>
+    <message>
+        <source>Start single player training session</source>
+        <translation>Démarrer une session d&apos;entraînement solo</translation>
+    </message>
+    <message>
+        <source>Start or join a multiplayer training session</source>
+        <translation>Démarrer ou rejoindre une session d&apos;entraînement multi-joueur</translation>
     </message>
 </context>
 <context>
@@ -145,6 +203,17 @@
     <message>
         <source>Options</source>
         <translation>Options</translation>
+    </message>
+</context>
+<context>
+    <name>ProcessDialogs</name>
+    <message>
+        <source>Running training sessions</source>
+        <translation>Sessions d&apos;entraînement en cours</translation>
+    </message>
+    <message>
+        <source>Running training session detected. Close ?</source>
+        <translation>Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
     </message>
 </context>
 <context>
@@ -192,11 +261,11 @@
     </message>
     <message>
         <source>Running Sessions</source>
-        <translation>Sessions en cours</translation>
+        <translation type="obsolete">Sessions en cours</translation>
     </message>
     <message>
         <source>Running session detected. Close ?</source>
-        <translation>Une session est en cours d&apos;execution. Fermer ? </translation>
+        <translation type="obsolete">Une session est en cours d&apos;execution. Fermer ? </translation>
     </message>
     <message>
         <source>Session:</source>
@@ -209,6 +278,10 @@
     <message>
         <source>Start</source>
         <translation>Démarrer</translation>
+    </message>
+    <message>
+        <source>Starting replay session</source>
+        <translation>Démarrage session rejeu</translation>
     </message>
 </context>
 <context>
@@ -248,6 +321,10 @@
     <message>
         <source>Edit</source>
         <translation>Editer</translation>
+    </message>
+    <message>
+        <source>Editing exercise</source>
+        <translation>Edition exercice</translation>
     </message>
 </context>
 <context>
@@ -319,6 +396,10 @@
         <source>The &apos;anonymous&apos; profile is a default profile allowing to play the automated exercise when it is available.</source>
         <translation>Le profil &apos;anonyme&apos; est un profil par défaut permettant de jouer l&apos;exercice scénarisé (partiellement automatisé) lorsque celui-ci est disponible.</translation>
     </message>
+    <message>
+        <source>Starting session</source>
+        <translation>Démarrage session</translation>
+    </message>
 </context>
 <context>
     <name>ScenarioPage</name>
@@ -354,6 +435,18 @@
         <source>Editer scenario</source>
         <translation type="obsolete">coucou</translation>
     </message>
+    <message>
+        <source>Start</source>
+        <translation type="obsolete">Démarrer</translation>
+    </message>
+    <message>
+        <source>Join multiplayer training session</source>
+        <translation>Rejoindre une session d&apos;entraînement multi-joueur</translation>
+    </message>
+    <message>
+        <source>Start multiplayer training session</source>
+        <translation>Démarrer une session d&apos;entraînement multi-joueur</translation>
+    </message>
 </context>
 <context>
     <name>SelfTrainingPage</name>
@@ -386,26 +479,26 @@
     <name>Session</name>
     <message>
         <source>Running Sessions</source>
-        <translation>Sessions en cours</translation>
+        <translation type="obsolete">Sessions en cours</translation>
     </message>
     <message>
         <source>Running session detected. Close ?</source>
-        <translation>Une session est en cours. Fermer ? </translation>
+        <translation type="obsolete">Une session est en cours. Fermer ? </translation>
     </message>
 </context>
 <context>
     <name>SessionRunningPage</name>
     <message>
         <source>Running Sessions</source>
-        <translation>Sessions en cours</translation>
+        <translation type="obsolete">Sessions en cours</translation>
     </message>
     <message>
         <source>Running session detected. Close ?</source>
-        <translation>Un exercice est en cours. Terminer ? </translation>
+        <translation type="obsolete">Un exercice est en cours. Terminer ? </translation>
     </message>
     <message>
         <source>Starting simulation</source>
-        <translation>Démarrage de la simulation</translation>
+        <translation type="obsolete">Démarrage de la simulation</translation>
     </message>
     <message>
         <source>Simualtion started</source>
@@ -413,7 +506,7 @@
     </message>
     <message>
         <source>Running gaming</source>
-        <translation>Démarrage de l&apos;interface graphique</translation>
+        <translation type="obsolete">Démarrage de l&apos;interface graphique</translation>
     </message>
     <message>
         <source>SessionRunningPage</source>
@@ -421,11 +514,18 @@
     </message>
     <message>
         <source>Simulation started</source>
-        <translation>Simulation démarrée</translation>
+        <translation type="obsolete">Simulation démarrée</translation>
     </message>
     <message>
         <source>Run Session</source>
-        <translation>Démarrer une session</translation>
+        <translation type="obsolete">Démarrer une session</translation>
+    </message>
+</context>
+<context>
+    <name>SessionTray</name>
+    <message>
+        <source>Show window</source>
+        <translation>Afficher la fenêtre</translation>
     </message>
 </context>
 <context>
@@ -472,6 +572,10 @@
     <message>
         <source>Start</source>
         <translation>Démarrer</translation>
+    </message>
+    <message>
+        <source>Starting tutorial</source>
+        <translation>Démarrage didacticiel</translation>
     </message>
 </context>
 </TS>

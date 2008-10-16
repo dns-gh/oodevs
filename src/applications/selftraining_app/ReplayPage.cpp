@@ -9,82 +9,51 @@
 
 #include "selftraining_app_pch.h"
 #include "ReplayPage.h"
-#include "MessageDialog.h" 
-#include "MenuButton.h" 
-#include "SessionRunningPage.h" 
 #include "moc_ReplayPage.cpp"
 #include "ExerciseList.h" 
-#include "SideList.h"
-#include "Session.h" 
+#include "CompositeProcessWrapper.h"
+#include "ProcessDialogs.h"
+#include "ProgressPage.h"
 #include "frontend/commands.h"
-#include "frontend/CreateSession.h" 
+#include "frontend/CommandLineTools.h"
+#include "frontend/CreateSession.h"
 #include "frontend/StartReplay.h"
 #include "frontend/JoinAnalysis.h"
-#include "frontend/commands.h" 
 #include "clients_gui/Tools.h"
-#include "clients_gui/LinkInterpreter_ABC.h" 
 #include "clients_kernel/Controllers.h" 
 #include "tools/GeneralConfig.h"
-#include <qlistbox.h>
-#include <qtextbrowser.h> 
-#include <qtabwidget.h> 
-#include <qgroupbox.h>
-#include <qlineedit.h>
-#include <qtabbar.h>
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4511 4512 )
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem.hpp> 
-#pragma warning( pop )
-
-namespace bpt = boost::posix_time;
-namespace bfs = boost::filesystem;
-
-namespace
-{
-    std::string BuildSessionName()
-    {
-        return bpt::to_iso_string( bpt::second_clock::local_time() );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, SessionRunningPage& running, boost::shared_ptr< Session > sessionStatus  )
+ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config )
     : ContentPage( pages, tools::translate( "ReplayPage", "Replay" ), previous )
-    , controllers_ ( controllers ) 
     , config_( config )
-    , running_( running ) 
-    , sessionStatus_( sessionStatus ) 
+    , controllers_( controllers ) 
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ReplayPage", "Starting replay session" ), controllers ) )
 {
-    QVBox* mainBox = new QVBox ( this ); 
+    QVBox* mainBox = new QVBox( this );
     {
+        QHBox* hbox = new QHBox( mainBox );
+        hbox->setBackgroundOrigin( QWidget::WindowOrigin );
+        hbox->setSpacing( 10 );
         {
-            QHBox* hbox = new QHBox ( mainBox ) ; 
-            hbox->setBackgroundOrigin( QWidget::WindowOrigin ); 
-            hbox->setSpacing( 10 );  
-            {
-                exercises_ = new ExerciseList( hbox, config,"",false )  ; 
-                connect( exercises_, SIGNAL( Select( const QString& ) ), this, SLOT( OnStartExercise( const QString& ) ) ); 
-                connect( exercises_, SIGNAL( Highlight( const QString& ) ), this, SLOT( OnSelectExercise( const QString& ) ) ); 
-            }
-            {
-                QLabel* label ; 
-                QVBox* vbox = new QVBox( hbox ) ;
-                vbox->setSpacing( 5 );
-                vbox->setBackgroundOrigin( QWidget::WindowOrigin );
-                label = new QLabel( tools::translate( "ReplayPage", "Session:" ) , vbox ); 
-                label->setBackgroundOrigin( QWidget::WindowOrigin );
-                sessionList_ = new QListBox( vbox);
-            }
+            exercises_ = new ExerciseList( hbox, config,"",false );
+            connect( exercises_, SIGNAL( Select( const QString& ) ), this, SLOT( OnStartExercise( const QString& ) ) );
+            connect( exercises_, SIGNAL( Highlight( const QString& ) ), this, SLOT( OnSelectExercise( const QString& ) ) );
+        }
+        {
+            QVBox* vbox = new QVBox( hbox );
+            vbox->setSpacing( 5 );
+            vbox->setBackgroundOrigin( QWidget::WindowOrigin );
+            QLabel* label = new QLabel( tools::translate( "ReplayPage", "Session:" ) , vbox );
+            label->setBackgroundOrigin( QWidget::WindowOrigin );
+            sessionList_ = new QListBox( vbox );
         }
     }
-    AddContent( mainBox );    
-    AddNextButton( tools::translate( "ReplayPage", "Start" ), *this, SLOT( OnStart() ) ); 
+    AddContent( mainBox );
+    AddNextButton( tools::translate( "ReplayPage", "Start" ), *this, SLOT( OnStart() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,21 +80,20 @@ void ReplayPage::Update()
 // -----------------------------------------------------------------------------
 void ReplayPage::OnStartExercise( const QString& exercise )
 {
-    if (sessionStatus_.get() && sessionStatus_->HasRunningProcess()) 
-    {
-        MessageDialog message( this, tools::translate( "ReplayPage", "Running Sessions" ), tools::translate( "ReplayPage", "Running session detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
-        if( message.exec() != QMessageBox::Yes )
-            return ; 
-    }
-
+    if( exercise.isEmpty() || ! dialogs::KillRunningProcesses( this ) )
+        return;
     QString session = "";  
     if( QListBoxItem* sessionItem = sessionList_->selectedItem() )
         session = sessionItem->text();
-    if ( session != "" ) 
+    if( !session.isEmpty() )
     {
-        CreateSession( exercise, session );
-        running_.SetSession( new Session( controllers_.controller_, new frontend::StartReplay( config_, exercise, session, 20000, true ), new frontend::JoinAnalysis( config_, exercise, 20000 ) ) ); 
-        running_.show();  
+        const unsigned int port = frontend::DispatcherPort( 1 ); // $$$$ SBO 2008-10-16: hard coded exercise number
+        ConfigureSession( exercise, session );
+        boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exercise, session, port, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exercise, port, true ) );
+        boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, replay, client ) );
+        progressPage_->Attach( process );
+        progressPage_->show();
     }
 }
 
@@ -133,7 +101,7 @@ void ReplayPage::OnStartExercise( const QString& exercise )
 // Name: TutorialPage::OnStart
 // Created: RDS 2008-09-01
 // -----------------------------------------------------------------------------
-void ReplayPage::OnStart( )
+void ReplayPage::OnStart()
 {
     QString exercise = exercises_->GetHighlight() ; 
     if ( exercise != "" ) 
@@ -151,23 +119,13 @@ void ReplayPage::OnSelectExercise( const QString& exercise )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::StartSession
-// Created: RDS 2008-08-28
-// -----------------------------------------------------------------------------
-void ReplayPage::StartSession( Session* session )
-{
-    sessionStatus_.reset( session ) ; 
-    sessionStatus_->Start(); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReplayPage::CreateSession
+// Name: ReplayPage::ConfigureSession
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
-void ReplayPage::CreateSession( const QString& exercise, const QString& session )
+void ReplayPage::ConfigureSession( const QString& exercise, const QString& session )
 {
     frontend::CreateSession action( config_, exercise.ascii(), session.ascii() );
-    action.SetDefaultValues();
+    action.SetDefaultValues(); // $$$$ SBO 2008-10-16: erases specific parameters
     {
         // force the networklogger to be used 
         action.SetOption( "session/config/simulation/debug/@networklogger"     , true );

@@ -32,6 +32,7 @@ ContentPage::ContentPage( QWidgetStack* pages, const QString& title, Page_ABC& p
     AddTitle( title );
     AddBackButton( previous );
     layout()->setAutoAdd( false );
+    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -107,6 +108,5 @@ QButton* ContentPage::AddNextButton( const QString& caption )
 // -----------------------------------------------------------------------------
 void ContentPage::Previous()
 {
-    previous_.show(); 
+    qApp->postEvent( &previous_, new QShowEvent() );
 }
-

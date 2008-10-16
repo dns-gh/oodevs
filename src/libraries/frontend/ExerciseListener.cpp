@@ -64,6 +64,7 @@ bool ExerciseListener::Wait()
                 if( line.find( "tick" ) != std::string::npos )
                     --count;
     		}
+            percentage_ = 100;
             return true;
         }
         else

@@ -10,7 +10,6 @@
 #include "selftraining_app_pch.h"
 #include "TrayMenu.h"
 #include "moc_TrayMenu.cpp"
-#include "Session.h" 
 #include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
