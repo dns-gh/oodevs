@@ -525,7 +525,7 @@
             <arg value="/DAPP_VERSION=${version.version}"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
-        <checksum file="SCALPED.nsi" forceOverwrite="yes"/>
+        <checksum file="${dist.dir}/current/${platform}/SCALPED.exe" forceOverwrite="yes"/>
     </target>
 
     <target name="crossbow-installer" description="create the crossbow installer">
