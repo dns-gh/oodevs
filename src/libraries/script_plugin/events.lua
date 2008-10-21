@@ -19,6 +19,14 @@ function AtState( state, f )
     }
 end
 
+function ChangeState( state )
+    plugin:Later( function() fsm:ChangeState( state ) end )
+end
+
+function Deactivate()
+    plugin:Later( function() fsm:Deactivate() end )
+end
+
 -- Sequences
 local timeSequences = {}
 function TimeSequence( name, time, f )

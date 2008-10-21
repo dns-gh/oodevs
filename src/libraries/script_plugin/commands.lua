@@ -54,7 +54,7 @@ function WaitForUserPhase( phase )
 end
 
 function Center( t )
-    local target = t.target or "\"" .. table.concat( t.coordinates, "," ) .. "\""
+    local target = t.target or "\"loc://" .. table.concat( t.coordinates, "," ) .. "\""
     Command( t, "/center " .. target )
 end
 
