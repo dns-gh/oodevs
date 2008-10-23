@@ -93,3 +93,12 @@ QString ProcessWrapper::GetStatus() const
 {
     return process_.get() ? process_->GetStatus() : "";
 }
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::GetStartedExercise
+// Created: LDC 2008-10-23
+// -----------------------------------------------------------------------------
+std::string ProcessWrapper::GetStartedExercise() const
+{
+    return process_->GetStartedExercise();
+}

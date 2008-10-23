@@ -11,13 +11,13 @@
 #include "Application.h"
 #include "MainWindow.h"
 #include "MessageDialog.h" 
-#include "tools/ProcessList.h"
-#include "tools/ApplicationMutex.h" 
-#include "clients_kernel/Tools.h" 
+#include "SessionTray.h" 
 #include "TrayIcon.h"
 #include "TrayMenu.h" 
-#include "SessionTray.h" 
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h" 
+#include "tools/ApplicationMutex.h" 
+#include "tools/ProcessList.h"
 
 // -----------------------------------------------------------------------------
 // Name: Application constructor

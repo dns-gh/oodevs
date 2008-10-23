@@ -11,41 +11,68 @@
     </message>
 </context>
 <context>
+    <name>ADN_AiEngine_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Thread management - Invalid operational state effect value (must be &gt;=0 and &lt;= 100)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Thread management - Invalid neutralization state effect value (must be &gt;=0 and &lt;= 100)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Op. state computation - Invalid equipment weight sum (must be &gt;=0 and &lt;= 1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_AiEngine_GUI</name>
-    <message>
-        <source>Danger management</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maximum decrease due to the operational state</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Maximum decrease due to the pertinence</source>
+        <source>Threat management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Maximum decrease due to the neutralized</source>
+        <source>Operational state maximum effect on threat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Operationnal state</source>
+        <source>Information relevance maximum effect on threat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Non major composantes weight</source>
+        <source>Neutralization state maximum effect on threat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Major composantes weight</source>
+        <source>Operational state computation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Humans weight</source>
+        <source>Non major equipments state weight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Major equipments state weight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crew state weight</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -60,39 +87,45 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Comp.</source>
+        <source>Equipments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Contenance</source>
+        <source>Resources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Norm. Conso</source>
+        <source>Norm. Consumption</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Conso Move</source>
+        <source>Consumption
+Moving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Autonomy Move</source>
+        <source>Autonomy
+Moving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Conso Engine Stopped</source>
+        <source>Consumption
+Parked engine stopped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Autonomy Engine Stopped</source>
+        <source>Autonomy
+Parked engine Stopped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Conso Engine Started</source>
+        <source>Consumption
+Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Autonomy Engine Started</source>
+        <source>Autonomy
+Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -107,43 +140,71 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Comp.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Norm. Conso</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Conso Move</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Autonomy Move</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Conso Engine Stopped</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Autonomy Engine Stopped</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Conso Engine Started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Autonomy Engine Started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Norm. Consumption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumption
+Moving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autonomy
+Moving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumption
+Parked engine stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autonomy
+Parked engine Stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumption
+Parked engine running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autonomy
+Parked engine running</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Automata_Data::AutomatonInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Automata_Data::UnitInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat - Invalid unit type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -162,10 +223,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Model</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Command post</source>
         <translation type="unfinished"></translation>
     </message>
@@ -175,18 +232,6 @@
     </message>
     <message>
         <source>Sub-units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automata [ off/sic/troop ]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit [ off/sic/troop ]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Composante [ off/sic/troop ]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -217,6 +262,22 @@
         <source>(%1..%2) x %3 [ %4/%5/%6 ]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Doctrine model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Automata_ListView</name>
@@ -232,19 +293,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add sub-unit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove sub-unit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Min Nbr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Max Nbr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add subordinate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove subordinate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -307,11 +368,23 @@
         <source>New breakdown</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_Data::RepairPartInfo</name>
     <message>
-        <source>Repair part &apos;%1&apos; does not exist.</source>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdowns - Invalid part &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -330,18 +403,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NTI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repair time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repair time variance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Required parts</source>
         <translation type="unfinished"></translation>
     </message>
@@ -350,7 +411,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Average diagnostic time</source>
+        <source>Seriousness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repair duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repair duration variance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average diagnostic duration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -396,6 +469,67 @@
     </message>
 </context>
 <context>
+    <name>ADN_Categories_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated volume type names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Invalid volume type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated resource nature names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Invalid resource nature</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Categories_Data::ArmorInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Categories_Data::AttritionEffectOnHuman</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Categories_GUI</name>
     <message>
         <source>Armor classes</source>
@@ -430,15 +564,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>EVA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NEVA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -454,11 +580,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dotation natures</source>
+        <source>Nature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nature</source>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource natures</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -488,15 +622,15 @@
 <context>
     <name>ADN_Communications_GUI</name>
     <message>
-        <source>Communications blackout effects</source>
+        <source>Jamming</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reload time factor</source>
+        <source>Effect on reloading duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Speed factor</source>
+        <source>Effect on movement speed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -541,44 +675,122 @@
 <context>
     <name>ADN_Composantes_Data</name>
     <message>
-        <source>New composante creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Composantes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Creation completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Click &quot;Done&quot; to create the new composante.</source>
+        <source>New equipment creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new equipment.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Composantes_Data::BreakdownGroupInfos</name>
     <message>
-        <source>Data error</source>
+        <source>Invalid data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The sum of breakdown odds for composante x is not equal to 100.</source>
+        <source>Equipment - Invalid breakdown data : sum != 100</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Composantes_Data::BreakdownInfos</name>
     <message>
-        <source>Breakdown %1 does not exist.</source>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Composantes_Data::CategoryInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Composantes_Data::ComposanteInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor and/or volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Composantes_Data::ConsumptionsInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid activty &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Composantes_Data::LogSupplyInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Composantes_Data::ObjectInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid object type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Composantes_Data::RadarInfos</name>
     <message>
-        <source>Radar %1 does not exist.</source>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Composantes_Data::WeaponInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -611,10 +823,6 @@
 </context>
 <context>
     <name>ADN_Composantes_GUI</name>
-    <message>
-        <source>Composante</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Data</source>
         <translation type="unfinished"></translation>
@@ -736,10 +944,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weapons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Contenance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -792,23 +996,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Health</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ambulance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ambulance releve</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Doctor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sorts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -820,35 +1008,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Treats shock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Capacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load time per person</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unload time per person</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>shock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -865,62 +1029,6 @@
     </message>
     <message>
         <source>m3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Carried nature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tower</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unload time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NTI 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NTI 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NTI 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Max repair time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can repair electronic breakdowns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can repair mobility breakdowns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Composante speeds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Composantes/</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Composantes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -944,15 +1052,167 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Disembarking time per person</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Radars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Composante_%1.htm</source>
+        <source>Equipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ambulance, collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ambulance, evacuation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Treats psyop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading duration per person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unloading duration per person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capabilities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>psyop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource nature carried</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tow truck</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unloading duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Seriousness level 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Seriousness level 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Seriousness level 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max repair duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can fix electronic breakdowns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can fix mobility breakdowns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment speeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max steepness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mounting duration per person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dismounting duration per person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading duration per ton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unloading duration per ton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial construction duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial destruction duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duration construction factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duration destruction factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mining duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine clearing duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bypass factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment_%1.htm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1004,15 +1264,15 @@
 <context>
     <name>ADN_Composantes_WeaponsListView</name>
     <message>
-        <source>Weapons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add weapon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove weapon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon systems</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1043,11 +1303,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SCIPIO executable (*.exe)</source>
+        <source>Select SIM to use for data test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select SIM to use for data test</source>
+        <source>Sword Officer Training executable (*.exe)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1090,11 +1350,63 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>% repairable with evac.</source>
+        <source>% maintenance support needed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>% repairable w/o evac.</source>
+        <source>% on site fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipement_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipement_Data::AmmoCategoryInfo</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipement_Data::CategoryInfo</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipement_Data::IndirectAmmoInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1153,10 +1465,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tranche D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Attritions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1197,19 +1505,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Deploy time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lifetime</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mine ammo parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nbr of mines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1221,19 +1517,35 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Repair no evac</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repair evac</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Destroyed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>PKs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For indirect fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Span</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mines quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1247,19 +1559,19 @@
 <context>
     <name>ADN_Equipement_Wizard</name>
     <message>
-        <source>New equipement creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipements</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Creation completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Click &quot;Done&quot; to create the new equipement category.</source>
+        <source>New resource creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new resource category.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1283,66 +1595,73 @@
     </message>
 </context>
 <context>
+    <name>ADN_Health_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Health_GUI</name>
     <message>
-        <source>Health</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Diagnostic time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sorting time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Contamination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Treating time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resting time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repartition (%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Life expectency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resources availability warnings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Changeover</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Collect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Doctors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Medical system data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diagnostic duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triage duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Psyop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Treatment duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convalescence duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Seriousness distribution (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Life span</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments availability warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ambulances - evacuation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ambulances - collection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_HumanFactors_GUI</name>
-    <message>
-        <source>Training modifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Newbie</source>
         <translation type="unfinished"></translation>
@@ -1360,10 +1679,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Normal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tired</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1372,23 +1687,31 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Speed factor</source>
+        <source>Experience modifiers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reloading speed factor</source>
+        <source>Not tired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Stance change speed factor</source>
+        <source>Effect on movement speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>PH factor</source>
+        <source>Effect on reloading duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sensors distance factor</source>
+        <source>Effect on stance changes duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effect on PH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effect on detection ranges</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1403,23 +1726,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Agents</source>
+        <source>Parameters on known units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Maximum lifetime</source>
+        <source>Maximum life span</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Maximum distance between knowledge and real unit</source>
+        <source>Maximum distance between known unit and real unit positions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Interpolation time</source>
+        <source>Extrapolation duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Populations</source>
+        <source>Parameters on known populations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1477,11 +1800,15 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Indirect</source>
+        <source>Shooter&apos;s stance / Target&apos;s stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Shooter&apos;s stance / Target&apos;s stance</source>
+        <source>Phs modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1525,15 +1852,15 @@ stance</source>
 <context>
     <name>ADN_ListView_Categories_DotationNature</name>
     <message>
-        <source>Dotation Natures</source>
+        <source>Resource Natures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New dotation nature</source>
+        <source>New nature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete dotation nature</source>
+        <source>Delete nature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1555,11 +1882,11 @@ stance</source>
 <context>
     <name>ADN_ListView_Composantes</name>
     <message>
-        <source>Composantes</source>
+        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
+        <source>Equipments</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1647,15 +1974,15 @@ stance</source>
 <context>
     <name>ADN_ListView_Orders</name>
     <message>
-        <source>Orders</source>
+        <source>Frag orders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add order</source>
+        <source>Add frag order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove order</source>
+        <source>Remove frag order</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1684,10 +2011,6 @@ stance</source>
 <context>
     <name>ADN_MainWindow</name>
     <message>
-        <source>Scipio Adaptation Tool - No Project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;New</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1697,10 +2020,6 @@ stance</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Test data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1728,23 +2047,11 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Confi&amp;guration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data test...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scipio Adaptation Tool - </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1784,10 +2091,6 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scipio Adaptation Tool</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Invalid password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1799,39 +2102,51 @@ stance</source>
         <source>Save changes to project %1?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Sword Officer Training Adaptation Tool - No Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sword Officer Training Adaptation Tool - </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sword Officer Training Adaptation Tool</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>
-    <message>
-        <source>Maintenance data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resources availability warnings</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Repairers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Haulers</source>
+        <source>Maintenance system data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Regimes de travail</source>
+        <source>Equipments availability warnings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Regime</source>
+        <source>Tow trucks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Work time</source>
+        <source>Shifts durations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning Delay</source>
+        <source>Shift </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Work duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning after</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1980,22 +2295,22 @@ stance</source>
 <context>
     <name>ADN_Models_Data::MissionInfos</name>
     <message>
-        <source>Data error</source>
+        <source>Invalid data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invalid mission: </source>
+        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Models_Data::OrderInfos</name>
     <message>
-        <source>Data error</source>
+        <source>Invalid data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invalid frag order: </source>
+        <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2035,6 +2350,25 @@ stance</source>
     </message>
 </context>
 <context>
+    <name>ADN_NBC_Datas::NbcIntoxInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC - Invalid wound type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_NBC_GUI</name>
     <message>
         <source>NBC Agent</source>
@@ -2049,14 +2383,6 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gaz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lifetime</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Spread angle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2064,35 +2390,19 @@ stance</source>
         <source>&#xb0;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Gaseous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Span</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_NBC_Intox_GUI</name>
     <message>
-        <source>Intoxication</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unhurt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>U1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>U2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>U3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>UE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2101,6 +2411,30 @@ stance</source>
     </message>
     <message>
         <source>Contamination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Poisoning effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unwounded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded extreme seriousness</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2131,21 +2465,52 @@ stance</source>
     </message>
 </context>
 <context>
+    <name>ADN_Objects_Data</name>
+    <message>
+        <source>Objects - Invalid object type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Objects_Data::ObjectInfos</name>
     <message>
-        <source>Data error</source>
+        <source>Invalid data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nbr max users for decontamination site &lt;= 0 when it should be &gt;= 1.</source>
+        <source>Objects - Object &apos;%1&apos; - Invalid resource &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Undefined category for construction in object %1.</source>
+        <source>Objects - Object &apos;%1&apos; - Default speed must be &gt;= 0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Undefined category for valorization in object %1.</source>
+        <source>Objects - Object &apos;%1&apos; - Default speed when bypassed &gt;= 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects - Object &apos;%1&apos; - Max interaction height must be &gt;= 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects - Object &apos;%1&apos; - Outgoing population density must be &gt;= 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects - Object &apos;%1&apos; - Number of users must be &gt; 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects - Invalid number of &apos;users&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects - Invalid resource category for construction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects - Invalid resource category for mining</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2172,10 +2537,6 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Avoid distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>m</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2196,18 +2557,6 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Default consumption</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speed impact</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Max agent speed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2217,30 +2566,6 @@ stance</source>
     </message>
     <message>
         <source>people/m&#xb2;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Max nbr of animators</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>uses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>valeur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mining</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location weights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2261,6 +2586,46 @@ stance</source>
     </message>
     <message>
         <source>Can be reserved obstacle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Safety distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity type when working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effect on movement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units max speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max nbr of concurrent users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources required for construction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources required for mining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic obstacle positioning</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2325,15 +2690,15 @@ Make sure the file exists.</source>
 <context>
     <name>ADN_Population_Data::PopulationInfos</name>
     <message>
-        <source>Data error</source>
+        <source>Population types - Invalid behavior model &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invalid population attitude.</source>
+        <source>Population types - Invalid population attitude &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invalid population ROE.</source>
+        <source>Population types - Invalid population &apos;rules of engagment&apos; &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2373,10 +2738,6 @@ Make sure the file exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reloading effects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Density</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2401,27 +2762,7 @@ Make sure the file exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Model</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Concentration density</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move nominal density</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move speed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>km/h</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speed effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2430,14 +2771,6 @@ Make sure the file exists.</source>
     </message>
     <message>
         <source>Max speed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fire effects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population -&gt; Agent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2457,7 +2790,35 @@ Make sure the file exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Agent -&gt; Population</source>
+        <source>Population effects on units firing capability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Behavior model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density while moving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average movement speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population effects on units movement capability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attritions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population -&gt; Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units -&gt; Population</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2502,9 +2863,28 @@ Make sure the file exists.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Radars_Data::DetectTimes</name>
+    <message>
+        <source>Sensors - Invalid level &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Radars_Data::RadarInfos</name>
     <message>
         <source>New special sensor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid radar type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid activity &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2543,28 +2923,28 @@ Make sure the file exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Detection times</source>
+        <source>Durations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Detect time</source>
+        <source>Detection duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Recognize time</source>
+        <source>Recognition duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Identification time</source>
+        <source>Identification duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>HQ detection times</source>
+        <source>CP durations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>When &apos;Detection times&apos; is unchecked, units are recognized instantly.
-When &apos;HQ detection times&apos; is unchecked, the detection times for HQs are the same as the others.</source>
+        <source>When &apos;Durations&apos; is unchecked, units are recognized instantly.
+When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2622,13 +3002,47 @@ Make sure that the file is not write-protected.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Sensors_Data::SensorInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid weather &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Sensors_Data::TargetInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid object &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Sensors_Environments_GUI</name>
     <message>
         <source>Environments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Modificators (%)</source>
+        <source>Modifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2647,10 +3061,6 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Can detect agents</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Angle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2663,35 +3073,7 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Distances</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Proximity distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>m</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Detection distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reco distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ident distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modificators</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stance modificators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2731,39 +3113,11 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ALAT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Survey times</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>/ha</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cobra</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Range</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Detect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reco</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ident</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Proximity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2806,6 +3160,46 @@ Make sure that the file is not write-protected.</source>
         <source>Object detection</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Can detect units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ranges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proximity range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detection range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recognition range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identification range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Army aviation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Survey durations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Counter battery radar</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>
@@ -2814,7 +3208,7 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Modificators (%)</source>
+        <source>Modifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2825,14 +3219,14 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Modificators (%)</source>
+        <source>Modifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Sensors_Postures_GUI</name>
     <message>
-        <source>Modificator (%)</source>
+        <source>Modifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2843,7 +3237,7 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Modificators (%)</source>
+        <source>Modifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2895,96 +3289,96 @@ Make sure that the file is not write-protected.</source>
 <context>
     <name>ADN_Supply_Data</name>
     <message>
-        <source>Unit &apos;%1&apos; does not exist.</source>
+        <source>Invalid data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mission &apos;%1&apos; does not exist.</source>
+        <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Data error</source>
+        <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convoy unit undefined.</source>
+        <source>Logistic supply systems - Convoy unit type not defined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convoy unit is not of type &apos;Pion LOG Convoi&apos;.</source>
+        <source>Logistic supply system - Invalid unit type for convoy units</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Supply_GUI</name>
     <message>
-        <source>Supply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mission</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convoy setup times</source>
+        <source>Supply system data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convoy loading times</source>
+        <source>Unit type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convoy unloading times</source>
+        <source>Convoy setup duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convoy speed modificators</source>
+        <source>Convoy loading duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vector availability warnings</source>
+        <source>Convoy unloading duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy speed modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conveyors availability warnings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Supply_TrucksDoubleTable</name>
     <message>
-        <source>Nbr of trucks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speed factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trucks qty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max speed modifier</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Supply_TrucksTimeTable</name>
     <message>
-        <source>Nbr of trucks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time required (s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trucks qty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3042,23 +3436,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
 <context>
     <name>ADN_Tr</name>
     <message>
-        <source>explosif</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>grenade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>aced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fumigene</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>eclairant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3066,115 +3444,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>inconnu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>foret</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>plantation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>marais</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>dune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>urbain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>etendue eau</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>glace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lisiere</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>banlieue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cote</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bord de plantation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bord de marais</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bord de dune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bord de glace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>chemin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>autoroute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>nationale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>departementale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ruisseau</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>riviere</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>riviere importante</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pont</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>falaise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voie ferree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>carrefour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>montagne</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bord de montagne</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3182,827 +3452,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ArretMoteurEteint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ArretMoteurAllume</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deplacement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>EnTravaux</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>JourSansNuage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>JourPeuNuageux</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>JourMoyennementNuageux</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>JourAssezNuageux</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>JourTresNuageux</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NuitPleineLune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NuitTroisQuartDeLune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NuitDemiLune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NuitQuartDeLune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NuitNouvelleLune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Eclairant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vide</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Foret</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urbain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lima</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion INF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ABC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion TRANS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG TC2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG BLD Sante</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG BLD Maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG BLD Ravitaillement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG BLT Sante</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG BLT Maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG BLT Ravitaillement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG Convoi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion CIRCULATION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion REFUGIE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion MILICE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion JOINT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASY</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Emergency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate INF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate RENS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ABC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate TRANS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG TC2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG BLD Sante</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG BLD Maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG BLD Ravitaillement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG BLT Sante</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG BLT Maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG BLT Ravitaillement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate CIRCULATION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate REFUGIE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate MILICE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate JOINT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASY</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate Emergency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ASS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blinde</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mortier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lance roquette</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vehicule</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Personnel a pied</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Helicoptere</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ASA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Indefini</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AuPlusLent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VitesseMaxObjet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VitesseMaxAgent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PasDePrecipitation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TempeteDeSable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Brouillard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crachin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pluie</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Neige</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fumigene</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>U1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>U2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>U3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>UE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>materiel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>humain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>EA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NTI1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NTI2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NTI3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Obus</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MissileSol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MissileAir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mitraille</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Civilian law enforcement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command operations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couverture aerienne</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Joint intelligence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Morale, welfare recreation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reglage electronique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remplacement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Service mortuaire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Signals intelligence (SIGINT)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Theatre missile defence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Utilitaire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Aeroporte</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Affaires publiques</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Affaires publiques, communication</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Affaires publiques, joint information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alpin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Amphibie</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arctique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Artillerie - reconnaissance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attaque</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attaque aerienne</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>C2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chemin de fer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ciblage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contre espionnage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Eclairage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Entretien</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Entretien, materiel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Entretien, missile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Entretien, opto-electronique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Espionnage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Espionnage militaire, aerial exploitation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Espionnage militaire, operation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Espionnage militaire, tactical exploitation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Evacuation sanitaire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Finance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Genie, combat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Genie, construction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Genie, construction navale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Guerre electronique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Guerre electronique, interception</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Guerre electronique, brouillage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Guerre electronique, detection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Interrogation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main d&apos;oeuvre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintien de la paix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Marine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mine de contre-mesure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC, biologique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC, chimique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC, chimique, fumee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC, decontamination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC, decontamination chimique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC, nucleaire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Non renseigne</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Observation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Observation, capteur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Observation, longue portee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Observation, meteo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Observation, module terrestre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Purification de l&apos;eau</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class I)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class II)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class III aviation)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class III)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class IV)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class V)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ravitaillement (eau)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ravitaillement, blanchisserie/bain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recherche &amp; sauvetage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reconnaissance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reconnaissance aerienne tactique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recuperation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Service du personnel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Service juridique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Support aerien rapproche</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmissions, forward communications</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmissions, node centre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmissions, node, large extension</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmissions, node, small extension</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmissions, radio relay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmissions, radio tactical satellite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmissions, radio teletype</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmissions, support</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmissions, radio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transport, allocation des mouvements</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transport, APOD/APOE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transport, SPOD/SPOE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transport, missile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Verrouillage de cible</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Verrouillage de cible, flash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Verrouillage de cible, radar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Verrouillage de cible, sonore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>radar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ecoute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ecoute radar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unite essence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unite feu TD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unite feu -TD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unite vivre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pieces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ReparableAvecEvacuation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ReparableSurPlace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Detruit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4149,17 +3599,569 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>IntelligenceList</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>explosive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>anti tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>smoke</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>illumination shell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>orchard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>swamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>urban area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>glacier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forest edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>suburb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waterfront</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>orchard edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>swamp edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dune edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>glacier edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>country road</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>highway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>main road</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>secondary road</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stream</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>river</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>main river</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bridge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cliff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>railroad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>crossroad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mountain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mountain edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parked, engine stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parked, engine running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very sunny day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sunny day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Partly cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waning moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quarter moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crescent moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illumination shell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>phase line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infantry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anti air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Army aviation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Armor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Engineer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground artillery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic close support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Movement support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refugee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Militia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Joint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Asymetric threat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emergency management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Infantry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Anti air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Army aviation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Armor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Engineer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Ground artillery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Logistic close support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Medical system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Maintenance system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Supply system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Medical system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Maintenance system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Supply system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Movement support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Refugee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Militia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Joint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Asymetric threat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Emergency management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mortar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rocket launcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dismounted infantry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Helicopter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anti air artillery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undefined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slowest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object, Max speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit, Max speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no rainfall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sand storm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drizzle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded extreme seriousness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>equipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>human</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Eletronic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mobility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Seriousness level 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Seriousness level 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Seriousness level 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Air missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bullet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>listening</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>radar listening</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Fuel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Ammos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Shells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Water/food</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_Composantes_GUI</name>
-    <message>
-        <source>Composantes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nbr</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Major</source>
         <translation type="unfinished"></translation>
@@ -4173,15 +4175,23 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nbr humans</source>
+        <source>Equipments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add composante</source>
+        <source>Qty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove composante</source>
+        <source>Crew size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add equipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove equipment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4207,7 +4217,53 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
 <context>
     <name>ADN_Units_Data::ComposanteInfos</name>
     <message>
-        <source>Composante %1 does not exist.</source>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid equipment &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit has no crew in equipment &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Units_Data::StockLogThresholdInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid resource &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Units_Data::UnitInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid unit type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid &apos;Atlas&apos; attribute &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4223,10 +4279,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4282,39 +4334,43 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nbr of NC officer(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Stances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Installation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Installation delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uninstallation delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distances before point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Composantes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Complementary Dotations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Stock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doctrine model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nbr of warrant officer(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deployment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deployment duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Un-deployment duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key terrain features range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Complementary resources</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4374,27 +4430,31 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weapons</source>
+        <source>Weapon systems</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_Data::WeaponInfos</name>
     <message>
-        <source>Data errror</source>
+        <source>Invalid data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>In the indirect fire parameters of weapon %1, the max range is inferior to min range.</source>
+        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_GUI</name>
-    <message>
-        <source>Weapon</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Name</source>
         <translation type="unfinished"></translation>
@@ -4424,19 +4484,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Direct</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ph (%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Distance (m)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Indirect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4480,30 +4532,46 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weapons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>PHs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weapons/</source>
+        <source>Weapon system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weapon_%1.htm</source>
+        <source>Direct fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WeaponSystems/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon Systems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WeaponSystem_%1.htm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_ListView</name>
     <message>
-        <source>Weapon</source>
+        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
+        <source>Weapon system</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4548,31 +4616,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Equipements</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Objects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weapons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Composantes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ai</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Models</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4585,10 +4633,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Breakdowns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Communications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4648,10 +4692,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scipio Adaptation Tool - Saving Errors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error(s) have been encountered during saving of project </source>
         <translation type="unfinished"></translation>
     </message>
@@ -4665,6 +4705,34 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>ADN - Data export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Op. indicators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doctrine models</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jamming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sword Officer Training Adaptation Tool - Saving Errors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

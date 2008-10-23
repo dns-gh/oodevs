@@ -62,7 +62,7 @@ void CreateSession::SetDefaultValues()
         setter_->SetValue( "session/config/simulation/debug/@diadebuggerport"      , 15000 );
         setter_->SetValue( "session/config/simulation/debug/@networklogger"        , false );
         setter_->SetValue( "session/config/simulation/debug/@networkloggerport"    , 20000 );
-        setter_->SetValue( "session/config/simulation/decisional/@useonlybinaries" , true );
+        setter_->SetValue( "session/config/simulation/decisional/@useonlybinaries" , false );
         setter_->SetValue( "session/config/simulation/dispatcher/@embedded"        , true );
         setter_->SetValue( "session/config/simulation/network/@port"               , SimulationPort( 1 ) );
         setter_->SetValue( "session/config/simulation/orbat/@checkcomposition"     , false );

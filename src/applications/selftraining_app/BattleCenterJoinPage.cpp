@@ -11,6 +11,7 @@
 #include "BattleCenterJoinPage.h"
 #include "moc_BattleCenterJoinPage.cpp"
 #include "ExerciseList.h"
+#include "Multiplayer.h"
 #include "ProgressPage.h"
 #include "ProcessWrapper.h"
 #include "ProcessDialogs.h"
@@ -89,13 +90,12 @@ void BattleCenterJoinPage::JoinExercise()
 {
     if( exercise_.isEmpty() || ! dialogs::KillRunningProcesses( this ) )
         return;
-    const std::string session = "multiplayer";
     {
-        frontend::CreateSession action( config_, exercise_.ascii(), session );
+        frontend::CreateSession action( config_, exercise_.ascii(), MULTIPLAYER_SESSION );
         action.SetDefaultValues();
         action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( port_->value() ) );
     }
-    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::JoinExercise( config_, exercise_, session.c_str(), true ) );
+    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::JoinExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), true ) );
     boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
     progressPage_->Attach( process );
     progressPage_->show();

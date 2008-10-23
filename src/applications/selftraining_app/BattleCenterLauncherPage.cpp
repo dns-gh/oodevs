@@ -11,6 +11,7 @@
 #include "BattleCenterLauncherPage.h"
 #include "moc_BattleCenterLauncherPage.cpp"
 #include "ExerciseList.h"
+#include "Multiplayer.h"
 #include "ProgressPage.h"
 #include "ProcessDialogs.h"
 #include "CompositeProcessWrapper.h"
@@ -67,16 +68,15 @@ void BattleCenterLauncherPage::StartExercise()
 {
     if( exercise_.isEmpty() || ! dialogs::KillRunningProcesses( this ) )
         return;
-    const std::string session = "multiplayer";
     {
-        frontend::CreateSession action( config_, exercise_.ascii(), session );
+        frontend::CreateSession action( config_, exercise_.ascii(), MULTIPLAYER_SESSION );
         action.SetDefaultValues();
         action.SetOption( "session/config/simulation/debug/@networklogger", true );
         action.SetOption( "session/config/simulation/debug/@networkloggerport", 20000 );
     }
-    boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartExercise( config_, exercise_, session.c_str(), true ) );
+    boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), true ) );
     // $$$$ SBO 2008-10-15: launch client optionally...
-    boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinExercise( config_, exercise_, session.c_str(), true ) );
+    boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), true ) );
     boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
     progressPage_->Attach( process );
     progressPage_->show();

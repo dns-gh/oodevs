@@ -28,6 +28,7 @@ namespace kernel
 }
 
 class QWidgetStack;
+class ExerciseService;
 
 // =============================================================================
 /** @class  MainWindow
@@ -72,6 +73,7 @@ private:
     std::auto_ptr< tools::GeneralConfig >     config_;
     std::auto_ptr< gui::LinkInterpreter_ABC > interpreter_; 
     QWidgetStack* pages_;
+    std::auto_ptr<ExerciseService>           exercises_ ;
     //@}
 };
 

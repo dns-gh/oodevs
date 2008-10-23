@@ -47,6 +47,7 @@ public:
     //@{
     virtual unsigned int GetPercentage() const;
     virtual QString GetStatus() const;
+    virtual std::string GetStartedExercise() const;
     //@}
 
 private:

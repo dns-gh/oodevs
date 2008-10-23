@@ -198,3 +198,12 @@ QString SpawnCommand::GetStatus() const
         return tools::translate( "SpawnCommand", "Starting..." );
     return tools::translate( "SpawnCommand", "Started" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::GetStartedExercise
+// Created: LDC 2008-10-23
+// -----------------------------------------------------------------------------
+std::string SpawnCommand::GetStartedExercise() const
+{
+    return std::string();
+}

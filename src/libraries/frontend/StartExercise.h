@@ -38,6 +38,7 @@ public:
     //@{
     virtual bool Wait();
     virtual unsigned int GetPercentage() const;
+    virtual std::string GetStartedExercise() const;
     //@}
 
 private:

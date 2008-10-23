@@ -90,3 +90,12 @@ QString StartExercise::GetStatus() const
         return tools::translate( "StartExercise", "Starting simulation..." );
     return tools::translate( "StartExercise", "Simulation started" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: StartExercise::GetStartedExercise
+// Created: LDC 2008-10-23
+// -----------------------------------------------------------------------------
+std::string StartExercise::GetStartedExercise() const
+{
+    return ( GetPercentage() == 100 ) ? exercise_ : std::string();
+}

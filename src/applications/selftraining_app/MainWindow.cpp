@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
+#include "ExerciseService.h"
 #include "HomePage.h"
 #include "LinkInterpreter.h" 
 #include "clients_gui/Tools.h"
@@ -30,6 +31,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , config_( new frontend::Config() )
     , interpreter_( new LinkInterpreter( this, controllers ) )
+    , exercises_( new ExerciseService( controllers, *config_ ) )
 {
     config_->Parse( qApp->argc(), qApp->argv() );
     setCaption( tools::translate( "MainWindow", "SWORD Officer Training" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );

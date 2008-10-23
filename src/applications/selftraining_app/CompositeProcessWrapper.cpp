@@ -109,3 +109,12 @@ QString CompositeProcessWrapper::GetStatus() const
 {
     return current_.get() ? current_->GetStatus() : "";
 }
+
+// -----------------------------------------------------------------------------
+// Name: CompositeProcessWrapper::GetStartedExercise
+// Created: LDC 2008-10-23
+// -----------------------------------------------------------------------------
+std::string CompositeProcessWrapper::GetStartedExercise() const
+{
+    return first_.get() ? first_->GetStartedExercise() : std::string();
+}
