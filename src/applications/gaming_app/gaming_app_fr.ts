@@ -1704,11 +1704,11 @@
     </message>
     <message>
         <source>Agent missions</source>
-        <translation>Missions pions</translation>
+        <translation>Actions tactiques</translation>
     </message>
     <message>
         <source>Automat missions</source>
-        <translation>Missions automate</translation>
+        <translation>Actions tactiques</translation>
     </message>
     <message>
         <source>Engage</source>
@@ -1724,7 +1724,15 @@
     </message>
     <message>
         <source>Fragmentary orders</source>
-        <translation>Ordres de conduite</translation>
+        <translation>Conduites à tenir</translation>
+    </message>
+    <message>
+        <source>Elementary acts</source>
+        <translation type="obsolete">Actes élementaires</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

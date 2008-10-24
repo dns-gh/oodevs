@@ -109,11 +109,14 @@ private:
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
 
     int AddMissions( kernel::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
-    void AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
+    void AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap = QPixmap() );
     int AddFragOrders( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
     void AddFragOrders( kernel::Iterator< const kernel::FragOrder& > it, QPopupMenu& menu, const char* slot );
     void SetInterface( MissionInterface_ABC* missionInterface );
     void NotifyMission();
+
+    template< typename T >
+    void AddMissionGroup( QPopupMenu& menu, const QString& prefix, const T& list, const char* slot );
     //@}
 
 private:

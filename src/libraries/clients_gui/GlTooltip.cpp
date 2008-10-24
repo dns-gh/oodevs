@@ -181,17 +181,33 @@ void GlTooltip::EndDisplay()
     else if( ! message_.isEmpty() )
         message_ += "\n";
 
-    QRegExp rx( "[<>]" );
+    QRegExp rx( "[<>](/?[biu])[<>]" );
+    QStringList styles;
+    if( rx.search( message_ ) > 0 )
+    {
+        styles = rx.capturedTexts();
+        styles.pop_front();
+    }
+
     const QStringList list = QStringList::split( rx, message_ );
     ::Style style( font_ );
+    QStringList::const_iterator itStyle = styles.begin();
+    if( itStyle != styles.end() && ! (*itStyle).startsWith( "/" ) && message_.startsWith( QString( "<%1>" ).arg( *itStyle ) ) )
+    {
+        style.Push( *itStyle );
+        ++itStyle;
+    }
     for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it )
     {
-        if( *it == "i" || *it == "b" || *it == "u" )
-            style.Push( *it );
-        else if( *it == "/i" || *it == "/b" || *it == "/u" )
-            style.Pop();
-        else
-            new_.push_back( T_Message( *it, T_Style( color_, style.Font() ) ) );
+        new_.push_back( T_Message( *it, T_Style( color_, style.Font() ) ) );
+        if( itStyle != styles.end() )
+        {
+            if( (*itStyle).startsWith( "/" ) )
+                style.Pop();
+            else
+                style.Push( *itStyle );
+            ++itStyle;
+        }
     }
     DirtyImage();
 }

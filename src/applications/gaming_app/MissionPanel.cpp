@@ -34,6 +34,7 @@
 #include "MissionInterfaceBuilder.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_gui/ParametersLayer.h"
+#include "icons.h"
 
 using namespace kernel;
 using namespace actions;
@@ -88,7 +89,7 @@ void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu 
         if( const Decisions* decisions = agent.Retrieve< Decisions >() )
             AddMissions( *decisions, menu, tr( "Agent missions" ), SLOT( ActivateAgentMission( int ) ) );
         if( const Automat_ABC* automat = static_cast< const Automat_ABC* >( agent.Get< kernel::TacticalHierarchies >().GetSuperior() ) )
-            AddMissions( automat->Get< AutomatDecisions >(), menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ) );
+            AddMissions( automat->Get< AutomatDecisions >(), menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ), MAKE_PIXMAP( lock ) );
     }
 }
 
@@ -102,7 +103,7 @@ void MissionPanel::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::
     {
         selectedEntity_ = &agent;
         const AutomatDecisions& decisions = agent.Get< AutomatDecisions >();
-        AddMissions( decisions, menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ) );
+        AddMissions( decisions, menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ), MAKE_PIXMAP( lock ) );
         if( ! decisions.IsEmbraye() )
             menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
         else if( decisions.CanBeOrdered() )
@@ -134,6 +135,76 @@ void MissionPanel::NotifyDeleted( const kernel::Entity_ABC& entity )
         hide();
 }
 
+namespace
+{
+    struct MissionHeaderItem : public QCustomMenuItem
+    {
+        explicit MissionHeaderItem( const QString& text ) : text_( text ), font_( "Arial", 8, QFont::Bold, false ) {}
+        virtual bool fullSpan   () const { return true; }
+        virtual bool isSeparator() const { return true; }
+
+        virtual void paint( QPainter* p, const QColorGroup& /*cg*/, bool /*act*/, bool /*enabled*/, int x, int y, int w, int h )
+        {
+            const QFont old = p->font();
+            p->fillRect( x, y, w, h, QColor( 128, 128, 128 ) );
+            p->setPen( Qt::white );
+            p->setFont( font_ );
+            p->drawText( x + 5, y, w, h, AlignLeft | AlignVCenter | DontClip, text_ );
+            p->setFont( old );
+        }
+
+        virtual QSize sizeHint()
+        {
+            if( text_.isEmpty() )
+                return QSize( 50, 4 );
+            return QFontMetrics( font_ ).size( AlignLeft | AlignVCenter | DontClip, text_ );
+        }
+        QString text_;
+        QFont font_;
+    };
+
+    QString GetPrefix( const QString& name )
+    {
+        QRegExp regexp( "^([A-Z]{3,})\\s" );
+        if( regexp.search( name ) > -1 )
+            return regexp.cap( 1 );
+        return "";
+    }
+
+    struct MissionComparator
+    {
+        bool operator()( const Mission* lhs, const Mission* rhs )
+        {
+            return lhs->GetName() < rhs->GetName();
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::AddMissionGroup
+// Created: SBO 2008-10-20
+// -----------------------------------------------------------------------------
+template< typename T >
+void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, const T& list, const char* slot )
+{
+    if( list.empty() )
+        return;
+    if( prefix.isEmpty() )
+    {
+        if( menu.idAt( 0 ) != -1 )
+            menu.insertItem( new MissionHeaderItem( tools::translate( "MissionPanel", "" ) ) );
+//            missions.insertItem( new MissionHeaderItem( tools::translate( "MissionPanel", "Elementary acts" ) ) );
+    }
+    else
+        menu.insertItem( new MissionHeaderItem( prefix ) );
+    for( T::const_iterator it = list.begin(); it != list.end(); ++it )
+    {
+        const Mission& mission = **it;
+        const int id = menu.insertItem( QString( mission.GetName().c_str() ).mid( prefix.length() ).stripWhiteSpace(), this, slot );
+        menu.setItemParameter( id, mission.GetId() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MissionPanel::AddMissions
 // Created: AGE 2006-03-14
@@ -141,13 +212,22 @@ void MissionPanel::NotifyDeleted( const kernel::Entity_ABC& entity )
 int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot )
 {
     QPopupMenu& missions = *new QPopupMenu( menu );
+    QString lastPrefix;
+    std::set< const Mission*, MissionComparator > list;
     while( it.HasMoreElements() )
     {
         const Mission& mission = it.NextElement();
-        int nId = missions.insertItem( mission.GetName().c_str(), this, slot );
-        missions.setItemParameter( nId, mission.GetId() );
+        const QString prefix = GetPrefix( mission.GetName().c_str() );
+        if( prefix != lastPrefix )
+        {
+            AddMissionGroup( missions, lastPrefix, list, slot );
+            list.clear();
+            lastPrefix = prefix;
+        }
+        list.insert( &mission );
     }
-    return menu.InsertItem( "Order", name, &missions  );
+    AddMissionGroup( missions, lastPrefix, list, slot );
+    return menu.InsertItem( "Order", name, &missions );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,12 +280,14 @@ void MissionPanel::AddFragOrders( Iterator< const FragOrder& > it, QPopupMenu& m
 // Name: MissionPanel::AddMissions
 // Created: AGE 2007-04-04
 // -----------------------------------------------------------------------------
-void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot )
+void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap /*= QPixmap()*/ )
 {
     if( !decisions.CanBeOrdered() )
         return;
 
-    AddMissions( decisions.GetMissions(), menu, name, slot );
+    int id = AddMissions( decisions.GetMissions(), menu, name, slot );
+    if( !pixmap.isNull() )
+        menu.SetPixmap( id, pixmap );
     //menu.SetItemEnabled( id, decisions.CanBeOrdered() );
     AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
 }

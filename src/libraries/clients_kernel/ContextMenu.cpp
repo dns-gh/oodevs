@@ -82,6 +82,15 @@ void ContextMenu::SetItemParameter( int id, int parameter )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ContextMenu::SetPixmap
+// Created: SBO 2008-10-20
+// -----------------------------------------------------------------------------
+void ContextMenu::SetPixmap( int id, const QPixmap& pixmap )
+{
+    menu_->changeItem( id, pixmap, menu_->text( id ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ContextMenu::InsertCategory
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------

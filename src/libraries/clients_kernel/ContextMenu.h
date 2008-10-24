@@ -16,6 +16,7 @@ class QWidget;
 class QPoint;
 class QString;
 class QKeySequence;
+class QPixmap;
 
 namespace kernel
 {
@@ -44,6 +45,7 @@ public:
     void SetItemEnabled( int id, bool enable );
     void SetItemParameter( int id, int parameter );
     void SetChecked( int id, bool checked );
+    void SetPixmap( int id, const QPixmap& pixmap );
 
     int InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member );
     int InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel, int id = -1 );
