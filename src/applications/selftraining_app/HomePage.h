@@ -12,11 +12,6 @@
 
 #include "MenuPage.h"
 
-namespace tools
-{
-    class GeneralConfig;
-}
-
 namespace gui 
 {
     class LinkInterpreter_ABC;
@@ -27,6 +22,7 @@ namespace kernel
     class Controllers;
 }
 
+class Config;
 class NetworkExerciseLister;
 
 // =============================================================================
@@ -41,7 +37,7 @@ class HomePage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, NetworkExerciseLister& lister );
+             HomePage( QWidgetStack* pages, const Config& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, NetworkExerciseLister& lister );
     virtual ~HomePage();
     //@}
 };

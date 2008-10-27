@@ -11,13 +11,14 @@
 #include "BattleCenterPage.h"
 #include "BattleCenterLauncherPage.h"
 #include "BattleCenterJoinPage.h"
+#include "Config.h"
 #include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: BattleCenterPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-BattleCenterPage::BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, NetworkExerciseLister& lister )
+BattleCenterPage::BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister )
     : MenuPage( pages )
 {
     AddLink( tools::translate( "BattleCenterPage", "Start" ), *new BattleCenterLauncherPage( pages, *this, controllers, config ), true, tools::translate( "ScenarioPage", "Start multiplayer training session" ) );

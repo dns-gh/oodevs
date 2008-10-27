@@ -44,7 +44,7 @@ void DirectoryExerciseLister::ListExercises( QStringList& list ) const
 // Name: DirectoryExerciseLister::GetPort
 // Created: LDC 2008-10-24
 // -----------------------------------------------------------------------------
-unsigned short DirectoryExerciseLister::GetPort( const QString& exercise ) const
+unsigned short DirectoryExerciseLister::GetPort( const QString& /*exercise*/ ) const
 {
     return 10001;
 }

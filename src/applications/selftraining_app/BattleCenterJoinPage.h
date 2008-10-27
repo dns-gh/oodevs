@@ -17,14 +17,10 @@ namespace kernel
     class Controllers;
 }
 
-namespace tools
-{
-    class GeneralConfig;
-}
-
-class ProgressPage;
+class Config;
 class ExerciseList;
 class NetworkExerciseLister;
+class ProgressPage;
 class QSpinBox;
 
 // =============================================================================
@@ -40,7 +36,7 @@ class BattleCenterJoinPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, NetworkExerciseLister& lister );
+             BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, NetworkExerciseLister& lister );
     virtual ~BattleCenterJoinPage();
     //@}
 
@@ -68,7 +64,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers&          controllers_;
-    const tools::GeneralConfig&   config_;
+    const Config&                 config_;
     std::auto_ptr< ProgressPage > progressPage_;
     QLineEdit*                    host_;
     QSpinBox*                     port_;

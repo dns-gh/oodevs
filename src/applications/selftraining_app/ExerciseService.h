@@ -24,10 +24,7 @@ namespace kernel
     class Controllers;
 }
 
-namespace tools
-{
-    class GeneralConfig;
-}
+class Config;
 
 // =============================================================================
 /** @class  ExerciseService
@@ -42,7 +39,7 @@ class ExerciseService : public kernel::Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseService( kernel::Controllers& controllers, tools::GeneralConfig& config );
+             ExerciseService( kernel::Controllers& controllers, const Config& config );
     virtual ~ExerciseService();
     //@}
 
@@ -79,7 +76,7 @@ private:
     //@{
     T_ExercicePortList             exerciseList_;
     kernel::Controllers&           controllers_;
-    tools::GeneralConfig&          config_;
+    const Config&                  config_;
     boost::asio::io_service        network_;
     unsigned short                 port_;
     boost::asio::ip::udp::socket   socket_;

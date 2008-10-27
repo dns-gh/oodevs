@@ -10,13 +10,13 @@
 #include "selftraining_app_pch.h"
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
-#include "NetworkExerciseLister.h"
+#include "Config.h"
 #include "ExerciseService.h"
 #include "HomePage.h"
-#include "LinkInterpreter.h" 
+#include "LinkInterpreter.h"
+#include "NetworkExerciseLister.h"
 #include "clients_gui/Tools.h"
 #include "clients_gui/resources.h"
-#include "frontend/Config.h"
 #include "tools/Version.h"
 
 #include <qapplication.h>
@@ -24,18 +24,27 @@
 #include <qpixmap.h>
 #include <qpalette.h>
 
+namespace
+{
+    Config* GetConfig()
+    {
+        Config* config = new Config();
+        config->Parse( qApp->argc(), qApp->argv() );
+        return config;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( kernel::Controllers& controllers )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
-    , config_( new frontend::Config() )
+    , config_( GetConfig() )
     , interpreter_( new LinkInterpreter( this, controllers ) )
     , exercises_( new ExerciseService( controllers, *config_ ) )
     , exerciseLister_( new NetworkExerciseLister( *config_ ) )
 {
-    config_->Parse( qApp->argc(), qApp->argv() );
     setCaption( tools::translate( "MainWindow", "SWORD Officer Training" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
     setIcon( MAKE_PIXMAP( csword ) );
     setFixedSize( 800, 600 );

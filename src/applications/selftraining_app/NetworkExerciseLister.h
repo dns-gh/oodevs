@@ -17,10 +17,7 @@
 
 class ExerciseList;
 
-namespace tools
-{
-    class GeneralConfig;
-}
+class Config;
 
 // =============================================================================
 /** @class  NetworkExerciseLister
@@ -34,7 +31,7 @@ class NetworkExerciseLister : public ExerciseLister_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetworkExerciseLister( const tools::GeneralConfig& config, const std::string& subDir ="" );
+             NetworkExerciseLister( const Config& config, const std::string& subDir ="" );
     virtual ~NetworkExerciseLister();
     //@}
 
@@ -74,7 +71,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig&  config_;
+    const Config&                config_;
     std::string                  subDir_;
     boost::asio::io_service      network_;
     boost::asio::ip::udp::socket socket_;

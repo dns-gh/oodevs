@@ -198,13 +198,3 @@ void ExerciseList::Clear()
     exercisesList_.clear();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ExerciseList::Add
-// Created: LDC 2008-10-24
-// -----------------------------------------------------------------------------
-void ExerciseList::Add( const std::string& exercise, const std::string& port )
-{
-    // $$$$ LDC FIXME : Use the port number
-    exercisesList_.append( exercise.c_str() );
-    Update();
-}

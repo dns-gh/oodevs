@@ -9,11 +9,11 @@
 
 #include "selftraining_app_pch.h"
 #include "ExerciseService.h"
+#include "Config.h"
 #include "Multiplayer.h"
 #include "clients_kernel/Controllers.h"
 #include "frontend/ConfigurationManipulator.h"
 #include "frontend/Process_ABC.h"
-#include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
 #include <sstream>
 
@@ -23,10 +23,10 @@ using namespace boost::asio;
 // Name: ExerciseService constructor
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-ExerciseService::ExerciseService( kernel::Controllers& controllers, tools::GeneralConfig& config )
+ExerciseService::ExerciseService( kernel::Controllers& controllers, const Config& config )
     : controllers_( controllers )
     , config_     ( config )
-    , port_       ( 31000 ) // $$$$ LDC Use config_ instead
+    , port_       ( config.GetListServerPort() )
     , socket_     ( network_, ip::udp::endpoint( ip::udp::v4(), port_ ) )
     , thread_     ( boost::bind( &ExerciseService::RunNetwork, this ) )
 {

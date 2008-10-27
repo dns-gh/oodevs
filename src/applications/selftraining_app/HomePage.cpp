@@ -9,17 +9,18 @@
 
 #include "selftraining_app_pch.h"
 #include "HomePage.h"
-#include "SelfTrainingPage.h"
 #include "BattleCenterPage.h"
+#include "Config.h"
 #include "OptionsPage.h"
 #include "QuitPage.h"
+#include "SelfTrainingPage.h"
 #include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: HomePage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-HomePage::HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, NetworkExerciseLister& lister )
+HomePage::HomePage( QWidgetStack* pages, const Config& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, NetworkExerciseLister& lister )
     : MenuPage( pages )
 {
     AddLink( tools::translate( "HomePage", "Self Training" ), *new SelfTrainingPage( pages, *this, config, controllers, interpreter, lister ), true, tools::translate( "HomePage", "Start single player training session" ) );

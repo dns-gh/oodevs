@@ -60,6 +60,10 @@
         <source>Port:</source>
         <translation>Port: </translation>
     </message>
+    <message>
+        <source>Update</source>
+        <translation>Mise à jour</translation>
+    </message>
 </context>
 <context>
     <name>BattleCenterLauncherPage</name>

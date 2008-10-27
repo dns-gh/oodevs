@@ -56,6 +56,10 @@
         <source>Port:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Update</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>BattleCenterLauncherPage</name>

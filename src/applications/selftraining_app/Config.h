@@ -3,25 +3,22 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2008 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __frontend_Config_h_
-#define __frontend_Config_h_
+#ifndef __Config_h_
+#define __Config_h_
 
-#include "tools/GeneralConfig.h"
-
-namespace frontend
-{
+#include "frontend/Config.h"
 
 // =============================================================================
 /** @class  Config
     @brief  Config
 */
-// Created: SBO 2008-03-14
+// Created: LDC 2008-10-27
 // =============================================================================
-class Config : public tools::GeneralConfig
+class Config : public frontend::Config
 {
 
 public:
@@ -33,7 +30,8 @@ public:
 
     //! @name Operations
     //@{
-    std::string GetPackageFile() const;
+    unsigned short GetListServerPort() const;
+    unsigned short GetListClientPort() const;
     //@}
 
 private:
@@ -50,10 +48,9 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string package_;
+    unsigned short listServerPort_;
+    unsigned short listClientPort_;
     //@}
 };
 
-}
-
-#endif // __frontend_Config_h_
+#endif // __Config_h_

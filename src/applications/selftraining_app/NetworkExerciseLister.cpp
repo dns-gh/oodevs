@@ -9,6 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "NetworkExerciseLister.h"
+#include "Config.h"
 #include "ExerciseList.h"
 #include "frontend/commands.h"
 
@@ -21,10 +22,10 @@ using namespace boost::asio;
 // Name: NetworkExerciseLister constructor
 // Created: LDC 2008-10-24
 // -----------------------------------------------------------------------------
-NetworkExerciseLister::NetworkExerciseLister( const tools::GeneralConfig& config, const std::string& subDir )
+NetworkExerciseLister::NetworkExerciseLister( const Config& config, const std::string& subDir )
     : config_( config )
     , subDir_( subDir )
-    , socket_( network_, ip::udp::endpoint( ip::udp::v4(), 31001 ) )//$$$$ LDC Use config_ instead
+    , socket_( network_, ip::udp::endpoint( ip::udp::v4(), config.GetListClientPort() ) )
     , thread_( boost::bind( &NetworkExerciseLister::RunNetwork, this ) )
 {    
     socket_.async_receive( buffer( answer_, 1024 ),

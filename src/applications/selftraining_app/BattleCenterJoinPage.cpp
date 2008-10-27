@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "BattleCenterJoinPage.h"
 #include "moc_BattleCenterJoinPage.cpp"
+#include "Config.h"
 #include "ExerciseList.h"
 #include "NetworkExerciseLister.h"
 #include "Multiplayer.h"
@@ -26,7 +27,7 @@
 // Name: BattleCenterJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, NetworkExerciseLister& lister )
+BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, NetworkExerciseLister& lister )
     : ContentPage    ( pages, tools::translate( "BattleCenterJoinPage", "Join" ), previous )
     , controllers_   ( controllers )
     , progressPage_  ( new ProgressPage( pages, *this, tools::translate( "BattleCenterJoinPage", "Joining host" ), controllers ) )
@@ -47,9 +48,9 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
         label->setBackgroundOrigin( QWidget::WindowOrigin );
         port_ = new QSpinBox( hbox );
         port_->setMaxValue( 32000 );
-        port_->setValue( 31000 );
-        connect( host_, SIGNAL( textChanged( const QString& ) ), this, SLOT( ReloadExerciseList() ) );
-        connect( port_, SIGNAL( valueChanged( int ) ), this, SLOT( ReloadExerciseList() ) );
+        port_->setValue( config.GetListServerPort() );
+        QPushButton* pButton = new QPushButton( tools::translate( "BattleCenterJoinPage", "Update" ), hbox );
+        connect( pButton, SIGNAL( clicked() ), this, SLOT( ReloadExerciseList() ) );
     }
     {
         exercises_ = new ExerciseList( box, config_, exerciseLister_ );

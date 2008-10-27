@@ -60,7 +60,6 @@ public slots:
     void UpdateExercise( int index );
     void SelectExercise();
     void Clear();
-    void Add( const std::string& exercise, const std::string& port );
     //@}
 
 private:
