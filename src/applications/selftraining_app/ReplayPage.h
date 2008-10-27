@@ -24,6 +24,7 @@ namespace kernel
 
 class ProgressPage;
 class ExerciseList;
+class NetworkExerciseLister;
 
 // =============================================================================
 /** @class  ReplayPage
@@ -38,7 +39,7 @@ class ReplayPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config );
+             ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, NetworkExerciseLister& lister );
     virtual ~ReplayPage();
     //@}
 
@@ -72,6 +73,7 @@ private:
     ProgressPage*               progressPage_;
     ExerciseList*               exercises_;
     QListBox*                   sessionList_;
+    NetworkExerciseLister&      lister_;
     //@}
 };
 

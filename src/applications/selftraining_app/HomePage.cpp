@@ -19,11 +19,11 @@
 // Name: HomePage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-HomePage::HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter )
+HomePage::HomePage( QWidgetStack* pages, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, NetworkExerciseLister& lister )
     : MenuPage( pages )
 {
-    AddLink( tools::translate( "HomePage", "Self Training" ), *new SelfTrainingPage( pages, *this, config, controllers, interpreter ), true, tools::translate( "HomePage", "Start single player training session" ) );
-    AddLink( tools::translate( "HomePage", "Multiplayer" ),   *new BattleCenterPage( pages, *this, config, controllers ), true, tools::translate( "HomePage", "Start or join a multiplayer training session" ) );
+    AddLink( tools::translate( "HomePage", "Self Training" ), *new SelfTrainingPage( pages, *this, config, controllers, interpreter, lister ), true, tools::translate( "HomePage", "Start single player training session" ) );
+    AddLink( tools::translate( "HomePage", "Multiplayer" ),   *new BattleCenterPage( pages, *this, config, controllers, lister ), true, tools::translate( "HomePage", "Start or join a multiplayer training session" ) );
     AddLink( tools::translate( "HomePage", "Options" ),       *new OptionsPage( pages, *this ), false, tools::translate( "HomePage", "Options" ) );
     AddLink( tools::translate( "HomePage", "Quit" ),          *new QuitPage( pages, *this ) );
 }

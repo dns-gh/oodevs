@@ -22,6 +22,8 @@ namespace kernel
     class Controllers;
 }
 
+class NetworkExerciseLister;
+
 // =============================================================================
 /** @class  ScenarioPage
     @brief  ScenarioPage
@@ -34,7 +36,7 @@ class ScenarioPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers );
+             ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, NetworkExerciseLister& lister );
     virtual ~ScenarioPage();
     //@}
 

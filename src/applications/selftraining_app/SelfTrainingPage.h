@@ -27,6 +27,8 @@ namespace kernel
     class Controllers;
 }
 
+class NetworkExerciseLister;
+
 // =============================================================================
 /** @class  SelfTrainingPage
     @brief  SelfTrainingPage
@@ -39,7 +41,7 @@ class SelfTrainingPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter );
+             SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, NetworkExerciseLister& lister );
     virtual ~SelfTrainingPage();
     //@}
 

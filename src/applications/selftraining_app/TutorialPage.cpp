@@ -99,10 +99,11 @@ TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools
     , controllers_ ( controllers )
     , interpreter_ ( interpreter )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "TutorialPage", "Starting tutorial" ), controllers ) )
+    , lister_( config, "tutorials" )
 {
     QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
-    exercises_ = new ExerciseList( box , config, "tutorials" );
+    exercises_ = new ExerciseList( box , config, lister_, "tutorials" );
     connect( exercises_, SIGNAL( Select( const QString& ) ), this, SLOT( OnStartExercise( const QString& ) ) );
     AddContent( box );
     AddNextButton( tools::translate( "TutorialPage", "Start" ), *this, SLOT( OnStart() ) );

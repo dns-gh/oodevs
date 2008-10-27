@@ -11,6 +11,7 @@
 #define __ScenarioLauncherPage_h_
 
 #include "ContentPage.h"
+#include "DirectoryExerciseLister.h"
 
 namespace tools
 {
@@ -56,7 +57,8 @@ private:
 private:
     //! @name Member data
     //@{
-    ExerciseList* exercises_;
+    ExerciseList*           exercises_;
+    DirectoryExerciseLister lister_;
     //@}
 };
 

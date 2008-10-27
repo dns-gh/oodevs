@@ -22,6 +22,8 @@ namespace tools
     class GeneralConfig;
 }
 
+class NetworkExerciseLister;
+
 // =============================================================================
 /** @class  BattleCenterPage
     @brief  BattleCenterPage
@@ -34,7 +36,7 @@ class BattleCenterPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers );
+             BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, NetworkExerciseLister& lister );
     virtual ~BattleCenterPage();
     //@}
 

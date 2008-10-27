@@ -24,6 +24,7 @@ namespace tools
 
 class ProgressPage;
 class ExerciseList;
+class NetworkExerciseLister;
 class QSpinBox;
 
 // =============================================================================
@@ -39,7 +40,7 @@ class BattleCenterJoinPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config );
+             BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, NetworkExerciseLister& lister );
     virtual ~BattleCenterJoinPage();
     //@}
 
@@ -48,6 +49,7 @@ private slots:
     //@{
     void SelectExercise( const QString& name );
     void JoinExercise();
+    void ReloadExerciseList();
     //@}
 
 private:
@@ -65,13 +67,14 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    const tools::GeneralConfig& config_;
+    kernel::Controllers&          controllers_;
+    const tools::GeneralConfig&   config_;
     std::auto_ptr< ProgressPage > progressPage_;
-    QLineEdit* host_;
-    QSpinBox* port_;
-    ExerciseList* exercises_;
-    QString exercise_;
+    QLineEdit*                    host_;
+    QSpinBox*                     port_;
+    ExerciseList*                 exercises_;
+    QString                       exercise_;
+    NetworkExerciseLister&        exerciseLister_;
     //@}
 };
 

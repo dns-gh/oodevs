@@ -17,11 +17,11 @@
 // Name: BattleCenterPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-BattleCenterPage::BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers )
+BattleCenterPage::BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, NetworkExerciseLister& lister )
     : MenuPage( pages )
 {
     AddLink( tools::translate( "BattleCenterPage", "Start" ), *new BattleCenterLauncherPage( pages, *this, controllers, config ), true, tools::translate( "ScenarioPage", "Start multiplayer training session" ) );
-    AddLink( tools::translate( "BattleCenterPage", "Join" ),  *new BattleCenterJoinPage( pages, *this, controllers, config ), true, tools::translate( "ScenarioPage", "Join multiplayer training session" ) );
+    AddLink( tools::translate( "BattleCenterPage", "Join" ),  *new BattleCenterJoinPage( pages, *this, controllers, config, lister ), true, tools::translate( "ScenarioPage", "Join multiplayer training session" ) );
     AddLink( tools::translate( "BattleCenterPage", "Back" ),  previous );
 }
 

@@ -21,6 +21,7 @@ namespace xml
 }
 
 class SideList;
+class ExerciseLister_ABC;
 
 // =============================================================================
 /** @class  ExerciseList
@@ -36,7 +37,7 @@ class ExerciseList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const std::string& subDir = "", bool showBrief = true );
+             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir = "", bool showBrief = true );
     virtual ~ExerciseList();
     //@}
 
@@ -58,6 +59,8 @@ public slots:
     void Update();
     void UpdateExercise( int index );
     void SelectExercise();
+    void Clear();
+    void Add( const std::string& exercise, const std::string& port );
     //@}
 
 private:
@@ -76,15 +79,15 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    const std::string           subDir_ ; 
-    QListBox*                   exercises_;
-    QLabel*                     briefingImage_;
-    QTextEdit*                  briefingText_;
-    SideList*                   sides_; 
-    bool                        showBrief_; 
-    QStringList                 exercisesList_ ; 
-    
+    const tools::GeneralConfig&  config_;
+    const std::string            subDir_ ; 
+    QListBox*                    exercises_;
+    QLabel*                      briefingImage_;
+    QTextEdit*                   briefingText_;
+    SideList*                    sides_; 
+    bool                         showBrief_; 
+    QStringList                  exercisesList_ ;
+    const ExerciseLister_ABC&    lister_;
  //@}
 };
 

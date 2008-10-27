@@ -11,6 +11,7 @@
 #define __BattleCenterLauncherPage_h_
 
 #include "ContentPage.h"
+#include "DirectoryExerciseLister.h"
 
 namespace kernel
 {
@@ -66,12 +67,13 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    kernel::Controllers& controllers_;
-    ProgressPage* progressPage_;
-    QLineEdit* host_;
-    QSpinBox* port_;
-    ExerciseList* exercises_;
-    QString exercise_;
+    kernel::Controllers&        controllers_;
+    ProgressPage*               progressPage_;
+    QLineEdit*                  host_;
+    QSpinBox*                   port_;
+    ExerciseList*               exercises_;
+    QString                     exercise_;
+    DirectoryExerciseLister     lister_;
     //@}
 };
 

@@ -11,6 +11,8 @@
 #define __ExerciseService_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
+#include <boost/asio.hpp>
+#include <boost/thread.hpp>
 
 namespace frontend
 {
@@ -58,17 +60,33 @@ private:
     ExerciseService& operator=( const ExerciseService& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void SetupNetwork();
+    void OnReceive( const boost::system::error_code& error, size_t bytes_received );
+    void OnSendExercisesRequest( const boost::system::error_code& error );
+    void RunNetwork();
+    //@}
+
     //! @name Types
     //@{
     typedef std::map< std::string, unsigned int > T_ExercicePortList;
+    typedef T_ExercicePortList::const_iterator    CIT_ExercicePortList;;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_ExercicePortList    exerciseList_;
-    kernel::Controllers&  controllers_;
-    tools::GeneralConfig& config_;
+    T_ExercicePortList             exerciseList_;
+    kernel::Controllers&           controllers_;
+    tools::GeneralConfig&          config_;
+    boost::asio::io_service        network_;
+    unsigned short                 port_;
+    boost::asio::ip::udp::socket   socket_;
+    char                           answer_[32];
+    boost::asio::ip::udp::endpoint remoteEndPoint_;
+    boost::thread                  thread_;
+    std::string                    exerciseMessage_;
     //@}
 };
 

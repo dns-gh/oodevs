@@ -9,6 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "ExerciseList.h"
+#include "ExerciseLister_ABC.h"
 #include "moc_ExerciseList.cpp"
 #include "MenuButton.h" 
 #include "SideList.h" 
@@ -17,8 +18,10 @@
 #include "clients_gui/Tools.h"
 
 #include <qfileinfo.h>
+#include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
-#include <boost/filesystem.hpp> 
+#include <boost/filesystem.hpp>
+#include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.h>
 
 namespace bfs = boost::filesystem;
@@ -27,11 +30,12 @@ namespace bfs = boost::filesystem;
 // Name: ExerciseList constructor
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const std::string& subDir /*= ""*/, bool showBrief )
-    : QVBox   ( parent ) 
-    , config_ ( config ) 
-    , subDir_ ( subDir )
-    , showBrief_ ( showBrief ) 
+ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir /*= ""*/, bool showBrief )
+    : QVBox      ( parent ) 
+    , config_    ( config ) 
+    , subDir_    ( subDir )
+    , showBrief_ ( showBrief )
+    , lister_    ( lister )
 {
     QHBox* box = new QHBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -75,7 +79,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
 ExerciseList::~ExerciseList()
-{
+{    
     // NOTHING
 }
 
@@ -86,7 +90,7 @@ ExerciseList::~ExerciseList()
 void ExerciseList::Update()
 {    
     static const QImage pix( "resources/images/selftraining/mission.png" );
-    exercisesList_ = frontend::commands::ListExercises( config_, subDir_ );
+    lister_.ListExercises( exercisesList_ );
     exercises_->clear();
     for( QStringList::iterator it = exercisesList_ .begin(); it != exercisesList_ .end(); ++it )
         exercises_->insertItem( pix, GetExerciseDisplayName( *it ) );
@@ -183,4 +187,24 @@ void ExerciseList::SelectExercise()
 {
     if( exercises_->selectedItem() )
         emit Select( GetHighlight() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseList::Clear
+// Created: LDC 2008-10-24
+// -----------------------------------------------------------------------------
+void ExerciseList::Clear()
+{
+    exercisesList_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseList::Add
+// Created: LDC 2008-10-24
+// -----------------------------------------------------------------------------
+void ExerciseList::Add( const std::string& exercise, const std::string& port )
+{
+    // $$$$ LDC FIXME : Use the port number
+    exercisesList_.append( exercise.c_str() );
+    Update();
 }

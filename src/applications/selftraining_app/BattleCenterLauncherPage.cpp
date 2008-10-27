@@ -30,12 +30,13 @@ BattleCenterLauncherPage::BattleCenterLauncherPage( QWidgetStack* pages, Page_AB
     , config_( config )
     , controllers_( controllers )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "BattleCenterLauncherPage", "Starting multiplayer session" ), controllers ) )
+    , lister_( config_, "" )
 {
     QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setMargin( 5 );
     {
-        exercises_ = new ExerciseList( box, config_ );
+        exercises_ = new ExerciseList( box, config_, lister_ );
         connect( exercises_, SIGNAL( Highlight( const QString& ) ), this, SLOT( SelectExercise( const QString& ) ) );
     }
     AddContent( box );

@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
+#include "NetworkExerciseLister.h"
 #include "ExerciseService.h"
 #include "HomePage.h"
 #include "LinkInterpreter.h" 
@@ -32,6 +33,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     , config_( new frontend::Config() )
     , interpreter_( new LinkInterpreter( this, controllers ) )
     , exercises_( new ExerciseService( controllers, *config_ ) )
+    , exerciseLister_( new NetworkExerciseLister( *config_ ) )
 {
     config_->Parse( qApp->argc(), qApp->argv() );
     setCaption( tools::translate( "MainWindow", "SWORD Officer Training" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
@@ -39,7 +41,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     setFixedSize( 800, 600 );
     SetStyle();
     pages_ = new QWidgetStack( this );
-    new HomePage( pages_, *config_, controllers, *interpreter_ );
+    new HomePage( pages_, *config_, controllers, *interpreter_, *exerciseLister_ );
     setCentralWidget( pages_ );
     CenterWindow();
 }

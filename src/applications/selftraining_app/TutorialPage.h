@@ -11,6 +11,7 @@
 #define __TutorialPage_h_
 
 #include "ContentPage.h"
+#include "DirectoryExerciseLister.h"
 
 namespace gui 
 {
@@ -76,6 +77,7 @@ private:
     gui::LinkInterpreter_ABC&   interpreter_;
     ProgressPage*               progressPage_;
     ExerciseList*               exercises_;
+    DirectoryExerciseLister     lister_;
     //@}
 };
 
