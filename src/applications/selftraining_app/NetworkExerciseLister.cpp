@@ -76,9 +76,9 @@ void NetworkExerciseLister::RunNetwork()
 // -----------------------------------------------------------------------------
 void NetworkExerciseLister::OnReceive( const boost::system::error_code& error, size_t bytes_received )
 {
+    ClearListeners();
     if( !error )
     {
-        ClearListeners();
         std::string exercises( answer_, bytes_received );
         typedef boost::tokenizer< boost::char_separator< char > > T_Tokenizer;
         boost::char_separator<char> separator("/");
@@ -91,6 +91,11 @@ void NetworkExerciseLister::OnReceive( const boost::system::error_code& error, s
             std::string port = token.substr( dotPosition + 1, token.length() - dotPosition -1 );
             UpdateListeners( scenario, port );
         }
+    }
+    else
+    {
+        for( CIT_Lists it = lists_.begin(); it != lists_.end(); ++it )
+            (*it)->Update();
     }
     socket_.async_receive( buffer( answer_, 1024 ),
 						         boost::bind( &NetworkExerciseLister::OnReceive, this, 
