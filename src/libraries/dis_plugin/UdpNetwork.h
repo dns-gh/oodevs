@@ -44,8 +44,9 @@ public:
         char buffer[ Message::size ];
         Serializer serializer( buffer );
         message.Serialize( serializer );
-        socket_.async_send_to( boost::asio::buffer( (const char*)buffer, Message::size ), target_,
-                           boost::bind( &UdpNetwork::Sent, this, boost::asio::placeholders::error ) );
+        boost::shared_ptr< std::string > messageString( new std::string( buffer ) );
+        socket_.async_send_to( boost::asio::buffer( *messageString ), target_,
+                           boost::bind( &UdpNetwork::Sent, this, messageString, boost::asio::placeholders::error ) );
     }
     //@}
 
@@ -60,7 +61,7 @@ private:
     //@{
     void Start();
     void Stop();
-    void Sent( const boost::system::error_code& ) {}
+    void Sent( boost::shared_ptr<std::string>, const boost::system::error_code& ) {}
     //@}
 
 protected:
