@@ -165,10 +165,25 @@ namespace
 
     QString GetPrefix( const QString& name )
     {
-        QRegExp regexp( "^([A-Z]{3,})\\s" );
-        if( regexp.search( name ) > -1 )
-            return regexp.cap( 1 );
+        {
+            QRegExp regexp( "^([A-Z]{3,})\\s" );
+            if( regexp.search( name ) > -1 )
+                return regexp.cap( 1 );
+        }
+        {
+            QRegExp regexp( "^(\\w{3,})\\s-\\s" );
+            if( regexp.search( name ) > -1 )
+                return regexp.cap( 1 );
+        }
         return "";
+    }
+
+    QString GetMissionName( const QString& name, const QString& prefix )
+    {
+        QString result( name.mid( prefix.length() ).stripWhiteSpace() );
+        if( result.startsWith( "-" ) )
+            return result.mid( 1 ).stripWhiteSpace();
+        return result;
     }
 
     struct MissionComparator
@@ -176,6 +191,11 @@ namespace
         bool operator()( const Mission* lhs, const Mission* rhs )
         {
             return lhs->GetName() < rhs->GetName();
+        }
+
+        bool operator()( const QString& lhs, const QString& rhs ) const
+        {
+            return ( lhs.isEmpty() && ! rhs.isEmpty() ) ? false : ( ( rhs.isEmpty() && !lhs.isEmpty() ) ? true : lhs < rhs );
         }
     };
 }
@@ -200,7 +220,7 @@ void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, con
     for( T::const_iterator it = list.begin(); it != list.end(); ++it )
     {
         const Mission& mission = **it;
-        const int id = menu.insertItem( QString( mission.GetName().c_str() ).mid( prefix.length() ).stripWhiteSpace(), this, slot );
+        const int id = menu.insertItem( GetMissionName( mission.GetName().c_str(), prefix ), this, slot );
         menu.setItemParameter( id, mission.GetId() );
     }
 }
@@ -213,20 +233,16 @@ int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu,
 {
     QPopupMenu& missions = *new QPopupMenu( menu );
     QString lastPrefix;
-    std::set< const Mission*, MissionComparator > list;
+    typedef std::map< QString, std::set< const Mission*, MissionComparator >, MissionComparator > T_Missions;
+    T_Missions list;
     while( it.HasMoreElements() )
     {
         const Mission& mission = it.NextElement();
         const QString prefix = GetPrefix( mission.GetName().c_str() );
-        if( prefix != lastPrefix )
-        {
-            AddMissionGroup( missions, lastPrefix, list, slot );
-            list.clear();
-            lastPrefix = prefix;
-        }
-        list.insert( &mission );
+        list[ prefix ].insert( &mission );
     }
-    AddMissionGroup( missions, lastPrefix, list, slot );
+    for( T_Missions::const_iterator itM = list.begin(); itM != list.end(); ++itM )
+        AddMissionGroup( missions, itM->first, itM->second, slot );
     return menu.InsertItem( "Order", name, &missions );
 }
 
