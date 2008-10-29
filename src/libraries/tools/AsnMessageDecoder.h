@@ -10,7 +10,7 @@
 #ifndef __AsnMessageDecoder_h_
 #define __AsnMessageDecoder_h_
 
-#include <asn1per.h> // $$$$ _RC_ CPG 2008-09-22: Remplacer par #include <masan/asn1per.h> ?
+#include <asn1per.h>
 #include <asn1PerCppTypes.h>
 #include "AsnControllers.h"
 
