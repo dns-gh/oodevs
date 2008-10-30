@@ -118,10 +118,11 @@ Section "${APP_NAME}"
     File /r /x ".svn" "${RUNDIR}\resources"
     File /nonfatal "${RUNDIR}\*.manifest"
     File "*.ico"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-
+    
     ; scalped licence
     File "scalped.lic"
+    
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     CreateDirectory "$SMPROGRAMS\${APP_NAME}"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
