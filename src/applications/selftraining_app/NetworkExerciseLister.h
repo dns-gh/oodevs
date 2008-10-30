@@ -11,12 +11,14 @@
 #define __ExerciseLister_h_
 
 #include <boost/asio.hpp>
-#include <boost/thread.hpp>
-
 #include "ExerciseLister_ABC.h"
 
-class ExerciseList;
+namespace boost
+{
+    class thread;
+}
 
+class ExerciseList;
 class Config;
 
 // =============================================================================
@@ -71,14 +73,14 @@ private:
 private:
     //! @name Member data
     //@{
-    const Config&                config_;
-    std::string                  subDir_;
-    boost::asio::io_service      network_;
-    boost::asio::ip::udp::socket socket_;
-    char                         answer_[1024];
-    boost::thread                thread_;
-    T_Lists                      lists_;
-    T_PortDictionary             exercises_;
+    const Config&                  config_;
+    std::string                    subDir_;
+    boost::asio::io_service        network_;
+    boost::asio::ip::udp::socket   socket_;
+    char                           answer_[1024];
+    std::auto_ptr< boost::thread > thread_;
+    T_Lists                        lists_;
+    T_PortDictionary               exercises_;
     //@}
 };
 

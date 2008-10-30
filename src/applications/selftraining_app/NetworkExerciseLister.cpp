@@ -12,8 +12,8 @@
 #include "Config.h"
 #include "ExerciseList.h"
 #include "frontend/commands.h"
-
 #include <boost/bind.hpp>
+#include <boost/thread.hpp>
 #include <boost/tokenizer.hpp>
 
 using namespace boost::asio;
@@ -26,7 +26,7 @@ NetworkExerciseLister::NetworkExerciseLister( const Config& config, const std::s
     : config_( config )
     , subDir_( subDir )
     , socket_( network_, ip::udp::endpoint( ip::udp::v4(), config.GetListClientPort() ) )
-    , thread_( boost::bind( &NetworkExerciseLister::RunNetwork, this ) )
+    , thread_( new boost::thread( boost::bind( &NetworkExerciseLister::RunNetwork, this ) ) )
 {    
     socket_.async_receive( buffer( answer_, 1024 ),
 						         boost::bind( &NetworkExerciseLister::OnReceive, this, 
@@ -40,7 +40,8 @@ NetworkExerciseLister::NetworkExerciseLister( const Config& config, const std::s
 // -----------------------------------------------------------------------------
 NetworkExerciseLister::~NetworkExerciseLister()
 {
-    thread_.join();
+    network_.stop();
+    thread_->join();
 }
 
 // -----------------------------------------------------------------------------

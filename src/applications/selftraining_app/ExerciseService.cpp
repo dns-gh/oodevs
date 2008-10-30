@@ -15,6 +15,7 @@
 #include "frontend/ConfigurationManipulator.h"
 #include "frontend/Process_ABC.h"
 #include <boost/bind.hpp>
+#include <boost/thread.hpp>
 #include <sstream>
 
 using namespace boost::asio;
@@ -28,7 +29,7 @@ ExerciseService::ExerciseService( kernel::Controllers& controllers, const Config
     , config_     ( config )
     , port_       ( config.GetListServerPort() )
     , socket_     ( network_, ip::udp::endpoint( ip::udp::v4(), port_ ) )
-    , thread_     ( boost::bind( &ExerciseService::RunNetwork, this ) )
+    , thread_     ( new boost::thread( boost::bind( &ExerciseService::RunNetwork, this ) ) )
 {
     controllers_.Register( *this );
     SetupNetwork();
@@ -41,7 +42,8 @@ ExerciseService::ExerciseService( kernel::Controllers& controllers, const Config
 ExerciseService::~ExerciseService()
 {
     controllers_.Unregister( *this );
-    thread_.join();
+    network_.stop();
+    thread_->join();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,8 +64,15 @@ void ExerciseService::NotifyUpdated( const frontend::Process_ABC& process )
     std::string exerciseName = process.GetStartedExercise();
     if( !exerciseName.empty() && exerciseList_.find( exerciseName ) == exerciseList_.end() )
     {
-        frontend::ConfigurationManipulator manipulator( config_, exerciseName, MULTIPLAYER_SESSION );
-        exerciseList_[ exerciseName ] = manipulator.GetValue< unsigned int >( "session/config/dispatcher/network/@server" );
+        try
+        {
+            frontend::ConfigurationManipulator manipulator( config_, exerciseName, MULTIPLAYER_SESSION );
+            exerciseList_[ exerciseName ] = manipulator.GetValue< unsigned int >( "session/config/dispatcher/network/@server" );
+        }
+        catch( ... )
+        {
+            // $$$$ SBO 2008-10-30: multiplayer session does not exists
+        }
     }
     exerciseMessage_.clear();
 }

@@ -12,7 +12,11 @@
 
 #include "clients_kernel/ElementObserver_ABC.h"
 #include <boost/asio.hpp>
-#include <boost/thread.hpp>
+
+namespace boost
+{
+    class thread;
+}
 
 namespace frontend
 {
@@ -82,7 +86,7 @@ private:
     boost::asio::ip::udp::socket   socket_;
     char                           answer_[32];
     boost::asio::ip::udp::endpoint remoteEndPoint_;
-    boost::thread                  thread_;
+    std::auto_ptr< boost::thread > thread_;
     std::string                    exerciseMessage_;
     //@}
 };
