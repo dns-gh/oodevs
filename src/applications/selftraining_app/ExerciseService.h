@@ -37,7 +37,7 @@ class Config;
 // Created: LDC 2008-10-23
 // =============================================================================
 class ExerciseService : public kernel::Observer_ABC
-                      , public kernel::ElementObserver_ABC< boost::shared_ptr< const frontend::Process_ABC > >
+                      , public kernel::ElementObserver_ABC< boost::shared_ptr< frontend::Process_ABC > >
 {
 
 public:
@@ -49,9 +49,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyCreated( const boost::shared_ptr< const frontend::Process_ABC >& process );
-    virtual void NotifyUpdated( const boost::shared_ptr< const frontend::Process_ABC >& process );
-    virtual void NotifyDeleted( const boost::shared_ptr< const frontend::Process_ABC >& process );
+    virtual void NotifyCreated( const boost::shared_ptr< frontend::Process_ABC >& process );
+    virtual void NotifyUpdated( const boost::shared_ptr< frontend::Process_ABC >& process );
+    virtual void NotifyDeleted( const boost::shared_ptr< frontend::Process_ABC >& process );
     //@}
 
 private:

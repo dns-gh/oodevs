@@ -34,7 +34,7 @@ class QTimer;
 // =============================================================================
 class ProgressPage : public ContentPage
                    , public kernel::Observer_ABC
-                   , public kernel::ElementObserver_ABC< boost::shared_ptr< const frontend::Process_ABC > >
+                   , public kernel::ElementObserver_ABC< boost::shared_ptr< frontend::Process_ABC > >
 {
     Q_OBJECT;
 
@@ -65,8 +65,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const boost::shared_ptr< const frontend::Process_ABC >& process );
-    virtual void NotifyDeleted( const boost::shared_ptr< const frontend::Process_ABC >& process );
+    virtual void NotifyUpdated( const boost::shared_ptr< frontend::Process_ABC >& process );
+    virtual void NotifyDeleted( const boost::shared_ptr< frontend::Process_ABC >& process );
     //@}
 
 private:

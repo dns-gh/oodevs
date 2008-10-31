@@ -60,7 +60,7 @@ ExerciseService::~ExerciseService()
 // Name: ExerciseService::NotifyCreated
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-void ExerciseService::NotifyCreated( const boost::shared_ptr< const frontend::Process_ABC >& process )
+void ExerciseService::NotifyCreated( const boost::shared_ptr< frontend::Process_ABC >& process )
 {
     // NOTHING
 }
@@ -69,7 +69,7 @@ void ExerciseService::NotifyCreated( const boost::shared_ptr< const frontend::Pr
 // Name: ExerciseService::NotifyUpdated
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-void ExerciseService::NotifyUpdated( const boost::shared_ptr< const frontend::Process_ABC >& process )
+void ExerciseService::NotifyUpdated( const boost::shared_ptr< frontend::Process_ABC >& process )
 {
     const std::string exerciseName = process->GetStartedExercise();
     if( !exerciseName.empty() && exerciseList_.find( exerciseName ) == exerciseList_.end() )
@@ -92,7 +92,7 @@ void ExerciseService::NotifyUpdated( const boost::shared_ptr< const frontend::Pr
 // Name: ExerciseService::NotifyDeleted
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-void ExerciseService::NotifyDeleted( const boost::shared_ptr< const frontend::Process_ABC >& process )
+void ExerciseService::NotifyDeleted( const boost::shared_ptr< frontend::Process_ABC >& process )
 {
     const std::string exerciseName = process->GetStartedExercise();
     if( !exerciseName.empty() )

@@ -11,7 +11,6 @@
 #define __CompositeProcessWrapper_h_
 
 #include "frontend/Process_ABC.h"
-#include <boost/enable_shared_from_this.hpp>
 
 namespace boost
 {
@@ -35,7 +34,6 @@ namespace frontend
 // Created: SBO 2008-10-15
 // =============================================================================
 class CompositeProcessWrapper : public frontend::Process_ABC
-                              , public boost::enable_shared_from_this< const frontend::Process_ABC >
 {
 
 public:

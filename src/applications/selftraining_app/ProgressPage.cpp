@@ -81,7 +81,7 @@ void ProgressPage::UpdateProgress()
 // Name: ProgressPage::NotifyUpdated
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-void ProgressPage::NotifyUpdated( const boost::shared_ptr< const frontend::Process_ABC >& process )
+void ProgressPage::NotifyUpdated( const boost::shared_ptr< frontend::Process_ABC >& process )
 {
     if( process.get() == process_.get() )
         UpdateProgress();
@@ -91,7 +91,7 @@ void ProgressPage::NotifyUpdated( const boost::shared_ptr< const frontend::Proce
 // Name: ProgressPage::NotifyDeleted
 // Created: SBO 2008-10-15
 // -----------------------------------------------------------------------------
-void ProgressPage::NotifyDeleted( const boost::shared_ptr< const frontend::Process_ABC >& process )
+void ProgressPage::NotifyDeleted( const boost::shared_ptr< frontend::Process_ABC >& process )
 {
     if( process.get() == process_.get() )
     {

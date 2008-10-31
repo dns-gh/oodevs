@@ -10,6 +10,8 @@
 #ifndef __Process_ABC_h_
 #define __Process_ABC_h_
 
+#include <boost/enable_shared_from_this.hpp>
+
 namespace frontend
 {
 
@@ -19,7 +21,7 @@ namespace frontend
 */
 // Created: SBO 2008-10-14
 // =============================================================================
-class Process_ABC
+class Process_ABC : public boost::enable_shared_from_this< frontend::Process_ABC >
 {
 
 public:
