@@ -92,9 +92,10 @@ void ExerciseList::Update()
     static const QImage pix( "resources/images/selftraining/mission.png" );
     lister_.ListExercises( exercisesList_ );
     exercises_->clear();
-    for( QStringList::iterator it = exercisesList_ .begin(); it != exercisesList_ .end(); ++it )
+    for( QStringList::iterator it = exercisesList_.begin(); it != exercisesList_ .end(); ++it )
         exercises_->insertItem( pix, GetExerciseDisplayName( *it ) );
     exercises_->setSelected( 0, true );
+    exercises_->repaint();
 }
 
 namespace
