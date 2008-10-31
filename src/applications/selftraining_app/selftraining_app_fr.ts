@@ -135,7 +135,7 @@
     </message>
     <message>
         <source>Profile:</source>
-        <translation type="unfinished">Profil:</translation>
+        <translation>Profil:</translation>
     </message>
 </context>
 <context>
@@ -371,14 +371,14 @@
     </message>
     <message>
         <source>Starting session</source>
-        <translation type="unfinished">Démarrage session</translation>
+        <translation>Démarrage session</translation>
     </message>
 </context>
 <context>
     <name>ScenarioLauncherPageOptions</name>
     <message>
         <source>Profile:</source>
-        <translation>Profil:</translation>
+        <translation type="obsolete">Profil:</translation>
     </message>
     <message>
         <source>Frequency:</source>
@@ -394,7 +394,7 @@
     </message>
     <message>
         <source>Start</source>
-        <translation>Démarrer</translation>
+        <translation type="obsolete">Démarrer</translation>
     </message>
     <message>
         <source>options</source>
@@ -402,15 +402,15 @@
     </message>
     <message>
         <source>Options</source>
-        <translation>Options</translation>
+        <translation type="obsolete">Options</translation>
     </message>
     <message>
         <source>The &apos;anonymous&apos; profile is a default profile allowing to play the automated exercise when it is available.</source>
-        <translation>Le profil &apos;anonyme&apos; est un profil par défaut permettant de jouer l&apos;exercice scénarisé (partiellement automatisé) lorsque celui-ci est disponible.</translation>
+        <translation type="obsolete">Le profil &apos;anonyme&apos; est un profil par défaut permettant de jouer l&apos;exercice scénarisé (partiellement automatisé) lorsque celui-ci est disponible.</translation>
     </message>
     <message>
         <source>Starting session</source>
-        <translation>Démarrage session</translation>
+        <translation type="obsolete">Démarrage session</translation>
     </message>
 </context>
 <context>

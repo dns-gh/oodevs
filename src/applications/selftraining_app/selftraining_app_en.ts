@@ -284,26 +284,6 @@
 </context>
 <context>
     <name>ScenarioLauncherPageOptions</name>
-    <message>
-        <source>Profile:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The &apos;anonymous&apos; profile is a default profile allowing to play the automated exercise when it is available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starting session</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ScenarioPage</name>

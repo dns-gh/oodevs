@@ -16,7 +16,6 @@ QuitPage.cpp \
 ReplayPage.cpp \
 ScenarioEditPage.cpp \
 ScenarioLauncherPage.cpp \
-ScenarioLauncherPageOptions.cpp \
 ScenarioPage.cpp \
 SelfTrainingPage.cpp \
 SessionTray.cpp \
