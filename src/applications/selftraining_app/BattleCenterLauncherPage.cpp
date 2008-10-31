@@ -37,7 +37,7 @@ BattleCenterLauncherPage::BattleCenterLauncherPage( QWidgetStack* pages, Page_AB
     box->setMargin( 5 );
     {
         exercises_ = new ExerciseList( box, config_, lister_ );
-        connect( exercises_, SIGNAL( Highlight( const QString& ) ), this, SLOT( SelectExercise( const QString& ) ) );
+        connect( exercises_, SIGNAL( Select( const QString&, const QString& profile ) ), this, SLOT( SelectExercise( const QString&, const QString& ) ) );
     }
     AddContent( box );
     AddNextButton( tools::translate( "BattleCenterLauncherPage", "Start" ) , *this, SLOT( StartExercise() ) );
@@ -56,9 +56,10 @@ BattleCenterLauncherPage::~BattleCenterLauncherPage()
 // Name: BattleCenterLauncherPage::SelectExercise
 // Created: SBO 2008-10-15
 // -----------------------------------------------------------------------------
-void BattleCenterLauncherPage::SelectExercise( const QString& name )
+void BattleCenterLauncherPage::SelectExercise( const QString& name, const QString& profile )
 {
     exercise_ = name;
+    profile_ = profile;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +78,7 @@ void BattleCenterLauncherPage::StartExercise()
     }
     boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), true ) );
     // $$$$ SBO 2008-10-15: launch client optionally...
-    boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), true ) );
+    boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), profile_, true ) );
     boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
     progressPage_->Attach( process );
     progressPage_->show();

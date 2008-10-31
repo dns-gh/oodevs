@@ -14,8 +14,11 @@
 #include "clients_kernel/Controllers.h"
 #include "frontend/ConfigurationManipulator.h"
 #include "frontend/Process_ABC.h"
+#pragma warning( push )
+#pragma warning( disable: 4512 )
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
+#pragma warning( pop )
 #include <sstream>
 
 using namespace boost::asio;

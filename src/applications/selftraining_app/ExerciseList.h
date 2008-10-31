@@ -20,7 +20,8 @@ namespace xml
     class xistream;
 }
 
-class SideList;
+class ProfileList;
+class Profile;
 class ExerciseLister_ABC;
 
 // =============================================================================
@@ -49,16 +50,15 @@ public:
 signals:
     //! @name Signals
     //@{
-    void Select   ( const QString& exercise );
-    void Highlight( const QString& exercise );
+    void Select( const QString& exercise, const QString& profile );
     //@}
 
 public slots:
     //! @name Slots
     //@{
     void Update();
-    void UpdateExercise( int index );
-    void SelectExercise();
+    void SelectExercise( int index );
+    void SelectProfile( const Profile& profile );
     void Clear();
     //@}
 
@@ -71,6 +71,7 @@ private:
 
     //! @name Helpers
     //@{
+    QString BuildExercisePath() const;
     void ReadBriefingText( xml::xistream& xis );
     QString GetExerciseDisplayName( const QString& exercise ) const ; 
     //@}
@@ -79,13 +80,13 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig&  config_;
-    const std::string            subDir_ ; 
+    const std::string            subDir_;
     QListBox*                    exercises_;
     QLabel*                      briefingImage_;
     QTextEdit*                   briefingText_;
-    SideList*                    sides_; 
-    bool                         showBrief_; 
-    QStringList                  exercisesList_ ;
+    ProfileList*                 profiles_;
+    bool                         showBrief_;
+    QStringList                  exercisesList_;
     const ExerciseLister_ABC&    lister_;
  //@}
 };

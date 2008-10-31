@@ -10,7 +10,10 @@
 #ifndef __ExerciseLister_h_
 #define __ExerciseLister_h_
 
+#pragma warning( push )
+#pragma warning( disable: 4512 )
 #include <boost/asio.hpp>
+#pragma warning( pop )
 #include "ExerciseLister_ABC.h"
 
 namespace boost

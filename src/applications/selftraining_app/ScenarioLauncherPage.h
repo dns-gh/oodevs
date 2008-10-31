@@ -24,7 +24,7 @@ namespace kernel
 }
 
 class ExerciseList;
-class ScenarioLauncherPageOptions;
+class ProgressPage;
 
 // =============================================================================
 /** @class  ScenarioLauncherPage
@@ -34,12 +34,20 @@ class ScenarioLauncherPageOptions;
 // =============================================================================
 class ScenarioLauncherPage : public ContentPage
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
              ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config );
     virtual ~ScenarioLauncherPage();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnStart();
+    void OnSelect( const QString& exercise, const QString& profile );
     //@}
 
 private:
@@ -52,13 +60,19 @@ private:
     //! @name Helpers
     //@{
     virtual void Update();
+    void CreateSession( const QString& exercise, const QString& session );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ExerciseList*           exercises_;
-    DirectoryExerciseLister lister_;
+    const tools::GeneralConfig& config_;
+    kernel::Controllers&        controllers_;
+    ProgressPage*               progressPage_;
+    ExerciseList*               exercises_;
+    QString                     exercise_;
+    QString                     profile_;
+    DirectoryExerciseLister     lister_;
     //@}
 };
 

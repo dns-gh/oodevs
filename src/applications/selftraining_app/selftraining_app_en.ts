@@ -105,11 +105,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sides:</source>
+        <source>No briefing available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No briefing available</source>
+        <source>Profile:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -275,6 +275,10 @@
     </message>
     <message>
         <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting session</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

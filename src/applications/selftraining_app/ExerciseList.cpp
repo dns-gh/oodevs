@@ -12,7 +12,8 @@
 #include "ExerciseLister_ABC.h"
 #include "moc_ExerciseList.cpp"
 #include "MenuButton.h" 
-#include "SideList.h" 
+#include "Profile.h"
+#include "ProfileList.h"
 #include "frontend/commands.h" 
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
@@ -49,14 +50,14 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         label->setBackgroundOrigin( QWidget::WindowOrigin );
         exercises_ = new QListBox( leftBox );
 
-        label = new QLabel( tools::translate( "ExerciseList", "Sides:" ), leftBox );
+        label = new QLabel( tools::translate( "ExerciseList", "Profile:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        sides_ = new SideList( leftBox, config );
+        profiles_ = new ProfileList( leftBox, config );
         leftBox->setStretchFactor( exercises_, 3 );
-        leftBox->setStretchFactor( sides_, 1 );
+        leftBox->setStretchFactor( profiles_, 1 );
 
-        connect( exercises_, SIGNAL( highlighted( int ) ), this,  SLOT( UpdateExercise( int ) ) );
-        connect( exercises_, SIGNAL( doubleClicked( QListBoxItem* ) ), this, SLOT( SelectExercise() ) );
+        connect( profiles_ , SIGNAL( Select( const Profile& ) ), this, SLOT( SelectProfile( const Profile& ) ) );
+        connect( exercises_, SIGNAL( highlighted( int ) ), this, SLOT( SelectExercise( int ) ) );
     }
     
     if( showBrief ) 
@@ -100,37 +101,36 @@ void ExerciseList::Update()
 
 namespace
 {
-    std::string GetFilePath( const std::string& subDir, const std::string& file )
+    QString MakePath( const std::string& dir, const std::string& file )
     {
-        if( subDir.empty() )
-            return file;
-        return subDir + "/" + file;
+        if( dir.empty() )
+            return file.c_str();
+        return QString( "%1/%2" ).arg( dir.c_str() ).arg( file.c_str() );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseList::UpdateExercise
+// Name: ExerciseList::SelectExercise
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-void ExerciseList::UpdateExercise( int index )
+void ExerciseList::SelectExercise( int index )
 {
     QString exercise = *exercisesList_.at( index ) ; 
-    emit Highlight( GetHighlight() );
-    sides_->Update( GetFilePath( subDir_.c_str(), exercise.ascii() ).c_str() );
+    profiles_->Update( MakePath( subDir_, exercise.ascii() ) );
     if( showBrief_ )
     {
         briefingText_->setText( tools::translate( "ExerciseList", "No briefing available" ) );
         briefingText_->hide();
         try
         {
-            xml::xifstream xis( config_.GetExerciseFile( GetFilePath( subDir_, exercise.ascii() ) ) );
+            xml::xifstream xis( config_.GetExerciseFile( MakePath( subDir_, exercise.ascii() ).ascii() ) );
             std::string image;
             xis >> xml::start( "exercise" )
                     >> xml::optional() >> xml::start( "meta" )
                         >> xml::optional() >> xml::start( "briefing" )
                             >> xml::optional()  >> xml::content("image", image )
                                 >> xml::list( "text", *this, &ExerciseList::ReadBriefingText );
-            const std::string imagePath = config_.GetExerciseDir( GetFilePath( exercise.ascii(), image ) );
+            const std::string imagePath = config_.GetExerciseDir( MakePath( exercise.ascii(), image ).ascii() );
             const QImage pix( imagePath.c_str() );
             briefingImage_->setPixmap( pix );
         }
@@ -150,7 +150,7 @@ QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
     std::string displayName( exercise.ascii() );
     try
     {
-        xml::xifstream xis( config_.GetExerciseFile( GetFilePath( subDir_, exercise.ascii() ) ) );
+        xml::xifstream xis( config_.GetExerciseFile( MakePath( subDir_, exercise.ascii() ).ascii() ) );
         xis >> xml::start( "exercise" )
                 >> xml::optional() >> xml::start( "meta" )
                     >> xml::optional() >> xml::content( "name", displayName );
@@ -163,15 +163,17 @@ QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseList::GetHighlight
-// Created: RDS 2008-09-01
+// Name: ExerciseList::BuildExercisePath
+// Created: SBO 2008-10-31
 // -----------------------------------------------------------------------------
-const QString ExerciseList::GetHighlight() const
+QString ExerciseList::BuildExercisePath() const
 {
-    if ( exercises_->selectedItem() )
-        return QString( GetFilePath( subDir_, ( *exercisesList_.at( exercises_->index( exercises_->selectedItem() ) ) ).ascii() ).c_str() );
-    else
-        return "";
+    if( exercises_->selectedItem() )
+    {
+        const QString exercise( *exercisesList_.at( exercises_->index( exercises_->selectedItem() ) ) );
+        return MakePath( subDir_, exercise.ascii() );
+    }
+    return "";
 }
 
 // -----------------------------------------------------------------------------
@@ -191,13 +193,13 @@ void ExerciseList::ReadBriefingText( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseList::SelectExercise
-// Created: RDS 2008-08-27
+// Name: ExerciseList::SelectProfile
+// Created: SBO 2008-10-31
 // -----------------------------------------------------------------------------
-void ExerciseList::SelectExercise()
+void ExerciseList::SelectProfile( const Profile& profile )
 {
     if( exercises_->selectedItem() )
-        emit Select( GetHighlight() );
+        emit Select( BuildExercisePath(), profile.GetLogin() );
 }
 
 // -----------------------------------------------------------------------------

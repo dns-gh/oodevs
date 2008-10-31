@@ -41,10 +41,9 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         hbox->setSpacing( 10 );
         {
-            exercises_ = new ExerciseList( hbox, config, lister, "" ,false );
+            exercises_ = new ExerciseList( hbox, config, lister, "", false );
             lister.AddList( exercises_ );
-            connect( exercises_, SIGNAL( Select( const QString& ) ), this, SLOT( OnStartExercise( const QString& ) ) );
-            connect( exercises_, SIGNAL( Highlight( const QString& ) ), this, SLOT( OnSelectExercise( const QString& ) ) );
+            connect( exercises_, SIGNAL( Select( const QString&, const QString& ) ), this, SLOT( OnSelectExercise( const QString&, const QString& ) ) );
         }
         {
             QVBox* vbox = new QVBox( hbox );
@@ -78,10 +77,10 @@ void ReplayPage::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReplayPage::OnStartExercise
+// Name: ReplayPage::StartExercise
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-void ReplayPage::OnStartExercise( const QString& exercise )
+void ReplayPage::StartExercise( const QString& exercise )
 {
     if( exercise.isEmpty() || ! dialogs::KillRunningProcesses( this ) )
         return;
@@ -106,17 +105,17 @@ void ReplayPage::OnStartExercise( const QString& exercise )
 // -----------------------------------------------------------------------------
 void ReplayPage::OnStart()
 {
-    QString exercise = exercises_->GetHighlight() ; 
-    if ( exercise != "" ) 
-        OnStartExercise( exercise ) ; 
+    if( exercise_ != "" )
+        StartExercise( exercise_ ) ; 
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPage::OnSelectExercise
 // Created: RDS 2008-09-02
 // -----------------------------------------------------------------------------
-void ReplayPage::OnSelectExercise( const QString& exercise )
+void ReplayPage::OnSelectExercise( const QString& exercise, const QString& profile )
 {
+    exercise_ = exercise;
     sessionList_->clear(); 
     sessionList_->insertStringList( frontend::commands::ListSessions( config_, exercise.ascii() ) );
 }

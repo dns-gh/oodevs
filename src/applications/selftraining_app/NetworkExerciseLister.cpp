@@ -12,9 +12,12 @@
 #include "Config.h"
 #include "ExerciseList.h"
 #include "frontend/commands.h"
+#pragma warning( push )
+#pragma warning( disable: 4512 )
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
 #include <boost/tokenizer.hpp>
+#pragma warning( pop )
 
 using namespace boost::asio;
 

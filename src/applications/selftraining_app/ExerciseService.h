@@ -11,7 +11,10 @@
 #define __ExerciseService_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
+#pragma warning( push )
+#pragma warning( disable: 4512 )
 #include <boost/asio.hpp>
+#pragma warning( pop )
 
 namespace boost
 {

@@ -47,9 +47,8 @@ private slots:
     
     //! @name Operations
     //@{
-    void OnStartExercise( const QString& exercise );
     void OnStart();
-    void OnSelectExercise( const QString& exercise );
+    void OnSelectExercise( const QString& exercise, const QString& profile );
     //@}
 
 private:
@@ -62,6 +61,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Update();
+    void StartExercise( const QString& exercise );
     void ConfigureSession( const QString& exercise, const QString& session );
     //@}
 
@@ -72,6 +72,7 @@ private:
     kernel::Controllers&        controllers_;
     ProgressPage*               progressPage_;
     ExerciseList*               exercises_;
+    QString                     exercise_;
     QListBox*                   sessionList_;
     NetworkExerciseLister&      lister_;
     //@}

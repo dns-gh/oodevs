@@ -104,7 +104,7 @@ TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools
     QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     exercises_ = new ExerciseList( box , config, lister_, "tutorials" );
-    connect( exercises_, SIGNAL( Select( const QString& ) ), this, SLOT( OnStartExercise( const QString& ) ) );
+    connect( exercises_, SIGNAL( Select( const QString&, const QString& ) ), this, SLOT( OnSelectExercise( const QString&, const QString& ) ) );
     AddContent( box );
     AddNextButton( tools::translate( "TutorialPage", "Start" ), *this, SLOT( OnStart() ) );
 }
@@ -128,48 +128,12 @@ void TutorialPage::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TutorialPage::OnStartExercise
+// Name: TutorialPage::OnSelectExercise
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-void TutorialPage::OnStartExercise( const QString& exercise )
+void TutorialPage::OnSelectExercise( const QString& exercise, const QString& /*profile*/ )
 {
-    const std::string target = ReadTargetApplication( config_, exercise );
-    if( target == "gaming" )
-    {
-        boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartExercise( config_, exercise, "default", true ) );
-        boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinExercise( config_, exercise, "default", true ) );
-        boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
-        progressPage_->Attach( process );
-        progressPage_->show();
-    }
-    else if( target == "preparation" )
-    {
-        boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exercise, true ) );
-        boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
-        progressPage_->Attach( process );
-        progressPage_->show();
-    }
-    else if( target == "replayer" )
-    {
-        const unsigned int port = frontend::DispatcherPort( 1 ); // $$$$ SBO 2008-10-16: hard coded port
-        boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartReplay( config_, exercise, "default", port, true ) );
-        boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinAnalysis( config_, exercise, port, true ) );
-        boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
-        progressPage_->Attach( process );
-        progressPage_->show();
-    }
-
-    if( target != "gaming" )
-    {
-        const QStringList resources = GetResources( config_, exercise );
-        if( ! resources.empty() )
-        {
-            std::string file = *resources.begin();
-            file = ( bfs::path( config_.GetExerciseDir( exercise.ascii() ), bfs::native ) / file ).native_file_string();
-            // file = config_.BuildDirectoryFile( exercise.ascii(), file );
-            interpreter_.Interprete( MakeLink( file ).c_str() );
-        }
-    }
+    exercise_ = exercise;
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +142,43 @@ void TutorialPage::OnStartExercise( const QString& exercise )
 // -----------------------------------------------------------------------------
 void TutorialPage::OnStart()
 {
-    const QString exercise = exercises_->GetHighlight();
-    if ( exercise != "" )
-        OnStartExercise( exercise );
+    if( exercise_.isEmpty() )
+        return;
+    const std::string target = ReadTargetApplication( config_, exercise_ );
+    if( target == "gaming" )
+    {
+        boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartExercise( config_, exercise_, "default", true ) );
+        boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinExercise( config_, exercise_, "default", true ) );
+        boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
+        progressPage_->Attach( process );
+        progressPage_->show();
+    }
+    else if( target == "preparation" )
+    {
+        boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exercise_, true ) );
+        boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+        progressPage_->Attach( process );
+        progressPage_->show();
+    }
+    else if( target == "replayer" )
+    {
+        const unsigned int port = frontend::DispatcherPort( 1 ); // $$$$ SBO 2008-10-16: hard coded port
+        boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartReplay( config_, exercise_, "default", port, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinAnalysis( config_, exercise_, port, true ) );
+        boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
+        progressPage_->Attach( process );
+        progressPage_->show();
+    }
+
+    if( target != "gaming" )
+    {
+        const QStringList resources = GetResources( config_, exercise_ );
+        if( ! resources.empty() )
+        {
+            std::string file = *resources.begin();
+            file = ( bfs::path( config_.GetExerciseDir( exercise_.ascii() ), bfs::native ) / file ).native_file_string();
+            // file = config_.BuildDirectoryFile( exercise.ascii(), file );
+            interpreter_.Interprete( MakeLink( file ).c_str() );
+        }
+    }
 }

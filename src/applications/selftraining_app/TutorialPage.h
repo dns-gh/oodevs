@@ -49,10 +49,9 @@ public:
     //@}
 
 private slots:
-    
     //! @name Operations
     //@{
-    void OnStartExercise( const QString& exercise );
+    void OnSelectExercise( const QString& exercise, const QString& profile );
     void OnStart();
     //@}
 
@@ -77,6 +76,7 @@ private:
     gui::LinkInterpreter_ABC&   interpreter_;
     ProgressPage*               progressPage_;
     ExerciseList*               exercises_;
+    QString                     exercise_;
     DirectoryExerciseLister     lister_;
     //@}
 };

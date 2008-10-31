@@ -10,21 +10,19 @@
 #ifndef __ProfileList_h_
 #define __ProfileList_h_
 
-#include "clients_kernel/Resolver.h" 
-
-#include <qiconview.h>
+#include <vector>
 
 namespace tools
 {
-    class GeneralConfig ; 
+    class GeneralConfig;
 }
 
 namespace xml
 {
-    class xistream ; 
+    class xistream;
 }
 
-class Side; 
+class Profile;
 
 // =============================================================================
 /** @class  ProfileList
@@ -35,7 +33,7 @@ class Side;
 class ProfileList : public QListBox 
 {
 
-    Q_OBJECT ; 
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -49,14 +47,13 @@ public slots:
     //! @name Slots
     //@{
     void Update( const QString& exercise );
+    void OnSelect( int index );
     //@}
 
 signals:
-
     //! @name 
     //@{
-    void Select    ( const QString& profile ) ;
-    void Highlight ( const QString& profile ) ;
+    void Select( const Profile& profile );
     //@}
 
 private:
@@ -68,17 +65,15 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadSides   ( const std::string& exercise ) ; 
-    void ReadSide    ( xml::xistream& xis ) ; 
-    void ReadProfiles( const std::string& exercise ) ; 
-    void ReadProfile ( xml::xistream& xis ); 
+    void ReadProfiles( const std::string& exercise );
+    void ReadProfile ( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_ ; 
-    kernel::Resolver< Side > sides_ ; 
+    const tools::GeneralConfig& config_;
+    std::vector< Profile > profiles_;
     //@}
 };
 

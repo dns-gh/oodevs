@@ -127,11 +127,15 @@
     </message>
     <message>
         <source>Sides:</source>
-        <translation>Camps:</translation>
+        <translation type="obsolete">Camps:</translation>
     </message>
     <message>
         <source>No briefing available</source>
         <translation>Aucun briefing</translation>
+    </message>
+    <message>
+        <source>Profile:</source>
+        <translation type="unfinished">Profil:</translation>
     </message>
 </context>
 <context>
@@ -364,6 +368,10 @@
     <message>
         <source>Start</source>
         <translation>Démarrer</translation>
+    </message>
+    <message>
+        <source>Starting session</source>
+        <translation type="unfinished">Démarrage session</translation>
     </message>
 </context>
 <context>

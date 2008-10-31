@@ -25,7 +25,7 @@ ProfileList::ProfileList( QWidget* parent, const tools::GeneralConfig& config )
     : QListBox( parent )
     , config_( config )
 {
-    // NOTHING
+    connect( this, SIGNAL( highlighted( int ) ), SLOT( OnSelect( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,53 +43,19 @@ ProfileList::~ProfileList()
 // -----------------------------------------------------------------------------
 void ProfileList::Update( const QString& exercise )
 {
+    profiles_.clear();
     clear();
     try
     {
-        if ( exercise != "" )
-        {
-            ReadSides( exercise.ascii() );
+        if( !exercise.isEmpty() )
             ReadProfiles( exercise.ascii() );
-        }
+        setSelected( 0, true );
     }
     catch( ... )
     {
         // something went wrong ... don't crash since it may be related to the exercise file, but clear
         clear();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfileList::ReadSides
-// Created: RDS 2008-09-10
-// -----------------------------------------------------------------------------
-void ProfileList::ReadSides( const std::string& exercise )
-{
-    sides_.DeleteAll();
-    std::string orbatFile;
-    {
-        xml::xifstream xis( config_.GetExerciseFile( exercise ) );
-        xis >> xml::start( "exercise" )
-                >> xml::start( "orbat" )
-                    >> xml::attribute( "file", orbatFile );
-    }
-    {
-        const std::string file = ( config_.BuildChildPath( config_.GetExerciseFile( exercise ), orbatFile ) );
-        xml::xifstream xis( file );
-        xis >> xml::start( "orbat" )
-                >> xml::start( "sides" )
-                    >> xml::list( "side", *this, &ProfileList::ReadSide );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfileList::ReadSide
-// Created: RDS 2008-09-10
-// -----------------------------------------------------------------------------
-void ProfileList::ReadSide( xml::xistream& xis )
-{
-    Side* side = new Side( xis );
-    sides_.Register( side->GetId(), *side );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,10 +85,21 @@ void ProfileList::ReadProfiles( const std::string& exercise )
 // -----------------------------------------------------------------------------
 void ProfileList::ReadProfile( xml::xistream& xis )
 {
-    const Profile profile( xis, sides_ );
+    const Profile profile( xis );
     const QString name = profile.GetLogin() != "" ?  profile.GetLogin() : tools::translate( "ReadProfile", "anonymous" );
     if ( profile.IsSupervision() )
         insertItem( QImage( "resources/images/selftraining/commandpost.xpm" ), name );
     else
         insertItem( name );
+    profiles_.push_back( profile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileList::OnSelect
+// Created: SBO 2008-10-31
+// -----------------------------------------------------------------------------
+void ProfileList::OnSelect( int index )
+{
+    if( index < int( profiles_.size() ) )
+        emit Select( profiles_[index] );
 }
