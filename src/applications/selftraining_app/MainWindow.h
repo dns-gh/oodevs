@@ -71,8 +71,8 @@ private:
     std::auto_ptr< Config >                   config_;
     std::auto_ptr< gui::LinkInterpreter_ABC > interpreter_; 
     QWidgetStack*                             pages_;
-    std::auto_ptr<ExerciseService>            exercises_ ;
-    std::auto_ptr<NetworkExerciseLister>      exerciseLister_;
+    std::auto_ptr< ExerciseService >          exercises_ ;
+    std::auto_ptr< NetworkExerciseLister >    exerciseLister_;
     //@}
 };
 

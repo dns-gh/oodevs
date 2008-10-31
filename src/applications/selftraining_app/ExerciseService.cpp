@@ -28,11 +28,20 @@ ExerciseService::ExerciseService( kernel::Controllers& controllers, const Config
     : controllers_( controllers )
     , config_     ( config )
     , port_       ( config.GetListServerPort() )
-    , socket_     ( network_, ip::udp::endpoint( ip::udp::v4(), port_ ) )
-    , thread_     ( new boost::thread( boost::bind( &ExerciseService::RunNetwork, this ) ) )
+    , socket_     ( 0 )
+    , thread_     ( 0 )
 {
+    try
+    {
+        socket_.reset( new boost::asio::ip::udp::socket( network_, ip::udp::endpoint( ip::udp::v4(), port_ ) ) );
+        thread_.reset( new boost::thread( boost::bind( &ExerciseService::RunNetwork, this ) ) );
+        SetupNetwork();
+    }
+    catch( ... )
+    {
+        // $$$$ SBO 2008-10-31: throw something to warn user
+    }
     controllers_.Register( *this );
-    SetupNetwork();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +52,8 @@ ExerciseService::~ExerciseService()
 {
     controllers_.Unregister( *this );
     network_.stop();
-    thread_->join();
+    if( thread_.get() )
+        thread_->join();
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +71,7 @@ void ExerciseService::NotifyCreated( const frontend::Process_ABC& )
 // -----------------------------------------------------------------------------
 void ExerciseService::NotifyUpdated( const frontend::Process_ABC& process )
 {
-    std::string exerciseName = process.GetStartedExercise();
+    const std::string exerciseName = process.GetStartedExercise();
     if( !exerciseName.empty() && exerciseList_.find( exerciseName ) == exerciseList_.end() )
     {
         try
@@ -83,7 +93,7 @@ void ExerciseService::NotifyUpdated( const frontend::Process_ABC& process )
 // -----------------------------------------------------------------------------
 void ExerciseService::NotifyDeleted( const frontend::Process_ABC& process )
 {
-    std::string exerciseName = process.GetStartedExercise();
+    const std::string exerciseName = process.GetStartedExercise();
     if( !exerciseName.empty() )
         exerciseList_.erase( exerciseName );
     exerciseMessage_.clear();
@@ -95,7 +105,7 @@ void ExerciseService::NotifyDeleted( const frontend::Process_ABC& process )
 // -----------------------------------------------------------------------------
 void ExerciseService::SetupNetwork()
 {
-    socket_.async_receive_from( buffer( answer_, 32 ), remoteEndPoint_,
+    socket_->async_receive_from( buffer( answer_, 32 ), remoteEndPoint_,
 						         boost::bind( &ExerciseService::OnReceive, this, 
 									          placeholders::error,
 									          placeholders::bytes_transferred ) );
@@ -125,12 +135,12 @@ void ExerciseService::OnReceive( const boost::system::error_code& error, size_t 
                 stream << it->first << ":" << it->second<<"/";
             exerciseMessage_ = stream.str();
         }
-        socket_.async_send_to( buffer( exerciseMessage_ ), remoteEndPoint_, boost::bind( &ExerciseService::OnSendExercisesRequest, this, placeholders::error ) );
+        socket_->async_send_to( buffer( exerciseMessage_ ), remoteEndPoint_, boost::bind( &ExerciseService::OnSendExercisesRequest, this, placeholders::error ) );
     }
-    socket_.async_receive_from( buffer( answer_, 32 ), remoteEndPoint_,
-					         boost::bind( &ExerciseService::OnReceive, this, 
-								          placeholders::error,
-								          placeholders::bytes_transferred ) );
+    socket_->async_receive_from( buffer( answer_, 32 ), remoteEndPoint_,
+					             boost::bind( &ExerciseService::OnReceive, this, 
+								              placeholders::error,
+								              placeholders::bytes_transferred ) );
 }
 
 // -----------------------------------------------------------------------------

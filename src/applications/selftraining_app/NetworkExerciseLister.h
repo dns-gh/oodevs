@@ -76,7 +76,7 @@ private:
     const Config&                  config_;
     std::string                    subDir_;
     boost::asio::io_service        network_;
-    boost::asio::ip::udp::socket   socket_;
+    std::auto_ptr< boost::asio::ip::udp::socket > socket_;
     char                           answer_[1024];
     std::auto_ptr< boost::thread > thread_;
     T_Lists                        lists_;

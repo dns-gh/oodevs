@@ -83,7 +83,7 @@ private:
     const Config&                  config_;
     boost::asio::io_service        network_;
     unsigned short                 port_;
-    boost::asio::ip::udp::socket   socket_;
+    std::auto_ptr< boost::asio::ip::udp::socket > socket_;
     char                           answer_[32];
     boost::asio::ip::udp::endpoint remoteEndPoint_;
     std::auto_ptr< boost::thread > thread_;

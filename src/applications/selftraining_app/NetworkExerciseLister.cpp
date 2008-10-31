@@ -25,13 +25,22 @@ using namespace boost::asio;
 NetworkExerciseLister::NetworkExerciseLister( const Config& config, const std::string& subDir )
     : config_( config )
     , subDir_( subDir )
-    , socket_( network_, ip::udp::endpoint( ip::udp::v4(), config.GetListClientPort() ) )
-    , thread_( new boost::thread( boost::bind( &NetworkExerciseLister::RunNetwork, this ) ) )
-{    
-    socket_.async_receive( buffer( answer_, 1024 ),
-						         boost::bind( &NetworkExerciseLister::OnReceive, this, 
-									          placeholders::error,
-									          placeholders::bytes_transferred ) );
+    , socket_( 0 )
+    , thread_( 0 )
+{
+    try
+    {
+        socket_.reset( new boost::asio::ip::udp::socket( network_, ip::udp::endpoint( ip::udp::v4(), config.GetListClientPort() ) ) );
+        thread_.reset( new boost::thread( boost::bind( &NetworkExerciseLister::RunNetwork, this ) ) );
+        socket_->async_receive( buffer( answer_, 1024 ),
+				                boost::bind( &NetworkExerciseLister::OnReceive, this, 
+								              placeholders::error,
+                                              placeholders::bytes_transferred ) );
+    }
+    catch( ... )
+    {
+        // $$$$ SBO 2008-10-31: throw exception to warn user
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +50,8 @@ NetworkExerciseLister::NetworkExerciseLister( const Config& config, const std::s
 NetworkExerciseLister::~NetworkExerciseLister()
 {
     network_.stop();
-    thread_->join();
+    if( thread_.get() )
+        thread_->join();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,10 +108,10 @@ void NetworkExerciseLister::OnReceive( const boost::system::error_code& error, s
         for( CIT_Lists it = lists_.begin(); it != lists_.end(); ++it )
             (*it)->Update();
     }
-    socket_.async_receive( buffer( answer_, 1024 ),
-						         boost::bind( &NetworkExerciseLister::OnReceive, this, 
-									          placeholders::error,
-									          placeholders::bytes_transferred ) );
+    socket_->async_receive( buffer( answer_, 1024 ),
+						    boost::bind( &NetworkExerciseLister::OnReceive, this, 
+							              placeholders::error,
+									      placeholders::bytes_transferred ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,11 +122,13 @@ void NetworkExerciseLister::Send( const std::string& host, unsigned int port )
 {
     try
     {
+        if( !socket_.get() )
+            return;
         ip::udp::resolver resolver( network_ );
         ip::udp::resolver::query query( host, boost::lexical_cast< std::string >( port ) );
         ip::udp::resolver::iterator iterator = resolver.resolve(query);
         ip::udp::endpoint endpoint = *iterator;
-        socket_.async_send_to( buffer( "exercises" ), endpoint, boost::bind( &NetworkExerciseLister::OnSendExercisesRequest, this, placeholders::error ) );
+        socket_->async_send_to( buffer( "exercises" ), endpoint, boost::bind( &NetworkExerciseLister::OnSendExercisesRequest, this, placeholders::error ) );
     }
     catch( ... )
     {
