@@ -139,6 +139,7 @@ void ExerciseList::SelectExercise( int index )
             // $$$$ SBO 2008-10-07: error in exercise.xml meta, just don't show briefing
         }
     }
+    exercises_->repaintContents();
 }
 
 // -----------------------------------------------------------------------------

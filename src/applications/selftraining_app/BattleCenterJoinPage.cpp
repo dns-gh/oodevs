@@ -55,7 +55,7 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
     {
         exercises_ = new ExerciseList( box, config_, exerciseLister_ );
         exerciseLister_.AddList( exercises_ );
-        connect( exercises_, SIGNAL( Select( const QString&, const QString& profile ) ), this, SLOT( SelectExercise( const QString&, const QString& ) ) );
+        connect( exercises_, SIGNAL( Select( const QString&, const QString& ) ), this, SLOT( SelectExercise( const QString&, const QString& ) ) );
     }
     ReloadExerciseList();
     AddContent( box ); 

@@ -154,7 +154,7 @@ void ExerciseService::OnReceive( const boost::system::error_code& error, size_t 
 // Name: ExerciseService::OnSendExercisesRequest
 // Created: LDC 2008-10-24
 // -----------------------------------------------------------------------------
-void ExerciseService::OnSendExercisesRequest( const boost::system::error_code& error )
+void ExerciseService::OnSendExercisesRequest( const boost::system::error_code& /*error*/ )
 {
     // NOTHING
 }
