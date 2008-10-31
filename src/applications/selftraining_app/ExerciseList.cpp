@@ -97,6 +97,16 @@ void ExerciseList::Update()
     exercises_->setSelected( 0, true );
 }
 
+namespace
+{
+    std::string GetFilePath( const std::string& subDir, const std::string& file )
+    {
+        if( subDir.empty() )
+            return file;
+        return subDir + "/" + file;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ExerciseList::UpdateExercise
 // Created: RDS 2008-08-27
@@ -105,21 +115,21 @@ void ExerciseList::UpdateExercise( int index )
 {
     QString exercise = *exercisesList_.at( index ) ; 
     emit Highlight( GetHighlight() );
-    sides_->Update( QString( subDir_.c_str() ) + "/"  + exercise );
+    sides_->Update( GetFilePath( subDir_.c_str(), exercise.ascii() ).c_str() );
     if( showBrief_ )
     {
         briefingText_->setText( tools::translate( "ExerciseList", "No briefing available" ) );
         briefingText_->hide();
         try
         {
-            xml::xifstream xis( config_.GetExerciseFile( subDir_ + "/"  + exercise.ascii() ) );
+            xml::xifstream xis( config_.GetExerciseFile( GetFilePath( subDir_, exercise.ascii() ) ) );
             std::string image;
             xis >> xml::start( "exercise" )
                     >> xml::optional() >> xml::start( "meta" )
                         >> xml::optional() >> xml::start( "briefing" )
                             >> xml::optional()  >> xml::content("image", image )
                                 >> xml::list( "text", *this, &ExerciseList::ReadBriefingText );
-            const std::string imagePath = config_.GetExerciseDir( exercise.ascii() ) + "/" + image;
+            const std::string imagePath = config_.GetExerciseDir( GetFilePath( exercise.ascii(), image ) );
             const QImage pix( imagePath.c_str() );
             briefingImage_->setPixmap( pix );
         }
@@ -139,7 +149,7 @@ QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
     std::string displayName( exercise.ascii() );
     try
     {
-        xml::xifstream xis( config_.GetExerciseFile( subDir_ + "/"  + exercise.ascii() ) );
+        xml::xifstream xis( config_.GetExerciseFile( GetFilePath( subDir_, exercise.ascii() ) ) );
         xis >> xml::start( "exercise" )
                 >> xml::optional() >> xml::start( "meta" )
                     >> xml::optional() >> xml::content( "name", displayName );
@@ -158,7 +168,7 @@ QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
 const QString ExerciseList::GetHighlight() const
 {
     if ( exercises_->selectedItem() )
-        return QString( subDir_.c_str() ) + "/" +  *exercisesList_.at( exercises_->index( exercises_->selectedItem() ) );
+        return QString( GetFilePath( subDir_, ( *exercisesList_.at( exercises_->index( exercises_->selectedItem() ) ) ).ascii() ).c_str() );
     else
         return "";
 }

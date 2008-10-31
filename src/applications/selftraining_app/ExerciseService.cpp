@@ -60,7 +60,7 @@ ExerciseService::~ExerciseService()
 // Name: ExerciseService::NotifyCreated
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-void ExerciseService::NotifyCreated( const frontend::Process_ABC& )
+void ExerciseService::NotifyCreated( const boost::shared_ptr< const frontend::Process_ABC >& process )
 {
     // NOTHING
 }
@@ -69,15 +69,16 @@ void ExerciseService::NotifyCreated( const frontend::Process_ABC& )
 // Name: ExerciseService::NotifyUpdated
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-void ExerciseService::NotifyUpdated( const frontend::Process_ABC& process )
+void ExerciseService::NotifyUpdated( const boost::shared_ptr< const frontend::Process_ABC >& process )
 {
-    const std::string exerciseName = process.GetStartedExercise();
+    const std::string exerciseName = process->GetStartedExercise();
     if( !exerciseName.empty() && exerciseList_.find( exerciseName ) == exerciseList_.end() )
     {
         try
         {
             frontend::ConfigurationManipulator manipulator( config_, exerciseName, MULTIPLAYER_SESSION );
             exerciseList_[ exerciseName ] = manipulator.GetValue< unsigned int >( "session/config/dispatcher/network/@server" );
+            runningProcesses_[ exerciseName ] = process;
         }
         catch( ... )
         {
@@ -91,11 +92,14 @@ void ExerciseService::NotifyUpdated( const frontend::Process_ABC& process )
 // Name: ExerciseService::NotifyDeleted
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-void ExerciseService::NotifyDeleted( const frontend::Process_ABC& process )
+void ExerciseService::NotifyDeleted( const boost::shared_ptr< const frontend::Process_ABC >& process )
 {
-    const std::string exerciseName = process.GetStartedExercise();
+    const std::string exerciseName = process->GetStartedExercise();
     if( !exerciseName.empty() )
+    {
         exerciseList_.erase( exerciseName );
+        runningProcesses_.erase( exerciseName );
+    }
     exerciseMessage_.clear();
 }
 
@@ -132,7 +136,7 @@ void ExerciseService::OnReceive( const boost::system::error_code& error, size_t 
         {
             std::stringstream stream;
             for( CIT_ExercicePortList it = exerciseList_.begin(); it != exerciseList_.end(); ++it )
-                stream << it->first << ":" << it->second<<"/";
+                stream << it->first << ":" << it->second << "/";
             exerciseMessage_ = stream.str();
         }
         socket_->async_send_to( buffer( exerciseMessage_ ), remoteEndPoint_, boost::bind( &ExerciseService::OnSendExercisesRequest, this, placeholders::error ) );

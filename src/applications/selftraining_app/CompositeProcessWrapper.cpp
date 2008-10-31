@@ -64,13 +64,13 @@ void CompositeProcessWrapper::ThreadStart()
     {
         if( first_.get() )
         {
-            controller_.Update( *(const frontend::Process_ABC*)this );
+            controller_.Update( shared_from_this() );
             boost::this_thread::interruption_point();
             first_->Start();
             boost::this_thread::interruption_point();
             first_->Wait();
             boost::this_thread::interruption_point();
-            controller_.Update( *(const frontend::Process_ABC*)this );
+            controller_.Update( shared_from_this() );
             boost::this_thread::interruption_point();
         }
         if( second_.get() )
@@ -78,11 +78,11 @@ void CompositeProcessWrapper::ThreadStart()
             current_ = second_;
             second_->Start();
             boost::this_thread::interruption_point();
-            controller_.Update( *(const frontend::Process_ABC*)this );
+            controller_.Update( shared_from_this() );
             boost::this_thread::interruption_point();
             second_->Wait();
             boost::this_thread::interruption_point();
-            controller_.Delete( *(const frontend::Process_ABC*)this );
+            controller_.Delete( shared_from_this() );
             boost::this_thread::interruption_point();
         }
     }
