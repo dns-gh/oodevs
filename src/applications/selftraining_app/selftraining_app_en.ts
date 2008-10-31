@@ -283,9 +283,6 @@
     </message>
 </context>
 <context>
-    <name>ScenarioLauncherPageOptions</name>
-</context>
-<context>
     <name>ScenarioPage</name>
     <message>
         <source>Play</source>

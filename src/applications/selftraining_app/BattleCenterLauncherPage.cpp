@@ -37,7 +37,7 @@ BattleCenterLauncherPage::BattleCenterLauncherPage( QWidgetStack* pages, Page_AB
     box->setMargin( 5 );
     {
         exercises_ = new ExerciseList( box, config_, lister_ );
-        connect( exercises_, SIGNAL( Select( const QString&, const QString& profile ) ), this, SLOT( SelectExercise( const QString&, const QString& ) ) );
+        connect( exercises_, SIGNAL( Select( const QString&, const QString& ) ), this, SLOT( SelectExercise( const QString&, const QString& ) ) );
     }
     AddContent( box );
     AddNextButton( tools::translate( "BattleCenterLauncherPage", "Start" ) , *this, SLOT( StartExercise() ) );
@@ -56,9 +56,9 @@ BattleCenterLauncherPage::~BattleCenterLauncherPage()
 // Name: BattleCenterLauncherPage::SelectExercise
 // Created: SBO 2008-10-15
 // -----------------------------------------------------------------------------
-void BattleCenterLauncherPage::SelectExercise( const QString& name, const QString& profile )
+void BattleCenterLauncherPage::SelectExercise( const QString& exercise, const QString& profile )
 {
-    exercise_ = name;
+    exercise_ = exercise;
     profile_ = profile;
 }
 
