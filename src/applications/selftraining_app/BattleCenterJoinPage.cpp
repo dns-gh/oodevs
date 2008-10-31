@@ -84,9 +84,9 @@ void BattleCenterJoinPage::Update()
 // Name: BattleCenterJoinPage::SelectExercise
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-void BattleCenterJoinPage::SelectExercise( const QString& name, const QString& profile )
+void BattleCenterJoinPage::SelectExercise( const QString& exercise, const QString& profile )
 {
-    exercise_ = name;
+    exercise_ = exercise;
     profile_ = profile;
 }
 

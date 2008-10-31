@@ -33,7 +33,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     addTab( box, tr( "General" ) );
 
     box = new QVBox( this );
-    group = new QGroupBox( 2, Qt::Vertical, tr( "Access permissions" ), box );
+    group = new QGroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
     group->setMargin( 5 );
     QHBox* holder = new QHBox( group );
     new QLabel( tr( "Supervisor actions:" ), holder );
@@ -45,10 +45,9 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( tabs, controllers, itemFactory, profile );
     tabs->addTab( populationRights, tr( "Populations" ) );
     populationRights_ = populationRights;
+    addTab( box, tr( "Permissions" ) );
     new QLabel( tr( "'Read' permission allows you to see an unit.\n"
                     "'Write' permission allows you to control an unit." ), group );
-
-    addTab( box, tr( "Permissions" ) );
 }
 
 // -----------------------------------------------------------------------------

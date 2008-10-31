@@ -10,7 +10,8 @@
 #include "selftraining_app_pch.h"
 #include "ScenarioLauncherPage.h"
 #include "moc_ScenarioLauncherPage.cpp"
-#include "ExerciseList.h" 
+#include "ExerciseList.h"
+#include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "CompositeProcessWrapper.h"
 #include "frontend/StartExercise.h"
@@ -80,16 +81,13 @@ namespace
 // -----------------------------------------------------------------------------
 void ScenarioLauncherPage::OnStart()
 {
-    if( exercise_.isEmpty() )
+    if( exercise_.isEmpty() || ! dialogs::KillRunningProcesses( this ) )
         return;
     const QString session = BuildSessionName().c_str();
     CreateSession( exercise_, session );
     boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exercise_, session, true ) );
     boost::shared_ptr< frontend::SpawnCommand > client;
-    if( !profile_.isEmpty() )
-        client.reset( new frontend::JoinExercise( config_, exercise_, session, profile_, true ) );
-    else
-        client.reset( new frontend::JoinExercise( config_, exercise_, session, true ) );
+    client.reset( new frontend::JoinExercise( config_, exercise_, session, profile_, true ) );
     boost::shared_ptr< frontend::Process_ABC > process( new CompositeProcessWrapper( controllers_.controller_, simulation, client ) );
     progressPage_->Attach( process );
     progressPage_->show();

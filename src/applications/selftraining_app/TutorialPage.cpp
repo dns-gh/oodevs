@@ -11,6 +11,7 @@
 #include "TutorialPage.h"
 #include "moc_TutorialPage.cpp"
 #include "ExerciseList.h"
+#include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "ProcessWrapper.h"
 #include "CompositeProcessWrapper.h"
@@ -103,7 +104,7 @@ TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools
 {
     QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
-    exercises_ = new ExerciseList( box , config, lister_, "tutorials" );
+    exercises_ = new ExerciseList( box , config, lister_, "tutorials", true, false );
     connect( exercises_, SIGNAL( Select( const QString&, const QString& ) ), this, SLOT( OnSelectExercise( const QString&, const QString& ) ) );
     AddContent( box );
     AddNextButton( tools::translate( "TutorialPage", "Start" ), *this, SLOT( OnStart() ) );
@@ -142,7 +143,7 @@ void TutorialPage::OnSelectExercise( const QString& exercise, const QString& /*p
 // -----------------------------------------------------------------------------
 void TutorialPage::OnStart()
 {
-    if( exercise_.isEmpty() )
+    if( exercise_.isEmpty() || ! dialogs::KillRunningProcesses( this ) )
         return;
     const std::string target = ReadTargetApplication( config_, exercise_ );
     if( target == "gaming" )

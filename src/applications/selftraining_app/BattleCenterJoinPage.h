@@ -43,7 +43,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void SelectExercise( const QString& name, const QString& profile );
+    void SelectExercise( const QString& exercise, const QString& profile );
     void JoinExercise();
     void ReloadExerciseList();
     //@}

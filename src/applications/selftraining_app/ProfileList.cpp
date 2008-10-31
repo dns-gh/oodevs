@@ -102,4 +102,5 @@ void ProfileList::OnSelect( int index )
 {
     if( index < int( profiles_.size() ) )
         emit Select( profiles_[index] );
+    repaintContents();
 }

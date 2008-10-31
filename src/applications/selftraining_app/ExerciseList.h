@@ -38,7 +38,7 @@ class ExerciseList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir = "", bool showBrief = true );
+             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir = "", bool showBrief = true, bool showProfile =true );
     virtual ~ExerciseList();
     //@}
 

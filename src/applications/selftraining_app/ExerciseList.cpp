@@ -31,7 +31,7 @@ namespace bfs = boost::filesystem;
 // Name: ExerciseList constructor
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir /*= ""*/, bool showBrief )
+ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir /*= ""*/, bool showBrief /*= true*/, bool showProfile /*=true*/ )
     : QVBox      ( parent ) 
     , config_    ( config ) 
     , subDir_    ( subDir )
@@ -55,6 +55,8 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         profiles_ = new ProfileList( leftBox, config );
         leftBox->setStretchFactor( exercises_, 3 );
         leftBox->setStretchFactor( profiles_, 1 );
+        label->setShown( showProfile );
+        profiles_->setShown( showProfile );
 
         connect( profiles_ , SIGNAL( Select( const Profile& ) ), this, SLOT( SelectProfile( const Profile& ) ) );
         connect( exercises_, SIGNAL( highlighted( int ) ), this, SLOT( SelectExercise( int ) ) );
@@ -89,14 +91,13 @@ ExerciseList::~ExerciseList()
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
 void ExerciseList::Update()
-{    
+{
     static const QImage pix( "resources/images/selftraining/mission.png" );
     lister_.ListExercises( exercisesList_ );
     exercises_->clear();
-    for( QStringList::iterator it = exercisesList_.begin(); it != exercisesList_ .end(); ++it )
+    for( QStringList::iterator it = exercisesList_.begin(); it != exercisesList_.end(); ++it )
         exercises_->insertItem( pix, GetExerciseDisplayName( *it ) );
     exercises_->setSelected( 0, true );
-    exercises_->repaint();
 }
 
 namespace

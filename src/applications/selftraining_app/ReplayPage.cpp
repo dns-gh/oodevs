@@ -41,7 +41,7 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         hbox->setSpacing( 10 );
         {
-            exercises_ = new ExerciseList( hbox, config, lister, "", false );
+            exercises_ = new ExerciseList( hbox, config, lister, "", false, false );
             lister.AddList( exercises_ );
             connect( exercises_, SIGNAL( Select( const QString&, const QString& ) ), this, SLOT( OnSelectExercise( const QString&, const QString& ) ) );
         }

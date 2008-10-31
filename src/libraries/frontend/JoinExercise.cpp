@@ -39,7 +39,8 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const QString& e
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument ( session );
-    addArgument( "--login=\"" + profile +"\"" );
+    if( !profile.isEmpty() )
+        addArgument( "--login=\"" + profile +"\"" );
 }
 
 // -----------------------------------------------------------------------------
