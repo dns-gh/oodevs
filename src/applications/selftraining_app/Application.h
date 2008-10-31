@@ -12,11 +12,6 @@
 
 #include <qapplication.h>
 
-namespace tools
-{
-    class ApplicationMutex ; 
-}
-
 namespace kernel
 {
     class Controllers; 
@@ -56,11 +51,10 @@ private:
 private:
     //! @name Member data
     //@{
-    QMainWindow*                             mainWindow_;
-    std::auto_ptr< tools::ApplicationMutex > appMutex_ ; 
-    std::auto_ptr< QPopupMenu >              trayMenu_ ; 
-    std::auto_ptr<SessionTray>               sessionTray_ ; 
-    std::auto_ptr<kernel::Controllers>       controllers_ ; 
+    QMainWindow*                         mainWindow_;
+    std::auto_ptr< QPopupMenu >          trayMenu_;
+    std::auto_ptr< SessionTray >         sessionTray_;
+    std::auto_ptr< kernel::Controllers > controllers_;
     //@}
 
 };

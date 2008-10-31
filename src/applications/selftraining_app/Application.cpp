@@ -16,7 +16,6 @@
 #include "TrayMenu.h" 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h" 
-#include "tools/ApplicationMutex.h" 
 #include "tools/ProcessList.h"
 
 // -----------------------------------------------------------------------------
@@ -25,7 +24,6 @@
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv, const QString& locale )
     : QApplication( argc, argv )
-    , appMutex_( new tools::ApplicationMutex( "SwordSelfTrainingApp" ) )
     , controllers_( new kernel::Controllers() )  
 {
     AddTranslator( "qt", locale );
