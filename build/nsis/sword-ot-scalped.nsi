@@ -191,17 +191,25 @@ SectionGroupEnd
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\orders"
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\sessions"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
-        SetOutPath "${INSTDATADIR}\data\terrains"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}"
-        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
     
 !macroend
 
+!macro EXERCISES.InstallTerrain TerrainName
+
+    SetOutPath "${INSTDATADIR}\data\terrains"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
+!macroEnd
+
 ;--------------------------------
 SectionGroup "Exercises" s_exo
+
+!insertmacro EXERCISES.InstallTerrain "Angers"
+!insertmacro EXERCISES.InstallTerrain "Paris_Est"
+!insertmacro EXERCISES.InstallTerrain "larochelle"
 
 !insertmacro EXERCISES.Install "esag" "Angers"
 !insertmacro EXERCISES.Install "CENTORSEM" "Paris_Est"
