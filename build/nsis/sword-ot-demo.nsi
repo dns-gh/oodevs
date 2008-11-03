@@ -189,6 +189,7 @@ SectionGroup "Exercises" s_exo
 
 !insertmacro EXERCISES.Install "Egypt" "Nord egypt"
 !insertmacro EXERCISES.Install "Paris" "Paris_Est"
+!insertmacro EXERCISES.Install "Scripting demo" "test"
 
 SectionGroupEnd
 
