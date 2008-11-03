@@ -80,6 +80,12 @@ Section "${APP_NAME}"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${DOCDIR}\*.chm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    
+    ; readme / changelog files
+    SetOutPath "$INSTDIR\doc"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File "${DOCDIR}\fr\scalped\readme.txt" ; $(OT_LANG)
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     SetOutPath "$INSTDIR\applications"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL

@@ -67,6 +67,12 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 Section "${APP_NAME}"
     SectionIn RO
 
+    ; readme / changelog files
+    SetOutPath "$INSTDIR\doc"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File "${DOCDIR}\$(OT_LANG)\readme.txt"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
     SetOutPath "$INSTDIR\applications"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"

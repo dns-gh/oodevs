@@ -79,6 +79,12 @@ Section "${APP_NAME}"
     File "${DOCDIR}\*.chm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
+    ; readme / changelog files
+    SetOutPath "$INSTDIR\doc"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File "${DOCDIR}\$(OT_LANG)\readme.txt"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
     SetOutPath "$INSTDIR\applications"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"
