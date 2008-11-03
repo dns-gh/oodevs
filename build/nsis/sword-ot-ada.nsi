@@ -82,7 +82,7 @@ Section "${APP_NAME}"
     ; readme / changelog files
     SetOutPath "$INSTDIR\doc"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\$(OT_LANG)\readme.txt"
+    File "${DOCDIR}\fr\readme.txt" ; $(OT_LANG)
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     SetOutPath "$INSTDIR\applications"

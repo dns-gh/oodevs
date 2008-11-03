@@ -15,6 +15,8 @@
     !define APP_VERSION "1.0.0.0"
 !endif
 
+!define SHORT_VERSION "1.0.1" ; Compute using function
+
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
 
@@ -54,7 +56,7 @@
 !endif
 
 Name "${APP_NAME}"
-OutFile "${DISTDIR}\${APP_NAME}.exe"
+OutFile "${DISTDIR}\${APP_NAME}_${SHORT_VERSION}.exe"
 InstallDir "$PROGRAMFILES\${APP_NAME}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
