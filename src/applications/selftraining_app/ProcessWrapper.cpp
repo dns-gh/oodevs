@@ -60,13 +60,13 @@ void ProcessWrapper::ThreadStart()
     {
         if( process_.get() )
         {
-            controller_.Update( *(const frontend::Process_ABC*)this );
+            controller_.Update( shared_from_this() );
             boost::this_thread::interruption_point();
             process_->Start();
             boost::this_thread::interruption_point();
             process_->Wait();
             boost::this_thread::interruption_point();
-            controller_.Delete( *(const frontend::Process_ABC*)this );
+            controller_.Delete( shared_from_this() );
             boost::this_thread::interruption_point();
         }
     }
