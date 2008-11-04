@@ -142,19 +142,21 @@ void ExerciseService::OnReceive( const boost::system::error_code& error, size_t 
                 stream << it->first << ":" << it->second << "/";
             exerciseMessage_ = stream.str();
         }
-        socket_->async_send_to( buffer( exerciseMessage_ ), remoteEndPoint_, boost::bind( &ExerciseService::OnSendExercisesRequest, this, placeholders::error ) );
+        socket_->async_send_to( buffer( exerciseMessage_ ), remoteEndPoint_, 
+                                boost::bind( &ExerciseService::OnSendExercisesRequest, this, 
+                                             placeholders::error,
+                                             placeholders::bytes_transferred ) );
     }
-    socket_->async_receive_from( buffer( answer_, 32 ), remoteEndPoint_,
-					             boost::bind( &ExerciseService::OnReceive, this, 
-								              placeholders::error,
-								              placeholders::bytes_transferred ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseService::OnSendExercisesRequest
 // Created: LDC 2008-10-24
 // -----------------------------------------------------------------------------
-void ExerciseService::OnSendExercisesRequest( const boost::system::error_code& /*error*/ )
+void ExerciseService::OnSendExercisesRequest( const boost::system::error_code& /*error*/, size_t /*bytes_received*/ )
 {
-    // NOTHING
+    socket_->async_receive_from( buffer( answer_, 32 ), remoteEndPoint_,
+					             boost::bind( &ExerciseService::OnReceive, this, 
+								              placeholders::error,
+								              placeholders::bytes_transferred ) );
 }

@@ -68,7 +68,7 @@ private:
     //@{
     void SetupNetwork();
     void OnReceive( const boost::system::error_code& error, size_t bytes_received );
-    void OnSendExercisesRequest( const boost::system::error_code& error );
+    void OnSendExercisesRequest( const boost::system::error_code& error, size_t bytes_received );
     void RunNetwork();
     //@}
 
