@@ -31,6 +31,9 @@ LangString OT_SECTION_PHYSICAL_MODELS ${LANG_FRENCH} "Modèles physiques"
 LangString OT_SECTION_EXERCISES ${LANG_ENGLISH} "Exercises"
 LangString OT_SECTION_EXERCISES ${LANG_FRENCH} "Exercices"
 
+LangString OT_SECTION_TERRAINS ${LANG_ENGLISH} "Terrains"
+LangString OT_SECTION_TERRAINS ${LANG_FRENCH} "Terrains"
+
 LangString OT_SECTION_DOCUMENTATION ${LANG_ENGLISH} "Documentation"
 LangString OT_SECTION_DOCUMENTATION ${LANG_FRENCH} "Documentation"
 
@@ -48,6 +51,13 @@ LangString OT_APPLICATION_IS_RUNNING ${LANG_FRENCH} "L'application '$9' est en c
 
 LangString OT_ABORTING_UNINSTALLATION ${LANG_ENGLISH} "Uninstallation aborted."
 LangString OT_ABORTING_UNINSTALLATION ${LANG_FRENCH} "Désinstallation interrompue."
+
+LangString OT_VERSION_NOT_INSTALLED ${LANG_ENGLISH} "Unable to perform update, no installation of ${APP_NAME} can be found."
+LangString OT_VERSION_NOT_INSTALLED ${LANG_FRENCH} "Impossible d'installer la mise à jour, aucune installation de ${APP_NAME} n'a pu être trouvée."
+LangString OT_VERSION_UP_TO_DATE ${LANG_ENGLISH} "This version of ${APP_NAME} is already installed."
+LangString OT_VERSION_UP_TO_DATE ${LANG_FRENCH} "Cette version de ${APP_NAME} est déjà installée."
+LangString OT_VERSION_MORE_RECENT ${LANG_ENGLISH} "A more recent version of ${APP_NAME} is already installed."
+LangString OT_VERSION_MORE_RECENT ${LANG_FRENCH} "Une version plus récente de ${APP_NAME} est déjà installée."
 
 LicenseLangString LICENSE ${LANG_ENGLISH} "license-english.txt"
 LicenseLangString LICENSE ${LANG_FRENCH} "license-french.txt"

@@ -191,7 +191,14 @@ SectionGroupEnd
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\orders"
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\sessions"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    SectionEnd
+    
+!macroend
 
+!macro EXERCISES.InstallTerrain TerrainName
+    
+    Section "${TerrainName}"
+        SectionIn RO
         SetOutPath "${INSTDATADIR}\data\terrains"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}"
@@ -216,6 +223,15 @@ SectionGroup "Exercises" s_exo
 !insertmacro EXERCISES.Install "tutorials\08 - Fonctions Avancees" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\09 - Rejeu et AAA" "Paris_Est"
 !insertmacro EXERCISES.Install "tutorials\10 - Preparation" "Paris_Est"
+
+SectionGroupEnd
+
+;--------------------------------
+SectionGroup "Terrains" s_ter
+
+!insertmacro EXERCISES.InstallTerrain "Angers"
+!insertmacro EXERCISES.InstallTerrain "Paris_Est"
+!insertmacro EXERCISES.InstallTerrain "larochelle"
 
 SectionGroupEnd
 
@@ -315,6 +331,7 @@ Function .onInit
     ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
     SectionSetText ${s_phymod} $(OT_SECTION_PHYSICAL_MODELS)
     SectionSetText ${s_exo} $(OT_SECTION_EXERCISES)
+    SectionSetText ${s_ter} $(OT_SECTION_TERRAINS)
     SectionSetText ${s_doc} $(OT_SECTION_DOCUMENTATION)
     SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
     SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
