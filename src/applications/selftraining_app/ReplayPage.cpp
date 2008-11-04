@@ -118,6 +118,7 @@ void ReplayPage::OnSelectExercise( const QString& exercise, const QString& profi
     exercise_ = exercise;
     sessionList_->clear(); 
     sessionList_->insertStringList( frontend::commands::ListSessions( config_, exercise.ascii() ) );
+    sessionList_->repaintContents();
 }
 
 // -----------------------------------------------------------------------------

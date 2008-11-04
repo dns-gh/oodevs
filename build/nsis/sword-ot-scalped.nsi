@@ -285,6 +285,10 @@ FunctionEnd
 
 !macroend
 
+!ifndef locate::RMDirEmpty
+!include "Locate.nsh"
+!endif
+
 ;--------------------------------
 Section "Uninstall"
     !insertmacro APPLICATION.KillRunning "selftraining_app.exe"
@@ -296,6 +300,10 @@ Section "Uninstall"
     !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
     !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
     !insertmacro UNINSTALL.LOG_END_UNINSTALL
+ 	
+ 	${locate::RMDirEmpty} "$INSTDIR" "/M=*.* /G=1 /B=1" $R1
+ 	${locate::RMDirEmpty} "${INSTDATADIR}" "/M=*.* /G=1 /B=1" $R1
+ 	${locate::Unload}
  	
     Delete "${UNINST_DAT}"
     Delete "${UNINST_EXE}"
