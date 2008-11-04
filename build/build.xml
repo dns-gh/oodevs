@@ -525,7 +525,13 @@
             <arg value="/DAPP_VERSION=${version.version}"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
-        <checksum file="${dist.dir}/current/${platform}/SCALPED.exe" forceOverwrite="yes"/>
+    </target>
+
+    <target name="package.patch" description="create the patch installer">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped-patch" script="sword-ot-scalped-patch.nsi" license="true">
+            <arg value="/DAPP_VERSION=${version.version}"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
     </target>
 
     <target name="crossbow-installer" description="create the crossbow installer">
