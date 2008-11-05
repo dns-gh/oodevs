@@ -30,6 +30,8 @@
 
 #include "actions/Limit.h"
 #include "actions/LimaList.h"
+#include "actions/Obstacle.h"
+#include "actions/ObstacleList.h"
 #include "actions/Objective.h"
 #include "actions/ObjectiveList.h"
 #include "actions/Direction.h"
@@ -50,8 +52,6 @@
 #include "actions/ObjectKnowledge.h"
 #include "actions/AgentKnowledgeList.h"
 #include "actions/ObjectKnowledgeList.h"
-#include "actions/EngineerConstruction.h"
-#include "actions/EngineerConstructionList.h"
 #include "actions/Enumeration.h"
 #include "actions/Bool.h"
 #include "actions/Numeric.h"
@@ -280,9 +280,9 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     else if( type == "dotationtype" )
         param.reset( new actions::parameters::DotationType( parameter, xis, *objects_ ) );
     else if( type == "genobject" )
-        param.reset( new actions::parameters::EngineerConstruction( parameter, converter_, *objects_, adapters_->automats_, xis, controller_ ) );
+        param.reset( new actions::parameters::Obstacle( parameter, converter_, *objects_, adapters_->automats_, xis, controller_ ) );
     else if( type == "genobjectlist" )
-        param.reset( new actions::parameters::EngineerConstructionList( parameter, converter_, *objects_, adapters_->automats_, xis, controller_ ) );
+        param.reset( new actions::parameters::ObstacleList( parameter, converter_, *objects_, adapters_->automats_, xis, controller_ ) );
     else if( type == "agentknowledge" )
         param.reset( new actions::parameters::AgentKnowledge( parameter, xis, adapters_->agents_, *agentsKnowledges_, entity, controller_ ) );
     else if( type == "populationknowledge" )
