@@ -19,12 +19,12 @@
 // Name: ScenarioPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioPage::ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, NetworkExerciseLister& lister )
+ScenarioPage::ScenarioPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers )
     : MenuPage( pages )
 {
     AddLink( tools::translate( "ScenarioPage", "Play" ),   *new ScenarioLauncherPage( pages, *this, controllers, config ), true, tools::translate( "ScenarioPage", "Start scenarios" ) );
     AddLink( tools::translate( "ScenarioPage", "Edit" ),   *new ScenarioEditPage( pages, *this, config, controllers ), true, tools::translate( "ScenarioPage", "Edit scenario" ) );
-    AddLink( tools::translate( "ScenarioPage", "Replay" ), *new ReplayPage( pages, *this , controllers, config, lister ), true, tools::translate( "ScenarioPage", "Replay scenario" ) );
+    AddLink( tools::translate( "ScenarioPage", "Replay" ), *new ReplayPage( pages, *this , controllers, config ), true, tools::translate( "ScenarioPage", "Replay scenario" ) );
     AddLink( tools::translate( "ScenarioPage", "Back" ),   previous );
 }
 

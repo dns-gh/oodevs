@@ -11,7 +11,7 @@
 #include "ReplayPage.h"
 #include "moc_ReplayPage.cpp"
 #include "ExerciseList.h" 
-#include "NetworkExerciseLister.h" 
+#include "DirectoryExerciseLister.h" 
 #include "CompositeProcessWrapper.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
@@ -28,12 +28,12 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, NetworkExerciseLister& lister )
+ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config )
     : ContentPage( pages, tools::translate( "ReplayPage", "Replay" ), previous )
     , config_( config )
     , controllers_( controllers ) 
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ReplayPage", "Starting replay session" ), controllers ) )
-    , lister_( lister )
+    , lister_( new DirectoryExerciseLister( config ) )
 {
     QVBox* mainBox = new QVBox( this );
     {
@@ -41,8 +41,7 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         hbox->setSpacing( 10 );
         {
-            exercises_ = new ExerciseList( hbox, config, lister, "", false, false );
-            lister.AddList( exercises_ );
+            exercises_ = new ExerciseList( hbox, config, *lister_, "", false, false );
             connect( exercises_, SIGNAL( Select( const QString&, const QString& ) ), this, SLOT( OnSelectExercise( const QString&, const QString& ) ) );
         }
         {
@@ -89,7 +88,7 @@ void ReplayPage::StartExercise( const QString& exercise )
         session = sessionItem->text();
     if( !session.isEmpty() )
     {
-        const unsigned int port = lister_.GetPort( exercise );
+        const unsigned int port = lister_->GetPort( exercise );
         ConfigureSession( exercise, session );
         boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exercise, session, port, true ) );
         boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exercise, port, true ) );

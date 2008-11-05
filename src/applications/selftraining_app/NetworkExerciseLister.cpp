@@ -93,9 +93,9 @@ void NetworkExerciseLister::OnReceive( const boost::system::error_code& error, s
     ClearListeners();
     if( !error )
     {
-        std::string exercises( answer_, bytes_received );
+        const std::string exercises( answer_, bytes_received );
         typedef boost::tokenizer< boost::char_separator< char > > T_Tokenizer;
-        boost::char_separator<char> separator( "/" );
+        boost::char_separator< char > separator( "/" );
         const T_Tokenizer tok( exercises, separator );
         for( T_Tokenizer::const_iterator it = tok.begin(); it != tok.end(); ++it )
         {

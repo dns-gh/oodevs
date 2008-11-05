@@ -92,12 +92,7 @@ ExerciseList::~ExerciseList()
 // -----------------------------------------------------------------------------
 void ExerciseList::Update()
 {
-    static const QImage pix( "resources/images/selftraining/mission.png" );
-    lister_.ListExercises( exercisesList_ );
-    exercises_->clear();
-    for( QStringList::iterator it = exercisesList_.begin(); it != exercisesList_.end(); ++it )
-        exercises_->insertItem( pix, GetExerciseDisplayName( *it ) );
-    exercises_->setSelected( 0, true );
+    QApplication::postEvent( this, new QCustomEvent( 4242 ) );
 }
 
 namespace
@@ -209,6 +204,26 @@ void ExerciseList::SelectProfile( const Profile& profile )
 // -----------------------------------------------------------------------------
 void ExerciseList::Clear()
 {
-    exercisesList_.clear();
+    QApplication::postEvent( this, new QCustomEvent( 4243 ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ExerciseList::customEvent
+// Created: SBO 2008-11-05
+// -----------------------------------------------------------------------------
+void ExerciseList::customEvent( QCustomEvent* e )
+{
+    if( e->type() == 4242 )
+    {
+        static const QImage pix( "resources/images/selftraining/mission.png" );
+        lister_.ListExercises( exercisesList_ );
+        exercises_->clear();
+        for( QStringList::iterator it = exercisesList_.begin(); it != exercisesList_.end(); ++it )
+            exercises_->insertItem( pix, GetExerciseDisplayName( *it ) );
+        exercises_->setSelected( 0, true );
+    }
+    else if( e->type() == 4243 )
+    {
+        exercisesList_.clear();
+    }
+}

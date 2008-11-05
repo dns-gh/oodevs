@@ -71,6 +71,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void customEvent( QCustomEvent* e );
     QString BuildExercisePath() const;
     void ReadBriefingText( xml::xistream& xis );
     QString GetExerciseDisplayName( const QString& exercise ) const ; 
