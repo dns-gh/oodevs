@@ -229,7 +229,7 @@
 
      ${un.FileReadFromEnd} "${UNLOG_TEMP}" "${UnLog_Uninstall_FileReadFromEndCallBackFunc}"
      ; Remove empty directories
-     ${locate::RMDirEmpty} "$INSTDIR" "/M=*.* /G=1 /B=1" $R1
+     ;${locate::RMDirEmpty} "$INSTDIR" "/M=*.* /G=1 /B=1" $R1
      ${locate::Unload}
     
   !verbose pop
@@ -421,8 +421,10 @@
 !macro UNINSTALL.LOG_UPDATE_INSTALL
   !verbose push
      !verbose ${UNINST_LOG_VERBOSE}
-
-        Delete "${UNINST_DAT}"
+        IfFileExists "${UNINST_DAT}" 0 +3
+            ${FileJoin} "${UNINST_DAT}" "${UNLOG_TEMP}" "${UNLOG_TEMP}"
+            Delete "${UNINST_DAT}"
+            
         Rename "${UNLOG_TEMP}" "${UNINST_DAT}"
         WriteUninstaller "${UNINST_EXE}"
         WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}.dat" "${UNINST_DAT}"

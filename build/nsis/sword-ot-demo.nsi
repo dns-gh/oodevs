@@ -117,6 +117,7 @@ Section "${APP_NAME}"
     CreateDirectory "$SMPROGRAMS\${APP_NAME}"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Self Training.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
     CreateShortcut "$SMPROGRAMS\${APP_NAME}\uninstall.lnk" "${UNINST_EXE}"
 
@@ -253,6 +254,10 @@ FunctionEnd
 
 !macroend
 
+!ifndef locate::RMDirEmpty
+!include "Locate.nsh"
+!endif
+
 ;--------------------------------
 Section "Uninstall"
     !insertmacro APPLICATION.KillRunning "adaptation_app.exe"
@@ -265,6 +270,10 @@ Section "Uninstall"
     !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
     !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
     !insertmacro UNINSTALL.LOG_END_UNINSTALL
+    
+    ${locate::RMDirEmpty} "$INSTDIR" "/M=*.* /G=1 /B=1" $R1
+ 	${locate::RMDirEmpty} "${INSTDATADIR}" "/M=*.* /G=1 /B=1" $R1
+ 	${locate::Unload}
  	
     Delete "${UNINST_DAT}"
     Delete "${UNINST_EXE}"
