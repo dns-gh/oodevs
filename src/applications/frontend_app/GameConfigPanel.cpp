@@ -15,10 +15,14 @@
 #include "tools/GeneralConfig.h"
 #include "tools/xmlcodecs.h"
 #include "clients_gui/Tools.h"
-#include <qspinbox.h>
+#include <xeumeuleu/xml.h>
+
 #include <qcheckbox.h>
 #include <qdatetimeedit.h>
-#include <xeumeuleu/xml.h>
+#include <qgroupbox.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qspinbox.h>
 
 #pragma warning( disable: 4127 4511 4512 )
 #include <boost/lexical_cast.hpp>

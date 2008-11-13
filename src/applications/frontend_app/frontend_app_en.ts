@@ -88,11 +88,11 @@
 <context>
     <name>Application</name>
     <message>
-        <source>sword-ot@masagroup.net</source>
+        <source>SWORD Officer Training</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SWORD Officer Training</source>
+        <source>sword-ot@masagroup.net</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

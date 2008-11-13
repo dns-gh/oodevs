@@ -10,6 +10,8 @@
 #include "frontend_app_pch.h"
 #include "InfoBubble.h"
 #include "resources.h"
+#include <qlabel.h>
+#include <qpixmap.h>
 
 // -----------------------------------------------------------------------------
 // Name: InfoBubble constructor

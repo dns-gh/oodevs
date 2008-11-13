@@ -9,65 +9,59 @@
 
 #include "tools_pch.h"
 #include "ApplicationMutex.h"
-
 #include <windows.h>
 
-using namespace tools ; 
+using namespace tools;
 
-class ApplicationMutexInternal
+namespace
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-    explicit ApplicationMutexInternal( const std::string& name ); 
-    virtual ~ApplicationMutexInternal();
-    //@}
+    class ApplicationMutexInternal : public ApplicationMutex_ABC
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        explicit ApplicationMutexInternal( const std::string& name )
+        {
+            handle_ = ::CreateMutex( NULL, false, name.c_str() );
+            DWORD err = GetLastError();
+            if( err == ERROR_ALREADY_EXISTS )
+                handle_ = NULL;
+        }
 
-    bool IsOwned() { return ( handle_ != NULL ); };  
+        virtual ~ApplicationMutexInternal()
+        {
+            if ( handle_ )
+                ::ReleaseMutex( handle_ );
+        }
+        //@}
 
-private:
-    //! @name members
-    //@{
-    HANDLE handle_ ; 
-    //@}
-}; 
+        bool IsOwned() const { return ( handle_ != NULL ); }
 
-ApplicationMutexInternal::ApplicationMutexInternal( const std::string& name )
-{
-    handle_ = ::CreateMutex( NULL, false, name.c_str() ); 
-    DWORD err = GetLastError();
-    if( err == ERROR_ALREADY_EXISTS ) 
-        handle_ = NULL ; 
+    private:
+        //! @name members
+        //@{
+        HANDLE handle_;
+        //@}
+    };
 }
-
-// -----------------------------------------------------------------------------
-// Name: ApplicationMutex::~ApplicationMutexInternal
-// Created: RDS 2008-08-18
-// -----------------------------------------------------------------------------
-ApplicationMutexInternal::~ApplicationMutexInternal()
-{
-    if ( handle_ ) 
-        ::ReleaseMutex( handle_ ) ; 
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: ApplicationMutex constructor
 // Created: RDS 2008-08-18
 // -----------------------------------------------------------------------------
 ApplicationMutex::ApplicationMutex( const std::string& name )
-    : internal_( new ApplicationMutexInternal(name) ) 
+    : internal_( new ::ApplicationMutexInternal( name ) )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ApplicationMutex::IsOwned
 // Created: RDS 2008-08-18
 // -----------------------------------------------------------------------------
-bool ApplicationMutex::IsOwned()
+bool ApplicationMutex::IsOwned() const
 {
-    return internal_->IsOwned()  ; 
+    return internal_->IsOwned();
 }
 
 // -----------------------------------------------------------------------------

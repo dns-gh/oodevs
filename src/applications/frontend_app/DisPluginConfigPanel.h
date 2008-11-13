@@ -20,6 +20,7 @@ namespace tools
 class QLineEdit;
 class QSpinBox;
 class QCheckBox;
+class QGroupBox;
 
 // =============================================================================
 /** @class  DisPluginConfigPanel

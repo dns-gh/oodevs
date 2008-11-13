@@ -13,6 +13,8 @@
 #include "frontend/CreateSession.h"
 #include "clients_gui/Tools.h"
 #include <qlineedit.h>
+#include <qgroupbox.h>
+#include <qlabel.h>
 
 // -----------------------------------------------------------------------------
 // Name: HlaPluginConfigPanel constructor

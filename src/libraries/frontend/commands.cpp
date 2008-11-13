@@ -16,6 +16,7 @@
 #include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.h>
 #include <zipstream/zipstream.h>
+#include <qstringlist.h>
 
 namespace bfs = boost::filesystem;
 

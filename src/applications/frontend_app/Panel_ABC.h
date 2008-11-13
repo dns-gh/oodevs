@@ -11,6 +11,7 @@
 #define __Panel_ABC_h_
 
 #include <boost/ptr_container/ptr_vector.hpp>
+#include <qvbox.h>
 
 namespace frontend
 {

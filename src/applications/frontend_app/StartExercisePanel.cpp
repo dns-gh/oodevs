@@ -20,11 +20,14 @@
 #include "frontend/StartExercise.h"
 #include "tools/GeneralConfig.h"
 #include <qaction.h>
+#include <qgroupbox.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qlineedit.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
-#include <qtabwidget.h>
 #include <qspinbox.h>
-#include <qlineedit.h>
+#include <qtabwidget.h>
 #include <qtextedit.h>
 #include <qtimer.h>
 

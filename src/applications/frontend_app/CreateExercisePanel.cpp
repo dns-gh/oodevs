@@ -17,9 +17,11 @@
 #include "frontend/CreateExercise.h"
 #include "frontend/commands.h"
 #include <qaction.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qlineedit.h>
-#include <qpushbutton.h>
 #include <qlistbox.h>
+#include <qpushbutton.h>
 
 using namespace frontend;
 

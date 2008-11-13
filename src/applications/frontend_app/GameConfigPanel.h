@@ -10,15 +10,17 @@
 #ifndef __GameConfigPanel_h_
 #define __GameConfigPanel_h_
 
-#include <qtabwidget.h>
+#include <qvbox.h>
+
 namespace tools
 {
     class GeneralConfig;
 }
-class QSpinBox;
-class QTimeEdit;
+
 class QCheckBox;
 class QGroupBox;
+class QSpinBox;
+class QTimeEdit;
 
 // =============================================================================
 /** @class  GameConfigPanel

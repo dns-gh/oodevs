@@ -16,10 +16,11 @@
 #include "frontend/commands.h"
 #include "frontend/StartExercise.h"
 #include <qaction.h>
+#include <qlabel.h>
+#include <qlineedit.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
 #include <qspinbox.h>
-#include <qlineedit.h>
 #include <qtextedit.h>
 #include <qtimer.h>
 

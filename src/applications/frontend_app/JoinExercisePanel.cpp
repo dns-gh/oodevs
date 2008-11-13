@@ -17,6 +17,8 @@
 #include "frontend/StartExercise.h"
 #include "frontend/JoinExercise.h"
 #include <qaction.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
 #include <qtabwidget.h>

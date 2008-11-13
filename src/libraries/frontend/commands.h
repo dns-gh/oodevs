@@ -12,6 +12,8 @@
 
 #include <boost/function.hpp>
 
+class QStringList;
+
 namespace tools
 {
     class GeneralConfig;

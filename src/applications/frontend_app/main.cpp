@@ -18,18 +18,19 @@ namespace
 {
     ////
 //    static const QString locale = "_en";
-    static const QString locale = "_fr";
+    static const std::string locale = "_fr";
     ////
 }
 
 int main( int argc, char* argv[] )
 {
-#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
-#endif
-
     QApplication::setStyle( "windowsxp" );
-    Application app( argc, argv, locale );
+    Application app( argc, argv, locale.c_str() );
+
+    #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
+    #endif
+
     BugTrap::Setup( tools::translate( "Application", "SWORD Officer Training" ).ascii() )
         .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).ascii() )
         .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );

@@ -18,6 +18,7 @@ namespace tools
 }
 
 class QLineEdit;
+class QGroupBox;
 
 // =============================================================================
 /** @class  HlaPluginConfigPanel

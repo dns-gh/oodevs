@@ -12,6 +12,9 @@
 #include "resources.h"
 #include "frontend/SpawnCommand.h" 
 #include <qaction.h>
+#include <qhbox.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qregion.h>
 #include <qwidgetstack.h>
 

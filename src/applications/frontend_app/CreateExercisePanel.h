@@ -16,9 +16,12 @@ namespace tools
 {
     class GeneralConfig;
 }
+
+class InfoBubble;
+class QLabel;
 class QLineEdit;
 class QListBox;
-class InfoBubble;
+class QPushButton;
 
 // =============================================================================
 /** @class  CreateExercisePanel

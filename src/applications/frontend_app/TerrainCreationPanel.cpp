@@ -17,6 +17,9 @@
 #include "frontend/commands.h"
 #include "tools/GeneralConfig.h"
 #include <qaction.h>
+#include <qhbox.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
 

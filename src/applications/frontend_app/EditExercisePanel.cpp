@@ -16,6 +16,8 @@
 #include "frontend/commands.h"
 #include "frontend/EditExercise.h"
 #include <qaction.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
 

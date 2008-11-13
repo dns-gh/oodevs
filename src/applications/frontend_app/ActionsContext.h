@@ -14,6 +14,7 @@
 #include <map>
 
 class QListBox;
+class QString;
 
 // =============================================================================
 /** @class  ActionsContext

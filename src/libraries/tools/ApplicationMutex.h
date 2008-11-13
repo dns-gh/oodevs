@@ -10,11 +10,16 @@
 #ifndef __ApplicationMutex_h_
 #define __ApplicationMutex_h_
 
-class ApplicationMutexInternal ; 
-
-
 namespace tools
 {
+class ApplicationMutex_ABC
+{
+public:
+             ApplicationMutex_ABC() {}
+    virtual ~ApplicationMutex_ABC() {}
+
+    virtual bool IsOwned() const = 0;
+};
 
 // =============================================================================
 /** @class  ApplicationMutex
@@ -22,7 +27,7 @@ namespace tools
 */
 // Created: RDS 2008-08-18
 // =============================================================================
-class ApplicationMutex
+class ApplicationMutex : public ApplicationMutex_ABC
 {
 
 public:
@@ -34,7 +39,7 @@ public:
 
     //! @name members 
     //@{
-    bool IsOwned(); 
+    bool IsOwned() const;
     //@}
         
 private:
@@ -47,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ApplicationMutexInternal> internal_ ; 
+    std::auto_ptr< ApplicationMutex_ABC > internal_;
     //@}
 };
 

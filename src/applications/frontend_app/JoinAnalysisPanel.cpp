@@ -17,10 +17,12 @@
 #include "frontend/JoinAnalysis.h"
 #include "frontend/CommandLineTools.h"
 #include <qaction.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qlistbox.h>
 #include <qpushbutton.h>
-#include <qtabwidget.h>
 #include <qspinbox.h>
+#include <qtabwidget.h>
 
 // -----------------------------------------------------------------------------
 // Name: JoinAnalysisPanel constructor

@@ -14,6 +14,9 @@
 #include "clients_gui/Tools.h"
 #include <qlineedit.h>
 #include <qspinbox.h>
+#include <qgroupbox.h>
+#include <qcheckbox.h>
+#include <qlabel.h>
 
 // -----------------------------------------------------------------------------
 // Name: DisPluginConfigPanel constructor

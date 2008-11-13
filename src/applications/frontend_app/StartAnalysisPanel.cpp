@@ -19,9 +19,11 @@
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.h>
 #include <qaction.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qlistbox.h>
-#include <qspinbox.h>
 #include <qpushbutton.h>
+#include <qspinbox.h>
 
 // -----------------------------------------------------------------------------
 // Name: StartAnalysisPanel constructor

@@ -11,12 +11,15 @@
 #define __TerrainCreationPanel_h_
 
 #include "Panel_ABC.h"
+#include <qobject.h>
 
 namespace tools
 {
     class GeneralConfig;
 }
 class QLineEdit;
+class QPushButton;
+class QString;
 class InfoBubble;
 
 // =============================================================================

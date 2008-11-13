@@ -16,9 +16,11 @@ namespace tools
 {
     class GeneralConfig;
 }
-class QSpinBox;
-class QListBox;
+
 class InfoBubble;
+class QListBox;
+class QPushButton;
+class QSpinBox;
 
 // =============================================================================
 /** @class  StartAnalysisPanel

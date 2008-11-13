@@ -21,13 +21,12 @@ class InfoBubble;
 class GameConfigPanel;
 class HlaPluginConfigPanel;
 class DisPluginConfigPanel;
-class QListBox;
-class QSpinBox;
+class QGroupBox;
 class QLineEdit;
-class QTextEdit;
+class QListBox;
 class QPushButton;
-
-
+class QSpinBox;
+class QTextEdit;
 
 // =============================================================================
 /** @class  StartExercisePanel

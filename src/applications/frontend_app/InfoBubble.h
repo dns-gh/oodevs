@@ -12,6 +12,8 @@
 
 #include <qhgroupbox.h>
 
+class QLabel;
+
 // =============================================================================
 /** @class  InfoBubble
     @brief  InfoBubble

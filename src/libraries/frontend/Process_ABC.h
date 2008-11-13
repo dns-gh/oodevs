@@ -12,6 +12,8 @@
 
 #include <boost/enable_shared_from_this.hpp>
 
+class QString;
+
 namespace frontend
 {
 

@@ -14,9 +14,4 @@
 #include <string>
 #include <memory>
 
-#pragma warning( push, 0 )
-#include <qprocess.h>
-#include <qstringlist.h>
-#pragma warning( pop )
-
 #endif // __frontend_pch_h_
