@@ -18,13 +18,15 @@
 #include <xeumeuleu/xml.h>
 
 #include <qaction.h>
+#include <qcursor.h>
 #include <qfiledialog.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qlineedit.h>
 #include <qlistbox.h>
-#include <qtextedit.h>
 #include <qpushbutton.h>
 #include <qprogressbar.h>
-#include <qcursor.h>
+#include <qtextedit.h>
 
 #pragma warning( disable: 4127 4244 4245 )
 #include <boost/filesystem/operations.hpp>
@@ -123,13 +125,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::string InstallPackagePanel::GetDestinationDirectory() const
 {
-    bfs::path p( config_.GetRootDir(), bfs::native );
-    if( !p.has_root_name() )
-    {
-        p = bfs::path( qApp->applicationDirPath().ascii(), bfs::native ) / p;
-        p = Normalize( p );
-    }
-    return p.native_file_string();
+    return config_.GetRootDir();
 }
 
 namespace

@@ -234,7 +234,7 @@
             depends="application.gaming_app,application.preparation_app,application.adaptation_app"/>
 
     <target name="applications.frontends" description="build CSword Frontend executables"
-            depends="application.selftraining_app,application.frontend_app"/>
+            depends="application.selftraining_app,application.frontend_app,application.package_app"/>
 
     <target name="application.dispatcher_dll" description="build CSword Dispatcher dll" depends="library.dispatcher,library.ENT,library.plugins">
         <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm,qt"
@@ -390,6 +390,12 @@
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <syslibset libs="gdi32,shell32,htmlhelp"/>
+        </build-app>
+    </target>
+
+    <target name="application.package_app" description="build CSword Package deployment executable">
+        <build-app name="package_app" depends="boost" subsystem="console">
+            <syslibset libs="user32"/>
         </build-app>
     </target>
 

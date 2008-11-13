@@ -22,11 +22,12 @@ namespace frontend
     class Config;
 }
 
+class InfoBubble;
 class QLineEdit;
 class QListBox;
 class QProgressBar;
+class QPushButton;
 class QTextEdit;
-class InfoBubble;
 
 // =============================================================================
 /** @class  InstallPackagePanel

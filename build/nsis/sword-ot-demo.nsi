@@ -82,6 +82,7 @@ Section "${APP_NAME}"
     File "${OUTDIR}\release\applications\replayer_app\*.exe"
     File "${OUTDIR}\release\applications\frontend_app\*.exe"
     File "${OUTDIR}\release\applications\selftraining_app\*.exe"
+    File "${OUTDIR}\release\applications\package_app\*.exe"
     File "${OUTDIR}\generation_app\*.exe"
     File "${RUNDIR}\gradients.xml"
     File "${RUNDIR}\preferences.xml"
@@ -132,7 +133,7 @@ Section "${APP_NAME}"
     WriteRegStr HKCR ".otpak" "" "Officer Training Package"
 	WriteRegStr HKCR "Officer Training Package\shell" "" "open"
 	WriteRegStr HKCR "Officer Training Package\DefaultIcon" "" "$INSTDIR\applications\sword-ot.ico"
-	WriteRegStr HKCR "Officer Training Package\shell\open\command" "" '$INSTDIR\applications\frontend_app.exe --install="%1"'
+	WriteRegStr HKCR "Officer Training Package\shell\open\command" "" '$INSTDIR\applications\package_app.exe --install="%1"'
 SectionEnd
 
 ;--------------------------------
