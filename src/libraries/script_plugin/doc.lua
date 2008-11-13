@@ -88,6 +88,10 @@ fsm =
     Deactivate   = function( self ) end,
 }
 
+-- thread safe fsm Helpers
+ChangeState = function( state ) end
+Deactivate  = function() end
+
 agent =
 {
     GetIdentifier       = function( self ) return nId end,
