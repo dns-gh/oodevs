@@ -27,6 +27,7 @@ namespace
     public:
         EventWidget( QWidget* parent, const QPixmap& pixmap, const QString& text )
             : QLabel( parent )
+            , label_( "" )
         {
             QImage img; // $$$$ SBO 2007-02-09: TODO: make new icons instead of resizing
             img = pixmap;
@@ -48,16 +49,24 @@ namespace
             paint->setPen( pen );
             paint->drawRoundRect( 0, 0, width(), height() );
             paint->drawPixmap( 0, 0, *pixmap() );
-            if( text().isEmpty() )
+            if( label_.isEmpty() )
                 return;
-            const QRect rect = paint->boundingRect( QRect( 0, 0, width() - 2, height() - 1 ), Qt::AlignRight | Qt::AlignBottom, text() );
+            const QRect rect = paint->boundingRect( QRect( 0, 0, width() - 2, height() - 1 ), Qt::AlignRight | Qt::AlignBottom, label_ );
             const QRect out( rect.left() - 1, rect.top() - 1, rect.width() + 3, rect.height() + 2 );
             paint->fillRect( out, Qt::white );
             paint->drawRoundRect( out );
             pen.setColor( Qt::black );
             paint->setPen( pen );
-            paint->drawText( rect, Qt::AlignRight | Qt::AlignBottom, text() );
+            paint->drawText( rect, Qt::AlignRight | Qt::AlignBottom, label_ );
         }
+
+        virtual void setText( const QString& text )
+        {
+            label_ = text;
+        }
+
+    private:
+        QString label_;
     };
 }
 
