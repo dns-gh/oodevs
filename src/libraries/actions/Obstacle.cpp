@@ -93,7 +93,7 @@ void Obstacle::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC&
         AddParameter( *new ObstacleType( xis ) );
     else if( type == "location" )
         AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, xis ) );
-    else if( type == "tc2" )
+    else if( type == "tc2" || type == "automat" )
         AddParameter( *new Automat( xis, automats, controller ) );
 }
 

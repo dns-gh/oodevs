@@ -214,6 +214,8 @@ actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
         action.reset( new actions::AgentMission( xis, controllers_.controller_, missions_, *target ) );
     else if( target = model_.agents_.FindAutomat( id ) )
         action.reset( new actions::AutomatMission( xis, controllers_.controller_, missions_, *target ) );
+    else if( target = model_.agents_.FindPopulation( id ) )
+        action.reset( new actions::PopulationMission( xis, controllers_.controller_, missions_, *target ) );
     else
         ThrowTargetNotFound( id );
 

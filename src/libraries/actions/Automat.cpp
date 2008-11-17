@@ -51,7 +51,7 @@ Automat::Automat( const OrderParameter& parameter, xml::xistream& xis, const Res
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 Automat::Automat( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Automat_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "automat", false ), &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
+    : Entity< Automat_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), attribute< std::string >( xis, "type" ), false ), &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }
