@@ -19,6 +19,7 @@ namespace dispatcher
     class Agent;
     class AgentKnowledge;
     class Automat;
+    class Population;
 }
 
 namespace plugins
@@ -35,6 +36,9 @@ namespace script
 #define DECLARE_AUTOMAT_EVENT( name )                 \
     DECLARE_EVENT( name, const dispatcher::Automat&, entity )
 
+#define DECLARE_POPULATION_EVENT( name )                 \
+    DECLARE_EVENT( name, const dispatcher::Population&, entity )
+
     namespace events
     {
         DECLARE_AGENT_EVENT( AgentMoved );
@@ -46,6 +50,8 @@ namespace script
         DECLARE_KNOWLEDGE_EVENT( PerceptionChanged );
 
         DECLARE_AUTOMAT_EVENT( AutomatMissionStarted );
+
+        DECLARE_POPULATION_EVENT( PopulationMoved );
     }
 }
 }

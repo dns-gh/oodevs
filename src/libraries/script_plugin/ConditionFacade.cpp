@@ -12,6 +12,7 @@
 #include "SimulationConditions.h"
 #include "AgentConditions.h"
 #include "AutomatConditions.h"
+#include "PopulationConditions.h"
 #include "EventCondition.h"
 #include "ClientConditions.h"
 #include "ScriptConditions.h"
@@ -31,6 +32,7 @@ ConditionFacade::ConditionFacade( kernel::Controller& controller, const kernel::
     Add( new SimulationConditions( controller ) );
     Add( new AgentConditions( controller, converter ) );
     Add( new AutomatConditions( controller ) );
+    Add( new PopulationConditions( controller, converter ) );
     Add( new ClientConditions( controller, model ) );
     Add( new ScriptConditions( controller ) );
 }

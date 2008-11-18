@@ -60,6 +60,11 @@ events =
          MissionStarted          = function( self ) return condition( automat ) end,
     },
     
+    populations =
+    {
+         PopulationEnters        = function( self, zone ) return condition( population ) end,
+    },
+    
     client =
     {
          UserChose      = function( self ) return condition( strId, strChoice ) end,
@@ -104,6 +109,12 @@ agent =
 automat =
 {
     GetIdentifier       = function( self ) return nId end,
+}
+
+population =
+{
+    GetIdentifier       = function( self ) return nId end,
+    GetName             = function( self ) return strName end,
 }
 
 knowledge =

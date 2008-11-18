@@ -24,6 +24,7 @@
 #include "AgentManipulator.h"
 #include "AutomatManipulator.h"
 #include "KnowledgeManipulator.h"
+#include "PopulationManipulator.h"
 #include "SimulationCommands.h"
 #include "ClientCommands.h"
 #include "ScriptCommands.h"
@@ -59,6 +60,7 @@ ScriptPlugin::ScriptPlugin( Model& model, const Config& config, SimulationPublis
     registrables_.Add( new AgentManipulator::Registrar() );
     registrables_.Add( new AutomatManipulator::Registrar() );
     registrables_.Add( new KnowledgeManipulator::Registrar() );
+    registrables_.Add( new PopulationManipulator::Registrar() );
     registrables_.Add( new SimulationCommands( publisher, *converter_ ) );
     registrables_.Add( new ClientCommands( clients, resolver ) );
     registrables_.Add( new ScriptCommands( *controller_ ) );

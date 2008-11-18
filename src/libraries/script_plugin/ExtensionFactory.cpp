@@ -12,12 +12,15 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/Automat.h"
+#include "dispatcher/Population.h"
 #include "AgentNotifier.h"
 #include "AgentManipulator.h"
 #include "KnowledgeNotifier.h"
 #include "KnowledgeManipulator.h"
 #include "AutomatNotifier.h"
 #include "AutomatManipulator.h"
+#include "PopulationNotifier.h"
+#include "PopulationManipulator.h"
 
 using namespace plugins::script;
 
@@ -69,4 +72,14 @@ void ExtensionFactory::Create( dispatcher::Automat& entity )
 {
     entity.Attach( *new AutomatNotifier   ( controller_, entity ) );
     entity.Attach( *new AutomatManipulator( entity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionFactory::Create
+// Created: SBO 2008-11-18
+// -----------------------------------------------------------------------------
+void ExtensionFactory::Create( dispatcher::Population& entity )
+{
+    entity.Attach( *new PopulationNotifier   ( controller_, entity ) );
+    entity.Attach( *new PopulationManipulator( entity ) );
 }

@@ -12,9 +12,11 @@
 #include "AgentManipulator.h"
 #include "KnowledgeManipulator.h"
 #include "AutomatManipulator.h"
+#include "PopulationManipulator.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/Automat.h"
+#include "dispatcher/Population.h"
 
 using namespace plugins::script;
 
@@ -47,5 +49,15 @@ void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::AgentK
 void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::Automat& entity )
 {
     if( const AutomatManipulator* manipulator = entity.Retrieve< AutomatManipulator >() )
+        that.Trigger( manipulator );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityConditionBase::Trigger
+// Created: SBO 2008-11-18
+// -----------------------------------------------------------------------------
+void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::Population& entity )
+{
+    if( const PopulationManipulator* manipulator = entity.Retrieve< PopulationManipulator >() )
         that.Trigger( manipulator );
 }

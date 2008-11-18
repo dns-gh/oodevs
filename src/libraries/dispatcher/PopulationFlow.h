@@ -58,7 +58,7 @@ private:
     PopulationFlow& operator=( const PopulationFlow& ); //!< Assignement operator
     //@}
 
-private:
+public:
     const Population&   population_;
     const unsigned long nID_;
 

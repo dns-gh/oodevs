@@ -18,6 +18,7 @@ namespace dispatcher
     class Agent;
     class AgentKnowledge;
     class Automat;
+    class Population;
 }
 
 namespace plugins
@@ -33,9 +34,10 @@ namespace script
 class EntityConditionBase
 {
 public:
-    static void Trigger( BaseCondition& that, const dispatcher::Agent& agent );
-    static void Trigger( BaseCondition& that, const dispatcher::AgentKnowledge& knowledge );
-    static void Trigger( BaseCondition& that, const dispatcher::Automat& knowledge );
+    static void Trigger( BaseCondition& that, const dispatcher::Agent& entity );
+    static void Trigger( BaseCondition& that, const dispatcher::AgentKnowledge& entity );
+    static void Trigger( BaseCondition& that, const dispatcher::Automat& entity );
+    static void Trigger( BaseCondition& that, const dispatcher::Population& entity );
 };
 
 // =============================================================================
@@ -70,6 +72,10 @@ public:
         EntityConditionBase::Trigger( *this, entity );
     }
     void Trigger( const dispatcher::Automat& entity )
+    {
+        EntityConditionBase::Trigger( *this, entity );
+    }
+    void Trigger( const dispatcher::Population& entity )
     {
         EntityConditionBase::Trigger( *this, entity );
     }

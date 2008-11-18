@@ -15,7 +15,6 @@
 #include "directia/Brain.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
-#include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 

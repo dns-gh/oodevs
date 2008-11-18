@@ -58,7 +58,7 @@ private:
     PopulationConcentration& operator=( const PopulationConcentration& ); //!< Assignement operator
     //@}
 
-private:
+public:
     const Population&   population_;
     const unsigned long nID_;
     const ASN1T_CoordLatLong position_;

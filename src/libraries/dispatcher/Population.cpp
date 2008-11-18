@@ -25,7 +25,7 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
-    : SimpleEntity< kernel::Population_ABC >( msg.oid )
+    : SimpleEntity< kernel::Population_ABC >( msg.oid, msg.nom )
     , model_           ( model )
     , nType_           ( msg.type_population )
     , strName_         ( msg.nom )
@@ -85,9 +85,10 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& msg )
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate&  msg )
+void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate& msg )
 {
     concentrations_.Get( msg.oid ).Update( msg );
+    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,6 +102,7 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& msg 
         concentrations_.Remove( msg.oid );
         delete concentration;
     }
+    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,6 +128,7 @@ void Population::Update( const ASN1T_MsgPopulationFlowCreation& msg )
 void Population::Update( const ASN1T_MsgPopulationFlowUpdate& msg )
 {
     flows_.Get( msg.oid ).Update( msg );
+    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,6 +142,7 @@ void Population::Update( const ASN1T_MsgPopulationFlowDestruction& msg )
         flows_.Remove( msg.oid );
         delete flow;
     }
+    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
