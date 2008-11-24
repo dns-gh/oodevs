@@ -29,7 +29,7 @@ CreateTerrain::CreateTerrain( const tools::GeneralConfig& config, const QString&
     const std::string directory = config.GetTerrainDir( name.ascii() );
     bfs::create_directories( directory );
 
-    addArgument( directory.c_str() );
+    addArgument( QString( "\"%1\"" ).arg( directory.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
