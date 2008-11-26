@@ -26,7 +26,7 @@
 #include "pathfind/TerrainData.h"
 #include "geocoord/Geoid.h"
 #include "MT_Tools/MT_Rect.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )

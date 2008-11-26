@@ -9,7 +9,7 @@
 
 #include "gearth_plugin_pch.h"
 #include "LocationEditor.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 #include <sstream>
 
 using namespace plugins::gearth;

@@ -15,7 +15,7 @@
 #include "MT_Tools/MT_Circle.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT/MT_IO/MT_FormatString.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace xml;
 

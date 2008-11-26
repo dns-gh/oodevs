@@ -14,7 +14,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 namespace actions {
     namespace parameters {

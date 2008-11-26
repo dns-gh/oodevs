@@ -14,7 +14,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace actions;

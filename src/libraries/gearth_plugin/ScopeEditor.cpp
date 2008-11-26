@@ -20,7 +20,7 @@
 #include "dispatcher/Config.h"
 
 #include <sstream>
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace plugins::gearth;
 

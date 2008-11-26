@@ -12,7 +12,7 @@
 #include "Agent.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace xml;
 using namespace kernel;

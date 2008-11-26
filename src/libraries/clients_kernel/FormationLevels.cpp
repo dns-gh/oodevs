@@ -11,7 +11,7 @@
 #include "FormationLevels.h"
 #include "Level.h"
 #include "SymbolFactory.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 

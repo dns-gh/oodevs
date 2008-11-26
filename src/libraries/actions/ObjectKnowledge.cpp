@@ -12,7 +12,7 @@
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;

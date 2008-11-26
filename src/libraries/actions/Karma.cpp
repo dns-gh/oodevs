@@ -12,7 +12,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace xml;
 using namespace actions;

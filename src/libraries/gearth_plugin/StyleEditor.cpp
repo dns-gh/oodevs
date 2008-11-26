@@ -10,7 +10,7 @@
 #include "gearth_plugin_pch.h"
 #include "StyleEditor.h"
 #include "dispatcher/Config.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/path.hpp>
 

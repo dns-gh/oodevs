@@ -11,7 +11,7 @@
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
 #include "game_asn/Simulation.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace xml;
 using namespace plugins;

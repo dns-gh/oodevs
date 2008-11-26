@@ -11,7 +11,7 @@
 #include "ObjectiveList.h"
 #include "Objective.h"
 #include "ParameterVisitor_ABC.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;

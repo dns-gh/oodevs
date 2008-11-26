@@ -11,7 +11,7 @@
 #include "SymbolCase.h"
 #include "SymbolRule.h"
 #include "SymbolVisitor_ABC.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;

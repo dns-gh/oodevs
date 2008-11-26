@@ -3,13 +3,10 @@
 //*****************************************************************************
 
 #include "clients_kernel_pch.h"
-
 #include "SensorType.h"
-
 #include "Tools.h"
 #include "Agent_ABC.h"
-
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;

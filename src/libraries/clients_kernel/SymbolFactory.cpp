@@ -11,7 +11,7 @@
 #include "SymbolFactory.h"
 #include "SymbolRule.h"
 #include "tools/GeneralConfig.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;

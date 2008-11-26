@@ -10,7 +10,7 @@
 #ifndef __xmlcodecs_h_
 #define __xmlcodecs_h_
 
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 #include <sstream>
 
 namespace tools

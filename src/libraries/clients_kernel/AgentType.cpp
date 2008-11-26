@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "AgentType.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 #include "AgentNature.h"
 #include "SymbolFactory.h"
 #include "GlTools_ABC.h"

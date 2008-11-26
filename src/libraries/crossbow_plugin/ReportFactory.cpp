@@ -14,7 +14,7 @@
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace xml;
 using namespace plugins;

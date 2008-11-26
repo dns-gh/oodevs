@@ -21,8 +21,7 @@
 #include "NoopPublisher.h"
 #include "AarPlugin.h"
 #include "Services.h"
-
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
 

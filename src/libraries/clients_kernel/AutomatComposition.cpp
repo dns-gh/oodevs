@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "AutomatComposition.h"
 #include "Resolver_ABC.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 

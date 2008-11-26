@@ -11,7 +11,7 @@
 #include "Enumeration.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/OrderParameterValue.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;

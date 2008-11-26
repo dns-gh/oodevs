@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "WorldParameters.h"
 #include "tools/ExerciseConfig.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 #include <boost/lexical_cast.hpp>
 
 using namespace kernel;

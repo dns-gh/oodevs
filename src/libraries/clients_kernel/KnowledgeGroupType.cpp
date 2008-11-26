@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "KnowledgeGroupType.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 
