@@ -69,7 +69,7 @@ private:
 template< typename SubClass >
 void HLA_ObjectInteraction::RegisterAttributes( hla::Interaction< SubClass >& interaction )
 {
-    interaction.Register( hla::ParameterIdentifier( "objet" ), *new hla::Attribute< SubClass, ObjectIdentifier >( & HLA_ObjectInteraction::objectId_ ) );
+    interaction.Register( hla::ParameterIdentifier( "objet" ), *new hla::Encodable< SubClass, ObjectIdentifier >( & HLA_ObjectInteraction::objectId_ ) );
 }
 
 #endif // __HLA_ObjectInteraction_h_

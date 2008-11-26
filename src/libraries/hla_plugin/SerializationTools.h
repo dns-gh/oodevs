@@ -10,7 +10,7 @@
 #ifndef __SerializationTools_h_
 #define __SerializationTools_h_
 
-#include "hla/Serializer.h"
+#include <hla/Serializer.h>
 
 namespace hla
 {

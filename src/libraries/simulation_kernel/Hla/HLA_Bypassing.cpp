@@ -66,7 +66,7 @@ void HLA_Bypassing::Execute() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Interaction< HLA_Bypassing >& HLA_Bypassing::CreateInteractionClass
+// Name: HLA_Bypassing::CreateInteractionClass
 // Created: AGE 2004-12-06
 // -----------------------------------------------------------------------------
 Interaction< HLA_Bypassing >& HLA_Bypassing::CreateInteractionClass( InteractionNotification_ABC< HLA_Bypassing >& callback )

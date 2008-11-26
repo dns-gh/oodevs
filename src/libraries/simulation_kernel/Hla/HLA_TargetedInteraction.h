@@ -69,7 +69,7 @@ private:
 template< typename SubClass >
 void HLA_TargetedInteraction::RegisterAttributes( hla::Interaction< SubClass >& interaction )
 {
-    interaction.Register( ParameterIdentifier( "cible" ), *new Attribute< SubClass, hla::ObjectIdentifier >( & HLA_TargetedInteraction::target_ ) );
+    interaction.Register( ParameterIdentifier( "cible" ), *new hla::Encodable< SubClass, hla::ObjectIdentifier >( & HLA_TargetedInteraction::target_ ) );
 }
 
 #endif // __HLA_TargetedInteraction_h_

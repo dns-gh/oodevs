@@ -66,7 +66,7 @@ private:
 template< typename SubClass >
 void HLA_FireInteraction::RegisterAttributes( hla::Interaction< SubClass >& interaction )
 {
-    interaction.Register( hla::ParameterIdentifier( "munition" ), *new hla::Attribute< SubClass, std::string >( & HLA_FireInteraction::strAmmunition_ ) );
+    interaction.Register( hla::ParameterIdentifier( "munition" ), *new hla::Encodable< SubClass, std::string >( & HLA_FireInteraction::strAmmunition_ ) );
 }
 
 #endif // __HLA_FireInteraction_h_
