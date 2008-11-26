@@ -235,12 +235,12 @@ SectionGroupEnd
 Function un.KillRunningApplication
 
     Processes::FindProcess "$9"
+    Pop $R0
     StrCmp $R0 "0" notrunning
     MessageBox MB_YESNO|MB_ICONQUESTION $(OT_APPLICATION_IS_RUNNING) /SD IDYES IDYES kill
         MessageBox MB_OK $(OT_ABORTING_UNINSTALLATION)
         Abort
     kill:
-        Pop $0
         Processes::KillProcess "$9"
     notrunning:
     
