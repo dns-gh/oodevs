@@ -200,9 +200,9 @@ SectionGroupEnd
     
     Section "${TerrainName}"
         SectionIn RO
-        SetOutPath "${INSTDATADIR}\data\terrains"
+        SetOutPath "${INSTDATADIR}\data\terrains\${TerrainName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}"
+        File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
     

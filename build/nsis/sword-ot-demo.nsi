@@ -177,10 +177,17 @@ SectionGroupEnd
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\orders"
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\sessions"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    SectionEnd
     
-        SetOutPath "${INSTDATADIR}\data\terrains"
+!macroend
+
+!macro EXERCISES.InstallTerrain TerrainName
+    
+    Section "${TerrainName}"
+        SectionIn RO
+        SetOutPath "${INSTDATADIR}\data\terrains\${TerrainName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}"
+        File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
     
@@ -192,6 +199,15 @@ SectionGroup "Exercises" s_exo
 !insertmacro EXERCISES.Install "Egypt" "Nord egypt"
 !insertmacro EXERCISES.Install "Paris" "Paris_Est"
 !insertmacro EXERCISES.Install "Scripting demo" "test"
+
+SectionGroupEnd
+
+;--------------------------------
+SectionGroup "Terrains" s_ter
+
+!insertmacro EXERCISES.InstallTerrain "Nord egypt"
+!insertmacro EXERCISES.InstallTerrain "Paris_Est"
+!insertmacro EXERCISES.InstallTerrain "test"
 
 SectionGroupEnd
 
@@ -235,12 +251,12 @@ SectionGroupEnd
 Function un.KillRunningApplication
 
     Processes::FindProcess "$9"
-    Pop $R0
     StrCmp $R0 "0" notrunning
     MessageBox MB_YESNO|MB_ICONQUESTION $(OT_APPLICATION_IS_RUNNING) /SD IDYES IDYES kill
         MessageBox MB_OK $(OT_ABORTING_UNINSTALLATION)
         Abort
     kill:
+        Pop $R0
         Processes::KillProcess "$9"
     notrunning:
     
@@ -310,6 +326,7 @@ Function .onInit
     ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
     SectionSetText ${s_phymod} $(OT_SECTION_PHYSICAL_MODELS)
     SectionSetText ${s_exo} $(OT_SECTION_EXERCISES)
+    SectionSetText ${s_ter} $(OT_SECTION_TERRAINS)
     SectionSetText ${s_doc} $(OT_SECTION_DOCUMENTATION)
     SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
     SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)

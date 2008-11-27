@@ -172,7 +172,7 @@ SectionGroup "Models" s_mod
         SectionIn RO
         SetOutPath "${INSTDATADIR}\data\models\ada\physical"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\models\ada\physical\france"
+        File /r /x ".svn" "${DATADIR}\data\models\ada\physical\worldwide"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
 
@@ -189,10 +189,17 @@ SectionGroupEnd
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\orders"
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\sessions"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    SectionEnd
     
-        SetOutPath "${INSTDATADIR}\data\terrains"
+!macroend
+
+!macro EXERCISES.InstallTerrain TerrainName
+    
+    Section "${TerrainName}"
+        SectionIn RO
+        SetOutPath "${INSTDATADIR}\data\terrains\${TerrainName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}"
+        File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
     
@@ -201,9 +208,18 @@ SectionGroupEnd
 ;--------------------------------
 SectionGroup "Exercises" s_exo
 
-!insertmacro EXERCISES.Install "ADA - Attaquer" "Angers"
-!insertmacro EXERCISES.Install "ADA - Donner_coup_arret" "Mailly"
-!insertmacro EXERCISES.Install "ADA - Freiner" "Paris_Est"
+!insertmacro EXERCISES.Install "Egypt" "Nord egypt"
+!insertmacro EXERCISES.Install "Paris" "Paris_Est"
+!insertmacro EXERCISES.Install "Scripting demo" "test"
+
+SectionGroupEnd
+
+;--------------------------------
+SectionGroup "Terrains" s_ter
+
+!insertmacro EXERCISES.InstallTerrain "Nord egypt"
+!insertmacro EXERCISES.InstallTerrain "Paris_Est"
+!insertmacro EXERCISES.InstallTerrain "test"
 
 SectionGroupEnd
 

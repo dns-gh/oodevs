@@ -44,8 +44,8 @@
  var unlog_tmp_3
  var unlog_error
 
-!include FileFunc.nsh
-!include TextFunc.nsh
+!include "FileFunc.nsh"
+!include "TextFunc.nsh"
 
 !insertmacro Locate
 !insertmacro un.Locate
@@ -417,14 +417,14 @@
   !verbose pop
 !macroend
 
-
 !macro UNINSTALL.LOG_UPDATE_INSTALL
   !verbose push
      !verbose ${UNINST_LOG_VERBOSE}
-        IfFileExists "${UNINST_DAT}" 0 +3
+
+        IfFileExists "${UNINST_DAT}" 0 noupdate 
             ${FileJoin} "${UNINST_DAT}" "${UNLOG_TEMP}" "${UNLOG_TEMP}"
             Delete "${UNINST_DAT}"
-            
+    noupdate:
         Rename "${UNLOG_TEMP}" "${UNINST_DAT}"
         WriteUninstaller "${UNINST_EXE}"
         WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}.dat" "${UNINST_DAT}"
