@@ -217,6 +217,8 @@ void ObjectPrototype_ABC::NotifyCreated( const Team_ABC& team )
     if( teams_->GetItemIndex( &team ) != -1 )
         return;
     teams_->AddItem( team.GetName(), &team );
+    if( teams_->currentItem() < 0 )
+        teams_->SetCurrentItem( &team );
 }
 
 // -----------------------------------------------------------------------------
