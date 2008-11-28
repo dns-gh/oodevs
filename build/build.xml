@@ -520,11 +520,12 @@
     ============================================================================
     -->
     <target name="package" description="create the installer">
-        <!--nsis todir="${dist.dir}/current" name="sword-ot"      script="sword-ot.nsi"/-->
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-ada"  script="sword-ot-ada.nsi">
+        <!--nsis todir="${dist.dir}/current/${platform}" name="sword-ot-ada" script="sword-ot-ada.nsi">
+            <arg value="/DAPP_VERSION=${version.version}"/>
             <arg value="/X!include sword-ot.nsh"/>
-        </nsis>
+        </nsis-->
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-demo" script="sword-ot-demo.nsi" license="true">
+            <arg value="/DAPP_VERSION=${version.version}"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped" script="sword-ot-scalped.nsi" license="true">

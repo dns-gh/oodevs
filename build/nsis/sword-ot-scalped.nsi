@@ -15,45 +15,16 @@
     !define APP_VERSION "1.0.0.0"
 !endif
 
-!define SHORT_VERSION "1.0.1" ; Compute using function
+!define SHORT_VERSION "1.0.1" ; TODO: Compute using function
 
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
 
-!include AdvUninstLog.nsh
+!include "AdvUninstLog.nsh"
+!include "tools.nsh"
+
+!insertmacro OT.Initialize
 ;..................................................................................................
-
-!ifndef PLATFORM
-    !define PLATFORM "vc80"
-!endif
-!ifndef RUNDIR
-    !define RUNDIR "..\..\run\${PLATFORM}"
-!endif
-!ifndef DATADIR
-    !define DATADIR "..\..\data"
-!endif
-!ifndef LIBDIR
-    !define LIBDIR "..\..\lib\${PLATFORM}"
-!endif
-!ifndef OUTDIR
-    !define OUTDIR "..\..\out\${PLATFORM}"
-!endif
-!ifndef DISTDIR
-    !define DISTDIR "."
-!endif
-!ifndef DOCDIR
-    !define DOCDIR "..\..\doc"
-!endif
-!ifndef LIBRARIESDIR
-    !define LIBRARIESDIR "..\..\src\libraries"
-!endif
-!ifndef APPLICATIONSDIR
-    !define APPLICATIONSDIR "..\..\src\applications"
-!endif
-
-!ifndef INSTDATADIR
-    !define INSTDATADIR "$DOCUMENTS\${APP_NAME}"
-!endif
 
 Name "${APP_NAME}"
 OutFile "${DISTDIR}\${APP_NAME}_${SHORT_VERSION}.exe"
@@ -62,13 +33,13 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro UNATTENDED_UNINSTALL
 
-!include lang.nsh
-!include version.nsh
+!include "lang.nsh"
+!include "version.nsh"
 
 LicenseLangString LICENSE ${LANG_FRENCH} "license-scalped.txt"
 
 ;--------------------------------
-Section "${APP_NAME}"
+Section "!${APP_NAME}"
     SectionIn RO
 
     ; resources: localization
@@ -137,103 +108,45 @@ Section "${APP_NAME}"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     CreateShortcut "$SMPROGRAMS\${APP_NAME}\uninstall.lnk" "${UNINST_EXE}"
 
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${APP_NAME}"
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayVersion" "${APP_VERSION}"
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
-    WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoModify" 1
-    WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoRepair" 1
+    !insertmacro OT.AddUninstallEntry    
+    !insertmacro OT.AddFileAssoc
     
-    ; register .otpak extension association
-    WriteRegStr HKCR ".otpak" "" "Officer Training Package"
-	WriteRegStr HKCR "Officer Training Package\shell" "" "open"
-	WriteRegStr HKCR "Officer Training Package\DefaultIcon" "" "$INSTDIR\applications\sword-ot.ico"
-	WriteRegStr HKCR "Officer Training Package\shell\open\command" "" '$INSTDIR\applications\package_app.exe --install="%1"'
 SectionEnd
 
 ;--------------------------------
 SectionGroup "Models" s_mod
 
-    Section "Decisional" s_decmod
-        SectionIn RO
-        SetOutPath "${INSTDATADIR}\data\models\ada\decisional"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Binaires"
-        File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\*.xml"
-        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    SectionEnd    
-    
-    ;Section "Sources" s_decmodsrc
-    ;    SectionIn RO
-    ;    SetOutPath "${INSTDATADIR}\data\models\main\decisional"
-    ;    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    ;    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Sources"
-    ;    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    ;SectionEnd
-    
-    Section "Physical" s_phymod
-        SectionIn RO
-        SetOutPath "${INSTDATADIR}\data\models\ada\physical"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\models\ada\physical\france"
-        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    SectionEnd
+    !insertmacro OT.AddDecisionalModels "ada"
+    !insertmacro OT.AddPhysicalModels "ada" "france"
 
 SectionGroupEnd
-
-!macro EXERCISES.Install ExerciseName TerrainName
-    
-    Section "${ExerciseName} - ${TerrainName}"
-        SetOutPath "${INSTDATADIR}\exercises\${ExerciseName}"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /x ".svn" "${DATADIR}\exercises\${ExerciseName}\*.xml"
-        File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\scripts"
-        File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\docs"
-        File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\orders"
-        File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\sessions"
-        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    SectionEnd
-    
-!macroend
-
-!macro EXERCISES.InstallTerrain TerrainName
-    
-    Section "${TerrainName}"
-        SectionIn RO
-        SetOutPath "${INSTDATADIR}\data\terrains\${TerrainName}"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}\*"
-        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    SectionEnd
-    
-!macroend
 
 ;--------------------------------
 SectionGroup "Exercises" s_exo
 
-!insertmacro EXERCISES.Install "esag" "Angers"
-!insertmacro EXERCISES.Install "CENTORSEM" "Paris_Est"
-!insertmacro EXERCISES.Install "puma" "larochelle"
-!insertmacro EXERCISES.Install "tutorials\01 - Generalites" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\02 - Jeu" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\03 - Mission" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\04 - ABC" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\05 - Infanterie" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\06 - Genie" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\07 - Artillerie" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\071 - NRBC" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\08 - Fonctions Avancees" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\09 - Rejeu et AAA" "Paris_Est"
-!insertmacro EXERCISES.Install "tutorials\10 - Preparation" "Paris_Est"
+    !insertmacro OT.AddExercise "esag" "Angers" "s_exo1"
+    !insertmacro OT.AddExercise "CENTORSEM" "Paris_Est" "s_exo2"
+    !insertmacro OT.AddExercise "puma" "larochelle" "s_exo3"
+    !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
+    !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
+    !insertmacro OT.AddExercise "tutorials\03 - Mission" "Paris_Est" "s_exo6"
+    !insertmacro OT.AddExercise "tutorials\04 - ABC" "Paris_Est" "s_exo7"
+    !insertmacro OT.AddExercise "tutorials\05 - Infanterie" "Paris_Est" "s_exo8"
+    !insertmacro OT.AddExercise "tutorials\06 - Genie" "Paris_Est" "s_exo9"
+    !insertmacro OT.AddExercise "tutorials\07 - Artillerie" "Paris_Est" "s_exo10"
+    !insertmacro OT.AddExercise "tutorials\071 - NRBC" "Paris_Est" "s_exo11"
+    !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo12"
+    !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo13"
+    !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo14"
 
 SectionGroupEnd
 
 ;--------------------------------
 SectionGroup "Terrains" s_ter
 
-!insertmacro EXERCISES.InstallTerrain "Angers"
-!insertmacro EXERCISES.InstallTerrain "Paris_Est"
-!insertmacro EXERCISES.InstallTerrain "larochelle"
+    !insertmacro OT.AddTerrain "Angers" "s_ter1"
+    !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
+    !insertmacro OT.AddTerrain "larochelle" "s_ter3"
 
 SectionGroupEnd
 
@@ -264,76 +177,19 @@ SectionGroup "Shortcuts" s_sc
 
 SectionGroupEnd
 
-Function un.KillRunningApplication
-
-    Processes::FindProcess "$9"
-    StrCmp $R0 "0" notrunning
-    MessageBox MB_YESNO|MB_ICONQUESTION $(OT_APPLICATION_IS_RUNNING) /SD IDYES IDYES kill
-        MessageBox MB_OK $(OT_ABORTING_UNINSTALLATION)
-        Abort
-    kill:
-        Pop $0
-        Processes::KillProcess "$9"
-    notrunning:
-    
-FunctionEnd
-
-!macro APPLICATION.KillRunning ApplicationName
-
-    Push $9
-    StrCpy $9 "${ApplicationName}"
-    Call un.KillRunningApplication
-    Pop $9
-
-!macroend
-
-!ifndef locate::RMDirEmpty
-!include "Locate.nsh"
-!endif
-
 ;--------------------------------
 Section "Uninstall"
-    !insertmacro APPLICATION.KillRunning "selftraining_app.exe"
-	!insertmacro APPLICATION.KillRunning "simulation_app.exe"
-	!insertmacro APPLICATION.KillRunning "gaming_app.exe"
-	!insertmacro APPLICATION.KillRunning "preparation_app.exe"
-	!insertmacro APPLICATION.KillRunning "replayer_app.exe"
-
-    !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
-    !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
-    !insertmacro UNINSTALL.LOG_END_UNINSTALL
- 	
- 	${locate::RMDirEmpty} "$INSTDIR" "/M=*.* /G=1 /B=1" $R1
- 	${locate::RMDirEmpty} "${INSTDATADIR}" "/M=*.* /G=1 /B=1" $R1
- 	${locate::Unload}
- 	
-    Delete "${UNINST_DAT}"
-    Delete "${UNINST_EXE}"
     
-    Delete "$DESKTOP\${APP_NAME}.lnk"
-    Delete "$QUICKLAUNCH\${APP_NAME}.lnk"
-    RmDir /r "$SMPROGRAMS\${APP_NAME}"
-    DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
+    !insertmacro OT.KillRunning
+    !insertmacro OT.Uninstall
     
-    ; unregister .otpak extension association
-    DeleteRegKey HKCR ".otpak"
 SectionEnd
 
 ;--------------------------------
 Function .onInit
-    System::Call 'kernel32::CreateMutexA(i 0, i 0, t "${APP_NAME}") i .r1 ?e'
-    Pop $R0
-    StrCmp $R0 0 +3
-        MessageBox MB_OK|MB_ICONEXCLAMATION "$(OT_ALREADY_RUNNING)"
-        Abort
-    Push ""
-    Push ${LANG_ENGLISH}
-    Push English
-    Push ${LANG_FRENCH}
-    Push Français
-    Push A ; auto count languages
-    LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
-    Pop $LANGUAGE
+
+    !insertmacro OT.CheckRunning
+    !insertmacro OT.ChooseLanguage
     
     ; Set section names
     SectionSetText ${s_mod} $(OT_SECTION_MODELS)
@@ -355,12 +211,21 @@ Function .onInstSuccess
     !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 FunctionEnd
 
-Function adobeReader
-    Push $0
-    ClearErrors
-    ReadRegStr $0 HKCR "CLSID\{CA8A9780-280D-11CF-A24D-444553540000}" ""
-    IfErrors 0 +3
-        MessageBox MB_YESNO|MB_ICONQUESTION "$(OT_INSTALL_ADOBE_READER)" /SD IDNO IDNO +2
-            ExecShell "open" "http://www.adobe.com/products/acrobat/readstep2.html"
-    Pop $0
+Function .onSelChange
+
+    !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
+    !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo3" "s_ter3"
+    !insertmacro OT.CheckDependency "s_exo4" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo5" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo6" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo7" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo8" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo9" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo10" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo11" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo12" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo13" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo14" "s_ter2"
+     
 FunctionEnd
