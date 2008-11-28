@@ -63,6 +63,7 @@ namespace
         virtual void setText( const QString& text )
         {
             label_ = text;
+            update();
         }
 
     private:
