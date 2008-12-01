@@ -9,7 +9,6 @@
 
 #include "clients_kernel_pch.h"
 #include "AtlasNature.h"
-#include "game_asn/Simulation.h" // $$$$ AGE 2008-06-19:  // $$$$ AGE 2008-06-19:  // $$$$ AGE 2008-06-19:  // $$$$ AGE 2008-06-19: 
 
 using namespace kernel;
 
@@ -90,5 +89,6 @@ void AtlasNature::Toggle( const AtlasNature& nature )
 void AtlasNature::CommitTo( unsigned int& n, unsigned char* bits ) const
 {
     n = 11;
-    std::memcpy( bits, (const unsigned char*)&value_, 2 );
+    bits[0] = value_ >> 8;
+    bits[1] = value_ & 0x00FF;
 }

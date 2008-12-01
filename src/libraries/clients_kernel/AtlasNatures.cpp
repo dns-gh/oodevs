@@ -30,6 +30,7 @@ AtlasNatures::AtlasNatures()
     AddField( tools::translate( "AtlasNature", "Vehicle" )        , BytXvehicule        , BitMvehicule );
     AddField( tools::translate( "AtlasNature", "Footman")         , BytXpersonnel_a_pied, BitMpersonnel_a_pied );
     AddField( tools::translate( "AtlasNature", "Helicopter" )     , BytXhelicoptere     , BitMhelicoptere );
+    AddField( tools::translate( "AtlasNature", "SAA" )            , BytXasa             , BitMasa );
     AddField( tools::translate( "AtlasNature", "Undefined" )      , BytXindefini        , BitMindefini );
     AddField( tools::translate( "AtlasNature", "None" )           , BytXnone            , BitMnone );
 }

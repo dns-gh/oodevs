@@ -26,12 +26,20 @@ AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const kernel:
     // NOTHING
 }
 
+namespace
+{
+    unsigned short Shortify( const unsigned char data[2] )
+    {
+        return ( data[0] << 8 ) + data[1];
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AtlasNature constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const ASN1T_AtlasNature& asn, const kernel::AtlasNatures& natures )
-    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( unsigned short( asn.data ) ) )
+    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( Shortify( asn.data ) ) )
 {
     // NOTHING
 }
@@ -74,6 +82,9 @@ void AtlasNature::CommitTo( ASN1T_MissionParameter& asn ) const
     asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_atlasNature;
     asn.value.u.atlasNature = new ASN1T_AtlasNature();
+    asn.value.u.atlasNature->numbits = 11;
+    asn.value.u.atlasNature->data[0] = 0;
+    asn.value.u.atlasNature->data[1] = 0;
     if( IsSet() )
         GetValue().CommitTo( asn.value.u.atlasNature->numbits, asn.value.u.atlasNature->data );
 }

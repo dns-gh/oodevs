@@ -45,6 +45,10 @@
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SAA</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>E_FuncLimaType</name>
