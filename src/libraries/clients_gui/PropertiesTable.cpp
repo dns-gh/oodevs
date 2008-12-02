@@ -157,6 +157,7 @@ void PropertiesTable::EndDisplay()
 // -----------------------------------------------------------------------------
 void PropertiesTable::Call( kernel::Property_ABC* const& property )
 {
+    clearSelection();
     setItem( row_, 1, new PropertyTableItem( this, *property, itemDisplayer_, factory_ ) );
 }
 
