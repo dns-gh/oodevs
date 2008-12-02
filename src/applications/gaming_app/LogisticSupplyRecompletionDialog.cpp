@@ -483,19 +483,14 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionPartial
         for( int nRow = 0; nRow < munitionsFamilyTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pMunitionItemCheckBox = static_cast< QCheckTableItem* >( munitionsFamilyTable_->item( nRow, 0 ) );
-            QTableItem*      pMunitionItem         = munitionsFamilyTable_->item( nRow, 1 );
             QTableItem*      pPercentageItem       = munitionsFamilyTable_->item( nRow, 2 );
 
             assert( pMunitionItemCheckBox );
             if( !pMunitionItemCheckBox->isChecked() )
                 continue;
 
-            assert( pMunitionItem );            
-            assert( pPercentageItem );
-
             ASN1T_AmmunitionDotationRecovery& asnMunition = pAsnMunitions[ nAsnIdx ++ ];
             asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)nRow; // $$$$ SBO 2008-06-16: should use munition family
-//            asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)tools::AmmunitionFamilyFromString( pMunitionItem->text() );
             asnMunition.pourcentage      = pPercentageItem->text().toUInt();
         }
     }   

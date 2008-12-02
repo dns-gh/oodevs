@@ -10,7 +10,7 @@
 #ifndef __Controller_h_
 #define __Controller_h_
 
-#include "tools/InterfaceContainer.h"
+#include "tools/SortedInterfaceContainer.h"
 #include "ElementObserver_ABC.h"
 #include "ControllerObserver_ABC.h"
 #include "Observer_ABC.h"
@@ -25,7 +25,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Controller : private tools::InterfaceContainer< Observer_ABC >
+class Controller : private tools::SortedInterfaceContainer< Observer_ABC >
 {
 
 public:

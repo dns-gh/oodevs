@@ -11,7 +11,7 @@
 #define __Entity_ABC_h_
 
 #include "tools/Extendable.h"
-#include "tools/InterfaceContainer.h"
+#include "tools/SortedInterfaceContainer.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
 #include <geometry/types.h>
@@ -39,7 +39,7 @@ namespace kernel
 // Created: AGE 2006-02-07
 // =============================================================================
 class Entity_ABC : public tools::Extendable< Extension_ABC >
-                 , public tools::InterfaceContainer< Extension_ABC >
+                 , public tools::SortedInterfaceContainer< Extension_ABC >
 {
 
 public:
@@ -78,7 +78,7 @@ public:
 
     void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
 
-    tools::InterfaceContainer< Extension_ABC >& Interface() const;
+    tools::SortedInterfaceContainer< Extension_ABC >& Interface() const;
     //@}
 
 protected:

@@ -36,7 +36,7 @@ Controller::~Controller()
 // -----------------------------------------------------------------------------
 void Controller::Register( Observer_ABC& observer )
 {
-    tools::InterfaceContainer< Observer_ABC >::Register( observer );
+    tools::SortedInterfaceContainer< Observer_ABC >::Register( observer );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,5 +45,5 @@ void Controller::Register( Observer_ABC& observer )
 // -----------------------------------------------------------------------------
 void Controller::Unregister( Observer_ABC& observer )
 {
-    tools::InterfaceContainer< Observer_ABC >::Unregister( observer );
+    tools::SortedInterfaceContainer< Observer_ABC >::Unregister( observer );
 }

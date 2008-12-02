@@ -10,7 +10,7 @@
 #ifndef __ActionController_h_
 #define __ActionController_h_
 
-#include "tools/InterfaceContainer.h"
+#include "tools/SortedInterfaceContainer.h"
 #include "Observer_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "ActivationObserver_ABC.h"
@@ -26,7 +26,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-16
 // =============================================================================
-class ActionController : private tools::InterfaceContainer< Observer_ABC >
+class ActionController : private tools::SortedInterfaceContainer< Observer_ABC >
 {
 
 public:

@@ -43,7 +43,7 @@ ActionController::~ActionController()
 // -----------------------------------------------------------------------------
 void ActionController::Register( Observer_ABC& observer )
 {
-    tools::InterfaceContainer< Observer_ABC >::Register( observer );
+    tools::SortedInterfaceContainer< Observer_ABC >::Register( observer );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ void ActionController::Register( Observer_ABC& observer )
 // -----------------------------------------------------------------------------
 void ActionController::Unregister( Observer_ABC& observer )
 {
-    tools::InterfaceContainer< Observer_ABC >::Unregister( observer );
+    tools::SortedInterfaceContainer< Observer_ABC >::Unregister( observer );
 }
 
 // -----------------------------------------------------------------------------

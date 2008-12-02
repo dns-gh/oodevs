@@ -57,7 +57,7 @@ void Entity_ABC::RegisterSelf( Extension_ABC& ext )
 // -----------------------------------------------------------------------------
 void Entity_ABC::AddExtension( Extension_ABC& ext )
 {
-    tools::InterfaceContainer< Extension_ABC >::Register( ext );
+    tools::SortedInterfaceContainer< Extension_ABC >::Register( ext );
     drawer_->Register( ext );
 }
     
@@ -71,10 +71,10 @@ void Entity_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& viewp
 }
 
 // -----------------------------------------------------------------------------
-// Name: InterfaceContainer< Extension_ABC >& Entity_ABC::Interface
+// Name: SortedInterfaceContainer< Extension_ABC >& Entity_ABC::Interface
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-tools::InterfaceContainer< Extension_ABC >& Entity_ABC::Interface() const
+tools::SortedInterfaceContainer< Extension_ABC >& Entity_ABC::Interface() const
 {
     return *const_cast< Entity_ABC* >( this );
 }
