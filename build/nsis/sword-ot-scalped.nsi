@@ -15,7 +15,7 @@
     !define APP_VERSION "1.0.0.0"
 !endif
 
-!define SHORT_VERSION "1.0.1" ; TODO: Compute using function
+!define SHORT_VERSION "1.0.2" ; TODO: Compute using function
 
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
@@ -135,9 +135,10 @@ SectionGroup "Exercises" s_exo
     !insertmacro OT.AddExercise "tutorials\06 - Genie" "Paris_Est" "s_exo9"
     !insertmacro OT.AddExercise "tutorials\07 - Artillerie" "Paris_Est" "s_exo10"
     !insertmacro OT.AddExercise "tutorials\071 - NRBC" "Paris_Est" "s_exo11"
-    !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo12"
-    !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo13"
-    !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo14"
+    !insertmacro OT.AddExercise "tutorials\072 - ALAT" "Paris_Est" "s_exo12"
+    !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo13"
+    !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo14"
+    !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo15"
 
 SectionGroupEnd
 
@@ -227,5 +228,6 @@ Function .onSelChange
     !insertmacro OT.CheckDependency "s_exo12" "s_ter2"
     !insertmacro OT.CheckDependency "s_exo13" "s_ter2"
     !insertmacro OT.CheckDependency "s_exo14" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo15" "s_ter2"
      
 FunctionEnd
