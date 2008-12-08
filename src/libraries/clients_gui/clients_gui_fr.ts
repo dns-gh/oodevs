@@ -1374,7 +1374,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>User controls</source>
-        <translation>Contrôles</translation>
+        <translation type="obsolete">Contrôles</translation>
     </message>
 </context>
 <context>

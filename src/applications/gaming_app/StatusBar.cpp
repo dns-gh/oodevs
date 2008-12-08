@@ -15,6 +15,23 @@
 
 using namespace kernel;
 
+namespace
+{
+    class MyButton : public QPushButton
+    {
+    public:
+        MyButton( const QString& text, QWidget* parent )
+            : QPushButton( text, parent )
+        {
+            setFlat( true );
+            QFont font( "Arial", 8 );
+            setFont( font );
+            setMaximumHeight( 18 );
+        }
+        virtual ~MyButton() {}
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14
@@ -31,19 +48,16 @@ StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const C
     checkPoint_->setMinimumWidth( 20 );
     checkPoint_->setAlignment( Qt::AlignCenter );
 
-    pSpeed_ = new QPushButton( "---", parent );
+    pSpeed_ = new MyButton( "---", parent );
     pSpeed_->setMinimumWidth( 50 );
-    pSpeed_->setFlat( true );
     connect( pSpeed_, SIGNAL( clicked() ), profilingDock, SLOT( show() ) );
 
-    pTime_ = new QPushButton( "---", parent );
+    pTime_ = new MyButton( "---", parent );
     pTime_->setMinimumWidth( 50 );
-    pTime_->setFlat( true );
     connect( pTime_, SIGNAL( clicked() ), profilingDock, SLOT( show() ) );
 
-    pTick_ = new QPushButton( parent );
+    pTick_ = new MyButton( "", parent );
     pTick_->setPixmap( MAKE_PIXMAP( tickoff ) );
-    pTick_->setFlat( true );
     connect( pTick_, SIGNAL( clicked() ), profilingDock, SLOT( show() ) );
 
     pLagTimer_ = new QTimer( this );
@@ -93,10 +107,7 @@ void StatusBar::NotifyUpdated( const Simulation& simulation )
         pLagTimer_->start( 10000, true );
     lastSimulationStatus_ = simulation.IsConnected();
 
-    unsigned long seconds = simulation.GetTime();
-    pTime_->setText( QString( "%1:%2:%3" ).arg( QString::number( ( seconds / 3600 ) % 24 ).rightJustify( 2, '0' ) )
-                                          .arg( QString::number( ( seconds / 60   ) % 60 ).rightJustify( 2, '0' ) )
-                                          .arg( QString::number( ( seconds % 60   )      ).rightJustify( 2, '0' ) ) );
+    pTime_->setText( QString( "%1 - %2" ).arg( simulation.GetDateAsString() ).arg( simulation.GetTimeAsString() ) );
     const float speed = simulation.GetEffectiveSpeed();
     pSpeed_->setText( speed > 0 ? QString::number( speed ) : QString( "---" ) );
 }

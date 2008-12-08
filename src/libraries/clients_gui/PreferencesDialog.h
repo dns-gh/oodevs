@@ -27,7 +27,6 @@ namespace gui
     class Layer_ABC;
     class LayersPanel;
     class Elevation2dLayer;
-    class UserControlPanel;
 
 // =============================================================================
 /** @class  PreferencesDialog

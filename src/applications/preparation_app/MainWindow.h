@@ -125,7 +125,6 @@ private:
 
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
-    std::auto_ptr< MapLayer_ABC >                moveLayer_;
 
     gui::GlProxy*       glProxy_;
     gui::ColorStrategy* strategy_;

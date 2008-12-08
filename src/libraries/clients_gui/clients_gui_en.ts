@@ -785,10 +785,6 @@ Do you want to remove it?</source>
         <source>2D/Elevation</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>User controls</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>gui::StatusBar</name>

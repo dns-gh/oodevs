@@ -131,7 +131,8 @@ void Object::Display( Displayer_ABC& displayer ) const
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" ).Start( Styles::bold ).Add( *(Object_ABC*)this ).End();
-    displayer.Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
+    displayer.Display( tools::translate( "Object", "Type:" ), type_ )
+             .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
     if( rValorizationPercentage_.IsSet() )
         displayer.Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
     if( rBypassConstructionPercentage_.IsSet() )
@@ -196,7 +197,8 @@ bool Object::IsReservedObstacleActivated() const
 // -----------------------------------------------------------------------------
 void Object::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
+    displayer.Display( tools::translate( "Object", "Type:" ), type_ )
+             .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
     if( rValorizationPercentage_.IsSet() )
         displayer.Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
     if( rBypassConstructionPercentage_.IsSet() )

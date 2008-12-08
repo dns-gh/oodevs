@@ -22,7 +22,6 @@
 #include "resources.h"
 #include "ElevationPanel.h"
 #include "Elevation2dLayer.h"
-#include "UserControlPanel.h"
 
 using namespace kernel;
 using namespace gui;
@@ -72,7 +71,6 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" )        , *layersPanel_ ); 
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
-    AddPage( tr( "User controls" ), *new UserControlPanel( this, controllers ) );
 //    AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) ); // $$$$ SBO 2008-08-12: options not used
 
     box = new QHBox( this );

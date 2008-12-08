@@ -12,6 +12,7 @@
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.h>
 
+#pragma warning( disable: 4800 )
 #include <boost/filesystem.hpp>
 
 namespace bfs = boost::filesystem;
