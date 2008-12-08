@@ -57,7 +57,7 @@ void AgentLogMaintenance::Update( const ASN1T_MsgLogMaintenanceState& asnMsg )
     {
         repairersAvailability_.clear();
         for( unsigned int i = 0; i < asnMsg.disponibilites_reparateurs.n; ++i )
-            repairersAvailability_.push_back( T_Availability( asnMsg.disponibilites_remorqueurs.elem[ i ] ) );
+            repairersAvailability_.push_back( T_Availability( asnMsg.disponibilites_reparateurs.elem[ i ] ) );
     }
 
     if( asnMsg.m.priorites_tactiquesPresent )
