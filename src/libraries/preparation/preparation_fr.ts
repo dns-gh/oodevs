@@ -459,15 +459,15 @@
     <name>Preparation</name>
     <message>
         <source>friend</source>
-        <translation>ami</translation>
+        <translation type="obsolete">ami</translation>
     </message>
     <message>
         <source>enemy</source>
-        <translation>ennemi</translation>
+        <translation type="obsolete">ennemi</translation>
     </message>
     <message>
         <source>neutral</source>
-        <translation>neutre</translation>
+        <translation type="obsolete">neutre</translation>
     </message>
     <message>
         <source>Army %1</source>

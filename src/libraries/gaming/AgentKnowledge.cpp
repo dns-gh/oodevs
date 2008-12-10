@@ -243,7 +243,7 @@ unsigned int AgentKnowledge::ElementsToKeep( E_PerceptionResult perception ) con
 const kernel::Karma& AgentKnowledge::TeamKarma( E_PerceptionResult perception ) const
 {
     if( team_ && perception > eDetection )
-        if( const Diplomacies* diplomacy = team_->Retrieve< Diplomacies >() )
+        if( const Diplomacies_ABC* diplomacy = team_->Retrieve< Diplomacies_ABC >() )
             return diplomacy->GetKarma();
     return Karma::unknown_;
 }

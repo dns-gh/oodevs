@@ -71,7 +71,7 @@ void Agent::InitializeSymbol() const
 {
     symbol_ = type_.GetSymbol();
     const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
-    const Diplomacies* diplo = team.Retrieve< Diplomacies >();
+    const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
     kernel::App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
 }
 

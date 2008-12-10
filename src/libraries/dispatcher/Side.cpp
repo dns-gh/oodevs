@@ -121,30 +121,3 @@ void Side::Accept( ModelVisitor_ABC& visitor ) const
     objects_.Apply( boost::bind( &Object::Accept, _1, boost::ref( visitor ) ) );
     populations_.Apply( boost::bind( &Population::Accept, _1, boost::ref( visitor ) ) );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Side::IsFriend
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-bool Side::IsFriend() const
-{
-    return nType_ == EnumDiplomacy::ami;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side::IsEnemy
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-bool Side::IsEnemy() const
-{
-    return nType_ == EnumDiplomacy::ennemi;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side::IsNeutral
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-bool Side::IsNeutral() const
-{
-    return nType_ == EnumDiplomacy::neutre;
-}

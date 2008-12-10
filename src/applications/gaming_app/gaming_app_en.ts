@@ -315,49 +315,6 @@
     </message>
 </context>
 <context>
-    <name>ChangeDiplomacyDialog</name>
-    <message>
-        <source>Diplomacy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Side</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> is </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>friend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>enemy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>neutral</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>with side</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChangeHumanFactorsDialog</name>
     <message>
         <source>Moral:</source>

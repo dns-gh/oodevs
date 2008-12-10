@@ -11,7 +11,7 @@
 #define __Diplomacies_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Karma.h"
@@ -29,7 +29,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class Diplomacies : public kernel::Extension_ABC
+class Diplomacies : public kernel::Diplomacies_ABC
                   , public kernel::Updatable_ABC< ASN1T_MsgTeamCreation >
                   , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomacyAck >
                   , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomacy >
@@ -44,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    const kernel::Karma& GetKarma() const;
-    ASN1T_EnumDiplomacy GetRelationship( const kernel::Entity_ABC& rhs ) const;
+    virtual const kernel::Karma& GetDiplomacy( const kernel::Entity_ABC& team ) const;
+    virtual const kernel::Karma& GetKarma() const;
     //@}
 
 private:
@@ -57,8 +57,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const Diplomacies*, ASN1T_EnumDiplomacy > T_Diplomacies;
-    typedef T_Diplomacies::const_iterator                      CIT_Diplomacies;
+    typedef std::map< const Diplomacies_ABC*, kernel::Karma > T_Diplomacies;
+    typedef T_Diplomacies::const_iterator                   CIT_Diplomacies;
     //@}
 
     //! @name Helpers

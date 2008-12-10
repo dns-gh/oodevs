@@ -13,7 +13,6 @@ AlarmsWidget.cpp \
 Application.cpp \
 BorrowingsListView.cpp \
 BriefingDialog.cpp \
-ChangeDiplomacyDialog.cpp \
 ChangeHumanFactorsDialog.cpp \
 ChangeLogisticLinksDialog.cpp \
 ChatDock.cpp \

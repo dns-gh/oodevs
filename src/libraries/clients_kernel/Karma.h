@@ -32,8 +32,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              Karma();
-    explicit Karma( const Team_ABC& team );
-             Karma( const std::string& identifier, const QString& name );
     virtual ~Karma();
     //@}
 
@@ -50,6 +48,12 @@ public:
     
     static const Karma& ResolveId  ( const std::string& id );
     static const Karma& ResolveName( const QString& name );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    Karma( const std::string& identifier, const QString& name );
     //@}
 
 private:

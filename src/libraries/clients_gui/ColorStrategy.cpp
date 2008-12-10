@@ -25,6 +25,7 @@
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "Drawing_ABC.h"
 #include "ColorModifier_ABC.h"
 #include <numeric>
@@ -307,12 +308,12 @@ QColor ColorStrategy::FindTeamColor( const Entity_ABC& entity )
         return it->second.first;
 
     T_Colors* available = 0;
-    const Team_ABC& team = static_cast< const Team_ABC& >( entity );
-    if( team.IsFriend() )
+    const Karma& karma = entity.Get< Diplomacies_ABC >().GetKarma();
+    if( karma == Karma::friend_ )
         available = &friendlyAvailable_;
-    else if( team.IsEnemy() )
+    else if( karma == Karma::enemy_ )
         available = &enemyAvailable_;
-    else /*if( team.IsNeutral() )*/
+    else /*if( karma == Karma::neutral_ )*/
         available = &neutralAvailable_;
 
     if( available->empty() )

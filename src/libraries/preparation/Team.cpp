@@ -9,50 +9,51 @@
 
 #include "preparation_pch.h"
 #include "Team.h"
-#include "KnowledgeGroupFactory_ABC.h"
-#include "ObjectFactory_ABC.h"
 #include "KnowledgeGroup.h"
+#include "KnowledgeGroupFactory_ABC.h"
+#include "IdManager.h"
 #include "Object.h"
-#include "TeamKarmas.h"
-#include "clients_kernel/Karma.h"
+#include "ObjectFactory_ABC.h"
+#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/IntelligenceHierarchies.h"
-#include "Tools.h"
-#include "xeumeuleu/xml.h"
-#include "IdManager.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager, TeamKarmas& karmas )
+Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager )
     : EntityImplementation< Team_ABC >( controller, idManager.GetNextId(), "" )
     , kgFactory_( kgFactory )
     , objectFactory_( objectFactory )
-    , karma_( &karmas.GetDefault() )
 {
     name_ = tools::translate( "Preparation", "Army %1" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
 
+namespace
+{
+    QString ReadName( xml::xistream& xis )
+    {
+        std::string name;
+        xis >> xml::attribute( "name", name );
+        return name.c_str();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager, TeamKarmas& karmas )
-    : EntityImplementation< Team_ABC >( controller, ReadId( xis ), ReadName( xis ) )
+Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager )
+    : EntityImplementation< Team_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), ReadName( xis ) )
     , kgFactory_( kgFactory )
     , objectFactory_( objectFactory )
 {
-    std::string karma;
-    xis >> attribute( "type", karma );
-    karma_ = &karmas.Get( karma.c_str() );
     RegisterSelf( *this );
     idManager.Lock( id_ );
     CreateDictionary( controller );
@@ -66,28 +67,6 @@ Team::~Team()
 {
     Resolver< Object_ABC >::DeleteAll();
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::ReadId
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-unsigned long Team::ReadId( xml::xistream& xis )
-{
-    int id;
-    xis >> attribute( "id", id );
-    return id;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::ReadName
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-QString Team::ReadName( xml::xistream& xis )
-{
-    std::string name;
-    xis >> attribute( "name", name );
-    return name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -145,18 +124,17 @@ void Team::Rename( const QString& name )
 // -----------------------------------------------------------------------------
 void Team::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "id", long( id_ ) )
-        << attribute( "name", name_.ascii() )
-        << attribute( "type", karma_->GetId() );
+    xos << xml::attribute( "id", long( id_ ) )
+        << xml::attribute( "name", name_.ascii() );
 
-    xos << start( "objects" );
+    xos << xml::start( "objects" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( "object" );
+        xos << xml::start( "object" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
-        xos << end();
+        xos << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -169,53 +147,4 @@ void Team::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), name_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Karma" ), karma_, *this, &Team::SetKarma );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::GetKarma
-// Created: AGE 2006-11-24
-// -----------------------------------------------------------------------------
-const kernel::Karma& Team::GetKarma() const
-{
-    return *karma_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::SetKarma
-// Created: AGE 2006-11-24
-// -----------------------------------------------------------------------------
-void Team::SetKarma( const TeamKarma& karma )
-{
-    karma_ = karma;
-    Touch();
-    Get< kernel::TacticalHierarchies >().UpdateSymbol( false );
-    Get< kernel::IntelligenceHierarchies >().UpdateSymbol( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::IsFriend
-// Created: SBO 2006-11-29
-// -----------------------------------------------------------------------------
-bool Team::IsFriend() const
-{
-    return *karma_ == Karma::friend_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::IsEnemy
-// Created: SBO 2006-11-29
-// -----------------------------------------------------------------------------
-bool Team::IsEnemy() const
-{
-    return *karma_ == Karma::enemy_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::IsNeutral
-// Created: SBO 2006-11-29
-// -----------------------------------------------------------------------------
-bool Team::IsNeutral() const
-{
-    return *karma_ == Karma::neutral_;
 }

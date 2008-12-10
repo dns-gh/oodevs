@@ -23,6 +23,21 @@
     </message>
 </context>
 <context>
+    <name>DiplomacyDialog_ABC</name>
+    <message>
+        <source>Diplomacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DisplayToolbar</name>
     <message>
         <source>Display toolbar</source>

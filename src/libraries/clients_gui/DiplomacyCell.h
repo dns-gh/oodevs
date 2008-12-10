@@ -12,7 +12,13 @@
 
 #include <qtable.h>
 
-class Diplomacy;
+namespace kernel
+{
+    class Karma;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  DiplomacyCell
@@ -28,14 +34,19 @@ class DiplomacyCell : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             DiplomacyCell( QTable* table, const QStringList& list );
+    explicit DiplomacyCell( QTable* table );
     virtual ~DiplomacyCell();
     //@}
 
     //! @name Operations
     //@{
-    void SetColor( const Diplomacy& diplomacy, const QColor& color );
-    Diplomacy GetValue() const;
+    kernel::Karma GetValue() const;
+    //@}
+
+private slots:
+    //! @name private slots
+    //@{
+    void OnTextChanged( const QString& );
     //@}
 
 private:
@@ -49,18 +60,15 @@ private:
     //@{
     virtual void paint( QPainter* p, const QColorGroup& cg, const QRect& cr, bool selected );
     virtual QWidget* createEditor() const;
+    void SetColor( const kernel::Karma& karma, const QColor& color );
     //@}
-
-private slots:
-    //! @name private slots
-    //@{
-    void OnTextChanged( const QString& );
-    //@}
-    
+   
 private:
     std::map< const QString, QColor > colors_;
-    std::map< const QString, Diplomacy > diplomacies_;
+    std::map< const QString, kernel::Karma > diplomacies_;
     bool valueSet_;
 };
+
+}
 
 #endif // __DiplomacyCell_h_

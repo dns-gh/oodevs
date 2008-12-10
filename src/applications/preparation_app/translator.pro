@@ -1,7 +1,6 @@
 HEADERS = 
 
 SOURCES = Application.cpp \
-ChangeDiplomacyDialog.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
 FileToolbar.cpp \

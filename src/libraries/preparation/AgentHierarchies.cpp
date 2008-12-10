@@ -11,9 +11,9 @@
 #include "AgentHierarchies.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
-#include "Team.h"
+#include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/Karma.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentHierarchies constructor
@@ -74,10 +74,9 @@ void AgentHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
 // -----------------------------------------------------------------------------
 void AgentHierarchies::UpdateKarma( const kernel::Entity_ABC& superior )
 {
-    const kernel::Entity_ABC& top = superior.Get< kernel::TacticalHierarchies >().GetTop();
-    const Team& team = static_cast< const Team& >( top );
+    const kernel::Diplomacies_ABC& diplomacy = superior.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >();
     symbol_ = baseSymbol_;
-    kernel::App6Symbol::SetKarma( symbol_, team.GetKarma() );
+    kernel::App6Symbol::SetKarma( symbol_, diplomacy.GetKarma() );
 }
 
 // -----------------------------------------------------------------------------

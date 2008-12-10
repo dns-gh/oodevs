@@ -42,22 +42,6 @@ Karma::Karma( const std::string& identifier, const QString& name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Karma constructor
-// Created: AGE 2008-06-19
-// -----------------------------------------------------------------------------
-Karma::Karma( const Team_ABC& team )
-    : identifier_( unknown_.identifier_ )
-    , name_( unknown_.name_ )
-{
-    if( team.IsFriend() )
-        *this = friend_;
-    else if( team.IsEnemy() )
-        *this = enemy_;
-    else if( team.IsNeutral() )
-        *this = neutral_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Karma destructor
 // Created: SBO 2007-02-26
 // -----------------------------------------------------------------------------

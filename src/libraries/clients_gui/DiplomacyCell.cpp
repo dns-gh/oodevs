@@ -7,24 +7,39 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "DiplomacyCell.h"
 #include "moc_DiplomacyCell.cpp"
-#include "preparation/Diplomacy.h"
-
+#include "clients_kernel/Karma.h"
 #include <qpainter.h>
+
+using namespace gui;
+
+namespace
+{
+    QStringList MakeValueList()
+    {
+        QStringList list;
+        list.append( kernel::Karma::friend_ .GetName() );
+        list.append( kernel::Karma::enemy_  .GetName() );
+        list.append( kernel::Karma::neutral_.GetName() );
+        return list;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: DiplomacyCell constructor
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-DiplomacyCell::DiplomacyCell( QTable* table, const QStringList& list )
-    : QComboTableItem( table, list )
+DiplomacyCell::DiplomacyCell( QTable* table )
+    : QComboTableItem( table, MakeValueList() )
     , valueSet_( false )
 {
-    // NOTHING
+    SetColor( kernel::Karma::friend_ , QColor( 200, 200, 255 ) );
+    SetColor( kernel::Karma::enemy_  , QColor( 255, 200, 200 ) );
+    SetColor( kernel::Karma::neutral_, QColor( 200, 255, 200 ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DiplomacyCell destructor
 // Created: SBO 2006-09-25
@@ -38,7 +53,7 @@ DiplomacyCell::~DiplomacyCell()
 // Name: DiplomacyCell::SetColor
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-void DiplomacyCell::SetColor( const Diplomacy& diplomacy, const QColor& color )
+void DiplomacyCell::SetColor( const kernel::Karma& diplomacy, const QColor& color )
 {
     const QString name = diplomacy.GetName();
     colors_[name] = color;
@@ -62,12 +77,12 @@ void DiplomacyCell::paint( QPainter* p, const QColorGroup& cg, const QRect& cr, 
 // Name: DiplomacyCell::GetValue
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-Diplomacy DiplomacyCell::GetValue() const
+kernel::Karma DiplomacyCell::GetValue() const
 {
-    std::map< const QString, Diplomacy >::const_iterator it = diplomacies_.find( QTableItem::text() );
+    std::map< const QString, kernel::Karma >::const_iterator it = diplomacies_.find( QTableItem::text() );
     if( it != diplomacies_.end() )
         return it->second;
-    return Diplomacy::Neutral();
+    return kernel::Karma::neutral_;
 }
 
 // -----------------------------------------------------------------------------

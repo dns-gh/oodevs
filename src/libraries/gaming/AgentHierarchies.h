@@ -10,14 +10,14 @@
 #ifndef __AgentHierarchies_h_
 #define __AgentHierarchies_h_
 
-#include "clients_kernel/EntityHierarchies.h"
-#include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Controller.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
-#include "Diplomacies.h"
 
 namespace kernel
 {
@@ -110,7 +110,7 @@ template< typename I >
 void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgUnitCreation& message )
 {
     kernel::Automat_ABC& superior = automatResolver_.Get( message.oid_automate );
-    const Diplomacies* diplo = superior.Get< I >().GetTop().Retrieve< Diplomacies >();
+    const Diplomacies_ABC* diplo = superior.Get< I >().GetTop().Retrieve< Diplomacies_ABC >();
     if( diplo )
         App6Symbol::SetKarma( symbol_, diplo->GetKarma() );
     SetSuperior( & superior );

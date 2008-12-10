@@ -110,7 +110,7 @@ namespace
 {
     const Karma& ComputeKarma( const Karma& karma, const Entity_ABC& parent )
     {
-        const Karma& parentKarma = parent.Get< IntelligenceHierarchies >().GetTop().Get< Diplomacies >().GetKarma();
+        const Karma& parentKarma = parent.Get< IntelligenceHierarchies >().GetTop().Get< Diplomacies_ABC >().GetKarma();
         if( karma == Karma::friend_ )
             return parentKarma;
         if( karma == Karma::enemy_ )

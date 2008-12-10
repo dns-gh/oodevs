@@ -12,9 +12,9 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include <xeumeuleu/xml.h>
 
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -48,7 +48,7 @@ namespace
     // Reverts diplomacy effect applied on karma => "diplomacy" karma
     const kernel::Karma& ComputeKarma( const kernel::Karma& karma, const kernel::Entity_ABC& parent )
     {
-        const kernel::Karma parentKarma( static_cast< const kernel::Team_ABC& >( parent.Get< kernel::IntelligenceHierarchies >().GetTop() ) );
+        const kernel::Karma& parentKarma = parent.Get< kernel::IntelligenceHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
         return parentKarma.RelativeTo( karma );
     }
 }
@@ -81,7 +81,7 @@ Karma::Karma( const kernel::OrderParameter& parameter, const ASN1T_EnumDiplomacy
 // -----------------------------------------------------------------------------
 Karma::Karma( const kernel::OrderParameter& parameter, xml::xistream& xis )
     : Parameter< QString >( parameter )
-    , karma_( kernel::Karma::ResolveId( attribute< std::string >( xis, "value" ) ) )
+    , karma_( kernel::Karma::ResolveId( xml::attribute< std::string >( xis, "value" ) ) )
 {
     SetValue( karma_.GetName() );
 }
@@ -111,5 +111,5 @@ void Karma::CommitTo( ASN1T_EnumDiplomacy& asn ) const
 void Karma::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
-    xos << attribute( "value", karma_.GetId() );
+    xos << xml::attribute( "value", karma_.GetId() );
 }

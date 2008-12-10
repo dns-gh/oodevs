@@ -66,15 +66,15 @@
     <name>ChangeDiplomacyDialog</name>
     <message>
         <source>Diplomacy</source>
-        <translation>Diplomatie</translation>
+        <translation type="obsolete">Diplomatie</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation type="obsolete">Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="obsolete">Annuler</translation>
     </message>
 </context>
 <context>

@@ -13,6 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Karma.h"
 
 // =============================================================================
 /** @class  Team
@@ -30,13 +31,6 @@ public:
     virtual ~Team();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual bool IsFriend () const;
-    virtual bool IsEnemy  () const;
-    virtual bool IsNeutral() const;
-    //@}
-
 private:
     //! @name Copy / Assignement
     //@{
@@ -47,12 +41,6 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    ASN1T_EnumDiplomacy karma_;
     //@}
 };
 

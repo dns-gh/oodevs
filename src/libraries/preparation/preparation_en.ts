@@ -409,18 +409,6 @@
 <context>
     <name>Preparation</name>
     <message>
-        <source>friend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>enemy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>neutral</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Army %1</source>
         <translation type="unfinished"></translation>
     </message>

@@ -93,6 +93,6 @@ void Automat::InitializeSymbol() const
         return;
     symbol_ = symbol;
     const Entity_ABC& team = hierarchies.GetTop();
-    const Diplomacies* diplo = team.Retrieve< Diplomacies >();
+    const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
     App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
 }

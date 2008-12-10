@@ -9,147 +9,56 @@
 
 #include "gaming_app_pch.h"
 #include "ChangeDiplomacyDialog.h"
-#include "moc_ChangeDiplomacyDialog.cpp"
 #include "game_asn/SimulationSenders.h"
-#include "gaming/Diplomacies.h"
-#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Profile_ABC.h"
-
-using namespace kernel;
-using namespace gui;
+#include "clients_kernel/Karma.h"
 
 // -----------------------------------------------------------------------------
 // Name: ChangeDiplomacyDialog constructor
-// Created: AGE 2006-04-20
+// Created: SBO 2008-12-09
 // -----------------------------------------------------------------------------
-ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Profile_ABC& profile )
-    : QDialog( parent )
-    , controllers_( controllers )
+ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile )
+    : gui::DiplomacyDialog_ABC( parent, controllers, profile )
     , publisher_( publisher )
-    , profile_( profile )
 {
-    setCaption( tr( "Diplomacy" ) );
-    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
-    pMainLayout->setMargin( 5 );
-
-    QHBox* box = new QHBox( this );
-    box->setMargin( 10 );
-    box->setSpacing( 10 );
-
-    new QLabel( tr( "Side" ), box );
-    pArmy1ComboBox_ = new ValuedComboBox< const Team_ABC* >( box );
-    new QLabel( tr( " is " ), box );
-
-    pDiplomacyComboBox_ = new ValuedComboBox< ASN1T_EnumDiplomacy >( box );
-    pDiplomacyComboBox_->AddItem( tr( "unknown" ), EnumDiplomacy::inconnu );
-    pDiplomacyComboBox_->AddItem( tr( "friend" ),  EnumDiplomacy::ami );
-    pDiplomacyComboBox_->AddItem( tr( "enemy" ),   EnumDiplomacy::ennemi );
-    pDiplomacyComboBox_->AddItem( tr( "neutral" ), EnumDiplomacy::neutre );
-
-    new QLabel( tr( "with side" ), box );
-    pArmy2ComboBox_ = new ValuedComboBox< const Team_ABC* >( box );
-    pMainLayout->addWidget( box );
-
-    QLabel* spacer = new QLabel( this );
-    spacer->setFrameStyle( QFrame::HLine | QFrame::Sunken );
-    pMainLayout->addWidget( spacer );
-
-    box = new QHBox( this );
-    box->setMaximumWidth( 200 );
-    QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
-    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
-    okBtn->setDefault( true );
-    pMainLayout->addWidget( box, 0, Qt::AlignCenter );
-
-    connect( okBtn    , SIGNAL( clicked() ), SLOT( Validate() ) );
-    connect( cancelBtn, SIGNAL( clicked() ), SLOT( Reject() ) );
-    connect( pArmy1ComboBox_, SIGNAL( activated( int ) ), SLOT( UpdateDiplomacy() ) );
-    connect( pArmy2ComboBox_, SIGNAL( activated( int ) ), SLOT( UpdateDiplomacy() ) );
-
-    controllers_.Register( *this );
-
-    hide();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ChangeDiplomacyDialog destructor
-// Created: AGE 2006-04-20
+// Created: SBO 2008-12-09
 // -----------------------------------------------------------------------------
 ChangeDiplomacyDialog::~ChangeDiplomacyDialog()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ChangeDiplomacyDialog::Validate
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::Validate()
+namespace
 {
-    if( pArmy1ComboBox_->count() && pArmy2ComboBox_->count() )
+    ASN1T_EnumDiplomacy ResolveDiplomacy( const kernel::Karma& karma )
     {
-        simulation::ChangeDiplomacy asn;
-        asn().oid_camp1  = pArmy1ComboBox_->GetValue()->GetId();
-        asn().oid_camp2  = pArmy2ComboBox_->GetValue()->GetId();
-        asn().diplomatie = pDiplomacyComboBox_->GetValue();
-        asn.Send( publisher_ );
-    }
-    hide();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ChangeDiplomacyDialog::Reject
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::Reject()
-{
-    hide();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ChangeDiplomacyDialog::NotifyCreated
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::NotifyCreated( const Team_ABC& team )
-{
-    pArmy1ComboBox_->AddItem( team.GetName(), &team );
-    pArmy2ComboBox_->AddItem( team.GetName(), &team );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ChangeDiplomacyDialog::NotifyDeleted
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::NotifyDeleted( const Team_ABC& team )
-{
-    pArmy1ComboBox_->RemoveItem( &team );
-    pArmy2ComboBox_->RemoveItem( &team );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ChangeDiplomacyDialog::NotifyContextMenu
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
-{
-    if( profile_.CanDoMagic( team ) )
-    {
-        pArmy1ComboBox_->SetCurrentItem( &team );
-        pArmy2ComboBox_->SetCurrentItem( &team );
-        UpdateDiplomacy();
-        menu.InsertItem( "Command", tr( "Diplomacy" ), this, SLOT( show() ) );
+        if( karma == kernel::Karma::friend_ )
+            return EnumDiplomacy::ami;
+        if( karma == kernel::Karma::enemy_ )
+            return EnumDiplomacy::ennemi;
+        if( karma == kernel::Karma::neutral_ )
+            return EnumDiplomacy::neutre;
+        return EnumDiplomacy::inconnu;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ChangeDiplomacyDialog::UpdateDiplomacy
-// Created: SBO 2007-01-02
+// Name: ChangeDiplomacyDialog::SetDiplomacy
+// Created: SBO 2008-12-09
 // -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::UpdateDiplomacy()
+void ChangeDiplomacyDialog::SetDiplomacy( const kernel::Team_ABC& team1, const kernel::Team_ABC& team2, const kernel::Karma& diplomacy ) const
 {
-    const Team_ABC* army1 = pArmy1ComboBox_->count() ? pArmy1ComboBox_->GetValue() : 0;
-    const Team_ABC* army2 = pArmy2ComboBox_->count() ? pArmy2ComboBox_->GetValue() : 0;
-    if( army1 && army2 )
-        pDiplomacyComboBox_->SetCurrentItem( army1->Get< Diplomacies >().GetRelationship( *army2 ) );
+    if( team1.Get< kernel::Diplomacies_ABC >().GetDiplomacy( team2 ) == diplomacy )
+        return;
+    simulation::ChangeDiplomacy message;
+    message().oid_camp1  = team1.GetId();
+    message().oid_camp2  = team2.GetId();
+    message().diplomatie = ResolveDiplomacy( diplomacy );
+    message.Send( publisher_ );
 }

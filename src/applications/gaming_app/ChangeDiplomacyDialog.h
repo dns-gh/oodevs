@@ -11,17 +11,7 @@
 #ifndef __ChangeDiplomacyDialog_h_
 #define __ChangeDiplomacyDialog_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "game_asn/Simulation.h"
-#include "clients_gui/ValuedComboBox.h"
-
-namespace kernel
-{
-    class Team_ABC;
-    class Controllers;
-    class Profile_ABC;
-}
+#include "clients_gui/DiplomacyDialog_ABC.h"
 
 class Publisher_ABC;
 
@@ -29,14 +19,10 @@ class Publisher_ABC;
 /** @class  ChangeDiplomacyDialog
     @brief  ChangeDiplomacyDialog
 */
-// Created: AGE 2006-10-11
+// Created: SBO 2006-09-07
 // =============================================================================
-class ChangeDiplomacyDialog : public QDialog
-                            , public kernel::Observer_ABC
-                            , public kernel::ElementObserver_ABC< kernel::Team_ABC >
-                            , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
+class ChangeDiplomacyDialog : public gui::DiplomacyDialog_ABC
 {
-    Q_OBJECT
 
 public:
     //! @name Constructor/Destructor
@@ -45,20 +31,10 @@ public:
     virtual ~ChangeDiplomacyDialog();
     //@}
 
-private slots:
-    //! @name Slots
-    //@{
-    void Validate();
-    void Reject();
-    void UpdateDiplomacy();
-    //@}
-
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const kernel::Team_ABC& );
-    virtual void NotifyDeleted( const kernel::Team_ABC& );
-    virtual void NotifyContextMenu( const kernel::Team_ABC&, kernel::ContextMenu& );
+    virtual void SetDiplomacy( const kernel::Team_ABC& team1, const kernel::Team_ABC& team2, const kernel::Karma& diplomacy ) const;
     //@}
 
 private:
@@ -67,17 +43,11 @@ private:
     ChangeDiplomacyDialog( const ChangeDiplomacyDialog& );
     ChangeDiplomacyDialog& operator=( const ChangeDiplomacyDialog& );
     //@}
-  
+
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
-    const kernel::Profile_ABC& profile_;
-
-    gui::ValuedComboBox< const kernel::Team_ABC* >* pArmy1ComboBox_;
-    gui::ValuedComboBox< const kernel::Team_ABC* >* pArmy2ComboBox_;
-    gui::ValuedComboBox< ASN1T_EnumDiplomacy >*    pDiplomacyComboBox_;
     //@}
 };
 

@@ -50,10 +50,6 @@ public:
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
     void Accept( ModelVisitor_ABC& visitor ) const;
-
-    virtual bool IsFriend () const;
-    virtual bool IsEnemy  () const;
-    virtual bool IsNeutral() const;
     //@}
 
 private:

@@ -20,7 +20,6 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Team::Team( const ASN1T_MsgTeamCreation& asnMsg, Controller& controller )
     : EntityImplementation< Team_ABC >( controller, asnMsg.oid, asnMsg.nom )
-    , karma_( asnMsg.type )
 {
     if( name_.isEmpty() )
         name_ = QString( tools::translate( "Team", "Army %1" ) ).arg( asnMsg.oid );
@@ -34,33 +33,6 @@ Team::Team( const ASN1T_MsgTeamCreation& asnMsg, Controller& controller )
 Team::~Team()
 {
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::IsFriend
-// Created: SBO 2006-11-29
-// -----------------------------------------------------------------------------
-bool Team::IsFriend() const
-{
-    return karma_ == EnumDiplomacy::ami;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Team::IsEnemy
-// Created: SBO 2006-11-29
-// -----------------------------------------------------------------------------
-bool Team::IsEnemy() const
-{
-    return karma_ == EnumDiplomacy::ennemi;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Team::IsNeutral
-// Created: SBO 2006-11-29
-// -----------------------------------------------------------------------------
-bool Team::IsNeutral() const
-{
-    return karma_ == EnumDiplomacy::neutre;
 }
 
 // -----------------------------------------------------------------------------

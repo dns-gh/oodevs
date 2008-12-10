@@ -10,7 +10,6 @@
 #ifndef __Team_h_
 #define __Team_h_
 
-#include "Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -23,7 +22,6 @@ namespace kernel
     class ObjectType;
     class Location_ABC;
     class Object_ABC;
-    class Karma;
 }
 
 namespace xml
@@ -35,7 +33,6 @@ namespace xml
 class KnowledgeGroupFactory_ABC;
 class ObjectFactory_ABC;
 class IdManager;
-class TeamKarmas;
 struct Enum_ObstacleType;
 
 // =============================================================================
@@ -53,8 +50,8 @@ class Team : public kernel::EntityImplementation< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager, TeamKarmas& karmas  );
-             Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, ObjectFactory_ABC& objectFactory, IdManager& idManager, TeamKarmas& karmas  );
+             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager );
+             Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, ObjectFactory_ABC& objectFactory, IdManager& idManager );
     virtual ~Team();
     //@}
 
@@ -66,11 +63,6 @@ public:
     void CreateObject( xml::xistream& xis );
     void Rename( const QString& name );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    const kernel::Karma& GetKarma() const;
-
-    virtual bool IsFriend () const;
-    virtual bool IsEnemy  () const;
-    virtual bool IsNeutral() const;
     //@}
 
 private:
@@ -83,10 +75,6 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-
-    static unsigned long ReadId  ( xml::xistream& xis );
-    static QString       ReadName( xml::xistream& xis );
-    void SetKarma( const TeamKarma& karma );
     //@}
 
 private:
@@ -94,7 +82,6 @@ private:
     //@{
     KnowledgeGroupFactory_ABC& kgFactory_;
     ObjectFactory_ABC& objectFactory_;
-    TeamKarma karma_;
     //@}
 };
 

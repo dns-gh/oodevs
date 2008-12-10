@@ -40,10 +40,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsFriend () const = 0;
-    virtual bool IsEnemy  () const = 0;
-    virtual bool IsNeutral() const = 0;
-
     virtual QString GetTypeName() const;
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;

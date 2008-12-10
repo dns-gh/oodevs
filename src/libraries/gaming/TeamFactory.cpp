@@ -66,7 +66,7 @@ Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
     Team* result = new Team( asnMsg, controllers_.controller_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
-    result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
+    result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     result->Attach< CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result, *this ) );
     result->Attach< TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Attach< IntelligenceHierarchies > ( *new EntityIntelligences    ( controllers_.controller_, *result, 0, model_.teams_ ) );

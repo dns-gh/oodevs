@@ -5,6 +5,7 @@ AutomatsLayer.cpp \
 BaseDisplayer.cpp \
 CampPrototype_ABC.cpp \
 CrossingSitePrototype_ABC.cpp \
+DiplomacyDialog_ABC.cpp \
 DisplayToolbar.cpp \
 DrawerLayer.cpp \
 DrawerPanel.cpp \

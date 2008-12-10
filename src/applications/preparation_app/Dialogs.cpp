@@ -17,10 +17,10 @@ using namespace kernel;
 // Name: Dialogs constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-Dialogs::Dialogs( QWidget* parent, Controllers& controllers )
+Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const kernel::Profile_ABC& profile )
     : QObject( parent )
 {
-    new ChangeDiplomacyDialog( parent, controllers );
+    new ChangeDiplomacyDialog( parent, controllers, profile );
 }
 
 // -----------------------------------------------------------------------------

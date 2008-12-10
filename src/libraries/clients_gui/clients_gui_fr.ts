@@ -76,6 +76,21 @@
     </message>
 </context>
 <context>
+    <name>DiplomacyDialog_ABC</name>
+    <message>
+        <source>Diplomacy</source>
+        <translation>Diplomatie</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
     <name>DisplayToolbar</name>
     <message>
         <source>Display toolbar</source>

@@ -13,6 +13,7 @@
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 // =============================================================================
@@ -27,7 +28,7 @@ class Dialogs : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             Dialogs( QWidget* parent, kernel::Controllers& controllers );
+             Dialogs( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
     virtual ~Dialogs();
     //@}
 };

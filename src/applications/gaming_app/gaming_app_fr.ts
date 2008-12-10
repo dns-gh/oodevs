@@ -333,43 +333,43 @@
     <name>ChangeDiplomacyDialog</name>
     <message>
         <source>Diplomacy</source>
-        <translation>Diplomatie</translation>
+        <translation type="obsolete">Diplomatie</translation>
     </message>
     <message>
         <source>Side</source>
-        <translation>Camp</translation>
+        <translation type="obsolete">Camp</translation>
     </message>
     <message>
         <source> is </source>
-        <translation> est </translation>
+        <translation type="obsolete"> est </translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation>inconnu</translation>
+        <translation type="obsolete">inconnu</translation>
     </message>
     <message>
         <source>friend</source>
-        <translation>ami</translation>
+        <translation type="obsolete">ami</translation>
     </message>
     <message>
         <source>enemy</source>
-        <translation>ennemi</translation>
+        <translation type="obsolete">ennemi</translation>
     </message>
     <message>
         <source>neutral</source>
-        <translation>neutre</translation>
+        <translation type="obsolete">neutre</translation>
     </message>
     <message>
         <source>with side</source>
-        <translation>avec le camp</translation>
+        <translation type="obsolete">avec le camp</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation type="obsolete">Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="obsolete">Annuler</translation>
     </message>
 </context>
 <context>
@@ -1732,7 +1732,7 @@
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>

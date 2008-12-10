@@ -19,21 +19,6 @@
     </message>
 </context>
 <context>
-    <name>ChangeDiplomacyDialog</name>
-    <message>
-        <source>Diplomacy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CommunicationListView</name>
     <message>
         <source>Create knowledge group</source>

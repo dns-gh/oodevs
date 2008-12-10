@@ -10,11 +10,11 @@
 #include "preparation_pch.h"
 #include "Intelligence.h"
 #include "IdManager.h"
-#include "Team.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/App6Symbol.h"
@@ -93,8 +93,7 @@ namespace
 {
     const Karma& ComputeKarma( const Karma& karma, const Entity_ABC& parent )
     {
-        // $$$$ SBO 2007-11-02: GetKarma could be in Team_ABC...
-        const Karma& teamKarma = static_cast< const Team& >( parent.Get< IntelligenceHierarchies >().GetTop() ).GetKarma();
+        const Karma& teamKarma = parent.Get< IntelligenceHierarchies >().GetTop().Get< Diplomacies_ABC >().GetKarma();
         if( karma == Karma::friend_ )
             return teamKarma;
         if( karma == Karma::enemy_ )

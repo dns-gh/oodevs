@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "Automat.h"
 #include "IdManager.h"
+#include "Tools.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
@@ -17,11 +18,10 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "Tools.h"
-#include "xeumeuleu/xml.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
-#include "Team.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;
@@ -128,9 +128,7 @@ void Automat::InitializeSymbol() const
     if( symbol_ == symbol )
         return;
     symbol_ = symbol;
-    const Entity_ABC& team = hierarchies.GetTop();
-    const kernel::Karma& karma = static_cast< const Team& >( team ).GetKarma();
-    kernel::App6Symbol::SetKarma( symbol_, karma );
+    kernel::App6Symbol::SetKarma( symbol_, hierarchies.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
 }
 
 // -----------------------------------------------------------------------------

@@ -1108,6 +1108,7 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplom
     NET_ASN_MsgChangeDiplomacyAck ack;
     ack().oid_camp1   = asnMsg.oid_camp1;
     ack().oid_camp2   = asnMsg.oid_camp2;
+    ack().diplomatie  = asnMsg.diplomatie;
     ack().error_code  = EnumChangeDiplomacyErrorCode::no_error;
 
     try

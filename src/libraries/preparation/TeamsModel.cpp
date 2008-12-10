@@ -148,7 +148,7 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << start( "side" );
-        it->second->Get< Diplomacies >().Serialize( xos );
+        static_cast< const Diplomacies& >( it->second->Get< kernel::Diplomacies_ABC >() ).Serialize( xos ); // $$$$ SBO 2008-12-09: !
         xos << end();
     }
     xos << end();
@@ -214,7 +214,7 @@ void TeamsModel::ReadDiplomacy( xml::xistream& xis )
 {
     int id;
     xis >> attribute( "id", id );
-    Get( id ).Get< Diplomacies >().Load( xis );
+    static_cast< Diplomacies& >( Get( id ).Get< Diplomacies_ABC >() ).Load( xis ); // $$$$ SBO 2008-12-09: !
 }
 
 // -----------------------------------------------------------------------------

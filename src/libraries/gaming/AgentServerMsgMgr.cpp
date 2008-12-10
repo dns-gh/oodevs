@@ -890,10 +890,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitChangeSuperior( const ASN1T_MsgUnitChang
 void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomacyAck& message, unsigned long )
 {
     if( CheckAcknowledge( logger_, message, "ChangeDiplomacyAck" ) )
-    {
         GetModel().teams_.GetTeam( message.oid_camp1 ).Update( message );
-        GetModel().teams_.GetTeam( message.oid_camp2 ).Update( message );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1192,7 +1189,6 @@ void AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const ASN1T_MsgStopPopul
 void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& message )
 {
     GetModel().teams_.GetTeam( message.oid_camp1 ).Update( message );
-    GetModel().teams_.GetTeam( message.oid_camp2 ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

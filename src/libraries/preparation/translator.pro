@@ -6,7 +6,7 @@ AgentsModelChecker.cpp \
 Automat.cpp \
 CampAttributes.cpp \
 CrossingSiteAttributes.cpp \
-Diplomacy.cpp \
+Diplomacies.cpp \
 Dotations.cpp \
 Formation.cpp \
 Intelligence.cpp \

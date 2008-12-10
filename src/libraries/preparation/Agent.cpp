@@ -9,22 +9,21 @@
 
 #include "preparation_pch.h"
 #include "Agent.h"
+#include "IdManager.h"
+#include "Tools.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
-#include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
-#include "Tools.h"
-#include "xeumeuleu/xml.h"
-#include "IdManager.h"
-#include "Team.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Karma.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
@@ -39,17 +38,27 @@ Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManage
     CreateDictionary( controller );
 }
 
+namespace
+{
+    QString ReadName( xml::xistream& xis )
+    {
+        std::string name;
+        xis >> xml::attribute( "name", name );
+        return name.c_str();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Agent::Agent( xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
-    : EntityImplementation< Agent_ABC >( controller, ReadId( xis ), ReadName( xis ) )
+Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
+    : EntityImplementation< Agent_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), ReadName( xis ) )
     , commandPost_( false )
 {
     std::string type;
-    xis >> attribute( "type", type )
-        >> optional() >> attribute( "command-post", commandPost_ );
+    xis >> xml::attribute( "type", type )
+        >> xml::optional() >> xml::attribute( "command-post", commandPost_ );
     type_ = &agentTypes.Resolver< AgentType, std::string >::Get( type );
     idManager.Lock( id_ );
     
@@ -64,28 +73,6 @@ Agent::Agent( xistream& xis, Controller& controller, IdManager& idManager, const
 Agent::~Agent()
 {
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ReadId
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-unsigned long Agent::ReadId( xml::xistream& xis )
-{
-    int id;
-    xis >> attribute( "id", id );
-    return id;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ReadName
-// Created: SBO 2006-10-20
-// -----------------------------------------------------------------------------
-QString Agent::ReadName( xml::xistream& xis )
-{
-    std::string name;
-    xis >> attribute( "name", name );
-    return name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,9 +99,7 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 void Agent::InitializeSymbol() const
 {
     symbol_ = type_->GetSymbol();
-    const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
-    const kernel::Karma& karma = static_cast< const Team& >( team ).GetKarma();
-    kernel::App6Symbol::SetKarma( symbol_, karma );
+    kernel::App6Symbol::SetKarma( symbol_, Get< CommunicationHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,8 +149,8 @@ void Agent::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 void Agent::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "id", long( id_ ) )
-        << attribute( "type", type_->GetName() )
-        << attribute( "name", name_.ascii() )
-        << attribute( "command-post", commandPost_ );
+    xos << xml::attribute( "id", long( id_ ) )
+        << xml::attribute( "type", type_->GetName() )
+        << xml::attribute( "name", name_.ascii() )
+        << xml::attribute( "command-post", commandPost_ );
 }
