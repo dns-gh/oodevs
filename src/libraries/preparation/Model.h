@@ -88,8 +88,8 @@ private:
     IdManager& idManager_;
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;
-    AgentFactory_ABC& agentFactory_;
     FormationFactory_ABC& formationFactory_;
+    AgentFactory_ABC& agentFactory_;
     ProfileFactory_ABC& profileFactory_;
     gui::DrawingFactory_ABC& drawingFactory_;
     std::string orbatFile_;
@@ -101,8 +101,8 @@ public:
     //@{
     TeamsModel& teams_;
     KnowledgeGroupsModel& knowledgeGroups_;
-    AgentsModel& agents_;
     FormationModel& formations_;
+    AgentsModel& agents_;
     LimitsModel& limits_;
     WeatherModel& weather_;
     ProfilesModel& profiles_;

@@ -51,15 +51,15 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     : controllers_( controllers )
     , idManager_( *new IdManager() )
     , teamFactory_( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
-    , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
     , formationFactory_( *new FormationFactory( controllers, idManager_ ) )
+    , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
     , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
     , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) ) 
     , orbatFile_( "" )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
-    , agents_( *new AgentsModel( controllers, agentFactory_ ) )
     , formations_( *new FormationModel( controllers, formationFactory_ ) )
+    , agents_( *new AgentsModel( controllers, agentFactory_ ) )
     , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
     , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
     , profiles_( *new ProfilesModel( profileFactory_ ) )
@@ -80,10 +80,10 @@ Model::~Model()
     delete &profileFactory_;
     delete &weather_;
     delete &limits_;
-    delete &formations_;
-    delete &formationFactory_;
     delete &agents_;
     delete &agentFactory_;
+    delete &formations_;
+    delete &formationFactory_;
     delete &knowledgeGroups_;
     delete &teams_;
     delete &teamFactory_;
@@ -101,8 +101,8 @@ void Model::Purge()
     profiles_.Purge();
     weather_.Purge();
     limits_.Purge();
-    formations_.Purge();
     agents_.Purge();
+    formations_.Purge();
     knowledgeGroups_.Purge();
     teams_.Purge();
     idManager_.Reset();
