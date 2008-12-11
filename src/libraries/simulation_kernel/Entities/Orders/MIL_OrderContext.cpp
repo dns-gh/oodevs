@@ -23,8 +23,8 @@
 // Name: MIL_OrderContext constructor
 // Created: SBO 2008-03-03
 // -----------------------------------------------------------------------------
-MIL_OrderContext::MIL_OrderContext()
-    : hasContext_   ( false )
+MIL_OrderContext::MIL_OrderContext( bool present /*= false */ )
+    : hasContext_   ( present )
     , limas_        ()
     , intelligences_()
     , fuseau_       ()

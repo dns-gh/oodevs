@@ -30,7 +30,7 @@ class MIL_OrderContext
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_OrderContext();
+    explicit MIL_OrderContext( bool present = false );
              MIL_OrderContext( const ASN1T_MissionParameters& asn, const MT_Vector2D& orientationReference );
              MIL_OrderContext( const MIL_OrderContext& rhs );
     virtual ~MIL_OrderContext();
