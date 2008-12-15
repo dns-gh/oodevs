@@ -429,3 +429,12 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
     if( asn().m.stocksPresent && asn().stocks.n > 0 )
         delete [] asn().stocks.elem;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::HasChanged
+// Created: SBO 2008-12-15
+// -----------------------------------------------------------------------------
+bool PHY_RolePionLOG_Supply::HasChanged() const
+{
+    return bHasChanged_;
+}

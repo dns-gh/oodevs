@@ -207,3 +207,13 @@ bool PHY_RolePion_Medical::CanCollectionAmbulanceGo( const PHY_MedicalCollection
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Medical::HasChanged
+// Created: SBO 2008-12-15
+// -----------------------------------------------------------------------------
+inline
+bool PHY_RolePion_Medical::HasChanged() const
+{
+    return false;
+}

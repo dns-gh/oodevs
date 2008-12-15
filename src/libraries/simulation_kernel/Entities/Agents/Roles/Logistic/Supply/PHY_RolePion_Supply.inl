@@ -18,3 +18,13 @@ MT_Float PHY_RolePion_Supply::ModifySpeed( MT_Float rSpeed ) const
 {
     return rSpeed;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::HasChanged
+// Created: SBO 2008-12-15
+// -----------------------------------------------------------------------------
+inline
+bool PHY_RolePion_Supply::HasChanged() const
+{
+    return false;
+}

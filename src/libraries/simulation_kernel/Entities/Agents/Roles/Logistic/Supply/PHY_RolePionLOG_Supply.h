@@ -87,6 +87,7 @@ public:
     //@{
     virtual void SendChangedState() const;
     virtual void SendFullState   () const;
+    virtual bool HasChanged      () const;
     //@}
 
 private:
