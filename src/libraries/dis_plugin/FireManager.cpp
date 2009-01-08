@@ -111,4 +111,3 @@ void FireManager::CreateFire( const ASN1T_CoordLatLong& position )
 {
     // $$$$ AGE 2008-05-05:  ?
 }
-

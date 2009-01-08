@@ -17,6 +17,7 @@
 #include "dispatcher/Model.h"
 #include <xeumeuleu/xml.h>
 #include "UdpNetwork.h"
+#pragma warning( disable: 4355 ) // 'this' : used in base member initializer list
 
 using namespace plugins::dis;
 using namespace dispatcher;

@@ -10,13 +10,12 @@
 #ifndef __FilterHelper_h_
 #define __FilterHelper_h_
 
-#pragma warning (push)
-#pragma warning (disable : 4100 4127 4511 4512 4702 )
-#include <set>
+#pragma warning( push, 0 )
 #include <xeumeuleu/xml.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
-#pragma warning (pop)
+#include <set>
+#pragma warning( pop )
 
 namespace xml
 {
