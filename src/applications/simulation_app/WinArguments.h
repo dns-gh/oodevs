@@ -20,7 +20,6 @@
 // =============================================================================
 class WinArguments
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

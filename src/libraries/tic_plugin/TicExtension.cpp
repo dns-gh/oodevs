@@ -166,8 +166,8 @@ void TicExtension::Accept( PlatformVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void TicExtension::SortPlatforms()
 {
-    std::sort( sorted_.begin(), sorted_.end(), 
-        boost::bind( &Formation_ABC::Compare, 
+    std::sort( sorted_.begin(), sorted_.end(),
+        boost::bind( &Formation_ABC::Compare,
             boost::bind( &Platform::GetPosition, _1 ),
             boost::bind( &Platform::GetPosition, _2 ),
             position_, direction_ ) );

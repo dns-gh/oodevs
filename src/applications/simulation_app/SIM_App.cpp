@@ -73,7 +73,6 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: SIM_App destructor
 // Created: NLD 2002-08-07
@@ -122,7 +121,6 @@ LRESULT SIM_App::MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         case WM_CREATE:
             return 0;
-
         case MY_WM_NOTIFYICON :
             if(lParam == WM_RBUTTONUP)
             {
@@ -137,17 +135,14 @@ LRESULT SIM_App::MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
               DestroyMenu(hmenu);
              }
             return 0;
-
-        case WM_CLOSE : 
+        case WM_CLOSE :
         case WM_DESTROY:
                 PostQuitMessage(0);
             return 0;
-
         case WM_COMMAND:
             if(LOWORD(wParam) == IDM_QUIT) 
                 PostQuitMessage(0);
             return 0;
-
         case WM_TIMER:
             application->AnimateIcon() ;
             return 0;
@@ -156,7 +151,6 @@ LRESULT SIM_App::MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SIM_App::RunDispatcher
 // Created: RDS 2008-07-25
@@ -164,7 +158,6 @@ LRESULT SIM_App::MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 void SIM_App::RunDispatcher()
 {
     pDispatcher_ = new SIM_Dispatcher( winArguments_.Argc(), const_cast< char** >( winArguments_.Argv() ) ); 
-    
     try
     {
         pDispatcher_->Run(); 
@@ -173,8 +166,7 @@ void SIM_App::RunDispatcher()
     {
        MT_FormatString( "The dispatcher has crashed ( '%s' )", exception.what() );    
     }
-    
-    Stop(); 
+    Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +177,6 @@ void SIM_App::RunGUI()
 {
     // Window
     WNDCLASS wc;
-
     wc.style = 0;
     wc.lpfnWndProc = &SIM_App::MainWndProc;
     wc.cbClsExtra = 0;
@@ -228,7 +219,7 @@ void SIM_App::RunGUI()
     
     Shell_NotifyIcon(NIM_DELETE,&TrayIcon_);
 
-    Stop(); 
+    Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -241,14 +232,13 @@ void SIM_App::StartIconAnimation()
     SetTimer(hWnd_, 1, 1000, NULL);
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SIM_App::StopIconAnimation
 // Created: RDS 2008-07-24
 // -----------------------------------------------------------------------------
 void SIM_App::StopIconAnimation()
 {
-    KillTimer(hWnd_, 1 ) ;
+    KillTimer(hWnd_, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -272,23 +262,21 @@ void SIM_App::AnimateIcon()
         DestroyIcon(hIconAtIndex);
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SIM_App::Cleanup
 // Created: NLD 2004-01-27
 // -----------------------------------------------------------------------------
 void SIM_App::Cleanup()
 {
-    // stop the dispatcher  
+    // stop the dispatcher
     pDispatcher_->Stop();
-    dispatcherThread_->join(); 
+    dispatcherThread_->join();
 
     MIL_AgentServer::DestroyWorkspace();
 
     // stop the GUI 
     ::PostMessage( hWnd_ , WM_COMMAND, IDM_QUIT, NULL ) ; 
     guiThread_->join();
-
 }
 
 // -----------------------------------------------------------------------------
@@ -298,12 +286,9 @@ void SIM_App::Cleanup()
 void SIM_App::Run()
 {
     StartIconAnimation();
-
-    // application loop
     while( Tic() )
     {
     }
-
     StopIconAnimation();
 }
 
@@ -316,7 +301,6 @@ void SIM_App::Stop()
     bUserInterrupt_ = true ;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SIM_App::Tic
 // Created: RDS 2008-07-08
@@ -325,10 +309,8 @@ bool SIM_App::Tic()
 {
     MIL_AgentServer::E_SimState nSimState = MIL_AgentServer::GetWorkspace().Update();
     bool bRun = ( nSimState != MIL_AgentServer::eSimStopped );
-
     ::Sleep( 0 );
-
-    return ( bRun && !bUserInterrupt_ ) ;
+    return bRun && !bUserInterrupt_;
 }
 
 //-----------------------------------------------------------------------------
@@ -384,13 +366,14 @@ int SIM_App::Test()
     return EXIT_FAILURE;
 }
 
-// -----------------------------------------------------------------------------
-// Name: SIM_App::IsAlreadyWrapped
-// Created: MCO 2005-02-22
-// -----------------------------------------------------------------------------
-bool SIM_App::IsAlreadyWrapped( const std::string& content ) const
+namespace
 {
-    return content.find( "WARNING" ) != std::string::npos || content.find( "ERROR" ) != std::string::npos || content.find( "INFO" ) != std::string::npos;
+    bool IsAlreadyWrapped( const std::string& content ) const
+    {
+        return content.find( "WARNING" ) != std::string::npos
+            || content.find( "ERROR" ) != std::string::npos
+            || content.find( "INFO" ) != std::string::npos;
+    }
 }
 
 // -----------------------------------------------------------------------------

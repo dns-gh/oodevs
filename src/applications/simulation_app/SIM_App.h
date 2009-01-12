@@ -57,8 +57,7 @@ private:
     void Cleanup   ();
     int  Test      ();
 
-    std::string Wrap                ( const std::string& content, const std::string& prefix ) const;
-    bool        IsAlreadyWrapped    ( const std::string& content ) const;
+    std::string Wrap( const std::string& content, const std::string& prefix ) const;
 
     //@}
     
