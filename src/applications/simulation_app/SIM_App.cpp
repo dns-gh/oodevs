@@ -368,7 +368,7 @@ int SIM_App::Test()
 
 namespace
 {
-    bool IsAlreadyWrapped( const std::string& content ) const
+    bool IsAlreadyWrapped( const std::string& content )
     {
         return content.find( "WARNING" ) != std::string::npos
             || content.find( "ERROR" ) != std::string::npos
