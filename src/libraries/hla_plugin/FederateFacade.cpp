@@ -15,6 +15,7 @@
 #include <hla/hla_lib.h>
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
+#include <hla/SimpleTime.h>
 #include <hla/SimpleTimeInterval.h>
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 
@@ -30,7 +31,7 @@ FederateFacade::FederateFacade( const std::string& name, unsigned int timeStepDu
     , timeFactory_    ( new SimpleTimeFactory() )
     , intervalFactory_( new SimpleTimeIntervalFactory() )
     , ambassador_     ( RtiAmbassador_ABC::CreateAmbassador( *timeFactory_, *intervalFactory_ ) )
-    , federate_       ( new Federate( *ambassador_, name, SimpleTimeInterval( timeStepDuration ) ) )
+    , federate_       ( new Federate( *ambassador_, name, SimpleTime(), SimpleTimeInterval( timeStepDuration ) ) )
 {
     // NOTHING
 }

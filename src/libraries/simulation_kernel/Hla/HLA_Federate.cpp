@@ -20,6 +20,7 @@
 #include "HLA_Federate.h"
 #include "HLA_TimeFactory.h"
 #include "HLA_TimeIntervalFactory.h"
+#include "HLA_Time.h"
 #include "HLA_TimeInterval.h"
 #include "HLA_DirectFire.h"
 #include "HLA_IndirectFire.h"
@@ -46,7 +47,7 @@ HLA_Federate::HLA_Federate( const std::string& strFederateName, unsigned int nTi
     : pTimeFactory_    ( new HLA_TimeFactory() )
     , pIntervalFactory_( new HLA_TimeIntervalFactory() )
     , pAmbassador_     ( RtiAmbassador_ABC::CreateAmbassador( *pTimeFactory_, *pIntervalFactory_ ) )
-    , pFederate_       ( new Federate( *pAmbassador_, strFederateName, HLA_TimeInterval( nTimeStepDuration ) ) )
+    , pFederate_       ( new Federate( *pAmbassador_, strFederateName, HLA_Time(), HLA_TimeInterval( nTimeStepDuration ) ) )
     , pUnitClass_         ( 0 )
     , pUnitRegistration_  ( 0 )
     , pObjectClass_       ( 0 )
