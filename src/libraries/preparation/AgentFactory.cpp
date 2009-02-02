@@ -124,13 +124,17 @@ kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType
 // -----------------------------------------------------------------------------
 kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position )
 {
-    Entity_ABC& top = const_cast< kernel::Entity_ABC& >( parent.Get< kernel::TacticalHierarchies >().GetTop() );
+    Entity_ABC* top = 0;
+    if( const kernel::TacticalHierarchies* hierarchies = parent.Retrieve< kernel::TacticalHierarchies >() )
+        top = const_cast< kernel::Entity_ABC* >( &hierarchies->GetTop() );
+    else
+        top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
 
     Population* result = new Population( type, controllers_.controller_, idManager_ );
     result->Attach< Positions >( *new PopulationPositions( *result, static_.coordinateConverter_, position ) );
-    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &top ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
 
-    if( Populations* popus = top.Retrieve< Populations >() )
+    if( Populations* popus = top->Retrieve< Populations >() )
         popus->AddPopulation( *result );
     result->Polish();
     return result;
