@@ -176,6 +176,24 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
+    // Logger
+    QDockWindow* pLogDockWnd_ = new QDockWindow( this, "log" );
+    moveDockWindow( pLogDockWnd_, Qt::DockBottom );
+    Logger* pLogPanel_ = new Logger( pLogDockWnd_, *factory );
+    pLogDockWnd_->setWidget( pLogPanel_ );
+    pLogDockWnd_->setResizeEnabled( true );
+    pLogDockWnd_->setCloseMode( QDockWindow::Always );
+    pLogDockWnd_->setCaption( tr( "Log" ) );
+    setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
+    connect( pLogPanel_, SIGNAL( EmitError() ), pLogDockWnd_, SLOT( show() ) );
+    pLogDockWnd_->hide();
+    logger.SetLogger( *pLogPanel_ );
+
+    // Standard toolbars
+    new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel_ );
+    new DisplayToolbar( this, controllers );
+    new EventToolbar( this, controllers, profile );
+
     // A few layers
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );
@@ -239,30 +257,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setAppropriate( pMissionPanel_, false );
     pMissionPanel_->hide();
 
-    // Actions panel
-    ActionsScheduler* scheduler = new ActionsScheduler( this, controllers_, simulation, model_.actions_, publisher );
-    ActionsPanel* actionsPanel = new ActionsPanel( this, controllers_, *factory, model_.actions_, *scheduler, config_ );
-    moveDockWindow( actionsPanel, Qt::DockRight );
-    setDockEnabled( actionsPanel, Qt::DockTop, false );
-    actionsPanel->hide();
-
-    TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler );
-    moveDockWindow( timelinePanel, Qt::DockTop );
-    timelinePanel->hide();
-
-    // Logger
-    QDockWindow* pLogDockWnd_ = new QDockWindow( this, "log" );
-    moveDockWindow( pLogDockWnd_, Qt::DockBottom );
-    Logger* pLogPanel_ = new Logger( pLogDockWnd_, *factory );
-    pLogDockWnd_->setWidget( pLogPanel_ );
-    pLogDockWnd_->setResizeEnabled( true );
-    pLogDockWnd_->setCloseMode( QDockWindow::Always );
-    pLogDockWnd_->setCaption( tr( "Log" ) );
-    setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
-    connect( pLogPanel_, SIGNAL( EmitError() ), pLogDockWnd_, SLOT( show() ) );
-    pLogDockWnd_->hide();
-    logger.SetLogger( *pLogPanel_ );
-
     // Chat
     QDockWindow* chatDock = new ChatDock( this, controllers_, publisher, network.GetCommands() );
     moveDockWindow( chatDock, Qt::DockBottom );
@@ -305,13 +299,22 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( pCreationWnd, Qt::DockTop, false );
 
     new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );
-    new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel_ );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
-    new DisplayToolbar( this, controllers );
-    new EventToolbar( this, controllers, profile );
     FolkToolbar* folkToolbar = new FolkToolbar( this, controllers, model.folk_ );
-
     AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, publisher, *paramLayer, staticModel_ );
+
+    // Actions panel
+    {
+        ActionsScheduler* scheduler = new ActionsScheduler( this, controllers_, simulation, model_.actions_, publisher );
+        ActionsPanel* actionsPanel = new ActionsPanel( this, controllers_, *factory, model_.actions_, *scheduler, config_ );
+        moveDockWindow( actionsPanel, Qt::DockRight );
+        setDockEnabled( actionsPanel, Qt::DockTop, false );
+        actionsPanel->hide();
+
+        TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler );
+        moveDockWindow( timelinePanel, Qt::DockTop );
+        timelinePanel->hide();
+    }
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
     new Menu( this, controllers, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger );

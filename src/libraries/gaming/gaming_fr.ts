@@ -509,6 +509,10 @@
         <source>Heading:</source>
         <translation>Direction:</translation>
     </message>
+    <message>
+        <source>Stances/Setup state</source>
+        <translation>Postures/Etat installation</translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

@@ -22,6 +22,7 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     : QDockWindow( parent, "timeline" )
 {
     setResizeEnabled( true );
+    setNewLine( true );
     setCaption( tools::translate( "TimelinePanel", "Actions timeline" ) );
     setCloseMode( QDockWindow::Always );
     QVBox* box = new QVBox( this );

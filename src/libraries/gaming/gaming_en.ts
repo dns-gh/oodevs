@@ -285,6 +285,10 @@
         <source>Refugees picked up:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Stances/Setup state</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>
