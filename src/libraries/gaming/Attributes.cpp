@@ -81,6 +81,7 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Speed" ),                           nSpeed_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Heading" ),                         nDirection_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Stances/Setup state" ),                  nInstallationState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Communications/Radio silence" ),         bRadioSilence_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Operational state" ),   nOpState_ );

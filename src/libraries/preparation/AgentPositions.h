@@ -14,6 +14,7 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Moveable_ABC.h"
 
 namespace kernel
 {
@@ -38,6 +39,7 @@ class AgentPositions : public kernel::Positions
                      , public kernel::Drawable_ABC
                      , public kernel::Aggregatable_ABC
                      , public kernel::Serializable_ABC
+                     , public kernel::Moveable_ABC
 {
 
 public:
@@ -61,7 +63,7 @@ public:
 
     //! @name Operations
     //@{
-    void Set( const geometry::Point2f& point );
+    virtual void Move( const geometry::Point2f& point );
     //@}
 
 private:

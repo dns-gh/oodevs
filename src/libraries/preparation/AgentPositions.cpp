@@ -151,10 +151,10 @@ void AgentPositions::SerializeAttributes( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentPositions::Set
+// Name: AgentPositions::Move
 // Created: SBO 2006-09-29
 // -----------------------------------------------------------------------------
-void AgentPositions::Set( const geometry::Point2f& point )
+void AgentPositions::Move( const geometry::Point2f& point )
 {
     position_ = point;
     // $$$$ SBO 2008-03-25: somehow trigger dictionary update
@@ -166,5 +166,5 @@ void AgentPositions::Set( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void AgentPositions::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    dico.Register( *(const AgentPositions*)this, tools::translate( "AgentPositions", "Info/Position" ), position_, *this, &AgentPositions::Set );
+    dico.Register( *(const AgentPositions*)this, tools::translate( "AgentPositions", "Info/Position" ), position_, *this, &AgentPositions::Move );
 }

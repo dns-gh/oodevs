@@ -18,6 +18,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Moveable_ABC.h"
 #include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
@@ -114,8 +115,7 @@ bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::
         || ( gui::ValuedDragObject::Provides< const AgentType >        ( event ) && selectedAutomat_ )
         || ( gui::ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ ) )
         || ( gui::ValuedDragObject::Provides< const HierarchyTemplate >( event ) && IsValidTemplate( event ) )
-        || ( gui::ValuedDragObject::Provides< const Entity_ABC >       ( event ) && selectedAutomat_ )
-        || ( gui::ValuedDragObject::Provides< const Entity_ABC >       ( event ) && selectedAgent_ );
+        || ( gui::ValuedDragObject::Provides< const Entity_ABC >       ( event ) && ( selectedAutomat_ || selectedAgent_ || selectedFormation_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,6 +133,20 @@ bool AgentsLayer::IsValidTemplate( QDragEnterEvent* event ) const
                          : droppedItem->IsCompatible( *selectedFormation_ );
 }
 
+namespace
+{
+    bool Move( const kernel::Entity_ABC& entity, const geometry::Point2f& point )
+    {
+        const kernel::Positions& positions = entity.Get< Positions >();
+        if( const kernel::Moveable_ABC* moveable = dynamic_cast< const kernel::Moveable_ABC* >( &positions ) )
+        {
+            const_cast< kernel::Moveable_ABC* >( moveable )->Move( point );
+            return true;
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer::HandleDropEvent
 // Created: SBO 2006-09-01
@@ -145,7 +159,7 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             return false;
         // if the events comes from the list or if far enough
         if( event->source() || position->GetPosition().Distance( point ) > 100 )
-            position->Set( point );
+            position->Move( point );
         return true;
     }
     if( const AgentType* droppedItem = gui::ValuedDragObject::GetValue< const AgentType >( event ) )
@@ -176,22 +190,11 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     if( const Entity_ABC* droppedItem = gui::ValuedDragObject::GetValue< const Entity_ABC >( event ) )
     {
         if( selectedAutomat_ )
-        {
-            if( const AutomatPositions* pos = static_cast< const AutomatPositions* >( selectedAutomat_->Retrieve< Positions >() ) )
-            {
-                const_cast< AutomatPositions* >( pos )->Set( point );
-                return true;
-            }
-        }
-        else if( selectedAgent_ )
-        {
-            if( const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() ) )
-            {
-                const_cast< AgentPositions* >( pos )->Set( point );
-                return true;
-            }
-        }
-        return false;
+            return Move( *selectedAutomat_, point );
+        if( selectedAgent_ )
+            return Move( *selectedAgent_, point );
+        if( selectedFormation_ )
+            return Move( *selectedFormation_, point );
     }
     return false;
 }

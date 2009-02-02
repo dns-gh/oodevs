@@ -3,15 +3,14 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2009 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __AutomatPositions_h_
-#define __AutomatPositions_h_
+#ifndef __FormationPositions_h_
+#define __FormationPositions_h_
 
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
 
 namespace kernel
@@ -20,21 +19,20 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  AutomatPositions
-    @brief  AutomatPositions
+/** @class  FormationPositions
+    @brief  FormationPositions
 */
-// Created: AGE 2006-10-06
+// Created: SBO 2009-02-02
 // =============================================================================
-class AutomatPositions : public kernel::Positions
-                       , public kernel::Drawable_ABC
-                       , public kernel::Moveable_ABC
+class FormationPositions : public kernel::Positions
+                         , public kernel::Moveable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AutomatPositions( const kernel::Entity_ABC& automat );
-    virtual ~AutomatPositions();
+    explicit FormationPositions( const kernel::Entity_ABC& formation );
+    virtual ~FormationPositions();
     //@}
 
     //! @name Operations
@@ -44,7 +42,6 @@ public:
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
 
     virtual void Move( const geometry::Point2f& point );
     //@}
@@ -52,15 +49,15 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    AutomatPositions( const AutomatPositions& );            //!< Copy constructor
-    AutomatPositions& operator=( const AutomatPositions& ); //!< Assignement operator
+    FormationPositions( const FormationPositions& );            //!< Copy constructor
+    FormationPositions& operator=( const FormationPositions& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::Entity_ABC& automat_;
+    const kernel::Entity_ABC& formation_;
     //@}
 };
 
-#endif // __AutomatPositions_h_
+#endif // __FormationPositions_h_

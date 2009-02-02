@@ -116,23 +116,21 @@ Rectangle2f AutomatPositions::GetBoundingBox() const
 void AutomatPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
-        tools.DrawCross( where, GL_CROSSSIZE );   
+        tools.DrawCross( where, GL_CROSSSIZE );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions::Set
+// Name: AutomatPositions::Move
 // Created: SBO 2007-11-12
 // -----------------------------------------------------------------------------
-void AutomatPositions::Set( const geometry::Point2f& point )
+void AutomatPositions::Move( const geometry::Point2f& point )
 {
     const geometry::Vector2f vect( GetPosition(), point );
     Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions* positions = children.NextElement().Retrieve< Positions >();
-        if( const AgentPositions* childPositions = dynamic_cast< const AgentPositions* >( positions ) )
-            const_cast< AgentPositions& >( *childPositions ).Set( positions->GetPosition() + vect );
-        else if( const AutomatPositions* childPositions = dynamic_cast< const AutomatPositions* >( positions ) )
-            const_cast< AutomatPositions& >( *childPositions ).Set( positions->GetPosition() + vect );
+        if( const kernel::Moveable_ABC* childPositions = dynamic_cast< const kernel::Moveable_ABC* >( positions ) )
+            const_cast< kernel::Moveable_ABC& >( *childPositions ).Move( positions->GetPosition() + vect );
     }
 }
