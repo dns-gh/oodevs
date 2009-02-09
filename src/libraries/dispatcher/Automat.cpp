@@ -212,11 +212,17 @@ void Automat::Update( const ASN1T_MsgAutomatOrder& msg )
 
 namespace
 {
-    void SerializeQuota( ASN1T_DotationQuota* asn, const DotationQuota& quota )
+    struct QuotaSerializer
     {
-        quota.Send( *asn );
-        ++asn;
-    }
+        explicit QuotaSerializer( ASN1T_DotationQuota* asn ) : asn_( asn ), index_( 0 ) {}
+        void SerializeQuota( const DotationQuota& quota )
+        {
+            quota.Send( asn_[ index_ ] );
+            ++index_;
+        }
+        ASN1T_DotationQuota* asn_;
+        int index_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +250,8 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         asn().oid_automate = GetId();
         asn().quotas.n = quotas_.Count();
         asn().quotas.elem = asn().quotas.n > 0 ? new ASN1T_DotationQuota[ asn().quotas.n ] : 0;
-        quotas_.Apply( boost::bind( &::SerializeQuota, asn().quotas.elem, _1 ) );
+        QuotaSerializer serializer( asn().quotas.elem );
+        quotas_.Apply( boost::bind( &QuotaSerializer::SerializeQuota, boost::ref( serializer ), _1 ) );
         asn.Send( publisher );
         if( asn().quotas.n > 0 )
             delete [] asn().quotas.elem;
