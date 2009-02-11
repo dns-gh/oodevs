@@ -136,9 +136,10 @@ SectionGroup "Exercises" s_exo
     !insertmacro OT.AddExercise "tutorials\07 - Artillerie" "Paris_Est" "s_exo10"
     !insertmacro OT.AddExercise "tutorials\071 - NRBC" "Paris_Est" "s_exo11"
     !insertmacro OT.AddExercise "tutorials\072 - ALAT" "Paris_Est" "s_exo12"
-    !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo13"
-    !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo14"
-    !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo15"
+    !insertmacro OT.AddExercise "tutorials\073 - LOG" "Paris_Est" "s_exo13"
+    !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo14"
+    !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo15"
+    !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo16"
 
 SectionGroupEnd
 
@@ -229,5 +230,6 @@ Function .onSelChange
     !insertmacro OT.CheckDependency "s_exo13" "s_ter2"
     !insertmacro OT.CheckDependency "s_exo14" "s_ter2"
     !insertmacro OT.CheckDependency "s_exo15" "s_ter2"
+    !insertmacro OT.CheckDependency "s_exo16" "s_ter2"
      
 FunctionEnd
