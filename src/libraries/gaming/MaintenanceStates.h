@@ -21,7 +21,7 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class EquipmentType;
-    class Agent_ABC;
+    class Automat_ABC;
     class PropertiesDictionary;
 }
 
@@ -37,7 +37,7 @@ class MaintenanceStates : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, kernel::PropertiesDictionary& dico );
+             MaintenanceStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::PropertiesDictionary& dico );
     virtual ~MaintenanceStates();
     //@}
 
@@ -62,8 +62,8 @@ private:
     //! @name Types
     //@{
     typedef std::vector< const kernel::EquipmentType* > T_Priorities;
-    typedef std::vector< Availability >         T_Availabilities;
-    typedef std::vector< const kernel::Agent_ABC* >         T_Agents;
+    typedef std::vector< Availability >                 T_Availabilities;
+    typedef std::vector< const kernel::Automat_ABC* >   T_Automats;
     //@}
 
 public:
@@ -71,12 +71,12 @@ public:
     //@{
     kernel::Controller&      controller_;
     const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver_;
+    const kernel::Resolver_ABC< kernel::Automat_ABC >&   automatResolver_;
 
     bool             bChainEnabled_;
     unsigned         nWorkRate_;
     T_Priorities     priorities_;
-    T_Agents         tacticalPriorities_;
+    T_Automats       tacticalPriorities_;
     T_Availabilities dispoHaulers_;
     T_Availabilities dispoRepairers_;
     //@}

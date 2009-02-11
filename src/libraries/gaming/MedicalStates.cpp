@@ -21,10 +21,10 @@ using namespace kernel;
 // Name: MedicalStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, PropertiesDictionary& dico )
+MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
-    , agentResolver_( agentResolver )
+    , automatResolver_( automatResolver )
 {
     CreateDictionary( dico );
 }
@@ -68,7 +68,7 @@ void MedicalStates::DoUpdate( const ASN1T_MsgLogMedicalState& message )
     {
         tacticalPriorities_.resize( message.priorites_tactiques.n );
         for( uint i = 0; i < message.priorites_tactiques.n; ++i )
-            tacticalPriorities_[i] = & agentResolver_.Get( message.priorites_tactiques.elem[i] );
+            tacticalPriorities_[i] = & automatResolver_.Get( message.priorites_tactiques.elem[i] );
     }
 
     if( message.m.disponibilites_ambulances_ramassagePresent )
