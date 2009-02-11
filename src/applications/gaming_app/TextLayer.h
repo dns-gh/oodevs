@@ -63,7 +63,13 @@ private:
     virtual bool HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point );
     void Display( const QString& text );
     void AddButton( const QString& label );
+    void ClearButtons();
     void DrawFrame( QPainter& painter, const QRect& rect );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< GlButton* > T_Buttons;
     //@}
 
 private:
@@ -73,7 +79,7 @@ private:
     CommandHandler& handler_;
     std::auto_ptr< CommandPublisher > publisher_;
     std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
-    std::auto_ptr< GlButton > button_;
+    T_Buttons buttons_;
     std::string currentPrompt_;
     //@}
 };

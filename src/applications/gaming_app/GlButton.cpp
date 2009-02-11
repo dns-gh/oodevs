@@ -151,3 +151,12 @@ QString GlButton::Label() const
 {
     return label_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlButton::BoundingBox
+// Created: SBO 2009-02-11
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f GlButton::BoundingBox() const
+{
+    return geometry::Rectangle2f( position_.X(), position_.Y() + height_, position_.X() + width_, position_.Y() );
+}

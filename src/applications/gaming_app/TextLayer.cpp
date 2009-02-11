@@ -38,6 +38,7 @@ TextLayer::TextLayer( kernel::Controllers& controllers, Publisher_ABC& publisher
 // -----------------------------------------------------------------------------
 TextLayer::~TextLayer()
 {
+    ClearButtons();
     handler_.Unregister( "prompt", *this );
     handler_.Unregister( "display", *this );
 }
@@ -64,12 +65,15 @@ void TextLayer::Paint( const geometry::Rectangle2f& viewport )
     topLeft += offset * 0.001f;
     tooltip_->Draw( topLeft, viewport.Width() / tools_.Pixels(), -50, tools_.Pixels() );
     gui::GlTooltip* tooltip = (gui::GlTooltip*)( tooltip_.get() );
-    if( button_.get() )
+    geometry::Rectangle2f boundingBox( viewport.Left(), viewport.Top()
+                                     , viewport.Left() + tooltip->Size().width() * tools_.Pixels()
+                                     , viewport.Top()  - tooltip->Size().height() * tools_.Pixels() );
+    for( T_Buttons::const_reverse_iterator it = buttons_.rbegin(); it != buttons_.rend(); ++it )
     {
-        geometry::Rectangle2f boundingBox( viewport.Left(), viewport.Top()
-                                         , viewport.Left() + tooltip->Size().width() * tools_.Pixels()
-                                         , viewport.Top()  - tooltip->Size().height() * tools_.Pixels() );
-        button_->Draw( boundingBox );
+        (*it)->Draw( boundingBox );
+        const geometry::Rectangle2f box = (*it)->BoundingBox();
+        boundingBox.Set( boundingBox.Left(), boundingBox.Bottom(), std::min( boundingBox.Right(), box.Right() ), boundingBox.Top() );
+        // $$$$ SBO 2009-02-11: only works for right align
     }
 }
 
@@ -82,7 +86,7 @@ void TextLayer::Receive( const Command& command )
     if( command.ArgumentCount() == 0 )
     {
         tooltip_.reset();
-        button_.reset();
+        ClearButtons();
         return;
     }
     if( command.Name() == "display" )
@@ -93,7 +97,7 @@ void TextLayer::Receive( const Command& command )
         Display( command.Argument( 2 ).c_str() );
         const QStringList buttons = QStringList::split( '|', command.Argument( 3 ).c_str() );
         for( QStringList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
-            AddButton( *it ); // $$$$ SBO 2008-07-07: only handle one button, handle a button stack if needed
+            AddButton( *it );
     }
 }
 
@@ -103,15 +107,21 @@ void TextLayer::Receive( const Command& command )
 // -----------------------------------------------------------------------------
 bool TextLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( mouse->button() & Qt::LeftButton && button_.get() && button_->HandleMousePress( point ) )
+    if( mouse->button() & Qt::LeftButton )
     {
-        if( mouse->state() != Qt::NoButton )
+        for( T_Buttons::const_iterator it = buttons_.begin(); it != buttons_.end(); ++it )
         {
-            const std::string message = "/choose " + currentPrompt_ + " \"" + button_->Label().ascii() + "\"";
-            publisher_->Send( "", message );
-            button_.reset();
+            if( (*it)->HandleMousePress( point ) )
+            {
+                if( mouse->state() != Qt::NoButton )
+                {
+                    const std::string message = "/choose " + currentPrompt_ + " \"" + (*it)->Label().ascii() + "\"";
+                    publisher_->Send( "", message );
+                    ClearButtons();
+                }
+                return true;
+            }
         }
-        return true;
     }
     return false;
 }
@@ -122,8 +132,9 @@ bool TextLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& p
 // -----------------------------------------------------------------------------
 bool TextLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& point )
 {
-    if( button_.get() )
-        return button_->HandleMouseMove( point );
+    for( T_Buttons::const_iterator it = buttons_.begin(); it != buttons_.end(); ++it )
+        if( (*it)->HandleMouseMove( point ) )
+            return true;
     return false;
 }
 
@@ -133,7 +144,7 @@ bool TextLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void TextLayer::Display( const QString& text )
 {
-    button_.reset();
+    ClearButtons();
     tooltip_ = tools_.CreateTooltip();
     {
         gui::GlTooltip* tooltip = (gui::GlTooltip*)( tooltip_.get() );
@@ -152,9 +163,21 @@ void TextLayer::Display( const QString& text )
 // -----------------------------------------------------------------------------
 void TextLayer::AddButton( const QString& label )
 {
-    button_.reset( new GlButton( label, tools_ ) );
-    button_->SetPosition( Qt::AlignRight );
-    button_->SetMargin( 10, 10 );
+    GlButton* button = new GlButton( label, tools_ );
+    buttons_.push_back( button );
+    button->SetPosition( Qt::AlignRight );
+    button->SetMargin( 10, 10 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TextLayer::ClearButtons
+// Created: SBO 2009-02-11
+// -----------------------------------------------------------------------------
+void TextLayer::ClearButtons()
+{
+    for( T_Buttons::iterator it = buttons_.begin(); it != buttons_.end(); ++it )
+        delete *it;
+    buttons_.clear();
 }
 
 // -----------------------------------------------------------------------------

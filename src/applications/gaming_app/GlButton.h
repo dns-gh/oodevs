@@ -48,6 +48,7 @@ public:
     //! @name Accessors
     //@{
     QString Label() const;
+    geometry::Rectangle2f BoundingBox() const;
     //@}
 
 private:
