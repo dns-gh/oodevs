@@ -226,10 +226,10 @@
     -->
     <target name="applications" description="build CSword executables"
             depends="applications.simulation,applications.clients,applications.frontends"/>
-           
+
     <target name="applications.simulation" description="build CSword Simulation executables"
             depends="application.dispatcher_app,application.simulation_app,application.replayer_app,application.AGR" />
-            
+
     <target name="applications.clients" description="build CSword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app"/>
 
@@ -238,7 +238,7 @@
 
     <target name="application.dispatcher_dll" description="build CSword Dispatcher dll" depends="library.dispatcher,library.ENT,library.plugins">
         <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm,qt"
-                   pattern="dispatcher_noop-${platform}-mt@{suffix}"
+                   pattern="dispatcher-${platform}-mt@{suffix}"
                    libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5
                          lib${ant.project.name}_actions-${platform}-mt
                          lib${ant.project.name}_tools-${platform}-mt
@@ -264,7 +264,7 @@
 
     <target name="application.dispatcher_dll.esri" description="build CSword Dispatcher dll with esri" depends="library.dispatcher,library.ENT,library.plugins">
         <build-lib name="dispatcher_dll_esri" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm,qt" input="dispatcher_dll"
-                   pattern="dispatcher-${platform}-mt@{suffix}"
+                   pattern="dispatcher_esri-${platform}-mt@{suffix}"
                    libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5
                          lib${ant.project.name}_actions-${platform}-mt
                          lib${ant.project.name}_tools-${platform}-mt
@@ -290,7 +290,7 @@
         </build-lib>
     </target>
 
-    <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="application.dispatcher_dll.esri">
+    <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="application.dispatcher_dll">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
                    libs="masalloc,tools
                          dispatcher-${platform}-mt@{suffix}
@@ -528,10 +528,14 @@
             <arg value="/DAPP_VERSION=${version.version}"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-ue-demo" script="sword-ue-demo.nsi" license="true">            
-            <arg value="/X!include sword-ue.nsh"/>
-        </nsis>
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped" script="sword-ot-scalped.nsi" license="true">
+            <arg value="/DAPP_VERSION=${version.version}"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+    </target>
+
+    <target name="package.patch" description="create the patch installer">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped-patch" script="sword-ot-scalped-patch.nsi" license="true">
             <arg value="/DAPP_VERSION=${version.version}"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
@@ -554,7 +558,6 @@
         </exec> -->
         <!--<nsis todir="${dist.dir}/current" name="crossbow_installer" script="crossbow_installer.nsi"/>-->
     </target>
-        
     <!--
     ============================================================================
       configure
