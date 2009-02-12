@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+using System.Collections;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
@@ -6,7 +8,7 @@ using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
-using ESRI.ArcGIS.MilitaryAnalyst;
+using ESRI.ArcGIS.DefenseSolutions;
 using ESRI.ArcGIS.ArcGlobe;
 using ESRI.ArcGIS.Analyst3D;
 
@@ -51,7 +53,7 @@ namespace Sword
             }
 
             #region "Get Sword Extension"
-            public static SwordExtension GetCSwordExtension()
+            public static SwordExtension GetSwordExtension()
             {
                 if (m_application == null)
                     return null;
@@ -110,10 +112,8 @@ namespace Sword
             #endregion
 
             #region "Get FeatureClass from Class Id"
-            public static IFeatureLayer GetFeatureClassFromId(int featureClassId)
+            public static IFeatureClass GetFeatureClassFromId(int featureClassId)
             {
-                if (featureClassId == -1)
-                    return null;
                 DocumentProxy layers = GetDocument();
                 for (int i = 0; i < layers.LayerCount; ++i)
                 {
@@ -122,7 +122,7 @@ namespace Sword
                     if (featureLayer != null)
                     {
                         if (featureLayer.FeatureClass.FeatureClassID == featureClassId)
-                            return featureLayer;
+                            return featureLayer.FeatureClass;
                     }
                     else
                     {
@@ -132,7 +132,7 @@ namespace Sword
                             {
                                 featureLayer = composite.get_Layer(j) as IFeatureLayer;
                                 if (featureLayer != null && featureLayer.FeatureClass != null && featureLayer.FeatureClass.FeatureClassID == featureClassId)
-                                    return featureLayer;
+                                    return featureLayer.FeatureClass;
                             }
                     }
                 }
@@ -164,11 +164,18 @@ namespace Sword
                 return RetrieveWorkspace(Tools.GetFeatureLayerByName(name));
             }
 
-            ///<summary>
-            /// Open a valid workspace according to the database's extension
-            ///</summary>
-            ///<param name="file">Name of the workspace</param>
-            public static IWorkspace OpenWorkspace(string file)
+            public static bool IsFileDatabase(string file)
+            {
+                string ext = file.Substring(file.LastIndexOf('.') + 1, 3);
+                return ext == "mdb" || ext == "gdb";
+            }
+
+            public static bool IsConnectionDatabase(string file)
+            {
+                return file.Substring(0, 6) == "sde://";                
+            }
+
+            public static IWorkspace OpenFileDatabase(string file)
             {
                 IWorkspaceFactory factory = null;
                 string ext = file.Substring(file.LastIndexOf('.') + 1, 3);
@@ -178,6 +185,39 @@ namespace Sword
                     factory = new FileGDBWorkspaceFactoryClass();
                 if (factory != null)
                     return factory.OpenFromFile(file, 0);
+                return null;
+            }
+
+            public static IWorkspace OpenConnectionDatabase(string file)
+            {                
+                Regex expression = new Regex( "(sde)://(\\w+):(\\w+)@(\\w+)(:(\\d+)){0,1}/(\\w*)" );
+                IWorkspaceFactory factory = new SdeWorkspaceFactoryClass();
+                IPropertySet property = new PropertySetClass();
+
+                ArrayList matches = new ArrayList( expression.Matches(file) );                
+                property.SetProperty( "server", matches[4] );
+                property.SetProperty("instance", matches[1] + ":postgresql:" + matches[4] );
+                property.SetProperty( "user", matches[2] );
+                property.SetProperty( "password", matches[3] );
+                if ( matches[ 6 ].ToString() != "" )
+                    property.SetProperty( "port", matches[6] );
+                property.SetProperty( "database", matches[7] );
+                property.SetProperty("version", "sde.DEFAULT");
+                if (factory != null)
+                    return factory.Open(property, 0);
+                return null;
+            }
+
+            ///<summary>
+            /// Open a valid workspace according to the database's extension
+            ///</summary>
+            ///<param name="file">Name of the workspace</param>
+            public static IWorkspace OpenWorkspace(string file)
+            {                
+                if (IsFileDatabase(file))
+                    return OpenFileDatabase(file);
+                if (IsConnectionDatabase(file))
+                    return OpenConnectionDatabase(file);
                 return null;
             }
             #endregion
@@ -222,10 +262,7 @@ namespace Sword
             {
                 int id = row.Fields.FindField(field);
                 if (id >= 0)
-                {
-                    object elt = row.get_Value(id);                    
-                    return (T)elt;
-                }
+                    return (T)row.get_Value(id);
                 return default(T);
             }
 
@@ -235,38 +272,25 @@ namespace Sword
             /// <param name="table">Name of the output table</param>
             /// <param name="value">Input geometry</param>
             /// <remarks>Input geometry should be zAwared according to the table</remarks>
-            /*
             public static void Store(string table, IGeometry value)
             {
                 try
                 {
-                    IFeatureWorkspace ws = (IFeatureWorkspace)OpenWorkspace(Tools.GetCSwordExtension().Config.SharedFile);
+                    IFeatureWorkspace ws = (IFeatureWorkspace)OpenWorkspace(Tools.GetSwordExtension().Config.SharedFile);
+                    ScopeLockEditor locker = new ScopeLockEditor(ws);
 
+                    locker.Lock();
                     IFeatureClass features = ws.OpenFeatureClass(table);
-                    ScopeLockEditor locker = new ScopeLockEditor((IDataset)features);
-                    locker.Lock();                    
-
-                    // IFeature feature = features.CreateFeature();
-                    // feature.Shape = value;
-                    // feature.Store();
-
-
-                    IFeatureBuffer feature = features.CreateFeatureBuffer();
-                    IFeatureCursor cursor = features.Insert(true);
+                    IFeature feature = features.CreateFeature();
                     feature.Shape = value;
-                    cursor.InsertFeature(feature);
-                    cursor.Flush();
-
+                    feature.Store();
                     locker.Unlock();
-
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(cursor);
                 }
                 catch (System.Exception e)
                 {
                     System.Diagnostics.Trace.WriteLine(e.Message);
                 }
             }
-            */
 
             /// <summary>
             ///  Remove all features of the specified feature class
@@ -280,14 +304,11 @@ namespace Sword
                     IFeatureWorkspace ws = (IFeatureWorkspace)OpenWorkspace(workspace);
                     if (ws == null)
                         return;
-                    IFeatureClass table = ws.OpenFeatureClass(name);
+                    ITable table = (ITable)ws.OpenFeatureClass(name);
                     if (table != null)
                     {
-                        ScopeLockEditor locker = new ScopeLockEditor((IDataset)table);
-                        locker.Lock();    
                         IQueryFilter filter = null;
-                        ((ITable)table).DeleteSearchedRows(filter);
-                        locker.Unlock(); 
+                        table.DeleteSearchedRows(filter);
                     }
                 }
                 catch (System.Exception e)

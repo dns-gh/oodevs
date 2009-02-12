@@ -129,11 +129,18 @@ namespace Sword
         public sealed class LayersConfiguration
         {
             private string m_units = "UnitForces";
-            private string m_knowledgeUnits = "KnowledgeUnits";
             private string m_limits = "BoundaryLimits";
             private string m_limas = "TacticalLines";
             private string m_reports = "Reports";
             private string m_objectsPoint = "TacticalObjectPoint";
+
+            const string database_ = "taranis_simulation";
+            const string protocol_ = "sde";
+
+            private string Decorate(string table)
+            {
+                return database_ + "." + protocol_ + "." + table;
+            }
 
             [DescriptionAttribute("Layer containing units")]
             [CategoryAttribute("Layer bindings")]
@@ -143,27 +150,11 @@ namespace Sword
             {
                 get
                 {
-                    return m_units;
+                    return Decorate( m_units );
                 }
                 set
                 {
                     m_units = value;
-                }
-            }
-
-            [DescriptionAttribute("Layer containing knowledge units")]
-            [CategoryAttribute("Layer bindings")]
-            [TypeConverterAttribute(typeof(FeatureLayerList))]
-            [DefaultValue("KnowledgeUnits")]
-            public string KnowledgeUnits
-            {
-                get
-                {
-                    return m_knowledgeUnits;
-                }
-                set
-                {
-                    m_knowledgeUnits = value;
                 }
             }
 
@@ -175,7 +166,7 @@ namespace Sword
             {
                 get
                 {
-                    return m_limas;
+                    return Decorate( m_limas );
                 }
                 set
                 {
@@ -191,7 +182,7 @@ namespace Sword
             {
                 get
                 {
-                    return m_limits;
+                    return Decorate( m_limits );
                 }
                 set
                 {
@@ -207,7 +198,7 @@ namespace Sword
             {
                 get
                 {
-                    return m_objectsPoint;
+                    return Decorate( m_objectsPoint );
                 }
                 set
                 {
@@ -223,7 +214,7 @@ namespace Sword
             {
                 get
                 {
-                    return m_reports;
+                    return Decorate( m_reports );
                 }
                 set
                 {

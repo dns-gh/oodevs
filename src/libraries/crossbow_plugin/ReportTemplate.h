@@ -19,7 +19,7 @@ struct ASN1T_MissionParameters;
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
     class ReportFactory;
 

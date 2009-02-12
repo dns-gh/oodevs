@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
-#include "CrossbowPlugin.h"
+#include "esri_plugin_pch.h"
+#include "EsriPlugin.h"
 #include "DatabasePublisher.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "dispatcher/DefaultProfile.h"
 
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
-// Name: CrossbowPlugin constructor
+// Name: EsriPlugin constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, 
+EsriPlugin::EsriPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, 
                                 dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& client, 
                                 dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables )
     : databasePublisher_( new DatabasePublisher( config, model, publisher, xis ) )
@@ -32,37 +32,37 @@ CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream&
 }
     
 // -----------------------------------------------------------------------------
-// Name: CrossbowPlugin destructor
+// Name: EsriPlugin destructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-CrossbowPlugin::~CrossbowPlugin()
+EsriPlugin::~EsriPlugin()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossbowPlugin::Receive
+// Name: EsriPlugin::Receive
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-void CrossbowPlugin::Receive( const ASN1T_MsgsSimToClient& asnMsg )
+void EsriPlugin::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 {
     databasePublisher_->Receive( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossbowPlugin::OnReceiveMessengerToClient
+// Name: EsriPlugin::OnReceiveMessengerToClient
 // Created: RDS 2008-04-11
 // -----------------------------------------------------------------------------
-void CrossbowPlugin::Send( const ASN1T_MsgsMessengerToClient& asnMsg )
+void EsriPlugin::Send( const ASN1T_MsgsMessengerToClient& asnMsg )
 {
     databasePublisher_->Receive( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossbowPlugin::NotifyClientAuthenticated
+// Name: EsriPlugin::NotifyClientAuthenticated
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-void CrossbowPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
+void EsriPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
 {
     // NOTHING
 }
@@ -71,7 +71,7 @@ void CrossbowPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC&
 // Name: ConnectorFacade::NotifyClientLeft
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-void CrossbowPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
+void EsriPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
 {
     // NOTHING
 }

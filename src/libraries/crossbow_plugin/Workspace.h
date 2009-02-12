@@ -15,7 +15,7 @@
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
 
 // =============================================================================

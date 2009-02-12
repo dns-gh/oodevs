@@ -15,7 +15,7 @@
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
     class Database;
     class Row;
@@ -72,7 +72,7 @@ private:
     const std::string name_;
     ITablePtr table_;
     ICursorPtr cursor_;
-    std::auto_ptr< crossbow::Row > row_;
+    std::auto_ptr< esri::Row > row_;
     bool inTransaction_;
     //@}
 };

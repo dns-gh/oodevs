@@ -1,6 +1,5 @@
 using System;
 using ESRI.ArcGIS.Display;
-using ESRI.ArcGIS.MOLE;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 

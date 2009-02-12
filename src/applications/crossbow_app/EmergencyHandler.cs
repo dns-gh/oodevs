@@ -36,14 +36,14 @@ namespace Sword
 
             public void ActivateItem(string name, object value)
             {
-                IFeatureWorkspace workspace = (IFeatureWorkspace)Tools.OpenWorkspace(Tools.GetCSwordExtension().Config.SharedFile);
-                string tableName = Tools.GetCSwordExtension().Config.LayersConfiguration.TacticalObjectPoint;
-                IFeatureClass featureClass = workspace.OpenFeatureClass(tableName);
+                IFeatureWorkspace workspace = (IFeatureWorkspace)Tools.OpenWorkspace(Tools.GetSwordExtension().Config.SharedFile);
+                ScopeLockEditor locker = new ScopeLockEditor(workspace);
 
-                ScopeLockEditor locker = new ScopeLockEditor((IDataset)featureClass);
+                locker.Lock();
                 try
                 {
-                    locker.Lock();
+                    string tableName = Tools.GetSwordExtension().Config.LayersConfiguration.TacticalObjectPoint;
+                    IFeatureClass featureClass = workspace.OpenFeatureClass(tableName);
                     IFeatureBuffer feature = featureClass.CreateFeatureBuffer();
                     // IFeature feature = featureClass.CreateFeature();
 
@@ -54,8 +54,7 @@ namespace Sword
                     IFeatureCursor featureCursor = featureClass.Insert(true);
                     featureCursor.InsertFeature(feature);
                     featureCursor.Flush();
-                    // feature.Store();                    
-                    locker.Unlock();
+                    // feature.Store();
                     //Release the Cursor
                     System.Runtime.InteropServices.Marshal.ReleaseComObject(featureCursor);
                     System.Runtime.InteropServices.Marshal.ReleaseComObject(featureClass);
@@ -64,7 +63,8 @@ namespace Sword
                 {
                     locker.Abord();
                     System.Diagnostics.Trace.WriteLine(e.Message);
-                }                
+                }
+                locker.Unlock();
             }
 
             private IGeometry CreatePosition(int x, int y)

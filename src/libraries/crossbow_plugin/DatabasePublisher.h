@@ -28,7 +28,7 @@ namespace dispatcher
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
     class Workspace_ABC;
     class Database_ABC;

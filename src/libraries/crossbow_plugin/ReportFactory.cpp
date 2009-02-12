@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "ReportFactory.h"
 #include "ReportTemplate.h"
 #include "dispatcher/Config.h"
@@ -18,7 +18,7 @@
 
 using namespace xml;
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: ReportFactory constructor

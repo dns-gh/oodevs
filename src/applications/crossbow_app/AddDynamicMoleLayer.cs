@@ -136,7 +136,7 @@ namespace Sword
                 featureLayer.FeatureClass = featureClass;
                 group.Add(featureLayer);
 
-                DynamicMoleLayer dynamicLayer = new DynamicMoleLayer(Tools.GetCSwordExtension().SymbolFactory);
+                DynamicMoleLayer dynamicLayer = new DynamicMoleLayer(Tools.GetSwordExtension().SymbolFactory);
                 dynamicLayer.Name = layer.Name + " - Dynamics";
                 dynamicLayer.FeatureClass = featureClass;
                 dynamicLayer.Connect();

@@ -28,7 +28,7 @@ namespace kernel
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
 
 // =============================================================================

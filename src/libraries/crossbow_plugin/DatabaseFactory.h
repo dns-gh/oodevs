@@ -3,53 +3,56 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2009 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __Line_h_
-#define __Line_h_
+#ifndef __dispatcher_esri_DatabaseFactory_h_
+#define __dispatcher_esri_DatabaseFactory_h_
 
-#include "PointCollection.h"
+namespace dispatcher
+{
+    class Config;
+}
 
 namespace plugins
 {
+    class Config;
+
 namespace esri
 {
-    class Point;
+    class Database_ABC;
 
 // =============================================================================
-/** @class  Line
-    @brief  Line
+/** @class  DatabaseFactory
+    @brief  DatabaseFactory
 */
-// Created: SBO 2007-08-30
+// Created: JCR 2009-02-10
 // =============================================================================
-class Line : public PointCollection
+class DatabaseFactory
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             Line();
-    explicit Line( const ASN1T_CoordLatLongList& asn );
-    explicit Line( IGeometryPtr geometry );
-    virtual ~Line();
+             DatabaseFactory();
+    virtual ~DatabaseFactory();
     //@}
 
     //! @name Operations
     //@{
-    void UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
-    void Serialize( ASN1T_Location& asn ) const;
+    Database_ABC& Create( const dispatcher::Config& config, const std::string& name );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Line( const Line& );            //!< Copy constructor
-    Line& operator=( const Line& ); //!< Assignment operator
+    DatabaseFactory( const DatabaseFactory& );            //!< Copy constructor
+    DatabaseFactory& operator=( const DatabaseFactory& ); //!< Assignment operator
     //@}
 };
 
 }
 }
 
-#endif // __Line_h_
+#endif // __dispatcher_esri_DatabaseFactory_h_

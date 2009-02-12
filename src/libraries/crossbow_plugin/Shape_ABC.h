@@ -12,7 +12,7 @@
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
     class Point;
     class PointCollection;

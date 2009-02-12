@@ -15,7 +15,7 @@
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
     class FeatureRow;
 
@@ -62,7 +62,7 @@ private:
     IFeatureClassPtr featureClass_;
     ISpatialReferencePtr spatialReference_;
     IFeatureCursorPtr cursor_;
-    std::auto_ptr< crossbow::FeatureRow > feature_;
+    std::auto_ptr< esri::FeatureRow > feature_;
     //@}
 };
 

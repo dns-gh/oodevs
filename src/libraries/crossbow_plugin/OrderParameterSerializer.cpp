@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "OrderParameterSerializer.h"
 #include "clients_kernel/OrderParameter.h"
 #include "dispatcher/Model.h"
@@ -25,7 +25,7 @@
 // #include <cmath>
 
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer constructor
@@ -208,18 +208,18 @@ void OrderParameterSerializer::SerializeBool( ASN1BOOL& asn, const std::string& 
 
 namespace 
 {
-    class GeometrySerializer : public crossbow::ShapeVisitor_ABC
+    class GeometrySerializer : public esri::ShapeVisitor_ABC
     {
     public:
         explicit GeometrySerializer( ASN1T_Location& asn ) 
             : asn_ ( asn ) 
         {
         }
-        void Visit( const crossbow::PointCollection& points )
+        void Visit( const esri::PointCollection& points )
         {
             points.Serialize( asn_ );
         }
-        void Visit( const crossbow::Point& point )
+        void Visit( const esri::Point& point )
         {
             point.Serialize( asn_ );
         }

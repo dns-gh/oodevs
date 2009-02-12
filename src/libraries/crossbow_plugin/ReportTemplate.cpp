@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
 #include "game_asn/Simulation.h"
@@ -15,7 +15,7 @@
 
 using namespace xml;
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: ReportTemplate constructor

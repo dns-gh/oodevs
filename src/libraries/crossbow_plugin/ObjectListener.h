@@ -19,7 +19,7 @@ namespace dispatcher
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
     class Database_ABC;
     class Row_ABC;

@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "OrderTypes.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/FragOrderType.h"
@@ -17,7 +17,7 @@
 
 using namespace xml;
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: OrderTypes constructor

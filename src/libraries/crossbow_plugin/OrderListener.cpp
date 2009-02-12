@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "OrderListener.h"
 #include "OrderDispatcher.h"
 #include "Database_ABC.h"
@@ -18,7 +18,7 @@
 
 using namespace dispatcher;
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: OrderListener constructor

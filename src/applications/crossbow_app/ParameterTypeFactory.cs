@@ -34,45 +34,18 @@ namespace Sword
             }
             private bool m_selected = false;
 
-
-            protected delegate void IFeatureSerializer(IFeatureBuffer feature);
-            // protected delegate void IFeatureBufferSerializer(IFeatureBuffer feature);
-
             protected void SerializeGeometry(String table, int parameterID, IGeometry value)
             {
-                Serialize(table, delegate(IFeatureBuffer feature)
-                {
-                    feature.Shape = value;
-                    Tools.SetValue<int>(feature, "ParameterID", parameterID);
-                });
-            }
-            
-            protected void Serialize(String table, IFeatureSerializer serializer)
-            {
-                IFeatureWorkspace ws = (IFeatureWorkspace)Tools.OpenWorkspace(Tools.GetCSwordExtension().Config.SharedFile);
+                IFeatureWorkspace ws = (IFeatureWorkspace)Tools.OpenWorkspace(Tools.GetSwordExtension().Config.SharedFile);
+                ScopeLockEditor locker = new ScopeLockEditor(ws);
+
+                locker.Lock();
                 IFeatureClass features = ws.OpenFeatureClass(table);
-                ScopeLockEditor locker = new ScopeLockEditor((IDataset)features);
-
-                try
-                {                                        
-                    locker.Lock();
-                    // IFeature feature = features.CreateFeature();
-                    IFeatureBuffer buffer = features.CreateFeatureBuffer(); 
-                    IFeatureCursor cursor = features.Insert(true);
-
-                    serializer(buffer);
-                    
-                    // feature.Store();
-                    cursor.InsertFeature(buffer);
-                    cursor.Flush();
-                    locker.Unlock();
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(cursor);                
-                }
-                catch (Exception ex)
-                {
-                    locker.Abord();
-                    System.Diagnostics.Trace.WriteLine(ex.Message, "Serialize parameter");
-                }
+                IFeature feature = features.CreateFeature();
+                feature.Shape = value;
+                Tools.SetValue<int>(feature, "ParameterID", parameterID);
+                feature.Store();
+                locker.Unlock();
             }
 
             protected void UpdateZAware(IPointCollection points)
@@ -92,268 +65,261 @@ namespace Sword
             }
         }
 
-        public sealed class ParameterTypePoint : ParameterType_ABC
+        public class ParameterTypeFactory
         {
-            int m_x;
-            int m_y;
-            IPoint m_point;
-
-            public ParameterTypePoint()
+            class ParameterTypePoint : ParameterType_ABC
             {
-                // NOTHING
-            }
+                int m_x;
+                int m_y;
+                IPoint m_point;
 
-            public override void OnContextMenu(int x, int y, IFeature selected)
-            {
-                m_x = x;
-                m_y = y;
-            }
-
-            public override void OnSelect(string value)
-            {
-                m_point = Tools.MakePoint(m_x, m_y);
-            }
-
-            public override string Type
-            {
-                get
+                public ParameterTypePoint()
                 {
-                    return "Point";
+                    // NOTHING
+                }
+
+                public override void OnContextMenu(int x, int y, IFeature selected)
+                {
+                    m_x = x;
+                    m_y = y;
+                }
+
+                public override void OnSelect(string value)
+                {
+                    m_point = Tools.MakePoint(m_x, m_y);
+                }
+
+                public override string Type 
+                {
+                    get
+                    {
+                        return "Point";
+                    }
+                }
+
+                public override string Value
+                {
+                    get
+                    {
+                        return "OrderParameterPoint";
+                    }
+                }
+
+                public override void Serialize(int parameterID)
+                {
+                    SerializeGeometry("OrderParameterPoint", parameterID, UpdateZAware(m_point));                    
                 }
             }
 
-            public override string Value
+            class ParameterTypePolygon : ParameterType_ABC
             {
-                get
+                IPointCollection m_polygon;
+
+                public override void OnContextMenu(int x, int y, IFeature selected)
                 {
-                    return "OrderParameterPoint";
+                    // NOTHING
                 }
-            }
-
-            public override void Serialize(int parameterID)
-            {
-                SerializeGeometry("OrderParameterPoint", parameterID, UpdateZAware(m_point));
-            }
-        }
-
-        public class ParameterTypePolygon : ParameterType_ABC
-        {
-            IPointCollection m_polygon;
-
-            public override void OnContextMenu(int x, int y, IFeature selected)
-            {
-                // NOTHING
-            }
-            public override void OnSelect(string value)
-            {
-                IScreenDisplay display = Tools.GetDocument().Display;
-                if (display == null)
-                    return;
-                m_polygon = null;
-                IRubberBand rubber = new RubberPolygonClass();
-                m_polygon = rubber.TrackNew(display, null) as IPointCollection;
-                if (m_polygon != null)
-                {
-                    // Get GeometryCollection for direct modification otherwise copy
-                    UpdateZAware(m_polygon);
-                    ISpatialReference spRef = ((IGeometry)m_polygon).SpatialReference;
-                    if (spRef == null)
-                        ((IGeometry)m_polygon).SpatialReference = Tools.GetDocument().SpatialReference;
-                }
-            }
-
-            public override string Type
-            {
-                get
-                {
-                    return "Area";
-                }
-            }
-
-            public override string Value
-            {
-                get
-                {
-                    return "OrderParameterArea";
-                }
-            }
-
-            public override void Serialize(int parameterID)
-            {
-                SerializeGeometry("OrderParameterArea", parameterID, (IGeometry)m_polygon);
-            }
-        }
-
-        public sealed class ParameterTypeLocation : ParameterTypePolygon
-        {
-            public override string Type
-            {
-                get
-                {
-                    return "Location";
-                }
-            }
-        }
-
-        public sealed class ParameterTypeAgent : ParameterType_ABC
-        {
-            IFeature m_agent;
-
-            public override void OnContextMenu(int x, int y, IFeature selected)
-            {
-                m_agent = selected;
-            }
-
-            public override string Type
-            {
-                get
-                {
-                    return "Agent";
-                }
-            }
-
-            public override string Value
-            {
-                get
-                {
-                    if (m_agent != null)
-                        return Tools.GetValue<int>(m_agent, "Public_OID").ToString();
-                    return "";
-                }
-            }
-        }
-
-        public sealed class ParameterTypeBool : ParameterType_ABC
-        {
-            bool m_state = false;
-
-            public override void OnContextMenu(int x, int y, IFeature selected)
-            {
-                m_state = !m_state;
-            }
-
-            public override string Type
-            {
-                get
-                {
-                    return "Bool";
-                }
-            }
-
-            public override string Value
-            {
-                get
-                {
-                    return m_state.ToString();
-                }
-            }
-        }
-
-        public sealed class ParameterTypePath : ParameterType_ABC
-        {
-            IPolyline m_path;
-
-            public override void OnContextMenu(int x, int y, IFeature selected)
-            {
-                // NOTHING ?
-            }
-            public override void OnSelect(string value)
-            {
-                if (m_path == null)
+                public override void OnSelect(string value)
                 {
                     IScreenDisplay display = Tools.GetDocument().Display;
                     if (display == null)
                         return;
-                    IRubberBand rubber = new RubberLineClass();
-                    m_path = (IPolyline)rubber.TrackNew(display, null);
-                    if (m_path != null)
+                    m_polygon = null;
+                    IRubberBand rubber = new RubberPolygonClass();
+                    m_polygon = rubber.TrackNew(display, null) as IPointCollection;
+                    if (m_polygon != null)
                     {
-                        UpdateZAware(m_path as IPointCollection);
-                        ISpatialReference spRef = m_path.SpatialReference;
+                        // Get GeometryCollection for direct modification otherwise copy
+                        UpdateZAware(m_polygon);
+                        ISpatialReference spRef = ((IGeometry)m_polygon).SpatialReference;
                         if (spRef == null)
-                            m_path.SpatialReference = Tools.GetDocument().SpatialReference;
+                            ((IGeometry)m_polygon).SpatialReference = Tools.GetDocument().SpatialReference;
+                    }
+                }
+
+                public override string Type
+                {
+                    get
+                    {
+                        return "Area";
+                    }
+                }
+
+                public override string Value
+                {
+                    get
+                    {
+                        return "OrderParameterArea";
+                    }
+                }
+
+                public override void Serialize(int parameterID) 
+                {
+                    SerializeGeometry("OrderParameterArea", parameterID, (IGeometry)m_polygon);
+                }
+            }
+
+            class ParameterTypeLocation : ParameterTypePolygon
+            {
+                public override string Type
+                {
+                    get
+                    {
+                        return "Location";
                     }
                 }
             }
 
-            public override string Type
+            class ParameterTypeAgent : ParameterType_ABC
             {
-                get
+                IFeature m_agent;
+
+                public override void OnContextMenu(int x, int y, IFeature selected)
                 {
-                    return "Path";
+                    m_agent = selected;
+                }
+
+                public override string Type
+                {
+                    get
+                    {
+                        return "Agent";
+                    }
+                }
+
+                public override string Value
+                {
+                    get
+                    {
+                        if (m_agent != null)
+                            return Tools.GetValue<int>(m_agent, "Public_OID").ToString();
+                        return "";
+                    }
+                }
+            }
+            sealed class ParameterTypeBool : ParameterType_ABC
+            {
+                bool m_state = false;
+
+                public override void OnContextMenu(int x, int y, IFeature selected)
+                {
+                    m_state = !m_state;
+                }
+
+                public override string Type
+                {
+                    get
+                    {
+                        return "Bool";
+                    }
+                }
+
+                public override string Value
+                {
+                    get
+                    {
+                        return m_state.ToString();
+                    }
                 }
             }
 
-            public override string Value
+            sealed class ParameterTypePath : ParameterType_ABC
             {
-                get
+                IPolyline m_path;
+
+                public override void OnContextMenu(int x, int y, IFeature selected)
                 {
-                    return "OrderParameterLine";
+                    // NOTHING ?
+                }
+                public override void OnSelect(string value)
+                {
+                    if (m_path == null)
+                    {
+                        IScreenDisplay display = Tools.GetDocument().Display;
+                        if (display == null)
+                            return;
+                        IRubberBand rubber = new RubberLineClass();
+                        m_path = (IPolyline)rubber.TrackNew(display, null);
+                        if (m_path != null)
+                        {
+                            UpdateZAware(m_path as IPointCollection);
+                            ISpatialReference spRef = m_path.SpatialReference;
+                            if (spRef == null)
+                                m_path.SpatialReference = Tools.GetDocument().SpatialReference;
+                        }
+                    }
+                }
+
+                public override string Type
+                {
+                    get
+                    {
+                        return "Path";
+                    }
+                }
+
+                public override string Value
+                {
+                    get
+                    {
+                        return "OrderParameterLine";
+                    }
+                }
+
+                public override void Serialize(int parameterID)
+                {
+                    SerializeGeometry("OrderParameterLine", parameterID, m_path);
                 }
             }
 
-            public override void Serialize(int parameterID)
+
+            sealed class ParameterTypeLine : ParameterType_ABC
             {
-                SerializeGeometry("OrderParameterLine", parameterID, m_path);
-            }
-        }
+                IPolyline m_path = new PolylineClass();
 
-
-        public class ParameterTypeLine : ParameterType_ABC
-        {
-            IPolyline m_path = new PolylineClass();
-
-            public ParameterTypeLine()
-            {
-                ISpatialReference spRef = m_path.SpatialReference;
-                if (spRef == null)
-                    m_path.SpatialReference = Tools.GetDocument().SpatialReference;
-            }
-
-            public override void OnContextMenu(int x, int y, IFeature selected)
-            {
-                if (selected.Shape.GeometryType == esriGeometryType.esriGeometryPolyline)
-                    OnSelect(selected.Shape);
-            }
-
-            public override void OnSelect(IGeometry value)
-            {
-                IPointCollection points = (IPointCollection)m_path;
-                if (value is IPointCollection)
-                    points.SetPointCollection((IPointCollection)value);
-                    // points.AddPointCollection((IPointCollection)value);
-                UpdateZAware(points);
-            }
-
-            public override string Type
-            {
-                get
+                public ParameterTypeLine()
                 {
-                    return "Line";
+                    ISpatialReference spRef = m_path.SpatialReference;
+                    if (spRef == null)
+                        m_path.SpatialReference = Tools.GetDocument().SpatialReference;
+                }
+
+                public override void OnContextMenu(int x, int y, IFeature selected)
+                {
+                    if (selected.Shape.GeometryType == esriGeometryType.esriGeometryPolyline)
+                        OnSelect(selected.Shape);
+                }
+
+                public override void OnSelect(IGeometry value) 
+                {
+                    IPointCollection points = (IPointCollection)m_path;
+                    // if (value is IPointCollection)
+                        points.AddPointCollection((IPointCollection)value);
+                    UpdateZAware(points);                    
+                }
+
+                public override string Type
+                {
+                    get
+                    {
+                        return "Line";
+                    }
+                }
+
+                public override string Value
+                {
+                    get
+                    {
+                        return "OrderParameterLine";
+                    }
+                }
+
+                public override void Serialize(int parameterID)
+                {
+                    SerializeGeometry("OrderParameterLine", parameterID, m_path);
                 }
             }
-
-            public override string Value
-            {
-                get
-                {
-                    return "OrderParameterLine";
-                }
-            }
-
-            public override void Serialize(int parameterID)
-            {
-                SerializeGeometry("OrderParameterLine", parameterID, m_path);
-            }
-
-            protected void SerializeShape(IFeatureBuffer feature)
-            {
-                feature.Shape = m_path;
-            }
-        }
-
-        public class ParameterTypeFactory
-        {
+            
             public static void Initialize(string workspace)
             {
                 Tools.ClearClass(workspace, "OrderParameterArea");

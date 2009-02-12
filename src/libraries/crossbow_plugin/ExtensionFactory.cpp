@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "ExtensionFactory.h"
 #include "dispatcher/AgentSymbols.h"
 #include "dispatcher/AutomatSymbols.h"
@@ -23,7 +23,7 @@
 #include "dispatcher/AgentKnowledge.h"
 
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: ExtensionFactory constructor

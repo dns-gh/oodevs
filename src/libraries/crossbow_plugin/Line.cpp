@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "Line.h"
 #include "Point.h"
 
@@ -17,7 +17,7 @@ using namespace plugins;
 // Name: Line constructor
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-crossbow::Line::Line()
+esri::Line::Line()
 {
     // NOTHING
 }
@@ -26,7 +26,7 @@ crossbow::Line::Line()
 // Name: Line constructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Line::Line( const ASN1T_CoordLatLongList& asn )
+esri::Line::Line( const ASN1T_CoordLatLongList& asn )
     : PointCollection( asn )
 {
     // NOTHING
@@ -36,7 +36,7 @@ crossbow::Line::Line( const ASN1T_CoordLatLongList& asn )
 // Name: Line constructor
 // Created: JCR 2007-11-06
 // -----------------------------------------------------------------------------
-crossbow::Line::Line( IGeometryPtr geometry )
+esri::Line::Line( IGeometryPtr geometry )
     : PointCollection( geometry )
 {
     // NOTHING
@@ -46,7 +46,7 @@ crossbow::Line::Line( IGeometryPtr geometry )
 // Name: Line destructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Line::~Line()
+esri::Line::~Line()
 {
     // NOTHING
 }
@@ -55,7 +55,7 @@ crossbow::Line::~Line()
 // Name: Line::UpdateGeometry
 // Created: JCR 2007-08-31
 // -----------------------------------------------------------------------------
-void crossbow::Line::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+void esri::Line::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
 {
     if( geometry == NULL )
         geometry.CreateInstance( CLSID_Polyline );
@@ -66,7 +66,7 @@ void crossbow::Line::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr
 // Name: Line::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Line::Serialize( ASN1T_Location& asn ) const
+void esri::Line::Serialize( ASN1T_Location& asn ) const
 {
     asn.type = EnumLocationType::line;
     PointCollection::Serialize( asn );

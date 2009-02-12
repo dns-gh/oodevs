@@ -17,7 +17,7 @@
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
     typedef boost::variant< int, long, std::string, bool > FieldVariant;
 }

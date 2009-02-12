@@ -88,7 +88,7 @@ namespace Sword
                 SelectFeature(m_symbolTree.GetNodeAt(e.X, e.Y));
                 if (e.Button == MouseButtons.Right)
                 {
-                    OrderHandler handler = Tools.GetCSwordExtension().OrderHandler;
+                    OrderHandler handler = Tools.GetSwordExtension().OrderHandler;
                     if (handler != null)
                         handler.OnContextMenu(e.X, e.Y);
                 }
@@ -169,9 +169,8 @@ namespace Sword
                     string symbol = Tools.GetValue<string>(pFeature, "Symbol_ID");
                     string name = Tools.GetValue<string>(pFeature, "Name");
 
-                    TreeNode newNode = node[0].Nodes.Add(oid.ToString(), name + " [" + oid + "]", symbol);
+                    TreeNode newNode = node[0].Nodes.Add(oid.ToString(), name, symbol);
                     newNode.SelectedImageKey = symbol;
-                    newNode.ForeColor = node[0].ForeColor;
                     pFeature = pCursor.NextFeature();
                 }
                 pCursor = null;
@@ -193,8 +192,7 @@ namespace Sword
 
                     TreeNode[] node = m_symbolTree.Nodes.Find(oidParent.ToString(), true);
                     TreeNode newNode = node[0].Nodes.Add(oid.ToString(), name, symbol);
-                    newNode.ForeColor = node[0].ForeColor;
-                    newNode.SelectedImageKey = symbol;                
+                    newNode.SelectedImageKey = symbol;
                     RunAgentCursorOnSubordinate(pFeatureClass, oidParent.ToString(), oid.ToString());
                     pFeature = pCursor.NextFeature();
                 }
@@ -212,8 +210,6 @@ namespace Sword
                     int oid = Tools.GetValue<int>(pRow, "Public_OID");
                     string name = Tools.GetValue<string>(pRow, "Name");
                     string symbolID = Tools.GetValue<string>(pRow, "Symbol_ID");
-                    int type = Tools.GetValue<int>(pRow, "Type");
-                    bool engaged = Tools.GetValue<short>(pRow, "Engaged") < 0;
 
                     TreeNodeCollection parentNode = m_symbolTree.Nodes;
                     TreeNode[] query = m_symbolTree.Nodes.Find(oidParent.ToString(), true);
@@ -223,8 +219,6 @@ namespace Sword
                         parentNode = query[0].Nodes;
                     TreeNode newNode = parentNode.Add(oid.ToString(), name, symbolID);
                     newNode.SelectedImageKey = symbolID;
-                    if (type > 0 && engaged)
-                        newNode.ForeColor = Color.Blue;
                     pRow = pCursor.NextRow();
                 }
                 pCursor = null;
@@ -240,7 +234,7 @@ namespace Sword
                     return;
                 m_featureLayer = layer;
                 IFeatureWorkspace workspace = Tools.RetrieveWorkspace(m_featureLayer);
-                ITable formationTable = workspace.OpenTable("Formations");
+                ITable formationTable = workspace.OpenTable("taranis_simulation.sde.Formations");
                 m_symbolTree.BeginUpdate();
                 BuildSymbols(formationTable);
                 BuildSymbols(m_featureLayer.FeatureClass as ITable);

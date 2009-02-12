@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionParameterFactory_ABC_h_
-#define __ActionParameterFactory_ABC_h_
+#ifndef __ActionsParameterFactory_ABC_h_
+#define __ActionsParameterFactory_ABC_h_
 
 namespace kernel
 {
@@ -50,4 +50,4 @@ public:
 
 }
 
-#endif // __ActionParameterFactory_ABC_h_
+#endif // __ActionsParameterFactory_ABC_h_

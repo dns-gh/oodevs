@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __CrossbowPlugin_h_
-#define __CrossbowPlugin_h_
+#ifndef __EsriPlugin_h_
+#define __EsriPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
 #include "dispatcher/NoopPublisher.h"
@@ -35,25 +35,25 @@ namespace tools
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
     class DatabasePublisher;
 
 // =============================================================================
-/** @class  CrossbowPlugin
-    @brief  CrossbowPlugin
+/** @class  EsriPlugin
+    @brief  EsriPlugin
 */
 // Created: JCR 2007-08-29
 // =============================================================================
-class CrossbowPlugin : public dispatcher::Plugin_ABC
-                     , public dispatcher::NoopClientPublisher
+class EsriPlugin : public dispatcher::Plugin_ABC
+                 , public dispatcher::NoopClientPublisher
 {
 
 public:
     //! @name Constructors/Destructor
     //@{             
-             CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables );
-    virtual ~CrossbowPlugin();
+             EsriPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables );
+    virtual ~EsriPlugin();
     //@}
 
     //! @name Operations
@@ -68,8 +68,8 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    CrossbowPlugin( const CrossbowPlugin& );            //!< Copy constructor
-    CrossbowPlugin& operator=( const CrossbowPlugin& ); //!< Assignement operator
+    EsriPlugin( const EsriPlugin& );            //!< Copy constructor
+    EsriPlugin& operator=( const EsriPlugin& ); //!< Assignement operator
     //@}
 
 private:
@@ -83,4 +83,4 @@ private:
 }
 }
 
-#endif // __CrossbowPlugin_h_
+#endif // __EsriPlugin_h_

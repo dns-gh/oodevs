@@ -14,7 +14,7 @@
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
 
 // =============================================================================
@@ -23,7 +23,7 @@ namespace crossbow
 */
 // Created: SBO 2007-08-30
 // =============================================================================
-class FeatureRow : public crossbow::Row
+class FeatureRow : public esri::Row
 {
 
 public:

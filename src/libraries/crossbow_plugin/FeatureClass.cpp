@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "FeatureClass.h"
 #include "FeatureRow.h"
 #include <boost/lexical_cast.hpp>
@@ -28,7 +28,7 @@ namespace
 // Name: FeatureClass constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::FeatureClass::FeatureClass( IFeatureClassPtr featureClass, const std::string& name )
+esri::FeatureClass::FeatureClass( IFeatureClassPtr featureClass, const std::string& name )
     : Table( GetTable( featureClass ), name )
     , name_( name )
     , featureClass_( featureClass )
@@ -43,7 +43,7 @@ crossbow::FeatureClass::FeatureClass( IFeatureClassPtr featureClass, const std::
 // Name: FeatureClass destructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::FeatureClass::~FeatureClass()
+esri::FeatureClass::~FeatureClass()
 {
     // NOTHING
 }
@@ -52,7 +52,7 @@ crossbow::FeatureClass::~FeatureClass()
 // Name: FeatureClass::InitializeSpatialReference
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::FeatureClass::InitializeSpatialReference()
+void esri::FeatureClass::InitializeSpatialReference()
 {
     ISpatialReferenceFactoryPtr factory( CLSID_SpatialReferenceEnvironment );
     IGeographicCoordinateSystemPtr geoCoordSystem;
@@ -75,7 +75,7 @@ void crossbow::FeatureClass::InitializeSpatialReference()
 // Name: FeatureClass::CreateRow
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC& crossbow::FeatureClass::CreateRow()
+esri::Row_ABC& esri::FeatureClass::CreateRow()
 {
     IFeaturePtr feature;
     featureClass_->CreateFeature( &feature ); // $$$$ SBO 2007-08-30: check
@@ -87,7 +87,7 @@ crossbow::Row_ABC& crossbow::FeatureClass::CreateRow()
 // Name: FeatureClass::UpdateRow
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::FeatureClass::UpdateRow( const Row_ABC& row )
+void esri::FeatureClass::UpdateRow( const Row_ABC& row )
 {
     if( &row != feature_.get() )
         return;
@@ -113,7 +113,7 @@ namespace
 // Name: FeatureClass::Find
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC* crossbow::FeatureClass::Find( const std::string& query )
+esri::Row_ABC* esri::FeatureClass::Find( const std::string& query )
 {
     IQueryFilterPtr filter;
 
@@ -135,7 +135,7 @@ crossbow::Row_ABC* crossbow::FeatureClass::Find( const std::string& query )
 // Name: FeatureClass::GetNextRow
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC* crossbow::FeatureClass::GetNextRow()
+esri::Row_ABC* esri::FeatureClass::GetNextRow()
 {
     IFeaturePtr feature;
     if( FAILED( cursor_->NextFeature( &feature ) ) || feature == NULL )

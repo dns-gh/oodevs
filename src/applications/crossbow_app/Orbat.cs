@@ -95,7 +95,7 @@ namespace Sword
 
             public void OnCreate(object hook)
             {
-                Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoadedHandler);
+                Tools.GetSwordExtension().ModelLoaded += new EventHandler(OnModelLoadedHandler);
             }
 
             public void OnDestroy()
@@ -113,7 +113,7 @@ namespace Sword
 
             private void OnModelLoadedHandler(object sender, EventArgs e)
             {
-                LoadLayer(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
+                LoadLayer(Tools.GetSwordExtension().Config.LayersConfiguration.Units);
             }
         }
     }

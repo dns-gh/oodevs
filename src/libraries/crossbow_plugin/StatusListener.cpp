@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "StatusListener.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
@@ -15,7 +15,7 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: StatusListener constructor

@@ -20,7 +20,7 @@ namespace dispatcher
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
 
 // =============================================================================
@@ -31,11 +31,9 @@ namespace crossbow
 // =============================================================================
 class Database : public Database_ABC
 {
-
 public:
     //! @name Constructors/Destructor
-    //@{
-    explicit Database( const dispatcher::Config& config, const std::string& name );
+    //@{    
     virtual ~Database();
     //@}
 
@@ -45,13 +43,27 @@ public:
     virtual void UnLock();
     virtual void StartEdit();
     virtual void StopEdit();
-    // virtual Table_ABC& OpenTable( const std::string& name, bool clear = true );
+    //@}
+
+    //! @name 
+    //@{
     virtual Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true );
-    virtual Table_ABC*  OpenTable( const std::string& name );        
+    virtual Table_ABC*  OpenTable( const std::string& name );
     virtual void        ClearTable( const std::string& name );
     virtual void ReleaseTable( const std::string& name );
     //@}
 
+protected:
+    //! @name Constructor
+    //@{
+        Database();
+    //@}
+
+    //! @name Workspace builder
+    //@{
+    void Initialize( IWorkspacePtr spWorkspace );
+    //@}
+    
 private:
     //! @name Copy/Assignment
     //@{
@@ -63,6 +75,7 @@ private:
     //@{
     Table_ABC* OpenWrappedTable( const std::string& name );
     //@}
+    
 
     //! @name Types
     //@{

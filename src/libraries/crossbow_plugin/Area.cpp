@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "Area.h"
 #include "Point.h"
 
@@ -17,7 +17,7 @@ using namespace plugins;
 // Name: Area constructor
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-crossbow::Area::Area()
+esri::Area::Area()
 {
     // NOTHING
 }
@@ -26,7 +26,7 @@ crossbow::Area::Area()
 // Name: Area constructor
 // Created: JCR 2008-04-25
 // -----------------------------------------------------------------------------
-crossbow::Area::Area( const ASN1T_CoordLatLongList& asn )
+esri::Area::Area( const ASN1T_CoordLatLongList& asn )
     : PointCollection( asn )
 {
     // NOTHING
@@ -36,7 +36,7 @@ crossbow::Area::Area( const ASN1T_CoordLatLongList& asn )
 // Name: Area constructor
 // Created: JCR 2007-11-06
 // -----------------------------------------------------------------------------
-crossbow::Area::Area( IGeometryPtr geometry )
+esri::Area::Area( IGeometryPtr geometry )
     : PointCollection( geometry )
 {
     // NOTHING
@@ -46,7 +46,7 @@ crossbow::Area::Area( IGeometryPtr geometry )
 // Name: Area destructor
 // Created: JCR 2008-04-25
 // -----------------------------------------------------------------------------
-crossbow::Area::~Area()
+esri::Area::~Area()
 {
     // NOTHING
 }
@@ -55,7 +55,7 @@ crossbow::Area::~Area()
 // Name: Area::UpdateGeometry
 // Created: JCR 2007-08-31
 // -----------------------------------------------------------------------------
-void crossbow::Area::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+void esri::Area::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
 {
     if( geometry == NULL )
         geometry.CreateInstance( CLSID_Polygon );
@@ -66,7 +66,7 @@ void crossbow::Area::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr
 // Name: Area::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Area::Serialize( ASN1T_Location& asn ) const
+void esri::Area::Serialize( ASN1T_Location& asn ) const
 {
     asn.type = EnumLocationType::polygon;
     PointCollection::Serialize( asn );

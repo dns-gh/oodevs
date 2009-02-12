@@ -37,7 +37,6 @@ namespace Sword
                 m_workspace.ExerciseFile = exerciseFileDialog.FileName;
 
                 string rootDir = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "\\sessions";
-                sessionList.Items.Clear();
                 foreach (string dir in System.IO.Directory.GetDirectories(rootDir))
                 {
                     int index = dir.LastIndexOf('\\');
@@ -49,34 +48,27 @@ namespace Sword
             private void sessionList_SelectedIndexChanged(object sender, EventArgs e)
             {
                 string item = (string)sessionList.SelectedItem;
-                string sessionDir = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "\\sessions\\" + item;
+                string sessionDir = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/sessions/" + item;
                 XmlDocument doc = new XmlDocument();
-                doc.Load(sessionDir + "\\session.xml");
+                doc.Load(sessionDir + "/session.xml");
                 string workspace = doc.SelectSingleNode("/session/config/dispatcher/plugins/crossbow/@geodatabase").Value;
-                LookupLayer(System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "\\" + workspace);
+                LookupLayer(System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/" + workspace);
                 string shared = doc.SelectSingleNode("/session/config/dispatcher/plugins/crossbow/@geodatabase-shared").Value;
-                m_workspace.SharedFile = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "\\" + shared;
+                m_workspace.SharedFile = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/" + shared;
                 string population = doc.SelectSingleNode("/session/config/dispatcher/plugins/crossbow/@geodatabase-population").Value;
-                m_workspace.PopulationFile = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "\\" + population;
+                m_workspace.PopulationFile = System.IO.Path.GetDirectoryName(m_workspace.ExerciseFile) + "/" + population;
             }
 
             private void LookupLayer(string file)
             {
                 m_workspace.WorkspaceFile = file;
                 IWorkspaceFactory factory = new AccessWorkspaceFactoryClass();
-                try
+                IWorkspace workspace = factory.OpenFromFile(file, 0);
+                if (workspace != null)
                 {
-                    IWorkspace workspace = factory.OpenFromFile(file, 0);
-                    if (workspace != null)
-                    {
-                        layersGrid.SelectedObject = null;
-                        FeatureLayerList.SetValues(workspace.get_DatasetNames(esriDatasetType.esriDTFeatureClass));
-                        layersGrid.SelectedObject = m_workspace.LayersConfiguration;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Trace.WriteLine(ex.Message, "Error loading workspace");
+                    layersGrid.SelectedObject = null;
+                    FeatureLayerList.SetValues(workspace.get_DatasetNames(esriDatasetType.esriDTFeatureClass));
+                    layersGrid.SelectedObject = m_workspace.LayersConfiguration;
                 }
             }
 

@@ -25,7 +25,7 @@ namespace dispatcher
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
     class ReportTemplate;
 

@@ -98,7 +98,7 @@ namespace Sword
             public override void OnCreate(object hook)
             {
                 if (Tools.IsSupportedApplication(hook))
-                    Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoaded);
+                    Tools.GetSwordExtension().ModelLoaded += new EventHandler(OnModelLoaded);
                 m_enabled = false;
             }
 
@@ -111,7 +111,7 @@ namespace Sword
             {
                 try
                 {
-                    Tools.GetCSwordExtension().EmergencyHandler.OnContextMenu(X, Y);
+                    Tools.GetSwordExtension().EmergencyHandler.OnContextMenu(X, Y);
                     ICommandBar menu = Tools.GetIDocument().CommandBars.Create("EmergencyMenu", esriCmdBarType.esriCmdBarTypeShortcutMenu);
                     BuildContextMenu(menu);
                     if (menu.Count > 0)

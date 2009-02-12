@@ -7,30 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __CrossbowPluginFactory_h_
-#define __CrossbowPluginFactory_h_
+#ifndef __EsriPluginFactory_h_
+#define __EsriPluginFactory_h_
 
 #include "dispatcher/PluginFactory_ABC.h"
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
 
 // =============================================================================
-/** @class  CrossbowPluginFactory
-    @brief  CrossbowPluginFactory
+/** @class  EsriPluginFactory
+    @brief  EsriPluginFactory
 */
 // Created: SBO 2008-02-28
 // =============================================================================
-class CrossbowPluginFactory : public dispatcher::PluginFactory_ABC
+class EsriPluginFactory : public dispatcher::PluginFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossbowPluginFactory();
-    virtual ~CrossbowPluginFactory();
+             EsriPluginFactory();
+    virtual ~EsriPluginFactory();
     //@}
 
     //! @name Operations
@@ -43,12 +43,12 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    CrossbowPluginFactory( const CrossbowPluginFactory& );            //!< Copy constructor
-    CrossbowPluginFactory& operator=( const CrossbowPluginFactory& ); //!< Assignment operator
+    EsriPluginFactory( const EsriPluginFactory& );            //!< Copy constructor
+    EsriPluginFactory& operator=( const EsriPluginFactory& ); //!< Assignment operator
     //@}
 };
 
 }
 }
 
-#endif // __CrossbowPluginFactory_h_
+#endif // __EsriPluginFactory_h_

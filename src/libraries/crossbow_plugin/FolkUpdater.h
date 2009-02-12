@@ -14,7 +14,7 @@
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {    
     class Table_ABC;
     class Row_ABC;

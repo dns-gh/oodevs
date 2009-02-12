@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "FeatureRow.h"
 #include "Point.h"
 #include "Line.h"
 #include "Area.h"
 
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: FeatureRow constructor
@@ -46,11 +46,11 @@ namespace
             , spatialReference_( spatialReference )
         {
         }
-        virtual void Visit( const crossbow::PointCollection& points )
+        virtual void Visit( const esri::PointCollection& points )
         {
             points.UpdateGeometry( geometry_, spatialReference_ );
         }
-        virtual void Visit( const crossbow::Point& point )
+        virtual void Visit( const esri::Point& point )
         {
             point.UpdateGeometry( geometry_, spatialReference_ );
         }
@@ -107,7 +107,7 @@ void FeatureRow::BindFeature( IFeaturePtr feature )
     shape_.reset();
     IRowPtr row;
     feature.QueryInterface( IID_IRow, &row ); // $$$$ SBO 2007-08-30: check
-    crossbow::Row::BindRow( row );
+    esri::Row::BindRow( row );
 }
 
 // -----------------------------------------------------------------------------

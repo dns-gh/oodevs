@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "Table.h"
 #include "Row.h"
 #include <boost/lexical_cast.hpp>
@@ -18,7 +18,7 @@ using namespace plugins;
 // Name: Table constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Table::Table( ITablePtr table, const std::string& name )
+esri::Table::Table( ITablePtr table, const std::string& name )
     : name_( name )
     , table_( table )
     , cursor_()
@@ -32,7 +32,7 @@ crossbow::Table::Table( ITablePtr table, const std::string& name )
 // Name: Table destructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Table::~Table()
+esri::Table::~Table()
 {
     // NOTHING
 }
@@ -55,7 +55,7 @@ namespace
 // Name: Table::CreateRow
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC& crossbow::Table::CreateRow()
+esri::Row_ABC& esri::Table::CreateRow()
 {
     IRowPtr row;
     HRESULT res = table_->CreateRow( &row ); // $$$$ SBO 2007-08-30: check
@@ -69,7 +69,7 @@ crossbow::Row_ABC& crossbow::Table::CreateRow()
 // Name: Table::DeleteRows
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-void crossbow::Table::DeleteRows( const std::string& query )
+void esri::Table::DeleteRows( const std::string& query )
 {
     IQueryFilterPtr filter;
     if ( query != "" )
@@ -84,7 +84,7 @@ void crossbow::Table::DeleteRows( const std::string& query )
 // Name: Table::Clear
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::Table::Clear()
+void esri::Table::Clear()
 {
     DeleteRows( "" );
 }
@@ -93,7 +93,7 @@ void crossbow::Table::Clear()
 // Name: Table::UpdateRow
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Table::UpdateRow( const Row_ABC& row )
+void esri::Table::UpdateRow( const Row_ABC& row )
 {
     if( &row != row_.get() )
         return;
@@ -104,7 +104,7 @@ void crossbow::Table::UpdateRow( const Row_ABC& row )
 // Name: Table::Find
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC* crossbow::Table::Find( const std::string& query )
+esri::Row_ABC* esri::Table::Find( const std::string& query )
 {
     IQueryFilterPtr filter;
     
@@ -126,7 +126,7 @@ crossbow::Row_ABC* crossbow::Table::Find( const std::string& query )
 // Name: Table::GetNextRow
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC* crossbow::Table::GetNextRow()
+esri::Row_ABC* esri::Table::GetNextRow()
 {
     IRowPtr row;
     if( cursor_ != NULL && ( FAILED( cursor_->NextRow( &row ) ) || row == NULL ) )
@@ -139,7 +139,7 @@ crossbow::Row_ABC* crossbow::Table::GetNextRow()
 // Name: Table::BeginTransaction
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Table::BeginTransaction()
+void esri::Table::BeginTransaction()
 {
     inTransaction_ = true;
 }
@@ -148,7 +148,7 @@ void crossbow::Table::BeginTransaction()
 // Name: Table::EndTransaction
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Table::EndTransaction()
+void esri::Table::EndTransaction()
 {
     inTransaction_ = false;
 }
@@ -157,7 +157,7 @@ void crossbow::Table::EndTransaction()
 // Name: Table::InTransaction
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-bool crossbow::Table::InTransaction() const
+bool esri::Table::InTransaction() const
 {
     return inTransaction_;
 }

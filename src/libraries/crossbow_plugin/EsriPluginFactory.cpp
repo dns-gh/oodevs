@@ -7,39 +7,39 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
-#include "CrossbowPluginFactory.h"
-#include "CrossbowPlugin.h"
+#include "esri_plugin_pch.h"
+#include "EsriPluginFactory.h"
+#include "EsriPlugin.h"
 
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
-// Name: CrossbowPluginFactory constructor
+// Name: EsriPluginFactory constructor
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-CrossbowPluginFactory::CrossbowPluginFactory()
+EsriPluginFactory::EsriPluginFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossbowPluginFactory destructor
+// Name: EsriPluginFactory destructor
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-CrossbowPluginFactory::~CrossbowPluginFactory()
+EsriPluginFactory::~EsriPluginFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::auto_ptr< dispatcher::Plugin_ABC > CrossbowPluginFactory::Create
+// Name: std::auto_ptr< dispatcher::Plugin_ABC > EsriPluginFactory::Create
 // Created: JCR 2008-07-30
 // -----------------------------------------------------------------------------
-std::auto_ptr< dispatcher::Plugin_ABC > CrossbowPluginFactory::Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& clientCommands, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables ) const
+std::auto_ptr< dispatcher::Plugin_ABC > EsriPluginFactory::Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& clientCommands, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables ) const
 {
     std::auto_ptr< dispatcher::Plugin_ABC > result;
-    if( name == "crossbow" )
-        result.reset( new CrossbowPlugin( config, xis, model, simulation, clientCommands, links, registrables ) );
+    if( name == "esri" )
+        result.reset( new EsriPlugin( config, xis, model, simulation, clientCommands, links, registrables ) );
     return result;
 }

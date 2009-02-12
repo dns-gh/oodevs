@@ -7,10 +7,11 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "DatabasePublisher.h"
 #include "Workspace.h"
-#include "Database.h"
+#include "DatabaseFactory.h"
+#include "Database_ABC.h"
 #include "DatabaseUpdater.h"
 #include "FolkUpdater.h"
 #include "ReportFactory.h"
@@ -24,7 +25,7 @@
 #include <xeumeuleu/xml.h>
 
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher constructor
@@ -72,7 +73,8 @@ DatabasePublisher::~DatabasePublisher()
 // -----------------------------------------------------------------------------
 void DatabasePublisher::Initialize( const std::string& name, const dispatcher::Config& config, xml::xistream& xis )
 {
-    databases_[ name ].reset( new Database( config, xml::attribute< std::string >( xis, name ) ) );
+    DatabaseFactory factory;
+    databases_[ name ].reset( &factory.Create( config, xml::attribute< std::string >( xis, name ) ) );
 }
 
 // -----------------------------------------------------------------------------

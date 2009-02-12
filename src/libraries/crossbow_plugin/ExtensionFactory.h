@@ -26,7 +26,7 @@ namespace dispatcher
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
 
 // =============================================================================

@@ -12,7 +12,7 @@
 
 namespace plugins
 {
-namespace crossbow
+namespace esri
 {
     class Database_ABC;
 
@@ -26,7 +26,7 @@ class ScopeEditor
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit ScopeEditor( crossbow::Database_ABC& database );
+    explicit ScopeEditor( esri::Database_ABC& database );
             ~ScopeEditor();
     //@}
           
@@ -40,7 +40,7 @@ private:
 private:
     //! @name Member data
     //@{
-    crossbow::Database_ABC& database_;
+    esri::Database_ABC& database_;
     //@}
 };
 

@@ -166,40 +166,22 @@ namespace Sword
             private void OnSelectionChanged(object sender, System.EventArgs e)
             {
                 string filter = m_teamCombo.SelectedItem.ToString();
-                    
-                bool units = FilterUnitLayer(filter);
-                bool knowledges = FilterKnowledgeLayer(filter);
-                if (units || knowledges)
+                IFeatureLayer layer = Tools.GetFeatureLayerByName(Tools.GetSwordExtension().Config.LayersConfiguration.Units);
+                if (layer != null)
+                {
+                    FilterLayer(layer, filter);
                     Tools.GetDocument().RefreshView();
+                }
             }
 
-            private bool FilterUnitLayer(string filter)
+            public void FilterLayer(IFeatureLayer layer, string filter)
             {
-                IFeatureLayer layer = Tools.GetFeatureLayerByName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
-
                 if (layer == null)
-                    return false;
-                IFeatureLayerDefinition definition = (IFeatureLayerDefinition)layer;
-                definition.DefinitionExpression = "";
-                if (filter != "All" && filter.Length > 0)                
-                    definition.DefinitionExpression = "Symbol_ID LIKE '?" + filter[0] + "?????????????'";                
-                return true;
-            }
-
-            private bool FilterKnowledgeLayer(string filter)
-            {
-                IFeatureLayer layer = Tools.GetFeatureLayerByName(Tools.GetCSwordExtension().Config.LayersConfiguration.KnowledgeUnits);    
-                if (layer == null)
-                    return false;
+                    return;
                 IFeatureLayerDefinition definition = (IFeatureLayerDefinition)layer;
                 definition.DefinitionExpression = "";
                 if (filter != "All" && filter.Length > 0)
-                {
-                    int filiation = layer.FeatureClass.FindField("ObserverAffiliation");
-                    if (filiation >= 0)                        
-                        definition.DefinitionExpression = "ObserverAffiliation = '" + filter[0] + "'";
-                }
-                return true;
+                    definition.DefinitionExpression = "Symbol_ID like '?" + filter[0] + "*'";
             }
 
             #region IDisposable Members

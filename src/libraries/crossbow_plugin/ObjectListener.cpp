@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "ObjectListener.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
@@ -19,7 +19,7 @@
 #include "game_asn/SimulationSenders.h"
 
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListener constructor
@@ -72,11 +72,11 @@ namespace
         GeometrySerializer( ASN1T_Location& asn )
             : asn_( &asn )
         {}
-        virtual void Visit( const crossbow::PointCollection& points )
+        virtual void Visit( const esri::PointCollection& points )
         {
             points.Serialize( *asn_ );
         }
-        virtual void Visit( const crossbow::Point& point )
+        virtual void Visit( const esri::Point& point )
         {
             point.Serialize( *asn_ );
         }

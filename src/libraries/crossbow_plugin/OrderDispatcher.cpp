@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "OrderDispatcher.h"
 #include "OrderTypes.h"
 #include "OrderParameterSerializer.h"
@@ -22,7 +22,7 @@
 #include "dispatcher/Automat.h"
 
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher constructor

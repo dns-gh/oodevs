@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "crossbow_plugin_pch.h"
+#include "esri_plugin_pch.h"
 #include "DatabaseUpdater.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
@@ -26,7 +26,7 @@
 #include "tools/App6Symbol.h"
 
 using namespace plugins;
-using namespace plugins::crossbow;
+using namespace plugins::esri;
 
 // -----------------------------------------------------------------------------
 // Name: DatabaseUpdater constructor
@@ -39,7 +39,7 @@ DatabaseUpdater::DatabaseUpdater( Database_ABC& database, const dispatcher::Mode
 {
     database.ClearTable( "UnitForces" );
     database.ClearTable( "KnowledgeUnits" );
-    database.ClearTable( "BoundaryLimits" );
+    // database.ClearTable( "BoundaryLimits" );
     database.ClearTable( "TacticalLines" );
     database.ClearTable( "TacticalObjectArea" );
     database.ClearTable( "TacticalObjectLine" );
