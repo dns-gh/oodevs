@@ -262,8 +262,8 @@
         </build-lib>
     </target>
 
-    <target name="application.dispatcher_dll.crossbowed" description="build CSword Dispatcher dll with crossbow" depends="library.dispatcher,library.ENT,library.plugins">
-        <build-lib name="dispatcher_dll_crossbowed" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm,qt" input="dispatcher_dll"
+    <target name="application.dispatcher_dll.esri" description="build CSword Dispatcher dll with esri" depends="library.dispatcher,library.ENT,library.plugins">
+        <build-lib name="dispatcher_dll_esri" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm,qt" input="dispatcher_dll"
                    pattern="dispatcher-${platform}-mt@{suffix}"
                    libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5
                          lib${ant.project.name}_actions-${platform}-mt
@@ -290,7 +290,7 @@
         </build-lib>
     </target>
 
-    <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="application.dispatcher_dll.crossbowed">
+    <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="application.dispatcher_dll.esri">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xeumeuleu,flexlm"
                    libs="masalloc,tools
                          dispatcher-${platform}-mt@{suffix}
@@ -537,14 +537,14 @@
         </nsis>
     </target>
 
-    <target name="package-crossbow" description="create the installer">
+    <target name="package-esri" description="create the installer">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ue-demo" script="sword-ue-demo.nsi" license="true">
             <arg value="/X!include sword-ue.nsh"/>
         </nsis>
     </target>
     
-    <target name="installer-crossbow" description="create the crossbow installer">
-        <nsis todir="${dist.dir}/current/${platform}" name="crossbow-plugin" script="crossbow.nsi" license="true">
+    <target name="installer-esri" description="create the esri installer">
+        <nsis todir="${dist.dir}/current/${platform}" name="esri-plugin" script="crossbow.nsi" license="true">
              <arg value="/X!include sword-ue.nsh"/>
         </nsis>     
         <!-- <exec executable="${bin.dir}/RegAsm.exe">

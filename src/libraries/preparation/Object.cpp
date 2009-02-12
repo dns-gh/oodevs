@@ -24,7 +24,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/ObjectIcons.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;

@@ -16,7 +16,7 @@
 #include "bml_plugin/BmlPluginFactory.h"
 #ifdef CROSSBOW_PLUGIN
 #   include "gearth_plugin/GearthPluginFactory.h"
-#   include "crossbow_plugin/EsriPluginFactory.h"
+#   include "esri_plugin/EsriPluginFactory.h"
 #endif
 #include "MT/MT_Logger/MT_Logger_lib.h"
 

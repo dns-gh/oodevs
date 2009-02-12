@@ -13,7 +13,7 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "FormationModel.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
 // Name: FormationTemplateElement constructor
