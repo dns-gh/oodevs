@@ -90,7 +90,7 @@ void ExerciseMenu::ReadResource( xml::xistream& xis, const tools::ExerciseConfig
     if( file.empty() )
         return;
     const int id = insertItem( name.c_str(), links_.size() );
-    file = config.BuildExerciseChildFile( file );
+    file = config.BuildExerciseChildFile( file.c_str() );
     links_.push_back( MakeLink( file ) );
     setItemEnabled( id, bfs::exists( file ) );
 }
@@ -102,7 +102,11 @@ void ExerciseMenu::ReadResource( xml::xistream& xis, const tools::ExerciseConfig
 void ExerciseMenu::OnSelect( int index )
 {
     if( index >= 0 && index < int( links_.size() ) )
-        interpreter_.Interprete( links_[index].c_str() );
+    {
+        QString tmp = QString::fromUtf8( links_[index].c_str() );
+        QUrl::encode( tmp );
+        interpreter_.Interprete( tmp );
+    }
 }
 
 // -----------------------------------------------------------------------------
