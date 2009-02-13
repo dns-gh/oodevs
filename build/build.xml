@@ -463,7 +463,7 @@
                     <filter token="PHYSICAL" value="@{physical}"/>
                 </filterset>
             </copy>
-            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true">
                 <arg value="--root-dir=../../data"/>
                 <arg value="--exercise=test-scripts"/>
                 <arg value="--session=test-session"/>
