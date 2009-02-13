@@ -165,7 +165,6 @@
     <target name="library.esri_plugin" description="build esri dispatcher plugin static library" depends="library.MT_Tools,library.tools,library.game_asn">
         <build-lib name="esri_plugin" pattern="lib${ant.project.name}_esri_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
-            <includepath path="${include.dir}/esri"/>
         </build-lib>
     </target>
 
@@ -550,7 +549,7 @@
     <target name="installer-esri" description="create the esri installer">
         <nsis todir="${dist.dir}/current/${platform}" name="esri-plugin" script="crossbow.nsi" license="true">
              <arg value="/X!include sword-ue.nsh"/>
-        </nsis>     
+        </nsis>
         <!-- <exec executable="${bin.dir}/RegAsm.exe">
             <arg value="../out/applications/crossbow_app/vc80/Release/Crossbow.dll"/>
             <arg value="/codebase"/>

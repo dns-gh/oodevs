@@ -15,11 +15,11 @@
 
 #pragma warning( push )
 #pragma warning( disable : 4146 4192 4278 4652 4336 )
-#import "esriSystem.olb"            raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
-#import "esriGeometry.olb"          raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
-#import "esriGeoDatabase.olb"       raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
-#import "esriDataSourcesGDB.olb"    raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
-#import "esriDefenseSolutions.olb"   raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
+#import <esri/esriSystem.olb>            no_registry, raw_interfaces_only, raw_native_types, no_namespace, named_guids, exclude( "OLE_COLOR", "OLE_HANDLE" )
+#import <esri/esriGeometry.olb>          no_registry, raw_interfaces_only, raw_native_types, no_namespace, named_guids
+#import <esri/esriGeoDatabase.olb>       no_registry, raw_interfaces_only, raw_native_types, no_namespace, named_guids
+#import <esri/esriDataSourcesGDB.olb>    no_registry, raw_interfaces_only, raw_native_types, no_namespace, named_guids
+#import <esri/esriDefenseSolutions.olb>  no_registry, raw_interfaces_only, raw_native_types, no_namespace, named_guids
 #pragma warning( pop )
 
 #endif // __EsriConnector_h_
