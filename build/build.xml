@@ -576,7 +576,7 @@
         <update name="zlib"/>
         <update name="bugtrap"/>
         <update name="shapelib"/>
-        <update name="esri"/>
+        <update name="esri" version="9.2"/>
         <update name="folk"/>
         <update name="mockpp"/>
         <update name="system"/>
