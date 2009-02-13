@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ESRI.ArcGIS.Display;
-using ESRI.ArcGIS.DefenseSolutions;
+using ESRI.ArcGIS.MOLE;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.esriSystem;
@@ -11,19 +11,47 @@ namespace Sword
     namespace Crossbow
     {
         public class SymbolFactory
-        {
+        {            
             private ISpatialReference m_spatialReference;
             private IForceElement2525BRenderer m_forceElementRenderer;
             private ITacticalGraphicRenderer m_tacticalElementRenderer;
-
+            
             // Mapping of Symbol Id's (string) to IDynamicGlyph's
             private Dictionary<string, IDynamicGlyph> m_Glyph = new Dictionary<string, IDynamicGlyph>();
+
+            /// <summary>
+            /// IMoleCoreHelper contains capabilities for obtaining default renderers, 
+            /// MOLE's runtime directory, etc.
+            /// </summary>
+            private static IMoleCoreHelper MoleHelper
+            {
+                get
+                {
+                    return m_MoleHelper;
+                }
+            }
+            private static IMoleCoreHelper m_MoleHelper = new MoleCoreHelperClass();
+
+            /// <summary>
+            /// The FEGraphicStyle style that will be used to create the next units
+            /// </summary>
+            private static IFEGraphicStyle StyleForCreate
+            {
+                get
+                {
+                    return m_StyleForCreate;
+                }
+                set
+                {
+                    m_StyleForCreate = value;
+                }
+            }
+            private static IFEGraphicStyle m_StyleForCreate = new FEGraphicStyleClass();
 
             #region Factory initialization / configuration
             public SymbolFactory()
             {
-                IMoleCoreHelper m_moleHelper = new MoleCoreHelperClass();
-                m_forceElementRenderer = (IForceElement2525BRenderer)m_moleHelper.ForceElementRenderer;
+                m_forceElementRenderer = MoleHelper.ForceElementRenderer as IForceElement2525BRenderer;
                 m_tacticalElementRenderer = new TacticalGraphic2525BRendererClass();
                 m_tacticalElementRenderer.UsesAffiliationColor = true;
             }
@@ -59,6 +87,7 @@ namespace Sword
                 return symbolId != null && symbolId.Trim().Length > 0;
             }
 
+            // Get bitmap symbol for Orbat image setup
             public System.Drawing.Bitmap GetSymbol(IDisplay pDisplay, string symbolId, string name, int size)
             {
                 if (IsEmergencyForceElement(symbolId))
@@ -78,7 +107,7 @@ namespace Sword
                 {
                     lock (m_Glyph)
                     {
-                        m_Glyph[symbolId] = CreateDynamicGlyphFromFile(dynamicDisplay, symbolId, 32, 32);
+                        m_Glyph[symbolId] = CreateDynamicGlyphFromFile(dynamicDisplay, symbolId, 48, 48);
                     }
                 }
                 element.Glyph = m_Glyph[symbolId];
@@ -89,12 +118,12 @@ namespace Sword
             private IDynamicElement CreateForceElement(IDisplay display, IDynamicDisplay dynamicDisplay, string symbolId)
             {
                 DynamicForceElement element = new DynamicForceElement();
-                element.CachedGraphic = CreateForceElementGraphic(symbolId, "");
+                element.CachedGraphic = CreateForceElementGraphic(symbolId, "");                
                 if (!m_Glyph.ContainsKey(symbolId))
                 {
                     lock (m_Glyph)
                     {
-                        m_Glyph[symbolId] = CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 32, 32);
+                        m_Glyph[ symbolId ] = CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 48, 48);
                     }
                 }
                 element.Glyph = m_Glyph[symbolId];
@@ -103,7 +132,17 @@ namespace Sword
 
             private ICachedGraphic CreateForceElementGraphic(string symbolId, string name)
             {
-                return m_forceElementRenderer.GraphicByForceElement(CreateMoleForceElement(symbolId, name));
+                IFEGraphic forceElementGraphic = null;
+                IForceElement forceElement = CreateMoleForceElement(symbolId, name);
+                IFEGraphicFactory factory = m_forceElementRenderer.GraphicFactory;
+
+                forceElementGraphic = factory.Make(symbolId);
+                forceElementGraphic.Style = StyleForCreate;
+                forceElementGraphic.ForceElement = forceElement;                
+                // m_forceElementRenderer.GraphicByForceElement();
+                ICachedGraphic cachedGraphic = forceElementGraphic as ICachedGraphic;                
+                cachedGraphic.IsLocked = false;
+                return cachedGraphic;
             }
 
             private IForceElement CreateMoleForceElement(string symbolId, string name)
@@ -120,8 +159,8 @@ namespace Sword
             private static string GetFileName(string symbolID, bool large)
             {
                 if (large)
-                    return Tools.GetSwordExtension().Config.BuildChildFile("\\Resources\\Symbols\\HSWG_Big\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png");
-                return Tools.GetSwordExtension().Config.BuildChildFile("\\Resources\\Symbols\\HSWG_Small\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png");
+                    return Tools.GetCSwordExtension().Config.BuildChildFile("\\Resources\\Symbols\\HSWG_Big\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png");
+                return Tools.GetCSwordExtension().Config.BuildChildFile("\\Resources\\Symbols\\HSWG_Small\\" + symbolID.Substring(0, symbolID.IndexOf('-')) + ".png");
             }
 
             // Create dynamic glyph
@@ -129,22 +168,33 @@ namespace Sword
             // glyphSize in points
             private static IDynamicGlyph CreateDynamicGlyph(IDisplay pDisplay, IDynamicDisplay pDynamicDisplay, ICachedGraphic pGraphic, int textureSize, int glyphSize)
             {
-                ICreateBitmap pBitmap = (ICreateBitmap)pGraphic;
-                IPictureMarkerSymbol pMarker = new PictureMarkerSymbolClass();
-                IColor bgColor = Tools.MakeColor(255, 255, 255);
-                IDynamicGlyphFactory factory = (IDynamicGlyphFactory)pDynamicDisplay.DynamicGlyphFactory;
+                IDynamicGlyph glyphMarker = null;
+                try
+                {
+                    IPictureMarkerSymbol pMarker = new PictureMarkerSymbolClass();
+                    ICreateBitmap pBitmap = pGraphic as ICreateBitmap;
+                    IColor bgColor = Tools.MakeColor(255, 255, 255);
+                    
+                    pMarker.Picture = pBitmap.DrawToPicture(pDisplay, textureSize, textureSize, 1.1, bgColor);
+                    pMarker.BitmapTransparencyColor = bgColor;
+                    pMarker.Size = glyphSize;
 
-                pMarker.Picture = pBitmap.DrawToPicture(pDisplay, textureSize, textureSize, 1, bgColor);
-                pMarker.BitmapTransparencyColor = bgColor;
-                pMarker.Size = glyphSize;
-                ISymbol symbol = (ISymbol)pMarker;
-                IDynamicGlyph glyph = factory.CreateDynamicGlyph(symbol);
-                float width = 0, height = 0;
-                glyph.QueryDimensions(ref width, ref height);
-                float ratio = height != 0 ? width / height : 1.0f;
-                // $$$$ SBO 2007-08-08: hack to handle difference of size between command-post/leveled units...
-                pMarker.Size = glyphSize / ratio;
-                return factory.CreateDynamicGlyph(symbol);
+                    IDynamicGlyphFactory factory = (IDynamicGlyphFactory)pDynamicDisplay.DynamicGlyphFactory;
+                    
+                    IDynamicGlyph glyph = factory.CreateDynamicGlyph(pMarker as ISymbol);
+                   // float width = 0, height = 0;
+                    // glyph.QueryDimensions(ref width, ref height);
+                    // double ratio = height != 0 ? width / height : 1.0;
+                    // $$$$ SBO 2007-08-08: hack to handle difference of size between command-post/leveled units...
+                    // pMarker.Size = glyphSize / ratio;
+                    // glyphMarker = factory.CreateDynamicGlyph(pMarker as ISymbol);
+                    glyphMarker = glyph;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Trace.WriteLine(ex.Message);
+                }
+                return glyphMarker;
             }
 
             private static IDynamicGlyph CreateDynamicGlyphFromFile(IDynamicDisplay pDynamicDisplay, string symbolID, int textureSize, int glyphSize)
@@ -162,7 +212,7 @@ namespace Sword
                 // pMarker.BitmapTransparencyColor = bgColor;
                 // pMarker.Size = glyphSize;
                 // return factory.CreateDynamicGlyph(pMarker as ISymbol);
-                return factory.CreateDynamicGlyphFromFile(esriDynamicGlyphType.esriDGlyphMarker, filename, bgColor);
+                return factory.CreateDynamicGlyphFromFile(esriDynamicGlyphType.esriDGlyphMarker, filename, bgColor);                
             }
             #endregion
 
@@ -181,7 +231,7 @@ namespace Sword
             {
                 DynamicForceElement element = new DynamicForceElement();
                 element.CachedGraphic = CreateTacticalElementGraphic(display, feature, symbolId);
-                element.Glyph = CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 256, 64);
+                element.Glyph = CreateDynamicGlyph(display, dynamicDisplay, element.CachedGraphic, 256, 75);
                 return element as IDynamicElement;
             }
 

@@ -18,7 +18,7 @@
 #include "FormationTemplateElement.h"
 #include "AutomatTemplateElement.h"
 #include "AgentTemplateElement.h"
-#include <xeumeuleu/xml.h>
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
 

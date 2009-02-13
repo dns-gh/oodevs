@@ -95,7 +95,7 @@ namespace Sword
             public override void OnCreate(object hook)
             {
                 if (Tools.IsSupportedApplication(hook))
-                    Tools.GetSwordExtension().ModelLoaded += new EventHandler(OnModelLoaded);
+                    Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoaded);
                 m_enabled = false;
             }
 
@@ -106,7 +106,7 @@ namespace Sword
 
             public override bool OnContextMenu(int X, int Y)
             {
-                OrderHandler handler = Tools.GetSwordExtension().OrderHandler;
+                OrderHandler handler = Tools.GetCSwordExtension().OrderHandler;
                 if (handler != null)
                     return handler.OnContextMenu(X, Y);
                 return false;

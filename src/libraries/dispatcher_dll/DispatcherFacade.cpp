@@ -16,7 +16,7 @@
 #include "bml_plugin/BmlPluginFactory.h"
 #ifdef CROSSBOW_PLUGIN
 #   include "gearth_plugin/GearthPluginFactory.h"
-#   include "esri_plugin/EsriPluginFactory.h"
+#   include "crossbow_plugin/CrossbowPluginFactory.h"
 #endif
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
@@ -39,7 +39,7 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv )
     dispatcher_->RegisterPluginFactory( *new tic::TicPluginFactory() );
     dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );
 #ifdef CROSSBOW_PLUGIN
-    dispatcher_->RegisterPluginFactory( *new esri::EsriPluginFactory() );
+    dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
     dispatcher_->RegisterPluginFactory( *new gearth::GearthPluginFactory() );
 #endif
     dispatcher_->CreatePlugins();

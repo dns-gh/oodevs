@@ -3,9 +3,9 @@ using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.MOLE;
 using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.ArcGlobe;
-using ESRI.ArcGIS.DefenseSolutions;
 
 namespace Sword
 {
@@ -18,14 +18,14 @@ namespace Sword
                 DocumentProxy document = Tools.GetDocument();
                 document.EnableDynamicDisplay(true);
 
-                // IWorkspaceFactory factory = new AccessWorkspaceFactoryClass();
-                // IFeatureWorkspace workspace = (IFeatureWorkspace)factory.OpenFromFile(config.WorkspaceFile, 0);
-                IFeatureWorkspace workspace = (IFeatureWorkspace)Tools.OpenWorkspace(config.WorkspaceFile);
+                IWorkspaceFactory factory = new AccessWorkspaceFactoryClass();
+                IFeatureWorkspace workspace = (IFeatureWorkspace)factory.OpenFromFile(config.WorkspaceFile, 0);
 
                 document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.Units));
                 document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limits));
                 document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limas));
                 document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.TacticalObjectPoint));
+                document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.KnowledgeUnits));
                 document.RefreshView();
             }
 
@@ -34,7 +34,8 @@ namespace Sword
                 IFeatureLayer featureLayer = (IGeoFeatureLayer)BuildFeatureLayer(workspace, name);
                 if (featureLayer == null)
                     return null;
-                DynamicMoleLayer dynamicLayer = new DynamicMoleLayer(Tools.GetSwordExtension().SymbolFactory);
+                DynamicMoleLayer dynamicLayer = new DynamicMoleLayer(Tools.GetCSwordExtension().SymbolFactory);
+                dynamicLayer.FeatureLayer = featureLayer;
                 dynamicLayer.FeatureClass = featureLayer.FeatureClass;
                 dynamicLayer.Connect();
                 return MakeGroup(name, featureLayer, dynamicLayer);

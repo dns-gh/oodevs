@@ -73,7 +73,7 @@
     <target name="libraries" description="build all libraries"
             depends="library.tools,library.MT_Tools,library.ENT,library.game_asn,library.game_asn,library.simulation_terrain,library.simulation_kernel,
                      library.clients_kernel,library.clients_gui,library.gaming,library.preparation,
-                     library.bml_plugin,library.esri_plugin,library.gearth_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,library.messenger_plugin,library.3a"/>
+                     library.bml_plugin,library.crossbow_plugin,library.gearth_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,library.messenger_plugin,library.3a"/>
 
     <target name="library.tools" description="build tools static library">
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
@@ -162,9 +162,10 @@
         </build-lib>
     </target>
 
-    <target name="library.esri_plugin" description="build esri dispatcher plugin static library" depends="library.MT_Tools,library.tools,library.game_asn">
-        <build-lib name="esri_plugin" pattern="lib${ant.project.name}_esri_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
+    <target name="library.crossbow_plugin" description="build crossbow dispatcher plugin static library" depends="library.MT_Tools,library.tools,library.game_asn">
+        <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
+            <includepath path="${include.dir}/esri"/>
         </build-lib>
     </target>
 
@@ -216,7 +217,7 @@
 
     <target name="library.plugins" description="build all dispatcher plugins"
             depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,library.3a,
-                     library.bml_plugin,library.esri_plugin,library.gearth_plugin,library.script_plugin,library.score_plugin"/>
+                     library.bml_plugin,library.crossbow_plugin,library.gearth_plugin,library.script_plugin,library.score_plugin"/>
 
     <!--
     ============================================================================
@@ -261,9 +262,9 @@
         </build-lib>
     </target>
 
-    <target name="application.dispatcher_dll.esri" description="build CSword Dispatcher dll with esri" depends="library.dispatcher,library.ENT,library.plugins">
-        <build-lib name="dispatcher_dll_esri" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm,qt" input="dispatcher_dll"
-                   pattern="dispatcher_esri-${platform}-mt@{suffix}"
+    <target name="application.dispatcher_dll.crossbowed" description="build CSword Dispatcher dll with crossbow" depends="library.dispatcher,library.ENT,library.plugins">
+        <build-lib name="dispatcher_dll_crossbowed" outtype="shared" mode="release" depends="mt,din,boost,terrain,xeumeuleu,flexlm,qt" input="dispatcher_dll"
+                   pattern="dispatcher_crossbowed-${platform}-mt@{suffix}"
                    libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5
                          lib${ant.project.name}_actions-${platform}-mt
                          lib${ant.project.name}_tools-${platform}-mt
@@ -279,7 +280,7 @@
                          lib${ant.project.name}_script_plugin-${platform}-mt
                          lib${ant.project.name}_3a-${platform}-mt
                          lib${ant.project.name}_score_plugin-${platform}-mt
-                         lib${ant.project.name}_esri_plugin-${platform}-mt
+                         lib${ant.project.name}_crossbow_plugin-${platform}-mt
                          lib${ant.project.name}_gearth_plugin-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
@@ -540,16 +541,8 @@
         </nsis>
     </target>
 
-    <target name="package-esri" description="create the installer">
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-ue-demo" script="sword-ue-demo.nsi" license="true">
-            <arg value="/X!include sword-ue.nsh"/>
-        </nsis>
-    </target>
-    
-    <target name="installer-esri" description="create the esri installer">
-        <nsis todir="${dist.dir}/current/${platform}" name="esri-plugin" script="crossbow.nsi" license="true">
-             <arg value="/X!include sword-ue.nsh"/>
-        </nsis>
+    <target name="crossbow-installer" description="create the crossbow installer">
+        <nsis todir="${dist.dir}/current" name="crossbow_install" script="crossbow.nsi"/>
         <!-- <exec executable="${bin.dir}/RegAsm.exe">
             <arg value="../out/applications/crossbow_app/vc80/Release/Crossbow.dll"/>
             <arg value="/codebase"/>

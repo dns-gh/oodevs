@@ -5,9 +5,6 @@ using ESRI.ArcGIS.ADF.BaseClasses;
 using ESRI.ArcGIS.ADF.CATIDs;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Framework;
-using ESRI.ArcGIS.esriSystem;
-using ESRI.ArcGIS.Geodatabase;
-using ESRI.ArcGIS.DataSourcesGDB;
 
 namespace Sword
 {
@@ -97,37 +94,15 @@ namespace Sword
 
             #region Overriden Class Methods
 
-            private void TryOpenWorkspace()
-            {
-                IWorkspaceFactory factory = new SdeWorkspaceFactoryClass();
-                IPropertySet property = new PropertySetClass();
-                property.SetProperty( "server", "localhost" );
-                property.SetProperty( "instance", "sde:postgresql:localhost" );
-                property.SetProperty( "user", "sde" );
-                property.SetProperty( "password", "sde" );                
-                property.SetProperty( "database", "taranis_simulation" );
-                property.SetProperty( "version", "sde.DEFAULT" );
-                try
-                {
-                    IWorkspace wps = factory.Open(property, 0);
-                }
-                catch (Exception e)
-                {
-                    System.Console.WriteLine("Error:" + e.Message);
-                }
-            }
-
             /// <summary>
             /// Occurs when this command is created
             /// </summary>
             /// <param name="hook">Instance of the application</param>
             public override void OnCreate(object hook)
             {
-                TryOpenWorkspace();
-
                 if (Tools.IsSupportedApplication(hook))
                 {
-                    WorkspaceConfiguration config = Tools.GetSwordExtension().Config; // $$$$ SBO 2007-08-20: bof bof...
+                    WorkspaceConfiguration config = Tools.GetCSwordExtension().Config; // $$$$ SBO 2007-08-20: bof bof...
                     m_form = new WorkspaceConfigurationForm(config);
                     m_enabled = m_form != null;
                     if (m_enabled)
@@ -140,7 +115,7 @@ namespace Sword
             void Config_ConfigurationLoaded(object sender, EventArgs e)
             {
                 WorkspaceBuilder.Build((WorkspaceConfiguration)sender);
-                Tools.GetSwordExtension().NotifyModelLoaded();
+                Tools.GetCSwordExtension().NotifyModelLoaded();
             }
 
             /// <summary>

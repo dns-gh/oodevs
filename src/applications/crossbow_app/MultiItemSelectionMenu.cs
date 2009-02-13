@@ -155,7 +155,7 @@ namespace Sword
             #endregion
 
             public OrderSelectionMenu()
-                : base(Tools.GetSwordExtension().OrderHandler)
+                : base(Tools.GetCSwordExtension().OrderHandler)
             {
                 // NOTHING
             }
@@ -214,7 +214,7 @@ namespace Sword
             #endregion
 
             public EmergencyCreationMenu()
-                : base(Tools.GetSwordExtension().EmergencyHandler)
+                : base(Tools.GetCSwordExtension().EmergencyHandler)
             {
                 // NOTHING
             }

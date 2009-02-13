@@ -96,7 +96,7 @@ namespace Sword
                 if (Tools.IsSupportedApplication(hook))
                 {
                     CreateDockableWindow(hook as IDockableWindowManager);
-                    Tools.GetSwordExtension().ModelLoaded += new EventHandler(OnModelLoaded);
+                    Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoaded);
                 }
                 m_enabled = false;
             }

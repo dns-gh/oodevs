@@ -166,22 +166,40 @@ namespace Sword
             private void OnSelectionChanged(object sender, System.EventArgs e)
             {
                 string filter = m_teamCombo.SelectedItem.ToString();
-                IFeatureLayer layer = Tools.GetFeatureLayerByName(Tools.GetSwordExtension().Config.LayersConfiguration.Units);
-                if (layer != null)
-                {
-                    FilterLayer(layer, filter);
+                    
+                bool units = FilterUnitLayer(filter);
+                bool knowledges = FilterKnowledgeLayer(filter);
+                if (units || knowledges)
                     Tools.GetDocument().RefreshView();
-                }
             }
 
-            public void FilterLayer(IFeatureLayer layer, string filter)
+            private bool FilterUnitLayer(string filter)
             {
+                IFeatureLayer layer = Tools.GetFeatureLayerByName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
+
                 if (layer == null)
-                    return;
+                    return false;
+                IFeatureLayerDefinition definition = (IFeatureLayerDefinition)layer;
+                definition.DefinitionExpression = "";
+                if (filter != "All" && filter.Length > 0)                
+                    definition.DefinitionExpression = "Symbol_ID LIKE '?" + filter[0] + "?????????????'";                
+                return true;
+            }
+
+            private bool FilterKnowledgeLayer(string filter)
+            {
+                IFeatureLayer layer = Tools.GetFeatureLayerByName(Tools.GetCSwordExtension().Config.LayersConfiguration.KnowledgeUnits);    
+                if (layer == null)
+                    return false;
                 IFeatureLayerDefinition definition = (IFeatureLayerDefinition)layer;
                 definition.DefinitionExpression = "";
                 if (filter != "All" && filter.Length > 0)
-                    definition.DefinitionExpression = "Symbol_ID like '?" + filter[0] + "*'";
+                {
+                    int filiation = layer.FeatureClass.FindField("ObserverAffiliation");
+                    if (filiation >= 0)                        
+                        definition.DefinitionExpression = "ObserverAffiliation = '" + filter[0] + "'";
+                }
+                return true;
             }
 
             #region IDisposable Members

@@ -98,36 +98,50 @@ namespace Sword
 
             public void Validate()
             {
-                IFeatureWorkspace workspace = (IFeatureWorkspace)Tools.OpenWorkspace(Tools.GetSwordExtension().Config.SharedFile);
+                IFeatureWorkspace workspace = (IFeatureWorkspace)Tools.OpenWorkspace(Tools.GetCSwordExtension().Config.SharedFile);
                 if (workspace != null)
                     Serialize(workspace);
             }
 
             void Serialize(IFeatureWorkspace featureWorkspace)
             {
-                ScopeLockEditor editor = new ScopeLockEditor(featureWorkspace);
-
-                editor.Lock();
                 int id = SerializeOrder(featureWorkspace);
                 SerializeParameters(featureWorkspace, id);
-                editor.Unlock();
+                ValidateOrder(featureWorkspace,id);
             }
 
             int SerializeOrder(IFeatureWorkspace featureWorkspace)
             {
-                ITable table = featureWorkspace.OpenTable("taranis_simulation.sde.Orders"); // $$$$ SBO 2007-07-20: keep it maybe...
-                IRow row = table.CreateRow();
+                ITable table = featureWorkspace.OpenTable("Orders"); // $$$$ SBO 2007-07-20: keep it maybe...
+                ScopeLockEditor editor = new ScopeLockEditor((IDataset)table);
+
+                editor.Lock();
+
+                IRowBuffer row = table.CreateRowBuffer();
+                
+                // IFeatureBuffer buffer = features.CreateFeatureBuffer(); 
+                ICursor cursor = table.Insert( true );
+                
+                // cursor.InsertFeature(buffer);
+                // cursor.Flush();
+                // int orderId = row.OID;
                 Tools.SetValue<string>(row, "Name", m_name);
                 Tools.SetValue<int>(row, "TargetId", m_Id);
                 Tools.SetValue<bool>(row, "Checked", false);
-                row.Store();
-                return row.OID;
+                // row.Store();
+                int orderId = (int)cursor.InsertRow(row);
+                cursor.Flush();
+                editor.Unlock();
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(cursor);                
+                return orderId;
             }
             
             void SerializeParameters(IFeatureWorkspace featureWorkspace, int orderId)
             {
-                ITable table = featureWorkspace.OpenTable("taranis_simulation.sde.OrderParameters"); // $$$$ SBO 2007-07-20: keep it maybe...
+                ITable table = featureWorkspace.OpenTable("OrderParameters"); // $$$$ SBO 2007-07-20: keep it maybe...
+                ScopeLockEditor editor = new ScopeLockEditor((IDataset)table);
 
+                editor.Lock();
                 // parameters must be serializable following this order
                 m_direction.Serialize(table, orderId);
                 m_limas.Serialize(table, orderId);
@@ -135,6 +149,16 @@ namespace Sword
                 m_intelligences.Serialize(table, orderId);
                 foreach (KeyValuePair<string, IOrderParameter> param in m_parameters)
                     param.Value.Serialize(table, orderId);
+                editor.Unlock();
+            }
+
+            void ValidateOrder(IFeatureWorkspace featureWorkspace, int orderId)
+            {
+                ITable table = featureWorkspace.OpenTable("Orders"); // $$$$ SBO 2007-07-20: keep it maybe...
+
+                IRow row = table.GetRow(orderId);
+                Tools.SetValue<bool>(row, "Checked", true);
+                row.Store();
             }
 
             #region IDisposable Members

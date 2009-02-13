@@ -26,8 +26,8 @@ namespace Sword
             private Dictionary<string, MissionDefinition> m_automatMissions = new Dictionary<string, MissionDefinition>();
             private Dictionary<string, EntityModel> m_unitModels = new Dictionary<string, EntityModel>();
             private Dictionary<string, EntityModel> m_automatModels = new Dictionary<string, EntityModel>();
-            private Dictionary<string, string> m_unitTypes = new Dictionary<string, string>();
-            private Dictionary<string, string> m_automatTypes = new Dictionary<string, string>();
+            private Dictionary<int, string> m_unitTypes = new Dictionary<int, string>();
+            private Dictionary<int, string> m_automatTypes = new Dictionary<int, string>();
             private List<string> m_objectTypes = new List<string>();
 
             #region Initialization
@@ -99,13 +99,13 @@ namespace Sword
                 }
             }
 
-            private void ReadEntities(string filename, string type, ref Dictionary<string, string> list)
+            private void ReadEntities(string filename, string type, ref Dictionary<int, string> list)
             {
                 XmlDocument doc = new XmlDocument();
-                doc.Load(filename);
+                doc.Load(filename);                
                 XmlNodeList nodes = doc.SelectNodes("/" + type + "s/" + type);
                 foreach (XmlNode node in nodes)
-                    list.Add(node.Attributes["name"].Value, node.Attributes["decisional-model"].Value);
+                    list.Add(int.Parse(node.Attributes["id"].Value), node.Attributes["decisional-model"].Value);
             }
             #endregion
 
@@ -150,7 +150,7 @@ namespace Sword
                 }
             }
 
-            public Dictionary<string, string> UnitTypes
+            public Dictionary<int, string> UnitTypes
             {
                 get
                 {
@@ -158,7 +158,7 @@ namespace Sword
                 }
             }
 
-            public Dictionary<string, string> AutomatTypes
+            public Dictionary<int, string> AutomatTypes
             {
                 get
                 {

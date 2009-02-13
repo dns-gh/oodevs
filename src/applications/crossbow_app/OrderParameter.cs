@@ -31,12 +31,13 @@ namespace Sword
             public void Serialize(ITable table, int id)
             {
                 IRow row = table.CreateRow();
+                int parameterId = row.OID;
                 Tools.SetValue<int>(row, "OrderId", id);
                 Tools.SetValue<string>(row, "Type", m_type.Type);
                 Tools.SetValue<string>(row, "Name", m_name);
-                Tools.SetValue<string>(row, "Value", m_type.Value);
+                Tools.SetValue<string>(row, "Value", m_type.Value);                
                 row.Store();
-                m_type.Serialize(row.OID);
+                m_type.Serialize(parameterId);
             }
 
             public void OnContextMenu(MultiItemContextMenu menu, int x, int y, IFeature selected)
@@ -48,6 +49,11 @@ namespace Sword
                 m_type.OnContextMenu(x, y, selected);
             }
 
+            public virtual bool IsSet(string value)
+            {
+                return m_type.Selected;
+            }
+            
             public virtual void SetValue(string value)
             {
                 m_type.Selected = true;

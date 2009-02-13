@@ -11,9 +11,9 @@ namespace Sword
         {
             IWorkspaceEdit m_edit;
 
-            public ScopeLockEditor(IFeatureWorkspace featureWorkspace)
+            public ScopeLockEditor(IDataset dataset)
             {
-                m_edit = (IWorkspaceEdit)featureWorkspace;
+                m_edit = (IWorkspaceEdit)dataset.Workspace;
             }
             public void Lock()
             {

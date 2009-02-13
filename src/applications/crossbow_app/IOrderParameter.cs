@@ -14,6 +14,7 @@ namespace Sword
             string Name { get; }
             void OnContextMenu(MultiItemContextMenu menu, int x, int y, IFeature selected);
             void SetValue(string value);
+            bool IsSet(string value);
             void Serialize(ITable table, int id);
             void NotifyUpdate(IMissionObserver observer);
         }

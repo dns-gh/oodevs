@@ -17,7 +17,7 @@
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
-#include <xeumeuleu/xml.h>
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
 using namespace xml;

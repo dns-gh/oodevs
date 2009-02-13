@@ -19,7 +19,7 @@ namespace Sword
                 {
                     get
                     {
-                        return "Intelligences";
+                        return "IntelligenceList";
                     }
                 }
 

@@ -16,7 +16,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 
-#include <xeumeuleu/xml.h>
+#include "xeumeuleu/xml.h"
 
 using namespace xml;
 
