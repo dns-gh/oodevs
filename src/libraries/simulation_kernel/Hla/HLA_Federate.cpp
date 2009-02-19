@@ -102,7 +102,7 @@ namespace
         UnitRegistration( HLA_InteractionManager& interactionManager )
             : interactionManager_( interactionManager )
         {}
-        virtual HLA_RoleInterface& Create( const ObjectIdentifier& objectId )
+        virtual HLA_RoleInterface& Create( const ObjectIdentifier& objectId, const std::string& /*objectName*/ )
         {
             MIL_AgentHLA* pPion = new MIL_AgentHLA( MIL_IDManager::units_.GetFreeSimID(), objectId, interactionManager_ );
             return pPion->GetRole< HLA_RoleInterface >();
@@ -120,8 +120,9 @@ namespace
     {
     public:
         ObjectRegistration( HLA_InteractionManager_ABC& interactionManager )
-            : interactionManager_( interactionManager ) {};
-        virtual HLA_Object_ABC& Create( const ObjectIdentifier& objectId )
+            : interactionManager_( interactionManager )
+        {}
+        virtual HLA_Object_ABC& Create( const ObjectIdentifier& objectId, const std::string& /*objectName*/ )
         {
             return *new HLA_DistantObject( objectId, interactionManager_ );
         };

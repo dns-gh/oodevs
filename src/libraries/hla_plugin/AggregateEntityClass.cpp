@@ -21,7 +21,7 @@ using namespace hla;
 
 struct AggregateEntityClass::UnitRegistration : public ObjectRegistration_ABC< HlaExtension_ABC >
 {
-    virtual HlaExtension_ABC& Create( const ObjectIdentifier& )
+    virtual HlaExtension_ABC& Create( const ObjectIdentifier&, const std::string& )
     {
         throw std::runtime_error( __FUNCTION__ );
     }
