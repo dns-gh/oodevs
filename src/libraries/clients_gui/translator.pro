@@ -15,6 +15,7 @@ ElevationPanel.cpp \
 FixedLightWidget.cpp \
 GradientWidget.cpp \
 GraphicPreferences.cpp \
+HelpSystem.cpp \
 HierarchyListView_ABC.cpp \
 HighlightColorModifier.cpp \
 IntelligencesPanel.cpp \

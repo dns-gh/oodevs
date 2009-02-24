@@ -78,6 +78,13 @@
     </message>
 </context>
 <context>
+    <name>HelpSystem</name>
+    <message>
+        <source>help/en/User Guide.chm</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HighlightColorModifier</name>
     <message>
         <source>Highlight</source>

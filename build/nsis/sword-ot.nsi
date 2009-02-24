@@ -10,68 +10,69 @@
 ;..................................................................................................
 !define APP_NAME "SWORD Officer Training"
 
+;........................................
+; defined from ant call
+!ifndef APP_VERSION_MAJOR
+    !define APP_VERSION_MAJOR "1.0.0"
+!endif
+
+!ifndef APP_VERSION_MINOR
+    !define APP_VERSION_MINOR "1.0.0.0"
+!endif
+
+; worldwide / france
+!ifndef APP_MODEL
+    !define APP_MODEL "worldwide"
+!endif
+;........................................
+
+
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
 
-!include AdvUninstLog.nsh
+!include "AdvUninstLog.nsh"
+!include "tools.nsh"
+
+!insertmacro OT.Initialize
 ;..................................................................................................
 
-!ifndef PLATFORM
-    !define PLATFORM "vc80"
-!endif
-!ifndef RUNDIR
-    !define RUNDIR "..\..\run\${PLATFORM}"
-!endif
-!ifndef DATADIR
-    !define DATADIR "..\..\data"
-!endif
-!ifndef LIBDIR
-    !define LIBDIR "..\..\lib\${PLATFORM}"
-!endif
-!ifndef OUTDIR
-    !define OUTDIR "..\..\out\${PLATFORM}"
-!endif
-!ifndef DISTDIR
-    !define DISTDIR "."
-!endif
-!ifndef DOCDIR
-    !define DOCDIR "..\..\doc"
-!endif
-!ifndef LIBRARIESDIR
-    !define LIBRARIESDIR "..\..\src\libraries"
-!endif
-!ifndef APPLICATIONSDIR
-    !define APPLICATIONSDIR "..\..\src\applications"
-!endif
-
 Name "${APP_NAME}"
-OutFile "${DISTDIR}\${APP_NAME}.exe"
+OutFile "${DISTDIR}\${APP_NAME}_${APP_MODEL}.exe"
 InstallDir "$PROGRAMFILES\${APP_NAME}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro UNATTENDED_UNINSTALL
 
-LicenseLangString LICENSE ${LANG_ENGLISH} "license-english.txt"
-LicenseLangString LICENSE ${LANG_FRENCH} "license-english.txt"
+!include "lang.nsh"
+!include "version.nsh"
 
 ;--------------------------------
-Function .onInit
-    System::Call 'kernel32::CreateMutexA(i 0, i 0, t "sword-ot") i .r1 ?e'
-    Pop $R0
-    StrCmp $R0 0 +3
-        MessageBox MB_OK|MB_ICONEXCLAMATION "Installer already running"
-        Abort
-    !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
-FunctionEnd
-
-Function .onInstSuccess
-    ;create/update log always within .onInstSuccess function
-    !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
-FunctionEnd
-
-;--------------------------------
-Section "!Basic"
+Section "!${APP_NAME}"
     SectionIn RO
+
+    ; resources: localization
+    SetOutPath "$INSTDIR\applications\resources\locales"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File "${RUNDIR}\*.qm"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    
+    ; resources: documentation
+    SetOutPath "$INSTDIR\applications\resources\help\en"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File "${OUTDOCDIR}\en\*.chm"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
+    SetOutPath "$INSTDIR\applications\resources\help\fr"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File "${OUTDOCDIR}\fr\*.chm"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
+    ; readme / changelog files
+    SetOutPath "$INSTDIR\doc"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File "${DOCDIR}\en\readme.txt" ; no language support
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
     SetOutPath "$INSTDIR\applications"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"
@@ -80,16 +81,12 @@ Section "!Basic"
     File "${OUTDIR}\release\applications\simulation_app\*.exe"
     File "${OUTDIR}\release\applications\replayer_app\*.exe"
     File "${OUTDIR}\release\applications\frontend_app\*.exe"
+    File "${OUTDIR}\release\applications\selftraining_app\*.exe"
+    File "${OUTDIR}\release\applications\package_app\*.exe"
     File "${OUTDIR}\generation_app\*.exe"
-    File "${RUNDIR}\*.qm"
-    File "${RUNDIR}\symbols.pak"
-    File "${RUNDIR}\symbols.xml"
     File "${RUNDIR}\gradients.xml"
-    File "${RUNDIR}\noise.dds"
     File "${RUNDIR}\preferences.xml"
-    File "${RUNDIR}\DrawingTemplates.xml"
     File "${RUNDIR}\functions.xml"
-    File "${RUNDIR}\*.svg"
     File "${RUNDIR}\TAO.dll"
     File "${RUNDIR}\TAO_CosNaming.dll"
     File "${RUNDIR}\TAO_IORTable.dll"
@@ -104,189 +101,187 @@ Section "!Basic"
     File "${RUNDIR}\libRTI-NG.dll"
     File "${RUNDIR}\librtiInternalIntercept.dll"
     File /x "msvc*d.dll" "${RUNDIR}\msvc*.dll"
-    File "${RUNDIR}\qt-*.dll"
+    File /x "qt-*d.dll" "${RUNDIR}\qt-*.dll"
     File "${RUNDIR}\userDdm.dll"
     File "${RUNDIR}\xerces-c_2_7.dll"
     File "${RUNDIR}\zlib1.dll"
     File "${RUNDIR}\bugtrap.dll"
     File "${RUNDIR}\population-${PLATFORM}-mt.dll"
     File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
+    File "${RUNDIR}\directia-${PLATFORM}-mt-4_5.dll"
     File "${RUNDIR}\shapelib.dll"
+    File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File /nonfatal "${RUNDIR}\*.manifest"
     File "*.ico"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
+
     CreateDirectory "$SMPROGRAMS\${APP_NAME}"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Self Training.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
     CreateShortcut "$SMPROGRAMS\${APP_NAME}\uninstall.lnk" "${UNINST_EXE}"
 
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${APP_NAME}"
-    ;Same as create shortcut you need to use ${UNINST_EXE} instead of anything else.
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
-    
-    ; register .otpak extension association
-    WriteRegStr HKCR ".otpak" "" "Officer Training Package"
-	WriteRegStr HKCR "Officer Training Package\shell" "" "open"
-	WriteRegStr HKCR "Officer Training Package\DefaultIcon" "" "$INSTDIR\applications\sword-ot.ico"
-	WriteRegStr HKCR "Officer Training Package\shell\open\command" "" '$INSTDIR\applications\frontend_app.exe --install="%1"'
-	
-	; vcredist
-	SetOutPath $TEMP
-    File /oname=vcredist_x86_rtm.exe "${OUTDIR}\vcredist_x86\rtm\vcredist_x86.exe"
-    ExecWait '"$TEMP\vcredist_x86_rtm.exe" /q:a /c:"VCREDI~1.EXE /q:a /c:""msiexec /i vcredist.msi /q"" "'
-    Delete "$TEMP\vcredist_x86_rtm.exe"
-    File /oname=vcredist_x86_sp1.exe "${OUTDIR}\vcredist_x86\sp1\vcredist_x86.exe"
-    ExecWait '"$TEMP\vcredist_x86_sp1.exe" /q:a /c:"VCREDI~3.EXE /q:a /c:""msiexec /i vcredist.msi /q"" "'
-    Delete "$TEMP\vcredist_x86_sp1.exe"
-SectionEnd
+    !insertmacro OT.AddUninstallEntry    
+    !insertmacro OT.AddFileAssoc
 
-Section "Terrains"
-    SectionIn RO
-    SetOutPath "$INSTDIR\data"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\terrains"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 
 ;--------------------------------
-SectionGroup "Main models"
+SectionGroup "Models" s_mod
 
-Section "Decisional models"
-    SetOutPath "$INSTDIR\data\models\main\decisional"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Binaires"
-    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\*.xml"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd    
-
-Section "Decisional models sources"
-    SetOutPath "$INSTDIR\data\models\main\decisional"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\models\main\decisional\Sources"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd
-
-Section "France Physical models"
-    SetOutPath "$INSTDIR\data\models\main\physical"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\models\main\physical\france"    
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd
-
-Section "Worldwide Physical models"
-    SetOutPath "$INSTDIR\data\models\main\physical"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\models\main\physical\worldwide"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd
+    !insertmacro OT.AddDecisionalModels "ada"
+    !insertmacro OT.AddPhysicalModels "ada" "${APP_MODEL}"
 
 SectionGroupEnd
 
 ;--------------------------------
-SectionGroup "ADA models"
+SectionGroup "Exercises" s_exo
 
-Section "Decisional models"
-    SetOutPath "$INSTDIR\data\models\ada\decisional"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Binaires"
-    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\*.xml"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd    
-
-Section "Decisional models sources"
-    SetOutPath "$INSTDIR\data\models\ada\decisional"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\models\ada\decisional\Sources"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd
-
-Section "France Physical models"
-    SetOutPath "$INSTDIR\data\models\ada\physical"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\france"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd
-
-Section "Worldwide Physical models"
-    SetOutPath "$INSTDIR\data\models\ada\physical"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\models\ada\physical\worldwide"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd
-
-Section "Sample exercises"
-    SetOutPath "$INSTDIR\exercises"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\exercises\ADA - Attaquer"
-    File /r /x ".svn" "${DATADIR}\exercises\ADA - Donner_coup_arret"
-    File /r /x ".svn" "${DATADIR}\exercises\ADA - Freiner"
-    File /r /x ".svn" "${DATADIR}\exercises\BAE"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd
+    !if "${APP_MODEL}" == "worldwide"
+        !insertmacro OT.AddExercise "Egypt" "Nord egypt" "s_exo1"
+        !insertmacro OT.AddExercise "Paris" "Paris_Est" "s_exo2"
+        !insertmacro OT.AddExercise "Scripting demo" "test" "s_exo3"
+    !else if "${APP_MODEL}" == "france"
+        !insertmacro OT.AddExercise "esag" "Angers" "s_exo1"
+        !insertmacro OT.AddExercise "CENTORSEM" "Paris_Est" "s_exo2"
+        !insertmacro OT.AddExercise "puma" "larochelle" "s_exo3"
+        !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
+        !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
+        !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
+        !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
+        !insertmacro OT.AddExercise "tutorials\03 - Mission" "Paris_Est" "s_exo6"
+        !insertmacro OT.AddExercise "tutorials\04 - ABC" "Paris_Est" "s_exo7"
+        !insertmacro OT.AddExercise "tutorials\05 - Infanterie" "Paris_Est" "s_exo8"
+        !insertmacro OT.AddExercise "tutorials\06 - Genie" "Paris_Est" "s_exo9"
+        !insertmacro OT.AddExercise "tutorials\07 - Artillerie" "Paris_Est" "s_exo10"
+        !insertmacro OT.AddExercise "tutorials\071 - NRBC" "Paris_Est" "s_exo11"
+        !insertmacro OT.AddExercise "tutorials\072 - ALAT" "Paris_Est" "s_exo12"
+        !insertmacro OT.AddExercise "tutorials\073 - LOG" "Paris_Est" "s_exo13"
+        !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo14"
+        !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo15"
+        !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo16"
+    !endif
 
 SectionGroupEnd
 
 ;--------------------------------
-SectionGroup "Civilian models"
+SectionGroup "Terrains" s_ter
 
-Section /o "Decisional models"
-    SetOutPath "$INSTDIR\data\models\civilian\decisional"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /nonfatal /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Binaires"
-    File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\*.xml"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd    
-
-Section /o "Decisional models sources"
-    SetOutPath "$INSTDIR\data\models\civilian\decisional"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\models\civilian\decisional\Sources"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd
-
-Section /o "Physical models"
-    SetOutPath "$INSTDIR\data\models\civilian\physical"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\models\civilian\physical"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    SetOutPath "$INSTDIR\data\population"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\data\population"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd
-
-Section /o "Sample exercises"
-    SetOutPath "$INSTDIR\exercises"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DATADIR}\exercises\bruxelles"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-SectionEnd
+    !if "${APP_MODEL}" == "worldwide"
+        !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
+        !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
+        !insertmacro OT.AddTerrain "test" "s_ter3"
+    !else if "${APP_MODEL}" == "france"
+        !insertmacro OT.AddTerrain "Angers" "s_ter1"
+        !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
+        !insertmacro OT.AddTerrain "larochelle" "s_ter3"
+        !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
+        !insertmacro OT.AddTerrain "Blois" "s_ter5"
+    !endif
 
 SectionGroupEnd
 
-Section "Documentation"
-    SectionIn RO
+;--------------------------------
+Section "Documentation" s_doc
+
     SetOutPath "$INSTDIR\doc"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DOCDIR}\*.pdf"
     File /r /x ".svn" "third party"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\User Guide.lnk" "$INSTDIR\doc\User Guide.pdf"
+    CreateDirectory "$SMPROGRAMS\${APP_NAME}\Documentation"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
+    SetOutPath "$INSTDIR\doc\en"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x ".svn" "${DOCDIR}\en\*.pdf"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\User Guide.lnk" "$INSTDIR\doc\en\User Guide.pdf"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    
+    SetOutPath "$INSTDIR\doc\fr"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x ".svn" "${DOCDIR}\fr\*.pdf"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Guide Utilisateur.lnk" "$INSTDIR\doc\fr\Guide Utilisateur.pdf"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    
 SectionEnd
+
+SectionGroup "Shortcuts" s_sc
+
+    ;--------------------------------
+    Section "Desktop" s_desktop
+        SetOutPath "$INSTDIR\applications"
+        CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    SectionEnd
+    
+    ;--------------------------------
+    Section "Quick Launch" s_quick
+        SetOutPath "$INSTDIR\applications"
+        StrCmp $QUICKLAUNCH $TEMP +2
+        CreateShortCut "$QUICKLAUNCH\${APP_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    SectionEnd
+
+SectionGroupEnd
 
 ;--------------------------------
 Section "Uninstall"
-    !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
-    !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
-    !insertmacro UNINSTALL.LOG_END_UNINSTALL
-    Delete "${UNINST_DAT}"
-    Delete "${UNINST_EXE}"
-    RmDir /r "$SMPROGRAMS\${APP_NAME}"
-    DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
-    
-    ; unregister .otpak extension association
-    DeleteRegKey HKCR ".otpak"
+
+    !insertmacro OT.KillRunning
+    !insertmacro OT.Uninstall
+
 SectionEnd
+
+;--------------------------------
+Function .onInit
+
+    !insertmacro OT.CheckRunning
+    !insertmacro OT.ChooseLanguage
+
+    ; Set section names
+    SectionSetText ${s_mod} $(OT_SECTION_MODELS)
+    SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)
+    ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
+    SectionSetText ${s_phymod} $(OT_SECTION_PHYSICAL_MODELS)
+    SectionSetText ${s_exo} $(OT_SECTION_EXERCISES)
+    SectionSetText ${s_ter} $(OT_SECTION_TERRAINS)
+    SectionSetText ${s_doc} $(OT_SECTION_DOCUMENTATION)
+    SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
+    SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
+    SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
+    
+    !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
+FunctionEnd
+
+Function .onInstSuccess
+    ;create/update log always within .onInstSuccess function
+    !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
+FunctionEnd
+
+Function .onSelChange
+
+    !if "${APP_MODEL}" == "worldwide"
+        !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
+        !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo3" "s_ter3"
+    !else if "${APP_MODEL}" == "france"
+        !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
+        !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo3" "s_ter3"
+        !insertmacro OT.CheckDependency "s_exo4" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo5" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo6" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo7" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo8" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo9" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo10" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo11" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo12" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo13" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo14" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo15" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo16" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo17" "s_ter4"
+        !insertmacro OT.CheckDependency "s_exo18" "s_ter5"
+    !endif
+     
+FunctionEnd

@@ -10,12 +10,22 @@
 ;..................................................................................................
 !define APP_NAME "SCALPED"
 
+;........................................
 ; defined from ant call
-!ifndef APP_VERSION
-    !define APP_VERSION "1.0.0.0"
+!ifndef APP_VERSION_MAJOR
+    !define APP_VERSION_MAJOR "1.0.0"
 !endif
 
-!define SHORT_VERSION "1.0.2" ; TODO: Compute using function
+!ifndef APP_VERSION_MINOR
+    !define APP_VERSION_MINOR "1.0.0.0"
+!endif
+
+; worldwide / france
+!ifndef APP_MODEL
+    !define APP_MODEL "france"
+!endif
+;........................................
+
 
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
@@ -27,7 +37,7 @@
 ;..................................................................................................
 
 Name "${APP_NAME}"
-OutFile "${DISTDIR}\${APP_NAME}_${SHORT_VERSION}.exe"
+OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION_MAJOR}.exe"
 InstallDir "$PROGRAMFILES\${APP_NAME}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
@@ -49,15 +59,15 @@ Section "!${APP_NAME}"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
     ; resources: documentation
-    SetOutPath "$INSTDIR\applications\resources\help"
+    SetOutPath "$INSTDIR\applications\resources\help\fr"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\*.chm"
+    File "${OUTDOCDIR}\fr\scalped\*.chm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
     ; readme / changelog files
     SetOutPath "$INSTDIR\doc"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\fr\scalped\readme.txt" ; $(OT_LANG)
+    File "${DOCDIR}\fr\scalped\readme.txt" ; no language support
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     SetOutPath "$INSTDIR\applications"
@@ -117,7 +127,7 @@ SectionEnd
 SectionGroup "Models" s_mod
 
     !insertmacro OT.AddDecisionalModels "ada"
-    !insertmacro OT.AddPhysicalModels "ada" "france"
+    !insertmacro OT.AddPhysicalModels "ada" "${APP_MODEL}"
 
 SectionGroupEnd
 
@@ -162,7 +172,12 @@ Section "Documentation" s_doc
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DOCDIR}\*.pdf"
     File /r /x ".svn" "third party"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Manuel Utilisateur.lnk" "$INSTDIR\doc\Manuel Utilisateur.pdf"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    
+    SetOutPath "$INSTDIR\doc\fr"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x ".svn" "${DOCDIR}\fr\scalped\*.pdf"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Guide Utilisateur.lnk" "$INSTDIR\doc\fr\Guide Utilisateur.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 SectionEnd
 

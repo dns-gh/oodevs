@@ -10,10 +10,16 @@
 ;..................................................................................................
 !define APP_NAME "SCALPED"
 
+;........................................
 ; defined from ant call
-!ifndef APP_VERSION
-    !define APP_VERSION "1.0.0.0"
+!ifndef APP_VERSION_MAJOR
+    !define APP_VERSION_MAJOR "1.0.0"
 !endif
+
+!ifndef APP_VERSION_MINOR
+    !define APP_VERSION_MINOR "1.0.0.0"
+!endif
+;........................................
 
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
@@ -58,7 +64,7 @@
 !endif
 
 Name "${APP_NAME}"
-OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION}_patch.exe"
+OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION_MINOR}_patch.exe"
 InstallDir "$PROGRAMFILES\${APP_NAME}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
@@ -110,7 +116,7 @@ Section "Patch"
     !insertmacro INSTALL.PATCH "patch_app"
     !insertmacro INSTALL.PATCH "patch_data"
     
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayVersion" "${APP_VERSION}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayVersion" "${APP_VERSION_MINOR}"
 SectionEnd
 
 SectionGroup "Shortcuts" s_sc
@@ -209,7 +215,7 @@ Function .onInit
 
     ; Check version
     ReadRegStr $R0 ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayVersion"
-    ${VersionCompare} "$R0" "${APP_VERSION}" $R1
+    ${VersionCompare} "$R0" "${APP_VERSION_MINOR}" $R1
     ; R1=0 => Same version
     ; R1=1 => installed version is more recent
     ; R1=2 => Ok, perform update

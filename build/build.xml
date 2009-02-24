@@ -8,7 +8,9 @@
     </svn>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword-OT"/>
-    <property name="version.version" value="1.0.2.${svn.version}"/>
+    <property name="version.major" value="1.0.2"/>
+    <property name="version.minor" value="${version.major}.${svn.version}"/>
+    <property name="version.version" value="${version.minor}"/><!-- required for rc extension -->
 
     <!--
     ============================================================================
@@ -79,7 +81,7 @@
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
             <defineset>
-                <define name="APP_VERSION" value="${version.version}"/>
+                <define name="APP_VERSION" value="${version.minor}"/>
             </defineset>
         </build-lib>
     </target>
@@ -516,27 +518,56 @@
 
     <!--
     ============================================================================
+      documentation
+    ============================================================================
+    -->
+    <target name="documentation" description="generate the documentation">
+        <setproxy proxyhost="proxy" proxyport="3128"/>
+        <docbook location="file:////install/Masa/common/dev/common/docbook/docbook-xsl" input="${root.dir}/doc" outdir="${root.dir}/out/documentation"/>
+        <htmlhelp input="${root.dir}/out/documentation"/>
+    </target>
+
+    <!--
+    ============================================================================
       package
     ============================================================================
     -->
     <target name="package" description="create the installer">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=france"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=worldwide"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+        <!--nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
+            <arg value="/DAPP_VERSION=${version.version}"/>
+            <arg value="/DAPP_MODEL=worldwide"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis-->
         <!--nsis todir="${dist.dir}/current/${platform}" name="sword-ot-ada" script="sword-ot-ada.nsi">
             <arg value="/DAPP_VERSION=${version.version}"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis-->
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-demo" script="sword-ot-demo.nsi" license="true">
+        <!--nsis todir="${dist.dir}/current/${platform}" name="sword-ot-demo" script="sword-ot-demo.nsi" license="true">
             <arg value="/DAPP_VERSION=${version.version}"/>
             <arg value="/X!include sword-ot.nsh"/>
-        </nsis>
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped" script="sword-ot-scalped.nsi" license="true">
+        </nsis-->
+        <!--nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped" script="sword-ot-scalped.nsi" license="true">
             <arg value="/DAPP_VERSION=${version.version}"/>
             <arg value="/X!include sword-ot.nsh"/>
-        </nsis>
+        </nsis-->
     </target>
 
     <target name="package.patch" description="create the patch installer">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped-patch" script="sword-ot-scalped-patch.nsi" license="true">
-            <arg value="/DAPP_VERSION=${version.version}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
     </target>
@@ -582,16 +613,6 @@
         <update name="system"/>
     </target>
 
-    <!--
-    ============================================================================
-      documentation
-    ============================================================================
-    -->
-    <target name="documentation" description="generate the documentation">
-        <setproxy proxyhost="proxy" proxyport="3128"/>
-        <docbook location="file:////install/Masa/common/dev/common/docbook/docbook-xsl" input="${root.dir}/doc" outdir="${root.dir}/out/documentation"/>
-        <htmlhelp input="${root.dir}/out/documentation"/>
-    </target>
     <!--
     ============================================================================
       main
