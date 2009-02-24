@@ -43,9 +43,6 @@ public:
     //@{
     template< typename Role >       typename Role& GetRole();
     template< typename Role > const typename Role& GetRole() const;
-
-    template< typename Role >       typename Role::RoleInterface& GetRoleInterface();
-    template< typename Role > const typename Role::RoleInterface& GetRoleInterface() const;
     //@}
 
 private:

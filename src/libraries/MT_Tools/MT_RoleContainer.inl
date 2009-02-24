@@ -119,33 +119,6 @@ typename Role::RoleInterface& MT_RoleContainer::RegisterRole( P1& param1, P2& pa
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
 template< typename Role >
-typename Role::RoleInterface& MT_RoleContainer::GetRoleInterface()
-{ 
-    const uint nIdx = GetIdx< Role::RoleInterface >();
-    if( roles_.size() <= nIdx || roles_[ nIdx ] == 0 )
-        RegisterRole< Role::RoleInterface >();
-    return static_cast< Role::RoleInterface& >( *roles_[ nIdx ] ); 
-}
-
-//-----------------------------------------------------------------------------
-// Name: MT_RoleContainer::GetRole
-// Created: NLD/JVT 2004-08-03
-//-----------------------------------------------------------------------------
-template< typename Role > 
-const typename Role::RoleInterface& MT_RoleContainer::GetRoleInterface() const  
-{ 
-    const uint nIdx = GetIdx< Role::RoleInterface >();
-    if( roles_.size() <= nIdx || roles_[ nIdx ] == 0 )
-        RegisterRole< Role::RoleInterface >();
-    return static_cast< const Role& >( *roles_[ nIdx ] ); 
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: MT_RoleContainer::GetRole
-// Created: NLD/JVT 2004-08-03
-//-----------------------------------------------------------------------------
-template< typename Role >
 typename Role& MT_RoleContainer::GetRole()
 { 
     const uint nIdx = GetIdx< Role::RoleInterface >();
