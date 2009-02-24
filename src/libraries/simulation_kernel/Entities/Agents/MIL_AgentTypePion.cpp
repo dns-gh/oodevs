@@ -289,7 +289,7 @@ void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
     std::string strModel;
     xis >> xml::attribute( "decisional-model", strModel );
 
-    pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( strModel );
+    pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModel( strModel );
     if( !pModel_ )
         xis.error( "Unknown pawn model" );
 }

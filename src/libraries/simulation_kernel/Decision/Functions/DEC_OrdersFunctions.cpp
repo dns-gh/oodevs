@@ -38,7 +38,7 @@ void DEC_OrdersFunctions::MRT_CreatePionMission( DIA_Call_ABC& call, MIL_Automat
     DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
     assert( pPion );
 
-    const MIL_PionMissionType* pMissionType = MIL_PionMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
+    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
     assert( pMissionType );
 
     MIL_PionMission* pPionMission = callerAutomate.GetOrderManager().MRT_CreatePionMission( pPion->GetPion(), *pMissionType );
@@ -116,7 +116,7 @@ void DEC_OrdersFunctions::CDT_CreatePionMission( DIA_Call_ABC& call, MIL_Automat
     assert( pPion );
 
     // Instanciate and check the new mission
-    const MIL_PionMissionType* pMissionType = MIL_PionMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
+    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
     assert( pMissionType );
 
     MIL_PionMission* pPionMission = callerAutomate.GetOrderManager().CDT_CreatePionMission( pPion->GetPion(), *pMissionType );
@@ -150,7 +150,7 @@ void DEC_OrdersFunctions::CreateAutomateMission( DIA_Call_ABC& call, MIL_Automat
     DEC_AutomateDecision* pAutomate = call.GetParameter( 0 ).ToUserObject( pAutomate );
     assert( pAutomate );
 
-    const MIL_AutomateMissionType* pMissionType = MIL_AutomateMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
+    const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
     assert( pMissionType );
 
     MIL_AutomateMission* pMission = callerAutomate.GetOrderManager().CreateAutomateMission( pAutomate->GetAutomate(), *pMissionType );

@@ -25,7 +25,7 @@ DIA_FunctionTable< MIL_Population >& MIL_PopulationType::GetFunctionTable() cons
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 inline
-const DEC_ModelPopulation& MIL_PopulationType::GetModel() const
+const DEC_Model_ABC& MIL_PopulationType::GetModel() const
 {
     assert( pModel_ );
     return *pModel_;

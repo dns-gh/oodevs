@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <populations>
   <reloading-time-effect modifier="2" population-density="2"/>
-  <population concentration-density="2" decisional-model="Test" id="0" moving-base-density="4" moving-speed="60" name="test1">
+  <population concentration-density="2" decisional-model="Test Population" id="0" moving-base-density="4" moving-speed="60" name="test1">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="41" population-density="0.9" unit-size="Gros"/>
@@ -38,7 +38,7 @@
       <unit attrition-surface="0.5" ph="0.8" rule-of-engagment="armes letales autorisees"/>
     </unit-fire-effects>
   </population>
-  <population concentration-density="2" decisional-model="Test" id="1" moving-base-density="20" moving-speed="24" name="test2">
+  <population concentration-density="2" decisional-model="Test Population" id="1" moving-base-density="20" moving-speed="24" name="test2">
     <slowing-effects>
       <slowing-effect population-attitude="calme"/>
       <slowing-effect population-attitude="agitee"/>

@@ -22,7 +22,7 @@ namespace xml
 }
 
 class PHY_UnitType;
-class DEC_ModelPion;
+class DEC_Model_ABC;
 class MIL_Automate;
 class MIL_AgentPion;
 class MIL_RealObjectType;
@@ -58,7 +58,7 @@ public:
     //! @name Accessors
     //@{
     const PHY_UnitType&                       GetUnitType                      () const;
-    const DEC_ModelPion&                      GetModel                         () const;
+    const DEC_Model_ABC&                      GetModel                         () const;
           DIA_FunctionTable< MIL_AgentPion >& GetFunctionTable                 () const;
           MT_Float                            GetDistanceAvantPoint            ( const TerrainData& nType ) const;
           MT_Float                            GetDistanceAvantLima             () const;
@@ -106,7 +106,7 @@ private:
     //@}
 
 private:
-    const DEC_ModelPion*    pModel_;
+    const DEC_Model_ABC*    pModel_;
     const PHY_UnitType*     pUnitType_;
     T_DistanceAvantPointMap distancesAvantPoints_;
     MT_Float                rDistanceAvantLimas_;

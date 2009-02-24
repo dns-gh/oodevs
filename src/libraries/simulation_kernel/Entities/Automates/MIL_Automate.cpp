@@ -42,7 +42,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Decision/DEC_ModelAutomate.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Tools/MIL_Tools.h"

@@ -14,7 +14,7 @@
 #include "PHY_Convoy_ABC.h"
 #include "PHY_Conveyor.h"
 #include "PHY_SupplyConsign_ABC.h"
-#include "Decision/DEC_ModelPion.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
@@ -43,7 +43,7 @@ struct PHY_Convoy_ABC::LoadingWrapper
       MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::unloadingTime_;
       MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::coefSpeedModificator_;
 const MIL_AgentTypePion*                  PHY_Convoy_ABC::pConvoyAgentType_   = 0;
-const MIL_PionMissionType*                PHY_Convoy_ABC::pConvoyMissionType_ = 0;
+const MIL_MissionType_ABC*                PHY_Convoy_ABC::pConvoyMissionType_ = 0;
 
 BOOST_CLASS_EXPORT_GUID( PHY_Convoy_ABC, "PHY_Convoy_ABC" )
 

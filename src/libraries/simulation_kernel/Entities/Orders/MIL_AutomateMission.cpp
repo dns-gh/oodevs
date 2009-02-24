@@ -17,7 +17,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Decision/DEC_Tools.h"
-#include "Decision/DEC_ModelAutomate.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 
@@ -40,7 +40,7 @@ void MIL_AutomateMission::InitializeDIA()
 // Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn )
+MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn )
     : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres, automate.GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() )
     , type_                    ( type )
     , automate_                ( automate )
@@ -55,7 +55,7 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, M
 // Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-24
 // -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate )
+MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate )
     : MIL_Mission_ABC          ( type, automate.GetKnowledge() )
     , type_                    ( type )
     , automate_                ( automate )
@@ -70,7 +70,7 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, M
 // Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const MIL_AutomateMission& parent )
+MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const MIL_AutomateMission& parent )
     : MIL_Mission_ABC          ( type, automate.GetKnowledge(), parent )
     , type_                    ( type )
     , automate_                ( automate )

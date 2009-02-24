@@ -211,7 +211,7 @@ void MIL_AutomateType::InitializeModel( xml::xistream& xis )
 {
     std::string strModel;
     xis >> xml::attribute( "decisional-model", strModel );
-    pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( strModel );
+    pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModel( strModel );
     if( !pModel_ )
         xis.error( "Unknown automata model" );
 }

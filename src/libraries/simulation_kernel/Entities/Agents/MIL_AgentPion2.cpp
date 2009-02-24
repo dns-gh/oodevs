@@ -52,7 +52,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 
-#include "Decision/DEC_ModelPion.h"
+#include "Decision/DEC_Model_ABC.h"
 
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"

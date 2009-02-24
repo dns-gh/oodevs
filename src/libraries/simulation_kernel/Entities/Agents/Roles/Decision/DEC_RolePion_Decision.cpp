@@ -18,10 +18,10 @@
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Orders/MIL_PionMissionType.h"
+#include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Entities/Orders/MIL_PionMission.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Decision/DEC_ModelPion.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "CheckPoints/DIA_Serializer.h"
 #include "Network/NET_ASN_Messages.h"
@@ -71,7 +71,7 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentP
 {
     RegisterUserFunctionCaller( diaFunctionCaller_ );
     
-    const DEC_ModelPion& model = pion.GetType().GetModel();
+    const DEC_Model_ABC& model = pion.GetType().GetModel();
     try
     {
         SetType ( model.GetDIAType() );
@@ -162,7 +162,7 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
 
     RegisterUserFunctionCaller( diaFunctionCaller_ );
  
-    const DEC_ModelPion& model = pType->GetModel();
+    const DEC_Model_ABC& model = pType->GetModel();
     try
     {
         SetType ( model.GetDIAType() );

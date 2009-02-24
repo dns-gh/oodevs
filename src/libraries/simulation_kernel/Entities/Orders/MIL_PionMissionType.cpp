@@ -66,7 +66,7 @@ void MIL_PionMissionType::ReadMission( xml::xistream& xis )
         xis.error( "Unit mission DIA ID already defined" );
     pMissionDiaID = pMission;       
 
-    const MIL_PionMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
+    const MIL_MissionType_ABC*& pMissionName = missionNames_[ pMission->GetName() ];
     if( pMissionName )
         xis.error( "Unit mission name already defined" );
     pMissionName = pMission;

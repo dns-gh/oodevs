@@ -24,7 +24,7 @@ class PHY_SupplyConsign_ABC;
 class PHY_ComposantePion;
 class MIL_AgentPion;
 class MIL_AgentTypePion;
-class MIL_PionMissionType;
+class MIL_MissionType_ABC;
 class MIL_Automate;
 class MIL_AutomateLOG;
 class PHY_Conveyor;
@@ -116,7 +116,7 @@ protected:
     static       MT_InterpolatedFunction< MT_Float > coefSpeedModificator_;
 
     static const MIL_AgentTypePion*                  pConvoyAgentType_;
-    static const MIL_PionMissionType*                pConvoyMissionType_;
+    static const MIL_MissionType_ABC*                pConvoyMissionType_;
 };
 
 #include "PHY_Convoy_ABC.inl"

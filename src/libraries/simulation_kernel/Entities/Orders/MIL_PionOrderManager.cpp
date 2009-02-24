@@ -14,7 +14,8 @@
 #include "MIL_FragOrder.h"
 #include "MIL_PionMissionType.h"
 #include "MIL_PionMission.h"
-#include "Decision/DEC_ModelPion.h"
+#include "MIL_FragOrderType.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -54,7 +55,7 @@ void MIL_PionOrderManager::OnReceiveMission( const ASN1T_MsgUnitOrder& asnMsg )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_surrendered );
 
     // Instanciate and check the new mission
-    const MIL_PionMissionType* pMissionType = MIL_PionMissionType::Find( asnMsg.mission );
+    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::Find( asnMsg.mission );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission );
 
@@ -66,7 +67,7 @@ void MIL_PionOrderManager::OnReceiveMission( const ASN1T_MsgUnitOrder& asnMsg )
 // Name: MIL_PionOrderManager::OnReceiveMission
 // Created: NLD 2006-11-24
 // -----------------------------------------------------------------------------
-void MIL_PionOrderManager::OnReceiveMission( const MIL_PionMissionType& type )
+void MIL_PionOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 {
     MIL_PionMission* pMission = new MIL_PionMission( type, pion_ );
     MIL_OrderManager_ABC::ReplaceMission( pMission );

@@ -15,7 +15,7 @@
 #include "MIL_PopulationMission.h"
 #include "MIL_FragOrder.h"
 #include "MIL_FragOrderType.h"
-#include "Decision/DEC_ModelPopulation.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
@@ -46,7 +46,7 @@ MIL_PopulationOrderManager::~MIL_PopulationOrderManager()
 //-----------------------------------------------------------------------------
 void MIL_PopulationOrderManager::OnReceiveMission( const ASN1T_MsgPopulationOrder& asnMsg )
 {
-    const MIL_PopulationMissionType* pMissionType = MIL_PopulationMissionType::Find( asnMsg.mission );
+    const MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( asnMsg.mission );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission );
 

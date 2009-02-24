@@ -58,7 +58,7 @@ DIA_FunctionTable< MIL_AgentPion >& MIL_AgentTypePion::GetFunctionTable() const
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
 inline
-const DEC_ModelPion& MIL_AgentTypePion::GetModel() const
+const DEC_Model_ABC& MIL_AgentTypePion::GetModel() const
 {
     assert( pModel_ );
     return *pModel_;

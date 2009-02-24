@@ -16,7 +16,6 @@
 
 class MIL_AgentPion;
 class MIL_MissionType_ABC;
-class MIL_PionMissionType;
 
 //=============================================================================
 // Created: NLD 2003-01-10
@@ -33,7 +32,7 @@ public:
     //@{
     virtual void OnReceiveFragOrder( const ASN1T_MsgFragOrder& asn );
             void OnReceiveMission  ( const ASN1T_MsgUnitOrder& asn );
-            void OnReceiveMission  ( const MIL_PionMissionType& type );
+            void OnReceiveMission  ( const MIL_MissionType_ABC& type );
     //@}
 
     //! @name Main

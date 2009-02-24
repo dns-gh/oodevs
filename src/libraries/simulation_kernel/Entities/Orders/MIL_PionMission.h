@@ -30,9 +30,9 @@ class MIL_PionMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn );
-             MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent );
-             MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion );
+             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn );
+             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent );
+             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion );
     virtual ~MIL_PionMission();
     //@}
 
@@ -44,7 +44,7 @@ public:
     //! @name Accessors
     //@{
                   MIL_AgentPion&       GetPion() const;
-    virtual const MIL_PionMissionType& GetType() const;
+    virtual const MIL_MissionType_ABC& GetType() const;
     //@}
 
     //! @name Operations
@@ -73,7 +73,7 @@ private:
     //@}
 
 private:
-    const MIL_PionMissionType& type_;
+    const MIL_MissionType_ABC& type_;
           MIL_AgentPion&       pion_;
           bool                 bDIABehaviorActivated_;
 

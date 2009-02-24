@@ -66,27 +66,10 @@ void MIL_AutomateMissionType::ReadMission( xml::xistream& xis )
         xis.error( "Automat mission DIA ID already defined" );
     pMissionDiaID = pMission;       
 
-    const MIL_AutomateMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
+    const MIL_MissionType_ABC*& pMissionName = missionNames_[ pMission->GetName() ];
     if( pMissionName )
         xis.error( "Automat mission name already defined" );
     pMissionName = pMission;       
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateMissionType::InitializeAutomaticMission
-// Created: NLD 2006-11-24
-// -----------------------------------------------------------------------------
-const MIL_AutomateMissionType& MIL_AutomateMissionType::InitializeAutomaticMission( xml::xistream& xis, const std::string& strTagName )
-{
-    xis >> xml::start( strTagName );
-
-    std::string strMissionName;
-    xis >> xml::attribute( "name", strMissionName );
-    const MIL_AutomateMissionType* pType = MIL_AutomateMissionType::Find( strMissionName );
-    if( !pType )
-        xis.error( "Unknown mission" );
-    xis >> xml::end();
-    return *pType;
 }
 
 // =============================================================================

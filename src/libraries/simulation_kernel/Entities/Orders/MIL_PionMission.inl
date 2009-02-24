@@ -14,7 +14,7 @@
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 inline
-const MIL_PionMissionType& MIL_PionMission::GetType() const
+const MIL_MissionType_ABC& MIL_PionMission::GetType() const
 {
     return type_;
 }

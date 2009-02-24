@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_AutomateTypeREFUGIE.h"
-#include "Decision/DEC_ModelAutomate.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include <xeumeuleu/xml.h>
 

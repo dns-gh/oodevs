@@ -11,14 +11,13 @@
 
 #include "MIL_PionMission.h"
 
-#include "MIL_PionMissionType.h"
 #include "MIL_AutomateMission.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Decision/DEC_Tools.h"
-#include "Decision/DEC_ModelPion.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 
 int MIL_PionMission::nDIADirectionDanger_ = 0;
@@ -38,7 +37,7 @@ void MIL_PionMission::InitializeDIA()
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn )
+MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn )
     : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parametres, pion.GetRole< PHY_RolePion_Location >().GetPosition() )
     , type_                 ( type )
     , pion_                 ( pion )
@@ -51,7 +50,7 @@ MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent )
+MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent )
     : MIL_Mission_ABC       ( type, pion.GetKnowledge(), parent )
     , type_                 ( type )
     , pion_                 ( pion )
@@ -64,7 +63,7 @@ MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-24
 // -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion& pion )
+MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion )
     : MIL_Mission_ABC       ( type, pion.GetKnowledge() )
     , type_                 ( type )
     , pion_                 ( pion )

@@ -138,7 +138,7 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
 
     std::string strModel;
     xis >> xml::attribute( "decisional-model", strModel );
-    pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( strModel );
+    pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModel( strModel );
     if( !pModel_ )
         xis.error( "Unknown population model" );
 

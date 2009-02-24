@@ -14,7 +14,7 @@
 
 #include "MIL_Mission_ABC.h"
 
-#include "MIL_AutomateMissionType.h"
+#include "MIL_MissionType_ABC.h"
 
 class MIL_AgentPion;
 
@@ -29,9 +29,9 @@ class MIL_AutomateMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn );
-             MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate, const MIL_AutomateMission& parent );
-             MIL_AutomateMission( const MIL_AutomateMissionType& type, MIL_Automate& automate );
+             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn );
+             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const MIL_AutomateMission& parent );
+             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate );
     virtual ~MIL_AutomateMission();
     //@}
 
@@ -42,8 +42,8 @@ public:
 
     //! @name Accessors
     //@{
-                  MIL_Automate&            GetAutomate() const;
-    virtual const MIL_AutomateMissionType& GetType    () const;
+                  MIL_Automate&        GetAutomate() const;
+    virtual const MIL_MissionType_ABC& GetType    () const;
     //@}
 
     //! @name Operations
@@ -78,10 +78,10 @@ private:
     //@}
 
 private:
-    const MIL_AutomateMissionType& type_;
-          MIL_Automate&            automate_;
-          bool                     bDIAMrtBehaviorActivated_;
-          bool                     bDIACdtBehaviorActivated_;
+    const MIL_MissionType_ABC& type_;
+          MIL_Automate&        automate_;
+          bool                 bDIAMrtBehaviorActivated_;
+          bool                 bDIACdtBehaviorActivated_;
 
 private:
     static int nDIADirectionDanger_;

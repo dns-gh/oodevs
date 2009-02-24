@@ -38,7 +38,7 @@ const MIL_PionMissionType* MIL_PionMissionType::FindFromDiaID( uint nID )
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 inline
-const MIL_PionMissionType* MIL_PionMissionType::Find( const std::string& strName )
+const MIL_MissionType_ABC* MIL_PionMissionType::Find( const std::string& strName )
 {
     CIT_MissionNameMap it = missionNames_.find( strName );
     if( it == missionNames_.end() )
@@ -51,7 +51,17 @@ const MIL_PionMissionType* MIL_PionMissionType::Find( const std::string& strName
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 inline
-const std::string& MIL_PionMissionType::GetDIABehavior() const
+const std::string& MIL_PionMissionType::GetDIABehavior( int ) const
 {
     return strDIABehavior_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMissionType::MissionNames
+// Created: LDC 2009-02-24
+// -----------------------------------------------------------------------------
+inline
+const MIL_MissionType_ABC::T_MissionNameMap& MIL_PionMissionType::MissionNames()
+{
+    return missionNames_;
 }

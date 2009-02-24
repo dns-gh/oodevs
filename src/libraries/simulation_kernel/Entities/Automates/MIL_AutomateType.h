@@ -22,7 +22,7 @@ namespace xml
 class MIL_AgentTypePion;
 class MIL_Automate;
 class MIL_Formation;
-class DEC_ModelAutomate;
+class DEC_Model_ABC;
 
 // =============================================================================
 // @class  MIL_AutomateType
@@ -56,7 +56,7 @@ public:
     //@{
           uint                               GetID                            () const;
     const MIL_AgentTypePion&                 GetTypePionPC                    () const;
-    const DEC_ModelAutomate&                 GetModel                         () const;
+    const DEC_Model_ABC&                     GetModel                         () const;
     const std::string&                       GetName                          () const;
           DIA_FunctionTable< MIL_Automate >& GetFunctionTable                 () const;
           MT_Float                           GetRapForIncreasePerTimeStepValue() const;
@@ -112,7 +112,7 @@ private:
 private:
           uint                nID_;
     const std::string         strName_;
-    const DEC_ModelAutomate*  pModel_;
+    const DEC_Model_ABC*      pModel_;
           T_CompositionMap    composition_;
     const MIL_AgentTypePion*  pTypePC_;
           MT_Float            rRapForIncreasePerTimeStepValue_;

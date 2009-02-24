@@ -30,6 +30,13 @@ public:
     //! @name Operations
     //@{
     virtual bool IsAvailableForModel( const DIA_Model& model ) const = 0;
+    virtual const std::string& GetDIABehavior( int phase = 0 ) const = 0;
+    //@}
+    
+    //! @name Types
+    //@{
+    typedef std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > T_MissionNameMap;
+    typedef T_MissionNameMap::const_iterator                                          CIT_MissionNameMap;
     //@}
 };
 

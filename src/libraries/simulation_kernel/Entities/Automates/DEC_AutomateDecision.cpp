@@ -15,7 +15,7 @@
 
 #include "MIL_Automate.h"
 #include "MIL_AutomateType.h"
-#include "Decision/DEC_ModelAutomate.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_AutomateMission.h"
@@ -63,7 +63,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
 {
     RegisterUserFunctionCaller( diaFunctionCaller_ );
 
-    const DEC_ModelAutomate& model = automate.GetType().GetModel();
+    const DEC_Model_ABC& model = automate.GetType().GetModel();
     try
     {
         SetType ( model.GetDIAType() );
@@ -150,7 +150,7 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
 
     RegisterUserFunctionCaller( diaFunctionCaller_ );
     
-    const DEC_ModelAutomate& model = pType->GetModel();
+    const DEC_Model_ABC& model = pType->GetModel();
     
     try
     {
@@ -268,7 +268,7 @@ void DEC_AutomateDecision::UpdateDecision()
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission& mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIAMrtBehavior();
+    const std::string& strBehavior = mission.GetType().GetDIABehavior( 0 );
     missionMrtBehaviorParameters_.GetParameter( 0 ).SetValue( mission );
     missionMrtBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionMrtBehaviorDummyId_++ );
     DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionMrtBehaviorParameters_ );
@@ -283,7 +283,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission 
 {
     __try
     {
-        const std::string& strBehavior = mission.GetType().GetDIAMrtBehavior();
+        const std::string& strBehavior = mission.GetType().GetDIABehavior( 0 );
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionMrtBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).Reset();
     }
@@ -299,7 +299,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission 
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission& mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIACdtBehavior();
+    const std::string& strBehavior = mission.GetType().GetDIABehavior( 1 );
     missionConduiteBehaviorParameters_.GetParameter( 0 ).SetValue( mission );
     missionConduiteBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionConduiteBehaviorDummyId_++ );
     DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionConduiteBehaviorParameters_ );
@@ -314,7 +314,7 @@ void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission& mis
 {
     __try
     {
-        const std::string& strBehavior = mission.GetType().GetDIACdtBehavior();
+        const std::string& strBehavior = mission.GetType().GetDIABehavior( 1 );
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionConduiteBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).Reset();
     }

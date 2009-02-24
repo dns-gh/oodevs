@@ -14,7 +14,7 @@
 
 #include "MIL_Mission_ABC.h"
 
-#include "MIL_PopulationMissionType.h"
+#include "MIL_MissionType_ABC.h"
 
 class MIL_Population;
 
@@ -29,7 +29,7 @@ class MIL_PopulationMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PopulationMission( const MIL_PopulationMissionType& type, MIL_Population& population, const ASN1T_MsgPopulationOrder& asn );
+             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const ASN1T_MsgPopulationOrder& asn );
     virtual ~MIL_PopulationMission();
     //@}
 
@@ -40,7 +40,7 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_PopulationMissionType& GetType() const;
+    const MIL_MissionType_ABC& GetType() const;
     //@}
 
     //! @name Operations
@@ -62,9 +62,9 @@ private:
     //@}
 
 private:
-    const MIL_PopulationMissionType& type_;
-          MIL_Population&            population_;
-          bool                       bDIABehaviorActivated_;
+    const MIL_MissionType_ABC& type_;
+          MIL_Population&      population_;
+          bool                 bDIABehaviorActivated_;
 };
 
 #include "MIL_PopulationMission.inl"

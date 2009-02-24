@@ -15,7 +15,7 @@
 
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
-#include "Decision/DEC_ModelPopulation.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Orders/MIL_PopulationMissionType.h"
 #include "Entities/Orders/MIL_PopulationMission.h"
@@ -60,7 +60,7 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
 {
     RegisterUserFunctionCaller( diaFunctionCaller_ );
 
-    const DEC_ModelPopulation& model = population.GetType().GetModel();
+    const DEC_Model_ABC& model = population.GetType().GetModel();
     try
     {
         SetType ( model.GetDIAType() );
@@ -126,7 +126,7 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
          >> rDominationState_
          >> rLastDominationState_;
    
-    const DEC_ModelPopulation& model = pPopulation_->GetType().GetModel();
+    const DEC_Model_ABC& model = pPopulation_->GetType().GetModel();
     
     diaFunctionCaller_.DIA_FunctionCaller< MIL_Population >::DIA_FunctionCaller( *pPopulation_, pPopulation_->GetType().GetFunctionTable() );
     RegisterUserFunctionCaller( diaFunctionCaller_ );

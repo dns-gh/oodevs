@@ -32,12 +32,13 @@ public:
     //@{
     static void                             Initialize( xml::xistream& xis );
     static const MIL_PopulationMissionType* Find      ( uint nID );
-    static const MIL_PopulationMissionType* Find      ( const std::string& strName );
+    static const MIL_MissionType_ABC*       Find      ( const std::string& strName );
+    static T_MissionNameMap& MissionNames();
     //@}
 
     //! @name Accessors
     //@{
-    const std::string& GetDIABehavior() const;
+    const std::string& GetDIABehavior( int ) const;
     //@}
 
     //! @name Operations
@@ -66,9 +67,6 @@ private:
     //@{
     typedef std::map< uint, const MIL_PopulationMissionType* > T_MissionIDMap;
     typedef T_MissionIDMap::const_iterator                     CIT_MissionIDMap;
-
-    typedef std::map< std::string, const MIL_PopulationMissionType*, sCaseInsensitiveLess > T_MissionNameMap;
-    typedef T_MissionNameMap::const_iterator                                                CIT_MissionNameMap;
     //@}
 
 private:

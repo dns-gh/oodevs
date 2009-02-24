@@ -38,7 +38,7 @@ const MIL_AutomateMissionType* MIL_AutomateMissionType::FindFromDiaID( uint nID 
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 inline
-const MIL_AutomateMissionType* MIL_AutomateMissionType::Find( const std::string& strName )
+const MIL_MissionType_ABC* MIL_AutomateMissionType::Find( const std::string& strName )
 {
     CIT_MissionNameMap it = missionNames_.find( strName );
     if( it == missionNames_.end() )
@@ -47,21 +47,21 @@ const MIL_AutomateMissionType* MIL_AutomateMissionType::Find( const std::string&
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateMissionType::GetDIAMrtBehavior
-// Created: NLD 2006-11-21
+// Name: MIL_AutomateMissionType::GetDIABehavior
+// Created: LDC 2009-02-24
 // -----------------------------------------------------------------------------
 inline
-const std::string& MIL_AutomateMissionType::GetDIAMrtBehavior() const
+const std::string& MIL_AutomateMissionType::GetDIABehavior( int phase /*= 0*/ ) const
 {
-    return strDIAMrtBehavior_;
+    return phase ? strDIACdtBehavior_ : strDIAMrtBehavior_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateMissionType::GetDIACdtBehavior
-// Created: NLD 2006-11-21
+// Name: MIL_AutomateMissionType::MissionNames
+// Created: LDC 2009-02-24
 // -----------------------------------------------------------------------------
 inline
-const std::string& MIL_AutomateMissionType::GetDIACdtBehavior() const
+const MIL_MissionType_ABC::T_MissionNameMap& MIL_AutomateMissionType::MissionNames()
 {
-    return strDIACdtBehavior_;
+    return missionNames_;
 }

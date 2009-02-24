@@ -9,13 +9,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationMission.h"
-#include "MIL_PopulationMissionType.h"
+#include "MIL_MissionType_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
-#include "Decision/DEC_ModelPopulation.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 
 // -----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ void MIL_PopulationMission::InitializeDIA()
 // Name: MIL_PopulationMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PopulationMission::MIL_PopulationMission( const MIL_PopulationMissionType& type, MIL_Population& population, const ASN1T_MsgPopulationOrder& asn )
+MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const ASN1T_MsgPopulationOrder& asn )
     : MIL_Mission_ABC       ( type, population.GetKnowledge(), asn.parametres )
     , type_                 ( type )
     , population_           ( population )

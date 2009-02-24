@@ -10,11 +10,11 @@
 //*****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateMissionType::GetType
+// Name: MIL_AutomateMission::GetType
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 inline
-const MIL_AutomateMissionType& MIL_AutomateMission::GetType() const
+const MIL_MissionType_ABC& MIL_AutomateMission::GetType() const
 {
     return type_;
 }

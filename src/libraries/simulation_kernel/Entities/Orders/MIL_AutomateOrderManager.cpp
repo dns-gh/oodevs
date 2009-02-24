@@ -17,8 +17,7 @@
 #include "MIL_AutomateMission.h"
 #include "MIL_FragOrderType.h"
 #include "MIL_FragOrder.h"
-#include "Decision/DEC_ModelAutomate.h"
-#include "Decision/DEC_ModelPion.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
@@ -65,7 +64,7 @@ void MIL_AutomateOrderManager::OnReceiveMission( const ASN1T_MsgAutomatOrder& as
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_surrendered );
 
     // Instanciate and check the new mission
-    const MIL_AutomateMissionType* pMissionType = MIL_AutomateMissionType::Find( asnMsg.mission );
+    const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::Find( asnMsg.mission );
     if( !pMissionType || !automate_.GetType().GetModel().IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission );
 
@@ -77,7 +76,7 @@ void MIL_AutomateOrderManager::OnReceiveMission( const ASN1T_MsgAutomatOrder& as
 // Name: MIL_AutomateOrderManager::OnReceiveMission
 // Created: NLD 2006-11-24
 // -----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::OnReceiveMission( const MIL_AutomateMissionType& type )
+void MIL_AutomateOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 {
     MIL_AutomateMission* pMission = new MIL_AutomateMission( type, automate_ );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
@@ -187,7 +186,7 @@ void MIL_AutomateOrderManager::MRT_SetFuseauForPion( MIL_AgentPion& pion, MIL_Fu
 // Name: MIL_AutomateOrderManager::MRT_CreatePionMission
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_PionMission* MIL_AutomateOrderManager::MRT_CreatePionMission( MIL_AgentPion& pion, const MIL_PionMissionType& missionType )
+MIL_PionMission* MIL_AutomateOrderManager::MRT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType )
 {
     assert( automate_.IsEngaged() );
 
@@ -243,7 +242,7 @@ void MIL_AutomateOrderManager::MRT_Validate()
 // Name: MIL_AutomateOrderManager::CDT_CreatePionMission
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_PionMission* MIL_AutomateOrderManager::CDT_CreatePionMission( MIL_AgentPion& pion, const MIL_PionMissionType& missionType )
+MIL_PionMission* MIL_AutomateOrderManager::CDT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType )
 {
     assert( automate_.IsEngaged() );
 
@@ -287,7 +286,7 @@ void MIL_AutomateOrderManager::CDT_GivePionMission( MIL_PionMission& mission )
 // Name: MIL_AutomateOrderManager::CreateAutomateMission
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-MIL_AutomateMission* MIL_AutomateOrderManager::CreateAutomateMission( MIL_Automate& automate, const MIL_AutomateMissionType& missionType )
+MIL_AutomateMission* MIL_AutomateOrderManager::CreateAutomateMission( MIL_Automate& automate, const MIL_MissionType_ABC& missionType )
 {
     if( !automate.GetOrderManager().IsMissionAvailable( missionType ) )
         return 0;

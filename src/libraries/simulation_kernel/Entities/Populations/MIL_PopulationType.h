@@ -26,7 +26,7 @@ class MIL_PopulationAttitude;
 class PHY_Volume;
 class PHY_Protection;
 class PHY_RoePopulation;
-class DEC_ModelPopulation;
+class DEC_Model_ABC;
 class MIL_Army;
 
 // =============================================================================
@@ -54,7 +54,7 @@ public:
           MT_Float                             GetDefaultFlowDensity  () const;
           MT_Float                             GetMaxSpeed            () const;
 
-    const DEC_ModelPopulation&                 GetModel               () const;
+    const DEC_Model_ABC&                       GetModel               () const;
           DIA_FunctionTable< MIL_Population >& GetFunctionTable       () const;
     //@}
 
@@ -132,7 +132,7 @@ private:
           MIL_PopulationPionAttritionData      attritionData_;
           T_DamageData                         damageData_;
 
-    const DEC_ModelPopulation*                 pModel_;
+    const DEC_Model_ABC*                       pModel_;
           DIA_FunctionTable< MIL_Population >* pDIAFunctionTable_;
 
 private:

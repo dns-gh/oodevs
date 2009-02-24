@@ -60,7 +60,7 @@ const MIL_AgentTypePion& MIL_AutomateType::GetTypePionPC() const
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
 inline
-const DEC_ModelAutomate& MIL_AutomateType::GetModel() const
+const DEC_Model_ABC& MIL_AutomateType::GetModel() const
 {
     assert( pModel_ );
     return *pModel_;

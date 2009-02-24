@@ -32,14 +32,14 @@ public:
     //@{
     static void                           Initialize   ( xml::xistream& xis );
     static const MIL_AutomateMissionType* Find         ( uint nID );
-    static const MIL_AutomateMissionType* Find         ( const std::string& strName );
+    static const MIL_MissionType_ABC*     Find         ( const std::string& strName );
     static const MIL_AutomateMissionType* FindFromDiaID( uint nID );
+    static const T_MissionNameMap& MissionNames();
     //@}
 
     //! @name Accessors
     //@{
-    const std::string& GetDIAMrtBehavior() const;
-    const std::string& GetDIACdtBehavior() const;
+    virtual const std::string& GetDIABehavior( int phase = 0 ) const;
     //@}
 
     //! @name Operations
@@ -52,11 +52,6 @@ private:
     //@{
              MIL_AutomateMissionType( uint nID, xml::xistream& xis );
     virtual ~MIL_AutomateMissionType();
-    //@}
-
-    //! @name Tools
-    //@{
-    static const MIL_AutomateMissionType& InitializeAutomaticMission( xml::xistream& xis, const std::string& strTagName );
     //@}
 
     //! @name Helpers
@@ -74,9 +69,6 @@ private:
     //@{
     typedef std::map< uint, const MIL_AutomateMissionType* > T_MissionIDMap;
     typedef T_MissionIDMap::const_iterator                   CIT_MissionIDMap;
-
-    typedef std::map< std::string, const MIL_AutomateMissionType*, sCaseInsensitiveLess > T_MissionNameMap;
-    typedef T_MissionNameMap::const_iterator                                              CIT_MissionNameMap;
     //@}
 
 private:

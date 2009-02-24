@@ -59,7 +59,7 @@ void MIL_PopulationMissionType::ReadMission( xml::xistream& xis )
         xis.error( "Population mission already defined" );
     pMission = new MIL_PopulationMissionType( nID, xis );
 
-    const MIL_PopulationMissionType*& pMissionName = missionNames_[ pMission->GetName() ];
+    const MIL_MissionType_ABC*& pMissionName = missionNames_[ pMission->GetName() ];
     if( pMissionName )
         xis.error( "Population mission name already defined" );
     pMissionName = pMission;
