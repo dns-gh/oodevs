@@ -30,11 +30,11 @@ class MIL_AutomateMissionType : public MIL_MissionType_ABC
 public:
     //! @name Factory
     //@{
-    static void                           Initialize   ( xml::xistream& xis );
-    static const MIL_AutomateMissionType* Find         ( uint nID );
-    static const MIL_MissionType_ABC*     Find         ( const std::string& strName );
-    static const MIL_AutomateMissionType* FindFromDiaID( uint nID );
-    static const T_MissionNameMap& MissionNames();
+    static void                       Initialize   ( xml::xistream& xis );
+    static const MIL_MissionType_ABC* Find         ( uint nID );
+    static const MIL_MissionType_ABC* Find         ( const std::string& strName );
+    static const MIL_MissionType_ABC* FindFromDiaID( uint nID );
+    static const T_MissionNameMap&    MissionNames();
     //@}
 
     //! @name Accessors
@@ -48,6 +48,7 @@ public:
     //@}
 
 private:
+    friend class MIL_MissionType_ABC;
     //! @name Constructors/Destructor
     //@{
              MIL_AutomateMissionType( uint nID, xml::xistream& xis );
@@ -57,19 +58,11 @@ private:
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadMission( xml::xistream& xis );
     //@}
 
 private:
     std::string strDIAMrtBehavior_;
     std::string strDIACdtBehavior_;
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< uint, const MIL_AutomateMissionType* > T_MissionIDMap;
-    typedef T_MissionIDMap::const_iterator                   CIT_MissionIDMap;
-    //@}
 
 private:
     static T_MissionIDMap   missionIDs_;

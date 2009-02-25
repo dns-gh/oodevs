@@ -14,9 +14,9 @@
 
 
 
-MIL_AutomateMissionType::T_MissionIDMap   MIL_AutomateMissionType::missionIDs_;
-MIL_AutomateMissionType::T_MissionIDMap   MIL_AutomateMissionType::missionDiaIDs_;
-MIL_AutomateMissionType::T_MissionNameMap MIL_AutomateMissionType::missionNames_;
+MIL_MissionType_ABC::T_MissionIDMap   MIL_AutomateMissionType::missionIDs_;
+MIL_MissionType_ABC::T_MissionIDMap   MIL_AutomateMissionType::missionDiaIDs_;
+MIL_MissionType_ABC::T_MissionNameMap MIL_AutomateMissionType::missionNames_;
 
 // =============================================================================
 // FACTORY
@@ -26,7 +26,7 @@ struct MIL_AutomateMissionType::LoadingWrapper
 {
     void ReadMission( xml::xistream& xis )
     {
-        MIL_AutomateMissionType::ReadMission( xis );
+        MIL_MissionType_ABC::ReadMission< MIL_AutomateMissionType >( xis, missionIDs_, &missionDiaIDs_, missionNames_ );
     }
 };
 
@@ -45,31 +45,6 @@ void MIL_AutomateMissionType::Initialize( xml::xistream& xis )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
             >> xml::end()
         >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateMissionType::ReadMission
-// Created: ABL 2007-07-26
-// -----------------------------------------------------------------------------
-void MIL_AutomateMissionType::ReadMission( xml::xistream& xis )
-{
-    uint nID;
-    xis >> xml::attribute( "id", nID );
-    
-    const MIL_AutomateMissionType*& pMission = missionIDs_[ nID ];
-    if( pMission )
-        xis.error( "Automat mission already defined" );
-    pMission = new MIL_AutomateMissionType( nID, xis );
-    
-    const MIL_AutomateMissionType*& pMissionDiaID = missionDiaIDs_[ pMission->GetDIAType().GetDebugId() ];
-    if( pMissionDiaID )
-        xis.error( "Automat mission DIA ID already defined" );
-    pMissionDiaID = pMission;       
-
-    const MIL_MissionType_ABC*& pMissionName = missionNames_[ pMission->GetName() ];
-    if( pMissionName )
-        xis.error( "Automat mission name already defined" );
-    pMissionName = pMission;       
 }
 
 // =============================================================================

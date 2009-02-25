@@ -14,9 +14,9 @@
 
 
 
-MIL_PionMissionType::T_MissionIDMap   MIL_PionMissionType::missionIDs_;
-MIL_PionMissionType::T_MissionIDMap   MIL_PionMissionType::missionDiaIDs_;
-MIL_PionMissionType::T_MissionNameMap MIL_PionMissionType::missionNames_;
+MIL_MissionType_ABC::T_MissionIDMap   MIL_PionMissionType::missionIDs_;
+MIL_MissionType_ABC::T_MissionIDMap   MIL_PionMissionType::missionDiaIDs_;
+MIL_MissionType_ABC::T_MissionNameMap MIL_PionMissionType::missionNames_;
 
 // =============================================================================
 // FACTORY
@@ -26,7 +26,7 @@ struct MIL_PionMissionType::LoadingWrapper
 {
     void ReadMission( xml::xistream& xis )
     {
-        MIL_PionMissionType::ReadMission( xis );
+        MIL_MissionType_ABC::ReadMission< MIL_PionMissionType >( xis, missionIDs_, &missionDiaIDs_, missionNames_ );
     }
 };
 
@@ -45,31 +45,6 @@ void MIL_PionMissionType::Initialize( xml::xistream& xis )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
             >> xml::end()
         >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PionMissionType::ReadMission
-// Created: ABL 2007-07-26
-// -----------------------------------------------------------------------------
-void MIL_PionMissionType::ReadMission( xml::xistream& xis )
-{
-    uint nID;
-    xis >> xml::attribute( "id", nID );
-
-    const MIL_PionMissionType*& pMission = missionIDs_[ nID ];
-    if( pMission )
-        xis.error( "Unit mission id already defined" );
-    pMission = new MIL_PionMissionType( nID, xis );
-
-    const MIL_PionMissionType*& pMissionDiaID = missionDiaIDs_[ pMission->GetDIAType().GetDebugId() ];
-    if( pMissionDiaID )
-        xis.error( "Unit mission DIA ID already defined" );
-    pMissionDiaID = pMission;       
-
-    const MIL_MissionType_ABC*& pMissionName = missionNames_[ pMission->GetName() ];
-    if( pMissionName )
-        xis.error( "Unit mission name already defined" );
-    pMissionName = pMission;
 }
 
 // =============================================================================

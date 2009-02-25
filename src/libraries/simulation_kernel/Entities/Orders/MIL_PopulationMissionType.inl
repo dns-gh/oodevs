@@ -12,7 +12,7 @@
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 inline
-const MIL_PopulationMissionType* MIL_PopulationMissionType::Find( uint nID )
+const MIL_MissionType_ABC* MIL_PopulationMissionType::Find( uint nID )
 {
     CIT_MissionIDMap it = missionIDs_.find( nID );
     if( it == missionIDs_.end() )

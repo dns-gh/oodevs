@@ -12,7 +12,7 @@
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 inline
-const MIL_PionMissionType* MIL_PionMissionType::Find( uint nID )
+const MIL_MissionType_ABC* MIL_PionMissionType::Find( uint nID )
 {
     CIT_MissionIDMap it = missionIDs_.find( nID );
     if( it == missionIDs_.end() )
@@ -25,7 +25,7 @@ const MIL_PionMissionType* MIL_PionMissionType::Find( uint nID )
 // Created: NLD 2006-12-04
 // -----------------------------------------------------------------------------
 inline
-const MIL_PionMissionType* MIL_PionMissionType::FindFromDiaID( uint nID )
+const MIL_MissionType_ABC* MIL_PionMissionType::FindFromDiaID( uint nID )
 {
     CIT_MissionIDMap it = missionDiaIDs_.find( nID );
     if( it == missionDiaIDs_.end() )

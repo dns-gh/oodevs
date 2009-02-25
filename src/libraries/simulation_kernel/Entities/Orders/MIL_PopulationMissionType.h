@@ -30,10 +30,10 @@ class MIL_PopulationMissionType : public MIL_MissionType_ABC
 public:
     //! @name Factory
     //@{
-    static void                             Initialize( xml::xistream& xis );
-    static const MIL_PopulationMissionType* Find      ( uint nID );
-    static const MIL_MissionType_ABC*       Find      ( const std::string& strName );
-    static T_MissionNameMap& MissionNames();
+    static void                       Initialize( xml::xistream& xis );
+    static const MIL_MissionType_ABC* Find      ( uint nID );
+    static const MIL_MissionType_ABC* Find      ( const std::string& strName );
+    static T_MissionNameMap&          MissionNames();
     //@}
 
     //! @name Accessors
@@ -49,6 +49,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
+    friend class MIL_MissionType_ABC;
     MIL_PopulationMissionType( uint nID, xml::xistream& xis );
     virtual ~MIL_PopulationMissionType();
     //@}
@@ -56,18 +57,10 @@ private:
     //! @name Heplers
     //@{
     struct LoadingWrapper;
-    static void ReadMission( xml::xistream& xis );
     //@}
 
 private:
     std::string strDIABehavior_;
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< uint, const MIL_PopulationMissionType* > T_MissionIDMap;
-    typedef T_MissionIDMap::const_iterator                     CIT_MissionIDMap;
-    //@}
 
 private:
     static T_MissionIDMap   missionIDs_;

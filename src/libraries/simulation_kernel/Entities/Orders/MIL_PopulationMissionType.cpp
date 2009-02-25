@@ -13,8 +13,8 @@
 
 
 
-MIL_PopulationMissionType::T_MissionIDMap   MIL_PopulationMissionType::missionIDs_;
-MIL_PopulationMissionType::T_MissionNameMap MIL_PopulationMissionType::missionNames_;
+MIL_MissionType_ABC::T_MissionIDMap   MIL_PopulationMissionType::missionIDs_;
+MIL_MissionType_ABC::T_MissionNameMap MIL_PopulationMissionType::missionNames_;
 
 // =============================================================================
 // FACTORY
@@ -24,7 +24,7 @@ struct MIL_PopulationMissionType::LoadingWrapper
 {
     void ReadMission( xml::xistream& xis )
     {
-        MIL_PopulationMissionType::ReadMission( xis );
+        MIL_MissionType_ABC::ReadMission< MIL_PopulationMissionType >( xis, missionIDs_, 0, missionNames_ );
     }
 };
 
@@ -43,26 +43,6 @@ void MIL_PopulationMissionType::Initialize( xml::xistream& xis )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
             >> xml::end()
         >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationMissionType::ReadMission
-// Created: ABL 2007-07-25
-// -----------------------------------------------------------------------------
-void MIL_PopulationMissionType::ReadMission( xml::xistream& xis )
-{
-    uint nID;
-    xis >> xml::attribute( "id", nID );
-
-    const MIL_PopulationMissionType*& pMission = missionIDs_[ nID ];
-    if( pMission )
-        xis.error( "Population mission already defined" );
-    pMission = new MIL_PopulationMissionType( nID, xis );
-
-    const MIL_MissionType_ABC*& pMissionName = missionNames_[ pMission->GetName() ];
-    if( pMissionName )
-        xis.error( "Population mission name already defined" );
-    pMissionName = pMission;
 }
 
 //-----------------------------------------------------------------------------

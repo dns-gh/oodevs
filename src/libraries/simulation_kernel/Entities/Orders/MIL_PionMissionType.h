@@ -31,9 +31,9 @@ public:
     //! @name Factory
     //@{
     static void                        Initialize   ( xml::xistream& xis );
-    static const MIL_PionMissionType*  Find         ( uint nID );
+    static const MIL_MissionType_ABC*  Find         ( uint nID );
     static const MIL_MissionType_ABC*  Find         ( const std::string& strName );
-    static const MIL_PionMissionType*  FindFromDiaID( uint nID );
+    static const MIL_MissionType_ABC*  FindFromDiaID( uint nID );
     static const T_MissionNameMap& MissionNames();
     //@}
 
@@ -48,6 +48,7 @@ public:
     //@}
 
 private:
+    friend class MIL_MissionType_ABC;
     //! @name Constructors/Destructor
     //@{
              MIL_PionMissionType( uint nID, xml::xistream& xis );
@@ -57,18 +58,10 @@ private:
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadMission( xml::xistream& xis );
     //@}
 
 private:
     std::string strDIABehavior_;
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< uint, const MIL_PionMissionType* > T_MissionIDMap;
-    typedef T_MissionIDMap::const_iterator               CIT_MissionIDMap;
-    //@}
 
 private:
     static T_MissionIDMap   missionIDs_;
