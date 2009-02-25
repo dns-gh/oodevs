@@ -51,9 +51,14 @@ const MIL_MissionType_ABC* MIL_AutomateMissionType::Find( const std::string& str
 // Created: LDC 2009-02-24
 // -----------------------------------------------------------------------------
 inline
-const std::string& MIL_AutomateMissionType::GetDIABehavior( int phase /*= 0*/ ) const
+const std::string& MIL_AutomateMissionType::GetDIABehavior( Phase phase ) const
 {
-    return phase ? strDIACdtBehavior_ : strDIAMrtBehavior_;
+    switch( phase ) 
+    {
+        case ePhaseMRT : return strDIAMrtBehavior_;  
+        case ePhaseCDT : return strDIACdtBehavior_; 
+        default: throw( std::runtime_error( "invalid PHASE" ) ); 
+    }
 }
 
 // -----------------------------------------------------------------------------

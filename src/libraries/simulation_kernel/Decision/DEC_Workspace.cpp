@@ -43,6 +43,12 @@
 #include <sys/stat.h>
 
 
+namespace
+{
+    static const std::string strUnits( "units" );
+    static const std::string strAutomats( "automats" );
+    static const std::string strPopulation( "populations" );
+}
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Workspace constructor
@@ -55,6 +61,9 @@ DEC_Workspace::DEC_Workspace( MIL_Config& config )
 {
     MT_LOG_INFO_MSG( "Initializing decision" );
     DIA_SDK_Manager::InitializeSDK();
+    modelTypes_[strUnits] = &pionModels_;
+    modelTypes_[strAutomats] = &automateModels_;
+    modelTypes_[strPopulation] = &populationModels_;
 
     InitializeConfig( config );
     InitializeDIA   ( config );
@@ -71,7 +80,11 @@ DEC_Workspace::~DEC_Workspace()
 
     delete pFuncTable_;
     delete pFunctionCaller_;
-    for( CIT_ModelMap it = models_.begin(); it != models_.end(); ++it )
+    for( CIT_ModelMap it = automateModels_.begin(); it != automateModels_.end(); ++it )
+        delete it->second;
+    for( CIT_ModelMap it = pionModels_.begin(); it != pionModels_.end(); ++it )
+        delete it->second;
+    for( CIT_ModelMap it = populationModels_.begin(); it != populationModels_.end(); ++it )
         delete it->second;
 }
 
@@ -474,21 +487,18 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
 
     // Pions
     MT_LOG_INFO_MSG( "Initializing unit DIA models" );
-    static const std::string strUnits( "units" );
     xisModels >> xml::start( "units" )
                 >> xml::list( "unit", *this, &DEC_Workspace::ReadModel, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strUnits, MIL_PionMissionType::MissionNames() )
               >> xml::end();
 
     // Automates
     MT_LOG_INFO_MSG( "Initializing automat DIA models" );
-    static const std::string strAutomats( "automats" );
     xisModels >> xml::start( "automats" )
                   >> xml::list( "automat", *this, &DEC_Workspace::ReadModel, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strAutomats, MIL_AutomateMissionType::MissionNames() )
               >> xml::end();
 
     // Populations
     MT_LOG_INFO_MSG( "Initializing population DIA models" );
-    static const std::string strPopulation( "populations" );
     xisModels >> xml::start( "populations" )
                   >> xml::list( "population", *this, &DEC_Workspace::ReadModel, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strPopulation, MIL_PopulationMissionType::MissionNames() )
               >> xml::end();
@@ -504,8 +514,11 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, bool bNeedScriptParsing, bool
 {
     std::string strName;
     xis >> xml::attribute( "name", strName );
-
-    const DEC_Model_ABC*& pModel = models_[ strName ];
+    
+    T_ModelMap* pModels = modelTypes_[strEntityType];
+    if( !pModels )
+        xis.error( "Unknown model type" );
+    const DEC_Model_ABC*& pModel = (*pModels)[ strName ];
     if( pModel )
         xis.error( "Duplicate model name" );
     pModel = new DEC_Model( *this, strName, xis, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strEntityType, missionTypes );
@@ -584,10 +597,20 @@ int InitializeDIAField( const std::string& strFieldName, const DIA_TypeDef& diaT
 // -----------------------------------------------------------------------------
 DIA_Model* DEC_Workspace::FindDIAModelFromScript( const std::string& strScriptName ) const
 {
-    for( CIT_ModelMap it = models_.begin(); it != models_.end(); ++it )
+    for( CIT_ModelMap itModelAutomate = automateModels_.begin(); itModelAutomate != automateModels_.end(); ++itModelAutomate )
     {
-        if( it->second && it->second->GetScriptName() == strScriptName )
-            return &it->second->GetDIAModel();
+        if( itModelAutomate->second && itModelAutomate->second->GetScriptName() == strScriptName )
+            return &itModelAutomate->second->GetDIAModel();
+    }
+    for( CIT_ModelMap itModelPion = pionModels_.begin(); itModelPion != pionModels_.end(); ++itModelPion )
+    {
+        if( itModelPion->second && itModelPion->second->GetScriptName() == strScriptName )
+            return &itModelPion->second->GetDIAModel();
+    }
+    for( CIT_ModelMap itModelPopulation = populationModels_.begin(); itModelPopulation != populationModels_.end(); ++itModelPopulation )
+    {
+        if( itModelPopulation->second && itModelPopulation->second->GetScriptName() == strScriptName )
+            return &itModelPopulation->second->GetDIAModel();
     }
     return 0;
 }

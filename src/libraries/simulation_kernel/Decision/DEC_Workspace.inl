@@ -3,14 +3,40 @@
 //*****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Workspace::FindModel
+// Name: DEC_Workspace::FindModelPion
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
 inline
-const DEC_Model_ABC* DEC_Workspace::FindModel( const std::string& strModelName ) const
+const DEC_Model_ABC* DEC_Workspace::FindModelPion( const std::string& strModelName ) const
 {
-    CIT_ModelMap it = models_.find( strModelName );
-    if( it == models_.end() )
+    CIT_ModelMap it = pionModels_.find( strModelName );
+    if( it == pionModels_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::FindModelAutomate
+// Created: NLD 2004-09-03
+// -----------------------------------------------------------------------------
+inline
+const DEC_Model_ABC* DEC_Workspace::FindModelAutomate( const std::string& strModelName ) const
+{
+    CIT_ModelMap it = automateModels_.find( strModelName );
+    if( it == automateModels_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::FindModelPopulation
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+inline
+const DEC_Model_ABC* DEC_Workspace::FindModelPopulation( const std::string& strModelName  ) const
+{
+    CIT_ModelMap it = populationModels_.find( strModelName );
+    if( it == populationModels_.end() )
         return 0;
     return it->second;
 }

@@ -21,7 +21,6 @@ namespace xml
     class xistream;
 }
 
-class MIL_PionMissionType;
 // =============================================================================
 /** @class  DEC_Model
     @brief  DEC_Model

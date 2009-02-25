@@ -21,6 +21,17 @@
 class MIL_MissionType_ABC : public MIL_OrderType_ABC
 {
 public:
+    //! @name Phase enum to access the behavior string 
+    //@{
+    enum Phase
+    {
+        eNoPhase = 0,
+        ePhaseMRT, 
+        ePhaseCDT 
+    }; 
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              MIL_MissionType_ABC( uint nID, xml::xistream& xis );
@@ -30,7 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual bool IsAvailableForModel( const DIA_Model& model ) const = 0;
-    virtual const std::string& GetDIABehavior( int phase = 0 ) const = 0;
+    virtual const std::string& GetDIABehavior( Phase phase = eNoPhase ) const = 0;
     //@}
     
     //! @name Types

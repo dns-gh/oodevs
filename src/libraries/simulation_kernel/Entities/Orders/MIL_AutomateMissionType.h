@@ -39,7 +39,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const std::string& GetDIABehavior( int phase = 0 ) const;
+    virtual const std::string& GetDIABehavior( Phase phase ) const;
     //@}
 
     //! @name Operations

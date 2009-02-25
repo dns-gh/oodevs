@@ -38,7 +38,7 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string& GetDIABehavior( int ) const;
+    const std::string& GetDIABehavior( Phase ) const;
     //@}
 
     //! @name Operations

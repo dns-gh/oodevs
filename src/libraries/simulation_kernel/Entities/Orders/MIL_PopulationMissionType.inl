@@ -38,7 +38,7 @@ const MIL_MissionType_ABC* MIL_PopulationMissionType::Find( const std::string& s
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 inline
-const std::string& MIL_PopulationMissionType::GetDIABehavior( int ) const
+const std::string& MIL_PopulationMissionType::GetDIABehavior( Phase ) const
 {
     return strDIABehavior_;
 }

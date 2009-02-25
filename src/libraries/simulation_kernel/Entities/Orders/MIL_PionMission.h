@@ -14,8 +14,7 @@
 
 #include "MIL_Mission_ABC.h"
 
-#include "MIL_PionMissionType.h"
-
+class MIL_MissionType_ABC;
 class MIL_AgentPion;
 class MIL_AutomateMission;
 

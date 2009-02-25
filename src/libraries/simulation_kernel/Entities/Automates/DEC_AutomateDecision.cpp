@@ -268,7 +268,7 @@ void DEC_AutomateDecision::UpdateDecision()
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission& mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior( 0 );
+    const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
     missionMrtBehaviorParameters_.GetParameter( 0 ).SetValue( mission );
     missionMrtBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionMrtBehaviorDummyId_++ );
     DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionMrtBehaviorParameters_ );
@@ -283,7 +283,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission 
 {
     __try
     {
-        const std::string& strBehavior = mission.GetType().GetDIABehavior( 0 );
+        const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionMrtBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).Reset();
     }
@@ -299,7 +299,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission 
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission& mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior( 1 );
+    const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
     missionConduiteBehaviorParameters_.GetParameter( 0 ).SetValue( mission );
     missionConduiteBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionConduiteBehaviorDummyId_++ );
     DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionConduiteBehaviorParameters_ );
@@ -314,7 +314,7 @@ void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission& mis
 {
     __try
     {
-        const std::string& strBehavior = mission.GetType().GetDIABehavior( 1 );
+        const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionConduiteBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).Reset();
     }

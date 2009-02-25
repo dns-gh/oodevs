@@ -38,7 +38,9 @@ public:
     //! @name Models management
     //@{
           DIA_Model*           FindDIAModelFromScript( const std::string& strScriptName ) const;
-    const DEC_Model_ABC*       FindModel             ( const std::string& strModelName  ) const;    
+    const DEC_Model_ABC*       FindModelPion         ( const std::string& strModelName  ) const;  
+    const DEC_Model_ABC*       FindModelAutomate     ( const std::string& strModelName  ) const;  
+    const DEC_Model_ABC*       FindModelPopulation   ( const std::string& strModelName  ) const;    
     //@}
 
     //! @name Accessors
@@ -66,6 +68,7 @@ private:
     typedef std::map< std::string, const DEC_Model_ABC*, sCaseInsensitiveLess > T_ModelMap;
     typedef T_ModelMap::const_iterator                                          CIT_ModelMap;
     typedef std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > T_MissionTypeNameMap;
+    typedef std::map< std::string, T_ModelMap* >                                T_ModelTypeMap;
     //@}
 
     //! @name Helpers
@@ -78,11 +81,14 @@ private:
     DIA_FunctionTable< DEC_Workspace >* pFuncTable_;
     DIA_FunctionCaller_ABC*             pFunctionCaller_;
 
-    T_ModelMap                          models_;
+    T_ModelMap                          automateModels_;
+    T_ModelMap                          pionModels_;
+    T_ModelMap                          populationModels_;
+    T_ModelTypeMap                      modelTypes_;
 
-    T_MissionTypeNameMap      unitMissionsNames_ ; 
-    T_MissionTypeNameMap      automatMissionsNames_ ; 
-    T_MissionTypeNameMap      populationMissionsNames_ ; 
+    T_MissionTypeNameMap                unitMissionsNames_ ; 
+    T_MissionTypeNameMap                automatMissionsNames_ ; 
+    T_MissionTypeNameMap                populationMissionsNames_ ; 
 };
 
 #include "DEC_Workspace.inl"

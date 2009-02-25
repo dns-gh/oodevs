@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <automats>
-  <automat decisional-model="Test Automate" id="35" name="Compagnie GEN Lourde" type="Automate INF">
+  <automat decisional-model="Test" id="35" name="Compagnie GEN Lourde" type="Automate INF">
     <unit command-post="true" max="2" min="2" type="Section Combat GEN"/>
     <unit max="1" min="1" type="Section Combat RENS"/>
   </automat>
-  <automat decisional-model="Test Automate" id="36" name="TC2" type="Automate LOG TC2">
+  <automat decisional-model="Test" id="36" name="TC2" type="Automate LOG TC2">
     <unit command-post="true" max="1" min="1" type="PC TC2"/>
   </automat>
-  <automat decisional-model="Test Automate" id="37" name="BLD Ravitaillement" type="Automate LOG BLD Ravitaillement">
+  <automat decisional-model="Test" id="37" name="BLD Ravitaillement" type="Automate LOG BLD Ravitaillement">
     <unit command-post="true" max="1" min="1" type="PC BLD Ravitaillement"/>
   </automat>
-  <automat decisional-model="Test Automate" id="38" name="BLD Maintenance" type="Automate LOG BLD Maintenance">
+  <automat decisional-model="Test" id="38" name="BLD Maintenance" type="Automate LOG BLD Maintenance">
     <unit command-post="true" max="1" min="1" type="PC BLD Maintenance"/>
   </automat>
-  <automat decisional-model="Test Automate" id="39" name="BLT Maintenance" type="Automate LOG BLT Maintenance">
+  <automat decisional-model="Test" id="39" name="BLT Maintenance" type="Automate LOG BLT Maintenance">
     <unit command-post="true" max="1" min="1" type="PC BLT Maintenance"/>
   </automat>
-  <automat decisional-model="Test Automate" id="40" name="BLD Sante" type="Automate LOG BLD Sante">
+  <automat decisional-model="Test" id="40" name="BLD Sante" type="Automate LOG BLD Sante">
     <unit command-post="true" max="1" min="1" type="PC BLD Sante"/>
   </automat>
-  <automat decisional-model="Test Automate" id="41" name="BLT Sante" type="Automate LOG BLT Sante">
+  <automat decisional-model="Test" id="41" name="BLT Sante" type="Automate LOG BLT Sante">
     <unit command-post="true" max="1" min="1" type="PC BLT Sante"/>
   </automat>
-  <automat decisional-model="Test Automate" id="42" name="Automate Refugie" type="Automate REFUGIE">
+  <automat decisional-model="Test" id="42" name="Automate Refugie" type="Automate REFUGIE">
     <unit command-post="true" max="1" min="1" type="Pion Refugie"/>
   </automat>
 </automats>

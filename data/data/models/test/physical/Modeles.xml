@@ -112,7 +112,7 @@
     </unit>
   </units>
   <automats>
-    <automat dia-type="T_Automate" file="For Tests\Tests\Automate\Files.hal" name="Test Automate">
+    <automat dia-type="T_Automate" file="For Tests\Tests\Automate\Files.hal" name="Test">
       <missions>
         <mission name="Test Move To"/>
         <mission name="GEN Realiser Travaux"/>
@@ -122,7 +122,7 @@
     </automat>
   </automats>
   <populations>
-    <population dia-type="T_Population" file="For Tests\Tests\Population\Files.hal" name="Test Population">
+    <population dia-type="T_Population" file="For Tests\Tests\Population\Files.hal" name="Test">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Commettre Exactions"/>
