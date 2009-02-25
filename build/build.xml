@@ -620,6 +620,6 @@
     -->
     <target name="build" depends="libraries,applications"/>
 
-    <target name="all" depends="configure,build,test,package" description="build and package distribution"/>
+    <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
 
 </project>
