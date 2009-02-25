@@ -497,7 +497,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 void MainWindow::WriteSettings()
 {
     Settings settings;
-    settings.setPath( "MASA", "CSword" );
+    settings.setPath( "MASA Group", "SWORD Officer Training" );
     settings.beginGroup( "/Gaming" );
 
     // Pannel configuration
@@ -517,7 +517,7 @@ void MainWindow::WriteSettings()
 void MainWindow::ReadSettings()
 {
     Settings settings;
-    settings.setPath( "MASA", "CSword" );
+    settings.setPath( "MASA Group", "SWORD Officer Training" );
     settings.beginGroup( "/Gaming" );
 
     // Pannel configuration
@@ -539,11 +539,9 @@ void MainWindow::ReadSettings()
 void MainWindow::WriteOptions()
 {
     Settings settings;
-    settings.setPath( "MASA", "CSword" );
-    settings.beginGroup( "/Gaming" );
-    settings.beginGroup( "/Options" );
+    settings.setPath( "MASA Group", "SWORD Officer Training" );
+    settings.beginGroup( "/Gaming/Options" );
     controllers_.options_.Save( settings );
-    settings.endGroup();
     settings.endGroup();
 }
 
@@ -554,11 +552,9 @@ void MainWindow::WriteOptions()
 void MainWindow::ReadOptions()
 {
     Settings settings;
-    settings.setPath( "MASA", "CSword" );
-    settings.beginGroup( "/Gaming" );
-    settings.beginGroup( "/Options" );
+    settings.setPath( "MASA Group", "SWORD Officer Training" );
+    settings.beginGroup( "/Gaming/Options" );
     controllers_.options_.Load( settings );
-    settings.endGroup();
     settings.endGroup();
 }
 

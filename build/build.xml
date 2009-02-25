@@ -545,23 +545,12 @@
             <arg value="/DAPP_MODEL=worldwide"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
-        <!--nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
-            <arg value="/DAPP_VERSION=${version.version}"/>
-            <arg value="/DAPP_MODEL=worldwide"/>
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped" script="sword-ot-scalped.nsi" license="true">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=france"/>
             <arg value="/X!include sword-ot.nsh"/>
-        </nsis-->
-        <!--nsis todir="${dist.dir}/current/${platform}" name="sword-ot-ada" script="sword-ot-ada.nsi">
-            <arg value="/DAPP_VERSION=${version.version}"/>
-            <arg value="/X!include sword-ot.nsh"/>
-        </nsis-->
-        <!--nsis todir="${dist.dir}/current/${platform}" name="sword-ot-demo" script="sword-ot-demo.nsi" license="true">
-            <arg value="/DAPP_VERSION=${version.version}"/>
-            <arg value="/X!include sword-ot.nsh"/>
-        </nsis-->
-        <!--nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped" script="sword-ot-scalped.nsi" license="true">
-            <arg value="/DAPP_VERSION=${version.version}"/>
-            <arg value="/X!include sword-ot.nsh"/>
-        </nsis-->
+        </nsis>
     </target>
 
     <target name="package.patch" description="create the patch installer">

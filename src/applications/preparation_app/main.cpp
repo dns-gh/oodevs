@@ -27,14 +27,6 @@ using namespace boost::gregorian;
 class FlexLmLicense {};
 #endif
 
-namespace
-{
-    ////
-//    static const QString locale = "_en";
-    static const QString locale = "_fr";
-    ////
-}
-
 int main( int argc, char** argv )
 {   
     std::auto_ptr< FlexLmLicense > license;
@@ -47,7 +39,7 @@ int main( int argc, char** argv )
 #endif
 
     QApplication::setStyle( "windowsxp" );
-    Application app( argc, argv, locale, expiration );
+    Application app( argc, argv, expiration );
 
     BugTrap::Setup( tools::translate( "Application", "SWORD Officer Training" ).ascii() )
             .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).ascii() )

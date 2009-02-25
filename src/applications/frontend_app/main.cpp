@@ -14,18 +14,10 @@
 #include "tools/Version.h"
 #include "clients_gui/Tools.h"
 
-namespace
-{
-    ////
-//    static const QString locale = "_en";
-    static const std::string locale = "_fr";
-    ////
-}
-
 int main( int argc, char* argv[] )
 {
     QApplication::setStyle( "windowsxp" );
-    Application app( argc, argv, locale.c_str() );
+    Application app( argc, argv );
 
     #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );

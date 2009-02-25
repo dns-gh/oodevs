@@ -41,7 +41,7 @@ class Application : public QApplication
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int argc, char** argv, const QString& locale, const QString& expiration );
+             Application( int argc, char** argv, const QString& expiration );
     virtual ~Application();
     //@}
 

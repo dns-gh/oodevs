@@ -11,6 +11,7 @@
 #include "Config.h"
 #include "clients_gui/Tools.h"
 #include <shlobj.h>
+#include <qsettings.h>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4511 4512 )
@@ -25,8 +26,18 @@ using namespace frontend;
 
 namespace
 {
+    QString ReadDataDirectory()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", "SWORD Officer Training" );
+        return settings.readEntry( "/Common/DataDirectory", "" );
+    }
+
     std::string GetDefaultRoot( const std::string& appName )
     {
+        const QString regDir = ReadDataDirectory();
+        if( !regDir.isEmpty() )
+            return regDir.ascii();
         char myDocuments[ MAX_PATH ];
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
         return ( bfs::path( myDocuments, bfs::native ) / appName ).native_file_string();

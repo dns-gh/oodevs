@@ -96,8 +96,9 @@ std::string Wrap( const std::string& content, const std::string& prefix )
 //-----------------------------------------------------------------------------
 bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile )
 {
-    AddTranslator( "adn_" );
-    AddTranslator( "ENT_" );
+    AddTranslator( "adaptation" );
+    AddTranslator( "adn" );
+    AddTranslator( "ENT" );
 
     // Initialize all the translations.
     ADN_Tr::InitTranslations();
@@ -144,8 +145,8 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
 // -----------------------------------------------------------------------------
 void ADN_App::AddTranslator( const char* name )
 {
-    const QString t = QString( name ) + QTextCodec::locale() + QString( ".qm" );
     std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
-    if( trans->load( t, "." ) || trans->load( t, "resources/locales" ) )
+    const QString file = QString( "%1_%2" ).arg( name ).arg( QTextCodec::locale() );
+    if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
         installTranslator( trans.release() );
 }

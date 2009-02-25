@@ -176,6 +176,17 @@
 !macroend
 
 ;------------------------------------------------------------------------------
+; Adds Common Application Configuration
+;------------------------------------------------------------------------------
+!macro OT.AddCommonConfig
+
+    ; register .otpak extension association
+    WriteRegStr ${INSTDIR_REG_ROOT} "Software\MASA Group\SWORD Officer Training\Common" "Language" "${OT_LANG}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "Software\MASA Group\SWORD Officer Training\Common" "DataDirectory" "${INSTDATADIR}"
+
+!macroend
+
+;------------------------------------------------------------------------------
 ; Adds File Associations
 ;------------------------------------------------------------------------------
 !macro OT.AddFileAssoc

@@ -2,9 +2,11 @@
 
 installDir="C:/Program Files"
 documentDir="C:/Documents and Settings/sbo/Mes Documents"
+fromVersion="1.0.1"
+toVersion="1.0.2"
 
-../bin/nsis/nsisPatchGen.exe --prefix patch_app "${installDir}/SCALPED_old" "${installDir}/SCALPED" patch_app patch_app.nsi
-../bin/nsis/nsisPatchGen.exe --prefix patch_data "${documentDir}/SCALPED_old" "${documentDir}/SCALPED" patch_data patch_data.nsi
+../bin/nsis/nsisPatchGen.exe --prefix patch_app "${installDir}/SCALPED_${fromVersion}" "${installDir}/SCALPED" patch_app patch_app.nsi
+../bin/nsis/nsisPatchGen.exe --prefix patch_data "${documentDir}/SCALPED_${fromVersion}" "${documentDir}/SCALPED" patch_data patch_data.nsi
 
 function prepare_patch {
     tempFile="$1.tmp"

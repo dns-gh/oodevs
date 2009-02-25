@@ -122,8 +122,9 @@ Section "!${APP_NAME}"
     ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
     CreateShortcut "$SMPROGRAMS\${APP_NAME}\uninstall.lnk" "${UNINST_EXE}"
 
-    !insertmacro OT.AddUninstallEntry    
+    !insertmacro OT.AddUninstallEntry
     !insertmacro OT.AddFileAssoc
+    !insertmacro OT.AddCommonConfig
 
 SectionEnd
 

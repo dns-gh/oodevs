@@ -99,8 +99,8 @@ void ConnectDialog::LoadDefaultConfig()
     pPortSpinBox_->setValue( 10001 );
 
     QSettings settings;
-    settings.setPath( "MASA", "CSword" );
-    settings.beginGroup( "/ConnectWindow" );
+    settings.setPath( "MASA Group", "SWORD Officer Training" );
+    settings.beginGroup( "/Common/Hosts" );
     QStringList list = settings.readListEntry( "/hosts", ';' );
     int nIndex = settings.readNumEntry( "/index", 0 );
     settings.endGroup();
@@ -124,8 +124,8 @@ void ConnectDialog::LoadDefaultConfig()
 void ConnectDialog::SaveConfig()
 {
     QSettings settings;
-    settings.setPath( "MASA", "CSword" );
-    settings.beginGroup( "/ConnectWindow" );
+    settings.setPath( "MASA Group", "SWORD Officer Training" );
+    settings.beginGroup( "/Common/Hosts" );
     
     QStringList list;
     for( int n = 0; n < pHostNameComboBox_->count(); ++n )

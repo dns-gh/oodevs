@@ -9,7 +9,6 @@
 
 #include "preparation_app_pch.h"
 #include "Application.h"
-
 #include "MainWindow.h"
 #include "Config.h"
 #include "preparation/StaticModel.h"
@@ -18,23 +17,31 @@
 #include "clients_kernel/Workers.h"
 #include "ENT/ENT_Tr.h"
 #include "preparation/Tools.h"
-
-using namespace kernel;
+#include <qsettings.h>
+#include <qtextcodec.h>
 
 namespace 
 {
     struct CatchMeIfYouCan {};
+
+    QString ReadLang()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", "SWORD Officer Training" );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Application::Application
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv, const QString& locale, const QString& license )
-    : QApplication  ( argc, argv )
+Application::Application( int argc, char** argv, const QString& license )
+    : QApplication( argc, argv )
     , mainWindow_( 0 )
     , license_( license )
 {
+    const QString locale = ReadLang();
     AddTranslator( locale, "qt" );
     AddTranslator( locale, "ENT" );
     AddTranslator( locale, "clients_kernel" );
@@ -60,7 +67,8 @@ Application::~Application()
 void Application::AddTranslator( const QString& locale, const char* t )
 {
     std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
-    if( trans->load( t + locale, "." ) || trans->load( t + locale, "resources/locales" ) )
+    const QString file = QString( "%1_%2" ).arg( t ).arg( locale );
+    if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
        installTranslator( trans.release() );
 }
 
@@ -88,8 +96,8 @@ void Application::Initialize()
 void Application::Initialize( int argc, char** argv )
 {
     config_      = new Config( argc, argv );
-    controllers_ = new Controllers();
-    workers_     = new Workers();
+    controllers_ = new kernel::Controllers();
+    workers_     = new kernel::Workers();
     staticModel_ = new StaticModel( *controllers_ );
     model_       = new Model( *controllers_, *staticModel_ );
     mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *config_, license_ );

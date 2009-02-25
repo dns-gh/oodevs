@@ -14,16 +14,7 @@
 #include "tools/win32/FlexLm.h"
 #include "tools/Win32/BugTrap.h"
 #include "clients_gui/Tools.h"
-
 #include <windows.h>
-
-namespace
-{
-    ////
-//    static const QString locale = "_en";
-    static const QString locale = "_fr";
-    ////
-}
 
 int main( int argc, char* argv[] )
 {
@@ -36,7 +27,7 @@ int main( int argc, char* argv[] )
             .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
     QApplication::setStyle( "windows" );
     QApplication::setDesktopSettingsAware( false );
-    Application app( argc, argv, locale );
+    Application app( argc, argv );
     app.exec();
     return 0;
 }

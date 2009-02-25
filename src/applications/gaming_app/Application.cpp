@@ -27,23 +27,33 @@
 #include "clients_kernel/Workers.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "ENT/ENT_Tr.h"
+#include <qsettings.h>
+#include <qtextcodec.h>
 
 using namespace kernel;
 
 namespace 
 {
     struct CatchMeIfYouCan {};
+
+    QString ReadLang()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", "SWORD Officer Training" );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Application::Application
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv, const QString& locale, const QString& expiration )
+Application::Application( int argc, char** argv, const QString& expiration )
     : QApplication( argc, argv )
     , mainWindow_ ( 0 )
     , expiration_ ( expiration )
 {
+    const QString locale = ReadLang();
     AddTranslator( locale, "qt" );
     AddTranslator( locale, "ENT" );
     AddTranslator( locale, "clients_kernel" );
@@ -72,10 +82,9 @@ Application::~Application()
 void Application::AddTranslator( const QString& locale, const char* t )
 {
     QTranslator* trans = new QTranslator( this );
-    if( trans->load( t + locale, "." ) || trans->load( t + locale, "resources/locales" ) )
+    const QString file = QString( "%1_%2" ).arg( t ).arg( locale );
+    if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
         installTranslator( trans );
-    else
-        std::cerr << "Error loading " << t << std::endl; // $$$$ AGE 2007-12-18: 
 }
 
 // -----------------------------------------------------------------------------
