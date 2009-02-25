@@ -261,26 +261,20 @@ MT_Vector2D MT_Polyline::GetPointAt( MT_Float rDist ) const
     if( rDirLength )
         vDir /= rDirLength;
 
-    while( 1 )
+    while( rDist >= rDirLength )
     {
-        if( rDist < rDirLength )
-        {
-            vCur = vCur + ( vDir * rDist );
+        rDist -= rDirLength;
+        vCur = vNext;
+        ++itNext;
+        if( itNext == points_.end() )
             return vCur;
-        }
-        else
-        {
-            rDist -= rDirLength;
-            vCur = vNext;
-            ++itNext;
-            if( itNext == points_.end() )
-                return vCur;
-            vNext = *itNext;
-            vDir = vNext - vCur;
-            rDirLength = vDir.Magnitude();
-            if( rDirLength )
-                vDir /= rDirLength;
-        }
-    }     
+        vNext = *itNext;
+        vDir = vNext - vCur;
+        rDirLength = vDir.Magnitude();
+        if( rDirLength )
+            vDir /= rDirLength;
+    }  
+    vCur = vCur + ( vDir * rDist );
+    return vCur;   
 }
 
