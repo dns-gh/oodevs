@@ -12,6 +12,7 @@
 #include "clients_gui/Tools.h"
 #include <shlobj.h>
 #include <qsettings.h>
+#include <qapplication.h>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4511 4512 )
@@ -29,7 +30,7 @@ namespace
     QString ReadDataDirectory()
     {
         QSettings settings;
-        settings.setPath( "MASA Group", "SWORD Officer Training" );
+        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD Officer Training" ) );
         return settings.readEntry( "/Common/DataDirectory", "" );
     }
 

@@ -89,14 +89,10 @@
     <name>Application</name>
     <message>
         <source>sword-ot@masagroup.net</source>
-        <translation type="unfinished">support@scalped.fr</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SWORD Officer Training</source>
-        <translation type="unfinished">SCALPED</translation>
-    </message>
-    <message>
-        <source>Sword Officer Training</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -291,12 +287,12 @@ Le paquetage sera installé dans: %1</translation>
     </message>
     <message>
         <source>Selected file is not a valid %1 package.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier sélectionné n&apos;est pas un paquetage %1 valide.</translation>
     </message>
     <message>
         <source>SWORD Officer Training</source>
         <comment>Application</comment>
-        <translation type="unfinished">SCALPED</translation>
+        <translation type="obsolete">SCALPED</translation>
     </message>
 </context>
 <context>

@@ -27,6 +27,7 @@
 #include <qpushbutton.h>
 #include <qprogressbar.h>
 #include <qtextedit.h>
+#include <qapplication.h>
 
 #pragma warning( disable: 4127 4244 4245 )
 #include <boost/filesystem/operations.hpp>
@@ -183,7 +184,7 @@ void InstallPackagePanel::Update()
     else
     {
         okay_->setDisabled( true );
-        bubble_->ShowError( tr( "Selected file is not a valid %1 package." ).arg( tr( "SWORD Officer Training", "Application" ) ) );
+        bubble_->ShowError( tr( "Selected file is not a valid %1 package." ).arg( qApp->translate( "Application", "SWORD Officer Training" ) ) );
     }
 }
 

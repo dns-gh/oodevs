@@ -27,7 +27,7 @@ namespace
     QString ReadLang()
     {
         QSettings settings;
-        settings.setPath( "MASA Group", "SWORD Officer Training" );
+        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
 }

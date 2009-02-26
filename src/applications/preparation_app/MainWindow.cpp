@@ -466,7 +466,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 void MainWindow::WriteSettings()
 {
     Settings settings;
-    settings.setPath( "MASA Group", "SWORD Officer Training" );
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
     settings.beginGroup( "/Preparation" );
 
     // Pannel configuration
@@ -485,7 +485,7 @@ void MainWindow::WriteSettings()
 void MainWindow::ReadSettings()
 {
     Settings settings;
-    settings.setPath( "MASA Group", "SWORD Officer Training" );
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
     settings.beginGroup( "/Preparation" );
 
     // Pannel configuration
@@ -506,7 +506,7 @@ void MainWindow::ReadSettings()
 void MainWindow::WriteOptions()
 {
     Settings settings;
-    settings.setPath( "MASA Group", "SWORD Officer Training" );
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
     settings.beginGroup( "/Preparation/Options" );
     controllers_.options_.Save( settings );
     settings.endGroup();
@@ -519,7 +519,7 @@ void MainWindow::WriteOptions()
 void MainWindow::ReadOptions()
 {
     Settings settings;
-    settings.setPath( "MASA Group", "SWORD Officer Training" );
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
     settings.beginGroup( "/Preparation/Options" );
     controllers_.options_.Load( settings );
     settings.endGroup();

@@ -8,11 +8,11 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-
 #include "ConnectDialog.h"
 #include "moc_ConnectDialog.cpp"
 #include "gaming/Network.h"
 #include "clients_kernel/Logger_ABC.h"
+#include "clients_gui/Tools.h"
 
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog constructor
@@ -99,7 +99,7 @@ void ConnectDialog::LoadDefaultConfig()
     pPortSpinBox_->setValue( 10001 );
 
     QSettings settings;
-    settings.setPath( "MASA Group", "SWORD Officer Training" );
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
     settings.beginGroup( "/Common/Hosts" );
     QStringList list = settings.readListEntry( "/hosts", ';' );
     int nIndex = settings.readNumEntry( "/index", 0 );
@@ -124,7 +124,7 @@ void ConnectDialog::LoadDefaultConfig()
 void ConnectDialog::SaveConfig()
 {
     QSettings settings;
-    settings.setPath( "MASA Group", "SWORD Officer Training" );
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
     settings.beginGroup( "/Common/Hosts" );
     
     QStringList list;
