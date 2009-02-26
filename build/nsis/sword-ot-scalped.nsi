@@ -55,7 +55,8 @@ Section "!${APP_NAME}"
     ; resources: localization
     SetOutPath "$INSTDIR\applications\resources\locales"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${RUNDIR}\*.qm"
+    File /x tools_fr.qm "${RUNDIR}\*.qm"
+    Rename "tools_fr_scalped.qm" "tools_fr.qm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
     ; resources: documentation
