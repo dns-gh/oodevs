@@ -180,9 +180,8 @@
 ;------------------------------------------------------------------------------
 !macro OT.AddCommonConfig
 
-    ; register .otpak extension association
-    WriteRegStr ${INSTDIR_REG_ROOT} "Software\MASA Group\SWORD Officer Training\Common" "Language" "${OT_LANG}"
-    WriteRegStr ${INSTDIR_REG_ROOT} "Software\MASA Group\SWORD Officer Training\Common" "DataDirectory" "${INSTDATADIR}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "Software\MASA Group\${APP_NAME}\Common" "Language" "$(OT_LANG)"
+    WriteRegStr ${INSTDIR_REG_ROOT} "Software\MASA Group\${APP_NAME}\Common" "DataDirectory" "${INSTDATADIR}"
 
 !macroend
 
@@ -289,6 +288,8 @@ FunctionEnd
     Delete "$QUICKLAUNCH\${APP_NAME}.lnk"
     RmDir /r "$SMPROGRAMS\${APP_NAME}"
     DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
+    ; TODO: prompt keep / delete preferences
+    ; DeleteRegKey ${INSTDIR_REG_ROOT} "Software\MASA Group\${APP_NAME}"
     
     ; unregister .otpak extension association
     DeleteRegKey HKCR ".otpak"

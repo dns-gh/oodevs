@@ -68,7 +68,7 @@ Section "!${APP_NAME}"
     ; readme / changelog files
     SetOutPath "$INSTDIR\doc"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\fr\scalped\readme.txt" ; no language support
+    File "${DOCDIR}\fr\scalped\readme.txt"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     SetOutPath "$INSTDIR\applications"
@@ -121,6 +121,7 @@ Section "!${APP_NAME}"
 
     !insertmacro OT.AddUninstallEntry    
     !insertmacro OT.AddFileAssoc
+    !insertmacro OT.AddCommonConfig
     
 SectionEnd
 
@@ -167,7 +168,7 @@ SectionGroup "Terrains" s_ter
 
 SectionGroupEnd
 
-;-------------------------------- $$$ add french user manual
+;--------------------------------
 Section "Documentation" s_doc
     SetOutPath "$INSTDIR\doc"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
