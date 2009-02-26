@@ -78,7 +78,7 @@
                      library.bml_plugin,library.crossbow_plugin,library.gearth_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,library.messenger_plugin,library.3a"/>
 
     <target name="library.tools" description="build tools static library">
-        <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="tools" depends="qt" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
             <defineset>
                 <define name="APP_VERSION" value="${version.minor}"/>
