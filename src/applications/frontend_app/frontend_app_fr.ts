@@ -95,6 +95,10 @@
         <source>SWORD Officer Training</source>
         <translation type="unfinished">SCALPED</translation>
     </message>
+    <message>
+        <source>Sword Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateExercisePanel</name>
@@ -283,7 +287,16 @@ Le paquetage sera installé dans: %1</translation>
     </message>
     <message>
         <source>Selected file is not a valid SWORD Officer Training package.</source>
-        <translation>Le fichier sélectionné n&apos;est pas un paquetage SWORD Officer Training valide.</translation>
+        <translation type="obsolete">Le fichier sélectionné n&apos;est pas un paquetage SWORD Officer Training valide.</translation>
+    </message>
+    <message>
+        <source>Selected file is not a valid %1 package.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training</source>
+        <comment>Application</comment>
+        <translation type="unfinished">SCALPED</translation>
     </message>
 </context>
 <context>
@@ -332,7 +345,7 @@ Le paquetage sera installé dans: %1</translation>
     </message>
     <message>
         <source>SWORD Officer Training</source>
-        <translation>SCALPED</translation>
+        <translation type="obsolete">SCALPED</translation>
     </message>
 </context>
 <context>

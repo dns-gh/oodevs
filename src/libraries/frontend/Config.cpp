@@ -49,7 +49,7 @@ namespace
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
 Config::Config()
-    : GeneralConfig( GetDefaultRoot( tools::translate( "Config", "SWORD Officer Training" ).ascii() ) )
+    : GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD Officer Training" ).ascii() ) )
 {
     po::options_description desc( "Frontend options" );
     desc.add_options()

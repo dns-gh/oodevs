@@ -300,7 +300,11 @@
     </message>
     <message>
         <source>SWORD Officer Training - Gaming</source>
-        <translation>SCALPED - Gaming</translation>
+        <translation type="obsolete">SCALPED - Gaming</translation>
+    </message>
+    <message>
+        <source>Gaming</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

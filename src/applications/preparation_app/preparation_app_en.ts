@@ -14,7 +14,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SWORD Officer Training - Preparation</source>
+        <source>Preparation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -59,7 +59,11 @@
     </message>
     <message>
         <source>SWORD Officer Training - Preparation</source>
-        <translation>SCALPED - Préparation</translation>
+        <translation type="obsolete">SCALPED - Préparation</translation>
+    </message>
+    <message>
+        <source>Preparation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

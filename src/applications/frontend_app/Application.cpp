@@ -38,6 +38,7 @@ Application::Application( int argc, char** argv )
     AddTranslator( "frontend_app", locale );
     AddTranslator( "clients_kernel", locale );
     AddTranslator( "clients_gui", locale );
+    AddTranslator( "tools", locale );
     ENT_Tr::InitTranslations();
     QMainWindow* mainWindow = new MainWindow();
     mainWindow->show();

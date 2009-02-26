@@ -45,7 +45,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     , exercises_( new ExerciseService( controllers, *config_ ) )
     , exerciseLister_( new NetworkExerciseLister( *config_ ) )
 {
-    setCaption( tools::translate( "MainWindow", "SWORD Officer Training" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
+    setCaption( tools::translate( "Application", "SWORD Officer Training" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
     setIcon( MAKE_PIXMAP( csword ) );
     setFixedSize( 800, 600 );
     SetStyle();

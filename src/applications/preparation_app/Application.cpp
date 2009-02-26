@@ -48,6 +48,7 @@ Application::Application( int argc, char** argv, const QString& license )
     AddTranslator( locale, "clients_gui" );
     AddTranslator( locale, "preparation" );
     AddTranslator( locale, "preparation_app" );
+    AddTranslator( locale, "tools" );
     ENT_Tr::InitTranslations();
 }
 

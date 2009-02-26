@@ -12,8 +12,9 @@
 #include "clients_gui_pch.h"
 #include "AboutDialog.h"
 #include "moc_AboutDialog.cpp"
-#include "clients_gui/RichLabel.h"
-#include "clients_gui/ItemFactory_ABC.h"
+#include "ItemFactory_ABC.h"
+#include "RichLabel.h"
+#include "Tools.h"
 #include "tools/GeneralConfig.h"
 
 using namespace gui;
@@ -38,7 +39,12 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
     box->layout()->setAlignment( Qt::AlignBottom | Qt::AlignRight );
     QHBox* hbox = new QHBox( box );
     QString message;
-    message += line + tr( "<br>© 2008 MasaGroup <a href=\"http://www.masagroup.net\">www.masagroup.net</a>" );
+    message = QString( "%1 - %2<br>%3 <a href=\"http://%4\">%5</a>" )
+            .arg( tools::translate( "Application", "SWORD Officer Training" ) )
+            .arg( line )
+            .arg( tools::translate( "Application", "© 2008 MASA Group" ) )
+            .arg( tools::translate( "Application", "www.masagroup.net" ) )
+            .arg( tools::translate( "Application", "www.masagroup.net" ) );
 
     if( ! license.isNull() )
         message += tr( "<br>License will expire on " ) + license;
@@ -74,7 +80,7 @@ QSize AboutDialog::sizeHint() const
 // -----------------------------------------------------------------------------
 QPixmap AboutDialog::GetSplashScreen() const
 {
-    const QString filename = tr( "images/gui/splash_swordot.jpg" );
+    const QString filename = tools::translate( "Application", "images/gui/splash_swordot.jpg" );
     if( filename.isNull() || filename.isEmpty() )
         return QImage( tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash_swordot.jpg" ).c_str() );
     return QImage( tools::GeneralConfig::BuildResourceChildFile( filename.ascii() ).c_str() );

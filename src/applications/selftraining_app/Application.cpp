@@ -43,7 +43,8 @@ Application::Application( int argc, char** argv )
     AddTranslator( "frontend", locale );
     AddTranslator( "clients_kernel", locale );
     AddTranslator( "clients_gui", locale );
-    AddTranslator( "selftraining_app", locale );    
+    AddTranslator( "selftraining_app", locale );
+    AddTranslator( "tools", locale );
 
     // Child processe status 
     mainWindow_ = new MainWindow( *controllers_ );

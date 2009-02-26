@@ -1,9 +1,16 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>Application</name>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation type="unfinished">SCALPED</translation>
+    </message>
+</context>
+<context>
     <name>Config</name>
     <message>
         <source>SWORD Officer Training</source>
-        <translation>SCALPED</translation>
+        <translation type="obsolete">SCALPED</translation>
     </message>
 </context>
 <context>

@@ -183,7 +183,7 @@ void InstallPackagePanel::Update()
     else
     {
         okay_->setDisabled( true );
-        bubble_->ShowError( tr( "Selected file is not a valid SWORD Officer Training package." ) );
+        bubble_->ShowError( tr( "Selected file is not a valid %1 package." ).arg( tr( "SWORD Officer Training", "Application" ) ) );
     }
 }
 

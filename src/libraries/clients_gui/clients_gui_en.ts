@@ -1,5 +1,24 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>Application</name>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&#xa9; 2008 MASA Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>www.masagroup.net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>images/gui/splash_swordot.jpg</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CrossingSitePrototype_ABC</name>
     <message>
         <source>Crossing site</source>
@@ -346,14 +365,6 @@
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>images/gui/splash_swordot.jpg</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;br&gt;&#xa9; 2008 MasaGroup &lt;a href=&quot;http://www.masagroup.net&quot;&gt;www.masagroup.net&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

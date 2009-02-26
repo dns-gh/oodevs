@@ -95,6 +95,10 @@
         <source>sword-ot@masagroup.net</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Sword Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateExercisePanel</name>
@@ -280,7 +284,12 @@ Package will be installed to: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Selected file is not a valid SWORD Officer Training package.</source>
+        <source>Selected file is not a valid %1 package.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD Officer Training</source>
+        <comment>Application</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -322,10 +331,6 @@ Package will be installed to: %1</source>
     </message>
     <message>
         <source>Manage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SWORD Officer Training</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

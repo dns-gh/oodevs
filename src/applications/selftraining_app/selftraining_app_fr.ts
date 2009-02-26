@@ -184,7 +184,7 @@
     <name>MainWindow</name>
     <message>
         <source>SWORD Officer Training</source>
-        <translation>SCALPED</translation>
+        <translation type="obsolete">SCALPED</translation>
     </message>
     <message>
         <source> - release </source>

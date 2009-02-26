@@ -150,10 +150,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>SWORD Officer Training</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> - release </source>
         <translation type="unfinished"></translation>
     </message>

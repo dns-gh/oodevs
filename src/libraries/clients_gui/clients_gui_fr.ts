@@ -19,6 +19,25 @@
     </message>
 </context>
 <context>
+    <name>Application</name>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&#xa9; 2008 MASA Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>www.masagroup.net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>images/gui/splash_swordot.jpg</source>
+        <translation type="unfinished">images/gui/splash_scalped.jpg</translation>
+    </message>
+</context>
+<context>
     <name>AutomatsLayer</name>
     <message>
         <source>Aggregate</source>
@@ -896,11 +915,11 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>images/gui/splash_swordot.jpg</source>
-        <translation>images/gui/splash_scalped.jpg</translation>
+        <translation type="obsolete">images/gui/splash_scalped.jpg</translation>
     </message>
     <message>
         <source>&lt;br&gt;&#xa9; 2008 MasaGroup &lt;a href=&quot;http://www.masagroup.net&quot;&gt;www.masagroup.net&lt;/a&gt;</source>
-        <translation>&lt;br&gt;© 2008 MasaGroup &lt;a href=&quot;http://www.masagroup.net&quot;&gt;www.masagroup.net&lt;/a&gt;</translation>
+        <translation type="obsolete">&lt;br&gt;© 2008 MasaGroup &lt;a href=&quot;http://www.masagroup.net&quot;&gt;www.masagroup.net&lt;/a&gt;</translation>
     </message>
 </context>
 <context>

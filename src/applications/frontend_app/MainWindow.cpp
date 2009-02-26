@@ -40,7 +40,7 @@ MainWindow::MainWindow()
     , config_( new frontend::Config() )
 {
     config_->Parse( qApp->argc(), qApp->argv() );
-    setCaption( tools::translate( "MainWindow", "SWORD Officer Training" ) );
+    setCaption( tools::translate( "Application", "SWORD Officer Training" ) );
     setIcon( MAKE_PIXMAP( csword ) );
     setMinimumSize( 800, 600 );
 

@@ -152,7 +152,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu = new QPopupMenu( this );
     menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Key_F1 );
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "SWORD Officer Training - Gaming" ) + " " + QString( tools::AppVersion() ), license ), SLOT( exec() ) );
+    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "Gaming" ) + " " + QString( tools::AppVersion() ), license ), SLOT( exec() ) );
     insertItem( tools::translate( "Menu", "&?" ), menu );
 
     controllers_.Register( *this );

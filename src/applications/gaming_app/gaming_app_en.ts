@@ -284,7 +284,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SWORD Officer Training - Gaming</source>
+        <source>Gaming</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

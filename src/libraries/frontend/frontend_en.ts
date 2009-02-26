@@ -1,6 +1,6 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>Config</name>
+    <name>Application</name>
     <message>
         <source>SWORD Officer Training</source>
         <translation type="unfinished"></translation>
