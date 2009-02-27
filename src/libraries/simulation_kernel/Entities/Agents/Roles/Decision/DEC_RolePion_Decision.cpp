@@ -25,7 +25,6 @@
 #include "Decision/DEC_Tools.h"
 #include "CheckPoints/DIA_Serializer.h"
 #include "Network/NET_ASN_Messages.h"
-#include "MIL_AgentServer.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
@@ -57,9 +56,8 @@ void DEC_RolePion_Decision::InitializeDIA()
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : DEC_Decision_ABC          ( pion )
+    : DEC_Decision              ( pion, "T_Pion" )
     , pPion_                    ( &pion )
-    , DIA_Engine                ( *DIA_TypeManager::Instance().GetType( "T_Pion" ), "" )
     , diaFunctionCaller_        ( pion, pion.GetType().GetFunctionTable() )
     , nForceRatioState_         ( eForceRatioStateNone         )
     , nRulesOfEngagementState_  ( eRoeStateNone                )
@@ -102,9 +100,8 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentP
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 DEC_RolePion_Decision::DEC_RolePion_Decision()
-    : DEC_Decision_ABC          ( ) 
+    : DEC_Decision              ( "T_Pion" ) 
     , pPion_                    ( 0 )
-    , DIA_Engine                ( *DIA_TypeManager::Instance().GetType( "T_Pion" ), "" )
     , diaFunctionCaller_        ( *(MIL_AgentPion*)0, *(DIA_FunctionTable< MIL_AgentPion >*)1 ) // $$$$ JVT : Eurkkk
     , nForceRatioState_         ( eForceRatioStateNone      )
     , nRulesOfEngagementState_  ( eRoeStateNone             )
@@ -369,27 +366,17 @@ namespace
     }
 }
 
-//-----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::UpdateDecision
-// Last modified: JVT 02-12-16
-//-----------------------------------------------------------------------------
-void DEC_RolePion_Decision::UpdateDecision()
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::HandleUpdateDecisionError
+// Created: LDC 2009-02-27
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::HandleUpdateDecisionError()
 {
-    __try
-    {
-        PrepareUpdate    ();
-        UpdateMotivations( (float)MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
-        UpdateDecisions  ();
-        ExecuteAllActions();
-    }
-    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
-    {
-        assert( pPion_ );
-        LogCrash( *pPion_ );
-        CleanStateAfterCrash();       
-        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_MissionImpossible_ );
-        pPion_->GetOrderManager().ReplaceMission();       
-    }
+    assert( pPion_ );
+    LogCrash( *pPion_ );
+    CleanStateAfterCrash();       
+    MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_MissionImpossible_ );
+    pPion_->GetOrderManager().ReplaceMission(); 
 }
 
 // -----------------------------------------------------------------------------

@@ -12,8 +12,7 @@
 #ifndef __DEC_PopulationDecision_h_
 #define __DEC_PopulationDecision_h_
 
-#include "MIL.h"
-#include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_Decision.h"
 
 class MIL_Population;
 class MIL_PopulationMission;
@@ -23,8 +22,7 @@ class NET_ASN_MsgPopulationUpdate;
 // @class  DEC_PopulationDecision
 // Created: JVT 2004-08-03
 // =============================================================================
-class DEC_PopulationDecision : public DEC_Decision_ABC
-                             , public DIA_Engine
+class DEC_PopulationDecision : public DEC_Decision
 {
     MT_COPYNOTALLOWED( DEC_PopulationDecision )
 
@@ -48,7 +46,6 @@ public:
     
     //! @name Operations
     //@{
-    virtual void UpdateDecision();
     void Clean         ();
 
     void StartMissionBehavior( MIL_PopulationMission& mission );
@@ -85,6 +82,11 @@ private:
     void              CleanStateAfterCrash      ();
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void HandleUpdateDecisionError();
+    //@}
+
 private:
     MIL_Population*                      pPopulation_;
     DIA_FunctionCaller< MIL_Population > diaFunctionCaller_;
@@ -102,7 +104,5 @@ private:
     static uint nDefaultBehaviorDummyId_;
     static uint nMissionBehaviorDummyId_;
 };
-
-#include "DEC_PopulationDecision.inl"
 
 #endif // __DEC_PopulationDecision_h_

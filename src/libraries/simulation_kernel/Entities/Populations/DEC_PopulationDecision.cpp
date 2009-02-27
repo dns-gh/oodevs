@@ -49,8 +49,7 @@ void DEC_PopulationDecision::InitializeDIA()
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
-    : DEC_Decision_ABC         ( population ) 
-    , DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Population" ), "" )
+    : DEC_Decision             ( population, "T_Population" )
     , pPopulation_             ( &population )
     , diaFunctionCaller_       ( population, population.GetType().GetFunctionTable() )
     , rDominationState_        ( 0. )
@@ -87,8 +86,7 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
 DEC_PopulationDecision::DEC_PopulationDecision()
-    : DEC_Decision_ABC         ( ) 
-    , DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Population" ), "" )
+    : DEC_Decision             ( "T_Population" ) 
     , pPopulation_             ( 0 )
     , diaFunctionCaller_       ( *(MIL_Population*)0, *(DIA_FunctionTable< MIL_Population >*)1 ) // $$$$ JVT : Eurkkk
     , rDominationState_        ( 0. )
@@ -206,27 +204,17 @@ namespace
     }
 }
 
-//-----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::UpdateDecision
-// Last modified: JVT 02-12-16
-//-----------------------------------------------------------------------------
-void DEC_PopulationDecision::UpdateDecision()
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::HandleUpdateDecisionError
+// Created: LDC 2009-02-27
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::HandleUpdateDecisionError()
 {
-    __try
-    {
-        PrepareUpdate    ();
-        UpdateMotivations( (float)MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
-        UpdateDecisions  ();
-        ExecuteAllActions();
-    }
-    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
-    {
-        assert( pPopulation_ );
-        LogCrash( pPopulation_ );
-        CleanStateAfterCrash();
-        MIL_Report::PostEvent( *pPopulation_, MIL_Report::eReport_MissionImpossible_ );
-        pPopulation_->GetOrderManager().ReplaceMission();
-    }
+    assert( pPopulation_ );
+    LogCrash( pPopulation_ );
+    CleanStateAfterCrash();
+    MIL_Report::PostEvent( *pPopulation_, MIL_Report::eReport_MissionImpossible_ );
+    pPopulation_->GetOrderManager().ReplaceMission();
 }
 
 // =============================================================================

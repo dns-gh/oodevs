@@ -12,8 +12,7 @@
 #ifndef __DEC_AutomateDecision_h_
 #define __DEC_AutomateDecision_h_
 
-#include "MIL.h"
-#include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_Decision.h"
 
 class MIL_Automate;
 class MIL_AutomateMission;
@@ -28,8 +27,7 @@ enum E_CloseCombatState;
 // @class  DEC_AutomateDecision
 // Created: JVT 2004-08-03
 // =============================================================================
-class DEC_AutomateDecision : public DEC_Decision_ABC
-                           , public DIA_Engine
+class DEC_AutomateDecision : public DEC_Decision
 {
     MT_COPYNOTALLOWED( DEC_AutomateDecision )
 
@@ -53,7 +51,6 @@ public:
     
     //! @name Operations
     //@{
-    virtual void UpdateDecision();
     virtual void Reset          ();
     void Clean          ();
     bool HasStateChanged() const;
@@ -92,6 +89,11 @@ private:
     void              StopDefaultBehavior       ();
 
     void              CleanStateAfterCrash      ();
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void HandleUpdateDecisionError();
     //@}
 
 private:

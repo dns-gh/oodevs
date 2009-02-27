@@ -21,7 +21,6 @@
 #include "Entities/Orders/MIL_AutomateMission.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "CheckPoints/DIA_Serializer.h"
 #include "MT_Tools/MT_CrashHandler.h"
@@ -51,8 +50,7 @@ void DEC_AutomateDecision::InitializeDIA()
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
-    : DEC_Decision_ABC         ( automate ) 
-    , DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Automate" ), "" )
+    : DEC_Decision             ( automate, "T_Automate" ) 
     , pAutomate_               ( &automate )
     , diaFunctionCaller_       ( automate, automate.GetType().GetFunctionTable() )
     , nForceRatioState_        ( eForceRatioStateNone  )
@@ -94,8 +92,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision::DEC_AutomateDecision()
-    : DEC_Decision_ABC         ( ) 
-    , DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Automate" ), "" )
+    : DEC_Decision             ( "T_Automate" ) 
     , pAutomate_               ( 0 )
     , diaFunctionCaller_       ( *(MIL_Automate*)0, *(DIA_FunctionTable< MIL_Automate >*)1 ) // $$$$ JVT : Eurkkk
     , nForceRatioState_        ( eForceRatioStateNone  )
@@ -235,27 +232,17 @@ namespace
     }
 }
 
-//-----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::UpdateDecision
-// Last modified: JVT 02-12-16
-//-----------------------------------------------------------------------------
-void DEC_AutomateDecision::UpdateDecision()
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::HandleUpdateDecisionError
+// Created: LDC 2009-02-27
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::HandleUpdateDecisionError()
 {
-    __try
-    {
-        PrepareUpdate    ();
-        UpdateMotivations( (float)MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
-        UpdateDecisions  ();
-        ExecuteAllActions();
-    }
-    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
-    {
-        assert( pAutomate_ );
-        LogCrash( pAutomate_ );
-        CleanStateAfterCrash();
-        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_MissionImpossible_ );
-        pAutomate_->GetOrderManager().ReplaceMission();               
-    }
+    assert( pAutomate_ );
+    LogCrash( pAutomate_ );
+    CleanStateAfterCrash();
+    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_MissionImpossible_ );
+    pAutomate_->GetOrderManager().ReplaceMission();               
 }
 
 // =============================================================================
