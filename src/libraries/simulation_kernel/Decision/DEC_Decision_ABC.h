@@ -37,6 +37,13 @@ public:
     virtual ~DEC_Decision_ABC();
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    virtual void UpdateDecision() = 0;
+    virtual void Reset() = 0;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

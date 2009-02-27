@@ -56,12 +56,12 @@ public:
     
     //! @name Operations
     //@{
-    void UpdateDecision();
+    virtual void UpdateDecision();
     void Clean         ();
 
     void StartMissionBehavior( MIL_PionMission& mission );
     void StopMissionBehavior ( MIL_PionMission& mission );
-    void Reset               ();
+    virtual void Reset               ();
 
     void NotifyAutomateChanged();
     //@}

@@ -340,8 +340,10 @@ void MIL_AgentPion::CleanKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdateDecision()
 {
-    orderManager_.Update( IsDead() );
-    GetRole< DEC_RolePion_Decision >().UpdateDecision();
+    if( IsDead() )
+        orderManager_.ReplaceMission( 0 );
+    orderManager_.Update();
+    GetRole< DEC_Decision_ABC >().UpdateDecision();
 }
 
 // -----------------------------------------------------------------------------

@@ -53,8 +53,8 @@ public:
     
     //! @name Operations
     //@{
-    void UpdateDecision ();
-    void Reset          ();
+    virtual void UpdateDecision();
+    virtual void Reset          ();
     void Clean          ();
     bool HasStateChanged() const;
 

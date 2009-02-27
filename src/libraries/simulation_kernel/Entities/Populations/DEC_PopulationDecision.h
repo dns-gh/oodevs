@@ -48,12 +48,12 @@ public:
     
     //! @name Operations
     //@{
-    void UpdateDecision();
+    virtual void UpdateDecision();
     void Clean         ();
 
     void StartMissionBehavior( MIL_PopulationMission& mission );
     void StopMissionBehavior ( MIL_PopulationMission& mission );
-    void Reset               ();
+    virtual void Reset               ();
     //@}
 
     //! @name Accessors

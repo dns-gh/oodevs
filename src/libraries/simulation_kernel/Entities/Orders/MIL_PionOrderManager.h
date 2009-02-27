@@ -35,11 +35,6 @@ public:
             void OnReceiveMission  ( const MIL_MissionType_ABC& type );
     //@}
 
-    //! @name Main
-    //@{
-    virtual void Update( bool bDead );
-    //@}
-
     //! @name Relieve
     //@{
     bool RelievePion   ( const MIL_AgentPion& pion ); 

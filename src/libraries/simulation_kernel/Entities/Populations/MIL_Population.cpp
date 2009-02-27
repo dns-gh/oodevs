@@ -306,7 +306,7 @@ void MIL_Population::CleanKnowledges()
 void MIL_Population::UpdateDecision()
 {
     orderManager_.Update();
-    GetRole< DEC_PopulationDecision >().UpdateDecision();
+    GetRole< DEC_Decision_ABC >().UpdateDecision();
 }
 
 // -----------------------------------------------------------------------------

@@ -490,7 +490,7 @@ bool MIL_Automate::CheckComposition() const
 void MIL_Automate::UpdateDecision()
 {
     orderManager_.Update();
-    GetRole< DEC_AutomateDecision >().UpdateDecision();
+    GetRole< DEC_Decision_ABC >().UpdateDecision();
 }
 
 // -----------------------------------------------------------------------------

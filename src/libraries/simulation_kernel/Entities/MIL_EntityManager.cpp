@@ -710,6 +710,7 @@ void MIL_EntityManager::UpdateKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateDecisions()
 {
+    // $$$$ LDC: Automata are called before pawns in order to make sure all pawns receive orders from the automata on the same step.
     if( profilerManager_.IsProfilingEnabled() )
     {
         MT_Profiler decisionUpdateProfiler;
