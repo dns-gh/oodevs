@@ -347,18 +347,6 @@ void DEC_AutomateDecision::StopDefaultBehavior()
         DIA_DesactivateOrder( &GetBehaviorPart(), "BEH_Defaut", defaultBehaviorParameters_, true );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::Reset
-// Created: NLD 2005-02-24
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::Reset()
-{
-    StopDefaultBehavior ();
-    StartDefaultBehavior();
-    assert( pMotivationTool_ );
-    static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ).Reset();
-} 
-
 // =============================================================================
 // NETWORK
 // =============================================================================

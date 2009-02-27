@@ -288,18 +288,6 @@ void DEC_RolePion_Decision::StopDefaultBehavior()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::Reset
-// Created: NLD 2005-02-24
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::Reset()
-{
-    StopDefaultBehavior ();
-    StartDefaultBehavior();
-    assert( pMotivationTool_ );
-    static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ).Reset();
-} 
-
-// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::StartMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------

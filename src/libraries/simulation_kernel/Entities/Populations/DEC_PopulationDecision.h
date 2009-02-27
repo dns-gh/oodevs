@@ -50,7 +50,6 @@ public:
 
     void StartMissionBehavior( MIL_PopulationMission& mission );
     void StopMissionBehavior ( MIL_PopulationMission& mission );
-    virtual void Reset               ();
     //@}
 
     //! @name Accessors
@@ -75,8 +74,8 @@ private:
     //! @name Tools
     //@{
     bool              IsDefaultBehaviorAvailable() const;
-    void              StartDefaultBehavior      ();
-    void              StopDefaultBehavior       ();
+    virtual void      StartDefaultBehavior      ();
+    virtual void      StopDefaultBehavior       ();
 
     void              CleanStateAfterCrash      ();
     //@}

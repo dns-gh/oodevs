@@ -51,7 +51,6 @@ public:
     
     //! @name Operations
     //@{
-    virtual void Reset          ();
     void Clean          ();
     bool HasStateChanged() const;
 
@@ -84,8 +83,8 @@ private:
     //! @name Tools
     //@{
     bool              IsDefaultBehaviorAvailable() const;
-    void              StartDefaultBehavior      ();
-    void              StopDefaultBehavior       ();
+    virtual void      StartDefaultBehavior      ();
+    virtual void      StopDefaultBehavior       ();
 
     void              CleanStateAfterCrash      ();
     //@}

@@ -58,7 +58,6 @@ public:
 
     void StartMissionBehavior( MIL_PionMission& mission );
     void StopMissionBehavior ( MIL_PionMission& mission );
-    virtual void Reset               ();
 
     void NotifyAutomateChanged();
     //@}
@@ -90,8 +89,8 @@ private:
     //! @name Tools
     //@{
     bool IsDefaultBehaviorAvailable() const;
-    void StartDefaultBehavior      ();
-    void StopDefaultBehavior       ();
+    virtual void      StartDefaultBehavior();
+    virtual void      StopDefaultBehavior ();
 
     void CleanStateAfterCrash      ();
     //@}

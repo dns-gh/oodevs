@@ -67,7 +67,10 @@ void DEC_Decision::UpdateDecision()
 // -----------------------------------------------------------------------------
 void DEC_Decision::Reset()
 {
-
+    StopDefaultBehavior ();
+    StartDefaultBehavior();
+    assert( pMotivationTool_ );
+    static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ).Reset();
 }
 
 //-----------------------------------------------------------------------------

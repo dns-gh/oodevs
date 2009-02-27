@@ -49,6 +49,8 @@ protected:
     //! @name Helpers
     //@{
     virtual void HandleUpdateDecisionError() = 0;
+    virtual void StartDefaultBehavior     () = 0;
+    virtual void StopDefaultBehavior      () = 0;
     //@}
 };
 
