@@ -69,3 +69,23 @@ void DEC_Decision::Reset()
 {
 
 }
+
+//-----------------------------------------------------------------------------
+// Name: DEC_Decision::GetBehaviorPart
+// Created: NLD 2002-12-12
+//-----------------------------------------------------------------------------
+DIA_BehaviorPart& DEC_Decision::GetBehaviorPart() const
+{
+    assert( pBehaviorTool_ != 0 );
+    return( static_cast< DIA_BehaviorPart& >( *pBehaviorTool_ ) );
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_Decision::GetKnowledgePart
+// Created: AGN 02-12-19
+//-----------------------------------------------------------------------------
+DIA_Knowledge_Part& DEC_Decision::GetKnowledgePart() const
+{
+    assert( pKnowledgeTool_ != 0 );
+    return( static_cast< DIA_Knowledge_Part& > (*pKnowledgeTool_) );
+}

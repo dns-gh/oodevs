@@ -9,28 +9,6 @@
 //
 // *****************************************************************************
 
-//-----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::GetBehaviorPart
-// Created: NLD 2002-12-12
-//-----------------------------------------------------------------------------
-inline
-DIA_BehaviorPart& DEC_RolePion_Decision::GetBehaviorPart() const
-{
-    assert( pBehaviorTool_ != 0 );
-    return( static_cast< DIA_BehaviorPart& >( *pBehaviorTool_ ) );
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::GetKnowledgePart
-// Created: AGN 02-12-19
-//-----------------------------------------------------------------------------
-inline
-DIA_Knowledge_Part& DEC_RolePion_Decision::GetKnowledgePart() const
-{
-    assert( pKnowledgeTool_ != 0 );
-    return( static_cast< DIA_Knowledge_Part& > (*pKnowledgeTool_) );
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GetPion
 // Created: NLD 2004-09-03

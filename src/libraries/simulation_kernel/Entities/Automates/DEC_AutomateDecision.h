@@ -83,7 +83,6 @@ public:
 private:
     //! @name Tools
     //@{
-    DIA_BehaviorPart& GetBehaviorPart           () const;
     bool              IsDefaultBehaviorAvailable() const;
     void              StartDefaultBehavior      ();
     void              StopDefaultBehavior       ();

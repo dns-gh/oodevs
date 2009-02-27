@@ -334,16 +334,6 @@ MT_Float DEC_PopulationDecision::GetDominationState() const
     return rDominationState_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::GetBehaviorPart
-// Created: NLD 2002-12-12
-//-----------------------------------------------------------------------------
-DIA_BehaviorPart& DEC_PopulationDecision::GetBehaviorPart() const
-{
-    assert( pBehaviorTool_ != 0 );
-    return( static_cast< DIA_BehaviorPart& >( *pBehaviorTool_ ) );
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::GetPopulation
 // Created: NLD 2004-10-26

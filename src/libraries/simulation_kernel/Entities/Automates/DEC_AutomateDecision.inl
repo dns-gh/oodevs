@@ -10,18 +10,6 @@
 // *****************************************************************************
 
 
-//-----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::GetBehaviorPart
-// Created: NLD 2002-12-12
-//-----------------------------------------------------------------------------
-inline
-DIA_BehaviorPart& DEC_AutomateDecision::GetBehaviorPart() const
-{
-    assert( pBehaviorTool_ != 0 );
-    return( static_cast< DIA_BehaviorPart& >( *pBehaviorTool_ ) );
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::Clean
 // Created: NLD 2004-09-08

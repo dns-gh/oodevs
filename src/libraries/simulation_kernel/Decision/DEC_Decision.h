@@ -38,6 +38,12 @@ public:
     virtual void UpdateDecision();
     virtual void Reset();
     //@}
+    
+    //!@name Accessors
+    //@{
+    DIA_BehaviorPart&   GetBehaviorPart () const;
+    DIA_Knowledge_Part& GetKnowledgePart() const;
+    //@}
 
 protected:
     //! @name Helpers
