@@ -31,6 +31,7 @@
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
 
 !include "AdvUninstLog.nsh"
+!include "lang.nsh"
 !include "tools.nsh"
 
 !insertmacro OT.Initialize
@@ -43,7 +44,6 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro UNATTENDED_UNINSTALL
 
-!include "lang.nsh"
 !include "version.nsh"
 
 ;--------------------------------
@@ -116,11 +116,11 @@ Section "!${APP_NAME}"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Frontend.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Self Training.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_ADAPTATION).lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_FRONTEND).lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_SELF_TRAINING).lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
-    CreateShortcut "$SMPROGRAMS\${APP_NAME}\uninstall.lnk" "${UNINST_EXE}"
+    CreateShortcut "$SMPROGRAMS\${APP_NAME}\$(OT_UNINSTALL).lnk" "${UNINST_EXE}"
 
     !insertmacro OT.AddUninstallEntry
     !insertmacro OT.AddFileAssoc

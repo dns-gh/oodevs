@@ -59,5 +59,14 @@ LangString OT_VERSION_UP_TO_DATE ${LANG_FRENCH} "Cette version de ${APP_NAME} es
 LangString OT_VERSION_MORE_RECENT ${LANG_ENGLISH} "A more recent version of ${APP_NAME} is already installed."
 LangString OT_VERSION_MORE_RECENT ${LANG_FRENCH} "Une version plus récente de ${APP_NAME} est déjà installée."
 
+LangString OT_FRONTEND ${LANG_ENGLISH} "Frontend"
+LangString OT_FRONTEND ${LANG_FRENCH} "SWORD Officer Training"
+
+LangString OT_ADAPTATION ${LANG_ENGLISH} "Adaptation"
+LangString OT_ADAPTATION ${LANG_FRENCH} "Adaptation"
+
+LangString OT_SELF_TRAINING ${LANG_ENGLISH} "Self Training"
+LangString OT_SELF_TRAINING ${LANG_FRENCH} "Auto Entraînement"
+
 LicenseLangString LICENSE ${LANG_ENGLISH} "license-english.txt"
 LicenseLangString LICENSE ${LANG_FRENCH} "license-french.txt"

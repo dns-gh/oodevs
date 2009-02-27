@@ -31,6 +31,7 @@
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
 
 !include "AdvUninstLog.nsh"
+!include "lang.nsh"
 !include "tools.nsh"
 
 !insertmacro OT.Initialize
@@ -43,7 +44,6 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro UNATTENDED_UNINSTALL
 
-!include "lang.nsh"
 !include "version.nsh"
 
 LicenseLangString LICENSE ${LANG_FRENCH} "license-scalped.txt"
@@ -117,7 +117,7 @@ Section "!${APP_NAME}"
 
     CreateDirectory "$SMPROGRAMS\${APP_NAME}"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
-    CreateShortcut "$SMPROGRAMS\${APP_NAME}\uninstall.lnk" "${UNINST_EXE}"
+    CreateShortcut "$SMPROGRAMS\${APP_NAME}\$(OT_UNINSTALL).lnk" "${UNINST_EXE}"
 
     !insertmacro OT.AddUninstallEntry    
     !insertmacro OT.AddFileAssoc
