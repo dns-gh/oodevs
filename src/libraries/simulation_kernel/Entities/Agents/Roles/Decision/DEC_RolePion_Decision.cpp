@@ -13,7 +13,6 @@
 
 #include "DEC_RolePion_Decision.h"
 
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
@@ -57,7 +56,6 @@ void DEC_RolePion_Decision::InitializeDIA()
 // -----------------------------------------------------------------------------
 DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentPion& pion )
     : DEC_Decision              ( pion, "T_Pion" )
-    , pPion_                    ( &pion )
     , diaFunctionCaller_        ( pion, pion.GetType().GetFunctionTable() )
     , nForceRatioState_         ( eForceRatioStateNone         )
     , nRulesOfEngagementState_  ( eRoeStateNone                )
@@ -101,7 +99,6 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentP
 // -----------------------------------------------------------------------------
 DEC_RolePion_Decision::DEC_RolePion_Decision()
     : DEC_Decision              ( "T_Pion" ) 
-    , pPion_                    ( 0 )
     , diaFunctionCaller_        ( *(MIL_AgentPion*)0, *(DIA_FunctionTable< MIL_AgentPion >*)1 ) // $$$$ JVT : Eurkkk
     , nForceRatioState_         ( eForceRatioStateNone      )
     , nRulesOfEngagementState_  ( eRoeStateNone             )
@@ -136,13 +133,13 @@ DEC_RolePion_Decision::~DEC_RolePion_Decision()
 void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< MT_Role_ABC >( *this )
-         >> pPion_ 
+         >> pEntity_ 
          >> nForceRatioState_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
          >> nOperationalState_
          >> nIndirectFireAvailability_;
-    assert( pPion_ );
+    assert( pEntity_ );
 
     uint nRoePopulationID;
     file >> nRoePopulationID;
@@ -155,7 +152,7 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nPionTypeID );
     assert( pType );    
 
-    diaFunctionCaller_.DIA_FunctionCaller< MIL_AgentPion >::DIA_FunctionCaller( *pPion_, pType->GetFunctionTable() );
+    diaFunctionCaller_.DIA_FunctionCaller< MIL_AgentPion >::DIA_FunctionCaller( *pEntity_, pType->GetFunctionTable() );
 
     RegisterUserFunctionCaller( diaFunctionCaller_ );
  
@@ -175,7 +172,7 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
         assert( pDecision );
         GetVariable( nDIAAutomateIdx_  ).SetValue( *pDecision );
         
-        DIA_Workspace::Instance().SetObjectName( *this, pPion_->GetName() ); // ????
+        DIA_Workspace::Instance().SetObjectName( *this, pEntity_->GetName() ); // ????
         
         DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
         file >> diaSerializer;
@@ -204,14 +201,14 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
 {
     DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
     unsigned roe  = pRoePopulation_->GetID(),
-             type = pPion_->GetType().GetID();
+             type = pEntity_->GetType().GetID();
     // $$$$ JVT : Beark
     const std::string diaName = const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIANameIdx_ ).ToString();
     // $$$$ JVT : Beark Arrrg
     DEC_AutomateDecision* const dec = static_cast< DEC_AutomateDecision* >( const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIAAutomateIdx_ ).ToObject() );
 
     file << boost::serialization::base_object< MT_Role_ABC >( *this )
-         << pPion_
+         << pEntity_
          << nForceRatioState_
          << nRulesOfEngagementState_
          << nCloseCombatState_
@@ -235,7 +232,7 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
 void DEC_RolePion_Decision::CleanStateAfterCrash()
 {
     assert( false ); // To allow debugging ...        
-    assert( pPion_ );    
+    assert( pEntity_ );    
     _clearfp();
 
     DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() );
@@ -246,7 +243,7 @@ void DEC_RolePion_Decision::CleanStateAfterCrash()
     GetBehaviorPart().ResetPart();
     Reset();
 
-    pPion_->CancelAllActions();
+    pEntity_->CancelAllActions();
     GetRole< PHY_RolePion_Perceiver >().DisableAllPerceptions();
 }
 
@@ -324,8 +321,8 @@ void DEC_RolePion_Decision::StopMissionBehavior( MIL_PionMission& mission )
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::NotifyAutomateChanged()
 {
-    assert( pPion_ );
-    GetVariable( nDIAAutomateIdx_ ).SetValue( pPion_->GetAutomate().GetDecision() );
+    assert( pEntity_ );
+    GetVariable( nDIAAutomateIdx_ ).SetValue( pEntity_->GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
@@ -345,27 +342,6 @@ void DEC_RolePion_Decision::NotifyRoePopulationChanged( const PHY_RoePopulation&
 // =============================================================================
 // UPDATE
 // =============================================================================
-
-namespace
-{
-    void LogCrash( MIL_AgentPion& pion )
-    {
-        MT_LOG_ERROR_MSG( "Pion " << pion.GetID() << "('" << pion.GetName() << "') : Mission '" << pion.GetOrderManager().GetMissionName() << "' impossible" );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::HandleUpdateDecisionError
-// Created: LDC 2009-02-27
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::HandleUpdateDecisionError()
-{
-    assert( pPion_ );
-    LogCrash( *pPion_ );
-    CleanStateAfterCrash();       
-    MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_MissionImpossible_ );
-    pPion_->GetOrderManager().ReplaceMission(); 
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::SendFullState

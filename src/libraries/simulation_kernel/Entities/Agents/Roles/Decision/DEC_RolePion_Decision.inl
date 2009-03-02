@@ -16,8 +16,8 @@
 inline
 MIL_AgentPion& DEC_RolePion_Decision::GetPion() const
 {
-    assert( pPion_ );
-    return *pPion_;
+    assert( pEntity_ );
+    return *pEntity_;
 }
 
 // -----------------------------------------------------------------------------

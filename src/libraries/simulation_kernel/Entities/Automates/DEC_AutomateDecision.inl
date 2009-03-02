@@ -97,6 +97,6 @@ void DEC_AutomateDecision::NotifyOperationalStateChanged( E_OperationalState nSt
 inline
 MIL_Automate& DEC_AutomateDecision::GetAutomate() const
 {
-    assert( pAutomate_ );
-    return *pAutomate_;
+    assert( pEntity_ );
+    return *pEntity_;
 }

@@ -13,7 +13,6 @@
 
 #include "DEC_PopulationDecision.h"
 
-#include "MIL_Population.h"
 #include "MIL_PopulationType.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
@@ -50,7 +49,6 @@ void DEC_PopulationDecision::InitializeDIA()
 // -----------------------------------------------------------------------------
 DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
     : DEC_Decision             ( population, "T_Population" )
-    , pPopulation_             ( &population )
     , diaFunctionCaller_       ( population, population.GetType().GetFunctionTable() )
     , rDominationState_        ( 0. )
     , rLastDominationState_    ( 0. )
@@ -87,7 +85,6 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
 // -----------------------------------------------------------------------------
 DEC_PopulationDecision::DEC_PopulationDecision()
     : DEC_Decision             ( "T_Population" ) 
-    , pPopulation_             ( 0 )
     , diaFunctionCaller_       ( *(MIL_Population*)0, *(DIA_FunctionTable< MIL_Population >*)1 ) // $$$$ JVT : Eurkkk
     , rDominationState_        ( 0. )
     , rLastDominationState_    ( 0. )
@@ -119,22 +116,22 @@ DEC_PopulationDecision::~DEC_PopulationDecision()
 void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< MT_Role_ABC >( *this )
-         >> pPopulation_
+         >> pEntity_
          >> rDominationState_
          >> rLastDominationState_;
    
-    const DEC_Model_ABC& model = pPopulation_->GetType().GetModel();
+    const DEC_Model_ABC& model = pEntity_->GetType().GetModel();
     
-    diaFunctionCaller_.DIA_FunctionCaller< MIL_Population >::DIA_FunctionCaller( *pPopulation_, pPopulation_->GetType().GetFunctionTable() );
+    diaFunctionCaller_.DIA_FunctionCaller< MIL_Population >::DIA_FunctionCaller( *pEntity_, pEntity_->GetType().GetFunctionTable() );
     RegisterUserFunctionCaller( diaFunctionCaller_ );
 
     try
     {
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
-        GetVariable( nDIANameIdx_    ).SetValue( pPopulation_->GetName() );
+        GetVariable( nDIANameIdx_    ).SetValue( pEntity_->GetName() );
         GetVariable( nDIAMissionIdx_ ).Reset();
-        DIA_Workspace::Instance().SetObjectName( *this , pPopulation_->GetName() ); // ????
+        DIA_Workspace::Instance().SetObjectName( *this , pEntity_->GetName() ); // ????
 
         DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
         file >> diaSerializer;
@@ -159,10 +156,10 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( pPopulation_ );
+    assert( pEntity_ );
     
     file << boost::serialization::base_object< MT_Role_ABC >( *this )
-         << pPopulation_
+         << pEntity_
          << rDominationState_
          << rLastDominationState_;
 
@@ -181,7 +178,7 @@ void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const uint ) 
 void DEC_PopulationDecision::CleanStateAfterCrash()
 {
     assert( false ); // To allow debugging ...
-    assert( pPopulation_ );   
+    assert( pEntity_ );   
     _clearfp();
 
     DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() );
@@ -195,27 +192,6 @@ void DEC_PopulationDecision::CleanStateAfterCrash()
 // =============================================================================
 // UPDATE
 // =============================================================================
-
-namespace
-{
-    void LogCrash( MIL_Population* pPopulation_ )
-    {
-        MT_LOG_ERROR_MSG( "Population " << pPopulation_->GetID() << " ('" << pPopulation_->GetName() << "') : Mission '" << pPopulation_->GetOrderManager().GetMissionName() << "' impossible" );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::HandleUpdateDecisionError
-// Created: LDC 2009-02-27
-// -----------------------------------------------------------------------------
-void DEC_PopulationDecision::HandleUpdateDecisionError()
-{
-    assert( pPopulation_ );
-    LogCrash( pPopulation_ );
-    CleanStateAfterCrash();
-    MIL_Report::PostEvent( *pPopulation_, MIL_Report::eReport_MissionImpossible_ );
-    pPopulation_->GetOrderManager().ReplaceMission();
-}
 
 // =============================================================================
 // OPERATIONS
@@ -328,8 +304,8 @@ MT_Float DEC_PopulationDecision::GetDominationState() const
 // -----------------------------------------------------------------------------
 MIL_Population& DEC_PopulationDecision::GetPopulation() const
 {
-    assert( pPopulation_ );
-    return *pPopulation_;
+    assert( pEntity_ );
+    return *pEntity_;
 }
 
 // -----------------------------------------------------------------------------

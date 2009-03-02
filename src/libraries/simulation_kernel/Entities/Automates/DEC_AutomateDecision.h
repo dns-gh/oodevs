@@ -13,8 +13,8 @@
 #define __DEC_AutomateDecision_h_
 
 #include "Decision/DEC_Decision.h"
+#include "Entities/Automates/MIL_Automate.h"
 
-class MIL_Automate;
 class MIL_AutomateMission;
 
 class NET_ASN_MsgAutomatAttributes;
@@ -27,7 +27,7 @@ enum E_CloseCombatState;
 // @class  DEC_AutomateDecision
 // Created: JVT 2004-08-03
 // =============================================================================
-class DEC_AutomateDecision : public DEC_Decision
+class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
 {
     MT_COPYNOTALLOWED( DEC_AutomateDecision )
 
@@ -86,16 +86,10 @@ private:
     virtual void      StartDefaultBehavior      ();
     virtual void      StopDefaultBehavior       ();
 
-    void              CleanStateAfterCrash      ();
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void HandleUpdateDecisionError();
+    virtual void      CleanStateAfterCrash      ();
     //@}
 
 private:
-    MIL_Automate*                      pAutomate_;
     DIA_FunctionCaller< MIL_Automate > diaFunctionCaller_;
     DIA_Parameters                     defaultBehaviorParameters_;
     DIA_Parameters                     missionMrtBehaviorParameters_;   

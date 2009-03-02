@@ -18,9 +18,11 @@ class MIL_Entity_ABC;
 // =============================================================================
 /** @class  DEC_Decision
     @brief  DEC_Decision
+    Template T must be a subcless of MIL_Entity_ABC
 */
 // Created: LDC 2009-02-27
 // =============================================================================
+template <class T >
 class DEC_Decision : public DEC_Decision_ABC
                    , public DIA_Engine
 {
@@ -28,7 +30,7 @@ class DEC_Decision : public DEC_Decision_ABC
 public:
     //! @name Cosntructor
     //@{
-             DEC_Decision( MIL_Entity_ABC& entity, const std::string& type );
+             DEC_Decision( T& entity, const std::string& type );
     explicit DEC_Decision( const std::string& type );
     virtual ~DEC_Decision();
     //@}
@@ -48,10 +50,20 @@ public:
 protected:
     //! @name Helpers
     //@{
-    virtual void HandleUpdateDecisionError() = 0;
+    virtual void HandleUpdateDecisionError();
+    virtual void CleanStateAfterCrash     () = 0;
     virtual void StartDefaultBehavior     () = 0;
     virtual void StopDefaultBehavior      () = 0;
+    
+            void LogCrash                 ();
+    //@}
+
+    //!@name Data
+    //@{
+    T* pEntity_;
     //@}
 };
+
+#include "DEC_Decision.inl"
 
 #endif // __DEC_Decision_h_

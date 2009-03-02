@@ -13,7 +13,6 @@
 
 #include "DEC_AutomateDecision.h"
 
-#include "MIL_Automate.h"
 #include "MIL_AutomateType.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
@@ -50,8 +49,7 @@ void DEC_AutomateDecision::InitializeDIA()
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
-    : DEC_Decision             ( automate, "T_Automate" ) 
-    , pAutomate_               ( &automate )
+    : DEC_Decision             ( automate, "T_Automate" )
     , diaFunctionCaller_       ( automate, automate.GetType().GetFunctionTable() )
     , nForceRatioState_        ( eForceRatioStateNone  )
     , nRulesOfEngagementState_ ( eRoeStateNone         )
@@ -93,7 +91,6 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision::DEC_AutomateDecision()
     : DEC_Decision             ( "T_Automate" ) 
-    , pAutomate_               ( 0 )
     , diaFunctionCaller_       ( *(MIL_Automate*)0, *(DIA_FunctionTable< MIL_Automate >*)1 ) // $$$$ JVT : Eurkkk
     , nForceRatioState_        ( eForceRatioStateNone  )
     , nRulesOfEngagementState_ ( eRoeStateNone         )
@@ -130,20 +127,20 @@ DEC_AutomateDecision::~DEC_AutomateDecision()
 void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< MT_Role_ABC >( *this )
-         >> pAutomate_
+         >> pEntity_
          >> nForceRatioState_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
          >> nOperationalState_;
     
-    assert( pAutomate_ );
+    assert( pEntity_ );
     
     uint nID;
     file >> nID;
     
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( nID );
     assert( pType );
-    diaFunctionCaller_.DIA_FunctionCaller< MIL_Automate >::DIA_FunctionCaller( *pAutomate_, pType->GetFunctionTable() );
+    diaFunctionCaller_.DIA_FunctionCaller< MIL_Automate >::DIA_FunctionCaller( *pEntity_, pType->GetFunctionTable() );
 
     RegisterUserFunctionCaller( diaFunctionCaller_ );
     
@@ -155,7 +152,7 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
         CopyFrom( &model.GetDIAModel() );
         
         GetVariable( nDIAMissionIdx_ ).Reset();
-        DIA_Workspace::Instance().SetObjectName( *this, pAutomate_->GetName() ); // ????
+        DIA_Workspace::Instance().SetObjectName( *this, pEntity_->GetName() ); // ????
 
         DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
         file >> diaSerializer;
@@ -184,10 +181,10 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( pAutomate_ );
-    unsigned id = pAutomate_->GetType().GetID();
+    assert( pEntity_ );
+    unsigned id = pEntity_->GetType().GetID();
     file << boost::serialization::base_object< MT_Role_ABC >( *this )
-         << pAutomate_
+         << pEntity_
          << nForceRatioState_
          << nRulesOfEngagementState_
          << nCloseCombatState_
@@ -209,7 +206,7 @@ void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) co
 void DEC_AutomateDecision::CleanStateAfterCrash()
 {
     assert( false ); // To allow debugging ...
-    assert( pAutomate_ );   
+    assert( pEntity_ );   
     _clearfp();
 
     DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() );
@@ -223,27 +220,6 @@ void DEC_AutomateDecision::CleanStateAfterCrash()
 // =============================================================================
 // UPDATE
 // =============================================================================
-
-namespace
-{
-    void LogCrash( MIL_Automate* pAutomate_ )
-    {
-        MT_LOG_ERROR_MSG( "Automate " << pAutomate_->GetID() << " ('" << pAutomate_->GetName() << "') : Mission '" << pAutomate_->GetOrderManager().GetMissionName() << "' impossible" );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::HandleUpdateDecisionError
-// Created: LDC 2009-02-27
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::HandleUpdateDecisionError()
-{
-    assert( pAutomate_ );
-    LogCrash( pAutomate_ );
-    CleanStateAfterCrash();
-    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_MissionImpossible_ );
-    pAutomate_->GetOrderManager().ReplaceMission();               
-}
 
 // =============================================================================
 // OPERATIONS

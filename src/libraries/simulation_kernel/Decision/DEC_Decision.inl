@@ -10,15 +10,18 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Decision.h"
 #include "MIL_AgentServer.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision constructor
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
-DEC_Decision::DEC_Decision( MIL_Entity_ABC& entity, const std::string& type )
+template <class T>
+DEC_Decision<T>::DEC_Decision( T& entity, const std::string& type )
 : DEC_Decision_ABC( entity )
 , DIA_Engine      ( *DIA_TypeManager::Instance().GetType( type ), "" )
+, pEntity_        ( &entity )
 {
     // NOTHING
 }
@@ -27,8 +30,10 @@ DEC_Decision::DEC_Decision( MIL_Entity_ABC& entity, const std::string& type )
 // Name: DEC_Decision constructor
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
-DEC_Decision::DEC_Decision( const std::string& type )
-: DIA_Engine      ( *DIA_TypeManager::Instance().GetType( type ), "" )
+template <class T>
+DEC_Decision<T>::DEC_Decision( const std::string& type )
+: DIA_Engine( *DIA_TypeManager::Instance().GetType( type ), "" )
+, pEntity_  ( 0 )
 {
     // NOTHING
 }
@@ -37,7 +42,8 @@ DEC_Decision::DEC_Decision( const std::string& type )
 // Name: DEC_Decision destructor
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
-DEC_Decision::~DEC_Decision()
+template <class T>
+DEC_Decision<T>::~DEC_Decision()
 {
     // NOTHING
 }
@@ -46,7 +52,8 @@ DEC_Decision::~DEC_Decision()
 // Name: DEC_Decision::UpdateDecision
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
-void DEC_Decision::UpdateDecision()
+template <class T>
+void DEC_Decision<T>::UpdateDecision()
 {
     __try
     {
@@ -65,7 +72,8 @@ void DEC_Decision::UpdateDecision()
 // Name: DEC_Decision::Reset
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
-void DEC_Decision::Reset()
+template <class T>
+void DEC_Decision<T>::Reset()
 {
     StopDefaultBehavior ();
     StartDefaultBehavior();
@@ -77,7 +85,8 @@ void DEC_Decision::Reset()
 // Name: DEC_Decision::GetBehaviorPart
 // Created: NLD 2002-12-12
 //-----------------------------------------------------------------------------
-DIA_BehaviorPart& DEC_Decision::GetBehaviorPart() const
+template <class T>
+DIA_BehaviorPart& DEC_Decision<T>::GetBehaviorPart() const
 {
     assert( pBehaviorTool_ != 0 );
     return( static_cast< DIA_BehaviorPart& >( *pBehaviorTool_ ) );
@@ -87,8 +96,34 @@ DIA_BehaviorPart& DEC_Decision::GetBehaviorPart() const
 // Name: DEC_Decision::GetKnowledgePart
 // Created: AGN 02-12-19
 //-----------------------------------------------------------------------------
-DIA_Knowledge_Part& DEC_Decision::GetKnowledgePart() const
+template <class T>
+DIA_Knowledge_Part& DEC_Decision<T>::GetKnowledgePart() const
 {
     assert( pKnowledgeTool_ != 0 );
     return( static_cast< DIA_Knowledge_Part& > (*pKnowledgeTool_) );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::HandleUpdateDecisionError
+// Created: LDC 2009-03-02
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::HandleUpdateDecisionError()
+{
+    assert( pEntity_ );
+    LogCrash();
+    CleanStateAfterCrash();
+    MIL_Report::PostEvent( *pEntity_, MIL_Report::eReport_MissionImpossible_ );
+    pEntity_->GetOrderManager().ReplaceMission();               
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::LogCrash
+// Created: LDC 2009-03-02
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::LogCrash()
+{
+    MT_LOG_ERROR_MSG( "Entity " << pEntity_->GetID() << "('" << pEntity_->GetName() << "') : Mission '" << pEntity_->GetOrderManager().GetMissionName() << "' impossible" );
 }

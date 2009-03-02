@@ -13,8 +13,8 @@
 #define __DEC_PopulationDecision_h_
 
 #include "Decision/DEC_Decision.h"
+#include "Entities/Populations/MIL_Population.h"
 
-class MIL_Population;
 class MIL_PopulationMission;
 class NET_ASN_MsgPopulationUpdate;
 
@@ -22,7 +22,7 @@ class NET_ASN_MsgPopulationUpdate;
 // @class  DEC_PopulationDecision
 // Created: JVT 2004-08-03
 // =============================================================================
-class DEC_PopulationDecision : public DEC_Decision
+class DEC_PopulationDecision : public DEC_Decision< MIL_Population >
 {
     MT_COPYNOTALLOWED( DEC_PopulationDecision )
 
@@ -77,16 +77,10 @@ private:
     virtual void      StartDefaultBehavior      ();
     virtual void      StopDefaultBehavior       ();
 
-    void              CleanStateAfterCrash      ();
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void HandleUpdateDecisionError();
+    virtual void      CleanStateAfterCrash      ();
     //@}
 
 private:
-    MIL_Population*                      pPopulation_;
     DIA_FunctionCaller< MIL_Population > diaFunctionCaller_;
     DIA_Parameters                       defaultBehaviorParameters_;
     DIA_Parameters                       missionBehaviorParameters_;   

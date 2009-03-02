@@ -13,8 +13,8 @@
 #define __DEC_RolePion_Decision_h_
 
 #include "Decision/DEC_Decision.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 
-class MIL_AgentPion;
 class MIL_PionMission;
 class NET_ASN_MsgUnitAttributes;
 class DEC_Path;
@@ -29,7 +29,7 @@ enum E_FireAvailability;
 // @class  DEC_RolePion_Decision
 // Created: JVT 2004-08-03
 // =============================================================================
-class DEC_RolePion_Decision : public DEC_Decision
+class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
 {
     MT_COPYNOTALLOWED( DEC_RolePion_Decision )
 
@@ -92,16 +92,10 @@ private:
     virtual void      StartDefaultBehavior();
     virtual void      StopDefaultBehavior ();
 
-    void CleanStateAfterCrash      ();
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void HandleUpdateDecisionError();
+    virtual void CleanStateAfterCrash      ();
     //@}
 
 private:
-    MIL_AgentPion*                      pPion_;
     DIA_FunctionCaller< MIL_AgentPion > diaFunctionCaller_;
     DIA_Parameters                      defaultBehaviorParameters_;
     DIA_Parameters                      missionBehaviorParameters_;   
