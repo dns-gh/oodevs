@@ -50,17 +50,25 @@ public:
 protected:
     //! @name Helpers
     //@{
-    virtual void HandleUpdateDecisionError();
     virtual void CleanStateAfterCrash     () = 0;
-    virtual void StartDefaultBehavior     () = 0;
-    virtual void StopDefaultBehavior      () = 0;
-    
+
+            void StartDefaultBehavior     ();
+            void StopDefaultBehavior      ();
             void LogCrash                 ();
     //@}
 
+private://! @name Helpers
+    //@{
+    void HandleUpdateDecisionError ();
+    bool IsDefaultBehaviorAvailable() const;
+    //@}
+
+protected:
     //!@name Data
     //@{
-    T* pEntity_;
+    T*                              pEntity_;
+    DIA_Parameters                  defaultBehaviorParameters_;
+    std::auto_ptr<DIA_Variable_Id>  pDefaultParameter_;
     //@}
 };
 

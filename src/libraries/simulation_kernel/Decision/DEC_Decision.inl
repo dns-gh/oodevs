@@ -22,8 +22,10 @@ DEC_Decision<T>::DEC_Decision( T& entity, const std::string& type )
 : DEC_Decision_ABC( entity )
 , DIA_Engine      ( *DIA_TypeManager::Instance().GetType( type ), "" )
 , pEntity_        ( &entity )
-{
-    // NOTHING
+{    
+    defaultBehaviorParameters_.SetOwnerShip( true );
+    pDefaultParameter_.reset( new DIA_Variable_Id() );
+    defaultBehaviorParameters_.AddParam( pDefaultParameter_.get() );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,8 +36,10 @@ template <class T>
 DEC_Decision<T>::DEC_Decision( const std::string& type )
 : DIA_Engine( *DIA_TypeManager::Instance().GetType( type ), "" )
 , pEntity_  ( 0 )
-{
-    // NOTHING
+{    
+    defaultBehaviorParameters_.SetOwnerShip( true );
+    pDefaultParameter_.reset( new DIA_Variable_Id() );
+    defaultBehaviorParameters_.AddParam( pDefaultParameter_.get() );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,4 +130,43 @@ template <class T>
 void DEC_Decision<T>::LogCrash()
 {
     MT_LOG_ERROR_MSG( "Entity " << pEntity_->GetID() << "('" << pEntity_->GetName() << "') : Mission '" << pEntity_->GetOrderManager().GetMissionName() << "' impossible" );
+}
+
+// =============================================================================
+// DEFAULT BEHAVIOR
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::StartDefaultBehavior
+// Created: LDC 2009-03-02
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::StartDefaultBehavior()
+{
+    if ( IsDefaultBehaviorAvailable() )
+    {
+        defaultBehaviorParameters_.GetParameter( 0 ).SetValue( 0 ); 
+        DIA_ActivateOrder( &GetBehaviorPart(), "BEH_Defaut", 1.0, defaultBehaviorParameters_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::StopDefaultBehavior
+// Created: LDC 2009-03-02
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::StopDefaultBehavior()
+{
+    if ( IsDefaultBehaviorAvailable() )
+        DIA_DesactivateOrder( &GetBehaviorPart(), "BEH_Defaut", defaultBehaviorParameters_, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::IsDefaultBehaviorAvailable
+// Created: LDC 2009-03-02
+// -----------------------------------------------------------------------------
+template <class T>
+bool DEC_Decision<T>::IsDefaultBehaviorAvailable() const
+{
+    return GetBehaviorPart().FindBehavior( "BEH_Defaut" ) != 0;
 }

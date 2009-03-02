@@ -31,7 +31,6 @@
 int  DEC_RolePion_Decision::nDIAMissionIdx_          = 0; 
 int  DEC_RolePion_Decision::nDIANameIdx_             = 0;
 int  DEC_RolePion_Decision::nDIAAutomateIdx_         = 0;
-uint DEC_RolePion_Decision::nDefaultBehaviorDummyId_ = 0;
 uint DEC_RolePion_Decision::nMissionBehaviorDummyId_ = 0;
 
 BOOST_CLASS_EXPORT_GUID( DEC_RolePion_Decision, "DEC_RolePion_Decision" )
@@ -88,8 +87,6 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentP
     missionBehaviorParameters_.AddParam( new DIA_Variable_Id() );
 
     // Parameters list for calling default behavior
-    defaultBehaviorParameters_.SetOwnerShip( true );
-    defaultBehaviorParameters_.AddParam( new DIA_Variable_Id() );
     StartDefaultBehavior();    
 }
 
@@ -117,7 +114,6 @@ DEC_RolePion_Decision::DEC_RolePion_Decision()
 DEC_RolePion_Decision::~DEC_RolePion_Decision()
 {
     StopDefaultBehavior();
-    MT_DELETEOWNED( defaultBehaviorParameters_.GetParameters() );
     MT_DELETEOWNED( missionBehaviorParameters_.GetParameters() );
 }
 
@@ -188,8 +184,6 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
     missionBehaviorParameters_.AddParam( new DIA_Variable_Id() );
 
     // Parameters list for calling default behavior
-    defaultBehaviorParameters_.SetOwnerShip( true );
-    defaultBehaviorParameters_.AddParam( new DIA_Variable_Id() );
     StartDefaultBehavior();
 }
 
@@ -251,38 +245,6 @@ void DEC_RolePion_Decision::CleanStateAfterCrash()
 // =============================================================================
 // DEFAULT BEHAVIOR MANAGEMENT
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::IsDefaultBehaviorAvailable
-// Created: NLD 2004-01-16
-// -----------------------------------------------------------------------------
-bool DEC_RolePion_Decision::IsDefaultBehaviorAvailable() const
-{
-    return GetBehaviorPart().FindBehavior( "BEH_Defaut" ) != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::StartDefaultBehavior
-// Created: NLD 2004-01-16
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StartDefaultBehavior()
-{                                 
-    if( !IsDefaultBehaviorAvailable() )
-        return;
-    defaultBehaviorParameters_.GetParameter( 0 ).SetValue( (int)nDefaultBehaviorDummyId_++ ); 
-    DIA_ActivateOrder( &GetBehaviorPart(), "BEH_Defaut", 1.0, defaultBehaviorParameters_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::StopDefaultBehavior
-// Created: NLD 2004-01-16
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StopDefaultBehavior()
-{
-    if( !IsDefaultBehaviorAvailable() )
-        return;
-    DIA_DesactivateOrder( &GetBehaviorPart(), "BEH_Defaut", defaultBehaviorParameters_, true );
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::StartMissionBehavior

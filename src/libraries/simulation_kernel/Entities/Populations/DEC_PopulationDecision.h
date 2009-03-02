@@ -73,16 +73,11 @@ public:
 private:
     //! @name Tools
     //@{
-    bool              IsDefaultBehaviorAvailable() const;
-    virtual void      StartDefaultBehavior      ();
-    virtual void      StopDefaultBehavior       ();
-
     virtual void      CleanStateAfterCrash      ();
     //@}
 
 private:
     DIA_FunctionCaller< MIL_Population > diaFunctionCaller_;
-    DIA_Parameters                       defaultBehaviorParameters_;
     DIA_Parameters                       missionBehaviorParameters_;   
 
     MT_Float                             rDominationState_;
@@ -93,7 +88,6 @@ private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Population
     static int nDIANameIdx_;
 
-    static uint nDefaultBehaviorDummyId_;
     static uint nMissionBehaviorDummyId_;
 };
 

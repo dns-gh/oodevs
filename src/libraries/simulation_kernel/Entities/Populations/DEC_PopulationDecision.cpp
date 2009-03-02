@@ -27,7 +27,6 @@
 int  DEC_PopulationDecision::nDIAMissionIdx_          = 0;
 int  DEC_PopulationDecision::nDIANameIdx_             = 0;
 uint DEC_PopulationDecision::nMissionBehaviorDummyId_ = 0;
-uint DEC_PopulationDecision::nDefaultBehaviorDummyId_ = 0;
 
 BOOST_CLASS_EXPORT_GUID( DEC_PopulationDecision, "DEC_PopulationDecision" )
 
@@ -74,8 +73,6 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
     missionBehaviorParameters_.AddParam( new DIA_Variable_Object() );
     missionBehaviorParameters_.AddParam( new DIA_Variable_Id    () );
 
-    defaultBehaviorParameters_.SetOwnerShip( true );
-    defaultBehaviorParameters_.AddParam( new DIA_Variable_Id() );
     StartDefaultBehavior();
 }
 
@@ -99,7 +96,6 @@ DEC_PopulationDecision::DEC_PopulationDecision()
 DEC_PopulationDecision::~DEC_PopulationDecision()
 {
     StopDefaultBehavior();
-    MT_DELETEOWNED( defaultBehaviorParameters_.GetParameters() );
 
     MT_DELETEOWNED( missionBehaviorParameters_.GetParameters() );
     missionBehaviorParameters_.GetParameters().clear();
@@ -145,8 +141,6 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
     missionBehaviorParameters_.AddParam( new DIA_Variable_Object() );
     missionBehaviorParameters_.AddParam( new DIA_Variable_Id    () );
 
-    defaultBehaviorParameters_.SetOwnerShip( true );
-    defaultBehaviorParameters_.AddParam( new DIA_Variable_Id() );
     StartDefaultBehavior();
 }
 
@@ -226,42 +220,6 @@ void DEC_PopulationDecision::StopMissionBehavior( MIL_PopulationMission& mission
     {
         CleanStateAfterCrash();
     }
-}
-
-// =============================================================================
-// DEFAULT BEHAVIOR
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::IsDefaultBehaviorAvailable
-// Created: JVT 2004-12-14
-// -----------------------------------------------------------------------------
-bool DEC_PopulationDecision::IsDefaultBehaviorAvailable() const
-{
-    return GetBehaviorPart().FindBehavior( "BEH_Defaut" ) != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::StartDefaultBehavior
-// Created: JVT 2004-12-14
-// -----------------------------------------------------------------------------
-void DEC_PopulationDecision::StartDefaultBehavior()
-{
-    if ( IsDefaultBehaviorAvailable() )
-    {
-        defaultBehaviorParameters_.GetParameter( 0 ).SetValue( (int)nDefaultBehaviorDummyId_++ ); 
-        DIA_ActivateOrder( &GetBehaviorPart(), "BEH_Defaut", 1.0, defaultBehaviorParameters_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::StopDefaultBehavior
-// Created: JVT 2004-12-14
-// -----------------------------------------------------------------------------
-void DEC_PopulationDecision::StopDefaultBehavior()
-{
-    if ( IsDefaultBehaviorAvailable() )
-        DIA_DesactivateOrder( &GetBehaviorPart(), "BEH_Defaut", defaultBehaviorParameters_, true );
 }
 
 // =============================================================================

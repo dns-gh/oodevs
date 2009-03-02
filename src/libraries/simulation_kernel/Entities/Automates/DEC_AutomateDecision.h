@@ -82,16 +82,11 @@ public:
 private:
     //! @name Tools
     //@{
-    bool              IsDefaultBehaviorAvailable() const;
-    virtual void      StartDefaultBehavior      ();
-    virtual void      StopDefaultBehavior       ();
-
     virtual void      CleanStateAfterCrash      ();
     //@}
 
 private:
     DIA_FunctionCaller< MIL_Automate > diaFunctionCaller_;
-    DIA_Parameters                     defaultBehaviorParameters_;
     DIA_Parameters                     missionMrtBehaviorParameters_;   
     DIA_Parameters                     missionConduiteBehaviorParameters_;   
 
@@ -106,7 +101,6 @@ private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Automate
     //    static int nDIANameIdx_;
 
-    static uint nDefaultBehaviorDummyId_;
     static uint nMissionMrtBehaviorDummyId_;
     static uint nMissionConduiteBehaviorDummyId_;
 };

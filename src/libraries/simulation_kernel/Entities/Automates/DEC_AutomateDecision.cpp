@@ -29,7 +29,6 @@
 int  DEC_AutomateDecision::nDIAMissionIdx_                  = 0;
 uint DEC_AutomateDecision::nMissionMrtBehaviorDummyId_      = 0;
 uint DEC_AutomateDecision::nMissionConduiteBehaviorDummyId_ = 0;
-uint DEC_AutomateDecision::nDefaultBehaviorDummyId_         = 0;
 
 BOOST_CLASS_EXPORT_GUID( DEC_AutomateDecision, "DEC_AutomateDecision" )
 
@@ -80,8 +79,6 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
     missionConduiteBehaviorParameters_.AddParam( new DIA_Variable_Object () );
     missionConduiteBehaviorParameters_.AddParam( new DIA_Variable_Id() );
 
-    defaultBehaviorParameters_.SetOwnerShip( true );
-    defaultBehaviorParameters_.AddParam( new DIA_Variable_Id() );
     StartDefaultBehavior();
 }
 
@@ -107,7 +104,6 @@ DEC_AutomateDecision::DEC_AutomateDecision()
 DEC_AutomateDecision::~DEC_AutomateDecision()
 {
     StopDefaultBehavior();
-    MT_DELETEOWNED( defaultBehaviorParameters_.GetParameters() );
 
     MT_DELETEOWNED( missionMrtBehaviorParameters_.GetParameters() );
     missionMrtBehaviorParameters_.GetParameters().clear();
@@ -170,8 +166,6 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
     missionConduiteBehaviorParameters_.AddParam( new DIA_Variable_Object () );
     missionConduiteBehaviorParameters_.AddParam( new DIA_Variable_Id() );
 
-    defaultBehaviorParameters_.SetOwnerShip( true );
-    defaultBehaviorParameters_.AddParam( new DIA_Variable_Id() );
     StartDefaultBehavior();
 }
 
@@ -285,42 +279,6 @@ void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission& mis
     {
         CleanStateAfterCrash();
     }
-}
-
-// =============================================================================
-// DEFAULT BEHAVIOR
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::IsDefaultBehaviorAvailable
-// Created: JVT 2004-12-14
-// -----------------------------------------------------------------------------
-bool DEC_AutomateDecision::IsDefaultBehaviorAvailable() const
-{
-    return GetBehaviorPart().FindBehavior( "BEH_Defaut" ) != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::StartDefaultBehavior
-// Created: JVT 2004-12-14
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StartDefaultBehavior()
-{
-    if ( IsDefaultBehaviorAvailable() )
-    {
-        defaultBehaviorParameters_.GetParameter( 0 ).SetValue( (int)nDefaultBehaviorDummyId_++ ); 
-        DIA_ActivateOrder( &GetBehaviorPart(), "BEH_Defaut", 1.0, defaultBehaviorParameters_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::StopDefaultBehavior
-// Created: JVT 2004-12-14
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StopDefaultBehavior()
-{
-    if ( IsDefaultBehaviorAvailable() )
-        DIA_DesactivateOrder( &GetBehaviorPart(), "BEH_Defaut", defaultBehaviorParameters_, true );
 }
 
 // =============================================================================
