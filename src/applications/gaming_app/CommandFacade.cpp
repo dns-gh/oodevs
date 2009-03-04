@@ -14,13 +14,14 @@
 #include "ChangeOptionCommand.h"
 #include "DockCommand.h"
 #include "LauncherCommand.h" 
+#include "FilterViewCommand.h"
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: CommandFacade constructor
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-CommandFacade::CommandFacade( QMainWindow* parent, kernel::Controllers& controllers, tools::ExerciseConfig& config, CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::View_ABC& view )
+CommandFacade::CommandFacade( QMainWindow* parent, kernel::Controllers& controllers, tools::ExerciseConfig& config, CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::View_ABC& view, ProfileFilter& profile )
     : QObject( parent )
 {
     Add( new CenterViewCommand  ( handler, interpreter ) );
@@ -28,6 +29,7 @@ CommandFacade::CommandFacade( QMainWindow* parent, kernel::Controllers& controll
     Add( new ChangeOptionCommand( handler, controllers.options_ ) );
     Add( new DockCommand        ( handler, *parent ) );
     Add( new LauncherCommand    ( handler, config, interpreter ) );
+    Add( new FilterViewCommand  ( handler, profile ) );
 }
 
 // -----------------------------------------------------------------------------

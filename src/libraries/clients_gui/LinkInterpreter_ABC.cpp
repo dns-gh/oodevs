@@ -85,13 +85,25 @@ bool LinkInterpreter_ABC::InterpreteId( const QUrl& url )
 {
     const QString classId = url.host();
     const QString strId = url.fileName();
+    const QString ref = url.ref();
     bool ok = false;
     const unsigned long id = strId.toULong( &ok );
 
     const Entity_ABC* entity = entites_[ classId ][ id ];
-    if( entity )
-        entity->Activate( actions_ );
-    return entity != 0;
+    return entity != 0 && InterpreteEntity( *entity, ref );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter_ABC::InterpreteEntity
+// Created: SBO 2009-03-04
+// -----------------------------------------------------------------------------
+bool LinkInterpreter_ABC::InterpreteEntity( const kernel::Entity_ABC& entity, const QString& action )
+{
+    if( action == "select" )
+        entity.Select( actions_ );
+    else
+        entity.Activate( actions_ );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

@@ -79,12 +79,7 @@ OrbatToolbar::~OrbatToolbar()
 void OrbatToolbar::OnSetFilter()
 {
     if( entity_ )
-    {
-        filterBtn_->setTextLabel( entity_->GetName() );
         filter_.SetFilter( *entity_ );
-        filterBtn_->show();
-        filterBtn_->repaint();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -93,9 +88,27 @@ void OrbatToolbar::OnSetFilter()
 // -----------------------------------------------------------------------------
 void OrbatToolbar::OnClearFilter()
 {
-    filterBtn_->setTextLabel( "" );
     filter_.RemoveFilter();
-    filterBtn_->hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyUpdated
+// Created: SBO 2009-03-04
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyUpdated( const ProfileFilter& filter )
+{
+    entity_ = filter.GetFilter();
+    if( entity_ == 0 )
+    {
+        filterBtn_->setTextLabel( "" );
+        filterBtn_->hide();
+    }
+    else
+    {
+        filterBtn_->setTextLabel( entity_->GetName() );
+        filterBtn_->show();
+        filterBtn_->repaint();
+    }
 }
 
 // -----------------------------------------------------------------------------

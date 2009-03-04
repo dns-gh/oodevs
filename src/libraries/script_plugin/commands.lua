@@ -58,6 +58,18 @@ function Center( t )
     Command( t, "/center " .. target )
 end
 
+function Select( t )
+    Command( t, "/center " .. t.target .. "#select" )
+end
+
+function SetFilter( t )
+    Command( t, "/center " .. t.target .. "#filter" )
+end
+
+function ClearFilter( t )
+    Command( t or {}, "/clearfilter" )
+end
+
 function Launch( t ) 
     Command( t, "/launch " .. t.target )
 end

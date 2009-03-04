@@ -173,7 +173,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     selector_->AddIcon( xpm_observe        ,  200, 150 );
 
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
-    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
+    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, profile );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     // Logger
@@ -262,7 +262,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( chatDock, Qt::DockBottom );
     chatDock->hide();
 
-    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_ );
+    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, profile );
     new ClientCommandFacade( this, controllers_, publisher );
 
     // Info

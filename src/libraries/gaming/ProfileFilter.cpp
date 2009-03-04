@@ -96,6 +96,7 @@ void ProfileFilter::SetFilter( const kernel::Entity_ABC& entity )
     cHierarchies_ = entity.Retrieve< CommunicationHierarchies >();
     iHierarchies_ = entity.Retrieve< IntelligenceHierarchies >();
     controller_.Update( *(Profile_ABC*)this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,6 +110,16 @@ void ProfileFilter::RemoveFilter()
     cHierarchies_ = 0;
     iHierarchies_ = 0;
     controller_.Update( *(Profile_ABC*)this );
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::GetFilter
+// Created: SBO 2009-03-04
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* ProfileFilter::GetFilter() const
+{
+    return entity_;
 }
 
 // -----------------------------------------------------------------------------

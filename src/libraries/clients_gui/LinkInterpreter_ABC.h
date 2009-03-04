@@ -50,6 +50,7 @@ protected:
     //@{
     void AddEntity   ( const QString& category, const kernel::Entity_ABC& entity );
     void RemoveEntity( const QString& category, const kernel::Entity_ABC& entity );
+    virtual bool InterpreteEntity( const kernel::Entity_ABC& entity, const QString& action );
     //@}
 
 private:

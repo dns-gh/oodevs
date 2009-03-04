@@ -19,6 +19,8 @@ namespace kernel
     class Entity_ABC;
 }
 
+class ProfileFilter;
+
 // =============================================================================
 /** @class  LinkInterpreter
     @brief  LinkInterpreter
@@ -33,7 +35,7 @@ class LinkInterpreter : public gui::LinkInterpreter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LinkInterpreter( QObject* parent, kernel::Controllers& controllers );
+             LinkInterpreter( QObject* parent, kernel::Controllers& controllers, ProfileFilter& filter );
     virtual ~LinkInterpreter();
     //@}
 
@@ -46,6 +48,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual bool InterpreteEntity( const kernel::Entity_ABC& entity, const QString& action );
     virtual void NotifyCreated( const kernel::Entity_ABC& entity );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     //@}
@@ -54,6 +57,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    ProfileFilter& filter_;
     //@}
 };
 

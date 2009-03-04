@@ -49,6 +49,7 @@ public:
 
     void SetFilter( const kernel::Entity_ABC& entity );
     void RemoveFilter();
+    const kernel::Entity_ABC* GetFilter() const;
     //@}
 
 private:

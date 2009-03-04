@@ -40,6 +40,7 @@ class OrbatToolbar : public QHBox
                    , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                    , public kernel::ElementObserver_ABC< Simulation >
+                   , public kernel::ElementObserver_ABC< ProfileFilter >
 {
     Q_OBJECT;
 
@@ -74,6 +75,7 @@ private:
     virtual void NotifyCreated( const kernel::Automat_ABC& );
     virtual void NotifyDeleted( const kernel::Automat_ABC& );
     virtual void NotifyUpdated( const Simulation& simu );
+    virtual void NotifyUpdated( const ProfileFilter& filter );
     //@}
 
     //! @name Types
