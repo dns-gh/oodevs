@@ -91,6 +91,7 @@ void MessagePanel::Receive( const Command& command )
         const QStringList buttons = QStringList::split( '|', command.Argument( 3 ).c_str() );
         for( QStringList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
             AddButton( *it );
+        buttons_->show();
     }
 }
 
@@ -114,7 +115,6 @@ void MessagePanel::Display( const QString& message )
 void MessagePanel::AddButton( const QString& title )
 {
     buttons_->insert( new QPushButton( title, buttons_ ) );
-    buttons_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +134,8 @@ void MessagePanel::Clear()
 // -----------------------------------------------------------------------------
 void MessagePanel::ClearButtons()
 {
-    for( int i = 0; i < buttons_->count(); ++i )
+    const int count = buttons_->count();
+    for( int i = 0; i < count; ++i )
         if( QButton* button = buttons_->find( i ) )
         {
             buttons_->remove( button );
