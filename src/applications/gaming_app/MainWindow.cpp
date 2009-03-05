@@ -54,7 +54,7 @@
 #include "ChatDock.h"
 #include "CommandFacade.h"
 #include "ClientCommandFacade.h"
-#include "TextLayer.h"
+#include "MessagePanel.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -316,6 +316,16 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         timelinePanel->hide();
     }
 
+    // Message panel
+    {
+        QDockWindow* messageDock = new MessagePanel( this, controllers_, publisher, network.GetCommands() );
+        setAppropriate( messageDock, false );
+        setDockEnabled( messageDock, Qt::DockBottom, false );
+        setDockEnabled( messageDock, Qt::DockLeft, false );
+        setDockEnabled( messageDock, Qt::DockRight, false );
+        moveDockWindow( messageDock, Qt::DockTop, true, -1 );
+    }
+
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
     new Menu( this, controllers, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger );
 
@@ -369,7 +379,6 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& folkLayer            = *new ::FolkLayer( controllers_.controller_, staticModel_.coordinateConverter_, model_.folk_ );
     Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& drawerLayer          = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
-    Layer_ABC& text                 = *new TextLayer( controllers_, publisher, *glProxy_, network_.GetCommands() );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
@@ -397,12 +406,10 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( locationsLayer );                                                                           locationsLayer      .SetPasses( "main" );
     glProxy_->Register( drawerLayer );                                                                              drawerLayer         .SetPasses( "main,miniviews" );
     glProxy_->Register( fogLayer );                                                                                 fogLayer            .SetPasses( "fog" );
-    glProxy_->Register( text );                                                                                     text                .SetPasses( "tooltip" );
     glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );
     glProxy_->Register( logoLayer );                preferences.AddLayer( tr( "Logo" ), logoLayer );                logoLayer           .SetPasses( "main" );
     
     // ordre des evenements
-    forward_->Register( text );
     forward_->Register( parameters );
     forward_->Register( agents );
     forward_->Register( automats );
