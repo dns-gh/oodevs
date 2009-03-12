@@ -55,6 +55,7 @@
 #include "CommandFacade.h"
 #include "ClientCommandFacade.h"
 #include "MessagePanel.h"
+#include "ScorePanel.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -314,6 +315,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler );
         moveDockWindow( timelinePanel, Qt::DockTop );
         timelinePanel->hide();
+    }
+
+    // Score panel
+    {
+        ScorePanel* scorePanel = new ScorePanel( this, controllers_, *factory );
+        moveDockWindow( scorePanel, Qt::DockRight );
+        setDockEnabled( scorePanel, Qt::DockTop, false );
+        scorePanel->hide();
     }
 
     // Message panel

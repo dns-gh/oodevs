@@ -52,6 +52,7 @@ class IntelligenceFactory;
 class IntelligencesModel;
 class DrawingFactory;
 class DrawingsModel;
+class ScoreModel;
 class ActionFactory_ABC;
 class ParameterFactory_ABC;
 
@@ -114,6 +115,7 @@ public:
     AfterActionModel&     aar_;
     IntelligencesModel&   intelligences_;
     DrawingsModel&        drawings_;
+    ScoreModel&           scores_;
     //@}
 
 private:

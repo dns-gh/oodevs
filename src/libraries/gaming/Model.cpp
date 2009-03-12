@@ -40,6 +40,7 @@
 #include "IntelligencesModel.h"
 #include "DrawingFactory.h"
 #include "DrawingsModel.h"
+#include "ScoreModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/FormationLevels.h"
 
@@ -84,6 +85,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , aar_( *new AfterActionModel( controllers.controller_, publisher ) )
     , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
+    , scores_( *new ScoreModel( controllers_.controller_, publisher ) )
 {
     // NOTHING
 }
@@ -94,6 +96,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &scores_;
     delete &drawings_;
     delete &intelligences_;
     delete &aar_;
@@ -132,6 +135,7 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
+    scores_.Purge();
     drawings_.Purge();
     intelligences_.Purge();
     actions_.Purge();

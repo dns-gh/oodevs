@@ -41,6 +41,7 @@
 #include "AfterActionModel.h"
 #include "IntelligencesModel.h"
 #include "DrawingsModel.h"
+#include "ScoreModel.h"
 #include "CommandHandler.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -1449,7 +1450,7 @@ void AgentServerMsgMgr::OnReceiveMsgAarResult( const ASN1T_MsgPlotResult& asnMsg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAarIndicator( const ASN1T_MsgIndicator& asnMsg )
 {
-
+    GetModel().scores_.Update( asnMsg );
 }
 
 
