@@ -118,6 +118,49 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
     publisher.verify();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Facade_TestOperationalStateNormalized
+// Created: SBO 2009-03-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestOperationalStateNormalized )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='operational-state' id='opstate'/>"
+        "<reduce type='float' function='select' input='opstate' key='2' id='myopstate'/>"
+        "<reduce type='float' function='threshold' input='myopstate' thresholds='0.5' values='0,1' id='mynormalizedopstate'/>"
+        "<result function='plot' input='mynormalizedopstate' type='float'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    MockPublisher publisher;
+    AarFacade facade( publisher, 42 );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( OperationalState( 50, 1 ) );
+    task->Receive( OperationalState( 25, 2 ) );
+    task->Receive( OperationalState( 75, 3 ) );
+    task->Receive( EndTick() );
+
+    task->Receive( BeginTick() );
+    task->Receive( OperationalState( 75, 1 ) );
+    task->Receive( OperationalState( 85, 3 ) );
+    task->Receive( EndTick() );
+
+    task->Receive( BeginTick() );
+    task->Receive( OperationalState( 75, 2 ) );
+    task->Receive( EndTick() );
+
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+
+    double expectedResult[] = { 0, 0, 1, 1 };
+    MakeExpectation( publisher.Send_mocker, expectedResult );
+    task->Commit();
+    publisher.verify();
+}
+
 namespace
 {
     ASN1T_MsgsSimToClient MakePosition( const char* position, unsigned long id )

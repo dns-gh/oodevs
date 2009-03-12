@@ -17,6 +17,7 @@
 #include "Maximum.h"
 #include "Adder.h"
 #include "Meaner.h"
+#include "Threshold.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReductionsFactory constructor
@@ -58,6 +59,8 @@ void ReductionsFactory::Reduce( const std::string& name, xml::xistream& xis, Tas
         ReduceFunction< Adder< K, T > >( name, xis, result );
     else if( functionName == "mean" )
         ReduceFunction< Meaner< K, T > >( name, xis, result );
+    else if( functionName == "threshold" )
+        ReduceFunction< Threshold< K, T > >( name, xis, result );
     else
         Error( functionName );
 }
