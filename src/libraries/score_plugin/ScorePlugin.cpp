@@ -26,7 +26,7 @@ using namespace plugins::score;
 ScorePlugin::ScorePlugin( dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config )
     : clients_( clients )
 {
-    LoadIndicators( config.BuildExerciseChildFile( "scripts/resources/scores.xml" ) );
+    LoadScores( config.BuildExerciseChildFile( "scripts/resources/scores.xml" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,18 +49,29 @@ void ScorePlugin::Receive( const ASN1T_MsgsSimToClient& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScorePlugin::LoadIndicators
+// Name: ScorePlugin::LoadScores
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-void ScorePlugin::LoadIndicators( const std::string& functions )
+void ScorePlugin::LoadScores( const std::string& functions )
 {
     if( bfs::exists( bfs::path( functions, bfs::native ) ) )
     {
         xml::xifstream xis( functions );
         xis >> xml::start( "scores" )
-                >> xml::list( "score", *this, &ScorePlugin::LoadIndicator )
+                >> xml::list( "score", *this, &ScorePlugin::LoadIndicators )
             >> xml::end();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScorePlugin::LoadIndicators
+// Created: SBO 2009-03-13
+// -----------------------------------------------------------------------------
+void ScorePlugin::LoadIndicators( xml::xistream& xis )
+{
+    xis >> xml::start( "indicators" )
+            >> xml::list( "indicator", *this, &ScorePlugin::LoadIndicator )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

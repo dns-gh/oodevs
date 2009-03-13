@@ -84,9 +84,7 @@ void Task::AddConnector( const std::string& name, boost::shared_ptr< Connector_A
 // -----------------------------------------------------------------------------
 void Task::Connect( xml::xistream& xis )
 {
-    xis >> xml::start( "indicator" )
-            >> xml::list( *this, &Task::Connect )
-        >> xml::end();
+    xis >> xml::list( *this, &Task::Connect );
 }
 
 // -----------------------------------------------------------------------------

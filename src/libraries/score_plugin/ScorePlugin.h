@@ -63,7 +63,8 @@ private:
 
     //! @name Helpers
     //@{
-    void LoadIndicators( const std::string& functions );
+    void LoadScores( const std::string& functions );
+    void LoadIndicators( xml::xistream& xis );
     void LoadIndicator ( xml::xistream& xis );
     //@}
 

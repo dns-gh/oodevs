@@ -48,9 +48,7 @@ void FunctionFactory::Add( std::auto_ptr< ElementFactory_ABC > factory )
 boost::shared_ptr< Task > FunctionFactory::CreateTask( xml::xistream& xis )
 {
     boost::shared_ptr< Task > result( new Task() );
-    xis >> xml::start( "indicator" )
-            >> xml::list( *this, &FunctionFactory::CreateFunction, *result )
-        >> xml::end();
+    xis >> xml::list( *this, &FunctionFactory::CreateFunction, *result );
     result->Connect( xis );
     return result;
 }

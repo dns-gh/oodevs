@@ -75,6 +75,12 @@ namespace
         for( unsigned i = 0; i < N; ++i )
             mocker.expects( once() ).with( eq( data[i], margin ) );
     }
+
+    xml::xistream& UnWrap( xml::xistream& xis )
+    {
+        xis >> xml::start( "indicator" );
+        return xis;
+    }
 }
 // -----------------------------------------------------------------------------
 // Name: Facade_TestOperationalState
@@ -92,7 +98,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 50, 1 ) );
@@ -135,7 +141,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalStateNormalized )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 50, 1 ) );
@@ -205,7 +211,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     task->Receive( BeginTick() );
     task->Receive( MakePosition( "31TBN7728449218", 1 ) );
@@ -241,7 +247,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime )
     xml::xistringstream xis( input );
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    BOOST_CHECK_THROW( facade.CreateTask( xis ), std::invalid_argument );
+    BOOST_CHECK_THROW( facade.CreateTask( UnWrap( xis ) ), std::invalid_argument );
 }
 
 namespace
@@ -295,7 +301,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     task->Receive( BeginTick() );
     task->Receive( CreateConsign( 12 ) );
@@ -335,7 +341,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     task->Receive( BeginTick() );
     task->Receive( CreateConsign( 12, 12 ) );
@@ -420,7 +426,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     task->Receive( BeginTick() );
     task->Receive( CreateDirectFire( 12, 12 ) );
@@ -480,7 +486,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     task->Receive( BeginTick() );
     task->Receive( CreateDirectFire( 12, 12 ) );
@@ -536,7 +542,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComp
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     task->Receive( BeginTick() );
     task->Receive( MakePosition( "31TBN7728449218", 12 ) );
@@ -610,7 +616,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     task->Receive( BeginTick() );
     task->Receive( MakeResourceVariation( 4212, 12 ) );
@@ -656,7 +662,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     task->Receive( BeginTick() );
     task->Receive( MakeResourceVariation( 4212, 12, 42 ) );
@@ -724,7 +730,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestEquipments )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     int base  [5] = { 5, 0, 0, 0, 0 }; //  0
     int prison[5] = { 2, 1, 0, 1, 1 }; // -2
@@ -773,7 +779,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestHumans )
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis ) );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
     BOOST_WARN_MESSAGE( 0, "TODO. I'm still lazy." );
 
