@@ -430,7 +430,7 @@
       tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test" description="run all tests"/>
+    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test,clients_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xeumeuleu,terrain,boost" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
@@ -445,6 +445,12 @@
                   lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}
                   lib${ant.project.name}_script_plugin-${platform}-mt@{suffix}">
             <includepath path="${include.dir}/masasn"/>
+        </build-test>
+    </target>
+
+    <target name="clients_test" depends="library.preparation">
+        <build-test name="plugins" depends="boost,xeumeuleu"
+            libs="lib${ant.project.name}_preparation-${platform}-mt@{suffix}">
         </build-test>
     </target>
 
