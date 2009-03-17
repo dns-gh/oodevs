@@ -17,7 +17,7 @@ using namespace plugins::script;
 // Name: Event constructor
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-Event::Event( boost::shared_ptr< Condition_ABC > condition, const std::vector< std::string >& states, const directia::WrappedScriptFunction& function )
+Event::Event( boost::shared_ptr< Condition_ABC > condition, const std::vector< std::string >& states, const directia::ScriptRef& function )
     : condition_( condition )
 {
     std::copy( states.begin(), states.end(), std::inserter( states_, states_.begin() ) );

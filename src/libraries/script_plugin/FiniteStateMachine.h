@@ -16,7 +16,7 @@
 namespace directia
 {
     class Brain;
-    class WrappedScriptFunction;
+    class ScriptRef;
 }
 
 namespace plugins
@@ -58,7 +58,7 @@ private:
 
     //! @name Helpers
     //@{
-    void DeclareEvent( boost::shared_ptr< Condition_ABC >, const std::vector< std::string >& states, const directia::WrappedScriptFunction& function );
+    void DeclareEvent( boost::shared_ptr< Condition_ABC >, const std::vector< std::string >& states, const directia::ScriptRef& function );
     std::string CurrentState() const;
     void ChangeState( const std::string& );
     void Deactivate();

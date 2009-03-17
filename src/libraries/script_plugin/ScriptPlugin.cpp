@@ -204,9 +204,9 @@ void ScriptPlugin::Reset()
 // Name: ScriptPlugin::Later
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-void ScriptPlugin::Later( const directia::WrappedScriptFunction& function )
+void ScriptPlugin::Later( const directia::ScriptRef& function )
 {
-    pending_.push_back( new directia::WrappedScriptFunction( function ) );
+    pending_.push_back( new directia::ScriptRef( function ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +224,7 @@ std::string ScriptPlugin::ToUtm( const dispatcher::Position& position )
 // -----------------------------------------------------------------------------
 void ScriptPlugin::ApplyPendings()
 {
-    boost::ptr_vector< directia::WrappedScriptFunction > pending;
+    boost::ptr_vector< directia::ScriptRef > pending;
     pending.swap( pending_ );
     std::for_each( pending.begin(), pending.end(), boost::apply<bool>() );
 }

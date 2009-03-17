@@ -11,8 +11,9 @@
 #define __BaseCondition_h_
 
 #include "Condition_ABC.h"
+#include "directia/ScriptRef.h"
 #include "directia/LuaBinder.h"
-#include "directia/ScriptFunctionWrappersTemplates.h"
+#include "directia/ScriptRef.inl"
 
 namespace plugins
 {
@@ -38,7 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual void Activate( bool );
-    virtual void SetTarget( const directia::WrappedScriptFunction& function );
+    virtual void SetTarget( const directia::ScriptRef& function );
     //@}
 
 public:
@@ -68,7 +69,7 @@ private:
     //! @name Member data
     //@{
     bool active_;
-    std::auto_ptr< directia::WrappedScriptFunction > function_;
+    std::auto_ptr< directia::ScriptRef > function_;
     //@}
 };
 

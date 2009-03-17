@@ -43,7 +43,7 @@ FiniteStateMachine::~FiniteStateMachine()
 // Name: FiniteStateMachine::DeclareEvent
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void FiniteStateMachine::DeclareEvent( boost::shared_ptr< Condition_ABC > condition, const std::vector< std::string >& states, const directia::WrappedScriptFunction& function )
+void FiniteStateMachine::DeclareEvent( boost::shared_ptr< Condition_ABC > condition, const std::vector< std::string >& states, const directia::ScriptRef& function )
 {
     events_.push_back( new Event( condition, states, function ) );
     events_.back().ChangeState( state_ );

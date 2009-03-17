@@ -12,7 +12,7 @@
 
 namespace directia
 {
-    class WrappedScriptFunction;
+    class ScriptRef;
 }
 
 namespace plugins
@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual void Activate( bool ) = 0;
-    virtual void SetTarget( const directia::WrappedScriptFunction& function ) = 0;
+    virtual void SetTarget( const directia::ScriptRef& function ) = 0;
     //@}
 };
 

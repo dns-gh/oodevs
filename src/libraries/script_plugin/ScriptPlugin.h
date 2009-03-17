@@ -15,7 +15,7 @@
 #include "dispatcher/Position.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 #include "game_asn/Messenger.h"
-#include "directia/ScriptFunctionWrappers.h"
+#include "directia/ScriptRef.h"
 
 namespace dispatcher
 {
@@ -88,7 +88,7 @@ private:
     virtual void RegisterIn( directia::Brain& brain );
 
     void Reset();
-    void Later( const directia::WrappedScriptFunction& function );
+    void Later( const directia::ScriptRef& function );
     std::string ToUtm( const dispatcher::Position& position );
 
     void ApplyPendings();
@@ -105,7 +105,7 @@ private:
     std::auto_ptr< ExtensionFactory > factory_;
     std::auto_ptr< Actions > actions_;
     boost::ptr_vector< Script > scripts_;
-    boost::ptr_vector< directia::WrappedScriptFunction > pending_;
+    boost::ptr_vector< directia::ScriptRef > pending_;
     long time_;
     bool reset_;
     //@}
