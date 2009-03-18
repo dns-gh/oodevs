@@ -451,6 +451,7 @@
     <target name="clients_test" depends="library.preparation">
         <build-test name="plugins" depends="boost,xeumeuleu"
             libs="lib${ant.project.name}_preparation-${platform}-mt@{suffix}">
+            <includepath path="${include.dir}/masasn"/>
         </build-test>
     </target>
 
