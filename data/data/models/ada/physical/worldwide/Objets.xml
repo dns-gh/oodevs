@@ -14,13 +14,13 @@
         <construction category="mine" count="10" dotation="mine classique"/>
       </dotations>
       <unit-attritions>
-        <unit-attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        <unit-attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        <unit-attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+        <unit-attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+        <unit-attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+        <unit-attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+        <unit-attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        <unit-attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        <unit-attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       </unit-attritions>
       <population-attrition ph="0.5" surface="3"/>
     </object>
@@ -29,13 +29,13 @@
         <construction category="mine" count="10" dotation="mine classique"/>
       </dotations>
       <unit-attritions>
-        <unit-attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        <unit-attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        <unit-attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+        <unit-attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+        <unit-attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+        <unit-attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+        <unit-attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        <unit-attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        <unit-attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       </unit-attritions>
       <population-attrition ph="0.5" surface="3"/>
     </object>
@@ -44,13 +44,13 @@
         <construction category="mine" count="10" dotation="mine classique"/>
       </dotations>
       <unit-attritions>
-        <unit-attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-        <unit-attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        <unit-attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        <unit-attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        <unit-attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+        <unit-attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+        <unit-attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+        <unit-attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+        <unit-attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        <unit-attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        <unit-attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       </unit-attritions>
       <population-attrition ph="0.5" surface="3"/>
     </object>
@@ -62,7 +62,7 @@
         <sensible-position terrain="nationale" value="5"/>
       </sensible-positions>
       <dotations>
-        <valorization category="mine" count="10" dotation="mine classique"/>
+        <valorization category="mine" count="1" dotation="mine classique"/>
       </dotations>
     </object>
     <object avoid-distance="1000" can-be-bypassed="true" can-be-developed="true" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" population-density="0.5" type="abattis" unit-speed-impact-mode="AuPlusLent">
@@ -136,7 +136,7 @@
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="3" max-interaction-height="0" type="site decontamination" unit-speed-impact-mode="VitesseMaxObjet"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone brouillage brod" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="rota" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone nbc" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" geometry="circle" max-animating-units="0" max-interaction-height="0" type="zone nbc" unit-speed-impact-mode="VitesseMaxObjet"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="true" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="zone brouillage bromure" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" type="aire poser" unit-speed-impact-mode="AuPlusLent"/>
     <object can-be-bypassed="false" can-be-developed="false" can-be-maneuver-obstacle="false" dangerous="false" default-bypassed-speed="-1" default-consumption-mode="EnTravaux" default-speed="-1" max-animating-units="0" max-interaction-height="0" max-unit-percentage-speed="90" type="piste" unit-speed-impact-mode="VitesseMaxAgent"/>
@@ -172,15 +172,10 @@
   </real-objects>
   <virtual-objects>
     <object type="controle de zone">
-      <shot-percentage-per-human-per-hectare percentage="100" volume="Medium"/>
-      <shot-percentage-per-human-per-hectare percentage="10" volume="Small"/>
-      <shot-percentage-per-human-per-hectare percentage="20" volume="Personal"/>
-      <shot-percentage-per-human-per-hectare percentage="100" volume="Small"/>
-      <shot-percentage-per-human-per-hectare percentage="10" volume="Medium"/>
-      <shot-percentage-per-human-per-hectare percentage="20" volume="Heavy"/>
-      <shot-percentage-per-human-per-hectare percentage="100" volume="Medium"/>
-      <shot-percentage-per-human-per-hectare percentage="10" volume="Small"/>
-      <shot-percentage-per-human-per-hectare percentage="20" volume="Personal"/>
+      <shot-percentage-per-human-per-hectare percentage="20" volume="Gros"/>
+      <shot-percentage-per-human-per-hectare percentage="100" volume="Moyen"/>
+      <shot-percentage-per-human-per-hectare percentage="10" volume="Petit"/>
+      <shot-percentage-per-human-per-hectare percentage="20" volume="Personnel"/>
     </object>
   </virtual-objects>
 </objects>

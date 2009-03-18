@@ -45,7 +45,7 @@
         <sensible-position terrain="nationale" value="5"/>
       </sensible-positions>
       <dotations>
-        <valorization category="mine" count="10" dotation="mine classique"/>
+        <valorization category="mine" count="1" dotation="mine classique"/>
       </dotations>
     </object>
     <object avoid-distance="1000" can-be-bypassed="true" can-be-developed="true" can-be-maneuver-obstacle="true" dangerous="true" default-bypassed-speed="10" default-consumption-mode="EnTravaux" default-speed="0" max-animating-units="0" max-interaction-height="0" type="abattis" unit-speed-impact-mode="AuPlusLent">
