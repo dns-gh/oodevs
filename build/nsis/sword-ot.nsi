@@ -113,6 +113,10 @@ Section "!${APP_NAME}"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File /nonfatal "${RUNDIR}\*.manifest"
     File "*.ico"
+    
+    ; evaluation licence
+    File "${RUNDIR}\evaluation.lic"
+    
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     CreateDirectory "$SMPROGRAMS\${APP_NAME}"

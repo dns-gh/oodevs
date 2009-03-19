@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <project name="csword" default="all">
 
+    <!-- Generate 3 months evaluation license -->
+    <property name="flex.name" value="evaluation"/>
+    <property name="flex.hostid" value="ANY"/>
+    <tstamp>
+        <format property="flex.expiration" pattern="d-MMM-yyyy" offset="3" unit="month" locale="en_US"/>
+    </tstamp>
+
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <svn>
