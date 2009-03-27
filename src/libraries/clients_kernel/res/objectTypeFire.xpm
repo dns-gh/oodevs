@@ -1,0 +1,17 @@
+/* XPM */
+static const char* xpm_objectTypeFire[]={
+"10 10 4 1",
+"# c #000000",
+"b c #b00000",
+"a c #f5f308",
+". c None",
+".##aaaa##.",
+"#bbbbbbbb#",
+"#bbbbbbbb#",
+"#bbaaaaaa#",
+"#bbaaaaaa#",
+"#bbbbbbaa#",
+"#bbbbbbaa#",
+"#bbaaaaaa#",
+"#bbaaaaaa#",
+".##aaaa##."};
