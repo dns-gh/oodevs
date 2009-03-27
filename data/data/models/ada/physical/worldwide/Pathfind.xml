@@ -43,10 +43,9 @@
         <object-cost type="nuage nbc" value="10000"/>
         <object-cost type="site decontamination" value="10"/>
         <object-cost type="plot ravitaillement" value="10"/>
-        <object-cost type="zone brouillage brod" value="10000"/>
-        <object-cost type="zone brouillage bromure" value="10000"/>
+        <object-cost type="zone brouillage" value="10000"/>        
         <object-cost type="rota" value="10000"/>
-        <object-cost type="zone NBC" value="10000"/>
+        <object-cost type="zone nbc" value="10000"/>
         <object-cost type="aire poser" value="10"/>
         <object-cost type="piste" value="-5"/>
         <object-cost type="plateforme" value="10"/>
@@ -176,10 +175,9 @@
         <object-cost type="nuage nbc" value="10000"/>
         <object-cost type="site decontamination" value="10"/>
         <object-cost type="plot ravitaillement" value="10"/>
-        <object-cost type="zone brouillage brod" value="10000"/>
-        <object-cost type="zone brouillage bromure" value="10000"/>
+        <object-cost type="zone brouillage" value="10000"/>
         <object-cost type="rota" value="10000"/>
-        <object-cost type="zone NBC" value="10000"/>
+        <object-cost type="zone nbc" value="10000"/>
         <object-cost type="aire poser" value="10"/>
         <object-cost type="piste" value="-5"/>
         <object-cost type="plateforme" value="10"/>

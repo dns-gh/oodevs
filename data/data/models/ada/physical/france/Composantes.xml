@@ -2061,7 +2061,7 @@
       <weapon-system launcher="Fusil Assaut FAMAS" munition="Charg 5,56 2 O-1T-4 O"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="0.3" bypassed-speed="5" construction-time-factor="-228s" destruction-time-factor="288s" devalorization-time="4800s" initial-construction-time="-2400s" initial-destruction-time="0s" non-bypassed-speed="5" type="bouchon mines" valorization-time="0s"/>
+      <object bypass-gain-factor="0.3" bypassed-speed="5" construction-time-factor="228s" destruction-time-factor="288s" devalorization-time="4800s" initial-construction-time="24000s" initial-destruction-time="0s" non-bypassed-speed="5" type="bouchon mines" valorization-time="0s"/>
       <object bypass-gain-factor="0.3" bypassed-speed="5" construction-time-factor="1s" destruction-time-factor="720s" devalorization-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="zone minee lineaire"/>
       <object bypass-gain-factor="0.3" bypassed-speed="5" construction-time-factor="2s" destruction-time-factor="720s" devalorization-time="1800s" initial-construction-time="600s" initial-destruction-time="0s" non-bypassed-speed="5" type="zone minee par dispersion" valorization-time="0s"/>
       <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="288s" destruction-time-factor="540s" devalorization-time="5400s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="fosse anti char" valorization-time="120s"/>
@@ -7606,7 +7606,7 @@
       <weapon-system launcher="Mitrailleuse Tourelleau" munition="Bd 7.62mm 4 Ord-1 T"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="zone brouillage bromure" valorization-time="0s"/>
+      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="zone brouillage" valorization-time="0s"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1 EB"/>
@@ -10694,7 +10694,7 @@
       <weapon-system launcher="Fusil Assaut FAMAS" munition="Charg 5,56 2 O-1T-4 O"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="-1" construction-time-factor="1s" destruction-time-factor="1s" devalorization-time="1s" initial-construction-time="1s" initial-destruction-time="1s" non-bypassed-speed="-1" type="zone brouillage brod" valorization-time="1s"/>
+      <object bypass-gain-factor="-1" construction-time-factor="1s" destruction-time-factor="1s" devalorization-time="1s" initial-construction-time="1s" initial-destruction-time="1s" non-bypassed-speed="-1" type="zone brouillage" valorization-time="1s"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="4" type="Panne MOB 1"/>
@@ -13594,7 +13594,7 @@
       <weapon-system launcher="Fusil Assaut AK 47" munition="Charg 7,62"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="0.3" bypassed-speed="5" construction-time-factor="-228s" destruction-time-factor="288s" devalorization-time="4800s" initial-construction-time="-2400s" initial-destruction-time="0s" non-bypassed-speed="5" type="bouchon mines" valorization-time="0s"/>
+      <object bypass-gain-factor="0.3" bypassed-speed="5" construction-time-factor="228s" destruction-time-factor="288s" devalorization-time="4800s" initial-construction-time="24000s" initial-destruction-time="0s" non-bypassed-speed="5" type="bouchon mines" valorization-time="0s"/>
       <object bypass-gain-factor="0.3" bypassed-speed="5" construction-time-factor="1s" destruction-time-factor="720s" devalorization-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="zone minee lineaire"/>
       <object bypass-gain-factor="0.3" bypassed-speed="5" construction-time-factor="2s" destruction-time-factor="720s" devalorization-time="1800s" initial-construction-time="600s" initial-destruction-time="0s" non-bypassed-speed="5" type="zone minee par dispersion" valorization-time="0s"/>
       <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="288s" destruction-time-factor="540s" devalorization-time="5400s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="fosse anti char" valorization-time="120s"/>

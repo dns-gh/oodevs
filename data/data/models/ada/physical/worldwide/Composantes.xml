@@ -3754,7 +3754,7 @@
       <weapon-system launcher="7.62-mm Cupola Machine Gun" munition="7.62-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="zone brouillage bromure" valorization-time="0s"/>
+      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="zone brouillage" valorization-time="0s"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>

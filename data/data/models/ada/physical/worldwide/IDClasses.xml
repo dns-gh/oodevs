@@ -31,8 +31,7 @@
     <Classe nom="nuage nbc"                             id="190" />
     <Classe nom="site decontamination"                  id="213" />
     <Classe nom="plot ravitaillement"                   id="189" />
-    <Classe nom="zone brouillage brod"                  id="212" />
-    <Classe nom="zone brouillage bromure"               id="212" />
+    <Classe nom="zone brouillage"                       id="212" />
     <Classe nom="rota"                                  id="197" />
     <Classe nom="zone NBC"                              id="126" />
     <Classe nom="aire poser"                            id="210" />
