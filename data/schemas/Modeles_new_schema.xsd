@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="models">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="units" type="T_Units"/>
+				<xs:element name="automats" type="T_Automats"/>
+				<xs:element name="populations" type="T_Populations"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="T_Model">
+		<xs:sequence>
+			<xs:element name="missions" type="T_Missions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="dia-type" type="xs:string" use="required"/>
+		<xs:attribute name="file" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="T_Units">
+		<xs:sequence>
+			<xs:element name="unit" type="T_Model" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="T_Automats">
+		<xs:sequence>
+			<xs:element name="automat" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="T_Populations">
+		<xs:sequence>
+			<xs:element name="population" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="T_Missions">
+		<xs:sequence>
+			<xs:element name="mission" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="fragorder" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="name" type="xs:string" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="name" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
