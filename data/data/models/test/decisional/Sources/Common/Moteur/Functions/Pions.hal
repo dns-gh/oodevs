@@ -81,14 +81,14 @@ signatures
     // Objets
     U /*T_Action*/                          A::DEC_StartReprendreTravauxObjet     ( I /*E_EtatActionObjet*/, U /*T_ConnaissanceObjet*/ );
     U /*T_Action*/                          A::DEC_StartOccuperObjet              ( U /*T_ConnaissanceObjet*/ );
-    U /*T_Action*/                          A::DEC_StartCreerObjet                ( I /*E_EtatActionObjet*/, U /*Object rep construit*/, I /*Objet type*/, U/*localisation*/, * );
-    U /*T_Action*/                          A::DEC_StartPreparerObjet             ( I /*E_EtatActionObjet*/, U /*Object rep construit*/, I /*Objet type*/, U/*localisation*/, * );
-    U /*T_Action*/                          A::DEC_StartDetruireObjet             ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
-    U /*T_Action*/                          A::DEC_StartCreerContournementObjet   ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
-    U /*T_Action*/                          A::DEC_StartValoriserObjet            ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
-    U /*T_Action*/                          A::DEC_StartAnimerObjet               ( U /*connaissance objet*/ );
-    B                                       A::DEC_ActiverObjet                   ( U /*connaissance objet*/ );
-    V                                       A::DEC_CreerObjetSansDelais           ( I /*Objet type*/, U/*localisation*/, * );
+    U /*T_Action*/                          A::DEC_StartCreerObjet                ( I /*E_EtatActionObjet*/, U /*T_ConnaissanceObjet*/, X /*Objet type*/, U/*localisation*/, * );
+    V                                       A::DEC_CreerObjetSansDelais           (                                                     X /*Objet type*/, U/*localisation*/, * );
+    U /*T_Action*/                          A::DEC_StartPreparerObjet             ( I /*E_EtatActionObjet*/, U /*T_ConnaissanceObjet*/, X /*Objet type*/, U/*localisation*/, * );
+    U /*T_Action*/                          A::DEC_StartDetruireObjet             ( I /*E_EtatActionObjet*/, U /*T_ConnaissanceObjet*/ );
+    U /*T_Action*/                          A::DEC_StartCreerContournementObjet   ( I /*E_EtatActionObjet*/, U /*T_ConnaissanceObjet*/ );
+    U /*T_Action*/                          A::DEC_StartValoriserObjet            ( I /*E_EtatActionObjet*/, U /*T_ConnaissanceObjet*/ );
+    U /*T_Action*/                          A::DEC_StartAnimerObjet               ( U /*T_ConnaissanceObjet*/ );
+    B                                       A::DEC_ActiverObjet                   ( U /*T_ConnaissanceObjet*/ );    
     V                                       A::DEC_DetruireObjetSansDelais        ( U /*T_ConnaissanceObjet*/ ); 
                                             
     // Déplacement                          
@@ -157,11 +157,11 @@ signatures
     B                                       A::DEC_Agent_EstPC                           ();
     R                                       A::DEC_Agent_EtatOps                         (); // Retourne une valeur entre 0 et 1
     R                                       A::DEC_Agent_EtatOpsMajeur                   (); // Retourne une valeur entre 0 et 1
-    B                                       A::DEC_Agent_PeutConstruireObjet             ( I /*E_TypeObject*/ );
-    B                                       A::DEC_Agent_PeutConstruireContournementObjet( I /*E_TypeObject*/ );
-    B                                       A::DEC_Agent_PeutDetruireObjet               ( I /*E_TypeObject*/ );
-    B                                       A::DEC_Agent_PeutValoriserObjet              ( I /*E_TypeObject*/ );         
-    B                                       A::DEC_Agent_PeutActiverObjet                ( I /*E_TypeObject*/ );             
+    B                                       A::DEC_Agent_PeutConstruireObjet             ( X /* E_TypeObject*/ );
+    B                                       A::DEC_Agent_PeutConstruireContournementObjet( U /* T_ConnaissanceObjet */ );
+    B                                       A::DEC_Agent_PeutDetruireObjet               ( U /* T_ConnaissanceObjet */ );
+    B                                       A::DEC_Agent_PeutValoriserObjet              ( U /* T_ConnaissanceObjet */ );
+    B                                       A::DEC_Agent_PeutActiverObjet                ( U /* T_ConnaissanceObjet */ );
     B                                       A::DEC_Agent_EstNeutralise                   ();                  
     B                                       A::DEC_Agent_AutomateEstEmbraye              ();         
     U /*T_Point*/                           A::DEC_Agent_Position                        ();
@@ -238,13 +238,14 @@ signatures
     B                                       A::DEC_ConnaissanceObjet_EstConstruit                     ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissanceObjet_EstValide                        ( U /*T_ConnaissanceObjet*/  );
     U /*T_Localisation*/                    A::DEC_ConnaissanceObjet_Localisation                     ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    I /*E_TypeObject*/                      A::DEC_ConnaissanceObjet_Type                             ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    X /*E_TypeObject*/                      A::DEC_ConnaissanceObjet_Type                             ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     R                                       A::DEC_ConnaissanceObjet_LargeurSiteFranchissement        ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissanceObjet_BergesAAmenagerSiteFranchissement( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     V                                       A::DEC_ConnaissanceObjet_Reconnaitre                      ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     I /*E_ValiditeRequete&*/                A::DEC_ConnaissanceObjet_DemandeDeDecontamination         ( U /*T_ConnaissanceObjet*/ );    
     B                                       A::DEC_ConnaissanceObjet_PeutEtreOccupe                   ( U /*T_ConnaissanceObjet*/ );   
     B                                       A::DEC_ConnaissanceObjet_PeutEtreAnime                    ( U /*T_ConnaissanceObjet*/ );
+    B                                       A::DEC_ConnaissanceObjet_PeutEtreContourne                ( U /*T_ConnaissanceObjet*/ );
     V                                       A::DEC_ConnaissanceObjet_ItineraireLogEstEquipe           ( U /*T_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
     V                                       A::DEC_ConnaissanceObjet_Degrader                         ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/, R /*facteur de degradation 0..1*/ );
     V                                       A::DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/, R /*densite*/ );

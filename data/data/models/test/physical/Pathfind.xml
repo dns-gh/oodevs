@@ -37,14 +37,13 @@
         <object-cost type="nuage nbc" value="10000"/>
         <object-cost type="site decontamination" value="10"/>
         <object-cost type="plot ravitaillement" value="10"/>
-        <object-cost type="zone brouillage brod" value="10000"/>
-        <object-cost type="zone brouillage bromure" value="10000"/>
+        <object-cost type="zone brouillage" value="10000"/>
         <object-cost type="rota" value="10000"/>
-        <object-cost type="zone NBC" value="10000"/>
+        <object-cost type="zone nbc" value="10000"/>
+        <object-cost type="nuage nbc" value="10000"/>
         <object-cost type="aire poser" value="10"/>
         <object-cost type="piste" value="-5"/>
         <object-cost type="plateforme" value="10"/>
-        <object-cost type="zone mobilite amelioree" value="10"/>
         <object-cost type="zone poser helicoptere" value="10"/>
         <object-cost type="aire logistique" value="10"/>
         <object-cost type="camp prisonniers" value="10"/>
@@ -134,47 +133,7 @@
       </automat-zone>
       <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
       <enemies cost-on-contact="0" cost-at-security-range="0"/>
-      <object-costs avoid="true">
-        <object-cost type="fosse anti char" value="10000"/>
-        <object-cost type="abattis" value="10000"/>
-        <object-cost type="barricade" value="10000"/>
-        <object-cost type="bouchon mines" value="10000"/>
-        <object-cost type="zone minee lineaire" value="10000"/>
-        <object-cost type="zone minee par dispersion" value="10000"/>
-        <object-cost type="eboulement" value="10000"/>
-        <object-cost type="destruction route" value="10000"/>
-        <object-cost type="destruction pont" value="10000"/>
-        <object-cost type="pont flottant continu" value="0"/>
-        <object-cost type="pont flottant discontinu" value="0"/>
-        <object-cost type="poste tir" value="0"/>
-        <object-cost type="zone protegee" value="0"/>
-        <object-cost type="zone implantation canon" value="10"/>
-        <object-cost type="zone implantation cobra" value="10"/>
-        <object-cost type="zone implantation lrm" value="10"/>
-        <object-cost type="site franchissement" value="10"/>
-        <object-cost type="nuage nbc" value="10000"/>
-        <object-cost type="site decontamination" value="10"/>
-        <object-cost type="plot ravitaillement" value="10"/>
-        <object-cost type="zone brouillage brod" value="10000"/>
-        <object-cost type="zone brouillage bromure" value="10000"/>
-        <object-cost type="rota" value="10000"/>
-        <object-cost type="zone NBC" value="10000"/>
-        <object-cost type="aire poser" value="10"/>
-        <object-cost type="piste" value="-5"/>
-        <object-cost type="plateforme" value="10"/>
-        <object-cost type="zone mobilite amelioree" value="10"/>
-        <object-cost type="zone poser helicoptere" value="10"/>
-        <object-cost type="aire logistique" value="10"/>
-        <object-cost type="camp prisonniers" value="10"/>
-        <object-cost type="camp refugies" value="10"/>
-        <object-cost type="itineraire logistique" value="-10"/>
-        <object-cost type="poste controle" value="-5"/>
-        <object-cost type="terrain largage" value="10"/>
-        <object-cost type="zone interdite tir" value="10"/>
-        <object-cost type="zone interdite mouvement" value="10000"/>
-        <object-cost type="zone implantation mortier" value="10"/>
-        <object-cost type="installation" value="0"/>
-      </object-costs>
+      <object-costs avoid="true"/>
     </rule>
     <rule type="movement" flying="true" autonomous="false" inherits="base">
       <avoided-terrains>

@@ -377,8 +377,11 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
                 T_ConnaissanceObjet objet;
                 float               rDist;
                 E_ValiditeRequete   nValidite;
-                if( DEC_Itineraire_ProchainObjet( objet, rDist, eTypeObjectPontFlottantContinu, eTypeObjectNuageNBC, eTypeObjectBouchonMines ) )
-                    DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + EnumToString( DEC_ConnaissanceObjet_Type( objet, nValidite ), E_TypeObject ) );
+                if( DEC_Itineraire_ProchainObjet( objet, rDist, 
+                            S_TypeObject_ToString( eTypeObjectPontFlottantContinu ), 
+                            S_TypeObject_ToString( eTypeObjectNuageNBC ), 
+                            S_TypeObject_ToString( eTypeObjectBouchonMines ) ) )
+                    DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + DEC_ConnaissanceObjet_Type( objet, nValidite ) );
                 else
                     DEC_Debug( "PAS D'OBJET SUR L'ITINERAIRE" );                
                 
@@ -589,9 +592,15 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         
         if( DIA_ModuleBegins() )
         {
-            DEC_Connaissances_ObjetsDansCercle( DEC_Agent_Position(), 2000, eTypeObjectBouchonMines );
-            DEC_Connaissances_ObjetsDansZone( mission.forme_, eTypeObjectBouchonMines );
-            DEC_Connaissances_ObjetsDansFuseau( eTypeObjectBouchonMines );
+            T_ListeConnaissancesObjet objects;
+            objects = DEC_Connaissances_ObjetsDansCercle( DEC_Agent_Position(), 2000, S_TypeObject_ToString( eTypeObjectBouchonMines ) );
+            DEC_Debug( "knowledge objects inside circle: " + FloatToString( DIA_Size( objects ) ) );
+            
+            objects = DEC_Connaissances_ObjetsDansZone( mission.forme_, S_TypeObject_ToString( eTypeObjectBouchonMines ) );
+            DEC_Debug( "knowledge objects inside area: " + FloatToString( DIA_Size( objects ) ) );
+            
+            objects = DEC_Connaissances_ObjetsDansFuseau( S_TypeObject_ToString( eTypeObjectBouchonMines ) );
+            DEC_Debug( "knowledge objects inside boundaries: " + FloatToString( DIA_Size( objects ) ) );
         
             
             E_LocalisationFunctionsReturnCode returnCode;
@@ -630,7 +639,7 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         if( DIA_ModuleBegins() )
         {
             //T_Localisation prout = DEC_Geometrie_CreerLocalisationCercle( DEC_Agent_Position(), 800 );
-            currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, mission.forme_, mission.param1_, mission.param2_, false );
+            currentAction = DEC_StartCreerObjet( nState, repObjet, S_TypeObject_ToString( mission.type_ ), mission.forme_, mission.param1_, mission.param2_, false );
             
             //currentAction =  DEC_StartControlerZone( mission.forme_, 12000, true );
             
@@ -706,6 +715,10 @@ behavior MIS_Pion_Test_DestroyObject( T_Mission_Pion_Test_DestroyObject mission,
     }    
 }
 
+behavior MIS_Pion_Test_GENObject( T_Point position )
+{
+    
+}
 
 behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, id nDummy )
 {

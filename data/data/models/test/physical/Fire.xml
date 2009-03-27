@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<fire-classes>
+	<class id="1" name="Class A" defaultheat="50" heatmax="200" tempthreshold="100" increaserate="10" decreaserate="5">
+    <extinguisher-agents>
+    	<agent nature="EauEnMasse" effect="30"/>
+    	<agent nature="EauEnPulvérisation" effect="30"/>
+    	<agent nature="Mousses" effect="15"/>
+    	<agent nature="Poudres" effect="30"/>
+    	<agent nature="CO2" effect="0"/>
+    	<agent nature="Solide" effect="0"/>
+    	<agent nature="HydrocarburesHalogenes" effect="0"/>
+    </extinguisher-agents>
+   </class>
+   <class id="2" name="Class B" defaultheat="75" heatmax="250" tempthreshold="200" increaserate="20" decreaserate="10">
+    <extinguisher-agents>
+    	<agent nature="EauEnMasse" effect="0"/>
+    	<agent nature="EauEnPulvérisation" effect="0"/>
+    	<agent nature="Mousses" effect="60"/>
+    	<agent nature="Poudres" effect="30"/>
+    	<agent nature="CO2" effect="90"/>
+    	<agent nature="Solide" effect="0"/>
+    	<agent nature="HydrocarburesHalogenes" effect="30"/>
+    </extinguisher-agents>
+   </class>
+   <class id="3" name="Class C" defaultheat="100" heatmax="300" tempthreshold="300" increaserate="30" decreaserate="15">
+    <extinguisher-agents>
+    	<agent nature="EauEnMasse" effect="0"/>
+    	<agent nature="EauEnPulvérisation" effect="0"/>
+    	<agent nature="Mousses" effect="0"/>
+    	<agent nature="Poudres" effect="30"/>
+    	<agent nature="CO2" effect="30"/>
+    	<agent nature="Solide" effect="0"/>
+    	<agent nature="HydrocarburesHalogenes" effect="30"/>
+    </extinguisher-agents>
+   </class>
+   <class id="4" name="Class D" defaultheat="125" heatmax="350" tempthreshold="400" increaserate="40" decreaserate="20">
+    <extinguisher-agents>
+    	<agent nature="EauEnMasse" effect="0"/>
+    	<agent nature="EauEnPulvérisation" effect="0"/>
+    	<agent nature="Mousses" effect="0"/>
+    	<agent nature="Poudres" effect="30"/>
+    	<agent nature="CO2" effect="0"/>
+    	<agent nature="Solide" effect="30"/>
+    	<agent nature="HydrocarburesHalogenes" effect="0"/>
+    </extinguisher-agents>
+  </class>
+</fire-classes>

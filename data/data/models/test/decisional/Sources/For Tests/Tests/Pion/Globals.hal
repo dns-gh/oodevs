@@ -13,14 +13,60 @@ signatures
 
 functions
 {
-T_ListeConnaissancesAgent S_ConnaissancesEnnemiesVivantesPercuesVolantes()
-{
-    DIA_Clear( S_ConnaissancesEnnemiesVivantesPercuesVolantes );
-
-    T_ListeConnaissancesAgent listeUnitesEnnemiesVivantesPercues = DEC_Connaissances_UnitesEnnemiesVivantesPercues();
-    with( x in listeUnitesEnnemiesVivantesPercues )
-        DEC_UserTypeList_PushBack( S_ConnaissancesEnnemiesVivantesPercuesVolantes, x );
-}
+    string S_TypeObject_ToString( E_TypeObject type )
+    {
+        switch( type )
+        {
+        case eTypeObjectBouchonMines: { S_TypeObject_ToString = "bouchon mines"; return; }
+        case eTypeObjectZoneMineeLineaire: { S_TypeObject_ToString = "zone minee lineaire"; return; }
+        case eTypeObjectZoneMineeParDispersion: { S_TypeObject_ToString = "zone minee dispersion"; return; }
+        case eTypeObjectFosseAntiChar: { S_TypeObject_ToString = "fosse antichar"; return; }
+        case eTypeObjectAbatti: { S_TypeObject_ToString = "abattis"; return; }
+        case eTypeObjectBarricade: { S_TypeObject_ToString = "barricade"; return; }
+        case eTypeObjectEboulement: { S_TypeObject_ToString = "eboulement"; return; }
+        case eTypeObjectDestructionRoute: { S_TypeObject_ToString = "destruction route"; return; }
+        case eTypeObjectDestructionPont: { S_TypeObject_ToString = "destruction pont"; return; }
+        case eTypeObjectPontFlottantContinu: { S_TypeObject_ToString = "pont flottant"; return; }
+        case eTypeObjectPosteTir: { S_TypeObject_ToString = "poste tir"; return; }
+        case eTypeObjectZoneProtegee: { S_TypeObject_ToString = "zone protegee"; return; }
+        case eTypeObjectZoneImplantationCanon: { S_TypeObject_ToString = "zone implantation canon"; return; }
+        case eTypeObjectZoneImplantationCOBRA: { S_TypeObject_ToString = "zone implantation cobra"; return; }
+        case eTypeObjectZoneImplantationMortier: { S_TypeObject_ToString = "zone implantation mortier"; return; } 
+        case eTypeObjectZoneImplantationLRM: { S_TypeObject_ToString = "zone implantation lrm"; return; }
+        case eTypeObjectSiteFranchissement: { S_TypeObject_ToString = "site franchissement"; return; }      
+        case eTypeObjectNuageNBC: { S_TypeObject_ToString = "nuage nbc"; return; }                   
+        case eTypeObjectPlotRavitaillement: { S_TypeObject_ToString = "plot ravittaillement"; return; }      
+        case eTypeObjectSiteDecontamination: { S_TypeObject_ToString = "site decontamination"; return; }
+        case eTypeObjectZoneBrouillageBrod: { S_TypeObject_ToString = "zone brouillage brod"; return; }
+        case eTypeObjectZoneBrouillageBromure: { S_TypeObject_ToString = "zone brouillage bromure"; return; }
+        case eTypeObjectRota: { S_TypeObject_ToString = "site rota"; return; }
+        case eTypeObjectZoneNBC: { S_TypeObject_ToString = "zone nbc"; return; }
+        case eTypeObjectAirePoser: { S_TypeObject_ToString = "aire poser"; return; }               
+        case eTypeObjectPiste: { S_TypeObject_ToString = "piste"; return; }                   
+        case eTypeObjectPlateForme: { S_TypeObject_ToString = "plateforme"; return; }              
+        case eTypeObjectZoneMobiliteAmelioree: { S_TypeObject_ToString = "zone mobilite amelioree"; return; }
+        case eTypeObjectZonePoserHelicoptere: { S_TypeObject_ToString = "zone poser helicoptere"; return; }
+        case eTypeObjectAireLogistique: { S_TypeObject_ToString = "aire logistique"; return; }
+        case eTypeObjectItineraireLogistique: { S_TypeObject_ToString = "itineraire logistique"; return; }    
+        case eTypeObjectCampPrisonniers: { S_TypeObject_ToString = "camp prisonniers"; return; }
+        case eTypeObjectCampRefugies: { S_TypeObject_ToString = "camp refugies"; return; }
+        case eTypeObjectPosteControle: { S_TypeObject_ToString = "poste controle"; return; }           
+        case eTypeObjectTerrainLargage: { S_TypeObject_ToString = "terrain largage"; return; }          
+        case eTypeObjectZoneInterditeDeplacement: { S_TypeObject_ToString = "zone interdite deplacement"; return; }
+        case eTypeObjectZoneInterditeTir: { S_TypeObject_ToString = "zone interdite tir"; return; }        
+        case eTypeObjectPontFlottantDiscontinu: { S_TypeObject_ToString = "bouchon mines"; return; }  
+        case eTypeObjectInstallation: { S_TypeObject_ToString = "installation"; return; }        
+        }
+    }
+    
+    T_ListeConnaissancesAgent S_ConnaissancesEnnemiesVivantesPercuesVolantes()
+    {
+        DIA_Clear( S_ConnaissancesEnnemiesVivantesPercuesVolantes );
+    
+        T_ListeConnaissancesAgent listeUnitesEnnemiesVivantesPercues = DEC_Connaissances_UnitesEnnemiesVivantesPercues();
+        with( x in listeUnitesEnnemiesVivantesPercues )
+            DEC_UserTypeList_PushBack( S_ConnaissancesEnnemiesVivantesPercuesVolantes, x );
+    }
 
     //-------------------------------------------------------------------------
     // Calcul d'une force entre 1 et 2 par rapport à la distance à un eni.

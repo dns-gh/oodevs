@@ -100,7 +100,7 @@ signatures
     B                                A::DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif        ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     B                                A::DEC_ConnaissanceObjet_EstObstacleDeManoeuvre             ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     B                                A::DEC_ConnaissanceObjet_EstConstruit                       ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    I /*E_TypeObject*/               A::DEC_ConnaissanceObjet_Type                               ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    X /*E_TypeObject*/               A::DEC_ConnaissanceObjet_Type                               ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     R                                A::DEC_ConnaissanceObjet_LargeurSiteFranchissement          ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     B                                A::DEC_ConnaissanceObjet_BergesAAmenagerSiteFranchissement  ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
     V                                A::DEC_ConnaissanceObjet_ItineraireLogEstEquipe             ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
@@ -153,13 +153,13 @@ signatures
     B                                A::DEC_Automate_PionEstEnVol                                     ( A /*T_Pion*/ );
     
     // Objets
-    B                                A::DEC_Automate_PionPeutConstruireObjet             ( A /*T_Pion*/, I /*E_TypeObject*/ );         
-    B                                A::DEC_Automate_PionPeutConstruireContournementObjet( A /*T_Pion*/, I /*E_TypeObject*/ );
-    B                                A::DEC_Automate_PionPeutDetruireObjet               ( A /*T_Pion*/, I /*E_TypeObject*/ );   
-    B                                A::DEC_Automate_PionPeutValoriserObjet              ( A /*T_Pion*/, I /*E_TypeObject*/ );         
-    B                                A::DEC_Automate_PionPeutActiverObjet                ( A /*T_Pion*/, I /*E_TypeObject*/ );         
+    B                                A::DEC_Automate_PionPeutConstruireObjet             ( A /*T_Pion*/, X /*E_TypeObject*/ );         
+    B                                A::DEC_Automate_PionPeutConstruireContournementObjet( A /*T_Pion*/, U /*T_ConnaissanceObjet*/ );
+    B                                A::DEC_Automate_PionPeutDetruireObjet               ( A /*T_Pion*/, U /*T_ConnaissanceObjet*/ );   
+    B                                A::DEC_Automate_PionPeutValoriserObjet              ( A /*T_Pion*/, U /*T_ConnaissanceObjet*/ );         
+    B                                A::DEC_Automate_PionPeutActiverObjet                ( A /*T_Pion*/, U /*T_ConnaissanceObjet*/ );         
     
-    V                                A::DEC_CreerObjetSansDelais   ( I /*Objet type*/, U/*localisation*/, * );
+    V                                A::DEC_CreerObjetSansDelais   ( X /*E_TypeObject*/, U/*localisation*/, * );
     V                                A::DEC_DetruireObjetSansDelais( U /*T_ConnaissanceObjet*/ );
 
     // Logistique

@@ -13,6 +13,8 @@
   <units file="Pions.xml"/>
   <automats file="Automates.xml"/>
   <nbc file="NBC.xml"/>
+  <fire file="Fire.xml"/>
+  <medical-treatment file="MedicalTreatment.xml"/>
   <health file="Sante.xml"/>
   <classeids file="IDClasses.xml"/>
   <human-factors file="FacteursHumains.xml"/>

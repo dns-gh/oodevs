@@ -18,7 +18,7 @@ default Default()
                 float               rDist;
                 E_ValiditeRequete   nValidite;
                 if( DEC_Itineraire_ProchainObjet( objet, rDist, eTypeObjectNuageNBC, eTypeObjectBouchonMines ) )
-                    DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + EnumToString( DEC_ConnaissanceObjet_Type( objet, nValidite ), E_TypeObject ) );
+                    DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + DEC_ConnaissanceObjet_Type( objet, nValidite ) );
                 else
                     DEC_Debug( "PAS D'OBJET SUR L'ITINERAIRE" );                */
                      
