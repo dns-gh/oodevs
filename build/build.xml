@@ -310,7 +310,7 @@
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher,library.simulation_kernel">
         <build-app name="simulation_app" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5
+                   libs="HLA,libFedTime,masalloc,tools,masasn,shapelib,shapefile@{suffix},vmap,directia-${platform}-mt-4_5
                          population-${platform}-mt@{suffix}
                          dispatcher-${platform}-mt@{suffix}
                          lib${ant.project.name}_tools-${platform}-mt@{suffix}
@@ -437,7 +437,7 @@
       tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test,clients_test" description="run all tests"/>
+    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test,clients_test,test-simulation_kernel_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xeumeuleu,terrain,boost" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
@@ -495,6 +495,7 @@
         <test-scripts dataset="main" physical="worldwide"/>
         <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="worldwide"/>
+        <test-scripts dataset="civilian" physical=""/>
     </target>
 
     <macrodef name="test-adaptation">
@@ -510,7 +511,7 @@
                 <arg value="${adaptation_test.dir2}/physical.xml"/>
             </exec>
             <compare-dirs dir1="${adaptation_test.dir1}" dir2="${adaptation_test.dir2}"
-                          excludes="**/Pathfind.xml,**/dis.xml"
+                          excludes="**/Pathfind.xml,**/dis.xml,**/Fire.xml,**/MedicalTreatment.xml"
                           includes="**/*.xml" property="adaptation_test.is-different"/>
             <if>
                 <isset property="adaptation_test.is-different"/>
@@ -526,8 +527,36 @@
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
         <test-adaptation physical="main/physical/worldwide"/>
         <test-adaptation physical="main/physical/france"/>
+        <test-adaptation physical="civilian/physical"/>
         <test-adaptation physical="test/physical"/>
     </target>
+
+    <target name="application.simulation_kernel_test" description="build CSword Simulation kernel test executable" depends="library.simulation_kernel">
+        <build-test name="simulation_kernel"
+                   libs="HLA,libFedTime,masalloc,tools,masasn,shapelib,shapefile@{suffix},vmap,directia-${platform}-mt-4_5
+                         population-${platform}-mt@{suffix}
+                         dispatcher-${platform}-mt@{suffix}
+                         lib${ant.project.name}_tools-${platform}-mt@{suffix}
+                         lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}
+                         lib${ant.project.name}_game_asn-${platform}-mt@{suffix}
+                         lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}
+                         lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}"
+                   depends="mt,din,dia3,terrain,boost,xeumeuleu">
+            <syslibset libs="dbghelp,psapi,shell32,iphlpapi"/>
+            <includepath path="${libraries.dir}/simulation_kernel"/>
+            <includepath path="${include.dir}/masasn"/>
+            <linkerarg value="/STACK:15000000"/>      <!-- Because of boost serialization -->
+        </build-test>
+    </target>
+
+    <target name="test-simulation_kernel_test" description="simulation kernel unit tests" depends="application.simulation_kernel_test">
+        <exec executable="${out.dir}/release/tests/simulation_kernel_test/simulation_kernel_test.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+            <arg value="--result_code=no"/>
+            <arg value="--report_level=no"/>
+            <arg value="--log_level=messages"/>
+        </exec>
+    </target>
+
 
     <!--
     ============================================================================
@@ -583,13 +612,14 @@
         </exec> -->
         <!--<nsis todir="${dist.dir}/current" name="crossbow_installer" script="crossbow_installer.nsi"/>-->
     </target>
+
     <!--
     ============================================================================
       configure
     ============================================================================
     -->
     <target name="configure" description="initialize local project structure with libraries">
-        <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind"/>
+        <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind,vmap,shapefile"/>
         <update name="terrain" package="generation_app_${platform}"/>
         <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Profiler,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>
         <update name="qt" version="3.3.8"/>
