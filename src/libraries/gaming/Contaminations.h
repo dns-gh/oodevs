@@ -74,6 +74,7 @@ public:
     bool        bNbcProtectionSuitWorn_;
     T_NbcAgents contaminatingNbcAgents_;
     int         nContamination_;
+    double      quantity_;
     //@}
 };
 

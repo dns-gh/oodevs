@@ -79,6 +79,7 @@ public:
     MT_Float GetWeldValue() const;
     MT_Float GetWidth    () const;
     MT_Float GetHeight   () const;
+    const MT_Rect& GetExtent() const;
 
     bool IsValidPosition( const MT_Vector2D& pos ) const;
     void ClipPointInsideWorld( MT_Vector2D& pos ) const;

@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_ObjectCollision.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
@@ -23,7 +23,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectCollision, "DEC_Knowledge_ObjectCol
 // Name: DEC_Knowledge_ObjectCollision constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision( const MIL_AgentPion& agentColliding, MIL_RealObject_ABC& object )
+DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision( const MIL_AgentPion& agentColliding, MIL_Object_ABC& object )
     : DEC_Knowledge_ABC()
     , pAgentColliding_ ( &agentColliding )
     , pObject_         ( &object )

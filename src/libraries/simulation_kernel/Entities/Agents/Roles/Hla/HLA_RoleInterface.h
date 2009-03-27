@@ -21,12 +21,11 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
-namespace hla
-{
-    class AttributeIdentifier;
-    class UpdateFunctor_ABC;
+namespace hla {
+    class AttributeIdentifier;    
     class Deserializer;
     class ObjectIdentifier;
+    class UpdateFunctor_ABC;
 }
 
 // =============================================================================

@@ -104,3 +104,13 @@ void DisplayBuilder::Hide()
     for( IT_Groups it = groups_.begin(); it != groups_.end(); ++it )
         it->second->Hide();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DisplayBuilder::Clear
+// Created: LDC 2009-03-18
+// -----------------------------------------------------------------------------
+void DisplayBuilder::Clear()
+{
+    for( IT_Groups it = groups_.begin(); it != groups_.end(); ++it )
+        it->second->Clear();
+}

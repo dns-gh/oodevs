@@ -25,7 +25,7 @@ bool DEC_Knowledge_ObjectCollision::IsValid() const
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& DEC_Knowledge_ObjectCollision::GetObject() const
+MIL_Object_ABC& DEC_Knowledge_ObjectCollision::GetObject() const
 {
     assert( pObject_ );
     return *pObject_;    

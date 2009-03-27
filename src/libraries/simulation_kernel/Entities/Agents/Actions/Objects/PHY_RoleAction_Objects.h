@@ -18,8 +18,8 @@
 
 class NET_ASN_MsgUnitAttributes;
 class DEC_Knowledge_Object;
-class MIL_RealObject_ABC;
-class MIL_RealObjectType;
+class MIL_Object_ABC;
+class MIL_ObjectType_ABC;
 class MIL_AgentPion;
 class PHY_DotationCategory;
 class PHY_RoleAction_Objects_DataComputer;
@@ -61,12 +61,13 @@ public:
     int GetInitialReturnCode() const;
     int GetFinalReturnCode  () const;
 
-    int  Construct           ( MIL_RealObject_ABC* pObject, DEC_Knowledge_Object*& pKnowledge );
+    int  Construct           ( MIL_Object_ABC* pObject, DEC_Knowledge_Object*& pKnowledge );
     int  ResumeWork          ( uint nKnowledgeObjectID );
     int  Destroy             ( uint nKnowledgeObjectID ); 
     int  Mine                ( uint nKnowledgeObjectID ); 
     int  Demine              ( uint nKnowledgeObjectID ); 
-    int  Bypass              ( uint nKnowledgeObjectID ); 
+    int  Bypass              ( uint nKnowledgeObjectID );
+    int  Extinguish          ( uint nKnowledgeObjectID );
     void StartAnimateObject  ( uint nKnowledgeObjectID );
     void StopAnimateObject   ( uint nKnowledgeObjectID );
     void StartOccupyingObject( uint nKnowledgeObjectID );
@@ -78,14 +79,15 @@ public:
     void MineSuspended      ();
     void DemineSuspended    ();
     void BypassSuspended    ();
+    void ExtinguishSuspended();
     //@}
 
     //! @name Capabilities
     //@{
-    bool CanConstructWithReinforcement( const MIL_RealObjectType& objectType ) const;
-    bool CanBypassWithReinforcement   ( const MIL_RealObjectType& objectType ) const;
-    bool CanDestroyWithReinforcement  ( const MIL_RealObjectType& objectType ) const;
-    bool CanMineWithReinforcement     ( const MIL_RealObjectType& objectType ) const;    
+    bool CanConstructWithReinforcement( const std::string& objectType ) const;
+    bool CanBypassWithReinforcement   ( const MIL_ObjectType_ABC& object ) const;
+    bool CanDestroyWithReinforcement  ( const MIL_ObjectType_ABC& object ) const;
+    bool CanMineWithReinforcement     ( const MIL_ObjectType_ABC& object ) const;    
     //@}
 
 private:
@@ -104,10 +106,11 @@ private:
 private:
     //! @name Tools
     //@{
-    MIL_RealObject_ABC* GetRealObject( uint nKnowledgeObjectID );
+    MIL_Object_ABC* GetObject( uint nKnowledgeObjectID );
 
-    int Construct( MIL_RealObject_ABC& object );
-    int Mine     ( MIL_RealObject_ABC& object );
+    int Construct( MIL_Object_ABC& object );
+    int Mine     ( MIL_Object_ABC& object );
+    int Demine   ( MIL_Object_ABC& object );
     //@}
 
 private:

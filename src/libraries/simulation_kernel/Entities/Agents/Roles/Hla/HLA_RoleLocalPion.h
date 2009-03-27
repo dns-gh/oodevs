@@ -21,12 +21,12 @@
 
 #include "HLA_RoleInterface.h"
 
-namespace hla
+class MIL_AgentPion;
+namespace hla 
 {
     class ObjectIdenfifier;
 }
 
-class MIL_AgentPion;
 
 // =============================================================================
 /** @class  HLA_RoleLocalPion
@@ -63,8 +63,8 @@ public:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&    pion_;
-    hla::ObjectIdentifier* pObjectId_;
+    MIL_AgentPion&          pion_;
+    hla::ObjectIdentifier*  pObjectId_;
     //@}
 };
 

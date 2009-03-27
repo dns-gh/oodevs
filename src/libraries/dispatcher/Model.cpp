@@ -182,10 +182,10 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
         case T_MsgsSimToClient_msg_msg_automat_order:                        automats_   .Get( asn.msg.u.msg_automat_order    ->oid ).Update( *asn.msg.u.msg_automat_order ); break;
         case T_MsgsSimToClient_msg_msg_population_order:                     populations_.Get( asn.msg.u.msg_population_order ->oid ).Update( *asn.msg.u.msg_population_order ); break;
 
-        case T_MsgsSimToClient_msg_msg_object_creation:                      CreateUpdate( objects_, *asn.msg.u.msg_object_creation ); break;
+        case T_MsgsSimToClient_msg_msg_object_creation:                      CreateUpdate( objects_, asn.msg.u.msg_object_creation->oid, *asn.msg.u.msg_object_creation ); break;
         case T_MsgsSimToClient_msg_msg_object_update:                        objects_.Get( asn.msg.u.msg_object_update->oid ).Update( *asn.msg.u.msg_object_update ); break;
         case T_MsgsSimToClient_msg_msg_object_destruction:                   Destroy( objects_, asn.msg.u.msg_object_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_object_knowledge_creation:            CreateUpdate( objectKnowledges_, *asn.msg.u.msg_object_knowledge_creation ); break;
+        case T_MsgsSimToClient_msg_msg_object_knowledge_creation:            CreateUpdate( objectKnowledges_, asn.msg.u.msg_object_knowledge_creation->oid, *asn.msg.u.msg_object_knowledge_creation ); break;
         case T_MsgsSimToClient_msg_msg_object_knowledge_update:              objectKnowledges_.Get( asn.msg.u.msg_object_knowledge_update->oid ).Update( *asn.msg.u.msg_object_knowledge_update ); break;
         case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:         Destroy( objectKnowledges_, asn.msg.u.msg_object_knowledge_destruction->oid ); break;
 

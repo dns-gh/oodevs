@@ -411,9 +411,8 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( xml::xistream& input )
 {
     std::string strType;
     input >> xml::attribute( "type", strType );
-    E_ObjectType nType = ENT_Tr::ConvertToObjectType( strType );
     ADN_Objects_Data::T_ObjectsInfos_Vector& objects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
-    ADN_Objects_Data::IT_ObjectsInfos_Vector itObject = std::find_if( objects.begin(), objects.end(), ADN_Objects_Data::ObjectInfos::Cmp( nType ) );
+    ADN_Objects_Data::IT_ObjectsInfos_Vector itObject = std::find_if( objects.begin(), objects.end(), ADN_Objects_Data::ObjectInfos::Cmp( strType ) );
     if( itObject == objects.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid object '%1'" ).arg( strType.c_str() ).ascii() );
     ptrObject_ = *itObject;
@@ -433,7 +432,7 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( xml::xistream& input )
 void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "object" )
-		<< xml::attribute( "type", ENT_Tr::ConvertFromObjectType(ptrObject_.GetData()->nObjectType_.GetData() ))
+        << xml::attribute( "type", ptrObject_.GetData()->strName_ )
         << xml::attribute( "detection-distance", rDistanceDetection_ );
     populationInfos_.WriteArchive( output );
 

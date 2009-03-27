@@ -19,8 +19,14 @@ namespace kernel
     class ObjectType;
 }
 
+namespace gui
+{
+    class SymbolIcons;
+}
+
 class StaticModel;
 class Publisher_ABC;
+
 
 // =============================================================================
 /** @class  ObjectPrototype
@@ -34,7 +40,7 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ParametersLayer& layer );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ParametersLayer& layer, gui::SymbolIcons& icons );
     virtual ~ObjectPrototype();
     //@}
 

@@ -43,6 +43,7 @@ public:
     GroupDisplayer& AddSpinBox( const QString& name, int min, int max, int step );
     GroupDisplayer& AddCheckBox( const QString& name );
     virtual void Hide();
+    virtual void Clear();
     //@}
 
 private:

@@ -11,6 +11,7 @@
 #include "ObjectPanel.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DotationType.h"
@@ -91,16 +92,32 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
             // $$$$ AGE 2006-02-17: refactor that
             Show();
             display_->Hide();
+            Clear();
             NotifyUpdated( *selected_ );
-            UpdateExtension< CampAttributes_ABC >( *selected_ );
-            UpdateExtension< CrossingSiteAttributes_ABC >( *selected_ );
-            UpdateExtension< LogisticRouteAttributes_ABC >( *selected_ );
-            UpdateExtension< NBCAttributes_ABC >( *selected_ );
-            UpdateExtension< RotaAttributes_ABC >( *selected_ );
+            UpdateExtension< MineAttribute_ABC >( *selected_ );
+            UpdateExtension< ConstructionAttribute_ABC >( *selected_ );
+            UpdateExtension< ObstacleAttribute_ABC >( *selected_ );
+            UpdateExtension< BypassAttribute_ABC >( *selected_ );
+            UpdateExtension< NBCAttribute_ABC >( *selected_ );
+            UpdateExtension< FireAttribute_ABC >( *selected_ );
+            UpdateExtension< MedicalTreatmentAttribute_ABC >( *selected_ );
+            UpdateExtension< LogisticAttribute_ABC >( *selected_ );
+            UpdateExtension< CrossingSiteAttribute_ABC >( *selected_ );
+            UpdateExtension< SupplyRouteAttribute_ABC >( *selected_ );
+            UpdateExtension< ActivityTimeAttribute_ABC >( *selected_ );
         }
         else
             Hide();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::Clear
+// Created: LDC 2009-03-18
+// -----------------------------------------------------------------------------
+void ObjectPanel::Clear()
+{
+    display_->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -152,9 +169,36 @@ void ObjectPanel::DisplayIfNeeded( const Extension& extension )
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
-// Created: AGE 2006-02-17
+// Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const CampAttributes_ABC& attributes )
+void ObjectPanel::NotifyUpdated( const MineAttribute_ABC& attributes )
+{
+    DisplayIfNeeded( attributes );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::NotifyUpdated
+// Created: JCR 2008-06-09
+// -----------------------------------------------------------------------------
+void ObjectPanel::NotifyUpdated( const ConstructionAttribute_ABC& attributes )
+{
+    DisplayIfNeeded( attributes );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::NotifyUpdated
+// Created: JCR 2008-06-09
+// -----------------------------------------------------------------------------
+void ObjectPanel::NotifyUpdated( const BypassAttribute_ABC& attributes )
+{
+    DisplayIfNeeded( attributes );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::NotifyUpdated
+// Created: JCR 2008-06-09
+// -----------------------------------------------------------------------------
+void ObjectPanel::NotifyUpdated( const ObstacleAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }
@@ -163,7 +207,7 @@ void ObjectPanel::NotifyUpdated( const CampAttributes_ABC& attributes )
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const CrossingSiteAttributes_ABC& attributes )
+void ObjectPanel::NotifyUpdated( const LogisticAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }
@@ -172,7 +216,7 @@ void ObjectPanel::NotifyUpdated( const CrossingSiteAttributes_ABC& attributes )
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const LogisticRouteAttributes_ABC& attributes )
+void ObjectPanel::NotifyUpdated( const CrossingSiteAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }
@@ -181,7 +225,7 @@ void ObjectPanel::NotifyUpdated( const LogisticRouteAttributes_ABC& attributes )
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const NBCAttributes_ABC& attributes )
+void ObjectPanel::NotifyUpdated( const SupplyRouteAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }
@@ -190,7 +234,34 @@ void ObjectPanel::NotifyUpdated( const NBCAttributes_ABC& attributes )
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const RotaAttributes_ABC& attributes )
+void ObjectPanel::NotifyUpdated( const NBCAttribute_ABC& attributes )
+{
+    DisplayIfNeeded( attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::NotifyUpdated
+// Created: RFT 2006-02-17
+// -----------------------------------------------------------------------------
+void ObjectPanel::NotifyUpdated( const FireAttribute_ABC& attributes )
+{
+    DisplayIfNeeded( attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::NotifyUpdated
+// Created: RFT 2006-02-17
+// -----------------------------------------------------------------------------
+void ObjectPanel::NotifyUpdated( const MedicalTreatmentAttribute_ABC& attributes )
+{
+    DisplayIfNeeded( attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::NotifyUpdated
+// Created: AGE 2006-02-17
+// -----------------------------------------------------------------------------
+void ObjectPanel::NotifyUpdated( const ActivityTimeAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }

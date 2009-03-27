@@ -21,13 +21,17 @@ namespace kernel
     class Team_ABC;
     class Controllers;
     class Displayer_ABC;
-    class NBCAttributes_ABC;
-    class CampAttributes_ABC;
-    class CrossingSiteAttributes_ABC;
-    class LogisticRouteAttributes_ABC;
-    class RotaAttributes_ABC;
-    class MineAttributes_ABC;
+    
     class ObjectKnowledge_ABC;
+    class ConstructionAttribute_ABC;
+    class ObstacleAttribute_ABC;    
+    class BypassAttribute_ABC;
+    class MineAttribute_ABC;
+    class NBCAttribute_ABC;
+    class LogisticAttribute_ABC;
+    class CrossingSiteAttribute_ABC;
+    class SupplyRouteAttribute_ABC;
+    class ActivityTimeAttribute_ABC;    
 }
 
 namespace gui
@@ -39,7 +43,6 @@ namespace gui
 }
 
 class ObjectKnowledges;
-class ObjectKnowledges;
 class ObjectPerceptions;
 
 // =============================================================================
@@ -50,15 +53,18 @@ class ObjectPerceptions;
 // =============================================================================
 class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public kernel::Observer_ABC
-                           , public kernel::ElementObserver_ABC< ObjectKnowledges >
+                           , public kernel::ElementObserver_ABC< ObjectKnowledges >                           
                            , public kernel::ElementObserver_ABC< ObjectPerceptions >
                            , public kernel::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::CampAttributes_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::CrossingSiteAttributes_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::LogisticRouteAttributes_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::NBCAttributes_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::RotaAttributes_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::MineAttributes_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::ConstructionAttribute_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::MineAttribute_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::ObstacleAttribute_ABC >    
+                           , public kernel::ElementObserver_ABC< kernel::BypassAttribute_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::LogisticAttribute_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::CrossingSiteAttribute_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::SupplyRouteAttribute_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::NBCAttribute_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::ActivityTimeAttribute_ABC >                           
                            , public kernel::TeamSelectionObserver
 {
     Q_OBJECT;
@@ -96,12 +102,15 @@ private:
     virtual void NotifyUpdated( const ObjectKnowledges& element );
     virtual void NotifyUpdated( const ObjectPerceptions& element );
     virtual void NotifyUpdated( const kernel::ObjectKnowledge_ABC& element );
-    virtual void NotifyUpdated( const kernel::CampAttributes_ABC& element );
-    virtual void NotifyUpdated( const kernel::CrossingSiteAttributes_ABC& element );
-    virtual void NotifyUpdated( const kernel::LogisticRouteAttributes_ABC& element );
-    virtual void NotifyUpdated( const kernel::NBCAttributes_ABC& element );
-    virtual void NotifyUpdated( const kernel::RotaAttributes_ABC& element );
-    virtual void NotifyUpdated( const kernel::MineAttributes_ABC& element );
+    virtual void NotifyUpdated( const kernel::ConstructionAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::BypassAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::ObstacleAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::MineAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::LogisticAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::CrossingSiteAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::SupplyRouteAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::NBCAttribute_ABC& element );
+    virtual void NotifyUpdated( const kernel::ActivityTimeAttribute_ABC& element );    
     template< typename T >
     void DisplayExtension( const T& extension );
     template< typename T >

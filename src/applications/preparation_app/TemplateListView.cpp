@@ -15,7 +15,7 @@
 #include "clients_gui/ValuedDragObject.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 namespace bfs = boost::filesystem;
 using namespace gui;

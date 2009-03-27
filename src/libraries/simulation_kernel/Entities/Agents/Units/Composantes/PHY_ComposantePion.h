@@ -29,7 +29,8 @@ class MIL_PopulationAttitude;
 class PHY_Sensor;
 class PHY_Weapon;
 class PHY_DotationGroupContainer;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
+class AttritionCapacity;
 class PHY_DirectFireData;
 class PHY_IndirectFireData;
 class PHY_IndirectFireDotationClass;
@@ -134,9 +135,9 @@ public:
     void     ApplyPopulationFire            ( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages );
     void     ApplyDirectFire                ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
     void     ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
-    void     ApplyExplosion                 ( const MIL_RealObjectType& objectType                                                      , PHY_FireDamages_Agent& fireDamages );
-    void     ApplyContamination             ( const MIL_NbcAgent& nbcAgent );
-    void     ApplyPoisonous                 ( const MIL_NbcAgent& nbcAgent );
+    void     ApplyExplosion                 ( const AttritionCapacity& capacity                                                         , PHY_FireDamages_Agent& fireDamages );
+    void     ApplyContamination             ( const MIL_ToxicEffectManipulator& contamination );
+    void     ApplyPoisonous                 ( const MIL_ToxicEffectManipulator& contamination );
     uint     GetNeutralizationTime          () const;
     void     ApplyHumansWounds              ( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );
     MT_Float GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rDistBtwFirerAndTarget ) const;
@@ -157,7 +158,7 @@ public:
       const PHY_ComposanteState&      GetState           () const;
             MT_Float                  GetMaxSpeed        () const;
             MT_Float                  GetMaxSpeed        ( const TerrainData& data ) const;
-            MT_Float                  GetMaxSpeed        ( const MIL_RealObject_ABC& object ) const;
+            MT_Float                  GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
             bool                      CanMove            () const;
             bool                      CanPerceive        () const;
             bool                      CanBeFired         () const;
@@ -171,23 +172,23 @@ public:
 
     //! @name Dotations
     //@{
-    const PHY_ConsumptionType&      GetConsumptionMode     ( const MIL_RealObjectType& objectType ) const;
+    const PHY_ConsumptionType&      GetConsumptionMode     ( const MIL_ObjectType_ABC& objectType ) const;
     const PHY_DotationConsumptions* GetDotationConsumptions( const PHY_ConsumptionType& consumptionMode ) const;
     //@}
 
     //! @name Objects
     //@{
-    bool CanConstruct( const MIL_RealObjectType& objectType ) const;
-    bool CanDestroy  ( const MIL_RealObjectType& objectType ) const;
-    bool CanMine     ( const MIL_RealObjectType& objectType ) const;
-    bool CanDemine   ( const MIL_RealObjectType& objectType ) const;
-    bool CanBypass   ( const MIL_RealObjectType& objectType, bool bObjectIsMined ) const;
+    bool CanConstruct( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanDestroy  ( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanMine     ( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanDemine   ( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanBypass   ( const MIL_ObjectType_ABC& objectType, bool bObjectIsMined ) const;
 
-    MT_Float GetConstructionTime( const MIL_RealObjectType& objectType, MT_Float rSizeCoef ) const;
-    MT_Float GetDestructionTime ( const MIL_RealObjectType& objectType, MT_Float rSizeCoef ) const;
-    MT_Float GetMiningTime      ( const MIL_RealObjectType& objectType ) const;
-    MT_Float GetDeminingTime    ( const MIL_RealObjectType& objectType ) const;
-    MT_Float GetBypassTime      ( const MIL_RealObjectType& objectType, MT_Float rSizeCoef, bool bObjectIsMined ) const;
+    MT_Float GetConstructionTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const;
+    MT_Float GetDestructionTime ( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const;
+    MT_Float GetMiningTime      ( const MIL_ObjectType_ABC& objectType ) const;
+    MT_Float GetDeminingTime    ( const MIL_ObjectType_ABC& objectType ) const;
+    MT_Float GetBypassTime      ( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef, bool bObjectIsMined ) const;
     //@}
 
     //! @name Load / unload / transport

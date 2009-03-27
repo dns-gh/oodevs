@@ -26,9 +26,10 @@
 #include "HLA_Activation.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include <hla/Deserializer.h>
 #include <hla/AttributeIdentifier.h>
 
@@ -142,20 +143,22 @@ void HLA_DistantObject::Deserialize( const AttributeIdentifier& attributeID, con
 // Name: HLA_DistantObject::InstanciateObject
 // Created: AGE 2004-11-30
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* HLA_DistantObject::InstanciateObject()
+MIL_Object_ABC* HLA_DistantObject::InstanciateObject()
 {
-    const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strObjectType_ );
-    if( !pType )
-        return 0;
     MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy_ );
     if( !pArmy )
         return 0;
     if( localisation_.GetType() == TER_Localisation::eNone )
         return 0;
-
-    MIL_RealObject_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( *pType , *pArmy, localisation_, strOption_, strExtra_, rConstructionPercentage_, rMiningPercentage_, rBypassPercentage_ );
+    MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( strObjectType_, *pArmy, localisation_ );
     if( pObject )
+    {
+        MIL_Object_ABC& object = *pObject;
+        object().Construct( rConstructionPercentage_ );
+        object().Mine( rMiningPercentage_ );
+        object().Bypass( rBypassPercentage_ );
         pObject->SetHLAView( *this );
+    }
     return pObject;
 }
 

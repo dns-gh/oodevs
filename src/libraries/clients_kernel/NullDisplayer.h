@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual void Hide();
+    virtual void Clear();
     //@}
 
 private:

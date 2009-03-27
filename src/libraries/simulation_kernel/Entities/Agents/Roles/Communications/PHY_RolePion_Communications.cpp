@@ -14,7 +14,7 @@
 #include "PHY_RolePion_Communications.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include <xeumeuleu/xml.h>
 
 
@@ -98,7 +98,7 @@ namespace boost
             file >> nNbr;
             while ( nNbr-- )
             {
-                MIL_RealObject_ABC* pObject;
+                MIL_Object_ABC* pObject;
                 file >> pObject;
                 set.insert( pObject );
             }
@@ -134,7 +134,7 @@ void PHY_RolePion_Communications::serialize( Archive& file, const uint )
 // Name: PHY_RolePion_Communications::Jam
 // Created: NLD 2004-11-04
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Communications::Jam( const MIL_RealObject_ABC& jammer )
+void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 {
     // UAC ...
     if( pPion_->IsAutonomous() ) 
@@ -146,7 +146,7 @@ void PHY_RolePion_Communications::Jam( const MIL_RealObject_ABC& jammer )
 // Name: PHY_RolePion_Communications::Unjam
 // Created: NLD 2004-11-04
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Communications::Unjam( const MIL_RealObject_ABC& jammer )
+void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
 {
     bHasChanged_ = ( jammers_.erase( &jammer ) == 1 );
 }

@@ -38,7 +38,7 @@ public:
 
     // Gen object
     static void GetGenObjectType             ( DIA_Call_ABC& call );
-    static void GetGenObjectObstacleType     ( DIA_Call_ABC& call );
+    static void GetGenObjectReservedObstacle ( DIA_Call_ABC& call );
     static void GetGenObjectLocalisation     ( DIA_Call_ABC& call );
     static void GetGenObjectDensity          ( DIA_Call_ABC& call );
     static void GetGenObjectPreliminaire     ( DIA_Call_ABC& call );

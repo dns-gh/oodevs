@@ -9,8 +9,10 @@
 
 #include "clients_kernel_pch.h"
 #include "ObjectType.h"
-#include <xeumeuleu/xml.h>
 #include "tools.h"
+
+#include <xeumeuleu/xml.h>
+#include <boost/shared_ptr.hpp>
 
 using namespace kernel;
 using namespace xml;
@@ -19,15 +21,15 @@ using namespace xml;
 // Name: ObjectType constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-ObjectType::ObjectType( xistream& xis, unsigned long id )
-    : id_( id )
+ObjectType::ObjectType( xistream& xis, const std::string& type )
+    : type_ ( type )    
+    , symbol_ ()
+    , canBeValorized_ ( false )
+    , canBeBypassed_ ( false )
 {
-    xis >> attribute( "type", type_ )
-        >> attribute( "can-be-maneuver-obstacle", canBeReservedObstacle_ )
-        >> attribute( "can-be-developed", canBeValorized_ )
-        >> attribute( "can-be-bypassed", canBeBypassed_ )
-        >> optional() >> attribute( "geometry", geometry_ );
-    name_ = tools::TranslateObjectType( type_ );
+    xis >> optional() >> attribute( "geometry", geometry_ )
+        >> optional() >> attribute( "symbol", symbol_ )
+        >> list( *this, &ObjectType::ReadCapacities );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,30 +42,102 @@ ObjectType::~ObjectType()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectType::ReadAttributes
+// Created: JCR 2008-06-10
+// -----------------------------------------------------------------------------
+void ObjectType::ReadCapacities( const std::string& capacity, xistream& xis )
+{
+    capacities_[ capacity ].reset( new xml::xibufferstream( xis ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectType::GetName
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-std::string ObjectType::GetName() const
+const std::string& ObjectType::GetName() const
 {
-    return name_;
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectType::GetType
 // Created: SBO 2008-03-20
 // -----------------------------------------------------------------------------
-std::string ObjectType::GetType() const
+const std::string& ObjectType::GetType() const
 {
     return type_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectType::GetId
-// Created: AGE 2008-03-14
+// Name: ObjectType::GetSymbol
+// Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-unsigned long ObjectType::GetId() const
+const std::string& ObjectType::GetSymbol() const
 {
-    return id_;
+    return symbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::CapacitiesBegin
+// Created: LDC 2009-03-17
+// -----------------------------------------------------------------------------
+ObjectType::CIT_Capacities ObjectType::CapacitiesBegin() const
+{
+    return capacities_.begin();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::CapacitiesEnd
+// Created: LDC 2009-03-17
+// -----------------------------------------------------------------------------
+ObjectType::CIT_Capacities ObjectType::CapacitiesEnd() const
+{
+    return capacities_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::FindCapacity
+// Created: LDC 2009-03-17
+// -----------------------------------------------------------------------------
+xml::xistream* ObjectType::FindCapacity( const std::string& capacity ) const
+{
+    CIT_Capacities it = capacities_.find( capacity );
+    if( it != capacities_.end() )
+        return it->second.get();
+    return 0;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::HasBuildableDensity
+// Created: LDC 2009-03-17
+// -----------------------------------------------------------------------------
+bool ObjectType::HasBuildableDensity() const
+{
+    xml::xistream* pXis = FindCapacity( "constructor" );
+    if( pXis )
+    {
+        xml::xistream& xis = *pXis;
+        if( xis.has_child( "buildable" ) && xis.has_attribute( "unit-type" ) )
+        {
+            std::string density;
+            xis >> xml::attribute( "unit-type", density );
+            xis >> xml::start( "buildable" );
+            bool hasResources = xis.has_child( "resoutces" );
+            xis >> xml::end();
+            return( hasResources && density == "density" );
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::HasLogistic
+// Created: LDC 2009-03-17
+// -----------------------------------------------------------------------------
+bool ObjectType::HasLogistic() const
+{
+    return( capacities_.find( "logistic" ) != capacities_.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +146,7 @@ unsigned long ObjectType::GetId() const
 // -----------------------------------------------------------------------------
 bool ObjectType::CanBeReservedObstacle() const
 {
-    return canBeReservedObstacle_;
+    return( capacities_.find( "activable" ) != capacities_.end() );
 }
 
 // -----------------------------------------------------------------------------

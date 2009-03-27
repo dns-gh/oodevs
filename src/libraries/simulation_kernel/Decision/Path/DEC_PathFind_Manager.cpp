@@ -14,7 +14,6 @@
 #include "DEC_PathFind_Manager.h"
 #include "DEC_Path_ABC.h"
 
-#include "Entities/Objects/MIL_RealObjectType.h"
 #include "DEC_PathType.h"
 #include "DEC_PathFactory.h"
 #include "Tools/MIL_Config.h"

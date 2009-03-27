@@ -31,7 +31,7 @@ namespace tools
     QString ToShortString( kernel::E_FuncLimaType nType );
 
     QString ToString( E_PopulationAttitude nType );
-    QString ToString( E_ObstacleType nType );
+    QString ToString( E_DemolitionTargetType nType );
     QString ToString( E_UnitPosture nType );
     QString ToString( E_OperationalStatus nType );
     QString ToString( E_ForceRatioStatus nType );
@@ -55,8 +55,7 @@ namespace tools
     const char* GetXmlSection( E_UnitPosture nPosture );
     const char* GetXmlSection( kernel::E_WeatherType nWeatherType );
     const char* GetXmlSection( kernel::E_LightingType nLightingType );
-
-    E_ObjectType            ObjectTypeFromString    ( const std::string& type );
+    
     E_DotationFamily        DotationFamilyFromString( const std::string& type );
     E_NatureLevel           NatureLevelFromString   ( const std::string& type );
     E_LocationType          LocationFromString      ( const std::string& type );

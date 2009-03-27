@@ -21,6 +21,7 @@
 class PHY_RolePion_Location;
 class MIL_AgentPion;
 class DEC_Knowledge_Object;
+class MIL_Object_ABC;
 
 // =============================================================================
 // @class  PHY_RoleAction_Moving
@@ -105,7 +106,7 @@ private:
     //! @name Speed management
     //@{
             MT_Float GetMaxSpeed              ( const TerrainData& environment ) const;
-            MT_Float GetMaxSpeed              ( const MIL_RealObject_ABC& object ) const;
+            MT_Float GetMaxSpeed              ( const MIL_Object_ABC& object ) const;
             MT_Float ApplyMaxSpeedModificators( MT_Float rSpeed ) const;
             MT_Float ApplySpeedModificators   ( MT_Float rSpeed ) const;
 

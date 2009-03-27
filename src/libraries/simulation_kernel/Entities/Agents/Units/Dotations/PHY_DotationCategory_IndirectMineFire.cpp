@@ -15,8 +15,9 @@
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_ZoneMineeParDispersion.h"
+
+//#include "Entities/Objects/MIL_ZoneMineeParDispersion.h"
+
 #include "simulation_terrain/TER_Localisation.h"
 #include <xeumeuleu/xml.h>
 
@@ -77,5 +78,5 @@ void PHY_DotationCategory_IndirectMineFire::ApplyEffect( const MIL_AgentPion& fi
     points.push_back( vTargetPosition + vRotatedFireDirection );
     const TER_Localisation localisation( TER_Localisation::eEllipse, points );
 
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectZoneeMineeParDispersion( firer.GetArmy(), localisation, nNbrMines );
+    // $$$$ TODO MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectZoneeMineeParDispersion( firer.GetArmy(), localisation, nNbrMines );
 }

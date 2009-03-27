@@ -15,9 +15,9 @@
 
 namespace tools
 {
-    E_PopulationAttitude PopulationAttitudeFromXml( const std::string& type );
-    E_ObstacleType       ObstacleTypeFromXml( const std::string& type );
-    std::string ToXml( E_ObstacleType type );
+    E_PopulationAttitude    PopulationAttitudeFromXml( const std::string& type );
+    E_DemolitionTargetType  DemolitionTargetTypeFromXml( const std::string& type );
+    std::string ToXml( E_DemolitionTargetType type );
     std::string ToXml( E_PopulationAttitude type );
 };
 

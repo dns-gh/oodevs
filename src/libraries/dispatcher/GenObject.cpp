@@ -32,9 +32,9 @@ GenObject::GenObject( const ASN1T_PlannedWork& asn )
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
 GenObject::GenObject()
-    : type_              ( EnumObjectType::abattis )
+    : type_              ( "" )
     , location_          ()
-    , typeObstacle_      ( EnumObstacleType::initial )
+    , typeObstacle_      ( EnumDemolitionTargetType::preliminary )
     , density_           ( 0. )
     , tc2_               ( 0 )
     , delaiActiviteMines_( 0 )
@@ -58,7 +58,7 @@ GenObject::~GenObject()
 // -----------------------------------------------------------------------------
 void GenObject::Send( ASN1T_PlannedWork& asn ) const
 {
-    asn.type           = type_;
+    asn.type           = type_.c_str();
     asn.type_obstacle  = typeObstacle_;
     asn.densite        = density_;
     asn.tc2            = tc2_;

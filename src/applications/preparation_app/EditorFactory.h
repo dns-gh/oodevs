@@ -49,7 +49,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< kernel::NBCAgent** >
                     , public tools::Caller< std::vector< kernel::NBCAgent* >* >
                     , public tools::Caller< Enum_PopulationAttitude* >
-                    , public tools::Caller< Enum_ObstacleType* >
+                    , public tools::Caller< Enum_DemolitionTargetType* >
                     , public tools::Caller< DotationsItem** >
                     , public tools::Caller< geometry::Point2f* >
 {
@@ -73,7 +73,7 @@ public:
     virtual void Call( kernel::NBCAgent** const& value );
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
     virtual void Call( Enum_PopulationAttitude* const& value );
-    virtual void Call( Enum_ObstacleType* const& value );
+    virtual void Call( Enum_DemolitionTargetType* const& value );
     virtual void Call( DotationsItem** const& value );
     virtual void Call( geometry::Point2f* const& value );
     //@}

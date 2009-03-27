@@ -10,12 +10,18 @@
 #include "gaming_pch.h"
 #include "ObjectFactory.h"
 #include "Object.h"
-#include "LogisticRouteAttributes.h"
-#include "NBCAttributes.h"
-#include "RotaAttributes.h"
-#include "CrossingSiteAttributes.h"
-#include "CampAttributes.h"
-#include "MineAttributes.h"
+#include "ConstructionAttribute.h"
+#include "BypassAttribute.h"
+#include "ObstacleAttribute.h"
+#include "MineAttribute.h"
+#include "SupplyRouteAttribute.h"
+#include "CrossingSiteAttribute.h"
+#include "LogisticAttribute.h"
+#include "ActivityTimeAttribute.h"
+#include "NBCAttribute.h"
+#include "FireAttribute.h"
+#include "MedicalTreatmentAttribute.h"
+#include "ToxicCloudAttribute.h"
 #include "Explosions.h"
 #include "Model.h"
 #include "TeamsModel.h"
@@ -56,43 +62,57 @@ ObjectFactory::~ObjectFactory()
 // -----------------------------------------------------------------------------
 Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
 {
-    Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, static_.objectTypes_, static_.objectTypes_ );
+    Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, static_.objectTypes_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     result->Attach< Positions >( *new ObjectPositions( static_.coordinateConverter_ ) );
     result->Attach< TacticalHierarchies >( *new ObjectHierarchies( *result, model_.teams_.GetTeam( message.team ) ) );
-    switch( message.type )
-    {
-    case EnumObjectType::camp_prisonniers:
-    case EnumObjectType::camp_refugies:
-        result->Attach< CampAttributes_ABC >( *new CampAttributes( controllers_.controller_, model_.agents_ ) );
-        result->Update( message );
-        break;
-    case EnumObjectType::itineraire_logistique:
-        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( controllers_.controller_ ) );
-        result->Update( message );
-        break;
-    case EnumObjectType::nuage_nbc:
-    case EnumObjectType::zone_nbc:
-        result->Attach< NBCAttributes_ABC >( *new NBCAttributes( controllers_.controller_, static_.objectTypes_ ) );
-        result->Update( message );
-        break;
-    case EnumObjectType::rota:
-        result->Attach< RotaAttributes_ABC >( *new RotaAttributes( controllers_.controller_, static_.objectTypes_ ) );
-        result->Update( message );
-        break;
-    case EnumObjectType::site_franchissement:
-        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( controllers_.controller_ ) );
-        result->Update( message );
-        break;
-    case EnumObjectType::bouchon_mines:
-    case EnumObjectType::zone_minee_lineaire:
-    case EnumObjectType::zone_minee_par_dispersion:
-        result->Attach< MineAttributes_ABC >( *new MineAttributes( controllers_.controller_, message.type != EnumObjectType::bouchon_mines ) );
-        result->Update( message );
-    default:
-        ;
-    };
+    
+    Register( *result, message.attributes );
+    
     result->Update( message );
     result->Polish();
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectFactory::Register
+// Created: JCR 2008-06-09
+// -----------------------------------------------------------------------------
+void ObjectFactory::Register( Object_ABC& result, const ASN1T_ObjectAttributes& attributes ) const
+{
+    if ( attributes.m.logisticPresent )
+        result.Attach< LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );    
+    
+    if ( attributes.m.constructionPresent )
+        result.Attach< ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_ ) );
+    
+    if ( attributes.m.minePresent )
+        result.Attach< MineAttribute_ABC >( *new MineAttribute( controllers_.controller_, static_.objectTypes_ ) );
+    
+    if ( attributes.m.bypassPresent )
+        result.Attach< BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_ ) );
+    
+    if ( attributes.m.obstaclePresent )
+        result.Attach< ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_ ) );
+    
+    if ( attributes.m.crossing_sitePresent )
+        result.Attach< CrossingSiteAttribute_ABC >( *new CrossingSiteAttribute( controllers_.controller_ ) );
+    
+    if ( attributes.m.supply_routePresent )
+        result.Attach< SupplyRouteAttribute_ABC >( *new SupplyRouteAttribute( controllers_.controller_ ) );    
+    
+    if ( attributes.m.nbcPresent )
+        result.Attach< NBCAttribute_ABC >( *new NBCAttribute( controllers_.controller_, static_.objectTypes_ ) );
+
+    if ( attributes.m.activity_timePresent )
+        result.Attach< ActivityTimeAttribute_ABC >( *new ActivityTimeAttribute( controllers_.controller_ ) );
+
+    if ( attributes.m.toxic_cloudPresent )
+        result.Attach< ToxicCloudAttribute_ABC >( *new ToxicCloudAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
+
+    if( attributes.m.firePresent )
+        result.Attach< FireAttribute_ABC >( *new FireAttribute( controllers_.controller_, static_.objectTypes_ ) );
+
+    if( attributes.m.medical_treatmentPresent )
+        result.Attach< MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
 }

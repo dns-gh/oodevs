@@ -26,12 +26,12 @@ namespace xml
 class MIL_Formation;
 class MIL_AutomateType;
 class MIL_AgentPion;
+class MIL_Army_ABC;
 class MIL_Army;
 class MIL_KnowledgeGroup;
 class MIL_Fuseau;
 class MIL_AutomateLOG;
-class MIL_CampPrisonniers;
-class MIL_CampRefugies;
+class MIL_Object_ABC;
 class MIL_AgentTypePion;
 class MIL_LimaFunction;
 class DEC_Knowledge_Agent;
@@ -95,7 +95,7 @@ public:
     //@{
           uint                              GetID            () const;
     const MIL_AutomateType&                 GetType          () const;
-          MIL_Army&                         GetArmy          () const;
+          MIL_Army_ABC&                     GetArmy          () const;
           MIL_KnowledgeGroup&               GetKnowledgeGroup() const;
           MIL_AutomateLOG*                  GetTC2           () const;
     const MIL_AutomateOrderManager&         GetOrderManager  () const;
@@ -145,14 +145,14 @@ public:
     const MIL_Army* GetArmySurrenderedTo() const;
           bool      NotifyCaptured      ( const MIL_AgentPion& pionTakingPrisoner );
           bool      NotifyReleased      ();
-          bool      NotifyImprisoned    ( const MIL_CampPrisonniers& camp );
+          bool      NotifyImprisoned    ( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Refugees $$$$ A revoir
     //@{
     void NotifyRefugeeOriented( const MIL_AgentPion& pionManaging );
     void NotifyRefugeeReleased();
-    void NotifyRefugeeReleased( const MIL_CampRefugies& camp );
+    void NotifyRefugeeReleased( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Network

@@ -54,7 +54,7 @@ Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     , nInstallationState_           ( 0 )
     , bNbcProtectionSuitEnabled_    ( false )
     , nbcAgentTypesContaminating_   ()
-    , nContaminationState_          ( 0 )
+    , contamination_                ()
     , bCommunicationJammed_         ( false )
     , bBlackoutEnabled_             ( false )
     , bRadarEnabled_                ( false )
@@ -169,8 +169,8 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
         for( unsigned int i = 0; i < asnMsg.contamine_par_agents_nbc.n; ++i )
             nbcAgentTypesContaminating_.push_back( asnMsg.contamine_par_agents_nbc.elem[ i ] );
     }
-
-    UPDATE_ASN_ATTRIBUTE( etat_contamination, nContaminationState_ );
+            
+    UPDATE_ASN_ATTRIBUTE( etat_contamination, contamination_ );
     UPDATE_ASN_ATTRIBUTE( communications_brouillees, bCommunicationJammed_ );
     UPDATE_ASN_ATTRIBUTE( silence_radio, bBlackoutEnabled_ );
     UPDATE_ASN_ATTRIBUTE( radar_actif, bRadarEnabled_ );
@@ -446,7 +446,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
                 asn().contamine_par_agents_nbc.elem[i++] = *it;
         }
 
-        asn().etat_contamination = nContaminationState_;
+        asn().etat_contamination = contamination_;
         asn().communications_brouillees = bCommunicationJammed_;
         asn().silence_radio = bBlackoutEnabled_;
         asn().radar_actif = bRadarEnabled_;

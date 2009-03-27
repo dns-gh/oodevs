@@ -13,7 +13,7 @@
 #include "NatureEditionCategory.h"
 
 #include "clients_kernel/SymbolRule.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace gui;
 using namespace xml;

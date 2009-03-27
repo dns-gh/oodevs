@@ -125,3 +125,13 @@ void GroupDisplayer::Hide()
 {
     hide();
 }
+
+// -----------------------------------------------------------------------------
+// Name: GroupDisplayer::Clear
+// Created: LDC 2009-03-18
+// -----------------------------------------------------------------------------
+void GroupDisplayer::Clear()
+{
+    for( IT_Items it = items_.begin(); it != items_.end(); ++it )
+        it->second->Clear();
+}

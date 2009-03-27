@@ -48,6 +48,11 @@ private:
     ObjectFactory& operator=( const ObjectFactory& ); //!< Assignement operator
     //@}
 
+    //! @name 
+    //@{
+    void Register( kernel::Object_ABC& result, const ASN1T_ObjectAttributes& attributes ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{

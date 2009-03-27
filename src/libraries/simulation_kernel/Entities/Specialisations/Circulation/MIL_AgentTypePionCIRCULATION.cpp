@@ -14,7 +14,7 @@
 #include "MIL_AgentTypePionCIRCULATION.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
-#include "xeumeuleu/xml.H"
+#include <xeumeuleu/xml.h>
 
 
 

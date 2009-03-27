@@ -21,17 +21,12 @@ namespace xml
     class xistream;
 }
 
-class MIL_Army;
-class MIL_RealObjectType;
+class MIL_Army_ABC;
 class TER_Localisation;
-class MIL_VirtualObject_ABC;
-class MIL_RealObject_ABC;
-class MIL_NbcAgentType;
-class MIL_ObstacleType;
-
-class MIL_ControlZone;
-class MIL_NuageNBC;
-class MIL_ZoneMineeParDispersion;
+class MIL_Object_ABC;
+class MIL_ObjectType_ABC;
+class MIL_ObjectBuilder_ABC;
+class MIL_ObjectFactory;
 
 // =============================================================================
 // @class  MIL_ObjectManager
@@ -58,13 +53,12 @@ public:
     void ProcessEvents();
     void UpdateStates ();
 
-    void                        CreateObject                       ( xml::xistream& xis, MIL_Army& army ); 
-    MIL_RealObject_ABC*         CreateObject                       ( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
-    MIL_RealObject_ABC*         CreateObject                       ( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
-    MIL_NuageNBC&               CreateObjectNuageNBC               ( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType );
-    MIL_ControlZone&            CreateObjectControlZone            ( MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius );
-    MIL_ZoneMineeParDispersion& CreateObjectZoneeMineeParDispersion( MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines );
-    MIL_RealObject_ABC*         FindRealObject                      ( uint nID ) const;
+    void             CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
+    MIL_Object_ABC*  CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
+    MIL_Object_ABC*  CreateObject( MIL_Army_ABC& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx, ASN1T_EnumDemolitionTargetType obstacleType );
+    MIL_Object_ABC*  CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
+    MIL_Object_ABC*             Find( uint nID ) const;
+    const MIL_ObjectType_ABC&   FindType( const std::string& type ) const;
     //@}
 
     //! @name Network
@@ -72,29 +66,31 @@ public:
     void OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx );
     //@}
 
+    //! @name 
+    //@{
+    void RegisterObject( MIL_Object_ABC& object );
+    //@}
+
 private:
     //! @name Types
     //@{
-    typedef std::map< uint, MIL_RealObject_ABC* > T_RealObjectMap;
-    typedef T_RealObjectMap::iterator             IT_RealObjectMap;
-    typedef T_RealObjectMap::const_iterator       CIT_RealObjectMap;
-
-    typedef std::vector< MIL_VirtualObject_ABC* > T_VirtualObjectVector;
-    typedef T_VirtualObjectVector::iterator       IT_VirtualObjectVector;
-    typedef T_VirtualObjectVector::const_iterator CIT_VirtualObjectVector;
+    typedef std::map< uint, MIL_Object_ABC* >   T_ObjectMap;
+    typedef T_ObjectMap::iterator               IT_ObjectMap;
+    typedef T_ObjectMap::const_iterator         CIT_ObjectMap;
     //@}
 
 private:
     //! @name Tools
     //@{
-    ASN1T_EnumObjectErrorCode CreateObject  ( const ASN1T_MagicActionCreateObject& asn );
-    void                      RegisterObject( MIL_VirtualObject_ABC& object );
-    void                      RegisterObject( MIL_RealObject_ABC& object    );
+    ASN1T_EnumObjectErrorCode CreateObject( const ASN1T_MagicActionCreateObject& asn );    
     //@}
 
 private:
-    T_RealObjectMap       realObjects_;
-    T_VirtualObjectVector virtualObjects_;
+    //! @name 
+    //@{
+    T_ObjectMap                         objects_;
+    std::auto_ptr< MIL_ObjectFactory >  builder_;
+    //@}
 };
 
 #include "MIL_ObjectManager.inl"

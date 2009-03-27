@@ -86,12 +86,12 @@ namespace
 
     
     // $$$$ SBO 2007-09-23: hard coded object list
-    unsigned int GetType( const std::string& type )
+    std::string GetType( const std::string& type )
     {
         if( type == "fire" )
-            return EnumObjectType::fire;
+            return "fire";
         if( type == "emergency shelter" )
-            return EnumObjectType::emergency_shelter;
+            return "emergency shelter";
         throw std::runtime_error( "unsupported object type" );
     }
 }
@@ -105,12 +105,9 @@ void ObjectListener::SendCreation( const Row_ABC& row )
     simulation::ObjectMagicAction asn;
     asn().action.t = T_MsgObjectMagicAction_action_create_object;
     ASN1T_MagicActionCreateObject*& creation = asn().action.u.create_object = new ASN1T_MagicActionCreateObject();
-    creation->m.namePresent = 0;
-    creation->m.obstacle_typePresent = 0;
-    creation->m.reserved_obstacle_activatedPresent = 0;
-    creation->m.specific_attributesPresent = 0;
     creation->team = 1; // $$$$ SBO 2007-09-23: Hard coded !!
-    creation->type = (ASN1T_EnumObjectType)GetType( boost::get< std::string >( row.GetField( "Info" ) ) );
+    creation->type = (ASN1VisibleString)GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str();
+    creation->name = "";
     GeometrySerializer serializer( creation->location );
     row.GetShape().Accept( serializer );
     asn.Send( publisher_ );

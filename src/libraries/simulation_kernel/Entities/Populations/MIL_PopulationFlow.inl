@@ -37,26 +37,6 @@ void MIL_PopulationFlow::NotifyMovingOnSpecialPoint( const DEC_PathPoint& /*poin
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::NotifyMovingInsideObject
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-//inline
-//void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& /*object*/ )
-//{
-    // NOTHING
-//}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::NotifyMovingOutsideObject
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-inline
-void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& /*object*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::NotifyEnvironmentChanged
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------

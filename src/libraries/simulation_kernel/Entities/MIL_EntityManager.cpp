@@ -15,6 +15,7 @@
 
 #include "Effects/MIL_EffectManager.h"
 #include "Objects/MIL_ObjectManager.h"
+#include "Objects/MIL_ObjectFactory.h"
 #include "Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Agents/Units/Categories/PHY_RoePopulation.h"
@@ -55,9 +56,11 @@
 #include "Agents/MIL_AgentPion.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
-#include "Objects/MIL_RealObjectType.h"
-#include "Objects/MIL_VirtualObjectType.h"
+
+#include "Objects/MIL_FireClass.h"
 #include "Objects/MIL_NbcAgentType.h"
+#include "Objects/MIL_MedicalTreatmentType.h"
+
 #include "Populations/MIL_PopulationType.h"
 #include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_Population.h"
@@ -69,12 +72,12 @@
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
 #include "Network/NET_ASN_Messages.h"
+#include "HLA/HLA_Federate.h"
 #include "Network/NET_AsnException.h"
 #include "MIL_Singletons.h"
-#include <hla/HLA_Federate.h>
 #include <xeumeuleu/xml.h>
 
-using namespace hla;
+
 
 BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
@@ -118,8 +121,7 @@ void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time
     InitializeType< PHY_Protection                 >( xis, config, "protections"         );
     InitializeType< PHY_DotationNature             >( xis, config, "dotation-natures"    );
     InitializeType< PHY_DotationType               >( xis, config, "dotations"           );
-    InitializeType< MIL_RealObjectType             >( xis, config, "objects"             );
-    InitializeType< MIL_VirtualObjectType          >( xis, config, "objects"             );
+    InitializeType< MIL_ObjectFactory              >( xis, config, "objects"             );
     InitializeType< PHY_BreakdownType              >( xis, config, "breakdowns"          );
     InitializeType< PHY_LauncherType               >( xis, config, "launchers"           );
     InitializeWeapons    ( xis, config, time, effects );
@@ -129,6 +131,8 @@ void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time
     InitializeType< MIL_AutomateType               >( xis, config, "automats"            );
     InitializeType< MIL_KnowledgeGroupType         >( xis, config, "knowledge-groups"    );
     InitializeType< MIL_NbcAgentType               >( xis, config, "nbc"                 );
+    InitializeType< MIL_FireClass                  >( xis, config, "fire"                );
+    InitializeType< MIL_MedicalTreatmentType       >( xis, config, "medical-treatment"   );
     InitializeType< PHY_SupplyResourcesAlarms      >( xis, config, "supply"              );   
     InitializeType< PHY_Convoy_ABC                 >( xis, config, "supply"              );
     InitializeType< PHY_MedicalResourcesAlarms     >( xis, config, "health"              );
@@ -136,7 +140,7 @@ void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time
     InitializeType< MIL_PopulationType             >( xis, config, "populations"         );
     InitializeMedical( xis, config );
 
-    xis >> xml::end(); // physical
+    xis >> xml::end(); // physical  
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +152,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , profilerManager_              ( profiler )
     , hla_                          ( hla )
     , effectManager_                ( effects )
-    , pObjectManager_               (  new MIL_ObjectManager() )
+    , pObjectManager_               ( new MIL_ObjectManager() )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0. )
     , rAutomatesDecisionTime_       ( 0. )
@@ -330,10 +334,10 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_WeaponType                ::Terminate();
     PHY_LauncherType              ::Terminate();
     PHY_DotationType              ::Terminate();
-    PHY_DotationNature            ::Terminate();
-    MIL_RealObjectType            ::Terminate();
-    MIL_VirtualObjectType         ::Terminate();
+    PHY_DotationNature            ::Terminate();    
     MIL_NbcAgentType              ::Terminate();
+    MIL_FireClass                 ::Terminate();
+    MIL_MedicalTreatmentType      ::Terminate();
     PHY_Protection                ::Terminate();
     PHY_Volume                    ::Terminate();
     PHY_HumanRank                 ::Terminate();
@@ -393,7 +397,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automates_  .size() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , pions_      .size() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
-
+    
     xis >> xml::end();
 
     // Check automate composition
@@ -613,7 +617,7 @@ MIL_Army* MIL_EntityManager::FindArmy( const std::string& strName ) const
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army& army )
+void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 {
     assert( pObjectManager_ );
     pObjectManager_->CreateObject( xis, army );
@@ -623,60 +627,59 @@ void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army& army )
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_EntityManager::CreateObject( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
+MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx, ASN1T_EnumDemolitionTargetType obstacleType )
 {
     assert( pObjectManager_ );
-    return pObjectManager_->CreateObject( army, obstacleType, diaParameters, nCurrentParamIdx );
+    return pObjectManager_->CreateObject( army, diaParameters, nCurrentParamIdx, obstacleType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateObject
+// Created: JCR 2008-06-03
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
+{
+    assert( pObjectManager_ );
+    return pObjectManager_->CreateObject( type, army, localisation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateObject
+// Created: JCR 2008-06-06
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder )
+{
+    return pObjectManager_->CreateObject( army, builder );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_EntityManager::CreateObject( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
-    assert( pObjectManager_ );
-    return pObjectManager_->CreateObject( type, army, localisation, strOption, strExtra, rCompletion, rMining, rBypass );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateObjectNuageNBC
-// Created: NLD 2006-10-23
-// -----------------------------------------------------------------------------
-MIL_NuageNBC& MIL_EntityManager::CreateObjectNuageNBC( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType )
-{
-    assert( pObjectManager_ );
-    return pObjectManager_->CreateObjectNuageNBC( army, localisation, nbcAgentType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateObjectZoneeMineeParDispersion
-// Created: NLD 2006-10-23
-// -----------------------------------------------------------------------------
-MIL_ZoneMineeParDispersion& MIL_EntityManager::CreateObjectZoneeMineeParDispersion( MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines )
-{
-    assert( pObjectManager_ );
-    return pObjectManager_->CreateObjectZoneeMineeParDispersion( army, localisation, nNbrMines );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateObjectControlZone
-// Created: NLD 2006-10-23
-// -----------------------------------------------------------------------------
-MIL_ControlZone& MIL_EntityManager::CreateObjectControlZone( MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius )
-{
-    assert( pObjectManager_ );
-    return pObjectManager_->CreateObjectControlZone( army, localisation, rRadius );
+    throw std::exception( "MIL_EntityManager::CreateObject not implemented" );    
+    // return pObjectManager_->CreateObject( type, army, localisation, strOption, strExtra, rCompletion, rMining, rBypass );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_EntityManager::FindObject( uint nID ) const
+MIL_Object_ABC* MIL_EntityManager::FindObject( uint nID ) const
 {
     assert( pObjectManager_ );
-    return pObjectManager_->FindRealObject( nID );
+    return pObjectManager_->Find( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindObjectType
+// Created: JCR 2008-06-03
+// -----------------------------------------------------------------------------
+const MIL_ObjectType_ABC& MIL_EntityManager::FindObjectType( const std::string& type ) const
+{
+    assert( pObjectManager_ );
+    return pObjectManager_->FindType( type );
 }
 
 // =============================================================================
@@ -710,7 +713,6 @@ void MIL_EntityManager::UpdateKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateDecisions()
 {
-    // $$$$ LDC: Automata are called before pawns in order to make sure all pawns receive orders from the automata on the same step.
     if( profilerManager_.IsProfilingEnabled() )
     {
         MT_Profiler decisionUpdateProfiler;
@@ -1109,7 +1111,6 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplom
     NET_ASN_MsgChangeDiplomacyAck ack;
     ack().oid_camp1   = asnMsg.oid_camp1;
     ack().oid_camp2   = asnMsg.oid_camp2;
-    ack().diplomatie  = asnMsg.diplomatie;
     ack().error_code  = EnumChangeDiplomacyErrorCode::no_error;
 
     try

@@ -19,8 +19,8 @@ namespace xml
     class xistream;
 }
 
-class MIL_RealObject_ABC;
-class MIL_RealObjectType;
+class MIL_Object_ABC;
+class MIL_ObjectType_ABC;
 class PHY_ConsumptionType;
 
 // =============================================================================
@@ -30,7 +30,7 @@ class PHY_ConsumptionType;
 class PHY_ComposanteTypeObjectData
 {
 public:
-     PHY_ComposanteTypeObjectData( const MIL_RealObjectType& objectType, xml::xistream& xis );
+     PHY_ComposanteTypeObjectData( const MIL_ObjectType_ABC& objectType, xml::xistream& xis );
     ~PHY_ComposanteTypeObjectData();
 
     //! @name Accessors
@@ -46,7 +46,7 @@ public:
     MT_Float GetMiningTime      () const;
     MT_Float GetDeminingTime    () const;
     MT_Float GetBypassTime      ( MT_Float rSizeCoef, bool bObjectIsMined ) const;
-    MT_Float GetMaxSpeed        ( const MIL_RealObject_ABC& object ) const;
+    MT_Float GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
 
     const PHY_ConsumptionType* GetConsumptionMode() const;
     //@}

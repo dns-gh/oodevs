@@ -28,9 +28,9 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
+#include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Effects/MIL_Effect_PopulationFire.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "MIL_AgentServer.h"
@@ -185,11 +185,11 @@ void MIL_PopulationElement_ABC::ApplyIndirectFire( const MT_Circle& attritionCir
 // Name: MIL_PopulationElement_ABC::ApplyExplosion
 // Created: NLD 2006-04-24
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::ApplyExplosion( const MIL_RealObjectType& objectType, PHY_FireResults_ABC& fireResult )
+void MIL_PopulationElement_ABC::ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult )
 {
-    const uint nNbrTarget = (uint)std::min( rNbrAliveHumans_, std::max( 1., rDensity_ * objectType.GetPopulationAttritionSurface() ) );
+    const uint nNbrTarget = (uint)std::min( rNbrAliveHumans_, std::max( 1., rDensity_ * capacity.GetAttritionSurface() ) );
 
-    const MT_Float rPH = objectType.GetPopulationAttritionPH();
+    const MT_Float rPH = capacity.GetAttritionPH();
     uint nHit = 0;
     for( uint i = 0; i < nNbrTarget; ++i )
         if( randomGenerator_.rand_oi() <= rPH )

@@ -24,7 +24,7 @@
 #include "Decision/Path/DEC_PathWalker.h"
 
 class MIL_Object_ABC;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_RC;
 class DEC_PathResult;
 class TerrainData;

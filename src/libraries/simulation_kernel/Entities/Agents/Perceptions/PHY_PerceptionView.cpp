@@ -10,7 +10,8 @@
 
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -172,9 +173,9 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Obje
 // Name: PHY_PerceptionView::Compute
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_RealObject_ABC& target ) const
+const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Object_ABC& target ) const
 {
-    if( !bIsEnabled_ || !target.CanBePerceived() )
+    if( !bIsEnabled_ || !target().CanBePerceived() )
         return PHY_PerceptionLevel::notSeen_;
 
     if( perceiver_.IsIdentified( target ) )
@@ -205,11 +206,8 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
     {
         for( TER_Object_ABC::CIT_ObjectVector itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
         {
-            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
-            if( !object.IsReal() )
-                continue;
-            MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
-            perceiver_.NotifyPerception( realObject, Compute( realObject ) );
+            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );            
+            perceiver_.NotifyPerception( object, Compute( object ) );
         }
     }
 }

@@ -56,11 +56,14 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
 
     if( !attritions_.empty() || pIndirectFireData_ )
     {
-        std::string strTmp;
-        xis >> xml::attribute( "type", strTmp );
-        pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( strTmp );
-        if( !pAmmoDotationClass_ )
-            xis.error( "Invalid ammo dotation class" );
+        std::string strTmp; // $$$$ Check validity
+        xis >> xml::optional() >> xml::attribute( "type", strTmp );
+        if ( strTmp != "" )
+        {
+            pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( strTmp );
+            if( !pAmmoDotationClass_ )
+                xis.error( "Invalid ammo dotation class" );
+        }
     }
     else
         pAmmoDotationClass_ = 0;

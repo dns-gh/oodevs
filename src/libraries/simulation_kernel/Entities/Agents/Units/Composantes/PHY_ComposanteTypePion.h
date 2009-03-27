@@ -38,8 +38,8 @@ class PHY_Posture;
 class PHY_Human;
 class PHY_DotationConsumptions;
 class PHY_DotationNature;
-class MIL_RealObjectType;
-class MIL_RealObject_ABC;
+class MIL_ObjectType_ABC;
+class MIL_Object_ABC;
 class PHY_RolePion_Dotations;
 class PHY_MaintenanceLevel;
 class PHY_Breakdown;
@@ -80,14 +80,14 @@ public:
     //@{
     const PHY_DotationCapacities&   GetDotationCapacities  () const;
     const PHY_DotationConsumptions* GetDotationConsumptions( const PHY_ConsumptionType& consumptionMode ) const;
-    const PHY_ConsumptionType&      GetConsumptionMode     ( const MIL_RealObjectType& objectType ) const;
+    const PHY_ConsumptionType&      GetConsumptionMode     ( const MIL_ObjectType_ABC& objectType ) const;
     //@}
 
     //! @name Accessors
     //@{
     MT_Float GetMaxSpeed           () const;
     MT_Float GetMaxSpeed           ( const TerrainData& data ) const;
-    MT_Float GetMaxSpeed           ( const MIL_RealObject_ABC& object ) const;
+    MT_Float GetMaxSpeed           ( const MIL_Object_ABC& object ) const;
     MT_Float GetSensorRotationAngle() const;
     MT_Float GetWeight             () const;
     MT_Float GetMaxSlope           () const;
@@ -107,17 +107,17 @@ public:
 
     //! @name Objects
     //@{
-    bool CanConstruct( const MIL_RealObjectType& objectType ) const;
-    bool CanDestroy  ( const MIL_RealObjectType& objectType ) const;
-    bool CanMine     ( const MIL_RealObjectType& objectType ) const;
-    bool CanDemine   ( const MIL_RealObjectType& objectType ) const;
-    bool CanBypass   ( const MIL_RealObjectType& objectType, bool bObjectIsMined ) const;
+    bool CanConstruct( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanDestroy  ( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanMine     ( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanDemine   ( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanBypass   ( const MIL_ObjectType_ABC& objectType, bool bObjectIsMined ) const;
 
-    MT_Float GetConstructionTime( const MIL_RealObjectType& objectType, MT_Float rSizeCoef ) const;
-    MT_Float GetDestructionTime ( const MIL_RealObjectType& objectType, MT_Float rSizeCoef ) const;
-    MT_Float GetMiningTime      ( const MIL_RealObjectType& objectType ) const;
-    MT_Float GetDeminingTime    ( const MIL_RealObjectType& objectType ) const;
-    MT_Float GetBypassTime      ( const MIL_RealObjectType& objectType, MT_Float rSizeCoef, bool bObjectIsMined ) const;
+    MT_Float GetConstructionTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const;
+    MT_Float GetDestructionTime ( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const;
+    MT_Float GetMiningTime      ( const MIL_ObjectType_ABC& objectType ) const;
+    MT_Float GetDeminingTime    ( const MIL_ObjectType_ABC& objectType ) const;
+    MT_Float GetBypassTime      ( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef, bool bObjectIsMined ) const;
     //@}
 
     //! @name Operations
@@ -200,8 +200,8 @@ private:
     typedef std::set< const PHY_RadarType* > T_RadarTypeSet;
     typedef T_RadarTypeSet::const_iterator   CIT_RadarTypeSet;
 
-    typedef std::vector< const PHY_ComposanteTypeObjectData* > T_ObjectDataVector;
-    typedef T_ObjectDataVector::const_iterator                 CIT_ObjectDataVector;
+    typedef std::vector< const PHY_ComposanteTypeObjectData* >  T_ObjectDataVector;
+    typedef T_ObjectDataVector::const_iterator                  CIT_ObjectDataVector;
 
     typedef std::vector< PHY_DotationConsumptions* >  T_ConsumptionVector;
     typedef T_ConsumptionVector::const_iterator       CIT_ConsumptionVector;

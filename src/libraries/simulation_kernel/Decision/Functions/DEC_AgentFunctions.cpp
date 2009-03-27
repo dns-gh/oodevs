@@ -38,13 +38,16 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
+
+#include "Entities/Objects/ActivableCapacity.h"
+
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
 #include "Tools/MIL_Tools.h"
 #include "DEC_AutomateFunctions.h"
@@ -290,12 +293,8 @@ void DEC_AgentFunctions::GetDirection( DIA_Call_ABC& call, const MIL_AgentPion& 
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::CanConstructObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
-    assert( pObjectType );
-    if( pObjectType )
-        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( *pObjectType ) );
-    else
-        call.GetResult().SetValue( false );
+    const std::string type( call.GetParameter( 0 ).ToString() );    
+    call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type ) );    
 }
 
 // -----------------------------------------------------------------------------
@@ -304,10 +303,9 @@ void DEC_AgentFunctions::CanConstructObject( DIA_Call_ABC& call, const MIL_Agent
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::CanBypassObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
-    assert( pObjectType );
-    if( pObjectType )
-        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( *pObjectType ) );
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    if( pKnowledge ) 
+        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( pKnowledge->GetType() ) );
     else
         call.GetResult().SetValue( false );
 }
@@ -318,10 +316,9 @@ void DEC_AgentFunctions::CanBypassObject( DIA_Call_ABC& call, const MIL_AgentPio
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::CanDestroyObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
-    assert( pObjectType );
-    if( pObjectType )
-        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( *pObjectType ) );
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    if( pKnowledge ) 
+        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( pKnowledge->GetType() ) );
     else
         call.GetResult().SetValue( false );
 }
@@ -332,10 +329,9 @@ void DEC_AgentFunctions::CanDestroyObject( DIA_Call_ABC& call, const MIL_AgentPi
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::CanMineObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
-    assert( pObjectType );
-        if( pObjectType )
-        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( *pObjectType ) );
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    if( pKnowledge ) 
+        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( pKnowledge->GetType() ) );
     else
         call.GetResult().SetValue( false );
 }
@@ -344,11 +340,11 @@ void DEC_AgentFunctions::CanMineObject( DIA_Call_ABC& call, const MIL_AgentPion&
 // Name: DEC_AgentFunctions::CanActivateObject
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::CanActivateObject( DIA_Call_ABC& call, const MIL_AgentPion& /*callerAgent*/ )
+void DEC_AgentFunctions::CanActivateObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
-    assert( pObjectType );
-    call.GetResult().SetValue( true );
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    call.GetResult().SetValue( pKnowledge != 0 && 
+                               pKnowledge->GetType().GetCapacity< ActivableCapacity >() );
 }
 
 //-----------------------------------------------------------------------------

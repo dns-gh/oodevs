@@ -18,7 +18,7 @@
 // Created: NLD 2004-03-26
 // -----------------------------------------------------------------------------
 inline
-void DEC_KS_ObjectInteraction::NotifyObjectInteraction( MIL_RealObject_ABC& object )
+void DEC_KS_ObjectInteraction::NotifyObjectInteraction( MIL_Object_ABC& object )
 {
     objectInteractions_.push_back( &object );    
 }
@@ -28,7 +28,7 @@ void DEC_KS_ObjectInteraction::NotifyObjectInteraction( MIL_RealObject_ABC& obje
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
 inline
-void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_RealObject_ABC& object, const MT_Vector2D& vPosition )
+void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition )
 {
     objectCollisions_.push_back( std::make_pair( &object, vPosition ) );
 }

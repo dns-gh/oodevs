@@ -40,8 +40,8 @@ public:
     //! @name Operations
     //@{
     virtual bool CanCommunicate() const;
-    virtual void Jam           ( const MIL_RealObject_ABC& jammer );
-    virtual void Unjam         ( const MIL_RealObject_ABC& jammer );
+    virtual void Jam           ( const MIL_Object_ABC& jammer );
+    virtual void Unjam         ( const MIL_Object_ABC& jammer );
     //@}
 
     //! @name Modifiers

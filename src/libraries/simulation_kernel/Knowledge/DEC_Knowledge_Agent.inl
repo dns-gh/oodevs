@@ -196,7 +196,7 @@ bool DEC_Knowledge_Agent::IsRefugeeManaged() const
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 inline
-const MIL_Army* DEC_Knowledge_Agent::GetArmy() const
+const MIL_Army_ABC* DEC_Knowledge_Agent::GetArmy() const
 {
     return dataRecognition_.GetArmy();
 }

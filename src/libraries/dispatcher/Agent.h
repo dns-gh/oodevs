@@ -113,7 +113,7 @@ public:
     unsigned int                  nInstallationState_;
     bool                          bNbcProtectionSuitEnabled_;
     std::vector< unsigned int >   nbcAgentTypesContaminating_;
-    unsigned int                  nContaminationState_;
+    ASN1T_ContaminationState      contamination_;
     bool                          bCommunicationJammed_;
     bool                          bBlackoutEnabled_;
     bool                          bRadarEnabled_;

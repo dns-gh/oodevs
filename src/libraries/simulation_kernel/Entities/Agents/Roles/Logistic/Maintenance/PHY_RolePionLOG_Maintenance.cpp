@@ -744,12 +744,3 @@ void PHY_RolePionLOG_Maintenance::SendChangedState() const
     if( bHasChanged_ || GetRole< PHY_RolePion_Composantes >().HasChanged() )
         SendFullState();
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Maintenance::HasChanged
-// Created: SBO 2008-12-15
-// -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Maintenance::HasChanged() const
-{
-    return bHasChanged_;
-}

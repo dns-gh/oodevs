@@ -13,20 +13,19 @@
 
 #include "PHY_ComposanteTypeObjectData.h"
 
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
 
-
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypeObjectData constructor
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_RealObjectType& objectType, xml::xistream& xis )
+PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_ObjectType_ABC& objectType, xml::xistream& xis )
     : rTimeBaseConstruction_      ( std::numeric_limits< MT_Float >::max() )
     , rTimeBaseDestruction_       ( std::numeric_limits< MT_Float >::max() )
     , rTimeConstructionCoef_      ( 1 )
@@ -34,8 +33,8 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_RealObject
     , rTimeMining_                ( std::numeric_limits< MT_Float >::max() )
     , rTimeDemining_              ( std::numeric_limits< MT_Float >::max() )
     , rCoefTimeBypass_            ( 1. )
-    , rSpeedWithinWhenNotBypassed_( objectType.GetDefaultSpeedWhenNotBypassed() )
-    , rSpeedWithinWhenBypassed_   ( objectType.GetDefaultSpeedWhenBypassed   () )
+//    , rSpeedWithinWhenNotBypassed_( objectType.GetDefaultSpeedWhenNotBypassed() )
+//    , rSpeedWithinWhenBypassed_   ( objectType.GetDefaultSpeedWhenBypassed   () )
     , pConsumptionMode_           ( 0 )
 {
     std::string strConsumptionMode = "";
@@ -77,10 +76,10 @@ PHY_ComposanteTypeObjectData::~PHY_ComposanteTypeObjectData()
 // Name: PHY_ComposanteTypeObjectData::GetMaxSpeed
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypeObjectData::GetMaxSpeed( const MIL_RealObject_ABC& object ) const
-{
-    if( object.IsBypassed() )
-        return rSpeedWithinWhenBypassed_;
+MT_Float PHY_ComposanteTypeObjectData::GetMaxSpeed( const MIL_Object_ABC& object ) const
+{    
+    if( object().IsBypassed() )
+        return rSpeedWithinWhenBypassed_; // object().GetDefaultSpeedWhenBypassed()
     else 
-        return rSpeedWithinWhenNotBypassed_;
+        return rSpeedWithinWhenNotBypassed_; // object().GetDefaultSpeedWhenBypassed()
 }

@@ -71,9 +71,10 @@ public:
           MIL_PionOrderManager&              GetOrderManager();
           DEC_RolePion_Decision&             GetDecision    (); //$$$ Dérolifier DEC_RolePion_Decision
     const DEC_RolePion_Decision&             GetDecision    () const; //$$$ Dérolifier DEC_RolePion_Decision
-    
-    virtual       MIL_Army&           GetArmy            () const;
+
+    virtual       MIL_Army_ABC&       GetArmy            () const;
                   MIL_KnowledgeGroup& GetKnowledgeGroup  () const;
+                  int                 GetNumberOfFireHoses( int bestExtinguisherAgent );
     virtual const MIL_Automate&       GetAutomate        () const;
     virtual       MIL_Automate&       GetAutomate        ();
     virtual const MIL_AgentTypePion&  GetType            () const;

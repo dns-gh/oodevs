@@ -290,19 +290,6 @@ public:
         T_ModificatorPostureInfos_Vector                          vModifStance_;
         PopulationInfos                                           populationInfos_;
 
-    public:
-        class Cmp : public std::unary_function< TargetInfos* , bool >
-        {
-        public:
-            Cmp(const E_ObjectType& val) : val_(val) {}
-            ~Cmp() {}
-
-            bool operator()( TargetInfos* tgtnfos ) const
-            {   return tgtnfos->ptrObject_.GetData() && tgtnfos->ptrObject_.GetData()->nObjectType_.GetData()==val_;}
-
-        private:
-            E_ObjectType val_;
-        };
     };   
 
     typedef ADN_Type_Vector_ABC<TargetInfos> T_TargetsInfos_Vector;

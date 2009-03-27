@@ -19,7 +19,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
@@ -233,38 +234,42 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
-    if( !object.IsReal() )
+    object.NotifyPopulationMovingInside( *this );
+
+    //$$$ DEUGUEU Cf. refactor gestion objets <-> population
+    if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &object )
         return;
 
-    MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
-    // $$$ POURRI
-    realObject.ApplyAttrition( *this );
-
-    //$$$ DEUGUEU Cf. refactor gestion objets<->population
-    if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &realObject )
+    const float density = object.GetAttribute< PopulationAttribute >().GetDensity();
+    if( density == std::numeric_limits< MT_Float >::max() )
         return;
 
-    if( realObject.GetExitingPopulationDensity() == std::numeric_limits< MT_Float >::max() )
-        return;
-
-    if( !pSplittingObject_ || realObject.GetExitingPopulationDensity() < pSplittingObject_->GetExitingPopulationDensity() )
-        pSplittingObject_ = &realObject;
+    if( !pSplittingObject_ || density < pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity() )
+        pSplittingObject_ = &object;
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::NotifyMovingOutsideObject
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
+{
+    object.NotifyPopulationMovingOutside( *this );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::GetSpeedWithReinforcement
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
 MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/, const MIL_Object_ABC& object ) const
 {
-    if( !object.IsReal() )
+    if( !CanObjectInteractWith( object ) )
+        return GetMaxSpeed();
+    
+    if( object.GetAttribute< PopulationAttribute >().GetDensity() == std::numeric_limits< MT_Float >::max() )
         return GetMaxSpeed();
 
-    const MIL_RealObject_ABC& realObject = static_cast< const MIL_RealObject_ABC& >( object );
-    if( realObject.GetExitingPopulationDensity() == std::numeric_limits< MT_Float >::max() )
-        return GetMaxSpeed();
-
-    if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &realObject )
+    if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &object )
         return GetMaxSpeed();
     return 0.; // First collision with 'splitting' object => stop the move (concentration will be created on collision point ...)
 }
@@ -275,7 +280,7 @@ MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*env
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::CanObjectInteractWith( const MIL_Object_ABC& object ) const
 {
-    return object.CanInteractWith( GetPopulation() );
+    return object.CanInteractWith( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -414,12 +419,16 @@ bool MIL_PopulationFlow::ManageObjectSplit()
     //pDestConcentration_->Move( destination_ ); $$ Auto next tick
 
     //$$$ TMP CRs - a changer apres refactor objets
-    const MIL_RealObject_ABC::T_AgentSet& animators = pSplittingObject_->GetAnimators();
-    for( MIL_RealObject_ABC::CIT_AgentSet it = animators.begin(); it != animators.end(); ++it )
+    
+    // $$$ TODO
+    /*{
+    const MIL_Object_ABC::T_AgentSet& animators = pSplittingObject_->GetAnimators();
+    for( MIL_Object_ABC::CIT_AgentSet it = animators.begin(); it != animators.end(); ++it )
         MIL_Report::PostEvent( **it, MIL_Report::eReport_InterventionAgainstPopulationStarted, GetAttitude().GetID() );            
     return true;
+    }*/
 
-/*
+    /*
     //$$$$$$$$$$$$$$$$$$$$$
     // $$$ TEST
     TER_ObjectManager::T_ObjectVector objects; 

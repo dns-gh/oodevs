@@ -18,7 +18,7 @@
 
 class DEC_Knowledge_ObjectPerception;
 class MIL_AgentPion;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  DEC_BlackBoard_CanContainKnowledgeObjectPerception
@@ -33,7 +33,7 @@ class DEC_BlackBoard_CanContainKnowledgeObjectPerception
 private:
     //! @name Types
     //@{
-    typedef std::map< const MIL_RealObject_ABC*, DEC_Knowledge_ObjectPerception* > T_KnowledgeObjectPerceptionMap;
+    typedef std::map< const MIL_Object_ABC*, DEC_Knowledge_ObjectPerception* > T_KnowledgeObjectPerceptionMap;
     typedef T_KnowledgeObjectPerceptionMap::iterator                               IT_KnowledgeObjectPerceptionMap;
     typedef T_KnowledgeObjectPerceptionMap::const_iterator                         CIT_KnowledgeObjectPerceptionMap;
     //@}
@@ -55,13 +55,13 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_ObjectPerception& CreateKnowledgeObjectPerception ( const MIL_AgentPion& agentPerceiving, MIL_RealObject_ABC& objectPerceived );
+    DEC_Knowledge_ObjectPerception& CreateKnowledgeObjectPerception ( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived );
     void                            DestroyKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& knowledge );
     //@}
 
     //! @name Queries
     //@{
-    DEC_Knowledge_ObjectPerception* GetKnowledgeObjectPerception( const MIL_RealObject_ABC& associatedObject ) const;
+    DEC_Knowledge_ObjectPerception* GetKnowledgeObjectPerception( const MIL_Object_ABC& associatedObject ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesObjectPerception( UnaryFunction fct ) const

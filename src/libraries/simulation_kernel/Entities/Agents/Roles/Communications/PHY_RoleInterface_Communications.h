@@ -16,7 +16,7 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Communications
@@ -42,8 +42,8 @@ public:
     //! @name Operations
     //@{
     virtual bool CanCommunicate() const = 0;
-    virtual void Jam           ( const MIL_RealObject_ABC& jammer ) = 0;
-    virtual void Unjam         ( const MIL_RealObject_ABC& jammer ) = 0;
+    virtual void Jam           ( const MIL_Object_ABC& jammer ) = 0;
+    virtual void Unjam         ( const MIL_Object_ABC& jammer ) = 0;
     //@}
 };
 

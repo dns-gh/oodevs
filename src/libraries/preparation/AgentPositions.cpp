@@ -20,7 +20,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "Tools.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace geometry;
 using namespace kernel;

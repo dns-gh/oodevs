@@ -30,51 +30,11 @@ bool MIL_Object_ABC::IsReadyForDeletion() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::ProcessAgentEntering
-// Created: NLD 2004-04-29
-// -----------------------------------------------------------------------------
-inline
-void MIL_Object_ABC::ProcessAgentEntering( MIL_Agent_ABC& /*agent*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::ProcessAgentExiting
-// Created: NLD 2004-04-29
-// -----------------------------------------------------------------------------
-inline
-void MIL_Object_ABC::ProcessAgentExiting( MIL_Agent_ABC& /*agent*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::ProcessAgentMovingInside
-// Created: NLD 2004-04-29
-// -----------------------------------------------------------------------------
-inline
-void MIL_Object_ABC::ProcessAgentMovingInside( MIL_Agent_ABC& /*agent*/ )
-{
-    // NOTHING   
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::ProcessAgentInside
-// Created: NLD 2004-04-29
-// -----------------------------------------------------------------------------
-inline
-void MIL_Object_ABC::ProcessAgentInside( MIL_Agent_ABC& /*agent*/ )
-{
-    // NOTHING    
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::GetArmy
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-const MIL_Army& MIL_Object_ABC::GetArmy() const
+const MIL_Army_ABC& MIL_Object_ABC::GetArmy() const
 {
     assert( pArmy_ );
     return *pArmy_;
@@ -85,18 +45,38 @@ const MIL_Army& MIL_Object_ABC::GetArmy() const
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-MIL_Army& MIL_Object_ABC::GetArmy()
+MIL_Army_ABC& MIL_Object_ABC::GetArmy()
 {
     assert( pArmy_ );
     return *pArmy_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::GetAgentsInside
-// Created: NLD 2004-10-27
+// Name: template< typename Extension > Extension& MIL_Object_ABC::GetAttribute
+// Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
-inline
-const MIL_Object_ABC::T_AgentSet& MIL_Object_ABC::GetAgentsInside() const
+template< typename Extension > 
+const Extension& MIL_Object_ABC::GetAttribute() const 
 {
-    return agentInsideSet_;
+    return tools::Extendable< ObjectAttribute_ABC >::Get< Extension >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename Extension > Extension& MIL_Object_ABC::RetrieveAttribute
+// Created: LDC 2009-03-25
+// -----------------------------------------------------------------------------
+template< typename Extension > 
+Extension* MIL_Object_ABC::RetrieveAttribute() 
+{
+    return tools::Extendable< ObjectAttribute_ABC >::Retrieve< Extension >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T> void MIL_Object_ABC::ProcessAgentsInside
+// Created: JCR 2008-08-28
+// -----------------------------------------------------------------------------
+template< typename Functor > 
+void MIL_Object_ABC::ProcessAgentsInside( Functor& functor ) const
+{
+    interaction_.ProcessInteraction( functor );
 }

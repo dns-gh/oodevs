@@ -17,7 +17,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_AgentPion;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_AgentPion;
 class DEC_Knowledge_ObjectCollision;
 
@@ -48,8 +48,8 @@ public:
 
     //! @name Events
     //@{
-    void NotifyObjectInteraction( MIL_RealObject_ABC& object );
-    void NotifyObjectCollision  ( MIL_RealObject_ABC& object, const MT_Vector2D& vPosition );
+    void NotifyObjectInteraction( MIL_Object_ABC& object );
+    void NotifyObjectCollision  ( MIL_Object_ABC& object, const MT_Vector2D& vPosition );
     //@}
 
     //! @name CheckPoints
@@ -60,10 +60,10 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_RealObject_ABC* > T_ObjectVector;
+    typedef std::vector< MIL_Object_ABC* > T_ObjectVector;
     typedef T_ObjectVector::const_iterator     CIT_ObjectVector;
 
-    typedef std::pair< MIL_RealObject_ABC*, MT_Vector2D > T_ObjectCollisionPair;
+    typedef std::pair< MIL_Object_ABC*, MT_Vector2D > T_ObjectCollisionPair;
     typedef std::vector< T_ObjectCollisionPair >          T_ObjectCollisionVector;
     typedef T_ObjectCollisionVector::const_iterator       CIT_ObjectCollisionVector;
     //@}
@@ -71,8 +71,8 @@ private:
 private:
     //! @name Accessors
     //@{
-    DEC_Knowledge_ObjectPerception& GetKnowledgeObjectPerception( MIL_RealObject_ABC& object ) const;
-    DEC_Knowledge_ObjectCollision&  GetKnowledgeObjectCollision ( MIL_RealObject_ABC& object ) const;
+    DEC_Knowledge_ObjectPerception& GetKnowledgeObjectPerception( MIL_Object_ABC& object ) const;
+    DEC_Knowledge_ObjectCollision&  GetKnowledgeObjectCollision ( MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Tools

@@ -610,7 +610,7 @@ void DEC_Knowledge_Agent::DegradeDangerosity( MT_Float& rDangerosity ) const
 MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_AgentPion& target ) const
 {
     if(     *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_ 
-        ||  target.GetArmy().IsAFriend( *this ) == eTristate_True 
+        ||  IsAFriend( target.GetArmy() ) == eTristate_True 
         ||  dataDetection_.IsSurrendered() )
         return 0.;
 
@@ -848,4 +848,28 @@ bool DEC_Knowledge_Agent::IsTerrorist() const
 {
     assert( pAgentKnown_ );
     return pAgentKnown_->GetType().IsTerrorist();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsAnEnemy
+// Created: LDC 2009-03-06
+// -----------------------------------------------------------------------------
+E_Tristate DEC_Knowledge_Agent::IsAnEnemy( const MIL_Army_ABC& army ) const
+{
+    const MIL_Army_ABC* pArmy = GetArmy();
+    if( !pArmy )
+        return eTristate_DontKnow;
+    return army.IsAnEnemy( *pArmy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsAFriend
+// Created: LDC 2009-03-06
+// -----------------------------------------------------------------------------
+E_Tristate DEC_Knowledge_Agent::IsAFriend( const MIL_Army_ABC& army ) const
+{
+    const MIL_Army_ABC* pArmy = GetArmy();
+    if( !pArmy )
+        return eTristate_DontKnow;
+    return army.IsAFriend( *pArmy );
 }

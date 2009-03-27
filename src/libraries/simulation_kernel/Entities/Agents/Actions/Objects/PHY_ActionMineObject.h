@@ -17,7 +17,7 @@
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Objects;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_AgentPion;
 
 // =============================================================================

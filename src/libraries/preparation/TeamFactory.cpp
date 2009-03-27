@@ -20,12 +20,21 @@
 #include "TeamCommunications.h"
 #include "Object.h"
 #include "ObjectPositions.h"
-#include "LogisticRouteAttributes.h"
-#include "NBCAttributes.h"
-#include "RotaAttributes.h"
-#include "CrossingSiteAttributes.h"
-#include "CampAttributes.h"
-#include "MineAttributes.h"
+
+#include "ActivityTimeAttribute.h"
+#include "BypassAttribute.h"
+#include "ConstructionAttribute.h"
+#include "CrossingSiteAttribute.h"
+#include "FireAttribute.h"
+#include "InputToxicCloudAttribute.h"
+#include "LogisticAttribute.h"
+#include "MedicalTreatmentAttribute.h"
+#include "MineAttribute.h"
+#include "NBCAttribute.h"
+#include "ObstacleAttribute.h"
+#include "SupplyRouteAttribute.h"
+
+#include "ObjectAttributesContainer.h"
 #include "ObjectHierarchies.h"
 #include "Populations.h"
 #include "EntityIntelligences.h"
@@ -33,8 +42,80 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/AgentTypes.h"
+#include "ObjectAttributeFactory_ABC.h"
+#include <xeumeuleu/xml.h>
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 using namespace kernel;
+
+namespace
+{
+    // -----------------------------------------------------------------------------
+    // Name: AttributeFactory
+    // Created: JCR 2008-05-22
+    // -----------------------------------------------------------------------------
+    class AttributeFactory : public ObjectAttributeFactory_ABC
+    {
+    public:
+        //! @name Types
+        //@{
+        typedef boost::function3< void, tools::SortedInterfaceContainer< Extension_ABC >&, kernel::PropertiesDictionary&, xml::xistream& > T_CallBack;
+        //@}
+
+    public:
+        AttributeFactory() {}
+        virtual ~AttributeFactory() {}
+        
+        void Register( const std::string& attribute, const T_CallBack& callback )
+        {
+            if ( ! callbacks_.insert( std::make_pair( attribute, callback ) ).second )
+		        throw std::invalid_argument( "capacity '" + attribute + "' already registered." );
+        }
+        
+        void Create( const std::string& attribute, tools::SortedInterfaceContainer< Extension_ABC >& result, PropertiesDictionary& dico, xml::xistream& xis )
+        {
+	        const CIT_Callbacks it = callbacks_.find( attribute );
+	        if ( it != callbacks_.end() )
+                it->second( result, dico, xis );
+        }
+
+    private:    
+	    //! @name Type
+        //@{
+	    typedef std::map< std::string, T_CallBack > T_CallBacks;
+        typedef T_CallBacks::const_iterator         CIT_Callbacks;
+        //@}
+
+    private:
+        T_CallBacks callbacks_;
+    };
+
+    template< typename I >
+    struct AttributeBuilder
+    {
+        template< typename T >
+        static void Attach( tools::SortedInterfaceContainer< Extension_ABC >& result, PropertiesDictionary& dico, xml::xistream& xis )
+        {
+            result.Register( *new T( xis, dico ) );
+        }
+        
+        template< typename T, typename Helper >
+        static void Attach2( tools::SortedInterfaceContainer< Extension_ABC >& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
+        {
+            result.Register( *new T( xis, helper, dico ) );
+        }
+    };
+}
+
+#define BIND_ATTACH_ATTRIBUTE( CLASS, P1, P2, P3 ) \
+    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS >, P1, P2, P3 )
+
+#define BIND_ATTACH_ATTRIBUTE_HELPER( CLASS, HELPER, P1, P2, P3, P4 ) \
+    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach2< CLASS, kernel::Resolver_ABC< HELPER > >, P1, P2, P3, P4 )
+
+#define BIND_ATTACH_ATTRIBUTE_STRING_HELPER( CLASS, HELPER, P1, P2, P3, P4 ) \
+    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach2< CLASS, kernel::Resolver_ABC< HELPER, std::string > >, P1, P2, P3, P4 )
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor
@@ -45,7 +126,8 @@ TeamFactory::TeamFactory( Controllers& controllers, Model& model, const StaticMo
     , model_( model )
     , staticModel_( staticModel )
     , idManager_( idManager )
-{
+    , factory_    ( )
+{ 
     // NOTHING
 }
 
@@ -56,6 +138,31 @@ TeamFactory::TeamFactory( Controllers& controllers, Model& model, const StaticMo
 TeamFactory::~TeamFactory()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamFactory::Initialize
+// Created: JCR 2008-06-30
+// -----------------------------------------------------------------------------
+void TeamFactory::Initialize()
+{
+    AttributeFactory* factory = new AttributeFactory();
+    // Register capacity
+    factory->Register( "activity-time"      , BIND_ATTACH_ATTRIBUTE( ActivityTimeAttribute, _1, _2, _3 ) );
+    factory->Register( "bypass"             , BIND_ATTACH_ATTRIBUTE( BypassAttribute, _1, _2, _3 ) );
+    factory->Register( "construction"       , BIND_ATTACH_ATTRIBUTE( ConstructionAttribute, _1, _2, _3 ) );
+    factory->Register( "crossing-site"      , BIND_ATTACH_ATTRIBUTE( CrossingSiteAttribute, _1, _2, _3 ) );    
+    factory->Register( "fire-class"         , BIND_ATTACH_ATTRIBUTE_STRING_HELPER( FireAttribute, kernel::FireClass, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
+    factory->Register( "input-toxic-cloud"  , 
+                       boost::bind( &AttributeBuilder< ToxicCloudAttribute_ABC >::Attach< InputToxicCloudAttribute >, _1, _2, _3 ) );
+    factory->Register( "medical-treatment"  , BIND_ATTACH_ATTRIBUTE_STRING_HELPER( MedicalTreatmentAttribute, kernel::MedicalTreatmentType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );    
+    factory->Register( "mine"               , BIND_ATTACH_ATTRIBUTE( MineAttribute, _1, _2, _3 ) );
+    factory->Register( "nbc-agents"         , BIND_ATTACH_ATTRIBUTE_STRING_HELPER( NBCAttribute, kernel::NBCAgent, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );    
+    factory->Register( "obstacle"           , BIND_ATTACH_ATTRIBUTE( ObstacleAttribute, _1, _2, _3 ) );
+    factory->Register( "supply-route"       , BIND_ATTACH_ATTRIBUTE( SupplyRouteAttribute, _1, _2, _3 ) );
+    factory->Register( "tc2"                , BIND_ATTACH_ATTRIBUTE_HELPER( LogisticAttribute, kernel::Automat_ABC, _1, _2, boost::cref( model_.agents_ ), _3 ) );
+    
+    factory_.reset( factory );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,40 +227,15 @@ kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( xml::xistream& xi
 // Name: TeamFactory::CreateObject
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, const Enum_ObstacleType& obstacleType, bool reservedObstacleActivated, const kernel::Location_ABC& location )
+kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, const kernel::Location_ABC& location )
 {
-    Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, obstacleType, reservedObstacleActivated, idManager_ );
+    Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( staticModel_.coordinateConverter_, location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( *result, &team ) );
-    
-    switch( type.id_ )
-    {
-    case eObjectType_CampPrisonniers:
-    case eObjectType_CampRefugies:
-        result->Attach< CampAttributes_ABC >( *new CampAttributes( dico ) );
-        break;
-    case eObjectType_ItineraireLogistique:
-        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( dico ) );
-        break;
-    case eObjectType_NuageNbc:
-    case eObjectType_ZoneNbc:
-        result->Attach< NBCAttributes_ABC >( *new NBCAttributes( dico ) );
-        break;
-    case eObjectType_Rota:
-        result->Attach< RotaAttributes_ABC >( *new RotaAttributes( dico ) );
-        break;
-    case eObjectType_SiteFranchissement:
-        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( dico ) );
-        break;
-    case eObjectType_BouchonMines:
-    case eObjectType_ZoneMineeLineaire:
-    case eObjectType_ZoneMineeParDispersion:
-        result->Attach< MineAttributes_ABC >( *new MineAttributes( dico ) );
-        break;
-    default:
-        break;
-    };
+    ObjectAttributesContainer& attributes = *new ObjectAttributesContainer();
+    result->Attach< ObjectAttributesContainer >( attributes );
+    // Attributes are commited by ObjectPrototype
     result->Polish();
     return result;
 }
@@ -168,33 +250,24 @@ kernel::Object_ABC* TeamFactory::CreateObject( xml::xistream& xis, kernel::Team_
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( xis, staticModel_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( *result, &team ) );
-    switch( result->GetType().id_ )
-    {
-    case eObjectType_CampPrisonniers:
-    case eObjectType_CampRefugies:
-        result->Attach< CampAttributes_ABC >( *new CampAttributes( xis, model_.agents_, dico ) );
-        break;
-    case eObjectType_ItineraireLogistique:
-        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( xis, dico ) );
-        break;
-    case eObjectType_NuageNbc:
-    case eObjectType_ZoneNbc:
-        result->Attach< NBCAttributes_ABC >( *new NBCAttributes( xis, staticModel_.objectTypes_, dico ) );
-        break;
-    case eObjectType_Rota:
-        result->Attach< RotaAttributes_ABC >( *new RotaAttributes( xis, staticModel_.objectTypes_, dico ) );
-        break;
-    case eObjectType_SiteFranchissement:
-        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( xis, dico ) );
-        break;
-    case eObjectType_BouchonMines:
-    case eObjectType_ZoneMineeLineaire:
-    case eObjectType_ZoneMineeParDispersion:
-        result->Attach< MineAttributes_ABC >( *new MineAttributes( xis, dico ) );
-        break;
-    default:
-        break;
-    };
+    
+    ObjectAttributesContainer& attributes = *new ObjectAttributesContainer();
+    result->Attach< ObjectAttributesContainer >( attributes );
+    xis >> xml::start( "attributes" )
+            >> xml::list( *this, &TeamFactory::ReadAttributes, attributes, dico )
+        >> xml::end();
+
     result->Polish();
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamFactory::ReadAttributes
+// Created: JCR 2008-06-10
+// -----------------------------------------------------------------------------
+void TeamFactory::ReadAttributes( const std::string& attr, xml::xistream& xis, tools::SortedInterfaceContainer< Extension_ABC >& result, PropertiesDictionary& dico )
+{
+    if( ! factory_.get() )
+        Initialize();
+    factory_->Create( attr, result, dico, xis );
 }

@@ -32,11 +32,10 @@
 // =============================================================================
 class HLA_UpdateFunctor
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             HLA_UpdateFunctor( hla::UpdateFunctor_ABC& functor, bool bUpdateAll );
+            HLA_UpdateFunctor( hla::UpdateFunctor_ABC& functor, bool bUpdateAll );
     virtual ~HLA_UpdateFunctor();
     //@}
 

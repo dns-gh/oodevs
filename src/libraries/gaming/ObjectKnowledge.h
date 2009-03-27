@@ -47,13 +47,14 @@ public:
              ObjectKnowledge( const kernel::Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message,
                               kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                               const kernel::Resolver_ABC< kernel::Object_ABC >& objectResolver,
-                              const kernel::Resolver_ABC< kernel::ObjectType >& typeResolver );
+                              const kernel::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
     virtual ~ObjectKnowledge();
     //@}
 
     //! @name Operations
     //@{
     virtual QString GetName() const;
+    virtual QString GetTypeName() const;
     virtual const kernel::Object_ABC* GetEntity() const;
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::Team_ABC&   GetOwner() const;
@@ -88,12 +89,12 @@ private:
     std::string position_;
     kernel::Object_ABC* pRealObject_;
 
-    kernel::OptionalValue< unsigned int >   nConstructionPercentage_;
-    kernel::OptionalValue< unsigned int >   nValorizationPercentage_;
-    kernel::OptionalValue< unsigned int >   nBypassConstructionPercentage_;
+//    kernel::OptionalValue< unsigned int >   nConstructionPercentage_;
+//    kernel::OptionalValue< unsigned int >   nValorizationPercentage_;
+//    kernel::OptionalValue< unsigned int >   nBypassConstructionPercentage_;
     kernel::OptionalValue< bool >           bIsPerceived_;
-    kernel::OptionalValue< E_ObstacleType > obstacleType_;
-    kernel::OptionalValue< bool           > reservedObstacleActivated_;
+//    kernel::OptionalValue< E_DemolitionTargetType > obstacleType_;
+//    kernel::OptionalValue< bool >           reservedObstacleActivated_;
     kernel::OptionalValue< uint >           nRelevance_;
     // $$$$ NLD 2007-05-23: Manque les dotations
     //@}

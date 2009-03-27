@@ -230,9 +230,9 @@ void DEC_KnowledgeFunctions::GetRapForGlobal( DIA_Call_ABC& call, const MIL_Auto
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeFunctions::GetClosestObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 0 );
+    MIL_ObjectFilter filter( call.GetParameters(), 0 );
     
-    DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), objectsFilter );
+    DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), filter );
     call.GetResult().SetValue( (void*)( pKnowledge ? pKnowledge->GetID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
 }
 
@@ -242,9 +242,9 @@ void DEC_KnowledgeFunctions::GetClosestObject( DIA_Call_ABC& call, const MIL_Age
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeFunctions::GetClosestFriendObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 0 );
+    MIL_ObjectFilter filter( call.GetParameters(), 0 );
     
-    DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), objectsFilter );
+    DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), filter );
     call.GetResult().SetValue( (void*)( pKnowledge ? pKnowledge->GetID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
 }
 

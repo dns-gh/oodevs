@@ -16,7 +16,7 @@
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
 class MIL_Agent_ABC;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 
@@ -42,7 +42,7 @@ public:
 
     virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
-    virtual const PHY_PerceptionLevel& Compute( const MIL_RealObject_ABC&   object    ) const;
+    virtual const PHY_PerceptionLevel& Compute( const MIL_Object_ABC&   object ) const;
 
     virtual void                       Execute( const TER_PopulationFlow_ABC::T_PopulationFlowVector& perceivableFlows );
 

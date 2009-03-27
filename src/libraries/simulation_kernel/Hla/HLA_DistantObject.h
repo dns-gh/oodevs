@@ -23,7 +23,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include <hla/ObjectIdentifier.h>
 
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class HLA_InteractionManager_ABC;
 
 // =============================================================================
@@ -74,7 +74,7 @@ private:
 
     //! @name Helpers
     //@{
-    MIL_RealObject_ABC* InstanciateObject();
+    MIL_Object_ABC* InstanciateObject();
     void DeserializeAttribute( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}
 
@@ -86,7 +86,7 @@ private:
     std::string strOption_;
     std::string strExtra_;
     TER_Localisation localisation_;
-    MIL_RealObject_ABC* pObject_;
+    MIL_Object_ABC* pObject_;
     double rConstructionPercentage_;
     double rMiningPercentage_;
     double rBypassPercentage_;

@@ -127,7 +127,8 @@ void DEC_KnowledgePopulationFunctions::IsEnemy( DIA_Call_ABC& call, const MIL_Ag
     }
     
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( caller.GetArmy().IsAnEnemy( *pKnowledge ) );
+    
+    call.GetResult().SetValue( caller.GetArmy().IsAnEnemy( pKnowledge->GetArmy() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -105,7 +105,16 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::Update( const MIL_Agent_ABC& 
     const PHY_RoleInterface_Composantes& roleComposantes = agentPerceived.GetRole< PHY_RoleInterface_Composantes >();
     rOperationalState_      =  roleComposantes.GetOperationalState     ();
     rMajorOperationalState_ =  roleComposantes.GetMajorOperationalState();
-    pArmy_                  = &agentPerceived.GetArmy();
+    pArmy_                  = dynamic_cast< const MIL_Army* >( &agentPerceived.GetArmy() );
     bIsPC_                  =  agentPerceived.IsPC();
     pAgentType_             = &agentPerceived.GetType();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetArmy
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+const MIL_Army_ABC* DEC_Knowledge_AgentPerceptionDataRecognition::GetArmy() const
+{
+    return pArmy_;
 }

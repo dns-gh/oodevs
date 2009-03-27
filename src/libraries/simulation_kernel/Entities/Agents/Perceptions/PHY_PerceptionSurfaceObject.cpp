@@ -78,7 +78,7 @@ void PHY_PerceptionSurfaceObject::save( MIL_CheckPointOutArchive& file, const ui
 // Name: PHY_PerceptionSurfaceObject::ComputePerception
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionSurfaceObject::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_RealObject_ABC& target ) const
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceObject::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_Object_ABC& target ) const
 {
     return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
 }

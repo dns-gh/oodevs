@@ -61,9 +61,12 @@ ObjectSymbols::~ObjectSymbols()
 
 namespace
 {
-    std::string MakeSymbol( const ASN1T_EnumObjectType& type )
+    std::string MakeSymbol( const std::string& /*type*/ )
+//    std::string MakeSymbol( const ASN1T_EnumObjectType& type )
     {
         std::string symbol( "G*MP********--X" );
+    // TODO
+    /*{
         switch( type )
         {
         case EnumObjectType::abattis:
@@ -98,6 +101,7 @@ namespace
             tools::app6::SetFunction( symbol, "OESS--" ); // 'O'bject 'E'mergency 'S'afety 'S'helter
             break;
         }
+    }*/
         return symbol;
     }
 }
@@ -108,7 +112,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::string ObjectSymbols::BuildSymbol( bool up /*= true*/ ) const
 {
-    std::string symbol( MakeSymbol( holder_.nType_ ) );
+    std::string symbol( MakeSymbol( holder_.type_ ) );
     if( up )
         return tools::app6::MergeSymbol( holder_.side_.Get< EntitySymbols_ABC >().BuildSymbol(), symbol );
     return symbol;

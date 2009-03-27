@@ -52,7 +52,7 @@ bool PHY_RoleHLA_Communications::CanCommunicate() const
 // Name: PHY_RoleHLA_Communications::Jam
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Communications::Jam( const MIL_RealObject_ABC& /*jammer*/ )
+void PHY_RoleHLA_Communications::Jam( const MIL_Object_ABC& /*jammer*/ )
 {
     // NOTHING
 }
@@ -61,7 +61,7 @@ void PHY_RoleHLA_Communications::Jam( const MIL_RealObject_ABC& /*jammer*/ )
 // Name: PHY_RoleHLA_Communications::Unjam
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Communications::Unjam( const MIL_RealObject_ABC& /*jammer*/ )
+void PHY_RoleHLA_Communications::Unjam( const MIL_Object_ABC& /*jammer*/ )
 {
     // NOTHING
 }

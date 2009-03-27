@@ -18,6 +18,7 @@ namespace kernel
     class Object_ABC;
 }
 
+class ObjectAttributesContainer;
 class StaticModel;
 class TeamsModel;
 
@@ -33,7 +34,7 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, gui::SymbolIcons& icons );
     virtual ~ObjectPrototype();
     //@}
 
@@ -57,8 +58,9 @@ private:
 private:
     //! @name Member data
     //@{
-    TeamsModel& teamsModel_;
-    kernel::Object_ABC* creation_;
+    TeamsModel&                 teamsModel_;
+    kernel::Object_ABC*         creation_;
+    ObjectAttributesContainer*  container_;   
     //@}
 };
 

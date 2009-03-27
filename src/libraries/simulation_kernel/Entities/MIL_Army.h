@@ -12,7 +12,9 @@
 #ifndef __MIL_Army_h_
 #define __MIL_Army_h_
 
-#include "MIL.h"
+#include "simulation_kernel/MIL.h"
+#include "simulation_kernel/Entities/MIL_Army_ABC.h"
+
 #include "MT_Tools/MT_Converter.h"
 
 namespace xml
@@ -29,32 +31,24 @@ class MIL_KnowledgeGroup;
 class MIL_EntityManager;
 class MIL_Formation;
 class MIL_Population;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 struct ASN1T_MsgChangeDiplomacy;
 
 // =============================================================================
 // @class  MIL_Army
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_Army
+class MIL_Army : public MIL_Army_ABC
 {
     MT_COPYNOTALLOWED( MIL_Army )
 
 public:
     //! @name Types
     //@{
-    enum E_Diplomacy
-    {
-        eUnknown,
-        eFriend,
-        eEnemy,
-        eNeutral
-    };
-
     typedef std::map< uint, MIL_KnowledgeGroup* > T_KnowledgeGroupMap;
     typedef T_KnowledgeGroupMap::const_iterator   CIT_KnowledgeGroupMap;
 
-    typedef std::map< const MIL_Army*, E_Diplomacy > T_DiplomacyMap;
+    typedef std::map< const MIL_Army_ABC*, E_Diplomacy > T_DiplomacyMap;
     typedef T_DiplomacyMap::const_iterator           CIT_DiplomacyMap;
 
     typedef std::set< MIL_Formation* >      T_FormationSet;
@@ -63,7 +57,7 @@ public:
     typedef std::set< MIL_Population* >      T_PopulationSet;
     typedef T_PopulationSet::const_iterator  CIT_PopulationSet;
 
-    typedef std::set< MIL_RealObject_ABC* > T_ObjectSet;
+    typedef std::set< MIL_Object_ABC* > T_ObjectSet;
     typedef T_ObjectSet::const_iterator     CIT_ObjectSet;
     //@}
 
@@ -101,8 +95,8 @@ public:
     void RegisterFormation  ( MIL_Formation& formation );
     void UnregisterFormation( MIL_Formation& formation );
 
-    void RegisterObject  ( MIL_RealObject_ABC& object );
-    void UnregisterObject( MIL_RealObject_ABC& object );
+    void RegisterObject  ( MIL_Object_ABC& object );
+    void UnregisterObject( MIL_Object_ABC& object );
 
     void RegisterPopulation  ( MIL_Population& population );
     void UnregisterPopulation( MIL_Population& population );
@@ -116,13 +110,12 @@ public:
     //@{
     bool       IsPerceived( const DEC_Knowledge_Object& knowledge )      const;
     E_Tristate IsAFriend  ( const DEC_Knowledge_Agent & knowledge )      const;
-    E_Tristate IsAFriend  ( const MIL_Army& army )                       const;
-    E_Tristate IsAnEnemy  ( const DEC_Knowledge_Agent& knowledge       ) const;
+    E_Tristate IsAFriend  ( const MIL_Army_ABC& army )                   const;
     E_Tristate IsAnEnemy  ( const DEC_Knowledge_Population & knowledge ) const;
-    E_Tristate IsAnEnemy  ( const MIL_Army& army )                       const;
-    E_Tristate IsNeutral  ( const MIL_Army& army )                       const;
-    bool       operator== ( const MIL_Army& rhs )                        const;
-    bool       operator!= ( const MIL_Army& rhs )                        const;
+    E_Tristate IsAnEnemy  ( const MIL_Army_ABC& army )                   const;
+    E_Tristate IsNeutral  ( const MIL_Army_ABC& army )                   const;
+//    bool       operator== ( const MIL_Army& rhs )                        const;
+//    bool       operator!= ( const MIL_Army& rhs )                        const;
     //@}
 
     //! @name Accessors
@@ -145,7 +138,7 @@ public:
 private:
     //! @name Tools
     //@{
-    E_Diplomacy GetDiplomacy( const MIL_Army& army ) const;
+    E_Diplomacy GetDiplomacy( const MIL_Army_ABC& army ) const;
     void ReadLogistic           ( xml::xistream& xis );
     void ReadAutomat            ( xml::xistream& xis );
     void ReadSubordinate        ( xml::xistream& xis, MIL_Automate* pSuperior );

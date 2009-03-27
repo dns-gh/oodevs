@@ -25,11 +25,13 @@
 
 
 MIL_MOSIDManager                 MIL_IDManager::units_;
+MIL_MOSIDManager                 MIL_IDManager::objects_;
 MIL_MOSIDManager                 MIL_IDManager::fireResultsPion_;
 MIL_MOSIDManager                 MIL_IDManager::fireResultsPopulation_;
 MIL_MOSIDManager                 MIL_IDManager::limas_;
 MIL_MOSIDManager                 MIL_IDManager::limits_;
 MIL_MOSIDManager                 MIL_IDManager::knowledgesAgent_;
+MIL_MOSIDManager                 MIL_IDManager::knowledgesObject_;
 MIL_MOSIDManager                 MIL_IDManager::effectsWeather_;
 MIL_MOSIDManager                 MIL_IDManager::maintenanceComposanteStates_;
 MIL_MOSIDManager                 MIL_IDManager::medicalHumanStates_;
@@ -90,7 +92,7 @@ void MIL_IDManager::ReadClasse( xml::xistream& xis )
     xis >> xml::attribute( "id", nClassID )
         >> xml::attribute( "nom", strName );
 
-            if( sCaseInsensitiveEqual()( strName, "Unite"                                  ) )  units_                             .SetClassID( nClassID );
+         if( sCaseInsensitiveEqual()( strName, "Unite"                                  ) )  units_                             .SetClassID( nClassID );
     else if( sCaseInsensitiveEqual()( strName, "TirPion"                                ) )  fireResultsPion_                   .SetClassID( nClassID );
     else if( sCaseInsensitiveEqual()( strName, "TirPopulation"                          ) )  fireResultsPopulation_             .SetClassID( nClassID );
     else if( sCaseInsensitiveEqual()( strName, "Lima"                                   ) )  limas_                             .SetClassID( nClassID );

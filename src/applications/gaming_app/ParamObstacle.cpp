@@ -18,7 +18,7 @@
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "actions/Action_ABC.h"
-#include "actions/Obstacle.h"
+#include "actions/EngineerConstruction.h"
 #include "actions/ObstacleType.h"
 
 using namespace kernel;
@@ -69,7 +69,7 @@ void ParamObstacle::BuildInterface( QWidget* parent )
     new QLabel( tr( "Type:" ), box );
     typeCombo_ = new ValuedComboBox< const ObjectType* >( box );
     typeCombo_->setSorting( true );
-    Iterator< const ObjectType& > it = objectTypes_.Resolver2< ObjectType, unsigned long >::CreateIterator();
+    Iterator< const ObjectType& > it = objectTypes_.StringResolver< ObjectType >::CreateIterator();
     while( it.HasMoreElements() )
     {
         const ObjectType& type = it.NextElement();
@@ -80,10 +80,10 @@ void ParamObstacle::BuildInterface( QWidget* parent )
     box->setSpacing( 5 );
 
     {
-        QLabel* label = new QLabel( tr( "Obstacle type:" ), box );
+        QLabel* label = new QLabel( tr( "Demolition target type:" ), box );
         obstacleTypeCombo_ = new ValuedComboBox< unsigned int >( box );
-        for( unsigned int i = 0; i < eNbrObstacleType ; ++i )
-            obstacleTypeCombo_->AddItem( tools::ToString( ( E_ObstacleType)i ), i );
+        for( unsigned int i = 0; i < eNbrDemolitionTargetType ; ++i )
+            obstacleTypeCombo_->AddItem( tools::ToString( ( E_DemolitionTargetType)i ), i );
         connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypeCombo_, SLOT( setShown( bool ) ) );
     }
@@ -134,17 +134,10 @@ bool ParamObstacle::CheckValidity()
     if( !typeCombo_->count() )
         return false;
     bool bOk = true;
-    switch( typeCombo_->GetValue()->id_ )
-    {
-    case EnumObjectType::zone_minee_lineaire:
-    case EnumObjectType::zone_minee_par_dispersion:
+    if( typeCombo_->GetValue()->HasBuildableDensity() )
         bOk = density_->CheckValidity();
-        break;
-    case EnumObjectType::camp_prisonniers:
-    case EnumObjectType::camp_refugies:
+    if( typeCombo_->GetValue()->HasLogistic() )
         bOk = tc2_->CheckValidity();
-        break;
-    };
     bOk = bOk && location_->CheckValidity();
     return bOk;
 }
@@ -158,18 +151,11 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type )
         return;
-    std::auto_ptr< actions::parameters::Obstacle > param( new actions::parameters::Obstacle( parameter_, *type ) );
-    switch( type->id_ )
-    {
-    case EnumObjectType::zone_minee_lineaire:
-    case EnumObjectType::zone_minee_par_dispersion:
+    std::auto_ptr< actions::parameters::EngineerConstruction > param( new actions::parameters::EngineerConstruction( parameter_, *type ) );
+    if( type->HasBuildableDensity() )
         density_->CommitTo( *param );
-        break;
-    case EnumObjectType::camp_prisonniers:
-    case EnumObjectType::camp_refugies:
+    if( type->HasLogistic() )
         tc2_->CommitTo( *param );
-        break;
-    };
     if( type->CanBeReservedObstacle() )
         param->AddParameter( *new actions::parameters::ObstacleType( OrderParameter( tr( "Obstacle type" ).ascii(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
     location_->CommitTo( *param );
@@ -198,17 +184,10 @@ void ParamObstacle::OnTypeChanged()
     const ObjectType* type = typeCombo_->GetValue();
     if( !type )
         return;
-    switch( type->id_ )
-    {
-    case EnumObjectType::zone_minee_lineaire:
-    case EnumObjectType::zone_minee_par_dispersion:
+    if( type->HasBuildableDensity() )
         density_->Show();
-        break;
-    case EnumObjectType::camp_prisonniers:
-    case EnumObjectType::camp_refugies:
+    if( type->HasLogistic() )
         tc2_->Show();
-        break;
-    };
     emit ToggleReservable( type->CanBeReservedObstacle() );
 }
 

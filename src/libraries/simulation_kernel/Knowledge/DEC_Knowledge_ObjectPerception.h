@@ -17,7 +17,7 @@
 #include "DEC_Knowledge_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -36,7 +36,7 @@ class DEC_Knowledge_ObjectPerception : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_ObjectPerception( const MIL_AgentPion& agentPerceiving, MIL_RealObject_ABC& objectPerceived );
+             DEC_Knowledge_ObjectPerception( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived );
              DEC_Knowledge_ObjectPerception();
     virtual ~DEC_Knowledge_ObjectPerception();
     //@}
@@ -64,7 +64,7 @@ public:
 
     //! @name Accessors
     //@{
-          MIL_RealObject_ABC&  GetObjectPerceived       () const;
+          MIL_Object_ABC&      GetObjectPerceived       () const;
     const MIL_AgentPion&       GetAgentPerceiving       () const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
           bool                 IsPerceived              () const;
@@ -72,7 +72,7 @@ public:
 
 private:
     const MIL_AgentPion*       pAgentPerceiving_;
-          MIL_RealObject_ABC*  pObjectPerceived_;
+          MIL_Object_ABC*      pObjectPerceived_;
 
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;

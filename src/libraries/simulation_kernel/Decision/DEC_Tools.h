@@ -188,10 +188,7 @@ struct DEC_DIACallFunctorWithProfiling
 template< class FunctionCall, class CallerType >
 static void DEC_RegisterDIACallFunctor( DIA_FunctionTable< CallerType >& funcTable, FunctionCall function, const std::string& strFunctionName )
 {
-//    if( MIL_AgentServer::GetWorkspace().GetConfig().IsProfilingEnabled() )
-//        funcTable.RegisterFunction( DEC_DIACallFunctorWithProfiling< FunctionCall, CallerType >( function ), strFunctionName );
-//    else
-        funcTable.RegisterFunction( DEC_DIACallFunctor< FunctionCall, CallerType >( function ), strFunctionName );
+    funcTable.RegisterFunction( DEC_DIACallFunctor< FunctionCall, CallerType >( function ), strFunctionName );
 }
 //@}
 

@@ -21,7 +21,7 @@
 
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"

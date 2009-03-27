@@ -23,7 +23,7 @@
 // Name: PHY_RoleAction_Objects_DataComputer constructor
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Objects_DataComputer::PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation operation, const MIL_RealObject_ABC& object )
+PHY_RoleAction_Objects_DataComputer::PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation operation, const MIL_Object_ABC& object )
     : pion_     ( pion )
     , operation_( operation )
     , object_   ( object )

@@ -28,7 +28,7 @@ class NBCPrototype : public gui::NBCPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCPrototype( QWidget* parent, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg );
+             NBCPrototype( QWidget* parent, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver, int maxToxic, ASN1T_MagicActionCreateObject& msg );
     virtual ~NBCPrototype();
     //@}
 
@@ -49,8 +49,6 @@ private:
     //! @name Member data
     //@{
     ASN1T_MagicActionCreateObject& msg_;
-    ASN1T_ObjectAttributesNbcZone* nbcArea_;
-    ASN1T_ObjectAttributesNbcCloud* nbcCloud_;
     //@}
 };
 

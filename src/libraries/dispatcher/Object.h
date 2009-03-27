@@ -15,6 +15,8 @@
 #include "clients_kernel/Object_ABC.h"
 #include "SimpleEntity.h"
 
+#include <boost/ptr_container/ptr_vector.hpp>
+
 namespace dispatcher
 {
     class Side;
@@ -58,38 +60,35 @@ private:
     Object& operator=( const Object& ); //!< Assignement operator
     //@}
 
-private:
-    //! @name Types
+    //! @name Attributes
     //@{
-    //$$$ bullshit
-    struct T_Optionals 
-    {
-        unsigned obstacle_de_manoeuvre_activePresent : 1;
-        unsigned type_obstaclePresent                : 1;
-    };
+    void Initialize( Model& model, const ASN1T_ObjectAttributes& attribute );
+    void AddAttribute( ObjectAttribute_ABC* attribute );
     //@}
 
-public:
-    //! @name Member data
-    //@{
-    const ASN1T_EnumObjectType   nType_; // XML reference - no resolved by dispatcher
-    const ASN1T_EnumObstacleType nObstacleType_;
+private:
+    //! @name Types
+    //@{   
+    typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
+    //@}
+
+public:    
+    const std::string            type_; // TODO : XML reference - no resolved by dispatcher
+    // const ASN1T_EnumObstacleType nObstacleType_;
     const std::string            strName_;
           Localisation           localisation_;
           Side&                  side_;
-    const unsigned int           nTypeDotationForConstruction_; // XML reference - no resolved by dispatcher
-    const unsigned int           nTypeDotationForMining_; // XML reference - no resolved by dispatcher
-
-    ObjectAttribute_ABC* pAttributes_;
-    unsigned int         nPercentageConstruction_;
-    unsigned int         nPercentageMining_;
-    unsigned int         nPercentageBypassing_;
-    bool                 bReservedObstacleActivated_;
-    unsigned int         nNbrDotationForConstruction_;
-    unsigned int         nNbrDotationForMining_;
-
-    T_Optionals          optionals_;
-    //@}
+    
+    T_ObjectAttributes           attributes_;
+    // ObjectAttribute_ABC* pAttributes_;
+//    unsigned int         nPercentageConstruction_;
+//    unsigned int         nPercentageMining_;
+//    unsigned int         nPercentageBypassing_;
+//    bool                 bReservedObstacleActivated_;
+//    unsigned int         nNbrDotationForConstruction_;
+//    unsigned int         nNbrDotationForMining_;
+//
+//    T_Optionals          optionals_;
 };
 
 }

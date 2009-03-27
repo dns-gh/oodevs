@@ -19,14 +19,19 @@
 // Created: JDY 03-07-03
 //*****************************************************************************
 class ADN_ListView_Objects
-: public ADN_ListView
+    : public ADN_ListView
 {
 public:
     explicit ADN_ListView_Objects( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_ListView_Objects();
 
+    void OnContextMenu( const QPoint& pt );
+
 private:
-    void ConnectItem( bool bConnect );
+    //! @name Helpers
+    //@{
+    void ConnectItem( bool bConnect );    
+    //@}
 };
 
 

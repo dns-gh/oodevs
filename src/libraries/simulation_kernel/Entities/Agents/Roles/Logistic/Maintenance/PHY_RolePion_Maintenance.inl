@@ -108,13 +108,3 @@ void PHY_RolePion_Maintenance::ChangeWorkRate( const PHY_MaintenanceWorkRate& /*
 {
     // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Maintenance::HasChanged
-// Created: SBO 2008-12-15
-// -----------------------------------------------------------------------------
-inline
-bool PHY_RolePion_Maintenance::HasChanged() const
-{
-    return false;
-}

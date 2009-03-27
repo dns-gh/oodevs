@@ -16,53 +16,13 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Objects/MIL_CampRefugies.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
+
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_Objective.h"
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::CanObjectTypeBeBypassed
-// Created: NLD 2005-09-21
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::CanObjectTypeBeBypassed( DIA_Call_ABC& call )
-{
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
-    assert( pObjectType );
-    if( pObjectType )
-        call.GetResult().SetValue( pObjectType->CanBeBypassed() );
-    else
-        call.GetResult().SetValue( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::CanObjectTypeBeMined
-// Created: NLD 2005-09-21
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::CanObjectTypeBeMined( DIA_Call_ABC& call )
-{
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
-    assert( pObjectType );
-    if( pObjectType )
-        call.GetResult().SetValue( pObjectType->CanBeMined() );
-    else
-        call.GetResult().SetValue( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::CanObjectTypeBeReservedObstacle
-// Created: NLD 2005-09-21
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::CanObjectTypeBeReservedObstacle( DIA_Call_ABC& call )
-{
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
-    assert( pObjectType );
-    if( pObjectType )
-        call.GetResult().SetValue( pObjectType->CanBeReservedObstacle() );
-    else
-        call.GetResult().SetValue( false );
-}
 
 // =============================================================================
 // GEN OBJECT
@@ -76,7 +36,7 @@ void DEC_ObjectFunctions::GetGenObjectType( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
     DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
-    call.GetResult().SetValue( (int)pTmp->GetType().GetID() );
+    call.GetResult().SetValue( pTmp->GetType().GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,14 +62,14 @@ void DEC_ObjectFunctions::GetGenObjectDensity( DIA_Call_ABC& call )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::GetGenObjectObstacleType
+// Name: DEC_ObjectFunctions::GetGenObjectReservedObstacle
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetGenObjectObstacleType( DIA_Call_ABC& call )
+void DEC_ObjectFunctions::GetGenObjectReservedObstacle( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
     DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
-    call.GetResult().SetValue( (int)pTmp->GetObstacleType().GetID() );
+    call.GetResult().SetValue( pTmp->GetObstacleType() == EnumDemolitionTargetType::reserved );
 }
 
 // -----------------------------------------------------------------------------

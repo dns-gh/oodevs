@@ -51,7 +51,7 @@ public:
             void NotifySurrenderCanceled();
     virtual bool Capture                ( const MIL_AgentPion& pionTakingPrisoner );
     virtual bool Release                ();
-    virtual bool Imprison               ( const MIL_CampPrisonniers& camp );
+    virtual bool Imprison               ( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Accessors
@@ -59,7 +59,7 @@ public:
     virtual const MIL_Army* GetArmySurrenderedTo() const;
     virtual       bool      IsSurrendered       () const;
     virtual       bool      IsPrisoner          () const;
-    virtual       bool      IsImprisoned        ( const MIL_CampPrisonniers& camp );
+    virtual       bool      IsImprisoned        ( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Network
@@ -71,7 +71,7 @@ public:
 private:
           MIL_AgentPion*       pPion_;
           bool                 bPrisoner_;
-    const MIL_CampPrisonniers* pPrison_;
+    const MIL_Object_ABC*      pPrison_;
           bool                 bHasChanged_;
 };
 

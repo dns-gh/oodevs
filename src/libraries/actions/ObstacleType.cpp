@@ -22,19 +22,9 @@ using namespace parameters;
 // -----------------------------------------------------------------------------
 ObstacleType::ObstacleType( const OrderParameter& parameter, unsigned int value )
     : Parameter< QString >( parameter )
-    , value_( E_ObstacleType( value ) )
+    , value_ ( ASN1T_EnumDemolitionTargetType( value ) )
 {
-    SetValue( tools::ToString( value_ )  );
-}
-
-namespace
-{
-    E_ObstacleType ReadValue( xml::xistream& xis )
-    {
-        unsigned int value;
-        xis >> attribute( "value", value );
-        return E_ObstacleType( value );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,10 +32,9 @@ namespace
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
 ObstacleType::ObstacleType( xml::xistream& xis )
-    : Parameter< QString >( OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), xml::attribute< std::string >( xis, "type" ), false ) )
-    , value_( ReadValue( xis ) )
+    : Parameter< QString >( OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), xml::attribute< std::string >( xis, "type" ), false ) )    
 {
-    SetValue( tools::ToString( value_ ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,15 +52,14 @@ ObstacleType::~ObstacleType()
 // -----------------------------------------------------------------------------
 void ObstacleType::Serialize( xml::xostream& xos ) const
 {
-    Parameter< QString >::Serialize( xos );
-    xos << attribute( "value", unsigned int( value_ ) );
+    Parameter< QString >::Serialize( xos );    
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleType::CommitTo
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-void ObstacleType::CommitTo( ASN1T_EnumObstacleType& asn ) const
+void ObstacleType::CommitTo( ASN1T_EnumDemolitionTargetType& asn ) const
 {
-    asn = ASN1T_EnumObstacleType( value_ );
+    asn = ASN1T_EnumDemolitionTargetType( value_ );
 }

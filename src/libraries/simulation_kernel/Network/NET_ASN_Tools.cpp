@@ -28,8 +28,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/MIL_Army.h"
 
 #include "Knowledge/DEC_Knowledge_Agent.h"

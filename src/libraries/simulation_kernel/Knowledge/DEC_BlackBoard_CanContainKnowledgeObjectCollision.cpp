@@ -15,7 +15,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObjectCollision, "DEC_BlackBoard_CanContainKnowledgeObjectCollision" )
 
@@ -71,7 +71,7 @@ namespace boost
             file >> nNbr;
             while ( nNbr-- )
             {
-                MIL_RealObject_ABC* pObject;
+                MIL_Object_ABC* pObject;
                 
                 file >> pObject;
                 file >> map[ pObject ];
@@ -106,7 +106,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::save( MIL_CheckPointOutA
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectCollision::CreateKnowledgeObjectCollision
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision::CreateKnowledgeObjectCollision( const MIL_AgentPion& agentPerceiving, MIL_RealObject_ABC& objectPerceived )
+DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision::CreateKnowledgeObjectCollision( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived )
 {
     DEC_Knowledge_ObjectCollision* pKnowledge = new DEC_Knowledge_ObjectCollision( agentPerceiving, objectPerceived );//$$ RAM   
     bool bOut = knowledgeObjectCollisionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second;

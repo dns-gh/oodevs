@@ -33,7 +33,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::serialize( Archive& archive, const uint 
 // Created: NLD 2004-03-30
 // -----------------------------------------------------------------------------
 inline
-void DEC_KS_ObjectKnowledgeSynthetizer::AddEphemeralObjectKnowledge( MIL_RealObject_ABC& objectKnown )
+void DEC_KS_ObjectKnowledgeSynthetizer::AddEphemeralObjectKnowledge( MIL_Object_ABC& objectKnown )
 {
     ephemeralKnowledges_.push_back( &objectKnown );    
 }
@@ -43,7 +43,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::AddEphemeralObjectKnowledge( MIL_RealObj
 // Created: NLD 2004-06-04
 // -----------------------------------------------------------------------------
 inline
-void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( MIL_RealObject_ABC& objectKnown )
+void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( MIL_Object_ABC& objectKnown )
 {
     if( std::find( objectsToForget_.begin(), objectsToForget_.end(), &objectKnown ) == objectsToForget_.end() )
         objectsToForget_.push_back( &objectKnown );    

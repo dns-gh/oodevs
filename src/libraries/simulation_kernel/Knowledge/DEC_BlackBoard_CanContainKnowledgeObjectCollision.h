@@ -17,7 +17,7 @@
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_ObjectCollision;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -33,7 +33,7 @@ class DEC_BlackBoard_CanContainKnowledgeObjectCollision
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_RealObject_ABC*, DEC_Knowledge_ObjectCollision* > T_KnowledgeObjectCollisionMap;
+    typedef std::map< const MIL_Object_ABC*, DEC_Knowledge_ObjectCollision* > T_KnowledgeObjectCollisionMap;
     typedef T_KnowledgeObjectCollisionMap::iterator                               IT_KnowledgeObjectCollisionMap;
     typedef T_KnowledgeObjectCollisionMap::const_iterator                         CIT_KnowledgeObjectCollisionMap;
     //@}
@@ -55,14 +55,14 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_ObjectCollision& CreateKnowledgeObjectCollision ( const MIL_AgentPion& agentColliding, MIL_RealObject_ABC& objectCollision );
+    DEC_Knowledge_ObjectCollision& CreateKnowledgeObjectCollision ( const MIL_AgentPion& agentColliding, MIL_Object_ABC& objectCollision );
     void                           DestroyKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge );
     //@}
 
     //! @name Queries
     //@{
     void                           GetKnowledgesObjectCollision( T_KnowledgeObjectCollisionVector& container ) const;
-    DEC_Knowledge_ObjectCollision* GetKnowledgeObjectCollision ( const MIL_RealObject_ABC& objectCollision ) const;
+    DEC_Knowledge_ObjectCollision* GetKnowledgeObjectCollision ( const MIL_Object_ABC& objectCollision ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesObjectCollision( UnaryFunction fct ) const

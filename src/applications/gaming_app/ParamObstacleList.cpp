@@ -12,7 +12,7 @@
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/OrderParameter.h"
 #include "actions/Action_ABC.h"
-#include "actions/ObstacleList.h"
+#include "actions/EngineerConstructionList.h"
 #include "gaming/Tools.h"
 
 using namespace kernel;
@@ -49,7 +49,7 @@ ParamObstacleList::~ParamObstacleList()
 // -----------------------------------------------------------------------------
 void ParamObstacleList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ObstacleList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::EngineerConstructionList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

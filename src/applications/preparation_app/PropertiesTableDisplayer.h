@@ -23,7 +23,7 @@ class DotationsItem;
 // =============================================================================
 class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public tools::Caller< Enum_PopulationAttitude >
-                               , public tools::Caller< Enum_ObstacleType >
+                               , public tools::Caller< Enum_DemolitionTargetType >
                                , public tools::Caller< DotationsItem >
                                , public tools::Caller< geometry::Point2f >
 {
@@ -38,7 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual void Call( const Enum_PopulationAttitude& value );
-    virtual void Call( const Enum_ObstacleType & value );
+    virtual void Call( const Enum_DemolitionTargetType & value );
     virtual void Call( const DotationsItem& value );
     virtual void Call( const geometry::Point2f& value );
     //@}

@@ -25,6 +25,7 @@ namespace xml
 class AfterActionFunction;
 class AfterActionRequest;
 class AfterActionRequests;
+class AfterActionIndicator;
 class Publisher_ABC;
 
 // =============================================================================
@@ -47,6 +48,7 @@ public:
     //@{
     void Update( const ASN1T_MsgAarInformation& asnMsg );
     void Update( const ASN1T_MsgPlotResult& asnMsg );
+	void Update( const ASN1T_MsgIndicator& asnMsg );
 
     AfterActionRequest& CreateRequest( const AfterActionFunction& function );
     //@}
@@ -62,6 +64,15 @@ private:
     //@{
     void Load( const std::string& functions );
     void ReadFunction( xml::xistream& xis );
+	void SaveIndicators( const std::string& fileName ) const;
+    void WriteIndicators( xml::xostream& xos ) const;
+    void WriteFile( const std::string& fileName, const std::string& data ) const;
+    //@}	
+
+private:
+    //! @name Types
+    //@{
+	typedef std::map< std::string, AfterActionIndicator* > T_Indicators;
     //@}
 
 private:
@@ -69,6 +80,7 @@ private:
     //@{
     kernel::Controller& controller_;
     std::auto_ptr< AfterActionRequests > requests_;
+	T_Indicators indicators_;
     //@}
 };
 

@@ -13,11 +13,25 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "DEC_FunctionsTools.h"
+
+/*
+namespace 
+{
+    template <typename Functor> 
+    bool HasCapacity( MIL_Object_ABC* pObject, Functor& functor )
+    {
+        if ( pObject )        
+            return (*pObject)().functor();
+        return false;
+    }
+}
+*/
 
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_ObjectFunctions::ActivateObject
@@ -33,14 +47,14 @@ void DEC_ObjectFunctions::ActivateObject( DIA_Call_ABC& call, const T& caller )
         return;
     }
 
-    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
-    if( !pObject || !pObject->CanBeActivated() )
+    MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+    if( !pObject || !(*pObject)().CanBeActivated() )
     {
         call.GetResult().SetValue( false );
         return;
     }
 
-    pObject->Activate();
+    (*pObject)().Activate();
     call.GetResult().SetValue( true );
     return;
 }
@@ -53,12 +67,7 @@ template< typename T >
 void DEC_ObjectFunctions::MagicCreateObject( DIA_Call_ABC& call, const T& caller )
 {
     //$$$ A réencapsuler
-    MIL_RealObject_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), MIL_ObstacleType::initial_, call.GetParameters(), 0 );
-    if( pObject )
-    {
-        pObject->Construct();
-        pObject->Mine     ();
-    }
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), call.GetParameters(), 0, EnumDemolitionTargetType::preliminary );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,10 +82,8 @@ void DEC_ObjectFunctions::MagicDestroyObject( DIA_Call_ABC& call, const T& calle
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
     if( pKnowledge )
     {
-        MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
-        if( pObject && pObject->CanBeDestroyed() )
-            pObject->Destroy(); // AddObjectKnowledgeToForget done
+        MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+        if( pObject && (*pObject)().CanBeDestroyed() )
+            (*pObject)().Destroy(); // AddObjectKnowledgeToForget done
     }
 }
-
-

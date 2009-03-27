@@ -11,7 +11,7 @@
 #include "SvglProxy.h"
 #include "SvglRenderer.h"
 #include "svgl/Node_ABC.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 #include "tools/GeneralConfig.h"
 
 using namespace gui;

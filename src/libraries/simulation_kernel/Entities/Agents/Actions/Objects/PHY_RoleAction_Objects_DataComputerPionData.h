@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_AgentPion;
 class PHY_ComposantePion;
 class PHY_DotationCategory;
@@ -40,7 +40,7 @@ public:
 
 public:
     PHY_RoleAction_Objects_DataComputerPionData();
-    PHY_RoleAction_Objects_DataComputerPionData( MIL_AgentPion& pion, E_Operation operation, const MIL_RealObject_ABC& object );
+    PHY_RoleAction_Objects_DataComputerPionData( MIL_AgentPion& pion, E_Operation operation, const MIL_Object_ABC& object );
 
     //! @name Operations
     //@{
@@ -68,7 +68,7 @@ private:
 
 private:
           E_Operation            operation_;
-    const MIL_RealObject_ABC*    pObject_;
+    const MIL_Object_ABC*    pObject_;
           MIL_AgentPion*         pPion_;
           bool                   bConsumptionReserved_;
           T_ComposanteDataVector workingComposantes_;    

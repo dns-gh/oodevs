@@ -75,11 +75,13 @@ private:
 
 public:
     static MIL_MOSIDManager units_;
+    static MIL_MOSIDManager objects_;
     static MIL_MOSIDManager fireResultsPion_;
     static MIL_MOSIDManager fireResultsPopulation_;
     static MIL_MOSIDManager limas_;
     static MIL_MOSIDManager limits_;
     static MIL_MOSIDManager knowledgesAgent_;
+    static MIL_MOSIDManager knowledgesObject_;
     static MIL_MOSIDManager effectsWeather_;
     static MIL_MOSIDManager maintenanceComposanteStates_;
     static MIL_MOSIDManager medicalHumanStates_;

@@ -20,9 +20,9 @@
 #include "PHY_RoleHLA_Location.h"
 #include "Tools/MIL_Tools.h"
 #include "Hla/HLA_Serialization.h"
+#include "Hla/AttributeIdentifier.h"
 #include "Entities/Agents/MIL_AgentHLA.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include <hla/AttributeIdentifier.h>
 
 using namespace hla;
 
@@ -54,7 +54,7 @@ PHY_RoleHLA_Location::~PHY_RoleHLA_Location()
 // Name: PHY_RoleHLA_Location::NotifyObjectCollision
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Location::NotifyObjectCollision( MIL_RealObject_ABC& /*object*/ )
+void PHY_RoleHLA_Location::NotifyObjectCollision( MIL_Object_ABC& /*object*/ )
 {
     // NOTHING (used for knowledge)
 }
@@ -112,6 +112,7 @@ void PHY_RoleHLA_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
 {
     object.NotifyAgentPutOutside( pion_ );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Location::Deserialize

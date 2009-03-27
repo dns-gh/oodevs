@@ -37,6 +37,7 @@ public:
     //@{
     bool IsChecked() const;
     virtual void Hide();
+    virtual void Clear();
     //@}
 
 private:

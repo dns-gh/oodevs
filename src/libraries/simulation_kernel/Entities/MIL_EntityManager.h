@@ -24,12 +24,14 @@ namespace xml
 class MIL_EffectManager;
 class MIL_ObjectManager;
 class MIL_Army;
+class MIL_Army_ABC;
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Formation;
 class MIL_AgentTypePion;
-class MIL_RealObject_ABC;
-class MIL_RealObjectType;
+class MIL_Object_ABC;
+class MIL_ObjectType_ABC;
+class MIL_ObjectBuilder_ABC;
 class MIL_Population;
 class MIL_PopulationType;
 class MIL_ObstacleType;
@@ -59,6 +61,8 @@ struct ASN1T_MsgAutomatChangeLogisticLinks;
 struct ASN1T_MsgUnitChangeSuperior;
 struct ASN1T_MsgLogSupplyChangeQuotas;
 struct ASN1T_MsgLogSupplyPushFlow;
+
+class ASN1T_EnumObjectType;
 
 class DIA_Parameters;
 
@@ -95,12 +99,11 @@ public:
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, uint nID, MIL_Automate&  automate , xml::xistream& xis );
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
 
-    void                        CreateObject                       ( xml::xistream& xis, MIL_Army& army ); 
-    MIL_RealObject_ABC*         CreateObject                       ( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
-    MIL_RealObject_ABC*         CreateObject                       ( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
-    MIL_NuageNBC&               CreateObjectNuageNBC               ( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType );
-    MIL_ZoneMineeParDispersion& CreateObjectZoneeMineeParDispersion( MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines );
-    MIL_ControlZone&            CreateObjectControlZone            ( MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius );
+    void                        CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
+    MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx, ASN1T_EnumDemolitionTargetType obstacleType );    
+    MIL_Object_ABC*             CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
+    MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
+    MIL_Object_ABC*             CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );        
     //@}
 
     //! @name Accessors
@@ -111,7 +114,8 @@ public:
           MIL_Automate*       FindAutomate  ( uint nID ) const;
           MIL_Population*     FindPopulation( uint nID ) const;
           MIL_AgentPion*      FindAgentPion ( uint nID ) const;
-          MIL_RealObject_ABC* FindObject    ( uint nID ) const;
+          MIL_Object_ABC*     FindObject    ( uint nID ) const;
+    const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;    
     const T_ArmyMap&          GetArmies     () const;
     
           MIL_EffectManager& GetEffectManager() const;

@@ -54,7 +54,7 @@ const T_KnowledgeComposanteVector& DEC_Knowledge_AgentDataRecognition::GetCompos
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
 inline
-const MIL_Army* DEC_Knowledge_AgentDataRecognition::GetArmy() const
+const MIL_Army_ABC* DEC_Knowledge_AgentDataRecognition::GetArmy() const
 {
     return pArmy_;
 }

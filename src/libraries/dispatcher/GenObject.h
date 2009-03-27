@@ -24,7 +24,7 @@ namespace dispatcher
 // =============================================================================
 class GenObject
 {
-
+   
 public:
     //! @name Constructors/Destructor
     //@{
@@ -41,12 +41,12 @@ public:
 private:
     //! @name Member data
     //@{
-    ASN1T_EnumObjectType      type_;
-    Localisation              location_;
-    ASN1T_EnumObstacleType    typeObstacle_;
-    double                    density_;
-    unsigned int              tc2_;
-    unsigned int              delaiActiviteMines_;
+    std::string                     type_;
+    Localisation                    location_;
+    ASN1T_EnumDemolitionTargetType  typeObstacle_;
+    double                          density_;
+    unsigned int                    tc2_;
+    unsigned int                    delaiActiviteMines_;
     //@}
 };
 

@@ -55,7 +55,7 @@ HLA_ObjectInteraction::~HLA_ObjectInteraction()
 // Name: HLA_ObjectInteraction::GetObject
 // Created: AGE 2004-12-06
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* HLA_ObjectInteraction::GetObject() const
+MIL_Object_ABC* HLA_ObjectInteraction::GetObject() const
 {
     assert( MIL_AgentServer::GetWorkspace().GetHLAFederate() );
     return MIL_AgentServer::GetWorkspace().GetHLAFederate()->GetLocalObject( objectId_ );

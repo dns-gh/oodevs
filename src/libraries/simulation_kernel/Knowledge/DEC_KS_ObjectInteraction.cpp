@@ -17,7 +17,7 @@
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
@@ -90,7 +90,7 @@ void DEC_KS_ObjectInteraction::Prepare()
 // Name: DEC_KS_ObjectInteraction::UpdateObjectPerceptionKnowledge
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectPerception& DEC_KS_ObjectInteraction::GetKnowledgeObjectPerception( MIL_RealObject_ABC& object ) const
+DEC_Knowledge_ObjectPerception& DEC_KS_ObjectInteraction::GetKnowledgeObjectPerception( MIL_Object_ABC& object ) const
 {
     assert( pBlackBoard_ );
     
@@ -104,7 +104,7 @@ DEC_Knowledge_ObjectPerception& DEC_KS_ObjectInteraction::GetKnowledgeObjectPerc
 // Name: DEC_KS_ObjectInteraction::UpdateObjectCollisionKnowledge
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectCollision& DEC_KS_ObjectInteraction::GetKnowledgeObjectCollision( MIL_RealObject_ABC& object ) const
+DEC_Knowledge_ObjectCollision& DEC_KS_ObjectInteraction::GetKnowledgeObjectCollision( MIL_Object_ABC& object ) const
 {
     assert( pBlackBoard_ );
     
@@ -123,7 +123,7 @@ void DEC_KS_ObjectInteraction::Talk()
     // Interaction with objects
     for( CIT_ObjectVector itInteraction = objectInteractions_.begin(); itInteraction != objectInteractions_.end(); ++itInteraction )
     {
-        MIL_RealObject_ABC& object = **itInteraction;
+        MIL_Object_ABC& object = **itInteraction;
         if( object.IsMarkedForDestruction() )
             continue;
         DEC_Knowledge_ObjectPerception& knowledge = GetKnowledgeObjectPerception( object );
@@ -134,7 +134,7 @@ void DEC_KS_ObjectInteraction::Talk()
     // Collision with objects
     for( CIT_ObjectCollisionVector itCollision = objectCollisions_.begin(); itCollision != objectCollisions_.end(); ++itCollision )
     {
-        MIL_RealObject_ABC& object = *itCollision->first;
+        MIL_Object_ABC& object = *itCollision->first;
         if( object.IsMarkedForDestruction() )
             continue;
         DEC_Knowledge_ObjectCollision& knowledge = GetKnowledgeObjectCollision( object );

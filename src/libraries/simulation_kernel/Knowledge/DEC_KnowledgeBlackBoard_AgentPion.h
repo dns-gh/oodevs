@@ -27,7 +27,7 @@ class DEC_KS_ObjectInteraction;
 class DEC_KS_PopulationInteraction;
 class DEC_KS_Fire;            
 class DEC_KS_Perception;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_PopulationConcentration;
 class MIL_Population;
 
@@ -106,8 +106,8 @@ public:
           MT_Float                     GetRapForLocalValue            () const;
 
     // Objects
-    bool IsIdentified       ( const MIL_RealObject_ABC& object ) const;
-    bool IsPerceived        ( const MIL_RealObject_ABC& object ) const;
+    bool IsIdentified       ( const MIL_Object_ABC& object ) const;
+    bool IsPerceived        ( const MIL_Object_ABC& object ) const;
     void GetObjectsColliding( T_KnowledgeObjectCollisionVector& container ) const;
     void GetObjectsColliding( T_KnowledgeObjectDiaIDVector&     container ) const;
 

@@ -915,13 +915,13 @@ void PHY_RolePion_Composantes::DamageTransported( MT_Float rWeightToDamage, cons
 // Name: PHY_RolePion_Composantes::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyContamination( const MIL_NbcAgent& nbcAgent )
+void PHY_RolePion_Composantes::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.GetState().IsUsable() )
-            composante.ApplyContamination( nbcAgent );
+            composante.ApplyContamination( contamination );
     }
 }
 
@@ -929,13 +929,13 @@ void PHY_RolePion_Composantes::ApplyContamination( const MIL_NbcAgent& nbcAgent 
 // Name: PHY_RolePion_Composantes::ApplyPoisonous
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyPoisonous( const MIL_NbcAgent& nbcAgent )
+void PHY_RolePion_Composantes::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.GetState().IsUsable() )
-            composante.ApplyPoisonous( nbcAgent );
+            composante.ApplyPoisonous( contamination );
     }
 }
 
@@ -943,7 +943,7 @@ void PHY_RolePion_Composantes::ApplyPoisonous( const MIL_NbcAgent& nbcAgent )
 // Name: PHY_RolePion_Composantes::ApplyExplosion
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyExplosion( const MIL_RealObjectType& objectType, PHY_FireResults_ABC& fireResult )
+void PHY_RolePion_Composantes::ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult )
 {
     assert( pPion_ );
 
@@ -951,13 +951,13 @@ void PHY_RolePion_Composantes::ApplyExplosion( const MIL_RealObjectType& objectT
     std::random_shuffle( composantes.begin(), composantes.end() );
 
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( *pPion_ );
-
     for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeFired() )
         {
-            composante.ApplyExplosion( objectType, fireDamages );
+            fireResult.Hit();
+            composante.ApplyExplosion( capacity, fireDamages );
             return;
         }
     }
@@ -1416,7 +1416,7 @@ MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& ta
 {
     assert( pPion_ );
 
-    if( pPion_->GetArmy().IsAFriend( target ) == eTristate_True
+    if( target.IsAFriend( pPion_->GetArmy() ) == eTristate_True
         ||  pPion_->GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
         return 0.;
 

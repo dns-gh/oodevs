@@ -19,6 +19,7 @@
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 class MIL_Army;
+class MIL_Army_ABC;
 class MIL_AgentType_ABC;
 
 
@@ -52,7 +53,7 @@ public:
           MT_Float                     GetOperationalState     () const;
           MT_Float                     GetMajorOperationalState() const;
     const T_KnowledgeComposanteVector& GetComposantes          () const;
-    const MIL_Army*                    GetArmy                 () const;
+    const MIL_Army_ABC*                GetArmy                 () const;
           bool                         IsPC                    () const;
     const MIL_AgentType_ABC*           GetAgentType            () const;
     //@}

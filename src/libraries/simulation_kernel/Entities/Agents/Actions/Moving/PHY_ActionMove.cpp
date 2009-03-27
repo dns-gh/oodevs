@@ -16,7 +16,6 @@
 #include "PHY_RoleAction_Moving.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_Army.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathWalker.h"
@@ -24,6 +23,11 @@
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+
+#include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Entities/Objects/AttritionCapacity.h"
+#include "Entities/Objects/ContaminationCapacity.h"
+#include "Entities/Objects/InterferenceCapacity.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove constructor
@@ -101,6 +105,19 @@ void PHY_ActionMove::DestroyJoiningPath()
     pJoiningPath_ = 0;
 }
 
+namespace 
+{
+    class MIL_DangerousObjectFilter : public MIL_ObjectFilter
+    {
+        virtual bool Test( const MIL_ObjectType_ABC& type ) const 
+        {
+            return type.GetCapacity< AttritionCapacity >() != 0 ||
+                   type.GetCapacity< ContaminationCapacity >() != 0 ||
+                   type.GetCapacity< InterferenceCapacity >() != 0;
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove::UpdateObjectsToAvoid
 // Created: NLD 2006-04-28
@@ -110,8 +127,9 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
     T_KnowledgeObjectVector knowledges;
 
     const MT_Float rHeight = pion_.GetRole< PHY_RolePion_Location >().GetHeight();
-
-    pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, MIL_RealObjectType::GetDangerousObjectTypes() );
+    
+    MIL_DangerousObjectFilter filter;
+    pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
     if( knowledges != objectsToAvoid_ )
     {
         objectsToAvoid_ = knowledges;

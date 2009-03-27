@@ -63,7 +63,7 @@ bool PHY_RoleHLA_Surrender::Release()
 // Name: PHY_RoleHLA_Surrender::Imprison
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Surrender::Imprison( const MIL_CampPrisonniers& /*camp*/ )
+bool PHY_RoleHLA_Surrender::Imprison( const MIL_Object_ABC& /*camp*/ )
 {
     // $$$$ _RC_ NLD 2005-03-10: 
     return false;
@@ -73,7 +73,7 @@ bool PHY_RoleHLA_Surrender::Imprison( const MIL_CampPrisonniers& /*camp*/ )
 // Name: PHY_RoleHLA_Surrender::IsImprisoned
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Surrender::IsImprisoned( const MIL_CampPrisonniers& /*camp*/ )
+bool PHY_RoleHLA_Surrender::IsImprisoned( const MIL_Object_ABC& /*camp*/ )
 {
     // $$$$ _RC_ NLD 2007-02-26: 
     return false;

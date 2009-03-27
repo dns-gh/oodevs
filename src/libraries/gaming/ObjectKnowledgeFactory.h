@@ -51,6 +51,11 @@ private:
     ObjectKnowledgeFactory& operator=( const ObjectKnowledgeFactory& ); //!< Assignement operator
     //@}
 
+    //! @name 
+    //@{
+    void Register( kernel::ObjectKnowledge_ABC& knowledge, const ASN1T_ObjectAttributes& attributes ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{

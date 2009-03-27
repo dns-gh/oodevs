@@ -22,7 +22,7 @@
 #include "HLA_Object_ABC.h"
 #include <hla/ObjectIdentifier.h>
 
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  HLA_LocalObject
@@ -36,7 +36,7 @@ class HLA_LocalObject : public HLA_Object_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HLA_LocalObject( MIL_RealObject_ABC& object );
+             HLA_LocalObject( MIL_Object_ABC& object );
     virtual ~HLA_LocalObject();
     //@}
 
@@ -70,7 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_RealObject_ABC& object_;
+    MIL_Object_ABC& object_;
     hla::ObjectIdentifier id_;
     //@}
 };

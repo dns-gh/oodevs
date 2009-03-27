@@ -22,6 +22,8 @@ namespace kernel
     class EquipmentType;
     class Population_ABC;
     class NBCAgent;
+    class FireClass;
+    class MedicalTreatmentType;
     class ComponentType;
     class BreakdownType;
     class Mission;
@@ -66,6 +68,8 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< kernel::DotationType >
                     , public tools::Caller< kernel::EquipmentType >
                     , public tools::Caller< kernel::NBCAgent >
+                    , public tools::Caller< kernel::FireClass >
+                    , public tools::Caller< kernel::MedicalTreatmentType >
                     , public tools::Caller< kernel::ComponentType >
                     , public tools::Caller< kernel::BreakdownType >
                     , public tools::Caller< kernel::Mission >
@@ -86,6 +90,11 @@ public:
     //@{
              BaseDisplayer();
     virtual ~BaseDisplayer();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Clear();
     //@}
 
 private:
@@ -111,6 +120,8 @@ private:
     virtual void Call( const kernel::DotationType& value );
     virtual void Call( const kernel::EquipmentType& value );
     virtual void Call( const kernel::NBCAgent& value );
+    virtual void Call( const kernel::FireClass& value );
+    virtual void Call( const kernel::MedicalTreatmentType& value );
     virtual void Call( const kernel::ComponentType& value );
     virtual void Call( const kernel::BreakdownType& value );
     virtual void Call( const kernel::Mission& value );

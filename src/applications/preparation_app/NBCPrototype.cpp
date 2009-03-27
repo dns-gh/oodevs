@@ -10,17 +10,24 @@
 #include "preparation_app_pch.h"
 #include "NBCPrototype.h"
 #include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/Iterator.h"
 #include "clients_kernel/Object_ABC.h"
-#include "preparation/NBCAttributes.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "preparation/NBCAttribute.h"
+#include "clients_gui/RichLabel.h"
+#include "clients_gui/ValuedListItem.h"
+
+#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: NBCPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-NBCPrototype::NBCPrototype( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver, Object_ABC*& creation )
-    : NBCPrototype_ABC( parent, resolver )
+NBCPrototype::NBCPrototype( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver, int maxToxic, Object_ABC*& creation )
+    : NBCPrototype_ABC( parent, resolver, maxToxic )
     , creation_( creation )
 {
     // NOTHING
@@ -32,7 +39,7 @@ NBCPrototype::NBCPrototype( QWidget* parent, const Resolver_ABC< NBCAgent >& res
 // -----------------------------------------------------------------------------
 NBCPrototype::~NBCPrototype()
 {
-    Clean();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,10 +48,19 @@ NBCPrototype::~NBCPrototype()
 // -----------------------------------------------------------------------------
 void NBCPrototype::Commit()
 {
-    if( !creation_ )
-        return;
-
-    static_cast< NBCAttributes& >( creation_->Get< NBCAttributes_ABC >() ).SetAgent( *nbcAgents_->GetValue() );
+    if( creation_ )
+    {
+        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
+        NBCAttribute* attribute = new NBCAttribute( dico );
+		{
+            attribute->SetState( nbcStates_->GetValue() );
+            for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
+                if( item->isSelected() )
+                    attribute->AddAgent( *static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >() );
+            attribute->SetDanger( danger_->text().toUInt() );
+		}
+        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ namespace xml
     class xistream;
 }
 
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class DEC_Knowledge_Object;
 class MIL_AgentPion;
 class PHY_PerceptionLevel;
@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const MIL_RealObject_ABC&   target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const MIL_Object_ABC&   target, MT_Float rSensorHeight ) const;
     const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const DEC_Knowledge_Object& target, MT_Float rSensorHeight ) const;
     //@}
 

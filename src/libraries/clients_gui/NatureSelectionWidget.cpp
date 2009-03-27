@@ -11,7 +11,7 @@
 #include "NatureSelectionWidget.h"
 #include "moc_NatureSelectionWidget.cpp"
 #include "clients_kernel/SymbolRule.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace xml;
 using namespace gui;

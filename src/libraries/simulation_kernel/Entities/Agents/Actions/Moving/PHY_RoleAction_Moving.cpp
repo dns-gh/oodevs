@@ -29,7 +29,10 @@
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
 #include "Decision/Path/DEC_PathPoint.h"
@@ -125,36 +128,39 @@ MT_Float PHY_RoleAction_Moving::ApplySpeedModificators( MT_Float rSpeed ) const
     return rSpeed;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetMaxSpeed
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-struct sMaxSpeedObjectCalculator
+namespace 
 {
-    MT_COPYNOTALLOWED( sMaxSpeedObjectCalculator );
-
-public:
-    sMaxSpeedObjectCalculator( const MIL_RealObject_ABC& object ) 
-        : rMaxSpeedObject_     ( std::numeric_limits< MT_Float >::max() )
-        , object_              ( object )
-        , bHasUsableComposante_( false )
+    // -----------------------------------------------------------------------------
+    // Name: PHY_RoleAction_Moving::GetMaxSpeed
+    // Created: NLD 2004-09-06
+    // -----------------------------------------------------------------------------
+    struct sMaxSpeedObjectCalculator
     {
-    }
+        MT_COPYNOTALLOWED( sMaxSpeedObjectCalculator );
 
-    void operator() ( const PHY_ComposantePion& composante )
-    {
-        if( composante.CanMove() )
+    public:
+        sMaxSpeedObjectCalculator( const MIL_Object_ABC& object ) 
+            : rMaxSpeedObject_     ( std::numeric_limits< MT_Float >::max() )
+            , object_              ( object )
+            , bHasUsableComposante_( false )
         {
-            bHasUsableComposante_ = true;
-            rMaxSpeedObject_ = std::min( rMaxSpeedObject_, composante.GetMaxSpeed( object_ ) );
         }
-    }
-          bool                bHasUsableComposante_;
-          MT_Float            rMaxSpeedObject_;
-    const MIL_RealObject_ABC& object_;
-};
 
-MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const MIL_RealObject_ABC& object ) const
+        void operator() ( const PHY_ComposantePion& composante )
+        {
+            if( composante.CanMove() )
+            {
+                bHasUsableComposante_ = true;
+                rMaxSpeedObject_ = std::min( rMaxSpeedObject_, composante.GetMaxSpeed( object_ ) );
+            }
+        }
+              bool              bHasUsableComposante_;
+              MT_Float          rMaxSpeedObject_;
+        const MIL_Object_ABC&   object_;
+    };
+}
+
+MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
     sMaxSpeedObjectCalculator functor( object );
     GetRole< PHY_RolePion_Composantes >().Apply( functor );
@@ -164,33 +170,36 @@ MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const MIL_RealObject_ABC& object ) 
     return functor.rMaxSpeedObject_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetMaxSpeed
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-struct sMaxSpeedEnvCalculator
+namespace
 {
-public:
-    sMaxSpeedEnvCalculator( const TerrainData& environment ) 
-        : rMaxSpeedEnv_        ( std::numeric_limits< MT_Float >::max() )
-        , environment_         ( environment )
-        , bHasUsableComposante_( false )
+    // -----------------------------------------------------------------------------
+    // Name: PHY_RoleAction_Moving::GetMaxSpeed
+    // Created: NLD 2004-09-06
+    // -----------------------------------------------------------------------------
+    struct sMaxSpeedEnvCalculator
     {
-    }
-
-    void operator() ( const PHY_ComposantePion& composante )
-    {
-        if( composante.CanMove() )
+    public:
+        sMaxSpeedEnvCalculator( const TerrainData& environment ) 
+            : rMaxSpeedEnv_        ( std::numeric_limits< MT_Float >::max() )
+            , environment_         ( environment )
+            , bHasUsableComposante_( false )
         {
-            bHasUsableComposante_ = true;
-            rMaxSpeedEnv_ = std::min( rMaxSpeedEnv_, composante.GetMaxSpeed( environment_ ) );
         }
-    }
 
-    bool        bHasUsableComposante_;
-    MT_Float    rMaxSpeedEnv_;
-    TerrainData environment_;
-};
+        void operator() ( const PHY_ComposantePion& composante )
+        {
+            if( composante.CanMove() )
+            {
+                bHasUsableComposante_ = true;
+                rMaxSpeedEnv_ = std::min( rMaxSpeedEnv_, composante.GetMaxSpeed( environment_ ) );
+            }
+        }
+
+        bool        bHasUsableComposante_;
+        MT_Float    rMaxSpeedEnv_;
+        TerrainData environment_;
+    };
+}
 
 MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
@@ -203,31 +212,34 @@ MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) co
     return functor.rMaxSpeedEnv_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetMaxSpeed
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-struct sMaxSpeedCalculator
+namespace 
 {
-public:
-    sMaxSpeedCalculator() 
-        : rMaxSpeed_           ( std::numeric_limits< MT_Float >::max() )
-        , bHasUsableComposante_( false )
+    // -----------------------------------------------------------------------------
+    // Name: PHY_RoleAction_Moving::GetMaxSpeed
+    // Created: NLD 2004-09-06
+    // -----------------------------------------------------------------------------
+    struct sMaxSpeedCalculator
     {
-    }
-
-    void operator() ( const PHY_ComposantePion& composante )
-    {
-        if( composante.CanMove() )
+    public:
+        sMaxSpeedCalculator() 
+            : rMaxSpeed_           ( std::numeric_limits< MT_Float >::max() )
+            , bHasUsableComposante_( false )
         {
-            bHasUsableComposante_ = true;
-            rMaxSpeed_ = std::min( rMaxSpeed_, composante.GetMaxSpeed() );
         }
-    }
 
-    bool     bHasUsableComposante_;
-    MT_Float rMaxSpeed_;
-};
+        void operator() ( const PHY_ComposantePion& composante )
+        {
+            if( composante.CanMove() )
+            {
+                bHasUsableComposante_ = true;
+                rMaxSpeed_ = std::min( rMaxSpeed_, composante.GetMaxSpeed() );
+            }
+        }
+
+        bool     bHasUsableComposante_;
+        MT_Float rMaxSpeed_;
+    };
+}
 
 MT_Float PHY_RoleAction_Moving::GetMaxSpeed() const
 {
@@ -307,13 +319,11 @@ MT_Float PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& en
 // -----------------------------------------------------------------------------
 inline
 MT_Float PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const
-{
-    if( !object.IsReal() )
+{    
+    if( !object().HasMobilityInfluence() )
         return std::numeric_limits< MT_Float >::max();
         
-    const MIL_RealObject_ABC& realObject = static_cast< const MIL_RealObject_ABC& >( object );
-
-    MT_Float rObjectSpeed = GetMaxSpeed( realObject );
+    MT_Float rObjectSpeed = GetMaxSpeed( object );
     const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
     for( PHY_RolePion_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
         rObjectSpeed = std::min( rObjectSpeed, (**itReinforcement).GetRole< PHY_RoleAction_Moving >().GetSpeedWithReinforcement( environment, object ) );
@@ -323,7 +333,7 @@ MT_Float PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& en
 
     rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );
     rObjectSpeed = ApplySpeedModificators( rObjectSpeed );
-    return realObject.ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed );
+    return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed );
 }
 
 // =============================================================================

@@ -330,7 +330,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
 // Name: PHY_RoleAction_Transport::NotifyComposanteContaminated
 // Created: NLD 2004-11-24
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::NotifyComposanteContaminated( const MIL_NbcAgent& nbcAgent )
+void PHY_RoleAction_Transport::NotifyComposanteContaminated( const MIL_ToxicEffectManipulator& nbcAgent )
 {
     MT_Float rWeightDamaged = rWeightTransported_;
     for( CIT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0; ++it )

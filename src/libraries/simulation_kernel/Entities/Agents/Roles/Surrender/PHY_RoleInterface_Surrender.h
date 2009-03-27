@@ -17,7 +17,7 @@
 #include "MT_Tools/MT_Role_ABC.h"
 
 class MIL_AgentPion;
-class MIL_CampPrisonniers;
+class MIL_Object_ABC;
 class MIL_Army;
 
 // =============================================================================
@@ -46,14 +46,14 @@ public:
     virtual const MIL_Army* GetArmySurrenderedTo() const = 0;
     virtual       bool      IsSurrendered       () const = 0;
     virtual       bool      IsPrisoner          () const = 0;
-    virtual       bool      IsImprisoned        ( const MIL_CampPrisonniers& camp ) = 0;
+    virtual       bool      IsImprisoned        ( const MIL_Object_ABC& camp ) = 0;
     //@}
 
     //! @name Operations
     //@{
     virtual bool Capture ( const MIL_AgentPion& pionTakingPrisoner ) = 0;
     virtual bool Release () = 0;
-    virtual bool Imprison( const MIL_CampPrisonniers& camp ) = 0;
+    virtual bool Imprison( const MIL_Object_ABC& camp ) = 0;
     //@}
 };
 

@@ -14,7 +14,6 @@
 
 #include "DEC_Agent_PathClass.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeObject constructor

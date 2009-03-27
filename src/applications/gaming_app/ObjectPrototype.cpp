@@ -13,35 +13,138 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Team_ABC.h"
-#include "CampPrototype.h"
+#include "clients_gui/ObjectAttributePrototypeFactory.h"
+
 #include "CrossingSitePrototype.h"
-#include "LogisticRoutePrototype.h"
+#include "SupplyRoutePrototype.h"
+#include "LogisticPrototype.h"
 #include "NBCPrototype.h"
-#include "RotaPrototype.h"
 #include "MinePrototype.h"
+#include "ObstaclePrototype.h"
+#include "MedicalTreatmentPrototype.h"
+#include "FirePrototype.h"
+#include "ActivityTimePrototype.h"
+
+#include <xeumeuleu/xml.h>
+#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;
+
+namespace
+{
+    typedef ObjectAttributePrototypeFactory_ABC::T_AttributeContainer  T_AttributeContainer;
+
+    class ConstructorBuilder
+    {
+    public:
+        ConstructorBuilder( T_AttributeContainer& container, QWidget* parent, ASN1T_MagicActionCreateObject& asn )
+            : container_ ( container )
+            , parent_ ( parent )
+            , asn_ ( asn ) {}
+
+        void BuildPrototype( xml::xistream& /*xis*/, bool /*density*/ )
+        {            
+        }
+
+        void ImprovePrototype( xml::xistream& /*xis*/, bool /*density*/ )
+        {
+        }
+    private:
+        ConstructorBuilder& operator=( const ConstructorBuilder& );
+        ConstructorBuilder( const ConstructorBuilder& );
+
+    private:
+        T_AttributeContainer& container_;
+        QWidget* parent_; 
+        ASN1T_MagicActionCreateObject& asn_;
+    };
+
+    void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ASN1T_MagicActionCreateObject& asn )
+    {
+        ConstructorBuilder builder( container, parent, asn );
+        std::string type( xml::attribute< std::string >( xis, "unit-type" ) );
+
+        bool density = ( type == "density" );
+        xis >> xml::optional() >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
+        xis >> xml::optional() >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
+    }
+
+    //void BypassableAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
+    //{
+    //}
+
+    void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, ASN1T_MagicActionCreateObject& asn )
+    {
+        container.push_back( new LogisticPrototype( parent, controllers, asn ) );
+    }
+    
+    void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, ASN1T_MagicActionCreateObject& asn )
+    {
+        std::string model( xml::attribute< std::string >( xis, "model" ) );
+        if( model == "input" )
+        {
+            // NOT ALLOWED DURING GAMING SESSION
+            // container.push_back( new InputPropagationPrototype( parent, resolver, asn ) );
+        }
+        if( model == "fire" )
+            container.push_back( new FirePrototype( parent, resolver, asn ) );
+    }
+
+    void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, ASN1T_MagicActionCreateObject& asn )
+    {
+        int toxic = xml::attribute< int >( xis, "max-toxic" );
+        container.push_back( new NBCPrototype( parent, resolver, toxic, asn ) );
+    }
+
+    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const Resolver_ABC< MedicalTreatmentType >& resolver, ASN1T_MagicActionCreateObject& asn )
+    {
+        container.push_back( new MedicalTreatmentPrototype( parent, resolver, asn ) );
+    }
+
+    template<typename T>
+    struct Capacity
+    {
+        static void Build( T_AttributeContainer& container, QWidget* parent, ASN1T_MagicActionCreateObject& asn )
+        {
+            container.push_back( new T( parent, asn ) );
+        }
+    };
+    
+    ObjectAttributePrototypeFactory_ABC* FactoryMaker( Controllers& controllers, 
+                                                       const ObjectTypes& resolver, ASN1T_MagicActionCreateObject& asn )
+    {
+        ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
+        factory->Register( "constructor"    , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( asn ) ) );
+        factory->Register( "activable"      , boost::bind( &Capacity< ObstaclePrototype >::Build, _2, _3, boost::ref( asn ) ) );
+        factory->Register( "time-limited"   , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( asn ) ) );
+        factory->Register( "supply-route"   , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( asn ) ) );
+        factory->Register( "bridging"       , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( asn ) ) );
+        
+        factory->Register( "logistic"       , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( asn ) ) );
+
+        factory->Register( "healable"       , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( asn ) ) );
+        factory->Register( "propagation"    , boost::bind( &PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( asn ) ) );
+                       
+        factory->Register( "contamination"  , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( asn ) ) );
+        return factory;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ParametersLayer& layer )
-    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer )
-    , msg_()
-    , creation_()
-    , serializer_( model.coordinateConverter_, creation_.location )
+ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ParametersLayer& layer, gui::SymbolIcons& icons )
+    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, 
+                           * FactoryMaker( controllers, model.objectTypes_, creation_ ),
+                           icons )
+    , msg_          ()
+    , creation_     ()
+    , serializer_   ( model.coordinateConverter_, creation_.location )
 {
     msg_().action.t                 = T_MsgObjectMagicAction_action_create_object;
     msg_().action.u.create_object   = &creation_;
-
-    campAttributes_          = new CampPrototype         ( parent, controllers, creation_ );        campAttributes_->hide();
-    crossingSiteAttributes_  = new CrossingSitePrototype ( parent, creation_ );                     crossingSiteAttributes_->hide();
-    logisticRouteAttributes_ = new LogisticRoutePrototype( parent, creation_ );                     logisticRouteAttributes_->hide();
-    nbcAttributes_           = new NBCPrototype          ( parent, model.objectTypes_, creation_ ); nbcAttributes_->hide();
-    rotaAttributes_          = new RotaPrototype         ( parent, model.objectTypes_, creation_ ); rotaAttributes_->hide();
-    mineAttributes_          = new MinePrototype         ( parent, creation_ );                     mineAttributes_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -58,34 +161,18 @@ ObjectPrototype::~ObjectPrototype()
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Commit( Publisher_ABC& publisher )
-{
-    creation_.m.namePresent = 0;
-    if( !name_->text().isEmpty() )
-    {
-        creation_.m.namePresent = 1;
-        creation_.name = name_->text().ascii();
-    }
-
-    creation_.m.reserved_obstacle_activatedPresent = creation_.m.obstacle_typePresent = GetType().CanBeReservedObstacle();
-    if( creation_.m.obstacle_typePresent )
-    {
-        creation_.obstacle_type = (ASN1T_EnumObstacleType)obstacleTypes_->GetValue();
-        creation_.m.reserved_obstacle_activatedPresent = creation_.obstacle_type == eObstacleType_Reserved;
-        creation_.reserved_obstacle_activated = reservedObstacleActivated_->isChecked();
-    }
+{    
+    if( name_->text().isEmpty() )
+        return;
+    
+    creation_.name = name_->text().ascii();    
     creation_.team = teams_->GetValue()->GetId();
-    creation_.type = (ASN1T_EnumObjectType)objectTypes_->GetValue()->id_;
+    creation_.type = objectTypes_->GetValue()->GetType().c_str();
+    
     if( location_ )
-        serializer_.Serialize( *location_ );
-
-    if( activeAttributes_ )
-    {
-        creation_.m.specific_attributesPresent = 1;
-        activeAttributes_->Commit();
-    }
-    else
-        creation_.m.specific_attributesPresent = 0;
-
+        serializer_.Serialize( *location_ );    
+    
+    ObjectPrototype_ABC::Commit();
     msg_.Send( publisher );
     Clean();
 }

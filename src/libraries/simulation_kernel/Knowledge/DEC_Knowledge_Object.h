@@ -18,15 +18,16 @@
 #include "DEC_Knowledge_ABC.h"
 #include "game_asn/Simulation.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "tools/Extendable.h"
 
-class MIL_Army;
-class MIL_RealObject_ABC;
+class MIL_Army_ABC;
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_ObjectPerception;
-class MIL_RealObjectType;
+class MIL_ObjectType_ABC;
+class MIL_Object_ABC;
 class MIL_Automate;
 class MIL_AgentType_ABC;
-class MIL_ObstacleType;
+class DEC_Knowledge_ObjectAttribute_ABC;
 
 // =============================================================================
 /** @class  DEC_Knowledge_Object
@@ -34,14 +35,16 @@ class MIL_ObstacleType;
 */
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_Knowledge_Object : public DEC_Knowledge_ABC
+class DEC_Knowledge_Object 
+    : public DEC_Knowledge_ABC
+    , private tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >
 {
     MT_COPYNOTALLOWED( DEC_Knowledge_Object ) 
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Object( const MIL_Army& armyKnowing, MIL_RealObject_ABC& objectKnown );
+             DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown );
              DEC_Knowledge_Object();
     virtual ~DEC_Knowledge_Object();
     //@}
@@ -54,6 +57,11 @@ public:
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
     
+    //! @name Collision
+    //@{
+    bool CanCollideWith( const MIL_Agent_ABC& agent ) const;
+    //@}
+
     //! @name Operations
     //@{
     void Recon  ( const MIL_Agent_ABC& agent );
@@ -61,7 +69,7 @@ public:
 
     void Update( const PHY_PerceptionLevel& currentPerceptionLevel );
     void Update( const DEC_Knowledge_ObjectPerception& perception );
-    void Update( const DEC_Knowledge_ObjectCollision&  collision  );
+    void Update( const DEC_Knowledge_ObjectCollision& collision  );
 
     bool Clean() const;
     //@}
@@ -86,12 +94,18 @@ public:
           bool                IsReservedObstacle         () const;
           bool                IsReservedObstacleActivated() const;
           uint                GetID                      () const;
-          MIL_RealObject_ABC* GetObjectKnown             () const;
-    const MIL_RealObjectType& GetType                    () const;
+          MIL_Object_ABC*     GetObjectKnown             () const;
+    const MIL_ObjectType_ABC& GetType                    () const;
     const TER_Localisation&   GetLocalisation            () const;
     const TER_Localisation&   GetAvoidanceLocalisation   () const;
-    const MIL_Army&           GetArmy                    () const;    
+    const MIL_Army_ABC&       GetArmy                    () const;    
           MT_Float            GetMaxInteractionHeight    () const;
+    //@}
+
+    //! @name Extension
+    //@{
+    template< typename Extension >  void              Attach( Extension& extension );
+    template< typename Extension >  const Extension*  Retrieve() const;
     //@}
     
 protected:
@@ -118,28 +132,18 @@ protected:
     //@}
 
 protected:
-    //! @name Update
-    //@{
-    virtual void UpdateSpecificAttributes( const PHY_PerceptionLevel& currentPerceptionLevel );
-    virtual void UpdateSpecificAttributes( const DEC_Knowledge_ObjectPerception& perception );
-    virtual void UpdateSpecificAttributes( const DEC_Knowledge_ObjectCollision&  collision  );
-
-    virtual void BuildMsgSpecificAttributes( ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
-    //@}
-
     //! @name Tools
     //@{
           void      NotifyAttributeUpdated( E_Attributes nAttribute );
           bool      IsAttributeUpdated    ( E_Attributes nAttribute ) const;
           bool      IsReconBy             ( const MIL_AgentType_ABC& agentType ) const;
-    const MIL_Army& GetArmyKnowing        () const;
+    const MIL_Army_ABC& GetArmyKnowing    () const;
     //@}
 
 private:
     //! @name Internal updaters
     //@{
     void UpdateLocalisations         ();
-    void UpdateStates                ();
     void UpdatePerceptionSources     ( const DEC_Knowledge_ObjectPerception& perception );
     void UpdateCurrentPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
     bool UpdateMaxPerceptionLevel    ( const PHY_PerceptionLevel& perceptionLevel );
@@ -152,7 +156,7 @@ private:
     void BuildMsgRelevance             ( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
     void BuildMsgLocalisations         ( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
     void BuildMsgCurrentPerceptionLevel( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgStates                ( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgAttributes            ( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
 
     void SendMsgCreation   () const;
     void SendMsgDestruction() const;
@@ -165,30 +169,28 @@ private:
     typedef T_PerceptionSourceSet::iterator         IT_PerceptionSourceSet;
     typedef T_PerceptionSourceSet::const_iterator   CIT_PerceptionSourceSet;
 
-    typedef std::set< const MIL_AgentType_ABC* > T_AgentTypeSet;
-    typedef T_AgentTypeSet::const_iterator       CIT_AgentTypeSet;
+    typedef std::set< const MIL_AgentType_ABC* >    T_AgentTypeSet;
+    typedef T_AgentTypeSet::const_iterator          CIT_AgentTypeSet;
+
+    typedef std::vector< DEC_Knowledge_ObjectAttribute_ABC* >   T_ObjectAttributeVector;
+    typedef T_ObjectAttributeVector::iterator                   IT_ObjectAttributeVector;
+    typedef T_ObjectAttributeVector::const_iterator             CIT_ObjectAttributeVector;
     //@}
 
 private:
-    const MIL_Army*           pArmyKnowing_;
-          MIL_RealObject_ABC* pObjectKnown_; // Objet réel (peut ne plus exister...)
+    const MIL_Army_ABC*       pArmyKnowing_;
+          MIL_Object_ABC*     pObjectKnown_; // Objet réel (peut ne plus exister...)
+    const MIL_ObjectType_ABC* pObjectType_; 
+    const uint                nID_;
 
-    const MIL_RealObjectType* pObjectType_;
-    const uint                nID_;   
-    const MIL_ObstacleType*   pObstacleType_;
+    T_ObjectAttributeVector   attributes_;
 
     int nAttributesUpdated_;
 
     // Attributes
-    const MIL_Army*   pOwnerArmy_;
+    const MIL_Army_ABC* pOwnerArmy_;
     TER_Localisation  localisation_;
     TER_Localisation  avoidanceLocalisation_;
-    uint              nConstructionPercentage_;
-    uint              nMiningPercentage_;
-    uint              nBypassPercentage_;
-    uint              nNbrDotationForConstruction_;
-    uint              nNbrDotationForMining_;            
-    bool              bReservedObstacleActivated_; 
 
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;

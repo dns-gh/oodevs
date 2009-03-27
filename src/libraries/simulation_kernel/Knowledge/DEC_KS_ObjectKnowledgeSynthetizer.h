@@ -21,7 +21,7 @@ class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_Object;
 class MIL_Army;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  DEC_KS_ObjectKnowledgeSynthetizer
@@ -51,8 +51,8 @@ public:
 
     //! @name Events
     //@{
-    void AddEphemeralObjectKnowledge( MIL_RealObject_ABC& objectKnown ); // The object will be perceived virtually only for one tick
-    void AddObjectKnowledgeToForget ( MIL_RealObject_ABC& objectKnown );
+    void AddEphemeralObjectKnowledge( MIL_Object_ABC& objectKnown ); // The object will be perceived virtually only for one tick
+    void AddObjectKnowledgeToForget ( MIL_Object_ABC& objectKnown );
     void AddObjectKnowledgeToForget ( DEC_Knowledge_Object& knowledge );
     //@}
 
@@ -68,7 +68,7 @@ private:
     //@{
     void                  UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
     void                  UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
-    DEC_Knowledge_Object& GetKnowledgeToUpdate                ( MIL_RealObject_ABC& objectKnown ) const;
+    DEC_Knowledge_Object& GetKnowledgeToUpdate                ( MIL_Object_ABC& objectKnown ) const;
     void                  UpdateKnowledgeRelevance            ( DEC_Knowledge_Object& knowledge );
     void                  CleanKnowledgeObject                ( DEC_Knowledge_Object& knowledge );
     //@}
@@ -84,8 +84,8 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_RealObject_ABC* >  T_ObjectVector;
-    typedef T_ObjectVector::const_iterator      CIT_ObjectVector;
+    typedef std::vector< MIL_Object_ABC* >  T_ObjectVector;
+    typedef T_ObjectVector::const_iterator  CIT_ObjectVector;
     //@}
     
 private:

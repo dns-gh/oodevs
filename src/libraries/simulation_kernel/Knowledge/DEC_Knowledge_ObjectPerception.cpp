@@ -14,7 +14,7 @@
 
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectPerception, "DEC_Knowledge_ObjectPerception" )
@@ -23,7 +23,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectPerception, "DEC_Knowledge_ObjectPe
 // Name: DEC_Knowledge_ObjectPerception constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception( const MIL_AgentPion& agentPerceiving, MIL_RealObject_ABC& objectPerceived )
+DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived )
     : DEC_Knowledge_ABC        ()
     , pAgentPerceiving_        ( &agentPerceiving )
     , pObjectPerceived_        ( &objectPerceived )

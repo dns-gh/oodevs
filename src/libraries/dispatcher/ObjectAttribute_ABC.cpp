@@ -16,8 +16,8 @@ using namespace dispatcher;
 // Name: ObjectAttribute_ABC constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ObjectAttribute_ABC::ObjectAttribute_ABC( const ASN1T_ObjectAttributesSpecific& asnMsg )
-    : nType_( asnMsg.t )
+ObjectAttribute_ABC::ObjectAttribute_ABC( const Model& /*model*/, const ASN1T_ObjectAttributes& asnMsg )
+    : nType_ ( 0 )
 {
     // NOTHING
 }

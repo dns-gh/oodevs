@@ -29,44 +29,28 @@
 #include "Tools.h"
 #include "RichLabel.h"
 #include "GroupDisplayer.h"
-#include "ObjectPrototypeAttributes_ABC.h"
-#include "CampPrototype_ABC.h"
-#include "CrossingSitePrototype_ABC.h"
-#include "LogisticRoutePrototype_ABC.h"
-#include "NBCPrototype_ABC.h"
-#include "RotaPrototype_ABC.h"
-#include "MinePrototype_ABC.h"
+#include "ObjectAttributePrototypeContainer.h"
+#include "ObjectAttributePrototypeFactory_ABC.h"
+#include "ObjectPreviewIcon.h"
+
+
 
 using namespace kernel;
 using namespace gui;
-
-namespace
-{
-    template< typename Enum, typename Combo >
-    void Populate( Enum size, Combo& combo )
-    {
-        combo.Clear();
-        for( unsigned int i = 0; i < (unsigned int)size; ++i )
-            combo.AddItem( tools::ToString( (Enum)i ), (Enum)i );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype_ABC constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const Resolver_ABC< ObjectType >& resolver, ParametersLayer& layer )
+ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const Resolver_ABC< ObjectType, std::string >& resolver, 
+                                         ParametersLayer& layer, const ObjectAttributePrototypeFactory_ABC& factory, SymbolIcons& icons )
     : QGroupBox( 2, Qt::Horizontal, tr( "Information" ), parent )
     , controllers_( controllers )
-    , resolver_( resolver )
-    , location_( 0 )
-    , activeAttributes_( 0 )
-    , campAttributes_( 0 )
-    , crossingSiteAttributes_( 0 )
-    , logisticRouteAttributes_( 0 )
-    , nbcAttributes_( 0 )
-    , rotaAttributes_( 0 )
-    , mineAttributes_( 0 )
+    , resolver_  ( resolver )
+    , location_  ( 0 )    
+    , attributes_( new ObjectAttributePrototypeContainer( resolver, factory, 
+                            new QGroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent ) ) )
+    , preview_ ( 0 )
 {
     new QLabel( tr( "Name:" ), this );
     name_ = new QLineEdit( this );
@@ -77,34 +61,21 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     new QLabel( tr( "Type:" ), this );
     objectTypes_ = new ValuedComboBox< const ObjectType* >( this );
 
-    {
-        QLabel* label = new QLabel( tr( "Obstacle type:" ), this );
-        obstacleTypes_ = new ValuedComboBox< E_ObstacleType >( this );
-        connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypes_, SLOT( setShown( bool ) ) );
-    }
-
-    {
-        QLabel* label = new QLabel( tr( "Reserved obstacle activated:" ), this );
-        reservedObstacleActivated_ = new QCheckBox( this );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), label, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), reservedObstacleActivated_, SLOT( setShown( bool ) ) );
-    }
-
     position_ = new RichLabel( tr( "Location:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
     locationLabel_->setMinimumWidth( 100 );
     locationLabel_->setAlignment( Qt::AlignCenter );
     locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );
+    locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );  
+
+    preview_.reset( new ObjectPreviewIcon( this, controllers, icons ) );
 
     // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
 
     controllers.Register( *this );
 
-    connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
-    connect( obstacleTypes_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
+    connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );    
 }
 
 // -----------------------------------------------------------------------------
@@ -112,8 +83,9 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
-{
-    Populate( eNbrObstacleType, *obstacleTypes_ );
+{    
+    attributes_->NotifyUpdated();
+    attributes_->Hide();
     FillObjectTypes();
     OnTypeChanged();
 }
@@ -123,8 +95,7 @@ void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::showEvent( QShowEvent* e )
-{
-    Populate( eNbrObstacleType, *obstacleTypes_ );
+{    
     FillObjectTypes();
     OnTypeChanged();
     controllers_.Register( *locationCreator_ );
@@ -141,9 +112,8 @@ void ObjectPrototype_ABC::hideEvent( QHideEvent* )
         controllers_.Unregister( *locationCreator_ );
     delete location_;
     location_ = 0;
-    if( activeAttributes_ )
-        activeAttributes_->hide();
-    activeAttributes_ = 0;
+    
+    attributes_->Hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +127,7 @@ void ObjectPrototype_ABC::FillObjectTypes()
     while( it.HasMoreElements() )
     {
         const ObjectType& element = it.NextElement();
-        objectTypes_->AddItem( element.GetName(), &element );
+        objectTypes_->AddItem( element.GetType(), &element );
     }
 }
 
@@ -167,13 +137,7 @@ void ObjectPrototype_ABC::FillObjectTypes()
 // -----------------------------------------------------------------------------
 ObjectPrototype_ABC::~ObjectPrototype_ABC()
 {
-    delete location_;
-    delete campAttributes_;
-    delete crossingSiteAttributes_;
-    delete logisticRouteAttributes_;
-    delete nbcAttributes_;
-    delete rotaAttributes_;
-    delete mineAttributes_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +156,7 @@ bool ObjectPrototype_ABC::CheckValidity() const
         position_->Warn( 3000 );
         return false;
     }
-    return ( !activeAttributes_ || activeAttributes_->CheckValidity() );
+    return true; // ( !activeAttributes_ || activeAttributes_->CheckValidity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,11 +165,18 @@ bool ObjectPrototype_ABC::CheckValidity() const
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::Clean()
 {
+    attributes_->Clean();
     name_->setText( "" );
-    reservedObstacleActivated_->setChecked( false );
-    if( activeAttributes_ )
-        activeAttributes_->Clean();
     ResetLocation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::Commit
+// Created: JCR 2008-06-11
+// -----------------------------------------------------------------------------
+void ObjectPrototype_ABC::Commit()
+{
+    attributes_->Commit();
 }
 
 // -----------------------------------------------------------------------------
@@ -217,8 +188,6 @@ void ObjectPrototype_ABC::NotifyCreated( const Team_ABC& team )
     if( teams_->GetItemIndex( &team ) != -1 )
         return;
     teams_->AddItem( team.GetName(), &team );
-    if( teams_->currentItem() < 0 )
-        teams_->SetCurrentItem( &team );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,66 +218,9 @@ void ObjectPrototype_ABC::OnTypeChanged()
 {
     const ObjectType* type = objectTypes_->GetValue();
     if( !type )
-    {
-        activeAttributes_ = 0;
         return;
-    }
-    ObjectPrototypeAttributes_ABC* previous = activeAttributes_;
-
-    switch( type->id_ )
-    {
-        case eObjectType_CampPrisonniers:
-        case eObjectType_CampRefugies:
-            activeAttributes_ = campAttributes_;
-            break;
-        case eObjectType_ItineraireLogistique:
-            activeAttributes_ = logisticRouteAttributes_;
-            break;
-        case eObjectType_NuageNbc:
-        case eObjectType_ZoneNbc:
-            activeAttributes_ = nbcAttributes_;
-            break;
-        case eObjectType_Rota:
-            activeAttributes_ = rotaAttributes_;
-            break;
-        case eObjectType_SiteFranchissement:
-            activeAttributes_ = crossingSiteAttributes_;
-            break;
-        case eObjectType_BouchonMines:
-        case eObjectType_ZoneMineeLineaire:
-        case eObjectType_ZoneMineeParDispersion:
-            activeAttributes_ = mineAttributes_;
-            mineAttributes_->SetMineField( type->id_ != eObjectType_BouchonMines );
-            break;
-        default:
-            activeAttributes_ = 0;
-            break;
-    }
-    if( previous && previous != activeAttributes_ )
-        previous->hide();
-
-    if( activeAttributes_ && previous != activeAttributes_ )
-        activeAttributes_->show();
-
-    emit ToggleReservable( type->CanBeReservedObstacle() );
-    OnObstacleTypeChanged();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectPrototype_ABC::OnObstacleTypeChanged
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::OnObstacleTypeChanged()
-{
-    const ObjectType* type = objectTypes_->GetValue();
-    E_ObstacleType obstacleType = obstacleTypes_->GetValue();
-    emit ToggleActivable( type && type->CanBeReservedObstacle() && obstacleType == eObstacleType_Reserved );
-    if( type )
-    {
-        locationCreator_->Allow( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle() );
-        if( location_ && !locationCreator_->Allows( *location_ ) )
-            ResetLocation();
-    }
+    preview_->NotifySelected( *type );    
+    attributes_->Select( *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -343,10 +255,30 @@ void ObjectPrototype_ABC::Draw( const GlTools_ABC& tools ) const
 {
     if( isVisible() && location_ )
     {
-        kernel::SimpleLocationDrawer drawer( tools );
-        glPushAttrib( GL_LINE_BIT );
-            glLineWidth( 3.f );
-            location_->Accept( drawer );
-        glPopAttrib();
+//        if ( symbol_ != "" )
+//            DrawSymbol( tools );
+//        else
+        DrawSymbolLocation( tools );          
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::DrawSymbol
+// Created: JCR 2008-08-27
+// -----------------------------------------------------------------------------
+void ObjectPrototype_ABC::DrawSymbol( const kernel::GlTools_ABC& /*tools*/ ) const
+{
+    // DrawingTemplate template( xml::xistream& xis, const DrawingCategory& category, svg::TextRenderer& renderer );
+    // SvgLocationDrawer drawer( template );
+    // location_->Accept( drawer );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::DrawSymbolLocation
+// Created: JCR 2008-08-27
+// -----------------------------------------------------------------------------
+void ObjectPrototype_ABC::DrawSymbolLocation( const kernel::GlTools_ABC& tools ) const
+{
+    SimpleLocationDrawer drawer( tools );
+    location_->Accept( drawer );    
 }

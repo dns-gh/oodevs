@@ -12,14 +12,12 @@
 #ifndef __PHY_RoleInterface_Location_h_
 #define __PHY_RoleInterface_Location_h_
 
-#include "MIL.h"
-
+#include "simulation_kernel/MIL.h"
 #include "MT_Tools/MT_Role_ABC.h"
-
 #include "simulation_terrain/TER_Agent_ABC.h"
 
 class MIL_Agent_ABC;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
@@ -50,7 +48,7 @@ public:
     //@{
     virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population ) = 0;
     virtual void NotifyPopulationCollision( MIL_PopulationConcentration& population ) = 0;
-    virtual void NotifyObjectCollision    ( MIL_RealObject_ABC& object ) = 0;
+    virtual void NotifyObjectCollision    ( MIL_Object_ABC& object ) = 0;
 
     virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object ) = 0;
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object ) = 0;

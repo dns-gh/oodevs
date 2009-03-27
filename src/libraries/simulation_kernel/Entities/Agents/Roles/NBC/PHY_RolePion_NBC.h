@@ -17,7 +17,7 @@
 #include "PHY_RoleInterface_NBC.h"
 
 class NET_ASN_MsgUnitAttributes;
-class MIL_NbcAgent;
+class MIL_ToxicEffectManipulator;
 class MIL_NbcAgentType;
 class MIL_AgentPion;
 
@@ -48,8 +48,8 @@ public:
 
     //! @name Main
     //@{
-    virtual void Poison       ( const MIL_NbcAgent& nbcAgent );
-    virtual void Contaminate  ( const MIL_NbcAgent& nbcAgent );
+    virtual void Poison       ( const MIL_ToxicEffectManipulator& nbcAgent );
+    virtual void Contaminate  ( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Decontaminate();
     virtual void Decontaminate( MT_Float rRatioAgentsWorking );
 
@@ -84,6 +84,7 @@ private:
     T_NbcAgentTypeSet   nbcAgentTypesContaminating_;
     bool                bNbcProtectionSuitWorn_;
     MT_Float            rContaminationState_;
+    MT_Float            rContaminationQuantity_;
     bool                bHasChanged_;
 };
 

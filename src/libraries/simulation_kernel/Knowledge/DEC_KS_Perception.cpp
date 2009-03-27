@@ -236,7 +236,7 @@ void DEC_KS_Perception::NotifyPerception( MIL_Agent_ABC& agentPerceived, const P
 // Name: DEC_KS_Perception::NotifyPerception
 // Created: NLD 2004-03-22
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::NotifyPerception( MIL_RealObject_ABC& objectPerceived, const PHY_PerceptionLevel& level, bool /*bRecordModeEnabled*/ )
+void DEC_KS_Perception::NotifyPerception( MIL_Object_ABC& objectPerceived, const PHY_PerceptionLevel& level, bool /*bRecordModeEnabled*/ )
 {
     if( level == PHY_PerceptionLevel::notSeen_ )
         return;

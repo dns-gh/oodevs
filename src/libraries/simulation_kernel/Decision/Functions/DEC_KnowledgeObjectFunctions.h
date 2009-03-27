@@ -25,30 +25,34 @@ class DEC_KnowledgeObjectFunctions
 public:
     //! @name Functions
     //@{
-    template< typename T > static void GetSiteFranchissementWidth        ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetSiteFranchissementWidth       ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsSiteFranchissementBanksToFitOut( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetType                            ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetLocalisation                    ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsBypassed                        ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetType                          ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetLocalisation                  ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsBypassed                       ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsReservedObstacleActivated      ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsReservedObstacle               ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsConstructed                       ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsKnowledgeValid                    ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsConstructed                    ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsKnowledgeValid                 ( DIA_Call_ABC& call, const T& caller );
 
-                           static void QueueForDecontamination            ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-                           static void CanBeAnimated                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+                           static void QueueForDecontamination          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+                           static void CanBeAnimated                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );                           
                            static void CanBeOccupied                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
                            static void DecontaminateZone                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
                            static void DamageObject                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
                            
+                           static void CanBeBypassed                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+                           static void CanBeMined                       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+                           static void CanBeActivated                   ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+
                            static void SetExitingPopulationDensity      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
                            static void ResetExitingPopulationDensity    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
                            static void Recon                            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    template< typename T > static void IsRecon                            ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsRecon                          ( DIA_Call_ABC& call, const T& caller );
 
-                           static void EquipLogisticRoute                ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    template< typename T > static void IsLogisticRouteEquipped            ( DIA_Call_ABC& call, const T& caller );
+                           static void EquipLogisticRoute               ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    template< typename T > static void IsLogisticRouteEquipped          ( DIA_Call_ABC& call, const T& caller );
     //@}
 };
 

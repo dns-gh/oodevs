@@ -20,7 +20,7 @@ using namespace gui;
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
 CrossingSitePrototype_ABC::CrossingSitePrototype_ABC( QWidget* parent )
-    : ObjectPrototypeAttributes_ABC( parent, tools::translate( "CrossingSitePrototype_ABC", "Crossing site" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "CrossingSitePrototype_ABC", "Crossing site" ) )
 {
     new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Width:" ), this );
     width_ = new QSpinBox( 0, 10000, 10, this );

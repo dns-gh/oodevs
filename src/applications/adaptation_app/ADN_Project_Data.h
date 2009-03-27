@@ -62,6 +62,8 @@ public:
         ADN_Type_String szReports_;
         ADN_Type_String szModels_;
         ADN_Type_String szMissions_;
+        ADN_Type_String szFire_;
+        ADN_Type_String szMedicalTreatment_ ;
 
         // $$$$ NLD 2007-01-15: files not loaded!
         ADN_Type_String szPathfinder_;

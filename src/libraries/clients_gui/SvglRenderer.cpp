@@ -16,7 +16,7 @@
 #include "svgl/ListLengthFactory.h"
 #include "svgl/PropertyFactory.h"
 #include "svgl/Style.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace geometry;
 using namespace gui;

@@ -13,7 +13,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/AutomatType.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
 // Name: AutomatTemplateElement constructor

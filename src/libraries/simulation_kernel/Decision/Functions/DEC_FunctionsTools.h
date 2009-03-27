@@ -16,9 +16,9 @@
 
 class DIA_Variable_ABC;
 class MIL_KnowledgeGroup;
-class MIL_Army;
+class MIL_Army_ABC;
 class MIL_AgentPion;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
@@ -33,10 +33,10 @@ public:
     //@{
     static DEC_Knowledge_Population* GetKnowledgePopulationFromDia( const DIA_Variable_ABC& diaVar, const MIL_KnowledgeGroup& caller );
     static DEC_Knowledge_Agent*      GetKnowledgeAgentFromDia     ( const DIA_Variable_ABC& diaVar, const MIL_KnowledgeGroup& caller );
-    static DEC_Knowledge_Object*     GetKnowledgeObjectFromDia    ( const DIA_Variable_ABC& diaVar, const MIL_Army& caller );
+    static DEC_Knowledge_Object*     GetKnowledgeObjectFromDia    ( const DIA_Variable_ABC& diaVar, const MIL_Army_ABC& caller );
 
     static MIL_AgentPion*            GetPopulationKnowledgeAgentFromDia ( const DIA_Variable_ABC& diaVar );
-    static MIL_RealObject_ABC*       GetPopulationKnowledgeObjectFromDia( const DIA_Variable_ABC& diaVar );
+    static MIL_Object_ABC*           GetPopulationKnowledgeObjectFromDia( const DIA_Variable_ABC& diaVar );
     //@}
 };
 

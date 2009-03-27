@@ -33,7 +33,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     , shown_( true )
 {
     AddPanel( units_   = new gui::UnitsPanel    ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
-    AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, publisher, staticModel, paramLayer, tools ) );
+    AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, publisher, staticModel, paramLayer, icons, tools ) );
     controllers_.Register( *this );
     AddPanel( intel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
     AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, drawings ) );

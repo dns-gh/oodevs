@@ -13,7 +13,8 @@
 
 #include "Decision/Path/DEC_PathType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include <xeumeuleu/xml.h>
 
@@ -120,7 +121,7 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_Pa
     , rPreferedTerrainCost_              ( 0 )
     , rAvoidedTerrainCost_               ( 0 )
     , bAvoidObjects_                     ( true )
-    , objectCosts_                       ( MIL_RealObjectType::GetObjectTypes().size(), 0 )
+    , objectCosts_                       ( )
     , rAltitudePreference_               ( 0 )
     , rMaximumFuseauDistance_            ( 1000 )
     , rMaximumFuseauDistanceWithAutomata_( 10000 )
@@ -201,14 +202,15 @@ void DEC_Agent_PathClass::ReadObjectsCost( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::ReadObject( xml::xistream& xis )
 {
-    std::string strObjectType;
-    xis >> xml::attribute( "type", strObjectType );
-    const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strObjectType );
-    if( !pType )
-        xis.error( "Unknown object type" );
+    std::string strType( xml::attribute( xis, "type", std::string() ) );
+    
+    const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+    uint id = objectType.GetID();
+    if ( objectCosts_.size() <= id )
+        objectCosts_.resize( id + 1, 0 );
 
-    assert( objectCosts_.size() > pType->GetID() );
-    xis >> xml::attribute( "value", objectCosts_[ pType->GetID() ] );
+    assert( objectCosts_.size() > id );
+    xis >> xml::attribute( "value", objectCosts_[ id ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -350,9 +352,10 @@ const DEC_Agent_PathClass& DEC_Agent_PathClass::GetPathClass( const DEC_PathType
 // Name: DEC_Agent_PathClass::GetObjectCost
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathClass::GetObjectCost( const MIL_RealObjectType& objectType ) const
+MT_Float DEC_Agent_PathClass::GetObjectCost( const MIL_ObjectType_ABC& objectType ) const
 {
-    assert( objectCosts_.size() > objectType.GetID() );
+   if ( objectCosts_.size() <= objectType.GetID() )
+        return 0.;
     return objectCosts_[ objectType.GetID() ];
 }
 

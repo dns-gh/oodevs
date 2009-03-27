@@ -718,6 +718,21 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::FindEquipementCategory( 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::FindEquipementCategory
+// Created: APE 2004-11-19
+// -----------------------------------------------------------------------------
+ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::FindEquipementCategory( const std::string& strCategoryName )
+{
+    for ( IT_DotationInfos_Vector it = dotations_.begin(); it != dotations_.end(); ++it )
+    {
+        ADN_Equipement_Data::CategoryInfo* category = (*it)->FindCategory( strCategoryName );
+        if ( category )
+            return category;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Data::GetNextCatId
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------

@@ -13,9 +13,6 @@
 #include "clients_gui/MinePrototype_ABC.h"
 
 struct ASN1T_MagicActionCreateObject;
-struct ASN1T_ObjectAttributesMineJam;
-struct ASN1T_ObjectAttributesLinearMineArea;
-struct ASN1T_ObjectAttributesDispersedMineArea;
 
 // =============================================================================
 /** @class  MinePrototype
@@ -46,17 +43,10 @@ private:
     MinePrototype& operator=( const MinePrototype& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     ASN1T_MagicActionCreateObject& msg_;
-    ASN1T_ObjectAttributesMineJam* attrMineJam_;
-    ASN1T_ObjectAttributesLinearMineArea* attrLinearMinedArea_;
-    ASN1T_ObjectAttributesDispersedMineArea* attrDispersedMinedArea_;
     //@}
 };
 

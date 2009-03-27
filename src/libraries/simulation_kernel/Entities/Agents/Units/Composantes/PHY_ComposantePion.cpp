@@ -34,7 +34,10 @@
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
+
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/AttritionCapacity.h"
+
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -320,7 +323,7 @@ MT_Float PHY_ComposantePion::GetMaxSpeed() const
 // Name: PHY_ComposantePion::GetMaxSpeed
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMaxSpeed( const MIL_RealObject_ABC& object ) const
+MT_Float PHY_ComposantePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
     return CanMove() ? pType_->GetMaxSpeed( object ) : 0.;
 }
@@ -341,7 +344,7 @@ const PHY_DotationConsumptions* PHY_ComposantePion::GetDotationConsumptions( con
 // Name: PHY_ComposantePion::GetConsumptionMode
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-const PHY_ConsumptionType& PHY_ComposantePion::GetConsumptionMode( const MIL_RealObjectType& objectType ) const
+const PHY_ConsumptionType& PHY_ComposantePion::GetConsumptionMode( const MIL_ObjectType_ABC& objectType ) const
 {
     assert( pType_ );
     return pType_->GetConsumptionMode( objectType );
@@ -390,10 +393,10 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
 // Name: PHY_ComposantePion::ApplyExplosion
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyExplosion( const MIL_RealObjectType& objectType, PHY_FireDamages_Agent& fireDamages )
+void PHY_ComposantePion::ApplyExplosion( const AttritionCapacity& capacity, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
-    ApplyFire( objectType.GetPionAttritionData( pType_->GetProtection() ), fireDamages );
+    ApplyFire( capacity.GetAttritionData( pType_->GetProtection() ), fireDamages );
 }
 
 // -----------------------------------------------------------------------------
@@ -432,20 +435,20 @@ void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotation
 // Name: PHY_ComposantePion::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyContamination( const MIL_NbcAgent& nbcAgent )
+void PHY_ComposantePion::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
 {
     assert( pHumans_ );
-    pHumans_->ApplyContamination( nbcAgent );
+    pHumans_->ApplyContamination( contamination );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyPoisonous
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyPoisonous( const MIL_NbcAgent& nbcAgent )
+void PHY_ComposantePion::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
 {
     assert( pHumans_ );
-    pHumans_->ApplyPoisonous( nbcAgent );
+    pHumans_->ApplyPoisonous( contamination );
 }
 
 // -----------------------------------------------------------------------------
@@ -1202,7 +1205,7 @@ bool PHY_ComposantePion::CanBeTransported() const
 // Name: PHY_ComposantePion::CanConstruct
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanConstruct( const MIL_RealObjectType& objectType ) const
+bool PHY_ComposantePion::CanConstruct( const MIL_ObjectType_ABC& objectType ) const
 {
     assert( pType_ );
     return pType_->CanConstruct( objectType ) && CanBeUsed() && pState_->IsUsable(); 
@@ -1212,7 +1215,7 @@ bool PHY_ComposantePion::CanConstruct( const MIL_RealObjectType& objectType ) co
 // Name: PHY_ComposantePion::CanDestroy
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanDestroy( const MIL_RealObjectType& objectType ) const
+bool PHY_ComposantePion::CanDestroy( const MIL_ObjectType_ABC& objectType ) const
 {
     assert( pType_ );
     return pType_->CanDestroy( objectType ) && CanBeUsed() && pState_->IsUsable(); 
@@ -1222,7 +1225,7 @@ bool PHY_ComposantePion::CanDestroy( const MIL_RealObjectType& objectType ) cons
 // Name: PHY_ComposantePion::CanMine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanMine( const MIL_RealObjectType& objectType ) const
+bool PHY_ComposantePion::CanMine( const MIL_ObjectType_ABC& objectType ) const
 {
     assert( pType_ );
     return pType_->CanMine( objectType ) && CanBeUsed() && pState_->IsUsable(); 
@@ -1232,7 +1235,7 @@ bool PHY_ComposantePion::CanMine( const MIL_RealObjectType& objectType ) const
 // Name: PHY_ComposantePion::CanDemine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanDemine( const MIL_RealObjectType& objectType ) const
+bool PHY_ComposantePion::CanDemine( const MIL_ObjectType_ABC& objectType ) const
 {
     assert( pType_ );
     return pType_->CanDemine( objectType ) && CanBeUsed() && pState_->IsUsable(); 
@@ -1242,7 +1245,7 @@ bool PHY_ComposantePion::CanDemine( const MIL_RealObjectType& objectType ) const
 // Name: PHY_ComposantePion::CanBypass
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanBypass( const MIL_RealObjectType& objectType, bool bObjectIsMined ) const
+bool PHY_ComposantePion::CanBypass( const MIL_ObjectType_ABC& objectType, bool bObjectIsMined ) const
 {
     assert( pType_ );
     return pType_->CanBypass( objectType, bObjectIsMined ) && CanBeUsed() && pState_->IsUsable(); 
@@ -1252,7 +1255,7 @@ bool PHY_ComposantePion::CanBypass( const MIL_RealObjectType& objectType, bool b
 // Name: PHY_ComposantePion::GetConstructionTime
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetConstructionTime( const MIL_RealObjectType& objectType, MT_Float rSizeCoef ) const
+MT_Float PHY_ComposantePion::GetConstructionTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
         return std::numeric_limits< MT_Float >::max();
@@ -1265,7 +1268,7 @@ MT_Float PHY_ComposantePion::GetConstructionTime( const MIL_RealObjectType& obje
 // Name: PHY_ComposantePion::GetDestructionTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetDestructionTime( const MIL_RealObjectType& objectType, MT_Float rSizeCoef ) const
+MT_Float PHY_ComposantePion::GetDestructionTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
         return std::numeric_limits< MT_Float >::max();
@@ -1278,7 +1281,7 @@ MT_Float PHY_ComposantePion::GetDestructionTime( const MIL_RealObjectType& objec
 // Name: PHY_ComposantePion::GetMiningTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMiningTime( const MIL_RealObjectType& objectType ) const
+MT_Float PHY_ComposantePion::GetMiningTime( const MIL_ObjectType_ABC& objectType ) const
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
         return std::numeric_limits< MT_Float >::max();
@@ -1291,7 +1294,7 @@ MT_Float PHY_ComposantePion::GetMiningTime( const MIL_RealObjectType& objectType
 // Name: PHY_ComposantePion::GetDeminingTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetDeminingTime( const MIL_RealObjectType& objectType ) const
+MT_Float PHY_ComposantePion::GetDeminingTime( const MIL_ObjectType_ABC& objectType ) const
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
         return std::numeric_limits< MT_Float >::max();
@@ -1304,7 +1307,7 @@ MT_Float PHY_ComposantePion::GetDeminingTime( const MIL_RealObjectType& objectTy
 // Name: PHY_ComposantePion::GetBypassTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetBypassTime( const MIL_RealObjectType& objectType, MT_Float rSizeCoef, bool bObjectIsMined ) const
+MT_Float PHY_ComposantePion::GetBypassTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef, bool bObjectIsMined ) const
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
         return std::numeric_limits< MT_Float >::max();

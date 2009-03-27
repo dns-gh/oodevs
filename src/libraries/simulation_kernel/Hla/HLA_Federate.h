@@ -37,7 +37,7 @@ class HLA_InteractionManager;
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  HLA_Federate
@@ -59,8 +59,8 @@ public:
     //@{
     bool Join( const std::string& strFederationName );
     void Register  ( MIL_AgentPion& agent );
-    void Register  ( MIL_RealObject_ABC& object );
-    void Unregister( MIL_RealObject_ABC& object );
+    void Register  ( MIL_Object_ABC& object );
+    void Unregister( MIL_Object_ABC& object );
 
     void Step();
     void Tick();
@@ -68,8 +68,8 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_Agent_ABC*      GetLocalAgent ( const hla::ObjectIdentifier& objectId ) const;
-    MIL_RealObject_ABC* GetLocalObject( const hla::ObjectIdentifier& objectId ) const;
+    MIL_Agent_ABC*  GetLocalAgent ( const hla::ObjectIdentifier& objectId ) const;
+    MIL_Object_ABC* GetLocalObject( const hla::ObjectIdentifier& objectId ) const;
     //@}
 
 private:
@@ -89,8 +89,8 @@ private:
     typedef std::map< hla::ObjectIdentifier, MIL_Agent_ABC* > T_AgentMap;
     typedef T_AgentMap::const_iterator                      CIT_AgentMap;
 
-    typedef std::map< hla::ObjectIdentifier, MIL_RealObject_ABC* > T_ObjectMap;
-    typedef T_ObjectMap::const_iterator                          CIT_ObjectMap;
+    typedef std::map< hla::ObjectIdentifier, MIL_Object_ABC* > T_ObjectMap;
+    typedef T_ObjectMap::const_iterator                   CIT_ObjectMap;
     //@}
 
 private:

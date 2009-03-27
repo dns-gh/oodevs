@@ -10,7 +10,7 @@
 #ifndef __CrossingSitePrototype_ABC_h_
 #define __CrossingSitePrototype_ABC_h_
 
-#include "ObjectPrototypeAttributes_ABC.h"
+#include "ObjectAttributePrototype_ABC.h"
 
 class QSpinBox;
 class QCheckBox;
@@ -24,7 +24,7 @@ namespace gui
 */
 // Created: SBO 2006-04-19
 // =============================================================================
-class CrossingSitePrototype_ABC : public ObjectPrototypeAttributes_ABC
+class CrossingSitePrototype_ABC : public ObjectAttributePrototype_ABC
 {
 
 public:

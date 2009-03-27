@@ -20,13 +20,12 @@
 #define __PHY_RoleHLA_Location_h_
 
 #include "PHY_RoleInterface_Location.h"
-#include <hla/Deserializer.h>
+#include "hla/Deserializer.h"
 
-namespace hla
+namespace hla 
 {
-    class AttributeIdentifier;
+    class AttributeIdentifier;    
 }
-
 class MIL_AgentHLA;
 
 // =============================================================================
@@ -49,7 +48,7 @@ public:
     //@{
     virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population );
     virtual void NotifyPopulationCollision( MIL_PopulationConcentration& population );
-    virtual void NotifyObjectCollision    ( MIL_RealObject_ABC& object );
+    virtual void NotifyObjectCollision    ( MIL_Object_ABC& object );
 
     virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object );
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );

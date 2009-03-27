@@ -13,8 +13,7 @@
 
 #include "PHY_SensorTypeObjectData.h"
 
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
@@ -66,13 +65,14 @@ void PHY_SensorTypeObjectData::ReadPosture( xml::xistream& xis, const PHY_Postur
             return;
 
         assert( factors.size() > it->second->GetID() );
-        MT_Float& rFactor = factors[ it->second->GetID() ];
+        MT_Float rFactor = 0;
         xis >> xml::attribute( "value", rFactor );
         if( rFactor < 0 || rFactor > 1 )
-            xis.error( "source-posture-modifier: value not in [0..1]" );
+            xis.error( "distance-modifier: value not in [0..1]" );
+        factors[ it->second->GetID() ] = rFactor;
     }
     else
-        xis.error( "source-posture-modifier: unknow type" );
+        xis.error( "distance-modifier: unknow type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +172,7 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
 // Name: PHY_SensorTypeObject::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_AgentPion& source, const MIL_RealObject_ABC& target, MT_Float /*rSensorHeight*/ ) const
+const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_AgentPion& source, const MIL_Object_ABC& target, MT_Float /*rSensorHeight*/ ) const
 {   
     const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RolePion_Location >().GetPosition();

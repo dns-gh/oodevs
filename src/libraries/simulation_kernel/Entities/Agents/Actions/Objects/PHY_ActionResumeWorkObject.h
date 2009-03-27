@@ -17,7 +17,6 @@
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Objects;
-class MIL_RealObject_ABC;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -32,7 +31,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-    PHY_ActionResumeWorkObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+            PHY_ActionResumeWorkObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionResumeWorkObject();
 
     //! @name Operations

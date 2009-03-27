@@ -36,7 +36,7 @@ class PHY_RadarClass;
 class PHY_RadarType;
 class MIL_Effect_IndirectFire;
 class MIL_Agent_ABC;
-class MIL_Army;
+class MIL_Army_ABC;
 class MIL_KnowledgeGroup;
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
@@ -82,7 +82,7 @@ public:
     void NotifyExternalPerception( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level );
     void NotifyPerception        ( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level, bool bPerceptionRecorded );
     void NotifyPerception        ( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level );
-    void NotifyPerception        ( MIL_RealObject_ABC&          object       , const PHY_PerceptionLevel& level );
+    void NotifyPerception        ( MIL_Object_ABC&              object       , const PHY_PerceptionLevel& level );
     void NotifyPerception        ( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
     void NotifyPerception        ( MIL_PopulationFlow&          flow         , const PHY_PerceptionLevel& level, const T_PointVector& shape );
     void NotifyPerception        ( const MIL_Effect_IndirectFire& flyingShell ) const;    
@@ -152,7 +152,7 @@ public:
 
     //! @name Tools
     //@{
-    const MIL_Army&           GetArmy                      () const;
+    const MIL_Army_ABC&       GetArmy                      () const;
     const MIL_KnowledgeGroup& GetKnowledgeGroup            () const;
     const MIL_AgentPion&      GetPion                      () const;
           MT_Float            GetMaxAgentPerceptionDistance() const;
@@ -162,8 +162,8 @@ public:
     bool IsKnown                    ( const MIL_Agent_ABC&               agent         ) const;
     bool IsIdentified               ( const MIL_Agent_ABC&               agent         ) const;
     bool WasPerceived               ( const MIL_Agent_ABC&               agent         ) const;
-    bool IsKnown                    ( const MIL_RealObject_ABC&          object        ) const;
-    bool IsIdentified               ( const MIL_RealObject_ABC&          object        ) const;
+    bool IsKnown                    ( const MIL_Object_ABC&              object        ) const;
+    bool IsIdentified               ( const MIL_Object_ABC&              object        ) const;
     bool IsIdentified               ( const MIL_PopulationConcentration& concentration ) const;
     //@}
 

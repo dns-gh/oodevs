@@ -16,6 +16,7 @@
 #include "Units/PHY_UnitType.h"
 
 #include "Decision/Functions/DEC_AgentFunctions.h"
+#include "Decision/Functions/DEC_ExtinguishFireFunctions.h"
 #include "Decision/Functions/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/Functions/DEC_KnowledgePopulationFunctions.h"
@@ -56,6 +57,7 @@
 #include "Entities/Agents/Actions/Objects/PHY_ActionBypassObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionOccupyObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionAnimateObject.h"
+#include "Entities/Agents/Actions/Objects/PHY_ActionExtinguishObject.h" 
 #include "Entities/Agents/Actions/Objects/PHY_ActionResumeWorkObject.h"
 #include "Entities/Agents/Actions/Moving/PHY_ActionMove.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Position.h"
@@ -324,6 +326,11 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionControlZone                      >, "DEC_StartControlerZone"                   );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionLoad                             >, "DEC_StartEmbarquement"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionUnload                           >, "DEC_StartDebarquement"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionExtinguishObject                 >, "DEC_StartEteindreObjet"                   );
+    
+    //Incendies
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ExtinguishFireFunctions::GetRangeToExtinguish  , "DEC_Fire_GetRangeToExtinguish"    );
+    //DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ExtinguishFireFunctions::AnalyzeFireClass      , "DEC_Fire_AnalyzeFireClass"        );
 
     // Embarquement / débarquement
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsLoaded                   , "DEC_Agent_EstEmbarque"               );
@@ -494,6 +501,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsRecon                          < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstReconnu"                        );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeOccupied                                     , "DEC_ConnaissanceObjet_PeutEtreOccupe"                    ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeAnimated                                     , "DEC_ConnaissanceObjet_PeutEtreAnime"                     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeBypassed                                     , "DEC_ConnaissanceObjet_PeutEtreContourne"                 );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped          < MIL_AgentPion >, "DEC_ConnaissanceObjet_ItineraireLogEstEquipe"            ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::DamageObject                                      , "DEC_ConnaissanceObjet_Degrader"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity                       , "DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante"  ); 

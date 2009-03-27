@@ -15,7 +15,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObjectPerception, "DEC_BlackBoard_CanContainKnowledgeObjectPerception" )
 
@@ -51,7 +51,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::load( MIL_CheckPointInA
     file >> nNbr;
     while ( nNbr-- )
     {
-        MIL_RealObject_ABC* pObject;
+        MIL_Object_ABC* pObject;
         file >> pObject;
         file >> knowledgeObjectPerceptionMap_[ pObject ];
     }
@@ -81,7 +81,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOut
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectPerception::CreateKnowledgeObjectPerception
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectPerception& DEC_BlackBoard_CanContainKnowledgeObjectPerception::CreateKnowledgeObjectPerception( const MIL_AgentPion& agentPerceiving, MIL_RealObject_ABC& objectPerceived )
+DEC_Knowledge_ObjectPerception& DEC_BlackBoard_CanContainKnowledgeObjectPerception::CreateKnowledgeObjectPerception( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived )
 {
     DEC_Knowledge_ObjectPerception* pKnowledge = new DEC_Knowledge_ObjectPerception( agentPerceiving, objectPerceived );//$$ RAM   
     bool bOut = knowledgeObjectPerceptionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second;

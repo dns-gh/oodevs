@@ -38,6 +38,6 @@ struct Enum_##name : public Enum_ABC< E_##name > {                              
 };
 
 DECLARE_ENUMTYPE( PopulationAttitude )
-DECLARE_ENUMTYPE( ObstacleType )
+DECLARE_ENUMTYPE( DemolitionTargetType )
 
 #endif // __EnumTypes_h_

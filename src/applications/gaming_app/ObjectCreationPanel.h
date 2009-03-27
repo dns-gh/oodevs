@@ -25,6 +25,7 @@ namespace gui
 {
     class ParametersLayer;
     class PanelStack_ABC;
+    class SymbolIcons;
 }
 
 class ObjectPrototype;
@@ -45,8 +46,8 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
 
 public:
     //! @name Constructors/Destructor
-    //@{
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+    //@{    
+            ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, gui::ParametersLayer& layer, gui::SymbolIcons& icons, const kernel::GlTools_ABC& tools );
     virtual ~ObjectCreationPanel();
     //@}
 

@@ -13,7 +13,7 @@
 
 #include "PHY_ObjectExplosionFireResult.h"
 
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_ASN_Messages.h"
@@ -23,9 +23,10 @@
 // Name: PHY_ObjectExplosionFireResult constructor
 // Created: NLD 2004-10-27
 // -----------------------------------------------------------------------------
-PHY_ObjectExplosionFireResult::PHY_ObjectExplosionFireResult( const MIL_RealObject_ABC& object )
+PHY_ObjectExplosionFireResult::PHY_ObjectExplosionFireResult( const MIL_Object_ABC& object )
     : PHY_FireResults_ABC()
-    , object_            ( object )
+    , object_ ( object )
+    , hits_ ( 0 )
 {
 }
 
@@ -36,7 +37,7 @@ PHY_ObjectExplosionFireResult::PHY_ObjectExplosionFireResult( const MIL_RealObje
 PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
 {
     NET_ASN_MsgExplosion asnMsg;
-    asnMsg().object_oid = object_ .GetID();
+    asnMsg().object_oid = object_.GetID();
 
     Serialize( asnMsg().units_damages       );
     Serialize( asnMsg().populations_damages );
@@ -58,3 +59,20 @@ PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ObjectExplosionFireResult::Hit
+// Created: JCR 2008-08-08
+// -----------------------------------------------------------------------------
+void PHY_ObjectExplosionFireResult::Hit()
+{
+    ++hits_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ObjectExplosionFireResult::Hit
+// Created: JCR 2008-08-08
+// -----------------------------------------------------------------------------
+uint PHY_ObjectExplosionFireResult::GetHits() const
+{
+    return hits_;
+}

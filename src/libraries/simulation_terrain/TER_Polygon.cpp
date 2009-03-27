@@ -520,9 +520,9 @@ namespace
         MT_Float rMaxProjection = 0;
         for( CIT_PointVector it = polygon.begin(); it != polygon.end(); ++it )
         {
-            const MT_Vector2D v = *it - from;
+            const MT_Vector2D v = from - *it;
             const MT_Float rProjection = CrossProductTmp( direction, v );
-            if( rProjection < -1 ) // epsilon
+            if( rProjection < -0.001 ) // epsilon
             {
                 bFound = true;
                 if( rMaxProjection > rProjection )

@@ -12,8 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Gen_Object.h"
 
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_ObstacleType.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Network/NET_ASN_Tools.h"
@@ -25,14 +24,14 @@
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object( const ASN1T_PlannedWork& asn )
-    : pType_             ( MIL_RealObjectType::Find( asn.type ) )
+    : pType_             ( &MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( asn.type ) )
     , localisation_      ()
-    , pObstacleType_     ( MIL_ObstacleType::Find( asn.type_obstacle ) )
+    , pObstacleType_     ( asn.type_obstacle )
     , rDensity_          ( asn.densite )
     , nMinesActivityTime_( asn.activity_time )
     , pTC2_              ( 0 )    
 {
-    if( !pType_ || !pObstacleType_ )
+    if( !pType_ )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     if( !NET_ASN_Tools::ReadLocation( asn.position, localisation_ ) )
@@ -94,10 +93,10 @@ void DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
 // -----------------------------------------------------------------------------
 void DEC_Gen_Object::Serialize( ASN1T_PlannedWork& asn ) const
 {
-    asn.type                 = pType_->GetAsnID();
-    asn.type_obstacle        = pObstacleType_->GetAsnID();
+    asn.type                 = pType_->GetName().c_str();
+    asn.type_obstacle        = ( ASN1T_EnumDemolitionTargetType )pObstacleType_;
     asn.tc2                  = pTC2_ ? pTC2_->GetID() : 0;
     asn.densite              = rDensity_;
-    asn.activity_time = nMinesActivityTime_;
+    asn.activity_time        = nMinesActivityTime_;
     NET_ASN_Tools::WriteLocation( localisation_, asn.position );
 }

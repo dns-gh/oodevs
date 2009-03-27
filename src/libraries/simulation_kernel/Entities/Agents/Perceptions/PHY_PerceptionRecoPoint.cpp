@@ -16,7 +16,8 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
@@ -161,7 +162,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const DEC_Knowledge
 // Name: PHY_PerceptionRecoPoint::Compute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MIL_RealObject_ABC& object ) const
+const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MIL_Object_ABC& object ) const
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
         if ( object.Intersect2DWithCircle( (*it)->vCenter_, (*it)->rCurrentSize_ ) )
@@ -196,12 +197,9 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Object_ABC::T_ObjectVector& /*p
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, perceivableObjects );
         for ( TER_Object_ABC::CIT_ObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
-            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
-            if( !object.IsReal() )
-                continue;
-            MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
-            if( realObject.CanBePerceived() )
-                perceiver_.NotifyPerception( realObject, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
+            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );    
+            if( object().CanBePerceived() )
+                perceiver_.NotifyPerception( object, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }
     }
 }

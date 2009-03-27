@@ -58,8 +58,8 @@ public:
     //! @name Main
     //@{
     virtual bool CanCommunicate() const;
-    virtual void Jam           ( const MIL_RealObject_ABC& jammer );
-    virtual void Unjam         ( const MIL_RealObject_ABC& jammer );
+    virtual void Jam           ( const MIL_Object_ABC& jammer );
+    virtual void Unjam         ( const MIL_Object_ABC& jammer );
 
             void ActivateBlackout  ();
             void DeactivateBlackout();
@@ -80,7 +80,7 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::set< const MIL_RealObject_ABC* > T_JammerSet;
+    typedef std::set< const MIL_Object_ABC* > T_JammerSet;
     typedef T_JammerSet::const_iterator           CIT_JammerSet;
     //@}
 

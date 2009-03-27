@@ -11,7 +11,9 @@
 #include "NBCPrototype.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/Iterator.h"
+#include "clients_gui/ValuedListItem.h"
 #include "game_asn/SimulationSenders.h"
+
 
 using namespace kernel;
 using namespace gui;
@@ -20,13 +22,11 @@ using namespace gui;
 // Name: NBCPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-NBCPrototype::NBCPrototype( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg )
-    : NBCPrototype_ABC( parent, resolver )
-    , msg_( msg ) 
-    , nbcArea_( 0 )
-    , nbcCloud_( 0 )
+NBCPrototype::NBCPrototype( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver, int maxToxic, ASN1T_MagicActionCreateObject& msg )
+    : NBCPrototype_ABC( parent, resolver, maxToxic )
+    , msg_      ( msg ) 
 {
-    // NOTHING
+    msg_.attributes.nbc.nbc_agents.n = 0;
 }
     
 // -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ NBCPrototype::NBCPrototype( QWidget* parent, const Resolver_ABC< NBCAgent >& res
 // -----------------------------------------------------------------------------
 NBCPrototype::~NBCPrototype()
 {
-    Clean();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,22 +44,14 @@ NBCPrototype::~NBCPrototype()
 // -----------------------------------------------------------------------------
 void NBCPrototype::Commit()
 {
-    if( msg_.type == EnumObjectType::nuage_nbc )
-    {
-        nbcCloud_ = new ASN1T_ObjectAttributesNbcCloud();
-        nbcCloud_->nbc_agent  = nbcAgents_->GetValue()->GetId();
-        msg_.m.specific_attributesPresent    = 1;
-        msg_.specific_attributes.t           = T_ObjectAttributesSpecific_nbc_cloud;
-        msg_.specific_attributes.u.nbc_cloud = nbcCloud_;
-    }
-    else if( msg_.type == EnumObjectType::zone_nbc )
-    {
-        nbcArea_ = new ASN1T_ObjectAttributesNbcZone();
-        nbcArea_->nbc_agent  = nbcAgents_->GetValue()->GetId();
-        msg_.m.specific_attributesPresent    = 1;
-        msg_.specific_attributes.t           = T_ObjectAttributesSpecific_nbc_zone;
-        msg_.specific_attributes.u.nbc_zone  = nbcArea_;
-    }
+    msg_.attributes.m.nbcPresent = 1;
+    msg_.attributes.nbc.nbc_agents.n = GetAgentCount();
+    msg_.attributes.nbc.nbc_agents.elem = new ASN1T_OID[ msg_.attributes.nbc.nbc_agents.n ];
+    
+    unsigned i = 0;
+    for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
+        if( item->isSelected() )
+            msg_.attributes.nbc.nbc_agents.elem[ i++ ] = static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >()->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -68,6 +60,8 @@ void NBCPrototype::Commit()
 // -----------------------------------------------------------------------------
 void NBCPrototype::Clean()
 {
-    delete nbcArea_; nbcArea_ = 0;
-    delete nbcCloud_; nbcCloud_ = 0;
+    msg_.attributes.m.nbcPresent = 0;
+    if ( msg_.attributes.nbc.nbc_agents.n > 0 )
+        delete [] msg_.attributes.nbc.nbc_agents.elem;
+    msg_.attributes.nbc.nbc_agents.n = 0;
 }

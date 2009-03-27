@@ -20,15 +20,14 @@
 #define __PHY_RoleHLA_Composantes_h_
 
 #include "PHY_RoleInterface_Composantes.h"
-#include <hla/Deserializer.h>
-
-namespace hla
-{
-    class AttributeIdentifier;
-}
+#include "hla/Deserializer.h"
 
 class PHY_ComposanteHLA;
 class HLA_InteractionManager_ABC;
+
+namespace hla {
+    class AttributeIdentifier;    
+}
 
 // =============================================================================
 /** @class  PHY_RoleHLA_Composantes
@@ -42,7 +41,7 @@ class PHY_RoleHLA_Composantes : public PHY_RoleInterface_Composantes
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleHLA_Composantes( MT_RoleContainer& role, HLA_InteractionManager_ABC& interactionManager );
+            PHY_RoleHLA_Composantes( MT_RoleContainer& role, HLA_InteractionManager_ABC& interactionManager );
     virtual ~PHY_RoleHLA_Composantes();
     //@}
 
@@ -65,7 +64,7 @@ public:
     virtual void ApplyPopulationFire        ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
     virtual void ApplyDirectFire            ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
     virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
-    virtual void ApplyExplosion             ( const MIL_RealObjectType& objectType        , PHY_FireResults_ABC& result );
+    virtual void ApplyExplosion             ( const AttritionCapacity& objectType        , PHY_FireResults_ABC& result );
     //@}
 
     //! @name Accessors

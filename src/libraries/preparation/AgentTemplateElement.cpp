@@ -13,7 +13,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "AgentsModel.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
 // Name: AgentTemplateElement constructor

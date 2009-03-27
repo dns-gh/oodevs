@@ -28,7 +28,7 @@ class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
 class MIL_Automate;
-class MIL_Army;
+class MIL_Army_ABC;
 class PHY_PerceptionLevel;
 class PHY_Posture;
 class PHY_SensorTypeAgent;
@@ -107,11 +107,13 @@ public:
           MT_Float                       GetMajorOperationalState () const;
           MIL_Agent_ABC&                 GetAgentKnown            () const;
     const PHY_NatureAtlas&               GetNatureAtlas           () const;
-    const MIL_Army*                      GetArmy                  () const;
+    const MIL_Army_ABC*                  GetArmy                  () const;
     const PHY_PerceptionLevel&           GetMaxPerceptionLevel    () const;
     const PHY_PerceptionLevel&           GetCurrentPerceptionLevel() const;
     const DEC_Knowledge_AgentComposante* GetMajorComposante       () const;
           bool                           IsHuman                  () const; // $$$$ NLD 2007-04-19: A CHIER
+    E_Tristate                           IsAnEnemy                ( const MIL_Army_ABC& army ) const;
+    E_Tristate                           IsAFriend                ( const MIL_Army_ABC& army ) const;
     //@}
 
     //! @name Perception

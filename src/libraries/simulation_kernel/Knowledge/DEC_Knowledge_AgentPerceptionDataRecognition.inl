@@ -20,16 +20,6 @@ uint DEC_Knowledge_AgentPerceptionDataRecognition::GetTimeLastUpdate() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetArmy
-// Created: NLD 2004-11-10
-// -----------------------------------------------------------------------------
-inline
-const MIL_Army* DEC_Knowledge_AgentPerceptionDataRecognition::GetArmy() const
-{
-    return pArmy_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataRecognition::IsPC
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------

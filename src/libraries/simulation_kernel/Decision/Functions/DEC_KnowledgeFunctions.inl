@@ -14,7 +14,9 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Objects/MIL_RealObjectTypeFilter.h"
+
+#include "Entities/Objects/MIL_ObjectFilter.h"
+
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
@@ -116,10 +118,10 @@ void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( DIA_Call_ABC& call, cons
 template< typename T > 
 void DEC_KnowledgeFunctions::GetObjects( DIA_Call_ABC& call, const T& caller )
 {
-    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 0 );
+    MIL_ObjectFilter filter( call.GetParameters(), 0 );
     
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjects( knowledges, objectsFilter );
+    caller.GetArmy().GetKnowledge().GetObjects( knowledges, filter );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
@@ -136,10 +138,10 @@ void DEC_KnowledgeFunctions::GetObjectsInCircle( DIA_Call_ABC& call, const T& ca
     const MT_Vector2D* pCenter = call.GetParameter( 0 ).ToUserPtr( pCenter );
     assert( pCenter );
 
-    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 2 );
+    MIL_ObjectFilter filter( call.GetParameters(), 2 );
     
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, objectsFilter, *pCenter, call.GetParameter( 1 ).ToFloat() );
+    caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, call.GetParameter( 1 ).ToFloat() );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
@@ -157,10 +159,10 @@ void DEC_KnowledgeFunctions::GetObjectsInZone( DIA_Call_ABC& call, const T& call
     const TER_Localisation* pLoc = call.GetParameter( 0 ).ToUserPtr( pLoc );
     assert( pLoc );
 
-    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 1 );
+    MIL_ObjectFilter filter( call.GetParameters(), 1 );
     
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, objectsFilter, *pLoc );
+    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pLoc );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
@@ -173,10 +175,10 @@ void DEC_KnowledgeFunctions::GetObjectsInZone( DIA_Call_ABC& call, const T& call
 template< typename T > 
 void DEC_KnowledgeFunctions::GetObjectsInFuseau( DIA_Call_ABC& call, const T& caller )
 {
-    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 0 );
+    MIL_ObjectFilter filter( call.GetParameters(), 0 );
     
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, objectsFilter, caller.GetFuseau() );
+    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, caller.GetFuseau() );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );

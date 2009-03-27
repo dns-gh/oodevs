@@ -11,7 +11,9 @@
 #include "CrossingSitePrototype.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Object_ABC.h"
-#include "preparation/CrossingSiteAttributes.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "preparation/CrossingSiteAttribute.h"
+#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 using namespace gui;
@@ -33,7 +35,7 @@ CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, Object_ABC*& crea
 // -----------------------------------------------------------------------------
 CrossingSitePrototype::~CrossingSitePrototype()
 {
-    Clean();
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -42,15 +44,16 @@ CrossingSitePrototype::~CrossingSitePrototype()
 // -----------------------------------------------------------------------------
 void CrossingSitePrototype::Commit()
 {
-    if( !creation_ )
-        return;
-
-    CrossingSiteAttributes& attr = static_cast< CrossingSiteAttributes& >( creation_->Get< CrossingSiteAttributes_ABC >() );
-
-    attr.SetWidth( width_->value() );
-    attr.SetDepth( depth_->value() );
-    attr.SetFlowSpeed( speed_->value() );
-    attr.SetConstruction( needsConstruction_->isOn() );
+    if( creation_ )
+    {
+        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
+        CrossingSiteAttribute* attribute = new CrossingSiteAttribute( dico );
+            attribute->SetWidth( width_->value() );
+            attribute->SetDepth( depth_->value() );
+            attribute->SetFlowSpeed( speed_->value() );
+            attribute->SetConstruction( needsConstruction_->isOn() );        
+        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+    }
 }
 
 // -----------------------------------------------------------------------------

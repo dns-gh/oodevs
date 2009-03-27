@@ -13,11 +13,17 @@
 #include "DEC_KnowledgeObjectFunctions.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_SiteDecontamination.h"
-#include "Entities/Objects/MIL_ZoneNBC.h"
-#include "Entities/Objects/MIL_ItineraireLogistique.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_RealObjectTypeFilter.h"
+#include "Entities/Objects/Object.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+
+#include "Entities/Objects/ContaminationCapacity.h"
+#include "Entities/Objects/DecontaminationCapacity.h"
+#include "Entities/Objects/OccupantAttribute.h"
+#include "Entities/Objects/PopulationAttribute.h"
+#include "Entities/Objects/SupplyRouteAttribute.h"
+
+#include "Entities/Objects/MIL_ObjectFilter.h"
+
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Decision/DEC_Tools.h"
@@ -38,6 +44,21 @@ void DEC_KnowledgeObjectFunctions::Recon( DIA_Call_ABC& call, const MIL_AgentPio
     pKnowledge->Recon( callerAgent );
 }
 
+namespace 
+{
+    template< typename Capacity >
+    Capacity* IsValidObjectCapacity( DEC_Knowledge_Object* pKnowledge )
+    {
+        if ( !pKnowledge )
+            return 0;
+
+        MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+        if ( pObject )
+            return pObject->Retrieve< Capacity >();
+        return 0;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::QueueForDecontamination
 // Created: NLD 2004-11-02
@@ -45,13 +66,14 @@ void DEC_KnowledgeObjectFunctions::Recon( DIA_Call_ABC& call, const MIL_AgentPio
 void DEC_KnowledgeObjectFunctions::QueueForDecontamination( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
-    if( !pKnowledge || !pKnowledge->GetObjectKnown() || pKnowledge->GetObjectKnown()->GetType() != MIL_RealObjectType::siteDecontamination_ )
+    DecontaminationCapacity* pCapacity = IsValidObjectCapacity< DecontaminationCapacity >( pKnowledge );
+    if( !pCapacity )
     {
         call.GetResult().SetValue( eQueryInvalid );
         return;    
     }
     call.GetResult().SetValue( eQueryValid );
-    static_cast< MIL_SiteDecontamination* >( pKnowledge->GetObjectKnown() )->QueueForDecontamination( callerAgent );
+    pCapacity->QueueForDecontamination( callerAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,13 +83,14 @@ void DEC_KnowledgeObjectFunctions::QueueForDecontamination( DIA_Call_ABC& call, 
 void DEC_KnowledgeObjectFunctions::CanBeAnimated( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
-    if( !pKnowledge || !pKnowledge->GetObjectKnown() )
+    if( !( pKnowledge && pKnowledge->GetObjectKnown() ) )
     {
         call.GetResult().SetValue( false );
         return;    
     }
-    bool bOut = pKnowledge->GetObjectKnown()->CanBeAnimatedBy( callerAgent );
-    call.GetResult().SetValue( bOut );
+
+    MIL_Object_ABC& object = *pKnowledge->GetObjectKnown();
+    call.GetResult().SetValue( object().CanBeAnimatedBy( callerAgent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,20 +102,21 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( DIA_Call_ABC& call, const 
     assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
     const TER_Localisation* pZoneDecontaminated = call.GetParameter( 0 ).ToUserPtr( pZoneDecontaminated );
 
-    MIL_RealObjectTypeFilter objectsFilter;
-    objectsFilter.Set( MIL_RealObjectType::zoneNBC_ );
+    MIL_ObjectFilter filter;
+    filter.Set( "zone nbc" ); // $$$$ TODO JCR ?? 
+    filter.Set( "nuage nbc" ); // $$$$ TODO JCR ?? 
 
     T_KnowledgeObjectVector knowledges;
-    callerAgent.GetArmy().GetKnowledge().GetObjects( knowledges, objectsFilter );
-
+    callerAgent.GetArmy().GetKnowledge().GetObjects( knowledges, filter );
     for( CIT_KnowledgeObjectVector it = knowledges.begin(); it != knowledges.end(); ++it )
     {
-        DEC_Knowledge_Object* pKnowledge = *it;
-        if( !pKnowledge->GetObjectKnown() )
-            continue;
-
-        assert( pKnowledge->GetObjectKnown()->GetType() == MIL_RealObjectType::zoneNBC_ );
-        static_cast< MIL_ZoneNBC* >( pKnowledge->GetObjectKnown() )->DecontaminateZone( *pZoneDecontaminated );
+        if ( pZoneDecontaminated->IsIntersecting( (*it)->GetLocalisation() ) )
+        {
+            ContaminationCapacity* pCapacity = IsValidObjectCapacity< ContaminationCapacity >( *it );
+            if( !pCapacity )
+                continue;
+            pCapacity->DecontaminateZone( *pZoneDecontaminated );
+        }
     }
 }
 
@@ -103,18 +127,26 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( DIA_Call_ABC& call, const 
 void DEC_KnowledgeObjectFunctions::DamageObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
-    if( !pKnowledge || !pKnowledge->GetObjectKnown() || !pKnowledge->GetObjectKnown()->CanBePerceived() )
+    if( !( pKnowledge && pKnowledge->GetObjectKnown() ) )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
         return;
     }
 
-    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
-    call.GetParameter( 1 ).SetValue( eQueryValid );
+    MIL_Object_ABC& object = *pKnowledge->GetObjectKnown();
+    if ( object().CanBePerceived() )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryValid );
 
-    float rDamageFactor = call.GetParameter( 2 ).ToFloat();
-    pObject->Destroy( rDamageFactor );
+        float rDamageFactor = call.GetParameter( 2 ).ToFloat();
+        object().Destroy( rDamageFactor );
+    }
+    else 
+    { 
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -123,13 +155,73 @@ void DEC_KnowledgeObjectFunctions::DamageObject( DIA_Call_ABC& call, const MIL_A
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeObjectFunctions::CanBeOccupied( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
-    if( !pKnowledge || !pKnowledge->GetObjectKnown() )
+    MIL_Object_ABC*         pObject;
+    DEC_Knowledge_Object*   pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    if( pKnowledge && ( pObject = pKnowledge->GetObjectKnown() ) )
     {
-        call.GetResult().SetValue( false );
-        return;    
+        const OccupantAttribute* pAttribute = pObject->RetrieveAttribute< OccupantAttribute >();
+        if( pAttribute )
+        {
+            const MIL_Agent_ABC* occupant = pAttribute->GetOccupant();
+            call.GetResult().SetValue( !occupant || occupant == &callerAgent );
+            return;
+        }
     }
-    call.GetResult().SetValue( pKnowledge->GetObjectKnown()->CanBeOccupiedBy( callerAgent ) );
+    call.GetResult().SetValue( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::CanBeBypassed
+// Created: JCR 2008-06-03
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeObjectFunctions::CanBeBypassed( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    
+    if( pKnowledge )
+    {
+        MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+        if( pObject )
+            return call.GetResult().SetValue( (*pObject)().CanBeBypassed() );
+    }
+    call.GetResult().SetValue( (int)0 );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::CanBeMined
+// Created: JCR 2008-06-03
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeObjectFunctions::CanBeMined( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    if( !( pKnowledge && pKnowledge->GetObjectKnown() ) )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
+        return;
+    }
+    MIL_Object_ABC& object = *pKnowledge->GetObjectKnown();
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( object().CanBeMined() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::CanBeActivated
+// Created: JCR 2008-06-03
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeObjectFunctions::CanBeActivated( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    
+    if( !( pKnowledge && pKnowledge->GetObjectKnown() ) )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
+        return;
+    }
+    MIL_Object_ABC& object = *pKnowledge->GetObjectKnown();
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( object().CanBeActivated() );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,15 +230,21 @@ void DEC_KnowledgeObjectFunctions::CanBeOccupied( DIA_Call_ABC& call, const MIL_
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeObjectFunctions::EquipLogisticRoute( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
-    if( !pKnowledge || pKnowledge->GetType() != MIL_RealObjectType::itineraireLogistique_ || !pKnowledge->GetObjectKnown() )
+	DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+
+    MIL_Object_ABC* pObject = 0;
+    if( pKnowledge && ( pObject = pKnowledge->GetObjectKnown() ) )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        return;
+        SupplyRouteAttribute* pAttribute = pObject->RetrieveAttribute< SupplyRouteAttribute >();
+        if( pAttribute )
+        {
+            call.GetParameter( 1 ).SetValue( eQueryValid );
+            pAttribute->Equip();
+            return;
+        }
     }
-    MIL_ItineraireLogistique& itiLog = static_cast< MIL_ItineraireLogistique& >( *pKnowledge->GetObjectKnown() );
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    itiLog.Equip();
+    call.GetParameter( 1 ).SetValue( eQueryInvalid );
+    return;
 }
 
 
@@ -157,16 +255,18 @@ void DEC_KnowledgeObjectFunctions::EquipLogisticRoute( DIA_Call_ABC& call, MIL_A
 void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
-    if( !pKnowledge || !pKnowledge->GetObjectKnown() )
+    MIL_Object_ABC* pObject;
+    if( pKnowledge && ( pObject = pKnowledge->GetObjectKnown() ) )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        return;
+        PopulationAttribute* pAttribute = pObject->RetrieveAttribute< PopulationAttribute >();
+        if( pAttribute )
+        {
+            call.GetParameter( 1 ).SetValue( eQueryValid );
+            pAttribute->SetDensity( call.GetParameter( 2 ).ToFloat() );
+            return;
+        }
     }
-
-    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-
-    pObject->SetExitingPopulationDensity( call.GetParameter( 2 ).ToFloat() );
+    call.GetParameter( 1 ).SetValue( eQueryInvalid );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,14 +276,16 @@ void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( DIA_Call_ABC& ca
 void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
-    if( !pKnowledge || !pKnowledge->GetObjectKnown() )
+    MIL_Object_ABC* pObject;
+    if( pKnowledge && ( pObject = pKnowledge->GetObjectKnown() ) )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        return;
+        PopulationAttribute* pAttribute = pObject->RetrieveAttribute< PopulationAttribute >();
+        if( pAttribute )
+        {
+            call.GetParameter( 1 ).SetValue( eQueryValid );
+            pAttribute->Reset();
+            return;
+        }
     }
-
-    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-
-    pObject->ResetExitingPopulationDensity();
+    call.GetParameter( 1 ).SetValue( eQueryInvalid );
 }

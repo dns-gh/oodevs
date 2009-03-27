@@ -28,6 +28,7 @@ Contaminations::Contaminations( Controller& controller, const Resolver_ABC< NBCA
     , resolver_( resolver )
     , bNbcProtectionSuitWorn_( false )
     , nContamination_( 0 )
+    , quantity_( 0 )
 {
     CreateDictionary( dico );
 }
@@ -50,6 +51,7 @@ void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
     dico.Register( *this, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_ );
     dico.Register( *this, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_ );
     dico.Register( *this, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_ );
+    dico.Register( *this, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +61,10 @@ void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
 void Contaminations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.etat_contaminationPresent )
-        nContamination_ = message.etat_contamination;
+    {
+        nContamination_ = message.etat_contamination.percentage;
+        quantity_ = message.etat_contamination.quantity;
+    }
 
     if( message.m.contamine_par_agents_nbcPresent )
     {
@@ -85,7 +90,8 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "NBC", "NBC suit:" ), 
                         bNbcProtectionSuitWorn_ ? tools::translate( "NBC", "on" ) : tools::translate( "NBC", "off" ) ) 
                 .Display( tools::translate( "NBC", "Contaminating agents:" ), contaminatingNbcAgents_ )
-                .Display( tools::translate( "NBC", "Contamination level:" ), nContamination_ );
+                .Display( tools::translate( "NBC", "Contamination level:" ), nContamination_ )
+                .Display( tools::translate( "NBC", "Contamination quantity:" ), quantity_ );
 }
 
 // -----------------------------------------------------------------------------

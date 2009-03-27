@@ -1,0 +1,116 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2008 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __NBCAttribute_h_
+#define __NBCAttribute_h_
+
+#include "ToxicAttribute_ABC.h"
+#include "MIL_ToxicEffectManipulator.h"
+#include "UpdatableAttribute_ABC.h"
+
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+class MIL_NbcAgentType;
+
+namespace hla 
+{
+    class Deserializer;    
+}
+class HLA_UpdateFunctor;
+
+// =============================================================================
+/** @class  NBCAttribute
+    @brief  NBCAttribute
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
+class NBCAttribute 
+    : public ObjectAttribute_ABC
+    , public UpdatableAttribute_ABC
+{   
+public:
+    //! @name Types
+    //@{
+    enum E_Form
+    {
+        eLiquid,
+        eGas
+    };
+    typedef std::vector< const MIL_NbcAgentType* > T_NBCAgents;
+    typedef T_NBCAgents::const_iterator CIT_NBCAgents;    
+    //@}
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             NBCAttribute();
+    explicit NBCAttribute( xml::xistream& xis );
+    virtual ~NBCAttribute();
+    //@}
+
+    //! @name Knowledge
+    //@{    
+    void Instanciate( DEC_Knowledge_Object& object ) const;      
+    //@}
+
+    //! @name Network update
+    //@{
+    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
+    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;  
+    //@}
+
+    //! @name ODB
+    //@{
+    void WriteODB( xml::xostream& xos ) const;
+    //@}
+
+    //! @name HLA
+    //@{
+    void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
+    void Serialize( HLA_UpdateFunctor& functor ) const;
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()    
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    const T_NBCAgents&  GetNBCAgents() const;
+    bool                IsContaminating() const;
+    bool                IsPoisonous() const;
+    //@}
+
+    //! @name Copy
+    //@{
+    NBCAttribute& operator=( const NBCAttribute& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void ReadNBCAgent( xml::xistream& xis );
+    bool ReadAgents( const std::string& strAgents );
+    std::string WriteAgents() const;
+    template< typename T > bool Insert( const T& type );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T_NBCAgents     agents_;
+    E_Form          nForm_;
+    unsigned int    danger_;
+    //@}
+};
+
+#endif // __NBCAttribute_h_

@@ -22,7 +22,6 @@ using namespace gui;
 CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg )
     : CrossingSitePrototype_ABC( parent )
     , msg_( msg )
-    , attr_( 0 )
 {
     // NOTHING
 }
@@ -33,7 +32,7 @@ CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, ASN1T_MagicAction
 // -----------------------------------------------------------------------------
 CrossingSitePrototype::~CrossingSitePrototype()
 {
-    Clean();
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -42,18 +41,11 @@ CrossingSitePrototype::~CrossingSitePrototype()
 // -----------------------------------------------------------------------------
 void CrossingSitePrototype::Commit()
 {
-    if( msg_.type != EnumObjectType::site_franchissement )
-        return;
-
-    attr_ = new ASN1T_ObjectAttributesCrossingSite();
-    
-    attr_->width                 = width_->value();
-    attr_->depth                 = depth_->value();
-    attr_->flow_rate             = speed_->value();
-    attr_->banks_require_fitting = needsConstruction_->isOn();
-    msg_.m.specific_attributesPresent    = 1;
-    msg_.specific_attributes.t           = T_ObjectAttributesSpecific_crossing_site;
-    msg_.specific_attributes.u.crossing_site = attr_;
+    msg_.attributes.m.crossing_sitePresent = 1;
+    msg_.attributes.crossing_site.width                 = width_->value();
+    msg_.attributes.crossing_site.depth                 = depth_->value();
+    msg_.attributes.crossing_site.flow_rate             = speed_->value();
+    msg_.attributes.crossing_site.banks_require_fitting = needsConstruction_->isOn();    
 }
 
 // -----------------------------------------------------------------------------
@@ -62,5 +54,5 @@ void CrossingSitePrototype::Commit()
 // -----------------------------------------------------------------------------
 void CrossingSitePrototype::Clean()
 {
-    delete attr_; attr_ = 0;
+    msg_.attributes.m.crossing_sitePresent = 0;
 }

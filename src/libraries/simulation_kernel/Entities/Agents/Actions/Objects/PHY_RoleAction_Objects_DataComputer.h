@@ -16,7 +16,7 @@
 
 #include "PHY_RoleAction_Objects_DataComputerPionData.h"
 
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_AgentPion;
 class PHY_ComposantePion;
 
@@ -29,7 +29,7 @@ class PHY_RoleAction_Objects_DataComputer
     MT_COPYNOTALLOWED( PHY_RoleAction_Objects_DataComputer )
 
 public:
-     PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_RealObject_ABC& object );
+     PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_Object_ABC& object );
     ~PHY_RoleAction_Objects_DataComputer();
 
 
@@ -67,7 +67,7 @@ private:
 private:
           MIL_AgentPion&                                            pion_;
     const PHY_RoleAction_Objects_DataComputerPionData::E_Operation  operation_;
-    const MIL_RealObject_ABC&                                       object_;
+    const MIL_Object_ABC&                                       object_;
           T_PionDataVector                                          pionsData_;
 
 };

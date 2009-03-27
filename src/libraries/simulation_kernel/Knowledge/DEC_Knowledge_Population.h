@@ -22,7 +22,7 @@ class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 class MIL_KnowledgeGroup;
 class MIL_AgentPion;
-class MIL_Army;
+class MIL_Army_ABC;
 class DEC_Knowledge_PopulationConcentration;
 class DEC_Knowledge_PopulationFlow;
 class DEC_Knowledge_PopulationPerception;
@@ -78,7 +78,7 @@ public:
     //! @name Accessors
     //@{
           uint                    GetID             () const;
-    const MIL_Army&               GetArmy           () const;
+    const MIL_Army_ABC&           GetArmy           () const;
     const MIL_KnowledgeGroup&     GetKnowledgeGroup () const;
           MIL_Population&         GetPopulationKnown() const;
           MT_Float                GetDangerosity    ( const MIL_AgentPion&    target        ) const;

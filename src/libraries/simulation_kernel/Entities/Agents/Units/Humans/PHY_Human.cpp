@@ -18,10 +18,12 @@
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_NbcAgent.h"
+#include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Singletons.h"
+
+#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_GUID( PHY_Human, "PHY_Human" )
 
@@ -253,16 +255,16 @@ bool PHY_Human::ApplyWound( const PHY_HumanWound& newWound )
 // Name: PHY_Human::ApplyPoisonous
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
-bool PHY_Human::ApplyPoisonous( const MIL_NbcAgent& nbcAgent )
+bool PHY_Human::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
 {
-    return ApplyWound( nbcAgent.GetRandomWound() );
+    return contamination.ApplyRandomWound( boost::bind( &PHY_Human::ApplyWound, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::ApplyContamination
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
-void PHY_Human::ApplyContamination( const MIL_NbcAgent& /*nbcAgent*/ )
+void PHY_Human::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
 {
     if( !IsUsable() )
         return;

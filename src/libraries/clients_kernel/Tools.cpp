@@ -200,9 +200,9 @@ QString tools::ToString( E_PopulationAttitude nType )
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_ObstacleType nType )
+QString tools::ToString( E_DemolitionTargetType nType )
 {
-    return ENT_Tr::ConvertFromObstacleType( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromDemolitionTargetType( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -359,15 +359,6 @@ QString tools::ToString( E_LocationType nType )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::ObjectTypeFromString
-// Created: AGE 2007-06-19
-// -----------------------------------------------------------------------------
-E_ObjectType tools::ObjectTypeFromString( const std::string& type )
-{
-    return ENT_Tr::ConvertToObjectType( type );
-}
-
-// -----------------------------------------------------------------------------
 // Name: tools::DotationFamilyFromString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
@@ -392,17 +383,6 @@ E_NatureLevel tools::NatureLevelFromString( const std::string& type )
 E_LocationType tools::LocationFromString( const std::string& type )
 {
     return ENT_Tr::ConvertToLocationType( type );
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::TranslateObjectType
-// Created: AGE 2008-02-06
-// -----------------------------------------------------------------------------
-QString tools::TranslateObjectType( const std::string& xmlType )
-{
-    return ENT_Tr::ConvertFromObjectType(
-                ENT_Tr::ConvertToObjectType( xmlType ), ENT_Tr::eToTr
-                ).c_str();
 }
 
 namespace 

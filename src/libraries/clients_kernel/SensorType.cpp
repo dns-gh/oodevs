@@ -113,7 +113,7 @@ void SensorType::ReadDistance( xml::xistream& xis )
 // Name: SensorType::GetPostureSourceFactor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-float SensorType::GetPostureSourceFactor( const Agent_ABC& agent ) const
+float SensorType::GetPostureSourceFactor( const Agent_ABC& /*agent*/ ) const
 {
     return 1.f;
 //    return agent.Get< Attributes_ABC >().ComputePostureFactor( postureSourceFactors_ );

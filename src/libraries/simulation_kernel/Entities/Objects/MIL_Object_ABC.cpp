@@ -12,33 +12,42 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_Object_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "MIL_ObjectInteraction.h"
+#include "MIL_AgentServer.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "simulation_terrain/TER_World.h"
+#include "MIL_ObjectType_ABC.h"
+#include "MIL_ObjectFactory.h"
 
 #include "Entities/MIL_Army.h"
+
+using namespace hla;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Object_ABC constructor
 // Created: NLD 2002-12-12
 //-----------------------------------------------------------------------------
-MIL_Object_ABC::MIL_Object_ABC( MIL_Army& army )
+MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC& army, const MIL_ObjectType_ABC& type )
     : pArmy_                ( &army )
+    , pType_                ( &type )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
-{
+{    
+    pArmy_->RegisterObject( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC constructor
-// Created: NLD 2006-10-23
+// Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
 MIL_Object_ABC::MIL_Object_ABC()
     : pArmy_                ( 0 )
+    , pType_                ( 0 )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
 {
-
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -47,8 +56,9 @@ MIL_Object_ABC::MIL_Object_ABC()
 //-----------------------------------------------------------------------------
 MIL_Object_ABC::~MIL_Object_ABC()
 {
-    assert( agentInsideSet_.empty() );
-    TER_Object_ABC::Terminate(); //$$$ Ne devrait pas être appelé (Cf MarkForDestruction() )
+    if ( !bMarkedForDestruction_ ) // Should already be done
+        MarkForDestruction();
+    pArmy_->UnregisterObject( *this );
 }
 
 // =============================================================================
@@ -81,13 +91,13 @@ void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
 void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< TER_Object_ABC >( *this );
+    std::string type;
+    file >> type;
+    pType_ = &MIL_ObjectFactory::FindType( type );
+
     file >> pArmy_
          >> bMarkedForDestruction_
-         >> bReadyForDeletion_
-         >> agentInsideSet_
-         >> agentEnteringSet_
-         >> agentExitingSet_
-         >> agentMovingInsideSet_;  
+         >> bReadyForDeletion_;
 }
 
 // -----------------------------------------------------------------------------
@@ -97,13 +107,20 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const uint )
 void MIL_Object_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< TER_Object_ABC >( *this );
+    file << pType_->GetName();
     file << pArmy_
          << bMarkedForDestruction_
-         << bReadyForDeletion_
-         << agentInsideSet_
-         << agentEnteringSet_
-         << agentExitingSet_
-         << agentMovingInsideSet_;
+         << bReadyForDeletion_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::GetType
+// Created: JCR 2008-06-03
+// -----------------------------------------------------------------------------
+const MIL_ObjectType_ABC& MIL_Object_ABC::GetType() const
+{
+    assert( pType_ );
+    return *pType_;
 }
 
 //=============================================================================
@@ -132,7 +149,7 @@ bool MIL_Object_ABC::CanInteractWith( const MIL_Agent_ABC& /*agent*/ ) const
 // Name: MIL_Object_ABC::CanInteractWith
 // Created: NLD 2005-12-10
 // -----------------------------------------------------------------------------
-bool MIL_Object_ABC::CanInteractWith( const MIL_Population& /*population*/ ) const
+bool MIL_Object_ABC::CanInteractWith( const MIL_PopulationElement_ABC& /*population*/ ) const
 {
     return CanCollideWithEntity();
 }
@@ -142,6 +159,27 @@ bool MIL_Object_ABC::CanInteractWith( const MIL_Population& /*population*/ ) con
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::NotifyPopulationMovingInside
+// Created: JCR 2008-06-06
+// -----------------------------------------------------------------------------
+void MIL_Object_ABC::NotifyPopulationMovingInside( MIL_PopulationElement_ABC& population )
+{
+    if( !CanCollideWithEntity() )
+        return;
+    interaction_.NotifyAgentMovingInside( population );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::NotifyPopulationMovingOutside
+// Created: JCR 2008-06-06
+// -----------------------------------------------------------------------------
+void MIL_Object_ABC::NotifyPopulationMovingOutside( MIL_PopulationElement_ABC& population )
+{
+    interaction_.NotifyAgentMovingOutside( population );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::NotifyAgentMovingInside
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
@@ -149,11 +187,7 @@ void MIL_Object_ABC::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
 {
     if( !CanCollideWithEntity() )
         return;
-
-    if( agentInsideSet_.insert( &agent ).second )
-        agentEnteringSet_.insert( &agent );
-    agentMovingInsideSet_.insert( &agent );
-    agentExitingSet_.erase ( &agent );
+    interaction_.NotifyAgentMovingInside( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,8 +196,7 @@ void MIL_Object_ABC::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::NotifyAgentMovingOutside( MIL_Agent_ABC& agent )
 {
-    if( agentInsideSet_.erase ( &agent ) == 1 )
-        agentExitingSet_.insert( &agent );   
+    interaction_.NotifyAgentMovingOutside( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,10 +207,7 @@ void MIL_Object_ABC::NotifyAgentPutInside( MIL_Agent_ABC& agent )
 {
     if( !CanCollideWithEntity() )
         return;
-
-    if( agentInsideSet_.insert( &agent ).second )
-        agentEnteringSet_.insert( &agent );
-    agentExitingSet_.erase ( &agent );
+    interaction_.NotifyAgentPutInside( agent );    
 }
 
 // -----------------------------------------------------------------------------
@@ -186,8 +216,7 @@ void MIL_Object_ABC::NotifyAgentPutInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
 {
-    if( agentInsideSet_ .erase( &agent ) == 1 )
-        agentExitingSet_.insert( &agent );    
+    interaction_.NotifyAgentPutOutside( agent );
 }
 
 // =============================================================================
@@ -210,23 +239,8 @@ void MIL_Object_ABC::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::ProcessEvents()
 {
-    CIT_AgentSet itAgent;
-   
-    for( itAgent = agentEnteringSet_.begin(); itAgent != agentEnteringSet_.end(); ++itAgent )
-        ProcessAgentEntering( **itAgent );
-
-    for( itAgent = agentExitingSet_.begin(); itAgent != agentExitingSet_.end(); ++itAgent )
-        ProcessAgentExiting( **itAgent );
-
-    for( itAgent = agentMovingInsideSet_.begin(); itAgent != agentMovingInsideSet_.end(); ++itAgent )
-        ProcessAgentMovingInside( **itAgent );
-
-    for( itAgent = agentInsideSet_.begin(); itAgent != agentInsideSet_.end(); ++itAgent )
-        ProcessAgentInside( **itAgent );
-
-    agentEnteringSet_    .clear();
-    agentExitingSet_     .clear();
-    agentMovingInsideSet_.clear();
+    Update( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
+    interaction_.ProcessInteractionEvents( *this );
 }
 
 // =============================================================================
@@ -240,30 +254,7 @@ void MIL_Object_ABC::ProcessEvents()
 void MIL_Object_ABC::UpdateLocalisation( const TER_Localisation& newLocalisation )
 {
     TER_Object_ABC::UpdateLocalisation( newLocalisation );
-
-    TER_Agent_ABC::T_AgentPtrVector newInsideTmp;
-    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), newInsideTmp );
-
-    T_AgentSet newInside;
-    for( TER_Agent_ABC::CIT_AgentPtrVector it = newInsideTmp.begin(); it != newInsideTmp.end(); ++it )
-    {
-        MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-        newInside.insert( &agent );
-    }
-
-    T_AgentSet intersection;
-    std::set_difference( agentInsideSet_.begin(), agentInsideSet_.end(), 
-                         newInside      .begin(), newInside      .end(), 
-                         std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
-    for( CIT_AgentSet it = intersection.begin(); it != intersection.end(); ++it )
-        (**it).GetRole< PHY_RoleInterface_Location >().NotifyPutOutsideObject( *this );
-
-    intersection.clear();
-    std::set_difference( newInside      .begin(), newInside      .end(), 
-                         agentInsideSet_.begin(), agentInsideSet_.end(), 
-                         std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
-    for( CIT_AgentSet it = intersection.begin(); it != intersection.end(); ++it )
-        (**it).GetRole< PHY_RoleInterface_Location >().NotifyPutInsideObject( *this );      
+    interaction_.UpdateInteraction( *this, GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,9 +264,6 @@ void MIL_Object_ABC::UpdateLocalisation( const TER_Localisation& newLocalisation
 void MIL_Object_ABC::MarkForDestruction()
 {
     bMarkedForDestruction_ = true;
-    while( !agentInsideSet_.empty() )
-        (**agentInsideSet_.begin()).GetRole< PHY_RoleInterface_Location >().NotifyPutOutsideObject( *this );
+    interaction_.ClearInteraction( *this );    
     TER_Object_ABC::Terminate(); // Degueu : vire l'objet du monde
 }
-
-

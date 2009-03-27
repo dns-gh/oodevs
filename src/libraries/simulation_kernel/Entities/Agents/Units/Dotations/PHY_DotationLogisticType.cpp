@@ -20,7 +20,6 @@ PHY_DotationLogisticType PHY_DotationLogisticType::uniteFeuTD_    ( "Unite feu T
 PHY_DotationLogisticType PHY_DotationLogisticType::uniteFeuSansTD_( "Unite feu -TD", eUniteFeuSansTD );
 PHY_DotationLogisticType PHY_DotationLogisticType::uniteVivre_    ( "Unite vivre"  , eUniteVivre     );
 PHY_DotationLogisticType PHY_DotationLogisticType::pieces_        ( "Pieces"       , ePieces         );
-
 //=============================================================================
 // STATIC INITIALIZATION 
 //=============================================================================
@@ -37,7 +36,7 @@ void PHY_DotationLogisticType::Initialize()
     dotationLogisticTypes_[ uniteFeuTD_    .GetName() ] = &uniteFeuTD_;
     dotationLogisticTypes_[ uniteFeuSansTD_.GetName() ] = &uniteFeuSansTD_;
     dotationLogisticTypes_[ uniteVivre_    .GetName() ] = &uniteVivre_;
-    dotationLogisticTypes_[ pieces_        .GetName() ] = &pieces_;    
+    dotationLogisticTypes_[ pieces_        .GetName() ] = &pieces_;
 }
 
 //-----------------------------------------------------------------------------

@@ -62,7 +62,7 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
          >> rOperationalState_
          >> rMajorOperationalState_
          >> composantes_
-         >> const_cast< MIL_Army*& >( pArmy_ )
+         >> const_cast< MIL_Army_ABC*& >( pArmy_ )
          >> bIsPC_;
          
     uint nID;

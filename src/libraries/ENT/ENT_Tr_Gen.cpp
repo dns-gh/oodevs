@@ -378,6 +378,13 @@ ENT_Tr::T_ConverterLogMedicalHandlingStatus ENT_Tr::LogMedicalHandlingStatusConv
     T_ConverterLogMedicalHandlingStatus( "", "", (E_LogMedicalHandlingStatus)-1 )
 };
 
+ENT_Tr::T_ConverterDemolitionTargetType ENT_Tr::DemolitionTargetTypeConverter_[] =
+{
+    T_ConverterDemolitionTargetType( "preliminary", QT_TRANSLATE_NOOP( "ENT_Tr", "preliminary" ), eDemolitionTargetType_Preliminary ),
+    T_ConverterDemolitionTargetType( "reserved", QT_TRANSLATE_NOOP( "ENT_Tr", "reserved" ), eDemolitionTargetType_Reserved ),
+    T_ConverterDemolitionTargetType( "", "", (E_DemolitionTargetType)-1 )
+};
+
 ENT_Tr::T_ConverterObjectErrorCode ENT_Tr::ObjectErrorCodeConverter_[] =
 {
     T_ConverterObjectErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eObjectErrorCode_NoError ),
@@ -388,59 +395,6 @@ ENT_Tr::T_ConverterObjectErrorCode ENT_Tr::ObjectErrorCodeConverter_[] =
     T_ConverterObjectErrorCode( "error missing specific attributes", QT_TRANSLATE_NOOP( "ENT_Tr", "error missing specific attributes" ), eObjectErrorCode_ErrorMissingSpecificAttributes ),
     T_ConverterObjectErrorCode( "error invalid specific attributes", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid specific attributes" ), eObjectErrorCode_ErrorInvalidSpecificAttributes ),
     T_ConverterObjectErrorCode( "", "", (E_ObjectErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
-{
-    T_ConverterObjectType( "bouchon mines", QT_TRANSLATE_NOOP( "ENT_Tr", "mines" ), eObjectType_BouchonMines ),
-    T_ConverterObjectType( "zone minee lineaire", QT_TRANSLATE_NOOP( "ENT_Tr", "mined area" ), eObjectType_ZoneMineeLineaire ),
-    T_ConverterObjectType( "zone minee par dispersion", QT_TRANSLATE_NOOP( "ENT_Tr", "mined area (scattered)" ), eObjectType_ZoneMineeParDispersion ),
-    T_ConverterObjectType( "fosse anti char", QT_TRANSLATE_NOOP( "ENT_Tr", "anti tank obstacle" ), eObjectType_FosseAntiChar ),
-    T_ConverterObjectType( "abattis", QT_TRANSLATE_NOOP( "ENT_Tr", "abatis" ), eObjectType_Abattis ),
-    T_ConverterObjectType( "barricade", QT_TRANSLATE_NOOP( "ENT_Tr", "barricade" ), eObjectType_Barricade ),
-    T_ConverterObjectType( "eboulement", QT_TRANSLATE_NOOP( "ENT_Tr", "collapse" ), eObjectType_Eboulement ),
-    T_ConverterObjectType( "destruction route", QT_TRANSLATE_NOOP( "ENT_Tr", "road destruction" ), eObjectType_DestructionRoute ),
-    T_ConverterObjectType( "destruction pont", QT_TRANSLATE_NOOP( "ENT_Tr", "bridge destruction" ), eObjectType_DestructionPont ),
-    T_ConverterObjectType( "pont flottant continu", QT_TRANSLATE_NOOP( "ENT_Tr", "engineer bridge" ), eObjectType_PontFlottantContinu ),
-    T_ConverterObjectType( "poste tir", QT_TRANSLATE_NOOP( "ENT_Tr", "firing post" ), eObjectType_PosteTir ),
-    T_ConverterObjectType( "zone protegee", QT_TRANSLATE_NOOP( "ENT_Tr", "protected area" ), eObjectType_ZoneProtegee ),
-    T_ConverterObjectType( "zone implantation canon", QT_TRANSLATE_NOOP( "ENT_Tr", "gun artillery deployment area" ), eObjectType_ZoneImplantationCanon ),
-    T_ConverterObjectType( "zone implantation cobra", QT_TRANSLATE_NOOP( "ENT_Tr", "counter battery radar deployment area" ), eObjectType_ZoneImplantationCobra ),
-    T_ConverterObjectType( "zone implantation lrm", QT_TRANSLATE_NOOP( "ENT_Tr", "mlrs deployment area" ), eObjectType_ZoneImplantationLrm ),
-    T_ConverterObjectType( "site franchissement", QT_TRANSLATE_NOOP( "ENT_Tr", "crossing site" ), eObjectType_SiteFranchissement ),
-    T_ConverterObjectType( "nuage nbc", QT_TRANSLATE_NOOP( "ENT_Tr", "NBC cloud" ), eObjectType_NuageNbc ),
-    T_ConverterObjectType( "plot ravitaillement", QT_TRANSLATE_NOOP( "ENT_Tr", "FARP" ), eObjectType_PlotRavitaillement ),
-    T_ConverterObjectType( "site decontamination", QT_TRANSLATE_NOOP( "ENT_Tr", "decontamination site" ), eObjectType_SiteDecontamination ),
-    T_ConverterObjectType( "zone brouillage brod", QT_TRANSLATE_NOOP( "ENT_Tr", "jamming area" ), eObjectType_ZoneBrouillageBrod ),
-    T_ConverterObjectType( "rota", QT_TRANSLATE_NOOP( "ENT_Tr", "ROTA zone" ), eObjectType_Rota ),
-    T_ConverterObjectType( "zone nbc", QT_TRANSLATE_NOOP( "ENT_Tr", "NBC zone" ), eObjectType_ZoneNbc ),
-    T_ConverterObjectType( "zone brouillage bromure", QT_TRANSLATE_NOOP( "ENT_Tr", "jamming area (type 2)" ), eObjectType_ZoneBrouillageBromure ),
-    T_ConverterObjectType( "aire poser", QT_TRANSLATE_NOOP( "ENT_Tr", "landing area" ), eObjectType_AirePoser ),
-    T_ConverterObjectType( "piste", QT_TRANSLATE_NOOP( "ENT_Tr", "slope" ), eObjectType_Piste ),
-    T_ConverterObjectType( "plateforme", QT_TRANSLATE_NOOP( "ENT_Tr", "platform" ), eObjectType_Plateforme ),
-    T_ConverterObjectType( "zone mobilite amelioree", QT_TRANSLATE_NOOP( "ENT_Tr", "mobility enhanced area" ), eObjectType_ZoneMobiliteAmelioree ),
-    T_ConverterObjectType( "zone poser helicoptere", QT_TRANSLATE_NOOP( "ENT_Tr", "landing area (helicopters)" ), eObjectType_ZonePoserHelicoptere ),
-    T_ConverterObjectType( "aire logistique", QT_TRANSLATE_NOOP( "ENT_Tr", "logistics support area" ), eObjectType_AireLogistique ),
-    T_ConverterObjectType( "itineraire logistique", QT_TRANSLATE_NOOP( "ENT_Tr", "logistics support route" ), eObjectType_ItineraireLogistique ),
-    T_ConverterObjectType( "camp prisonniers", QT_TRANSLATE_NOOP( "ENT_Tr", "prisoners camp" ), eObjectType_CampPrisonniers ),
-    T_ConverterObjectType( "camp refugies", QT_TRANSLATE_NOOP( "ENT_Tr", "refugees camp" ), eObjectType_CampRefugies ),
-    T_ConverterObjectType( "poste controle", QT_TRANSLATE_NOOP( "ENT_Tr", "checkpoint" ), eObjectType_PosteControle ),
-    T_ConverterObjectType( "terrain largage", QT_TRANSLATE_NOOP( "ENT_Tr", "dropping zone" ), eObjectType_TerrainLargage ),
-    T_ConverterObjectType( "zone interdite mouvement", QT_TRANSLATE_NOOP( "ENT_Tr", "keep out zone" ), eObjectType_ZoneInterditeMouvement ),
-    T_ConverterObjectType( "zone interdite tir", QT_TRANSLATE_NOOP( "ENT_Tr", "fire forbidden zone" ), eObjectType_ZoneInterditeTir ),
-    T_ConverterObjectType( "zone implantation mortier", QT_TRANSLATE_NOOP( "ENT_Tr", "mortar deployment area" ), eObjectType_ZoneImplantationMortier ),
-    T_ConverterObjectType( "pont flottant discontinu", QT_TRANSLATE_NOOP( "ENT_Tr", "engineer bridge (type2)" ), eObjectType_PontFlottantDiscontinu ),
-    T_ConverterObjectType( "installation", QT_TRANSLATE_NOOP( "ENT_Tr", "facility" ), eObjectType_Installation ),
-    T_ConverterObjectType( "fire", QT_TRANSLATE_NOOP( "ENT_Tr", "fire" ), eObjectType_Fire ),
-    T_ConverterObjectType( "emergency shelter", QT_TRANSLATE_NOOP( "ENT_Tr", "emergency shelter" ), eObjectType_EmergencyShelter ),
-    T_ConverterObjectType( "", "", (E_ObjectType)-1 )
-};
-
-ENT_Tr::T_ConverterObstacleType ENT_Tr::ObstacleTypeConverter_[] =
-{
-    T_ConverterObstacleType( "initial", QT_TRANSLATE_NOOP( "ENT_Tr", "initial" ), eObstacleType_Initial ),
-    T_ConverterObstacleType( "reserved", QT_TRANSLATE_NOOP( "ENT_Tr", "reserved" ), eObstacleType_Reserved ),
-    T_ConverterObstacleType( "", "", (E_ObstacleType)-1 )
 };
 
 ENT_Tr::T_ConverterOrderErrorCode ENT_Tr::OrderErrorCodeConverter_[] =
@@ -538,9 +492,8 @@ void ENT_Tr::InitTranslations()
     InitTr( MsgLogSupplyChangeQuotasAckConverter_, "ENT_Tr" );
     InitTr( MsgLogSupplyPushFlowAckConverter_, "ENT_Tr" );
     InitTr( LogMedicalHandlingStatusConverter_, "ENT_Tr" );
+    InitTr( DemolitionTargetTypeConverter_, "ENT_Tr" );
     InitTr( ObjectErrorCodeConverter_, "ENT_Tr" );
-    InitTr( ObjectTypeConverter_, "ENT_Tr" );
-    InitTr( ObstacleTypeConverter_, "ENT_Tr" );
     InitTr( OrderErrorCodeConverter_, "ENT_Tr" );
     InitTr( ReportTypeConverter_, "ENT_Tr" );
     InitTr( AutomatOrderFormationConverter_, "ENT_Tr" );
@@ -875,22 +828,12 @@ const std::string& ENT_Tr::ConvertFromObjectErrorCode( E_ObjectErrorCode nValue,
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromObjectType
+// Name: ENT_Tr::ConvertFromDemolitionTargetType
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromObjectType( E_ObjectType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromDemolitionTargetType( E_DemolitionTargetType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    const std::string& strOut = ENT_Tr::InverseFindInConverter( ObjectTypeConverter_, nValue, nConverterType );
-    return strOut;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromObstacleType
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromObstacleType( E_ObstacleType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ObstacleTypeConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( DemolitionTargetTypeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1267,22 +1210,14 @@ E_ObjectErrorCode ENT_Tr::ConvertToObjectErrorCode( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToObjectType
+// Name: ENT_Tr::ConvertToDemolitionTargetType
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_ObjectType ENT_Tr::ConvertToObjectType( const std::string& strName )
+E_DemolitionTargetType ENT_Tr::ConvertToDemolitionTargetType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( ObjectTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( DemolitionTargetTypeConverter_, strName );
 }
 
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToObstacleType
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ObstacleType ENT_Tr::ConvertToObstacleType( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ObstacleTypeConverter_, strName );
-}
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToOrderErrorCode

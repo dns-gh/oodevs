@@ -23,26 +23,6 @@ MIL_KnowledgeGroup* MIL_Army::FindKnowledgeGroup( uint nID ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::operator==
-// Created: NLD 2004-08-30
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Army::operator==( const MIL_Army& rhs ) const
-{
-    return nID_ == rhs.nID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Army::operator!=
-// Created: NLD 2004-10-25
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Army::operator!=( const MIL_Army& rhs ) const
-{
-    return nID_ != rhs.nID_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Army::GetID
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
@@ -78,7 +58,7 @@ DEC_KnowledgeBlackBoard_Army& MIL_Army::GetKnowledge() const
 // Created: NLD 2004-03-24
 //-----------------------------------------------------------------------------
 inline
-MIL_Army::E_Diplomacy MIL_Army::GetDiplomacy( const MIL_Army& otherArmy ) const
+MIL_Army_ABC::E_Diplomacy MIL_Army::GetDiplomacy( const MIL_Army_ABC& otherArmy ) const
 {
     if( &otherArmy == this )
         return eFriend;

@@ -20,9 +20,9 @@
 #define __PHY_RoleHLA_Posture_h_
 
 #include "PHY_RoleInterface_Posture.h"
-#include <hla/Deserializer.h>
+#include "hla/Deserializer.h"
 
-namespace hla
+namespace hla 
 {
     class AttributeIdentifier;
 }

@@ -28,7 +28,7 @@ namespace xml
 
 class DEC_PathType;
 class MIL_AgentPion;
-class MIL_RealObjectType;
+class MIL_ObjectType_ABC;
 class MIL_PopulationAttitude;
 
 // =============================================================================
@@ -82,7 +82,7 @@ public:
           MT_Float     GetEnemyCostOnContact               () const;
           MT_Float     GetEnemyCostAtSecurityRange         () const;
           MT_Float     GetEnemyMaximumCost                 () const;
-          MT_Float     GetObjectCost                       ( const MIL_RealObjectType& objectType ) const;
+          MT_Float     GetObjectCost                       ( const MIL_ObjectType_ABC& objectType ) const;
           MT_Float     GetPopulationAttitudeCost           ( const MIL_PopulationAttitude& attitude ) const;
           MT_Float     GetPopulationSecurityRange          () const;
           MT_Float     GetPopulationMaximumCost            () const;

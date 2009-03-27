@@ -10,8 +10,7 @@
 #ifndef __MinePrototype_ABC_h_
 #define __MinePrototype_ABC_h_
 
-#include "ObjectPrototypeAttributes_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "ObjectAttributePrototype_ABC.h"
 
 namespace gui
 {
@@ -22,7 +21,7 @@ namespace gui
 */
 // Created: SBO 2007-02-08
 // =============================================================================
-class MinePrototype_ABC : public ObjectPrototypeAttributes_ABC
+class MinePrototype_ABC : public ObjectAttributePrototype_ABC
 {
 
 public:
@@ -48,14 +47,9 @@ private:
     MinePrototype_ABC& operator=( const MinePrototype_ABC& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 protected:
     //! @name Member data
-    //@{
-    QSpinBox*  activityTime_;
+    //@{    
     QLineEdit* density_;
 
     QLabel*    densityLabel_;

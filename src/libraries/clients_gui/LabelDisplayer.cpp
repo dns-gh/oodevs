@@ -97,3 +97,12 @@ void LabelDisplayer::Hide()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: LabelDisplayer::Clear
+// Created: LDC 2009-03-18
+// -----------------------------------------------------------------------------
+void LabelDisplayer::Clear()
+{
+    valueLabel_->setText( QString() );
+}

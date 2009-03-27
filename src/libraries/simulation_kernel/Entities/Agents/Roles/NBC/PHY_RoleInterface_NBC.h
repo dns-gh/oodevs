@@ -12,11 +12,10 @@
 #ifndef __PHY_RoleInterface_NBC_h_
 #define __PHY_RoleInterface_NBC_h_
 
-#include "MIL.h"
-
+#include "simulation_kernel/MIL.h"
 #include "MT_Tools/MT_Role_ABC.h"
 
-class MIL_NbcAgent;
+class MIL_ToxicEffectManipulator;
 
 // =============================================================================
 // @class  PHY_RoleInterface_NBC
@@ -42,8 +41,8 @@ public:
     //! @name Operations
     //@{
     virtual bool IsContaminated() const = 0;
-    virtual void Poison        ( const MIL_NbcAgent& nbcAgent ) = 0;
-    virtual void Contaminate   ( const MIL_NbcAgent& nbcAgent ) = 0;
+    virtual void Poison        ( const MIL_ToxicEffectManipulator& contamination ) = 0;
+    virtual void Contaminate   ( const MIL_ToxicEffectManipulator& contamination ) = 0;
     virtual void Decontaminate () = 0;
     virtual void Decontaminate ( MT_Float rRatioAgentsWorking ) = 0;
     //@}

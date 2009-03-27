@@ -36,6 +36,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Clear() = 0;
     virtual void Hide() = 0;
     template< typename T >
     Displayer_ABC& Display( const T& element );

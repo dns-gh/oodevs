@@ -342,7 +342,7 @@ void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationConcentrati
 // Name: PHY_RolePion_Location::NotifyObjectCollision
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::NotifyObjectCollision( MIL_RealObject_ABC& object )
+void PHY_RolePion_Location::NotifyObjectCollision( MIL_Object_ABC& object )
 {
     assert( pPion_ );
     pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, vPosition_ );

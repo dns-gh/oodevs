@@ -11,7 +11,9 @@
 #include "MinePrototype.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Object_ABC.h"
-#include "preparation/MineAttributes.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "preparation/MineAttribute.h"
+#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 using namespace gui;
@@ -22,7 +24,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 MinePrototype::MinePrototype( QWidget* parent, kernel::Object_ABC*& creation )
     : MinePrototype_ABC( parent )
-    , creation_( creation )
+    , creation_ ( creation )
 {
     // NOTHING
 }
@@ -33,7 +35,7 @@ MinePrototype::MinePrototype( QWidget* parent, kernel::Object_ABC*& creation )
 // -----------------------------------------------------------------------------
 MinePrototype::~MinePrototype()
 {
-    Clean();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,12 +44,13 @@ MinePrototype::~MinePrototype()
 // -----------------------------------------------------------------------------
 void MinePrototype::Commit()
 {
-    if( !creation_ )
-        return;
-
-    MineAttributes& attr = static_cast< MineAttributes& >( creation_->Get< MineAttributes_ABC >() );
-    attr.SetDensity( density_->text().toFloat() );
-    attr.SetActivityTime( activityTime_->value() );
+    if( creation_ )
+    {
+        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
+        MineAttribute* attribute = new MineAttribute( dico );                        
+                        attribute->SetDensity( density_->text().toFloat() );                        
+        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+    }
 }
 
 // -----------------------------------------------------------------------------

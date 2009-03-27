@@ -19,11 +19,17 @@ namespace kernel
 {
     class Object_ABC;
     class Controllers;
-    class NBCAttributes_ABC;
-    class CampAttributes_ABC;
-    class CrossingSiteAttributes_ABC;
-    class LogisticRouteAttributes_ABC;
-    class RotaAttributes_ABC;
+    class MineAttribute_ABC;
+    class ConstructionAttribute_ABC;
+    class ActivityTimeAttribute_ABC;
+    class ObstacleAttribute_ABC;
+    class BypassAttribute_ABC;
+    class NBCAttribute_ABC;
+    class FireAttribute_ABC;
+    class MedicalTreatmentAttribute_ABC;
+    class LogisticAttribute_ABC;
+    class CrossingSiteAttribute_ABC;
+    class SupplyRouteAttribute_ABC;    
 }
 
 namespace gui
@@ -40,11 +46,17 @@ namespace gui
 class ObjectPanel : public InfoPanel_ABC
                   , public kernel::Observer_ABC
                   , public kernel::ElementObserver_ABC< kernel::Object_ABC >
-                  , public kernel::ElementObserver_ABC< kernel::CampAttributes_ABC >
-                  , public kernel::ElementObserver_ABC< kernel::CrossingSiteAttributes_ABC >
-                  , public kernel::ElementObserver_ABC< kernel::LogisticRouteAttributes_ABC >
-                  , public kernel::ElementObserver_ABC< kernel::NBCAttributes_ABC >
-                  , public kernel::ElementObserver_ABC< kernel::RotaAttributes_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::ConstructionAttribute_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::MineAttribute_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::ObstacleAttribute_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::ActivityTimeAttribute_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::BypassAttribute_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::LogisticAttribute_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::SupplyRouteAttribute_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::CrossingSiteAttribute_ABC >                  
+                  , public kernel::ElementObserver_ABC< kernel::NBCAttribute_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::FireAttribute_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::MedicalTreatmentAttribute_ABC >
                   , public kernel::SelectionObserver< kernel::Object_ABC >
 
 {
@@ -74,6 +86,7 @@ protected:
     const kernel::Object_ABC* GetSelected();
     DisplayBuilder& GetBuilder();
     void Update();
+    void Clear();
     //@}
 
 private:
@@ -83,11 +96,17 @@ private:
 
     virtual void NotifyUpdated( const kernel::Object_ABC& );
     virtual void NotifyDeleted( const kernel::Object_ABC& );
-    virtual void NotifyUpdated( const kernel::CampAttributes_ABC& attributes );
-    virtual void NotifyUpdated( const kernel::CrossingSiteAttributes_ABC& attributes );
-    virtual void NotifyUpdated( const kernel::LogisticRouteAttributes_ABC& attributes );
-    virtual void NotifyUpdated( const kernel::NBCAttributes_ABC& attributes );
-    virtual void NotifyUpdated( const kernel::RotaAttributes_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::MineAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::ConstructionAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::BypassAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::ObstacleAttribute_ABC& attributes );    
+    virtual void NotifyUpdated( const kernel::LogisticAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::CrossingSiteAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::SupplyRouteAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::NBCAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::FireAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::MedicalTreatmentAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::ActivityTimeAttribute_ABC& attributes );
 
     template< typename Extension >
     bool ShouldUpdate( const Extension& extension );

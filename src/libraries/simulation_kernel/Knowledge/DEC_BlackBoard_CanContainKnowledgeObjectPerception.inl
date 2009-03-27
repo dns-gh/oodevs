@@ -14,7 +14,7 @@
 // Created: NLD 2004-03-23
 // -----------------------------------------------------------------------------
 inline
-DEC_Knowledge_ObjectPerception* DEC_BlackBoard_CanContainKnowledgeObjectPerception::GetKnowledgeObjectPerception( const MIL_RealObject_ABC& associatedObject ) const
+DEC_Knowledge_ObjectPerception* DEC_BlackBoard_CanContainKnowledgeObjectPerception::GetKnowledgeObjectPerception( const MIL_Object_ABC& associatedObject ) const
 {
     CIT_KnowledgeObjectPerceptionMap itKnowledge = knowledgeObjectPerceptionMap_.find( &associatedObject );
     if( itKnowledge != knowledgeObjectPerceptionMap_.end() )

@@ -157,9 +157,9 @@ void DEC_KnowledgeAgentFunctions::IsPerceivedByKnowledgeGroup( DIA_Call_ABC& cal
 // Name: DEC_KnowledgeAgentFunctions::IsAnEnemy
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeAgentFunctions::IsAnEnemy( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+void DEC_KnowledgeAgentFunctions::IsAnEnemy( DIA_Call_ABC& call, const MIL_AgentPion& caller )
 {
-    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
@@ -168,7 +168,8 @@ void DEC_KnowledgeAgentFunctions::IsAnEnemy( DIA_Call_ABC& call, const MIL_Agent
     }
     
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( callerAgent.GetArmy().IsAnEnemy( *pKnowledge ) );
+    
+    call.GetResult().SetValue( pKnowledge->IsAnEnemy( caller.GetArmy() ) );
 }
 
 // -----------------------------------------------------------------------------

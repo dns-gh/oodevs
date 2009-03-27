@@ -44,6 +44,7 @@ public:
     //! @name Operations
     //@{
     int GetValue() const;
+    virtual void Clear();
     //@}
 
 private:

@@ -14,11 +14,11 @@
 
 #include "MIL.h"
 
+#include "Entities/Objects/ObstacleAttribute.h"
 #include "simulation_terrain/TER_Localisation.h"
 
 class DEC_AutomateDecision;
-class MIL_RealObjectType;
-class MIL_ObstacleType;
+class MIL_ObjectType_ABC;
 
 //*****************************************************************************
 // Created: AGN 03-08-27
@@ -26,18 +26,24 @@ class MIL_ObstacleType;
 class DEC_Gen_Object
 {
 public:
-     DEC_Gen_Object( const ASN1T_PlannedWork& asn );
-     DEC_Gen_Object( const DEC_Gen_Object& rhs );
+    //! @name Type
+    //@{
+    typedef EnumDemolitionTargetType::Root E_DemolitionTargetType;
+    //@}
+
+public:
+     explicit DEC_Gen_Object( const ASN1T_PlannedWork& asn );
+              DEC_Gen_Object( const DEC_Gen_Object& rhs );
     ~DEC_Gen_Object();
 
     //! @name Accessors
     //@{
-    const MIL_RealObjectType&    GetType             () const;
-    const TER_Localisation&      GetLocalisation     () const;
-    const MIL_ObstacleType&      GetObstacleType     () const;
-          MT_Float               GetDensity          () const;
-          uint                   GetMinesActivityTime() const;
-    const MIL_Automate*          GetTC2              () const;
+    const MIL_ObjectType_ABC& GetType             () const;
+    const TER_Localisation&   GetLocalisation     () const;
+    E_DemolitionTargetType    GetObstacleType     () const;
+          MT_Float            GetDensity          () const;
+          uint                GetMinesActivityTime() const;
+    const MIL_Automate*       GetTC2              () const;
     //@}
 
     //! @name Operations
@@ -47,12 +53,15 @@ public:
     //@}
 
 private:
-    const MIL_RealObjectType*    pType_;
-          TER_Localisation       localisation_;
-    const MIL_ObstacleType*      pObstacleType_;
-          MT_Float               rDensity_;
-          uint                   nMinesActivityTime_;
-    const MIL_Automate*          pTC2_;
+    //! @name Data members
+    //@{
+    const MIL_ObjectType_ABC*       pType_;
+          TER_Localisation          localisation_;
+          E_DemolitionTargetType    pObstacleType_;
+          MT_Float                  rDensity_;
+          uint                      nMinesActivityTime_;
+    const MIL_Automate*             pTC2_;
+    //@}
 };
 
 #include "DEC_Gen_Object.inl"

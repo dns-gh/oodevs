@@ -62,7 +62,7 @@ bool PHY_RoleHLA_Refugee::Release()
 // Name: PHY_RoleHLA_Refugee::Release
 // Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Refugee::Release( const MIL_CampRefugies& /*camp*/ )
+bool PHY_RoleHLA_Refugee::Release( const MIL_Object_ABC& /*camp*/ )
 {
     // $$$$ NLD 2007-02-15: 
     return false;
@@ -72,7 +72,7 @@ bool PHY_RoleHLA_Refugee::Release( const MIL_CampRefugies& /*camp*/ )
 // Name: PHY_RoleHLA_Refugee::IsManaged
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Refugee::IsManaged( const MIL_CampRefugies& /*camp*/ ) const
+bool PHY_RoleHLA_Refugee::IsManaged( const MIL_Object_ABC& /*camp*/ ) const
 {
     return false;
 }

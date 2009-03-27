@@ -27,6 +27,8 @@ namespace kernel
     class EquipmentType;
     class NBCAgent;
     class WeaponSystemType;
+    class FireClass;
+    class MedicalTreatmentType;
 
 // =============================================================================
 /** @class  ObjectTypes
@@ -35,11 +37,13 @@ namespace kernel
 // Created: AGE 2006-02-16
 // =============================================================================
 class ObjectTypes
-    : public Resolver2< ObjectType >
+    : public StringResolver< ObjectType >
     , public Resolver2< DotationType > // $$$$ AGE 2006-04-05: pas du tout des objets...
     , public Resolver< WeaponSystemType, std::string >
     , public Resolver< EquipmentType >
     , public Resolver2< NBCAgent >
+    , public Resolver2< FireClass >
+    , public Resolver2< MedicalTreatmentType >
     , public Resolver< BreakdownType >
 {
 
@@ -76,6 +80,10 @@ private:
     void ReadEquipment( xml::xistream& xis );
     void ReadNBC( const std::string& nbc );
     void ReadNBCAgent( xml::xistream& xis );
+    void ReadFire( const std::string& fire );
+    void ReadFireClass( xml::xistream& xis );
+    void ReadMedicalTreatment( const std::string& medicaltreatment );
+    void ReadMedicalTreatmentType( xml::xistream& xis );
     void ReadBreakdowns( const std::string& breakdowns );
     void ReadBreakdownCategory( xml::xistream& xis );
     void ReadBreakdown( xml::xistream& xis );

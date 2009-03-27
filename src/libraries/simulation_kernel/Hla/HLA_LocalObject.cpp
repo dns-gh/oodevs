@@ -18,11 +18,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_LocalObject.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "MIL_AgentServer.h"
 #include "HLA_Federate.h"
 #include "HLA_InteractionManager_ABC.h"
-#include <hla/HLA_UpdateFunctor.h>
+#include "HLA_UpdateFunctor.h"
 
 using namespace hla;
 
@@ -30,7 +30,7 @@ using namespace hla;
 // Name: HLA_LocalObject constructor
 // Created: AGE 2004-11-30
 // -----------------------------------------------------------------------------
-HLA_LocalObject::HLA_LocalObject( MIL_RealObject_ABC& object )
+HLA_LocalObject::HLA_LocalObject( MIL_Object_ABC& object )
     : object_( object )
     , id_( uint( -1 ) )
 {

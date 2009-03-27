@@ -12,11 +12,10 @@
 #ifndef __MIL_Agent_ABC_h_
 #define __MIL_Agent_ABC_h_
 
-#include "MIL.h"
+#include "simulation_kernel/MIL.h"
+#include "simulation_kernel/Entities/MIL_Entity_ABC.h"
 
-#include "Entities/MIL_Entity_ABC.h"
-
-class MIL_Army;
+class MIL_Army_ABC;
 class MIL_KnowledgeGroup;
 class MIL_AgentType_ABC;
 class MIL_AgentPion;
@@ -48,7 +47,7 @@ public:
     //! @name Accessors
     //@{
             uint                      GetID            () const;
-    virtual       MIL_Army&           GetArmy          () const = 0;
+    virtual       MIL_Army_ABC&       GetArmy          () const = 0;
     virtual const MIL_AgentType_ABC&  GetType          () const = 0;
     virtual bool                      IsDead           () const = 0;
     virtual bool                      IsNeutralized    () const = 0;

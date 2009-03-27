@@ -21,7 +21,7 @@
 // Created: NLD 2006-04-27
 // -----------------------------------------------------------------------------
 inline
-const MIL_RealObject_ABC* MIL_PopulationConcentration::GetSplittingObject() const
+const MIL_Object_ABC* MIL_PopulationConcentration::GetSplittingObject() const
 {
     return pSplittingObject_;
 }

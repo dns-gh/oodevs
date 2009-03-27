@@ -32,7 +32,7 @@ public:
     //@{
     virtual bool Capture     ( const MIL_AgentPion& pionTakingPrisoner );
     virtual bool Release     ();
-    virtual bool Imprison    ( const MIL_CampPrisonniers& camp );
+    virtual bool Imprison    ( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Accessors
@@ -40,7 +40,7 @@ public:
     virtual const MIL_Army* GetArmySurrenderedTo() const;
     virtual       bool      IsSurrendered       () const;
     virtual       bool      IsPrisoner          () const;
-    virtual       bool      IsImprisoned        ( const MIL_CampPrisonniers& camp );
+    virtual       bool      IsImprisoned        ( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Modifiers

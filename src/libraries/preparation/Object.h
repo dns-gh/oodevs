@@ -41,14 +41,14 @@ class IdManager;
 class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
              , public kernel::Drawable_ABC
-             , public kernel::Serializable_ABC
+             , public kernel::Serializable_ABC             
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const kernel::ObjectType& type, const QString& name, const Enum_ObstacleType& obstacleType, bool reservedObstacleActivated, IdManager& idManager );
+                     const kernel::ObjectType& type, const QString& name, IdManager& idManager );
              Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, 
                      const kernel::Resolver_ABC< kernel::ObjectType, std::string >& types, IdManager& idManager );
     virtual ~Object();
@@ -79,28 +79,14 @@ private:
     void CreateDictionary( kernel::Controller& controller );
     unsigned long             ReadId                       ( xml::xistream& xis );
     QString                   ReadName                     ( xml::xistream& xis );
-    const kernel::ObjectType& ReadType                     ( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, std::string >& types );
-    Enum_ObstacleType         ReadObstacleType             ( xml::xistream& xis );
-    bool                      ReadReservedObstacleActivated( xml::xistream& xis );
+    const kernel::ObjectType& ReadType                     ( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, std::string >& types );    
     //@}
 
 public:
     //! @name Member data
     //@{
-    const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::ObjectType& type_;
-
-    float rConstructionPercentage_;
-    float rValorizationPercentage_;
-    float rBypassConstructionPercentage_;
-
-    Enum_ObstacleType obstacleType_;
-    bool              reservedObstacleActivated_;
-
-    kernel::DotationType* construction_;
-    kernel::DotationType* valorization_;
-    unsigned int nDotationConstruction_;
-    unsigned int nDotationValorization_;
+    const kernel::CoordinateConverter_ABC&  converter_;
+    const kernel::ObjectType&               type_;    
     //@}
 };
 

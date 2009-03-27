@@ -12,6 +12,7 @@
 #include "Viewport_ABC.h"
 #include "GlTools_ABC.h"
 #include "Types.h"
+#include "ObjectType.h"
 
 #define static 
 #include "res/objectTypeZoneProtegee.xpm"
@@ -36,6 +37,7 @@
 #include "res/objectTypePlateForme.xpm"
 #include "res/objectTypePiste.xpm"
 #include "res/objectTypeNuageNBC.xpm"
+#include "res/objectTypeFire.xpm"
 #include "res/objectTypeMine.xpm"
 #include "res/objectTypeItineraireLog.xpm"
 #include "res/objectTypeImplantationMortier.xpm"
@@ -49,65 +51,82 @@
 #include "res/objectTypeAirePoser.xpm"
 #include "res/objectTypeAireLogistique.xpm"
 #include "res/objectTypeAbattis.xpm"
+#include "res/objectTypeMedicalTreatment.xpm"
 
 using namespace kernel;
 
+namespace
+{
+    static std::map< std::string, const char** > sTypeIcons;
+    void Init()
+    {
+        sTypeIcons[ "zone protegee" ] = xpm_objectTypeZoneProtegee;
+        sTypeIcons[ "zone poser helicoptere" ] = xpm_objectTypeZonePoserHelicoptere;
+        sTypeIcons[ "zone nbc" ] = xpm_objectTypeZoneNBC;
+        sTypeIcons[ "zone mobilite amelioree" ] = xpm_objectTypeZoneMobiliteAmelioree;
+        sTypeIcons[ "zone interdite tir" ] = xpm_objectTypeZoneInterditeTir;
+        sTypeIcons[ "zone interdite mouvement" ] = xpm_objectTypeZoneInterditeMvt;
+        sTypeIcons[ "zone implantation lrm" ] = xpm_objectTypeZoneImplantationLrm ;
+        sTypeIcons[ "zone implantation cobra" ] = xpm_objectTypeZoneImplantationCobra;
+        sTypeIcons[ "zone implantation mortier:" ] = xpm_objectTypeZoneImplantationCanon;
+        sTypeIcons[ "zone implantation canon" ] = xpm_objectTypeZoneImplantationCanon;
+        sTypeIcons[ "zone brouillage" ] = xpm_objectTypeZoneBrouillardBrod ;
+        sTypeIcons[ "terrain largage" ] = xpm_objectTypeTerrainLargage;
+        sTypeIcons[ "site franchissement" ] = xpm_objectTypeSiteFranchissement;
+        sTypeIcons[ "site decontamination" ] = xpm_objectTypeSiteDecontamination;
+        sTypeIcons[ "rota" ] = xpm_objectTypeRota ;
+        sTypeIcons[ "poste tir" ] = xpm_objectTypePosteTir;
+        sTypeIcons[ "poste controle" ] = xpm_objectTypePosteControle;
+        sTypeIcons[ "pont flottant continu" ] = xpm_objectTypePontFlottant;
+        sTypeIcons[ "pont flottant discontinu" ] = xpm_objectTypePontFlottant;
+        sTypeIcons[ "plot ravitaillement" ] = xpm_objectTypePlotRavitaillement;
+        sTypeIcons[ "plateforme" ] = xpm_objectTypePlateforme;
+        sTypeIcons[ "piste" ] = xpm_objectTypePiste;
+        sTypeIcons[ "nuage nbc" ] = xpm_objectTypeNuageNBC;
+        sTypeIcons[ "fire" ] = xpm_objectTypeFire;
+        //sTypeIcons[ "MedicalTreatment" ] = xpm_objectTypeMedicalTreatment;
+        sTypeIcons[ "bouchon mines" ] = xpm_objectTypeMine;
+        sTypeIcons[ "zone minee lineaire" ] = xpm_objectTypeMine;
+        sTypeIcons[ "zone minee par dispersion" ] = xpm_objectTypeMine;
+        sTypeIcons[ "itineraire logistique" ] = xpm_objectTypeItineraireLog;
+        sTypeIcons[ "fosse anti char" ] = xpm_objectTypeFosseAC;
+        sTypeIcons[ "eboulement" ] = xpm_objectTypeEboulement;
+        sTypeIcons[ "destruction route" ] = xpm_objectTypeDestructionRoute;
+        sTypeIcons[ "destruction pont" ] = xpm_objectTypeDestructionPont;
+        sTypeIcons[ "camp refugies" ] = xpm_objectTypeCampRefugies;
+        sTypeIcons[ "camp prisonniers" ] = xpm_objectTypeCampPrisonniers;
+        sTypeIcons[ "barricade" ] = xpm_objectTypeBarricade;
+        sTypeIcons[ "aire poser" ] = xpm_objectTypeAirePoser;
+        sTypeIcons[ "aire logistique" ] = xpm_objectTypeAireLogistique;
+        sTypeIcons[ "abattis" ] = xpm_objectTypeAbattis;
+    }
+
 // -----------------------------------------------------------------------------
-// Name: ObjectIcons::Draw
+// Name: TypeIcon
 // Created: AGE 2008-03-14
 // -----------------------------------------------------------------------------
-void ObjectIcons::Draw( unsigned long type, const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools )
+const char** TypeIcon( const std::string& symbol, const std::string& type )
 {
-    if( viewport.IsVisible( where ) )
-        tools.DrawIcon( TypeIcon( type ), where, 900.f );
+    if( sTypeIcons.empty() )
+        Init();
+    std::map< std::string, const char** >::const_iterator it = sTypeIcons.find( type );
+    if( it != sTypeIcons.end() )
+        return it->second;
+    return 0;
+}
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectIcons::TypeIcon
-// Created: AGE 2008-03-14
+// Name: objecticons::Draw
+// Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-const char** ObjectIcons::TypeIcon( unsigned long id )
+void ObjectIcons::Draw( const ObjectType& type, const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools )
 {
-    switch( id )
+    if( viewport.IsVisible( where ) )
     {
-        case eObjectType_ZoneProtegee           : return xpm_objectTypeZoneProtegee ;
-        case eObjectType_ZonePoserHelicoptere   : return xpm_objectTypeZonePoserHelicoptere;
-        case eObjectType_ZoneNbc                : return xpm_objectTypeZoneNBC;
-        case eObjectType_ZoneMobiliteAmelioree  : return xpm_objectTypeZoneMobiliteAmelioree;
-        case eObjectType_ZoneInterditeTir       : return xpm_objectTypeZoneInterditeTir;
-        case eObjectType_ZoneInterditeMouvement : return xpm_objectTypeZoneInterditeMvt;
-        case eObjectType_ZoneImplantationLrm    : return xpm_objectTypeZoneImplantationLrm ;
-        case eObjectType_ZoneImplantationCobra  : return xpm_objectTypeZoneImplantationCobra;
-        case eObjectType_ZoneImplantationCanon  : return xpm_objectTypeZoneImplantationCanon;
-        case eObjectType_ZoneBrouillageBrod     : return xpm_objectTypeZoneBrouillardBrod ;
-        case eObjectType_ZoneBrouillageBromure  : return xpm_objectTypeZoneBrouillageBromure;
-        case eObjectType_TerrainLargage         : return xpm_objectTypeTerrainLargage;
-        case eObjectType_SiteFranchissement     : return xpm_objectTypeSiteFranchissement;
-        case eObjectType_SiteDecontamination    : return xpm_objectTypeSiteDecontamination;
-        case eObjectType_Rota                   : return xpm_objectTypeRota ;
-        case eObjectType_PosteTir               : return xpm_objectTypePosteTir;
-        case eObjectType_PosteControle          : return xpm_objectTypePosteControle;
-        case eObjectType_PontFlottantContinu    : 
-        case eObjectType_PontFlottantDiscontinu : return xpm_objectTypePontFlottant;
-        case eObjectType_PlotRavitaillement     : return xpm_objectTypePlotRavitaillement;
-        case eObjectType_Plateforme             : return xpm_objectTypePlateforme;
-        case eObjectType_Piste                  : return xpm_objectTypePiste;
-        case eObjectType_NuageNbc               : return xpm_objectTypeNuageNBC;
-        case eObjectType_BouchonMines           : 
-        case eObjectType_ZoneMineeLineaire      : 
-        case eObjectType_ZoneMineeParDispersion : return xpm_objectTypeMine;
-        case eObjectType_ItineraireLogistique   : return xpm_objectTypeItineraireLog;
-        case eObjectType_ZoneImplantationMortier: return xpm_objectTypeImplantationMortier;
-        case eObjectType_FosseAntiChar          : return xpm_objectTypeFosseAC;
-        case eObjectType_Eboulement             : return xpm_objectTypeEboulement;
-        case eObjectType_DestructionRoute       : return xpm_objectTypeDestructionRoute;
-        case eObjectType_DestructionPont        : return xpm_objectTypeDestructionPont;
-        case eObjectType_CampRefugies           : return xpm_objectTypeCampRefugies;
-        case eObjectType_CampPrisonniers        : return xpm_objectTypeCampPrisonniers;
-        case eObjectType_Barricade              : return xpm_objectTypeBarricade;
-        case eObjectType_AirePoser              : return xpm_objectTypeAirePoser;
-        case eObjectType_AireLogistique         : return xpm_objectTypeAireLogistique;
-        case eObjectType_Abattis                : return xpm_objectTypeAbattis;
-        default: return 0;
-    };
+        const std::string& symbol = type.GetSymbol();
+        const std::string& name = type.GetName();
+        tools.DrawIcon( TypeIcon( symbol, name ), where, 900.f );
+    }
 }

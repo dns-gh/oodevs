@@ -1,0 +1,215 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "simulation_kernel_pch.h"
+#include "ControlZoneCapacity.h"
+#include "Object.h"
+
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
+#include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
+
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/MIL_Army.h"
+#include "Tools/MIL_Tools.h"
+
+#include "simulation_terrain/TER_Localisation.h"
+
+#include <xeumeuleu/xml.h>
+#include <boost/bind.hpp>
+
+MT_Random ControlZoneCapacity::randomGenerator_;
+
+BOOST_CLASS_EXPORT_GUID( ControlZoneCapacity, "ControlZoneCapacity" )
+
+namespace 
+{
+    class StaticLoader
+    {
+    public:
+        typedef std::vector< MT_Float > T_FirePercentageVector;
+    public:
+        StaticLoader( T_FirePercentageVector& vFirePercentages ) 
+            : vFirePercentages_ ( vFirePercentages ) 
+        {
+            vFirePercentages_.clear();
+            vFirePercentages_.resize( PHY_Volume::GetVolumes().size(), 0. );            
+        }
+
+        //! @name Helpers
+        //@{
+        void LoadFirePercentages()
+        {
+                static const char *volumes = "<shot-percentages>"
+                    "<per-human-per-hectare percentage='100' volume='Medium'/>"
+                    "<per-human-per-hectare percentage='10' volume='Small'/>"
+                    "<per-human-per-hectare percentage='20' volume='Personal'/>"
+                    "<per-human-per-hectare percentage='100' volume='Small'/>"
+                    "<per-human-per-hectare percentage='10' volume='Medium'/>"
+                    "<per-human-per-hectare percentage='20' volume='Heavy'/>"
+                    "<per-human-per-hectare percentage='100' volume='Medium'/>"
+                    "<per-human-per-hectare percentage='10' volume='Small'/>"
+                    "<per-human-per-hectare percentage='20' volume='Personal'/>"
+                    "</shot-percentages>";
+
+                xml::xistringstream xis( volumes );
+                xis >> xml::start( "shot-percentages" )
+                        >> xml::list( "per-human-per-hectare", *this, &StaticLoader::ReadPercentage )
+                    >> xml::end();
+        }
+
+    private:
+        void ReadPercentage( xml::xistream& xis )
+        {
+            std::string volume;
+            MT_Float rFirePercentage;
+            
+            xis >> xml::attribute( "volume", volume );    
+            const PHY_Volume* pVolume = PHY_Volume::FindVolume( volume );
+            if ( !pVolume )
+                xis.error( "Unknown volume name - " + volume );
+            
+            xis >> xml::attribute( "percentage", rFirePercentage );
+            if( rFirePercentage < 0 || rFirePercentage > 100 )
+                xis.error( "percentage not in [0..100]" );
+            
+            rFirePercentage *= 10000.;                                               // hectare => m2
+            rFirePercentage = MIL_Tools::ConvertMeterSquareToSim( rFirePercentage ); // m2 => px2
+           
+            vFirePercentages_[ pVolume->GetID() ] = rFirePercentage / 100.;
+        }
+        //@}
+    private:
+        T_FirePercentageVector vFirePercentages_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlZoneCapacity constructor
+// Created: JCR 2008-08-21
+// -----------------------------------------------------------------------------
+ControlZoneCapacity::ControlZoneCapacity( const MIL_Agent_ABC& controller )
+    : controller_ ( &controller )
+    , vFirerPosition_ ( &controller.GetRole< PHY_RolePion_Location >().GetPosition() )
+{
+    StaticLoader loader( vFirePercentages_ );
+    loader.LoadFirePercentages();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlZoneCapacityconstructor
+// Created: JCR 2008-05-22
+// -----------------------------------------------------------------------------
+ControlZoneCapacity::ControlZoneCapacity()
+    : controller_ ( 0 )
+    , vFirerPosition_ ( 0 )
+{
+    StaticLoader loader( vFirePercentages_ );
+    loader.LoadFirePercentages();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlZoneCapacityconstructor
+// Created: JCR 2008-05-22
+// -----------------------------------------------------------------------------
+ControlZoneCapacity::ControlZoneCapacity( const ControlZoneCapacity& from )
+    : controller_ ( from.controller_ )
+    , vFirerPosition_ ( from.vFirerPosition_ )
+    , vFirePercentages_ ( from.vFirePercentages_ )
+{
+    // NOTHING
+}
+	
+// -----------------------------------------------------------------------------
+// Name: ControlZoneCapacitydestructor
+// Created: JCR 2008-05-22
+// -----------------------------------------------------------------------------
+ControlZoneCapacity::~ControlZoneCapacity()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlZoneCapacity::load
+// Created: JCR 2008-07-03
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void ControlZoneCapacity::serialize( Archive& file, const uint )
+{    
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & const_cast< MIL_Agent_ABC*& >( controller_ );         
+    if ( controller_ )
+        vFirerPosition_ = &controller_->GetRole< PHY_RolePion_Location >().GetPosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlZoneCapacity::Register
+// Created: JCR 2008-07-03
+// -----------------------------------------------------------------------------
+void ControlZoneCapacity::Register( Object& object )
+{
+    object.AddCapacity( this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlZoneCapacity::Instanciate
+// Created: JCR 2008-06-08
+// -----------------------------------------------------------------------------
+void ControlZoneCapacity::Instanciate( Object& object ) const
+{    
+    object.AddCapacity( new ControlZoneCapacity( *this ) );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlZoneCapacity::GetUnitDensityFirePercentage
+// Created: JCR 2008-08-28
+// -----------------------------------------------------------------------------
+MT_Float ControlZoneCapacity::GetUnitDensityFirePercentage( const PHY_Volume& volume ) const
+{
+    return vFirePercentages_[ volume.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlZoneCapacity::RetrieveTargets
+// Created: JCR 2008-08-28
+// -----------------------------------------------------------------------------
+void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_TargetVector& targets ) const
+{        
+    MT_Float area = object.GetLocalisation().GetArea();
+    MT_Float rPHCoeff = MT_IsZero( area ) 
+                                ? 0. 
+                                : controller_->GetRole< PHY_RolePion_Humans >().GetNbrUsableHumans() / area;
+
+    targets.clear();
+    object.ProcessAgentsInside( boost::bind( &ControlZoneCapacity::ControlTarget, this, _1,  boost::cref( object.GetArmy() ), rPHCoeff, boost::ref( targets ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlZoneCapacity::ControlTarget
+// Created: JCR 2008-08-28
+// -----------------------------------------------------------------------------
+void ControlZoneCapacity::ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC& army, MT_Float phCoef, T_TargetVector& targets ) const
+{
+
+    if ( army.IsAFriend( agent->GetArmy() ) == eTristate_True )
+        return;    
+
+    PHY_RoleInterface_Composantes::T_ComposanteVector compTargets;
+    agent->GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );
+    for( PHY_RoleInterface_Composantes::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
+    {
+        PHY_Composante_ABC& compTarget = **itCompTarget;
+
+        if ( randomGenerator_.rand_oi( 0., 1. ) <= phCoef * GetUnitDensityFirePercentage( compTarget.GetType().GetVolume() ) )
+            targets.push_back( std::make_pair( agent, &compTarget ) );
+    }
+}

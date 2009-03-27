@@ -32,7 +32,7 @@ namespace xml
 class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class PHY_Volume;
 
 // =============================================================================
@@ -71,12 +71,12 @@ public:
     void     UnregisterPushingFlow ( MIL_PopulationFlow& flow );
 
     MT_Float GetPullingFlowsDensity() const;
-    void     SetPullingFlowsDensity( const MIL_RealObject_ABC& splittingObject );
+    void     SetPullingFlowsDensity( const MIL_Object_ABC& splittingObject );
     //@}
 
     //! @name Accessors
     //@{
-    const MIL_RealObject_ABC* GetSplittingObject() const;
+    const MIL_Object_ABC* GetSplittingObject() const;
     const MT_Vector2D&        GetPosition       () const;
           bool                IsNearPosition    ( const MT_Vector2D& position ) const;
 
@@ -133,7 +133,7 @@ private:
     MIL_PopulationFlow*     pPullingFlow_;
     T_FlowSet               pushingFlows_;
 
-    const MIL_RealObject_ABC* pSplittingObject_;
+    const MIL_Object_ABC* pSplittingObject_;
     MT_Float                  rPullingFlowsDensity_;
 };
 

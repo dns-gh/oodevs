@@ -18,10 +18,10 @@
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObject( const MIL_RealObject_ABC& objectKnown ) const
+DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
 {
-    CIT_KnowledgeObjectMap itKnowledge = realObjectMap_.find( &objectKnown );   
-    if( itKnowledge == realObjectMap_.end() )
+    CIT_KnowledgeObjectMap itKnowledge = objectMap_.find( &objectKnown );   
+    if( itKnowledge == objectMap_.end() )
         return 0;
     return itKnowledge->second;
 }
@@ -55,7 +55,7 @@ DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObje
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-bool DEC_BlackBoard_CanContainKnowledgeObject::HasKnowledgeObject( const MIL_RealObject_ABC& objectKnown ) const
+bool DEC_BlackBoard_CanContainKnowledgeObject::HasKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
 {
-    return realObjectMap_.find( &objectKnown ) != realObjectMap_.end();
+    return objectMap_.find( &objectKnown ) != objectMap_.end();
 }

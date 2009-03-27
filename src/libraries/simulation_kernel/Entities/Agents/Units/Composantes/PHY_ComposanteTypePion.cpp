@@ -25,8 +25,11 @@
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/BuildableCapacity.h"
+#include "Entities/Objects/MobilityCapacity.h"
 #include "PHY_ComposanteTypeObjectData.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
@@ -130,7 +133,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , speeds_                                    ( xis )
     , rMaxSlope_                                 ( 1. )
     , dotationCapacities_                        ( "composition", xis )
-    , objectData_                                ( MIL_RealObjectType::GetObjectTypes().size(), 0 )
+    , objectData_                                ( )
     , consumptions_                              ( PHY_ConsumptionType::GetConsumptionTypes().size(), 0 )
     , rNbrHumansLoadedPerTimeStep_               ( 0. )
     , rNbrHumansUnloadedPerTimeStep_             ( 0. )
@@ -452,19 +455,16 @@ void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis )
 {
-    std::string strType;
-    xis >> xml::attribute( "type", strType );
+    std::string strType( xml::attribute( xis, "type", std::string() ) );
+    
+    const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
-    if( !pObjectType )
-        xis.error( "Unknown object type '" + strType + "'" );
-
-    assert( objectData_.size() > pObjectType->GetID() );
-    const PHY_ComposanteTypeObjectData*& pObject = objectData_[ pObjectType->GetID() ];
+    if ( objectData_.size() <= objectType.GetID() )
+        objectData_.resize( objectType.GetID() + 1, 0 );
+    const PHY_ComposanteTypeObjectData*& pObject = objectData_[ objectType.GetID() ];
     if( pObject )
         xis.error( "Object type '" + strType + "' already instanciated" );
-
-    pObject = new PHY_ComposanteTypeObjectData( *pObjectType, xis );
+    pObject = new PHY_ComposanteTypeObjectData( objectType, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -791,10 +791,11 @@ void PHY_ComposanteTypePion::InstanciateSensors( std::back_insert_iterator < std
 // Name: PHY_ComposanteTypePion::CanConstruct
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::CanConstruct( const MIL_RealObjectType& objectType ) const
+bool PHY_ComposanteTypePion::CanConstruct( const MIL_ObjectType_ABC& object ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return false;
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanConstruct();
 }
 
@@ -802,10 +803,11 @@ bool PHY_ComposanteTypePion::CanConstruct( const MIL_RealObjectType& objectType 
 // Name: PHY_ComposanteTypePion::CanDestroy
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::CanDestroy( const MIL_RealObjectType& objectType ) const
+bool PHY_ComposanteTypePion::CanDestroy( const MIL_ObjectType_ABC& object ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return false;
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanDestroy();
 }
 
@@ -813,10 +815,11 @@ bool PHY_ComposanteTypePion::CanDestroy( const MIL_RealObjectType& objectType ) 
 // Name: PHY_ComposanteTypePion::CanMine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::CanMine( const MIL_RealObjectType& objectType ) const
+bool PHY_ComposanteTypePion::CanMine( const MIL_ObjectType_ABC& object ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return false;
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanMine();
 }
 
@@ -824,10 +827,11 @@ bool PHY_ComposanteTypePion::CanMine( const MIL_RealObjectType& objectType ) con
 // Name: PHY_ComposanteTypePion::CanDemine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::CanDemine( const MIL_RealObjectType& objectType ) const
+bool PHY_ComposanteTypePion::CanDemine( const MIL_ObjectType_ABC& object ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return false;
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanDemine();
 }
 
@@ -835,10 +839,11 @@ bool PHY_ComposanteTypePion::CanDemine( const MIL_RealObjectType& objectType ) c
 // Name: PHY_ComposanteTypePion::CanBypass
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::CanBypass( const MIL_RealObjectType& objectType, bool bObjectIsMined ) const
+bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool bObjectIsMined ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return false;
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanBypass( bObjectIsMined );
 }
 
@@ -846,10 +851,11 @@ bool PHY_ComposanteTypePion::CanBypass( const MIL_RealObjectType& objectType, bo
 // Name: PHY_ComposanteTypePion::GetConstructionTime
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetConstructionTime( const MIL_RealObjectType& objectType, MT_Float rSizeCoef ) const
+MT_Float PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& object, MT_Float rSizeCoef ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return std::numeric_limits< MT_Float >::max();
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetConstructionTime( rSizeCoef );
     return std::numeric_limits< MT_Float >::max();
@@ -859,10 +865,11 @@ MT_Float PHY_ComposanteTypePion::GetConstructionTime( const MIL_RealObjectType& 
 // Name: PHY_ComposanteTypePion::GetDestructionTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetDestructionTime( const MIL_RealObjectType& objectType, MT_Float rSizeCoef ) const
+MT_Float PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& object, MT_Float rSizeCoef ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return std::numeric_limits< MT_Float >::max();
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetDestructionTime( rSizeCoef );
     return std::numeric_limits< MT_Float >::max();
@@ -872,10 +879,11 @@ MT_Float PHY_ComposanteTypePion::GetDestructionTime( const MIL_RealObjectType& o
 // Name: PHY_ComposanteTypePion::GetMiningTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMiningTime( const MIL_RealObjectType& objectType ) const
+MT_Float PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return std::numeric_limits< MT_Float >::max();
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetMiningTime();
     return std::numeric_limits< MT_Float >::max();
@@ -884,10 +892,11 @@ MT_Float PHY_ComposanteTypePion::GetMiningTime( const MIL_RealObjectType& object
 // Name: PHY_ComposanteTypePion::GetDeminingTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetDeminingTime( const MIL_RealObjectType& objectType ) const
+MT_Float PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return std::numeric_limits< MT_Float >::max();
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetDeminingTime();
     return std::numeric_limits< MT_Float >::max();
@@ -897,10 +906,11 @@ MT_Float PHY_ComposanteTypePion::GetDeminingTime( const MIL_RealObjectType& obje
 // Name: PHY_ComposanteTypePion::GetBypassTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetBypassTime( const MIL_RealObjectType& objectType, MT_Float rSizeCoef, bool bObjectIsMined ) const
+MT_Float PHY_ComposanteTypePion::GetBypassTime( const MIL_ObjectType_ABC& object, MT_Float rSizeCoef, bool bObjectIsMined ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return std::numeric_limits< MT_Float >::max();
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetBypassTime( rSizeCoef, bObjectIsMined );
     return std::numeric_limits< MT_Float >::max();
@@ -910,14 +920,14 @@ MT_Float PHY_ComposanteTypePion::GetBypassTime( const MIL_RealObjectType& object
 // Name: PHY_ComposanteTypePion::GetMaxSpeed
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMaxSpeed( const MIL_RealObject_ABC& object ) const
+MT_Float PHY_ComposanteTypePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
-    assert( objectData_.size() > object.GetType().GetID() );
+    if ( objectData_.size() <= object.GetID() )
+        return std::numeric_limits< MT_Float >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetType().GetID() ];
     if( pObjectData )
-        return pObjectData->GetMaxSpeed( object );
-
-    return object.GetDefaultMaxSpeed();
+        return pObjectData->GetMaxSpeed( object );    
+    return object.Get< MobilityCapacity >().GetDefaultSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -934,13 +944,14 @@ const PHY_DotationConsumptions* PHY_ComposanteTypePion::GetDotationConsumptions(
 // Name: PHY_ComposanteTypePion::GetConsumptionMode
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-const PHY_ConsumptionType& PHY_ComposanteTypePion::GetConsumptionMode( const MIL_RealObjectType& objectType ) const
+const PHY_ConsumptionType& PHY_ComposanteTypePion::GetConsumptionMode( const MIL_ObjectType_ABC& object ) const
 {
-    assert( objectData_.size() > objectType.GetID() );
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ objectType.GetID() ];
+    if ( objectData_.size() <= object.GetID() )
+        return object.GetCapacity< BuildableCapacity >()->GetDefaultConsumptionMode();
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData && pObjectData->GetConsumptionMode() )
         return *pObjectData->GetConsumptionMode();
-    return objectType.GetDefaultConsumptionMode();
+    return object.GetCapacity< BuildableCapacity >()->GetDefaultConsumptionMode();
 }
 
 // =============================================================================

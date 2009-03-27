@@ -21,21 +21,21 @@ E_PopulationAttitude tools::PopulationAttitudeFromXml( const std::string& type )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::ObstacleTypeFromXml
+// Name: tools::DemolitionTargetTypeFromXml
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-E_ObstacleType tools::ObstacleTypeFromXml( const std::string& type )
+E_DemolitionTargetType tools::DemolitionTargetTypeFromXml( const std::string& type )
 {
-    return ENT_Tr::ConvertToObstacleType( type );
+    return ENT_Tr::ConvertToDemolitionTargetType( type );
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToXml
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-std::string tools::ToXml( E_ObstacleType type )
+std::string tools::ToXml( E_DemolitionTargetType type )
 {
-    return ENT_Tr::ConvertFromObstacleType( type, ENT_Tr::eToSim );
+    return ENT_Tr::ConvertFromDemolitionTargetType( type, ENT_Tr::eToSim );
 }
 
 // -----------------------------------------------------------------------------

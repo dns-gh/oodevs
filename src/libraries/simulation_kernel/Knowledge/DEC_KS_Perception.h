@@ -22,7 +22,7 @@ class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_PopulationPerception;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class PHY_PerceptionLevel;
@@ -60,7 +60,7 @@ public:
     //@{
     // Called by ::Talk()
     void NotifyPerception( MIL_Agent_ABC&               agentPerceived        , const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
-    void NotifyPerception( MIL_RealObject_ABC&          objectPerceived       , const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
+    void NotifyPerception( MIL_Object_ABC&          objectPerceived       , const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
     void NotifyPerception( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
     void NotifyPerception( MIL_PopulationFlow&          flowPerceived         , const PHY_PerceptionLevel& level, const T_PointVector& shape, bool bRecordModeEnabled );
 

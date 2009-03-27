@@ -14,7 +14,7 @@
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& DEC_Knowledge_ObjectPerception::GetObjectPerceived() const
+MIL_Object_ABC& DEC_Knowledge_ObjectPerception::GetObjectPerceived() const
 {
     assert( pObjectPerceived_ );
     return *pObjectPerceived_; 

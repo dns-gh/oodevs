@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "Entities/Objects/MIL_ObstacleType.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::GetID
@@ -26,7 +26,7 @@ uint DEC_Knowledge_Object::GetID() const
 // Created: NLD 2006-01-05
 // -----------------------------------------------------------------------------
 inline
-const MIL_Army& DEC_Knowledge_Object::GetArmy() const
+const MIL_Army_ABC& DEC_Knowledge_Object::GetArmy() const
 {
     assert( pOwnerArmy_ );
     return *pOwnerArmy_;
@@ -57,7 +57,7 @@ const TER_Localisation& DEC_Knowledge_Object::GetAvoidanceLocalisation() const
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
 inline
-const MIL_RealObjectType& DEC_Knowledge_Object::GetType() const
+const MIL_ObjectType_ABC& DEC_Knowledge_Object::GetType() const
 {
     assert( pObjectType_ );
     return *pObjectType_;   
@@ -78,69 +78,9 @@ MT_Float DEC_Knowledge_Object::GetRelevance() const
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC* DEC_Knowledge_Object::GetObjectKnown() const
+MIL_Object_ABC* DEC_Knowledge_Object::GetObjectKnown() const
 {
     return pObjectKnown_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::IsBypassed
-// Created: NLD 2004-04-06
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Knowledge_Object::IsBypassed() const
-{
-    return nBypassPercentage_ >= 100;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::IsConstructed
-// Created: NLD 2006-10-27
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Knowledge_Object::IsConstructed() const
-{
-    return nConstructionPercentage_ >= 100;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::UpdateSpecificAttributes
-// Created: NLD 2004-05-04
-// -----------------------------------------------------------------------------
-inline
-void DEC_Knowledge_Object::UpdateSpecificAttributes( const PHY_PerceptionLevel& /*nCurrentPerceptionLevel*/ )
-{
-    // Nothing
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::UpdateSpecificAttributes
-// Created: NLD 2004-05-04
-// -----------------------------------------------------------------------------
-inline
-void DEC_Knowledge_Object::UpdateSpecificAttributes( const DEC_Knowledge_ObjectPerception& /*perception*/ )
-{
-    // Nothing
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::UpdateSpecificAttributes
-// Created: NLD 2004-05-04
-// -----------------------------------------------------------------------------
-inline
-void DEC_Knowledge_Object::UpdateSpecificAttributes( const DEC_Knowledge_ObjectCollision&  /*collision*/  )
-{
-    // Nothing   
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::BuildMsgSpecificAttributes
-// Created: NLD 2004-03-24
-// -----------------------------------------------------------------------------
-inline
-void DEC_Knowledge_Object::BuildMsgSpecificAttributes( ASN1T_MsgObjectKnowledgeUpdate& /*asnMsg*/ )
-{
-    // Nothing
 }
 
 // -----------------------------------------------------------------------------
@@ -198,28 +138,29 @@ bool DEC_Knowledge_Object::Clean() const
 // Created: NLD 2007-02-07
 // -----------------------------------------------------------------------------
 inline
-const MIL_Army& DEC_Knowledge_Object::GetArmyKnowing() const
+const MIL_Army_ABC& DEC_Knowledge_Object::GetArmyKnowing() const
 {
     assert( pArmyKnowing_ );
     return *pArmyKnowing_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::IsReservedObstacle
-// Created: NLD 2007-05-22
+// Name: template< typename Extension >  void DEC_Knowledge_Object::Attach
+// Created: JCR 2008-08-12
 // -----------------------------------------------------------------------------
-inline
-bool DEC_Knowledge_Object::IsReservedObstacle() const
+template< typename Extension >  
+void DEC_Knowledge_Object::Attach( Extension& extension )
 {
-    return pObstacleType_ && pObstacleType_->CouldBeActivated();
+    attributes_.push_back( &extension );
+    tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >::Attach( extension );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::IsReservedObstacleActivated
-// Created: NLD 2007-05-23
+// Name: template< typename Extension >  const Extension* DEC_Knowledge_Object::Retrieve
+// Created: JCR 2008-08-12
 // -----------------------------------------------------------------------------
-inline
-bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
+template< typename Extension >  
+const Extension* DEC_Knowledge_Object::Retrieve() const
 {
-    return bReservedObstacleActivated_;
+    return tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >::Retrieve< Extension >();
 }

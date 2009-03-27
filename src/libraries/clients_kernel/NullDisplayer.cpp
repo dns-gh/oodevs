@@ -74,3 +74,12 @@ void NullDisplayer::EndDisplay()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: NullDisplayer::Clear
+// Created: LDC 2009-03-18
+// -----------------------------------------------------------------------------
+void NullDisplayer::Clear()
+{
+    // NOTHING
+}

@@ -12,23 +12,20 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_ObjectManager.h"
-#include "MIL_RealObjectType.h"
-#include "MIL_RealObject_ABC.h"
-#include "MIL_VirtualObject_ABC.h"
-#include "MIL_NuageNBC.h"
-#include "MIL_ZoneMineeParDispersion.h"
-#include "MIL_ControlZone.h"
+#include "MIL_ObjectFactory.h"
+#include "MIL_Object_ABC.h"
+#include "MIL_ObjectManipulator_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_Federate.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
+
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Tools/MIL_IDManager.h"
+
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( MIL_ObjectManager, "MIL_ObjectManager" )
 
@@ -37,9 +34,9 @@ BOOST_CLASS_EXPORT_GUID( MIL_ObjectManager, "MIL_ObjectManager" )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 MIL_ObjectManager::MIL_ObjectManager()
-    : realObjects_   ()
-    , virtualObjects_()
+    : builder_ ( new MIL_ObjectFactory( *this ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,11 +45,9 @@ MIL_ObjectManager::MIL_ObjectManager()
 // -----------------------------------------------------------------------------
 MIL_ObjectManager::~MIL_ObjectManager()
 {
-    for( CIT_RealObjectMap itReal = realObjects_.begin(); itReal != realObjects_.end(); ++itReal )
-        delete itReal->second;
-
-    for( CIT_VirtualObjectVector itVirtual = virtualObjects_.begin(); itVirtual != virtualObjects_.end(); ++itVirtual )
-        delete *itVirtual;
+    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+        if ( it->second )
+            delete it->second;
 }
 
 
@@ -62,8 +57,7 @@ MIL_ObjectManager::~MIL_ObjectManager()
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> realObjects_;
-         // >> virtualObjects_; // les objets virtuels sont créés par le décisionnel   
+    file >> objects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -72,8 +66,7 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << realObjects_;
-         // << virtualObjects_;
+    file << objects_;
 }
 
 // =============================================================================
@@ -86,11 +79,8 @@ void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::ProcessEvents()
 {
-    for( CIT_RealObjectMap itRealObject = realObjects_.begin(); itRealObject != realObjects_.end(); ++itRealObject )
-        itRealObject->second->ProcessEvents();
-
-    for( CIT_VirtualObjectVector itVirtualObject = virtualObjects_.begin(); itVirtualObject != virtualObjects_.end(); ++itVirtualObject )
-        (**itVirtualObject).ProcessEvents();
+    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+        it->second->ProcessEvents();
 }
 
 // -----------------------------------------------------------------------------
@@ -99,36 +89,19 @@ void MIL_ObjectManager::ProcessEvents()
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::UpdateStates()
 {
-    // Real objects
-    for( IT_RealObjectMap itRealObject = realObjects_.begin(); itRealObject != realObjects_.end();  )
+    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); )
     {
-        MIL_RealObject_ABC& object = *itRealObject->second;
+        MIL_Object_ABC& object = *it->second;
         if( object.IsReadyForDeletion() )
         {
             object.SendDestruction();
             delete &object;
-            itRealObject = realObjects_.erase( itRealObject );
+            it = objects_.erase( it );
         }
         else
         {
             object.UpdateState();   
-            ++itRealObject;
-        }
-    }
-
-    // Virtual objects
-    for( IT_VirtualObjectVector itVirtualObject = virtualObjects_.begin(); itVirtualObject != virtualObjects_.end();  )
-    {
-        MIL_VirtualObject_ABC& object = **itVirtualObject;
-        if( object.IsReadyForDeletion() )
-        {
-            delete &object;
-            itVirtualObject = virtualObjects_.erase( itVirtualObject );
-        }
-        else
-        {
-            object.UpdateState();   
-            ++itVirtualObject;
+            ++it;
         }
     }
 }
@@ -139,61 +112,34 @@ void MIL_ObjectManager::UpdateStates()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::RegisterObject
-// Created: NLD 2004-10-27
-// -----------------------------------------------------------------------------
-void MIL_ObjectManager::RegisterObject( MIL_VirtualObject_ABC& object )
-{
-    assert( std::find( virtualObjects_.begin(), virtualObjects_.end(), &object ) == virtualObjects_.end() );
-    virtualObjects_.push_back( &object );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::RegisterObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::RegisterObject( MIL_RealObject_ABC& object )
+void MIL_ObjectManager::RegisterObject( MIL_Object_ABC& object )
 {
     if( MIL_AgentServer::GetWorkspace().GetHLAFederate() )
         MIL_AgentServer::GetWorkspace().GetHLAFederate()->Register( object );
-    bool bOut = realObjects_.insert( std::make_pair( object.GetID(), &object ) ).second;
+    bool bOut = objects_.insert( std::make_pair( object.GetID(), &object ) ).second;
     assert( bOut );
     object.SendCreation(); //$$$ a déplacer ...
     object.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( object ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::GetType
+// Created: JCR 2008-06-06
+// -----------------------------------------------------------------------------
+const MIL_ObjectType_ABC& MIL_ObjectManager::FindType( const std::string& type ) const
+{
+    return builder_->FindType( type );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army& army )
+void MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 {
-    uint        id;
-    std::string strType;
-    xis >> xml::attribute( "id", id )
-        >> xml::attribute( "type", strType );
-
-    const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strType );
-    if( !pType )
-        xis.error( "Unknown object type" );
-
-    id = pType->GetIDManager().ConvertSimIDToMosID( id );
-    if( realObjects_.find( id ) != realObjects_.end() )
-        xis.error( "ID already exists" );
-
-    if( pType->GetIDManager().IsMosIDValid( id ) )
-    {
-        if( !pType->GetIDManager().LockMosID( id ) )
-            xis.error( "ID already used" );
-    }
-
-    MIL_RealObject_ABC& object = pType->InstanciateObject( id, army );
-    object.Initialize( xis );
-
-    // Default state : full constructed, valorized if it can be, not prepared
-    object.Construct();
-    object.Mine     ();
-
-    RegisterObject( object );
+    builder_->BuildObject( xis, army );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,106 +147,43 @@ void MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army& army )
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActionCreateObject& asn )
-{
-    const MIL_RealObjectType* pType = MIL_RealObjectType::Find( asn.type );
-    if( !pType )
-        return EnumObjectErrorCode::error_invalid_object;
-
+{  
     MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asn.team );
     if( !pArmy )
         return EnumObjectErrorCode::error_invalid_camp;
+    return builder_->BuildObject( asn, *pArmy );
+}
 
-    MIL_RealObject_ABC& object = pType->InstanciateObject( pType->GetIDManager().GetFreeSimID(), *pArmy );
-    ASN1T_EnumObjectErrorCode nErrorCode = object.Initialize( asn );
-    if( nErrorCode != EnumObjectErrorCode::no_error )
-    {
-        object.MarkForDestruction(); //$$$ naze, mais nécessaire
-        delete &object;
-        return nErrorCode;
-    }
-
-    // Default state : full constructed, valorized if it can be, not prepared
-    object.Construct();
-    object.Mine     ();
-
-    RegisterObject( object );
-    return EnumObjectErrorCode::no_error;
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::CreateObject
+// Created: JCR 2008-06-03
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
+{
+    return builder_->BuildObject( type, army, localisation, EnumDemolitionTargetType::preliminary );    
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( MIL_Army& army, const MIL_ObstacleType& obstacleType, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx, ASN1T_EnumDemolitionTargetType obstacleType )
 {
-    uint nObjectTypeID = diaParameters[ nCurrentParamIdx++ ].ToId();
-    const MIL_RealObjectType* pType = MIL_RealObjectType::Find( nObjectTypeID );
-    if( !pType )
-        return 0;
-
-    MIL_RealObject_ABC& object = pType->InstanciateObject( pType->GetIDManager().GetFreeSimID(), army );
-    if( !object.Initialize( obstacleType, diaParameters, nCurrentParamIdx ) )
-    {
-        object.MarkForDestruction(); //$$$ naze, mais nécessaire
-        delete &object;
-        return 0;
-    }
-    RegisterObject( object );
-    return &object;
+	const std::string type( diaParameters[ nCurrentParamIdx++ ].ToString() );
+    const TER_Localisation* pLocalisation = diaParameters[ nCurrentParamIdx++ ].ToUserPtr( pLocalisation );    
+    
+    if ( pLocalisation )
+        return builder_->BuildObject( type, army, *pLocalisation, obstacleType );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::CreateObject
-// Created: NLD 2006-10-23
+// Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder )
 {
-    MIL_RealObject_ABC& object = type.InstanciateObject( type.GetIDManager().GetFreeSimID(), army );
-    if( !object.Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass ) )
-    {
-        object.MarkForDestruction(); //$$$ naze, mais nécessaire
-        delete &object;
-        return 0;
-    }
-    RegisterObject( object );
-    return &object;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::CreateObjectNuageNBC
-// Created: NLD 2006-10-23
-// -----------------------------------------------------------------------------
-MIL_NuageNBC& MIL_ObjectManager::CreateObjectNuageNBC( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType )
-{
-    MIL_NuageNBC& object = *new MIL_NuageNBC( MIL_RealObjectType::nuageNBC_, MIL_RealObjectType::nuageNBC_.GetIDManager().GetFreeSimID(), army );
-    object.Initialize( localisation, nbcAgentType );
-    object.Construct();
-    RegisterObject( object );
-    return object;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::CreateObjectZoneeMineeParDispersion
-// Created: NLD 2006-10-23
-// -----------------------------------------------------------------------------
-MIL_ZoneMineeParDispersion& MIL_ObjectManager::CreateObjectZoneeMineeParDispersion( MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines )
-{
-    MIL_ZoneMineeParDispersion& object = *new MIL_ZoneMineeParDispersion( MIL_RealObjectType::zoneMineeParDispersion_, MIL_RealObjectType::nuageNBC_.GetIDManager().GetFreeSimID(), army );
-    object.Initialize( localisation, nNbrMines );
-    object.Construct();
-    RegisterObject( object );
-    return object;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::CreateObjectControlZone
-// Created: NLD 2006-10-23
-// -----------------------------------------------------------------------------
-MIL_ControlZone& MIL_ObjectManager::CreateObjectControlZone( MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius )
-{
-    MIL_ControlZone& object = *new MIL_ControlZone( army, localisation, rRadius );
-    RegisterObject( object );
-    return object;
+    return builder_->BuildObject( builder, army );
 }
 
 // =============================================================================
@@ -315,23 +198,29 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagi
 {
     ASN1T_EnumObjectErrorCode nErrorCode = EnumObjectErrorCode::no_error;
 
-    if( asnMsg.action.t == T_MsgObjectMagicAction_action_create_object )
+    switch ( asnMsg.action.t )
+    {
+    case T_MsgObjectMagicAction_action_create_object:
         nErrorCode = CreateObject( *asnMsg.action.u.create_object );
-    else if( asnMsg.action.t == T_MsgObjectMagicAction_action_destroy_object )
-    {
-        MIL_RealObject_ABC* pObject = FindRealObject( asnMsg.action.u.destroy_object );
-        if( !pObject )
-            nErrorCode = EnumObjectErrorCode::error_invalid_object;
-        else
-            pObject->Destroy();
-    }
-    else if( asnMsg.action.t == T_MsgObjectMagicAction_action_update_object )
-    {
-        MIL_RealObject_ABC* pObject = FindRealObject( asnMsg.action.u.update_object->oid );
-        if( !pObject )
-            nErrorCode = EnumObjectErrorCode::error_invalid_object;
-        else
-            nErrorCode = pObject->OnReceiveMagicActionUpdate( *asnMsg.action.u.update_object );
+        break;
+    case T_MsgObjectMagicAction_action_destroy_object:
+        {
+            MIL_Object_ABC* pObject = Find( asnMsg.action.u.destroy_object );
+            if( !pObject )
+                nErrorCode = EnumObjectErrorCode::error_invalid_object;
+            else
+                (*pObject)().Destroy();
+            break;
+        }
+    case T_MsgObjectMagicAction_action_update_object:
+        {
+            MIL_Object_ABC* pObject = Find( asnMsg.action.u.update_object->oid );
+            if( !pObject )
+                nErrorCode = EnumObjectErrorCode::error_invalid_object;
+            else
+                nErrorCode = pObject->OnUpdate( asnMsg.action.u.update_object->attributes );
+            break;
+        }
     }
     
     NET_ASN_MsgObjectMagicActionAck asnReplyMsg;

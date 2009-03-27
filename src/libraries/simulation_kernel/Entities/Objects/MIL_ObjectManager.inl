@@ -10,14 +10,14 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::FindRealObject
+// Name: MIL_ObjectManager::Find
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC* MIL_ObjectManager::FindRealObject( uint nID ) const
+MIL_Object_ABC* MIL_ObjectManager::Find( uint nID ) const
 {
-    CIT_RealObjectMap it = realObjects_.find( nID );
-    if( it == realObjects_.end() )
+    CIT_ObjectMap it = objects_.find( nID );
+    if( it == objects_.end() )
         return 0;
     return it->second;
 }

@@ -14,7 +14,7 @@
 #include "PHY_RolePion_Refugee.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_CampRefugies.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Refugee, "PHY_RolePion_Refugee" )
@@ -70,7 +70,7 @@ void PHY_RolePion_Refugee::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< PHY_RoleInterface_Refugee >( *this )
          & pPion_
          & bManaged_
-         & const_cast< MIL_CampRefugies*& >( pCamp_ );
+         & const_cast< MIL_Object_ABC*& >( pCamp_ );
 }
 
 // =============================================================================
@@ -125,7 +125,7 @@ bool PHY_RolePion_Refugee::Release()
 // Name: PHY_RolePion_Refugee::Release
 // Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Refugee::Release( const MIL_CampRefugies& camp )
+bool PHY_RolePion_Refugee::Release( const MIL_Object_ABC& camp )
 {
     assert( pPion_ );
     if( !pPion_->GetType().IsRefugee() || !bManaged_ )
@@ -142,7 +142,7 @@ bool PHY_RolePion_Refugee::Release( const MIL_CampRefugies& camp )
 // Name: PHY_RolePion_Refugee::IsManaged
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Refugee::IsManaged( const MIL_CampRefugies& camp ) const
+bool PHY_RolePion_Refugee::IsManaged( const MIL_Object_ABC& camp ) const
 {
     if( !pCamp_ )
         return false;

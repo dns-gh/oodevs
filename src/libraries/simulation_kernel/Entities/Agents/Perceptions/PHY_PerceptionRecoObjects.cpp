@@ -13,7 +13,8 @@
 #include "PHY_PerceptionRecoObjects.h"
 
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
 #include "simulation_terrain/TER_World.h"
@@ -145,7 +146,7 @@ void PHY_PerceptionRecoObjects::Update()
 // Name: PHY_PerceptionRecoObjects::Compute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const MIL_RealObject_ABC& object ) const
+const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const MIL_Object_ABC& object ) const
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
         if ( (*it)->IsInside( object.GetLocalisation() ) )
@@ -181,11 +182,8 @@ void PHY_PerceptionRecoObjects::Execute( const TER_Object_ABC::T_ObjectVector& /
         for ( TER_Object_ABC::CIT_ObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
-            if( !object.IsReal() )
-                continue;
-            MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
-            if( realObject.CanBePerceived() )
-                perceiver_.NotifyPerception( realObject, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
+            if( object().CanBePerceived() )
+                perceiver_.NotifyPerception( object, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }
     }
 }

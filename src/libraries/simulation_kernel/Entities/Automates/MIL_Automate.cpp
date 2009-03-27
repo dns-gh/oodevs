@@ -27,10 +27,8 @@
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationRequestContainer.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_CampRefugies.h"
-#include "Entities/Objects/MIL_CampPrisonniers.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/LogisticAttribute.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
@@ -690,7 +688,7 @@ bool MIL_Automate::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 // Name: MIL_Automate::GetArmy
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MIL_Army& MIL_Automate::GetArmy() const
+MIL_Army_ABC& MIL_Automate::GetArmy() const
 {
     assert( pParentFormation_ || pParentAutomate_ );
 
@@ -730,11 +728,11 @@ void MIL_Automate::NotifyRefugeeReleased()
 // Name: MIL_Automate::NotifyRefugeeReleased
 // Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-void MIL_Automate::NotifyRefugeeReleased( const MIL_CampRefugies& camp )
+void MIL_Automate::NotifyRefugeeReleased( const MIL_Object_ABC& camp )
 {
     if( !pType_->IsRefugee() )
         return;
-    pTC2_ = &camp.GetTC2();
+    pTC2_ = &camp.GetAttribute< LogisticAttribute >().GetTC2();
 }
 
 
@@ -795,12 +793,12 @@ bool MIL_Automate::NotifyReleased()
 // Name: MIL_Automate::NotifyImprisoned
 // Created: NLD 2005-03-07
 // -----------------------------------------------------------------------------
-bool MIL_Automate::NotifyImprisoned( const MIL_CampPrisonniers& camp )
+bool MIL_Automate::NotifyImprisoned( const MIL_Object_ABC& camp )
 {
     if( !IsSurrendered() )
         return false;
 
-    pTC2_ = &camp.GetTC2();
+    pTC2_ = &camp.GetAttribute< LogisticAttribute >().GetTC2();
     return true;
 }
 

@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( ASN1T_EnumObstacleType& asn ) const;
+    void CommitTo( ASN1T_EnumDemolitionTargetType& asn ) const;
     //@}
 
 private:
@@ -52,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    E_ObstacleType value_;
+    ASN1T_EnumDemolitionTargetType value_;
     //@}
 };
 

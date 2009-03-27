@@ -20,7 +20,7 @@ class NET_ASN_MsgUnitAttributes;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
 class PHY_ComposantePion;
-class MIL_NbcAgent;
+class MIL_ToxicEffectManipulator;
 
 // =============================================================================
 // @class  PHY_RoleAction_Transport
@@ -102,7 +102,7 @@ public:
     //! @name Notifications on transporter
     //@{
     void NotifyComposanteChanged     ( const PHY_ComposantePion& composante );
-    void NotifyComposanteContaminated( const MIL_NbcAgent&       nbcAgent );
+    void NotifyComposanteContaminated( const MIL_ToxicEffectManipulator& nbcAgent );
     //@}
 
     //! @name Network

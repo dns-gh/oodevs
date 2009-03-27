@@ -132,3 +132,12 @@ void SpinBoxDisplayer::Hide()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: SpinBoxDisplayer::Clear
+// Created: LDC 2009-03-18
+// -----------------------------------------------------------------------------
+void SpinBoxDisplayer::Clear()
+{
+    Call( kernel::ValueNotSet() );
+}

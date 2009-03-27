@@ -31,7 +31,7 @@ using namespace kernel;
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
-                                  const Resolver_ABC< Object_ABC >& objectResolver, const Resolver_ABC< ObjectType >& typeResolver )
+                                  const Resolver_ABC< Object_ABC >& objectResolver, const Resolver_ABC< ObjectType, std::string >& typeResolver )
     : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid, "" )
     , converter_     ( converter )
     , owner_         ( owner )
@@ -41,11 +41,6 @@ ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKn
 {
     RegisterSelf( *this );
     pRealObject_ = objectResolver_.Find( message.real_object );
-
-    if( message.m.obstacle_typePresent )
-        obstacleType_ = (E_ObstacleType)message.obstacle_type;   
-    if( message.m.reserved_obstacle_activatedPresent )
-        reservedObstacleActivated_ = message.reserved_obstacle_activated != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,25 +64,6 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
     if( message.m.relevancePresent )
         nRelevance_ = message.relevance;
 
-    // $$$$ AGE 2008-04-03: 
-//    if( message.m.locationPresent && message.location.coordinates.n )
-//        position_ = std::string( (const char*)( message.location.coordinates.elem[0].data ), 15 );
-
-    if( message.m.construction_percentagePresent )
-        nConstructionPercentage_ = message.construction_percentage;
-    
-    if( message.m.mining_percentagePresent )
-        nValorizationPercentage_ = message.mining_percentage;
-    
-    if( message.m.bypass_construction_percentagePresent )
-        nBypassConstructionPercentage_ = message.bypass_construction_percentage;
-    
-    if( message.m.reserved_obstacle_activatedPresent )
-        reservedObstacleActivated_ = message.reserved_obstacle_activated != 0;
-    
-    if( message.m.perceivedPresent )
-        bIsPerceived_ = message.perceived != 0;
-
     Touch();
 }
 
@@ -101,11 +77,6 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Object", "Identifier:" ), id_ )
                 .Display( tools::translate( "Object", "Associated object:" ), pRealObject_ )
                 .Display( tools::translate( "Object", "Type:" ), type_ )
-                .Display( tools::translate( "Object", "Construction:" ), nConstructionPercentage_ * Units::percentage )
-                .Display( tools::translate( "Object", "Mining:" ), nValorizationPercentage_ * Units::percentage )
-                .Display( tools::translate( "Object", "Bypass:" ), nBypassConstructionPercentage_* Units::percentage )
-                .Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ )
-                .Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ )
                 .Display( tools::translate( "Object", "Perceived:" ), bIsPerceived_ )
                 .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ );
     if( ! position_.empty() )
@@ -133,16 +104,7 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 void ObjectKnowledge::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Object", "Type:" ), type_ )
-             .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ )
-             .Display( tools::translate( "Object", "Construction:" ), nConstructionPercentage_ * Units::percentage );
-    if( nValorizationPercentage_.IsSet() )
-        displayer.Display( tools::translate( "Object", "Mining:" ), nValorizationPercentage_ * Units::percentage );
-    if( nBypassConstructionPercentage_.IsSet() )
-        displayer.Display( tools::translate( "Object", "Bypass:" ), nBypassConstructionPercentage_ * Units::percentage );
-    if( obstacleType_.IsSet() )
-        displayer.Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ );
-    if( reservedObstacleActivated_.IsSet() )
-        displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
+             .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,6 +114,15 @@ void ObjectKnowledge::DisplayInSummary( Displayer_ABC& displayer ) const
 QString ObjectKnowledge::GetName() const
 {
     return pRealObject_ ? pRealObject_->GetName() : tools::translate( "Object", "Unknown object" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetTypeName
+// Created: SBO 2006-10-12
+// -----------------------------------------------------------------------------
+QString ObjectKnowledge::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------
@@ -188,18 +159,18 @@ const Team_ABC& ObjectKnowledge::GetOwner() const
 void ObjectKnowledge::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( type_ )
-        ObjectIcons::Draw( type_->GetId(), where, viewport, tools );
-    if( viewport.IsVisible( where ) )
-    {
-        // $$$$ SBO 2007-05-04: hard coded icon positions
-        glPushAttrib( GL_CURRENT_BIT );
-            glColor3f( 1, 1, 1 );
-            if( reservedObstacleActivated_.IsSet() )
-                tools.DrawIcon( reservedObstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
-            if( nConstructionPercentage_.IsSet() )
-                tools.DrawLife( where - geometry::Vector2f( 0.f, 250.f ), nConstructionPercentage_ / 100.f );
-            if( nBypassConstructionPercentage_.IsSet() )
-                tools.DrawLife( where - geometry::Vector2f( 0.f, 200.f ), nBypassConstructionPercentage_ / 100.f );
-        glPopAttrib();
-    }
+        ObjectIcons::Draw( *type_, where, viewport, tools );
+//    if( viewport.IsVisible( where ) )
+//    {
+//        // $$$$ SBO 2007-05-04: hard coded icon positions
+//        glPushAttrib( GL_CURRENT_BIT );
+//            glColor3f( 1, 1, 1 );
+//            if( reservedObstacleActivated_.IsSet() )
+//                tools.DrawIcon( reservedObstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
+//            if( nConstructionPercentage_.IsSet() )
+//                tools.DrawLife( where - geometry::Vector2f( 0.f, 250.f ), nConstructionPercentage_ / 100.f );
+//            if( nBypassConstructionPercentage_.IsSet() )
+//                tools.DrawLife( where - geometry::Vector2f( 0.f, 200.f ), nBypassConstructionPercentage_ / 100.f );
+//        glPopAttrib();
+//    }
 }

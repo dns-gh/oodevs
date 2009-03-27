@@ -14,10 +14,12 @@
 #include "PHY_SensorTypeObject.h"
 
 #include "PHY_SensorTypeObjectData.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+
 #include <xeumeuleu/xml.h>
 
 
@@ -28,7 +30,7 @@
 // -----------------------------------------------------------------------------
 PHY_SensorTypeObject::PHY_SensorTypeObject( const PHY_SensorType& type, xml::xistream& xis )
     : type_        ( type )
-    , objectData_  ( MIL_RealObjectType::GetObjectTypes().size() )
+    , objectData_  ( )
     , rMaxDistance_( 0. )
 {
     xis >> xml::list( "object", *this, &PHY_SensorTypeObject::ReadObject );
@@ -43,13 +45,13 @@ void PHY_SensorTypeObject::ReadObject( xml::xistream& xis )
     std::string strType;
     xis >> xml::attribute( "type", strType );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
-    if( !pObjectType )
-        xis.error( "Unknown object type" );
+    const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+    
+    if ( objectData_.size() <= objectType.GetID() )
+        objectData_.resize( objectType.GetID() + 1, 0 );
 
-    assert( objectData_.size() > pObjectType->GetID() );
     const PHY_SensorTypeObjectData* pObjectData = new PHY_SensorTypeObjectData( xis );
-    objectData_[ pObjectType->GetID() ] = pObjectData;
+    objectData_[ objectType.GetID() ] = pObjectData;
     rMaxDistance_ = std::max( rMaxDistance_, pObjectData->GetMaxDistance() );
 }
 
@@ -74,11 +76,13 @@ PHY_SensorTypeObject::~PHY_SensorTypeObject()
 // Name: PHY_SensorTypeObject::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_AgentPion& perceiver, const MIL_RealObject_ABC& target, MT_Float rSensorHeight ) const
+const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_AgentPion& perceiver, const MIL_Object_ABC& target, MT_Float rSensorHeight ) const
 {
-    assert( target.CanBePerceived() );
+    assert( target().CanBePerceived() );
 
-    assert( objectData_.size()  > target.GetType().GetID() );
+    if( objectData_.size() <= target.GetType().GetID() )
+        return PHY_PerceptionLevel::notSeen_;
+    
     const PHY_SensorTypeObjectData* pObjectData = objectData_[ target.GetType().GetID() ];
     if( !pObjectData )
         return PHY_PerceptionLevel::notSeen_;
@@ -92,10 +96,10 @@ const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Ag
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_AgentPion& perceiver, const DEC_Knowledge_Object& target, MT_Float rSensorHeight ) const
 {
-    assert( objectData_.size()  > target.GetType().GetID() );
+    if( objectData_.size() <= target.GetType().GetID() )
+        return PHY_PerceptionLevel::notSeen_;
     const PHY_SensorTypeObjectData* pObjectData = objectData_[ target.GetType().GetID() ];
     if( !pObjectData )
         return PHY_PerceptionLevel::notSeen_;
-
     return pObjectData->ComputePerception( perceiver, target, rSensorHeight );    
 }

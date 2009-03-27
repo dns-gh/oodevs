@@ -227,7 +227,7 @@ namespace {
 
             if(    knowledge.GetAgentPerceived() == *pPion_ 
                 || pKnowledge->IsDead()
-                || pArmy_->IsAnEnemy( *pKnowledge ) != eTristate_True
+                || pKnowledge->IsAnEnemy( *pArmy_ ) != eTristate_True
                 || pKnowledge->IsRefugee()
                 || pKnowledge->IsSurrendered() )
                 return;
@@ -241,7 +241,7 @@ namespace {
     private:
               T_KnowledgeAgentDiaIDVector* pContainer_;
         const MIL_AgentPion*               pPion_;
-        const MIL_Army*                    pArmy_;
+        const MIL_Army_ABC*                pArmy_;
         const T*                           pZone_;
     };
 }
@@ -374,7 +374,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemiesInZone( T_KnowledgeAg
 // Name: DEC_KnowledgeBlackBoard_AgentPion::IsIdentified
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_RealObject_ABC& object ) const
+bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_Object_ABC& object ) const
 {
     assert( pKnowledgeObjectPerceptionContainer_ );
     
@@ -388,7 +388,7 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_RealObject_ABC& 
 // Name: DEC_KnowledgeBlackBoard_AgentPion::IsPerceived
 // Created: NLD 2004-03-23
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeBlackBoard_AgentPion::IsPerceived( const MIL_RealObject_ABC& object ) const
+bool DEC_KnowledgeBlackBoard_AgentPion::IsPerceived( const MIL_Object_ABC& object ) const
 {
     assert( pKnowledgeObjectPerceptionContainer_ );
     

@@ -118,8 +118,8 @@ bool TER_Localisation::IsInside( const MT_Vector2D& vPos, MT_Float rPrecision ) 
     switch( nType_ )
     {
 //        case ePoint:   return vPos.SquareDistance( pointVector_[0] ) <= ( rPrecision_ * rPrecision_ );
-        case ePoint:   return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsInside( vPos, rPrecision );
-        case ePolygon: return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsInside( vPos, rPrecision );
+        case ePoint:   return polygon_.IsNull() || ( boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsInside( vPos, rPrecision ) );
+        case ePolygon: return polygon_.IsNull() || ( boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsInside( vPos, rPrecision ) );
         case eLine:    return boundingBox_.IsInside( vPos, rPrecision_ ) && polyline_.IsInside( vPos, rPrecision );
         default:
             return false;
@@ -199,11 +199,11 @@ MT_Float TER_Localisation::GetArea() const
 {
     switch( nType_ )
     {
-        case ePoint:   return 1.;
+        case ePoint:   return 1.f;
         case ePolygon: return polygon_ .GetArea  (); 
         case eLine:    return polyline_.Magnitude();
         default:
-            return false;
+            return 0.f;
     }
 }
 

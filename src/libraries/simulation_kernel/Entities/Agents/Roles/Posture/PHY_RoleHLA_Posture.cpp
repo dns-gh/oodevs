@@ -21,6 +21,7 @@
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+
 #include <hla/AttributeIdentifier.h>
 
 using namespace hla;

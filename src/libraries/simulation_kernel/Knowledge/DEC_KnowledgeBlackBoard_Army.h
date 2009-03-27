@@ -19,8 +19,8 @@
 class DEC_BlackBoard_CanContainKnowledgeObject;
 class DEC_KS_ObjectKnowledgeSynthetizer;
 class MIL_Army;
-class MIL_RealObject_ABC;
-class MIL_RealObjectTypeFilter;
+class MIL_Object_ABC;
+class MIL_ObjectFilter;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_Army
@@ -35,7 +35,7 @@ class DEC_KnowledgeBlackBoard_Army : public DEC_KnowledgeBlackBoard_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-              DEC_KnowledgeBlackBoard_Army( MIL_Army& army );
+    explicit  DEC_KnowledgeBlackBoard_Army( MIL_Army& army );
               DEC_KnowledgeBlackBoard_Army();
      virtual ~DEC_KnowledgeBlackBoard_Army();
     //@}
@@ -75,22 +75,22 @@ public:
 
     //! @name Queries
     //@{
-    bool                  IsKnown                 ( const MIL_RealObject_ABC& oject ) const;
+    bool                  IsKnown                 ( const MIL_Object_ABC& oject ) const;
     DEC_Knowledge_Object* GetKnowledgeObjectFromID( uint nID ) const;
 
     void                  GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
-    DEC_Knowledge_Object* GetKnowledgeObject ( MIL_RealObject_ABC& object ) const;
+    DEC_Knowledge_Object* GetKnowledgeObject ( MIL_Object_ABC& object ) const;
     DEC_Knowledge_Object* GetKnowledgeObject ( const DEC_Knowledge_ObjectCollision& collision ) const;
 
-    void                  GetObjects                   ( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter ) const;
-    void                  GetObjects                   ( T_KnowledgeObjectVector&      container, const MIL_RealObjectTypeFilter& filter ) const;
+    void                  GetObjects                   ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const;
+    void                  GetObjects                   ( T_KnowledgeObjectVector&      container, const MIL_ObjectFilter& filter ) const;
     void                  GetObjects                   ( T_KnowledgeObjectVector&      container ) const;
-    void                  GetObjectsInCircle           ( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const MT_Vector2D& center, MT_Float rRadius );
-    void                  GetObjectsInZone             ( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const TER_Localisation& zone );
-    void                  GetObjectsInZone             ( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const TER_Polygon& zone );
-    void                  GetObjectsAtInteractionHeight( T_KnowledgeObjectVector&      container, MT_Float rHeight, const MIL_RealObjectTypeFilter& filter ) const;
-    DEC_Knowledge_Object* GetClosestObject             ( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
-    DEC_Knowledge_Object* GetClosestFriendObject       ( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
+    void                  GetObjectsInCircle           ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, MT_Float rRadius );
+    void                  GetObjectsInZone             ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
+    void                  GetObjectsInZone             ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone );
+    void                  GetObjectsAtInteractionHeight( T_KnowledgeObjectVector&      container, MT_Float rHeight, const MIL_ObjectFilter& filter ) const;
+    DEC_Knowledge_Object* GetClosestObject             ( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const;
+    DEC_Knowledge_Object* GetClosestFriendObject       ( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const;
     //@}
 
 private:

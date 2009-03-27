@@ -1344,11 +1344,7 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( xml::xistream& input )
     std::string strName;
     input >> xml::attribute( "type", strName );
 
-	const E_ObjectType nObjectType = ENT_Tr::ConvertToObjectType( strName );
-	if( nObjectType == (E_ObjectType)-1)
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid object type '%1'" ).arg( strName.c_str() ).ascii() );
-
-    ADN_Objects_Data::ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( nObjectType );
+    ADN_Objects_Data::ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strName );
     if( !pObject )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid object type '%1'" ).arg( strName.c_str() ).ascii() );
     ptrObject_ = pObject;
@@ -1381,7 +1377,7 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( xml::xistream& input )
 void ADN_Composantes_Data::ObjectInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "object" )
-            << xml::attribute( "type", ENT_Tr::ConvertFromObjectType(ptrObject_.GetData()->nObjectType_.GetData()));
+            << xml::attribute( "type", ptrObject_.GetData()->strName_ );
     if( bInitialBuildTime_.GetData() )
         output << xml::attribute( "initial-construction-time", initialBuildTime_ );
     if( bInitialDestructionTime_.GetData() )

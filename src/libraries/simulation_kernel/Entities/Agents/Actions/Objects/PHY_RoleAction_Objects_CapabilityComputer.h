@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-class MIL_RealObjectType;
+class MIL_ObjectType_ABC;
 class PHY_ComposantePion;
 class MIL_AgentPion;
 
@@ -40,7 +40,7 @@ public:
     //@}
 
 public:
-     PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_RealObjectType& objectType );
+     PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_ObjectType_ABC& objectType );
     ~PHY_RoleAction_Objects_CapabilityComputer();
 
     //! @name Operations
@@ -57,7 +57,7 @@ private:
 
 private:
     const E_Operation         nOperation_;
-    const MIL_RealObjectType& objectType_;
+    const MIL_ObjectType_ABC& objectType_;
           bool                bHasCapability_;
 };
 

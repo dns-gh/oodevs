@@ -11,6 +11,8 @@
 #include "NBCPrototype_ABC.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/Iterator.h"
+#include "RichLabel.h"
+#include "ValuedListItem.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -20,12 +22,30 @@ using namespace gui;
 // Name: NBCPrototype_ABC constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver )
-    : ObjectPrototypeAttributes_ABC( parent, tools::translate( "NBCPrototype_ABC", "NBC parameters" ) )
+NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver, int maxToxic )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "NBCPrototype_ABC", "NBC parameters" ) )
     , resolver_( resolver )
+    , maxToxic_ ( maxToxic )
 {
-    new QLabel( tools::translate( "NBCPrototype_ABC", "NBC Agent:" ), this );
-    nbcAgents_ = new ValuedComboBox< const NBCAgent* >( this );
+//    new QLabel( tools::translate( "NBCPrototype_ABC", "NBC Agent:" ), this );
+//    nbcAgents_ = new ValuedComboBox< const NBCAgent* >( this );    
+  
+    danger_ = new QSpinBox( 0, 10, 1, this );
+    nbcAgentsLabel_ = new RichLabel( tools::translate( "NBCPrototype_ABC", "NBC agent(s):" ), this );
+    nbcAgents_ = new QListView( this );
+    if ( maxToxic == 1 )
+        nbcAgents_->setSelectionMode( QListView::Single );
+    else
+        nbcAgents_->setSelectionMode( QListView::Multi );    
+    nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
+    nbcAgents_->addColumn( tools::translate( "NBCPrototype_ABC", "Type" ) );
+
+
+    new QLabel( tools::translate( "NBCPrototype_ABC", "NBC agent state:" ), this );
+    nbcStates_ = new ValuedComboBox< std::string >( this );
+    nbcStates_->AddItem( std::string( "Liquid" ), std::string( "liquid" ) );
+    nbcStates_->AddItem( std::string( "Gaseous" ), std::string( "gaseous" ) );
+
     FillTypes();
 }
     
@@ -44,12 +64,13 @@ NBCPrototype_ABC::~NBCPrototype_ABC()
 // -----------------------------------------------------------------------------
 void NBCPrototype_ABC::FillTypes()
 {
-    nbcAgents_->Clear();
+    nbcAgents_->clear();
     Iterator< const NBCAgent& > it( resolver_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const NBCAgent& element = it.NextElement();
-        nbcAgents_->AddItem( element.GetName(), &element );
+        ValuedListItem* item = new ValuedListItem( nbcAgents_ );
+        item->SetNamed( element );
     }
 }
 
@@ -69,5 +90,24 @@ void NBCPrototype_ABC::showEvent( QShowEvent* e )
 // -----------------------------------------------------------------------------
 bool NBCPrototype_ABC::CheckValidity() const
 {
-    return nbcAgents_->count() && nbcAgents_->GetValue();
+    const int count = (int)GetAgentCount();
+    if ( maxToxic_ != count || ( maxToxic_ == -1 && count == 0 ) )
+    {
+        nbcAgentsLabel_->Warn( 3000 );
+        return false;
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NBCPrototype_ABC::GetAgentCount
+// Created: SBO 2006-04-20
+// -----------------------------------------------------------------------------
+unsigned NBCPrototype_ABC::GetAgentCount() const
+{
+    unsigned selected = 0;
+    for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
+        if( item->isSelected() )
+            ++selected;
+    return selected;
 }

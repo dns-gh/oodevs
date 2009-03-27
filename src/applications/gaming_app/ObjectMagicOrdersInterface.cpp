@@ -93,8 +93,9 @@ void ObjectMagicOrdersInterface::SendObjectMagic( ASN1T_MagicActionUpdateObject&
 void ObjectMagicOrdersInterface::BuildObject()
 {
     ASN1T_MagicActionUpdateObject asn;
-    asn.m.construction_percentagePresent = 1;
-    asn.construction_percentage          = 100;
+    asn.attributes.m.constructionPresent = 1;
+    asn.attributes.construction.m.percentagePresent = 1;
+    asn.attributes.construction.percentage = 100;
     SendObjectMagic( asn );
 }
 
@@ -105,8 +106,9 @@ void ObjectMagicOrdersInterface::BuildObject()
 void ObjectMagicOrdersInterface::DestroyObject()
 {
     ASN1T_MagicActionUpdateObject asn;
-    asn.m.construction_percentagePresent  = 1;
-    asn.construction_percentage           = 0;
+    asn.attributes.m.constructionPresent = 1;
+    asn.attributes.construction.m.percentagePresent = 1;
+    asn.attributes.construction.percentage = 0;
     SendObjectMagic( asn );
 }
 
@@ -117,8 +119,9 @@ void ObjectMagicOrdersInterface::DestroyObject()
 void ObjectMagicOrdersInterface::MineObject()
 {
     ASN1T_MagicActionUpdateObject asn;
-    asn.m.mining_percentagePresent  = 1;
-    asn.mining_percentage           = 100;
+    asn.attributes.m.minePresent = 1;
+    asn.attributes.mine.m.percentagePresent = 1;
+    asn.attributes.mine.percentage = 100;
     SendObjectMagic( asn );
 }
 
@@ -129,8 +132,9 @@ void ObjectMagicOrdersInterface::MineObject()
 void ObjectMagicOrdersInterface::SweepMineObject()
 {
     ASN1T_MagicActionUpdateObject asn;
-    asn.m.mining_percentagePresent  = 1;
-    asn.mining_percentage           = 0;
+    asn.attributes.m.minePresent = 1;
+    asn.attributes.mine.m.percentagePresent = 1;
+    asn.attributes.mine.percentage = 0;
     SendObjectMagic( asn );
 }
 
@@ -141,8 +145,8 @@ void ObjectMagicOrdersInterface::SweepMineObject()
 void ObjectMagicOrdersInterface::ActivateReservedObstacle()
 {
     ASN1T_MagicActionUpdateObject asn;
-    asn.m.reserved_obstacle_activatedPresent = 1;
-    asn.reserved_obstacle_activated = 1;
+    asn.attributes.m.obstaclePresent = 1;
+    asn.attributes.obstacle.activated = 1;    
     SendObjectMagic( asn );
 }
     
@@ -153,8 +157,8 @@ void ObjectMagicOrdersInterface::ActivateReservedObstacle()
 void ObjectMagicOrdersInterface::DeactivateReservedObstacle()
 {
     ASN1T_MagicActionUpdateObject asn;
-    asn.m.reserved_obstacle_activatedPresent = 1;
-    asn.reserved_obstacle_activated = 0;
+    asn.attributes.m.obstaclePresent = 1;
+    asn.attributes.obstacle.activated = 0;    
     SendObjectMagic( asn );
 }
 

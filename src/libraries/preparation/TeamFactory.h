@@ -14,14 +14,22 @@
 #include "KnowledgeGroupFactory_ABC.h"
 #include "ObjectFactory_ABC.h"
 
+namespace tools
+{
+    template< typename T > class SortedInterfaceContainer;
+}
+
 namespace kernel
 {
     class Controllers;
+    class PropertiesDictionary;    
+    class Extension_ABC;
 }
 
 class Model;
 class StaticModel;
 class IdManager;
+class ObjectAttributeFactory_ABC;
 
 // =============================================================================
 /** @class  TeamFactory
@@ -41,6 +49,11 @@ public:
     virtual ~TeamFactory();
     //@}
 
+    //! @name 
+    //@{
+    void Initialize();
+    //@}
+
     //! @name Operations
     //@{
     virtual kernel::Team_ABC* CreateTeam();
@@ -49,7 +62,7 @@ public:
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( kernel::Team_ABC& team );
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( xml::xistream& xis, kernel::Team_ABC& team );
 
-    virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, const Enum_ObstacleType& obstacleType, bool reservedObstacleActivated, const kernel::Location_ABC& location );
+    virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, const kernel::Location_ABC& location );
     virtual kernel::Object_ABC* CreateObject( xml::xistream& xis, kernel::Team_ABC& team );
     //@}
 
@@ -60,6 +73,11 @@ private:
     TeamFactory& operator=( const TeamFactory& ); //!< Assignement operator
     //@}
 
+    //! @name Helper
+    //@{
+    void ReadAttributes( const std::string& attr, xml::xistream& xis, tools::SortedInterfaceContainer< kernel::Extension_ABC >& result, kernel::PropertiesDictionary& dico );    
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -67,6 +85,7 @@ private:
     Model& model_;
     const StaticModel& staticModel_;
     IdManager& idManager_;
+    std::auto_ptr< ObjectAttributeFactory_ABC >   factory_;
     //@}
 };
 

@@ -32,7 +32,7 @@
 #include "Entities/Agents/Roles/Hla/HLA_RoleLocalPion.h"
 #include "Entities/Agents/MIL_AgentHLA.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Tools/MIL_IDManager.h"
 #include <hla/hla_lib.h>
 #include <windows.h> // For ::Sleep()
@@ -190,7 +190,7 @@ void HLA_Federate::Register( MIL_AgentPion& agent )
 // Name: HLA_Federate::Register
 // Created: AGE 2004-11-30
 // -----------------------------------------------------------------------------
-void HLA_Federate::Register( MIL_RealObject_ABC& object )
+void HLA_Federate::Register( MIL_Object_ABC& object )
 {
     assert( pObjectClass_ );
     assert( pInteractionManager_ );
@@ -207,7 +207,7 @@ void HLA_Federate::Register( MIL_RealObject_ABC& object )
 // Name: HLA_Federate::Unregister
 // Created: AGE 2004-11-30
 // -----------------------------------------------------------------------------
-void HLA_Federate::Unregister( MIL_RealObject_ABC& object )
+void HLA_Federate::Unregister( MIL_Object_ABC& object )
 {
     assert( pObjectClass_ );
     if( ! object.GetHLAView() )
@@ -252,7 +252,7 @@ MIL_Agent_ABC* HLA_Federate::GetLocalAgent( const ObjectIdentifier& objectId ) c
 // Name: HLA_Federate::GetLocalObject
 // Created: AGE 2004-12-06
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* HLA_Federate::GetLocalObject( const ObjectIdentifier& objectId ) const
+MIL_Object_ABC* HLA_Federate::GetLocalObject( const ObjectIdentifier& objectId ) const
 {
     CIT_ObjectMap itObject = localObjects_.find( objectId );
     if( itObject != localObjects_.end() )

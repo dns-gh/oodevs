@@ -11,8 +11,9 @@
 
 #include "DEC_FunctionsTools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectSiteFranchissement.h"
-#include "Knowledge/DEC_Knowledge_ObjectItineraireLogistique.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeCrossingSite.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeSupplyRoute.h"
+
 
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_KnowledgeObjectFunctions::IsRecon
@@ -41,15 +42,15 @@ template< typename T >
 void DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( DIA_Call_ABC& call, const T& caller )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    if( !pKnowledge || pKnowledge->GetType() != MIL_RealObjectType::siteFranchissement_ )
+    const DEC_Knowledge_ObjectAttributeCrossingSite* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeCrossingSite >();
+    if( !(pKnowledge && attribute != 0 ) )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (float)0. );
         return;
-    }
-    DEC_Knowledge_ObjectSiteFranchissement* pKnowledgeSiteFranchissement = static_cast< DEC_Knowledge_ObjectSiteFranchissement* >( pKnowledge );
+    }    
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (float)pKnowledgeSiteFranchissement->GetWidth() );
+    call.GetResult().SetValue( attribute->GetWidth() );
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::IsSiteFranchissementBanksToFitOut
@@ -59,15 +60,15 @@ template< typename T >
 void DEC_KnowledgeObjectFunctions::IsSiteFranchissementBanksToFitOut( DIA_Call_ABC& call, const T& caller )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    if( !pKnowledge || pKnowledge->GetType() != MIL_RealObjectType::siteFranchissement_ )
+    const DEC_Knowledge_ObjectAttributeCrossingSite* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeCrossingSite >();
+    if( !(pKnowledge && attribute != 0 ) )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( false );
         return;
     }
-    DEC_Knowledge_ObjectSiteFranchissement* pKnowledgeSiteFranchissement = static_cast< DEC_Knowledge_ObjectSiteFranchissement* >( pKnowledge );
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( pKnowledgeSiteFranchissement->IsBanksToFitOut() );
+    call.GetResult().SetValue( attribute->IsBanksToFitOut() );
 }
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_KnowledgeObjectFunctions::GetLocalisation
@@ -190,7 +191,7 @@ void DEC_KnowledgeObjectFunctions::GetType( DIA_Call_ABC& call, const T& caller 
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (int)pKnowledge->GetType().GetID() );
+    call.GetResult().SetValue( pKnowledge->GetType().GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,13 +202,13 @@ template< typename T >
 void DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped( DIA_Call_ABC& call, const T& caller )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    if( !pKnowledge || pKnowledge->GetType() != MIL_RealObjectType::itineraireLogistique_ )
+    const DEC_Knowledge_ObjectAttributeSupplyRoute* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeSupplyRoute >();    
+    if( !( pKnowledge && attribute != 0 ) )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( false );
         return;
     }
-    DEC_Knowledge_ObjectItineraireLogistique* pKnowledgeItiLog = static_cast< DEC_Knowledge_ObjectItineraireLogistique* >( pKnowledge );
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( pKnowledgeItiLog->IsEquipped() );
+    call.GetResult().SetValue( attribute->IsEquipped() );
 }

@@ -91,7 +91,8 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgUnitKnowledgeCreation& asn )
 // -----------------------------------------------------------------------------
 std::string SymbolEditor::GetSymbol( const ASN1T_MsgObjectCreation& asn ) const
 {
-    switch ( asn.type ) 
+    //TO DO
+    /*switch ( asn.type ) 
     {
     case EnumObjectType::bouchon_mines:
         return styles_.GetStyle( "HS - Explosion" );
@@ -106,6 +107,7 @@ std::string SymbolEditor::GetSymbol( const ASN1T_MsgObjectCreation& asn ) const
     }
     if( const dispatcher::Object* object = model_.objects_.Find( asn.oid ) )
         return FormatSymbol( object->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() ).c_str();
+    */
     return "";
 }
     

@@ -12,14 +12,24 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_RoleAction_Objects.h"
+#include "MIL_AgentServer.h"
+#include "Entities/MIL_EntityManager.h"
+#include "Entities/MIL_Army.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/ConstructionAttribute.h"
+#include "Entities/Objects/MineAttribute.h"
+#include "Entities/Objects/BuildableCapacity.h"
+#include "Entities/Objects/WorkableCapacity.h"
+#include "Entities/Objects/OccupantAttribute.h"
+#include "Entities/Objects/FireAttribute.h"
+#include "Entities/Objects/MIL_FireFunctor.h"
+#include "Entities/Objects/ExtinguishableCapacity.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
@@ -78,11 +88,11 @@ void PHY_RoleAction_Objects::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects::GetRealObject
+// Name: PHY_RoleAction_Objects::GetObject
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC* PHY_RoleAction_Objects::GetRealObject( uint nKnowledgeObjectID )
+MIL_Object_ABC* PHY_RoleAction_Objects::GetObject( uint nKnowledgeObjectID )
 {
     assert( pPion_ );
     
@@ -90,7 +100,7 @@ MIL_RealObject_ABC* PHY_RoleAction_Objects::GetRealObject( uint nKnowledgeObject
     if( !pKnowledge )
         return 0;
 
-    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
+    MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
     if( pObject )
         return pObject;
 
@@ -106,13 +116,12 @@ MIL_RealObject_ABC* PHY_RoleAction_Objects::GetRealObject( uint nKnowledgeObject
 // Name: PHY_RoleAction_Objects::Construct
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Construct( MIL_RealObject_ABC& object )
-{
-    assert( pPion_ );
-    if( !object.CanBeConstructed() )
+int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
+{    
+    if( !object().CanBeConstructed() )
         return eImpossible;
 
-    if( object.GetConstructionPercentage() == 1. )
+    if( object().IsBuilt() )
         return eFinished;
 
     PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::eConstruct, object );
@@ -121,18 +130,20 @@ int PHY_RoleAction_Objects::Construct( MIL_RealObject_ABC& object )
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
 
-    const uint                  nDotationNeeded   = object.GetDotationNeededForConstruction( rDeltaPercentage );
-    const PHY_DotationCategory* pDotationCategory = object.GetType().GetDotationCategoryForConstruction();
+    // $$$$ TODO: refactor to handle more than a single resource
+    const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
+	const uint                  nDotationNeeded   = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
+    const PHY_DotationCategory* pDotationCategory = object.Get< BuildableCapacity >().GetDotationCategory();
     if( pDotationCategory && !dataComputer.HasDotations( *pDotationCategory, nDotationNeeded ) )
         return eNoMoreDotation;
 
     pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
 
-    object.Construct( rDeltaPercentage );
+    object().Construct( rDeltaPercentage );
     if( pDotationCategory )
         dataComputer.ConsumeDotations( *pDotationCategory, nDotationNeeded );
 
-    if( object.GetConstructionPercentage() == 1. )
+    if( object().IsBuilt() )
         return eFinished;
 
     return eRunning;
@@ -142,7 +153,7 @@ int PHY_RoleAction_Objects::Construct( MIL_RealObject_ABC& object )
 // Name: PHY_RoleAction_Objects::Construct
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Construct( MIL_RealObject_ABC* pObject, DEC_Knowledge_Object*& pKnowledge )
+int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, DEC_Knowledge_Object*& pKnowledge )
 {
     if( !pObject )
     {
@@ -160,56 +171,60 @@ int PHY_RoleAction_Objects::Construct( MIL_RealObject_ABC* pObject, DEC_Knowledg
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::Destroy( uint nKnowledgeObjectID )
-{
+{    
     assert( pPion_ );
     
     DEC_Knowledge_Object* pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nKnowledgeObjectID );
     if( !pKnowledge )
-        return eImpossible;
-    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
-    if( !pObject )
+        return 0;
+
+    MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+    if( !pObject ) 
     {
         pPion_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
-        return eImpossible;
+        return 0;
     }
-
-    if( !pObject->CanBeDestroyed() )
+        
+    MIL_Object_ABC& object = *pObject; 
+    if( !object().CanBeDestroyed() )
         return eImpossible;
 
-    if( pObject->IsMined() )
+    if( object().IsMined() )
     {
-        PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::eDemine, *pObject );        
+        PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::eDemine, object );        
    
         const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
         if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
             return eNoCapacity;
 
-        pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
-        pObject->Demine( rDeltaPercentage );
+        pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+        object().Demine( rDeltaPercentage );
         return eRunning;
     }
     else
     {
-        PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::eDestroy, *pObject );
+        PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::eDestroy, object );
    
         const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
         if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
             return eNoCapacity;
 
-        const uint                  nDotationRecovered = pObject->GetDotationRecoveredWhenDestroying( rDeltaPercentage );
-        const PHY_DotationCategory* pDotationCategory  = pObject->GetType().GetDotationCategoryForConstruction();
+        // $$$$ TODO: refactor to handle more than a single resource
+        const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
+        const uint                  nDotationRecovered = attribute.GetDotationRecoveredWhenDestroying( rDeltaPercentage );
+        const PHY_DotationCategory* pDotationCategory  = object.Get< BuildableCapacity >().GetDotationCategory();
 
-        pObject->Destroy( rDeltaPercentage );
+        object().Destroy( rDeltaPercentage );
 
         if( pDotationCategory && pPion_->GetArmy() == pObject->GetArmy() )
             dataComputer.RecoverDotations( *pDotationCategory, nDotationRecovered );
 
-        if( pObject->GetConstructionPercentage() == 0. )
+        if( attribute.GetState() == 0. )
         {
             pPion_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
             return eFinished;
         }
-        pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
+        pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
         return eRunning;
     }
 }
@@ -218,10 +233,10 @@ int PHY_RoleAction_Objects::Destroy( uint nKnowledgeObjectID )
 // Name: PHY_RoleAction_Objects::Mine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Mine( MIL_RealObject_ABC& object )
+int PHY_RoleAction_Objects::Mine( MIL_Object_ABC& object )
 {
     assert( pPion_ );
-    if( !object.CanBeMined() )
+    if( !object().CanBeMined() )
         return eImpossible;
 
     PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::eMine, object );
@@ -231,8 +246,8 @@ int PHY_RoleAction_Objects::Mine( MIL_RealObject_ABC& object )
         return eNoCapacity;
 
     pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
-    object.Mine( rDeltaPercentage );
-    if( object.GetMiningPercentage() == 1. )
+    object().Mine( rDeltaPercentage );
+    if( object().IsFullyMined() )
         return eFinished;
     return eRunning;
 }
@@ -243,7 +258,7 @@ int PHY_RoleAction_Objects::Mine( MIL_RealObject_ABC& object )
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::Mine( uint nKnowledgeObjectID )
 {
-    MIL_RealObject_ABC* pObject = GetRealObject( nKnowledgeObjectID );
+    MIL_Object_ABC* pObject = GetObject( nKnowledgeObjectID );
     if( !pObject )
         return eImpossible;
 
@@ -252,27 +267,35 @@ int PHY_RoleAction_Objects::Mine( uint nKnowledgeObjectID )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::Demine
-// Created: NLD 2004-09-16
+// Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::Demine( uint nKnowledgeObjectID )
 {
-    assert( pPion_ );
-    MIL_RealObject_ABC* pObject = GetRealObject( nKnowledgeObjectID );
+    MIL_Object_ABC* pObject = GetObject( nKnowledgeObjectID );
     if( !pObject )
         return eImpossible;
 
-    if( !pObject->CanBeMined() )
+    return Demine( *pObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::Demine
+// Created: NLD 2004-09-16
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::Demine( MIL_Object_ABC& object )
+{
+    if( !object().CanBeMined() )
         return eImpossible;
 
-    PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::eDemine, *pObject );
+    PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::eDemine, object );
 
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
 
-    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
-    pObject->Demine( rDeltaPercentage );
-    if( pObject->GetMiningPercentage() == 0. )
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+    object().Demine( rDeltaPercentage );
+    if( object.GetAttribute< MineAttribute >().GetState() == 0. )
         return eFinished;
     return eRunning;
 }
@@ -282,24 +305,70 @@ int PHY_RoleAction_Objects::Demine( uint nKnowledgeObjectID )
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::Bypass( uint nKnowledgeObjectID )
-{
-    assert( pPion_ );
-    MIL_RealObject_ABC* pObject = GetRealObject( nKnowledgeObjectID );
+{    
+    MIL_Object_ABC* pObject = GetObject( nKnowledgeObjectID );
     if( !pObject )
         return eImpossible;
 
-    if( !pObject->CanBeBypassed() )
+    MIL_Object_ABC& object = *pObject;
+    if( !object().CanBeBypassed() )
         return eImpossible;
 
-    PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::eBypass, *pObject );
+    if( object().IsBypassed() )
+        return eFinished;
 
+    PHY_RoleAction_Objects_DataComputer dataComputer( *pPion_, PHY_RoleAction_Objects_DataComputerPionData::eBypass, object );
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+    object().Bypass( rDeltaPercentage );
+    if( object().IsBypassed() )
+        return eFinished;
+    return eRunning;
+}
 
-    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
-    pObject->Bypass( rDeltaPercentage );
-    if( pObject->GetBypassPercentage() == 1. )
+namespace
+{
+    // -----------------------------------------------------------------------------
+    // Name: ExtinguishableCapacity::GetBestExtinguisherAgent
+    // Created: RFT 2004-09-16
+    // -----------------------------------------------------------------------------
+    int GetBestExtinguisher( const MIL_AgentPion* pPion, MIL_FireFunctor& functor )
+    {
+        pPion->GetRole< PHY_RolePion_Composantes >().Apply( functor );
+
+        const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
+        for( PHY_RolePion_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
+            (*itReinforcement)->GetRole< PHY_RolePion_Composantes >().Apply( functor );
+    
+        return functor.GetNumberOfTheExtinguisherAgent();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::Extinguish
+// Created: RFT 28/05/2008
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::Extinguish( uint nKnowledgeObjectID )
+{
+    MIL_Object_ABC* pObject = GetObject( nKnowledgeObjectID );
+    if( !pObject || pObject->IsMarkedForDestruction() )
+        return eImpossible;
+
+    MIL_Object_ABC& object = *pObject;
+    ExtinguishableCapacity* capacity = object.Retrieve< ExtinguishableCapacity >(); 
+    if ( !capacity )    
+        return eImpossible;
+
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+
+    //selection numberOFireHoses, bestExtinguisherAgent
+    MIL_FireFunctor functor( object.GetAttribute< FireAttribute >().GetClass() );
+    int bestExtinguisherAgent = GetBestExtinguisher( pPion_, functor );
+    object().Extinguish( bestExtinguisherAgent, pPion_->GetNumberOfFireHoses( bestExtinguisherAgent ) );
+    
+    if( object.GetAttribute< FireAttribute >().GetHeat() <= 0 )
         return eFinished;
     return eRunning;
 }
@@ -309,22 +378,15 @@ int PHY_RoleAction_Objects::Bypass( uint nKnowledgeObjectID )
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::ResumeWork( uint nKnowledgeObjectID )
-{
-    assert( pPion_ );
-    DEC_Knowledge_Object* pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nKnowledgeObjectID );
-    if( !pKnowledge )
-        return eImpossible;
-    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
+{    
+    MIL_Object_ABC* pObject = GetObject( nKnowledgeObjectID );
     if( !pObject )
-    {
-        pPion_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
         return eImpossible;
-    }
-
-    if( pObject->GetConstructionPercentage() != 1. )
-        return Construct( *pObject );
-    else if( pObject->CanBeMined() && pObject->GetMiningPercentage() != 1. )
-        return Mine( *pObject );
+    MIL_Object_ABC& object = *pObject;
+    if( ! object().IsBuilt() )
+        return Construct( object );
+    else if( object().CanBeMined() && !object().IsFullyMined() )
+        return Mine( object );
     return eFinished;
 }
 
@@ -334,13 +396,18 @@ int PHY_RoleAction_Objects::ResumeWork( uint nKnowledgeObjectID )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::StartAnimateObject( uint nKnowledgeObjectID )
 {
-    MIL_RealObject_ABC* pObject = GetRealObject( nKnowledgeObjectID );
+    MIL_Object_ABC* pObject = GetObject( nKnowledgeObjectID );
     if( !pObject )
         return;
 
+    MIL_Object_ABC& object = *pObject;
     assert( pPion_ );
-    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
-    pObject->AddAnimator( *pPion_ );
+    WorkableCapacity* capacity = object.Retrieve< WorkableCapacity >();
+    if ( capacity )
+    {
+        pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+        object().AddAnimator( *pPion_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -349,13 +416,18 @@ void PHY_RoleAction_Objects::StartAnimateObject( uint nKnowledgeObjectID )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::StopAnimateObject( uint nKnowledgeObjectID )
 {
-    MIL_RealObject_ABC* pObject = GetRealObject( nKnowledgeObjectID );
+    MIL_Object_ABC* pObject = GetObject( nKnowledgeObjectID );
     if( !pObject )
         return;
 
+    MIL_Object_ABC& object = *pObject;
     assert( pPion_ );
-    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
-    pObject->RemoveAnimator( *pPion_ );
+    WorkableCapacity* capacity = object.Retrieve< WorkableCapacity >();
+    if ( capacity )
+    {
+        pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+        object().ReleaseAnimator( *pPion_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -364,13 +436,17 @@ void PHY_RoleAction_Objects::StopAnimateObject( uint nKnowledgeObjectID )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::StartOccupyingObject( uint nKnowledgeObjectID )
 {
-    MIL_RealObject_ABC* pObject = GetRealObject( nKnowledgeObjectID );
+    MIL_Object_ABC* pObject = GetObject( nKnowledgeObjectID );
     if( !pObject )
         return;
 
     assert( pPion_ );
-    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
-    pObject->AddOccupier( *pPion_ );
+    OccupantAttribute* pAttribute = pObject->RetrieveAttribute< OccupantAttribute >();
+    if ( pAttribute )
+    {
+        pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
+        pAttribute->AddOccupant( *pPion_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -379,13 +455,17 @@ void PHY_RoleAction_Objects::StartOccupyingObject( uint nKnowledgeObjectID )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::StopOccupyingObject( uint nKnowledgeObjectID )
 {
-    MIL_RealObject_ABC* pObject = GetRealObject( nKnowledgeObjectID );
+    MIL_Object_ABC* pObject = GetObject( nKnowledgeObjectID );
     if( !pObject )
         return;
 
     assert( pPion_ );
-    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
-    pObject->RemoveOccupier( *pPion_ );
+    OccupantAttribute* pAttribute = pObject->RetrieveAttribute< OccupantAttribute >();
+    if ( pAttribute )
+    {
+        pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
+        pAttribute->ReleaseOccupant( *pPion_ );
+    }
 }
 
 // =============================================================================
@@ -396,9 +476,10 @@ void PHY_RoleAction_Objects::StopOccupyingObject( uint nKnowledgeObjectID )
 // Name: PHY_RoleAction_Objects::CanConstructWithReinforcement
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const MIL_RealObjectType& objectType ) const
+bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& strType ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *pPion_, PHY_RoleAction_Objects_CapabilityComputer::eConstruct, objectType );
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *pPion_, PHY_RoleAction_Objects_CapabilityComputer::eConstruct, type );
     return capabilityComputer.HasCapability();
 }
 
@@ -406,9 +487,9 @@ bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const MIL_RealObject
 // Name: PHY_RoleAction_Objects::CanBypassWithReinforcement
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_RealObjectType& objectType ) const
+bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_ABC& object ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *pPion_, PHY_RoleAction_Objects_CapabilityComputer::eBypass, objectType );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *pPion_, PHY_RoleAction_Objects_CapabilityComputer::eBypass, object );
     return capabilityComputer.HasCapability();
 }
 
@@ -416,9 +497,9 @@ bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_RealObjectTyp
 // Name: PHY_RoleAction_Objects::CanDestroyWithReinforcement
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_RealObjectType& objectType ) const
+bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *pPion_, PHY_RoleAction_Objects_CapabilityComputer::eDestroy, objectType );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *pPion_, PHY_RoleAction_Objects_CapabilityComputer::eDestroy, object );
     return capabilityComputer.HasCapability();
 }
 
@@ -426,9 +507,9 @@ bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_RealObjectTy
 // Name: PHY_RoleAction_Objects::CanMineWithReinforcement
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_RealObjectType& objectType ) const
+bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC& object ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *pPion_, PHY_RoleAction_Objects_CapabilityComputer::eMine, objectType );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *pPion_, PHY_RoleAction_Objects_CapabilityComputer::eMine, object );
     return capabilityComputer.HasCapability();
 }
 

@@ -22,7 +22,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;
@@ -80,9 +80,9 @@ void TeamsModel::CreateKnowledgeGroup( const kernel::Team_ABC& team )
 // Name: TeamsModel::CreateObject
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-Object_ABC* TeamsModel::CreateObject( const kernel::Team_ABC& team, kernel::ObjectType& type, const QString& name, const Enum_ObstacleType& obstacleType, bool reservedObstacleActivated, const kernel::Location_ABC& location )
+Object_ABC* TeamsModel::CreateObject( const kernel::Team_ABC& team, kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location )
 {
-    return static_cast< Team& >( Get( team.GetId() ) ).CreateObject( type, name, obstacleType, reservedObstacleActivated, location );
+    return static_cast< Team& >( Get( team.GetId() ) ).CreateObject( type, name, location );
 }
 
 // -----------------------------------------------------------------------------

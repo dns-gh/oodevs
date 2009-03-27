@@ -37,12 +37,17 @@ class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
              , public kernel::Drawable_ABC
 {
+public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
              Object( const ASN1T_MsgObjectCreation& asnMsg, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const kernel::Resolver_ABC< kernel::ObjectType >& typeResolver, const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver );
+                     const kernel::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
     virtual ~Object();
     //@}
 
@@ -57,6 +62,7 @@ public:
     //! @name Accessors
     //@{
     virtual kernel::ObjectType& GetType           () const;
+    virtual QString             GetTypeName       () const;
             bool                IsReservedObstacle() const;
             bool                IsReservedObstacleActivated() const;
 
@@ -84,7 +90,7 @@ private:
     kernel::OptionalValue< float          > rConstructionPercentage_;
     kernel::OptionalValue< float          > rValorizationPercentage_;
     kernel::OptionalValue< float          > rBypassConstructionPercentage_;
-    kernel::OptionalValue< E_ObstacleType > obstacleType_;
+    kernel::OptionalValue< E_DemolitionTargetType > obstacleType_;
     kernel::OptionalValue< bool           > reservedObstacleActivated_;
     //@}
 

@@ -21,8 +21,8 @@
 #include <hla/Interaction.h>
 #include <hla/Attribute.h>
 #include "HLA_Serialization.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
-
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 using namespace hla;
 
 // -----------------------------------------------------------------------------
@@ -60,11 +60,11 @@ HLA_Activation::~HLA_Activation()
 // -----------------------------------------------------------------------------
 void HLA_Activation::Execute() const
 {
-    MIL_RealObject_ABC* pObject = GetObject();
+    MIL_Object_ABC* pObject = GetObject();
     if( pObject )
     {
         if( bActivate_ )
-            pObject->Activate(); // $$$$ AGE 2004-12-06: Effect ?
+            (*pObject)().Activate(); // $$$$ AGE 2004-12-06: Effect ?
 //        else
 //            pObject->Prepare( 0 ); // $$$$ AGE 2004-12-06: Effect ?. I also know the internal object mechanism
     }

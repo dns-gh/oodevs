@@ -15,6 +15,8 @@
 #include "SimpleEntity.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 
+#include <boost/ptr_container/ptr_vector.hpp>
+
 namespace kernel
 {
     class Automat_ABC;
@@ -60,6 +62,14 @@ public:
     //@}
 
 private:
+    
+    //! @name Attributes
+    //@{
+    void Initialize( const Model& model, const ASN1T_ObjectAttributes& attribute );
+    void AddAttribute( ObjectAttribute_ABC* attribute );
+    //@}
+
+private:
     //! @name Types
     //@{
     //$$$ bullshit
@@ -84,24 +94,37 @@ public:
     const Model&                 model_;
     const kernel::Team_ABC&      team_;
     const kernel::Object_ABC*    pObject_;
-    const ASN1T_EnumObjectType   nType_;
-    const ASN1T_EnumObstacleType nObstacleType_;
-    const unsigned int           nTypeDotationForConstruction_;
-    const unsigned int           nTypeDotationForMining_;
+	const std::string            nType_;
 
-    ObjectAttribute_ABC*           pAttributes_;
+
     unsigned int                   nRelevance_;
     Localisation                   localisation_;
-    unsigned int                   nConstructionPercentage_;
-    unsigned int                   nMiningPercentage_;
-    unsigned int                   nBypassingPercentage_;
-    bool                           bReservedObstacleActivated_;
     bool                           bPerceived_;
     std::vector< const kernel::Automat_ABC* >  automatPerceptions_;
-    unsigned int                   nNbrDotationForConstruction_;
-    unsigned int                   nNbrDotationForMining_;
+        
+private:
+    //! @name Types
+    //@{   
+    typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
+    //@}
 
+private:
+    T_ObjectAttributes           attributes_;
     T_Optionals                    optionals_;
+    
+//    const ASN1T_EnumObstacleType nObstacleType_;
+//    const unsigned int           nTypeDotationForConstruction_;
+//    const unsigned int           nTypeDotationForMining_;
+
+        
+//    unsigned int                   nConstructionPercentage_;
+//    unsigned int                   nMiningPercentage_;
+//    unsigned int                   nBypassingPercentage_;
+//    bool                           bReservedObstacleActivated_;    
+//    unsigned int                   nNbrDotationForConstruction_;
+//    unsigned int                   nNbrDotationForMining_;
+
+    
 };
 
 }

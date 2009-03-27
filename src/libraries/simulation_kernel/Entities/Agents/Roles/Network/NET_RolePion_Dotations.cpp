@@ -118,9 +118,6 @@ bool NET_RolePion_Dotations::DataUpdated() const
         || GetRole< PHY_RolePion_Dotations        >().HasChanged()
         || GetRole< PHY_RolePion_Humans           >().HasChanged()
         || GetRole< PHY_RolePion_Composantes      >().HasChanged()
-        || GetRole< PHY_RolePion_Maintenance      >().HasChanged()
-        || GetRole< PHY_RolePion_Medical          >().HasChanged()
-        || GetRole< PHY_RolePion_Supply           >().HasChanged()
         || pPion_->IsDead()        != bLastStateDead_
         || pPion_->IsNeutralized() != bLastStateNeutralized_ )
         return true;

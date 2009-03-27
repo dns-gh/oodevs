@@ -279,6 +279,7 @@ public:
     T_DotationInfos_Vector& GetDotations();
     DotationInfos&          GetDotation( E_DotationFamily nType );
     CategoryInfo*           FindEquipementCategory( const std::string& strDotationName, const std::string& strCategoryName );
+    CategoryInfo*           FindEquipementCategory( const std::string& strCategoryName );
 
     int                     GetNextCatId();
 

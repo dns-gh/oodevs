@@ -24,7 +24,7 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_KS_ObjectKnowledgeSynthetizer, "DEC_KS_ObjectKnowledgeSynthetizer" )
 
@@ -74,7 +74,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Prepare()
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
 inline
-DEC_Knowledge_Object& DEC_KS_ObjectKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_RealObject_ABC& objectKnown ) const
+DEC_Knowledge_Object& DEC_KS_ObjectKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_Object_ABC& objectKnown ) const
 {
     assert( pBlackBoard_ );    
     DEC_Knowledge_Object* pKnowledge = pBlackBoard_->GetKnowledgeObjectContainer().GetKnowledgeObject( objectKnown );
@@ -139,7 +139,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessEphemeralKnowledges()
 {
     for( CIT_ObjectVector itObject = ephemeralKnowledges_.begin(); itObject != ephemeralKnowledges_.end(); ++itObject )
     {
-        MIL_RealObject_ABC& object = **itObject;
+        MIL_Object_ABC& object = **itObject;
         if( object.IsMarkedForDestruction() )
             continue;
         GetKnowledgeToUpdate( object ).Update( PHY_PerceptionLevel::identified_ );
@@ -186,7 +186,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance( DEC_Knowledge_
     assert( pBlackBoard_ );
 
     //$$$$ VIRER TOUT CA quand stockage dans blackboard avec comme clé l'ID de l'objet réel plutot que le pointeur de l'objet réél ...
-    const MIL_RealObject_ABC* pObjectKnown = knowledge.GetObjectKnown();
+    const MIL_Object_ABC* pObjectKnown = knowledge.GetObjectKnown();
     knowledge.UpdateRelevance();
     if( pObjectKnown && !knowledge.GetObjectKnown() )
         pBlackBoard_->GetKnowledgeObjectContainer().NotifyKnowledgeObjectDissociatedFromRealObject( *pObjectKnown, knowledge );

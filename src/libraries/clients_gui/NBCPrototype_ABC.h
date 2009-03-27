@@ -10,7 +10,7 @@
 #ifndef __NBCPrototype_ABC_h_
 #define __NBCPrototype_ABC_h_
 
-#include "ObjectPrototypeAttributes_ABC.h"
+#include "ObjectAttributePrototype_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "ValuedComboBox.h"
 
@@ -21,6 +21,7 @@ namespace kernel
 
 namespace gui
 {
+    class RichLabel;
 
 // =============================================================================
 /** @class  NBCPrototype_ABC
@@ -28,13 +29,13 @@ namespace gui
 */
 // Created: SBO 2006-04-20
 // =============================================================================
-class NBCPrototype_ABC : public ObjectPrototypeAttributes_ABC
+class NBCPrototype_ABC : public ObjectAttributePrototype_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCPrototype_ABC( QWidget* parent, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver );
+             NBCPrototype_ABC( QWidget* parent, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver, int maxToxic );
     virtual ~NBCPrototype_ABC();
     //@}
 
@@ -59,10 +60,20 @@ private:
     //@}
 
 protected:
+    //! @name Helpers
+    //@{
+    unsigned GetAgentCount() const;
+    //@}
+
     //! @name Member data
     //@{
     const kernel::Resolver_ABC< kernel::NBCAgent >& resolver_;
-    ValuedComboBox< const kernel::NBCAgent* >* nbcAgents_;
+    int maxToxic_;
+    
+    RichLabel* nbcAgentsLabel_;
+    QSpinBox* danger_;
+    QListView* nbcAgents_;
+    ValuedComboBox< std::string >* nbcStates_;
     //@}
 };
 

@@ -27,11 +27,13 @@
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/MIL_EntityManager.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "DEC_FunctionsTools.h"
     
 
 // -----------------------------------------------------------------------------
@@ -335,10 +337,8 @@ void DEC_AutomateFunctions::CanPionConstructObject( DIA_Call_ABC& call, const MI
     assert( pPion );
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
      
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 1 ).ToId() );
-    assert( pObjectType );
-
-    call.GetResult().SetValue( pObjectType && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( *pObjectType ) );
+    const std::string& type = call.GetParameter( 1 ).ToString();
+    call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -354,10 +354,8 @@ void DEC_AutomateFunctions::CanPionBypassObject( DIA_Call_ABC& call, const MIL_A
     assert( pPion );
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 1 ).ToId() );
-    assert( pObjectType );
-
-    call.GetResult().SetValue( pObjectType && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( *pObjectType ) );
+    const DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAutomate.GetArmy() );
+    call.GetResult().SetValue( pKnowledge && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( pKnowledge->GetType() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -373,10 +371,8 @@ void DEC_AutomateFunctions::CanPionDestroyObject( DIA_Call_ABC& call, const MIL_
     assert( pPion );
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 1 ).ToId() );
-    assert( pObjectType );
-     
-    call.GetResult().SetValue( pObjectType && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( *pObjectType ) );
+    const DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAutomate.GetArmy() );
+    call.GetResult().SetValue( pKnowledge && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( pKnowledge->GetType() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -392,10 +388,8 @@ void DEC_AutomateFunctions::CanPionMineObject( DIA_Call_ABC& call, const MIL_Aut
     assert( pPion );
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 1 ).ToId() );
-    assert( pObjectType );
-     
-    call.GetResult().SetValue( pObjectType && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( *pObjectType ) );
+    const DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAutomate.GetArmy() );
+    call.GetResult().SetValue( pKnowledge && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( pKnowledge->GetType() ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -411,10 +405,8 @@ void DEC_AutomateFunctions::CanPionActivateObject( DIA_Call_ABC& call, const MIL
     assert( pPion );
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 1 ).ToId() );
-    assert( pObjectType );
-
-    call.GetResult().SetValue( true );
+    const DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAutomate.GetArmy() );
+    call.GetResult().SetValue( pKnowledge != 0 );
 }
 
 // -----------------------------------------------------------------------------

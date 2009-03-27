@@ -284,9 +284,9 @@ void EditorFactory::Call( Enum_PopulationAttitude* const& value )
 // Name: EditorFactory::Call
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( Enum_ObstacleType* const& value )
+void EditorFactory::Call( Enum_DemolitionTargetType* const& value )
 {
-    EnumEditor< Enum_ObstacleType >* editor= new EnumEditor< Enum_ObstacleType >( parent_ );
+    EnumEditor< Enum_DemolitionTargetType >* editor= new EnumEditor< Enum_DemolitionTargetType >( parent_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

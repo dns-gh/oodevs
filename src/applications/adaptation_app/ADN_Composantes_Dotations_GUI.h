@@ -28,7 +28,7 @@ class ADN_Composantes_Dotations_GUI
     Q_OBJECT
 
 public:
-    explicit ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent = 0 );
+    explicit ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent = 0, bool bIncludeThreshold = true );
     virtual ~ADN_Composantes_Dotations_GUI();
 
 private:

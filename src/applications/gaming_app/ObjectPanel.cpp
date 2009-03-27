@@ -17,6 +17,7 @@
 #include "clients_gui/SpinBoxDisplayer.h"
 #include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 
@@ -37,16 +38,16 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tr( "Identifier:" ) )
                 .AddLabel( tr( "Name:" ) )
                 .AddLabel( tr( "Type:" ) )
-                .AddLabel( tr( "Location:" ) )
-                .AddSpinBox( tr( "Construction:" ), 0, 100, 1 )
-                .AddSpinBox( tr( "Mining:" ), 0, 100, 1 )
-                .AddSpinBox( tr( "Bypass:" ), 0, 100, 1 )
-                .AddLabel( tr( "Obstacle type:" ) )
-                .AddCheckBox( tr( "Reserved obstacle activated:" ) );
+                .AddLabel( tr( "Location:" ) );
 
     GetBuilder().Group( tr( "Information" ) )
+                .AddSpinBox( tr( "Construction:" ), 0, 100, 1 )
                 .AddLabel( tr( "Construction dotation:" ) )
-                .AddLabel( tr( "Development dotation:" ) );
+                .AddSpinBox( tr( "Mining:" ), 0, 100, 1 )
+                .AddLabel( tr( "Development dotation:" ) )
+                .AddSpinBox( tr( "Bypass:" ), 0, 100, 1 )                
+                .AddLabel( tr( "Obstacle type:" ) )
+                .AddCheckBox( tr( "Reserved obstacle activated:" ) );
 
     GetBuilder().AddGroup( tr( "Crossing site" ) )
                 .AddLabel( tr( "Width:" ) )
@@ -57,12 +58,16 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
     GetBuilder().AddGroup( tr( "Camp" ) )
                 .AddLabel( tr( "TC2:" ) );
 
-    GetBuilder().AddGroup( tr( "NBC cloud/zone" ) )
-                .AddLabel( tr( "NBC agent:" ) );
-
-    GetBuilder().AddGroup( tr( "ROTA" ) )
-                .AddLabel( tr( "Danger level:" ) )
+    GetBuilder().AddGroup( tr( "NBC" ) )
+                .AddLabel( tr( "NBC agent state:" ) )
+                .AddLabel( tr( "Danger:" ) )
                 .AddLabel( tr( "NBC agent(s):" ) );
+
+    GetBuilder().AddGroup( tr( "Medical Treatment" ) )
+                .AddLabel( tr( "Total number of beds:" ) )
+                .AddLabel( tr( "Number of available beds:" ) )
+                .AddLabel( tr( "Total number of doctors:" ) )
+                .AddLabel( tr( "Number of available doctors:" ) );
 
     GetBuilder().AddGroup( tr( "Logistic route" ) )
                 .AddLabel( tr( "Equipped:" ) )
@@ -72,8 +77,8 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tr( "Maximum weight:" ) );
 
     GetBuilder().AddGroup( tr( "Mine parameters" ) )
-                .AddLabel( tr( "Activity time:" ) )
-                .AddLabel( tr( "Density:" ) );
+                .AddLabel( tr( "Density:" ) )
+                .AddLabel( tr( "Activity time:" ) );
 
     Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
     construction_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
@@ -113,19 +118,33 @@ void ObjectPanel::OnApply()
     {
         ASN1T_MagicActionUpdateObject asnAction;
 
-        asnAction.m.construction_percentagePresent        = 1;
-        asnAction.m.mining_percentagePresent              = 1;
-        asnAction.m.bypass_construction_percentagePresent = 1;
+        asnAction.attributes.m.constructionPresent = 1;
+        asnAction.attributes.m.minePresent         = 1;
+        asnAction.attributes.m.bypassPresent       = 1;
 
-        asnAction.oid                                     = object->GetId();
-        asnAction.construction_percentage                 = construction_ ->GetValue();
-        asnAction.mining_percentage                       = valorisation_ ->GetValue();
-        asnAction.bypass_construction_percentage          = contournement_->GetValue();
-//        asnAction.en_preparation                     = prepared_     ->IsChecked();
+        asnAction.attributes.construction.m.percentagePresent = 1;
+        asnAction.attributes.mine.m.percentagePresent         = 1;
+        asnAction.attributes.bypass.m.percentagePresent       = 1;
+
+        asnAction.oid = object->GetId();
+
+        Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
+        gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::translate( "Object", "Reserved obstacle activated:" ) ) );
+        if( pCheckBox && pCheckBox->IsChecked() )
+        {
+            asnAction.attributes.m.obstaclePresent = 1;
+            asnAction.attributes.obstacle.type = EnumDemolitionTargetType::reserved;
+            asnAction.attributes.obstacle.activated = true;
+        }
+
+        asnAction.attributes.construction.percentage = construction_ ->GetValue();
+        asnAction.attributes.mine.percentage         = valorisation_ ->GetValue();
+        asnAction.attributes.bypass.percentage       = contournement_->GetValue();
 
         simulation::ObjectMagicAction asnMsg;
-        asnMsg().action.t                 = T_MsgObjectMagicAction_action_update_object;
-        asnMsg().action.u.update_object   = &asnAction;
+
+        asnMsg().action.t               = T_MsgObjectMagicAction_action_update_object;
+        asnMsg().action.u.update_object = &asnAction;
 
         asnMsg.Send( publisher_ );
     }

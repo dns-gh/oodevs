@@ -505,20 +505,20 @@ public:
         ADN_Type_Double                                             rSpeedCirc_;
         ADN_Type_Double                                             rSpeedNotCirc_;
 
-    public:
-        class Cmp : public std::unary_function< ObjectInfos* , bool >
-        {
-        public:
-            Cmp(const E_ObjectType& val) : val_(val) {}
-            ~Cmp() {}
-
-            bool operator()( ObjectInfos* tgtnfos ) const 
-            { return tgtnfos->ptrObject_.GetData() && tgtnfos->ptrObject_.GetData()->nObjectType_.GetData()==val_; }
-
-        private:
-
-            E_ObjectType val_;
-        };
+//    public:
+//        class Cmp : public std::unary_function< ObjectInfos* , bool >
+//        {
+//        public:
+//            Cmp(const E_ObjectType& val) : val_(val) {}
+//            ~Cmp() {}
+//
+//            bool operator()( ObjectInfos* tgtnfos ) const 
+//            { return tgtnfos->ptrObject_.GetData() && tgtnfos->ptrObject_.GetData()->nObjectType_.GetData()==val_; }
+//
+//        private:
+//
+//            E_ObjectType val_;
+//        };
     };
 
     typedef ADN_Type_Vector_ABC<ObjectInfos>    T_ObjectInfos_Vector;

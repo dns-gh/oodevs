@@ -1035,7 +1035,7 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
 // Name: PHY_RolePion_Perceiver::GetArmy
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const MIL_Army& PHY_RolePion_Perceiver::GetArmy() const
+const MIL_Army_ABC& PHY_RolePion_Perceiver::GetArmy() const
 {
     assert( pPion_ );
     return pPion_->GetArmy();
@@ -1085,7 +1085,7 @@ bool PHY_RolePion_Perceiver::WasPerceived( const MIL_Agent_ABC& agent  ) const
 // Name: PHY_RolePion_Perceiver::IsKnown
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Perceiver::IsKnown( const MIL_RealObject_ABC& object ) const
+bool PHY_RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 {
     assert( pPion_ );
     return pPion_->GetArmy().GetKnowledge().IsKnown( object );
@@ -1095,7 +1095,7 @@ bool PHY_RolePion_Perceiver::IsKnown( const MIL_RealObject_ABC& object ) const
 // Name: PHY_RolePion_Perceiver::IsIdentified
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Perceiver::IsIdentified( const MIL_RealObject_ABC& object ) const
+bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Object_ABC& object ) const
 {
     assert( pPion_ );
     return pPion_->GetKnowledge().IsIdentified( object );
@@ -1145,7 +1145,7 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_P
 // Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyPerception( MIL_RealObject_ABC& object, const PHY_PerceptionLevel& level )
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& object, const PHY_PerceptionLevel& level )
 {
     assert( pPion_ );
     pPion_->GetKnowledge().GetKsPerception().NotifyPerception( object, level, bRecordModeEnabled_ );

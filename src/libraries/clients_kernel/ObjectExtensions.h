@@ -22,13 +22,19 @@ public:                                                                         
 };
 
 namespace kernel
-{
-    DECLARE_EXTENSION( CampAttributes_ABC )
-    DECLARE_EXTENSION( CrossingSiteAttributes_ABC )
-    DECLARE_EXTENSION( LogisticRouteAttributes_ABC )
-    DECLARE_EXTENSION( NBCAttributes_ABC )
-    DECLARE_EXTENSION( RotaAttributes_ABC )
-    DECLARE_EXTENSION( MineAttributes_ABC )
+{    
+    DECLARE_EXTENSION( ConstructionAttribute_ABC )
+    DECLARE_EXTENSION( MineAttribute_ABC )
+    DECLARE_EXTENSION( ActivityTimeAttribute_ABC )
+    DECLARE_EXTENSION( NBCAttribute_ABC )
+    DECLARE_EXTENSION( BypassAttribute_ABC )
+    DECLARE_EXTENSION( ObstacleAttribute_ABC )
+    DECLARE_EXTENSION( LogisticAttribute_ABC )
+    DECLARE_EXTENSION( CrossingSiteAttribute_ABC )
+    DECLARE_EXTENSION( SupplyRouteAttribute_ABC )
+    DECLARE_EXTENSION( ToxicCloudAttribute_ABC )
+    DECLARE_EXTENSION( FireAttribute_ABC )
+    DECLARE_EXTENSION( MedicalTreatmentAttribute_ABC )    
 }
 
 #undef DECLARE_EXTENSION

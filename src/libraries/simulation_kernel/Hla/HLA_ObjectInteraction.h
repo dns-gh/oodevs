@@ -26,7 +26,7 @@ namespace hla
 template < typename T > class Interaction;
 }
 
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class HLA_Object_ABC;
 
 // =============================================================================
@@ -49,7 +49,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    MIL_RealObject_ABC* GetObject() const;
+    MIL_Object_ABC* GetObject() const;
 
     template< typename SubClass >
     static void RegisterAttributes( hla::Interaction< SubClass >& interaction );

@@ -10,10 +10,23 @@
 #ifndef __ObjectType_h_
 #define __ObjectType_h_
 
-namespace xml { class xistream; };
+namespace boost
+{
+    template<typename T> class shared_ptr;
+}
+
+namespace xml 
+{ 
+    class xibufferstream;
+    class xistream; 
+};
+
+class ObjectCapacity_ABC;
 
 namespace kernel
 {
+    class Object_ABC;
+
 // =============================================================================
 /** @class  ObjectType
     @brief  ObjectType
@@ -22,19 +35,33 @@ namespace kernel
 // =============================================================================
 class ObjectType
 {
-
+    
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectType( xml::xistream& xis, unsigned long id );
+            ObjectType( xml::xistream& xis, const std::string& type );
     virtual ~ObjectType();
     //@}
 
+public:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, boost::shared_ptr< xml::xibufferstream > >  T_Capacities;
+    typedef T_Capacities::const_iterator                                       CIT_Capacities;
+    //@}
+
+public:
     //! @name Operations
     //@{
-    std::string GetName() const;
-    std::string GetType() const;
+    const std::string& GetName() const;
+    const std::string& GetType() const;
+    const std::string& GetSymbol() const;
 
+    CIT_Capacities CapacitiesBegin() const;
+    CIT_Capacities CapacitiesEnd() const;
+
+    bool HasBuildableDensity() const;
+    bool HasLogistic() const;
     bool CanBeReservedObstacle() const;
     bool CanBeValorized() const;
     bool CanBeBypassed() const;
@@ -42,9 +69,7 @@ public:
     bool CanBePoint() const;
     bool CanBeLine() const;
     bool CanBePolygon() const;
-    bool CanBeCircle() const;
-
-    unsigned long GetId() const;
+    bool CanBeCircle() const;    
     //@}
 
 private:
@@ -54,17 +79,23 @@ private:
     ObjectType& operator=( const ObjectType& ); //!< Assignement operator
     //@}
 
-public:
+    //! @name Helper
+    //@{
+    void ReadCapacities( const std::string& capacity, xml::xistream& xis );
+    xml::xistream* FindCapacity( const std::string& capacity ) const;
+    //@}
+
+private:
     //! @name Static members
     //@{
-    unsigned long id_;
-    std::string name_;
-    std::string type_;
+    std::string     type_;
+    std::string     symbol_;
+    
+    T_Capacities    capacities_;
 
-    bool canBeReservedObstacle_;
-    bool canBeValorized_;
-    bool canBeBypassed_;
-    std::string geometry_;
+    bool            canBeValorized_;
+    bool            canBeBypassed_;
+    std::string     geometry_;
     //@}
 };
 

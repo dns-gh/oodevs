@@ -25,7 +25,6 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -48,7 +47,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
     , unitSpeeds_              ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_               ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathKnowledgeAgents_     ()
-    , pathKnowledgeObjects_    ( MIL_RealObjectType::GetObjectTypes().size() )
+    , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
     , pathKnowledgePopulations_()
     , pathType_                ( pathType )
@@ -79,7 +78,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
     , unitSpeeds_               ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_                ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathKnowledgeAgents_      ()
-    , pathKnowledgeObjects_     ( MIL_RealObjectType::GetObjectTypes().size() )
+    , pathKnowledgeObjects_     ( )
     , rCostOutsideOfAllObjects_( 0. )
     , pathKnowledgePopulations_ ()
     , pathType_                 ( pathType )
@@ -111,7 +110,7 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     , unitSpeeds_              ( queryMaker_.GetRole< PHY_RoleAction_Moving >() )
     , rMaxSlope_               ( rhs.rMaxSlope_ )
     , pathKnowledgeAgents_     ()
-    , pathKnowledgeObjects_    ( MIL_RealObjectType::GetObjectTypes().size() )
+    , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
     , pathKnowledgePopulations_()
     , pathType_                ( rhs.pathType_ )
@@ -208,14 +207,17 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         queryMaker_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
         for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
-            const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-            //$$$ POURRI : Faire un DEC_Knowledge_Object::CanCollideWithXXX
-            if(      ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() )
-                    && !knowledge.IsBypassed() 
-                    && queryMaker_.GetRole< PHY_RolePion_Location >().GetHeight() <= knowledge.GetMaxInteractionHeight() 
-                    && !IsObjectInsidePathPoint( knowledge, pathPoints ) ) //$$$ BOF
+            const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;            
+            if ( knowledge.CanCollideWith( queryMaker_ ) && !IsObjectInsidePathPoint( knowledge, pathPoints ) ) //$$$ BOF
             {
+                
+                // $$$$ TODO with map ? 
+                // {
+                if ( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
+                    pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
+                // }
                 assert( pathKnowledgeObjects_.size() > knowledge.GetType().GetID() );
+                
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
                 pathKnowledges.push_back( DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
                 if( pathKnowledges.size() == 1 && pathKnowledges.front().GetCostOut() > 0 )

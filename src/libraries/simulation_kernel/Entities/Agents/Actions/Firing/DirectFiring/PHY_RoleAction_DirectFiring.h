@@ -25,7 +25,7 @@ class PHY_FireResults_Default;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MIL_Population;
-class MIL_ControlZone;
+class MIL_Object_ABC;
 
 // =============================================================================
 // @class  PHY_RoleAction_DirectFiring
@@ -65,7 +65,7 @@ public:
     int  FirePion               ( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
     void FirePionSuspended      ( uint nTargetKnowledgeID );
 
-    void FireZone               ( const MIL_ControlZone& zone, PHY_FireResults_Default*& pFireResult );
+    void FireZone               ( const MIL_Object_ABC& zone, PHY_FireResults_Default*& pFireResult );
     //@}
 
     //! @name Return codes

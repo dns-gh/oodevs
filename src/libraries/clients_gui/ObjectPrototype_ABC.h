@@ -24,20 +24,19 @@ namespace kernel
     class Team_ABC;
     class ObjectType;
     class ModelLoaded;
+    class GlTools_ABC;
 }
 
 namespace gui
 {
-    class ObjectPrototypeAttributes_ABC;
-    class CampPrototype_ABC;
-    class CrossingSitePrototype_ABC;
-    class LogisticRoutePrototype_ABC;
-    class NBCPrototype_ABC;
-    class RotaPrototype_ABC;
-    class MinePrototype_ABC;
+    class ObjectAttributePrototypeContainer;
+    class ObjectAttributePrototypeFactory_ABC;
+    class ObjectAttributePrototype_ABC;
     class LocationCreator;
     class ParametersLayer;
     class RichLabel;
+    class ObjectPreviewIcon;
+    class SymbolIcons;
 
 // =============================================================================
 /** @class  ObjectPrototype_ABC
@@ -49,14 +48,15 @@ class ObjectPrototype_ABC : public QGroupBox
                           , public kernel::Observer_ABC
                           , public kernel::ElementObserver_ABC< kernel::Team_ABC >
                           , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                          , public ShapeHandler_ABC
+                          , public ShapeHandler_ABC                          
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, ParametersLayer& layer );
+             ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers, 
+                                  const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver, ParametersLayer& layer, const ObjectAttributePrototypeFactory_ABC& factory, SymbolIcons& icons );
     virtual ~ObjectPrototype_ABC();
     //@}
 
@@ -65,7 +65,7 @@ public:
     bool CheckValidity() const;
     void Clean();
 
-    void Draw( const kernel::GlTools_ABC& tools ) const;
+            void Draw( const kernel::GlTools_ABC& tools ) const;
     virtual void Handle( kernel::Location_ABC& location );
     //@}
 
@@ -73,14 +73,12 @@ signals:
     //! @name Signals
     //@{
     void ToggleReservable( bool );
-    void ToggleActivable( bool );
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnTypeChanged();
-    void OnObstacleTypeChanged();
     //@}
 
 private:
@@ -102,30 +100,38 @@ private:
     void ResetLocation();
     //@}
 
+    //! @name Symobl tools
+    //@{
+    void DrawSymbol( const kernel::GlTools_ABC& tools ) const;
+    void DrawSymbolLocation( const kernel::GlTools_ABC& tools ) const;
+    //@}
+
+protected:
+    //! @name Commit attributes
+    //@{
+    void Commit();
+    //@}
+
 protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::Resolver_ABC< kernel::ObjectType >& resolver_;
+    const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver_;
 
     ValuedComboBox< const kernel::Team_ABC* >* teams_;
-    ValuedComboBox< const kernel::ObjectType* >* objectTypes_;
-    QLineEdit* name_;
-    ValuedComboBox< E_ObstacleType >* obstacleTypes_;
-    QCheckBox* reservedObstacleActivated_;
+    ValuedComboBox< const kernel::ObjectType* >* objectTypes_;    
+    QLineEdit* name_;    
+    
+//    ValuedComboBox< E_DemolitionTargetType >* obstacleTypes_;
+//    QCheckBox* reservedObstacleActivated_;
 
-    LocationCreator* locationCreator_;
-    kernel::Location_ABC* location_;
-    QLabel* locationLabel_;
-    RichLabel* position_;
-
-    ObjectPrototypeAttributes_ABC* activeAttributes_;
-    CampPrototype_ABC* campAttributes_;
-    CrossingSitePrototype_ABC* crossingSiteAttributes_;
-    LogisticRoutePrototype_ABC* logisticRouteAttributes_;
-    NBCPrototype_ABC* nbcAttributes_;
-    RotaPrototype_ABC* rotaAttributes_;
-    MinePrototype_ABC* mineAttributes_;
+    LocationCreator*                locationCreator_;
+    kernel::Location_ABC*           location_;
+    QLabel*                         locationLabel_;
+    RichLabel*                      position_;
+    
+    std::auto_ptr< ObjectAttributePrototypeContainer >  attributes_;
+    std::auto_ptr< ObjectPreviewIcon >                  preview_;
     //@}
 };
 

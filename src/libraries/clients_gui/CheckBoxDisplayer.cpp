@@ -104,3 +104,12 @@ void CheckBoxDisplayer::Hide()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: CheckBoxDisplayer::Clear
+// Created: LDC 2009-03-18
+// -----------------------------------------------------------------------------
+void CheckBoxDisplayer::Clear()
+{
+    Call( kernel::ValueNotSet() );
+}

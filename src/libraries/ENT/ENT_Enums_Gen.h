@@ -414,6 +414,14 @@ enum E_LogMedicalHandlingStatus
 };
 
 
+enum E_DemolitionTargetType
+{
+    eDemolitionTargetType_Preliminary,
+    eDemolitionTargetType_Reserved,
+    eNbrDemolitionTargetType
+};
+
+
 enum E_ObjectErrorCode
 {
     eObjectErrorCode_NoError,
@@ -424,61 +432,6 @@ enum E_ObjectErrorCode
     eObjectErrorCode_ErrorMissingSpecificAttributes,
     eObjectErrorCode_ErrorInvalidSpecificAttributes,
     eNbrObjectErrorCode
-};
-
-
-enum E_ObjectType
-{
-    eObjectType_BouchonMines,
-    eObjectType_ZoneMineeLineaire,
-    eObjectType_ZoneMineeParDispersion,
-    eObjectType_FosseAntiChar,
-    eObjectType_Abattis,
-    eObjectType_Barricade,
-    eObjectType_Eboulement,
-    eObjectType_DestructionRoute,
-    eObjectType_DestructionPont,
-    eObjectType_PontFlottantContinu,
-    eObjectType_PosteTir,
-    eObjectType_ZoneProtegee,
-    eObjectType_ZoneImplantationCanon,
-    eObjectType_ZoneImplantationCobra,
-    eObjectType_ZoneImplantationLrm,
-    eObjectType_SiteFranchissement,
-    eObjectType_NuageNbc,
-    eObjectType_PlotRavitaillement,
-    eObjectType_SiteDecontamination,
-    eObjectType_ZoneBrouillageBrod,
-    eObjectType_Rota,
-    eObjectType_ZoneNbc,
-    eObjectType_ZoneBrouillageBromure,
-    eObjectType_AirePoser,
-    eObjectType_Piste,
-    eObjectType_Plateforme,
-    eObjectType_ZoneMobiliteAmelioree,
-    eObjectType_ZonePoserHelicoptere,
-    eObjectType_AireLogistique,
-    eObjectType_ItineraireLogistique,
-    eObjectType_CampPrisonniers,
-    eObjectType_CampRefugies,
-    eObjectType_PosteControle,
-    eObjectType_TerrainLargage,
-    eObjectType_ZoneInterditeMouvement,
-    eObjectType_ZoneInterditeTir,
-    eObjectType_ZoneImplantationMortier,
-    eObjectType_PontFlottantDiscontinu,
-    eObjectType_Installation,
-    eObjectType_Fire,
-    eObjectType_EmergencyShelter,
-    eNbrObjectType
-};
-
-
-enum E_ObstacleType
-{
-    eObstacleType_Initial,
-    eObstacleType_Reserved,
-    eNbrObstacleType
 };
 
 

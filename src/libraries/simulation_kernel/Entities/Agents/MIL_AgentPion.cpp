@@ -487,7 +487,7 @@ const DEC_RolePion_Decision& MIL_AgentPion::GetDecision() const
 // Name: MIL_AgentPion::GetArmy
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MIL_Army& MIL_AgentPion::GetArmy() const
+MIL_Army_ABC& MIL_AgentPion::GetArmy() const
 {
     assert( pAutomate_ );
     return pAutomate_->GetArmy();
@@ -977,3 +977,7 @@ bool MIL_AgentPion::IsPerceived( const MIL_Agent_ABC& agent ) const
     return GetKnowledge().IsPerceived( agent );    
 }
 
+int MIL_AgentPion::GetNumberOfFireHoses( int bestExtinguisherAgent )
+{
+    return 4;
+}

@@ -18,7 +18,7 @@
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
-class MIL_NbcAgent;
+class MIL_ToxicEffectManipulator;
 class MIL_AutomateLOG;
 class PHY_HumanRank;
 class PHY_HumanWound;
@@ -167,9 +167,9 @@ public:
     virtual void     ApplyPopulationFire             ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
     virtual void     ApplyDirectFire                 ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
     virtual void     ApplyIndirectFire               ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
-    virtual void     ApplyExplosion                  ( const MIL_RealObjectType& objectType, PHY_FireResults_ABC& result );
-            void     ApplyContamination              ( const MIL_NbcAgent& nbcAgent );
-            void     ApplyPoisonous                  ( const MIL_NbcAgent& nbcAgent );
+    virtual void     ApplyExplosion                  ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
+            void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination );
+            void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination );
             MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
             MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
             MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;

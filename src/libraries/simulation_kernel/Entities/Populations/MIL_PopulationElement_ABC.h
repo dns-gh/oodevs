@@ -29,7 +29,7 @@ class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
-class MIL_RealObjectType;
+class AttritionCapacity;
 class PHY_Volume;
 class PHY_FireResults_Population;
 class PHY_FireResults_ABC;
@@ -80,7 +80,7 @@ public:
     MT_Float GetDangerosity   ( const MIL_AgentPion& target ) const;
     void     ApplyFire        (       uint                nNbrAmmoFired  , PHY_FireResults_ABC& fireResult );
     void     ApplyIndirectFire( const MT_Circle&          attritionCircle, PHY_FireResults_ABC& fireResult );
-    void     ApplyExplosion   ( const MIL_RealObjectType& objectType     , PHY_FireResults_ABC& fireResult );
+    void     ApplyExplosion   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
     //@}
 
     //! @name Accessors

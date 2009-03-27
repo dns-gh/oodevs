@@ -18,7 +18,7 @@
 
 class DEC_Knowledge_AgentPerceptionDataRecognition;
 class MIL_AgentType_ABC;
-class MIL_Army;
+class MIL_Army_ABC;
 class MIL_Agent_ABC;
 class PHY_NatureAtlas;
 
@@ -65,7 +65,7 @@ public:
           MT_Float                     GetOperationalState     () const;
           MT_Float                     GetMajorOperationalState() const;
     const T_KnowledgeComposanteVector& GetComposantes          () const;
-    const MIL_Army*                    GetArmy                 () const;
+    const MIL_Army_ABC*                GetArmy                 () const;
     const PHY_NatureAtlas&             GetNatureAtlas          () const;
     const MIL_AgentType_ABC*           GetAgentType            () const;
           bool                         IsPC                    () const;
@@ -83,7 +83,7 @@ private:
           MT_Float                     rOperationalState_;
           MT_Float                     rMajorOperationalState_;
           T_KnowledgeComposanteVector  composantes_;
-    const MIL_Army*                    pArmy_;
+    const MIL_Army_ABC*                pArmy_;
           bool                         bIsPC_;
     const MIL_AgentType_ABC*           pAgentType_; // For 'natures'
 

@@ -16,7 +16,8 @@
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputerPionData
@@ -36,7 +37,7 @@ PHY_RoleAction_Objects_DataComputerPionData::PHY_RoleAction_Objects_DataComputer
 // Name: PHY_RoleAction_Objects_DataComputerPionData
 // Created: NLD 2005-03-25
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Objects_DataComputerPionData::PHY_RoleAction_Objects_DataComputerPionData( MIL_AgentPion& pion, E_Operation operation, const MIL_RealObject_ABC& object )
+PHY_RoleAction_Objects_DataComputerPionData::PHY_RoleAction_Objects_DataComputerPionData( MIL_AgentPion& pion, E_Operation operation, const MIL_Object_ABC& object )
     : operation_           ( operation )
     , pObject_             ( &object )
     , pPion_               ( &pion )
@@ -55,11 +56,11 @@ void PHY_RoleAction_Objects_DataComputerPionData::operator() ( const PHY_Composa
     MT_Float rDeltaTime = 0.;
     switch( operation_ )
     {
-        case eConstruct: rDeltaTime = composante.GetConstructionTime( pObject_->GetType(), pObject_->GetSizeCoef() ); break;
-        case eDestroy  : rDeltaTime = composante.GetDestructionTime ( pObject_->GetType(), pObject_->GetSizeCoef() ); break;
+        case eConstruct: rDeltaTime = composante.GetConstructionTime( pObject_->GetType(), (*pObject_)().GetSizeCoef() ); break;
+        case eDestroy  : rDeltaTime = composante.GetDestructionTime ( pObject_->GetType(), (*pObject_)().GetSizeCoef() ); break;
         case eMine     : rDeltaTime = composante.GetMiningTime      ( pObject_->GetType() ); break;
         case eDemine   : rDeltaTime = composante.GetDeminingTime    ( pObject_->GetType() ); break;
-        case eBypass   : rDeltaTime = composante.GetBypassTime      ( pObject_->GetType(), pObject_->GetSizeCoef(), pObject_->IsMined() ); break;
+        case eBypass   : rDeltaTime = composante.GetBypassTime      ( pObject_->GetType(), (*pObject_)().GetSizeCoef(), (*pObject_)().IsMined() ); break;
         default: assert( false );
     }
     assert( rDeltaTime >= 0. );

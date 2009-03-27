@@ -14,7 +14,7 @@ namespace actions
 {
     namespace parameters {
         class Numeric;
-        class Obstacle;
+        class EngineerConstruction;
         class Objective;
         class Lima;
         class Intelligence;
@@ -48,7 +48,7 @@ public:
     //! @name Operations
     //@{
     virtual void Visit( const parameters::Numeric&             ) {}
-    virtual void Visit( const parameters::Obstacle&            ) {}
+    virtual void Visit( const parameters::EngineerConstruction&) {}
     virtual void Visit( const parameters::Objective&           ) {}
     virtual void Visit( const parameters::Lima&                ) {}
     virtual void Visit( const parameters::Intelligence&        ) {}

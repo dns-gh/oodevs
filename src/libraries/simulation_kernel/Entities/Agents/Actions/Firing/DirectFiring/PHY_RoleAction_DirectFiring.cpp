@@ -18,7 +18,8 @@
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
-#include "Entities/Objects/MIL_ControlZone.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/ControlZoneCapacity.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Actions/PHY_FireResults_Default.h"
@@ -224,20 +225,25 @@ void PHY_RoleAction_DirectFiring::FirePionSuspended( uint nTargetKnowledgeID )
 // Name: PHY_RoleAction_DirectFiring::FireZone
 // Created: NLD 2004-10-27
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_DirectFiring::FireZone( const MIL_ControlZone& zone, PHY_FireResults_Default*& pFireResult )
+void PHY_RoleAction_DirectFiring::FireZone( const MIL_Object_ABC& object, PHY_FireResults_Default*& pFireResult )
 {
     if( !pFireResult )
         pFireResult = new PHY_FireResults_Default();
 
-    assert( pPion_ );
-
-    MIL_ControlZone::T_TargetVector targets;
-    zone.GetTargets( *pPion_, targets );
-
+    assert( pPion_ );    
+    typedef std::pair< MIL_Agent_ABC*, PHY_Composante_ABC* > T_TargetPair;
+    typedef std::vector< T_TargetPair >                      T_TargetVector;
+    typedef T_TargetVector::const_iterator                   CIT_TargetVector;
+    
+    T_TargetVector targets;
+    const ControlZoneCapacity* capacity = object.Retrieve< ControlZoneCapacity >();
+    if ( capacity )
+        capacity->RetrieveTargets( object, targets );
+    
     PHY_DirectFireData firerWeapons( *pPion_, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFiringModeNormal );
     GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
 
-    for( MIL_ControlZone::CIT_TargetVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
+    for( CIT_TargetVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
     {
         MIL_Agent_ABC&      target       = *itTarget->first;
         PHY_Composante_ABC& compTarget   = *itTarget->second;

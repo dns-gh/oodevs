@@ -284,9 +284,9 @@ struct Formatter< E_LogMaintenanceHandlingStatus >
 };
 
 template< >
-struct Formatter< E_ObstacleType >
+struct Formatter< E_DemolitionTargetType >
 {
-    void operator()( const E_ObstacleType& e, Displayer_ABC& displayer ) const;
+    void operator()( const E_DemolitionTargetType& e, Displayer_ABC& displayer ) const;
 };
 
 // =============================================================================

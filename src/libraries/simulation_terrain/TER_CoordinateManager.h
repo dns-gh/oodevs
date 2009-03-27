@@ -47,9 +47,10 @@ public:
     void MosToSimMgrsCoord( double latitude, double longitude, MT_Vector2D& pos ) const;
     void SimToMosMgrsCoord( const MT_Vector2D& pos, double& latitude, double& longitude ) const;
 
-    MT_Float GetWeldValue() const;
-    MT_Float GetWidth    () const;
-    MT_Float GetHeight   () const;
+    MT_Float        GetWeldValue() const;
+    MT_Float        GetWidth    () const;
+    MT_Float        GetHeight   () const;
+    const MT_Rect&  GetExtent   () const;
 
     bool IsValidPosition( const MT_Vector2D& pos ) const;
     void ClipPointInsideWorld( MT_Vector2D& pos ) const;
@@ -105,6 +106,16 @@ inline
 MT_Float TER_CoordinateManager::GetHeight() const
 {
     return extent_.GetHeight();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_CoordinateManager::GetExtent
+// Created: JCR 2008-06-11
+// -----------------------------------------------------------------------------
+inline
+const MT_Rect& TER_CoordinateManager::GetExtent() const
+{
+    return extent_;
 }
 
 #endif // __TER_CoordinateManager_h_

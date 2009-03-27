@@ -60,12 +60,9 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     display_->AddGroup( tr( "Camp" ) )
                 .AddLabel( tr( "TC2:" ) );
 
-    display_->AddGroup( tr( "NBC cloud/zone" ) )
-                .AddLabel( tr( "NBC agent:" ) );
-
-    display_->AddGroup( tr( "ROTA" ) )
-                .AddLabel( tr( "Danger level:" ) )
-                .AddLabel( tr( "NBC agent(s):" ) );
+    display_->AddGroup( tr( "NBC" ) )
+                .AddLabel( tr( "Danger:" ) )
+                .AddLabel( tr( "NBC agent(s):" ) );   
 
     display_->AddGroup( tr( "Logistic route" ) )
                 .AddLabel( tr( "Equipped:" ) )
@@ -122,7 +119,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 // Name: ObjectKnowledgePanel::Display
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Display( const ObjectKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
+void ObjectKnowledgePanel::Display( const kernel::ObjectKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
     item->SetValue( &k );
     k.DisplayInList( displayer );
@@ -132,7 +129,7 @@ void ObjectKnowledgePanel::Display( const ObjectKnowledge_ABC& k, Displayer_ABC&
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledge_ABC& element )
+void ObjectKnowledgePanel::NotifyUpdated( const kernel::ObjectKnowledge_ABC& element )
 {
     if( ! IsVisible() || &element != subSelected_ )
         return;
@@ -177,7 +174,7 @@ void ObjectKnowledgePanel::DisplayExtension( const T& extension )
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const CampAttributes_ABC& element )
+void ObjectKnowledgePanel::NotifyUpdated( const ConstructionAttribute_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -186,7 +183,34 @@ void ObjectKnowledgePanel::NotifyUpdated( const CampAttributes_ABC& element )
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const CrossingSiteAttributes_ABC& element )
+void ObjectKnowledgePanel::NotifyUpdated( const BypassAttribute_ABC& element )
+{
+    DisplayExtension( element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::NotifyUpdated
+// Created: AGE 2006-02-24
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::NotifyUpdated( const ObstacleAttribute_ABC& element )
+{
+    DisplayExtension( element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::NotifyUpdated
+// Created: AGE 2006-02-24
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::NotifyUpdated( const LogisticAttribute_ABC& element )
+{
+    DisplayExtension( element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::NotifyUpdated
+// Created: AGE 2006-02-24
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::NotifyUpdated( const CrossingSiteAttribute_ABC& element )
 {
    DisplayExtension( element );
 }
@@ -195,7 +219,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const CrossingSiteAttributes_ABC& elem
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const LogisticRouteAttributes_ABC& element )
+void ObjectKnowledgePanel::NotifyUpdated( const SupplyRouteAttribute_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -204,7 +228,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const LogisticRouteAttributes_ABC& ele
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const NBCAttributes_ABC& element )
+void ObjectKnowledgePanel::NotifyUpdated( const NBCAttribute_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -213,7 +237,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const NBCAttributes_ABC& element )
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const RotaAttributes_ABC& element )
+void ObjectKnowledgePanel::NotifyUpdated( const ActivityTimeAttribute_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -222,7 +246,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const RotaAttributes_ABC& element )
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const MineAttributes_ABC& element )
+void ObjectKnowledgePanel::NotifyUpdated( const MineAttribute_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -273,12 +297,15 @@ void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
         if( subSelected_ )
         {
             NotifyUpdated( *subSelected_ );
-            UpdateExtension< CampAttributes_ABC >( *subSelected_ );
-            UpdateExtension< CrossingSiteAttributes_ABC >( *subSelected_ );
-            UpdateExtension< LogisticRouteAttributes_ABC >( *subSelected_ );
-            UpdateExtension< NBCAttributes_ABC >( *subSelected_ );
-            UpdateExtension< RotaAttributes_ABC >( *subSelected_ );
-            UpdateExtension< MineAttributes_ABC >( *subSelected_ );
+            UpdateExtension< ConstructionAttribute_ABC >( *subSelected_ );
+            UpdateExtension< BypassAttribute_ABC >( *subSelected_ );
+            UpdateExtension< ObstacleAttribute_ABC >( *subSelected_ );
+            UpdateExtension< LogisticAttribute_ABC >( *subSelected_ );
+            UpdateExtension< CrossingSiteAttribute_ABC >( *subSelected_ );
+            UpdateExtension< SupplyRouteAttribute_ABC >( *subSelected_ );
+            UpdateExtension< NBCAttribute_ABC >( *subSelected_ );
+            UpdateExtension< ActivityTimeAttribute_ABC >( *subSelected_ );
+            UpdateExtension< MineAttribute_ABC >( *subSelected_ );
         }
     }
 }

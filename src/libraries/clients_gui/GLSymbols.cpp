@@ -12,7 +12,7 @@
 #include "SvglRenderer.h"
 #include "tools/GeneralConfig.h"
 #include "zipstream/zipstream.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 #include "svgl/Node_ABC.h"
 
 using namespace geometry;

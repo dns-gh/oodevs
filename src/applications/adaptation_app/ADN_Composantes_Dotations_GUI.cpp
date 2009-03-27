@@ -71,7 +71,7 @@ public:
 // Name: ADN_Composantes_Dotations_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent )
+ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold )
 : ADN_Table2( pParent, "ADN_Composantes_Dotations_GUI" )
 {
     // Selection and sorting.
@@ -86,7 +86,8 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
     setLeftMargin( 0 );
 
     // Setup the columns.
-    setNumCols( bIncludeNormalizedConsumption ? 4 : 3 );
+    const int cols = 4 - ( ( bIncludeNormalizedConsumption ) ? 0 : 1 ) - ( ( bIncludeThreshold ) ? 0 : 1 );
+    setNumCols( cols );
     setNumRows( 0 );
 //    setColumnStretchable( 0, true );
 //    setColumnStretchable( 1, true );
@@ -96,7 +97,8 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
 
     horizontalHeader()->setLabel( 0, tr( "Category" ) );
     horizontalHeader()->setLabel( 1, tr( "Qty" ) );
-    horizontalHeader()->setLabel( 2, tr( "Log threshold (%)" ) );
+    if ( bIncludeThreshold )
+        horizontalHeader()->setLabel( 2, tr( "Log threshold (%)" ) );
     if( bIncludeNormalizedConsumption )
         horizontalHeader()->setLabel( 3, tr( "Normalized consumption" ) );
 

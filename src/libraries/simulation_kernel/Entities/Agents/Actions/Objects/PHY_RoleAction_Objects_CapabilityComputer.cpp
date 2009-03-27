@@ -22,7 +22,7 @@
 // Name: PHY_RoleAction_Objects_CapabilityComputer constructor
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Objects_CapabilityComputer::PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_RealObjectType& objectType )
+PHY_RoleAction_Objects_CapabilityComputer::PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_ObjectType_ABC& objectType )
     : nOperation_    ( nOperation )
     , objectType_    ( objectType )
     , bHasCapability_( false )

@@ -71,9 +71,9 @@ public:
     static const std::string& ConvertFromMsgLogSupplyChangeQuotasAck( E_MsgLogSupplyChangeQuotasAck, E_Conversion = eToSim );
     static const std::string& ConvertFromMsgLogSupplyPushFlowAck( E_MsgLogSupplyPushFlowAck, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMedicalHandlingStatus( E_LogMedicalHandlingStatus, E_Conversion = eToSim );
+    static const std::string& ConvertFromDemolitionTargetType( E_DemolitionTargetType, E_Conversion = eToSim );    
     static const std::string& ConvertFromObjectErrorCode( E_ObjectErrorCode, E_Conversion = eToSim );
-    static const std::string& ConvertFromObjectType( E_ObjectType, E_Conversion = eToSim );
-    static const std::string& ConvertFromObstacleType( E_ObstacleType, E_Conversion = eToSim );
+
     static const std::string& ConvertFromOrderErrorCode( E_OrderErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromReportType( E_ReportType, E_Conversion = eToSim );
     static const std::string& ConvertFromAutomatOrderFormation( E_AutomatOrderFormation, E_Conversion = eToSim );
@@ -118,8 +118,7 @@ public:
     static E_MsgLogSupplyPushFlowAck ConvertToMsgLogSupplyPushFlowAck( const std::string& );
     static E_LogMedicalHandlingStatus ConvertToLogMedicalHandlingStatus( const std::string& );
     static E_ObjectErrorCode ConvertToObjectErrorCode( const std::string& );
-    static E_ObjectType ConvertToObjectType( const std::string& );
-    static E_ObstacleType ConvertToObstacleType( const std::string& );
+    static E_DemolitionTargetType ConvertToDemolitionTargetType( const std::string& );
     static E_OrderErrorCode ConvertToOrderErrorCode( const std::string& );
     static E_ReportType ConvertToReportType( const std::string& );
     static E_AutomatOrderFormation ConvertToAutomatOrderFormation( const std::string& );
@@ -164,9 +163,8 @@ private:
     typedef ENT_Tr::converter<E_MsgLogSupplyChangeQuotasAck> T_ConverterMsgLogSupplyChangeQuotasAck;
     typedef ENT_Tr::converter<E_MsgLogSupplyPushFlowAck> T_ConverterMsgLogSupplyPushFlowAck;
     typedef ENT_Tr::converter<E_LogMedicalHandlingStatus> T_ConverterLogMedicalHandlingStatus;
+    typedef ENT_Tr::converter<E_DemolitionTargetType> T_ConverterDemolitionTargetType;
     typedef ENT_Tr::converter<E_ObjectErrorCode> T_ConverterObjectErrorCode;
-    typedef ENT_Tr::converter<E_ObjectType> T_ConverterObjectType;
-    typedef ENT_Tr::converter<E_ObstacleType> T_ConverterObstacleType;
     typedef ENT_Tr::converter<E_OrderErrorCode> T_ConverterOrderErrorCode;
     typedef ENT_Tr::converter<E_ReportType> T_ConverterReportType;
     typedef ENT_Tr::converter<E_AutomatOrderFormation> T_ConverterAutomatOrderFormation;
@@ -210,9 +208,8 @@ private:
     static T_ConverterMsgLogSupplyChangeQuotasAck MsgLogSupplyChangeQuotasAckConverter_ [];
     static T_ConverterMsgLogSupplyPushFlowAck MsgLogSupplyPushFlowAckConverter_ [];
     static T_ConverterLogMedicalHandlingStatus LogMedicalHandlingStatusConverter_ [];
+    static T_ConverterDemolitionTargetType DemolitionTargetTypeConverter_ [];
     static T_ConverterObjectErrorCode ObjectErrorCodeConverter_ [];
-    static T_ConverterObjectType ObjectTypeConverter_ [];
-    static T_ConverterObstacleType ObstacleTypeConverter_ [];
     static T_ConverterOrderErrorCode OrderErrorCodeConverter_ [];
     static T_ConverterReportType ReportTypeConverter_ [];
     static T_ConverterAutomatOrderFormation AutomatOrderFormationConverter_ [];

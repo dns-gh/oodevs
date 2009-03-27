@@ -21,8 +21,7 @@
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Automates/MIL_AutomateType.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "MIL_Formation.h"
 #include "MIL_EntityManager.h"
@@ -34,7 +33,7 @@
 
 
 
-MT_Converter< std::string, MIL_Army::E_Diplomacy > MIL_Army::diplomacyConverter_( eUnknown );
+MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > MIL_Army::diplomacyConverter_( eUnknown );
 
 BOOST_CLASS_EXPORT_GUID( MIL_Army, "MIL_Army" )
 
@@ -176,6 +175,7 @@ namespace boost
 template< typename Archive > 
 void MIL_Army::serialize( Archive& file, const uint )
 {
+    file & boost::serialization::base_object< MIL_Army_ABC >( *this );
     file & const_cast< std::string& >( strName_ )
          & const_cast< uint& >( nID_ )
          & nType_
@@ -408,7 +408,7 @@ bool MIL_Army::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 // Name: MIL_Army::IsAnEnemy
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-E_Tristate MIL_Army::IsAnEnemy( const MIL_Army& army ) const
+E_Tristate MIL_Army::IsAnEnemy( const MIL_Army_ABC& army ) const
 {
     E_Diplomacy nRelation = GetDiplomacy( army );
     switch( nRelation )
@@ -425,19 +425,6 @@ E_Tristate MIL_Army::IsAnEnemy( const MIL_Army& army ) const
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::IsAnEnemy
-// Created: NLD 2004-04-06
-// -----------------------------------------------------------------------------
-E_Tristate MIL_Army::IsAnEnemy( const DEC_Knowledge_Agent& knowledge ) const
-{
-    const MIL_Army* pArmy = knowledge.GetArmy();
-    if( !pArmy )
-        return eTristate_DontKnow;
-
-    return IsAnEnemy( *pArmy );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Army::IsAnEnemy
 // Created: HME 2005-12-29
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsAnEnemy( const DEC_Knowledge_Population& knowledge ) const
@@ -449,7 +436,7 @@ E_Tristate MIL_Army::IsAnEnemy( const DEC_Knowledge_Population& knowledge ) cons
 // Name: MIL_Army::IsAFriend
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-E_Tristate MIL_Army::IsAFriend( const MIL_Army& army ) const
+E_Tristate MIL_Army::IsAFriend( const MIL_Army_ABC& army ) const
 {
     E_Diplomacy nRelation = GetDiplomacy( army );
     switch( nRelation )
@@ -470,7 +457,7 @@ E_Tristate MIL_Army::IsAFriend( const MIL_Army& army ) const
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsAFriend( const DEC_Knowledge_Agent& knowledge ) const
 {
-    const MIL_Army* pArmy = knowledge.GetArmy();
+    const MIL_Army_ABC* pArmy = knowledge.GetArmy();
     if( !pArmy )
         return eTristate_DontKnow;
 
@@ -481,7 +468,7 @@ E_Tristate MIL_Army::IsAFriend( const DEC_Knowledge_Agent& knowledge ) const
 // Name: MIL_Army::IsNeutral
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-E_Tristate MIL_Army::IsNeutral( const MIL_Army& army ) const
+E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 {
     E_Diplomacy nRelation = GetDiplomacy( army );
     switch( nRelation )
@@ -593,7 +580,7 @@ void MIL_Army::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& asnM
 // Name: MIL_Army::RegisterObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-void MIL_Army::RegisterObject( MIL_RealObject_ABC& object )
+void MIL_Army::RegisterObject( MIL_Object_ABC& object )
 {
     bool bOut = objects_.insert( &object ).second;
     assert( bOut );
@@ -603,7 +590,7 @@ void MIL_Army::RegisterObject( MIL_RealObject_ABC& object )
 // Name: MIL_Army::UnregisterObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-void MIL_Army::UnregisterObject( MIL_RealObject_ABC& object )
+void MIL_Army::UnregisterObject( MIL_Object_ABC& object )
 {
     int nOut = objects_.erase( &object );
     assert( nOut == 1 );

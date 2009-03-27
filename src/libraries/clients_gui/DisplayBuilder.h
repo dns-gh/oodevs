@@ -38,6 +38,7 @@ public:
     GroupDisplayer& AddGroup( const QString& name );
     virtual GroupDisplayer& Group( const QString& name );
     virtual void Hide();
+    void Clear();
     //@}
 
 private:

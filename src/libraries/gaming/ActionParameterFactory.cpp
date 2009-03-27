@@ -11,8 +11,8 @@
 #include "ActionParameterFactory.h"
 #include "actions/Limit.h"
 #include "actions/LimaList.h"
-#include "actions/Obstacle.h"
-#include "actions/ObstacleList.h"
+#include "actions/EngineerConstruction.h"
+#include "actions/EngineerConstructionList.h"
 #include "actions/Objective.h"
 #include "actions/ObjectiveList.h"
 #include "actions/Direction.h"
@@ -132,7 +132,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     case T_MissionParameter_value_locationList:
         return new actions::parameters::LocationList( parameter, converter_, *asn.value.u.locationList );
     case T_MissionParameter_value_plannedWorkList:
-        return new actions::parameters::ObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWorkList, controller_ );
+        return new actions::parameters::EngineerConstructionList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWorkList, controller_ );
     case T_MissionParameter_value_pointList:
         return new actions::parameters::PointList( parameter, converter_, *asn.value.u.pointList );
     case T_MissionParameter_value_polygonList:
@@ -140,7 +140,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     case T_MissionParameter_value_location:
         return new actions::parameters::Location( parameter, converter_, *asn.value.u.location );
     case T_MissionParameter_value_plannedWork:
-        return new actions::parameters::Obstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWork, controller_ );
+        return new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWork, controller_ );
     case T_MissionParameter_value_atlasNature:
         return new actions::parameters::AtlasNature( parameter, *asn.value.u.atlasNature, staticModel_.atlasNatures_ );
     case T_MissionParameter_value_missionObjective:
@@ -232,9 +232,9 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     else if( type == "dotationtype" )
         param.reset( new actions::parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
     else if( type == "genobject" )
-        param.reset( new actions::parameters::Obstacle( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis, controller_ ) );
+        param.reset( new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis, controller_ ) );
     else if( type == "genobjectlist" )
-        param.reset( new actions::parameters::ObstacleList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis, controller_ ) );
+        param.reset( new actions::parameters::EngineerConstructionList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis, controller_ ) );
     else if( type == "agentknowledge" )
         param.reset( new actions::parameters::AgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "populationknowledge" )

@@ -12,7 +12,7 @@
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
 inline
-const MIL_RealObjectType& DEC_Gen_Object::GetType() const
+const MIL_ObjectType_ABC& DEC_Gen_Object::GetType() const
 {
     assert( pType_ );
     return *pType_;
@@ -33,10 +33,9 @@ const TER_Localisation& DEC_Gen_Object::GetLocalisation() const
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
 inline
-const MIL_ObstacleType& DEC_Gen_Object::GetObstacleType() const
-{
-    assert( pObstacleType_ );
-    return *pObstacleType_;
+DEC_Gen_Object::E_DemolitionTargetType DEC_Gen_Object::GetObstacleType() const
+{    
+    return pObstacleType_;
 }
 
 // -----------------------------------------------------------------------------

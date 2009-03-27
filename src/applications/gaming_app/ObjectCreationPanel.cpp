@@ -23,12 +23,12 @@ using namespace gui;
 // Name: ObjectCreationPanel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, ParametersLayer& layer, const GlTools_ABC& tools )
+ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, ParametersLayer& layer, gui::SymbolIcons& icons, const GlTools_ABC& tools )
     : InfoPanel_ABC( parent, panel, tr( "Objects" ), "ObjectCreationPanel" )
     , controllers_( controllers )
     , publisher_( publisher )
     , tools_( tools )
-    , created_( new ObjectPrototype( this, controllers, model, layer ) )
+    , created_( new ObjectPrototype( this, controllers, model, layer, icons ) )
 {
     QPushButton* pOkButton = new QPushButton( tr( "Create" ), this );
     connect( pOkButton, SIGNAL( clicked() ), this, SLOT( Commit() ) );

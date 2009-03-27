@@ -52,7 +52,7 @@ DEC_Knowledge_Agent* DEC_FunctionsTools::GetKnowledgeAgentFromDia( const DIA_Var
 // Name: DEC_FunctionsTools::GetKnowledgeObjectFromDia
 // Created: NLD 2004-03-31
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_FunctionsTools::GetKnowledgeObjectFromDia( const DIA_Variable_ABC& diaVar, const MIL_Army& caller )
+DEC_Knowledge_Object* DEC_FunctionsTools::GetKnowledgeObjectFromDia( const DIA_Variable_ABC& diaVar, const MIL_Army_ABC& caller )
 {
     assert( DEC_Tools::CheckTypeConnaissanceObjet( diaVar ) );
 
@@ -80,7 +80,7 @@ MIL_AgentPion* DEC_FunctionsTools::GetPopulationKnowledgeAgentFromDia( const DIA
 // Name: DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( const DIA_Variable_ABC& diaVar )
+MIL_Object_ABC* DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( const DIA_Variable_ABC& diaVar )
 {
     assert( DEC_Tools::CheckTypePopulationConnaissanceObjet( diaVar ) );
     uint nID = ( uint )diaVar.ToPtr();

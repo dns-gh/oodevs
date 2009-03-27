@@ -22,6 +22,8 @@
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/FireClass.h"
+#include "clients_kernel/MedicalTreatmentType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/BreakdownType.h"
 #include "clients_kernel/AgentType.h"
@@ -179,6 +181,24 @@ void BaseDisplayer::Call( const NBCAgent& value )
 
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer::Call
+// Created: RFT 2006-04-05
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const FireClass& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: RFT 2006-04-05
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const MedicalTreatmentType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const ComponentType& value )
@@ -302,4 +322,13 @@ void BaseDisplayer::Call( const kernel::PopulationKnowledge_ABC& value )
 void BaseDisplayer::Call( const kernel::ObjectKnowledge_ABC& value )
 {
     AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Clear
+// Created: LDC 2009-03-18
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Clear()
+{
+
 }

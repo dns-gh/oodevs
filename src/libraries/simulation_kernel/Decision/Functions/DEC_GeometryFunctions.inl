@@ -10,13 +10,15 @@
 // *****************************************************************************
 
 #include "Entities/Orders/MIL_Fuseau.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Objective.h"
+
+#include "Entities/Objects/TerrainHeuristicCapacity.h"
+
 
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_PathFindManager.h"
@@ -176,50 +178,53 @@ void DEC_GeometryFunctions::ComputeStartPoint( DIA_Call_ABC& call, const T& call
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
 
-// =============================================================================
-// $$$$ NLD - A TRIER - DEGUEU
-// =============================================================================
-struct sBestNodeForObstacle
+namespace
 {
-    sBestNodeForObstacle( const MIL_Fuseau& fuseau, const MIL_RealObjectType& objectType, const MT_Vector2D& vCenter, MT_Float rRadius )
-        : fuseau_      ( fuseau )
-        , objectType_  ( objectType )
-        , center_      ( vCenter )
-        , rSquareRadius_( rRadius * rRadius )
-        , bestPos_()
-        , nLastScore_( std::numeric_limits< int >::min() )
+    // =============================================================================
+    // $$$$ NLD - A TRIER - DEGUEU
+    // =============================================================================
+    struct sBestNodeForObstacle
     {
-    }
-    void Visit( const MT_Vector2D& pos, const TerrainData& nPassability )
-    {
-        const MT_Float rTestNodeSquareDistance = center_.SquareDistance( pos );
-        if( rTestNodeSquareDistance > rSquareRadius_ || !fuseau_.IsInside( pos ) )
-            return;
-
-        const int nTestNodeScore = objectType_.ComputePlacementScore( pos, nPassability );
-        if( nTestNodeScore == -1 )
-            return;
-
-        if( nLastScore_ == std::numeric_limits< int >::min()
-         || nTestNodeScore  > nLastScore_
-         || ( nTestNodeScore  == nLastScore_ && rTestNodeSquareDistance < center_.SquareDistance( bestPos_ ) ) )
+        sBestNodeForObstacle( const MIL_Fuseau& fuseau, const TerrainHeuristicCapacity& heuristic, const MT_Vector2D& vCenter, MT_Float rRadius )
+            : fuseau_      ( fuseau )
+            , heuristic_   ( heuristic )
+            , center_      ( vCenter )
+            , rSquareRadius_( rRadius * rRadius )
+            , bestPos_()
+            , nLastScore_( std::numeric_limits< int >::min() )
         {
-            nLastScore_ = nTestNodeScore;
-            bestPos_ = pos;
         }
-    }
-    bool FoundAPoint() const { return nLastScore_ != std::numeric_limits< int >::min(); };
-    const MT_Vector2D& BestPosition() const { return bestPos_; };
+        void Visit( const MT_Vector2D& pos, const TerrainData& nPassability )
+        {
+            const MT_Float rTestNodeSquareDistance = center_.SquareDistance( pos );
+            if( rTestNodeSquareDistance > rSquareRadius_ || !fuseau_.IsInside( pos ) )
+                return;
+            
+            const int nTestNodeScore = heuristic_.ComputePlacementScore( pos, nPassability );
+            if( nTestNodeScore == -1 )
+                return;
 
-private:
-    sBestNodeForObstacle& operator=( const sBestNodeForObstacle& );
-    const MIL_Fuseau&         fuseau_;
-    const MIL_RealObjectType& objectType_;
-    const MT_Vector2D&        center_;
-    MT_Float                  rSquareRadius_;
-    MT_Vector2D               bestPos_;
-    int                       nLastScore_;
-};
+            if( nLastScore_ == std::numeric_limits< int >::min()
+             || nTestNodeScore  > nLastScore_
+             || ( nTestNodeScore  == nLastScore_ && rTestNodeSquareDistance < center_.SquareDistance( bestPos_ ) ) )
+            {
+                nLastScore_ = nTestNodeScore;
+                bestPos_ = pos;
+            }
+        }
+        bool FoundAPoint() const { return nLastScore_ != std::numeric_limits< int >::min(); };
+        const MT_Vector2D& BestPosition() const { return bestPos_; };
+
+    private:
+        sBestNodeForObstacle& operator=( const sBestNodeForObstacle& );
+        const MIL_Fuseau&         fuseau_;
+        const TerrainHeuristicCapacity& heuristic_;    
+        const MT_Vector2D&        center_;
+        MT_Float                  rSquareRadius_;
+        MT_Vector2D               bestPos_;
+        int                       nLastScore_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeObstaclePosition
@@ -228,27 +233,25 @@ private:
 template< typename T >
 void DEC_GeometryFunctions::ComputeObstaclePosition( DIA_Call_ABC& call, const T& caller )
 {
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 1 ) ) );
+    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
 
-    MT_Vector2D*        pCenter = call.GetParameter( 1 ).ToUserPtr( pCenter );
-    MT_Float            rRadius = MIL_Tools::ConvertMeterToSim( call.GetParameter( 2 ).ToFloat() );
+    MT_Vector2D*        pCenter = call.GetParameter( 0 ).ToUserPtr( pCenter );
+    MT_Float            rRadius = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
 
     assert( pCenter );
-
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
-    assert( pObjectType );
-
+    
     MT_Vector2D* pResultPos = new MT_Vector2D();
     call.GetResult().SetValue( (void*)pResultPos, &DEC_Tools::GetTypePoint() );
 
-    sBestNodeForObstacle  costEvaluationFunctor( caller.GetFuseau(), *pObjectType, *pCenter, rRadius );
-    TER_World::GetWorld().GetPathFindManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );
-    const bool bOut = costEvaluationFunctor.FoundAPoint();
-
-    if( bOut )
-        *pResultPos = costEvaluationFunctor.BestPosition();
-    else
-        *pResultPos = *pCenter;
+    TerrainHeuristicCapacity* pCapacity = 0;
+    *pResultPos = *pCenter;
+    if ( pCapacity )
+    {
+        sBestNodeForObstacle  costEvaluationFunctor( caller.GetFuseau(), *pCapacity, *pCenter, rRadius );
+        TER_World::GetWorld().GetPathFindManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );        
+        if( costEvaluationFunctor.FoundAPoint() )
+            *pResultPos = costEvaluationFunctor.BestPosition();
+    }
 }
 
 //-----------------------------------------------------------------------------

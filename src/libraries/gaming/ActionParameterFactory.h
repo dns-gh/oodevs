@@ -10,6 +10,7 @@
 #ifndef __ActionParameterFactory_h_
 #define __ActionParameterFactory_h_
 
+#include "game_asn/Simulation.h"
 #include "ParameterFactory_ABC.h"
 
 namespace kernel

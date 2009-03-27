@@ -13,6 +13,8 @@
 #include "DotationType.h"
 #include "EquipmentType.h"
 #include "NBCAgent.h"
+#include "FireClass.h"
+#include "MedicalTreatmentType.h"
 #include "BreakdownType.h"
 #include "WeaponSystemType.h"
 #include "tools.h"
@@ -63,13 +65,15 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
     Purge();
 
     xml::xifstream scipio( config.GetPhysicalFile() );
-    std::string dotations, weaponsystems, equipments, nbc, pannes, objects;
+    std::string dotations, weaponsystems, equipments, nbc, fire, pannes, objects, medicaltreatment;
     scipio >> start( "physical" );
     FileReader( scipio )
         .Read( "dotations", dotations )
         .Read( "components", equipments )
         .Read( "weapon-systems", weaponsystems )
         .Read( "nbc", nbc )
+        .Read( "fire", fire )
+        .Read( "medical-treatment", medicaltreatment )
         .Read( "breakdowns", pannes )
         .Read( "objects", objects );
    
@@ -78,6 +82,8 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
     ReadWeaponSystems( config.BuildPhysicalChildFile( weaponsystems ) );
     ReadEquipments( config.BuildPhysicalChildFile( equipments ) );
     ReadNBC( config.BuildPhysicalChildFile( nbc ) );
+    ReadFire( config.BuildPhysicalChildFile( fire ) );
+    ReadMedicalTreatment( config.BuildPhysicalChildFile( medicaltreatment ) );
     ReadBreakdowns( config.BuildPhysicalChildFile( pannes ) );
 }
 
@@ -92,7 +98,9 @@ void ObjectTypes::Purge()
     Resolver< EquipmentType >::DeleteAll();
     Resolver< WeaponSystemType, std::string >::DeleteAll();
     Resolver2< DotationType >::DeleteAll();
-    Resolver2< ObjectType >::DeleteAll();
+    StringResolver< ObjectType >::DeleteAll();
+    Resolver2< FireClass >::DeleteAll();
+    Resolver2< MedicalTreatmentType >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -111,9 +119,8 @@ ObjectTypes::~ObjectTypes()
 void ObjectTypes::ReadObjectTypes( const std::string& objects )
 {
     xifstream xis( objects );
-    xis >> start( "objects" )
-        >> start( "real-objects" )
-        >> list ( "object", *this, &ObjectTypes::ReadObjectType );
+    xis >> start( "objects" )        
+            >> list ( "object", *this, &ObjectTypes::ReadObjectType );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,8 +131,8 @@ void ObjectTypes::ReadObjectType( xml::xistream& xis )
 {
     std::string type;
     xis >> attribute( "type", type );
-    int nType = tools::ObjectTypeFromString( type );
-    Resolver2< ObjectType >::Register( nType, type, *new ObjectType( xis, nType ) );
+    // int nType = tools::ObjectTypeFromString( type );
+    StringResolver< ObjectType >::Register( type, *new ObjectType( xis, type ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,6 +220,47 @@ void ObjectTypes::ReadNBCAgent( xml::xistream& xis )
     Resolver2< NBCAgent >::Register( nbc->GetId(), nbc->GetName(), *nbc );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadFire
+// Created: RFT 2006-04-04
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadFire( const std::string& fire )
+{
+    xifstream xis( fire );
+    xis >> start( "fire-classes" )
+            >> list( "class", *this, &ObjectTypes::ReadFireClass );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadFireClass
+// Created: RFT 2006-04-04
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadFireClass( xml::xistream& xis )
+{
+    FireClass* fire = new FireClass( xis );
+    Resolver2< FireClass >::Register( fire->GetId(), fire->GetName(), *fire );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadMedicalTreatment
+// Created: RFT 2006-04-04
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadMedicalTreatment( const std::string& medicaltreatment )
+{
+    xifstream xis( medicaltreatment );
+    xis >> start( "medical-treatments" )
+            >> list( "medical-treatment", *this, &ObjectTypes::ReadMedicalTreatmentType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadMedicalTreatmentType
+// Created: RFT 2006-04-04
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadMedicalTreatmentType( xml::xistream& xis )
+{
+    MedicalTreatmentType* medicaltreatment = new MedicalTreatmentType( xis );
+    Resolver2< MedicalTreatmentType >::Register( medicaltreatment->GetId(), medicaltreatment->GetName(), *medicaltreatment );
+}
 // -----------------------------------------------------------------------------
 // Name: ObjectTypes::ReadBreakdowns
 // Created: AGE 2006-04-05

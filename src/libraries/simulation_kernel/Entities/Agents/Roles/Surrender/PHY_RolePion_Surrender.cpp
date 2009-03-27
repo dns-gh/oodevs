@@ -16,7 +16,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Objects/MIL_CampPrisonniers.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
@@ -74,7 +74,7 @@ void PHY_RolePion_Surrender::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< PHY_RoleInterface_Surrender >( *this )
          & pPion_
          & bPrisoner_
-         & const_cast< MIL_CampPrisonniers*& >( pPrison_ );
+         & const_cast< MIL_Object_ABC*& >( pPrison_ );
 }
 
 // =============================================================================
@@ -153,7 +153,7 @@ bool PHY_RolePion_Surrender::Release()
 // Name: PHY_RolePion_Surrender::Imprison
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Surrender::Imprison( const MIL_CampPrisonniers& camp )
+bool PHY_RolePion_Surrender::Imprison( const MIL_Object_ABC& camp )
 {
     if( !IsSurrendered() || !bPrisoner_ )
         return false;
@@ -166,7 +166,7 @@ bool PHY_RolePion_Surrender::Imprison( const MIL_CampPrisonniers& camp )
 // Name: PHY_RolePion_Surrender::IsImprisoned
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Surrender::IsImprisoned( const MIL_CampPrisonniers& camp )
+bool PHY_RolePion_Surrender::IsImprisoned( const MIL_Object_ABC& camp )
 {
     if( !pPrison_ )
         return false;

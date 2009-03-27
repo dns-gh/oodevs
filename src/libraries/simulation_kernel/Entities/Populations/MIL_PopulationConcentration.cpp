@@ -19,7 +19,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/PopulationAttribute.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Messages.h"
@@ -252,7 +253,7 @@ MT_Float MIL_PopulationConcentration::GetPullingFlowsDensity() const
 {
     if( pSplittingObject_ )
     {
-        const MT_Float rObjectPullingDensity = pSplittingObject_->GetExitingPopulationDensity();
+        const MT_Float rObjectPullingDensity = pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity();
         if( rObjectPullingDensity != std::numeric_limits< MT_Float >::max() )
             return rObjectPullingDensity;
     }
@@ -263,12 +264,12 @@ MT_Float MIL_PopulationConcentration::GetPullingFlowsDensity() const
 // Name: MIL_PopulationConcentration::SetPullingFlowsDensity
 // Created: NLD 2005-12-11
 // -----------------------------------------------------------------------------
-void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_RealObject_ABC& splittingObject )
+void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_Object_ABC& splittingObject )
 {
     pSplittingObject_ = &splittingObject;
 
     //$$$ RC TMP
-    if( pSplittingObject_->GetExitingPopulationDensity() == 0. )
+    if( pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity() == 0. )
         MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Blocked );
     else
         MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Filtered );
@@ -373,7 +374,7 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uin
          >> pPullingFlow_
          >> pushingFlows_
          >> rPullingFlowsDensity_
-         >> const_cast< MIL_RealObject_ABC*& >( pSplittingObject_ );
+         >> const_cast< MIL_Object_ABC*& >( pSplittingObject_ );
 }
 
 // -----------------------------------------------------------------------------

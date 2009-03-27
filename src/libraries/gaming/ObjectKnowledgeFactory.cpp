@@ -10,12 +10,19 @@
 #include "gaming_pch.h"
 #include "ObjectKnowledgeFactory.h"
 #include "ObjectKnowledge.h"
-#include "LogisticRouteAttributes.h"
-#include "NBCAttributes.h"
-#include "RotaAttributes.h"
-#include "CrossingSiteAttributes.h"
-#include "CampAttributes.h"
-#include "MineAttributes.h"
+
+#include "ConstructionAttribute.h"
+#include "BypassAttribute.h"
+#include "ObstacleAttribute.h"
+#include "MineAttribute.h"
+#include "SupplyRouteAttribute.h"
+#include "CrossingSiteAttribute.h"
+#include "LogisticAttribute.h"
+#include "ActivityTimeAttribute.h"
+#include "NBCAttribute.h"
+#include "FireAttribute.h"
+#include "MedicalTreatmentAttribute.h"
+
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
@@ -58,32 +65,47 @@ ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const Team_ABC& owner, cons
     ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, static_.coordinateConverter_, model_.objects_, static_.objectTypes_ );
     knowledge->Attach< Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_ ) );
     knowledge->Attach( *new ObjectPerceptions( controllers_.controller_, model_.agents_ ) );
-    switch( message.type )
-    {
-    case EnumObjectType::camp_prisonniers:
-    case EnumObjectType::camp_refugies:
-        knowledge->Attach< CampAttributes_ABC >( *new CampAttributes( controllers_.controller_, model_.agents_ ) );
-        break;
-    case EnumObjectType::itineraire_logistique:
-        knowledge->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( controllers_.controller_ ) );
-        break;
-    case EnumObjectType::nuage_nbc:
-    case EnumObjectType::zone_nbc:
-        knowledge->Attach< NBCAttributes_ABC >( *new NBCAttributes( controllers_.controller_, static_.objectTypes_ ) );
-        break;
-    case EnumObjectType::rota:
-        knowledge->Attach< RotaAttributes_ABC >( *new RotaAttributes( controllers_.controller_, static_.objectTypes_ ) );
-        break;
-    case EnumObjectType::site_franchissement:
-        knowledge->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( controllers_.controller_ ) );
-        break;
-    case EnumObjectType::bouchon_mines:
-    case EnumObjectType::zone_minee_lineaire:
-    case EnumObjectType::zone_minee_par_dispersion:
-        knowledge->Attach< MineAttributes_ABC >( *new MineAttributes( controllers_.controller_, message.type != EnumObjectType::bouchon_mines ) );
-    default:
-        ;
-    };
+    Register( *knowledge, message.attributes );
     knowledge->Polish();
     return knowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgeFactory::Register
+// Created: JCR 2008-06-09
+// -----------------------------------------------------------------------------
+void ObjectKnowledgeFactory::Register( ObjectKnowledge_ABC& knowledge, const ASN1T_ObjectAttributes& attributes ) const
+{
+    if ( attributes.m.logisticPresent )
+        knowledge.Attach< LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );    
+    
+    if ( attributes.m.constructionPresent )
+        knowledge.Attach< ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_ ) );
+    
+    if ( attributes.m.minePresent )
+        knowledge.Attach< MineAttribute_ABC >( *new MineAttribute( controllers_.controller_, static_.objectTypes_ ) );
+    
+    if ( attributes.m.bypassPresent )
+        knowledge.Attach< BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_ ) );
+    
+    if ( attributes.m.obstaclePresent )
+        knowledge.Attach< ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_ ) );
+
+    if ( attributes.m.activity_timePresent )
+        knowledge.Attach< ActivityTimeAttribute_ABC >( *new ActivityTimeAttribute( controllers_.controller_ ) );
+    
+    if ( attributes.m.crossing_sitePresent )
+        knowledge.Attach< CrossingSiteAttribute_ABC >( *new CrossingSiteAttribute( controllers_.controller_ ) );
+    
+    if ( attributes.m.supply_routePresent )
+        knowledge.Attach< SupplyRouteAttribute_ABC >( *new SupplyRouteAttribute( controllers_.controller_ ) );    
+    
+    if ( attributes.m.nbcPresent )
+        knowledge.Attach< NBCAttribute_ABC >( *new NBCAttribute( controllers_.controller_, static_.objectTypes_ ) );
+
+    if( attributes.m.firePresent )
+        knowledge.Attach< FireAttribute_ABC >( *new FireAttribute( controllers_.controller_, static_.objectTypes_ ) );
+
+    if( attributes.m.medical_treatmentPresent )
+        knowledge.Attach< MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
 }

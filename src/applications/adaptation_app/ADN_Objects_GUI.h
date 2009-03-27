@@ -33,33 +33,76 @@ class ADN_Objects_GUI
 public:
     enum E_GuiElements
     {
-        eName,
-        eCanBeBypassed,
-        eAvoidDistance,
-        eDefaultSpeed,
-        eDefaultBypassSpeed,
-        eMaxInteractionHeight,
-        eDefaultConsumption,
-        eSpeedImpact,
-        eMaxAgentSpeedPercentage,
-        eHasOutgoingPopulationDensity,
-        eOutgoingPopulationDensity,
-        eMaxNbrUsers,
-        eToBuild,
-        eToReinforce,
-        eLocationScores,
-        eAttritions,
-        eHasToBuild,
-        eHasToReinforce,
-        eNbrToBuild,
-        eNbrToReinforce,
-        eHasAttritions,
-        eHasPopulationAttritions,
-        ePopulationAttritionSurface,
-        ePopulationAttritionPh,
-        eCanBeReservedObstacle,
-        eCanBeValorized,
-        eDangerous,
+        eName = 0,
+        eGeometry,
+        eSymbol,
+
+        eActivableCapacityPresent,
+
+		eAttritionCapacityPresent,
+
+        eAvoidableCapacityPresent,
+        eAvoidableCapacity_Distance,
+
+        eBridgingCapacityPresent,
+
+        eBuildableCapacityPresent,
+        eBuildableCapacity_Dotation,
+
+        eBypassableCapacityPresent,
+        eBypassableCapacity_Speed,
+
+        eConstructorCapacityPresent,
+        eConstructorCapacity_DefaultConsumption,
+        eConstructorCapacity_UnitType,
+
+		eContaminationCapacityPresent,
+        eContaminationCapacity_MaxToxic,
+
+		eDecontaminationCapacityPresent,
+
+		eDetectionCapacityPresent,
+
+		eExtinguishableCapacityPresent,
+
+		eHealableCapacityPresent,    
+
+        eImprovableCapacityPresent,        
+        eImprovableCapacity_Dotation,
+
+		eInterferenceCapacityPresent,
+
+        eIntoxicationCapacityPresent,
+        eIntoxicationCapacity_MaxToxic,
+
+        eLogisticCapacityPresent,
+
+        eMobilityCapacityPresent,
+        eMobilityCapacity_DefaultSpeed,
+        eMobilityCapacity_SpeedModifier,
+        eMobilityCapacity_MaxAgentSpeed,
+
+		eOccupableCapacityPresent,
+
+		ePropagationCapacityPresent,
+        ePropagationCapacity_ModelType,
+
+		eProtectionCapacityPresent,
+        eProtectionCapacity_MaxSize,
+        eProtectionCapacity_GeniePrepared,
+ 
+        eSupplyCapacityPresent,
+
+        eSupplyRouteCapacityPresent,
+
+		eTerrainHeuristicCapacityPresent,
+        eTerrainHeuristicCapacity_LocationScore,
+
+        eTimeLimitedCapacityPresent,
+
+		eWorkableCapacityPresent,
+        eWorkableCapacity_Size,
+
         eNbrGuiElements
     };
 

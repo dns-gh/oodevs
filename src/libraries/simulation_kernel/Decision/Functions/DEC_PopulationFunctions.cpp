@@ -18,8 +18,9 @@
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
-#include "Entities/Objects/MIL_RealObject_ABC.h"
-#include "Entities/Objects/MIL_RealObjectTypeFilter.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
@@ -220,25 +221,22 @@ void DEC_PopulationFunctions::GetObjectsInZone( DIA_Call_ABC& call, const MIL_Po
 {
     assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
 
-    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 1 );
-
+    
     const TER_Localisation* pZone = call.GetParameter( 0 ).ToUserPtr( pZone );
     assert( pZone );
 
     T_PopulationKnowledgeObjectDiaIDVector knowledges;
 
-    TER_Object_ABC::T_ObjectVector objects;
+    MIL_ObjectFilter                filter( call.GetParameters(), 1 );
+    TER_Object_ABC::T_ObjectVector  objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( *pZone, objects );
     for( TER_Object_ABC::CIT_ObjectVector it = objects.begin(); it != objects.end(); ++it )
     {
         MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
-        if( !object.IsReal() )
-            continue;
-        MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
-        if( !realObject.CanBePerceived() || !objectsFilter.Test( realObject.GetType() ) )
-            continue;
 
-        knowledges.push_back( (void*)realObject.GetID() );
+        if( !object().CanBePerceived() || !filter.Test( object.GetType() ) )
+            continue;
+        knowledges.push_back( (void*)object.GetID() );
     }
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
@@ -251,8 +249,8 @@ void DEC_PopulationFunctions::GetObjectsInZone( DIA_Call_ABC& call, const MIL_Po
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::GetKnowledgeObjectLocalisation( DIA_Call_ABC& call, const MIL_Population& /*callerPopulation*/ )
 {
-    const MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
-    if( !pObject || !pObject->CanBePerceived() )
+    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !( pObject && (*pObject)().CanBePerceived() ) )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
@@ -269,8 +267,8 @@ void DEC_PopulationFunctions::GetKnowledgeObjectLocalisation( DIA_Call_ABC& call
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::IsKnowledgeObjectValid( DIA_Call_ABC& call, const MIL_Population& /*callerPopulation*/ )
 {
-    const MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
-    if( !pObject || !pObject->CanBePerceived() )
+    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !( pObject && (*pObject)().CanBePerceived() ) )
         call.GetResult().SetValue( false );
     else
         call.GetResult().SetValue( true );
@@ -282,8 +280,8 @@ void DEC_PopulationFunctions::IsKnowledgeObjectValid( DIA_Call_ABC& call, const 
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::DamageObject( DIA_Call_ABC& call, const MIL_Population& /*callerPopulation*/ )
 {
-    MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
-    if( !pObject || !pObject->CanBePerceived() )
+    MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !( pObject && (*pObject)().CanBePerceived() ) )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
@@ -293,7 +291,7 @@ void DEC_PopulationFunctions::DamageObject( DIA_Call_ABC& call, const MIL_Popula
     call.GetParameter( 1 ).SetValue( eQueryValid );
 
     float rDamageFactor = call.GetParameter( 2 ).ToFloat();
-    pObject->Destroy( rDamageFactor );
+    (*pObject)().Destroy( rDamageFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,8 +300,8 @@ void DEC_PopulationFunctions::DamageObject( DIA_Call_ABC& call, const MIL_Popula
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::GetKnowledgeObjectDistance( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
 {
-    const MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
-    if( !pObject || !pObject->CanBePerceived() )
+    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !( pObject && (*pObject)().CanBePerceived() ) )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
@@ -320,8 +318,8 @@ void DEC_PopulationFunctions::GetKnowledgeObjectDistance( DIA_Call_ABC& call, co
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
 {
-    const MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
-    if( !pObject || !pObject->CanBePerceived() )
+    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !( pObject && (*pObject)().CanBePerceived() ) )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
@@ -339,8 +337,8 @@ void DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint( DIA_Call_ABC& call
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::IsEnemy( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
 {
-    const MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
-    if( !pObject || !pObject->CanBePerceived() )
+    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !( pObject && (*pObject)().CanBePerceived() ) )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );

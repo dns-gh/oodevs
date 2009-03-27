@@ -26,7 +26,7 @@ class DEC_KS_PopulationKnowledgeSynthetizer;
 class DEC_KS_Sharing;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_PopulationPerception;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_KnowledgeGroup

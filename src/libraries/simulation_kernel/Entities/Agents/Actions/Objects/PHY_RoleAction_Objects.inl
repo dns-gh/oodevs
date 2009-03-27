@@ -107,3 +107,12 @@ inline
 void PHY_RoleAction_Objects::BypassSuspended()
 {
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::ExtinguishSuspended
+// Created: RFT 28/05/2008
+// -----------------------------------------------------------------------------
+inline
+void PHY_RoleAction_Objects::ExtinguishSuspended()
+{
+}

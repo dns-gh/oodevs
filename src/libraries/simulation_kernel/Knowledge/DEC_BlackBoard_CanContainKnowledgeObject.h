@@ -17,7 +17,7 @@
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_Object;
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 class MIL_Army;
 
 // =============================================================================
@@ -46,18 +46,18 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_Object& CreateKnowledgeObject ( const MIL_Army& teamKnowing, MIL_RealObject_ABC& objectKnown );
+    DEC_Knowledge_Object& CreateKnowledgeObject ( const MIL_Army& teamKnowing, MIL_Object_ABC& objectKnown );
     void                  DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge );
 
-    void                  NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_RealObject_ABC& objectKnown, DEC_Knowledge_Object& knowledge );
+    void                  NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& knowledge );
     //@}
 
     //! @name Queries
     //@{
     DEC_Knowledge_Object* GetKnowledgeObjectFromID( uint nID ) const;
-    DEC_Knowledge_Object* GetKnowledgeObject      ( const MIL_RealObject_ABC& objectKnown ) const;
+    DEC_Knowledge_Object* GetKnowledgeObject      ( const MIL_Object_ABC& objectKnown ) const;
     void                  GetKnowledgesObject     ( T_KnowledgeObjectVector& outContainer ) const;
-    bool                  HasKnowledgeObject      ( const MIL_RealObject_ABC& objectKnown ) const;
+    bool                  HasKnowledgeObject      ( const MIL_Object_ABC& objectKnown ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesObject( UnaryFunction& fct ) const
@@ -74,9 +74,9 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_RealObject_ABC*, DEC_Knowledge_Object* > T_KnowledgeObjectMap;
-    typedef T_KnowledgeObjectMap::iterator                               IT_KnowledgeObjectMap;
-    typedef T_KnowledgeObjectMap::const_iterator                         CIT_KnowledgeObjectMap;
+    typedef std::map< const MIL_Object_ABC*, DEC_Knowledge_Object* >    T_KnowledgeObjectMap;
+    typedef T_KnowledgeObjectMap::iterator                              IT_KnowledgeObjectMap;
+    typedef T_KnowledgeObjectMap::const_iterator                        CIT_KnowledgeObjectMap;
     //@}
 
 private:
@@ -90,7 +90,7 @@ private:
 private:
     //! @name Member data
     //@{
-    T_KnowledgeObjectMap   realObjectMap_;
+    T_KnowledgeObjectMap   objectMap_;
     T_KnowledgeObjectIDMap knowledgeObjectFromIDMap_;
     //@}
 };

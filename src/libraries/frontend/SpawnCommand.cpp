@@ -91,7 +91,10 @@ void SpawnCommand::Start()
     if( !CreateProcessA( 0, commandLine_.local8Bit().data(),
                 0, 0, TRUE, CREATE_NEW_CONSOLE, 0,
                 ".", &startupInfo, &internal_->pid_) )
+    {
+        DWORD errCode = GetLastError();     
         throw std::runtime_error( "Could not start process" );
+    }
 }
 
 namespace

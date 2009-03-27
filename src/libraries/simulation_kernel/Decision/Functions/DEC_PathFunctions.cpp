@@ -20,7 +20,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_RealObjectTypeFilter.h"
+#include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -116,7 +116,7 @@ void DEC_PathFunctions::ExtrapolatePosition( DIA_Call_ABC& call, const MIL_Agent
 // -----------------------------------------------------------------------------
 void DEC_PathFunctions::GetNextObjectOnPath( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 2 );
+    MIL_ObjectFilter filter( call.GetParameters(), 2 );
 
     const DEC_Knowledge_Object* pObjectColliding   = 0;
           MT_Float              rDistanceCollision = 0.;
@@ -126,7 +126,7 @@ void DEC_PathFunctions::GetNextObjectOnPath( DIA_Call_ABC& call, const MIL_Agent
     const MT_Vector2D&           position     = roleLocation.GetPosition();
 
     T_KnowledgeObjectVector knowledges;
-    callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, objectsFilter );
+    callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
 
     if( knowledges.empty() || !callerAgent.GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, &pObjectColliding ) )
     {

@@ -14,7 +14,7 @@
 #include "PHY_RolePion_NBC.h"
 
 #include "Network/NET_ASN_Messages.h"
-#include "Entities/Objects/MIL_NbcAgent.h"
+#include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
@@ -33,6 +33,7 @@ PHY_RolePion_NBC::PHY_RolePion_NBC( MT_RoleContainer& role, MIL_AgentPion& pion 
     , bNbcProtectionSuitWorn_     ( false )
     , nbcAgentTypesContaminating_ ()
     , rContaminationState_        ( 0. )
+    , rContaminationQuantity_     ( 0. )
     , bHasChanged_                ( true )
 {
 }
@@ -117,31 +118,33 @@ void PHY_RolePion_NBC::serialize( Archive& file, const uint )
 // Name: PHY_RolePion_NBC::Poison
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
-void PHY_RolePion_NBC::Poison( const MIL_NbcAgent& nbcAgent )
+void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
 {
     if( bNbcProtectionSuitWorn_ )
         return;
 
-    GetRole< PHY_RolePion_Composantes >().ApplyPoisonous( nbcAgent );
+    GetRole< PHY_RolePion_Composantes >().ApplyPoisonous( contamination );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::Contaminate
 // Created: NLD 2004-04-30
 // -----------------------------------------------------------------------------
-void PHY_RolePion_NBC::Contaminate( const MIL_NbcAgent& nbcAgent )
+void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contamination )
 {
-    GetRole< PHY_RoleAction_Transport >().NotifyComposanteContaminated( nbcAgent );
-    GetRole< PHY_RolePion_Composantes >().ApplyContamination          ( nbcAgent );
+	if( contamination.GetQuantity() < 1e-15 ) // TODO
+		return;
+    
+    GetRole< PHY_RoleAction_Transport >().NotifyComposanteContaminated( contamination );
+    if( ! bNbcProtectionSuitWorn_ )
+        GetRole< PHY_RolePion_Composantes >().ApplyContamination( contamination );
 
-    if( nbcAgentTypesContaminating_.insert( &nbcAgent.GetType() ).second )
-        bHasChanged_ = true;
+    nbcAgentTypesContaminating_.insert( &contamination.GetType() );
+    
+    rContaminationQuantity_ += contamination.GetQuantity();
+    rContaminationState_ = 1.;
 
-    if( rContaminationState_ != 1. )
-    {
-        rContaminationState_ = 1.;
-        bHasChanged_         = true;
-    }    
+    bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -155,8 +158,9 @@ void PHY_RolePion_NBC::Decontaminate()
         assert( nbcAgentTypesContaminating_.empty() );
         return;
     }
-
+    
     rContaminationState_ = 0.;
+    rContaminationQuantity_ = 0.;
     bHasChanged_         = true;
     nbcAgentTypesContaminating_.clear();
 }
@@ -179,10 +183,12 @@ void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
 
     if( (uint)( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
         bHasChanged_ = true;
-
+    
     rContaminationState_ = rNewContaminationState;
+    rContaminationQuantity_ = std::max( 0., rContaminationQuantity_ * rContaminationState_ );
     if( rContaminationState_ == 0. )
     {
+        rContaminationQuantity_ = 0.;
         nbcAgentTypesContaminating_.clear();
         bHasChanged_ = true;
     }
@@ -236,7 +242,8 @@ void PHY_RolePion_NBC::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
     msg().en_tenue_de_protection_nbc          = bNbcProtectionSuitWorn_;
 
     msg().m.etat_contaminationPresent = 1;
-    msg().etat_contamination          = (uint)( rContaminationState_ * 100. );
+    msg().etat_contamination.percentage = (uint)( rContaminationState_ * 100. );
+    msg().etat_contamination.quantity = rContaminationQuantity_;
 }
 
 // -----------------------------------------------------------------------------

@@ -25,7 +25,7 @@ class PHY_PerceptionRecoLocalisation : public PHY_Perception_ABC
     MT_COPYNOTALLOWED( PHY_PerceptionRecoLocalisation )
 
 public:
-             PHY_PerceptionRecoLocalisation( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_PerceptionRecoLocalisation( PHY_RolePion_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoLocalisation();
 
     //! @name Add/Remove Points

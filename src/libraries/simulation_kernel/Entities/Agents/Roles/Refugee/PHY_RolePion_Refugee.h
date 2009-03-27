@@ -48,7 +48,7 @@ public:
     //@{
     virtual bool Orientate( const MIL_AgentPion& pionManaging );
     virtual bool Release  ();
-    virtual bool Release  ( const MIL_CampRefugies& camp );
+    virtual bool Release  ( const MIL_Object_ABC& camp );
 
             bool NotifyManaged  ();
             bool NotifyUnmanaged();
@@ -57,7 +57,7 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsManaged() const;
-    virtual bool IsManaged( const MIL_CampRefugies& camp ) const;
+    virtual bool IsManaged( const MIL_Object_ABC& camp ) const;
     //@}
 
     //! @name Network
@@ -69,7 +69,7 @@ public:
 private:
           MIL_AgentPion*    pPion_;
           bool              bManaged_;
-    const MIL_CampRefugies* pCamp_;
+    const MIL_Object_ABC*   pCamp_;
           bool              bHasChanged_;
 };
 

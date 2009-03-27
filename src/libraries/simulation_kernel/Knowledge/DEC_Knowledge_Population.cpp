@@ -328,7 +328,7 @@ const MIL_PopulationAttitude& DEC_Knowledge_Population::GetAttitude() const
 // Name: DEC_Knowledge_Agent::GetArmy
 // Created: HME 2005-12-29
 // -----------------------------------------------------------------------------
-const MIL_Army& DEC_Knowledge_Population::GetArmy() const
+const MIL_Army_ABC& DEC_Knowledge_Population::GetArmy() const
 {
     assert( pPopulationKnown_ );
     return pPopulationKnown_->GetArmy();

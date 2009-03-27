@@ -12,11 +12,9 @@
 #ifndef __PHY_ObjectExplosionFireResult_h_
 #define __PHY_ObjectExplosionFireResult_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 
-class MIL_RealObject_ABC;
+class MIL_Object_ABC;
 
 // =============================================================================
 // @class  PHY_ObjectExplosionFireResult
@@ -27,13 +25,15 @@ class PHY_ObjectExplosionFireResult : public PHY_FireResults_ABC
     MT_COPYNOTALLOWED( PHY_ObjectExplosionFireResult )
 
 public:
-    PHY_ObjectExplosionFireResult( const MIL_RealObject_ABC& object );
+    explicit PHY_ObjectExplosionFireResult( const MIL_Object_ABC& object );
     virtual ~PHY_ObjectExplosionFireResult();
 
-private:
-    const MIL_RealObject_ABC& object_;
-};
+    void    Hit();
+    uint    GetHits() const;
 
-#include "PHY_ObjectExplosionFireResult.inl"
+private:
+    const MIL_Object_ABC& object_;
+    uint  hits_;
+};
 
 #endif // __PHY_ObjectExplosionFireResult_h_

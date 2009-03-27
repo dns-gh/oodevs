@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentHLA.h"
 #include "MIL_AgentServer.h"
+#include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -68,7 +69,7 @@ MIL_AgentHLA::~MIL_AgentHLA()
 // Name: MIL_AgentHLA::GetArmy
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-MIL_Army& MIL_AgentHLA::GetArmy() const
+MIL_Army_ABC& MIL_AgentHLA::GetArmy() const
 {
     if( pArmy_ )
         return *pArmy_;

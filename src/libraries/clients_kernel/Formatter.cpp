@@ -128,7 +128,7 @@ void  Formatter< E_LogMaintenanceHandlingStatus >::operator()( const E_LogMainte
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void  Formatter< E_ObstacleType >::operator()( const E_ObstacleType& e, Displayer_ABC& displayer ) const {
+void  Formatter< E_DemolitionTargetType >::operator()( const E_DemolitionTargetType& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 

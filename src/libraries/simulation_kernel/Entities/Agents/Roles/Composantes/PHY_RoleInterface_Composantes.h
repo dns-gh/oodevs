@@ -23,7 +23,7 @@ class PHY_SensorTypeAgent;
 class PHY_Volume;
 class PHY_FireResults_ABC;
 class PHY_DotationCategory;
-class MIL_RealObjectType;
+class AttritionCapacity;
 class MIL_PopulationType;
 class MIL_PopulationAttitude;
 
@@ -73,7 +73,7 @@ public:
     virtual void ApplyPopulationFire        ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyDirectFire            ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result ) = 0;
-    virtual void ApplyExplosion             ( const MIL_RealObjectType& objectType        , PHY_FireResults_ABC& result ) = 0;
+    virtual void ApplyExplosion             ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result ) = 0;
     //@}
 };
 

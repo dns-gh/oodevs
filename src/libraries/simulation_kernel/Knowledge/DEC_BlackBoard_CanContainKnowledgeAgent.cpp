@@ -216,10 +216,10 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
                     detectedContainer_.push_back( &knowledge );
             }
 
-            else if( army.IsAFriend( knowledge ) == eTristate_True )
+            else if( knowledge.IsAFriend( army ) == eTristate_True )
                 friendsContainer_.push_back( &knowledge );
             
-            else if( army.IsAnEnemy( knowledge ) == eTristate_True )
+            else if( knowledge.IsAnEnemy( army ) == eTristate_True )
                 enemiesContainer_.push_back( &knowledge );
 
             if( knowledge.IsMilitia() )

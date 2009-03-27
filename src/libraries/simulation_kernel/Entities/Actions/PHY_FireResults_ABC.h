@@ -44,6 +44,11 @@ public:
     void DecRef();
     //@}
 
+    //! @name Refs
+    //@{
+    virtual void Hit();
+    //@}
+
 protected:
     //! @name Types
     //@{

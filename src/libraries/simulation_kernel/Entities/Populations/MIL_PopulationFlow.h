@@ -29,7 +29,6 @@ class MIL_Population;
 class MIL_PopulationConcentration;
 class MIL_PopulationAttitude;
 class DEC_Population_Path;
-class MIL_RealObjectType;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -174,7 +173,7 @@ private:
     bool bSpeedUpdated_;
 
     // Split
-    const MIL_RealObject_ABC* pSplittingObject_;
+    const MIL_Object_ABC* pSplittingObject_;
 };
 
 #include "MIL_PopulationFlow.inl"
