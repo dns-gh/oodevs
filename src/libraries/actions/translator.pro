@@ -18,8 +18,6 @@ ObjectKnowledge.cpp \
 ObjectKnowledgeList.cpp \
 Objective.cpp \
 ObjectiveList.cpp \
-Obstacle.cpp \
-ObstacleList.cpp \
 Parameter.inl \
 Parameter_ABC.cpp \
 Path.cpp \

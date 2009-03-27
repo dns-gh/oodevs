@@ -2,18 +2,21 @@ HEADERS =
 
 SOURCES = ActionFactory.cpp \
 ActionParameterFactory.cpp \
+ActivityTimeAttribute.cpp \
 Agent.cpp \
 AgentKnowledge.cpp \
 Attributes.cpp \
 Automat.cpp \
 AutomatDecisions.cpp \
 AutomatHierarchies.cpp \
-CampAttributes.cpp \
+BypassAttribute.cpp \
+ConstructionAttribute.cpp \
 Contaminations.cpp \
-CrossingSiteAttributes.cpp \
+CrossingSiteAttribute.cpp \
 Decisions.cpp \
 Dotations.cpp \
 Equipments.cpp \
+FireAttribute.cpp \
 Formation.cpp \
 HumanFactors.cpp \
 Intelligence.cpp \
@@ -23,15 +26,17 @@ Limit.cpp \
 LogMaintenanceConsign.cpp \
 LogMedicalConsign.cpp \
 LogSupplyConsign.cpp \
+LogisticAttribute.cpp \
 LogisticLinks.cpp \
-LogisticRouteAttributes.cpp \
 MaintenanceStates.cpp \
 MedicalStates.cpp \
-MineAttributes.cpp \
-NBCAttributes.cpp \
+MedicalTreatmentAttribute.cpp \
+MineAttribute.cpp \
+NBCAttribute.cpp \
 Network.cpp \
 Object.cpp \
 ObjectKnowledge.cpp \
+ObstacleAttribute.cpp \
 Population.cpp \
 PopulationConcentrationKnowledge.cpp \
 PopulationFlowKnowledge.cpp \
@@ -39,7 +44,7 @@ PopulationKnowledge.cpp \
 Reinforcements.cpp \
 Report.cpp \
 ReportFactory.cpp \
-RotaAttributes.cpp \
+SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 Team.cpp \
 Tools.cpp \

@@ -1,9 +1,11 @@
 HEADERS = 
 
 SOURCES = AboutDialog.cpp \
+ActivityTimePrototype_ABC.cpp \
 AutomatsLayer.cpp \
 BaseDisplayer.cpp \
-CampPrototype_ABC.cpp \
+BypassPrototype_ABC.cpp \
+ConstructionPrototype_ABC.cpp \
 CrossingSitePrototype_ABC.cpp \
 DiplomacyDialog_ABC.cpp \
 DisplayToolbar.cpp \
@@ -12,19 +14,22 @@ DrawerPanel.cpp \
 EditorFactory.cpp \
 ElevationExtrema.cpp \
 ElevationPanel.cpp \
+FirePrototype_ABC.cpp \
 FixedLightWidget.cpp \
 GradientWidget.cpp \
 GraphicPreferences.cpp \
 HelpSystem.cpp \
 HierarchyListView_ABC.cpp \
 HighlightColorModifier.cpp \
+InputPropagationPrototype_ABC.cpp \
 IntelligencesPanel.cpp \
 LayersPanel.cpp \
 LightingPanel.cpp \
 LocationCreator.cpp \
 LocationEditorToolbar.cpp \
 Logger.cpp \
-LogisticRoutePrototype_ABC.cpp \
+LogisticPrototype_ABC.cpp \
+MedicalTreatmentPrototype_ABC.cpp \
 MetricsLayer.cpp \
 MinePrototype_ABC.cpp \
 MiniViews.cpp \
@@ -32,15 +37,17 @@ NBCPrototype_ABC.cpp \
 NatureEditionCategory.cpp \
 ObjectListView.cpp \
 ObjectPanel.cpp \
+ObjectPreviewIcon.cpp \
 ObjectPrototype_ABC.cpp \
+ObstaclePrototype_ABC.cpp \
 OptionsPanel.cpp \
 PopulationListView.cpp \
 PopulationPanel.cpp \
 PreferencesDialog.cpp \
 PreferencesList.cpp \
 PropertiesPanel.cpp \
-RotaPrototype_ABC.cpp \
 StatusBar.cpp \
+SupplyRoutePrototype_ABC.cpp \
 TacticalLinesLayer.cpp \
 TerrainPreference.cpp \
 UnitListView.cpp \
