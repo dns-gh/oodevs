@@ -13,22 +13,62 @@
 #include "messenger_plugin/MessengerPlugin.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "dispatcher/DefaultProfile.h"
+#include "tools/ClientNetworker.h"
+#include "game_asn/Authentication.h"
 
 using namespace plugins;
 using namespace plugins::crossbow;
+
+namespace
+{
+	class DummyClientNetworker : public tools::ClientNetworker
+							   , public Publisher_ABC
+	{
+	public:
+		DummyClientNetworker()
+			: defaultProfile_( new dispatcher::DefaultProfile() )
+		{}
+		virtual ~DummyClientNetworker() {}
+
+		virtual void Send( const ASN1T_MsgsClientToSim& message ) {}
+		virtual void Send( const ASN1T_MsgsClientToAuthentication& message )
+		{
+			MessageSender_ABC::Send( endpoint_, message );
+		}
+		virtual void Send( const ASN1T_MsgsClientToReplay& message ) {}
+		virtual void Send( const ASN1T_MsgsClientToAar& message ) {}
+		virtual void Send( const ASN1T_MsgsClientToMessenger& message ) {}
+
+	protected:
+		virtual void ConnectionSucceeded( const std::string& endpoint )
+		{
+			ClientNetworker::ConnectionSucceeded( endpoint );
+			endpoint_ = endpoint;
+			authentication::AuthenticationRequest message;
+			message().login    = defaultProfile_->GetName().c_str();
+			message().password = "";
+			message.Send( *this );
+			std::cout << "Dummy::ConnectionSucceeded " << endpoint << std::endl;
+		}
+
+	private:
+		std::string endpoint_;
+		std::auto_ptr< dispatcher::Profile_ABC > defaultProfile_;
+	};
+}
 
 // -----------------------------------------------------------------------------
 // Name: CrossbowPlugin constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
 CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, 
-                                dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& client, 
+                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client, 
                                 dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables )
     : databasePublisher_( new DatabasePublisher( config, model, publisher, xis ) )
-    , messenger_        ( new messenger::MessengerPlugin( *this, client, links, config, registrables ) )
+	, clientNetworker_  ( new DummyClientNetworker() )
 {
-    dispatcher::DefaultProfile defaultProfile;
-    messenger_->NotifyClientAuthenticated( *this, defaultProfile );
+	std::cout << "CrossbowPlugin::CrossbowPlugin" << std::endl;
+	//clientNetworker_->Connect( "localhost:10001", false );
 }
     
 // -----------------------------------------------------------------------------
@@ -38,6 +78,20 @@ CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream&
 CrossbowPlugin::~CrossbowPlugin()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrossbowPlugin::Update
+// Created: JCR 2009-03-28
+// -----------------------------------------------------------------------------
+void CrossbowPlugin::Update()
+{
+    static bool connect = false;
+    if ( !connect )
+    {
+        clientNetworker_->Connect( "localhost:10001", false );
+        connect = true;
+    }
 }
 
 // -----------------------------------------------------------------------------

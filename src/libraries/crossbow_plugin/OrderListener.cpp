@@ -71,7 +71,7 @@ void OrderListener::Listen()
             dispatcher_->Dispatch( publisher_, *row );
             MarkProcessed( *row );            
             row = validation_.GetNextRow();
-        }        
+        }
     }
 }
 

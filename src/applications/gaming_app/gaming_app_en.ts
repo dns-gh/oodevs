@@ -1577,6 +1577,13 @@
     </message>
 </context>
 <context>
+    <name>Object</name>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Create</source>
@@ -1662,22 +1669,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NBC cloud/zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC agent:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NBC agent(s):</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1731,6 +1722,14 @@
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1844,22 +1843,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NBC cloud/zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC agent:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NBC agent(s):</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1901,6 +1884,38 @@
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent state:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of doctors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available doctors:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2048,11 +2063,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
+        <source>Obstacle type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Obstacle type</source>
+        <source>Demolition target type:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

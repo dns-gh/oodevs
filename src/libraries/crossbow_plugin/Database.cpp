@@ -16,39 +16,14 @@
 using namespace plugins;
 using namespace plugins::crossbow;
 
-namespace 
-{
-    IWorkspaceFactoryPtr GetWorkspaceFactory( const std::string& geodatabase )
-    {
-        IWorkspaceFactoryPtr spWorkspaceFactory;
-
-        std::string extension( geodatabase, geodatabase.rfind( '.' ) + 1 );
-        if ( extension == "mdb" )
-            spWorkspaceFactory.CreateInstance( CLSID_AccessWorkspaceFactory );
-        if ( extension == "gdb" )
-            spWorkspaceFactory.CreateInstance( CLSID_FileGDBWorkspaceFactory );
-        return spWorkspaceFactory;
-    }
-}
 
 // -----------------------------------------------------------------------------
-// Name: Database constructor
-// Created: SBO 2007-08-30
+// Name: Database::Database::Database
+// Created: JCR 2009-02-03
 // -----------------------------------------------------------------------------
-Database::Database( const dispatcher::Config& config, const std::string& name )
+Database::Database()
 {
-    const std::string geodatabase = config.BuildExerciseChildFile( name );
-
-    IWorkspaceFactoryPtr spWorkspaceFactory = GetWorkspaceFactory( geodatabase );
-    if( spWorkspaceFactory == NULL )
-        throw std::runtime_error( "Unable to create Access workspace factory." );
-    IWorkspacePtr workspace;
-    if( FAILED( spWorkspaceFactory->OpenFromFile( CComBSTR( geodatabase.c_str() ), NULL, &workspace ) ) || workspace == NULL )
-        throw std::runtime_error( "Unable to connect to geodatabase: " + geodatabase );
-    if( FAILED( workspace->QueryInterface( IID_IFeatureWorkspace, (LPVOID*)&workspace_ ) ) || workspace_ == NULL )
-        throw std::runtime_error( "Cannot retrieve IFeatureWorkspace interface." );
-    if( FAILED( workspace->QueryInterface( IID_IWorkspaceEdit, (LPVOID*)&workspaceEdit_ ) ) || workspaceEdit_ == NULL )
-        throw std::runtime_error( "Cannot retrieve IWorkspaceEdit interface." );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,6 +38,18 @@ Database::~Database()
         StopEdit();
         UnLock();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Database::BuildWorkspace
+// Created: JCR 2009-02-03
+// -----------------------------------------------------------------------------
+void Database::Initialize( IWorkspacePtr spWorkspace )
+{
+    if( FAILED( spWorkspace->QueryInterface( IID_IFeatureWorkspace, (LPVOID*)&workspace_ ) ) || workspace_ == NULL )
+        throw std::runtime_error( "Cannot retrieve IFeatureWorkspace interface." );    
+    if( FAILED( spWorkspace->QueryInterface( IID_IWorkspaceEdit, (LPVOID*)&workspaceEdit_ ) ) || workspaceEdit_ == NULL )
+        throw std::runtime_error( "Cannot retrieve IWorkspaceEdit interface." );
 }
 
 // -----------------------------------------------------------------------------

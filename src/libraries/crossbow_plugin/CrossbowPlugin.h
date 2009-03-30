@@ -31,6 +31,7 @@ namespace dispatcher
 namespace tools
 {
     class MessageDispatcher_ABC;
+	class ClientNetworker;
 }
 
 namespace plugins
@@ -52,7 +53,7 @@ class CrossbowPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{             
-             CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables );
+             CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables );
     virtual ~CrossbowPlugin();
     //@}
 
@@ -60,7 +61,7 @@ public:
     //@{    
     virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
     virtual void Send   ( const ASN1T_MsgsMessengerToClient& msg ); 
-
+    virtual void Update();
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     //@}
@@ -76,7 +77,8 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< DatabasePublisher > databasePublisher_;
-    std::auto_ptr< dispatcher::Plugin_ABC > messenger_;
+	std::auto_ptr< tools::ClientNetworker > clientNetworker_;
+	std::auto_ptr< dispatcher::Plugin_ABC > messenger_;
     //@}
 };
 

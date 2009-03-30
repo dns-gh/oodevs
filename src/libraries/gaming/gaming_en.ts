@@ -358,6 +358,21 @@
     </message>
 </context>
 <context>
+    <name>Fire</name>
+    <message>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire class:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire temperature:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Formation</name>
     <message>
         <source>Info/Identifier</source>
@@ -661,6 +676,37 @@
     </message>
 </context>
 <context>
+    <name>MedicalTreatment</name>
+    <message>
+        <source>Medical Treatment services</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of doctors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available doctors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NBC</name>
     <message>
         <source>NBC/NBC suit</source>
@@ -699,19 +745,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NBC cloud/zone</source>
+        <source>NBC/Contamination quantity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NBC agent:</source>
+        <source>Contamination quantity:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
+        <source>Danger:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -745,66 +787,6 @@
 <context>
     <name>Object</name>
     <message>
-        <source>Camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crossing site</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Depth:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stream speed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Build river banks:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic route</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipped:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flow:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maximum weight:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mine parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activity time:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Density:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -822,34 +804,6 @@
     </message>
     <message>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mining:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bypass:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction dotation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Development dotation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -874,6 +828,86 @@
     </message>
     <message>
         <source>Unknown object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bypass:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossing site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Depth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stream speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build river banks:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mining:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Development dotation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipped:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flow:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum weight:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

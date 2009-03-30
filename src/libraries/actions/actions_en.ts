@@ -123,22 +123,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Obstacle type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Obstacle %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Destination</source>
         <translation type="unfinished"></translation>
     </message>

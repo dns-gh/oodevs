@@ -958,7 +958,7 @@
     </message>
     <message>
         <source>barricade</source>
-        <translation type="unfinished">barricade</translation>
+        <translation type="obsolete">barricade</translation>
     </message>
     <message>
         <source>eboulement</source>
@@ -1757,18 +1757,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>fire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>emergency shelter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>initial</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>reserved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2265,158 +2253,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>mines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mined area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mined area (scattered)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>anti tank obstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>abatis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>collapse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>road destruction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bridge destruction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>engineer bridge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>firing post</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>protected area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>gun artillery deployment area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>counter battery radar deployment area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mlrs deployment area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>crossing site</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC cloud</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FARP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>decontamination site</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>jamming area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROTA zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>jamming area (type 2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>landing area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>slope</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>platform</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mobility enhanced area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>landing area (helicopters)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logistics support area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logistics support route</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>prisoners camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>refugees camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>checkpoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dropping zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>keep out zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fire forbidden zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mortar deployment area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>engineer bridge (type2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>facility</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>event</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2442,6 +2278,10 @@
     </message>
     <message>
         <source>fuel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>preliminary</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

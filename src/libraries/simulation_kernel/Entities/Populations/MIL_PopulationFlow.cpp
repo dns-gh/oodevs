@@ -240,11 +240,11 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
     if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &object )
         return;
 
-    const float density = object.GetAttribute< PopulationAttribute >().GetDensity();
-    if( density == std::numeric_limits< MT_Float >::max() )
+    const PopulationAttribute* attr = object.RetrieveAttribute< PopulationAttribute >();
+    if ( !attr || attr->GetDensity() == std::numeric_limits< MT_Float >::max() )
         return;
-
-    if( !pSplittingObject_ || density < pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity() )
+    
+    if( !pSplittingObject_ || attr->GetDensity() < pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity() )
         pSplittingObject_ = &object;
 }
 
@@ -266,7 +266,8 @@ MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*env
     if( !CanObjectInteractWith( object ) )
         return GetMaxSpeed();
     
-    if( object.GetAttribute< PopulationAttribute >().GetDensity() == std::numeric_limits< MT_Float >::max() )
+    const PopulationAttribute* attr = (const_cast< MIL_Object_ABC* >( &object ))->RetrieveAttribute< PopulationAttribute >();
+    if( !attr || attr->GetDensity() == std::numeric_limits< MT_Float >::max() )
         return GetMaxSpeed();
 
     if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &object )

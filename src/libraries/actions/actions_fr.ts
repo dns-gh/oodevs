@@ -129,19 +129,19 @@
     </message>
     <message>
         <source>Obstacle type</source>
-        <translation>Type d&apos;obstacle</translation>
+        <translation type="obsolete">Type d&apos;obstacle</translation>
     </message>
     <message>
         <source>TC2</source>
-        <translation>TC2</translation>
+        <translation type="obsolete">TC2</translation>
     </message>
     <message>
         <source>Density</source>
-        <translation>Densité</translation>
+        <translation type="obsolete">Densité</translation>
     </message>
     <message>
         <source>Obstacle %1</source>
-        <translation>Obstacle %1</translation>
+        <translation type="obsolete">Obstacle %1</translation>
     </message>
     <message>
         <source>Destination</source>

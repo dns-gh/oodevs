@@ -1,5 +1,16 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>ActivityTimePrototype_ABC</name>
+    <message>
+        <source>Activity time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Application</name>
     <message>
         <source>SWORD Officer Training</source>
@@ -15,6 +26,20 @@
     </message>
     <message>
         <source>images/gui/splash_swordot.jpg</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BypassPrototype_ABC</name>
+    <message>
+        <source>Bypass parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConstructionPrototype_ABC</name>
+    <message>
+        <source>Construction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -90,6 +115,17 @@
     </message>
 </context>
 <context>
+    <name>FirePrototype_ABC</name>
+    <message>
+        <source>Fire parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire Class:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GraphicPreferences</name>
     <message>
         <source>Colors</source>
@@ -111,6 +147,37 @@
     </message>
     <message>
         <source>Remove highlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InputPropagationPrototype_ABC</name>
+    <message>
+        <source>Propagation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC Agent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lookup data:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send data:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Propagation (propagation.xml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -152,29 +219,29 @@
     </message>
 </context>
 <context>
-    <name>LogisticRoutePrototype_ABC</name>
+    <name>MedicalTreatmentPrototype_ABC</name>
     <message>
-        <source>Logistic route</source>
+        <source>MedicalTreatment parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Flow:</source>
+        <source>MedicalTreatment Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Width:</source>
+        <source>Beds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Length:</source>
+        <source>Initial available beds:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Maximum weight:</source>
+        <source>Doctors:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Equipped:</source>
+        <source>Initial available doctors:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -182,10 +249,6 @@
     <name>MinePrototype_ABC</name>
     <message>
         <source>Mine parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activity time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -200,7 +263,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NBC Agent:</source>
+        <source>NBC agent(s):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent state:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -208,6 +279,21 @@
     <name>ObjectPanel</name>
     <message>
         <source>Object state</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ObstaclePrototype_ABC</name>
+    <message>
+        <source>Obstacle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -269,28 +355,36 @@
     </message>
 </context>
 <context>
-    <name>RotaPrototype_ABC</name>
+    <name>R&#xe8;gle GL</name>
     <message>
-        <source>ROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC agents:</source>
+        <source> %1m</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>R&#xe8;gle GL</name>
+    <name>SupplyRoutePrototype_ABC</name>
     <message>
-        <source> %1m</source>
+        <source>Logistic route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flow:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum weight:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipped:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -376,21 +470,6 @@
     </message>
     <message>
         <source>Disaggregate</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::CampPrototype_ABC</name>
-    <message>
-        <source>Camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camp&apos;s TC2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -679,6 +758,21 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
+    <name>gui::LogisticPrototype_ABC</name>
+    <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Camp&apos;s TC2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::MiniViews</name>
     <message>
         <source>Miniviews</source>
@@ -726,14 +820,6 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Location:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -743,6 +829,10 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>New object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attributes</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

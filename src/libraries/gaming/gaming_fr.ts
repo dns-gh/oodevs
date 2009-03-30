@@ -625,6 +625,21 @@
     </message>
 </context>
 <context>
+    <name>Fire</name>
+    <message>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire class:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire temperature:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Formation</name>
     <message>
         <source>Info/Identifier</source>
@@ -928,6 +943,37 @@
     </message>
 </context>
 <context>
+    <name>MedicalTreatment</name>
+    <message>
+        <source>Medical Treatment services</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of doctors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available doctors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NBC</name>
     <message>
         <source>NBC</source>
@@ -935,7 +981,7 @@
     </message>
     <message>
         <source>ROTA</source>
-        <translation>ROTA</translation>
+        <translation type="obsolete">ROTA</translation>
     </message>
     <message>
         <source>NBC/Contaminating agents</source>
@@ -967,23 +1013,35 @@
     </message>
     <message>
         <source>NBC agent:</source>
-        <translation>Agent NBC:</translation>
+        <translation type="obsolete">Agent NBC:</translation>
     </message>
     <message>
         <source>Danger level:</source>
-        <translation>Niveau de danger:</translation>
+        <translation type="obsolete">Niveau de danger:</translation>
     </message>
     <message>
         <source>NBC agent(s):</source>
-        <translation>Agent(s) NBC:</translation>
+        <translation type="unfinished">Agent(s) NBC:</translation>
     </message>
     <message>
         <source>NBC cloud/zone</source>
-        <translation>Nuage/zone NBC</translation>
+        <translation type="obsolete">Nuage/zone NBC</translation>
     </message>
     <message>
         <source>NBC/NBC suit</source>
         <translation>NBC/Combinaison NBC</translation>
+    </message>
+    <message>
+        <source>NBC/Contamination quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contamination quantity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1013,7 +1071,7 @@
     <name>Object</name>
     <message>
         <source>TC2:</source>
-        <translation>TC2:</translation>
+        <translation type="unfinished">TC2:</translation>
     </message>
     <message>
         <source>Type:</source>
@@ -1021,47 +1079,47 @@
     </message>
     <message>
         <source>Construction:</source>
-        <translation>Construction:</translation>
+        <translation type="unfinished">Construction:</translation>
     </message>
     <message>
         <source>Crossing site</source>
-        <translation>Site de franchissement</translation>
+        <translation type="unfinished">Site de franchissement</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Largeur:</translation>
+        <translation type="unfinished">Largeur:</translation>
     </message>
     <message>
         <source>Depth:</source>
-        <translation>Profondeur:</translation>
+        <translation type="unfinished">Profondeur:</translation>
     </message>
     <message>
         <source>Stream speed:</source>
-        <translation>Débit du courant:</translation>
+        <translation type="unfinished">Débit du courant:</translation>
     </message>
     <message>
         <source>Build river banks:</source>
-        <translation>Aménagement des rives:</translation>
+        <translation type="unfinished">Aménagement des rives:</translation>
     </message>
     <message>
         <source>Logistic route</source>
-        <translation>Itinéraire logistique</translation>
+        <translation type="obsolete">Itinéraire logistique</translation>
     </message>
     <message>
         <source>Equipped:</source>
-        <translation>Equipé:</translation>
+        <translation type="unfinished">Equipé:</translation>
     </message>
     <message>
         <source>Flow:</source>
-        <translation>Débit:</translation>
+        <translation type="unfinished">Débit:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Longueur:</translation>
+        <translation type="unfinished">Longueur:</translation>
     </message>
     <message>
         <source>Maximum weight:</source>
-        <translation>Poids maximum:</translation>
+        <translation type="unfinished">Poids maximum:</translation>
     </message>
     <message>
         <source>Information</source>
@@ -1081,11 +1139,11 @@
     </message>
     <message>
         <source>Bypass:</source>
-        <translation>Contournement:</translation>
+        <translation type="unfinished">Contournement:</translation>
     </message>
     <message>
         <source>Development dotation:</source>
-        <translation>Dotation de valorisation:</translation>
+        <translation type="unfinished">Dotation de valorisation:</translation>
     </message>
     <message>
         <source>Details</source>
@@ -1113,35 +1171,39 @@
     </message>
     <message>
         <source>Camp</source>
-        <translation>Camp</translation>
+        <translation type="unfinished">Camp</translation>
     </message>
     <message>
         <source>Construction dotation:</source>
-        <translation>Dotation de construction:</translation>
+        <translation type="obsolete">Dotation de construction:</translation>
     </message>
     <message>
         <source>Mine parameters</source>
-        <translation>Paramètres des mines</translation>
+        <translation type="unfinished">Paramètres des mines</translation>
     </message>
     <message>
         <source>Activity time:</source>
-        <translation>Temps d&apos;activité:</translation>
+        <translation type="unfinished">Temps d&apos;activité:</translation>
     </message>
     <message>
         <source>Density:</source>
-        <translation>Densité:</translation>
+        <translation type="obsolete">Densité:</translation>
     </message>
     <message>
         <source>Mining:</source>
-        <translation>Valorisation:</translation>
+        <translation type="unfinished">Valorisation:</translation>
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation>Type d&apos;obstacle:</translation>
+        <translation type="unfinished">Type d&apos;obstacle:</translation>
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
-        <translation>Obstacle de manoeuvre activé:</translation>
+        <translation type="unfinished">Obstacle de manoeuvre activé:</translation>
+    </message>
+    <message>
+        <source>Supply route</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

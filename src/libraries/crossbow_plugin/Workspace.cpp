@@ -20,7 +20,7 @@ crossbow::Workspace::Workspace()
 {
     // #if _ARCGIS_VERSION_ >= 9.2  // $$$$ JCR 2007-06-14: do not use license checking on arcgis version lower than 9.2
     ::CoInitialize( NULL );
-    InitializeLicence( esriLicenseProductCodeArcInfo );
+    InitializeLicence( esriLicenseProductCodeEngine );
 }
 
 // -----------------------------------------------------------------------------

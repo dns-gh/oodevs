@@ -1740,6 +1740,13 @@
     </message>
 </context>
 <context>
+    <name>Object</name>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation type="unfinished">Obstacle de manoeuvre activé:</translation>
+    </message>
+</context>
+<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
@@ -1842,19 +1849,19 @@
     </message>
     <message>
         <source>NBC cloud/zone</source>
-        <translation>Nuage/zone NBC</translation>
+        <translation type="obsolete">Nuage/zone NBC</translation>
     </message>
     <message>
         <source>NBC agent:</source>
-        <translation>Agent NBC:</translation>
+        <translation type="obsolete">Agent NBC:</translation>
     </message>
     <message>
         <source>ROTA</source>
-        <translation>ROTA</translation>
+        <translation type="obsolete">ROTA</translation>
     </message>
     <message>
         <source>Danger level:</source>
-        <translation>Niveau de danger:</translation>
+        <translation type="obsolete">Niveau de danger:</translation>
     </message>
     <message>
         <source>NBC agent(s):</source>
@@ -1895,6 +1902,14 @@
     <message>
         <source>Agent</source>
         <translation>Agent</translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2008,19 +2023,19 @@
     </message>
     <message>
         <source>NBC cloud/zone</source>
-        <translation>Nuage/zone NBC</translation>
+        <translation type="obsolete">Nuage/zone NBC</translation>
     </message>
     <message>
         <source>NBC agent:</source>
-        <translation>Agent NBC:</translation>
+        <translation type="obsolete">Agent NBC:</translation>
     </message>
     <message>
         <source>ROTA</source>
-        <translation>ROTA</translation>
+        <translation type="obsolete">ROTA</translation>
     </message>
     <message>
         <source>Danger level:</source>
-        <translation>Niveau de danger:</translation>
+        <translation type="obsolete">Niveau de danger:</translation>
     </message>
     <message>
         <source>NBC agent(s):</source>
@@ -2065,6 +2080,38 @@
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent state:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of doctors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available doctors:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2211,7 +2258,7 @@
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation>Type d&apos;obstacle:</translation>
+        <translation type="obsolete">Type d&apos;obstacle:</translation>
     </message>
     <message>
         <source>Density</source>
@@ -2228,6 +2275,10 @@
     <message>
         <source>Obstacle type</source>
         <translation>Type d&apos;obstacle</translation>
+    </message>
+    <message>
+        <source>Demolition target type:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

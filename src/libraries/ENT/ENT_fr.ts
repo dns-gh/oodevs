@@ -2315,7 +2315,7 @@
     </message>
     <message>
         <source>barricade</source>
-        <translation>barricade</translation>
+        <translation type="obsolete">barricade</translation>
     </message>
     <message>
         <source>eboulement</source>
@@ -2451,15 +2451,15 @@
     </message>
     <message>
         <source>fire</source>
-        <translation>feu</translation>
+        <translation type="obsolete">feu</translation>
     </message>
     <message>
         <source>emergency shelter</source>
-        <translation>abris d&apos;urgence</translation>
+        <translation type="obsolete">abris d&apos;urgence</translation>
     </message>
     <message>
         <source>initial</source>
-        <translation>préliminaire</translation>
+        <translation type="obsolete">préliminaire</translation>
     </message>
     <message>
         <source>reserved</source>
@@ -3011,155 +3011,155 @@
     </message>
     <message>
         <source>mines</source>
-        <translation>mines</translation>
+        <translation type="obsolete">mines</translation>
     </message>
     <message>
         <source>mined area</source>
-        <translation>zone minée</translation>
+        <translation type="obsolete">zone minée</translation>
     </message>
     <message>
         <source>mined area (scattered)</source>
-        <translation>zone minée (dispersion)</translation>
+        <translation type="obsolete">zone minée (dispersion)</translation>
     </message>
     <message>
         <source>anti tank obstacle</source>
-        <translation>obstacle anti-char</translation>
+        <translation type="obsolete">obstacle anti-char</translation>
     </message>
     <message>
         <source>abatis</source>
-        <translation>abattis</translation>
+        <translation type="obsolete">abattis</translation>
     </message>
     <message>
         <source>collapse</source>
-        <translation>éboulement</translation>
+        <translation type="obsolete">éboulement</translation>
     </message>
     <message>
         <source>road destruction</source>
-        <translation>destruction de route</translation>
+        <translation type="obsolete">destruction de route</translation>
     </message>
     <message>
         <source>bridge destruction</source>
-        <translation>destruction de pont</translation>
+        <translation type="obsolete">destruction de pont</translation>
     </message>
     <message>
         <source>engineer bridge</source>
-        <translation>pont du génie</translation>
+        <translation type="obsolete">pont du génie</translation>
     </message>
     <message>
         <source>firing post</source>
-        <translation>poste de tir</translation>
+        <translation type="obsolete">poste de tir</translation>
     </message>
     <message>
         <source>protected area</source>
-        <translation>zone protégée</translation>
+        <translation type="obsolete">zone protégée</translation>
     </message>
     <message>
         <source>gun artillery deployment area</source>
-        <translation>zone d&apos;implantation artillery</translation>
+        <translation type="obsolete">zone d&apos;implantation artillery</translation>
     </message>
     <message>
         <source>counter battery radar deployment area</source>
-        <translation>zone d&apos;implantation radar contre-batterie</translation>
+        <translation type="obsolete">zone d&apos;implantation radar contre-batterie</translation>
     </message>
     <message>
         <source>mlrs deployment area</source>
-        <translation>zone d&apos;implantation LRM</translation>
+        <translation type="obsolete">zone d&apos;implantation LRM</translation>
     </message>
     <message>
         <source>crossing site</source>
-        <translation>site de franchissement</translation>
+        <translation type="obsolete">site de franchissement</translation>
     </message>
     <message>
         <source>NBC cloud</source>
-        <translation>nuage NBC</translation>
+        <translation type="obsolete">nuage NBC</translation>
     </message>
     <message>
         <source>FARP</source>
-        <translation>point de ravitaillement</translation>
+        <translation type="obsolete">point de ravitaillement</translation>
     </message>
     <message>
         <source>decontamination site</source>
-        <translation>site de décontamination</translation>
+        <translation type="obsolete">site de décontamination</translation>
     </message>
     <message>
         <source>jamming area</source>
-        <translation>zone de brouillage</translation>
+        <translation type="obsolete">zone de brouillage</translation>
     </message>
     <message>
         <source>ROTA zone</source>
-        <translation>zone ROTA</translation>
+        <translation type="obsolete">zone ROTA</translation>
     </message>
     <message>
         <source>NBC zone</source>
-        <translation>zone NBC</translation>
+        <translation type="obsolete">zone NBC</translation>
     </message>
     <message>
         <source>jamming area (type 2)</source>
-        <translation>zone de brouillage (type 2)</translation>
+        <translation type="obsolete">zone de brouillage (type 2)</translation>
     </message>
     <message>
         <source>landing area</source>
-        <translation>zone d&apos;atterrissage</translation>
+        <translation type="obsolete">zone d&apos;atterrissage</translation>
     </message>
     <message>
         <source>slope</source>
-        <translation>pente</translation>
+        <translation type="obsolete">pente</translation>
     </message>
     <message>
         <source>platform</source>
-        <translation>plateforme</translation>
+        <translation type="obsolete">plateforme</translation>
     </message>
     <message>
         <source>mobility enhanced area</source>
-        <translation>zone de mobilité améliorée</translation>
+        <translation type="obsolete">zone de mobilité améliorée</translation>
     </message>
     <message>
         <source>landing area (helicopters)</source>
-        <translation>zone d&apos;atterrissage (hélicoptères)</translation>
+        <translation type="obsolete">zone d&apos;atterrissage (hélicoptères)</translation>
     </message>
     <message>
         <source>logistics support area</source>
-        <translation>zone d&apos;appui logistique</translation>
+        <translation type="obsolete">zone d&apos;appui logistique</translation>
     </message>
     <message>
         <source>logistics support route</source>
-        <translation>itinéraire d&apos;appui logistique</translation>
+        <translation type="obsolete">itinéraire d&apos;appui logistique</translation>
     </message>
     <message>
         <source>prisoners camp</source>
-        <translation>camp de prisonniers</translation>
+        <translation type="obsolete">camp de prisonniers</translation>
     </message>
     <message>
         <source>refugees camp</source>
-        <translation>camp de réfugiés</translation>
+        <translation type="obsolete">camp de réfugiés</translation>
     </message>
     <message>
         <source>checkpoint</source>
-        <translation>point de contrôle</translation>
+        <translation type="obsolete">point de contrôle</translation>
     </message>
     <message>
         <source>dropping zone</source>
-        <translation>zone de largage</translation>
+        <translation type="obsolete">zone de largage</translation>
     </message>
     <message>
         <source>keep out zone</source>
-        <translation>zone interdite</translation>
+        <translation type="obsolete">zone interdite</translation>
     </message>
     <message>
         <source>fire forbidden zone</source>
-        <translation>zone de tir interdit</translation>
+        <translation type="obsolete">zone de tir interdit</translation>
     </message>
     <message>
         <source>mortar deployment area</source>
-        <translation>zone de déploiement mortier</translation>
+        <translation type="obsolete">zone de déploiement mortier</translation>
     </message>
     <message>
         <source>engineer bridge (type2)</source>
-        <translation>pont du génie (type 2)</translation>
+        <translation type="obsolete">pont du génie (type 2)</translation>
     </message>
     <message>
         <source>facility</source>
-        <translation>installation</translation>
+        <translation type="obsolete">installation</translation>
     </message>
     <message>
         <source>event</source>
@@ -3184,6 +3184,10 @@
     <message>
         <source>nervous</source>
         <translation>énervé</translation>
+    </message>
+    <message>
+        <source>preliminary</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
