@@ -67,6 +67,9 @@ public:
     //! @name Accessors
     //@{
     bool IsValid() const;
+    
+    virtual       DEC_RolePion_Decision& GetDecision   ();
+    virtual const DEC_RolePion_Decision& GetDecision   () const;
     //@}
 
     //! @name Modifiers

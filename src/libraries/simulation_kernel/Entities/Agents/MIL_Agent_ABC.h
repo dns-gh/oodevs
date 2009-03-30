@@ -21,6 +21,7 @@ class MIL_AgentType_ABC;
 class MIL_AgentPion;
 class MIL_Population;
 class DEC_Knowledge_Agent;
+class DEC_RolePion_Decision;
 
 // =============================================================================
 // @class  MIL_Agent_ABC
@@ -52,6 +53,9 @@ public:
     virtual bool                      IsDead           () const = 0;
     virtual bool                      IsNeutralized    () const = 0;
     virtual bool                      IsPC             () const = 0;
+    
+    virtual       DEC_RolePion_Decision& GetDecision   () = 0;
+    virtual const DEC_RolePion_Decision& GetDecision   () const = 0;
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const = 0;
     //@}

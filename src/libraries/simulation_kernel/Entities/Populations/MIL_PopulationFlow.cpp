@@ -14,6 +14,7 @@
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationKnowledge.h"
+#include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -422,12 +423,10 @@ bool MIL_PopulationFlow::ManageObjectSplit()
     //$$$ TMP CRs - a changer apres refactor objets
     
     // $$$ TODO
-    /*{
-    const MIL_Object_ABC::T_AgentSet& animators = pSplittingObject_->GetAnimators();
-    for( MIL_Object_ABC::CIT_AgentSet it = animators.begin(); it != animators.end(); ++it )
+    const AnimatorAttribute::T_AgentSet& animators = pSplittingObject_->GetAttribute<AnimatorAttribute>().GetAnimators();
+    for( AnimatorAttribute::CIT_AgentSet it = animators.begin(); it != animators.end(); ++it )
         MIL_Report::PostEvent( **it, MIL_Report::eReport_InterventionAgainstPopulationStarted, GetAttitude().GetID() );            
     return true;
-    }*/
 
     /*
     //$$$$$$$$$$$$$$$$$$$$$

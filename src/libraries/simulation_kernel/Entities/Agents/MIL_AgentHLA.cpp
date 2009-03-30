@@ -214,3 +214,21 @@ void MIL_AgentHLA::ChangeStatus( const std::vector< std::string >& statuses )
     // $$$$ AGE 2004-12-13: Not really a status, more like a permanent attribute.
     bPc_ = std::find( statuses.begin(), statuses.end(), "pc" ) != statuses.end();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::GetDecision
+// Created: LDC 2009-03-30
+// -----------------------------------------------------------------------------
+DEC_RolePion_Decision& MIL_AgentHLA::GetDecision()
+{
+    throw std::runtime_error( "GetDecision unavailable for HLA Agents" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::GetDecision
+// Created: LDC 2009-03-30
+// -----------------------------------------------------------------------------
+const DEC_RolePion_Decision& MIL_AgentHLA::GetDecision() const
+{
+    throw std::runtime_error( "GetDecision unavailable for HLA Agents" );
+}
