@@ -58,6 +58,9 @@ public:
     {
         return *CreateKnowledgeShadow( knowledgeGroup );
     }
+    
+    virtual       DEC_RolePion_Decision& GetDecision   () { throw;}
+    virtual const DEC_RolePion_Decision& GetDecision   () const { throw; }
 
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, uint, GetID );
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsDead );
