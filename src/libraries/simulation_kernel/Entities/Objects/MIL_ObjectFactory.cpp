@@ -11,6 +11,8 @@
 #include "MIL_ObjectFactory.h"
 #include "MIL_ObjectLoader.h"
 #include "MIL_ObjectManager.h"
+#include "MIL_Object_ABC.h"
+#include "MIL_ObjectManipulator_ABC.h"
 
 using namespace xml;
 
@@ -83,10 +85,14 @@ void MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC& army )
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_ObjectFactory::BuildObject( const ASN1T_MagicActionCreateObject& asn, MIL_Army_ABC& army )
 {
-    ASN1T_EnumObjectErrorCode   value;
+    ASN1T_EnumObjectErrorCode   value = EnumObjectErrorCode::no_error;
     MIL_Object_ABC*             pObject = GetLoader().CreateObject( asn, army, value );
     if ( pObject )
+    {
+        MIL_ObjectManipulator_ABC& obj = pObject->operator ()();
+        obj.Construct();
         manager_.RegisterObject( *pObject );
+    }
     return value;
 }
 

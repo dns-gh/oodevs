@@ -65,7 +65,9 @@ MIL_ObjectManipulator::~MIL_ObjectManipulator()
 // -----------------------------------------------------------------------------
 void MIL_ObjectManipulator::Construct()
 {
-    object_.Get< BuildableCapacity >().Construct( object_ );
+    BuildableCapacity* pCapacity = object_.Retrieve< BuildableCapacity >();
+    if( pCapacity )
+        pCapacity->Construct( object_ );
 }
 
 // -----------------------------------------------------------------------------
