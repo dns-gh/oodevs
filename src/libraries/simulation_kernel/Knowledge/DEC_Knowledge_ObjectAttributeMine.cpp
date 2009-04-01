@@ -122,8 +122,7 @@ void DEC_Knowledge_ObjectAttributeMine::Send( ASN1T_ObjectAttributes& asn ) cons
         asn.mine.m.percentagePresent = 1;
         asn.mine.percentage = (uint)( rMiningPercentage_ * 100. ); 
         asn.mine.m.dotation_nbrPresent = 1;
-        asn.mine.dotation_nbr = nNbrDotationForMining_;        
-        // TODO asn.mine.activity_time = nMinesActivityTime_;
+        asn.mine.dotation_nbr = nNbrDotationForMining_;      
         // TODO asn.mine.dotation_type = 
         Reset();
     }

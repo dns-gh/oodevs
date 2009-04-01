@@ -61,47 +61,36 @@ ObjectSymbols::~ObjectSymbols()
 
 namespace
 {
-    std::string MakeSymbol( const std::string& /*type*/ )
-//    std::string MakeSymbol( const ASN1T_EnumObjectType& type )
+    std::string MakeSymbol( const std::string& type )
     {
+        // $$$$ LDC FIXME: Would be better with a map.
         std::string symbol( "G*MP********--X" );
-    // TODO
-    /*{
-        switch( type )
-        {
-        case EnumObjectType::abattis:
+        if( type == "abattis" )
             tools::app6::SetFunction( symbol, "OS----" );
-            break;
-        case EnumObjectType::bouchon_mines:
+        else if( type == "bouchon mines" )
             tools::app6::SetFunction( symbol, "OMC---" );
-            break;
-        case EnumObjectType::zone_minee_lineaire:
+        else if( type == "zone minee lineaire" )
+        {
             tools::app6::SetBattleDimension( symbol, 'A' );
             tools::app6::SetFunction( symbol, "OFS---" );
-            break;
-        case EnumObjectType::destruction_pont:
-        case EnumObjectType::destruction_route:
+        }
+        else if( type == "destruction pont" || type == "destruction route" )
             tools::app6::SetFunction( symbol, "ORA---" );
-            break;
-        case EnumObjectType::plot_ravitaillement:
-        case EnumObjectType::zone_implantation_canon:
-        case EnumObjectType::zone_implantation_cobra:
-        case EnumObjectType::zone_implantation_lrm:
-        case EnumObjectType::zone_implantation_mortier:
+        else if( type == "plot ravitaillement"
+              || type == "zone implantation canon"
+              || type == "zone implantation cobra"
+              || type == "zone implantation lrm"
+              || type == "zone implantation mortier" )
+        {
             tools::app6::SetBattleDimension( symbol, 'G' );
             tools::app6::SetFunction( symbol, "GPP---" );
-            break;
-        case EnumObjectType::poste_controle:
-            tools::app6::SetFunction( symbol, "OESP--" ); // 'O'bject 'E'mergency 'S'afety 'P'atrol
-            break;
-        case EnumObjectType::fire:
-            tools::app6::SetFunction( symbol, "OEIF--" ); // 'O'bject 'E'mergency 'I'ncident 'F'ire
-            break;
-        case EnumObjectType::emergency_shelter:
-            tools::app6::SetFunction( symbol, "OESS--" ); // 'O'bject 'E'mergency 'S'afety 'S'helter
-            break;
         }
-    }*/
+        else if( type == "poste controle" )
+            tools::app6::SetFunction( symbol, "OESP--" ); // 'O'bject 'E'mergency 'S'afety 'P'atrol
+        else if( type == "fire" )
+            tools::app6::SetFunction( symbol, "OEIF--" ); // 'O'bject 'E'mergency 'I'ncident 'F'ire
+        else if( type == "zone protegee" )
+            tools::app6::SetFunction( symbol, "OESS--" ); // 'O'bject 'E'mergency 'S'afety 'S'helter
         return symbol;
     }
 }

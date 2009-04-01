@@ -120,8 +120,9 @@ void MineAttribute::UpdateData( const T& message )
         if ( message.mine.m.dotation_nbrPresent )
             nDotationValorization_ = message.mine.dotation_nbr;
         if ( message.mine.m.percentagePresent )
-            rValorizationPercentage_ = message.mine.percentage;        
-        // TODO density_ = message.mine.density;
+            rValorizationPercentage_ = message.mine.percentage;
+        if ( message.mine.m.densityPresent )
+            density_ = message.mine.density;
         controller_.Update( *(MineAttribute_ABC*)this );
     }
 }

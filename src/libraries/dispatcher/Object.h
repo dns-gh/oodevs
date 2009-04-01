@@ -74,21 +74,12 @@ private:
 
 public:    
     const std::string            type_; // TODO : XML reference - no resolved by dispatcher
-    // const ASN1T_EnumObstacleType nObstacleType_;
+
     const std::string            strName_;
           Localisation           localisation_;
           Side&                  side_;
     
     T_ObjectAttributes           attributes_;
-    // ObjectAttribute_ABC* pAttributes_;
-//    unsigned int         nPercentageConstruction_;
-//    unsigned int         nPercentageMining_;
-//    unsigned int         nPercentageBypassing_;
-//    bool                 bReservedObstacleActivated_;
-//    unsigned int         nNbrDotationForConstruction_;
-//    unsigned int         nNbrDotationForMining_;
-//
-//    T_Optionals          optionals_;
 };
 
 }

@@ -22,6 +22,7 @@
 #include "NBCAttribute.h"
 #include "ObstacleAttribute.h"
 #include "OccupantAttribute.h"
+#include "PopulationAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "TimeLimitedAttribute.h"
 
@@ -94,6 +95,7 @@ AttributeFactory::AttributeFactory()
     Register( "supply-route", boost::bind( &AddBuilder< SupplyRouteAttribute >::Add, _1, _2 ) );
     Register( "medical-treatment", boost::bind( &AddBuilder< MedicalTreatmentAttribute >::Add, _1, _2 ) );
     Register( "interaction-height", boost::bind( &AddBuilder< InteractionHeightAttribute >::Add, _1, _2 ) );
+    Register( "population-filter", boost::bind( &AddBuilder< PopulationAttribute >::Add, _1, _2 ) );
 }
 	
 // -----------------------------------------------------------------------------

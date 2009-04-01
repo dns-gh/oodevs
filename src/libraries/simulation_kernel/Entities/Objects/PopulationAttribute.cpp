@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PopulationAttribute.h"
-
+#include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
 // Name: PopulationAttribute::PopulationAttribute
@@ -21,6 +21,15 @@ PopulationAttribute::PopulationAttribute()
 
 }
 
+// -----------------------------------------------------------------------------
+// Name: PopulationAttribute constructor
+// Created: LDC 2009-04-01
+// -----------------------------------------------------------------------------
+PopulationAttribute::PopulationAttribute( xml::xistream& xis )
+    : density_( xml::attribute< float >( xis, "density" ) )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: PopulationAttribute destructor

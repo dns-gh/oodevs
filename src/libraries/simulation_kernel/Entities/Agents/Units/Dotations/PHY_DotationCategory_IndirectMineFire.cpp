@@ -15,6 +15,8 @@
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/ConstructionAttribute.h"
 
 //#include "Entities/Objects/MIL_ZoneMineeParDispersion.h"
 
@@ -78,5 +80,7 @@ void PHY_DotationCategory_IndirectMineFire::ApplyEffect( const MIL_AgentPion& fi
     points.push_back( vTargetPosition + vRotatedFireDirection );
     const TER_Localisation localisation( TER_Localisation::eEllipse, points );
 
-    // $$$$ TODO MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectZoneeMineeParDispersion( firer.GetArmy(), localisation, nNbrMines );
+    MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "zone minee par dispersion", firer.GetArmy(), localisation );
+    ConstructionAttribute* pAttribute = pObject->RetrieveAttribute< ConstructionAttribute >();
+    pAttribute->Build( 1. );
 }

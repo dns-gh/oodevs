@@ -45,7 +45,6 @@ class EngineerConstruction : public Parameter< std::string >
 
     //! @name Operations
     //@{
-//    void AddObstacleType( unsigned int type );
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
@@ -70,7 +69,7 @@ private:
     //@{
     void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
     virtual void Serialize( xml::xostream& xos ) const;
-    // void SetParameters( const ASN1T_PlannedWork& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
+    void SetParameters( const ASN1T_PlannedWork& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
     //@}
 
 private:

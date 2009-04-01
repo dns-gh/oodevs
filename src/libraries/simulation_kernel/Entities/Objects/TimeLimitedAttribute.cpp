@@ -126,16 +126,17 @@ bool TimeLimitedAttribute::IsTimeOver( uint time ) const
 // Name: TimeLimitedAttribute::SendFullState
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::SendFullState( ASN1T_ObjectAttributes& /*asn*/ ) const
+void TimeLimitedAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
 {
-    // TODO
+    asn.m.activity_timePresent = 1;
+    asn.activity_time.value = nActivityTime_;
 }
     
 // -----------------------------------------------------------------------------
 // Name: TimeLimitedAttribute::SendUpdate
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::SendUpdate( ASN1T_ObjectAttributes& /*asn*/ ) const
+void TimeLimitedAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
 {
-    // TODO
+    SendFullState( asn );
 }

@@ -710,36 +710,7 @@ void DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint( DIA_Call_ABC& call, 
 // -----------------------------------------------------------------------------
 void DEC_GeometryFunctions::ComputeChantierPosition( DIA_Call_ABC& /*call*/, const MIL_AgentPion& /*callerAgent*/ )
 {
-    assert( false ); ///$$$ TODO
-/*    TER_Localisation* pLocalisation =                 call.GetParameter( 0 ).ToUserPtr( pLocalisation );
-    E_ObjectTypeID    nObjectType   = (E_ObjectTypeID)call.GetParameter( 1 ).ToId();
-    MT_Float          rSecurityDist =                 call.GetParameter( 2 ).ToFloat() / MIL_Tools::GetMeterPerPixel();
-
-    MT_Vector2D* pResult = new MT_Vector2D(); //$$$$ TMP
-    call.GetResult().SetValue( pResult );
-
-    bool bOut = pLocalisation->ComputeNearestPointInPolygon( callerAgent.GetUnit().GetPosition(), callerAgent.GetFuseau(), *pResult );
-    if( !bOut )
-        return; //$$$ BOF
-
-
-    param.GetParameter( 1 ).SetValue( (void*)pResult );
-    call.GetResult().SetValue( bOut );
-    */
-
-
-    /*
-    E_ObjectTypeID      nObjectType     = (E_ObjectTypeID)call.GetParameters()[0].ToId();
-    MT_Vector2D*        pCenter         =                 call.GetParameters()[1].ToUserPtr( pCenter );
-    MT_Float            rRadius         =                 call.GetParameters()[2].ToFloat() / MIL_Tools::GetMeterPerPixel();
-    DIA_Variable_ABC&   diaReturnCode   =                 call.GetParameters()[3];
-
-    MT_Vector2D* pResultPos = new MT_Vector2D();
-    bool bOut = TER_World::GetWorld().SearchForBestNodePositionWithinCircle( *pCenter, rRadius, sBestNodeForObstacle( nObjectType, *pCenter, rRadius ), *pResultPos );
-
-    diaReturnCode.SetValue( bOut );
-    call.GetResult().SetValue( (void*)pResultPos );
-     */
+    assert( false ); 
 }
 
 // =============================================================================

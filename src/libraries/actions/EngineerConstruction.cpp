@@ -47,7 +47,25 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 {
     AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, asn.position ) );
     SetValue( type_.GetName() );
-// TODO    SetParameters( asn, automats, controller );
+    SetParameters( asn, automats, controller );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EngineerConstruction::SetParameters
+// Created: LDC 2009-04-01
+// -----------------------------------------------------------------------------
+void EngineerConstruction::SetParameters( const ASN1T_PlannedWork& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller )
+{
+    if( asn.tc2 != 0 )
+    {
+        const OrderParameter param( tools::translate( "ActionParameter", "TC2" ).ascii(), "tc2", false );
+        AddParameter( *new Automat( param, asn.tc2, automats, controller ) );
+    }
+    if( asn.densite != 0 )
+    {
+        const OrderParameter param( tools::translate( "ActionParameter", "Density" ).ascii(), "density", false );
+        AddParameter( *new Numeric( param, asn.densite ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -98,17 +116,6 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
     else if( type == "tc2" )
         AddParameter( *new Automat( xis, automats, controller ) );
 }
-
-// -----------------------------------------------------------------------------
-// Name: EngineerConstruction::AddEngineerConstructionType
-// Created: SBO 2007-05-25
-// -----------------------------------------------------------------------------
-// TODO
-//void EngineerConstruction::AddObstacleType( const std::string& type )
-//{
-//    const OrderParameter orderParameter( tools::translate( "Parameter", "Obstacle type" ).ascii(), "obstacletype", false );
-//    AddParameter( *new EngineerConstructionType( orderParameter, type ) );
-//}
 
 // -----------------------------------------------------------------------------
 // Name: Obstacle::Draw

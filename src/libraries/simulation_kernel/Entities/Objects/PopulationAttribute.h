@@ -19,7 +19,8 @@ class PopulationAttribute : public ObjectAttribute_ABC
 public:
 	//! @name Constructors/Destructor
     //@{
-	        PopulationAttribute();
+	         PopulationAttribute();
+             explicit PopulationAttribute( xml::xistream& xis );
 	virtual ~PopulationAttribute();
 	//@}
 

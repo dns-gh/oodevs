@@ -210,12 +210,8 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;            
             if ( knowledge.CanCollideWith( queryMaker_ ) && !IsObjectInsidePathPoint( knowledge, pathPoints ) ) //$$$ BOF
             {
-                
-                // $$$$ TODO with map ? 
-                // {
                 if ( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
-                // }
                 assert( pathKnowledgeObjects_.size() > knowledge.GetType().GetID() );
                 
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
