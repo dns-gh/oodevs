@@ -545,6 +545,26 @@ void ADN_Objects_Data::ADN_CapacityInfos_Decontamination::WriteArchive( xml::xos
 }
 //@}
 
+//! @name ADN_CapacityInfos_Population
+//@{
+ADN_Objects_Data::ADN_CapacityInfos_Population::ADN_CapacityInfos_Population()
+: density_( 0 )
+{
+    density_.SetParentNode( *this );
+}
+
+void ADN_Objects_Data::ADN_CapacityInfos_Population::ReadArchive( xml::xistream& xis )
+{
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    xis >> xml::attribute( "density", density_ );
+}
+
+void ADN_Objects_Data::ADN_CapacityInfos_Population::WriteArchive( xml::xostream& xos )
+{
+    xos << xml::attribute( "density", density_ );
+}
+
+//@}
 
 //! @name ADN_CapacityInfos_Propagation
 //@{
@@ -786,6 +806,7 @@ INIT_DATA( ADN_CapacityInfos_Intoxication,     "Intoxication",      "intoxicatio
 INIT_DATA( ADN_CapacityInfos_Logistic,         "Logistic",          "logistic" );
 INIT_DATA( ADN_CapacityInfos_Mobility,         "Mobility",          "mobility" );
 INIT_DATA( ADN_CapacityInfos_Occupable,        "Occupable",         "occupable" );
+INIT_DATA( ADN_CapacityInfos_Population,       "Population",        "population-filter" );
 INIT_DATA( ADN_CapacityInfos_Propagation,      "Propagation",       "propagation" );
 INIT_DATA( ADN_CapacityInfos_Protection,       "Protection",        "protection" );
 INIT_DATA( ADN_CapacityInfos_Supply,           "Supply",            "supply" );
@@ -855,6 +876,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_Logistic::TAG ].reset( new ADN_CapacityInfos_Logistic() );
     capacities_[ ADN_CapacityInfos_Mobility::TAG ].reset( new ADN_CapacityInfos_Mobility() );
     capacities_[ ADN_CapacityInfos_Occupable::TAG ].reset( new ADN_CapacityInfos_Occupable() );
+    capacities_[ ADN_CapacityInfos_Population::TAG ].reset( new ADN_CapacityInfos_Population() );
     capacities_[ ADN_CapacityInfos_Propagation::TAG ].reset( new ADN_CapacityInfos_Propagation() );
     capacities_[ ADN_CapacityInfos_Protection::TAG ].reset( new ADN_CapacityInfos_Protection() );
     capacities_[ ADN_CapacityInfos_Supply::TAG ].reset( new ADN_CapacityInfos_Supply() );

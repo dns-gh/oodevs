@@ -407,6 +407,25 @@ public:
 		typedef NullType FieldsHolderType;
 	};
 
+    class ADN_CapacityInfos_Population
+        : public ADN_TypeCapacity_Infos
+    {
+    public:
+        
+        static const std::string TAG;
+		static const std::string DISPLAY_NAME;
+
+        ADN_CapacityInfos_Population();
+
+        void ReadArchive( xml::xistream& xis );
+        void WriteArchive( xml::xostream& xos );
+    private:
+        static const char* choices_[];
+	public:
+		typedef NullType FieldsHolderType;
+        ADN_Type_Double density_;
+	};
+
 	class ADN_CapacityInfos_Propagation
         : public ADN_TypeCapacity_Infos
     {

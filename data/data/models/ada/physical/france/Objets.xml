@@ -23,6 +23,7 @@
     </heuristic>
     <interact-with-enemy/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.1"/>
     <time-limited/>
   </object>
   <object geometry="point" symbol="" type="zone protegee">
@@ -44,8 +45,8 @@
   <object geometry="point" symbol="" type="nuage nbc">
     <avoidable distance="100"/>
     <contamination max-toxic="1" type="nbc"/>
-    <intoxication max-toxic="1" type="nbc"/>
     <interaction-height height="100"/>
+    <intoxication max-toxic="1" type="nbc"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="input"/>
   </object>
@@ -87,6 +88,7 @@
       </improvable>
     </constructor>
     <interact-with-enemy/>
+    <population-filter density="0.5"/>
   </object>
   <object geometry="polygon" symbol="" type="fosse anti char">
     <avoidable distance="250"/>
@@ -101,6 +103,7 @@
     </constructor>
     <interact-with-enemy/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.5"/>
   </object>
   <object geometry="point" symbol="" type="barricade">
     <avoidable distance="50"/>
@@ -117,6 +120,7 @@
       </improvable>
     </constructor>
     <interact-with-enemy/>
+    <population-filter density="0.5"/>
   </object>
   <object geometry="polygon" symbol="G*MPOFS---****X" type="zone minee lineaire">
     <activable/>
@@ -133,6 +137,7 @@
     </constructor>
     <interact-with-enemy/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.1"/>
     <time-limited/>
   </object>
   <object geometry="polygon" symbol="G*MPOFS---****X" type="zone minee par dispersion">
@@ -150,6 +155,7 @@
     </constructor>
     <interact-with-enemy/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.1"/>
     <time-limited/>
   </object>
   <object geometry="point" symbol="" type="eboulement">
@@ -174,6 +180,7 @@
       <terrain type="nationale" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.5"/>
   </object>
   <object geometry="point" symbol="G*MPORA---****X" type="destruction route">
     <activable/>
@@ -198,6 +205,7 @@
       <terrain type="nationale" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.5"/>
   </object>
   <object geometry="point" symbol="G*MPORA---****X" type="destruction pont">
     <activable/>
@@ -267,6 +275,7 @@
   <object geometry="polygon" symbol="" type="zone interdite mouvement">
     <interact-with-enemy/>
     <interaction-height height="6000"/>
+    <population-filter density="0.5"/>
   </object>
   <object geometry="point" symbol="" type="installation"/>
 </objects>
