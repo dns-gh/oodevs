@@ -47,8 +47,8 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, DIA_Param
     if( diaEvents_.size() <= (uint)nReport )
         return;
 
-    const DIA_Engine& engine = receiver.GetDecision();
-    DIA_Variable_ABC* pResult = const_cast< DIA_Engine& >( engine ).ExecuteScriptFunction( diaEvents_[ nReport ], parameters );
+    const DEC_Decision_ABC& engine = receiver.GetDecision();
+    DIA_Variable_ABC* pResult = const_cast< DEC_Decision_ABC& >( engine ).ExecuteFunction( diaEvents_[ nReport ], parameters );
     if( pResult ) 
         delete pResult;
 }

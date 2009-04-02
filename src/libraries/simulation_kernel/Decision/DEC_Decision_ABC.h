@@ -13,6 +13,8 @@
 #include "MT_Tools/MT_Role_ABC.h"
 
 class MIL_Entity_ABC;
+class DIA_Parameters;
+class DIA_Variable_ABC;
 
 // =============================================================================
 /** @class  DEC_Decision_ABC
@@ -42,6 +44,7 @@ public:
     //@{
     virtual void UpdateDecision() = 0;
     virtual void Reset() = 0;
+    virtual DIA_Variable_ABC* ExecuteFunction( const std::string& szFuncName, DIA_Parameters& parameters ) = 0;
     //@}
 
 private:

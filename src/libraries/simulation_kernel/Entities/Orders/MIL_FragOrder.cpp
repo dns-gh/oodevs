@@ -12,6 +12,7 @@
 #include "MIL_FragOrderType.h"
 #include "MIL_OrderContext.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::InitializeDIA
@@ -20,7 +21,8 @@
 // static
 void MIL_FragOrder::InitializeDIA()
 {
-    /*const DIA_TypeDef& diaType = */DEC_Tools::GetDIAType( "Rep_OrdreConduite" );
+    /*const DIA_TypeDef& diaType = */
+    DEC_Tools::GetDIAType( "Rep_OrdreConduite" );
 //    nDIATypeIdx_ = DEC_Tools::InitializeDIAField( "eOrdre_", diaType );
 //    nDIAHintIdx_ = DEC_Tools::InitializeDIAField( "szHint_", diaType );
 }
@@ -29,7 +31,7 @@ void MIL_FragOrder::InitializeDIA()
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DIA_Engine& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MsgFragOrder& asn )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MsgFragOrder& asn )
     : DIA_Representation( "", type.GetDIAType() )
     , type_             ( type )
     , diaEngine_        ( engine )
@@ -45,7 +47,7 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DIA_Engine& engine,
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DIA_Engine& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs )
     : DIA_Representation( "", type.GetDIAType() )
     , type_             ( type )
     , diaEngine_        ( engine )
@@ -72,7 +74,7 @@ MIL_FragOrder::~MIL_FragOrder()
 void MIL_FragOrder::Launch()
 {
     eventParameters_.GetParameter( 0 ).SetValue( *this ); 
-    DIA_Variable_ABC* pResult = diaEngine_.ExecuteScriptFunction( "EVT_DEC_OrdreConduite", eventParameters_ ); //$$$$
+    DIA_Variable_ABC* pResult = diaEngine_.ExecuteFunction( "EVT_DEC_OrdreConduite", eventParameters_ ); //$$$$
     if( pResult ) 
         delete pResult;
 }

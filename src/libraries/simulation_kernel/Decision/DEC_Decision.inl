@@ -64,12 +64,24 @@ void DEC_Decision<T>::UpdateDecision()
         PrepareUpdate    ();
         UpdateMotivations( (float)MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
         UpdateDecisions  ();
+        //brain_.SelectActions         ();
         ExecuteAllActions();
+        //brain_.TriggerSelectedActions( (float)MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
         HandleUpdateDecisionError();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::ExecuteFunction
+// Created: LDC 2009-04-02
+// -----------------------------------------------------------------------------
+template <class T>
+DIA_Variable_ABC* DEC_Decision<T>::ExecuteFunction( const std::string& szFuncName, DIA_Parameters& parameters )
+{
+    return ExecuteScriptFunction( szFuncName, parameters );    
 }
 
 // -----------------------------------------------------------------------------

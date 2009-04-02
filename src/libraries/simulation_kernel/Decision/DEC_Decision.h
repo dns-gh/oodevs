@@ -39,6 +39,7 @@ public:
     //@{
     virtual void UpdateDecision();
     virtual void Reset();
+    virtual DIA_Variable_ABC* ExecuteFunction( const std::string& szFuncName, DIA_Parameters& parameters );    
     //@}
     
     //!@name Accessors
