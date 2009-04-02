@@ -32,10 +32,10 @@ void MIL_FragOrder::InitializeDIA()
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MsgFragOrder& asn )
-    : DIA_Representation( "", type.GetDIAType() )
-    , type_             ( type )
-    , diaEngine_        ( engine )
-    , eventParameters_  ()
+    : DIA_TypedObject ( type.GetDIAType() )
+    , type_           ( type )
+    , diaEngine_      ( engine )
+    , eventParameters_()
 {
     eventParameters_.SetOwnerShip( true );
     eventParameters_.AddParam( new DIA_Variable_Object( this ) );
@@ -48,10 +48,10 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& e
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs )
-    : DIA_Representation( "", type.GetDIAType() )
-    , type_             ( type )
-    , diaEngine_        ( engine )
-    , eventParameters_  ()
+    : DIA_TypedObject ( type.GetDIAType() )
+    , type_           ( type )
+    , diaEngine_      ( engine )
+    , eventParameters_()
 {
     eventParameters_.SetOwnerShip( true );
     eventParameters_.AddParam( new DIA_Variable_Object( this ) );
