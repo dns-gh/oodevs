@@ -22,7 +22,7 @@ class DEC_Decision_ABC;
 */
 // Created: NLD 2006-11-14
 // =============================================================================
-class MIL_FragOrder : public DIA_TypedObject
+class MIL_FragOrder : public DIA_Representation
 {
 public:
     //! @name Constructors/Destructor
