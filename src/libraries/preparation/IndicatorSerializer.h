@@ -18,6 +18,9 @@ namespace xml
     class xostream;
 }
 
+class IndicatorElementFactory_ABC;
+class IndicatorElement_ABC;
+
 // =============================================================================
 /** @class  IndicatorGrammarHandler
     @brief  IndicatorGrammarHandler
@@ -30,7 +33,7 @@ class IndicatorSerializer : public IndicatorGrammarHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IndicatorSerializer( xml::xostream& xos );
+             IndicatorSerializer( const IndicatorElementFactory_ABC& factory, xml::xostream& xos );
     virtual ~IndicatorSerializer();
     //@}
 
@@ -49,16 +52,12 @@ private:
     IndicatorSerializer& operator=( const IndicatorSerializer& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    typedef std::string T_Parameter;
-    //@}
-
 private:
     //! @name Member data
     //@{
+    const IndicatorElementFactory_ABC& factory_;
     xml::xostream& xos_;
-    std::vector< T_Parameter > stack_;
+    std::vector< boost::shared_ptr< IndicatorElement_ABC > > stack_;
     //@}
 };
 

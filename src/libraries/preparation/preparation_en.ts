@@ -1,5 +1,12 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>ActivityTimeAttribute</name>
+    <message>
+        <source>Info/Mine parameters/Activity time</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Agent</name>
     <message>
         <source>Info/Identifier</source>
@@ -48,14 +55,7 @@
     </message>
 </context>
 <context>
-    <name>CampAttributes</name>
-    <message>
-        <source>Info/Camp attributes/Superior</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CrossingSiteAttributes</name>
+    <name>CrossingSiteAttribute</name>
     <message>
         <source>Info/Crossing site attributes/Width</source>
         <translation type="unfinished"></translation>
@@ -81,6 +81,24 @@
     </message>
     <message>
         <source>Dotations/Dotations</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Fire</name>
+    <message>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire class:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FireAttribute</name>
+    <message>
+        <source>Info/Fire attributes/Fire class</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -171,25 +189,9 @@
     </message>
 </context>
 <context>
-    <name>LogisticRouteAttributes</name>
+    <name>LogisticAttribute</name>
     <message>
-        <source>Info/Logistic route attributes/Flow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Logistic route attributes/Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Logistic route attributes/Length</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Logistic route attributes/Maximum weight</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Logistic route attributes/Equipped</source>
+        <source>Info/Camp attributes/Superior</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -208,11 +210,53 @@
     </message>
 </context>
 <context>
-    <name>MineAttributes</name>
+    <name>MedicalTreatment</name>
     <message>
-        <source>Info/Mine parameters/Activity time</source>
+        <source>Medical Treatment services</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Medical Treatment type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of doctors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available doctors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalTreatmentAttribute</name>
+    <message>
+        <source>Info/Medical Treatment attributes/Medical Treatment type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MineAttribute</name>
     <message>
         <source>Info/Mine parameters/Density</source>
         <translation type="unfinished"></translation>
@@ -221,30 +265,30 @@
 <context>
     <name>NBC</name>
     <message>
-        <source>NBC cloud/zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC agent:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NBC agent(s):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC state:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>NBCAttributes</name>
+    <name>NBCAttribute</name>
     <message>
-        <source>Info/NBC attributes/NBC agent</source>
+        <source>Info/NBC attributes/NBC state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/NBC attributes/NBC agents</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -276,10 +320,6 @@
     </message>
     <message>
         <source>Build river banks:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -347,10 +387,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Construction dotation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Development dotation:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -375,11 +411,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Obstacle type</source>
+        <source>Info/Demolition target parameters/Obstacle type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Reserved obstacle activated</source>
+        <source>Info/Demolition target parameters/Obstacle activated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply route</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -445,17 +485,6 @@ You will not be able to give orders to these units.
     </message>
 </context>
 <context>
-    <name>RotaAttributes</name>
-    <message>
-        <source>Info/ROTA attributes/Danger level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/ROTA attributes/Agents</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Stocks</name>
     <message>
         <source>Stocks</source>
@@ -463,6 +492,29 @@ You will not be able to give orders to these units.
     </message>
     <message>
         <source>Stocks/Stocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyRouteAttribute</name>
+    <message>
+        <source>Info/Logistic route attributes/Flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Logistic route attributes/Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Logistic route attributes/Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Logistic route attributes/Maximum weight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Logistic route attributes/Equipped</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -511,6 +563,21 @@ You will not be able to give orders to these units.
     </message>
     <message>
         <source>Info/Karma</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ToxicCloudAttribute</name>
+    <message>
+        <source>Info/Cloud parameters/Data source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Cloud parameters/Data field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Cloud parameters/Data export</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

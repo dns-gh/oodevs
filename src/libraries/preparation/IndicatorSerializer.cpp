@@ -9,6 +9,8 @@
 
 #include "preparation_pch.h"
 #include "IndicatorSerializer.h"
+#include "IndicatorElementFactory_ABC.h"
+#include "IndicatorElement_ABC.h"
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.h>
 
@@ -18,8 +20,9 @@ namespace bs = boost::spirit::classic;
 // Name: IndicatorSerializer constructor
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-IndicatorSerializer::IndicatorSerializer( xml::xostream& xos )
-    : xos_( xos )
+IndicatorSerializer::IndicatorSerializer( const IndicatorElementFactory_ABC& factory, xml::xostream& xos )
+    : factory_( factory )
+    , xos_( xos )
 {
     xos_ << xml::start( "indicator" );
 }
@@ -40,7 +43,8 @@ IndicatorSerializer::~IndicatorSerializer()
 // -----------------------------------------------------------------------------
 void IndicatorSerializer::HandleNumber( double value )
 {
-    stack_.push_back( boost::lexical_cast< std::string >( value ) );
+    boost::shared_ptr< IndicatorElement_ABC > element( factory_.CreateNumber( value ) );
+    stack_.push_back( element );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +62,8 @@ void IndicatorSerializer::HandleExtract( const boost::spirit::classic::tree_matc
 // -----------------------------------------------------------------------------
 void IndicatorSerializer::HandleVariable( const std::string& name )
 {
-    stack_.push_back( std::string( "$" ) + name );
+    boost::shared_ptr< IndicatorElement_ABC > element( factory_.CreateVariable( name ) );
+    stack_.push_back( element );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,17 +72,13 @@ void IndicatorSerializer::HandleVariable( const std::string& name )
 // -----------------------------------------------------------------------------
 void IndicatorSerializer::HandleFunctionCall( const std::string& name, unsigned int parameters )
 {
-    xos_ << xml::start( "function" )
-            << xml::attribute( "name", name );
+    boost::shared_ptr< IndicatorElement_ABC > function( factory_.CreateFunction( name ) );
     std::reverse( stack_.end() - parameters, stack_.end() );
     for( unsigned int i = 0; i < parameters && !stack_.empty(); ++i )
     {
-        const T_Parameter& parameter = stack_.back();
-        xos_ << xml::start( "parameter" )
-                << xml::attribute( "value", parameter )
-             << xml::end();
+        function->AddParameter( stack_.back() );
         stack_.pop_back();
     }
-    xos_ << xml::end();
-    stack_.push_back( std::string( "Function_" + name ) );
+    function->Serialize( xos_ );
+    stack_.push_back( function );
 }
