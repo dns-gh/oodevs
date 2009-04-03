@@ -37,12 +37,16 @@ ObjectKnowledgeConverter::~ObjectKnowledgeConverter()
 // Name: ObjectKnowledgeConverter::Find
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, const kernel::Team_ABC& owner )
+const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, const kernel::Team_ABC& owner ) const
 {
-    T_KnowledgeMap knowledges = knowledges_[ &owner ];
-    for( T_KnowledgeMap::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
-        if( it->second->GetId() == id )
-            return it->second;
+    CIT_Knowledges it = knowledges_.find( &owner );
+    if( it != knowledges_.end() )
+    {
+        const T_KnowledgeMap& knowledges = it->second;
+        for( T_KnowledgeMap::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
+            if( it->second->GetId() == id )
+                return it->second;
+    }
     return 0;
 }
 
@@ -50,7 +54,7 @@ const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, con
 // Name: ObjectKnowledgeConverter::Find
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const ObjectKnowledge_ABC& base, const Team_ABC& owner )
+const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const ObjectKnowledge_ABC& base, const Team_ABC& owner ) const
 {
     const Object_ABC* real = base.GetEntity();
     return real ? Find( *real, owner ) : 0;
@@ -60,9 +64,15 @@ const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const ObjectKnowledge
 // Name: ObjectKnowledgeConverter::Find
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const Object_ABC& base, const Team_ABC& owner )
+const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const Object_ABC& base, const Team_ABC& owner ) const
 {
-    return knowledges_[ & owner ][ & base ];
+    CIT_Knowledges it = knowledges_.find( &owner );
+    if( it == knowledges_.end() )
+        return 0;
+    CIT_KnowledgeMap kit = it->second.find( & base );
+    if( kit == it->second.end() )
+        return 0;
+    return kit->second;
 }
 
 // -----------------------------------------------------------------------------

@@ -171,7 +171,7 @@ struct ActionParameterFactory::ObjectConverter : public kernel::ObjectKnowledgeC
         : model_( model ) {}
     //! @name Operations
     //@{
-    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner )
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner ) const
     {
         kernel::Iterator< const dispatcher::ObjectKnowledge& > it = model_.objectKnowledges_.CreateIterator();
         while( it.HasMoreElements() )
@@ -186,8 +186,8 @@ struct ActionParameterFactory::ObjectConverter : public kernel::ObjectKnowledgeC
 
     //! @name Useless stuff
     //@{
-    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long , const kernel::Team_ABC& ) { return 0; }
-    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& , const kernel::Team_ABC& ) { return 0; }
+    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long , const kernel::Team_ABC& ) const { return 0; }
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& , const kernel::Team_ABC& ) const { return 0; }
     //@}
 
 private:

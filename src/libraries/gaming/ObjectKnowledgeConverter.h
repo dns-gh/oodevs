@@ -38,9 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Team_ABC& owner );
-    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner );
-    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner );
+    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Team_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner ) const;
     //@}
 
 private:
@@ -58,8 +58,10 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Object_ABC*, const kernel::ObjectKnowledge_ABC* >    T_KnowledgeMap;
-    typedef std::map< const kernel::Team_ABC*, T_KnowledgeMap >                          T_Knowledges;
+    typedef std::map< const kernel::Object_ABC*, const kernel::ObjectKnowledge_ABC* > T_KnowledgeMap;
+    typedef T_KnowledgeMap::const_iterator                                            CIT_KnowledgeMap;
+    typedef std::map< const kernel::Team_ABC*, T_KnowledgeMap >                       T_Knowledges;
+    typedef T_Knowledges::const_iterator                                              CIT_Knowledges;
     //@}
 
 private:
