@@ -79,7 +79,7 @@ typedef enum E_TypePointParticulier
 // Representation des points terrains perçu : ponts, villages, carrefours ...
 //============================================================================= 
 
-typedef struct Rep_PointABC : Representation
+typedef struct Rep_PointABC : Thing
 {
     T_Point point_;
     E_Point cls_;           // type du point: point ou avant point

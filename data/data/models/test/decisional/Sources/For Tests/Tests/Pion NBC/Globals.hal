@@ -23,7 +23,7 @@ functions
         DEC_Debug( "EVT_DEC_OrdreConduite" );
     
         // ajout a la liste des ordres recus
-        //DIA_AddToCategory( "ordres_recus", ordreConduite );
+        //DEC_AddToCategory( "ordres_recus", ordreConduite );
     }
 
     // *****************************************************************************
@@ -32,7 +32,7 @@ functions
     none EVT_DEC_Point( Rep_PointABC rep )
     {
         assert( rep != 0, "EvenementTerrain: rep = 0" );
-       // DIA_AddToCategory("points_particuliers",rep);
+       // DEC_AddToCategory("points_particuliers",rep);
             
         if( rep.cls_ == ePoint )
         {
@@ -70,7 +70,7 @@ functions
 /*
 define M_DumpAvantPoints()
 {
-    selection listePoints = DIA_GetCategory( "points_interressants" );    
+    selection listePoints = DEC_GetCategory( "points_interressants" );    
     with ( x in listePoints )
     {
         Rep_PointABC ptABC        = x;
@@ -113,7 +113,7 @@ define M_DumpAvantPoints()
                 DEC_Trace( "", "Rencontre d'un avant point pointant sur un point de type " + EnumToString( ppt.eType_, E_TypePoint ) );
             }
         }
-        DIA_RemoveFromCategory( "points_interressants", ptABC );
+        DEC_RemoveFromCategory( "points_interressants", ptABC );
     }
 }
 end_define

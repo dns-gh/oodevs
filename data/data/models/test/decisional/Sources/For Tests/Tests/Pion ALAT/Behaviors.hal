@@ -41,7 +41,7 @@ behavior BEH_Defaut( id nDummy )
 {         
     when updated:
     {
-    	selection ordres_recus = DIA_GetCategory( "ordres_recus" );
+    	selection ordres_recus = DEC_GetCategory( "ordres_recus" );
     	with ( x in ordres_recus)
     	{
     		Rep_OrdreConduite ordre = x;   		

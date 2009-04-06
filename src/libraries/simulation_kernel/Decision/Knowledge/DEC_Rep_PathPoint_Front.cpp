@@ -27,7 +27,7 @@ int DEC_Rep_PathPoint_Front::nDIADestIdx_  = 0;
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest )
     : DEC_PathPoint     ( vPos )
-    , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( "Rep_AvantPoint" ) )
+    , DIA_TypedObject   ( *DIA_TypeManager::Instance().GetType( "Rep_AvantPoint" ), "$$$ nom tmp" )
     , destPoint_        ( dest )
     , pSentToDiaAgent_  ( 0 )
 {
@@ -47,7 +47,7 @@ DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
 {
     if( pSentToDiaAgent_ )
     {
-        pSentToDiaAgent_->GetKnowledgePart().RemoveFromCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
+        pSentToDiaAgent_->RemoveRepresentationFromCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
         pSentToDiaAgent_->GetBehaviorPart ().RemoveAllReferencesOf( *this, pSentToDiaAgent_->GetContext() );    
     }
 }

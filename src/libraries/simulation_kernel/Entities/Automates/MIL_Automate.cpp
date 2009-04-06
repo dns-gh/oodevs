@@ -41,6 +41,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Model_ABC.h"
+#include "Decision/DEC_Representations.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Tools/MIL_Tools.h"
@@ -260,7 +261,12 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
          >> pKnowledgeBlackBoard_
          >> const_cast< MIL_Army*& >( pArmySurrenderedTo_ )
          >> nTickRcDotationSupplyQuerySent_;
-    { DEC_AutomateDecision         * pRole; file >> pRole; RegisterRole( pRole ); }
+    {
+        DEC_AutomateDecision* pRole;
+        file >> pRole;
+        RegisterRole( pRole );
+        RegisterRole( new DEC_Representations() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -311,6 +317,7 @@ void MIL_Automate::Initialize( xml::xistream& xis )
     pKnowledgeGroup_->RegisterAutomate( *this );
       
     RegisterRole( new DEC_AutomateDecision( *this ) ) ;  //$$$ BULLSHIT : strName_ must be initialized ...
+    RegisterRole( new DEC_Representations() );
     
     xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
         >> xml::list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate );

@@ -140,7 +140,7 @@ behavior BEH_GererOrdreConduite()
         if( DIA_ModuleBegins() )
             DEC_Debug( "init ordres popu" );
         
-    	selection ordres_recus = DIA_GetCategory( "ordres_recus" );
+    	selection ordres_recus = DEC_GetCategory( "ordres_recus" );
     	with ( x in ordres_recus)
     	{
     		Rep_OrdreConduite ordre = x;
@@ -152,8 +152,8 @@ behavior BEH_GererOrdreConduite()
                     DEC_Debug( "changement attitude" );
                     DEC_Population_ChangerAttitude( ordreAtt.orderConduitePopulationChangerAttitude_ );
             		// on a finit de traiter l'ordre, on le supprime
-            		DIA_RemoveFromCategory( "ordres_recus", ordre );
-            		DIA_DeleteRepresentation( ordre );
+            		DEC_RemoveFromCategory( "ordres_recus", ordre );
+            		DEC_DeleteRepresentation( ordre );
                     break;
                 }
             }

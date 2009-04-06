@@ -39,7 +39,7 @@ void DEC_Rep_PathPoint::InitializeDIA()
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType )
     : DEC_PathPoint     ( vPos )
-    , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( szDIARepType ) )
+    , DIA_TypedObject   ( *DIA_TypeManager::Instance().GetType( szDIARepType ), "$$$ nom tmp" )
     , nTypePoint_       ( nTypePoint )
     , nTypeTerrain_     ( nTypeTerrain )
     , pSentToDiaAgent_  ( 0 )
@@ -62,7 +62,7 @@ DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 {
     if( pSentToDiaAgent_ )
     {
-        pSentToDiaAgent_->GetKnowledgePart().RemoveFromCategory   ( "points_interressants", const_cast< DEC_Rep_PathPoint* >( this ) );
+        pSentToDiaAgent_->RemoveRepresentationFromCategory   ( "points_interressants", const_cast< DEC_Rep_PathPoint* >( this ) );
         pSentToDiaAgent_->GetBehaviorPart ().RemoveAllReferencesOf( *this, pSentToDiaAgent_->GetContext() );
     }
 }

@@ -677,6 +677,12 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction< PHY_ActionInfluenceInArea >      , "DEC_Emergency_StartInfluenceInArea" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivityInArea >, "DEC_Emergency_StartTriggerActivityInArea" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction< PHY_ActionUnloadActivity >       , "DEC_Emergency_StartUnloadActivity" );    
+
+    // Representations
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetCategory         , "DEC_GetCategory" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::AddToCategory       , "DEC_AddToCategory" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RemoveFromCategory  , "DEC_RemoveFromCategory" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::DeleteRepresentation, "DEC_DeleteRepresentation" );
 }
 
 // =============================================================================

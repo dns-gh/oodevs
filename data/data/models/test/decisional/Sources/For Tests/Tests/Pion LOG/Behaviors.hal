@@ -11,7 +11,7 @@ default Default()
         persistent T_Action actionPreterVSRAM = 0;
         persistent T_Action actionPreterRemorqueurs = 0;
                    
-        selection ordres_recus = DIA_GetCategory( "ordres_recus" );
+        selection ordres_recus = DEC_GetCategory( "ordres_recus" );
         with ( x in ordres_recus)
         {
         	Rep_OrdreConduite ordre = x;
@@ -21,8 +21,8 @@ default Default()
                 {
                     Rep_OrderConduite_ModifierPrioritesReparations tmp = ordre;
                     DEC_Maintenance_ChangerPriorites( tmp.orderConduiteModifierPrioritesReparations_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-        		    DIA_DeleteRepresentation( ordre );
+                    DEC_RemoveFromCategory( "ordres_recus", ordre );
+        		    DEC_DeleteRepresentation( ordre );
                     break;
                 }
                 
@@ -30,8 +30,8 @@ default Default()
                 {
                     Rep_OrderConduite_ModifierPrioritesBlesses tmp = ordre;
                     DEC_Sante_ChangerPriorites( tmp.orderConduiteModifierPrioritesBlesses_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-        		    DIA_DeleteRepresentation( ordre );
+                    DEC_RemoveFromCategory( "ordres_recus", ordre );
+        		    DEC_DeleteRepresentation( ordre );
                     break;
                 }                
                 
@@ -39,8 +39,8 @@ default Default()
                 {
                     Rep_OrderConduite_ModifierPrioritesTactiquesReparations tmp = ordre;
                     DEC_Maintenance_ChangerPrioritesTactiques( tmp.orderConduiteModifierPrioritesTactiquesReparations_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-        		    DIA_DeleteRepresentation( ordre );
+                    DEC_RemoveFromCategory( "ordres_recus", ordre );
+        		    DEC_DeleteRepresentation( ordre );
                     break;
                 }
                 
@@ -48,8 +48,8 @@ default Default()
                 {
                     Rep_OrderConduite_ModifierPrioritesTactiquesBlesses tmp = ordre;
                     DEC_Sante_ChangerPrioritesTactiques( tmp.orderConduiteModifierPrioritesTactiquesBlesses_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-        		    DIA_DeleteRepresentation( ordre );
+                    DEC_RemoveFromCategory( "ordres_recus", ordre );
+        		    DEC_DeleteRepresentation( ordre );
                     break;
                 }
                 
@@ -58,8 +58,8 @@ default Default()
                 {
                     Rep_OrderConduite_ModifierRegimeTravailMaintenance tmp = ordre;
                     DEC_Maintenance_ChangerRegimeTravail( tmp.orderConduiteModifierRegimeTravailMaintenance_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-        		    DIA_DeleteRepresentation( ordre );
+                    DEC_RemoveFromCategory( "ordres_recus", ordre );
+        		    DEC_DeleteRepresentation( ordre );
                     break;
                 }
                
@@ -68,8 +68,8 @@ default Default()
                 {
                     Rep_OrderConduite_Pion_RenforcerEnVSRAM tmp = ordre;
                     //DEC_Sante_PreterVSRAM( tmp.pionARenforcer_, tmp.nbrAmbulances_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-        		    DIA_DeleteRepresentation( ordre );
+                    DEC_RemoveFromCategory( "ordres_recus", ordre );
+        		    DEC_DeleteRepresentation( ordre );
         		    
         		    bool bDummy;
         		    actionPreterVSRAM = DEC_StartPreterVSRAM( tmp.pionARenforcer_, tmp.nbrAmbulances_, bDummy );
@@ -80,8 +80,8 @@ default Default()
                 {                   
                     Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM tmp = ordre;
                     DEC_RecupererVSRAM( tmp.pionRenforce_, tmp.nbrAmbulances_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-        		    DIA_DeleteRepresentation( ordre );
+                    DEC_RemoveFromCategory( "ordres_recus", ordre );
+        		    DEC_DeleteRepresentation( ordre );
                     break;
                 }       
                 
@@ -89,8 +89,8 @@ default Default()
                 {
                     Rep_OrderConduite_Pion_RenforcerEnRemorqueurs tmp = ordre;
                     //DEC_Sante_PreterRemorqueurs( tmp.pionARenforcer_, tmp.nbrRemorqueurs_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-        		    DIA_DeleteRepresentation( ordre );
+                    DEC_RemoveFromCategory( "ordres_recus", ordre );
+        		    DEC_DeleteRepresentation( ordre );
         		    
         		    bool bDummy;
         		    actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( tmp.pionARenforcer_, tmp.nbrRemorqueurs_, bDummy );
@@ -101,8 +101,8 @@ default Default()
                 {                   
                     Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs tmp = ordre;
                     DEC_RecupererRemorqueurs( tmp.pionRenforce_, tmp.nbrRemorqueurs_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-        		    DIA_DeleteRepresentation( ordre );
+                    DEC_RemoveFromCategory( "ordres_recus", ordre );
+        		    DEC_DeleteRepresentation( ordre );
                     break;
                 }                                        
             }

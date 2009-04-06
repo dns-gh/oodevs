@@ -75,15 +75,6 @@ void DEC_PathPoint::SendToDIA( DEC_RolePion_Decision& /*agent*/ ) const
     assert( false );
 }
 
-//-----------------------------------------------------------------------------
-// Name: DEC_PathPoint::RemoveFromDIA
-// Created: AGN 03-01-13
-//-----------------------------------------------------------------------------
-void DEC_PathPoint::RemoveFromDIA( DEC_RolePion_Decision& /*agent*/ ) const
-{
-    
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PathPoint::Dump
 // Created: NLD 2005-08-10

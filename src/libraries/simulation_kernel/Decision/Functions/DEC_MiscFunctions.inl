@@ -48,4 +48,3 @@ void DEC_MiscFunctions::RC_Warning( DIA_Call_ABC& call, T& caller )
     if( pReport )
         pReport->Send( caller, MIL_Report::eRcTypeWarning, call.GetParameters() );
 }
-

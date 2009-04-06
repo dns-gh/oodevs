@@ -22,6 +22,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Decision/DEC_Representations.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Messages.h"
@@ -67,6 +68,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
 
     pKnowledge_ = new DEC_PopulationKnowledge();
     RegisterRole( new DEC_PopulationDecision( *this  ) ); 
+    RegisterRole( new DEC_Representations() );
 
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
@@ -164,7 +166,12 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> rOverloadedPionMaxSpeed_
          >> pKnowledge_
          >> bHasDoneMagicMove_;
-    { DEC_PopulationDecision         * pRole; file >> pRole; RegisterRole( pRole ); }
+    {
+        DEC_PopulationDecision* pRole;
+        file >> pRole;
+        RegisterRole( pRole );
+        RegisterRole( new DEC_Representations() );
+    }
 }
 
 // -----------------------------------------------------------------------------

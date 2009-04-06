@@ -13,11 +13,13 @@
 #include "DEC_MiscFunctions.h"
 
 #include "MIL_AgentServer.h"
+#include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Representations.h"
 #include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
@@ -93,5 +95,47 @@ void DEC_MiscFunctions::CancelReinforcement( DIA_Call_ABC& /*call*/, MIL_AgentPi
 void DEC_MiscFunctions::IsReinforcing( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     call.GetResult().SetValue( callerAgent.GetRole< PHY_RolePion_Reinforcement >().IsReinforcing() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::DEC_MiscFunctions::GetCategory
+// Created: LDC 2009-04-03
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::GetCategory( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+{
+    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    const T_ObjectVector& category = role.GetCategory( call.GetParameter( 0 ).ToString() );
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValue( category );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::DEC_MiscFunctions::AddToCategory
+// Created: LDC 2009-04-03
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::AddToCategory( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+{
+    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    role.AddToCategory( call.GetParameter( 0 ).ToString(), call.GetParameter( 1 ).ToObject() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::DEC_MiscFunctions::RemoveFromCategory
+// Created: LDC 2009-04-03
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::RemoveFromCategory( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+{
+    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    role.RemoveFromCategory( call.GetParameter( 0 ).ToString(), call.GetParameter( 1 ).ToObject() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::DEC_MiscFunctions::DeleteRepresentation
+// Created: LDC 2009-04-03
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::DeleteRepresentation( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+{
+    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    role.DeleteRepresentation( call.GetParameter( 0 ).ToObject() );
 }
 

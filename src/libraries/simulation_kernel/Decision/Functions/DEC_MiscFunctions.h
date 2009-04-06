@@ -16,6 +16,7 @@
 #include "MT_Tools/MT_Random.h"
 
 class MIL_AgentPion;
+class MIL_Entity_ABC;
 
 // =============================================================================
 // Created: NLD 2004-07-08
@@ -37,6 +38,12 @@ public:
     // Misc
     static void SetCurrentSpeedModificator( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void SetMaxSpeedModificator    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    
+    // Representations
+    static void DEC_MiscFunctions::GetCategory         ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void DEC_MiscFunctions::AddToCategory       ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void DEC_MiscFunctions::RemoveFromCategory  ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void DEC_MiscFunctions::DeleteRepresentation( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
 };
 
 #include "DEC_MiscFunctions.inl"

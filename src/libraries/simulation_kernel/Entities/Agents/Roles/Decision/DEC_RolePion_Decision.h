@@ -60,6 +60,8 @@ public:
     void StopMissionBehavior ( MIL_PionMission& mission );
 
     void NotifyAutomateChanged();
+
+    void RemoveRepresentationFromCategory( const std::string& name, DIA_TypedObject* pObject );
     //@}
 
     //! @name Accessors

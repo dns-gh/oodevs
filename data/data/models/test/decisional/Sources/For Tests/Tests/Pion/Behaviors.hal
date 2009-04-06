@@ -214,7 +214,7 @@ behavior BEH_GererOrdreConduite()
         if( DIA_ModuleBegins() )
             DEC_Debug( "Niveau installation " + EnumToString( DEC_Agent_NiveauInstallation(), E_EtatNiveauInstallation ) );
         
-    	selection ordres_recus = DIA_GetCategory( "ordres_recus" );
+    	selection ordres_recus = DEC_GetCategory( "ordres_recus" );
     	with ( x in ordres_recus)
     	{
             E_EtatROEPopulation eRoePopu = DEC_Agent_RoePopulation();
@@ -248,8 +248,8 @@ behavior BEH_GererOrdreConduite()
                     Rep_OrderConduite_ChangerReglesEngagementPopulation ordreROE = ordre;
                     DEC_Agent_ChangeEtatROEPopulation( ordreROE.orderConduiteChangerReglesEngagementPopulation_ );
             		// on a finit de traiter l'ordre, on le supprime
-            		DIA_RemoveFromCategory( "ordres_recus", ordre );
-            		DIA_DeleteRepresentation( ordre );
+            		DEC_RemoveFromCategory( "ordres_recus", ordre );
+            		DEC_DeleteRepresentation( ordre );
                     break;
                 }
             }

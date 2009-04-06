@@ -16,7 +16,6 @@
 
 class DEC_Path;
 class DEC_PathPoint;
-class DIA_Representation;
 class DEC_RolePion_Decision;
 
 //*****************************************************************************
@@ -66,7 +65,6 @@ public:
     //! @name DIA
     //@{
     virtual void SendToDIA    ( DEC_RolePion_Decision& agent ) const;
-    virtual void RemoveFromDIA( DEC_RolePion_Decision& agent ) const;
     //@}
 
     //! @name Debug

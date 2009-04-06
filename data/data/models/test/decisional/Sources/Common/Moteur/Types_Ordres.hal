@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-typedef struct Rep_Ordre : Representation
+typedef struct Rep_Ordre : Thing
 {
 	string szHint_;
 };
