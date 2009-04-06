@@ -40,7 +40,7 @@ public:
 public:	
 	//! @name Constructors/Destructor
     //@{
-			ObjectAttributePrototypeFactory_ABC() {}
+			 ObjectAttributePrototypeFactory_ABC() {}
 	virtual ~ObjectAttributePrototypeFactory_ABC() {}
 	//@}	
 

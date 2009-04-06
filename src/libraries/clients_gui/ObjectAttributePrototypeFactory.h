@@ -10,9 +10,7 @@
 #ifndef __ObjectAttributePrototypeFactory_h_
 #define __ObjectAttributePrototypeFactory_h_
 
-#include "clients_kernel/Resolver_ABC.h"
 #include "ObjectAttributePrototypeFactory_ABC.h"
-
 #include <boost/function.hpp>
 
 namespace xml 
@@ -32,11 +30,11 @@ namespace gui
 // Name: ObjectAttributePrototypeFactory
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-class ObjectAttributePrototypeFactory 
-    : public ObjectAttributePrototypeFactory_ABC        
+class ObjectAttributePrototypeFactory : public ObjectAttributePrototypeFactory_ABC        
 {   
+
 public:
-    //! @name 
+    //! @name Types
     //@{    
     typedef boost::function3< void, xml::xistream&, T_AttributeContainer&, QWidget* > T_CallBack;
     //@}
@@ -44,21 +42,20 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-            ObjectAttributePrototypeFactory ();
-    virtual ~ObjectAttributePrototypeFactory ();
+             ObjectAttributePrototypeFactory();
+    virtual ~ObjectAttributePrototypeFactory();
     //@}
     
     //! @name Methods
     //@{
     void Register( const std::string& capacity, const T_CallBack& callback );    
-    void Create( const std::string& capacity, xml::xistream& xis, T_AttributeContainer& resolver, QWidget* parent ) const;
+    virtual void Create( const std::string& capacity, xml::xistream& xis, T_AttributeContainer& resolver, QWidget* parent ) const;
     //@}
     
 private:    
     //! @name Types
     //@{    
     typedef std::map< std::string, T_CallBack > T_CallBacks;
-    typedef T_CallBacks::const_iterator         CIT_Callbacks;
     //@}
 
 private:

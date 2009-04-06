@@ -9,16 +9,13 @@
 
 #include "clients_gui_pch.h"
 #include "BypassPrototype_ABC.h"
-#include "clients_kernel/NBCAgent.h"
-#include "clients_kernel/Iterator.h"
 #include "Tools.h"
 
-using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: BypassPrototype_ABC constructor
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 BypassPrototype_ABC::BypassPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "BypassPrototype_ABC", "Bypass parameters" ) )
@@ -28,7 +25,7 @@ BypassPrototype_ABC::BypassPrototype_ABC( QWidget* parent )
     
 // -----------------------------------------------------------------------------
 // Name: BypassPrototype_ABC destructor
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 BypassPrototype_ABC::~BypassPrototype_ABC()
 {
@@ -36,17 +33,8 @@ BypassPrototype_ABC::~BypassPrototype_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: BypassPrototype_ABC::showEvent
-// Created: AGE 2006-08-11
-// -----------------------------------------------------------------------------
-void BypassPrototype_ABC::showEvent( QShowEvent* e )
-{
-    QGroupBox::showEvent( e );
-}
-
-// -----------------------------------------------------------------------------
 // Name: BypassPrototype_ABC::CheckValidity
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 bool BypassPrototype_ABC::CheckValidity() const
 {

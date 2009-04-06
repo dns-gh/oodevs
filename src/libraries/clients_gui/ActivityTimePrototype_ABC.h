@@ -12,8 +12,6 @@
 
 #include "ObjectAttributePrototype_ABC.h"
 
-class QSpinBox;
-
 namespace gui
 {
     
@@ -21,22 +19,20 @@ namespace gui
 /** @class  PropagationPrototype_ABC
     @brief  PropagationPrototype_ABC
 */
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // =============================================================================
 class ActivityTimePrototype_ABC : public ObjectAttributePrototype_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ActivityTimePrototype_ABC( QWidget* parent );
+    explicit ActivityTimePrototype_ABC( QWidget* parent );
     virtual ~ActivityTimePrototype_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
-    virtual void Commit() = 0;
-    virtual void Clean() = 0;
     //@}
 
 private:

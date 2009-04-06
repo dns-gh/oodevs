@@ -13,25 +13,24 @@
 #include "clients_kernel/Iterator.h"
 #include "Tools.h"
 
-using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: FirePrototype_ABC constructor
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
-FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const Resolver_ABC< FireClass >& resolver )
+FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const kernel::Resolver_ABC< kernel::FireClass >& resolver )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "FirePrototype_ABC", "Fire parameters" ) )
     , resolver_( resolver )
 {
     new QLabel( tools::translate( "FirePrototype_ABC", "Fire Class:" ), this );
-    fireClass_ = new ValuedComboBox< const FireClass* >( this );
+    fireClass_ = new ValuedComboBox< const kernel::FireClass* >( this );
     FillTypes();
 }
     
 // -----------------------------------------------------------------------------
 // Name: FirePrototype_ABC destructor
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 FirePrototype_ABC::~FirePrototype_ABC()
 {
@@ -40,32 +39,32 @@ FirePrototype_ABC::~FirePrototype_ABC()
 
 // -----------------------------------------------------------------------------
 // Name: FirePrototype_ABC::FillTypes
-// Created: AGE 2006-08-11
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 void FirePrototype_ABC::FillTypes()
 {
     fireClass_->Clear();
-    Iterator< const FireClass& > it( resolver_.CreateIterator() );
+    kernel::Iterator< const kernel::FireClass& > it( resolver_.CreateIterator() );
     while( it.HasMoreElements() )
     {
-        const FireClass& element = it.NextElement();
+        const kernel::FireClass& element = it.NextElement();
         fireClass_->AddItem( element.GetName(), &element );
     }
 }
 
 // -----------------------------------------------------------------------------
 // Name: FirePrototype_ABC::showEvent
-// Created: AGE 2006-08-11
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 void FirePrototype_ABC::showEvent( QShowEvent* e )
 {
     FillTypes();
-    QGroupBox::showEvent( e );
+    ObjectAttributePrototype_ABC::showEvent( e );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FirePrototype_ABC::CheckValidity
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 bool FirePrototype_ABC::CheckValidity() const
 {

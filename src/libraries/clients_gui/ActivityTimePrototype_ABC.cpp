@@ -9,16 +9,13 @@
 
 #include "clients_gui_pch.h"
 #include "ActivityTimePrototype_ABC.h"
-#include "clients_kernel/Units.h"
 #include "Tools.h"
-#include <qvalidator.h>
 
-using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: ActivityTimePrototype_ABC constructor
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ActivityTimePrototype_ABC::ActivityTimePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "ActivityTimePrototype_ABC", "Activity time" ) )    
@@ -29,7 +26,7 @@ ActivityTimePrototype_ABC::ActivityTimePrototype_ABC( QWidget* parent )
 
 // -----------------------------------------------------------------------------
 // Name: ActivityTimePrototype_ABC destructor
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ActivityTimePrototype_ABC::~ActivityTimePrototype_ABC()
 {
@@ -38,7 +35,7 @@ ActivityTimePrototype_ABC::~ActivityTimePrototype_ABC()
 
 // -----------------------------------------------------------------------------
 // Name: ActivityTimePrototype_ABC::CheckValidity
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 bool ActivityTimePrototype_ABC::CheckValidity() const
 {

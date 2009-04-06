@@ -12,7 +12,6 @@
 
 #include "ObjectAttributePrototype_ABC.h"
 
-
 namespace gui
 {
 
@@ -34,8 +33,6 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
-    virtual void Commit() = 0;
-    virtual void Clean() = 0;
     //@}
 
 private:

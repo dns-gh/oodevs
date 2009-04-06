@@ -13,7 +13,6 @@
 #include "ObjectAttributePrototype_ABC.h"
 #include "ValuedComboBox.h"
 
-
 namespace gui
 {
     
@@ -21,23 +20,22 @@ namespace gui
 /** @class  PropagationPrototype_ABC
     @brief  PropagationPrototype_ABC
 */
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // =============================================================================
 class InputPropagationPrototype_ABC : public ObjectAttributePrototype_ABC
 {
     Q_OBJECT;
+
 public:
     //! @name Constructors/Destructor
     //@{
-             InputPropagationPrototype_ABC( QWidget* parent );
+    explicit InputPropagationPrototype_ABC( QWidget* parent );
     virtual ~InputPropagationPrototype_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
-    virtual void Commit() = 0;
-    virtual void Clean() = 0;
     //@}
 
 private slots:
@@ -56,7 +54,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    std::string         source_;    
+    std::string source_;    
     ValuedComboBox< std::string >* dataField_;
     QPushButton* pPathButton_;
     QCheckBox* exportData_;

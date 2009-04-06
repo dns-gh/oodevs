@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>Preparation</source>
-        <translation type="unfinished"></translation>
+        <translation>Preparation</translation>
     </message>
 </context>
 <context>

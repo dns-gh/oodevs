@@ -12,7 +12,6 @@
 #include "clients_kernel/Units.h"
 #include "Tools.h"
 
-using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -24,15 +23,15 @@ CrossingSitePrototype_ABC::CrossingSitePrototype_ABC( QWidget* parent )
 {
     new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Width:" ), this );
     width_ = new QSpinBox( 0, 10000, 10, this );
-    width_->setSuffix( Units::meters );
+    width_->setSuffix( kernel::Units::meters );
 
     new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Depth:" ), this );
     depth_ = new QSpinBox( 0, 1000, 10, this );
-    depth_->setSuffix( Units::meters );
+    depth_->setSuffix( kernel::Units::meters );
 
     new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Stream speed:" ), this );
     speed_ = new QSpinBox( 0, 100, 1, this );
-    speed_->setSuffix( Units::metersPerSecond );
+    speed_->setSuffix( kernel::Units::metersPerSecond );
 
     new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Build river banks:" ), this );
     needsConstruction_ = new QCheckBox( this );

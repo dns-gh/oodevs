@@ -18,14 +18,14 @@ using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: InputPropagationPrototype_ABC constructor
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "InputPropagationPrototype_ABC", "Propagation" ) )    
 {    
     new QLabel( tools::translate( "InputPropagationPrototype_ABC", "NBC Agent:" ), this );
 
-    pPathButton_ = new QPushButton( tr( "Input Data" ), this );
+    pPathButton_ = new QPushButton( tools::translate( "InputPropagationPrototype_ABC", "Input file..." ), this );
     connect( pPathButton_, SIGNAL( clicked() ), this, SLOT( LoadPath() ) );
 
     new QLabel( tools::translate( "InputPropagationPrototype_ABC", "Lookup data:" ), this );
@@ -40,7 +40,7 @@ InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent )
 
 // -----------------------------------------------------------------------------
 // Name: InputPropagationPrototype_ABC destructor
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 InputPropagationPrototype_ABC::~InputPropagationPrototype_ABC()
 {
@@ -49,11 +49,11 @@ InputPropagationPrototype_ABC::~InputPropagationPrototype_ABC()
 
 // -----------------------------------------------------------------------------
 // Name: InputPropagationPrototype_ABC::CheckValidity
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 bool InputPropagationPrototype_ABC::CheckValidity() const
 {
-    return source_ != "" && dataField_->GetValue() != "";
+    return ! source_.empty() && ! dataField_->GetValue().empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ bool InputPropagationPrototype_ABC::CheckValidity() const
 void InputPropagationPrototype_ABC::LoadPath()
 {
     static const int length = 22;
-    QString fileName = QFileDialog::getOpenFileName( "./", tr("Propagation (propagation.xml)"), 0, tr("Open File") );
+    QString fileName = QFileDialog::getOpenFileName( "./", tools::translate( "InputPropagationPrototype_ABC", "Propagation (propagation.xml)" ), 0, tools::translate( "InputPropagationPrototype_ABC", "Open File" ) );
     if ( fileName.ascii() )
     {        
         source_ = std::string( fileName.ascii() );

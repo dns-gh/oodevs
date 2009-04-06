@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectAttributePrototypeFactory.h"
-#include "ObjectAttributePrototype_ABC.h"
 
 using namespace gui;
 
@@ -19,7 +18,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ObjectAttributePrototypeFactory::ObjectAttributePrototypeFactory()
 {
-
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -28,7 +27,7 @@ ObjectAttributePrototypeFactory::ObjectAttributePrototypeFactory()
 // -----------------------------------------------------------------------------
 ObjectAttributePrototypeFactory::~ObjectAttributePrototypeFactory()
 {
-
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -47,7 +46,7 @@ void ObjectAttributePrototypeFactory::Register( const std::string& capacity, con
 // -----------------------------------------------------------------------------
 void ObjectAttributePrototypeFactory::Create( const std::string& capacity, xml::xistream& xis, T_AttributeContainer& container, QWidget* parent ) const
 {
-    const CIT_Callbacks it = callbacks_.find( capacity );
+    T_CallBacks::const_iterator it = callbacks_.find( capacity );
     if ( it != callbacks_.end() )
         it->second( xis, container, parent );
 }

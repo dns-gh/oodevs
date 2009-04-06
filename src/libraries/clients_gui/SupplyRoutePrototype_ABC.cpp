@@ -12,7 +12,6 @@
 #include "clients_kernel/Units.h"
 #include "Tools.h"
 
-using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -24,19 +23,19 @@ SupplyRoutePrototype_ABC::SupplyRoutePrototype_ABC( QWidget* parent )
 {
     new QLabel( this, tools::translate( "SupplyRoutePrototype_ABC", "Flow:" ) );
     flow_ = new QSpinBox( 0, 10000, 1, this );
-    flow_->setSuffix( Units::vehiclesPerHour );
+    flow_->setSuffix( kernel::Units::vehiclesPerHour );
 
     new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Width:" ), this );
     width_ = new QSpinBox( 0, 10000, 1, this );
-    width_->setSuffix( Units::meters );
+    width_->setSuffix( kernel::Units::meters );
 
     new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Length:" ), this );
     length_ = new QSpinBox( 0, 10000, 1, this );
-    length_->setSuffix( Units::meters );
+    length_->setSuffix( kernel::Units::meters );
 
     new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Maximum weight:" ), this );
     maxWeight_ = new QSpinBox( 0, 10000, 1, this );
-    maxWeight_->setSuffix( Units::tons );
+    maxWeight_->setSuffix( kernel::Units::tons );
 
     equipped_ = new QCheckBox( tools::translate( "SupplyRoutePrototype_ABC", "Equipped:" ), this );
 }

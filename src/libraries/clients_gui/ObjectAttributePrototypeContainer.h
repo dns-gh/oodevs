@@ -36,9 +36,10 @@ namespace gui
 // Created: JCR 2008-04-18
 // =============================================================================
 class ObjectAttributePrototypeContainer 
-{    
+{
+
 public:
-    //! @name 
+    //! @name Types
     //@{
     typedef ObjectAttributePrototypeFactory_ABC::T_AttributeContainer T_AttributeContainer;
     //@}
@@ -46,30 +47,27 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-            ObjectAttributePrototypeContainer( const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const ObjectAttributePrototypeFactory_ABC& factory, QWidget* parent );
+             ObjectAttributePrototypeContainer( const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const ObjectAttributePrototypeFactory_ABC& factory, QWidget* parent );
     virtual ~ObjectAttributePrototypeContainer();
     //@}
 
-    //! @name 
+    //! @name Operations
     //@{
     void Commit();
     void Clean();
     void Hide();
-    void Show();    
-    //@}
+    void Show();
 
-    //! @name 
-    //@{
     const T_AttributeContainer* Select( const kernel::ObjectType& type );
-    virtual void NotifyUpdated( /*const ModelLoaded& */); // Enregistrer aupres du controleur
+    virtual void NotifyUpdated( /*const ModelLoaded& */); // $$$$ JCR 2009-04-03: Enregistrer aupres du controleur 
     //@}
 
 private:
     //! @name Types
     //@{    
-    typedef std::map< std::string, boost::shared_ptr< T_AttributeContainer > >   T_AttributesPrototypes;
-    typedef T_AttributesPrototypes::iterator                                     IT_AttributesPrototypes;
-    typedef T_AttributesPrototypes::const_iterator                               CIT_AttributesPrototypes;
+    typedef std::map< std::string, boost::shared_ptr< T_AttributeContainer > > T_AttributesPrototypes;
+    typedef T_AttributesPrototypes::iterator                                  IT_AttributesPrototypes;
+    typedef T_AttributesPrototypes::const_iterator                           CIT_AttributesPrototypes;
     //@}
 
 private:
@@ -81,7 +79,7 @@ private:
 
     //! @name Helper
     //@{
-    void Load( const kernel::ObjectType& type );    
+    void Load( const kernel::ObjectType& type );
     //@}
 
 private:
@@ -89,9 +87,9 @@ private:
     //@{
     const ObjectAttributePrototypeFactory_ABC& factory_;
     const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver_;
-    T_AttributesPrototypes  attributes_;
-    T_AttributeContainer*   select_;
-    QWidget*                parent_;
+    T_AttributesPrototypes attributes_;
+    T_AttributeContainer* select_;
+    QWidget* parent_;
     //@}
 };
 

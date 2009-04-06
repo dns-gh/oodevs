@@ -14,6 +14,14 @@
 #include "moc_ObjectPrototype_ABC.cpp"
 
 #include "DisplayBuilder.h"
+#include "LocationCreator.h"
+#include "ParametersLayer.h"
+#include "Tools.h"
+#include "RichLabel.h"
+#include "GroupDisplayer.h"
+#include "ObjectAttributePrototypeContainer.h"
+#include "ObjectAttributePrototypeFactory_ABC.h"
+#include "ObjectPreviewIcon.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -23,17 +31,6 @@
 #include "clients_kernel/Iterator.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/SimpleLocationDrawer.h"
-
-#include "LocationCreator.h"
-#include "ParametersLayer.h"
-#include "Tools.h"
-#include "RichLabel.h"
-#include "GroupDisplayer.h"
-#include "ObjectAttributePrototypeContainer.h"
-#include "ObjectAttributePrototypeFactory_ABC.h"
-#include "ObjectPreviewIcon.h"
-
-
 
 using namespace kernel;
 using namespace gui;

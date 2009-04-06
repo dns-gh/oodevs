@@ -15,7 +15,7 @@ using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionPrototype_ABC constructor
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ConstructionPrototype_ABC::ConstructionPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "ConstructionPrototype_ABC", "Construction" ) )    
@@ -25,7 +25,7 @@ ConstructionPrototype_ABC::ConstructionPrototype_ABC( QWidget* parent )
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionPrototype_ABC destructor
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ConstructionPrototype_ABC::~ConstructionPrototype_ABC()
 {
@@ -33,17 +33,8 @@ ConstructionPrototype_ABC::~ConstructionPrototype_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConstructionPrototype_ABC::showEvent
-// Created: AGE 2006-08-11
-// -----------------------------------------------------------------------------
-void ConstructionPrototype_ABC::showEvent( QShowEvent* e )
-{    
-    QGroupBox::showEvent( e );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ConstructionPrototype_ABC::CheckValidity
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 bool ConstructionPrototype_ABC::CheckValidity() const
 {

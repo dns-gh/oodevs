@@ -26,7 +26,7 @@ namespace gui
 /** @class  FirePrototype_ABC
     @brief  FirePrototype_ABC
 */
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // =============================================================================
 class FirePrototype_ABC : public ObjectAttributePrototype_ABC
 {
@@ -41,8 +41,6 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
-    virtual void Commit() = 0;
-    virtual void Clean() = 0;
     //@}
 
 private:

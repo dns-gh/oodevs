@@ -353,10 +353,6 @@ Please check access permissions or write protection.</source>
         <translation type="unfinished">Agent NBC:</translation>
     </message>
     <message>
-        <source>Input Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Lookup data:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -370,6 +366,10 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Open File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input file...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

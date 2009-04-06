@@ -68,9 +68,7 @@ namespace
     void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
     {
         ConstructorBuilder builder( container, parent, object );
-        std::string type( xml::attribute< std::string >( xis, "unit-type" ) );
-
-        bool density = ( type == "density" );
+        const bool density = xml::attribute< std::string >( xis, "unit-type" ) == "density";
         xis >> xml::optional() >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
         xis >> xml::optional() >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
     }
@@ -124,25 +122,24 @@ namespace
     /*
     * Register capacity tag
     */
-    ObjectAttributePrototypeFactory_ABC* FactoryMaker( Controllers& controllers, 
-                                                       const ObjectTypes& resolver, Object_ABC*& object )
+    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, Object_ABC*& object )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
-        factory->Register( "constructor"        , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
+        factory->Register( "constructor"        , boost::bind( &::ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
         factory->Register( "activable"          , boost::bind( &Capacity< ObstaclePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "time-limited"       , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "supply-route"       , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "bridging"           , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( object ) ) );
         
-        factory->Register( "logistic"           , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
-        factory->Register( "interact-with-enemy", boost::bind( &InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );
-        factory->Register( "interference"       , boost::bind( &InterferenceAttribute, _2, _3, boost::ref( object ) ) );
+        factory->Register( "logistic"           , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
+        factory->Register( "interact-with-enemy", boost::bind( &::InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );
+        factory->Register( "interference"       , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );
                             
-        factory->Register( "healable"           , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
-        factory->Register( "propagation"        , boost::bind( &PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );        
+        factory->Register( "healable"           , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+        factory->Register( "propagation"        , boost::bind( &::PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );        
 
-        factory->Register( "contamination"      , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );  
-        return factory;
+        factory->Register( "contamination"      , boost::bind( &::ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );  
+        return *factory;
     }
 }
 
@@ -151,11 +148,9 @@ namespace
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer, gui::SymbolIcons& icons )
-    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, 
-                           * FactoryMaker( controllers, model.objectTypes_, creation_ ),
-                           icons )
-    , teamsModel_ ( teamsModel )
-    , creation_   ( 0 )
+    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, creation_ ), icons )
+    , teamsModel_( teamsModel )
+    , creation_( 0 )
 {
     // NOTHING
 }

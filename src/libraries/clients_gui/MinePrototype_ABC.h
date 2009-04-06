@@ -33,11 +33,9 @@ public:
 
     //! @name Operations
     //@{
-    void SetMineField( bool minefield );
+    void SetMineField( bool minefield ); // $$$$ SBO 2009-04-03: never called
 
     virtual bool CheckValidity() const;
-    virtual void Commit() = 0;
-    virtual void Clean() = 0;
     //@}
 
 private:
@@ -51,7 +49,6 @@ protected:
     //! @name Member data
     //@{    
     QLineEdit* density_;
-
     QLabel*    densityLabel_;
     QHBox*     densityBox_;
     //@}

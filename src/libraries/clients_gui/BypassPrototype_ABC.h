@@ -11,13 +11,6 @@
 #define __BypassPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
-#include "ValuedComboBox.h"
-
-namespace kernel
-{
-    class NBCAgent;
-}
 
 namespace gui
 {
@@ -26,7 +19,7 @@ namespace gui
 /** @class  BypassPrototype_ABC
     @brief  BypassPrototype_ABC
 */
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // =============================================================================
 class BypassPrototype_ABC : public ObjectAttributePrototype_ABC
 {
@@ -34,15 +27,13 @@ class BypassPrototype_ABC : public ObjectAttributePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             BypassPrototype_ABC( QWidget* parent );
+    explicit BypassPrototype_ABC( QWidget* parent );
     virtual ~BypassPrototype_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
-    virtual void Commit() = 0;
-    virtual void Clean() = 0;
     //@}
 
 private:
@@ -50,17 +41,6 @@ private:
     //@{
     BypassPrototype_ABC( const BypassPrototype_ABC& );            //!< Copy constructor
     BypassPrototype_ABC& operator=( const BypassPrototype_ABC& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{    
-    virtual void showEvent( QShowEvent* );
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    // SpinBox
     //@}
 };
 

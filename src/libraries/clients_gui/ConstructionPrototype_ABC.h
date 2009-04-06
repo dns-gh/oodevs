@@ -19,7 +19,7 @@ namespace gui
 /** @class  ConstructionPrototype_ABC
     @brief  ConstructionPrototype_ABC
 */
-// Created: SBO 2006-04-20
+// Created: JCR 2008-06-30
 // =============================================================================
 class ConstructionPrototype_ABC : public ObjectAttributePrototype_ABC
 {
@@ -34,8 +34,6 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
-    virtual void Commit() = 0;
-    virtual void Clean() = 0;
     //@}
 
 private:
@@ -43,11 +41,6 @@ private:
     //@{
     ConstructionPrototype_ABC( const ConstructionPrototype_ABC& );            //!< Copy constructor
     ConstructionPrototype_ABC& operator=( const ConstructionPrototype_ABC& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void showEvent( QShowEvent* );
     //@}
 };
 
