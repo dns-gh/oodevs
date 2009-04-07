@@ -174,7 +174,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { DEC_RolePion_Decision         * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RoleAction_InterfaceFlying* pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RoleAction_FolkInfluence  * pRole; file >> pRole; RegisterRole( pRole ); }
-    RegisterRole( new DEC_Representations() );
+    RegisterRole( new DEC_Representations( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -236,7 +236,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     RegisterRole< PHY_RoleAction_IndirectFiring  >( *this );
     RegisterRole< DEC_RolePion_Decision          >( *this );
     RegisterRole< PHY_RoleAction_FolkInfluence   >( *this );
-    RegisterRole( new DEC_Representations() );
+    RegisterRole< DEC_Representations            >();
 
     if( CanFly() )
         RegisterRole< PHY_RoleAction_Flying >( *this );

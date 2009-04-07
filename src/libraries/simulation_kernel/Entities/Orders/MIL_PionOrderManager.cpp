@@ -16,6 +16,7 @@
 #include "MIL_PionMission.h"
 #include "MIL_FragOrderType.h"
 #include "Decision/DEC_Model_ABC.h"
+#include "Decision/DEC_Representations.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -92,7 +93,7 @@ void MIL_PionOrderManager::OnReceiveFragOrder( const ASN1T_MsgFragOrder& asn )
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_order_conduite );
 
-    MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, pion_.GetDecision(), pion_.GetKnowledge(), asn );
+    MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, pion_.GetRole<DEC_Representations>(), pion_.GetKnowledge(), asn );
     pFragOrder->Launch();
 }
 

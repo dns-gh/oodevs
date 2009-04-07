@@ -14,6 +14,7 @@
 
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Representations.h"
 
 int DEC_Rep_PathPoint::nDIAPointIdx_  = 0;
 int DEC_Rep_PathPoint::nDIAClsIdx_    = 0;
@@ -48,10 +49,7 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
 
     GetVariable( nDIAPointIdx_ ).SetValue( (void*)&vPos_, &DEC_Tools::GetTypePoint(), 1 ); 
     SetValue( nDIAClsIdx_   , ePoint     );     
-    SetValue( nDIATypeIdx_  , nTypePoint );  
-
-    diaParameters_.SetOwnerShip( true );
-    diaParameters_.AddParam( new DIA_Variable_Object() );
+    SetValue( nDIATypeIdx_  , nTypePoint );
 }
 
 //-----------------------------------------------------------------------------
@@ -62,8 +60,8 @@ DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 {
     if( pSentToDiaAgent_ )
     {
-        pSentToDiaAgent_->RemoveRepresentationFromCategory   ( "points_interressants", const_cast< DEC_Rep_PathPoint* >( this ) );
-        pSentToDiaAgent_->RemoveAllReferencesOf( *this, pSentToDiaAgent_->GetContext() );
+        pSentToDiaAgent_->RemoveFromCategory   ( "points_interressants", const_cast< DEC_Rep_PathPoint* >( this ) );
+        pSentToDiaAgent_->RemoveAllReferencesOf( *this );
     }
 }
 
@@ -71,16 +69,13 @@ DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 // Name: DEC_Rep_PathPoint::SendToDIA
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint::SendToDIA( DEC_RolePion_Decision& agent ) const
+void DEC_Rep_PathPoint::SendToDIA( DEC_Representations& agent ) const
 {
     if( pSentToDiaAgent_ )
         return;
         
     // ATTENTION, si cette fonction est appelée, alors l'agent physique s'est automatiquement arrêté sur la position du point...
-    diaParameters_.GetParameter( 0 ).SetValue( const_cast< DEC_Rep_PathPoint& >( *this ) );
-    DIA_Variable_ABC* pResult = agent.ExecuteScriptFunction( "EVT_DEC_Point", diaParameters_ );
-    if( pResult ) 
-        delete pResult;
+    agent.AddToCategory( "points_interressants", const_cast< DEC_Rep_PathPoint* >( this ) );
 
     pSentToDiaAgent_ = &agent;
 }

@@ -16,7 +16,7 @@
 #include "Decision/Path/DEC_PathPoint.h"
 
 class DEC_Rep_PathPoint;
-class DEC_RolePion_Decision;
+class DEC_Representations;
 
 //*****************************************************************************
 // Created: JDY 03-05-05
@@ -37,7 +37,7 @@ public:
 
     //! @name DIA
     //@{
-    virtual void SendToDIA( DEC_RolePion_Decision& agent ) const;
+    virtual void SendToDIA( DEC_Representations& agent ) const;
     //@}
 
     //! @name Debug
@@ -48,8 +48,8 @@ public:
 private:
     DEC_Rep_PathPoint& destPoint_;
 
-    mutable DIA_Parameters          diaParameters_;
-    mutable DEC_RolePion_Decision*  pSentToDiaAgent_;
+    mutable DIA_Parameters       diaParameters_;
+    mutable DEC_Representations* pSentToDiaAgent_;
 
 private:
     static int nDIAPointIdx_;

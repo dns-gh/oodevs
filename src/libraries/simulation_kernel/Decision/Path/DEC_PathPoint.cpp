@@ -70,7 +70,7 @@ bool DEC_PathPoint::WillBeInObject( const TerrainData& data ) const
 // Name: DEC_PathPoint::SendToDIA
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-void DEC_PathPoint::SendToDIA( DEC_RolePion_Decision& /*agent*/ ) const
+void DEC_PathPoint::SendToDIA( DEC_Representations& /*agent*/ ) const
 {
     assert( false );
 }

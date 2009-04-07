@@ -16,6 +16,7 @@
 #include "MIL_FragOrder.h"
 #include "MIL_FragOrderType.h"
 #include "Decision/DEC_Model_ABC.h"
+#include "Decision/DEC_Representations.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
@@ -67,7 +68,7 @@ void MIL_PopulationOrderManager::OnReceiveFragOrder( const ASN1T_MsgFragOrder& a
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_order_conduite );
 
-    MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, population_.GetDecision(), population_.GetKnowledge(), asn );
+    MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, population_.GetRole<DEC_Representations>(), population_.GetKnowledge(), asn );
     pFragOrder->Launch();
 }
 

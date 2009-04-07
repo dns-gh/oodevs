@@ -14,7 +14,7 @@
 
 class MIL_FragOrderType;
 class DEC_KnowledgeResolver_ABC;
-class DEC_Decision_ABC;
+class DEC_Representations;
 
 // =============================================================================
 /** @class  MIL_FragOrder
@@ -27,8 +27,8 @@ class MIL_FragOrder : public DIA_TypedObject
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MsgFragOrder& asn );
-             MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs );
+             MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MsgFragOrder& asn );
+             MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs );
     virtual ~MIL_FragOrder();
     //@}
 
@@ -48,9 +48,8 @@ public:
     //@}
 
 private:
-    const MIL_FragOrderType& type_;
-          DEC_Decision_ABC&  diaEngine_;
-          DIA_Parameters     eventParameters_;
+    const MIL_FragOrderType&   type_;
+          DEC_Representations& diaEngine_;
 };
 
 #include "MIL_FragOrder.inl"

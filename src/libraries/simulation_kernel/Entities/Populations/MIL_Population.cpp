@@ -68,7 +68,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
 
     pKnowledge_ = new DEC_PopulationKnowledge();
     RegisterRole( new DEC_PopulationDecision( *this  ) ); 
-    RegisterRole( new DEC_Representations() );
+    RegisterRole( new DEC_Representations( *this ) );
 
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
@@ -170,7 +170,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
         DEC_PopulationDecision* pRole;
         file >> pRole;
         RegisterRole( pRole );
-        RegisterRole( new DEC_Representations() );
+        RegisterRole( new DEC_Representations( *this ) );
     }
 }
 

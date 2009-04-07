@@ -15,7 +15,7 @@
 #include "MIL.h"
 #include "Decision/Path/DEC_PathPoint.h"
 
-class DEC_RolePion_Decision;
+class DEC_Representations;
 
 //*****************************************************************************
 // Created: JDY 03-05-05
@@ -59,7 +59,7 @@ public:
 
     //! @name DIA
     //@{
-    void SendToDIA( DEC_RolePion_Decision& agent ) const;
+    void SendToDIA( DEC_Representations& agent ) const;
     //@}
 
     //! @name Debug
@@ -71,8 +71,7 @@ private:
     E_TypePoint    nTypePoint_;
     TerrainData    nTypeTerrain_;
 
-    mutable DIA_Parameters          diaParameters_; //$$$
-    mutable DEC_RolePion_Decision*  pSentToDiaAgent_;
+    mutable DEC_Representations* pSentToDiaAgent_;
 
 public:
     static int nDIAPointIdx_;

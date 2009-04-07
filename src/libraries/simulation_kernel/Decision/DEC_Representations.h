@@ -26,7 +26,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Representations();
+    explicit DEC_Representations( MT_RoleContainer& roleContainer );
     virtual ~DEC_Representations();
     //@}
 
@@ -36,6 +36,7 @@ public:
     void AddToCategory( const std::string& name, DIA_TypedObject* pObject );
     void RemoveFromCategory( const std::string& name, DIA_TypedObject* pObject );
     void DeleteRepresentation( DIA_TypedObject* pObject );
+    void RemoveAllReferencesOf( const DIA_TypedObject& referenced );
     //@}
 
 private:

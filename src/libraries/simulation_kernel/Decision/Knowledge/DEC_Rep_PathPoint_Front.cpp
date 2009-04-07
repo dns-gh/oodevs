@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Representations.h"
 
 int DEC_Rep_PathPoint_Front::nDIAPointIdx_ = 0;
 int DEC_Rep_PathPoint_Front::nDIAClsIdx_   = 0;
@@ -47,8 +48,8 @@ DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
 {
     if( pSentToDiaAgent_ )
     {
-        pSentToDiaAgent_->RemoveRepresentationFromCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
-        pSentToDiaAgent_->RemoveAllReferencesOf( *this, pSentToDiaAgent_->GetContext() );    
+        pSentToDiaAgent_->RemoveFromCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
+        pSentToDiaAgent_->RemoveAllReferencesOf( *this );    
     }
 }
 
@@ -69,15 +70,13 @@ void DEC_Rep_PathPoint_Front::InitializeDIA()
 // Created: JVT 02-12-09
 // Last modified: JVT 02-12-16
 //-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint_Front::SendToDIA( DEC_RolePion_Decision& agent ) const
+void DEC_Rep_PathPoint_Front::SendToDIA( DEC_Representations& agent ) const
 {
     if( pSentToDiaAgent_ )
         return;
 
-    diaParameters_.GetParameter( 0 ).SetValue( const_cast< DEC_Rep_PathPoint_Front& >( *this )  );
-    DIA_Variable_ABC* pResult = agent.ExecuteScriptFunction( "EVT_DEC_Point", diaParameters_ );
-    if( pResult ) 
-        delete pResult;
+    agent.AddToCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
+
     pSentToDiaAgent_ = &agent;
 }
 

@@ -265,7 +265,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
         DEC_AutomateDecision* pRole;
         file >> pRole;
         RegisterRole( pRole );
-        RegisterRole( new DEC_Representations() );
+        RegisterRole( new DEC_Representations( *this ) );
     }
 }
 
@@ -317,7 +317,7 @@ void MIL_Automate::Initialize( xml::xistream& xis )
     pKnowledgeGroup_->RegisterAutomate( *this );
       
     RegisterRole( new DEC_AutomateDecision( *this ) ) ;  //$$$ BULLSHIT : strName_ must be initialized ...
-    RegisterRole( new DEC_Representations() );
+    RegisterRole( new DEC_Representations( *this ) );
     
     xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
         >> xml::list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate );

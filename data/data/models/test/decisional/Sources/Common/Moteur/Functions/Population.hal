@@ -53,7 +53,6 @@ signatures
     
     // Migration Representations
     S                                         A::DEC_GetCategory( X );
-    V                                         A::DEC_AddToCategory( X, A );
     V                                         A::DEC_RemoveFromCategory( X, A );
     V                                         A::DEC_DeleteRepresentation( A );
 }

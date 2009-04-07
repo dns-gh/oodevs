@@ -22,7 +22,6 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
-#include "Decision/DEC_Representations.h"
 #include "CheckPoints/DIA_Serializer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "MT_Tools/MT_CrashHandler.h"
@@ -227,15 +226,6 @@ void DEC_RolePion_Decision::EndCleanStateAfterCrash()
 {
     pEntity_->CancelAllActions();
     GetRole< PHY_RolePion_Perceiver >().DisableAllPerceptions();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::RemoveRepresentationFromCategory
-// Created: LDC 2009-04-06
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::RemoveRepresentationFromCategory( const std::string& name, DIA_TypedObject* pObject )
-{
-    GetRole< DEC_Representations >().RemoveFromCategory( name, pObject );
 }
 
 // -----------------------------------------------------------------------------

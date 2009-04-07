@@ -16,7 +16,7 @@
 
 class DEC_Path;
 class DEC_PathPoint;
-class DEC_RolePion_Decision;
+class DEC_Representations;
 
 //*****************************************************************************
 // Created: JVT 02-12-04
@@ -64,7 +64,7 @@ public:
 
     //! @name DIA
     //@{
-    virtual void SendToDIA    ( DEC_RolePion_Decision& agent ) const;
+    virtual void SendToDIA    ( DEC_Representations& agent ) const;
     //@}
 
     //! @name Debug

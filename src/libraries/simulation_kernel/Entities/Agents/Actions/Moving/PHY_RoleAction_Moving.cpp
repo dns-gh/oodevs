@@ -35,6 +35,7 @@
 
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
+#include "Decision/DEC_Representations.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -458,7 +459,7 @@ void PHY_RoleAction_Moving::NotifyMovingOnPathPoint( const DEC_PathPoint& /*poin
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( const DEC_PathPoint& point )
 {
-    point.SendToDIA( GetRole< DEC_RolePion_Decision >() );
+    point.SendToDIA( GetRole< DEC_Representations >() );
 }
 
 // -----------------------------------------------------------------------------

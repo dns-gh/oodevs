@@ -91,29 +91,12 @@ functions
         S_Connaissance_ForceDistance2 = 1;
     }
 
-
-
-    //-------------------------------------------------------------------------
-    // Fonction appellée lorsque un ordre de conduite a été séléctionné
-    // param @strMission     Mission courante
-    // param @nOrdreConduite Ordre de conduite
-    // param @strHint
-    //-------------------------------------------------------------------------
-    none EVT_DEC_OrdreConduite( Rep_OrdreConduite ordreConduite )
-    {
-        DEC_Debug( "EVT_DEC_OrdreConduite" );
-    
-        // ajout a la liste des ordres recus
-        DEC_AddToCategory( "ordres_recus", ordreConduite );
-    }
-
     // *****************************************************************************
     // Ev terrain.
     // *****************************************************************************
     none EVT_DEC_Point( Rep_PointABC rep )
     {
         assert( rep != 0, "EvenementTerrain: rep = 0" );
-       // DEC_AddToCategory("points_particuliers",rep);
             
         if( rep.cls_ == ePoint )
         {

@@ -9,12 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Representations.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Representations constructor
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-DEC_Representations::DEC_Representations()
+DEC_Representations::DEC_Representations( MT_RoleContainer& roleContainer )
+: MT_Role_ABC( roleContainer )
 {
     // NOTHING
 }
@@ -81,4 +83,14 @@ void DEC_Representations::DeleteRepresentation( DIA_TypedObject* pObject )
             }
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Representations::RemoveAllReferencesOf
+// Created: LDC 2009-04-07
+// -----------------------------------------------------------------------------
+void DEC_Representations::RemoveAllReferencesOf( const DIA_TypedObject& referenced )
+{
+    DEC_RolePion_Decision& role = GetRole<DEC_RolePion_Decision>();
+    role.RemoveAllReferencesOf( referenced, role.GetContext() );
 }

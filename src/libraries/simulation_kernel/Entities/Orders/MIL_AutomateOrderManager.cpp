@@ -18,6 +18,7 @@
 #include "MIL_FragOrderType.h"
 #include "MIL_FragOrder.h"
 #include "Decision/DEC_Model_ABC.h"
+#include "Decision/DEC_Representations.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
@@ -101,7 +102,7 @@ void MIL_AutomateOrderManager::OnReceiveFragOrder( const ASN1T_MsgFragOrder& asn
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_order_conduite );
 
-    MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, automate_.GetDecision(), automate_.GetKnowledge(), asn );
+    MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, automate_.GetRole<DEC_Representations>(), automate_.GetKnowledge(), asn );
     pFragOrder->Launch();
 }
 

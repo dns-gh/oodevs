@@ -11,12 +11,4 @@ signatures
 
 functions
 {
-    none EVT_DEC_OrdreConduite( Rep_OrdreConduite ordreConduite )
-    {
-        DEC_Debug( "EVT_DEC_OrdreConduite" );
-    
-        // ajout a la liste des ordres recus
-        DEC_AddToCategory( "ordres_recus", ordreConduite );
-        DEC_Debug( "Adding order to list" );
-    }
 }
