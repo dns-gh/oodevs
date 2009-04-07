@@ -9787,4 +9787,255 @@
       <breakdown origin="attrition" percentage="50" type="AAC Breakdown NTI3"/>
     </breakdowns>
   </element>
+  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Truck" id="109" name="Fire Truck" protection="UnarmouredVehicle" size="Medium" weight="3">
+    <speeds max="90">
+      <speed terrain="inconnu" value="0"/>
+      <speed terrain="foret" value="10"/>
+      <speed terrain="plantation" value="0"/>
+      <speed terrain="marais" value="0"/>
+      <speed terrain="dune" value="0"/>
+      <speed terrain="urbain" value="1"/>
+      <speed terrain="etendue eau" value="0"/>
+      <speed terrain="glace" value="0"/>
+      <speed terrain="lisiere" value="0"/>
+      <speed terrain="banlieue" value="1"/>
+      <speed terrain="cote" value="0"/>
+      <speed terrain="bord de plantation" value="0"/>
+      <speed terrain="bord de marais" value="0"/>
+      <speed terrain="bord de dune" value="0"/>
+      <speed terrain="bord de glace" value="0"/>
+      <speed terrain="chemin" value="30"/>
+      <speed terrain="autoroute" value="90"/>
+      <speed terrain="nationale" value="90"/>
+      <speed terrain="departementale" value="60"/>
+      <speed terrain="ruisseau" value="0"/>
+      <speed terrain="riviere" value="0"/>
+      <speed terrain="riviere importante" value="0"/>
+      <speed terrain="pont" value="60"/>
+      <speed terrain="falaise" value="0"/>
+      <speed terrain="voie ferree" value="0"/>
+      <speed terrain="carrefour" value="60"/>
+      <speed terrain="montagne" value="0"/>
+      <speed terrain="bord de montagne" value="0"/>
+    </speeds>
+    <composition/>
+    <sensors>
+      <sensor height="1.8" type="Eye"/>
+      <sensor height="2" type="Engineers Sensor"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions/>
+    <weapon-systems/>
+    <objects>
+      <object initial-destruction-time="20m" type="fire"/>
+      <object initial-destruction-time="120m" type="nuage nbc"/>
+    </objects>
+    <breakdowns>
+      <breakdown origin="random" percentage="11" type="MOB Breakdown 1"/>
+      <breakdown origin="random" percentage="11" type="MOB Breakdown 2"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 2 Evac"/>
+      <breakdown origin="random" percentage="12" type="MOB Breakdown 3"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 3 Evac"/>
+      <breakdown origin="random" percentage="9" type="MOB Breakdown 4"/>
+      <breakdown origin="random" percentage="7" type="MOB Breakdown 4 Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 5"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 5 Evac"/>
+      <breakdown origin="random" percentage="3" type="MOB Breakdown 6"/>
+      <breakdown origin="random" percentage="6" type="MOB Breakdown 6 Evac"/>
+      <breakdown origin="random" percentage="1" type="MOB Breakdown 7"/>
+      <breakdown origin="random" percentage="6" type="MOB Breakdown 7 Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 8 Evac"/>
+      <breakdown origin="random" percentage="3" type="MOB Breakdown 10 Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 12 Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 16 Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown NTI3 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 1"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 2"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 2 Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 4"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 3"/>
+      <breakdown origin="attrition" percentage="2" type="MOB Breakdown 3 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 4 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 5"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 5 Evac"/>
+      <breakdown origin="attrition" percentage="2" type="MOB Breakdown 6"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 6 Evac"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 7"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 7 Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 8 Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 10 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 10 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 16 Evac"/>
+      <breakdown origin="attrition" percentage="50" type="MOB Breakdown NTI3 Evac"/>
+    </breakdowns>
+  </element>
+  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Engine" id="110" name="Fire Engine" protection="UnarmouredVehicle" size="Medium" weight="3">
+    <speeds max="90">
+      <speed terrain="inconnu" value="0"/>
+      <speed terrain="foret" value="10"/>
+      <speed terrain="plantation" value="0"/>
+      <speed terrain="marais" value="0"/>
+      <speed terrain="dune" value="0"/>
+      <speed terrain="urbain" value="1"/>
+      <speed terrain="etendue eau" value="0"/>
+      <speed terrain="glace" value="0"/>
+      <speed terrain="lisiere" value="0"/>
+      <speed terrain="banlieue" value="1"/>
+      <speed terrain="cote" value="0"/>
+      <speed terrain="bord de plantation" value="0"/>
+      <speed terrain="bord de marais" value="0"/>
+      <speed terrain="bord de dune" value="0"/>
+      <speed terrain="bord de glace" value="0"/>
+      <speed terrain="chemin" value="30"/>
+      <speed terrain="autoroute" value="90"/>
+      <speed terrain="nationale" value="90"/>
+      <speed terrain="departementale" value="60"/>
+      <speed terrain="ruisseau" value="0"/>
+      <speed terrain="riviere" value="0"/>
+      <speed terrain="riviere importante" value="0"/>
+      <speed terrain="pont" value="60"/>
+      <speed terrain="falaise" value="0"/>
+      <speed terrain="voie ferree" value="0"/>
+      <speed terrain="carrefour" value="60"/>
+      <speed terrain="montagne" value="0"/>
+      <speed terrain="bord de montagne" value="0"/>
+    </speeds>
+    <composition/>
+    <sensors>
+      <sensor height="1.8" type="Eye"/>
+      <sensor height="2" type="Engineers Sensor"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions/>
+    <weapon-systems/>
+    <objects>
+      <object initial-construction-time="3m" type="zone interdite mouvement"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="installation"/>
+      <object initial-destruction-time="40m" type="fire"/>
+    </objects>
+    <breakdowns>
+      <breakdown origin="random" percentage="11" type="MOB Breakdown 1"/>
+      <breakdown origin="random" percentage="11" type="MOB Breakdown 2"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 2 Evac"/>
+      <breakdown origin="random" percentage="12" type="MOB Breakdown 3"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 3 Evac"/>
+      <breakdown origin="random" percentage="9" type="MOB Breakdown 4"/>
+      <breakdown origin="random" percentage="7" type="MOB Breakdown 4 Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 5"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 5 Evac"/>
+      <breakdown origin="random" percentage="3" type="MOB Breakdown 6"/>
+      <breakdown origin="random" percentage="6" type="MOB Breakdown 6 Evac"/>
+      <breakdown origin="random" percentage="1" type="MOB Breakdown 7"/>
+      <breakdown origin="random" percentage="6" type="MOB Breakdown 7 Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 8 Evac"/>
+      <breakdown origin="random" percentage="3" type="MOB Breakdown 10 Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 12 Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 16 Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown NTI3 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 1"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 2"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 2 Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 4"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 3"/>
+      <breakdown origin="attrition" percentage="2" type="MOB Breakdown 3 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 4 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 5"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 5 Evac"/>
+      <breakdown origin="attrition" percentage="2" type="MOB Breakdown 6"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 6 Evac"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 7"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 7 Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 8 Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 10 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 10 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 16 Evac"/>
+      <breakdown origin="attrition" percentage="50" type="MOB Breakdown NTI3 Evac"/>
+    </breakdowns>
+  </element>
+  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Police Car" id="111" name="Police Car" protection="UnarmouredVehicle" size="Small" weight="1">
+    <speeds max="90">
+      <speed terrain="inconnu" value="0"/>
+      <speed terrain="foret" value="1"/>
+      <speed terrain="plantation" value="0"/>
+      <speed terrain="marais" value="0"/>
+      <speed terrain="dune" value="0"/>
+      <speed terrain="urbain" value="1"/>
+      <speed terrain="etendue eau" value="0"/>
+      <speed terrain="glace" value="0"/>
+      <speed terrain="lisiere" value="0"/>
+      <speed terrain="banlieue" value="1"/>
+      <speed terrain="cote" value="0"/>
+      <speed terrain="bord de plantation" value="0"/>
+      <speed terrain="bord de marais" value="0"/>
+      <speed terrain="bord de dune" value="0"/>
+      <speed terrain="bord de glace" value="0"/>
+      <speed terrain="chemin" value="30"/>
+      <speed terrain="autoroute" value="90"/>
+      <speed terrain="nationale" value="90"/>
+      <speed terrain="departementale" value="60"/>
+      <speed terrain="ruisseau" value="0"/>
+      <speed terrain="riviere" value="0"/>
+      <speed terrain="riviere importante" value="0"/>
+      <speed terrain="pont" value="60"/>
+      <speed terrain="falaise" value="0"/>
+      <speed terrain="voie ferree" value="0"/>
+      <speed terrain="carrefour" value="60"/>
+      <speed terrain="montagne" value="0"/>
+      <speed terrain="bord de montagne" value="0"/>
+    </speeds>
+    <composition/>
+    <sensors>
+      <sensor height="1.8" type="Eye"/>
+      <sensor height="2" type="Engineers Sensor"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions/>
+    <weapon-systems/>
+    <objects>
+      <object construction-time-factor="0s" destruction-time-factor=".0s" initial-construction-time="180s" initial-destruction-time="0s" type="zone interdite mouvement"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="installation"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="poste controle"/>
+    </objects>
+    <breakdowns>
+      <breakdown origin="random" percentage="11" type="MOB Breakdown 1"/>
+      <breakdown origin="random" percentage="11" type="MOB Breakdown 2"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 2 Evac"/>
+      <breakdown origin="random" percentage="12" type="MOB Breakdown 3"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 3 Evac"/>
+      <breakdown origin="random" percentage="9" type="MOB Breakdown 4"/>
+      <breakdown origin="random" percentage="7" type="MOB Breakdown 4 Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 5"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 5 Evac"/>
+      <breakdown origin="random" percentage="3" type="MOB Breakdown 6"/>
+      <breakdown origin="random" percentage="6" type="MOB Breakdown 6 Evac"/>
+      <breakdown origin="random" percentage="1" type="MOB Breakdown 7"/>
+      <breakdown origin="random" percentage="6" type="MOB Breakdown 7 Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 8 Evac"/>
+      <breakdown origin="random" percentage="3" type="MOB Breakdown 10 Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 12 Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 16 Evac"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown NTI3 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 1"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 2"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 2 Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 4"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 3"/>
+      <breakdown origin="attrition" percentage="2" type="MOB Breakdown 3 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 4 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 5"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 5 Evac"/>
+      <breakdown origin="attrition" percentage="2" type="MOB Breakdown 6"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 6 Evac"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 7"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 7 Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 8 Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 10 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 10 Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 16 Evac"/>
+      <breakdown origin="attrition" percentage="50" type="MOB Breakdown NTI3 Evac"/>
+    </breakdowns>
+  </element>
 </elements>

@@ -1559,6 +1559,52 @@
         </mission>
       </missions>
     </unit>
+    <unit dia-type="HS_Police" file="Emergency\Pions\Police\Model.hal" name="HS - Police">
+      <missions>
+        <mission name="Emergency - block road"/>
+        <mission name="Emergency - convoy population"/>
+        <mission name="Emergency - escort demonstration"/>
+        <mission name="Emergency - evacuate area"/>
+        <mission name="follow"/>
+        <mission name="move"/>
+        <mission name="park"/>
+      </missions>
+    </unit>
+    <unit dia-type="HS_Medical" file="Emergency\Pions\Medical\Model.hal" name="HS - Medical">
+      <missions>
+        <mission name="Emergency - organise shelter"/>
+        <mission name="Emergency - provide first aid"/>
+        <mission name="Emergency - soothe"/>
+        <mission name="follow"/>
+        <mission name="move"/>
+        <mission name="park"/>
+      </missions>
+    </unit>
+    <unit dia-type="HS_Firefighter" file="Emergency\Pions\Firefighter\Model.hal" name="HS - Firefighter">
+      <missions>
+        <mission name="Emergency - evacuate area"/>
+        <mission name="Emergency - extinguish fire"/>
+        <mission name="Emergency - soothe"/>
+        <mission name="Emergency - provide first aid"/>
+        <mission name="follow"/>
+        <mission name="move"/>
+        <mission name="park"/>
+      </missions>
+    </unit>
+    <unit dia-type="HS_Safety" file="Emergency\Pions\Safety\Model.hal" name="HS - Safety">
+      <missions>
+        <mission name="Emergency - organise shelter"/>
+        <mission name="Emergency - provide first aid"/>
+        <mission name="Emergency - soothe"/>
+        <mission name="move"/>
+        <mission name="park"/>
+      </missions>
+    </unit>
+    <unit dia-type="HS_Disturbance" file="Emergency\Pions\Disturbance\Model.hal" name="HS - Disturbance">
+      <missions>
+        <mission name="Emergency - riot"/>
+      </missions>
+    </unit>
   </units>
   <automats>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.hal" name="Strategic Bomber Squadron">
@@ -2301,6 +2347,32 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
+      </missions>
+    </automat>
+    <automat dia-type="HS_Police_HQ" file="Emergency\Automates\Police\Model.hal" name="HS - Police HQ">
+      <missions>
+        <mission name="Emergency - evacuate area"/>
+        <mission name="move"/>
+        <mission name="park"/>
+      </missions>
+    </automat>
+    <automat dia-type="HS_Firefighter_HQ" file="Emergency\Automates\Firefighter\Model.hal" name="HS - Firefighter HQ">
+      <missions>
+        <mission name="Emergency - evacuate area"/>
+        <mission name="move"/>
+        <mission name="park"/>
+      </missions>
+    </automat>
+    <automat dia-type="HS_Safety_HQ" file="Emergency\Automates\Safety\Model.hal" name="HS - Safety HQ">
+      <missions>
+        <mission name="move"/>
+        <mission name="park"/>
+      </missions>
+    </automat>
+    <automat dia-type="HS_Medical_HQ" file="Emergency\Automates\Medical\Model.hal" name="HS - Medical HQ">
+      <missions>
+        <mission name="move"/>
+        <mission name="park"/>
       </missions>
     </automat>
     <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.hal" name="Battalion">

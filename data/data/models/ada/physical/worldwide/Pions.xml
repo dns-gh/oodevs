@@ -2617,4 +2617,234 @@
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
   </unit>
+  <unit decisional-model="HS - Firefighter" id="127" name="HS - Fire_Suppression" type="Pion Emergency">
+    <nature atlas-nature="None" level="none" nature="emergency/firefighter/operation/fire suppression"/>
+    <equipments>
+      <equipment count="1" crew="8" major="true" type="Fire Truck"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+  </unit>
+  <unit decisional-model="HS - Police" id="128" name="HS - Law_Police" type="Pion Emergency">
+    <nature atlas-nature="PC" level="none" nature="emergency/police/operation/police"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="Police Car"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+  </unit>
+  <unit decisional-model="HS - Medical" id="129" name="HS - Med_Ambulance" type="Pion Emergency">
+    <nature atlas-nature="PC" level="none" nature="emergency/medical/evacuation/ambulance"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="Ambulance"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+  </unit>
+  <unit decisional-model="HS - Firefighter" id="130" name="HS - Fire_Station" type="Pion Emergency">
+    <nature atlas-nature="None" level="none" nature="emergency/firefighter/fire station"/>
+    <equipments>
+      <equipment count="1" crew="4" major="true" type="Fire Engine"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="131" name="HS - Med_Evacuation_Helicopter" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature="emergency/medical/evacuation/helicopter"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="Transport helicopter"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+  </unit>
+  <unit decisional-model="NBC decontamination troop" id="132" name="HS - Chemical Decontamination" type="Pion NBC">
+    <nature atlas-nature="Blinde" level="oo" nature="emergency/nbc/chemical/recon/wheeled armored vehicle"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="RSV decontamination NBC"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="300"/>
+      <distance-before-point type="urbain" value="400"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>  
+  <unit decisional-model="NBC reconnaissance troop" id="133" name="HS - Chemical Recognition" type="Pion NBC">
+    <nature atlas-nature="Blinde" level="oo" nature="emergency/nbc/chemical/recon/wheeled armored vehicle"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="RSV reconnaissance NBC"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="7" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="300"/>
+      <distance-before-point type="urbain" value="400"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="500"/>
+  </unit>
+  <unit decisional-model="HS - Firefighter" id="134" name="HS - Fire_Station_CP" type="Pion Emergency">
+    <nature atlas-nature="None" level="none" nature="emergency/firefighter/fire station"/>
+    <equipments>
+      <equipment count="1" crew="4" major="true" type="Fire Engine"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+  </unit>
+  <unit decisional-model="HS - Firefighter" id="135" name="HS - Fire_Suppression_CP" type="Pion Emergency">
+    <nature atlas-nature="None" level="none" nature="emergency/firefighter/operation/fire suppression"/>
+    <equipments>
+      <equipment count="1" crew="8" major="true" type="Fire Truck"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+  </unit>
+  <unit decisional-model="HS - Police" id="136" name="HS - Law_Police_CP" type="Pion Emergency">
+    <nature atlas-nature="PC" level="none" nature="emergency/police/operation/police"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="Police Car"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+  </unit>
+  <unit decisional-model="PC TC2" id="137" name="HS - Logistic Support" type="Pion LOG TC2">
+    <nature atlas-nature="Log" level="ooo" nature="emergency/public safety/operation/operation center"/>
+    <equipments>
+      <equipment convoyer="true" count="8" crew="3" type="MTV12,7"/>
+      <equipment convoyer="true" count="22" crew="1" type="TUM 12.7"/>
+      <equipment convoyer="true" count="9" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
+      <equipment count="5" crew="2" major="true" type="Light Recovery Vehicle"/>
+      <equipment count="2" crew="2" major="true" type="Heavy Equipment Transporter System"/>
+      <equipment count="1" crew="3" type="Ambulance"/>
+      <equipment count="5" crew="2" type="Light Armored Vehicle"/>
+      <equipment count="4" crew="2" type="VAB SAN"/>
+      <equipment convoyer="true" count="2" crew="3" type="Load Carrying Vehicle"/>
+      <equipment count="4" crew="2" type="Medical Cell"/>
+      <equipment convoyer="true" count="2" crew="2" major="true" type="30m3 Semi-Trailer Gasoil Tank Trunk"/>
+      <equipment count="5" crew="2" major="true" type="CP mobility repairs team"/>
+      <equipment count="1" crew="2" type="CP repairs team"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="6" type="Officier"/>
+      <crew-rank count="29" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="10000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <dotation capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="10000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="2700s"/>
+      <posture name="PostePrepareGenie" setup-time="2700s"/>
+    </postures>
+    <setup installation-time="60s" uninstallation-time="60s"/>
+    <nbc decontamination-delay="21600s"/>
+  </unit>    
 </units>

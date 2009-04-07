@@ -239,4 +239,29 @@
   <automat decisional-model="Battalion" id="151" name="Teeth Arms Battalion" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Armored squadron CP"/>
   </automat>
+  <automat decisional-model="HS - Medical HQ" id="207" name="HS - Medical_HQ" type="Automate Emergency">
+    <unit command-post="true" min-occurs="3" type="HS - Med_Ambulance"/>
+    <unit max-occurs="2" type="HS - Med_Evacuation_Helicopter"/>
+  </automat>
+  <automat decisional-model="HS - Firefighter HQ" id="208" name="HS - Fire_Station_HQ" type="Automate Emergency">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="HS - Fire_Suppression_CP"/>
+  </automat>
+  <automat decisional-model="HS - Firefighter HQ" id="209" name="HS - Fire_Suppression_HQ" type="Automate Emergency">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="HS - Fire_Station_CP"/>
+    <unit min-occurs="3" type="HS - Fire_Suppression"/>
+    <unit min-occurs="1" type="HS - Fire_Station"/>
+  </automat>
+  <automat decisional-model="HS - Police HQ" id="210" name="HS - Police_HQ" type="Automate Emergency">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="HS - Law_Police_CP"/>
+    <unit min-occurs="2" type="HS - Law_Police"/>
+    <unit type="HS - Chemical Decontamination"/>
+    <unit type="HS - Chemical Recognition"/>
+  </automat>
+  <automat decisional-model="TC2" id="211" name="HS - Supply" type="Automate LOG TC2">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="HS - Logistic Support"/>
+  </automat>
+  <automat decisional-model="NBC decontamination platoon" id="212" name="HS - NBC_HQ" type="Automate NBC">
+    <unit command-post="true" min-occurs="1" type="HS - Chemical Decontamination"/>    
+    <unit min-occurs="1" type="HS - Chemical Recognition"/>
+  </automat>
 </automats>

@@ -759,6 +759,35 @@
       <parameter dia-name="refugies_" name="Refugees" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="campRefugies_" name="Refugees camp" optional="false" type="ObjectKnowledge"/>
     </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_OrganiseShelter" dia-type="T_Mission_Pion_Emergency_OrganiseShelter" id="474" name="Emergency - organise shelter">
+      <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
+      <parameter dia-name="area_" name="Area" optional="false" type="Location"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_BlockRoad" dia-type="T_Mission_Pion_Emergency_BlockRoad" id="475" name="Emergency - block road">
+      <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_Soothe" dia-type="T_Mission_Pion_Emergency_Soothe" id="476" name="Emergency - soothe">
+      <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_Riot" dia-type="T_Mission_Pion_Emergency_Riot" id="477" name="Emergency - riot">
+      <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_ExtinguishFire" dia-type="T_Mission_Pion_Emergency_ExtinguishFire" id="44478" name="Emergency - extinguish fire">
+      <parameter dia-name="position_" name="On Position" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_EvacuateArea" dia-type="T_Mission_Pion_Emergency_EvacuateArea" id="479" name="Emergency - evacuate area">
+      <parameter dia-name="area_" name="Area" optional="false" type="Location"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_ConvoyPopulation" dia-type="T_Mission_Pion_Emergency_ConvoyPopulation" id="480" name="Emergency - convoy population"/>
+    <mission dia-behavior="MIS_Pion_Emergency_ProvideFirstAid" dia-type="T_Mission_Pion_Emergency_ProvideFirstAid" id="481" name="Emergency - provide first aid">
+      <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_EscortDemonstration" dia-type="T_Mission_Pion_Emergency_EscortDemonstration" id="482" name="Emergency - escort demonstration">
+      <parameter dia-name="target_" name="Target" optional="false" type="Agent"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_EscortPopulation" dia-type="T_Mission_Pion_Emergency_EscortPopulation" id="483" name="Emergency - escort population">
+      <parameter dia-name="path_" name="Path" optional="false" type="Path"/>
+    </mission>
   </units>
   <automats>
     <context>
@@ -1327,6 +1356,9 @@
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_Suivre" dia-type="T_Mission_Automate_Suivre" id="330" mrt-dia-behavior="MIS_Automate_MRT_Suivre" name="Follow">
       <parameter dia-name="compagnie_" name="company to follow" optional="false" type="Automate"/>
+    </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_Emergency_EvacuateArea" dia-type="T_Mission_Automate_Emergency_EvacuateArea" id="527" mrt-dia-behavior="MIS_Automate_MRT_Emergency_EvacuateArea" name="Emergency - evacuate area">
+      <parameter dia-name="area_" name="Area" optional="false" type="Location"/>
     </mission>
   </automats>
   <populations>
