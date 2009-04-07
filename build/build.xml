@@ -491,11 +491,8 @@
 
     <target name="test-scripts" description="run all tests">
         <test-scripts dataset="test" physical=""/>
-        <test-scripts dataset="main" physical="france"/>
-        <test-scripts dataset="main" physical="worldwide"/>
         <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="worldwide"/>
-        <test-scripts dataset="civilian" physical=""/>
     </target>
 
     <macrodef name="test-adaptation">
@@ -525,9 +522,8 @@
     </macrodef>
 
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
-        <test-adaptation physical="main/physical/worldwide"/>
-        <test-adaptation physical="main/physical/france"/>
-        <test-adaptation physical="civilian/physical"/>
+        <test-adaptation physical="ada/physical/worldwide"/>
+        <test-adaptation physical="ada/physical/france"/>
         <test-adaptation physical="test/physical"/>
     </target>
 
