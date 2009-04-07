@@ -61,6 +61,7 @@ protected:
     //! @name Helpers
     //@{
     template<typename T> static void ReadMission( xml::xistream& xis, T_MissionIDMap& missionIDs, T_MissionIDMap* pMissionDiaIDs, T_MissionNameMap& missionNames );
+    bool IsMissionAvailableForModel( const DIA_Model& model, const std::string& strBehavior ) const;
     //@}
 };
 

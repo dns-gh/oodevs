@@ -83,6 +83,5 @@ MIL_AutomateMissionType::~MIL_AutomateMissionType()
 // -----------------------------------------------------------------------------
 bool MIL_AutomateMissionType::IsAvailableForModel( const DIA_Model& model ) const
 {
-    DIA_BehaviorPart& behaviorPart = static_cast< DIA_BehaviorPart& >( const_cast< DIA_Model& >( model ).GetBehaviorTool() );
-    return behaviorPart.FindBehavior( strDIAMrtBehavior_ ) != 0 && behaviorPart.FindBehavior( strDIACdtBehavior_ ) != 0;
+    return IsMissionAvailableForModel( model, strDIAMrtBehavior_ ) && IsMissionAvailableForModel( model, strDIACdtBehavior_ );
 }

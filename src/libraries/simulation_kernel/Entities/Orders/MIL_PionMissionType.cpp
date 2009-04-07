@@ -80,6 +80,5 @@ MIL_PionMissionType::~MIL_PionMissionType()
 // -----------------------------------------------------------------------------
 bool MIL_PionMissionType::IsAvailableForModel( const DIA_Model& model ) const
 {
-    DIA_BehaviorPart& behaviorPart = static_cast< DIA_BehaviorPart& >( const_cast< DIA_Model& >( model ).GetBehaviorTool() );
-    return behaviorPart.FindBehavior( strDIABehavior_ ) != 0;
+    return IsMissionAvailableForModel( model, strDIABehavior_ );
 }

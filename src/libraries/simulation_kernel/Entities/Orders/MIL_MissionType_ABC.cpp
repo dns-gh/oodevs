@@ -28,3 +28,13 @@ MIL_MissionType_ABC::~MIL_MissionType_ABC()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionType_ABC::IsMissionAvailableForModel
+// Created: LDC 2009-04-07
+// -----------------------------------------------------------------------------
+bool MIL_MissionType_ABC::IsMissionAvailableForModel( const DIA_Model& model, const std::string& strBehavior ) const
+{
+    DIA_BehaviorPart& behaviorPart = static_cast< DIA_BehaviorPart& >( const_cast< DIA_Model& >( model ).GetBehaviorTool() );
+    return behaviorPart.FindBehavior( strBehavior ) != 0;
+}
