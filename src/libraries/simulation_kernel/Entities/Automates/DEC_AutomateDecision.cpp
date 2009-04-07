@@ -223,16 +223,8 @@ void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission& mission
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission )
 {
-    __try
-    {
-        const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
-        DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionMrtBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).Reset();
-    }
-    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
-    {
-        CleanStateAfterCrash();
-    }
+    const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
+    StopMission( strBehavior, missionMrtBehaviorParameters_, nDIAMissionIdx_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,16 +243,8 @@ void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission& mi
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission& mission )
 {
-    __try
-    {
-        const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
-        DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionConduiteBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).Reset();
-    }
-    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
-    {
-        CleanStateAfterCrash();
-    }
+    const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
+    StopMission( strBehavior, missionConduiteBehaviorParameters_, nDIAMissionIdx_ );
 }
 
 // =============================================================================

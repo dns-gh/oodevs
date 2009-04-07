@@ -52,6 +52,7 @@ protected:
     void LogCrash                 ();
     
     void ActivateOrder( const std::string& strBehavior, DIA_Parameters& parameters, DIA_TypedObject& mission, int missionIndex );
+    void StopMission( const std::string& strBehavior, DIA_Parameters& parameters, int missionIndex );
     //@}
     
     //!@name Accessors

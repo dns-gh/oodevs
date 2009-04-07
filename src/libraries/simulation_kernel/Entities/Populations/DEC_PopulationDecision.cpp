@@ -196,16 +196,8 @@ void DEC_PopulationDecision::StartMissionBehavior( MIL_PopulationMission& missio
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::StopMissionBehavior( MIL_PopulationMission& mission )
 {
-    __try
-    {
-        const std::string& strBehavior = mission.GetType().GetDIABehavior();
-        DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).Reset();
-    }
-    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
-    {
-        CleanStateAfterCrash();
-    }
+    const std::string& strBehavior = mission.GetType().GetDIABehavior();
+    StopMission( strBehavior, missionBehaviorParameters_, nDIAMissionIdx_ );
 }
 
 // =============================================================================

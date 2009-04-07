@@ -205,3 +205,21 @@ void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, DIA_Paramet
     DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, parameters );
     GetVariable( missionIndex ).SetValue( mission );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::StopMission
+// Created: LDC 2009-04-07
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::StopMission( const std::string& strBehavior, DIA_Parameters& parameters, int missionIndex )
+{
+    __try
+    {
+        DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, parameters, true );
+        GetVariable( missionIndex ).Reset();
+    }
+    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
+    {
+        CleanStateAfterCrash();
+    }
+}

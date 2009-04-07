@@ -267,16 +267,8 @@ void DEC_RolePion_Decision::StartMissionBehavior( MIL_PionMission& mission )
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::StopMissionBehavior( MIL_PionMission& mission )
 {
-    __try
-    {
-        const std::string& strBehavior = mission.GetType().GetDIABehavior();
-        DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).Reset();
-    }
-    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
-    {
-        CleanStateAfterCrash();
-    }
+    const std::string& strBehavior = mission.GetType().GetDIABehavior();
+    StopMission( strBehavior, missionBehaviorParameters_, nDIAMissionIdx_ );
 }
 
 // -----------------------------------------------------------------------------
