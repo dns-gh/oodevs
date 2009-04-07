@@ -48,18 +48,13 @@
     <Classe nom="zone interdite tir"                    id="215" />
     <Classe nom="zone interdite mouvement"              id="215" />
     <Classe nom="zone implantation mortier"             id="167" />
-    
-<Classe nom="installation"                          id="210" />
-
-<Classe nom="fire"                          id="210" />
-
-<Classe nom="emergency shelter"             id="210" />
-
-<Classe nom="Population"                            id="139" />
+    <Classe nom="installation"                          id="210" />
+    <Classe nom="fire"                                  id="210" />
+    <Classe nom="emergency shelter"                     id="210" />
+    <Classe nom="Population"                            id="139" />
     <Classe nom="PopulationConcentration"               id="218" />
     <Classe nom="PopulationFlux"                        id="220" />
     <Classe nom="ConnaissancePopulation"                id="223" />
     <Classe nom="ConnaissancePopulationConcentration"   id="222" />
     <Classe nom="ConnaissancePopulationFlux"            id="221" />
 </Classes>
-

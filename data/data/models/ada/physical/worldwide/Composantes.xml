@@ -9787,7 +9787,7 @@
       <breakdown origin="attrition" percentage="50" type="AAC Breakdown NTI3"/>
     </breakdowns>
   </element>
-  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Truck" id="109" name="Fire Truck" protection="UnarmouredVehicle" size="Medium" weight="3">
+  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Truck" id="101" name="Fire Truck" protection="UnarmouredVehicle" size="Medium" weight="3">
     <speeds max="90">
       <speed terrain="inconnu" value="0"/>
       <speed terrain="foret" value="10"/>
@@ -9870,7 +9870,7 @@
       <breakdown origin="attrition" percentage="50" type="MOB Breakdown NTI3 Evac"/>
     </breakdowns>
   </element>
-  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Engine" id="110" name="Fire Engine" protection="UnarmouredVehicle" size="Medium" weight="3">
+  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Engine" id="102" name="Fire Engine" protection="UnarmouredVehicle" size="Medium" weight="3">
     <speeds max="90">
       <speed terrain="inconnu" value="0"/>
       <speed terrain="foret" value="10"/>
@@ -9954,7 +9954,7 @@
       <breakdown origin="attrition" percentage="50" type="MOB Breakdown NTI3 Evac"/>
     </breakdowns>
   </element>
-  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Police Car" id="111" name="Police Car" protection="UnarmouredVehicle" size="Small" weight="1">
+  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Police Car" id="103" name="Police Car" protection="UnarmouredVehicle" size="Small" weight="1">
     <speeds max="90">
       <speed terrain="inconnu" value="0"/>
       <speed terrain="foret" value="1"/>
