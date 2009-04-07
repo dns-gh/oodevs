@@ -166,21 +166,11 @@ void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const uint ) 
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::CleanStateAfterCrash
+// Name: DEC_PopulationDecision::EndCleanStateAfterCrash
 // Created: NLD 2005-06-23
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::CleanStateAfterCrash()
+void DEC_PopulationDecision::EndCleanStateAfterCrash()
 {
-    assert( false ); // To allow debugging ...
-    assert( pEntity_ );   
-    _clearfp();
-
-    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() );
-
-    GetBehaviorPart().ResetPart();
-    Reset();
-    while( GetContext().GetLocation() != 0 )
-        GetContext().ExitContext();
 }
 
 // =============================================================================

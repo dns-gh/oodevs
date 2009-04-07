@@ -62,6 +62,7 @@ public:
     void NotifyAutomateChanged();
 
     void RemoveRepresentationFromCategory( const std::string& name, DIA_TypedObject* pObject );
+    void RemoveAllReferencesOf( const DIA_TypedObject& referenced, DIA_ExecutionContext& context );
     //@}
 
     //! @name Accessors
@@ -90,7 +91,7 @@ public:
 private:
     //! @name Tools
     //@{
-    virtual void CleanStateAfterCrash      ();
+    virtual void EndCleanStateAfterCrash  ();
     //@}
 
 private:

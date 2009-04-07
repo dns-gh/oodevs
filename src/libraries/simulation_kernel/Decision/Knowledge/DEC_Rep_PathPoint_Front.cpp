@@ -48,7 +48,7 @@ DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
     if( pSentToDiaAgent_ )
     {
         pSentToDiaAgent_->RemoveRepresentationFromCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
-        pSentToDiaAgent_->GetBehaviorPart ().RemoveAllReferencesOf( *this, pSentToDiaAgent_->GetContext() );    
+        pSentToDiaAgent_->RemoveAllReferencesOf( *this, pSentToDiaAgent_->GetContext() );    
     }
 }
 

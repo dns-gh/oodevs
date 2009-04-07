@@ -43,7 +43,6 @@ public:
     //! @name Operations
     //@{
     virtual void UpdateDecision() = 0;
-    virtual void Reset() = 0;
     virtual DIA_Variable_ABC* ExecuteFunction( const std::string& szFuncName, DIA_Parameters& parameters ) = 0;
     //@}
 

@@ -82,7 +82,7 @@ public:
 private:
     //! @name Tools
     //@{
-    virtual void      CleanStateAfterCrash      ();
+    virtual void      EndCleanStateAfterCrash      ();
     //@}
 
 private:

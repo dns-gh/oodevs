@@ -41,27 +41,28 @@ public:
     virtual void Reset();
     virtual DIA_Variable_ABC* ExecuteFunction( const std::string& szFuncName, DIA_Parameters& parameters );
     //@}
-    
-    //!@name Accessors
-    //@{
-    DIA_BehaviorPart&   GetBehaviorPart () const;
-    DIA_Knowledge_Part& GetKnowledgePart() const;
-    //@}
 
 protected:
     //! @name Helpers
     //@{
-    virtual void CleanStateAfterCrash     () = 0;
+    void CleanStateAfterCrash     ();
 
-            void StartDefaultBehavior     ();
-            void StopDefaultBehavior      ();
-            void LogCrash                 ();
+    void StartDefaultBehavior     ();
+    void StopDefaultBehavior      ();
+    void LogCrash                 ();
+    //@}
+    
+    //!@name Accessors
+    //@{
+    DIA_BehaviorPart&   GetBehaviorPart () const;
     //@}
 
 private://! @name Helpers
     //@{
     void HandleUpdateDecisionError ();
     bool IsDefaultBehaviorAvailable() const;
+    
+    virtual void EndCleanStateAfterCrash  () = 0;
     //@}
 
 protected:

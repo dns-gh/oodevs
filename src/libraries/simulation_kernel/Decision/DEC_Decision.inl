@@ -97,6 +97,27 @@ void DEC_Decision<T>::Reset()
     static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ).Reset();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::CleanStateAfterCrash
+// Created: LDC 2009-04-07
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::CleanStateAfterCrash()
+{    
+    assert( false ); // To allow debugging ...
+    assert( pEntity_ );   
+    _clearfp();
+
+    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() );
+
+    GetBehaviorPart().ResetPart();
+    Reset();
+    while( GetContext().GetLocation() != 0 )
+        GetContext().ExitContext();
+
+    EndCleanStateAfterCrash();
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_Decision::GetBehaviorPart
 // Created: NLD 2002-12-12
@@ -107,18 +128,6 @@ DIA_BehaviorPart& DEC_Decision<T>::GetBehaviorPart() const
     assert( pBehaviorTool_ != 0 );
     return( static_cast< DIA_BehaviorPart& >( *pBehaviorTool_ ) );
 }
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Decision::GetKnowledgePart
-// Created: AGN 02-12-19
-//-----------------------------------------------------------------------------
-template <class T>
-DIA_Knowledge_Part& DEC_Decision<T>::GetKnowledgePart() const
-{
-    assert( pKnowledgeTool_ != 0 );
-    return( static_cast< DIA_Knowledge_Part& > (*pKnowledgeTool_) );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::HandleUpdateDecisionError

@@ -194,21 +194,11 @@ void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) co
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::CleanStateAfterCrash
+// Name: DEC_AutomateDecision::EndCleanStateAfterCrash
 // Created: NLD 2005-06-23
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::CleanStateAfterCrash()
+void DEC_AutomateDecision::EndCleanStateAfterCrash()
 {
-    assert( false ); // To allow debugging ...
-    assert( pEntity_ );   
-    _clearfp();
-
-    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() );
-    
-    GetBehaviorPart().ResetPart();
-    Reset();
-    while( GetContext().GetLocation() != 0 )
-        GetContext().ExitContext();
 }
 
 // =============================================================================

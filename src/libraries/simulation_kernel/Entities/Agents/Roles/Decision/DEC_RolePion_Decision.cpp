@@ -221,27 +221,14 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::CleanStateAfterCrash
-// Created: NLD 2005-06-23
+// Name: DEC_RolePion_Decision::EndCleanStateAfterCrash
+// Created: LDC 2009-04-07
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::CleanStateAfterCrash()
+void DEC_RolePion_Decision::EndCleanStateAfterCrash()
 {
-    assert( false ); // To allow debugging ...        
-    assert( pEntity_ );    
-    _clearfp();
-
-    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() );
-
-    while( GetContext().GetLocation() != 0 )
-        GetContext().ExitContext();
-
-    GetBehaviorPart().ResetPart();
-    Reset();
-
     pEntity_->CancelAllActions();
     GetRole< PHY_RolePion_Perceiver >().DisableAllPerceptions();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::RemoveRepresentationFromCategory
@@ -250,6 +237,15 @@ void DEC_RolePion_Decision::CleanStateAfterCrash()
 void DEC_RolePion_Decision::RemoveRepresentationFromCategory( const std::string& name, DIA_TypedObject* pObject )
 {
     GetRole< DEC_Representations >().RemoveFromCategory( name, pObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::RemoveAllReferencesOf
+// Created: LDC 2009-04-07
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::RemoveAllReferencesOf( const DIA_TypedObject& referenced, DIA_ExecutionContext& context )
+{
+    GetBehaviorPart().RemoveAllReferencesOf( referenced, context );
 }
 
 // =============================================================================
