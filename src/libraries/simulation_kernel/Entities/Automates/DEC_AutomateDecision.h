@@ -100,9 +100,6 @@ private:
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Automate
     //    static int nDIANameIdx_;
-
-    static uint nMissionMrtBehaviorDummyId_;
-    static uint nMissionConduiteBehaviorDummyId_;
 };
 
 #include "DEC_AutomateDecision.inl"

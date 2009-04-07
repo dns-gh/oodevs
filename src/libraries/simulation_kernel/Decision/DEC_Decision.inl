@@ -191,3 +191,17 @@ bool DEC_Decision<T>::IsDefaultBehaviorAvailable() const
 {
     return GetBehaviorPart().FindBehavior( "BEH_Defaut" ) != 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::ActivateOrder
+// Created: LDC 2009-04-07
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, DIA_Parameters& parameters, DIA_TypedObject& mission, int missionIndex )
+{
+    static int nMissionMrtBehaviorDummyId = 0;
+    parameters.GetParameter( 0 ).SetValue( mission );
+    parameters.GetParameter( 1 ).SetValue( nMissionMrtBehaviorDummyId++ );
+    DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, parameters );
+    GetVariable( missionIndex ).SetValue( mission );
+}

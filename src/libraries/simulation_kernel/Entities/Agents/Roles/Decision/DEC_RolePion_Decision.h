@@ -113,8 +113,6 @@ private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Pion
     static int nDIANameIdx_;
     static int nDIAAutomateIdx_;
-
-    static uint nMissionBehaviorDummyId_;
 };
 
 #include "DEC_RolePion_Decision.inl"

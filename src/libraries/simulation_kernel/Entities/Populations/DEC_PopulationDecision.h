@@ -87,8 +87,6 @@ private:
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Population
     static int nDIANameIdx_;
-
-    static uint nMissionBehaviorDummyId_;
 };
 
 #endif // __DEC_PopulationDecision_h_

@@ -26,7 +26,6 @@
 
 int  DEC_PopulationDecision::nDIAMissionIdx_          = 0;
 int  DEC_PopulationDecision::nDIANameIdx_             = 0;
-uint DEC_PopulationDecision::nMissionBehaviorDummyId_ = 0;
 
 BOOST_CLASS_EXPORT_GUID( DEC_PopulationDecision, "DEC_PopulationDecision" )
 
@@ -187,11 +186,8 @@ void DEC_PopulationDecision::EndCleanStateAfterCrash()
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::StartMissionBehavior( MIL_PopulationMission& mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior();
-    missionBehaviorParameters_.GetParameter( 0 ).SetValue( mission );
-    missionBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionBehaviorDummyId_++ );
-    DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionBehaviorParameters_ );
-    GetVariable( nDIAMissionIdx_ ).SetValue( mission );
+    const std::string& strBehavior = mission.GetType().GetDIABehavior();    
+    ActivateOrder( strBehavior, missionBehaviorParameters_, mission, nDIAMissionIdx_ );
 }
 
 // -----------------------------------------------------------------------------

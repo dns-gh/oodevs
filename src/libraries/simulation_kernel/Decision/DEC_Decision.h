@@ -50,6 +50,8 @@ protected:
     void StartDefaultBehavior     ();
     void StopDefaultBehavior      ();
     void LogCrash                 ();
+    
+    void ActivateOrder( const std::string& strBehavior, DIA_Parameters& parameters, DIA_TypedObject& mission, int missionIndex );
     //@}
     
     //!@name Accessors

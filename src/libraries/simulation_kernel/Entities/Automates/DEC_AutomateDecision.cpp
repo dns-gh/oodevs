@@ -27,8 +27,6 @@
 #include "DIA/DIA_Internal_Exception.h"
 
 int  DEC_AutomateDecision::nDIAMissionIdx_                  = 0;
-uint DEC_AutomateDecision::nMissionMrtBehaviorDummyId_      = 0;
-uint DEC_AutomateDecision::nMissionConduiteBehaviorDummyId_ = 0;
 
 BOOST_CLASS_EXPORT_GUID( DEC_AutomateDecision, "DEC_AutomateDecision" )
 
@@ -216,10 +214,7 @@ void DEC_AutomateDecision::EndCleanStateAfterCrash()
 void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
-    missionMrtBehaviorParameters_.GetParameter( 0 ).SetValue( mission );
-    missionMrtBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionMrtBehaviorDummyId_++ );
-    DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionMrtBehaviorParameters_ );
-    GetVariable( nDIAMissionIdx_ ).SetValue( mission );
+    ActivateOrder( strBehavior, missionMrtBehaviorParameters_, mission, nDIAMissionIdx_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,10 +242,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission 
 void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
-    missionConduiteBehaviorParameters_.GetParameter( 0 ).SetValue( mission );
-    missionConduiteBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionConduiteBehaviorDummyId_++ );
-    DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionConduiteBehaviorParameters_ );
-    GetVariable( nDIAMissionIdx_ ).SetValue( mission );
+    ActivateOrder( strBehavior, missionConduiteBehaviorParameters_, mission, nDIAMissionIdx_ );
 }
 
 // -----------------------------------------------------------------------------
