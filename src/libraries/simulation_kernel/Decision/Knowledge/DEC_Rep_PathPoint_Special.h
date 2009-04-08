@@ -52,6 +52,4 @@ private:
     static int nDIAIdxTypePart_;
 };
 
-#include "DEC_Rep_PathPoint_Special.inl"
-
 #endif // __DEC_Rep_PathPoint_Special_h_

@@ -48,7 +48,6 @@ public:
 private:
     DEC_Rep_PathPoint& destPoint_;
 
-    mutable DIA_Parameters       diaParameters_;
     mutable DEC_Representations* pSentToDiaAgent_;
 
 private:
@@ -56,7 +55,5 @@ private:
     static int nDIAClsIdx_;
     static int nDIADestIdx_;
 };
-
-#include "DEC_Rep_PathPoint_Front.inl"
 
 #endif // __DEC_Rep_PathPoint_Front_h_

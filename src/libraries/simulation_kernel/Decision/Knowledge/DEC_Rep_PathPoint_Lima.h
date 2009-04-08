@@ -43,6 +43,4 @@ private:
     static int nDIAIdxTypeLima_;
 };
 
-#include "DEC_Rep_PathPoint_Lima.inl"
-
 #endif // __DEC_Rep_PathPoint_Lima_h_
