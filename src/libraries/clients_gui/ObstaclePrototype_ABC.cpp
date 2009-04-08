@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "ObstaclePrototype_ABC.h"
+#include "moc_ObstaclePrototype_ABC.cpp"
 #include "ValuedListItem.h"
 #include "Tools.h"
 
