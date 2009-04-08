@@ -11,7 +11,6 @@
 
 #include "clients_gui_pch.h"
 #include "LogisticPrototype_ABC.h"
-#include "moc_LogisticPrototype_ABC.cpp"
 
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
