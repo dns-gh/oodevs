@@ -12,7 +12,7 @@
 #ifndef __MIL_ObjectFilter_h_
 #define __MIL_ObjectFilter_h_
 
-#include <hash_set>
+#include <set>
 #include <boost/functional/hash.hpp>
 
 class DIA_Parameters;
@@ -41,31 +41,7 @@ public:
 private:
     //! @name Types
     //@{
-    template<class Key>
-    class hash_compare
-    {
-    public:
-         static const std::size_t bucket_size = 4;
-         static const std::size_t min_buckets = 8;
-
-         hash_compare() : hasher_ () 
-         {
-         }
-         
-         std::size_t operator()(const Key& k) const 
-         {
-             return hasher_( k );
-         }
-
-         bool operator()( const Key& k1, const Key& k2 ) const 
-         {
-             return k1 < k2;
-         }
-    private:
-        boost::hash< Key >  hasher_;
-    };
-
-    typedef stdext::hash_set<std::string, hash_compare<std::string> > T_ObjectStateMap; 
+    typedef std::set<std::string> T_ObjectStateMap; 
     //@}
 
 private:

@@ -25,7 +25,6 @@
 // static
 void MIL_PopulationMission::InitializeDIA()
 {
-    /*const DIA_TypeDef& diaType = */DEC_Tools::GetDIAType( "T_Mission_Population" );
 }
 
 // -----------------------------------------------------------------------------
