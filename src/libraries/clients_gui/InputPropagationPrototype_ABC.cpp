@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "InputPropagationPrototype_ABC.h"
-#include "moc_InputPropagationPrototype_ABC.cpp"
 #include "Tools.h"
 #include <qfiledialog.h>
 
