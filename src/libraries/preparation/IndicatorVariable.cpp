@@ -14,8 +14,8 @@
 // Name: IndicatorVariable constructor
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-IndicatorVariable::IndicatorVariable( unsigned long id, const std::string& name )
-    : IndicatorConstant< std::string >( id, std::string( "$" ) + name )
+IndicatorVariable::IndicatorVariable( unsigned long id, const std::string& name, const IndicatorType& type )
+    : IndicatorConstant< std::string >( id, std::string( "$" ) + name, type )
 {
     // NOTHING
 }

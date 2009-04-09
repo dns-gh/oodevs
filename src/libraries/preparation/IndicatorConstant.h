@@ -11,6 +11,7 @@
 #define __IndicatorConstant_h_
 
 #include "IndicatorElement_ABC.h"
+#include "IndicatorType.h"
 #include <xeumeuleu/xml.h>
 
 // =============================================================================
@@ -26,8 +27,14 @@ class IndicatorConstant : public IndicatorElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorConstant( unsigned long id, const T& value ) : IndicatorElement_ABC( id ), value_( value ) {}
+             IndicatorConstant( unsigned long id, const T& value, const IndicatorType& type )
+                 : IndicatorElement_ABC( id ), value_( value ), type_( type ) {}
     virtual ~IndicatorConstant() {}
+    //@}
+
+    //! @name Accessors
+    //@{
+    const IndicatorType& GetType() const;
     //@}
 
     //! @name Operations
@@ -52,8 +59,19 @@ private:
     //! @name Member data
     //@{
     const T value_;
+    const IndicatorType& type_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorConstant::GetType
+// Created: SBO 2009-04-09
+// -----------------------------------------------------------------------------
+template< typename T >
+const IndicatorType& IndicatorConstant< T >::GetType() const
+{
+    return type_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorConstant::AddParameter
@@ -75,6 +93,7 @@ void IndicatorConstant< T >::Serialize( xml::xostream& xos ) const
     xos << xml::start( "constant" )
             << xml::attribute( "id", GetId() )
             << xml::attribute< T >( "value", value_ )
+            << xml::attribute( "type", type_.ToString() )
         << xml::end();
 }
 

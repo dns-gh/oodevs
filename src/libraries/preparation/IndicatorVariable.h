@@ -24,7 +24,7 @@ class IndicatorVariable : public IndicatorConstant< std::string >
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorVariable( unsigned long id, const std::string& name );
+             IndicatorVariable( unsigned long id, const std::string& name, const IndicatorType& type );
     virtual ~IndicatorVariable();
     //@}
 

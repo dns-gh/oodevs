@@ -12,6 +12,9 @@
 
 #include "IndicatorElement_ABC.h"
 
+class IndicatorPrimitive;
+class IndicatorPrimitiveParameter;
+
 // =============================================================================
 /** @class  IndicatorFunction
     @brief  IndicatorFunction
@@ -24,8 +27,13 @@ class IndicatorFunction : public IndicatorElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorFunction( unsigned long id, const std::string& name );
+             IndicatorFunction( unsigned long id, const IndicatorPrimitive& primitive );
     virtual ~IndicatorFunction();
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const IndicatorType& GetType() const;
     //@}
 
     //! @name Operations
@@ -44,13 +52,13 @@ private:
 
     //! @name Helpers
     //@{
-    typedef std::vector< boost::shared_ptr< IndicatorElement_ABC > > T_Parameters;
+    typedef std::map< const IndicatorPrimitiveParameter*, boost::shared_ptr< IndicatorElement_ABC > > T_Parameters;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string name_;
+    const IndicatorPrimitive& primitive_;
     T_Parameters parameters_;
     //@}
 };

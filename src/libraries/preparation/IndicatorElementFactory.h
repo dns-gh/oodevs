@@ -12,6 +12,8 @@
 
 #include "IndicatorElementFactory_ABC.h"
 
+class IndicatorPrimitives;
+
 // =============================================================================
 /** @class  IndicatorElementFactory
     @brief  IndicatorElementFactory
@@ -24,7 +26,7 @@ class IndicatorElementFactory : public IndicatorElementFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorElementFactory();
+    explicit IndicatorElementFactory( const IndicatorPrimitives& primitives );
     virtual ~IndicatorElementFactory();
     //@}
 
@@ -51,6 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const IndicatorPrimitives& primitives_;
     mutable unsigned long id_;
     //@}
 };

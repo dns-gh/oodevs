@@ -17,6 +17,9 @@ namespace xml
     class xostream;
 }
 
+class IndicatorPrimitiveParameter;
+class IndicatorType;
+
 // =============================================================================
 /** @class  IndicatorElement_ABC
     @brief  IndicatorElement_ABC
@@ -36,6 +39,7 @@ public:
     //! @name Accessors
     //@{
     unsigned long GetId() const { return id_; }
+    virtual const IndicatorType& GetType() const = 0;
     //@}
 
     //! @name Operations

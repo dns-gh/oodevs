@@ -12,13 +12,20 @@
 #include "IndicatorConstant.h"
 #include "IndicatorVariable.h"
 #include "IndicatorFunction.h"
+#include "IndicatorType.h"
+#include "IndicatorPrimitives.h"
+#pragma warning( push, 1 )
+#pragma warning( disable : 4512 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorElementFactory constructor
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-IndicatorElementFactory::IndicatorElementFactory()
-    : id_( 0 )
+IndicatorElementFactory::IndicatorElementFactory( const IndicatorPrimitives& primitives )
+    : primitives_( primitives )
+    , id_( 0 )
 {
     // NOTHING
 }
@@ -38,7 +45,8 @@ IndicatorElementFactory::~IndicatorElementFactory()
 // -----------------------------------------------------------------------------
 IndicatorElement_ABC* IndicatorElementFactory::CreateNumber( double value ) const
 {
-    return new IndicatorConstant< double >( NextId(), value );
+    static IndicatorType type( "float" );
+    return new IndicatorConstant< double >( NextId(), value, type );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +55,8 @@ IndicatorElement_ABC* IndicatorElementFactory::CreateNumber( double value ) cons
 // -----------------------------------------------------------------------------
 IndicatorElement_ABC* IndicatorElementFactory::CreateVariable( const std::string& name ) const
 {
-    return new IndicatorVariable( NextId(), name );
+    static IndicatorType type( "variable" ); // $$$$ SBO 2009-04-09: 
+    return new IndicatorVariable( NextId(), name, type );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +74,7 @@ IndicatorElement_ABC* IndicatorElementFactory::CreateExtractor( const std::strin
 // -----------------------------------------------------------------------------
 IndicatorElement_ABC* IndicatorElementFactory::CreateFunction( const std::string& name ) const
 {
-    return new IndicatorFunction( NextId(), name );
+    return new IndicatorFunction( NextId(), primitives_.Get( boost::algorithm::to_lower_copy( name ).c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
