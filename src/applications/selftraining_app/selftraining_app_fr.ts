@@ -212,6 +212,18 @@
         <source>Options</source>
         <translation>Options</translation>
     </message>
+    <message>
+        <source>English</source>
+        <translation>English</translation>
+    </message>
+    <message>
+        <source>Fran&#xe7;ais</source>
+        <translation>Français</translation>
+    </message>
+    <message>
+        <source>Language: </source>
+        <translation>Langue: </translation>
+    </message>
 </context>
 <context>
     <name>ProcessDialogs</name>

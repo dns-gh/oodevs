@@ -20,6 +20,7 @@
 // =============================================================================
 class OptionsPage : public ContentPage
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -28,8 +29,10 @@ public:
     virtual ~OptionsPage();
     //@}
 
+private slots:
     //! @name Operations
     //@{
+    void OnChangeLanguage( const QString& lang );
     //@}
 
 private:
@@ -41,11 +44,19 @@ private:
 
     //! @name Helpers
     //@{
+    void Commit();
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< QString, std::string > T_Languages;
     //@}
 
 private:
     //! @name Member data
     //@{
+    T_Languages languages_;
+    std::string selectedLanguage_;
     //@}
 };
 
