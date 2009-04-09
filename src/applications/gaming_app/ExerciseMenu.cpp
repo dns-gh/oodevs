@@ -72,9 +72,7 @@ namespace
 {
     std::string MakeLink( const std::string& file )
     {
-        const QFileInfo info( file.c_str() );
-        const QString protocol = info.extension( false ) == "exe" ? "cmd" : "file";
-        return QString( "%1://%2" ).arg( protocol ).arg( info.absFilePath() ).ascii();
+        return QString( "file://%1" ).arg( QFileInfo( file.c_str() ).absFilePath() ).ascii();
     }
 }
 
