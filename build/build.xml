@@ -457,7 +457,8 @@
 
     <target name="clients_test" depends="library.preparation">
         <build-test name="clients" depends="boost,qt,xeumeuleu"
-            libs="lib${ant.project.name}_preparation-${platform}-mt@{suffix}">
+            libs="lib${ant.project.name}_preparation-${platform}-mt@{suffix}
+                  lib${ant.project.name}_tools-${platform}-mt">
         </build-test>
     </target>
 
