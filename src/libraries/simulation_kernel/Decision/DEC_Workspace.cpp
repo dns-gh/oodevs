@@ -229,7 +229,7 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 
     xisDecisional >> xml::attribute( "max-neutralized-state", nTmp );
     if( nTmp < 0 || nTmp > 100 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "degerousity-modifiers: max-neutralized-state not in [0..100]" );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dangerousity-modifiers: max-neutralized-state not in [0..100]" );
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
     PHY_RolePion_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
 

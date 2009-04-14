@@ -51,7 +51,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
                     >> xml::start( "configuration" )
                         >> xml::attribute( "distance-threshold", rDistanceThreshold_ );
     if( tools::ReadTimeAttribute( xis, "max-calculation-time", nMaxComputationDuration_ ) && nMaxComputationDuration_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "pathfind configuartion : max-calculation-time w<= 0" );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind configuration : max-calculation-time w<= 0" );
 
     xisPathfind     >> xml::end();
 

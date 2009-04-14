@@ -34,7 +34,7 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint 
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     if( !GetAutomate().GetType().IsLogistic() )
-        xis.error( "The automata of this pion is not a logistic one. Haaahahahahah" );
+        xis.error( "The automata of this pion is not a logistic one." );
 }
 
 // -----------------------------------------------------------------------------

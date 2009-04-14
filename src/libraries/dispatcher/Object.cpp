@@ -179,5 +179,5 @@ void Object::Display( kernel::Displayer_ABC& ) const
 // -----------------------------------------------------------------------------
 const kernel::ObjectType& Object::GetType() const
 {
-    throw std::runtime_error( "Not implemented" );
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

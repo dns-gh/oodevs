@@ -106,5 +106,5 @@ void Formation::Accept( ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 const kernel::HierarchyLevel_ABC& Formation::GetLevel() const
 {
-    throw std::runtime_error( "Not implemented" ); // $$$$ AGE 2008-06-20: 
+    throw std::runtime_error( __FUNCTION__ " not implemented" ); // $$$$ AGE 2008-06-20: 
 }

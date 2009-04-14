@@ -500,7 +500,7 @@ void TER_Localisation::Read( xml::xistream& xis )
     xis >> end(); // shape
 
     if( !Initialize() )
-        throw MT_ScipioException( "TER_Localisation::Read", __FILE__, __LINE__, "Invalid localisation" ); // $$$$ ABL 2007-07-09: error context
+        throw MT_ScipioException( "TER_Localisation::Read", __FILE__, __LINE__, "Invalid location" ); // $$$$ ABL 2007-07-09: error context
 }
 
 // -----------------------------------------------------------------------------
@@ -580,7 +580,7 @@ TER_Localisation::E_LocationType TER_Localisation::ConvertLocalisationType( cons
     else if ( !::strcmpi( strType.c_str(), "secteur" ) )
         return eSector;
     else
-        throw MT_ScipioException( "TER_Localisation::ConvertLocalisationType", __FILE__, __LINE__, MT_FormatString( "Invalid localisation type: '%s'", strType.c_str() ) );
+        throw MT_ScipioException( "TER_Localisation::ConvertLocalisationType", __FILE__, __LINE__, MT_FormatString( "Invalid location type: '%s'", strType.c_str() ) );
 }
 
 
@@ -601,7 +601,7 @@ std::string TER_Localisation::ConvertLocalisationType( E_LocationType nType )   
         default : break;
     }
 
-    throw MT_ScipioException( "TER_Localisation::ConvertLocalisationType", __FILE__, __LINE__, MT_FormatString( "Invalid localisation type: '%d'", nType ) );
+    throw MT_ScipioException( "TER_Localisation::ConvertLocalisationType", __FILE__, __LINE__, MT_FormatString( "Invalid location type: '%d'", nType ) );
 }
 
 

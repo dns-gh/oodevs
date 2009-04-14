@@ -658,7 +658,7 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const MIL_O
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
-    throw std::exception( "MIL_EntityManager::CreateObject not implemented" );    
+    throw std::exception( __FUNCTION__ " not implemented" );    
     // return pObjectManager_->CreateObject( type, army, localisation, strOption, strExtra, rCompletion, rMining, rBypass );
 }
 

@@ -317,5 +317,5 @@ MT_Float& PHY_Speeds::SpeedFor( const TerrainData& data )
 // -----------------------------------------------------------------------------
 void PHY_Speeds::DumpSpeeds( const TerrainData& ) const
 {
-   MT_LOG_INFO_MSG( "Hahaha do it yourself !" ); // $$$$ AGE 2005-02-03: 
+   MT_LOG_INFO_MSG( "Speed dump not implemented..." ); // $$$$ AGE 2005-02-03: 
 }

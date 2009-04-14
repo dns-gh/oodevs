@@ -159,7 +159,7 @@ unsigned int PopulationFlow::GetLivingHumans() const
 // -----------------------------------------------------------------------------
 unsigned int PopulationFlow::GetDensity() const
 {
-    throw std::runtime_error( "Not implemented" );
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,5 +168,5 @@ unsigned int PopulationFlow::GetDensity() const
 // -----------------------------------------------------------------------------
 QString PopulationFlow::GetAttitude() const
 {
-    throw std::runtime_error( "Not implemented" );
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

@@ -84,7 +84,7 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
 
     std::ifstream file( config.BuildCheckpointChildFile( "data" ).c_str(), std::ios::in | std::ios::binary );
     if ( !file || !file.is_open() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't open file '%s'", config.BuildCheckpointChildFile( "data" ).c_str() ) );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file '%s'", config.BuildCheckpointChildFile( "data" ).c_str() ) );
 
     MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file );
     
@@ -183,7 +183,7 @@ void MIL_CheckPointManager::CreateMetaData( const std::string& strFileName, cons
     }
     catch( ... )
     {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't create file '%s'", strFileName.c_str() ) );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot create file '%s'", strFileName.c_str() ) );
     }
 }
 
@@ -196,7 +196,7 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
     std::ofstream file( strFileName.c_str(), std::ios::out | std::ios::binary );
 
     if ( !file || !file.is_open() )
-        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__, MT_FormatString( "Can't open file '%s'", strFileName.c_str() ) );
+        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__, MT_FormatString( "Cannot open file '%s'", strFileName.c_str() ) );
 
     MIL_CheckPointOutArchive* pArchive = new MIL_CheckPointOutArchive( file );
     
@@ -223,7 +223,7 @@ namespace
                 >> xml::attribute( "crc", nCRC );
             if( MIL_Tools::ComputeCRC( strFileName ) != nCRC )
                 throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ ,
-                    "Checkpoint can not be loaded - File '" + strFileName + "' has changed since the checkpoint creation" );
+                    "Cannot load checkpoint - File '" + strFileName + "' has changed since the checkpoint creation" );
         }
     };
 }
@@ -256,14 +256,14 @@ void MIL_CheckPointManager::CheckCRC( const MIL_Config& config )
         >> xml::end();
             
     if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "CRCs.xml" ) ) != nCRC )
-        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Checkpoint can not be loaded - File 'CRCs.xml' has changed since the checkpoint creation" );
+        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Cannot load checkpoint - File 'CRCs.xml' has changed since the checkpoint creation" );
 
     CheckFilesCRC( config );
 
     xis >> xml::start( "save" )
             >> xml::attribute( "crc", nCRC );
     if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "data" ) ) != nCRC )
-        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Checkpoint can not be loaded - File 'data' has changed since the checkpoint creation" );
+        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Cannot load checkpoint - File 'data' has changed since the checkpoint creation" );
 }
 
 // -----------------------------------------------------------------------------

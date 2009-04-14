@@ -232,7 +232,7 @@ void Population::Accept( ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 const kernel::PopulationType& Population::GetType() const
 {
-    throw std::runtime_error( "Not implemented" );
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +241,7 @@ const kernel::PopulationType& Population::GetType() const
 // -----------------------------------------------------------------------------
 unsigned int Population::GetLivingHumans() const
 {
-    throw std::runtime_error( "Not implemented" );
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,5 +250,5 @@ unsigned int Population::GetLivingHumans() const
 // -----------------------------------------------------------------------------
 unsigned int Population::GetDeadHumans() const
 {
-    throw std::runtime_error( "Not implemented" );
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

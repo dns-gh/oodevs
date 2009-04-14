@@ -140,7 +140,7 @@ unsigned int PopulationConcentration::GetLivingHumans() const
 // -----------------------------------------------------------------------------
 unsigned int PopulationConcentration::GetDensity() const
 {
-    throw std::runtime_error( "Not implemented" );
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,5 +149,5 @@ unsigned int PopulationConcentration::GetDensity() const
 // -----------------------------------------------------------------------------
 QString PopulationConcentration::GetAttitude() const
 {
-    throw std::runtime_error( "Not implemented" );
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

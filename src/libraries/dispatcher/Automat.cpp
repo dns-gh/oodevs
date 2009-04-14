@@ -357,7 +357,7 @@ void Automat::Accept( ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 const kernel::AutomatType& Automat::GetType() const
 {
-    throw std::runtime_error( "Not implemented" ); // $$$$ AGE 2008-06-20: 
+    throw std::runtime_error( __FUNCTION__ " not implemented" ); // $$$$ AGE 2008-06-20: 
 }
 
 // -----------------------------------------------------------------------------
