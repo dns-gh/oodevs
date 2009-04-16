@@ -31,7 +31,7 @@ public:
     //! @name Operations
     //@{
     virtual void HandleNumber( double value ) = 0;
-    virtual void HandleExtract( const boost::spirit::classic::tree_match< const char* >::const_tree_iterator& it ) = 0;
+    virtual void HandleString( const std::string& value ) = 0;
     virtual void HandleVariable( const std::string& name ) = 0;
     virtual void HandleFunctionCall( const std::string& name, unsigned int parameters ) = 0;
     //@}

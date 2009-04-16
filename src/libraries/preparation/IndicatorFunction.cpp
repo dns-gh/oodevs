@@ -12,6 +12,7 @@
 #include "IndicatorPrimitive.h"
 #include "IndicatorPrimitiveParameter.h"
 #include "IndicatorType.h"
+#include "IndicatorTypeResolver.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
@@ -22,9 +23,11 @@
 // Name: IndicatorFunction constructor
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-IndicatorFunction::IndicatorFunction( unsigned long id, const IndicatorPrimitive& primitive )
+IndicatorFunction::IndicatorFunction( const std::string& id, const IndicatorPrimitive& primitive )
     : IndicatorElement_ABC( id )
     , primitive_( primitive )
+    , typeResolver_( boost::shared_ptr< IndicatorTypeResolver >( new IndicatorTypeResolver() ) )
+    , type_( new IndicatorType( primitive_.GetType(), typeResolver_ ) )
 {
     // NOTHING
 }
@@ -38,48 +41,23 @@ IndicatorFunction::~IndicatorFunction()
     // NOTHING
 }
 
-namespace
-{
-    class ParameterTypeChecker : public IndicatorPrimitiveParameterVisitor_ABC
-    {
-    public:
-        ParameterTypeChecker( const IndicatorElement_ABC& element, unsigned int count )
-            : element_( element )
-            , count_( count )
-            , current_( 0 )
-            , parameter_( 0 )
-        {}
-        virtual ~ParameterTypeChecker() {}
-
-        virtual void Visit( const IndicatorPrimitiveParameter& parameter )
-        {
-            if( current_++ != count_ )
-                return;
-            if( element_.GetType() != parameter.GetType() )
-                throw std::exception( "parameter type mismatch" );
-            parameter_ = &parameter;
-        }
-
-    private:
-        ParameterTypeChecker& operator=( const ParameterTypeChecker& );
-
-    public:
-        const IndicatorElement_ABC& element_;
-        const unsigned int count_;
-        unsigned int current_;
-        const IndicatorPrimitiveParameter* parameter_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: IndicatorFunction::AddParameter
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
 void IndicatorFunction::AddParameter( boost::shared_ptr< IndicatorElement_ABC > element )
 {
-    ParameterTypeChecker checker( *element, parameters_.size() );
-    primitive_.Accept( checker );
-    parameters_[ checker.parameter_ ] = element;
+    const IndicatorPrimitiveParameter* parameter = primitive_.FindParameter( parameters_.size() );
+    if( !parameter )
+        throw std::exception( "Parameter mismatch." );
+    if( element->GetType() != parameter->GetType() )
+    {
+        std::stringstream ss;
+        ss << "parameter type mismatch : " << element->GetType().ToString() << " != " << parameter->GetType().ToString();
+        throw std::exception( ss.str().c_str() );
+    }
+    parameters_.push_back( std::make_pair( parameter, element ) );
+    typeResolver_->AddElement( element->GetType(), parameter->GetType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +66,7 @@ void IndicatorFunction::AddParameter( boost::shared_ptr< IndicatorElement_ABC > 
 // -----------------------------------------------------------------------------
 const IndicatorType& IndicatorFunction::GetType() const
 {
-    return primitive_.GetType();
+    return *type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -101,25 +79,38 @@ void IndicatorFunction::Serialize( xml::xostream& xos ) const
         parameter.second->SerializeDeclaration( xos );
     xos << xml::start( primitive_.GetCategory() )
             << xml::attribute( "id", GetId() )
-            << xml::attribute( "function", primitive_.GetName() )
-            << xml::attribute( "type", primitive_.GetType().ToString() );
-    std::map< std::string, std::vector< std::string > > values;
-    BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
-        values[ parameter.first->GetAttribute() ].push_back( boost::lexical_cast< std::string, unsigned long >( parameter.second->GetId() ) );
-    for( std::map< std::string, std::vector< std::string > >::const_iterator it = values.begin(); it != values.end(); ++it )
-    {
-        const std::string value = boost::algorithm::join( it->second, "," );
-        if( !value.empty() )
-            xos << xml::attribute( it->first, value );
-    }
+            << xml::attribute( "function", primitive_.GetName() );
+    SerializeType( xos );
+    SerializeParameters( xos );
     xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction::SerializeDeclaration
-// Created: SBO 2009-04-03
+// Name: IndicatorFunction::SerializeType
+// Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-void IndicatorFunction::SerializeDeclaration( xml::xostream& xos ) const
+void IndicatorFunction::SerializeType( xml::xostream& xos ) const
 {
-    // $$$$ SBO 2009-04-03: NOTHING
+    if( primitive_.GetCategory() == "extract" )
+        return;
+    const std::string simpleType = IndicatorTypeResolver::ToSimpleType( GetType().Resolve() );
+    xos << xml::attribute( "type", simpleType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorFunction::SerializeParameters
+// Created: SBO 2009-04-15
+// -----------------------------------------------------------------------------
+void IndicatorFunction::SerializeParameters( xml::xostream& xos ) const
+{
+    typedef std::map< std::string, std::vector< std::string > > T_Attributes;
+    T_Attributes attributes;
+    BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
+        attributes[ parameter.first->GetAttribute() ].push_back( parameter.second->GetId() );
+    BOOST_FOREACH( const T_Attributes::value_type& attribute, attributes )
+    {
+        const std::string value = boost::algorithm::join( attribute.second, "," );
+        if( !value.empty() )
+            xos << xml::attribute( attribute.first, value );
+    }
 }

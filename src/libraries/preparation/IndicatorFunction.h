@@ -11,9 +11,11 @@
 #define __IndicatorFunction_h_
 
 #include "IndicatorElement_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 class IndicatorPrimitive;
 class IndicatorPrimitiveParameter;
+class IndicatorTypeResolver;
 
 // =============================================================================
 /** @class  IndicatorFunction
@@ -27,7 +29,7 @@ class IndicatorFunction : public IndicatorElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorFunction( unsigned long id, const IndicatorPrimitive& primitive );
+             IndicatorFunction( const std::string& id, const IndicatorPrimitive& primitive );
     virtual ~IndicatorFunction();
     //@}
 
@@ -40,7 +42,6 @@ public:
     //@{
     virtual void AddParameter( boost::shared_ptr< IndicatorElement_ABC > element );
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual void SerializeDeclaration( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -52,13 +53,21 @@ private:
 
     //! @name Helpers
     //@{
-    typedef std::map< const IndicatorPrimitiveParameter*, boost::shared_ptr< IndicatorElement_ABC > > T_Parameters;
+    void SerializeType( xml::xostream& xos ) const;
+    void SerializeParameters( xml::xostream& xos ) const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< std::pair< const IndicatorPrimitiveParameter*, boost::shared_ptr< IndicatorElement_ABC > > > T_Parameters;
     //@}
 
 private:
     //! @name Member data
     //@{
     const IndicatorPrimitive& primitive_;
+    boost::shared_ptr< IndicatorTypeResolver > typeResolver_;
+    std::auto_ptr< IndicatorType > type_;
     T_Parameters parameters_;
     //@}
 };

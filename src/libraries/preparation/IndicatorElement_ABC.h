@@ -32,13 +32,13 @@ class IndicatorElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IndicatorElement_ABC( unsigned long id ) : id_( id ) {}
+    explicit IndicatorElement_ABC( const std::string& id ) : id_( id ) {}
     virtual ~IndicatorElement_ABC() {}
     //@}
 
     //! @name Accessors
     //@{
-    unsigned long GetId() const { return id_; }
+    std::string GetId() const { return id_; }
     virtual const IndicatorType& GetType() const = 0;
     //@}
 
@@ -46,7 +46,7 @@ public:
     //@{
     virtual void AddParameter( boost::shared_ptr< IndicatorElement_ABC > element ) = 0;
     virtual void Serialize( xml::xostream& xos ) const = 0;
-    virtual void SerializeDeclaration( xml::xostream& xos ) const = 0;
+    virtual void SerializeDeclaration( xml::xostream& ) const {}
     //@}
 
 private:
@@ -58,7 +58,7 @@ private:
 
     //! @name Member data
     //@{
-    const unsigned long id_;
+    const std::string id_;
     //@}
 };
 

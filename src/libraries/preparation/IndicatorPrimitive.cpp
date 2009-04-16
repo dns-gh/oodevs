@@ -77,11 +77,10 @@ const IndicatorType& IndicatorPrimitive::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive::Accept
-// Created: SBO 2009-04-07
+// Name: IndicatorPrimitive::FindParameter
+// Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-void IndicatorPrimitive::Accept( IndicatorPrimitiveParameterVisitor_ABC& visitor ) const
+const IndicatorPrimitiveParameter* IndicatorPrimitive::FindParameter( unsigned int index ) const
 {
-    BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
-        visitor.Visit( *parameter );
+    return index < parameters_.size() ? parameters_.at( index ) : 0;
 }

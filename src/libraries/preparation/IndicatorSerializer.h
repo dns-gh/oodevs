@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual void HandleNumber( double value );
-    virtual void HandleExtract( const boost::spirit::classic::tree_match< const char* >::const_tree_iterator& it );
+    virtual void HandleString( const std::string& value );
     virtual void HandleVariable( const std::string& name );
     virtual void HandleFunctionCall( const std::string& name, unsigned int parameters );
     //@}

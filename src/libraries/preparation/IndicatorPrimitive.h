@@ -20,17 +20,10 @@ class IndicatorElement_ABC;
 class IndicatorPrimitiveParameter;
 class IndicatorType;
 
-class IndicatorPrimitiveParameterVisitor_ABC
-{
-public:
-             IndicatorPrimitiveParameterVisitor_ABC() {}
-    virtual ~IndicatorPrimitiveParameterVisitor_ABC() {}
-    virtual void Visit( const IndicatorPrimitiveParameter& parameter ) = 0;
-};
-
 // =============================================================================
 /** @class  IndicatorPrimitive
     @brief  IndicatorPrimitive
+    // $$$$ SBO 2009-04-15: TODO: reverse dependency between Primitive and Instance (Element)
 */
 // Created: SBO 2009-04-06
 // =============================================================================
@@ -49,11 +42,7 @@ public:
     QString GetName() const;
     std::string GetCategory() const;
     const IndicatorType& GetType() const;
-    //@}
-
-    //! @name Operations
-    //@{
-    void Accept( IndicatorPrimitiveParameterVisitor_ABC& visitor ) const;
+    const IndicatorPrimitiveParameter* FindParameter( unsigned int index ) const;
     //@}
 
 private:

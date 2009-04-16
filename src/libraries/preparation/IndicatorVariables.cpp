@@ -8,46 +8,43 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "IndicatorPrimitiveParameter.h"
-#include "IndicatorType.h"
-#include "IndicatorElement_ABC.h"
-#include <xeumeuleu/xml.h>
+#include "IndicatorVariables.h"
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter constructor
-// Created: SBO 2009-04-06
+// Name: IndicatorVariables constructor
+// Created: SBO 2009-04-10
 // -----------------------------------------------------------------------------
-IndicatorPrimitiveParameter::IndicatorPrimitiveParameter( xml::xistream& xis )
-    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
-    , attribute_( xml::attribute< std::string >( xis, "attribute", "input" ) )
-    , type_( new IndicatorType( xis ) )
+IndicatorVariables::IndicatorVariables()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter destructor
-// Created: SBO 2009-04-06
+// Name: IndicatorVariables destructor
+// Created: SBO 2009-04-10
 // -----------------------------------------------------------------------------
-IndicatorPrimitiveParameter::~IndicatorPrimitiveParameter()
+IndicatorVariables::~IndicatorVariables()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter::GetAttribute
-// Created: SBO 2009-04-09
+// Name: IndicatorVariables::Register
+// Created: SBO 2009-04-10
 // -----------------------------------------------------------------------------
-std::string IndicatorPrimitiveParameter::GetAttribute() const
+void IndicatorVariables::Register( const std::string& name, boost::shared_ptr< IndicatorElement_ABC > element )
 {
-    return attribute_;
+    variables_[ name ] = element;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter::GetType
-// Created: SBO 2009-04-06
+// Name: IndicatorVariables::Find
+// Created: SBO 2009-04-10
 // -----------------------------------------------------------------------------
-const IndicatorType& IndicatorPrimitiveParameter::GetType() const
+boost::shared_ptr< IndicatorElement_ABC > IndicatorVariables::Find( const std::string& name ) const
 {
-    return *type_;
+    T_Variables::const_iterator it = variables_.find( name );
+    if( it != variables_.end() )
+        return it->second;
+    return boost::shared_ptr< IndicatorElement_ABC >();
 }

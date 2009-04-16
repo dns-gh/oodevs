@@ -10,10 +10,14 @@
 #ifndef __IndicatorType_h_
 #define __IndicatorType_h_
 
+#include <boost/shared_ptr.hpp>
+
 namespace xml
 {
     class xistream;
 }
+
+class IndicatorTypeResolver;
 
 // =============================================================================
 /** @class  IndicatorType
@@ -29,20 +33,22 @@ public:
     //@{
     explicit IndicatorType( xml::xistream& xis );
     explicit IndicatorType( const std::string& type );
+             IndicatorType( const IndicatorType& type, boost::shared_ptr< IndicatorTypeResolver > resolver );
     virtual ~IndicatorType();
     //@}
 
     //! @name Operations
     //@{
     std::string ToString() const;
-    bool operator==( const IndicatorType& rhs ) const;
+    std::string Resolve() const;
     bool operator!=( const IndicatorType& rhs ) const;
+    bool IsAbstract() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorType( const IndicatorType& );            //!< Copy constructor
+//    IndicatorType( const IndicatorType& type ); //<! Copy constructor
     IndicatorType& operator=( const IndicatorType& ); //!< Assignment operator
     //@}
 
@@ -53,7 +59,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string type_;
+    std::string type_;
+    boost::shared_ptr< IndicatorTypeResolver > resolver_;
     //@}
 };
 

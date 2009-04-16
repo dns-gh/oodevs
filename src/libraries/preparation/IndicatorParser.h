@@ -62,7 +62,7 @@ private:
     {
         StartTag,
         NumberTag,
-        ExtractTag,
+        StringTag,
         VariableTag,
         FunctionCallTag,
         FunctionParametersTag,
@@ -79,23 +79,25 @@ public:
     public:
         explicit definition( const IndicatorParser& parser )
         {
-            number_  = bs::leaf_node_d[ bs::real_p ];
-            extract_ = bs::leaf_node_d[ bs::str_p( "Extract" ) ];
+            number_ = bs::leaf_node_d[ bs::real_p ];
+//            string_ = bs::confix_p( "'", bs::leaf_node_d[ *bs::alpha_p ], "'" );
+            string_ = bs::no_node_d[ bs::ch_p( '\'' ) ] >> bs::leaf_node_d[ *bs::alpha_p ] >> bs::no_node_d[ bs::ch_p( '\'' ) ];
+            constant_ = number_ | string_;
 
-            identifier_ = bs::leaf_node_d[ ( ( bs::alpha_p | '_' ) >> *( bs::alnum_p | '_' | '-' ) ) - extract_ ];
+            identifier_ = bs::leaf_node_d[ ( ( bs::alpha_p | '_' ) >> *( bs::alnum_p | '_' | '-' ) ) ];
             variable_   = bs::no_node_d[ bs::ch_p( '$' ) ] >> identifier_;
 
-            functionName_ = identifier_ | extract_;
+            functionName_ = identifier_;
             functionCall_ = functionName_ >> bs::no_node_d[ bs::ch_p( '(' ) ] >> !functionParameters_ >> bs::no_node_d[ bs::ch_p( ')' ) ];
 
             functionParameters_ = bs::list_p( bs::gen_pt_node_d[ functionParameter_ ], bs::no_node_d[ bs::ch_p( ',' ) ] );
-            functionParameter_ = bs::gen_pt_node_d[ variable_ ] | number_ | bs::gen_pt_node_d[ functionCall_ ];
+            functionParameter_ = bs::gen_pt_node_d[ variable_ ] | constant_ | bs::gen_pt_node_d[ functionCall_ ];
 
-            start_ = bs::gen_pt_node_d[ functionCall_ ] | number_ | bs::gen_pt_node_d[ variable_ ];
+            start_ = bs::gen_pt_node_d[ functionCall_ ] | constant_ | bs::gen_pt_node_d[ variable_ ];
 
             BOOST_SPIRIT_DEBUG_RULE( start_ );
             BOOST_SPIRIT_DEBUG_RULE( number_ );
-            BOOST_SPIRIT_DEBUG_RULE( extract_ );
+            BOOST_SPIRIT_DEBUG_RULE( string_ );
             BOOST_SPIRIT_DEBUG_RULE( variable_ );
             BOOST_SPIRIT_DEBUG_RULE( functionCall_ );
             BOOST_SPIRIT_DEBUG_RULE( functionParameters_ );
@@ -117,13 +119,13 @@ public:
 
         //! @name Member data
         //@{
-        bs::rule< T > identifier_, functionName_;
+        bs::rule< T > constant_, identifier_, functionName_;
         bs::rule< T, bs::parser_context<>, bs::parser_tag< StartTag > >              start_;
         bs::rule< T, bs::parser_context<>, bs::parser_tag< NumberTag > >             number_;
-        bs::rule< T, bs::parser_context<>, bs::parser_tag< ExtractTag > >            extract_;
+        bs::rule< T, bs::parser_context<>, bs::parser_tag< StringTag > >             string_;
         bs::rule< T, bs::parser_context<>, bs::parser_tag< VariableTag > >           variable_;
         bs::rule< T, bs::parser_context<>, bs::parser_tag< FunctionCallTag > >       functionCall_;
-        bs::rule< T, bs::parser_context<>, bs::parser_tag< FunctionParametersTag > >  functionParameters_;
+        bs::rule< T, bs::parser_context<>, bs::parser_tag< FunctionParametersTag > > functionParameters_;
         bs::rule< T, bs::parser_context<>, bs::parser_tag< FunctionParameterTag > >  functionParameter_;
         //@}
     };

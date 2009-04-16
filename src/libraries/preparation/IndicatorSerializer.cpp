@@ -33,7 +33,12 @@ IndicatorSerializer::IndicatorSerializer( const IndicatorElementFactory_ABC& fac
 // -----------------------------------------------------------------------------
 IndicatorSerializer::~IndicatorSerializer()
 {
-    // $$$$ SBO 2009-03-17: what if stack not empty...
+    if( ! stack_.empty() )
+    {
+        stack_.pop_back(); // $$$$ SBO 2009-04-15: try to remove last element... investigate
+        if( ! stack_.empty() )
+            throw std::exception( "Invalid indicator definition." );
+    }
     xos_ << xml::end();
 }
 
@@ -48,12 +53,13 @@ void IndicatorSerializer::HandleNumber( double value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorSerializer::HandleExtract
-// Created: SBO 2009-03-16
+// Name: IndicatorSerializer::HandleString
+// Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-void IndicatorSerializer::HandleExtract( const boost::spirit::classic::tree_match< const char* >::const_tree_iterator& it )
+void IndicatorSerializer::HandleString( const std::string& value )
 {
-
+    boost::shared_ptr< IndicatorElement_ABC > element( factory_.CreateString( value ) );
+    stack_.push_back( element );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,6 +69,8 @@ void IndicatorSerializer::HandleExtract( const boost::spirit::classic::tree_matc
 void IndicatorSerializer::HandleVariable( const std::string& name )
 {
     boost::shared_ptr< IndicatorElement_ABC > element( factory_.CreateVariable( name ) );
+    if( element == 0 )
+        throw std::exception( ( "Undefined variable : " + name ).c_str() );
     stack_.push_back( element );
 }
 
@@ -73,7 +81,10 @@ void IndicatorSerializer::HandleVariable( const std::string& name )
 void IndicatorSerializer::HandleFunctionCall( const std::string& name, unsigned int parameters )
 {
     boost::shared_ptr< IndicatorElement_ABC > function( factory_.CreateFunction( name ) );
-    std::reverse( stack_.end() - parameters, stack_.end() );
+    if( function == 0 )
+        throw std::exception( ( "Undefined function : " + name ).c_str() );
+    if( !stack_.empty() )
+        std::reverse( stack_.end() - parameters, stack_.end() );
     for( unsigned int i = 0; i < parameters && !stack_.empty(); ++i )
     {
         function->AddParameter( stack_.back() );

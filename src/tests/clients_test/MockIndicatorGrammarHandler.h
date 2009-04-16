@@ -28,7 +28,7 @@ public:
              MockIndicatorGrammarHandler()
                 : mockpp::ChainableMockObject( "MockIndicatorGrammarHandler", 0 )
                 , HandleNumber_mocker( "HandleNumber", this )
-                , HandleExtract_mocker( "HandleExtract", this )
+                , HandleString_mocker( "HandleString", this )
                 , HandleVariable_mocker( "HandleVariable", this )
                 , HandleFunctionCall_mocker( "HandleFunctionCall", this )
              {}
@@ -42,6 +42,11 @@ public:
         HandleNumber_mocker.forward( value );
     }
 
+    virtual void HandleString( const std::string& value )
+    {
+        HandleString_mocker.forward( value );
+    }
+
     virtual void HandleVariable( const std::string& name )
     {
         HandleVariable_mocker.forward( name );
@@ -51,20 +56,12 @@ public:
     {
         HandleFunctionCall_mocker.forward( name, parameters );
     }
-
-#define GENERATE_HANDLE_MOCKER( name ) \
-    virtual void Handle##name( const boost::spirit::classic::tree_match< const char* >::const_tree_iterator& it ) \
-    { \
-        Handle##name##_mocker.forward( it ); \
-    }
-
-    GENERATE_HANDLE_MOCKER( Extract );
     //@}
 
     //! @name Member data
     //@{
     mockpp::ChainableMockMethod< void, double > HandleNumber_mocker;
-    mockpp::ChainableMockMethod< void, const boost::spirit::classic::tree_match< const char* >::const_tree_iterator > HandleExtract_mocker;
+    mockpp::ChainableMockMethod< void, std::string > HandleString_mocker;
     mockpp::ChainableMockMethod< void, std::string > HandleVariable_mocker;
     mockpp::ChainableMockMethod< void, std::string, unsigned int > HandleFunctionCall_mocker;
     //@}

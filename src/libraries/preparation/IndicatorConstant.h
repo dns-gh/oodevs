@@ -27,14 +27,14 @@ class IndicatorConstant : public IndicatorElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorConstant( unsigned long id, const T& value, const IndicatorType& type )
+        IndicatorConstant( const std::string& id, const T& value, const IndicatorType& type )
                  : IndicatorElement_ABC( id ), value_( value ), type_( type ) {}
     virtual ~IndicatorConstant() {}
     //@}
 
     //! @name Accessors
     //@{
-    const IndicatorType& GetType() const;
+    virtual const IndicatorType& GetType() const;
     //@}
 
     //! @name Operations
@@ -55,11 +55,11 @@ private:
     //@{
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     const T value_;
-    const IndicatorType& type_;
+    IndicatorType type_;
     //@}
 };
 

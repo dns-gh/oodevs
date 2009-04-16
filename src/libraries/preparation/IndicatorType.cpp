@@ -9,6 +9,9 @@
 
 #include "preparation_pch.h"
 #include "IndicatorType.h"
+#include "IndicatorTypeResolver.h"
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/regex.hpp>
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -17,6 +20,7 @@
 // -----------------------------------------------------------------------------
 IndicatorType::IndicatorType( xml::xistream& xis )
     : type_( xml::attribute< std::string >( xis, "type" ) )
+    , resolver_( boost::shared_ptr< IndicatorTypeResolver >( new IndicatorTypeResolver() ) )
 {
     // NOTHING
 }
@@ -27,6 +31,18 @@ IndicatorType::IndicatorType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 IndicatorType::IndicatorType( const std::string& type )
     : type_( type )
+    , resolver_( boost::shared_ptr< IndicatorTypeResolver >( new IndicatorTypeResolver() ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorType constructor
+// Created: SBO 2009-04-10
+// -----------------------------------------------------------------------------
+IndicatorType::IndicatorType( const IndicatorType& type, boost::shared_ptr< IndicatorTypeResolver > resolver )
+    : type_( type.type_ )
+    , resolver_( resolver )
 {
     // NOTHING
 }
@@ -50,12 +66,12 @@ std::string IndicatorType::ToString() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorType::operator==
-// Created: SBO 2009-04-09
+// Name: IndicatorType::Resolve
+// Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-bool IndicatorType::operator==( const IndicatorType& rhs ) const
+std::string IndicatorType::Resolve() const
 {
-    return true; // $$$$ SBO 2009-04-09: TODO
+    return resolver_->Resolve( type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,5 +80,5 @@ bool IndicatorType::operator==( const IndicatorType& rhs ) const
 // -----------------------------------------------------------------------------
 bool IndicatorType::operator!=( const IndicatorType& rhs ) const
 {
-    return !( *this == rhs );
+    return false; //ToString() != rhs.ToString(); // $$$$ SBO 2009-04-15: TODO, check type compatibility
 }

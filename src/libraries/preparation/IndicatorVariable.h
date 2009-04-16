@@ -10,7 +10,9 @@
 #ifndef __IndicatorVariable_h_
 #define __IndicatorVariable_h_
 
-#include "IndicatorConstant.h"
+#include "IndicatorElement_ABC.h"
+
+class IndicatorType;
 
 // =============================================================================
 /** @class  IndicatorVariable
@@ -18,14 +20,26 @@
 */
 // Created: SBO 2009-03-17
 // =============================================================================
-class IndicatorVariable : public IndicatorConstant< std::string >
+class IndicatorVariable : public IndicatorElement_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorVariable( unsigned long id, const std::string& name, const IndicatorType& type );
+             IndicatorVariable( const std::string& name, const std::string& type );
     virtual ~IndicatorVariable();
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const IndicatorType& GetType() const;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void AddParameter( boost::shared_ptr< IndicatorElement_ABC > element );
+    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void SerializeDeclaration( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -33,6 +47,12 @@ private:
     //@{
     IndicatorVariable( const IndicatorVariable& );            //!< Copy constructor
     IndicatorVariable& operator=( const IndicatorVariable& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::auto_ptr< IndicatorType > type_;
     //@}
 };
 

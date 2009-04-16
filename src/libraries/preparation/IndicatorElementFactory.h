@@ -13,6 +13,7 @@
 #include "IndicatorElementFactory_ABC.h"
 
 class IndicatorPrimitives;
+class IndicatorVariables;
 
 // =============================================================================
 /** @class  IndicatorElementFactory
@@ -26,16 +27,16 @@ class IndicatorElementFactory : public IndicatorElementFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IndicatorElementFactory( const IndicatorPrimitives& primitives );
+             IndicatorElementFactory( const IndicatorPrimitives& primitives, const IndicatorVariables& variables );
     virtual ~IndicatorElementFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual IndicatorElement_ABC* CreateNumber( double value ) const;
-    virtual IndicatorElement_ABC* CreateVariable( const std::string& name ) const;
-    virtual IndicatorElement_ABC* CreateExtractor( const std::string& name ) const;
-    virtual IndicatorElement_ABC* CreateFunction( const std::string& name ) const;
+    virtual boost::shared_ptr< IndicatorElement_ABC > CreateNumber( double value ) const;
+    virtual boost::shared_ptr< IndicatorElement_ABC > CreateString( const std::string& value ) const;
+    virtual boost::shared_ptr< IndicatorElement_ABC > CreateVariable( const std::string& name ) const;
+    virtual boost::shared_ptr< IndicatorElement_ABC > CreateFunction( const std::string& name ) const;
     //@}
 
 private:
@@ -47,13 +48,14 @@ private:
 
     //! @name Helpers
     //@{
-    unsigned long NextId() const;
+    std::string NextId() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const IndicatorPrimitives& primitives_;
+    const IndicatorVariables& variables_;
     mutable unsigned long id_;
     //@}
 };

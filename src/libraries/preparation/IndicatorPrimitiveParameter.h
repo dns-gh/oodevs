@@ -39,7 +39,6 @@ public:
     //@{
     std::string GetAttribute() const;
     const IndicatorType& GetType() const;
-    void Serialize( xml::xostream& xos, const IndicatorElement_ABC& element ) const;
     //@}
 
 private:

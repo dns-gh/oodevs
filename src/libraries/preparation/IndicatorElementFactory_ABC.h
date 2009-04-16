@@ -10,6 +10,8 @@
 #ifndef __IndicatorElementFactory_ABC_h_
 #define __IndicatorElementFactory_ABC_h_
 
+#include <boost/shared_ptr.hpp>
+
 class IndicatorElement_ABC;
 
 // =============================================================================
@@ -30,10 +32,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual IndicatorElement_ABC* CreateNumber( double value ) const = 0;
-    virtual IndicatorElement_ABC* CreateVariable( const std::string& name ) const = 0;
-    virtual IndicatorElement_ABC* CreateExtractor( const std::string& name ) const = 0;
-    virtual IndicatorElement_ABC* CreateFunction( const std::string& name ) const = 0;
+    virtual boost::shared_ptr< IndicatorElement_ABC > CreateNumber( double value ) const = 0;
+    virtual boost::shared_ptr< IndicatorElement_ABC > CreateString( const std::string& value ) const = 0;
+    virtual boost::shared_ptr< IndicatorElement_ABC > CreateVariable( const std::string& name ) const = 0;
+    virtual boost::shared_ptr< IndicatorElement_ABC > CreateFunction( const std::string& name ) const = 0;
     //@}
 };
 

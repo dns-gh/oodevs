@@ -8,46 +8,41 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "IndicatorPrimitiveParameter.h"
-#include "IndicatorType.h"
-#include "IndicatorElement_ABC.h"
-#include <xeumeuleu/xml.h>
+#include "IndicatorString.h"
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter constructor
-// Created: SBO 2009-04-06
+// Name: IndicatorString constructor
+// Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-IndicatorPrimitiveParameter::IndicatorPrimitiveParameter( xml::xistream& xis )
-    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
-    , attribute_( xml::attribute< std::string >( xis, "attribute", "input" ) )
-    , type_( new IndicatorType( xis ) )
+IndicatorString::IndicatorString( const std::string& value, const IndicatorType& type )
+    : IndicatorConstant< std::string >( value, value, type )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter destructor
-// Created: SBO 2009-04-06
+// Name: IndicatorString destructor
+// Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-IndicatorPrimitiveParameter::~IndicatorPrimitiveParameter()
+IndicatorString::~IndicatorString()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter::GetAttribute
-// Created: SBO 2009-04-09
+// Name: IndicatorString::Serialize
+// Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-std::string IndicatorPrimitiveParameter::GetAttribute() const
+void IndicatorString::Serialize( xml::xostream& xos ) const
 {
-    return attribute_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter::GetType
-// Created: SBO 2009-04-06
+// Name: IndicatorString::SerializeDeclaration
+// Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-const IndicatorType& IndicatorPrimitiveParameter::GetType() const
+void IndicatorString::SerializeDeclaration( xml::xostream& ) const
 {
-    return *type_;
+    // NOTHING
 }

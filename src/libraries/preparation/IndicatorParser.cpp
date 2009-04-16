@@ -64,8 +64,8 @@ void IndicatorParser::Evaluate( const bs::tree_match< const char* >::const_tree_
         Evaluate( it->children.begin() ); break;
     case NumberTag:
         handler_.HandleNumber( EvaluateNumber( it->value ) ); break;
-    case ExtractTag:
-        handler_.HandleExtract( it ); break;
+    case StringTag:
+        handler_.HandleString( EvaluateString( it->value ) ); break;
     case VariableTag:
         handler_.HandleVariable( EvaluateString( it->children[0].value ) ); break;
     case FunctionCallTag:

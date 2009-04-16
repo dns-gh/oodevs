@@ -25,15 +25,39 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestEmpty )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorParser_TestConstant
+// Name: IndicatorParser_TestBadSyntax
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( IndicatorParser_TestConstant )
+BOOST_AUTO_TEST_CASE( IndicatorParser_TestBadSyntax )
+{
+    MockIndicatorGrammarHandler handler;
+    IndicatorParser parser( handler );
+    BOOST_CHECK_THROW( parser.Parse( "test(" ), std::exception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorParser_TestNumberConstant
+// Created: SBO 2009-03-16
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorParser_TestNumberConstant )
 {
     MockIndicatorGrammarHandler handler;
     IndicatorParser parser( handler );
     handler.HandleNumber_mocker.expects( once() ).with( eq( double( 12 ) ) );
     parser.Parse( "12" );
+    handler.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorParser_TestStringLiteral
+// Created: SBO 2009-03-16
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorParser_TestStringLiteral )
+{
+    MockIndicatorGrammarHandler handler;
+    IndicatorParser parser( handler );
+    handler.HandleString_mocker.expects( once() ).with( eq< std::string >( "test" ) );
+    parser.Parse( "'test'" );
     handler.verify();
 }
 
@@ -86,10 +110,10 @@ BOOST_AUTO_TEST_CASE( IndicatorParser_TestFunctionCallManyParameters )
     MockIndicatorGrammarHandler handler;
     IndicatorParser parser( handler );
     handler.HandleNumber_mocker.expects( once() ).with( eq( double( 12 ) ) );
-    handler.HandleNumber_mocker.expects( once() ).with( eq( double( 42 ) ) );
+    handler.HandleString_mocker.expects( once() ).with( eq< std::string >( "test" ) );
     handler.HandleNumber_mocker.expects( once() ).with( eq( double( 51 ) ) );
     handler.HandleFunctionCall_mocker.expects( once() ).with( eq< std::string >( "MyFunction" ), eq( 3u ) );
-    parser.Parse( "MyFunction( 12, 42, 51 )" );
+    parser.Parse( "MyFunction( 12, 'test', 51 )" );
     handler.verify();
 }
 
