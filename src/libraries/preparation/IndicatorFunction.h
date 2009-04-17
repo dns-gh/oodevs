@@ -36,6 +36,7 @@ public:
     //! @name Accessors
     //@{
     virtual const IndicatorType& GetType() const;
+    virtual std::string GetValue() const;
     //@}
 
     //! @name Operations

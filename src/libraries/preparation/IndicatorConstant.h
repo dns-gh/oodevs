@@ -12,6 +12,7 @@
 
 #include "IndicatorElement_ABC.h"
 #include "IndicatorType.h"
+#include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.h>
 
 // =============================================================================
@@ -27,14 +28,15 @@ class IndicatorConstant : public IndicatorElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-        IndicatorConstant( const std::string& id, const T& value, const IndicatorType& type )
-                 : IndicatorElement_ABC( id ), value_( value ), type_( type ) {}
+             IndicatorConstant( const std::string& id, const std::string& type, const T& value )
+                 : IndicatorElement_ABC( id ), type_( type ), value_( value ) {}
     virtual ~IndicatorConstant() {}
     //@}
 
     //! @name Accessors
     //@{
     virtual const IndicatorType& GetType() const;
+    virtual std::string GetValue() const;
     //@}
 
     //! @name Operations
@@ -58,8 +60,8 @@ private:
 protected:
     //! @name Member data
     //@{
+    const IndicatorType type_;
     const T value_;
-    IndicatorType type_;
     //@}
 };
 
@@ -71,6 +73,16 @@ template< typename T >
 const IndicatorType& IndicatorConstant< T >::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorConstant::GetValue
+// Created: SBO 2009-04-17
+// -----------------------------------------------------------------------------
+template< typename T >
+std::string IndicatorConstant< T >::GetValue() const
+{
+    return boost::lexical_cast< std::string, T >( value_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +103,7 @@ template< typename T >
 void IndicatorConstant< T >::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "constant" )
-            << xml::attribute( "id", GetId() )
+            << xml::attribute( "id", GetInput() )
             << xml::attribute< T >( "value", value_ )
             << xml::attribute( "type", type_.ToString() )
         << xml::end();
@@ -102,9 +114,9 @@ void IndicatorConstant< T >::Serialize( xml::xostream& xos ) const
 // Created: SBO 2009-04-03
 // -----------------------------------------------------------------------------
 template< typename T >
-void IndicatorConstant< T >::SerializeDeclaration( xml::xostream& xos ) const
+void IndicatorConstant< T >::SerializeDeclaration( xml::xostream& ) const
 {
-    Serialize( xos );
+    // NOTHING
 }
 
 #endif // __IndicatorConstant_h_

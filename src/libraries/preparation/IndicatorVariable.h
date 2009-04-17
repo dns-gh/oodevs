@@ -10,7 +10,12 @@
 #ifndef __IndicatorVariable_h_
 #define __IndicatorVariable_h_
 
-#include "IndicatorElement_ABC.h"
+#include "IndicatorConstant.h"
+
+namespace xml
+{
+    class xistream;
+}
 
 class IndicatorType;
 
@@ -20,24 +25,19 @@ class IndicatorType;
 */
 // Created: SBO 2009-03-17
 // =============================================================================
-class IndicatorVariable : public IndicatorElement_ABC
+class IndicatorVariable : public IndicatorConstant< std::string >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorVariable( const std::string& name, const std::string& type );
+             IndicatorVariable( const std::string& name, const std::string& type, const std::string& value );
+    explicit IndicatorVariable( xml::xistream& xis );
     virtual ~IndicatorVariable();
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual const IndicatorType& GetType() const;
     //@}
 
     //! @name Operations
     //@{
-    virtual void AddParameter( boost::shared_ptr< IndicatorElement_ABC > element );
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void SerializeDeclaration( xml::xostream& xos ) const;
     //@}
@@ -47,12 +47,6 @@ private:
     //@{
     IndicatorVariable( const IndicatorVariable& );            //!< Copy constructor
     IndicatorVariable& operator=( const IndicatorVariable& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::auto_ptr< IndicatorType > type_;
     //@}
 };
 

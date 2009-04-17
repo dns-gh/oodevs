@@ -9,6 +9,9 @@
 
 #include "preparation_pch.h"
 #include "IndicatorVariables.h"
+#include "IndicatorVariable.h"
+#include <boost/foreach.hpp>
+#include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorVariables constructor
@@ -17,6 +20,17 @@
 IndicatorVariables::IndicatorVariables()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorVariables constructor
+// Created: SBO 2009-04-17
+// -----------------------------------------------------------------------------
+IndicatorVariables::IndicatorVariables( xml::xistream& xis )
+{
+    xis >> xml::start( "variables" )
+            >> xml::list( "variable", *this, &IndicatorVariables::ReadVariable )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -47,4 +61,37 @@ boost::shared_ptr< IndicatorElement_ABC > IndicatorVariables::Find( const std::s
     if( it != variables_.end() )
         return it->second;
     return boost::shared_ptr< IndicatorElement_ABC >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorVariables::ReadVariable
+// Created: SBO 2009-04-17
+// -----------------------------------------------------------------------------
+void IndicatorVariables::ReadVariable( xml::xistream& xis )
+{
+    boost::shared_ptr< IndicatorElement_ABC > element( new IndicatorVariable( xis ) );
+    const std::string name = xml::attribute< std::string >( xis, "name" ); // $$$$ SBO 2009-04-17: 
+    Register( name, element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorVariables::Serialize
+// Created: SBO 2009-04-17
+// -----------------------------------------------------------------------------
+void IndicatorVariables::Serialize( xml::xostream& xos ) const
+{
+    xos << xml::start( "variables" );
+    BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
+        variable.second->Serialize( xos );
+    xos << xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorVariables::SerializeDeclarations
+// Created: SBO 2009-04-17
+// -----------------------------------------------------------------------------
+void IndicatorVariables::SerializeDeclarations( xml::xostream& xos ) const
+{
+    BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
+        variable.second->SerializeDeclaration( xos );
 }

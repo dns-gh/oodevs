@@ -20,6 +20,7 @@ namespace xml
 
 class IndicatorElementFactory_ABC;
 class IndicatorElement_ABC;
+class IndicatorVariables;
 
 // =============================================================================
 /** @class  IndicatorGrammarHandler
@@ -33,7 +34,7 @@ class IndicatorSerializer : public IndicatorGrammarHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorSerializer( const IndicatorElementFactory_ABC& factory, xml::xostream& xos );
+             IndicatorSerializer( const IndicatorElementFactory_ABC& factory, const IndicatorVariables& variables );
     virtual ~IndicatorSerializer();
     //@}
 
@@ -43,6 +44,7 @@ public:
     virtual void HandleString( const std::string& value );
     virtual void HandleVariable( const std::string& name );
     virtual void HandleFunctionCall( const std::string& name, unsigned int parameters );
+    virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -56,7 +58,7 @@ private:
     //! @name Member data
     //@{
     const IndicatorElementFactory_ABC& factory_;
-    xml::xostream& xos_;
+    const IndicatorVariables& variables_;
     std::vector< boost::shared_ptr< IndicatorElement_ABC > > stack_;
     //@}
 };

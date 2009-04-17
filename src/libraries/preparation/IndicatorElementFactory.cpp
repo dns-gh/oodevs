@@ -45,8 +45,7 @@ IndicatorElementFactory::~IndicatorElementFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateNumber( double value ) const
 {
-    static IndicatorType type( "float" );
-    return boost::shared_ptr< IndicatorElement_ABC >( new IndicatorConstant< double >( NextId(), value, type ) );
+    return boost::shared_ptr< IndicatorElement_ABC >( new IndicatorConstant< double >( NextId(), "float", value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,8 +54,7 @@ boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateNumber(
 // -----------------------------------------------------------------------------
 boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateString( const std::string& value ) const
 {
-    static IndicatorType type( "string" );
-    return boost::shared_ptr< IndicatorElement_ABC >( new IndicatorString( value, type ) );
+    return boost::shared_ptr< IndicatorElement_ABC >( new IndicatorString( value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +63,10 @@ boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateString(
 // -----------------------------------------------------------------------------
 boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateVariable( const std::string& name ) const
 {
-    return variables_.Find( name );
+    boost::shared_ptr< IndicatorElement_ABC > element( variables_.Find( name ) );
+    if( element == 0 )
+        throw std::exception( ( "Undefined variable : " + name ).c_str() );
+    return element;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +77,7 @@ boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateFunctio
 {
     const IndicatorPrimitive* primitive = primitives_.Find( boost::algorithm::to_lower_copy( name ).c_str() );
     if( !primitive )
-        return boost::shared_ptr< IndicatorElement_ABC >();
+        throw std::exception( ( "Undefined function : " + name ).c_str() );
     return boost::shared_ptr< IndicatorElement_ABC >( new IndicatorFunction( NextId(), *primitive ) );
 }
 

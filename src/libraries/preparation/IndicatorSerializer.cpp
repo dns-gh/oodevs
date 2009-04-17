@@ -11,20 +11,18 @@
 #include "IndicatorSerializer.h"
 #include "IndicatorElementFactory_ABC.h"
 #include "IndicatorElement_ABC.h"
-#include <boost/lexical_cast.hpp>
+#include "IndicatorVariables.h"
 #include <xeumeuleu/xml.h>
-
-namespace bs = boost::spirit::classic;
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorSerializer constructor
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-IndicatorSerializer::IndicatorSerializer( const IndicatorElementFactory_ABC& factory, xml::xostream& xos )
+IndicatorSerializer::IndicatorSerializer( const IndicatorElementFactory_ABC& factory, const IndicatorVariables& variables )
     : factory_( factory )
-    , xos_( xos )
+    , variables_( variables )
 {
-    xos_ << xml::start( "indicator" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,13 +31,7 @@ IndicatorSerializer::IndicatorSerializer( const IndicatorElementFactory_ABC& fac
 // -----------------------------------------------------------------------------
 IndicatorSerializer::~IndicatorSerializer()
 {
-    if( ! stack_.empty() )
-    {
-        stack_.pop_back(); // $$$$ SBO 2009-04-15: try to remove last element... investigate
-        if( ! stack_.empty() )
-            throw std::exception( "Invalid indicator definition." );
-    }
-    xos_ << xml::end();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,8 +40,7 @@ IndicatorSerializer::~IndicatorSerializer()
 // -----------------------------------------------------------------------------
 void IndicatorSerializer::HandleNumber( double value )
 {
-    boost::shared_ptr< IndicatorElement_ABC > element( factory_.CreateNumber( value ) );
-    stack_.push_back( element );
+    stack_.push_back( factory_.CreateNumber( value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,8 +49,7 @@ void IndicatorSerializer::HandleNumber( double value )
 // -----------------------------------------------------------------------------
 void IndicatorSerializer::HandleString( const std::string& value )
 {
-    boost::shared_ptr< IndicatorElement_ABC > element( factory_.CreateString( value ) );
-    stack_.push_back( element );
+    stack_.push_back( factory_.CreateString( value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,10 +58,7 @@ void IndicatorSerializer::HandleString( const std::string& value )
 // -----------------------------------------------------------------------------
 void IndicatorSerializer::HandleVariable( const std::string& name )
 {
-    boost::shared_ptr< IndicatorElement_ABC > element( factory_.CreateVariable( name ) );
-    if( element == 0 )
-        throw std::exception( ( "Undefined variable : " + name ).c_str() );
-    stack_.push_back( element );
+    stack_.push_back( factory_.CreateVariable( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,8 +68,6 @@ void IndicatorSerializer::HandleVariable( const std::string& name )
 void IndicatorSerializer::HandleFunctionCall( const std::string& name, unsigned int parameters )
 {
     boost::shared_ptr< IndicatorElement_ABC > function( factory_.CreateFunction( name ) );
-    if( function == 0 )
-        throw std::exception( ( "Undefined function : " + name ).c_str() );
     if( !stack_.empty() )
         std::reverse( stack_.end() - parameters, stack_.end() );
     for( unsigned int i = 0; i < parameters && !stack_.empty(); ++i )
@@ -90,6 +75,18 @@ void IndicatorSerializer::HandleFunctionCall( const std::string& name, unsigned 
         function->AddParameter( stack_.back() );
         stack_.pop_back();
     }
-    function->Serialize( xos_ );
     stack_.push_back( function );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer::Serialize
+// Created: SBO 2009-04-17
+// -----------------------------------------------------------------------------
+void IndicatorSerializer::Serialize( xml::xostream& xos ) const
+{
+    xos << xml::start( "indicator" );
+    variables_.SerializeDeclarations( xos );
+    if( ! stack_.empty() )
+        stack_.front()->Serialize( xos );
+    xos << xml::end();
 }

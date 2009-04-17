@@ -80,7 +80,6 @@ public:
         explicit definition( const IndicatorParser& parser )
         {
             number_ = bs::leaf_node_d[ bs::real_p ];
-//            string_ = bs::confix_p( "'", bs::leaf_node_d[ *bs::alpha_p ], "'" );
             string_ = bs::no_node_d[ bs::ch_p( '\'' ) ] >> bs::leaf_node_d[ *bs::alpha_p ] >> bs::no_node_d[ bs::ch_p( '\'' ) ];
             constant_ = number_ | string_;
 

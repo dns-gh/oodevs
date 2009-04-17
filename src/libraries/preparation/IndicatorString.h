@@ -14,7 +14,7 @@
 
 // =============================================================================
 /** @class  IndicatorString
-    @brief  IndicatorString
+    @brief  Indicator string literal element
 */
 // Created: SBO 2009-04-16
 // =============================================================================
@@ -24,14 +24,13 @@ class IndicatorString : public IndicatorConstant< std::string >
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorString( const std::string& value, const IndicatorType& type );
+    explicit IndicatorString( const std::string& value );
     virtual ~IndicatorString();
     //@}
 
     //! @name Operations
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual void SerializeDeclaration( xml::xostream& xos ) const;
     //@}
 
 private:

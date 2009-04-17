@@ -10,14 +10,26 @@
 #include "preparation_pch.h"
 #include "IndicatorVariable.h"
 #include "IndicatorType.h"
+#include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorVariable constructor
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-IndicatorVariable::IndicatorVariable( const std::string& name, const std::string& type )
-    : IndicatorElement_ABC( std::string( "$" ) + name )
-    , type_( new IndicatorType( type ) )
+IndicatorVariable::IndicatorVariable( const std::string& name, const std::string& type, const std::string& value )
+    : IndicatorConstant< std::string >( std::string( "$" ) + name, type, value )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorVariable constructor
+// Created: SBO 2009-04-17
+// -----------------------------------------------------------------------------
+IndicatorVariable::IndicatorVariable( xml::xistream& xis )
+    : IndicatorConstant< std::string >( xml::attribute< std::string >( xis, "name" )
+                                      , xml::attribute< std::string >( xis, "type" )
+                                      , xml::attribute< std::string >( xis, "value" ) )
 {
     // NOTHING
 }
@@ -32,24 +44,6 @@ IndicatorVariable::~IndicatorVariable()
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariable::GetType
-// Created: SBO 2009-04-10
-// -----------------------------------------------------------------------------
-const IndicatorType& IndicatorVariable::GetType() const
-{
-    return *type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: IndicatorVariable::AddParameter
-// Created: SBO 2009-04-10
-// -----------------------------------------------------------------------------
-void IndicatorVariable::AddParameter( boost::shared_ptr< IndicatorElement_ABC > element )
-{
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: IndicatorVariable::Serialize
 // Created: SBO 2009-04-10
 // -----------------------------------------------------------------------------
@@ -60,9 +54,9 @@ void IndicatorVariable::Serialize( xml::xostream& ) const
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorVariable::SerializeDeclaration
-// Created: SBO 2009-04-10
+// Created: SBO 2009-04-17
 // -----------------------------------------------------------------------------
-void IndicatorVariable::SerializeDeclaration( xml::xostream& ) const
+void IndicatorVariable::SerializeDeclaration( xml::xostream& xos ) const
 {
-    // NOTHING
+    IndicatorConstant< std::string >::Serialize( xos );
 }

@@ -14,8 +14,8 @@
 // Name: IndicatorString constructor
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-IndicatorString::IndicatorString( const std::string& value, const IndicatorType& type )
-    : IndicatorConstant< std::string >( value, value, type )
+IndicatorString::IndicatorString( const std::string& value )
+    : IndicatorConstant< std::string >( value, "string", value )
 {
     // NOTHING
 }
@@ -34,15 +34,6 @@ IndicatorString::~IndicatorString()
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
 void IndicatorString::Serialize( xml::xostream& xos ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: IndicatorString::SerializeDeclaration
-// Created: SBO 2009-04-16
-// -----------------------------------------------------------------------------
-void IndicatorString::SerializeDeclaration( xml::xostream& ) const
 {
     // NOTHING
 }

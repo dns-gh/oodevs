@@ -12,6 +12,12 @@
 
 #include "boost/shared_ptr.hpp"
 
+namespace xml
+{
+    class xistream;
+    class xostream;
+}
+
 class IndicatorElement_ABC;
 
 // =============================================================================
@@ -27,6 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              IndicatorVariables();
+    explicit IndicatorVariables( xml::xistream& xis );
     virtual ~IndicatorVariables();
     //@}
 
@@ -34,6 +41,8 @@ public:
     //@{
     void Register( const std::string& name, boost::shared_ptr< IndicatorElement_ABC > element );
     boost::shared_ptr< IndicatorElement_ABC > Find( const std::string& name ) const;
+    void Serialize( xml::xostream& xos ) const;
+    void SerializeDeclarations( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -41,6 +50,11 @@ private:
     //@{
     IndicatorVariables( const IndicatorVariables& );            //!< Copy constructor
     IndicatorVariables& operator=( const IndicatorVariables& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadVariable( xml::xistream& xis );
     //@}
 
     //! @name Types

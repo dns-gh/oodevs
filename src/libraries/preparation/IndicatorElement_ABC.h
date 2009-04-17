@@ -38,7 +38,8 @@ public:
 
     //! @name Accessors
     //@{
-    std::string GetId() const { return id_; }
+    virtual std::string GetInput() const { return id_; }
+    virtual std::string GetValue() const = 0;
     virtual const IndicatorType& GetType() const = 0;
     //@}
 

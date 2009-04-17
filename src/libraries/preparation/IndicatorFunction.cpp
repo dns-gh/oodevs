@@ -70,15 +70,24 @@ const IndicatorType& IndicatorFunction::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: IndicatorFunction::GetValue
+// Created: SBO 2009-04-17
+// -----------------------------------------------------------------------------
+std::string IndicatorFunction::GetValue() const
+{
+    return GetInput();
+}
+
+// -----------------------------------------------------------------------------
 // Name: IndicatorFunction::Serialize
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
 void IndicatorFunction::Serialize( xml::xostream& xos ) const
 {
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
-        parameter.second->SerializeDeclaration( xos );
+        parameter.second->Serialize( xos );
     xos << xml::start( primitive_.GetCategory() )
-            << xml::attribute( "id", GetId() )
+            << xml::attribute( "id", GetInput() )
             << xml::attribute( "function", primitive_.GetName() );
     SerializeType( xos );
     SerializeParameters( xos );
@@ -106,11 +115,11 @@ void IndicatorFunction::SerializeParameters( xml::xostream& xos ) const
     typedef std::map< std::string, std::vector< std::string > > T_Attributes;
     T_Attributes attributes;
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
-        attributes[ parameter.first->GetAttribute() ].push_back( parameter.second->GetId() );
-    BOOST_FOREACH( const T_Attributes::value_type& attribute, attributes )
     {
-        const std::string value = boost::algorithm::join( attribute.second, "," );
-        if( !value.empty() )
-            xos << xml::attribute( attribute.first, value );
+        const std::string name = parameter.first->GetAttribute();
+        attributes[ name ].push_back( name == "input" ? parameter.second->GetInput() : parameter.second->GetValue() );
     }
+    BOOST_FOREACH( const T_Attributes::value_type& attribute, attributes )
+        if( attribute.second.size() )
+            xos << xml::attribute( attribute.first, boost::algorithm::join( attribute.second, "," ) );
 }
