@@ -20,8 +20,6 @@
 #include "Decision/DEC_Model_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 
-int MIL_PionMission::nDIADirectionDanger_ = 0;
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PionMission::InitializeDIA
 // Created: NLD 2006-11-21
@@ -30,7 +28,6 @@ int MIL_PionMission::nDIADirectionDanger_ = 0;
 void MIL_PionMission::InitializeDIA()
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "T_Mission_Pion" );
-    nDIADirectionDanger_ = DEC_Tools::InitializeDIAField( "dirDangereuse_", diaType );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +40,6 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,8 +51,7 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
     , type_                 ( type )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
-{
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );    
+{   
 }
 
 // -----------------------------------------------------------------------------
@@ -68,8 +63,7 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
     , type_                 ( type )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
-{
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );    
+{  
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +76,6 @@ MIL_PionMission::MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rh
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,5 +179,4 @@ void MIL_PionMission::Send() const
 void MIL_PionMission::AffectDirection( const MT_Vector2D& direction )
 {
     MIL_Mission_ABC::AffectDirection( direction );
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
 }

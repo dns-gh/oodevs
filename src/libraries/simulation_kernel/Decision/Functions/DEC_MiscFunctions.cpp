@@ -20,6 +20,7 @@
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_AutomateMission.h"
+#include "Entities/Orders/MIL_PionMission.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Representations.h"
 #include "simulation_terrain/TER_World.h"
@@ -187,4 +188,24 @@ void DEC_MiscFunctions::GetDirectionEnnemi( DIA_Call_ABC& call, MIL_Entity_ABC& 
 {
     MIL_AutomateMission* pMission = dynamic_cast<MIL_AutomateMission*>( call.GetParameter( 0 ).ToObject() );
     call.GetResult().SetValue( new MT_Vector2D( pMission->GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::CopyDirectionDanger
+// Created: LDC 2009-04-21
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::CopyDirectionDanger( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+{
+    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 0 ) ) );
+
+    DIA_Parameters& params = call.GetParameters();
+
+    MT_Vector2D* pPosSource = params[0].ToUserPtr( pPosSource );
+
+    assert( pPosSource );
+    assert( !pPosSource->IsZero() );
+    assert( MT_IsZero( pPosSource->SquareMagnitude() - 1. ) );    
+
+    MIL_PionMission* pMission = dynamic_cast<MIL_PionMission*>( call.GetParameter( 1 ).ToObject() );
+    pMission->AffectDirection( *pPosSource );
 }

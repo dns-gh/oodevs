@@ -45,11 +45,12 @@ public:
     static void RemoveFromCategory  ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
     static void DeleteRepresentation( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
     
-    static void GetMission        ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void SetMission        ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );  
-    static void GetName           ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void GetAutomate       ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void GetDirectionEnnemi( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void GetMission         ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void SetMission         ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );  
+    static void GetName            ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void GetAutomate        ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void GetDirectionEnnemi ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void CopyDirectionDanger( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
 };
 
 #include "DEC_MiscFunctions.inl"

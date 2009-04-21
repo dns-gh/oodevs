@@ -466,6 +466,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetName            , "DEC_GetSzName"   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetAutomate        , "DEC_GetAutomate" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetDirectionEnnemi , "DEC_GetDirectionEnnemi" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::CopyDirectionDanger, "DEC_Copie_DirectionDanger" );
 
 }
 

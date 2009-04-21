@@ -40,6 +40,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 
 #include "Entities/Objects/ActivableCapacity.h"
+#include "Entities/Orders/MIL_PionMission.h"
 
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
@@ -921,4 +922,14 @@ void DEC_AgentFunctions::IsUninstalled( DIA_Call_ABC& call, const MIL_AgentPion&
 void DEC_AgentFunctions::Install( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Posture >().Install();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetDirectionDanger
+// Created: LDC 2009-04-21
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::GetDirectionDanger( DIA_Call_ABC& call, const MIL_AgentPion& /*callerAgent*/ )
+{
+    MIL_PionMission* pMission = dynamic_cast<MIL_PionMission*>( call.GetParameter( 0 ).ToObject() );
+    call.GetResult().SetValue( new MT_Vector2D( pMission->GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
 }
