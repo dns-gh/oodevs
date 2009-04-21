@@ -93,6 +93,8 @@ fsm =
     Deactivate   = function( self ) end,
 }
 
+AtState     = function( state, func ) end
+
 -- thread safe fsm Helpers
 ChangeState = function( state ) end
 Deactivate  = function() end
@@ -135,6 +137,11 @@ drawing =
     GetCoordinates = function( self ) return zone end
 }
 
+profiles =
+{
+    SetAutomatRight = function( profile, automat, readOnly, readWrite ) end
+}
+
 -- Helpers
 
 xml =
@@ -156,6 +163,7 @@ Message          = function( tParameters ) end
 Display          = function( tParameters ) end
 Dialog           = function( tParameters ) end
 Briefing         = function( tParameters ) end
+Launch           = function( tParameters ) end
 PromptNextPhase  = function( tParameters ) end
 Center           = function( tParameters ) end
 Select           = function( tParameters ) end
