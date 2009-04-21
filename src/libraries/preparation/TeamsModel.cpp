@@ -44,6 +44,7 @@ TeamsModel::TeamsModel( Controllers& controllers, TeamFactory_ABC& factory )
 // -----------------------------------------------------------------------------
 TeamsModel::~TeamsModel()
 {
+    Purge();
     controllers_.Unregister( *this );
 }
  

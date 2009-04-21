@@ -44,10 +44,6 @@ public:
     virtual ~ScorePanel();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

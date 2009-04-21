@@ -41,6 +41,7 @@ public:
     //@{
     QString GetName() const;
     std::string GetCategory() const;
+    QString GetPrototype() const;
     const IndicatorType& GetType() const;
     const IndicatorPrimitiveParameter* FindParameter( unsigned int index ) const;
     //@}
@@ -55,6 +56,7 @@ private:
     //! @name Helpers
     //@{
     void ReadParameter( xml::xistream& xis );
+    QString BuildParameterList() const;
     //@}
 
     //! @name Types

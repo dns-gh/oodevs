@@ -22,6 +22,8 @@
 #include "WeatherModel.h"
 #include "ProfilesModel.h"
 #include "ProfileFactory.h"
+#include "ScoresModel.h"
+#include "ScoreFactory.h"
 #include "IntelligencesModel.h"
 #include "OrbatReIndexer.h"
 #include "clients_kernel/Controllers.h"
@@ -54,6 +56,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , formationFactory_( *new FormationFactory( controllers, idManager_ ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
     , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
+    , scoreFactory_( *new ScoreFactory( controllers_.controller_ ) )
     , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) ) 
     , orbatFile_( "" )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
@@ -63,6 +66,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
     , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
     , profiles_( *new ProfilesModel( profileFactory_ ) )
+    , scores_( *new ScoresModel( scoreFactory_ ) )
     , intelligences_( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
     , drawings_( *new gui::DrawerModel( controllers, drawingFactory_ ) )
 {
@@ -76,6 +80,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
 Model::~Model()
 {
     delete &intelligences_;
+    delete &scores_;
+    delete &scoreFactory_;
     delete &profiles_;
     delete &profileFactory_;
     delete &weather_;
@@ -98,6 +104,7 @@ void Model::Purge()
 {
     UpdateName( "orbat" );
     intelligences_.Purge();
+    scores_.Purge();
     profiles_.Purge();
     weather_.Purge();
     limits_.Purge();
@@ -130,7 +137,7 @@ void Model::Load( const tools::ExerciseConfig& config )
         else
         {
             weather_.Serialize( weatherFile );
-            controllers_.controller_.Update(weather_); 
+            controllers_.controller_.Update( weather_); 
         }
     }
     {

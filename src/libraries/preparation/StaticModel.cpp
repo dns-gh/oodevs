@@ -9,8 +9,9 @@
 
 #include "preparation_pch.h"
 #include "StaticModel.h"
-#include "TeamKarmas.h"
+#include "IndicatorPrimitives.h"
 #include "IntelligenceKarmas.h"
+#include "TeamKarmas.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/DetectionMap.h"
@@ -38,6 +39,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , teamKarmas_         ( *new TeamKarmas() )
     , intelligenceKarmas_ ( *new IntelligenceKarmas() )
     , drawings_           ( *new gui::DrawingTypes( controllers.controller_ ) )
+    , indicators_         ( *new IndicatorPrimitives() )
 {
     // NOTHING
 }
@@ -48,6 +50,7 @@ StaticModel::StaticModel( Controllers& controllers )
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &indicators_;
     delete &drawings_;
     delete &intelligenceKarmas_;
     delete &teamKarmas_;
@@ -70,6 +73,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( config );
     detection_.Load( config );
     drawings_.Load( tools::GeneralConfig::BuildResourceChildFile( "DrawingTemplates.xml" ) );
+    indicators_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
 
@@ -79,6 +83,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void StaticModel::Purge()
 {
+    indicators_.Purge();
     drawings_.Purge();
     types_.Purge();
     objectTypes_.Purge();

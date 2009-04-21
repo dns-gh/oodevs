@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QSize sizeHint () const;
+    virtual QSize sizeHint() const;
     //@}
 
 private slots:

@@ -34,12 +34,14 @@
 #include "TemplatesPanel.h"
 #include "IntelligencesLayer.h"
 #include "ImportOrbatDialog.h"
+#include "ScoreDialog.h"
 
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
 #include "preparation/FormationModel.h"
 #include "preparation/IntelligencesModel.h"
 #include "preparation/ModelChecker_ABC.h"
+#include "preparation/IndicatorPrimitives.h"
 #include "preparation/Tools.h"
 
 #include "clients_kernel/ActionController.h"
@@ -148,6 +150,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
+    ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, staticModel_.indicators_ );
 
     QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
     QVBox* listsTabBox = new QVBox( pListsTabWidget );
@@ -222,7 +225,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new DisplayToolbar( this, controllers );
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
-    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *factory, expiration, *help );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *scoreDialog, *factory, expiration, *help );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );

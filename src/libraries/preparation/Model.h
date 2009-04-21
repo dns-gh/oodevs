@@ -50,6 +50,8 @@ class ProfileFactory_ABC;
 class IntelligencesModel;
 class ModelChecker_ABC;
 class OrbatImportFilter;
+class ScoresModel;
+class ScoreFactory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -91,6 +93,7 @@ private:
     FormationFactory_ABC& formationFactory_;
     AgentFactory_ABC& agentFactory_;
     ProfileFactory_ABC& profileFactory_;
+    ScoreFactory_ABC& scoreFactory_;
     gui::DrawingFactory_ABC& drawingFactory_;
     std::string orbatFile_;
     QString name_;
@@ -106,6 +109,7 @@ public:
     LimitsModel& limits_;
     WeatherModel& weather_;
     ProfilesModel& profiles_;
+    ScoresModel& scores_;
     IntelligencesModel& intelligences_;
     gui::DrawerModel& drawings_;
     //@}

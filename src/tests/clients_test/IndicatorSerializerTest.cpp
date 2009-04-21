@@ -16,6 +16,7 @@
 #include "preparation/IndicatorPrimitives.h"
 #include "preparation/IndicatorVariable.h"
 #include "preparation/IndicatorVariables.h"
+#include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.h>
 
 using namespace mockpp;
@@ -25,7 +26,11 @@ namespace
     class SerializerFixture
     {
     public:
-        SerializerFixture() : factory_( primitives_, variables_ ) {}
+        SerializerFixture()
+            : factory_( primitives_, variables_ )
+        {
+            primitives_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
+        }
 
         void ParseAndCheck( const std::string& text, const std::string& expected )
         {

@@ -12,7 +12,9 @@
 #include "IndicatorPrimitiveParameter.h"
 #include "IndicatorElement_ABC.h"
 #include "IndicatorType.h"
+#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
+#include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -68,6 +70,15 @@ std::string IndicatorPrimitive::GetCategory() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: IndicatorPrimitive::GetPrototype
+// Created: SBO 2009-04-20
+// -----------------------------------------------------------------------------
+QString IndicatorPrimitive::GetPrototype() const
+{
+    return QString( "%1(%2)" ).arg( name_ ).arg( BuildParameterList() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: IndicatorPrimitive::GetType
 // Created: SBO 2009-04-09
 // -----------------------------------------------------------------------------
@@ -83,4 +94,16 @@ const IndicatorType& IndicatorPrimitive::GetType() const
 const IndicatorPrimitiveParameter* IndicatorPrimitive::FindParameter( unsigned int index ) const
 {
     return index < parameters_.size() ? parameters_.at( index ) : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorPrimitive::BuildParameterList
+// Created: SBO 2009-04-20
+// -----------------------------------------------------------------------------
+QString IndicatorPrimitive::BuildParameterList() const
+{
+    std::vector< std::string > list;
+    BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
+        list.push_back( parameter->GetName().ascii() );
+    return boost::join( list, "," ).c_str();
 }

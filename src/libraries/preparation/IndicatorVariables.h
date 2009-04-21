@@ -10,7 +10,7 @@
 #ifndef __IndicatorVariables_h_
 #define __IndicatorVariables_h_
 
-#include "boost/shared_ptr.hpp"
+#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -19,6 +19,14 @@ namespace xml
 }
 
 class IndicatorElement_ABC;
+
+class IndicatorVariablesVisitor_ABC
+{
+public:
+             IndicatorVariablesVisitor_ABC() {}
+    virtual ~IndicatorVariablesVisitor_ABC() {}
+    virtual void Visit( IndicatorElement_ABC& element ) = 0;
+};
 
 // =============================================================================
 /** @class  IndicatorVariables
@@ -43,6 +51,7 @@ public:
     boost::shared_ptr< IndicatorElement_ABC > Find( const std::string& name ) const;
     void Serialize( xml::xostream& xos ) const;
     void SerializeDeclarations( xml::xostream& xos ) const;
+    void Accept( IndicatorVariablesVisitor_ABC& visitor ) const;
     //@}
 
 private:

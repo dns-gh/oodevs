@@ -30,8 +30,9 @@ namespace gui
     class DrawingTypes;
 }
 
-class TeamKarmas;
+class IndicatorPrimitives;
 class IntelligenceKarmas;
+class TeamKarmas;
 
 // =============================================================================
 /** @class  StaticModel
@@ -68,6 +69,7 @@ public:
     TeamKarmas&                      teamKarmas_;
     IntelligenceKarmas&              intelligenceKarmas_;
     gui::DrawingTypes&               drawings_;
+    IndicatorPrimitives&             indicators_;
     //@}
 
 private:

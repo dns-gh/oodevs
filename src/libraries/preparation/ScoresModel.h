@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorPrimitives_h_
-#define __IndicatorPrimitives_h_
+#ifndef __ScoresModel_h_
+#define __ScoresModel_h_
 
 #include "clients_kernel/Resolver.h"
 
@@ -17,41 +17,51 @@ namespace xml
     class xistream;
 }
 
-class IndicatorPrimitive;
+class Score_ABC;
+class ScoreFactory_ABC;
 
 // =============================================================================
-/** @class  IndicatorPrimitives
-    @brief  IndicatorPrimitives
+/** @class  ScoresModel
+    @brief  ScoresModel
 */
-// Created: SBO 2009-04-06
+// Created: SBO 2009-04-16
 // =============================================================================
-class IndicatorPrimitives : public kernel::Resolver< IndicatorPrimitive, QString >
+class ScoresModel : public kernel::Resolver< Score_ABC, QString >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorPrimitives();
-    virtual ~IndicatorPrimitives();
+    explicit ScoresModel( const ScoreFactory_ABC& factory );
+    virtual ~ScoresModel();
     //@}
 
     //! @name Operations
     //@{
-    void Load( const std::string& file );
+    void Create( const QString& name );
+    void Delete( const Score_ABC& score );
     void Purge();
+    void Load( const std::string& file );
+    void Serialize( const std::string& file ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorPrimitives( const IndicatorPrimitives& );            //!< Copy constructor
-    IndicatorPrimitives& operator=( const IndicatorPrimitives& ); //!< Assignment operator
+    ScoresModel( const ScoresModel& );            //!< Copy constructor
+    ScoresModel& operator=( const ScoresModel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void ReadPrimitive( xml::xistream& xis );
+    void ReadScore( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const ScoreFactory_ABC& factory_;
     //@}
 };
 
-#endif // __IndicatorPrimitives_h_
+#endif // __ScoresModel_h_

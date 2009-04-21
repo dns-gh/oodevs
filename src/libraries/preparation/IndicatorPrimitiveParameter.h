@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     std::string GetAttribute() const;
+    QString GetName() const;
     const IndicatorType& GetType() const;
     //@}
 

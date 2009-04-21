@@ -44,6 +44,15 @@ std::string IndicatorPrimitiveParameter::GetAttribute() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: IndicatorPrimitiveParameter::GetName
+// Created: SBO 2009-04-20
+// -----------------------------------------------------------------------------
+QString IndicatorPrimitiveParameter::GetName() const
+{
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: IndicatorPrimitiveParameter::GetType
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------

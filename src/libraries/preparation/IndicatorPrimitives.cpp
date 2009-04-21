@@ -10,7 +10,6 @@
 #include "preparation_pch.h"
 #include "IndicatorPrimitives.h"
 #include "IndicatorPrimitive.h"
-#include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -19,10 +18,7 @@
 // -----------------------------------------------------------------------------
 IndicatorPrimitives::IndicatorPrimitives()
 {
-    xml::xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
-    xis >> xml::start( "primitives" )
-            >> xml::list( "primitive", *this, &IndicatorPrimitives::ReadPrimitive )
-        >> xml::end();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +27,19 @@ IndicatorPrimitives::IndicatorPrimitives()
 // -----------------------------------------------------------------------------
 IndicatorPrimitives::~IndicatorPrimitives()
 {
-    DeleteAll();
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorPrimitives::Load
+// Created: SBO 2009-04-20
+// -----------------------------------------------------------------------------
+void IndicatorPrimitives::Load( const std::string& file )
+{
+    xml::xifstream xis( file );
+    xis >> xml::start( "primitives" )
+            >> xml::list( "primitive", *this, &IndicatorPrimitives::ReadPrimitive )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -42,4 +50,13 @@ void IndicatorPrimitives::ReadPrimitive( xml::xistream& xis )
 {
     IndicatorPrimitive* primitive = new IndicatorPrimitive( xis );
     Register( primitive->GetName(), *primitive );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorPrimitives::Purge
+// Created: SBO 2009-04-20
+// -----------------------------------------------------------------------------
+void IndicatorPrimitives::Purge()
+{
+    DeleteAll();
 }

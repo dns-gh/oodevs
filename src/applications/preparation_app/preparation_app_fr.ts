@@ -445,6 +445,14 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>&amp;?</source>
         <translation>&amp;?</translation>
     </message>
+    <message>
+        <source>Scores...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Exercise</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>

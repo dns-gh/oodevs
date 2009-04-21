@@ -9,20 +9,9 @@
 
 #include "gaming_app_pch.h"
 #include "ScorePanel.h"
-#include "clients_gui/ListDisplayer.h"
 #include "clients_kernel/Controllers.h"
 #include "gaming/Score.h"
 #include "gaming/Tools.h"
-
-namespace
-{
-    class MyList : public gui::ListDisplayer< ScorePanel >
-    {
-    public:
-        MyList( ScorePanel* parent, gui::ItemFactory_ABC& factory )
-            : gui::ListDisplayer< ScorePanel >( parent, *parent, factory ) {}
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: ScorePanel constructor
@@ -37,7 +26,7 @@ ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controller
     setCloseMode( QDockWindow::Always );
     setCaption( tools::translate( "ScorePanel", "Scores" ) );
 
-    scores_ = new MyList( this, factory_ );
+    scores_ = new gui::ListDisplayer< ScorePanel >( this, *this, factory_ );
     scores_->AddColumn( tools::translate( "Score", "Name" ) );
     scores_->AddColumn( tools::translate( "Score", "Value" ) );
     setWidget( scores_ );

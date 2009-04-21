@@ -95,3 +95,13 @@ void IndicatorVariables::SerializeDeclarations( xml::xostream& xos ) const
     BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
         variable.second->SerializeDeclaration( xos );
 }
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorVariables::Accept
+// Created: SBO 2009-04-21
+// -----------------------------------------------------------------------------
+void IndicatorVariables::Accept( IndicatorVariablesVisitor_ABC& visitor ) const
+{
+    BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
+        visitor.Visit( *variable.second );
+}
