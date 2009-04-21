@@ -7,29 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __ScoreVariablesEditor_h_
-#define __ScoreVariablesEditor_h_
+#ifndef __ScoreVariablesList_h_
+#define __ScoreVariablesList_h_
 
 #include "clients_gui/ListDisplayer.h"
 
 class IndicatorElement_ABC;
 class Score_ABC;
+class ScoreVariableCreationWizard;
 
 // =============================================================================
-/** @class  ScoreVariablesEditor
-    @brief  ScoreVariablesEditor
+/** @class  ScoreVariablesList
+    @brief  ScoreVariablesList
 */
 // Created: SBO 2009-04-20
 // =============================================================================
-class ScoreVariablesEditor : public QVBox
+class ScoreVariablesList : public QVBox
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreVariablesEditor( QWidget* parent, gui::ItemFactory_ABC& factory );
-    virtual ~ScoreVariablesEditor();
+             ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory );
+    virtual ~ScoreVariablesList();
     //@}
 
     //! @name Operations
@@ -50,13 +51,14 @@ private slots:
     void OnAdd();
     void OnDelete();
     void OnPaste();
+    void OnVariableCreated( IndicatorElement_ABC& variable );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ScoreVariablesEditor( const ScoreVariablesEditor& );            //!< Copy constructor
-    ScoreVariablesEditor& operator=( const ScoreVariablesEditor& ); //!< Assignment operator
+    ScoreVariablesList( const ScoreVariablesList& );            //!< Copy constructor
+    ScoreVariablesList& operator=( const ScoreVariablesList& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -68,8 +70,9 @@ private:
     //! @name Member data
     //@{
     gui::ItemFactory_ABC& factory_;
-    gui::ListDisplayer< ScoreVariablesEditor >* list_;
+    ScoreVariableCreationWizard* wizard_;
+    gui::ListDisplayer< ScoreVariablesList >* list_;
     //@}
 };
 
-#endif // __ScoreVariablesEditor_h_
+#endif // __ScoreVariablesList_h_

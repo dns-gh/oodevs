@@ -11,7 +11,7 @@
 #include "ScoreEditor.h"
 #include "moc_ScoreEditor.cpp"
 #include "ScorePrimitivesLibrary.h"
-#include "ScoreVariablesEditor.h"
+#include "ScoreVariablesList.h"
 #include "preparation/Score_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -46,8 +46,8 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
         connect( library, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
     }
     {
-        QGroupBox* box = new QHGroupBox( tr( "Where: " ), this );
-        variables_ = new ScoreVariablesEditor( box, factory );
+        QGroupBox* box = new QHGroupBox( tr( "Variables: " ), this );
+        variables_ = new ScoreVariablesList( box, factory );
         grid->addWidget( box, 2, 1 );
         connect( variables_, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
     }

@@ -20,7 +20,7 @@ namespace gui
 
 class Score_ABC;
 class IndicatorPrimitive;
-class ScoreVariablesEditor;
+class ScoreVariablesList;
 
 // =============================================================================
 /** @class  ScoreEditor
@@ -69,7 +69,7 @@ private:
     QLineEdit* name_;
     QLineEdit* formula_;
     QButton* checkFormula_;
-    ScoreVariablesEditor* variables_;
+    ScoreVariablesList* variables_;
     //@}
 };
 

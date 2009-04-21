@@ -49,7 +49,7 @@ boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateNumber(
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateString
+// Name: IndicatorElementFactory::CreateString
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateString( const std::string& value ) const

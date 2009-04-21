@@ -8,26 +8,30 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "ScoreVariablesEditor.h"
-#include "moc_ScoreVariablesEditor.cpp"
+#include "ScoreVariablesList.h"
+#include "moc_ScoreVariablesList.cpp"
+#include "ScoreVariableCreationWizard.h"
 #include "preparation/IndicatorElement_ABC.h"
 #include "preparation/IndicatorType.h"
 #include "preparation/IndicatorVariables.h"
 #include "preparation/Score_ABC.h"
 
 // -----------------------------------------------------------------------------
-// Name: ScoreVariablesEditor constructor
+// Name: ScoreVariablesList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreVariablesEditor::ScoreVariablesEditor( QWidget* parent, gui::ItemFactory_ABC& factory )
+ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory )
     : QVBox( parent )
     , factory_( factory )
-    , list_( new gui::ListDisplayer< ScoreVariablesEditor >( this, *this, factory ) )
+    , wizard_( new ScoreVariableCreationWizard( this ) )
+    , list_( new gui::ListDisplayer< ScoreVariablesList >( this, *this, factory ) )
 {
+    setMargin( 5 );
     {
         list_->AddColumn( tr( "Name" ) );
         list_->AddColumn( tr( "Type" ) );
         list_->AddColumn( tr( "Value" ) );
+        connect( list_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnPaste() ) );
     }
     {
         QHBox* box = new QHBox( this );
@@ -38,13 +42,14 @@ ScoreVariablesEditor::ScoreVariablesEditor( QWidget* parent, gui::ItemFactory_AB
         connect( del, SIGNAL( clicked() ), SLOT( OnDelete() ) );
         connect( paste, SIGNAL( clicked() ), SLOT( OnPaste() ) );
     }
+    connect( wizard_, SIGNAL( VariableCreated( IndicatorElement_ABC& ) ), SLOT( OnVariableCreated( IndicatorElement_ABC& ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreVariablesEditor destructor
+// Name: ScoreVariablesList destructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreVariablesEditor::~ScoreVariablesEditor()
+ScoreVariablesList::~ScoreVariablesList()
 {
     // NOTHING
 }
@@ -54,7 +59,7 @@ namespace
     class VariablesCollector : public IndicatorVariablesVisitor_ABC
     {
     public:
-        explicit VariablesCollector( ScoreVariablesEditor& editor ) : editor_( &editor ) {}
+        explicit VariablesCollector( ScoreVariablesList& editor ) : editor_( &editor ) {}
         virtual ~VariablesCollector() {}
 
         virtual void Visit( IndicatorElement_ABC& variable )
@@ -62,15 +67,15 @@ namespace
             editor_->AddVariable( variable );
         }
     private:
-        ScoreVariablesEditor* editor_;
+        ScoreVariablesList* editor_;
     };
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreVariablesEditor::StartEdit
+// Name: ScoreVariablesList::StartEdit
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-void ScoreVariablesEditor::StartEdit( Score_ABC& score )
+void ScoreVariablesList::StartEdit( Score_ABC& score )
 {
     list_->clear();
     VariablesCollector collector( *this );
@@ -78,48 +83,59 @@ void ScoreVariablesEditor::StartEdit( Score_ABC& score )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreVariablesEditor::AddVariable
+// Name: ScoreVariablesList::AddVariable
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-void ScoreVariablesEditor::AddVariable( const IndicatorElement_ABC& variable )
+void ScoreVariablesList::AddVariable( const IndicatorElement_ABC& variable )
 {
     gui::ValuedListItem* item = factory_.CreateItem( list_ );
     Display( variable, item );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreVariablesEditor::Display
+// Name: ScoreVariablesList::Display
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-void ScoreVariablesEditor::Display( const IndicatorElement_ABC& variable, gui::ValuedListItem* item )
+void ScoreVariablesList::Display( const IndicatorElement_ABC& variable, gui::ValuedListItem* item )
 {
     item->Set( &variable, variable.GetInput().c_str(), variable.GetType().ToString().c_str() );
     item->setText( 2, variable.GetValue().c_str() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreVariablesEditor::OnAdd
+// Name: ScoreVariablesList::OnAdd
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void ScoreVariablesEditor::OnAdd()
+void ScoreVariablesList::OnAdd()
 {
-    
+    wizard_->Create();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreVariablesEditor::OnDelete
+// Name: ScoreVariablesList::OnDelete
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void ScoreVariablesEditor::OnDelete()
+void ScoreVariablesList::OnDelete()
 {
-    
+    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( list_->selectedItem() ) )
+        list_->RemoveItem( item );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreVariablesEditor::OnPaste
+// Name: ScoreVariablesList::OnPaste
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void ScoreVariablesEditor::OnPaste()
+void ScoreVariablesList::OnPaste()
 {
-    // $$$$ SBO 2009-04-20: emit Insert( "$variable" );
+    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( list_->selectedItem() ) )
+        emit Insert( item->GetValue< IndicatorElement_ABC >()->GetInput().c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariablesList::OnVariableCreated
+// Created: SBO 2009-04-21
+// -----------------------------------------------------------------------------
+void ScoreVariablesList::OnVariableCreated( IndicatorElement_ABC& variable )
+{
+    AddVariable( variable );
 }
