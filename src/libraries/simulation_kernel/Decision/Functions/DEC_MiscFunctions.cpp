@@ -18,6 +18,8 @@
 #include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Orders/MIL_Mission_ABC.h"
+#include "Entities/Orders/MIL_AutomateMission.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Representations.h"
 #include "simulation_terrain/TER_World.h"
@@ -139,3 +141,50 @@ void DEC_MiscFunctions::DeleteRepresentation( DIA_Call_ABC& call, MIL_Entity_ABC
     role.DeleteRepresentation( call.GetParameter( 0 ).ToObject() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::GetMission
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::GetMission( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+{
+    call.GetResult().SetValue( *dynamic_cast<DEC_Decision_ABC*>( call.GetParameter( 0 ).ToObject() )->GetMission() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::SetMission
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::SetMission( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+{
+    dynamic_cast<DEC_Decision_ABC*>( call.GetParameter( 0 ).ToObject() )->SetMission( static_cast<MIL_Mission_ABC*>( call.GetParameter( 1 ).ToObject() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::GetName
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::GetName( DIA_Call_ABC& call,     MIL_Entity_ABC& callerAgent )
+{
+    call.GetResult().SetValue( dynamic_cast<DEC_Decision_ABC*>( call.GetParameter( 0 ).ToObject() )->GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::GetAutomate
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::GetAutomate( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+{
+    DEC_Decision_ABC* pAgent = dynamic_cast<DEC_Decision_ABC*>( call.GetParameter( 0 ).ToObject() );
+    DEC_AutomateDecision* pAutomate = pAgent->GetDecAutomate();
+    call.GetResult().SetValue( pAutomate ? *pAutomate : *(DEC_AutomateDecision*)0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::GetDirectionEnnemi
+// Created: LDC 2009-04-20
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::GetDirectionEnnemi( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+{
+    MIL_AutomateMission* pMission = dynamic_cast<MIL_AutomateMission*>( call.GetParameter( 0 ).ToObject() );
+    call.GetResult().SetValue( new MT_Vector2D( pMission->GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
+}

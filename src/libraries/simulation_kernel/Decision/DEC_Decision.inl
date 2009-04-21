@@ -22,6 +22,7 @@ DEC_Decision<T>::DEC_Decision( T& entity, const std::string& type )
 : DEC_Decision_ABC( entity )
 , DIA_Engine      ( *DIA_TypeManager::Instance().GetType( type ), "" )
 , pEntity_        ( &entity )
+, pMission_       ( 0 )
 {    
     defaultBehaviorParameters_.SetOwnerShip( true );
     pDefaultParameter_.reset( new DIA_Variable_Id() );
@@ -36,6 +37,7 @@ template <class T>
 DEC_Decision<T>::DEC_Decision( const std::string& type )
 : DIA_Engine( *DIA_TypeManager::Instance().GetType( type ), "" )
 , pEntity_  ( 0 )
+, pMission_ ( 0 )
 {    
     defaultBehaviorParameters_.SetOwnerShip( true );
     pDefaultParameter_.reset( new DIA_Variable_Id() );
@@ -197,13 +199,13 @@ bool DEC_Decision<T>::IsDefaultBehaviorAvailable() const
 // Created: LDC 2009-04-07
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, DIA_Parameters& parameters, DIA_TypedObject& mission, int missionIndex )
+void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, DIA_Parameters& parameters, MIL_Mission_ABC& mission )
 {
     static int nMissionMrtBehaviorDummyId = 0;
     parameters.GetParameter( 0 ).SetValue( mission );
     parameters.GetParameter( 1 ).SetValue( nMissionMrtBehaviorDummyId++ );
     DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, parameters );
-    GetVariable( missionIndex ).SetValue( mission );
+    pMission_ = &mission;
 }
 
 // -----------------------------------------------------------------------------
@@ -211,15 +213,35 @@ void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, DIA_Paramet
 // Created: LDC 2009-04-07
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::StopMission( const std::string& strBehavior, DIA_Parameters& parameters, int missionIndex )
+void DEC_Decision<T>::StopMission( const std::string& strBehavior, DIA_Parameters& parameters )
 {
     __try
     {
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, parameters, true );
-        GetVariable( missionIndex ).Reset();
+        pMission_ = 0;
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
         CleanStateAfterCrash();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::SetMission
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::SetMission( MIL_Mission_ABC* pMission )
+{
+    pMission_ = pMission;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::GetMission
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+template <class T>
+MIL_Mission_ABC* DEC_Decision<T>::GetMission()
+{
+    return pMission_;
 }

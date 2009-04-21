@@ -307,6 +307,11 @@ void MIL_PopulationType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::AddToCategory       , "DEC_AddToCategory" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RemoveFromCategory  , "DEC_RemoveFromCategory" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::DeleteRepresentation, "DEC_DeleteRepresentation" );
+    
+    // Former szName_, mission_, automate_:
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetSzName, "DEC_GetSzName"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetMission     , "DEC_GetMission"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::SetMission     , "DEC_SetMission"  );
 } 
 
 // =============================================================================

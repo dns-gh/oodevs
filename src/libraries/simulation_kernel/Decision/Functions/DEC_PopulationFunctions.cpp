@@ -361,3 +361,12 @@ void DEC_PopulationFunctions::NotifyDominationStateChanged( DIA_Call_ABC& call, 
 {
     callerPopulation.GetDecision().NotifyDominationStateChanged( call.GetParameter( 0 ).ToFloat() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetSzName
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetSzName( DIA_Call_ABC& call, MIL_Population& callerPopulation )
+{
+    call.GetResult().SetValue( callerPopulation.GetDecision().GetName() );
+}

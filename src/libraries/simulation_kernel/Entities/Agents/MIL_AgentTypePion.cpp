@@ -429,7 +429,14 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
  
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeLeftForMoving  , "DEC_Agent_AutonomieEnDeplacement"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeToMoveDistance , "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite" );
+    
+    // Former szName_, mission_, automate_:
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetName     , "DEC_GetSzName"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetAutomate , "DEC_GetAutomate" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetMission  , "DEC_GetMission"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::SetMission  , "DEC_SetMission"  );
 
+ 
     // NBC
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsContaminated                   , "DEC_Agent_EstContamine"                         );   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsWearingNbcProtectionSuit       , "DEC_Agent_EstEnTenueProtectionNBC"              );

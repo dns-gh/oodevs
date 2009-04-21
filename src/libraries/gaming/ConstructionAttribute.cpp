@@ -49,8 +49,8 @@ void ConstructionAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
              .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage ); 
-    if ( !construction_ )
-        return;
+//    if ( !construction_ )
+//        return;
 //    displayer.Group( tools::translate( "Object", "Information" ) )
 //             .Item( tools::translate( "Object", "Construction dotation:" ) )
 //                .Start( nDotationConstruction_ )

@@ -54,9 +54,11 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_Population& GetPopulation     () const;
-    MT_Float        GetDominationState() const;
-    bool            HasStateChanged   () const; // Etat decisionnel
+    MIL_Population&    GetPopulation     () const;
+    MT_Float           GetDominationState() const;
+    bool               HasStateChanged   () const; // Etat decisionnel
+    virtual DEC_AutomateDecision* GetDecAutomate() const;
+    virtual std::string GetName() const;
     //@}
 
     //! @name Notifications
@@ -83,6 +85,7 @@ private:
     MT_Float                             rDominationState_;
     MT_Float                             rLastDominationState_;
     bool                                 bStateHasChanged_;
+    std::string                          name_;
 
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Population

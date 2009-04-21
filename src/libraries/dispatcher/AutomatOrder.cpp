@@ -21,7 +21,6 @@ using namespace dispatcher;
 AutomatOrder::AutomatOrder( Model& model, Automat& automat, const ASN1T_MsgAutomatOrder& asn )
     : Order_ABC ( model, asn.mission, asn.parametres )
     , automat_  ( automat )
-    , formation_( asn.formation )
 {
     // NOTHING
 }
@@ -43,8 +42,7 @@ void AutomatOrder::Send( ClientPublisher_ABC& publisher )
 {
     client::AutomatOrder asn;
     asn().oid       = automat_.GetId();
-    asn().mission   = missionID_;
-    asn().formation = formation_;       
+    asn().mission   = missionID_;   
     Order_ABC::Send( asn().parametres );
     asn.Send( publisher );
     AsnDelete( asn().parametres );    
@@ -60,7 +58,6 @@ void AutomatOrder::SendNoMission( const Automat& automat, ClientPublisher_ABC& p
     client::AutomatOrder asn;
     asn().oid          = automat.GetId();
     asn().mission      = 0;
-    asn().formation    = EnumAutomatOrderFormation::un_echelon;
     asn().parametres.n = 0;
     asn.Send( publisher );
 }

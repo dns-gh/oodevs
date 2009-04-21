@@ -15,6 +15,8 @@
 class MIL_Entity_ABC;
 class DIA_Parameters;
 class DIA_Variable_ABC;
+class MIL_Mission_ABC;
+class DEC_AutomateDecision;
 
 // =============================================================================
 /** @class  DEC_Decision_ABC
@@ -44,6 +46,10 @@ public:
     //@{
     virtual void UpdateDecision() = 0;
     virtual DIA_Variable_ABC* ExecuteFunction( const std::string& szFuncName, DIA_Parameters& parameters ) = 0;
+    virtual void SetMission( MIL_Mission_ABC* pMission ) = 0;
+    virtual MIL_Mission_ABC* GetMission() = 0;
+    virtual DEC_AutomateDecision* GetDecAutomate() const = 0;
+    virtual std::string GetName() const = 0;
     //@}
 
 private:

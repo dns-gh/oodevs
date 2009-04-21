@@ -26,8 +26,6 @@
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
 
-int  DEC_AutomateDecision::nDIAMissionIdx_                  = 0;
-
 BOOST_CLASS_EXPORT_GUID( DEC_AutomateDecision, "DEC_AutomateDecision" )
 
 //-----------------------------------------------------------------------------
@@ -38,7 +36,6 @@ BOOST_CLASS_EXPORT_GUID( DEC_AutomateDecision, "DEC_AutomateDecision" )
 void DEC_AutomateDecision::InitializeDIA()
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "T_Automate" );
-    nDIAMissionIdx_   = DEC_Tools::InitializeDIAField( "mission_"  , diaType );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +58,6 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
     {
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
-        GetVariable( nDIAMissionIdx_ ).Reset();
         DIA_Workspace::Instance().SetObjectName( *this, automate.GetName() ); // ????
     }
     catch( DIA_Internal_Exception& e )
@@ -145,7 +141,6 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
         
-        GetVariable( nDIAMissionIdx_ ).Reset();
         DIA_Workspace::Instance().SetObjectName( *this, pEntity_->GetName() ); // ????
 
         DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
@@ -214,7 +209,7 @@ void DEC_AutomateDecision::EndCleanStateAfterCrash()
 void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
-    ActivateOrder( strBehavior, missionMrtBehaviorParameters_, mission, nDIAMissionIdx_ );
+    ActivateOrder( strBehavior, missionMrtBehaviorParameters_, mission );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +219,7 @@ void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission& mission
 void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
-    StopMission( strBehavior, missionMrtBehaviorParameters_, nDIAMissionIdx_ );
+    StopMission( strBehavior, missionMrtBehaviorParameters_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -234,7 +229,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission 
 void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
-    ActivateOrder( strBehavior, missionConduiteBehaviorParameters_, mission, nDIAMissionIdx_ );
+    ActivateOrder( strBehavior, missionConduiteBehaviorParameters_, mission );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +239,7 @@ void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission& mi
 void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
-    StopMission( strBehavior, missionConduiteBehaviorParameters_, nDIAMissionIdx_ );
+    StopMission( strBehavior, missionConduiteBehaviorParameters_ );
 }
 
 // =============================================================================
@@ -276,4 +271,24 @@ void DEC_AutomateDecision::SendChangedState( NET_ASN_MsgAutomatAttributes& msg )
 {
     if( bStateHasChanged_ )
         SendFullState( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::GetDecAutomate
+// Created: LDC 2009-04-10
+// -----------------------------------------------------------------------------
+DEC_AutomateDecision* DEC_AutomateDecision::GetDecAutomate() const
+{
+    assert( false );
+    throw std::runtime_error( "Unexpected call to DEC_GetAutomate on automate" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::GetName
+// Created: LDC 2009-04-10
+// -----------------------------------------------------------------------------
+std::string DEC_AutomateDecision::GetName() const
+{
+    assert( false );
+    throw std::runtime_error( "Unexpected call to DEC_GetSzName on automate" );
 }

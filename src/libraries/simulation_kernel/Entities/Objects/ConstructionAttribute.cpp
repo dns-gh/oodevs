@@ -178,7 +178,7 @@ void ConstructionAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if ( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate) )
     {
         asn.m.constructionPresent = 1;
 

@@ -55,6 +55,8 @@ public:
 
     // Etat decisionnel
     static void NotifyDominationStateChanged( DIA_Call_ABC& call, MIL_Population& callerPopulation );
+
+    static void GetSzName( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     //@}    
 };
 

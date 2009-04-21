@@ -459,6 +459,14 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::AddToCategory       , "DEC_AddToCategory" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RemoveFromCategory  , "DEC_RemoveFromCategory" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::DeleteRepresentation, "DEC_DeleteRepresentation" );
+        
+    // Former szName_, mission_, automate_:
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetMission         , "DEC_GetMission"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::SetMission         , "DEC_SetMission"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetName            , "DEC_GetSzName"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetAutomate        , "DEC_GetAutomate" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetDirectionEnnemi , "DEC_GetDirectionEnnemi" );
+
 }
 
 

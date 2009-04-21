@@ -503,7 +503,6 @@ typedef struct EXTERN ASN1T_MsgAutomatOrder {
    ASN1T_Automat  oid;
    ASN1T_OID  mission;
    ASN1T_MissionParameters  parametres;
-   ASN1T_EnumAutomatOrderFormation  formation;
 } ASN1T_MsgAutomatOrder;
 
 class EXTERN ASN1C_MsgAutomatOrder : public ASN1CType {

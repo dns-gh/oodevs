@@ -53,7 +53,6 @@ private:
     //! @name Member data
     //@{
     Automat&                        automat_;
-    ASN1T_EnumAutomatOrderFormation formation_;
     //@}
 };
 

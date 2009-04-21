@@ -115,7 +115,7 @@ public:
     static void IsInstalled  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsUninstalled( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void Install      ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-   
+
     // Test / debug
     static void SetPosture     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void Debug          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

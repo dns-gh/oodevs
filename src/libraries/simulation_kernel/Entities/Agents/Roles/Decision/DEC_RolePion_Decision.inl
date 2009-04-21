@@ -124,3 +124,23 @@ void DEC_RolePion_Decision::NotifyOperationalStateChanged( E_OperationalState nS
         bStateHasChanged_  = true;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetName
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+inline
+std::string DEC_RolePion_Decision::GetName() const
+{
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetDecAutomate
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+inline
+DEC_AutomateDecision* DEC_RolePion_Decision::GetDecAutomate() const
+{
+    return pAutomate_;
+}

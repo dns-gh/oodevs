@@ -28,10 +28,6 @@
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
 
-int  DEC_RolePion_Decision::nDIAMissionIdx_          = 0; 
-int  DEC_RolePion_Decision::nDIANameIdx_             = 0;
-int  DEC_RolePion_Decision::nDIAAutomateIdx_         = 0;
-
 BOOST_CLASS_EXPORT_GUID( DEC_RolePion_Decision, "DEC_RolePion_Decision" )
 
 //-----------------------------------------------------------------------------
@@ -42,10 +38,6 @@ BOOST_CLASS_EXPORT_GUID( DEC_RolePion_Decision, "DEC_RolePion_Decision" )
 void DEC_RolePion_Decision::InitializeDIA()
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "T_Pion" );
-
-    nDIANameIdx_      = DEC_Tools::InitializeDIAField( "szName_"   , diaType );
-    nDIAMissionIdx_   = DEC_Tools::InitializeDIAField( "mission_"  , diaType );
-    nDIAAutomateIdx_  = DEC_Tools::InitializeDIAField( "automate_" , diaType );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,6 +54,7 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentP
     , nIndirectFireAvailability_( eFireAvailabilityNone        )
     , pRoePopulation_           ( &PHY_RoePopulation::none_    )
     , bStateHasChanged_         ( true                         )
+    , pAutomate_                ( 0                            )
 {
     RegisterUserFunctionCaller( diaFunctionCaller_ );
     
@@ -70,9 +63,8 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentP
     {
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
-        GetVariable( nDIANameIdx_      ).SetValue( pion.GetName() );
-        GetVariable( nDIAMissionIdx_   ).Reset();
-        GetVariable( nDIAAutomateIdx_  ).SetValue( pion.GetAutomate().GetDecision() );
+        name_ = pion.GetName();
+        pAutomate_ = &pion.GetAutomate().GetDecision();
         DIA_Workspace::Instance().SetObjectName( *this, pion.GetName() ); // ????
     }
     catch( DIA_Internal_Exception& e )
@@ -103,6 +95,7 @@ DEC_RolePion_Decision::DEC_RolePion_Decision()
     , nIndirectFireAvailability_( eFireAvailabilityNone     )
     , pRoePopulation_           ( &PHY_RoePopulation::none_ )
     , bStateHasChanged_         ( true                      )
+    , pAutomate_                ( 0                            )
 {
 }
 
@@ -157,15 +150,12 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
         
-        std::string strName;
-        file >> strName;
-        GetVariable( nDIANameIdx_    ).SetValue( strName );
-        GetVariable( nDIAMissionIdx_ ).Reset();
-        
+        file >> name_;
+                
         DEC_AutomateDecision* pDecision;
         file >> pDecision;
         assert( pDecision );
-        GetVariable( nDIAAutomateIdx_  ).SetValue( *pDecision );
+        pAutomate_ = pDecision;
         
         DIA_Workspace::Instance().SetObjectName( *this, pEntity_->GetName() ); // ????
         
@@ -195,11 +185,7 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
     DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
     unsigned roe  = pRoePopulation_->GetID(),
              type = pEntity_->GetType().GetID();
-    // $$$$ JVT : Beark
-    const std::string diaName = const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIANameIdx_ ).ToString();
-    // $$$$ JVT : Beark Arrrg
-    DEC_AutomateDecision* const dec = static_cast< DEC_AutomateDecision* >( const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIAAutomateIdx_ ).ToObject() );
-
+    
     file << boost::serialization::base_object< MT_Role_ABC >( *this )
          << pEntity_
          << nForceRatioState_
@@ -209,8 +195,8 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
          << nIndirectFireAvailability_
          << roe
          << type
-         << diaName 
-         << dec 
+         << name_ 
+         << pAutomate_ 
          << diaSerializer;         
 }
 
@@ -248,7 +234,7 @@ void DEC_RolePion_Decision::RemoveAllReferencesOf( const DIA_TypedObject& refere
 void DEC_RolePion_Decision::StartMissionBehavior( MIL_PionMission& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior();
-    ActivateOrder( strBehavior, missionBehaviorParameters_, mission, nDIAMissionIdx_ );
+    ActivateOrder( strBehavior, missionBehaviorParameters_, mission );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +244,7 @@ void DEC_RolePion_Decision::StartMissionBehavior( MIL_PionMission& mission )
 void DEC_RolePion_Decision::StopMissionBehavior( MIL_PionMission& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior();
-    StopMission( strBehavior, missionBehaviorParameters_, nDIAMissionIdx_ );
+    StopMission( strBehavior, missionBehaviorParameters_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +254,6 @@ void DEC_RolePion_Decision::StopMissionBehavior( MIL_PionMission& mission )
 void DEC_RolePion_Decision::NotifyAutomateChanged()
 {
     assert( pEntity_ );
-    GetVariable( nDIAAutomateIdx_ ).SetValue( pEntity_->GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------

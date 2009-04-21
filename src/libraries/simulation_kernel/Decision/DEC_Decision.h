@@ -40,6 +40,9 @@ public:
     virtual void UpdateDecision();
     virtual void Reset();
     virtual DIA_Variable_ABC* ExecuteFunction( const std::string& szFuncName, DIA_Parameters& parameters );
+    
+    virtual void SetMission( MIL_Mission_ABC* pMission );
+    virtual MIL_Mission_ABC* GetMission();
     //@}
 
 protected:
@@ -51,8 +54,8 @@ protected:
     void StopDefaultBehavior      ();
     void LogCrash                 ();
     
-    void ActivateOrder( const std::string& strBehavior, DIA_Parameters& parameters, DIA_TypedObject& mission, int missionIndex );
-    void StopMission( const std::string& strBehavior, DIA_Parameters& parameters, int missionIndex );
+    void ActivateOrder( const std::string& strBehavior, DIA_Parameters& parameters, MIL_Mission_ABC& mission );
+    void StopMission( const std::string& strBehavior, DIA_Parameters& parameters );
     //@}
     
     //!@name Accessors
@@ -74,6 +77,7 @@ protected:
     T*                              pEntity_;
     DIA_Parameters                  defaultBehaviorParameters_;
     std::auto_ptr<DIA_Variable_Id>  pDefaultParameter_;
+    MIL_Mission_ABC*                pMission_;
     //@}
 };
 

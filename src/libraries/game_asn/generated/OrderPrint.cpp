@@ -456,9 +456,6 @@ void asn1Print_MsgAutomatOrder (ASN1ConstCharPtr name, ASN1T_MsgAutomatOrder* pv
    sprintf (namebuf, "%s.parametres", name);
    asn1Print_MissionParameters (namebuf, &pvalue->parametres);
 
-   sprintf (namebuf, "%s.formation", name);
-   asn1Print_EnumAutomatOrderFormation (namebuf, &pvalue->formation);
-
 }
 
 void ASN1C_MsgAutomatOrder::Print (ASN1ConstCharPtr name)

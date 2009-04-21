@@ -24,9 +24,6 @@
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
 
-int  DEC_PopulationDecision::nDIAMissionIdx_          = 0;
-int  DEC_PopulationDecision::nDIANameIdx_             = 0;
-
 BOOST_CLASS_EXPORT_GUID( DEC_PopulationDecision, "DEC_PopulationDecision" )
 
 //-----------------------------------------------------------------------------
@@ -37,8 +34,6 @@ BOOST_CLASS_EXPORT_GUID( DEC_PopulationDecision, "DEC_PopulationDecision" )
 void DEC_PopulationDecision::InitializeDIA()
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "T_Population" );
-    nDIAMissionIdx_ = DEC_Tools::InitializeDIAField( "mission_", diaType );
-    nDIANameIdx_    = DEC_Tools::InitializeDIAField( "szName_" , diaType );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +54,7 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
     {
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
-        GetVariable( nDIANameIdx_    ).SetValue( population.GetName() );
-        GetVariable( nDIAMissionIdx_ ).Reset();
+        name_ = population.GetName();
         DIA_Workspace::Instance().SetObjectName( *this , population.GetName() ); // ????
     }
     catch( DIA_Internal_Exception& e )
@@ -124,8 +118,7 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
     {
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
-        GetVariable( nDIANameIdx_    ).SetValue( pEntity_->GetName() );
-        GetVariable( nDIAMissionIdx_ ).Reset();
+        name_ = pEntity_->GetName();
         DIA_Workspace::Instance().SetObjectName( *this , pEntity_->GetName() ); // ????
 
         DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
@@ -187,7 +180,7 @@ void DEC_PopulationDecision::EndCleanStateAfterCrash()
 void DEC_PopulationDecision::StartMissionBehavior( MIL_PopulationMission& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior();    
-    ActivateOrder( strBehavior, missionBehaviorParameters_, mission, nDIAMissionIdx_ );
+    ActivateOrder( strBehavior, missionBehaviorParameters_, mission );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +190,7 @@ void DEC_PopulationDecision::StartMissionBehavior( MIL_PopulationMission& missio
 void DEC_PopulationDecision::StopMissionBehavior( MIL_PopulationMission& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior();
-    StopMission( strBehavior, missionBehaviorParameters_, nDIAMissionIdx_ );
+    StopMission( strBehavior, missionBehaviorParameters_ );
 }
 
 // =============================================================================
@@ -279,4 +272,22 @@ bool DEC_PopulationDecision::HasStateChanged() const
     return bStateHasChanged_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::GetDecAutomate
+// Created: LDC 2009-04-10
+// -----------------------------------------------------------------------------
+DEC_AutomateDecision* DEC_PopulationDecision::GetDecAutomate() const
+{
+    assert( false );
+    throw std::runtime_error( "DEC_GetAutomate unexpected on population" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::GetName
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+std::string DEC_PopulationDecision::GetName() const
+{
+    return name_;
+}
 

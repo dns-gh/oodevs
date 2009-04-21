@@ -152,11 +152,11 @@ void BuildableCapacity::Instanciate( Object& object ) const
     object.AddCapacity( new BuildableCapacity( *this ) );
     if ( unitType_ == ConstructionCapacity::eRaw && dotation_ )
         object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_ );
-    if ( unitType_ == ConstructionCapacity::eDensity && dotation_ )
+    else if ( unitType_ == ConstructionCapacity::eDensity && dotation_ )
     {
         const TER_Localisation& location = object.GetLocalisation();
         object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_ * location.GetArea() );
-    }        
+    }
 }
 
 // -----------------------------------------------------------------------------

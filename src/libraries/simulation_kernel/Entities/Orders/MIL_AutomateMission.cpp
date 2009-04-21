@@ -21,9 +21,6 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 
-int MIL_AutomateMission::nDIADirectionDanger_ = 0;
-int MIL_AutomateMission::nDIAFormation_       = 0;
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission::InitializeDIA
 // Created: NLD 2006-11-21
@@ -32,8 +29,6 @@ int MIL_AutomateMission::nDIAFormation_       = 0;
 void MIL_AutomateMission::InitializeDIA()
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "T_Mission_Automate" );
-    nDIADirectionDanger_ = DEC_Tools::InitializeDIAField( "directionEnnemi_", diaType );
-    nDIAFormation_       = DEC_Tools::InitializeDIAField( "formation_"      , diaType );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,8 +42,6 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
 {
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
-    GetVariable( nDIAFormation_       ).SetValue( (int)asn.formation );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,8 +55,6 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
 {
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
-    GetVariable( nDIAFormation_       ).SetValue( (int)EnumAutomatOrderFormation::deux_echelons );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,8 +68,6 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
 {
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
-    GetVariable( nDIAFormation_       ).SetValue( (int)EnumAutomatOrderFormation::deux_echelons );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,8 +81,6 @@ MIL_AutomateMission::MIL_AutomateMission( MIL_Automate& automate, const MIL_Auto
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
 {
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
-    GetVariable( nDIAFormation_       ).SetValue( const_cast< MIL_AutomateMission& >( rhs ).GetVariable( nDIAFormation_ ).ToId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +179,6 @@ void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 
     asn().oid          = automate.GetID();
     asn().mission      = 0;
-    asn().formation    = EnumAutomatOrderFormation::un_echelon;
     asn().parametres.n = 0;
     asn.Send();
 }
@@ -208,8 +194,6 @@ void MIL_AutomateMission::Send() const
     asn().oid       = automate_.GetID();
     asn().mission   = type_    .GetID();
 
-    NET_ASN_Tools::CopyEnumeration( const_cast< MIL_AutomateMission* >( this )->GetVariable( nDIAFormation_ ), asn().formation );
-
     MIL_Mission_ABC::Serialize( asn().parametres );
 
     asn.Send();
@@ -224,5 +208,4 @@ void MIL_AutomateMission::Send() const
 void MIL_AutomateMission::AffectDirection( const MT_Vector2D& direction )
 {
     MIL_Mission_ABC::AffectDirection( direction );
-    GetVariable( nDIADirectionDanger_ ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
 }

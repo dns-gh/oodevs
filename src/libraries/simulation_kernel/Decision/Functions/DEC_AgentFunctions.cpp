@@ -922,5 +922,3 @@ void DEC_AgentFunctions::Install( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerA
 {
     callerAgent.GetRole< PHY_RolePion_Posture >().Install();
 }
-
-

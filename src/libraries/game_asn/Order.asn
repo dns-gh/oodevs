@@ -128,7 +128,6 @@ MsgAutomatOrder ::= SEQUENCE
     oid           Automat,
     mission       OID,
     parametres    MissionParameters,
-    formation     EnumAutomatOrderFormation
 }
 MsgAutomatOrderAck ::= SEQUENCE
 {

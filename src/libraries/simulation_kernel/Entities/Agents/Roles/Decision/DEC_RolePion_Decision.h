@@ -19,6 +19,7 @@ class MIL_PionMission;
 class NET_ASN_MsgUnitAttributes;
 class DEC_Path;
 class PHY_RoePopulation;
+class DEC_AutomateDecision;
 
 enum E_FightRateState;
 enum E_RulesOfEngagementState;
@@ -66,9 +67,12 @@ public:
 
     //! @name Accessors
     //@{
-          MIL_AgentPion&      GetPion         () const;
-          bool                HasStateChanged () const; // Etat decisionnel
-    const PHY_RoePopulation&  GetRoePopulation() const;
+          MIL_AgentPion&        GetPion         () const;
+          bool                  HasStateChanged () const; // Etat decisionnel
+    const PHY_RoePopulation&    GetRoePopulation() const;
+
+    virtual std::string           GetName         () const;
+    virtual DEC_AutomateDecision* GetDecAutomate  () const;
     //@}
 
     //! @name Network
@@ -108,10 +112,8 @@ private:
     // Network
     bool bStateHasChanged_;
 
-private:
-    static int nDIAMissionIdx_; // index de mission_ dans T_Pion
-    static int nDIANameIdx_;
-    static int nDIAAutomateIdx_;
+    std::string           name_;
+    DEC_AutomateDecision* pAutomate_;
 };
 
 #include "DEC_RolePion_Decision.inl"

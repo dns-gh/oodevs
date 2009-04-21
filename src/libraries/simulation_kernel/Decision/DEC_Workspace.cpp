@@ -572,20 +572,6 @@ const DIA_TypeDef& GetDIAType( const std::string& strTypeName )
     return *pType;
 }
 
-//-----------------------------------------------------------------------------
-// Name: InitializeDIAField
-// Created: AGN 03-07-17
-//-----------------------------------------------------------------------------
-//extern
-int InitializeDIAField( const std::string& strFieldName, const DIA_TypeDef& diaType )
-{
-    int nResult = DIA_TypeManager::Instance().GetFieldIdx( strFieldName, diaType );
-    if( nResult == -1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Field '" ) + strFieldName + "' is not member of DirectIA type " + diaType.GetName() );
-
-    return nResult;
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Workspace::FindDIAModelFromScript
 // Created: NLD 2004-09-06

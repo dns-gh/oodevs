@@ -40,10 +40,16 @@ public:
     static void SetMaxSpeedModificator    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     
     // Representations
-    static void DEC_MiscFunctions::GetCategory         ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void DEC_MiscFunctions::AddToCategory       ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void DEC_MiscFunctions::RemoveFromCategory  ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void DEC_MiscFunctions::DeleteRepresentation( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void GetCategory         ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void AddToCategory       ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void RemoveFromCategory  ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void DeleteRepresentation( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    
+    static void GetMission        ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void SetMission        ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );  
+    static void GetName           ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void GetAutomate       ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static void GetDirectionEnnemi( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
 };
 
 #include "DEC_MiscFunctions.inl"

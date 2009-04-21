@@ -197,7 +197,6 @@ void Mission::SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher
     simulation::AutomatOrder asn;
     asn().oid = automatTaskee_->GetId();
     asn().mission = type_.GetId();
-    asn().formation = EnumAutomatOrderFormation::deux_echelons;
     asn().parametres.n = type_.Count();
     if( asn().parametres.n > 0 )
         asn().parametres.elem = new ASN1T_MissionParameter[ asn().parametres.n ];

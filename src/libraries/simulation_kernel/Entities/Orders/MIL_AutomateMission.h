@@ -82,10 +82,6 @@ private:
           MIL_Automate&        automate_;
           bool                 bDIAMrtBehaviorActivated_;
           bool                 bDIACdtBehaviorActivated_;
-
-private:
-    static int nDIADirectionDanger_;
-    static int nDIAFormation_;
 };
 
 #include "MIL_AutomateMission.inl"

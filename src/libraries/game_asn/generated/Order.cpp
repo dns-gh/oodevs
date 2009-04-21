@@ -1480,11 +1480,6 @@ EXTERN int asn1PE_MsgAutomatOrder (ASN1CTXT* ctxt_p, ASN1T_MsgAutomatOrder* pval
    stat = asn1PE_MissionParameters (ctxt_p, &pvalue->parametres);
    if (stat != ASN_OK) return stat;
 
-   /* encode formation */
-
-   stat = asn1PE_EnumAutomatOrderFormation (ctxt_p, pvalue->formation);
-   if (stat != ASN_OK) return stat;
-
    return (stat);
 }
 
@@ -1512,11 +1507,6 @@ EXTERN int asn1PD_MsgAutomatOrder (ASN1CTXT* ctxt_p, ASN1T_MsgAutomatOrder* pval
    /* decode parametres */
 
    stat = asn1PD_MissionParameters (ctxt_p, &pvalue->parametres);
-   if (stat != ASN_OK) return stat;
-
-   /* decode formation */
-
-   stat = asn1PD_EnumAutomatOrderFormation (ctxt_p, &pvalue->formation);
    if (stat != ASN_OK) return stat;
 
 

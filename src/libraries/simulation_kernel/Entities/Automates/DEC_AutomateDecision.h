@@ -77,6 +77,8 @@ public:
     //! @name Accessors
     //@{
     MIL_Automate& GetAutomate() const;
+    virtual DEC_AutomateDecision* GetDecAutomate() const;
+    virtual std::string GetName() const;
     //@}
 
 private:
