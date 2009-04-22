@@ -94,6 +94,15 @@ signatures
     // Manipulation DIA Thing 
     A                                   DEC_CreerDIAThing   ( I /*Type*/ );
     V                                   DEC_DetruireDIAThing( A /*Thing*/ );
+
+    // Rep_Points
+    U /* T_Point */                     DEC_GetRepPoint     ( A /*Rep_PointABC*/ );
+    B                                   DEC_IsAvantPoint    ( A /*Rep_PointABC*/ );
+    B                                   DEC_IsPoint         ( A /*Rep_PointABC*/ );
+    I                                   DEC_GetTypePoint    ( A /*Rep_PointABC*/ );
+    A                                   DEC_GetDestPoint    ( A /*Rep_PointABC*/ );
+    I                                   DEC_GetTypeLimaPoint( A /*Rep_PointABC*/ );
+    U /* T_Lima */                      DEC_GetLimaPoint    ( A /*Rep_PointABC*/ );
 }
 
 

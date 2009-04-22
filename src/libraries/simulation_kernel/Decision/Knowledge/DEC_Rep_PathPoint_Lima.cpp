@@ -14,9 +14,6 @@
 #include "Entities/Orders/MIL_LimaFunction.h"
 #include "Decision/DEC_Tools.h"
 
-int DEC_Rep_PathPoint_Lima::nDIAIdxLima_     = 0;
-int DEC_Rep_PathPoint_Lima::nDIAIdxTypeLima_ = 0;
-
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Lima::InitializeDIA
 // Created: NLD 2003-01-13
@@ -24,8 +21,6 @@ int DEC_Rep_PathPoint_Lima::nDIAIdxTypeLima_ = 0;
 void DEC_Rep_PathPoint_Lima::InitializeDIA()
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "Rep_PointLima" );
-    nDIAIdxTypeLima_ = DEC_Tools::InitializeDIAField( "nTypeLima_", diaType );
-    nDIAIdxLima_     = DEC_Tools::InitializeDIAField( "lima_"     , diaType );
 }
 
 //-----------------------------------------------------------------------------
@@ -37,8 +32,6 @@ DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const T
     , typeLima_( (int)function.GetID() )
     , limaID_  ( (void*)nLimaID )
 {
-    SetValue( nDIAIdxTypeLima_, (int)function.GetID() );
-    GetVariable( nDIAIdxLima_ ).SetValue( (void*)nLimaID, &DEC_Tools::GetTypeLima() );
 }
 
 //-----------------------------------------------------------------------------

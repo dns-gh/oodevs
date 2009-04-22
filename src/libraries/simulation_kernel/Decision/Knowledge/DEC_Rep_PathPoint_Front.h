@@ -50,11 +50,6 @@ private:
     DEC_Rep_PathPoint& destPoint_;
 
     mutable DEC_Representations* pSentToDiaAgent_;
-
-private:
-    static int nDIAPointIdx_;
-    static int nDIAClsIdx_;
-    static int nDIADestIdx_;
 };
 
 #endif // __DEC_Rep_PathPoint_Front_h_

@@ -18,10 +18,6 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Representations.h"
 
-int DEC_Rep_PathPoint_Front::nDIAPointIdx_ = 0;
-int DEC_Rep_PathPoint_Front::nDIAClsIdx_   = 0;
-int DEC_Rep_PathPoint_Front::nDIADestIdx_  = 0;
-
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Front constructor
 // Created: JVT 02-12-09
@@ -32,9 +28,6 @@ DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_R
     , destPoint_        ( dest )
     , pSentToDiaAgent_  ( 0 )
 {
-    GetVariable( nDIAPointIdx_ ).SetValue( (void*)&vPos_, &DEC_Tools::GetTypePoint(), 1 );
-    SetValue      ( nDIAClsIdx_      , eAvantPoint );     
-    SetObjectValue( nDIADestIdx_     , &destPoint_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -57,9 +50,6 @@ DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
 void DEC_Rep_PathPoint_Front::InitializeDIA()
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "Rep_AvantPoint" );
-    nDIAPointIdx_     = DEC_Tools::InitializeDIAField( "point_"     , diaType );
-    nDIAClsIdx_       = DEC_Tools::InitializeDIAField( "cls_"       , diaType );
-    nDIADestIdx_      = DEC_Tools::InitializeDIAField( "dest_"      , diaType );
 }
 
 //-----------------------------------------------------------------------------

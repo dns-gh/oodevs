@@ -41,12 +41,6 @@ typedef enum E_EtatCalculItineraire
 // POINTS
 //============================================================================
 
-typedef enum E_Point
-{
-    eAvantPoint,
-    ePoint
-};
-
 //-----------------------------------------------------------------------------
 // Types de point
 //-----------------------------------------------------------------------------
@@ -81,23 +75,14 @@ typedef enum E_TypePointParticulier
 
 typedef struct Rep_PointABC : Thing
 {
-    T_Point point_;
-    E_Point cls_;           // type du point: point ou avant point
 };
 
-typedef struct Rep_AvantPoint;
 
 //-----------------------------------------------------------------------------
 // Representation d' un point
 //-----------------------------------------------------------------------------
 typedef struct Rep_Point : Rep_PointABC
 {
-    E_TypePoint         eType_;
-    float               rProbaEnnemi_;
-    float               rIdent_;        // pourcentage d'identification d'un point
-    float               rProbaEnnemi;   // probabilité de presence ennemi
-    bool                bPresenceEni_;  // presence d'ennemi detectée sur le point  
-    Rep_AvantPoint      avt_;           // si il existe, le avant point associé
 };
 
 //-----------------------------------------------------------------------------
@@ -105,7 +90,6 @@ typedef struct Rep_Point : Rep_PointABC
 //-----------------------------------------------------------------------------
 typedef struct Rep_AvantPoint : Rep_PointABC
 {
-    Rep_Point dest_;
 };
 
 //-----------------------------------------------------------------------------
@@ -113,8 +97,6 @@ typedef struct Rep_AvantPoint : Rep_PointABC
 //-----------------------------------------------------------------------------
 typedef struct Rep_PointParticulier : Rep_Point
 {
-    E_TypePointParticulier    eTypePart_;   // type du point particulier
-//    UserType                  id_;          // identifiant du point
 };
 
 //-----------------------------------------------------------------------------
@@ -122,7 +104,5 @@ typedef struct Rep_PointParticulier : Rep_Point
 //-----------------------------------------------------------------------------
 typedef struct Rep_PointLima : Rep_Point
 {
-    E_TypeLima  nTypeLima_;        
-    T_Lima      lima_;
 };
 

@@ -72,11 +72,6 @@ private:
     TerrainData    nTypeTerrain_;
 
     mutable DEC_Representations* pSentToDiaAgent_;
-
-public:
-    static int nDIAPointIdx_;
-    static int nDIAClsIdx_;
-    static int nDIATypeIdx_;
 };
 
 #include "DEC_Rep_PathPoint.inl"

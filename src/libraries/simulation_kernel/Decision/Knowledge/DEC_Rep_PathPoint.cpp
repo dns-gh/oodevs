@@ -16,10 +16,6 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Representations.h"
 
-int DEC_Rep_PathPoint::nDIAPointIdx_  = 0;
-int DEC_Rep_PathPoint::nDIAClsIdx_    = 0;
-int DEC_Rep_PathPoint::nDIATypeIdx_   = 0;
-
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint::InitializeDIA
 // Created: NLD 2003-01-13
@@ -27,9 +23,6 @@ int DEC_Rep_PathPoint::nDIATypeIdx_   = 0;
 void DEC_Rep_PathPoint::InitializeDIA()
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "Rep_Point" );
-    nDIAPointIdx_     = DEC_Tools::InitializeDIAField( "point_"     , diaType );
-    nDIAClsIdx_       = DEC_Tools::InitializeDIAField( "cls_"       , diaType );
-    nDIATypeIdx_      = DEC_Tools::InitializeDIAField( "eType_"     , diaType );
 }
 
 //-----------------------------------------------------------------------------
@@ -44,10 +37,6 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
     , pSentToDiaAgent_  ( 0 )
 {
     assert( nType_ != eTypePointPath );
-
-    GetVariable( nDIAPointIdx_ ).SetValue( (void*)&vPos_, &DEC_Tools::GetTypePoint(), 1 ); 
-    SetValue( nDIAClsIdx_   , ePoint     );     
-    SetValue( nDIATypeIdx_  , nTypePoint );
 }
 
 //-----------------------------------------------------------------------------

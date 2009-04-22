@@ -43,10 +43,6 @@ public:
 private:
     int   typeLima_;
     void* limaID_;
-  
-private:
-    static int nDIAIdxLima_;
-    static int nDIAIdxTypeLima_;
 };
 
 #endif // __DEC_Rep_PathPoint_Lima_h_
