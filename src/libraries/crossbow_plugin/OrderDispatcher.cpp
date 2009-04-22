@@ -118,7 +118,6 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
     simulation::AutomatOrder asn;
     asn().oid = automat.GetId();
     asn().mission = type->GetId();
-    asn().formation = EnumAutomatOrderFormation::deux_echelons; // $$$$ SBO 2007-06-01:
     try  
     {
         SetParameters( asn().parametres, orderId, *type );
