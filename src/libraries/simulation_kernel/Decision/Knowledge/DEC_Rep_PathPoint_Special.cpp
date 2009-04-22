@@ -13,8 +13,6 @@
 #include "DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Tools.h"
 
-int DEC_Rep_PathPoint_Special::nDIAIdxTypePart_ = 0;
-
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Lima::InitializeDIA
 // Created: NLD 2003-01-13
@@ -22,7 +20,6 @@ int DEC_Rep_PathPoint_Special::nDIAIdxTypePart_ = 0;
 void DEC_Rep_PathPoint_Special::InitializeDIA()
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "Rep_PointParticulier" );
-    nDIAIdxTypePart_ = DEC_Tools::InitializeDIAField( "eTypePart_", diaType );
 }
 
 
@@ -33,8 +30,7 @@ void DEC_Rep_PathPoint_Special::InitializeDIA()
 DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain )
     : DEC_Rep_PathPoint     ( vPos, DEC_Rep_PathPoint::eTypePointParticulier, nTypeTerrain, "Rep_PointParticulier" )
     , nTypePointParticulier_( nTypePoint )
-{
-    SetValue( nDIAIdxTypePart_, nTypePointParticulier_ ); 
+{ 
 }
 
 //-----------------------------------------------------------------------------

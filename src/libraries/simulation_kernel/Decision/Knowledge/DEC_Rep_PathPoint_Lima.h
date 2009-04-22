@@ -31,12 +31,18 @@ public:
     //! @name Init
     //@{
     static void InitializeDIA();
+    int GetTypeLima();
+    void* GetLimaID();
     //@}
 
     //! @name Debug
     //@{
     virtual void Dump() const;
     //@}
+
+private:
+    int   typeLima_;
+    void* limaID_;
   
 private:
     static int nDIAIdxLima_;

@@ -49,7 +49,6 @@ public:
 
 private:
     E_TypePointParticulier nTypePointParticulier_;
-    static int nDIAIdxTypePart_;
 };
 
 #endif // __DEC_Rep_PathPoint_Special_h_

@@ -78,6 +78,15 @@ void DEC_Rep_PathPoint_Front::SendToDIA( DEC_Representations& agent ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Rep_PathPoint_Front::GetDestPoint
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+DEC_Rep_PathPoint& DEC_Rep_PathPoint_Front::GetDestPoint() const
+{
+    return destPoint_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Front::Dump
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------

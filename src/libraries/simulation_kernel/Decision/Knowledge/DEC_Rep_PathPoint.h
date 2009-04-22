@@ -77,7 +77,6 @@ public:
     static int nDIAPointIdx_;
     static int nDIAClsIdx_;
     static int nDIATypeIdx_;
-    static int nDIAavtIdx_;
 };
 
 #include "DEC_Rep_PathPoint.inl"

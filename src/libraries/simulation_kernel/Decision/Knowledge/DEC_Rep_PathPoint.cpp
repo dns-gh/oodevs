@@ -19,7 +19,6 @@
 int DEC_Rep_PathPoint::nDIAPointIdx_  = 0;
 int DEC_Rep_PathPoint::nDIAClsIdx_    = 0;
 int DEC_Rep_PathPoint::nDIATypeIdx_   = 0;
-int DEC_Rep_PathPoint::nDIAavtIdx_    = 0;
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint::InitializeDIA
@@ -31,7 +30,6 @@ void DEC_Rep_PathPoint::InitializeDIA()
     nDIAPointIdx_     = DEC_Tools::InitializeDIAField( "point_"     , diaType );
     nDIAClsIdx_       = DEC_Tools::InitializeDIAField( "cls_"       , diaType );
     nDIATypeIdx_      = DEC_Tools::InitializeDIAField( "eType_"     , diaType );
-    nDIAavtIdx_       = DEC_Tools::InitializeDIAField( "avt_"       , diaType );
 }
 
 //-----------------------------------------------------------------------------

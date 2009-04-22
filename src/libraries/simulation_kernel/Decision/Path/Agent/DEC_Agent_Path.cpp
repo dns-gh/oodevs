@@ -301,7 +301,6 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
         if( itCurrent == resultList_.begin() )
         {
             DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( vCurrentPos, spottedPathPoint );
-            spottedPathPoint.GetVariable( DEC_Rep_PathPoint::nDIAavtIdx_ ).SetValue( *pNewPoint );
             resultList_.insert( ++itCurrent, pNewPoint );
             break;
         }
@@ -324,7 +323,6 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
             // Positionnement du point avant au même endroit qu'un autre point
             DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( vPreviousPos, spottedPathPoint );
 
-            spottedPathPoint.GetVariable( DEC_Rep_PathPoint::nDIAavtIdx_ ).SetValue( *pNewPoint );
             resultList_.insert( itPrev, pNewPoint );
             break;
         }
@@ -337,7 +335,6 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
 
             DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( vTmp, spottedPathPoint );
 
-            spottedPathPoint.GetVariable( DEC_Rep_PathPoint::nDIAavtIdx_ ).SetValue( *pNewPoint );
             resultList_.insert( itCurrent, pNewPoint );
             break;
         }

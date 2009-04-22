@@ -33,6 +33,13 @@ public:
     static void ExtrapolatePosition  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLastPointOfPath   ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsMovingOnPath       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetRepPoint          ( DIA_Call_ABC& call );
+    static void IsAvantPoint         ( DIA_Call_ABC& call );
+    static void IsPoint              ( DIA_Call_ABC& call );
+    static void GetTypePoint         ( DIA_Call_ABC& call );
+    static void GetDestPoint         ( DIA_Call_ABC& call );
+    static void GetTypeLimaPoint     ( DIA_Call_ABC& call );
+    static void GetLimaPoint         ( DIA_Call_ABC& call );
     //@}
 };
 

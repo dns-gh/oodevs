@@ -34,6 +34,8 @@ void DEC_Rep_PathPoint_Lima::InitializeDIA()
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, uint nLimaID, const MIL_LimaFunction& function )
     : DEC_Rep_PathPoint( vPos, DEC_Rep_PathPoint::eTypePointLima, nTypeTerrain, "Rep_PointLima" )
+    , typeLima_( (int)function.GetID() )
+    , limaID_  ( (void*)nLimaID )
 {
     SetValue( nDIAIdxTypeLima_, (int)function.GetID() );
     GetVariable( nDIAIdxLima_ ).SetValue( (void*)nLimaID, &DEC_Tools::GetTypeLima() );
@@ -60,5 +62,21 @@ void DEC_Rep_PathPoint_Lima::Dump() const
               << std::endl;
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: DEC_Rep_PathPoint_Lima::GetTypeLima
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+int DEC_Rep_PathPoint_Lima::GetTypeLima()
+{
+    return typeLima_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Rep_PathPoint_Lima::GetLimaID
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+void* DEC_Rep_PathPoint_Lima::GetLimaID()
+{
+    return limaID_;
+}
 

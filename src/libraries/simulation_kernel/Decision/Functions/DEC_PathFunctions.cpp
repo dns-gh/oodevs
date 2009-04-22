@@ -28,6 +28,9 @@
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/Knowledge/DEC_Rep_PathPoint.h"
+#include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
+#include "Decision/Knowledge/DEC_Rep_PathPoint_Lima.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPoint
@@ -75,14 +78,8 @@ void DEC_PathFunctions::CreatePathToPointList( DIA_Call_ABC& call, MIL_AgentPion
 // Name: DEC_Agent_ABC::DeletePath
 // Created: AGN 02-12-19
 //-----------------------------------------------------------------------------
-void DEC_PathFunctions::DeletePath( DIA_Call_ABC& call, MIL_AgentPion& /*callerAgent*/ )
+void DEC_PathFunctions::DeletePath( DIA_Call_ABC& /*call*/, MIL_AgentPion& /*callerAgent*/ )
 {
-//    $$$ A VIRER
-//    assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
-//    DEC_Agent_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
-//    assert( pPath );
-//    pPath->Cancel();
-//    pPath->DecDIARef();
 }
 
 // -----------------------------------------------------------------------------
@@ -168,3 +165,72 @@ void DEC_PathFunctions::IsMovingOnPath( DIA_Call_ABC& call, const MIL_AgentPion&
     call.GetResult().SetValue( pPath ? callerAgent.GetRole< PHY_RoleAction_Moving >().IsMovingOn( *pPath ) : false );    
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::GetRepPoint
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+void DEC_PathFunctions::GetRepPoint( DIA_Call_ABC& call )
+{
+    DEC_PathPoint* pPoint = dynamic_cast< DEC_PathPoint* >( call.GetParameter( 0 ).ToObject() );
+    call.GetResult().SetValue( (void*)&pPoint->GetPos(), &DEC_Tools::GetTypePoint(), 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::IsAvantPoint
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+void DEC_PathFunctions::IsAvantPoint( DIA_Call_ABC& call )
+{
+    DEC_Rep_PathPoint_Front* pFront = dynamic_cast< DEC_Rep_PathPoint_Front* >( call.GetParameter( 0 ).ToObject() );
+    call.GetResult().SetValue( pFront ? true : false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::IsPoint
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+void DEC_PathFunctions::IsPoint( DIA_Call_ABC& call )
+{
+    DEC_Rep_PathPoint* pPoint = dynamic_cast< DEC_Rep_PathPoint* >( call.GetParameter( 0 ).ToObject() );
+    call.GetResult().SetValue( pPoint ? true : false );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::GetTypePoint
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+void DEC_PathFunctions::GetTypePoint( DIA_Call_ABC& call )
+{
+    DEC_Rep_PathPoint* pPoint = dynamic_cast< DEC_Rep_PathPoint* >( call.GetParameter( 0 ).ToObject() );
+    call.GetResult().SetValue( pPoint->GetTypePoint() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::GetDestPoint
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+void DEC_PathFunctions::GetDestPoint( DIA_Call_ABC& call )
+{
+    DEC_Rep_PathPoint_Front* pFront = dynamic_cast< DEC_Rep_PathPoint_Front* >( call.GetParameter( 0 ).ToObject() );
+    call.GetResult().SetValue( pFront->GetDestPoint() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::GetTypeLimaPoint
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+void DEC_PathFunctions::GetTypeLimaPoint( DIA_Call_ABC& call )
+{
+    DEC_Rep_PathPoint_Lima* pPoint = dynamic_cast< DEC_Rep_PathPoint_Lima* >( call.GetParameter( 0 ).ToObject() );
+    call.GetResult().SetValue( pPoint->GetTypeLima() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::GetLimaPoint
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+void DEC_PathFunctions::GetLimaPoint( DIA_Call_ABC& call )
+{
+    DEC_Rep_PathPoint_Lima* pPoint = dynamic_cast< DEC_Rep_PathPoint_Lima* >( call.GetParameter( 0 ).ToObject() );
+    call.GetResult().SetValue( pPoint->GetLimaID(), &DEC_Tools::GetTypeLima() );
+}

@@ -30,6 +30,7 @@
 #include "Decision/Functions/DEC_LogisticFunctions.h"
 #include "Decision/Functions/DEC_ObjectFunctions.h"
 #include "Decision/Functions/DEC_OrdersFunctions.h"
+#include "Decision/Functions/DEC_PathFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
@@ -184,6 +185,15 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetObjectiveLocalisation     , "DEC_Objectif_Localisation" );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::IsObjectiveFlagged           , "DEC_Objectif_EstFlage"     );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::SetObjectiveFlag             , "DEC_Objectif_Flag"         );
+
+    //Rep_Points
+    pFuncTable->RegisterFunction( DEC_PathFunctions::GetRepPoint     , "DEC_GetRepPoint" ); //point_
+    pFuncTable->RegisterFunction( DEC_PathFunctions::IsAvantPoint    , "DEC_IsAvantPoint" ); //cls_
+    pFuncTable->RegisterFunction( DEC_PathFunctions::IsPoint         , "DEC_IsPoint" ); //cls_
+    pFuncTable->RegisterFunction( DEC_PathFunctions::GetTypePoint    , "DEC_GetTypePoint" ); //eType_
+    pFuncTable->RegisterFunction( DEC_PathFunctions::GetDestPoint    , "DEC_GetDestPoint" ); //dest_
+    pFuncTable->RegisterFunction( DEC_PathFunctions::GetTypeLimaPoint, "DEC_GetTypeLimaPoint" ); //nTypeLima_
+    pFuncTable->RegisterFunction( DEC_PathFunctions::GetLimaPoint    , "DEC_GetLimaPoint" ); //lima_
 
     // Debug
     pFuncTable->RegisterFunction( DEC_DIAFunctions::PointToString    , "DEC_PointToString"      );

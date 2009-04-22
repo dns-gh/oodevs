@@ -38,6 +38,7 @@ public:
     //! @name DIA
     //@{
     virtual void SendToDIA( DEC_Representations& agent ) const;
+    DEC_Rep_PathPoint& GetDestPoint() const;
     //@}
 
     //! @name Debug
