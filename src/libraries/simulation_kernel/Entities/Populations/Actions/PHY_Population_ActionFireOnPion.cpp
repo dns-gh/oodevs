@@ -16,7 +16,6 @@
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 
 // -----------------------------------------------------------------------------

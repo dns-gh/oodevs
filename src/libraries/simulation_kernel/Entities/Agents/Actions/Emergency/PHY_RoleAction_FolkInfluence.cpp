@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_FolkInfluence.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 
 #include "MIL_AgentServer.h"
 #include "MIL_Folk.h"
@@ -20,9 +19,8 @@
 // Name: PHY_RoleAction_FolkInfluence constructor
 // Created: JCR 2007-09-12
 // -----------------------------------------------------------------------------
-PHY_RoleAction_FolkInfluence::PHY_RoleAction_FolkInfluence( MT_RoleContainer& role, const MIL_AgentPion& pion )
+PHY_RoleAction_FolkInfluence::PHY_RoleAction_FolkInfluence( MT_RoleContainer& role )
     : MT_Role_ABC( role )
-    , pPion_     ( &pion )
     , pManager_  ( MIL_AgentServer::GetWorkspace().GetFolkManager().GetObjectManager() )
 {
     // NOTHING
@@ -33,8 +31,7 @@ PHY_RoleAction_FolkInfluence::PHY_RoleAction_FolkInfluence( MT_RoleContainer& ro
 // Created: JCR 2007-09-12
 // -----------------------------------------------------------------------------
 PHY_RoleAction_FolkInfluence::PHY_RoleAction_FolkInfluence()
-    : pPion_     ( 0 )
-    , pManager_  ( MIL_AgentServer::GetWorkspace().GetFolkManager().GetObjectManager() )
+    : pManager_  ( MIL_AgentServer::GetWorkspace().GetFolkManager().GetObjectManager() )
 {
     // NOTHING
 }

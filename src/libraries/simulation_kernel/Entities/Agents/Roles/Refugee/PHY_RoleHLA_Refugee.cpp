@@ -13,7 +13,6 @@
 
 #include "PHY_RoleHLA_Refugee.h"
 #include "Network/NET_ASN_Messages.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Refugee constructor

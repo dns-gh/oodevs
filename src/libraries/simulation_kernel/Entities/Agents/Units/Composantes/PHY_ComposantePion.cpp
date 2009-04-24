@@ -23,7 +23,6 @@
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"

@@ -19,7 +19,6 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"

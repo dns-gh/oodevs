@@ -40,7 +40,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_RoleAction_FolkInfluence( MT_RoleContainer& role, const MIL_AgentPion& pion );
+    explicit PHY_RoleAction_FolkInfluence( MT_RoleContainer& role );
              PHY_RoleAction_FolkInfluence();
     virtual ~PHY_RoleAction_FolkInfluence();
     //@}
@@ -77,7 +77,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const MIL_AgentPion* pPion_;
     population::ObjectManager_ABC* pManager_;
     //@}
 };

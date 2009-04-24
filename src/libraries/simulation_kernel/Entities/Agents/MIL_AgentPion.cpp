@@ -235,7 +235,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     RegisterRole< PHY_RoleAction_DirectFiring    >( *this );
     RegisterRole< PHY_RoleAction_IndirectFiring  >( *this );
     RegisterRole< DEC_RolePion_Decision          >( *this );
-    RegisterRole< PHY_RoleAction_FolkInfluence   >( *this );
+    RegisterRole< PHY_RoleAction_FolkInfluence   >();
     RegisterRole< DEC_Representations            >();
 
     if( CanFly() )

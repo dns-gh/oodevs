@@ -17,7 +17,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
@@ -264,7 +263,7 @@ bool PHY_Human::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination 
 // Name: PHY_Human::ApplyContamination
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
-void PHY_Human::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
+void PHY_Human::ApplyContamination( const MIL_ToxicEffectManipulator& /*contamination*/ )
 {
     if( !IsUsable() )
         return;

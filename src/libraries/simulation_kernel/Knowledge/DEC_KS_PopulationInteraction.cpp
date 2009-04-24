@@ -15,7 +15,6 @@
 #include "DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationCollision.h"
 #include "DEC_Knowledge_PopulationCollision.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 

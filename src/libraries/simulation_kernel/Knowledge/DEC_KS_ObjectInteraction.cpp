@@ -18,7 +18,6 @@
 #include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_KS_ObjectInteraction, "DEC_KS_ObjectInteraction" )

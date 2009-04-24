@@ -13,7 +13,6 @@
 
 #include "PHY_FireResults_Pion.h"
 
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Orders/MIL_Report.h"
