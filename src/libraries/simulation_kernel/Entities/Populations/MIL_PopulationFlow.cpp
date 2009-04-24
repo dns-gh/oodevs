@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationFlow.h"
 
-#include "MIL_Population.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationKnowledge.h"

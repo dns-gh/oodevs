@@ -15,7 +15,6 @@
 
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 
