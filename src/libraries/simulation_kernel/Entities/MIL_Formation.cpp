@@ -12,7 +12,6 @@
 #include "MIL_Formation.h"
 
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
-#include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"

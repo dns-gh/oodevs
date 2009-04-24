@@ -48,7 +48,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 
