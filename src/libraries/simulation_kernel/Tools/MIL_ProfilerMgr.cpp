@@ -14,6 +14,7 @@
 
 #include "Entities/Populations/MIL_Population.h"
 #include "MIL_AgentServer.h"
+#include "Entities/Automates/MIL_Automate.h"
 
 #include <direct.h>
 

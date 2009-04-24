@@ -12,7 +12,6 @@
 #include "Entities/Orders/MIL_LimaOrder.h"
 #include "Entities/Orders/MIL_LimaFunction.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Automates/MIL_Automate.h"
 #include "Decision/DEC_Tools.h"
 
 // =============================================================================

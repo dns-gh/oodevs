@@ -10,7 +10,6 @@
 //*****************************************************************************
 
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Automates/MIL_Automate.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ProfilerMgr::NotifyTickBegin

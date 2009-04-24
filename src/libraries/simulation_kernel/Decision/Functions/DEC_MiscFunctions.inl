@@ -11,7 +11,6 @@
 
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Automates/MIL_Automate.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_ABC::RC_Operational

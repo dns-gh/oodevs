@@ -15,7 +15,6 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
-#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Formation.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MIL_TacticalLineManager.h"
