@@ -42,6 +42,7 @@ public:
     QString GetName() const;
     std::string GetCategory() const;
     QString GetPrototype() const;
+    QString GetComment() const;
     const IndicatorType& GetType() const;
     const IndicatorPrimitiveParameter* FindParameter( unsigned int index ) const;
     //@}
@@ -69,6 +70,7 @@ private:
     //@{
     const QString name_;
     const std::string category_;
+    const QString comment_;
     std::auto_ptr< IndicatorType > type_;
     T_Parameters parameters_;
     //@}

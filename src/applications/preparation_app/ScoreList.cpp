@@ -12,18 +12,19 @@
 #include "moc_ScoreList.cpp"
 #include "ScoreEditor.h"
 #include "clients_kernel/Controllers.h"
+#include "preparation/IndicatorPrimitives.h"
 #include "preparation/Score_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScoreList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Resolver_ABC< IndicatorPrimitive, QString >& primitives )
+ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& indicators )
     : QVBox( parent )
     , controllers_( controllers )
     , factory_( factory )
     , scores_( new gui::ListDisplayer< ScoreList >( this, *this, factory ) )
-    , editor_( new ScoreEditor( this, controllers, factory, primitives ) )
+    , editor_( new ScoreEditor( this, controllers, factory, indicators ) )
 {
     layout()->setAlignment( Qt::AlignRight );
     scores_->AddColumn( tr( "Name" ) );
@@ -95,7 +96,7 @@ void ScoreList::NotifyUpdated( const Score_ABC& element )
 void ScoreList::NotifyDeleted( const Score_ABC& element )
 {
     if( gui::ValuedListItem* item = gui::FindItem( &element, scores_->firstChild() ) )
-        scores_->RemoveItem( item );
+        scores_->removeItem( item );
 }
 
 // -----------------------------------------------------------------------------

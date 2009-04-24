@@ -10,7 +10,6 @@
 #ifndef __ScorePrimitivesPage_h_
 #define __ScorePrimitivesPage_h_
 
-#include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 #include <boost/function.hpp>
@@ -23,6 +22,7 @@ namespace kernel
 }
 
 class IndicatorPrimitive;
+class IndicatorPrimitives;
 
 // =============================================================================
 /** @class  ScorePrimitivesPage
@@ -46,7 +46,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Resolver_ABC< IndicatorPrimitive, QString >& primitives, const T_Filter& filter );
+             ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& primitives, const T_Filter& filter );
     virtual ~ScorePrimitivesPage();
     //@}
 
@@ -59,12 +59,14 @@ signals:
     //! @name Signals
     //@{
     void Insert( const QString& text );
+    void Selected( const IndicatorPrimitive& primitive );
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnInsert();
+    void OnSelectionChanged( QListViewItem* item );
     //@}
 
 private:
@@ -85,7 +87,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     T_Filter filter_;
-    const kernel::Resolver_ABC< IndicatorPrimitive, QString >& primitives_;
+    const IndicatorPrimitives& primitives_;
     gui::ListDisplayer< ScorePrimitivesPage >* list_;
     //@}
 };

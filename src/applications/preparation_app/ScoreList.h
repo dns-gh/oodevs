@@ -11,7 +11,6 @@
 #define __ScoreList_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 
 namespace kernel
@@ -19,7 +18,7 @@ namespace kernel
     class Controllers;
 }
 
-class IndicatorPrimitive;
+class IndicatorPrimitives;
 class Score_ABC;
 class ScoreEditor;
 
@@ -38,7 +37,7 @@ class ScoreList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Resolver_ABC< IndicatorPrimitive, QString >& primitives );
+             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& indicators );
     virtual ~ScoreList();
     //@}
 

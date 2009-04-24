@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Gaming_Tools_h_
-#define __Gaming_Tools_h_
+#ifndef __Preparation_Tools_h_
+#define __Preparation_Tools_h_
 
 #include "clients_kernel/Tools.h"
 #include "Types.h"
@@ -21,4 +21,4 @@ namespace tools
     std::string ToXml( E_PopulationAttitude type );
 };
 
-#endif // __Gaming_Tools_h_
+#endif // __Preparation_Tools_h_

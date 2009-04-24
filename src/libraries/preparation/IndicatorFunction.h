@@ -43,6 +43,7 @@ public:
     //@{
     virtual void AddParameter( boost::shared_ptr< IndicatorElement_ABC > element );
     virtual void Serialize( xml::xostream& xos ) const;
+    virtual IndicatorElement_ABC& Clone() const;
     //@}
 
 private:

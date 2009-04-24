@@ -11,6 +11,7 @@
 #include "IndicatorTypeResolver.h"
 #include "IndicatorPrimitiveParameter.h"
 #include "IndicatorType.h"
+#include "Tools.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/regex.hpp>
 
@@ -91,7 +92,7 @@ std::string IndicatorTypeResolver::Resolve( const std::string& type ) const
         if( ! it->second.empty() )
             boost::replace_all( result, it->first, it->second );
     if( IsAbstract( result ) )
-        throw std::exception( ( "Unresolved type parameter: " + result ).c_str() );
+        throw std::exception( tools::translate( "Scores", "Unresolved type parameter: %1." ).arg( result.c_str() ).ascii() );
     return ReplaceBaseTypes( result );
 }
 
@@ -139,7 +140,7 @@ void IndicatorTypeResolver::ConvertTypes( std::vector< std::string >& type1, std
     else if( type2.size() > type1.size() )
         type2.erase( type2.begin(), type2.begin() + ( type2.size() - type1.size() ) );
     if( type1.size() == 0 || type2.size() == 0 )
-        throw std::exception( "Cannot convert list parameters." );
+        throw std::exception( tools::translate( "Scores", "Cannot convert list parameter." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,6 +151,6 @@ std::string IndicatorTypeResolver::ToSimpleType( const std::string& type )
 {
     const std::vector< std::string > list = Split( type );
     if( list.empty() )
-        throw std::exception( "Indicator has no type." );
+        throw std::exception( tools::translate( "Scores", "Indicator has no type." ).ascii() );
     return list.back();
 }

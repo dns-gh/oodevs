@@ -63,7 +63,9 @@ void ScoresModel::Serialize( const std::string& file ) const
 {
     xml::xofstream xos( file );
     xos << xml::start( "scores" );
-    std::for_each( elements_.begin(), elements_.end(), boost::bind( &Score_ABC::Serialize, boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
+    std::for_each( elements_.begin(), elements_.end(), boost::bind( &Score_ABC::Serialize
+                                                                  , boost::bind( &T_Elements::value_type::second, _1 )
+                                                                  , boost::ref( xos ) ) );
     xos << xml::end();
 }
 

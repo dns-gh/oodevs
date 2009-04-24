@@ -17,6 +17,8 @@ namespace kernel
     class Controller;
 }
 
+class IndicatorPrimitives;
+
 // =============================================================================
 /** @class  ScoreFactory
     @brief  ScoreFactory
@@ -29,7 +31,7 @@ class ScoreFactory : public ScoreFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ScoreFactory( kernel::Controller& controller );
+             ScoreFactory( kernel::Controller& controller, const IndicatorPrimitives& indicators );
     virtual ~ScoreFactory();
     //@}
 
@@ -54,6 +56,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const IndicatorPrimitives& indicators_;
     //@}
 };
 

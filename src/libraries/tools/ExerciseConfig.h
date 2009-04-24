@@ -52,6 +52,7 @@ public:
     virtual std::string GetOrbatFile   () const;
     virtual std::string GetProfilesFile() const;
     virtual std::string GetPopulationFile() const;
+    virtual std::string GetScoresFile() const;
 
     virtual void Parse( int argc, char** argv );
     void LoadExercise( const std::string& file );
@@ -78,6 +79,7 @@ private:
     std::string weather_;
     std::string orbat_;
     std::string profiles_;
+    std::string scores_;
     std::string population_;
     //@}
 };

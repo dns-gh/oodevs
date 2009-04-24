@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "IndicatorVariable.h"
 #include "IndicatorType.h"
+#include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -59,4 +60,14 @@ void IndicatorVariable::Serialize( xml::xostream& ) const
 void IndicatorVariable::SerializeDeclaration( xml::xostream& xos ) const
 {
     IndicatorConstant< std::string >::Serialize( xos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorVariable::Clone
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+IndicatorElement_ABC& IndicatorVariable::Clone() const
+{
+    IndicatorElement_ABC* clone = new IndicatorVariable( boost::erase_first_copy( GetInput(), "$" ), type_.ToString(), value_ );
+    return *clone;
 }

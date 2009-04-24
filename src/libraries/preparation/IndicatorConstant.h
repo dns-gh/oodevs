@@ -44,6 +44,7 @@ public:
     virtual void AddParameter( boost::shared_ptr< IndicatorElement_ABC > element );
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void SerializeDeclaration( xml::xostream& xos ) const;
+    virtual IndicatorElement_ABC& Clone() const;
     //@}
 
 private:
@@ -92,7 +93,7 @@ std::string IndicatorConstant< T >::GetValue() const
 template< typename T >
 void IndicatorConstant< T >::AddParameter( boost::shared_ptr< IndicatorElement_ABC > element )
 {
-    throw std::runtime_error( "Not implemented" );
+    throw std::runtime_error( __FUNCTION__ " not implemented." );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,6 +118,16 @@ template< typename T >
 void IndicatorConstant< T >::SerializeDeclaration( xml::xostream& ) const
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorConstant::Clone
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+template< typename T >
+IndicatorElement_ABC& IndicatorConstant< T >::Clone() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented." );
 }
 
 #endif // __IndicatorConstant_h_

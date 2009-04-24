@@ -56,7 +56,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , formationFactory_( *new FormationFactory( controllers, idManager_ ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
     , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
-    , scoreFactory_( *new ScoreFactory( controllers_.controller_ ) )
+    , scoreFactory_( *new ScoreFactory( controllers_.controller_, staticModel.indicators_ ) )
     , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) ) 
     , orbatFile_( "" )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
@@ -115,6 +115,21 @@ void Model::Purge()
     idManager_.Reset();
 }
 
+namespace
+{
+    template< typename M >
+    bool LoadOptional( const std::string& file, M& model )
+    {
+        if( bfs::exists( file ) )
+        {
+            model.Load( file );
+            return true;
+        }
+        model.Serialize( file );
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Model::Load
 // Created: SBO 2006-10-05
@@ -130,23 +145,10 @@ void Model::Load( const tools::ExerciseConfig& config )
             teams_.Load( xis, *this );
         }
     }
-    {
-        const std::string weatherFile = config.GetWeatherFile();
-        if( bfs::exists( weatherFile ) )
-            weather_.Load( weatherFile );
-        else
-        {
-            weather_.Serialize( weatherFile );
-            controllers_.controller_.Update( weather_); 
-        }
-    }
-    {
-        const std::string profileFile = config.GetProfilesFile();
-        if( bfs::exists( profileFile ) )
-            profiles_.Load( profileFile );
-        else
-            profiles_.Serialize( profileFile );
-    }
+    if( ! LoadOptional( config.GetWeatherFile(), weather_ ) )
+        controllers_.controller_.Update( weather_); 
+    LoadOptional( config.GetProfilesFile(), profiles_ );
+    LoadOptional( config.GetScoresFile(), scores_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,6 +184,7 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
 
         weather_ .Serialize( config.GetWeatherFile() );
         profiles_.Serialize( config.GetProfilesFile() );
+        scores_  .Serialize( config.GetScoresFile() );
     }
     return valid;
 }

@@ -15,6 +15,7 @@
 #include "IndicatorFunction.h"
 #include "IndicatorType.h"
 #include "IndicatorPrimitives.h"
+#include "Tools.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -65,7 +66,7 @@ boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateVariabl
 {
     boost::shared_ptr< IndicatorElement_ABC > element( variables_.Find( name ) );
     if( element == 0 )
-        throw std::exception( ( "Undefined variable : " + name ).c_str() );
+        throw std::exception( tools::translate( "Scores", "Undefined variable: %1." ).arg( name.c_str() ).ascii() );
     return element;
 }
 
@@ -77,7 +78,7 @@ boost::shared_ptr< IndicatorElement_ABC > IndicatorElementFactory::CreateFunctio
 {
     const IndicatorPrimitive* primitive = primitives_.Find( boost::algorithm::to_lower_copy( name ).c_str() );
     if( !primitive )
-        throw std::exception( ( "Undefined function : " + name ).c_str() );
+        throw std::exception( tools::translate( "Scores", "Undefined function: %1." ).arg( name.c_str() ).ascii() );
     return boost::shared_ptr< IndicatorElement_ABC >( new IndicatorFunction( NextId(), *primitive ) );
 }
 

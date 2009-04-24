@@ -13,6 +13,7 @@
 #include "ScoreVariableCreationWizard.h"
 #include "preparation/IndicatorElement_ABC.h"
 #include "preparation/IndicatorType.h"
+#include "preparation/IndicatorVariable.h"
 #include "preparation/IndicatorVariables.h"
 #include "preparation/Score_ABC.h"
 
@@ -42,7 +43,7 @@ ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& f
         connect( del, SIGNAL( clicked() ), SLOT( OnDelete() ) );
         connect( paste, SIGNAL( clicked() ), SLOT( OnPaste() ) );
     }
-    connect( wizard_, SIGNAL( VariableCreated( IndicatorElement_ABC& ) ), SLOT( OnVariableCreated( IndicatorElement_ABC& ) ) );
+    connect( wizard_, SIGNAL( VariableCreated( const IndicatorElement_ABC& ) ), SLOT( AddVariable( const IndicatorElement_ABC& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +76,7 @@ namespace
 // Name: ScoreVariablesList::StartEdit
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-void ScoreVariablesList::StartEdit( Score_ABC& score )
+void ScoreVariablesList::StartEdit( const Score_ABC& score )
 {
     list_->clear();
     VariablesCollector collector( *this );
@@ -90,6 +91,24 @@ void ScoreVariablesList::AddVariable( const IndicatorElement_ABC& variable )
 {
     gui::ValuedListItem* item = factory_.CreateItem( list_ );
     Display( variable, item );
+    emit Updated();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariablesList::CommitTo
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+void ScoreVariablesList::CommitTo( IndicatorVariables& variables )
+{
+    for( QListViewItemIterator it( list_ ); it.current(); ++it )
+        if( const gui::ValuedListItem* item = static_cast< const gui::ValuedListItem* >( *it ) )
+        {
+            const QString name  = item->text( 0 ).remove( 0, 1 );
+            const QString type  = item->text( 1 );
+            const QString value = item->text( 2 );
+            boost::shared_ptr< IndicatorElement_ABC > variable( new IndicatorVariable( name.ascii(), type.ascii(), value.ascii() ) );
+            variables.Register( name.ascii(), variable );
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +117,9 @@ void ScoreVariablesList::AddVariable( const IndicatorElement_ABC& variable )
 // -----------------------------------------------------------------------------
 void ScoreVariablesList::Display( const IndicatorElement_ABC& variable, gui::ValuedListItem* item )
 {
-    item->Set( &variable, variable.GetInput().c_str(), variable.GetType().ToString().c_str() );
+    // $$$$ SBO 2009-04-24: use a displayer
+    item->setText( 0, variable.GetInput().c_str() );
+    item->setText( 1, variable.GetType().ToString().c_str() );
     item->setText( 2, variable.GetValue().c_str() );
 }
 
@@ -117,8 +138,11 @@ void ScoreVariablesList::OnAdd()
 // -----------------------------------------------------------------------------
 void ScoreVariablesList::OnDelete()
 {
-    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( list_->selectedItem() ) )
-        list_->RemoveItem( item );
+    if( QListViewItem* item = list_->selectedItem() )
+    {
+        list_->removeItem( item );
+        emit Updated();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -127,15 +151,6 @@ void ScoreVariablesList::OnDelete()
 // -----------------------------------------------------------------------------
 void ScoreVariablesList::OnPaste()
 {
-    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( list_->selectedItem() ) )
-        emit Insert( item->GetValue< IndicatorElement_ABC >()->GetInput().c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScoreVariablesList::OnVariableCreated
-// Created: SBO 2009-04-21
-// -----------------------------------------------------------------------------
-void ScoreVariablesList::OnVariableCreated( IndicatorElement_ABC& variable )
-{
-    AddVariable( variable );
+    if( QListViewItem* item = list_->selectedItem() )
+        emit Insert( item->text( 0 ) );
 }

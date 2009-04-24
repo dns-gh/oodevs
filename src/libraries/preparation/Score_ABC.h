@@ -44,13 +44,6 @@ public:
     //@{
     virtual void Serialize( xml::xostream& xos ) const = 0;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Score_ABC( const Score_ABC& );            //!< Copy constructor
-    Score_ABC& operator=( const Score_ABC& ); //!< Assignment operator
-    //@}
 };
 
 #endif // __Score_ABC_h_

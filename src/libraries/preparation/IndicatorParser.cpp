@@ -10,10 +10,10 @@
 #include "preparation_pch.h"
 #include "IndicatorParser.h"
 #include "IndicatorGrammarHandler_ABC.h"
+#include "Tools.h"
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/spirit/include/classic_ast.hpp>
-#include <sstream>
 
 namespace bs = boost::spirit::classic;
 
@@ -44,11 +44,7 @@ void IndicatorParser::Parse( const std::string& text )
 {
     bs::tree_parse_info<> info = bs::ast_parse( text.c_str(), *this, bs::space_p );
     if( !info.full )
-    {
-        std::stringstream ss;
-        ss << "syntax error: " << info.stop;
-        throw std::exception( ss.str().c_str() );
-    }
+        throw std::exception( tools::translate( "Scores", "Syntax error: %1." ).arg( info.stop ).ascii() );
     Evaluate( info.trees.begin() );
 }
 
@@ -89,7 +85,7 @@ void IndicatorParser::Evaluate( const bs::tree_match< const char* >::const_tree_
             break;
         }
     default:
-        throw std::runtime_error( "unknown rule" );
+        throw std::runtime_error( __FUNCTION__ " unknown rule" );
     }
 }
 

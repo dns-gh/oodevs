@@ -37,7 +37,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void VariableCreated( IndicatorElement_ABC& variable );
+    void VariableCreated( const IndicatorElement_ABC& variable );
     //@}
 
 private slots:

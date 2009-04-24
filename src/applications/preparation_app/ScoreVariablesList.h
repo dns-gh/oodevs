@@ -13,6 +13,7 @@
 #include "clients_gui/ListDisplayer.h"
 
 class IndicatorElement_ABC;
+class IndicatorVariables;
 class Score_ABC;
 class ScoreVariableCreationWizard;
 
@@ -35,23 +36,29 @@ public:
 
     //! @name Operations
     //@{
-    void StartEdit( Score_ABC& score );
-    void AddVariable( const IndicatorElement_ABC& variable );
+    void StartEdit( const Score_ABC& score );
+    void CommitTo( IndicatorVariables& variables );
     //@}
 
 signals:
     //! @name Signals
     //@{
     void Insert( const QString& text );
+    void Updated();
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void AddVariable( const IndicatorElement_ABC& variable );
     //@}
 
 private slots:
-    //! @name Operations
+    //! @name Slots
     //@{
     void OnAdd();
     void OnDelete();
     void OnPaste();
-    void OnVariableCreated( IndicatorElement_ABC& variable );
     //@}
 
 private:

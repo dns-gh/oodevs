@@ -12,12 +12,13 @@
 #include "moc_ScorePrimitivesPage.cpp"
 #include "clients_kernel/Controllers.h"
 #include "preparation/IndicatorPrimitive.h"
+#include "preparation/IndicatorPrimitives.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScorePrimitivesPage constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Resolver_ABC< IndicatorPrimitive, QString >& primitives, const T_Filter& filter )
+ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& primitives, const T_Filter& filter )
     : QVBox( parent )
     , controllers_( controllers )
     , filter_( filter )
@@ -27,6 +28,7 @@ ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& 
     {
         list_->AddColumn( tr( "Name" ) );
         list_->header()->hide();
+        connect( list_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
         connect( list_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnInsert() ) );
     }
     {
@@ -89,4 +91,15 @@ void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelLoaded& )
 void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
     list_->clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScorePrimitivesPage::OnSelectionChanged
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+void ScorePrimitivesPage::OnSelectionChanged( QListViewItem* item )
+{
+    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( list_->selectedItem() ) )
+        if( const IndicatorPrimitive* primitive = item->GetValue< IndicatorPrimitive >() )
+            emit Selected( *primitive );
 }

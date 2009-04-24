@@ -105,3 +105,27 @@ void IndicatorVariables::Accept( IndicatorVariablesVisitor_ABC& visitor ) const
     BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
         visitor.Visit( *variable.second );
 }
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorVariables::Clone
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+IndicatorVariables& IndicatorVariables::Clone() const
+{
+    IndicatorVariables* clone = new IndicatorVariables();
+    BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
+        clone->Register( variable.first, boost::shared_ptr< IndicatorElement_ABC >( & variable.second->Clone() ) );
+    return *clone;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorVariables::operator=
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+IndicatorVariables& IndicatorVariables::operator=( const IndicatorVariables& rhs )
+{
+    variables_.clear();
+    BOOST_FOREACH( const T_Variables::value_type& variable, rhs.variables_ )
+        Register( variable.first, variable.second );
+    return *this;
+}

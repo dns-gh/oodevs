@@ -17,6 +17,16 @@
 #include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.h>
 
+namespace
+{
+    QString ReadComment( xml::xistream& xis )
+    {
+        std::string comment;
+        xis >> xml::start( "comments" ) >> comment >> xml::end();
+        return comment.c_str();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: IndicatorPrimitive constructor
 // Created: SBO 2009-04-06
@@ -24,9 +34,9 @@
 IndicatorPrimitive::IndicatorPrimitive( xml::xistream& xis )
     : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
     , category_( xml::attribute< std::string >( xis, "category" ) )
+    , comment_( ReadComment( xis ) )
     , type_( new IndicatorType( xis ) )
 {
-    // $$$$ SBO 2009-04-06: Read "comment"
     xis >> xml::optional() >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &IndicatorPrimitive::ReadParameter )
         >> xml::end();
@@ -67,6 +77,15 @@ QString IndicatorPrimitive::GetName() const
 std::string IndicatorPrimitive::GetCategory() const
 {
     return category_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorPrimitive::GetComment
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+QString IndicatorPrimitive::GetComment() const
+{
+    return comment_;
 }
 
 // -----------------------------------------------------------------------------

@@ -31,6 +31,7 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
+    virtual IndicatorElement_ABC& Clone() const;
     //@}
 
 private:

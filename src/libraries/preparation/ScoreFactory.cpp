@@ -15,8 +15,9 @@
 // Name: ScoreFactory constructor
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-ScoreFactory::ScoreFactory( kernel::Controller& controller )
+ScoreFactory::ScoreFactory( kernel::Controller& controller, const IndicatorPrimitives& indicators )
     : controller_( controller )
+    , indicators_( indicators )
 {
     // NOTHING
 }
@@ -36,7 +37,7 @@ ScoreFactory::~ScoreFactory()
 // -----------------------------------------------------------------------------
 Score_ABC* ScoreFactory::CreateScore( xml::xistream& xis ) const
 {
-    return new Score( xis, controller_ );
+    return new Score( xis, controller_, indicators_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,5 +46,5 @@ Score_ABC* ScoreFactory::CreateScore( xml::xistream& xis ) const
 // -----------------------------------------------------------------------------
 Score_ABC* ScoreFactory::CreateScore( const QString& name ) const
 {
-    return new Score( name, controller_ );
+    return new Score( name, controller_, indicators_ );
 }

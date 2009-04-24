@@ -23,6 +23,8 @@ namespace xml
 }
 
 class IndicatorVariables;
+class IndicatorPrimitives;
+class IndicatorElementFactory_ABC;
 
 // =============================================================================
 /** @class  Score
@@ -36,8 +38,9 @@ class Score : public Score_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Score( xml::xistream& xis, kernel::Controller& controller );
-             Score( const QString& name, kernel::Controller& controller );
+             Score( xml::xistream& xis, kernel::Controller& controller, const IndicatorPrimitives& indicators );
+             Score( const QString& name, kernel::Controller& controller, const IndicatorPrimitives& indicators );
+             Score( const QString& name, const QString& formula, const IndicatorVariables& variables, const IndicatorPrimitives& indicators );
     virtual ~Score();
     //@}
 
@@ -45,33 +48,35 @@ public:
     //@{
     virtual QString GetName() const;
     virtual QString GetFormula() const;
+    virtual void Accept( IndicatorVariablesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Operations
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual void Accept( IndicatorVariablesVisitor_ABC& visitor ) const;
+    Score& operator=( const Score& score );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
     Score( const Score& );            //!< Copy constructor
-    Score& operator=( const Score& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
     void SerializeVariables( xml::xostream& xos ) const;
+    void SerializeIndicators( xml::xostream& xos ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controller* controller_;
     QString name_;
     QString formula_;
     std::auto_ptr< IndicatorVariables > variables_;
+    std::auto_ptr< IndicatorElementFactory_ABC > elementFactory_;
     //@}
 };
 

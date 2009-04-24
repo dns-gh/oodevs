@@ -45,20 +45,25 @@ public:
     virtual ~IndicatorVariables();
     //@}
 
+    //! @name Accessors
+    //@{
+    void Accept( IndicatorVariablesVisitor_ABC& visitor ) const;
+    boost::shared_ptr< IndicatorElement_ABC > Find( const std::string& name ) const;
+    //@}
+
     //! @name Operations
     //@{
     void Register( const std::string& name, boost::shared_ptr< IndicatorElement_ABC > element );
-    boost::shared_ptr< IndicatorElement_ABC > Find( const std::string& name ) const;
     void Serialize( xml::xostream& xos ) const;
     void SerializeDeclarations( xml::xostream& xos ) const;
-    void Accept( IndicatorVariablesVisitor_ABC& visitor ) const;
+    IndicatorVariables& Clone() const;
+    IndicatorVariables& operator=( const IndicatorVariables& );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
     IndicatorVariables( const IndicatorVariables& );            //!< Copy constructor
-    IndicatorVariables& operator=( const IndicatorVariables& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

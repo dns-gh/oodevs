@@ -13,6 +13,7 @@
 #include "IndicatorPrimitiveParameter.h"
 #include "IndicatorType.h"
 #include "IndicatorTypeResolver.h"
+#include "Tools.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
@@ -49,13 +50,11 @@ void IndicatorFunction::AddParameter( boost::shared_ptr< IndicatorElement_ABC > 
 {
     const IndicatorPrimitiveParameter* parameter = primitive_.FindParameter( parameters_.size() );
     if( !parameter )
-        throw std::exception( "Parameter mismatch." );
+        throw std::exception( tools::translate( "Scores", "Parameter mismatch in function '%1'." ).arg( primitive_.GetName() ).ascii() );
     if( element->GetType() != parameter->GetType() )
-    {
-        std::stringstream ss;
-        ss << "parameter type mismatch : " << element->GetType().ToString() << " != " << parameter->GetType().ToString();
-        throw std::exception( ss.str().c_str() );
-    }
+        throw std::exception( tools::translate( "Scores", "Parameter type mismatch in function '%1': %2 != %3." ).arg( primitive_.GetName() )
+                                                .arg( element->GetType().ToString().c_str() )
+                                                .arg( parameter->GetType().ToString().c_str() ) );
     parameters_.push_back( std::make_pair( parameter, element ) );
     typeResolver_->AddElement( element->GetType(), parameter->GetType() );
 }
@@ -122,4 +121,13 @@ void IndicatorFunction::SerializeParameters( xml::xostream& xos ) const
     BOOST_FOREACH( const T_Attributes::value_type& attribute, attributes )
         if( attribute.second.size() )
             xos << xml::attribute( attribute.first, boost::algorithm::join( attribute.second, "," ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorFunction::Clone
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+IndicatorElement_ABC& IndicatorFunction::Clone() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented." );
 }

@@ -10,8 +10,10 @@
 #ifndef __ScoreEditor_h_
 #define __ScoreEditor_h_
 
-#include "clients_kernel/Resolver_ABC.h"
-#include "clients_kernel/SafePointer.h"
+namespace kernel
+{
+    class Controllers;
+}
 
 namespace gui
 {
@@ -20,6 +22,7 @@ namespace gui
 
 class Score_ABC;
 class IndicatorPrimitive;
+class IndicatorPrimitives;
 class ScoreVariablesList;
 
 // =============================================================================
@@ -35,7 +38,7 @@ class ScoreEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Resolver_ABC< IndicatorPrimitive, QString >& primitives );
+             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& indicators );
     virtual ~ScoreEditor();
     //@}
 
@@ -47,8 +50,11 @@ public:
 private slots:
     //! @name Slots
     //@{
+    void Commit();
     void OnInsert( const QString& text );
+    void OnSelectPrimitive( const IndicatorPrimitive& indicator );
     void OnFormulaChanged( const QString& text );
+    void CheckFormula();
     //@}
 
 private:
@@ -58,17 +64,16 @@ private:
     ScoreEditor& operator=( const ScoreEditor& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-    kernel::SafePointer< Score_ABC > current_;
+    const IndicatorPrimitives& indicators_;
+    Score_ABC* current_;
     QLineEdit* name_;
     QLineEdit* formula_;
-    QButton* checkFormula_;
+    QLabel* checkResult_;
+    QButton* ok_;
+    QLabel* help_;
     ScoreVariablesList* variables_;
     //@}
 };

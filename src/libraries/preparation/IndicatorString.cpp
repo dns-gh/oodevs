@@ -33,7 +33,17 @@ IndicatorString::~IndicatorString()
 // Name: IndicatorString::Serialize
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-void IndicatorString::Serialize( xml::xostream& xos ) const
+void IndicatorString::Serialize( xml::xostream& /*xos*/ ) const
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorString::Clone
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+IndicatorElement_ABC& IndicatorString::Clone() const
+{
+    IndicatorElement_ABC* clone = new IndicatorString( value_ );
+    return *clone;
 }

@@ -21,18 +21,19 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent )
 {
     setCaption( tr( "Create variable" ) );
     QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
+    grid->setMargin( 5 );
     {
         QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Information" ), this );
         new QLabel( tr( "Name: " ), box );
         name_ = new QLineEdit( box );
         new QLabel( tr( "Type: " ), box );
         type_ = new QComboBox( box );
-        type_->insertItem( tr( "Number" ) );
-        type_->insertItem( tr( "String" ) );
-        type_->insertItem( tr( "Unit" ) );
-        type_->insertItem( tr( "Unit list" ) );
-        type_->insertItem( tr( "Position" ) );
-        type_->insertItem( tr( "Area" ) );
+        type_->insertItem( "float" );
+        type_->insertItem( "string" );
+        type_->insertItem( "unit" );
+        type_->insertItem( "unit list" );
+        type_->insertItem( "position" );
+        type_->insertItem( "area" );
         new QLabel( tr( "Value: " ), box );
         value_ = new QLineEdit( box );
         grid->addWidget( box, 0, 0 );
@@ -63,6 +64,9 @@ ScoreVariableCreationWizard::~ScoreVariableCreationWizard()
 // -----------------------------------------------------------------------------
 void ScoreVariableCreationWizard::Create()
 {
+    name_->clear();
+    type_->setCurrentItem( 0 );
+    value_->clear();
     show();
 }
 

@@ -10,8 +10,6 @@
 #ifndef __ScorePrimitivesLibrary_h_
 #define __ScorePrimitivesLibrary_h_
 
-#include "clients_kernel/Resolver_ABC.h"
-
 namespace kernel
 {
     class Controllers;
@@ -23,6 +21,8 @@ namespace gui
 }
 
 class IndicatorPrimitive;
+class IndicatorPrimitives;
+class ScorePrimitivesPage;
 
 // =============================================================================
 /** @class  ScorePrimitivesLibrary
@@ -37,7 +37,7 @@ class ScorePrimitivesLibrary : public QTabWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Resolver_ABC< IndicatorPrimitive, QString >& primitives );
+             ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& primitives );
     virtual ~ScorePrimitivesLibrary();
     //@}
 
@@ -45,6 +45,7 @@ signals:
     //! @name Slots
     //@{
     void Insert( const QString& text );
+    void Selected( const IndicatorPrimitive& indicator );
     //@}
 
 private:
@@ -52,6 +53,11 @@ private:
     //@{
     ScorePrimitivesLibrary( const ScorePrimitivesLibrary& );            //!< Copy constructor
     ScorePrimitivesLibrary& operator=( const ScorePrimitivesLibrary& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void AddPage( const QString& name, QWidget* page );
     //@}
 };
 

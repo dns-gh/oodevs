@@ -83,7 +83,10 @@ void ExerciseConfig::LoadExercise( const std::string& file )
                 >> end()
                 >> optional() >> start( "population" )
                     >> attribute( "name", population_ )
-                >> end();
+                >> end()
+                >> optional() >> start( "scores" );
+        scores_ = attribute< std::string >( xis, "file", "scores.xml" );
+        xis     >> end();
         if( GetExerciseFile() != file )
             SetExerciseName( file );
     }
@@ -220,6 +223,15 @@ std::string ExerciseConfig::GetOrbatFile() const
 std::string ExerciseConfig::GetProfilesFile() const
 {
     return BuildExerciseChildFile( profiles_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetScoresFile
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetScoresFile() const
+{
+    return BuildExerciseChildFile( scores_ );
 }
 
 // -----------------------------------------------------------------------------

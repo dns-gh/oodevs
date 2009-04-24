@@ -12,6 +12,7 @@
 #include "moc_ScorePrimitivesLibrary.cpp"
 #include "ScorePrimitivesPage.h"
 #include "preparation/IndicatorPrimitive.h"
+#include "preparation/IndicatorPrimitives.h"
 #include <boost/bind.hpp>
 
 namespace
@@ -26,19 +27,11 @@ namespace
 // Name: ScorePrimitivesLibrary constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScorePrimitivesLibrary::ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Resolver_ABC< IndicatorPrimitive, QString >& primitives )
+ScorePrimitivesLibrary::ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& primitives )
     : QTabWidget( parent )
 {
-    {
-        ScorePrimitivesPage* page = new ScorePrimitivesPage( this, controllers, factory, primitives, boost::bind( &::FilterExtractors, _1 ) );
-        addTab( page, tr( "Data" ) );
-        connect( page, SIGNAL( Insert( const QString& ) ), SIGNAL( Insert( const QString& ) ) );
-    }
-    {
-        ScorePrimitivesPage* page = new ScorePrimitivesPage( this, controllers, factory, primitives, boost::bind( std::logical_not< bool >(), boost::bind( &::FilterExtractors, _1 ) ) );
-        addTab( page, tr( "Functions" ) );
-        connect( page, SIGNAL( Insert( const QString& ) ), SIGNAL( Insert( const QString& ) ) );
-    }
+    AddPage( tr( "Data" )     , new ScorePrimitivesPage( this, controllers, factory, primitives, boost::bind( &::FilterExtractors, _1 ) ) );
+    AddPage( tr( "Functions" ), new ScorePrimitivesPage( this, controllers, factory, primitives, boost::bind( std::logical_not< bool >(), boost::bind( &::FilterExtractors, _1 ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,4 +41,15 @@ ScorePrimitivesLibrary::ScorePrimitivesLibrary( QWidget* parent, kernel::Control
 ScorePrimitivesLibrary::~ScorePrimitivesLibrary()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScorePrimitivesLibrary::AddPage
+// Created: SBO 2009-04-24
+// -----------------------------------------------------------------------------
+void ScorePrimitivesLibrary::AddPage( const QString& name, QWidget* page )
+{
+    addTab( page, name );
+    connect( page, SIGNAL( Selected( const IndicatorPrimitive& ) ), SIGNAL( Selected( const IndicatorPrimitive& ) ) );
+    connect( page, SIGNAL( Insert( const QString& ) ), SIGNAL( Insert( const QString& ) ) );
 }
