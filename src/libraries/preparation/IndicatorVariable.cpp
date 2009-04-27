@@ -68,6 +68,5 @@ void IndicatorVariable::SerializeDeclaration( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 IndicatorElement_ABC& IndicatorVariable::Clone() const
 {
-    IndicatorElement_ABC* clone = new IndicatorVariable( boost::erase_first_copy( GetInput(), "$" ), type_.ToString(), value_ );
-    return *clone;
+    return *new IndicatorVariable( boost::erase_first_copy( GetInput(), "$" ), type_.ToString(), value_ );
 }

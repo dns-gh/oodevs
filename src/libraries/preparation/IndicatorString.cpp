@@ -44,6 +44,5 @@ void IndicatorString::Serialize( xml::xostream& /*xos*/ ) const
 // -----------------------------------------------------------------------------
 IndicatorElement_ABC& IndicatorString::Clone() const
 {
-    IndicatorElement_ABC* clone = new IndicatorString( value_ );
-    return *clone;
+    return *new IndicatorString( value_ );
 }

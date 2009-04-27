@@ -124,5 +124,5 @@ QString IndicatorPrimitive::BuildParameterList() const
     std::vector< std::string > list;
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
         list.push_back( parameter->GetName().ascii() );
-    return boost::join( list, "," ).c_str();
+    return list.empty() ? "" : ( " " + boost::join( list, ", " ) + " " ).c_str();
 }

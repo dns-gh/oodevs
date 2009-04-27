@@ -18,6 +18,32 @@
 #include "preparation/Score.h"
 #include <xeumeuleu/xml.h>
 
+namespace
+{
+    class FormulaLineEdit : public QLineEdit
+    {
+    public:
+        explicit FormulaLineEdit( QWidget* parent ) : QLineEdit( parent ) {}
+        virtual ~FormulaLineEdit() {}
+
+        virtual void focusOutEvent( QFocusEvent* e )
+        {
+            const int start = selectionStart();
+            const unsigned int length = selectedText().length();
+            QLineEdit::focusOutEvent( e );
+            setSelection( start, length );
+        }
+
+        virtual void mouseDoubleClickEvent( QMouseEvent* e )
+        {
+            QLineEdit::mouseDoubleClickEvent( e );
+            const QString selected = selectedText();
+            if( selected.endsWith( "," ) )
+                setSelection( selectionStart(), selected.length() - 1 );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ScoreEditor constructor
 // Created: SBO 2009-04-20
@@ -39,7 +65,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
     }
     {
         QGroupBox* box = new QGroupBox( 2, Qt::Vertical, tr( "Formula" ), this );
-        formula_ = new QLineEdit( box );
+        formula_ = new FormulaLineEdit( box );
         checkResult_ = new QLabel( box );
         checkResult_->setMinimumHeight( 30 );
         grid->addMultiCellWidget( box, 1, 1, 0, 1 );
@@ -137,7 +163,7 @@ void ScoreEditor::OnSelectPrimitive( const IndicatorPrimitive& indicator )
 // Name: ScoreEditor::OnFormulaChanged
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void ScoreEditor::OnFormulaChanged( const QString& text )
+void ScoreEditor::OnFormulaChanged( const QString& /*text*/ )
 {
     CheckFormula();
 }
