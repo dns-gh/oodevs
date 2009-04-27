@@ -182,9 +182,7 @@ void ScoreEditor::CheckFormula()
         variables_->CommitTo( variables );
         Score score( name_->text(), formula_->text(), variables, indicators_ );
         xml::xostringstream xos;
-        xos << xml::start( "indicator" );
         score.Serialize( xos );
-        xos << xml::end();
         checkResult_->setText( "" );
         ok_->setEnabled( true );
     }

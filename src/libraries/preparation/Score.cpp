@@ -102,20 +102,11 @@ QString Score::GetFormula() const
 // -----------------------------------------------------------------------------
 void Score::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "name", name_.ascii() )
-        << xml::start( "formula" ) << formula_.ascii() << xml::end();
-    SerializeVariables( xos );
-    SerializeIndicators( xos );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Score::SerializeVariables
-// Created: SBO 2009-04-16
-// -----------------------------------------------------------------------------
-void Score::SerializeVariables( xml::xostream& xos ) const
-{
-    xos << xml::start( "variables" );
+    xos << xml::start( "score")
+            << xml::attribute( "name", name_.ascii() )
+            << xml::start( "formula" ) << xml::cdata( formula_.ascii() ) << xml::end();
     variables_->Serialize( xos );
+    SerializeIndicators( xos );
     xos << xml::end();
 }
 
@@ -149,5 +140,7 @@ Score& Score::operator=( const Score& score )
     name_ = score.name_;
     formula_ = score.formula_;
     *variables_ = *score.variables_;
+    if( controller_ )
+        controller_->Update( *(Score_ABC*)this );
     return *this;
 }

@@ -28,7 +28,7 @@ IndicatorVariable::IndicatorVariable( const std::string& name, const std::string
 // Created: SBO 2009-04-17
 // -----------------------------------------------------------------------------
 IndicatorVariable::IndicatorVariable( xml::xistream& xis )
-    : IndicatorConstant< std::string >( xml::attribute< std::string >( xis, "name" )
+    : IndicatorConstant< std::string >( xml::attribute< std::string >( xis, "id" )
                                       , xml::attribute< std::string >( xis, "type" )
                                       , xml::attribute< std::string >( xis, "value" ) )
 {

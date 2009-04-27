@@ -28,8 +28,8 @@ IndicatorVariables::IndicatorVariables()
 // -----------------------------------------------------------------------------
 IndicatorVariables::IndicatorVariables( xml::xistream& xis )
 {
-    xis >> xml::start( "variables" )
-            >> xml::list( "variable", *this, &IndicatorVariables::ReadVariable )
+    xis >> xml::start( "constants" )
+            >> xml::list( "constant", *this, &IndicatorVariables::ReadVariable )
         >> xml::end();
 }
 
@@ -70,8 +70,7 @@ boost::shared_ptr< IndicatorElement_ABC > IndicatorVariables::Find( const std::s
 void IndicatorVariables::ReadVariable( xml::xistream& xis )
 {
     boost::shared_ptr< IndicatorElement_ABC > element( new IndicatorVariable( xis ) );
-    const std::string name = xml::attribute< std::string >( xis, "name" ); // $$$$ SBO 2009-04-17: 
-    Register( name, element );
+    Register( element->GetInput(), element );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,9 +79,9 @@ void IndicatorVariables::ReadVariable( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void IndicatorVariables::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::start( "variables" );
+    xos << xml::start( "constants" );
     BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
-        variable.second->Serialize( xos );
+        variable.second->SerializeDeclaration( xos );
     xos << xml::end();
 }
 

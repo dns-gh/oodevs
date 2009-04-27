@@ -65,7 +65,6 @@ private:
 
     //! @name Helpers
     //@{
-    void SerializeVariables( xml::xostream& xos ) const;
     void SerializeIndicators( xml::xostream& xos ) const;
     //@}
 
