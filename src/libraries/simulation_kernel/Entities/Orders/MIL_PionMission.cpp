@@ -36,7 +36,6 @@ void MIL_PionMission::InitializeDIA()
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn )
     : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parametres, pion.GetRole< PHY_RolePion_Location >().GetPosition() )
-    , type_                 ( type )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -48,7 +47,6 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent )
     : MIL_Mission_ABC       ( type, pion.GetKnowledge(), parent )
-    , type_                 ( type )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {   
@@ -60,7 +58,6 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion )
     : MIL_Mission_ABC       ( type, pion.GetKnowledge() )
-    , type_                 ( type )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {  
@@ -72,7 +69,6 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs )
     : MIL_Mission_ABC       ( pion.GetKnowledge(), rhs )
-    , type_                 ( rhs.type_ )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -106,7 +102,7 @@ MIL_PionMission& MIL_PionMission::CreateCopy( MIL_AgentPion& target ) const
 // -----------------------------------------------------------------------------
 bool MIL_PionMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const
 {
-    return pion_.GetType().GetModel().IsFragOrderAvailableForMission( type_, fragOrderType );
+    return pion_.GetType().GetModel().IsFragOrderAvailableForMission( GetType(), fragOrderType );
 }
 
 // =============================================================================
@@ -166,7 +162,7 @@ void MIL_PionMission::Send() const
 {
     NET_ASN_MsgUnitOrder asn;
     asn().oid       = pion_.GetID();
-    asn().mission   = type_.GetID();
+    asn().mission   = GetType().GetID();
     Serialize( asn().parametres );
     asn.Send();
     CleanAfterSerialization( asn().parametres );

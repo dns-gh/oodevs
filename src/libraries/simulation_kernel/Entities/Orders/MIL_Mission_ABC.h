@@ -40,8 +40,8 @@ public:
 
     //! @name Accessors
     //@{
+    virtual const   MIL_MissionType_ABC& GetType              () const;
     const   std::string&         GetName              () const;
-    const   MIL_MissionType_ABC& GetType              () const;
     const   MT_Vector2D&         GetDirDanger         () const;
     const   MIL_Fuseau&          GetFuseau            () const;
     const   T_LimaVector&        GetLimas             () const;

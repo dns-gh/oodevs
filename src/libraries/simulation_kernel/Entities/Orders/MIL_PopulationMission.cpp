@@ -33,7 +33,6 @@ void MIL_PopulationMission::InitializeDIA()
 // -----------------------------------------------------------------------------
 MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const ASN1T_MsgPopulationOrder& asn )
     : MIL_Mission_ABC       ( type, population.GetKnowledge(), asn.parametres )
-    , type_                 ( type )
     , population_           ( population )
     , bDIABehaviorActivated_( false )
 {
@@ -55,7 +54,7 @@ MIL_PopulationMission::~MIL_PopulationMission()
 // -----------------------------------------------------------------------------
 bool MIL_PopulationMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const
 {
-    return population_.GetType().GetModel().IsFragOrderAvailableForMission( type_, fragOrderType );
+    return population_.GetType().GetModel().IsFragOrderAvailableForMission( GetType(), fragOrderType );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +110,7 @@ void MIL_PopulationMission::Send() const
 {
     NET_ASN_MsgPopulationOrder asn;
     asn().oid     = population_.GetID();
-    asn().mission = type_.GetID();
+    asn().mission = GetType().GetID();
     Serialize( asn().parametres );
     asn.Send();
     CleanAfterSerialization( asn().parametres );

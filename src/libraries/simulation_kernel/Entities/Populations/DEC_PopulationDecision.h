@@ -15,7 +15,7 @@
 #include "Decision/DEC_Decision.h"
 #include "Entities/Populations/MIL_Population.h"
 
-class MIL_PopulationMission;
+class MIL_Mission_ABC;
 class NET_ASN_MsgPopulationUpdate;
 
 // =============================================================================
@@ -48,8 +48,8 @@ public:
     //@{
     void Clean         ();
 
-    void StartMissionBehavior( MIL_PopulationMission& mission );
-    void StopMissionBehavior ( MIL_PopulationMission& mission );
+    void StartMissionBehavior( MIL_Mission_ABC& mission );
+    void StopMissionBehavior ( MIL_Mission_ABC& mission );
     //@}
 
     //! @name Accessors

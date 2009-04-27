@@ -38,11 +38,6 @@ public:
     static void InitializeDIA();
     //@}
 
-    //! @name Accessors
-    //@{
-    const MIL_MissionType_ABC& GetType() const;
-    //@}
-
     //! @name Operations
     //@{
     virtual void Start               ();
@@ -62,7 +57,6 @@ private:
     //@}
 
 private:
-    const MIL_MissionType_ABC& type_;
           MIL_Population&      population_;
           bool                 bDIABehaviorActivated_;
 };

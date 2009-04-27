@@ -16,7 +16,8 @@
 #include "MIL_PopulationType.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
-#include "Entities/Orders/MIL_PopulationMission.h"
+#include "Entities/Orders/MIL_Mission_ABC.h"
+#include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "CheckPoints/DIA_Serializer.h"
 #include "MT_Tools/MT_CrashHandler.h"
@@ -177,7 +178,7 @@ void DEC_PopulationDecision::EndCleanStateAfterCrash()
 // Name: DEC_PopulationDecision::StartMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::StartMissionBehavior( MIL_PopulationMission& mission )
+void DEC_PopulationDecision::StartMissionBehavior( MIL_Mission_ABC& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior();    
     ActivateOrder( strBehavior, missionBehaviorParameters_, mission );
@@ -187,7 +188,7 @@ void DEC_PopulationDecision::StartMissionBehavior( MIL_PopulationMission& missio
 // Name: DEC_PopulationDecision::StopMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::StopMissionBehavior( MIL_PopulationMission& mission )
+void DEC_PopulationDecision::StopMissionBehavior( MIL_Mission_ABC& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior();
     StopMission( strBehavior, missionBehaviorParameters_ );

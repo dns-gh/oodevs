@@ -43,7 +43,6 @@ public:
     //! @name Accessors
     //@{
                   MIL_Automate&        GetAutomate() const;
-    virtual const MIL_MissionType_ABC& GetType    () const;
     //@}
 
     //! @name Operations
@@ -78,7 +77,6 @@ private:
     //@}
 
 private:
-    const MIL_MissionType_ABC& type_;
           MIL_Automate&        automate_;
           bool                 bDIAMrtBehaviorActivated_;
           bool                 bDIACdtBehaviorActivated_;

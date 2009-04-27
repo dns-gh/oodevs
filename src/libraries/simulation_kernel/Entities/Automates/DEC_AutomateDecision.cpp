@@ -17,7 +17,7 @@
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
-#include "Entities/Orders/MIL_AutomateMission.h"
+#include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
@@ -206,7 +206,7 @@ void DEC_AutomateDecision::EndCleanStateAfterCrash()
 // Name: DEC_AutomateDecision::StartMissionMrtBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission& mission )
+void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_Mission_ABC& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
     ActivateOrder( strBehavior, missionMrtBehaviorParameters_, mission );
@@ -216,7 +216,7 @@ void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission& mission
 // Name: DEC_AutomateDecision::StopMissionMrtBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission )
+void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_Mission_ABC& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
     StopMission( strBehavior, missionMrtBehaviorParameters_ );
@@ -226,7 +226,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission 
 // Name: DEC_AutomateDecision::StartMissionConduiteBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission& mission )
+void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_Mission_ABC& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
     ActivateOrder( strBehavior, missionConduiteBehaviorParameters_, mission );
@@ -236,7 +236,7 @@ void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission& mi
 // Name: DEC_AutomateDecision::StopMissionConduiteBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission& mission )
+void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_Mission_ABC& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
     StopMission( strBehavior, missionConduiteBehaviorParameters_ );

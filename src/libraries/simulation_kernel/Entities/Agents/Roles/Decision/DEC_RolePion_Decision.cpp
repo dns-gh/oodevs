@@ -18,7 +18,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
-#include "Entities/Orders/MIL_PionMission.h"
+#include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
@@ -231,7 +231,7 @@ void DEC_RolePion_Decision::RemoveAllReferencesOf( const DIA_TypedObject& refere
 // Name: DEC_RolePion_Decision::StartMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StartMissionBehavior( MIL_PionMission& mission )
+void DEC_RolePion_Decision::StartMissionBehavior( MIL_Mission_ABC& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior();
     ActivateOrder( strBehavior, missionBehaviorParameters_, mission );
@@ -241,7 +241,7 @@ void DEC_RolePion_Decision::StartMissionBehavior( MIL_PionMission& mission )
 // Name: DEC_RolePion_Decision::StopMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StopMissionBehavior( MIL_PionMission& mission )
+void DEC_RolePion_Decision::StopMissionBehavior( MIL_Mission_ABC& mission )
 {
     const std::string& strBehavior = mission.GetType().GetDIABehavior();
     StopMission( strBehavior, missionBehaviorParameters_ );

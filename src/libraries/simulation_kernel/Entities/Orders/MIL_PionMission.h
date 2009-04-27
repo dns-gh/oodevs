@@ -43,7 +43,6 @@ public:
     //! @name Accessors
     //@{
                   MIL_AgentPion&       GetPion() const;
-    virtual const MIL_MissionType_ABC& GetType() const;
     //@}
 
     //! @name Operations
@@ -72,7 +71,6 @@ private:
     //@}
 
 private:
-    const MIL_MissionType_ABC& type_;
           MIL_AgentPion&       pion_;
           bool                 bDIABehaviorActivated_;
 };

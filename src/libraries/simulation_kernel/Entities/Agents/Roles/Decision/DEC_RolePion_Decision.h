@@ -15,7 +15,7 @@
 #include "Decision/DEC_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
-class MIL_PionMission;
+class MIL_Mission_ABC;
 class NET_ASN_MsgUnitAttributes;
 class DEC_Path;
 class PHY_RoePopulation;
@@ -57,8 +57,8 @@ public:
     //@{
     void Clean         ();
 
-    void StartMissionBehavior( MIL_PionMission& mission );
-    void StopMissionBehavior ( MIL_PionMission& mission );
+    void StartMissionBehavior( MIL_Mission_ABC& mission );
+    void StopMissionBehavior ( MIL_Mission_ABC& mission );
 
     void NotifyAutomateChanged();
 

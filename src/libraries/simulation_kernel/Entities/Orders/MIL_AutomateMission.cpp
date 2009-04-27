@@ -37,7 +37,6 @@ void MIL_AutomateMission::InitializeDIA()
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn )
     : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres, automate.GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() )
-    , type_                    ( type )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -50,7 +49,6 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate )
     : MIL_Mission_ABC          ( type, automate.GetKnowledge() )
-    , type_                    ( type )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -63,7 +61,6 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const MIL_AutomateMission& parent )
     : MIL_Mission_ABC          ( type, automate.GetKnowledge(), parent )
-    , type_                    ( type )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -76,7 +73,6 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::MIL_AutomateMission( MIL_Automate& automate, const MIL_AutomateMission& rhs )
     : MIL_Mission_ABC          ( automate.GetKnowledge(), rhs )
-    , type_                    ( rhs.type_ )
     , automate_                ( automate)
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -111,7 +107,7 @@ MIL_AutomateMission& MIL_AutomateMission::CreateCopy( MIL_Automate& target ) con
 // -----------------------------------------------------------------------------
 bool MIL_AutomateMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const
 {
-    return automate_.GetType().GetModel().IsFragOrderAvailableForMission( type_, fragOrderType );
+    return automate_.GetType().GetModel().IsFragOrderAvailableForMission( GetType(), fragOrderType );
 }
 
 // =============================================================================
@@ -192,7 +188,7 @@ void MIL_AutomateMission::Send() const
     NET_ASN_MsgAutomatOrder asn;
 
     asn().oid       = automate_.GetID();
-    asn().mission   = type_    .GetID();
+    asn().mission   = GetType().GetID();
 
     MIL_Mission_ABC::Serialize( asn().parametres );
 
