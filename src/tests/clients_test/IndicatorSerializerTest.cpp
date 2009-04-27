@@ -75,10 +75,10 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNonExistingFunction )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorSerializer_TestExtractor
+// Name: IndicatorSerializer_TestExtractorTypeIsImplicit
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestExtractor )
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestExtractorTypeIsImplicit )
 {
     const std::string expected = 
         "<indicator>"
@@ -88,10 +88,10 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestExtractor )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorSerializer_TestExtractorCaseInsensitive
+// Name: IndicatorSerializer_TestFunctionNameIsCaseInsensitive
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestExtractorCaseInsensitive )
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestFunctionNameIsCaseInsensitive )
 {
     const std::string expected = 
         "<indicator>"
@@ -115,6 +115,20 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestExtractorWithParameters )
     RegisterVariable( "Equipments", "list(equipment-type)", "eq1,eq2,eq3" );
     RegisterVariable( "States", "list(equipment-state)", "state1,state2,state3" );
     ParseAndCheck( "equipments( $Equipments, $States )", expected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer_TestResultFunctionsHaveNoId
+// Created: SBO 2009-04-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResultFunctionsHaveNoId )
+{
+    const std::string expected = 
+        "<indicator>"
+            "<extract function='operational-state' id='1'/>"
+            "<result function='indicator' input='1' name='test' type='float'/>"
+        "</indicator>";
+    ParseAndCheck( "indicator( 'test', operational-state() )", expected );
 }
 
 // -----------------------------------------------------------------------------

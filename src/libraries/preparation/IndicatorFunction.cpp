@@ -86,8 +86,9 @@ void IndicatorFunction::Serialize( xml::xostream& xos ) const
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
         parameter.second->Serialize( xos );
     xos << xml::start( primitive_.GetCategory() )
-            << xml::attribute( "id", GetInput() )
             << xml::attribute( "function", primitive_.GetName() );
+    if( primitive_.GetCategory() != "result" )
+        xos << xml::attribute( "id", GetInput() );
     SerializeType( xos );
     SerializeParameters( xos );
     xos << xml::end();

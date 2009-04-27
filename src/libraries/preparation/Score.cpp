@@ -116,10 +116,26 @@ void Score::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Score::SerializeIndicators( xml::xostream& xos ) const
 {
-    IndicatorSerializer serializer( *elementFactory_, *variables_ );
-    IndicatorParser parser( serializer );
-    parser.Parse( formula_.ascii() );
-    serializer.Serialize( xos );
+    xos << xml::start( "indicators" );
+    {
+        IndicatorSerializer serializer( *elementFactory_, *variables_ );
+        IndicatorParser parser( serializer );
+        parser.Parse( QString( "indicator( '%1/Value', %2 )" ).arg( name_ ).arg( formula_ ).ascii() );
+        serializer.Serialize( xos );
+    }
+    {
+        IndicatorSerializer serializer( *elementFactory_, *variables_ );
+        IndicatorParser parser( serializer );
+        parser.Parse( QString( "indicator( '%1/Tendency', derivate( %2 ) )" ).arg( name_ ).arg( formula_ ).ascii() );
+        serializer.Serialize( xos );
+    }
+    {
+        IndicatorSerializer serializer( *elementFactory_, *variables_ );
+        IndicatorParser parser( serializer );
+        parser.Parse( QString( "indicator( '%1/Gauge', threshold( '%2', '%3', %4 ) )" ).arg( name_ ).arg( "0,10,20" ).arg( "0,0.25,0.5,1" ).arg( formula_ ).ascii() );
+        serializer.Serialize( xos );
+    }
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------

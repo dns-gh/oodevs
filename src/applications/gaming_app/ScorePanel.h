@@ -22,6 +22,7 @@ namespace gui
 namespace kernel
 {
     class Controllers;
+    class ModelUnLoaded;
 }
 
 class Score;
@@ -35,6 +36,7 @@ class Score;
 class ScorePanel : public QDockWindow
                  , public kernel::Observer_ABC
                  , public kernel::ElementObserver_ABC< Score >
+                 , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
 
 public:
@@ -56,6 +58,7 @@ private:
     virtual void NotifyCreated( const Score& element );
     virtual void NotifyUpdated( const Score& element );
     virtual void NotifyDeleted( const Score& element );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     void Display( const Score& score, gui::ValuedListItem* item );
     //@}
 

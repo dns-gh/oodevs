@@ -26,7 +26,7 @@ using namespace plugins::score;
 ScorePlugin::ScorePlugin( dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config )
     : clients_( clients )
 {
-    LoadScores( config.BuildExerciseChildFile( "scripts/resources/scores.xml" ) );
+    LoadScores( config.GetScoresFile() );
 }
 
 // -----------------------------------------------------------------------------

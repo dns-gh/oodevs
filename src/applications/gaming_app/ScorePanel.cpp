@@ -72,6 +72,15 @@ void ScorePanel::NotifyDeleted( const Score& element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ScorePanel::NotifyUpdated
+// Created: SBO 2009-04-27
+// -----------------------------------------------------------------------------
+void ScorePanel::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    scores_->clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ScorePanel::Display
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
