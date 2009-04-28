@@ -43,12 +43,12 @@ namespace
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 InputToxicCloudAttribute::InputToxicCloudAttribute()
-    : extent_ ( ConvertTo( TER_World::GetWorld().GetExtent() ) )
-    , quantities_ ( new T_Quantities( extent_ ) )
-    , schedule_ ( new T_Schedule() )
-    , bExport_ ( true )
+    : extent_( ConvertTo( TER_World::GetWorld().GetExtent() ) )
+    , quantities_( new T_Quantities( extent_ ) )
+    , schedule_( new T_Schedule() )
+    , bExport_( true )
 {
-     quantities_->SetRefinementPolicy( 20 );  // $$$$ JCR 2007-09-13: profiling ?
+     quantities_->SetRefinementPolicy( 20 );  // $$$$ JCR 2007-09-13: profiling?
 }
 
 // -----------------------------------------------------------------------------
@@ -56,17 +56,14 @@ InputToxicCloudAttribute::InputToxicCloudAttribute()
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis )
-    : extent_ ( ConvertTo( TER_World::GetWorld().GetExtent() ) )
-    , quantities_ ( new T_Quantities( extent_ ) )
-    , filename_ ( xml::attribute< std::string >( xis, "source" ) )
+    : extent_( ConvertTo( TER_World::GetWorld().GetExtent() ) )
+    , quantities_( new T_Quantities( extent_ ) )
+    , filename_( xml::attribute< std::string >( xis, "source" ) )
     , dataField_( xml::attribute< std::string >( xis, "data-field" ) )
-    , schedule_ ( new T_Schedule() )
-    , bExport_ ( true )
+    , schedule_( new T_Schedule() )
+    , bExport_( xml::attribute< bool >( xis, "export", true ) )
 {
-    quantities_->SetRefinementPolicy( 20 );  // $$$$ JCR 2007-09-13: profiling ?     
-    
-    xis >> xml::optional() >> xml::attribute( "export", bExport_ );
-    
+    quantities_->SetRefinementPolicy( 20 );  // $$$$ JCR 2007-09-13: profiling?
     LoadConfig();
 }
 
@@ -88,7 +85,7 @@ void InputToxicCloudAttribute::load( MIL_CheckPointInArchive& ar, const uint )
     ar >> filename_
        >> field_
        >> dataField_
-       >> bExport_;    
+       >> bExport_;
     LoadConfig();
 }
     
@@ -117,7 +114,7 @@ InputToxicCloudAttribute& InputToxicCloudAttribute::operator=( const InputToxicC
     bExport_ = rhs.bExport_;
     extent_ = rhs.extent_;
     schedule_ = rhs.schedule_;
-    quantities_ = rhs.quantities_;    
+    quantities_ = rhs.quantities_;
     NotifyAttributeUpdated( eOnCreation );
     return *this;
 }
@@ -185,7 +182,7 @@ void InputToxicCloudAttribute::ReadFiles( xml::xistream& xis )
     if ( CanConvertWeirdFormat( schedule, eventGDH ) )
     {    
         uint eventTime = ReadGDH( eventGDH );
-        uint simTime = MIL_AgentServer::GetWorkspace().RealTimeToTick( eventTime );        
+        uint simTime = MIL_AgentServer::GetWorkspace().RealTimeToTick( eventTime );
         (*schedule_)[ simTime ] = schedule;
     }
 }
@@ -222,7 +219,7 @@ void InputToxicCloudAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
 {
     if( bExport_ && NeedUpdate() )
     {
-        SendFullState( asn );        
+        SendFullState( asn );
         Reset();
     }
 }
@@ -233,7 +230,7 @@ void InputToxicCloudAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void InputToxicCloudAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "input-toxic-cloud" )             
+    xos << xml::start( "input-toxic-cloud" )
             << xml::attribute( "source", filename_ )
             << xml::attribute( "data-field", dataField_ )
             << xml::attribute( "export", bExport_ )
@@ -246,7 +243,7 @@ namespace
     {
         typedef InputToxicCloudAttribute::T_Quantity    T_Quantity;
         typedef InputToxicCloudAttribute::T_Quantities  T_Quantities;
-        Handler( const std::string& field, T_Quantities& quantities, std::vector< T_Quantity >& export ) 
+        Handler( const std::string& field, T_Quantities& quantities, std::vector< T_Quantity >& export )
             : field_ ( field ), quantities_ ( quantities ), export_ ( export ) {}
         
         virtual void Handle( vmap::Feature_ABC* feature )
@@ -264,7 +261,7 @@ namespace
                     
                     // switch long/lat -> lat/long
                     MT_Vector2D latlong( position.rY_, position.rX_ );
-                    export_.push_back( std::make_pair( latlong, quantity ) ); 
+                    export_.push_back( std::make_pair( latlong, quantity ) );
                 }
             }
             delete feature; // must be deleted
@@ -299,8 +296,8 @@ void InputToxicCloudAttribute::BuildConvexHull( TER_Polygon& polygon ) const
 {
     T_PointVector vector( export_.size() );
 	IT_PointVector to = vector.begin();
-	for ( CIT_QuantityContainer it = export_.begin(); it != export_.end();  ++it )	
-		*(to++) = MT_Vector2D( it->first.rY_, it->first.rX_ );	
+	for ( CIT_QuantityContainer it = export_.begin(); it != export_.end();  ++it )
+		*(to++) = MT_Vector2D( it->first.rY_, it->first.rX_ );
     polygon.Reset( vector, true /*convexhull*/ );
 }
 
@@ -356,7 +353,7 @@ namespace
     public:
         explicit AssessQuantity( MT_Float& quantity ) : n_( 0 ), quantity_ ( quantity ) {}
         
-        bool operator()( const InputToxicCloudAttribute::T_Quantity& quantity ) 
+        bool operator()( const InputToxicCloudAttribute::T_Quantity& quantity )
         {
             quantity_ += quantity.second;
             return false;

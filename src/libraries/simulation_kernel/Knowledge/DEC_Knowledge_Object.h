@@ -16,6 +16,7 @@
 
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "DEC_Knowledge_ABC.h"
+#include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "game_asn/Simulation.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/Extendable.h"
@@ -27,7 +28,6 @@ class MIL_ObjectType_ABC;
 class MIL_Object_ABC;
 class MIL_Automate;
 class MIL_AgentType_ABC;
-class DEC_Knowledge_ObjectAttribute_ABC;
 
 // =============================================================================
 /** @class  DEC_Knowledge_Object
