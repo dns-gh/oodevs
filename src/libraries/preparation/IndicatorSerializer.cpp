@@ -11,6 +11,7 @@
 #include "IndicatorSerializer.h"
 #include "IndicatorElementFactory_ABC.h"
 #include "IndicatorElement_ABC.h"
+#include "IndicatorElementDeclarator_ABC.h"
 #include "IndicatorVariables.h"
 #include <xeumeuleu/xml.h>
 
@@ -78,6 +79,28 @@ void IndicatorSerializer::HandleFunctionCall( const std::string& name, unsigned 
     stack_.push_back( function );
 }
 
+namespace
+{
+    class IndicatorElementDeclarator : public IndicatorElementDeclarator_ABC
+    {
+    public:
+        explicit IndicatorElementDeclarator( xml::xostream& xos ) : xos_( &xos ) {}
+        virtual ~IndicatorElementDeclarator() {}
+
+        virtual void Declare( boost::shared_ptr< IndicatorElement_ABC > element )
+        {
+            if( std::find( elements_.begin(), elements_.end(), element ) == elements_.end() )
+            {
+                element->SerializeDeclaration( *xos_ );
+                elements_.push_back( element );
+            }
+        }
+    private:
+        xml::xostream* xos_;
+        std::vector< boost::shared_ptr< IndicatorElement_ABC > > elements_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: IndicatorSerializer::Serialize
 // Created: SBO 2009-04-17
@@ -85,8 +108,10 @@ void IndicatorSerializer::HandleFunctionCall( const std::string& name, unsigned 
 void IndicatorSerializer::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "indicator" );
-    variables_.SerializeDeclarations( xos );
     if( ! stack_.empty() )
-        stack_.front()->Serialize( xos );
+    {
+        IndicatorElementDeclarator declarator( xos );
+        stack_.front()->Serialize( xos, declarator );
+    }
     xos << xml::end();
 }

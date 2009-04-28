@@ -45,24 +45,6 @@ IndicatorVariable::~IndicatorVariable()
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariable::Serialize
-// Created: SBO 2009-04-10
-// -----------------------------------------------------------------------------
-void IndicatorVariable::Serialize( xml::xostream& ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: IndicatorVariable::SerializeDeclaration
-// Created: SBO 2009-04-17
-// -----------------------------------------------------------------------------
-void IndicatorVariable::SerializeDeclaration( xml::xostream& xos ) const
-{
-    IndicatorConstant< std::string >::Serialize( xos );
-}
-
-// -----------------------------------------------------------------------------
 // Name: IndicatorVariable::Clone
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------

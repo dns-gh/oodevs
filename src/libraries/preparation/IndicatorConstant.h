@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual void AddParameter( boost::shared_ptr< IndicatorElement_ABC > element );
-    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void Serialize( xml::xostream& xos, IndicatorElementDeclarator_ABC& declarator ) const;
     virtual void SerializeDeclaration( xml::xostream& xos ) const;
     virtual IndicatorElement_ABC& Clone() const;
     //@}
@@ -52,10 +52,6 @@ private:
     //@{
     IndicatorConstant( const IndicatorConstant& );            //!< Copy constructor
     IndicatorConstant& operator=( const IndicatorConstant& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 protected:
@@ -101,13 +97,9 @@ void IndicatorConstant< T >::AddParameter( boost::shared_ptr< IndicatorElement_A
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
 template< typename T >
-void IndicatorConstant< T >::Serialize( xml::xostream& xos ) const
+void IndicatorConstant< T >::Serialize( xml::xostream&, IndicatorElementDeclarator_ABC& ) const
 {
-    xos << xml::start( "constant" )
-            << xml::attribute( "id", GetInput() )
-            << xml::attribute< T >( "value", value_ )
-            << xml::attribute( "type", type_.ToString() )
-        << xml::end();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -115,9 +107,13 @@ void IndicatorConstant< T >::Serialize( xml::xostream& xos ) const
 // Created: SBO 2009-04-03
 // -----------------------------------------------------------------------------
 template< typename T >
-void IndicatorConstant< T >::SerializeDeclaration( xml::xostream& ) const
+void IndicatorConstant< T >::SerializeDeclaration( xml::xostream& xos ) const
 {
-    // NOTHING
+    xos << xml::start( "constant" )
+            << xml::attribute( "id", GetInput() )
+            << xml::attribute< T >( "value", value_ )
+            << xml::attribute( "type", type_.ToString() )
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------

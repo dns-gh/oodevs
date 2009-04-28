@@ -21,6 +21,11 @@ namespace
     {
         return primitive.GetCategory() == "extract";
     }
+    bool FilterUserFunctions( const IndicatorPrimitive& primitive )
+    {
+        const std::string category = primitive.GetCategory();
+        return category != "extract" && category != "result";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +36,7 @@ ScorePrimitivesLibrary::ScorePrimitivesLibrary( QWidget* parent, kernel::Control
     : QTabWidget( parent )
 {
     AddPage( tr( "Data" )     , new ScorePrimitivesPage( this, controllers, factory, primitives, boost::bind( &::FilterExtractors, _1 ) ) );
-    AddPage( tr( "Functions" ), new ScorePrimitivesPage( this, controllers, factory, primitives, boost::bind( std::logical_not< bool >(), boost::bind( &::FilterExtractors, _1 ) ) ) );
+    AddPage( tr( "Functions" ), new ScorePrimitivesPage( this, controllers, factory, primitives, boost::bind( &::FilterUserFunctions, _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------

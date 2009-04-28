@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual void AddParameter( boost::shared_ptr< IndicatorElement_ABC > element );
-    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void Serialize( xml::xostream& xos, IndicatorElementDeclarator_ABC& declarator ) const;
     virtual IndicatorElement_ABC& Clone() const;
     //@}
 
@@ -55,6 +55,7 @@ private:
 
     //! @name Helpers
     //@{
+    void SerializeDeclarations( xml::xostream& xos, IndicatorElementDeclarator_ABC& declarator ) const;
     void SerializeType( xml::xostream& xos ) const;
     void SerializeParameters( xml::xostream& xos ) const;
     //@}

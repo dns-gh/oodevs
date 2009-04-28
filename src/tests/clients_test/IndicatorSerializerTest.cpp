@@ -101,23 +101,6 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestFunctionNameIsCaseInsensitive )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorSerializer_TestExtractorWithParameters
-// Created: SBO 2009-03-16
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestExtractorWithParameters )
-{
-    const std::string expected = 
-        "<indicator>"
-            "<constant id='$Equipments' type='list(equipment-type)' value='eq1,eq2,eq3'/>"
-            "<constant id='$States' type='list(equipment-state)' value='state1,state2,state3'/>"
-            "<extract equipments='eq1,eq2,eq3' function='equipments' id='1' states='state1,state2,state3'/>"
-        "</indicator>";
-    RegisterVariable( "Equipments", "list(equipment-type)", "eq1,eq2,eq3" );
-    RegisterVariable( "States", "list(equipment-state)", "state1,state2,state3" );
-    ParseAndCheck( "equipments( $Equipments, $States )", expected );
-}
-
-// -----------------------------------------------------------------------------
 // Name: IndicatorSerializer_TestResultFunctionsHaveNoId
 // Created: SBO 2009-04-27
 // -----------------------------------------------------------------------------
@@ -132,10 +115,56 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResultFunctionsHaveNoId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorSerializer_TestFunctionWithTemplateReturnType
+// Name: IndicatorSerializer_TestFunctionWithReturnTypeDeducedFromParameterType
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestFunctionWithTemplateReturnType )
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestFunctionWithReturnTypeDeducedFromParameterType )
+{
+    const std::string expected = 
+        "<indicator>"
+            "<constant id='$values' type='list(string)' value='va,lu,es'/>"
+            "<reduce function='mean' id='1' input='$values' type='string'/>"
+        "</indicator>";
+    RegisterVariable( "values", "list(string)", "va,lu,es" );
+    ParseAndCheck( "mean( $values )", expected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer_TestVariableReferenceIsReplacedByValue
+// Created: SBO 2009-04-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestVariableReferenceIsReplacedByValue )
+{
+    const std::string expected = 
+        "<indicator>"
+            "<extract equipments='eq1,eq2,eq3' function='equipments' id='1' states='state1,state2,state3'/>"
+        "</indicator>";
+    RegisterVariable( "Equipments", "list(equipment-type)", "eq1,eq2,eq3" );
+    RegisterVariable( "States", "list(equipment-state)", "state1,state2,state3" );
+    ParseAndCheck( "equipments( $Equipments, $States )", expected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer_TestUnreferencedVariableIsNotDeclared
+// Created: SBO 2009-04-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestUnreferencedVariableIsNotDeclared )
+{
+    const std::string expected = 
+        "<indicator>"
+            "<extract equipments='eq1,eq2,eq3' function='equipments' id='1' states='state1,state2,state3'/>"
+        "</indicator>";
+    RegisterVariable( "Equipments", "list(equipment-type)", "eq1,eq2,eq3" );
+    RegisterVariable( "States", "list(equipment-state)", "state1,state2,state3" );
+    RegisterVariable( "Unreferenced", "float", "1.0" );
+    ParseAndCheck( "equipments( $Equipments, $States )", expected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer_TestVariableReferencedInInputNeedsDeclaration
+// Created: SBO 2009-04-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestVariableReferencedInInputNeedsDeclaration )
 {
     const std::string expected = 
         "<indicator>"
@@ -154,8 +183,6 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNestedFunctions )
 {
     const std::string expected = 
         "<indicator>"
-            "<constant id='$MyResources' type='list(resource-type)' value='res,our,ces'/>"
-            "<constant id='$MyUnits' type='list(key)' value='un,its'/>"
             "<extract dotations='res,our,ces' function='resources' id='1'/>"
             "<transform function='domain' id='2' input='1' select='un,its' type='int'/>"
             "<reduce function='sum' id='3' input='2' type='int'/>"
@@ -166,10 +193,10 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNestedFunctions )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorSerializer_TestMultipleVariableReferences
-// Created: SBO 2009-03-16
+// Name: IndicatorSerializer_TestMultipleReferencedVariableIsDeclaredOnlyOnce
+// Created: SBO 2009-04-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMultipleVariableReferences )
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMultipleReferencedVariableIsDeclaredOnlyOnce )
 {
     const std::string expected = 
         "<indicator>"
@@ -178,6 +205,29 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMultipleVariableReferences )
         "</indicator>";
     RegisterVariable( "loc", "position", "00UTM0000000000" );
     ParseAndCheck( "distance( $loc, $loc )", expected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer_TestMultipleReferencedVariableIsDeclaredBeforeFirstReference
+// Created: SBO 2009-04-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMultipleReferencedVariableIsDeclaredBeforeFirstReference )
+{
+    const std::string expected = 
+        "<indicator>"
+            "<constant id='$Zone' type='zone' value='circle(00UTM0000000000,00UTM0000000000)'/>"
+            "<extract function='position' id='1'/>"
+            "<extract function='direct-fire-unit' id='2'/>"
+            "<transform function='compose' id='3' input='1,2' type='position'/>"
+            "<transform function='contains' id='4' input='$Zone,3' type='bool'/>"
+            "<extract function='position' id='5'/>"
+            "<extract function='maintenance-handling-unit' id='6'/>"
+            "<transform function='compose' id='7' input='5,6' type='position'/>"
+            "<transform function='contains' id='8' input='$Zone,7' type='bool'/>"
+            "<transform function='compare' id='9' input='4,8' operator='less' type='bool'/>"
+        "</indicator>";
+    RegisterVariable( "Zone", "zone", "circle(00UTM0000000000,00UTM0000000000)" );
+    ParseAndCheck( "compare( 'less', contains( $Zone, Compose( position(), direct-fire-unit() ) ), contains( $Zone, Compose( position(), maintenance-handling-unit() ) ) )", expected );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +255,6 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestOperationalState )
 {
     const std::string expected = 
         "<indicator>"
-            "<constant id='$Unit' type='key' value='42'/>"
             "<extract function='operational-state' id='1'/>"
             "<reduce function='select' id='2' input='1' key='42' type='float'/>"
         "</indicator>";
@@ -221,7 +270,6 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMeanOperationalState )
 {
     const std::string expected = 
         "<indicator>"
-            "<constant id='$Units' type='list(key)' value='un,its'/>"
             "<extract function='operational-state' id='1'/>"
             "<transform function='domain' id='2' input='1' select='un,its' type='float'/>"
             "<reduce function='mean' id='3' input='2' type='float'/>"
@@ -238,8 +286,6 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestDistanceBetweenUnits )
 {
     const std::string expected = 
         "<indicator>"
-            "<constant id='$Unit1' type='key' value='42'/>"
-            "<constant id='$Unit2' type='key' value='51'/>"
             "<extract function='position' id='1'/>"
             "<reduce function='select' id='2' input='1' key='42' type='position'/>"
             "<extract function='position' id='3'/>"
@@ -259,7 +305,6 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNumberOfBreakdown )
 {
     const std::string expected = 
         "<indicator>"
-            "<constant id='$Units' type='list(key)' value='un,its'/>"
             "<extract function='maintenance-handling-unit' id='1'/>"
             "<transform function='is-one-of' id='2' input='1' select='un,its' type='bool'/>"
             "<extract function='maintenance-handling-unit' id='3'/>"
@@ -292,7 +337,6 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestComponentDamages )
 {
     const std::string expected = 
         "<indicator>"
-            "<constant id='$Components' type='list(key)' value='com,pon,ents'/>"
             "<extract components='com,pon,ents' function='fire-component-damage' id='1'/>"
             "<reduce function='sum' id='2' input='1' type='float'/>"
         "</indicator>";
@@ -308,7 +352,6 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestInflictedDamageFromDirectFiresFrom
 {
     const std::string expected = 
         "<indicator>"
-            "<constant id='$Components' type='list(key)' value='com,pon,ents'/>"
             "<constant id='$Zone' type='zone' value='circle(00UTM0000000000,00UTM0000000000)'/>"
             "<extract function='position' id='1'/>"
             "<extract function='direct-fire-unit' id='2'/>"
@@ -331,8 +374,6 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestTotalResourcesForUnits )
 {
     const std::string expected = 
         "<indicator>"
-            "<constant id='$Dotations' type='list(key)' value='dot,ati,ons'/>"
-            "<constant id='$Units' type='list(key)' value='un,its'/>"
             "<extract dotations='dot,ati,ons' function='resources' id='1'/>"
             "<transform function='domain' id='2' input='1' select='un,its' type='int'/>"
             "<reduce function='sum' id='3' input='2' type='int'/>"
@@ -350,11 +391,9 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResourceConsumptionsForUnits )
 {
     const std::string expected = 
         "<indicator>"
-            "<constant id='$Resources' type='list(key)' value='res,our,ces'/>"
-            "<constant id='$Units' type='list(key)' value='un,its'/>"
+            "<constant id='3' type='float' value='0'/>"
             "<extract dotations='res,our,ces' function='resources' id='1'/>"
             "<transform function='derivate' id='2' input='1' type='int'/>"
-            "<constant id='3' type='float' value='0'/>"
             "<transform function='compare' id='4' input='2,3' operator='less' type='bool'/>"
             "<extract dotations='res,our,ces' function='resources' id='5'/>"
             "<transform function='derivate' id='6' input='5' type='int'/>"

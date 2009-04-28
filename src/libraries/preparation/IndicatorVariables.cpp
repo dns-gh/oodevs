@@ -86,16 +86,6 @@ void IndicatorVariables::Serialize( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables::SerializeDeclarations
-// Created: SBO 2009-04-17
-// -----------------------------------------------------------------------------
-void IndicatorVariables::SerializeDeclarations( xml::xostream& xos ) const
-{
-    BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
-        variable.second->SerializeDeclaration( xos );
-}
-
-// -----------------------------------------------------------------------------
 // Name: IndicatorVariables::Accept
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------

@@ -55,7 +55,6 @@ public:
     //@{
     void Register( const std::string& name, boost::shared_ptr< IndicatorElement_ABC > element );
     void Serialize( xml::xostream& xos ) const;
-    void SerializeDeclarations( xml::xostream& xos ) const;
     IndicatorVariables& Clone() const;
     IndicatorVariables& operator=( const IndicatorVariables& );
     //@}

@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "IndicatorFunction.h"
+#include "IndicatorElementDeclarator_ABC.h"
 #include "IndicatorPrimitive.h"
 #include "IndicatorPrimitiveParameter.h"
 #include "IndicatorType.h"
@@ -81,10 +82,11 @@ std::string IndicatorFunction::GetValue() const
 // Name: IndicatorFunction::Serialize
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-void IndicatorFunction::Serialize( xml::xostream& xos ) const
+void IndicatorFunction::Serialize( xml::xostream& xos, IndicatorElementDeclarator_ABC& declarator ) const
 {
+    SerializeDeclarations( xos, declarator );
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
-        parameter.second->Serialize( xos );
+        parameter.second->Serialize( xos, declarator );
     xos << xml::start( primitive_.GetCategory() )
             << xml::attribute( "function", primitive_.GetName() );
     if( primitive_.GetCategory() != "result" )
@@ -92,6 +94,17 @@ void IndicatorFunction::Serialize( xml::xostream& xos ) const
     SerializeType( xos );
     SerializeParameters( xos );
     xos << xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorFunction::SerializeDeclarations
+// Created: SBO 2009-04-28
+// -----------------------------------------------------------------------------
+void IndicatorFunction::SerializeDeclarations( xml::xostream& xos, IndicatorElementDeclarator_ABC& declarator ) const
+{
+    BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
+        if( parameter.first->GetAttribute() == "input" )
+            declarator.Declare( parameter.second );
 }
 
 // -----------------------------------------------------------------------------
