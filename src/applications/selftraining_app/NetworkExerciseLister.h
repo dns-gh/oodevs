@@ -67,10 +67,10 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector<ExerciseList *> T_Lists;
-    typedef T_Lists::const_iterator     CIT_Lists;
+    typedef std::vector< ExerciseList* > T_Lists;
+    typedef T_Lists::const_iterator    CIT_Lists;
     typedef std::map< std::string, unsigned short > T_PortDictionary;
-    typedef T_PortDictionary::const_iterator     CIT_PortDictionary;
+    typedef T_PortDictionary::const_iterator      CIT_PortDictionary;
     //@}
 
 private:

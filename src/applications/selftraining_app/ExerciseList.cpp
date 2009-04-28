@@ -111,7 +111,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ExerciseList::SelectExercise( int index )
 {
-    QString exercise = *exercisesList_.at( index ) ; 
+    const QString exercise = *exercisesList_.at( index ); 
     profiles_->Update( MakePath( subDir_, exercise.ascii() ) );
     if( showBrief_ )
     {
@@ -224,6 +224,7 @@ void ExerciseList::customEvent( QCustomEvent* e )
     }
     else if( e->type() == 4243 )
     {
-        exercisesList_.clear();
+        profiles_->clear();
+        exercises_->clear();
     }
 }
