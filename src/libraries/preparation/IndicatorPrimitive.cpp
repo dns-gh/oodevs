@@ -126,3 +126,12 @@ QString IndicatorPrimitive::BuildParameterList() const
         list.push_back( parameter->GetName().ascii() );
     return list.empty() ? "" : ( " " + boost::join( list, ", " ) + " " ).c_str();
 }
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorPrimitive::ParameterCount
+// Created: SBO 2009-04-28
+// -----------------------------------------------------------------------------
+unsigned int IndicatorPrimitive::ParameterCount() const
+{
+    return parameters_.size();
+}

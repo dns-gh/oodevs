@@ -84,6 +84,8 @@ std::string IndicatorFunction::GetValue() const
 // -----------------------------------------------------------------------------
 void IndicatorFunction::Serialize( xml::xostream& xos, IndicatorElementDeclarator_ABC& declarator ) const
 {
+    if( parameters_.size() < primitive_.ParameterCount() )
+        throw std::exception( tools::translate( "Scores", "Too few parameters in function '%1'." ).arg( primitive_.GetName() ).ascii() );
     SerializeDeclarations( xos, declarator );
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
         parameter.second->Serialize( xos, declarator );

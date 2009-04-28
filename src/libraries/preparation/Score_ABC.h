@@ -42,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void CheckValidity() const = 0;
     virtual void Serialize( xml::xostream& xos ) const = 0;
     //@}
 };

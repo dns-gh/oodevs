@@ -53,6 +53,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void CheckValidity() const;
     virtual void Serialize( xml::xostream& xos ) const;
     Score& operator=( const Score& score );
     //@}

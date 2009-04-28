@@ -132,6 +132,7 @@ void Score::SerializeIndicators( xml::xostream& xos ) const
     {
         IndicatorSerializer serializer( *elementFactory_, *variables_ );
         IndicatorParser parser( serializer );
+        // $$$$ SBO 2009-04-28: TODO: configure normalization
         parser.Parse( QString( "indicator( '%1/Gauge', threshold( '%2', '%3', %4 ) )" ).arg( name_ ).arg( "0,10,20" ).arg( "0,0.25,0.5,1" ).arg( formula_ ).ascii() );
         serializer.Serialize( xos );
     }
@@ -145,6 +146,21 @@ void Score::SerializeIndicators( xml::xostream& xos ) const
 void Score::Accept( IndicatorVariablesVisitor_ABC& visitor ) const
 {
     variables_->Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::IsValid
+// Created: SBO 2009-04-28
+// -----------------------------------------------------------------------------
+void Score::CheckValidity() const
+{
+    xml::xostringstream xos;
+    xos << xml::start( "indicators" );
+    IndicatorSerializer serializer( *elementFactory_, *variables_ );
+    IndicatorParser parser( serializer );
+    parser.Parse( formula_.ascii() );
+    serializer.Serialize( xos );
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------

@@ -181,8 +181,7 @@ void ScoreEditor::CheckFormula()
         IndicatorVariables variables;
         variables_->CommitTo( variables );
         Score score( name_->text(), formula_->text(), variables, indicators_ );
-        xml::xostringstream xos;
-        score.Serialize( xos );
+        score.CheckValidity();
         checkResult_->setText( "" );
         ok_->setEnabled( true );
     }

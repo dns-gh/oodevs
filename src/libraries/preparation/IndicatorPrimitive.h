@@ -45,6 +45,7 @@ public:
     QString GetComment() const;
     const IndicatorType& GetType() const;
     const IndicatorPrimitiveParameter* FindParameter( unsigned int index ) const;
+    unsigned int ParameterCount() const;
     //@}
 
 private:
