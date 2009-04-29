@@ -10,7 +10,10 @@
 #ifndef __ScoreVariableCreationWizard_h_
 #define __ScoreVariableCreationWizard_h_
 
-class IndicatorElement_ABC;
+namespace indicators
+{
+    class Element_ABC;
+}
 
 // =============================================================================
 /** @class  ScoreVariableCreationWizard
@@ -37,7 +40,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void VariableCreated( const IndicatorElement_ABC& variable );
+    void VariableCreated( const indicators::Element_ABC& variable );
     //@}
 
 private slots:
@@ -51,10 +54,6 @@ private:
     //@{
     ScoreVariableCreationWizard( const ScoreVariableCreationWizard& );            //!< Copy constructor
     ScoreVariableCreationWizard& operator=( const ScoreVariableCreationWizard& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

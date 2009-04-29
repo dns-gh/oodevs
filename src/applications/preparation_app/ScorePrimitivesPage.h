@@ -21,8 +21,11 @@ namespace kernel
     class Controllers;
 }
 
-class IndicatorPrimitive;
-class IndicatorPrimitives;
+namespace indicators
+{
+    class Primitive;
+    class Primitives;
+}
 
 // =============================================================================
 /** @class  ScorePrimitivesPage
@@ -40,26 +43,26 @@ class ScorePrimitivesPage : public QVBox
 public:
     //! @name Types
     //@{
-    typedef boost::function< bool( const IndicatorPrimitive& ) > T_Filter;
+    typedef boost::function< bool( const indicators::Primitive& ) > T_Filter;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& primitives, const T_Filter& filter );
+             ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& primitives, const T_Filter& filter );
     virtual ~ScorePrimitivesPage();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const IndicatorPrimitive& primitive, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void Display( const indicators::Primitive& primitive, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
 signals:
     //! @name Signals
     //@{
     void Insert( const QString& text );
-    void Selected( const IndicatorPrimitive& primitive );
+    void Selected( const indicators::Primitive& primitive );
     //@}
 
 private slots:
@@ -87,7 +90,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     T_Filter filter_;
-    const IndicatorPrimitives& primitives_;
+    const indicators::Primitives& primitives_;
     gui::ListDisplayer< ScorePrimitivesPage >* list_;
     //@}
 };

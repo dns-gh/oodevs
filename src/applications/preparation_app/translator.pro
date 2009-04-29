@@ -18,6 +18,13 @@ ProfileDialog.cpp \
 ProfileEditor.cpp \
 ProfileWizardDialog.cpp \
 PropertiesTableDisplayer.cpp \
+ScoreDialog.cpp \
+ScoreEditor.cpp \
+ScoreList.cpp \
+ScorePrimitivesLibrary.cpp \
+ScorePrimitivesPage.cpp \
+ScoreVariableCreationWizard.cpp \
+ScoreVariablesList.cpp \
 TacticalListView.cpp \
 TemplateListView.cpp \
 TemplatesPanel.cpp \

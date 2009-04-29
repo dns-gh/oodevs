@@ -12,12 +12,15 @@
 
 #include "ScoreFactory_ABC.h"
 
+namespace indicators
+{
+    class Primitives;
+}
+
 namespace kernel
 {
     class Controller;
 }
-
-class IndicatorPrimitives;
 
 // =============================================================================
 /** @class  ScoreFactory
@@ -31,7 +34,7 @@ class ScoreFactory : public ScoreFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreFactory( kernel::Controller& controller, const IndicatorPrimitives& indicators );
+             ScoreFactory( kernel::Controller& controller, const indicators::Primitives& indicators );
     virtual ~ScoreFactory();
     //@}
 
@@ -48,15 +51,11 @@ private:
     ScoreFactory& operator=( const ScoreFactory& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const IndicatorPrimitives& indicators_;
+    const indicators::Primitives& indicators_;
     //@}
 };
 

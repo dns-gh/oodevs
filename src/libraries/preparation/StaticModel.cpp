@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "StaticModel.h"
-#include "IndicatorPrimitives.h"
 #include "IntelligenceKarmas.h"
 #include "TeamKarmas.h"
 #include "clients_kernel/AgentTypes.h"
@@ -21,6 +20,7 @@
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_gui/DrawingTypes.h"
+#include "indicators/Primitives.h"
 #include "tools/ExerciseConfig.h"
 
 using namespace kernel;
@@ -39,7 +39,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , teamKarmas_         ( *new TeamKarmas() )
     , intelligenceKarmas_ ( *new IntelligenceKarmas() )
     , drawings_           ( *new gui::DrawingTypes( controllers.controller_ ) )
-    , indicators_         ( *new IndicatorPrimitives() )
+    , indicators_         ( *new indicators::Primitives() )
 {
     // NOTHING
 }

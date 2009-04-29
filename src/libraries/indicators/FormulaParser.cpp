@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "IndicatorParser.h"
-#include "IndicatorGrammarHandler_ABC.h"
+#include "FormulaParser.h"
+#include "GrammarHandler_ABC.h"
 #include "clients_kernel/Tools.h"
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
@@ -17,42 +17,44 @@
 
 namespace bs = boost::spirit::classic;
 
+using namespace indicators;
+
 // -----------------------------------------------------------------------------
-// Name: IndicatorParser constructor
+// Name: FormulaParser constructor
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-IndicatorParser::IndicatorParser( IndicatorGrammarHandler_ABC& handler )
+FormulaParser::FormulaParser( GrammarHandler_ABC& handler )
     : handler_( handler )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorParser destructor
+// Name: FormulaParser destructor
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-IndicatorParser::~IndicatorParser()
+FormulaParser::~FormulaParser()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorParser::Parse
+// Name: FormulaParser::Parse
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-void IndicatorParser::Parse( const std::string& text )
+void FormulaParser::Parse( const std::string& text )
 {
     bs::tree_parse_info<> info = bs::ast_parse( text.c_str(), *this, bs::space_p );
     if( !info.full )
-        throw std::exception( tools::translate( "Scores", "Syntax error: %1." ).arg( info.stop ).ascii() );
+        throw std::exception( tools::translate( "Indicators", "Syntax error: %1." ).arg( info.stop ).ascii() );
     Evaluate( info.trees.begin() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorParser::Evaluate
+// Name: FormulaParser::Evaluate
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-void IndicatorParser::Evaluate( const bs::tree_match< const char* >::const_tree_iterator& it )
+void FormulaParser::Evaluate( const bs::tree_match< const char* >::const_tree_iterator& it )
 {
     switch( it->value.id().to_long() )
     {
@@ -90,19 +92,19 @@ void IndicatorParser::Evaluate( const bs::tree_match< const char* >::const_tree_
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorParser::EvaluateNumber
+// Name: FormulaParser::EvaluateNumber
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-double IndicatorParser::EvaluateNumber( const bs::node_val_data< const char* >& node ) const
+double FormulaParser::EvaluateNumber( const bs::node_val_data< const char* >& node ) const
 {
     return boost::lexical_cast< double >( EvaluateString( node ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorParser::EvaluateString
+// Name: FormulaParser::EvaluateString
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-std::string IndicatorParser::EvaluateString( const bs::node_val_data< const char* >& node ) const
+std::string FormulaParser::EvaluateString( const bs::node_val_data< const char* >& node ) const
 {
     return std::string( node.begin(), node.end() );
 }

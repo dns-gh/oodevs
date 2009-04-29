@@ -8,27 +8,29 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "IndicatorVariable.h"
-#include "IndicatorType.h"
+#include "Variable.h"
+#include "ElementType.h"
 #include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.h>
 
+using namespace indicators;
+
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariable constructor
+// Name: Variable constructor
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-IndicatorVariable::IndicatorVariable( const std::string& name, const std::string& type, const std::string& value )
-    : IndicatorConstant< std::string >( std::string( "$" ) + name, type, value )
+Variable::Variable( const std::string& name, const std::string& type, const std::string& value )
+    : Constant< std::string >( std::string( "$" ) + name, type, value )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariable constructor
+// Name: Variable constructor
 // Created: SBO 2009-04-17
 // -----------------------------------------------------------------------------
-IndicatorVariable::IndicatorVariable( xml::xistream& xis )
-    : IndicatorConstant< std::string >( xml::attribute< std::string >( xis, "id" )
+Variable::Variable( xml::xistream& xis )
+    : Constant< std::string >( xml::attribute< std::string >( xis, "id" )
                                       , xml::attribute< std::string >( xis, "type" )
                                       , xml::attribute< std::string >( xis, "value" ) )
 {
@@ -36,19 +38,19 @@ IndicatorVariable::IndicatorVariable( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariable destructor
+// Name: Variable destructor
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-IndicatorVariable::~IndicatorVariable()
+Variable::~Variable()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariable::Clone
+// Name: Variable::Clone
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------
-IndicatorElement_ABC& IndicatorVariable::Clone() const
+Element_ABC& Variable::Clone() const
 {
-    return *new IndicatorVariable( boost::erase_first_copy( GetInput(), "$" ), type_.ToString(), value_ );
+    return *new Variable( boost::erase_first_copy( GetInput(), "$" ), type_.ToString(), value_ );
 }

@@ -35,7 +35,7 @@ namespace
 // Name: ScoreDialog constructor
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, const IndicatorPrimitives& indicators )
+ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, const indicators::Primitives& indicators )
     : QDialog( parent, "ScoreDialog" )
     , model_( model )
 {

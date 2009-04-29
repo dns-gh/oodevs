@@ -8,14 +8,16 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "IndicatorPrimitive.h"
-#include "IndicatorPrimitiveParameter.h"
-#include "IndicatorElement_ABC.h"
-#include "IndicatorType.h"
+#include "Primitive.h"
+#include "PrimitiveParameter.h"
+#include "Element_ABC.h"
+#include "ElementType.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.h>
+
+using namespace indicators;
 
 namespace
 {
@@ -28,98 +30,98 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive constructor
+// Name: Primitive constructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-IndicatorPrimitive::IndicatorPrimitive( xml::xistream& xis )
+Primitive::Primitive( xml::xistream& xis )
     : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
     , category_( xml::attribute< std::string >( xis, "category" ) )
     , comment_( ReadComment( xis ) )
-    , type_( new IndicatorType( xis ) )
+    , type_( new ElementType( xis ) )
 {
     xis >> xml::optional() >> xml::start( "parameters" )
-            >> xml::list( "parameter", *this, &IndicatorPrimitive::ReadParameter )
+            >> xml::list( "parameter", *this, &Primitive::ReadParameter )
         >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive destructor
+// Name: Primitive destructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-IndicatorPrimitive::~IndicatorPrimitive()
+Primitive::~Primitive()
 {
     for( T_Parameters::iterator it = parameters_.begin(); it != parameters_.end(); ++it )
         delete *it;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive::ReadParameter
+// Name: Primitive::ReadParameter
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-void IndicatorPrimitive::ReadParameter( xml::xistream& xis )
+void Primitive::ReadParameter( xml::xistream& xis )
 {
-    parameters_.push_back( new IndicatorPrimitiveParameter( xis ) );
+    parameters_.push_back( new PrimitiveParameter( xis ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive::GetName
+// Name: Primitive::GetName
 // Created: SBO 2009-04-09
 // -----------------------------------------------------------------------------
-QString IndicatorPrimitive::GetName() const
+QString Primitive::GetName() const
 {
     return name_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive::GetCategory
+// Name: Primitive::GetCategory
 // Created: SBO 2009-04-09
 // -----------------------------------------------------------------------------
-std::string IndicatorPrimitive::GetCategory() const
+std::string Primitive::GetCategory() const
 {
     return category_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive::GetComment
+// Name: Primitive::GetComment
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------
-QString IndicatorPrimitive::GetComment() const
+QString Primitive::GetComment() const
 {
     return comment_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive::GetPrototype
+// Name: Primitive::GetPrototype
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-QString IndicatorPrimitive::GetPrototype() const
+QString Primitive::GetPrototype() const
 {
     return QString( "%1(%2)" ).arg( name_ ).arg( BuildParameterList() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive::GetType
+// Name: Primitive::GetType
 // Created: SBO 2009-04-09
 // -----------------------------------------------------------------------------
-const IndicatorType& IndicatorPrimitive::GetType() const
+const ElementType& Primitive::GetType() const
 {
     return *type_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive::FindParameter
+// Name: Primitive::FindParameter
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-const IndicatorPrimitiveParameter* IndicatorPrimitive::FindParameter( unsigned int index ) const
+const PrimitiveParameter* Primitive::FindParameter( unsigned int index ) const
 {
     return index < parameters_.size() ? parameters_.at( index ) : 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive::BuildParameterList
+// Name: Primitive::BuildParameterList
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-QString IndicatorPrimitive::BuildParameterList() const
+QString Primitive::BuildParameterList() const
 {
     std::vector< std::string > list;
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
@@ -128,10 +130,10 @@ QString IndicatorPrimitive::BuildParameterList() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitive::ParameterCount
+// Name: Primitive::ParameterCount
 // Created: SBO 2009-04-28
 // -----------------------------------------------------------------------------
-unsigned int IndicatorPrimitive::ParameterCount() const
+unsigned int Primitive::ParameterCount() const
 {
     return parameters_.size();
 }

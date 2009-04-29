@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorPrimitives_h_
-#define __IndicatorPrimitives_h_
+#ifndef __Primitives_h_
+#define __Primitives_h_
 
 #include "clients_kernel/Resolver.h"
 
@@ -17,22 +17,24 @@ namespace xml
     class xistream;
 }
 
-class IndicatorPrimitive;
+namespace indicators
+{
+    class Primitive;
 
 // =============================================================================
-/** @class  IndicatorPrimitives
-    @brief  IndicatorPrimitives
+/** @class  Primitives
+    @brief  Primitives
 */
 // Created: SBO 2009-04-06
 // =============================================================================
-class IndicatorPrimitives : public kernel::Resolver< IndicatorPrimitive, QString >
+class Primitives : public kernel::Resolver< Primitive, QString >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorPrimitives();
-    virtual ~IndicatorPrimitives();
+             Primitives();
+    virtual ~Primitives();
     //@}
 
     //! @name Operations
@@ -44,8 +46,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorPrimitives( const IndicatorPrimitives& );            //!< Copy constructor
-    IndicatorPrimitives& operator=( const IndicatorPrimitives& ); //!< Assignment operator
+    Primitives( const Primitives& );            //!< Copy constructor
+    Primitives& operator=( const Primitives& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -54,4 +56,6 @@ private:
     //@}
 };
 
-#endif // __IndicatorPrimitives_h_
+}
+
+#endif // __Primitives_h_

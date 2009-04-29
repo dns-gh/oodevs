@@ -10,6 +10,12 @@
 #ifndef __ScoreEditor_h_
 #define __ScoreEditor_h_
 
+namespace indicators
+{
+    class Primitive;
+    class Primitives;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -21,8 +27,6 @@ namespace gui
 }
 
 class Score_ABC;
-class IndicatorPrimitive;
-class IndicatorPrimitives;
 class ScoreVariablesList;
 
 // =============================================================================
@@ -38,7 +42,7 @@ class ScoreEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& indicators );
+             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators );
     virtual ~ScoreEditor();
     //@}
 
@@ -52,7 +56,7 @@ private slots:
     //@{
     void Commit();
     void OnInsert( const QString& text );
-    void OnSelectPrimitive( const IndicatorPrimitive& indicator );
+    void OnSelectPrimitive( const indicators::Primitive& indicator );
     void OnFormulaChanged( const QString& text );
     void CheckFormula();
     //@}
@@ -67,7 +71,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const IndicatorPrimitives& indicators_;
+    const indicators::Primitives& indicators_;
     Score_ABC* current_;
     QLineEdit* name_;
     QLineEdit* formula_;

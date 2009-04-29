@@ -8,27 +8,29 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "IndicatorTypeResolver.h"
-#include "IndicatorPrimitiveParameter.h"
-#include "IndicatorType.h"
+#include "ElementTypeResolver.h"
+#include "PrimitiveParameter.h"
+#include "ElementType.h"
 #include "clients_kernel/Tools.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/regex.hpp>
 
+using namespace indicators;
+
 // -----------------------------------------------------------------------------
-// Name: IndicatorTypeResolver constructor
+// Name: ElementTypeResolver constructor
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-IndicatorTypeResolver::IndicatorTypeResolver()
+ElementTypeResolver::ElementTypeResolver()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorTypeResolver destructor
+// Name: ElementTypeResolver destructor
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-IndicatorTypeResolver::~IndicatorTypeResolver()
+ElementTypeResolver::~ElementTypeResolver()
 {
     // NOTHING
 }
@@ -56,10 +58,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorTypeResolver::AddElement
+// Name: ElementTypeResolver::AddElement
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-void IndicatorTypeResolver::AddElement( const IndicatorType& instance, const IndicatorType& definition )
+void ElementTypeResolver::AddElement( const ElementType& instance, const ElementType& definition )
 {
     if( IsAbstract( definition.ToString() ) )
     {
@@ -70,7 +72,7 @@ void IndicatorTypeResolver::AddElement( const IndicatorType& instance, const Ind
 
 namespace
 {
-    std::string& ReplaceBaseTypes( std::string& type )
+    std::string& ReplaceBaseElementTypes( std::string& type )
     {
         boost::replace_all( type, "key", "unsigned long" );
         boost::replace_all( type, "damage", "float" );
@@ -81,19 +83,19 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorTypeResolver::Resolve
+// Name: ElementTypeResolver::Resolve
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-std::string IndicatorTypeResolver::Resolve( const std::string& type ) const
+std::string ElementTypeResolver::Resolve( const std::string& type ) const
 {
-    const_cast< IndicatorTypeResolver* >( this )->Update(); // $$$$ SBO 2009-04-15: 
+    const_cast< ElementTypeResolver* >( this )->Update(); // $$$$ SBO 2009-04-15: 
     std::string result( type );
     for( std::map< std::string, std::string >::const_iterator it = dictionary_.begin(); it != dictionary_.end(); ++it )
         if( ! it->second.empty() )
             boost::replace_all( result, it->first, it->second );
     if( IsAbstract( result ) )
-        throw std::exception( tools::translate( "Scores", "Unresolved type parameter: %1." ).arg( result.c_str() ).ascii() );
-    return ReplaceBaseTypes( result );
+        throw std::exception( tools::translate( "Indicators", "Unresolved type parameter: %1." ).arg( result.c_str() ).ascii() );
+    return ReplaceBaseElementTypes( result );
 }
 
 namespace
@@ -108,17 +110,17 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorTypeResolver::Update
+// Name: ElementTypeResolver::Update
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-void IndicatorTypeResolver::Update()
+void ElementTypeResolver::Update()
 {
-    for( std::map< const IndicatorType*, const IndicatorType* >::const_iterator itI = instances_.begin(); itI != instances_.end(); ++itI )
+    for( std::map< const ElementType*, const ElementType* >::const_iterator itI = instances_.begin(); itI != instances_.end(); ++itI )
     {
         std::vector< std::string > def = Split( itI->first->ToString() );
         std::vector< std::string > val = Split( itI->second->Resolve() );
         if( def.size() != val.size() )
-            ConvertTypes( def, val );
+            ConvertElementTypes( def, val );
         for( std::vector< std::string >::const_iterator it = def.begin(); it != def.end(); ++it )
         {
             std::map< std::string, std::string >::iterator itD = dictionary_.find( *it );
@@ -129,28 +131,28 @@ void IndicatorTypeResolver::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorTypeResolver::ConvertTypes
+// Name: ElementTypeResolver::ConvertElementTypes
 // Created: SBO 2009-04-15
 // $$$$ SBO 2009-04-15: Try to convert types from list(key,val) to list(val)
 // -----------------------------------------------------------------------------
-void IndicatorTypeResolver::ConvertTypes( std::vector< std::string >& type1, std::vector< std::string >& type2 ) const
+void ElementTypeResolver::ConvertElementTypes( std::vector< std::string >& type1, std::vector< std::string >& type2 ) const
 {
     if( type1.size() > type2.size() )
         type1.erase( type1.begin(), type1.begin() + ( type1.size() - type2.size() ) );
     else if( type2.size() > type1.size() )
         type2.erase( type2.begin(), type2.begin() + ( type2.size() - type1.size() ) );
     if( type1.size() == 0 || type2.size() == 0 )
-        throw std::exception( tools::translate( "Scores", "Cannot convert list parameter." ).ascii() );
+        throw std::exception( tools::translate( "Indicators", "Cannot convert list parameter." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorTypeResolver::ToSimpleType
+// Name: ElementTypeResolver::ToSimpleType
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-std::string IndicatorTypeResolver::ToSimpleType( const std::string& type )
+std::string ElementTypeResolver::ToSimpleType( const std::string& type )
 {
     const std::vector< std::string > list = Split( type );
     if( list.empty() )
-        throw std::exception( tools::translate( "Scores", "Indicator has no type." ).ascii() );
+        throw std::exception( tools::translate( "Indicators", " has no type." ).ascii() );
     return list.back();
 }

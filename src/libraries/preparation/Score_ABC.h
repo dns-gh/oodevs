@@ -10,12 +10,15 @@
 #ifndef __Score_ABC_h_
 #define __Score_ABC_h_
 
+namespace indicators
+{
+    class VariablesVisitor_ABC;
+}
+
 namespace xml
 {
     class xostream;
 }
-
-class IndicatorVariablesVisitor_ABC;
 
 // =============================================================================
 /** @class  Score_ABC
@@ -37,7 +40,7 @@ public:
     //@{
     virtual QString GetName() const = 0;
     virtual QString GetFormula() const = 0;
-    virtual void Accept( IndicatorVariablesVisitor_ABC& visitor ) const = 0;
+    virtual void Accept( indicators::VariablesVisitor_ABC& visitor ) const = 0;
     //@}
 
     //! @name Operations

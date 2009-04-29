@@ -7,46 +7,50 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorVariable_h_
-#define __IndicatorVariable_h_
+#ifndef __Variable_h_
+#define __Variable_h_
 
-#include "IndicatorConstant.h"
+#include "Constant.h"
 
 namespace xml
 {
     class xistream;
 }
 
-class IndicatorType;
+namespace indicators
+{
+    class ElementType;
 
 // =============================================================================
-/** @class  IndicatorVariable
-    @brief  IndicatorVariable
+/** @class  Variable
+    @brief  Variable
 */
 // Created: SBO 2009-03-17
 // =============================================================================
-class IndicatorVariable : public IndicatorConstant< std::string >
+class Variable : public Constant< std::string >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorVariable( const std::string& name, const std::string& type, const std::string& value );
-    explicit IndicatorVariable( xml::xistream& xis );
-    virtual ~IndicatorVariable();
+             Variable( const std::string& name, const std::string& type, const std::string& value );
+    explicit Variable( xml::xistream& xis );
+    virtual ~Variable();
     //@}
 
     //! @name Operations
     //@{
-    virtual IndicatorElement_ABC& Clone() const;
+    virtual Element_ABC& Clone() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorVariable( const IndicatorVariable& );            //!< Copy constructor
-    IndicatorVariable& operator=( const IndicatorVariable& ); //!< Assignment operator
+    Variable( const Variable& );            //!< Copy constructor
+    Variable& operator=( const Variable& ); //!< Assignment operator
     //@}
 };
 
-#endif // __IndicatorVariable_h_
+}
+
+#endif // __Variable_h_

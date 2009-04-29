@@ -10,7 +10,7 @@
 #ifndef __MockIndicatorGrammarHandler_h_
 #define __MockIndicatorGrammarHandler_h_
 
-#include "indicators/IndicatorGrammarHandler_ABC.h"
+#include "indicators/GrammarHandler_ABC.h"
 
 // =============================================================================
 /** @class  MockIndicatorGrammarHandler
@@ -18,7 +18,7 @@
 */
 // Created: SBO 2009-03-16
 // =============================================================================
-class MockIndicatorGrammarHandler : public IndicatorGrammarHandler_ABC
+class MockIndicatorGrammarHandler : public indicators::GrammarHandler_ABC
                                   , public mockpp::ChainableMockObject
 {
 

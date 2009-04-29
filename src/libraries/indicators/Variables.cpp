@@ -8,76 +8,78 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "IndicatorVariables.h"
-#include "IndicatorVariable.h"
+#include "Variables.h"
+#include "Variable.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.h>
 
+using namespace indicators;
+
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables constructor
+// Name: Variables constructor
 // Created: SBO 2009-04-10
 // -----------------------------------------------------------------------------
-IndicatorVariables::IndicatorVariables()
+Variables::Variables()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables constructor
+// Name: Variables constructor
 // Created: SBO 2009-04-17
 // -----------------------------------------------------------------------------
-IndicatorVariables::IndicatorVariables( xml::xistream& xis )
+Variables::Variables( xml::xistream& xis )
 {
     xis >> xml::start( "constants" )
-            >> xml::list( "constant", *this, &IndicatorVariables::ReadVariable )
+            >> xml::list( "constant", *this, &Variables::ReadVariable )
         >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables destructor
+// Name: Variables destructor
 // Created: SBO 2009-04-10
 // -----------------------------------------------------------------------------
-IndicatorVariables::~IndicatorVariables()
+Variables::~Variables()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables::Register
+// Name: Variables::Register
 // Created: SBO 2009-04-10
 // -----------------------------------------------------------------------------
-void IndicatorVariables::Register( const std::string& name, boost::shared_ptr< IndicatorElement_ABC > element )
+void Variables::Register( const std::string& name, boost::shared_ptr< Element_ABC > element )
 {
     variables_[ name ] = element;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables::Find
+// Name: Variables::Find
 // Created: SBO 2009-04-10
 // -----------------------------------------------------------------------------
-boost::shared_ptr< IndicatorElement_ABC > IndicatorVariables::Find( const std::string& name ) const
+boost::shared_ptr< Element_ABC > Variables::Find( const std::string& name ) const
 {
     T_Variables::const_iterator it = variables_.find( name );
     if( it != variables_.end() )
         return it->second;
-    return boost::shared_ptr< IndicatorElement_ABC >();
+    return boost::shared_ptr< Element_ABC >();
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables::ReadVariable
+// Name: Variables::ReadVariable
 // Created: SBO 2009-04-17
 // -----------------------------------------------------------------------------
-void IndicatorVariables::ReadVariable( xml::xistream& xis )
+void Variables::ReadVariable( xml::xistream& xis )
 {
-    boost::shared_ptr< IndicatorElement_ABC > element( new IndicatorVariable( xis ) );
+    boost::shared_ptr< Element_ABC > element( new Variable( xis ) );
     Register( element->GetInput(), element );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables::Serialize
+// Name: Variables::Serialize
 // Created: SBO 2009-04-17
 // -----------------------------------------------------------------------------
-void IndicatorVariables::Serialize( xml::xostream& xos ) const
+void Variables::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "constants" );
     BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
@@ -86,32 +88,32 @@ void IndicatorVariables::Serialize( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables::Accept
+// Name: Variables::Accept
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-void IndicatorVariables::Accept( IndicatorVariablesVisitor_ABC& visitor ) const
+void Variables::Accept( VariablesVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
         visitor.Visit( *variable.second );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables::Clone
+// Name: Variables::Clone
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------
-IndicatorVariables& IndicatorVariables::Clone() const
+Variables& Variables::Clone() const
 {
-    IndicatorVariables* clone = new IndicatorVariables();
+    Variables* clone = new Variables();
     BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
-        clone->Register( variable.first, boost::shared_ptr< IndicatorElement_ABC >( & variable.second->Clone() ) );
+        clone->Register( variable.first, boost::shared_ptr< Element_ABC >( & variable.second->Clone() ) );
     return *clone;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorVariables::operator=
+// Name: Variables::operator=
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------
-IndicatorVariables& IndicatorVariables::operator=( const IndicatorVariables& rhs )
+Variables& Variables::operator=( const Variables& rhs )
 {
     variables_.clear();
     BOOST_FOREACH( const T_Variables::value_type& variable, rhs.variables_ )

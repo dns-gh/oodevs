@@ -12,9 +12,9 @@
 #include "moc_ScoreEditor.cpp"
 #include "ScorePrimitivesLibrary.h"
 #include "ScoreVariablesList.h"
-#include "indicators/IndicatorVariables.h"
-#include "indicators/IndicatorPrimitive.h"
-#include "indicators/IndicatorPrimitives.h"
+#include "indicators/Primitive.h"
+#include "indicators/Primitives.h"
+#include "indicators/Variables.h"
 #include "preparation/Score.h"
 #include <xeumeuleu/xml.h>
 
@@ -48,7 +48,7 @@ namespace
 // Name: ScoreEditor constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& indicators )
+ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators )
     : QDialog( parent, "ScoreEditor" )
     , indicators_( indicators )
     , current_( 0 )
@@ -74,7 +74,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
     {
         ScorePrimitivesLibrary* library = new ScorePrimitivesLibrary( this, controllers, factory, indicators_ );
         grid->addWidget( library, 2, 0 );
-        connect( library, SIGNAL( Selected( const IndicatorPrimitive& ) ), SLOT( OnSelectPrimitive( const IndicatorPrimitive& ) ) );
+        connect( library, SIGNAL( Selected( const indicators::Primitive& ) ), SLOT( OnSelectPrimitive( const indicators::Primitive& ) ) );
         connect( library, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
     }
     {
@@ -130,7 +130,7 @@ void ScoreEditor::StartEdit( Score_ABC& score )
 void ScoreEditor::Commit()
 {
     {
-        IndicatorVariables variables;
+        indicators::Variables variables;
         variables_->CommitTo( variables );
         Score copy( name_->text(), formula_->text(), variables, indicators_ );
         *static_cast< Score* >( current_ ) = copy; // $$$$ SBO 2009-04-24: sucks
@@ -151,7 +151,7 @@ void ScoreEditor::OnInsert( const QString& text )
 // Name: ScoreEditor::OnSelectPrimitive
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------
-void ScoreEditor::OnSelectPrimitive( const IndicatorPrimitive& indicator )
+void ScoreEditor::OnSelectPrimitive( const indicators::Primitive& indicator )
 {
     help_->setText( QString( "<b>%1</b><br><i>%2</i><br>%3" )
                             .arg( indicator.GetName() )
@@ -178,7 +178,7 @@ void ScoreEditor::CheckFormula()
     {
         if( formula_->text().isEmpty() )
             throw std::exception( tr( "Formula is empty." ) );
-        IndicatorVariables variables;
+        indicators::Variables variables;
         variables_->CommitTo( variables );
         Score score( name_->text(), formula_->text(), variables, indicators_ );
         score.CheckValidity();

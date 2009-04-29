@@ -17,14 +17,17 @@ namespace kernel
     class Controller;
 }
 
+namespace indicators
+{
+    class Variables;
+    class Primitives;
+    class ElementFactory_ABC;    
+}
+
 namespace xml
 {
     class xistream;
 }
-
-class IndicatorVariables;
-class IndicatorPrimitives;
-class IndicatorElementFactory_ABC;
 
 // =============================================================================
 /** @class  Score
@@ -38,9 +41,9 @@ class Score : public Score_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Score( xml::xistream& xis, kernel::Controller& controller, const IndicatorPrimitives& indicators );
-             Score( const QString& name, kernel::Controller& controller, const IndicatorPrimitives& indicators );
-             Score( const QString& name, const QString& formula, const IndicatorVariables& variables, const IndicatorPrimitives& indicators );
+             Score( xml::xistream& xis, kernel::Controller& controller, const indicators::Primitives& indicators );
+             Score( const QString& name, kernel::Controller& controller, const indicators::Primitives& indicators );
+             Score( const QString& name, const QString& formula, const indicators::Variables& variables, const indicators::Primitives& indicators );
     virtual ~Score();
     //@}
 
@@ -48,7 +51,7 @@ public:
     //@{
     virtual QString GetName() const;
     virtual QString GetFormula() const;
-    virtual void Accept( IndicatorVariablesVisitor_ABC& visitor ) const;
+    virtual void Accept( indicators::VariablesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Operations
@@ -67,6 +70,7 @@ private:
     //! @name Helpers
     //@{
     void SerializeIndicators( xml::xostream& xos ) const;
+    void SerializeIndicator( xml::xostream& xos, const QString& formula ) const;
     //@}
 
 private:
@@ -75,8 +79,8 @@ private:
     kernel::Controller* controller_;
     QString name_;
     QString formula_;
-    std::auto_ptr< IndicatorVariables > variables_;
-    std::auto_ptr< IndicatorElementFactory_ABC > elementFactory_;
+    std::auto_ptr< indicators::Variables > variables_;
+    std::auto_ptr< indicators::ElementFactory_ABC > elementFactory_;
     //@}
 };
 

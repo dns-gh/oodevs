@@ -13,12 +13,16 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 
+namespace indicators
+{
+    class Primitives;
+}
+
 namespace kernel
 {
     class Controllers;
 }
 
-class IndicatorPrimitives;
 class Score_ABC;
 class ScoreEditor;
 
@@ -37,7 +41,7 @@ class ScoreList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& indicators );
+             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators );
     virtual ~ScoreList();
     //@}
 

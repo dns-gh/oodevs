@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorParser_h_
-#define __IndicatorParser_h_
+#ifndef __FormulaParser_h_
+#define __FormulaParser_h_
 
 //#define BOOST_SPIRIT_DEBUG
 
@@ -19,22 +19,24 @@
 
 namespace bs = boost::spirit::classic;
 
-class IndicatorGrammarHandler_ABC;
+namespace indicators
+{
+    class GrammarHandler_ABC;
 
 // =============================================================================
-/** @class  IndicatorParser
-    @brief  IndicatorParser
+/** @class  FormulaParser
+    @brief  FormulaParser
 */
 // Created: SBO 2009-03-16
 // =============================================================================
-class IndicatorParser : public boost::spirit::classic::grammar< IndicatorParser >
+class FormulaParser : public boost::spirit::classic::grammar< FormulaParser >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IndicatorParser( IndicatorGrammarHandler_ABC& handler );
-    virtual ~IndicatorParser();
+    explicit FormulaParser( GrammarHandler_ABC& handler );
+    virtual ~FormulaParser();
     //@}
 
     //! @name Operations
@@ -45,8 +47,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorParser( const IndicatorParser& );            //!< Copy constructor
-    IndicatorParser& operator=( const IndicatorParser& ); //!< Assignment operator
+    FormulaParser( const FormulaParser& );            //!< Copy constructor
+    FormulaParser& operator=( const FormulaParser& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -71,13 +73,13 @@ private:
     //@}
 
 public:
-    //! @name Parser
+    //! @name FormulaParser
     //@{
     template< typename T >
     class definition
     {
     public:
-        explicit definition( const IndicatorParser& parser )
+        explicit definition( const FormulaParser& parser )
         {
             number_ = bs::leaf_node_d[ bs::real_p ];
             string_ = bs::no_node_d[ bs::ch_p( '\'' ) ] >> bs::leaf_node_d[ *( bs::anychar_p - bs::ch_p( '\'' ) ) ] >> bs::no_node_d[ bs::ch_p( '\'' ) ];
@@ -133,8 +135,10 @@ public:
 private:
     //! @name Member data
     //@{
-    IndicatorGrammarHandler_ABC& handler_;
+    GrammarHandler_ABC& handler_;
     //@}
 };
 
-#endif // __IndicatorParser_h_
+}
+
+#endif // __FormulaParser_h_

@@ -44,6 +44,7 @@ PopulationKnowledge.cpp \
 Reinforcements.cpp \
 Report.cpp \
 ReportFactory.cpp \
+Score.cpp \
 SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 Team.cpp \

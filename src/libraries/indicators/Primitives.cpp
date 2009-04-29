@@ -8,55 +8,57 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "IndicatorPrimitives.h"
-#include "IndicatorPrimitive.h"
+#include "Primitives.h"
+#include "Primitive.h"
 #include <xeumeuleu/xml.h>
 
+using namespace indicators;
+
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitives constructor
+// Name: Primitives constructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-IndicatorPrimitives::IndicatorPrimitives()
+Primitives::Primitives()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitives destructor
+// Name: Primitives destructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-IndicatorPrimitives::~IndicatorPrimitives()
+Primitives::~Primitives()
 {
     Purge();
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitives::Load
+// Name: Primitives::Load
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void IndicatorPrimitives::Load( const std::string& file )
+void Primitives::Load( const std::string& file )
 {
     xml::xifstream xis( file );
     xis >> xml::start( "primitives" )
-            >> xml::list( "primitive", *this, &IndicatorPrimitives::ReadPrimitive )
+            >> xml::list( "primitive", *this, &Primitives::ReadPrimitive )
         >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitives::ReadPrimitive
+// Name: Primitives::ReadPrimitive
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-void IndicatorPrimitives::ReadPrimitive( xml::xistream& xis )
+void Primitives::ReadPrimitive( xml::xistream& xis )
 {
-    IndicatorPrimitive* primitive = new IndicatorPrimitive( xis );
+    Primitive* primitive = new Primitive( xis );
     Register( primitive->GetName(), *primitive );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitives::Purge
+// Name: Primitives::Purge
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void IndicatorPrimitives::Purge()
+void Primitives::Purge()
 {
     DeleteAll();
 }

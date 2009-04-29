@@ -7,25 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorGrammarHandler_ABC_h_
-#define __IndicatorGrammarHandler_ABC_h_
+#ifndef __GrammarHandler_ABC_h_
+#define __GrammarHandler_ABC_h_
 
-#include <boost/spirit/include/classic_parse_tree.hpp>
+namespace indicators
+{
 
 // =============================================================================
-/** @class  IndicatorGrammarHandler_ABC
-    @brief  IndicatorGrammarHandler_ABC
+/** @class  GrammarHandler_ABC
+    @brief  GrammarHandler_ABC
 */
 // Created: SBO 2009-03-16
 // =============================================================================
-class IndicatorGrammarHandler_ABC
+class GrammarHandler_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorGrammarHandler_ABC() {}
-    virtual ~IndicatorGrammarHandler_ABC() {}
+             GrammarHandler_ABC() {}
+    virtual ~GrammarHandler_ABC() {}
     //@}
 
     //! @name Operations
@@ -35,13 +36,8 @@ public:
     virtual void HandleVariable( const std::string& name ) = 0;
     virtual void HandleFunctionCall( const std::string& name, unsigned int parameters ) = 0;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    IndicatorGrammarHandler_ABC( const IndicatorGrammarHandler_ABC& );            //!< Copy constructor
-    IndicatorGrammarHandler_ABC& operator=( const IndicatorGrammarHandler_ABC& ); //!< Assignment operator
-    //@}
 };
 
-#endif // __IndicatorGrammarHandler_ABC_h_
+}
+
+#endif // __GrammarHandler_ABC_h_

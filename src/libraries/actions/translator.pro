@@ -7,6 +7,8 @@ AgentKnowledgeList.cpp \
 AgentList.cpp \
 AtlasNature.cpp \
 AutomatList.cpp \
+EngineerConstruction.cpp \
+EngineerConstructionList.cpp \
 FragOrder.cpp \
 Intelligence.cpp \
 IntelligenceList.cpp \

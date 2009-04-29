@@ -8,55 +8,57 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "IndicatorPrimitiveParameter.h"
-#include "IndicatorType.h"
-#include "IndicatorElement_ABC.h"
+#include "PrimitiveParameter.h"
+#include "ElementType.h"
+#include "Element_ABC.h"
 #include <xeumeuleu/xml.h>
 
+using namespace indicators;
+
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter constructor
+// Name: PrimitiveParameter constructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-IndicatorPrimitiveParameter::IndicatorPrimitiveParameter( xml::xistream& xis )
+PrimitiveParameter::PrimitiveParameter( xml::xistream& xis )
     : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
     , attribute_( xml::attribute< std::string >( xis, "attribute", "input" ) )
-    , type_( new IndicatorType( xis ) )
+    , type_( new ElementType( xis ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter destructor
+// Name: PrimitiveParameter destructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-IndicatorPrimitiveParameter::~IndicatorPrimitiveParameter()
+PrimitiveParameter::~PrimitiveParameter()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter::GetAttribute
+// Name: PrimitiveParameter::GetAttribute
 // Created: SBO 2009-04-09
 // -----------------------------------------------------------------------------
-std::string IndicatorPrimitiveParameter::GetAttribute() const
+std::string PrimitiveParameter::GetAttribute() const
 {
     return attribute_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter::GetName
+// Name: PrimitiveParameter::GetName
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-QString IndicatorPrimitiveParameter::GetName() const
+QString PrimitiveParameter::GetName() const
 {
     return name_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitiveParameter::GetType
+// Name: PrimitiveParameter::GetType
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-const IndicatorType& IndicatorPrimitiveParameter::GetType() const
+const ElementType& PrimitiveParameter::GetType() const
 {
     return *type_;
 }

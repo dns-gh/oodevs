@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorPrimitiveParameter_h_
-#define __IndicatorPrimitiveParameter_h_
+#ifndef __PrimitiveParameter_h_
+#define __PrimitiveParameter_h_
 
 namespace xml
 {
@@ -16,37 +16,39 @@ namespace xml
     class xostream;
 }
 
-class IndicatorType;
-class IndicatorElement_ABC;
+namespace indicators
+{
+    class ElementType;
+    class Element_ABC;
 
 // =============================================================================
-/** @class  IndicatorPrimitiveParameter
-    @brief  IndicatorPrimitiveParameter
+/** @class  PrimitiveParameter
+    @brief  PrimitiveParameter
 */
 // Created: SBO 2009-04-06
 // =============================================================================
-class IndicatorPrimitiveParameter
+class PrimitiveParameter
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IndicatorPrimitiveParameter( xml::xistream& xis );
-    virtual ~IndicatorPrimitiveParameter();
+    explicit PrimitiveParameter( xml::xistream& xis );
+    virtual ~PrimitiveParameter();
     //@}
 
     //! @name Operations
     //@{
     std::string GetAttribute() const;
     QString GetName() const;
-    const IndicatorType& GetType() const;
+    const ElementType& GetType() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorPrimitiveParameter( const IndicatorPrimitiveParameter& );            //!< Copy constructor
-    IndicatorPrimitiveParameter& operator=( const IndicatorPrimitiveParameter& ); //!< Assignment operator
+    PrimitiveParameter( const PrimitiveParameter& );            //!< Copy constructor
+    PrimitiveParameter& operator=( const PrimitiveParameter& ); //!< Assignment operator
     //@}
 
 private:
@@ -54,8 +56,10 @@ private:
     //@{
     const QString name_;
     const std::string attribute_;
-    std::auto_ptr< IndicatorType > type_;
+    std::auto_ptr< ElementType > type_;
     //@}
 };
 
-#endif // __IndicatorPrimitiveParameter_h_
+}
+
+#endif // __PrimitiveParameter_h_

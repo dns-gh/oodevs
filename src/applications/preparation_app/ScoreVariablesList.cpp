@@ -11,10 +11,10 @@
 #include "ScoreVariablesList.h"
 #include "moc_ScoreVariablesList.cpp"
 #include "ScoreVariableCreationWizard.h"
-#include "indicators/IndicatorElement_ABC.h"
-#include "indicators/IndicatorType.h"
-#include "indicators/IndicatorVariable.h"
-#include "indicators/IndicatorVariables.h"
+#include "indicators/Element_ABC.h"
+#include "indicators/ElementType.h"
+#include "indicators/Variable.h"
+#include "indicators/Variables.h"
 #include "preparation/Score_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& f
         connect( del, SIGNAL( clicked() ), SLOT( OnDelete() ) );
         connect( paste, SIGNAL( clicked() ), SLOT( OnPaste() ) );
     }
-    connect( wizard_, SIGNAL( VariableCreated( const IndicatorElement_ABC& ) ), SLOT( AddVariable( const IndicatorElement_ABC& ) ) );
+    connect( wizard_, SIGNAL( VariableCreated( const indicators::Element_ABC& ) ), SLOT( AddVariable( const indicators::Element_ABC& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,13 +57,13 @@ ScoreVariablesList::~ScoreVariablesList()
 
 namespace
 {
-    class VariablesCollector : public IndicatorVariablesVisitor_ABC
+    class VariablesCollector : public indicators::VariablesVisitor_ABC
     {
     public:
         explicit VariablesCollector( ScoreVariablesList& editor ) : editor_( &editor ) {}
         virtual ~VariablesCollector() {}
 
-        virtual void Visit( IndicatorElement_ABC& variable )
+        virtual void Visit( indicators::Element_ABC& variable )
         {
             editor_->AddVariable( variable );
         }
@@ -87,7 +87,7 @@ void ScoreVariablesList::StartEdit( const Score_ABC& score )
 // Name: ScoreVariablesList::AddVariable
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-void ScoreVariablesList::AddVariable( const IndicatorElement_ABC& variable )
+void ScoreVariablesList::AddVariable( const indicators::Element_ABC& variable )
 {
     gui::ValuedListItem* item = factory_.CreateItem( list_ );
     Display( variable, item );
@@ -98,7 +98,7 @@ void ScoreVariablesList::AddVariable( const IndicatorElement_ABC& variable )
 // Name: ScoreVariablesList::CommitTo
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------
-void ScoreVariablesList::CommitTo( IndicatorVariables& variables )
+void ScoreVariablesList::CommitTo( indicators::Variables& variables )
 {
     for( QListViewItemIterator it( list_ ); it.current(); ++it )
         if( const gui::ValuedListItem* item = static_cast< const gui::ValuedListItem* >( *it ) )
@@ -106,7 +106,7 @@ void ScoreVariablesList::CommitTo( IndicatorVariables& variables )
             const QString name  = item->text( 0 ).remove( 0, 1 );
             const QString type  = item->text( 1 );
             const QString value = item->text( 2 );
-            boost::shared_ptr< IndicatorElement_ABC > variable( new IndicatorVariable( name.ascii(), type.ascii(), value.ascii() ) );
+            boost::shared_ptr< indicators::Element_ABC > variable( new indicators::Variable( name.ascii(), type.ascii(), value.ascii() ) );
             variables.Register( name.ascii(), variable );
         }
 }
@@ -115,7 +115,7 @@ void ScoreVariablesList::CommitTo( IndicatorVariables& variables )
 // Name: ScoreVariablesList::Display
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-void ScoreVariablesList::Display( const IndicatorElement_ABC& variable, gui::ValuedListItem* item )
+void ScoreVariablesList::Display( const indicators::Element_ABC& variable, gui::ValuedListItem* item )
 {
     // $$$$ SBO 2009-04-24: use a displayer
     item->setText( 0, variable.GetInput().c_str() );

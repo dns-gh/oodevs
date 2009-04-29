@@ -15,7 +15,7 @@
 // Name: ScoreFactory constructor
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-ScoreFactory::ScoreFactory( kernel::Controller& controller, const IndicatorPrimitives& indicators )
+ScoreFactory::ScoreFactory( kernel::Controller& controller, const indicators::Primitives& indicators )
     : controller_( controller )
     , indicators_( indicators )
 {

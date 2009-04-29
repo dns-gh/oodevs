@@ -41,7 +41,6 @@
 #include "preparation/FormationModel.h"
 #include "preparation/IntelligencesModel.h"
 #include "preparation/ModelChecker_ABC.h"
-#include "preparation/IndicatorPrimitives.h"
 #include "preparation/Tools.h"
 
 #include "clients_kernel/ActionController.h"

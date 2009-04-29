@@ -11,14 +11,14 @@
 #include "ScorePrimitivesPage.h"
 #include "moc_ScorePrimitivesPage.cpp"
 #include "clients_kernel/Controllers.h"
-#include "indicators/IndicatorPrimitive.h"
-#include "indicators/IndicatorPrimitives.h"
+#include "indicators/Primitive.h"
+#include "indicators/Primitives.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScorePrimitivesPage constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& primitives, const T_Filter& filter )
+ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& primitives, const T_Filter& filter )
     : QVBox( parent )
     , controllers_( controllers )
     , filter_( filter )
@@ -51,7 +51,7 @@ ScorePrimitivesPage::~ScorePrimitivesPage()
 // Name: ScorePrimitivesPage::Display
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void ScorePrimitivesPage::Display( const IndicatorPrimitive& primitive, kernel::Displayer_ABC& /*displayer*/, gui::ValuedListItem* item )
+void ScorePrimitivesPage::Display( const indicators::Primitive& primitive, kernel::Displayer_ABC& /*displayer*/, gui::ValuedListItem* item )
 {
     item->SetNamed( primitive );
 }
@@ -63,7 +63,7 @@ void ScorePrimitivesPage::Display( const IndicatorPrimitive& primitive, kernel::
 void ScorePrimitivesPage::OnInsert()
 {
     if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( list_->selectedItem() ) )
-        if( const IndicatorPrimitive* primitive = item->GetValue< IndicatorPrimitive >() )
+        if( const indicators::Primitive* primitive = item->GetValue< indicators::Primitive >() )
             emit Insert( primitive->GetPrototype() );
 }
 
@@ -73,11 +73,11 @@ void ScorePrimitivesPage::OnInsert()
 // -----------------------------------------------------------------------------
 void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelLoaded& )
 {
-    kernel::Resolver< const IndicatorPrimitive, QString > subset;
-    kernel::Iterator< const IndicatorPrimitive& > it( primitives_.CreateIterator() );
+    kernel::Resolver< const indicators::Primitive, QString > subset;
+    kernel::Iterator< const indicators::Primitive& > it( primitives_.CreateIterator() );
     while( it.HasMoreElements() )
     {
-        const IndicatorPrimitive& element = it.NextElement();
+        const indicators::Primitive& element = it.NextElement();
         if( filter_( element ) )
             subset.Register( element.GetName(), element );
     }
@@ -100,6 +100,6 @@ void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelUnLoaded& )
 void ScorePrimitivesPage::OnSelectionChanged( QListViewItem* item )
 {
     if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( list_->selectedItem() ) )
-        if( const IndicatorPrimitive* primitive = item->GetValue< IndicatorPrimitive >() )
+        if( const indicators::Primitive* primitive = item->GetValue< indicators::Primitive >() )
             emit Selected( *primitive );
 }

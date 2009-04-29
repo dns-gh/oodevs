@@ -8,12 +8,12 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "IndicatorFunction.h"
-#include "IndicatorElementDeclarator_ABC.h"
-#include "IndicatorPrimitive.h"
-#include "IndicatorPrimitiveParameter.h"
-#include "IndicatorType.h"
-#include "IndicatorTypeResolver.h"
+#include "Function.h"
+#include "ElementDeclarator_ABC.h"
+#include "ElementType.h"
+#include "ElementTypeResolver.h"
+#include "Primitive.h"
+#include "PrimitiveParameter.h"
 #include "clients_kernel/Tools.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -21,39 +21,41 @@
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.h>
 
+using namespace indicators;
+
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction constructor
+// Name: Function constructor
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-IndicatorFunction::IndicatorFunction( const std::string& id, const IndicatorPrimitive& primitive )
-    : IndicatorElement_ABC( id )
+Function::Function( const std::string& id, const Primitive& primitive )
+    : Element_ABC( id )
     , primitive_( primitive )
-    , typeResolver_( boost::shared_ptr< IndicatorTypeResolver >( new IndicatorTypeResolver() ) )
-    , type_( new IndicatorType( primitive_.GetType(), typeResolver_ ) )
+    , typeResolver_( boost::shared_ptr< ElementTypeResolver >( new ElementTypeResolver() ) )
+    , type_( new ElementType( primitive_.GetType(), typeResolver_ ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction destructor
+// Name: Function destructor
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-IndicatorFunction::~IndicatorFunction()
+Function::~Function()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction::AddParameter
+// Name: Function::AddParameter
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-void IndicatorFunction::AddParameter( boost::shared_ptr< IndicatorElement_ABC > element )
+void Function::AddParameter( boost::shared_ptr< Element_ABC > element )
 {
-    const IndicatorPrimitiveParameter* parameter = primitive_.FindParameter( parameters_.size() );
+    const PrimitiveParameter* parameter = primitive_.FindParameter( parameters_.size() );
     if( !parameter )
-        throw std::exception( tools::translate( "Scores", "Parameter mismatch in function '%1'." ).arg( primitive_.GetName() ).ascii() );
+        throw std::exception( tools::translate( "Indicators", "Parameter mismatch in function '%1'." ).arg( primitive_.GetName() ).ascii() );
     if( element->GetType() != parameter->GetType() )
-        throw std::exception( tools::translate( "Scores", "Parameter type mismatch in function '%1': %2 != %3." ).arg( primitive_.GetName() )
+        throw std::exception( tools::translate( "Indicators", "Parameter type mismatch in function '%1': %2 != %3." ).arg( primitive_.GetName() )
                                                 .arg( element->GetType().ToString().c_str() )
                                                 .arg( parameter->GetType().ToString().c_str() ) );
     parameters_.push_back( std::make_pair( parameter, element ) );
@@ -61,31 +63,31 @@ void IndicatorFunction::AddParameter( boost::shared_ptr< IndicatorElement_ABC > 
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction::GetType
+// Name: Function::GetType
 // Created: SBO 2009-04-09
 // -----------------------------------------------------------------------------
-const IndicatorType& IndicatorFunction::GetType() const
+const ElementType& Function::GetType() const
 {
     return *type_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction::GetValue
+// Name: Function::GetValue
 // Created: SBO 2009-04-17
 // -----------------------------------------------------------------------------
-std::string IndicatorFunction::GetValue() const
+std::string Function::GetValue() const
 {
     return GetInput();
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction::Serialize
+// Name: Function::Serialize
 // Created: SBO 2009-03-17
 // -----------------------------------------------------------------------------
-void IndicatorFunction::Serialize( xml::xostream& xos, IndicatorElementDeclarator_ABC& declarator ) const
+void Function::Serialize( xml::xostream& xos, ElementDeclarator_ABC& declarator ) const
 {
     if( parameters_.size() < primitive_.ParameterCount() )
-        throw std::exception( tools::translate( "Scores", "Too few parameters in function '%1'." ).arg( primitive_.GetName() ).ascii() );
+        throw std::exception( tools::translate( "Indicators", "Too few parameters in function '%1'." ).arg( primitive_.GetName() ).ascii() );
     SerializeDeclarations( xos, declarator );
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
         parameter.second->Serialize( xos, declarator );
@@ -99,10 +101,10 @@ void IndicatorFunction::Serialize( xml::xostream& xos, IndicatorElementDeclarato
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction::SerializeDeclarations
+// Name: Function::SerializeDeclarations
 // Created: SBO 2009-04-28
 // -----------------------------------------------------------------------------
-void IndicatorFunction::SerializeDeclarations( xml::xostream& xos, IndicatorElementDeclarator_ABC& declarator ) const
+void Function::SerializeDeclarations( xml::xostream& xos, ElementDeclarator_ABC& declarator ) const
 {
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
         if( parameter.first->GetAttribute() == "input" )
@@ -110,22 +112,22 @@ void IndicatorFunction::SerializeDeclarations( xml::xostream& xos, IndicatorElem
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction::SerializeType
+// Name: Function::SerializeType
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-void IndicatorFunction::SerializeType( xml::xostream& xos ) const
+void Function::SerializeType( xml::xostream& xos ) const
 {
     if( primitive_.GetCategory() == "extract" )
         return;
-    const std::string simpleType = IndicatorTypeResolver::ToSimpleType( GetType().Resolve() );
+    const std::string simpleType = ElementTypeResolver::ToSimpleType( GetType().Resolve() );
     xos << xml::attribute( "type", simpleType );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction::SerializeParameters
+// Name: Function::SerializeParameters
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-void IndicatorFunction::SerializeParameters( xml::xostream& xos ) const
+void Function::SerializeParameters( xml::xostream& xos ) const
 {
     typedef std::map< std::string, std::vector< std::string > > T_Attributes;
     T_Attributes attributes;
@@ -140,10 +142,10 @@ void IndicatorFunction::SerializeParameters( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorFunction::Clone
+// Name: Function::Clone
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------
-IndicatorElement_ABC& IndicatorFunction::Clone() const
+Element_ABC& Function::Clone() const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented." );
 }

@@ -9,13 +9,13 @@
 
 #include "clients_test_pch.h"
 #include "XmlChecks.h"
-#include "indicators/IndicatorParser.h"
-#include "indicators/IndicatorSerializer.h"
-#include "indicators/IndicatorElement_ABC.h"
-#include "indicators/IndicatorElementFactory.h"
-#include "indicators/IndicatorPrimitives.h"
-#include "indicators/IndicatorVariable.h"
-#include "indicators/IndicatorVariables.h"
+#include "indicators/FormulaParser.h"
+#include "indicators/Serializer.h"
+#include "indicators/Element_ABC.h"
+#include "indicators/ElementFactory.h"
+#include "indicators/Primitives.h"
+#include "indicators/Variable.h"
+#include "indicators/Variables.h"
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.h>
 
@@ -35,8 +35,8 @@ namespace
         void ParseAndCheck( const std::string& text, const std::string& expected )
         {
             xml::xostringstream xos;
-            IndicatorSerializer handler( factory_, variables_ );
-            IndicatorParser parser( handler );
+            indicators::Serializer handler( factory_, variables_ );
+            indicators::FormulaParser parser( handler );
             parser.Parse( text );
             handler.Serialize( xos );
             BOOST_CHECK_XML_EQUAL( expected, xos.str() );
@@ -44,13 +44,13 @@ namespace
 
         void RegisterVariable( const std::string& name, const std::string& type, const std::string& value )
         {
-            variables_.Register( name, boost::shared_ptr< IndicatorElement_ABC >( new IndicatorVariable( name, type, value ) ) );
+            variables_.Register( name, boost::shared_ptr< indicators::Element_ABC >( new indicators::Variable( name, type, value ) ) );
         }
 
     private:
-        IndicatorPrimitives primitives_;
-        IndicatorVariables variables_;
-        IndicatorElementFactory factory_;
+        indicators::Primitives primitives_;
+        indicators::Variables variables_;
+        indicators::ElementFactory factory_;
     };
 }
 

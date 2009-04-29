@@ -10,6 +10,11 @@
 #ifndef __ScoreDialog_h_
 #define __ScoreDialog_h_
 
+namespace indicators
+{
+    class Primitives;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -20,7 +25,6 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class IndicatorPrimitives;
 class Score_ABC;
 class ScoresModel;
 
@@ -37,7 +41,7 @@ class ScoreDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, const IndicatorPrimitives& indicators );
+             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, const indicators::Primitives& indicators );
     virtual ~ScoreDialog();
     //@}
 

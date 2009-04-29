@@ -7,53 +7,57 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorTypeResolver_h_
-#define __IndicatorTypeResolver_h_
+#ifndef __ElementTypeResolver_h_
+#define __ElementTypeResolver_h_
 
-class IndicatorType;
+namespace indicators
+{
+    class ElementType;
 
 // =============================================================================
-/** @class  IndicatorTypeResolver
-    @brief  IndicatorTypeResolver
+/** @class  ElementTypeResolver
+    @brief  ElementTypeResolver
 */
 // Created: SBO 2009-04-15
 // =============================================================================
-class IndicatorTypeResolver
+class ElementTypeResolver
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorTypeResolver();
-    virtual ~IndicatorTypeResolver();
+             ElementTypeResolver();
+    virtual ~ElementTypeResolver();
     //@}
 
     //! @name Operations
     //@{
     std::string Resolve( const std::string& type ) const;
-    void AddElement( const IndicatorType& instance, const IndicatorType& definition );
+    void AddElement( const ElementType& instance, const ElementType& definition );
     static std::string ToSimpleType( const std::string& type );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorTypeResolver( const IndicatorTypeResolver& );            //!< Copy constructor
-    IndicatorTypeResolver& operator=( const IndicatorTypeResolver& ); //!< Assignment operator
+    ElementTypeResolver( const ElementTypeResolver& );            //!< Copy constructor
+    ElementTypeResolver& operator=( const ElementTypeResolver& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
     void Update();
-    void ConvertTypes( std::vector< std::string >& type1, std::vector< std::string >& type2 ) const;
+    void ConvertElementTypes( std::vector< std::string >& type1, std::vector< std::string >& type2 ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     std::map< std::string, std::string > dictionary_;
-    std::map< const IndicatorType*, const IndicatorType* > instances_;
+    std::map< const ElementType*, const ElementType* > instances_;
     //@}
 };
 
-#endif // __IndicatorTypeResolver_h_
+}
+
+#endif // __ElementTypeResolver_h_

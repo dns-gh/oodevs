@@ -20,8 +20,12 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class IndicatorPrimitive;
-class IndicatorPrimitives;
+namespace indicators
+{
+    class Primitive;
+    class Primitives;
+}
+
 class ScorePrimitivesPage;
 
 // =============================================================================
@@ -37,7 +41,7 @@ class ScorePrimitivesLibrary : public QTabWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& primitives );
+             ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& primitives );
     virtual ~ScorePrimitivesLibrary();
     //@}
 
@@ -45,7 +49,7 @@ signals:
     //! @name Slots
     //@{
     void Insert( const QString& text );
-    void Selected( const IndicatorPrimitive& indicator );
+    void Selected( const indicators::Primitive& indicator );
     //@}
 
 private:

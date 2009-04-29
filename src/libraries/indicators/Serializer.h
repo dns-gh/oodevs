@@ -7,35 +7,37 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorSerializer_h_
-#define __IndicatorSerializer_h_
+#ifndef __Serializer_h_
+#define __Serializer_h_
 
-#include "IndicatorGrammarHandler_ABC.h"
-#include <vector>
+#include "GrammarHandler_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
     class xostream;
 }
 
-class IndicatorElementFactory_ABC;
-class IndicatorElement_ABC;
-class IndicatorVariables;
+namespace indicators
+{
+    class ElementFactory_ABC;
+    class Element_ABC;
+    class Variables;
 
 // =============================================================================
-/** @class  IndicatorGrammarHandler
-    @brief  IndicatorGrammarHandler
+/** @class  GrammarHandler
+    @brief  GrammarHandler
 */
 // Created: SBO 2009-03-16
 // =============================================================================
-class IndicatorSerializer : public IndicatorGrammarHandler_ABC
+class Serializer : public GrammarHandler_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorSerializer( const IndicatorElementFactory_ABC& factory, const IndicatorVariables& variables );
-    virtual ~IndicatorSerializer();
+             Serializer( const ElementFactory_ABC& factory, const Variables& variables );
+    virtual ~Serializer();
     //@}
 
     //! @name Operations
@@ -50,17 +52,19 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorSerializer( const IndicatorSerializer& );            //!< Copy constructor
-    IndicatorSerializer& operator=( const IndicatorSerializer& ); //!< Assignment operator
+    Serializer( const Serializer& );            //!< Copy constructor
+    Serializer& operator=( const Serializer& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    const IndicatorElementFactory_ABC& factory_;
-    const IndicatorVariables& variables_;
-    std::vector< boost::shared_ptr< IndicatorElement_ABC > > stack_;
+    const ElementFactory_ABC& factory_;
+    const Variables& variables_;
+    std::vector< boost::shared_ptr< Element_ABC > > stack_;
     //@}
 };
 
-#endif // __IndicatorSerializer_h_
+}
+
+#endif // __Serializer_h_

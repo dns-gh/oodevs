@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorVariables_h_
-#define __IndicatorVariables_h_
+#ifndef __Variables_h_
+#define __Variables_h_
 
 #include <boost/shared_ptr.hpp>
 
@@ -18,51 +18,53 @@ namespace xml
     class xostream;
 }
 
-class IndicatorElement_ABC;
+namespace indicators
+{
+    class Element_ABC;
 
-class IndicatorVariablesVisitor_ABC
+class VariablesVisitor_ABC
 {
 public:
-             IndicatorVariablesVisitor_ABC() {}
-    virtual ~IndicatorVariablesVisitor_ABC() {}
-    virtual void Visit( IndicatorElement_ABC& element ) = 0;
+             VariablesVisitor_ABC() {}
+    virtual ~VariablesVisitor_ABC() {}
+    virtual void Visit( Element_ABC& element ) = 0;
 };
 
 // =============================================================================
-/** @class  IndicatorVariables
-    @brief  IndicatorVariables
+/** @class  Variables
+    @brief  Variables
 */
 // Created: SBO 2009-04-10
 // =============================================================================
-class IndicatorVariables
+class Variables
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorVariables();
-    explicit IndicatorVariables( xml::xistream& xis );
-    virtual ~IndicatorVariables();
+             Variables();
+    explicit Variables( xml::xistream& xis );
+    virtual ~Variables();
     //@}
 
     //! @name Accessors
     //@{
-    void Accept( IndicatorVariablesVisitor_ABC& visitor ) const;
-    boost::shared_ptr< IndicatorElement_ABC > Find( const std::string& name ) const;
+    void Accept( VariablesVisitor_ABC& visitor ) const;
+    boost::shared_ptr< Element_ABC > Find( const std::string& name ) const;
     //@}
 
     //! @name Operations
     //@{
-    void Register( const std::string& name, boost::shared_ptr< IndicatorElement_ABC > element );
+    void Register( const std::string& name, boost::shared_ptr< Element_ABC > element );
     void Serialize( xml::xostream& xos ) const;
-    IndicatorVariables& Clone() const;
-    IndicatorVariables& operator=( const IndicatorVariables& );
+    Variables& Clone() const;
+    Variables& operator=( const Variables& );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorVariables( const IndicatorVariables& );            //!< Copy constructor
+    Variables( const Variables& );            //!< Copy constructor
     //@}
 
     //! @name Helpers
@@ -72,7 +74,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, boost::shared_ptr< IndicatorElement_ABC > > T_Variables;
+    typedef std::map< std::string, boost::shared_ptr< Element_ABC > > T_Variables;
     //@}
 
 private:
@@ -82,4 +84,6 @@ private:
     //@}
 };
 
-#endif // __IndicatorVariables_h_
+}
+
+#endif // __Variables_h_

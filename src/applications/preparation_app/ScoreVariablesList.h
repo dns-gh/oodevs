@@ -12,8 +12,12 @@
 
 #include "clients_gui/ListDisplayer.h"
 
-class IndicatorElement_ABC;
-class IndicatorVariables;
+namespace indicators
+{
+    class Element_ABC;
+    class Variables;
+}
+
 class Score_ABC;
 class ScoreVariableCreationWizard;
 
@@ -37,7 +41,7 @@ public:
     //! @name Operations
     //@{
     void StartEdit( const Score_ABC& score );
-    void CommitTo( IndicatorVariables& variables );
+    void CommitTo( indicators::Variables& variables );
     //@}
 
 signals:
@@ -50,7 +54,7 @@ signals:
 public slots:
     //! @name Slots
     //@{
-    void AddVariable( const IndicatorElement_ABC& variable );
+    void AddVariable( const indicators::Element_ABC& variable );
     //@}
 
 private slots:
@@ -70,7 +74,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Display( const IndicatorElement_ABC& variable, gui::ValuedListItem* item );
+    void Display( const indicators::Element_ABC& variable, gui::ValuedListItem* item );
     //@}
 
 private:

@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "clients_test_pch.h"
-#include "indicators/IndicatorType.h"
-#include "indicators/IndicatorTypeResolver.h"
-#include "indicators/IndicatorPrimitiveParameter.h"
+#include "indicators/ElementType.h"
+#include "indicators/ElementTypeResolver.h"
+#include "indicators/PrimitiveParameter.h"
 #include <xeumeuleu/xml.h>
 
 using namespace mockpp;
@@ -21,7 +21,7 @@ using namespace mockpp;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveNoTemplate )
 {
-    IndicatorTypeResolver resolver;
+    indicators::ElementTypeResolver resolver;
     BOOST_CHECK_EQUAL( "float", resolver.Resolve( "float" ) );
 }
 
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveNoTemplate )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveUndefined )
 {
-    IndicatorTypeResolver resolver;
+    indicators::ElementTypeResolver resolver;
     BOOST_CHECK_THROW( resolver.Resolve( "_1" ), std::exception );
 }
 
@@ -41,9 +41,9 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveUndefined )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameter )
 {
-    IndicatorTypeResolver resolver;
-    const IndicatorType instance( "float" );
-    const IndicatorType definition( "_1" );
+    indicators::ElementTypeResolver resolver;
+    const indicators::ElementType instance( "float" );
+    const indicators::ElementType definition( "_1" );
     resolver.AddElement( instance, definition );
     BOOST_CHECK_EQUAL( "float", resolver.Resolve( "_1" ) );
 }
@@ -54,9 +54,9 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameterList )
 {
-    IndicatorTypeResolver resolver;
-    const IndicatorType instance( "list(float)" );
-    const IndicatorType definition( "list(_1)" );
+    indicators::ElementTypeResolver resolver;
+    const indicators::ElementType instance( "list(float)" );
+    const indicators::ElementType definition( "list(_1)" );
     resolver.AddElement( instance, definition );
     BOOST_CHECK_EQUAL( "float", resolver.Resolve( "_1" ) );
 }
@@ -67,9 +67,9 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameterList )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameterListToList )
 {
-    IndicatorTypeResolver resolver;
-    const IndicatorType instance( "list(float)" );
-    const IndicatorType definition( "list(_1)" );
+    indicators::ElementTypeResolver resolver;
+    const indicators::ElementType instance( "list(float)" );
+    const indicators::ElementType definition( "list(_1)" );
     resolver.AddElement( instance, definition );
     BOOST_CHECK_EQUAL( "list(float)", resolver.Resolve( "list(_1)" ) );
 }
@@ -80,9 +80,9 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameterListToLi
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameterMap )
 {
-    IndicatorTypeResolver resolver;
-    const IndicatorType instance( "list(key,float)" );
-    const IndicatorType definition( "list(key,_1)" );
+    indicators::ElementTypeResolver resolver;
+    const indicators::ElementType instance( "list(key,float)" );
+    const indicators::ElementType definition( "list(key,_1)" );
     resolver.AddElement( instance, definition );
     BOOST_CHECK_EQUAL( "float", resolver.Resolve( "_1" ) );
 }

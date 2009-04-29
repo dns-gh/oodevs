@@ -146,7 +146,7 @@
     </target>
     
     <target name="library.indicators" description="build indicators static library" depends="library.clients_kernel">
-        <build-lib name="indicators" depends="qt" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="indicators" depends="boost,qt,xeumeuleu" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
@@ -377,6 +377,7 @@
                    libs="svgl,zipstream,zlib1,bugtrap
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_ENT-${platform}-mt
+                         lib${ant.project.name}_indicators-${platform}-mt
                          lib${ant.project.name}_preparation-${platform}-mt
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">

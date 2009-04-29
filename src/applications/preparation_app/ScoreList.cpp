@@ -12,14 +12,14 @@
 #include "moc_ScoreList.cpp"
 #include "ScoreEditor.h"
 #include "clients_kernel/Controllers.h"
-#include "preparation/IndicatorPrimitives.h"
+#include "indicators/Primitives.h"
 #include "preparation/Score_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScoreList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const IndicatorPrimitives& indicators )
+ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators )
     : QVBox( parent )
     , controllers_( controllers )
     , factory_( factory )

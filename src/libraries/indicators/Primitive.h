@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorPrimitive_h_
-#define __IndicatorPrimitive_h_
+#ifndef __Primitive_h_
+#define __Primitive_h_
 
 namespace xml
 {
@@ -16,25 +16,27 @@ namespace xml
     class xostream;
 }
 
-class IndicatorElement_ABC;
-class IndicatorPrimitiveParameter;
-class IndicatorType;
+namespace indicators
+{
+    class Element_ABC;
+    class PrimitiveParameter;
+    class ElementType;
 
 // =============================================================================
-/** @class  IndicatorPrimitive
-    @brief  IndicatorPrimitive
+/** @class  Primitive
+    @brief  Primitive
     // $$$$ SBO 2009-04-15: TODO: reverse dependency between Primitive and Instance (Element)
 */
 // Created: SBO 2009-04-06
 // =============================================================================
-class IndicatorPrimitive
+class Primitive
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IndicatorPrimitive( xml::xistream& xis );
-    virtual ~IndicatorPrimitive();
+    explicit Primitive( xml::xistream& xis );
+    virtual ~Primitive();
     //@}
 
     //! @name Accessors
@@ -43,16 +45,16 @@ public:
     std::string GetCategory() const;
     QString GetPrototype() const;
     QString GetComment() const;
-    const IndicatorType& GetType() const;
-    const IndicatorPrimitiveParameter* FindParameter( unsigned int index ) const;
+    const ElementType& GetType() const;
+    const PrimitiveParameter* FindParameter( unsigned int index ) const;
     unsigned int ParameterCount() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorPrimitive( const IndicatorPrimitive& );            //!< Copy constructor
-    IndicatorPrimitive& operator=( const IndicatorPrimitive& ); //!< Assignment operator
+    Primitive( const Primitive& );            //!< Copy constructor
+    Primitive& operator=( const Primitive& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -63,7 +65,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< IndicatorPrimitiveParameter* > T_Parameters;
+    typedef std::vector< PrimitiveParameter* > T_Parameters;
     //@}
 
 private:
@@ -72,9 +74,11 @@ private:
     const QString name_;
     const std::string category_;
     const QString comment_;
-    std::auto_ptr< IndicatorType > type_;
+    std::auto_ptr< ElementType > type_;
     T_Parameters parameters_;
     //@}
 };
 
-#endif // __IndicatorPrimitive_h_
+}
+
+#endif // __Primitive_h_

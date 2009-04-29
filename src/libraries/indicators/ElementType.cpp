@@ -8,39 +8,41 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "IndicatorType.h"
-#include "IndicatorTypeResolver.h"
+#include "ElementType.h"
+#include "ElementTypeResolver.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/regex.hpp>
 #include <xeumeuleu/xml.h>
 
+using namespace indicators;
+
 // -----------------------------------------------------------------------------
-// Name: IndicatorType constructor
+// Name: ElementType constructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-IndicatorType::IndicatorType( xml::xistream& xis )
+ElementType::ElementType( xml::xistream& xis )
     : type_( xml::attribute< std::string >( xis, "type" ) )
-    , resolver_( boost::shared_ptr< IndicatorTypeResolver >( new IndicatorTypeResolver() ) )
+    , resolver_( boost::shared_ptr< ElementTypeResolver >( new ElementTypeResolver() ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorType constructor
+// Name: ElementType constructor
 // Created: SBO 2009-04-09
 // -----------------------------------------------------------------------------
-IndicatorType::IndicatorType( const std::string& type )
+ElementType::ElementType( const std::string& type )
     : type_( type )
-    , resolver_( boost::shared_ptr< IndicatorTypeResolver >( new IndicatorTypeResolver() ) )
+    , resolver_( boost::shared_ptr< ElementTypeResolver >( new ElementTypeResolver() ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorType constructor
+// Name: ElementType constructor
 // Created: SBO 2009-04-10
 // -----------------------------------------------------------------------------
-IndicatorType::IndicatorType( const IndicatorType& type, boost::shared_ptr< IndicatorTypeResolver > resolver )
+ElementType::ElementType( const ElementType& type, boost::shared_ptr< ElementTypeResolver > resolver )
     : type_( type.type_ )
     , resolver_( resolver )
 {
@@ -48,37 +50,37 @@ IndicatorType::IndicatorType( const IndicatorType& type, boost::shared_ptr< Indi
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorType destructor
+// Name: ElementType destructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-IndicatorType::~IndicatorType()
+ElementType::~ElementType()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorType::ToString
+// Name: ElementType::ToString
 // Created: SBO 2009-04-09
 // -----------------------------------------------------------------------------
-std::string IndicatorType::ToString() const
+std::string ElementType::ToString() const
 {
     return type_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorType::Resolve
+// Name: ElementType::Resolve
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-std::string IndicatorType::Resolve() const
+std::string ElementType::Resolve() const
 {
     return resolver_->Resolve( type_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorType::operator
+// Name: ElementType::operator
 // Created: SBO 2009-04-09
 // -----------------------------------------------------------------------------
-bool IndicatorType::operator!=( const IndicatorType& rhs ) const
+bool ElementType::operator!=( const ElementType& rhs ) const
 {
     return false; //ToString() != rhs.ToString(); // $$$$ SBO 2009-04-15: TODO, check type compatibility
 }

@@ -7,29 +7,37 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorElementDeclarator_ABC_h_
-#define __IndicatorElementDeclarator_ABC_h_
+#ifndef __ElementDeclarator_ABC_h_
+#define __ElementDeclarator_ABC_h_
+
+#include <boost/shared_ptr.hpp>
+
+namespace indicators
+{
+    class Element_ABC;
 
 // =============================================================================
-/** @class  IndicatorElementDeclarator_ABC
-    @brief  IndicatorElementDeclarator_ABC
+/** @class  ElementDeclarator_ABC
+    @brief  ElementDeclarator_ABC
 */
 // Created: SBO 2009-04-28
 // =============================================================================
-class IndicatorElementDeclarator_ABC
+class ElementDeclarator_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorElementDeclarator_ABC() {}
-    virtual ~IndicatorElementDeclarator_ABC() {}
+             ElementDeclarator_ABC() {}
+    virtual ~ElementDeclarator_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Declare( boost::shared_ptr< IndicatorElement_ABC > element ) = 0;
+    virtual void Declare( boost::shared_ptr< Element_ABC > element ) = 0;
     //@}
 };
 
-#endif // __IndicatorElementDeclarator_ABC_h_
+}
+
+#endif // __ElementDeclarator_ABC_h_

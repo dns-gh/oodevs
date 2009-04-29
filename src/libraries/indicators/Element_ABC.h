@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __IndicatorElement_ABC_h_
-#define __IndicatorElement_ABC_h_
+#ifndef __Element_ABC_h_
+#define __Element_ABC_h_
 
 #include <boost/shared_ptr.hpp>
 
@@ -17,52 +17,57 @@ namespace xml
     class xostream;
 }
 
-class IndicatorElementDeclarator_ABC;
-class IndicatorPrimitiveParameter;
-class IndicatorType;
+namespace indicators
+{
+    class ElementDeclarator_ABC;
+    class PrimitiveParameter;
+    class ElementType;
 
 // =============================================================================
-/** @class  IndicatorElement_ABC
-    @brief  IndicatorElement_ABC
+/** @class  Element_ABC
+    @brief  Element_ABC
 */
 // Created: SBO 2009-03-17
 // =============================================================================
-class IndicatorElement_ABC
+class Element_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IndicatorElement_ABC( const std::string& id ) : id_( id ) {}
-    virtual ~IndicatorElement_ABC() {}
+    explicit Element_ABC( const std::string& id ) : id_( id ) {}
+    virtual ~Element_ABC() {}
     //@}
 
     //! @name Accessors
     //@{
     virtual std::string GetInput() const { return id_; }
     virtual std::string GetValue() const = 0;
-    virtual const IndicatorType& GetType() const = 0;
+    virtual const ElementType& GetType() const = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual void AddParameter( boost::shared_ptr< IndicatorElement_ABC > element ) = 0;
-    virtual void Serialize( xml::xostream& xos, IndicatorElementDeclarator_ABC& declarator ) const = 0;
+    virtual void AddParameter( boost::shared_ptr< Element_ABC > element ) = 0;
+    virtual void Serialize( xml::xostream& xos, ElementDeclarator_ABC& declarator ) const = 0;
     virtual void SerializeDeclaration( xml::xostream& ) const {}
-    virtual IndicatorElement_ABC& Clone() const = 0;
+    virtual Element_ABC& Clone() const = 0;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    IndicatorElement_ABC( const IndicatorElement_ABC& );            //!< Copy constructor
-    IndicatorElement_ABC& operator=( const IndicatorElement_ABC& ); //!< Assignment operator
+    Element_ABC( const Element_ABC& );            //!< Copy constructor
+    Element_ABC& operator=( const Element_ABC& ); //!< Assignment operator
     //@}
 
+private:
     //! @name Member data
     //@{
     const std::string id_;
     //@}
 };
 
-#endif // __IndicatorElement_ABC_h_
+}
+
+#endif // __Element_ABC_h_
