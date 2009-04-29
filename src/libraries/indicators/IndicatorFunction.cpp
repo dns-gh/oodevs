@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "indicators_pch.h"
 #include "IndicatorFunction.h"
 #include "IndicatorElementDeclarator_ABC.h"
 #include "IndicatorPrimitive.h"
 #include "IndicatorPrimitiveParameter.h"
 #include "IndicatorType.h"
 #include "IndicatorTypeResolver.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>

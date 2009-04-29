@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "indicators_pch.h"
 #include "IndicatorPrimitive.h"
 #include "IndicatorPrimitiveParameter.h"
 #include "IndicatorElement_ABC.h"

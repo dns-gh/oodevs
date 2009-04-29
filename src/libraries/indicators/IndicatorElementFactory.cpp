@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "indicators_pch.h"
 #include "IndicatorElementFactory.h"
 #include "IndicatorConstant.h"
 #include "IndicatorString.h"
@@ -15,7 +15,7 @@
 #include "IndicatorFunction.h"
 #include "IndicatorType.h"
 #include "IndicatorPrimitives.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 

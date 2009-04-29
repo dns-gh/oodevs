@@ -7,56 +7,56 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
-#include "IndicatorPrimitives.h"
-#include "IndicatorPrimitive.h"
+#include "indicators_pch.h"
+#include "IndicatorPrimitiveParameter.h"
+#include "IndicatorType.h"
+#include "IndicatorElement_ABC.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitives constructor
+// Name: IndicatorPrimitiveParameter constructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-IndicatorPrimitives::IndicatorPrimitives()
+IndicatorPrimitiveParameter::IndicatorPrimitiveParameter( xml::xistream& xis )
+    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
+    , attribute_( xml::attribute< std::string >( xis, "attribute", "input" ) )
+    , type_( new IndicatorType( xis ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitives destructor
+// Name: IndicatorPrimitiveParameter destructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-IndicatorPrimitives::~IndicatorPrimitives()
+IndicatorPrimitiveParameter::~IndicatorPrimitiveParameter()
 {
-    Purge();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitives::Load
+// Name: IndicatorPrimitiveParameter::GetAttribute
+// Created: SBO 2009-04-09
+// -----------------------------------------------------------------------------
+std::string IndicatorPrimitiveParameter::GetAttribute() const
+{
+    return attribute_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorPrimitiveParameter::GetName
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void IndicatorPrimitives::Load( const std::string& file )
+QString IndicatorPrimitiveParameter::GetName() const
 {
-    xml::xifstream xis( file );
-    xis >> xml::start( "primitives" )
-            >> xml::list( "primitive", *this, &IndicatorPrimitives::ReadPrimitive )
-        >> xml::end();
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorPrimitives::ReadPrimitive
+// Name: IndicatorPrimitiveParameter::GetType
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-void IndicatorPrimitives::ReadPrimitive( xml::xistream& xis )
+const IndicatorType& IndicatorPrimitiveParameter::GetType() const
 {
-    IndicatorPrimitive* primitive = new IndicatorPrimitive( xis );
-    Register( primitive->GetName(), *primitive );
-}
-
-// -----------------------------------------------------------------------------
-// Name: IndicatorPrimitives::Purge
-// Created: SBO 2009-04-20
-// -----------------------------------------------------------------------------
-void IndicatorPrimitives::Purge()
-{
-    DeleteAll();
+    return *type_;
 }

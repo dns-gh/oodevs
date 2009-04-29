@@ -9,13 +9,13 @@
 
 #include "clients_test_pch.h"
 #include "XmlChecks.h"
-#include "preparation/IndicatorParser.h"
-#include "preparation/IndicatorSerializer.h"
-#include "preparation/IndicatorElement_ABC.h"
-#include "preparation/IndicatorElementFactory.h"
-#include "preparation/IndicatorPrimitives.h"
-#include "preparation/IndicatorVariable.h"
-#include "preparation/IndicatorVariables.h"
+#include "indicators/IndicatorParser.h"
+#include "indicators/IndicatorSerializer.h"
+#include "indicators/IndicatorElement_ABC.h"
+#include "indicators/IndicatorElementFactory.h"
+#include "indicators/IndicatorPrimitives.h"
+#include "indicators/IndicatorVariable.h"
+#include "indicators/IndicatorVariables.h"
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.h>
 

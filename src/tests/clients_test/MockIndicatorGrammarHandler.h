@@ -10,7 +10,7 @@
 #ifndef __MockIndicatorGrammarHandler_h_
 #define __MockIndicatorGrammarHandler_h_
 
-#include "preparation/IndicatorGrammarHandler_ABC.h"
+#include "indicators/IndicatorGrammarHandler_ABC.h"
 
 // =============================================================================
 /** @class  MockIndicatorGrammarHandler

@@ -9,7 +9,7 @@
 
 #include "clients_test_pch.h"
 #include "MockIndicatorGrammarHandler.h"
-#include "preparation/IndicatorParser.h"
+#include "indicators/IndicatorParser.h"
 
 using namespace mockpp;
 

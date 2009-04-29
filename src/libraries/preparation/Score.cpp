@@ -9,11 +9,11 @@
 
 #include "preparation_pch.h"
 #include "Score.h"
-#include "IndicatorVariables.h"
 #include "clients_kernel/Controller.h"
-#include "preparation/IndicatorElementFactory.h"
-#include "preparation/IndicatorParser.h"
-#include "preparation/IndicatorSerializer.h"
+#include "indicators/IndicatorVariables.h"
+#include "indicators/IndicatorElementFactory.h"
+#include "indicators/IndicatorParser.h"
+#include "indicators/IndicatorSerializer.h"
 #include <xeumeuleu/xml.h>
 
 namespace

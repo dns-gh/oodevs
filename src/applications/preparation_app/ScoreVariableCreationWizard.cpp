@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ScoreVariableCreationWizard.h"
 #include "moc_ScoreVariableCreationWizard.cpp"
-#include "preparation/IndicatorVariable.h"
+#include "indicators/IndicatorVariable.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScoreVariableCreationWizard constructor

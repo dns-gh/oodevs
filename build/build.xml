@@ -144,6 +144,12 @@
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
+    
+    <target name="library.indicators" description="build indicators static library" depends="library.clients_kernel">
+        <build-lib name="indicators" depends="qt" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
+        </build-lib>
+    </target>
 
     <target name="library.gaming" description="build gaming static library" depends="library.game_asn,library.clients_gui,library.actions">
         <build-lib name="gaming" depends="qt" pattern="lib${ant.project.name}_gaming-${platform}-mt@{suffix}" suffix="-gd">
@@ -151,7 +157,7 @@
         </build-lib>
     </target>
 
-    <target name="library.preparation" description="build preparation static library" depends="library.clients_gui">
+    <target name="library.preparation" description="build preparation static library" depends="library.clients_gui,library.indicators">
         <build-lib name="preparation" depends="qt" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
@@ -455,11 +461,11 @@
         </build-test>
     </target>
 
-    <target name="clients_test" depends="library.preparation">
+    <target name="clients_test" depends="library.indicators">
         <build-test name="clients" depends="boost,qt,xeumeuleu"
             libs="lib${ant.project.name}_tools-${platform}-mt
                   lib${ant.project.name}_ENT-${platform}-mt
-                  lib${ant.project.name}_preparation-${platform}-mt
+                  lib${ant.project.name}_indicators-${platform}-mt
                   lib${ant.project.name}_clients_gui-${platform}-mt
                   lib${ant.project.name}_clients_kernel-${platform}-mt">
         </build-test>

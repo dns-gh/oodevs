@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "indicators_pch.h"
 #include "IndicatorParser.h"
 #include "IndicatorGrammarHandler_ABC.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/spirit/include/classic_ast.hpp>

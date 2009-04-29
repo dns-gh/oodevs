@@ -11,8 +11,8 @@
 #include "ScorePrimitivesPage.h"
 #include "moc_ScorePrimitivesPage.cpp"
 #include "clients_kernel/Controllers.h"
-#include "preparation/IndicatorPrimitive.h"
-#include "preparation/IndicatorPrimitives.h"
+#include "indicators/IndicatorPrimitive.h"
+#include "indicators/IndicatorPrimitives.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScorePrimitivesPage constructor

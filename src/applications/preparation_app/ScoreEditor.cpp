@@ -12,9 +12,9 @@
 #include "moc_ScoreEditor.cpp"
 #include "ScorePrimitivesLibrary.h"
 #include "ScoreVariablesList.h"
-#include "preparation/IndicatorVariables.h"
-#include "preparation/IndicatorPrimitive.h"
-#include "preparation/IndicatorPrimitives.h"
+#include "indicators/IndicatorVariables.h"
+#include "indicators/IndicatorPrimitive.h"
+#include "indicators/IndicatorPrimitives.h"
 #include "preparation/Score.h"
 #include <xeumeuleu/xml.h>
 

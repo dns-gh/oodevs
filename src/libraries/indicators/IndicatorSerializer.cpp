@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "indicators_pch.h"
 #include "IndicatorSerializer.h"
 #include "IndicatorElementFactory_ABC.h"
 #include "IndicatorElement_ABC.h"

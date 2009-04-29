@@ -11,8 +11,8 @@
 #include "ScorePrimitivesLibrary.h"
 #include "moc_ScorePrimitivesLibrary.cpp"
 #include "ScorePrimitivesPage.h"
-#include "preparation/IndicatorPrimitive.h"
-#include "preparation/IndicatorPrimitives.h"
+#include "indicators/IndicatorPrimitive.h"
+#include "indicators/IndicatorPrimitives.h"
 #include <boost/bind.hpp>
 
 namespace

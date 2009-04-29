@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "indicators_pch.h"
 #include "IndicatorVariable.h"
 #include "IndicatorType.h"
 #include <boost/algorithm/string.hpp>

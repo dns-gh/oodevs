@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "indicators_pch.h"
 #include "IndicatorTypeResolver.h"
 #include "IndicatorPrimitiveParameter.h"
 #include "IndicatorType.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/regex.hpp>
 

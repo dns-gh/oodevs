@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "indicators_pch.h"
 #include "IndicatorVariables.h"
 #include "IndicatorVariable.h"
 #include <boost/foreach.hpp>

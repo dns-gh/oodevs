@@ -11,10 +11,10 @@
 #include "ScoreVariablesList.h"
 #include "moc_ScoreVariablesList.cpp"
 #include "ScoreVariableCreationWizard.h"
-#include "preparation/IndicatorElement_ABC.h"
-#include "preparation/IndicatorType.h"
-#include "preparation/IndicatorVariable.h"
-#include "preparation/IndicatorVariables.h"
+#include "indicators/IndicatorElement_ABC.h"
+#include "indicators/IndicatorType.h"
+#include "indicators/IndicatorVariable.h"
+#include "indicators/IndicatorVariables.h"
 #include "preparation/Score_ABC.h"
 
 // -----------------------------------------------------------------------------

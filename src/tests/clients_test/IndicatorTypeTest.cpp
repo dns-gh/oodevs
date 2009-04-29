@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "clients_test_pch.h"
-#include "preparation/IndicatorType.h"
-#include "preparation/IndicatorTypeResolver.h"
-#include "preparation/IndicatorPrimitiveParameter.h"
+#include "indicators/IndicatorType.h"
+#include "indicators/IndicatorTypeResolver.h"
+#include "indicators/IndicatorPrimitiveParameter.h"
 #include <xeumeuleu/xml.h>
 
 using namespace mockpp;
