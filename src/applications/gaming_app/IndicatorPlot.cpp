@@ -172,9 +172,12 @@ void IndicatorPlot::mouseReleaseEvent( QMouseEvent* e )
 // -----------------------------------------------------------------------------
 void IndicatorPlot::contextMenuEvent( QContextMenuEvent* e )
 {
-    QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( tr( "Refresh" ), this, SLOT( OnRefresh() ), Qt::Key_F5 );
-    menu->exec( e->globalPos() );
+    if( !interactive_ )
+    {
+        QPopupMenu* menu = new QPopupMenu( this );
+        menu->insertItem( tr( "Refresh" ), this, SLOT( OnRefresh() ), Qt::Key_F5 );
+        menu->exec( e->globalPos() );   
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +186,7 @@ void IndicatorPlot::contextMenuEvent( QContextMenuEvent* e )
 // -----------------------------------------------------------------------------
 void IndicatorPlot::keyPressEvent( QKeyEvent* e )
 {
-    if( e->key() == Qt::Key_F5 )
+    if( !interactive_ && e->key() == Qt::Key_F5 )
         OnRefresh();
     GQ_Plot::keyPressEvent( e );
 }
