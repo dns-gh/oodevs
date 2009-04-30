@@ -2,6 +2,7 @@ HEADERS =
 
 SOURCES = Actions.cpp \
 AdvancedButton.cpp \
+Application.cpp \
 CreateExercisePanel.cpp \
 DisPluginConfigPanel.cpp \
 EditExercisePanel.cpp \

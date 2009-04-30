@@ -11,6 +11,17 @@
     </message>
 </context>
 <context>
+    <name>ActionParameter</name>
+    <message>
+        <source>TC2</source>
+        <translation type="unfinished">TC2</translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation type="unfinished">Densité</translation>
+    </message>
+</context>
+<context>
     <name>ActionsModel</name>
     <message>
         <source>The order file contains error(s), some actions could not be loaded:
@@ -141,7 +152,7 @@
     </message>
     <message>
         <source>Obstacle %1</source>
-        <translation type="obsolete">Obstacle %1</translation>
+        <translation type="unfinished">Obstacle %1</translation>
     </message>
     <message>
         <source>Destination</source>

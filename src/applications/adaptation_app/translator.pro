@@ -93,7 +93,6 @@ ADN_NBC_GUI.cpp \
 ADN_NBC_Intox_GUI.cpp \
 ADN_NBC_NbcAgentListView.cpp \
 ADN_NBC_Wizard.cpp \
-ADN_Objects_Data.cpp \
 ADN_Objects_GUI.cpp \
 ADN_OpenFile_Exception.cpp \
 ADN_OpenMode_Dialog.cpp \

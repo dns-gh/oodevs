@@ -11,6 +11,17 @@
     </message>
 </context>
 <context>
+    <name>ActionParameter</name>
+    <message>
+        <source>TC2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ActionsModel</name>
     <message>
         <source>The order file contains error(s), some actions could not be loaded:
@@ -140,6 +151,10 @@
     </message>
     <message>
         <source>Agent knowledge not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
