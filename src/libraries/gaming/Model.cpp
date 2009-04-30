@@ -85,7 +85,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , aar_( *new AfterActionModel( controllers.controller_, publisher ) )
     , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
-    , scores_( *new ScoreModel( controllers_.controller_, publisher ) )
+    , scores_( *new ScoreModel( controllers, publisher, staticModel.scores_ ) )
 {
     // NOTHING
 }

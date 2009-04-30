@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AfterActionRequest_h_
-#define __AfterActionRequest_h_
+#ifndef __IndicatorRequest_h_
+#define __IndicatorRequest_h_
 
 #include "game_asn/Aar.h"
 
@@ -17,16 +17,16 @@ namespace kernel
     class Controller;
 }
 
-class AfterActionFunction;
+class IndicatorDefinition_ABC;
 class Publisher_ABC;
 
 // =============================================================================
-/** @class  AfterActionRequest
-    @brief  AfterActionRequest
+/** @class  IndicatorRequest
+    @brief  IndicatorRequest
 */
 // Created: AGE 2007-09-25
 // =============================================================================
-class AfterActionRequest
+class IndicatorRequest
 {
 public:
     //! @name Types
@@ -37,14 +37,14 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionRequest( kernel::Controller& controller, const AfterActionFunction& function, Publisher_ABC& publisher );
-    virtual ~AfterActionRequest();
+             IndicatorRequest( kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher );
+    virtual ~IndicatorRequest();
     //@}
 
     //! @name Operations
     //@{
     void SetParameter( const std::string& name, const std::string& value );
-    void Commit();
+    void Commit() const;
 
     QString GetName() const;
     void Update( const ASN1T_MsgPlotResult& asnMsg );
@@ -59,8 +59,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    AfterActionRequest( const AfterActionRequest& );            //!< Copy constructor
-    AfterActionRequest& operator=( const AfterActionRequest& ); //!< Assignment operator
+    IndicatorRequest( const IndicatorRequest& );            //!< Copy constructor
+    IndicatorRequest& operator=( const IndicatorRequest& ); //!< Assignment operator
     //@}
 
     //! @name Types
@@ -72,7 +72,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const AfterActionFunction& function_;
+    const IndicatorDefinition_ABC& definition_;
     Publisher_ABC& publisher_;
     T_Parameters parameters_;
     bool done_;
@@ -81,4 +81,4 @@ private:
     //@}
 };
 
-#endif // __AfterActionRequest_h_
+#endif // __IndicatorRequest_h_

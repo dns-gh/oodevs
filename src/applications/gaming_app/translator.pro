@@ -88,6 +88,7 @@ ReplayerToolbar.cpp \
 ReportFilterOptions.cpp \
 ReportListView.cpp \
 SIMControlToolbar.cpp \
+ScorePanel.cpp \
 StatisticsWidget.cpp \
 StatusBar.cpp \
 SupplyConsignsWidget.cpp \

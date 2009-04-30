@@ -21,10 +21,11 @@ namespace gui
     class ItemFactory_ABC;
     class ParametersLayer;
 }
+
 class AfterActionFunction;
 class AfterActionModel;
 class AfterActionRequest;
-class Publisher_ABC;
+class IndicatorPlotFactory;
 class Services;
 class StaticModel;
 
@@ -43,8 +44,8 @@ class AfterAction : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model, Publisher_ABC& publisher,
-                          gui::ParametersLayer& layer, const StaticModel& staticModel );
+             AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model,
+                          gui::ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory );
     virtual ~AfterAction();
     //@}
 
@@ -62,8 +63,8 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher,
-                                gui::ParametersLayer& layer, const StaticModel& staticModel );
+    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+                                gui::ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory );
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyCreated( const AfterActionRequest& );
     //@}

@@ -9,9 +9,20 @@
 
 #include "gaming_pch.h"
 #include "Score.h"
+#include "Services.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_gui/Tools.h"
+#include "game_asn/AarSenders.h"
+#include <boost/algorithm/string.hpp>
+
+namespace
+{
+    QString ExtractRoot( const QString& name )
+    {
+        return name.section( '/', 0, 0 );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Score constructor
@@ -20,7 +31,10 @@
 Score::Score( const ASN1T_MsgIndicator& message, kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_( controller )
     , publisher_( publisher )
-    , name_( message.name )
+    , name_( ExtractRoot( message.name ) )
+    , value_( 0 )
+    , tendency_( 0 )
+    , normalized_( 0 )
 {
     controller_.Create( *this );
 }
@@ -49,7 +63,12 @@ QString Score::GetName() const
 // -----------------------------------------------------------------------------
 void Score::Update( const ASN1T_MsgIndicator& message )
 {
-    value_ = message.value;
+    if( boost::ends_with( message.name, "/Tendency" ) )
+        tendency_ = message.value;
+    else if( boost::ends_with( message.name, "/Gauge" ) )
+        normalized_ = message.value;
+    else
+        value_ = message.value;
     controller_.Update( *this );
 }
 
@@ -60,5 +79,16 @@ void Score::Update( const ASN1T_MsgIndicator& message )
 void Score::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Score", "Name" ), name_ )
-             .Display( tools::translate( "Score", "Value" ), value_ );
+             .Display( tools::translate( "Score", "Value" ), value_ )
+             .Display( tools::translate( "Score", "Tendency" ), tendency_ )
+             .Display( tools::translate( "Score", "Gauge" ), normalized_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::Commit
+// Created: SBO 2009-04-30
+// -----------------------------------------------------------------------------
+std::string Score::Commit( const T_Parameters& ) const
+{
+    return "indicator://" + name_;
 }

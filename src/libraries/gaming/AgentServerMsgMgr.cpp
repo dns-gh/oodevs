@@ -1442,6 +1442,7 @@ void AgentServerMsgMgr::OnReceiveMsgAarInformation( const ASN1T_MsgAarInformatio
 void AgentServerMsgMgr::OnReceiveMsgAarResult( const ASN1T_MsgPlotResult& asnMsg )
 {
     GetModel().aar_.Update( asnMsg );
+    GetModel().scores_.Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------

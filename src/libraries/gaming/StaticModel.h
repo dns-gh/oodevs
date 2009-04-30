@@ -26,15 +26,21 @@ namespace gui
     class DrawingTypes;
 }
 
+namespace indicators
+{
+    class Primitives;
+}
+
 namespace tools
 {
     class ExerciseConfig;
 }
 
-class SurfaceFactory;
-class ReportFactory;
 class RcEntityResolver_ABC;
+class ReportFactory;
+class ScoreDefinitions;
 class Simulation;
+class SurfaceFactory;
 
 // =============================================================================
 /** @class  StaticModel
@@ -71,6 +77,8 @@ public:
     SurfaceFactory&                  surfaceFactory_;
     ReportFactory&                   reportFactory_;
     gui::DrawingTypes&               drawings_;
+    indicators::Primitives&          indicators_;
+    ScoreDefinitions&                scores_;
     //@}
 
 private:

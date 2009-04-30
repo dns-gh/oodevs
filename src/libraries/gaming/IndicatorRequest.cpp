@@ -8,18 +8,18 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "AfterActionRequest.h"
-#include "AfterActionFunction.h"
+#include "IndicatorRequest.h"
+#include "IndicatorDefinition_ABC.h"
 #include "game_asn/AarSenders.h"
 #include "clients_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest constructor
+// Name: IndicatorRequest constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionRequest::AfterActionRequest( kernel::Controller& controller, const AfterActionFunction& function, Publisher_ABC& publisher )
+IndicatorRequest::IndicatorRequest( kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher )
     : controller_( controller )
-    , function_( function )
+    , definition_( definition )
     , publisher_( publisher )
     , done_( false )
 {
@@ -27,41 +27,41 @@ AfterActionRequest::AfterActionRequest( kernel::Controller& controller, const Af
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest destructor
+// Name: IndicatorRequest destructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionRequest::~AfterActionRequest()
+IndicatorRequest::~IndicatorRequest()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest::SetParameter
+// Name: IndicatorRequest::SetParameter
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-void AfterActionRequest::SetParameter( const std::string& name, const std::string& value )
+void IndicatorRequest::SetParameter( const std::string& name, const std::string& value )
 {
     parameters_[ name ] = value;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest::Commit
+// Name: IndicatorRequest::Commit
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
-void AfterActionRequest::Commit()
+void IndicatorRequest::Commit() const
 {
-    aar::PlotRequest request;
-    const std::string xmlRequest = function_.Commit( parameters_ );
-    request().identifier = reinterpret_cast< int >( this );
-    request().request = xmlRequest.c_str();
-    request.Send( publisher_ );
+    aar::PlotRequest message;
+    const std::string request = definition_.Commit( parameters_ );
+    message().identifier = reinterpret_cast< int >( this );
+    message().request = request.c_str();
+    message.Send( publisher_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest::Update
+// Name: IndicatorRequest::Update
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequest::Update( const ASN1T_MsgPlotResult& message )
+void IndicatorRequest::Update( const ASN1T_MsgPlotResult& message )
 {
     if( message.identifier == reinterpret_cast< int >( this ) )
     {
@@ -74,55 +74,55 @@ void AfterActionRequest::Update( const ASN1T_MsgPlotResult& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest::GetName
+// Name: IndicatorRequest::GetName
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-QString AfterActionRequest::GetName() const
+QString IndicatorRequest::GetName() const
 {
-    return function_.GetName();
+    return definition_.GetName();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest::IsPending
+// Name: IndicatorRequest::IsPending
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-bool AfterActionRequest::IsPending() const
+bool IndicatorRequest::IsPending() const
 {
     return !done_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest::IsDone
+// Name: IndicatorRequest::IsDone
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-bool AfterActionRequest::IsDone() const
+bool IndicatorRequest::IsDone() const
 {
     return done_ && !result_.empty();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest::IsFailed
+// Name: IndicatorRequest::IsFailed
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-bool AfterActionRequest::IsFailed() const
+bool IndicatorRequest::IsFailed() const
 {
     return done_ && result_.empty();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest::ErrorMessage
+// Name: IndicatorRequest::ErrorMessage
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-QString AfterActionRequest::ErrorMessage() const
+QString IndicatorRequest::ErrorMessage() const
 {
     return QString( error_.c_str() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequest::Result
+// Name: IndicatorRequest::Result
 // Created: AGE 2007-09-26
 // -----------------------------------------------------------------------------
-const AfterActionRequest::T_Data& AfterActionRequest::Result() const
+const IndicatorRequest::T_Data& IndicatorRequest::Result() const
 {
     return result_;
 }

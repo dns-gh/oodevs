@@ -148,11 +148,11 @@
     <name>AfterActionPlot</name>
     <message>
         <source>Value</source>
-        <translation>Valeur</translation>
+        <translation type="obsolete">Valeur</translation>
     </message>
     <message>
         <source>Time (Tick)</source>
-        <translation>Temps (ticks)</translation>
+        <translation type="obsolete">Temps (ticks)</translation>
     </message>
 </context>
 <context>
@@ -167,7 +167,7 @@
     </message>
     <message>
         <source>Plot</source>
-        <translation>Courbe</translation>
+        <translation type="obsolete">Courbe</translation>
     </message>
 </context>
 <context>
@@ -2581,6 +2581,40 @@
     <message>
         <source>Speed factor: </source>
         <translation>Jeu accéléré: </translation>
+    </message>
+</context>
+<context>
+    <name>Score</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nom</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">Valeur</translation>
+    </message>
+    <message>
+        <source>View graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tendency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gauge</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScorePanel</name>
+    <message>
+        <source>Scores</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plot</source>
+        <translation type="obsolete">Courbe</translation>
     </message>
 </context>
 <context>

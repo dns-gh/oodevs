@@ -25,15 +25,15 @@ using namespace kernel;
 // Name: AfterAction constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, Publisher_ABC& publisher,
-                          ParametersLayer& layer, const StaticModel& staticModel )
+AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model,
+                          ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory )
     : window_      ( window )
     , controllers_ ( controllers )
     , model_       ( model )
     , functionsTab_( 0 )
     , aar_         ( false )
 {
-    CreateAfterActionDock( window, controllers, factory, publisher, layer, staticModel );
+    CreateAfterActionDock( window, controllers, factory, layer, staticModel, plotFactory );
     controllers_.Register( *this );
 }
 
@@ -50,7 +50,7 @@ AfterAction::~AfterAction()
 // Name: AfterAction::CreateAfterActionDock
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, Publisher_ABC& publisher, ParametersLayer& layer, const StaticModel& staticModel )
+void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory )
 {
     aarDock_ = new QDockWindow( window, "aar" );
     QVBox* box = new QVBox( aarDock_ );
@@ -60,7 +60,7 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& contr
     AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory, model_, layer, staticModel );
     functionsTab_->addTab( list, tools::translate( "AfterAction", "Functions" ) );
 
-    AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, window, controllers, factory, publisher );
+    AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, controllers, factory, plotFactory );
     functionsTab_->addTab( requests, tools::translate( "AfterAction", "Requests" ) );
 
     aarDock_->setResizeEnabled( true );

@@ -8,18 +8,18 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "AfterActionRequests.h"
-#include "AfterActionRequest.h"
+#include "IndicatorRequests.h"
+#include "IndicatorRequest.h"
 #include "clients_kernel/Controller.h"
 #include <boost/bind.hpp>
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequests constructor
+// Name: IndicatorRequests constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionRequests::AfterActionRequests( Controller& controller, Publisher_ABC& publisher )
+IndicatorRequests::IndicatorRequests( Controller& controller, Publisher_ABC& publisher )
     : controller_( controller )
     , publisher_( publisher ) 
 {
@@ -27,19 +27,19 @@ AfterActionRequests::AfterActionRequests( Controller& controller, Publisher_ABC&
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequests destructor
+// Name: IndicatorRequests destructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionRequests::~AfterActionRequests()
+IndicatorRequests::~IndicatorRequests()
 {
     Purge();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequests::Purge
+// Name: IndicatorRequests::Purge
 // Created: AGE 2007-10-08
 // -----------------------------------------------------------------------------
-void AfterActionRequests::Purge()
+void IndicatorRequests::Purge()
 {
     for( T_Requests::iterator it = requests_.begin(); it != requests_.end(); ++it )
         delete *it;
@@ -48,31 +48,31 @@ void AfterActionRequests::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequests::CreateRequest
+// Name: IndicatorRequests::CreateRequest
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionRequest& AfterActionRequests::CreateRequest( const AfterActionFunction& function )
+IndicatorRequest& IndicatorRequests::CreateRequest( const IndicatorDefinition_ABC& definition )
 {
-    requests_.push_back( new AfterActionRequest( controller_, function, publisher_ ) );
+    requests_.push_back( new IndicatorRequest( controller_, definition, publisher_ ) );
     controller_.Update( *this );
     return *requests_.back();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequests::CreateIterator
+// Name: IndicatorRequests::CreateIterator
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-Iterator< const AfterActionRequest& > AfterActionRequests::CreateIterator()
+Iterator< const IndicatorRequest& > IndicatorRequests::CreateIterator()
 {
-    return new SimpleIterator< const AfterActionRequest&, T_Requests >( requests_ );
+    return new SimpleIterator< const IndicatorRequest&, T_Requests >( requests_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionRequests::Update
+// Name: IndicatorRequests::Update
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequests::Update( const ASN1T_MsgPlotResult& asnMsg )
+void IndicatorRequests::Update( const ASN1T_MsgPlotResult& asnMsg )
 {
     std::for_each( requests_.begin(), requests_.end(), 
-                   boost::bind( &AfterActionRequest::Update, _1, boost::ref( asnMsg ) ) );
+                   boost::bind( &IndicatorRequest::Update, _1, boost::ref( asnMsg ) ) );
 }

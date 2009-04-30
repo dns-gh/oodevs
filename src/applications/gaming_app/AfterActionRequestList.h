@@ -18,9 +18,8 @@ namespace kernel
     class Controllers;
 }
 
-class AfterActionRequest;
-class AfterActionPlot;
-class Publisher_ABC;
+class IndicatorRequest;
+class IndicatorPlotFactory;
 
 // =============================================================================
 /** @class  AfterActionRequestList
@@ -30,14 +29,14 @@ class Publisher_ABC;
 // =============================================================================
 class AfterActionRequestList : public QVBox
                              , public kernel::Observer_ABC
-                             , public kernel::ElementObserver_ABC< AfterActionRequest > 
+                             , public kernel::ElementObserver_ABC< IndicatorRequest > 
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionRequestList( QWidget* parent, QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
+             AfterActionRequestList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory );
     virtual ~AfterActionRequestList();
     //@}
 
@@ -56,19 +55,17 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const AfterActionRequest& request );
-    virtual void NotifyUpdated( const AfterActionRequest& request );
-    void Display( const AfterActionRequest& request, gui::ValuedListItem* item );
-    AfterActionPlot* CreateNewPlot();
+    virtual void NotifyCreated( const IndicatorRequest& request );
+    virtual void NotifyUpdated( const IndicatorRequest& request );
+    void Display( const IndicatorRequest& request, gui::ValuedListItem* item );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QMainWindow* mainWindow_;
     kernel::Controllers& controllers_;
     gui::ItemFactory_ABC& factory_;
-    Publisher_ABC& publisher_;
+    IndicatorPlotFactory& plotFactory_;
     gui::ListDisplayer< AfterActionRequestList >* requests_;
     QPixmap pendingPixmap_;
     QPixmap donePixmap_;

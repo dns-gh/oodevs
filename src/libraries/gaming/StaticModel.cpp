@@ -9,6 +9,9 @@
 
 #include "gaming_pch.h"
 #include "StaticModel.h"
+#include "ReportFactory.h"
+#include "ScoreDefinitions.h"
+#include "SurfaceFactory.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/DetectionMap.h"
@@ -19,9 +22,8 @@
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/AtlasNatures.h"
 #include "clients_gui/DrawingTypes.h"
-#include "tools/GeneralConfig.h"
-#include "SurfaceFactory.h"
-#include "ReportFactory.h"
+#include "indicators/Primitives.h"
+#include "tools/ExerciseConfig.h"
 
 using namespace kernel;
 
@@ -40,6 +42,8 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_, simu ) )
     , atlasNatures_       ( *new AtlasNatures() )
     , drawings_           ( *new gui::DrawingTypes( controllers_.controller_ ) )
+    , indicators_         ( *new indicators::Primitives() )
+    , scores_             ( *new ScoreDefinitions( indicators_ ) )
 {
     // NOTHING
 }
@@ -50,6 +54,8 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &scores_;
+    delete &indicators_;
     delete &drawings_;
     delete &atlasNatures_;
     delete &reportFactory_;
@@ -74,6 +80,8 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     detection_.Load( config );
     reportFactory_.Load( config );
     drawings_.Load( tools::GeneralConfig::BuildResourceChildFile( "DrawingTemplates.xml" ) );
+    indicators_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
+    scores_.Load( config.GetScoresFile() );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
 
@@ -83,6 +91,8 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void StaticModel::Purge()
 {
+    scores_.Purge();
+    indicators_.Purge();
     drawings_.Purge();
     reportFactory_.Purge();
     types_.Purge();

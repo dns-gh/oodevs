@@ -16,7 +16,7 @@
 #include "clients_gui/ListItemToolTip.h"
 #include "gaming/AfterActionFunction.h"
 #include "gaming/AfterActionParameter.h"
-#include "gaming/AfterActionRequest.h"
+#include "gaming/IndicatorRequest.h"
 #include "gaming/AfterActionModel.h"
 #include "actions/ParameterContainer_ABC.h"
 #include "gaming/StaticModel.h"
@@ -121,7 +121,7 @@ namespace
 {
     struct Serializer : public actions::ParameterContainer_ABC
     {
-        Serializer( AfterActionRequest& request )
+        Serializer( IndicatorRequest& request )
             : request_( &request ) {}
         virtual void AddParameter( actions::Parameter_ABC& parameter )
         {
@@ -133,7 +133,7 @@ namespace
     private:
         Serializer( const Serializer& );
         Serializer& operator=( const Serializer& );
-        AfterActionRequest* request_;
+        IndicatorRequest* request_;
     };
 }
 
@@ -146,7 +146,7 @@ void AfterActionFunctionList::Request()
     if( ValuedListItem* item = static_cast< ValuedListItem* >( functions_->selectedItem() ) )
         if( const AfterActionFunction* function = item->GetValue< const AfterActionFunction >() )
         {
-            AfterActionRequest& request = model_.CreateRequest( *function );
+            IndicatorRequest& request = model_.CreateRequest( *function );
             Serializer serializer( request );
             std::for_each( paramList_.begin(), paramList_.end(),
                 boost::bind( &Param_ABC::CommitTo, _1, boost::ref( serializer ) ) );

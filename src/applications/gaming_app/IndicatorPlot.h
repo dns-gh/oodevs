@@ -7,48 +7,57 @@
 //
 // *****************************************************************************
 
-#ifndef __AfterActionPlot_h_
-#define __AfterActionPlot_h_
+#ifndef __IndicatorPlot_h_
+#define __IndicatorPlot_h_
 
 #include "GQ_Plot.h"
 #include "clients_kernel/ElementObserver_ABC.h"
+
 namespace kernel
 {
     class Controllers;
 }
 
-class AfterActionRequest;
+class IndicatorRequest;
 class Publisher_ABC;
 class Simulation;
 
 // =============================================================================
-/** @class  AfterActionPlot
-    @brief  AfterActionPlot
+/** @class  IndicatorPlot
+    @brief  IndicatorPlot
 */
 // Created: AGE 2007-09-26
 // =============================================================================
-class AfterActionPlot : public GQ_Plot
-                      , public kernel::Observer_ABC
-                      , public kernel::ElementObserver_ABC< Simulation >
+class IndicatorPlot : public GQ_Plot
+                    , public kernel::Observer_ABC
+                    , public kernel::ElementObserver_ABC< Simulation >
+                    , public kernel::ElementObserver_ABC< IndicatorRequest >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock );
-    virtual ~AfterActionPlot();
+             IndicatorPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock, bool interactive );
+    virtual ~IndicatorPlot();
     //@}
 
     //! @name Operations
     //@{
-    void Add( const AfterActionRequest& request );
+    void Add( const IndicatorRequest& request );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnRefresh();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AfterActionPlot( const AfterActionPlot& );            //!< Copy constructor
-    AfterActionPlot& operator=( const AfterActionPlot& ); //!< Assignment operator
+    IndicatorPlot( const IndicatorPlot& );            //!< Copy constructor
+    IndicatorPlot& operator=( const IndicatorPlot& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -57,13 +66,17 @@ private:
     virtual void mouseReleaseEvent( QMouseEvent* e );
     virtual void dragEnterEvent( QDragEnterEvent* e );
     virtual void dropEvent( QDropEvent* e );
+    virtual void contextMenuEvent( QContextMenuEvent* e );
+    virtual void keyPressEvent( QKeyEvent* e );
     virtual void NotifyUpdated( const Simulation& simulation );
-    static QColor GetPlotColor( unsigned i );
+    virtual void NotifyUpdated( const IndicatorRequest& request );
+    void UpdatePlot( GQ_PlotData* plot, const IndicatorRequest& request, unsigned int from );
     //@}
 
     //! @name Types
     //@{
     typedef std::vector< GQ_PlotData* > T_Datas;
+    typedef std::map< const IndicatorRequest*, GQ_PlotData* > T_PlottedRequests;
     //@}
 
 private:
@@ -71,12 +84,14 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    const bool interactive_;
     QDockWindow* dock_;
     T_Datas datas_;
     GQ_PlotData* tickData_;
+    T_PlottedRequests plots_;
     double min_;
     double max_;
     //@}
 };
 
-#endif // __AfterActionPlot_h_
+#endif // __IndicatorPlot_h_

@@ -130,17 +130,6 @@
     </message>
 </context>
 <context>
-    <name>AfterActionPlot</name>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time (Tick)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AfterActionRequestList</name>
     <message>
         <source>Request</source>
@@ -148,10 +137,6 @@
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Plot</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2366,6 +2351,36 @@
     </message>
     <message>
         <source>Speed factor: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Score</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tendency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gauge</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScorePanel</name>
+    <message>
+        <source>Scores</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -25,7 +25,10 @@ namespace kernel
     class ModelUnLoaded;
 }
 
+class IndicatorRequest;
+class IndicatorPlotFactory;
 class Score;
+class ScoreModel;
 
 // =============================================================================
 /** @class  ScorePanel
@@ -37,13 +40,22 @@ class ScorePanel : public QDockWindow
                  , public kernel::Observer_ABC
                  , public kernel::ElementObserver_ABC< Score >
                  , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
+                 , public kernel::ElementObserver_ABC< IndicatorRequest >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory, ScoreModel& model );
     virtual ~ScorePanel();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnContextMenu( QListViewItem* item, const QPoint& point, int column );
+    void OnShowGraph();
     //@}
 
 private:
@@ -59,6 +71,7 @@ private:
     virtual void NotifyUpdated( const Score& element );
     virtual void NotifyDeleted( const Score& element );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
+    virtual void NotifyUpdated( const IndicatorRequest& request );
     void Display( const Score& score, gui::ValuedListItem* item );
     //@}
 
@@ -67,7 +80,11 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::ItemFactory_ABC& factory_;
+    IndicatorPlotFactory& plotFactory_;
+    QMainWindow* mainWindow_;
+    ScoreModel& model_;
     gui::ListDisplayer< ScorePanel >* scores_;
+    const IndicatorRequest* pendingGraphRequest_;
     //@}
 };
 

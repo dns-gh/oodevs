@@ -14,8 +14,9 @@
 #include "clients_gui/ItemFactory_ABC.h"
 #include "clients_gui/ListItemToolTip.h"
 #include "clients_gui/ValuedDragObject.h"
-#include "gaming/AfterActionRequest.h"
-#include "AfterActionPlot.h"
+#include "gaming/IndicatorRequest.h"
+#include "IndicatorPlot.h"
+#include "IndicatorPlotFactory.h"
 #include "icons.h"
 
 using namespace kernel;
@@ -34,7 +35,7 @@ namespace
         {
             ValuedListItem* item = (ValuedListItem*)selectedItem();
             if( !item ) return 0;
-            const AfterActionRequest* request = item->GetValue< const AfterActionRequest >();
+            const IndicatorRequest* request = item->GetValue< const IndicatorRequest >();
             return new ValuedDragObject( request, this );
         }
     };
@@ -44,12 +45,11 @@ namespace
 // Name: AfterActionRequestList constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionRequestList::AfterActionRequestList( QWidget* parent, QMainWindow* mainWindow, Controllers& controllers, ItemFactory_ABC& factory, Publisher_ABC& publisher )
+AfterActionRequestList::AfterActionRequestList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory )
     : QVBox( parent, "AfterActionRequestList" )
-    , mainWindow_( mainWindow )
     , controllers_( controllers )
     , factory_( factory )
-    , publisher_( publisher )
+    , plotFactory_( plotFactory )
     , pendingPixmap_( MAKE_PIXMAP( aaa_pending ) )
     , donePixmap_   ( MAKE_PIXMAP( aaa_valid ) )
     , failedPixmap_ ( MAKE_PIXMAP( aaa_broken ) )
@@ -79,42 +79,19 @@ AfterActionRequestList::~AfterActionRequestList()
 // -----------------------------------------------------------------------------
 void AfterActionRequestList::OnDoubleClicked( QListViewItem * i )
 {
-    ValuedListItem* item = static_cast< ValuedListItem* >( i );
-    if( item )
+    if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
     {
-        const AfterActionRequest* request = item->GetValue< const AfterActionRequest >();
+        const IndicatorRequest* request = item->GetValue< const IndicatorRequest >();
         if( request && request->IsDone() )
-        {
-            AfterActionPlot* plot = CreateNewPlot();
-            plot->Add( *request );
-        }
+            plotFactory_.CreatePlot( *request );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterActionRequestList::CreateNewPlot
-// Created: AGE 2007-09-26
-// -----------------------------------------------------------------------------
-AfterActionPlot* AfterActionRequestList::CreateNewPlot()
-{
-    QDockWindow* plotDock = new QDockWindow( mainWindow_, "aarplot", WDestructiveClose );
-    QVBox* box = new QVBox( plotDock );
-    AfterActionPlot* plot = new AfterActionPlot( box, controllers_, publisher_, plotDock );
-    plotDock->setWidget( box );
-    plotDock->setResizeEnabled( true );
-    plotDock->setCloseMode( QDockWindow::Always );
-    plotDock->setCaption( tr( "Plot" ) );
-    plotDock->undock();
-    mainWindow_->setAppropriate( plotDock, false );
-    box->show();
-    return plot;
 }
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionRequestList::NotifyCreated
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequestList::NotifyCreated( const AfterActionRequest& request )
+void AfterActionRequestList::NotifyCreated( const IndicatorRequest& request )
 {
     ValuedListItem* item = factory_.CreateItem( requests_ );
     Display( request, item );
@@ -124,10 +101,9 @@ void AfterActionRequestList::NotifyCreated( const AfterActionRequest& request )
 // Name: AfterActionRequestList::NotifyUpdated
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequestList::NotifyUpdated( const AfterActionRequest& request )
+void AfterActionRequestList::NotifyUpdated( const IndicatorRequest& request )
 {
-    ValuedListItem* item = FindItem( &request, requests_->firstChild() );
-    if( item )
+    if( ValuedListItem* item = FindItem( &request, requests_->firstChild() ) )
         Display( request, item );
 }
 
@@ -135,7 +111,7 @@ void AfterActionRequestList::NotifyUpdated( const AfterActionRequest& request )
 // Name: AfterActionRequestList::Display
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequestList::Display( const AfterActionRequest& request, gui::ValuedListItem* item )
+void AfterActionRequestList::Display( const IndicatorRequest& request, gui::ValuedListItem* item )
 {
     item->SetNamed( request );
     item->setPixmap( 1, request.IsPending() ? pendingPixmap_ :

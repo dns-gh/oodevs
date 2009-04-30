@@ -56,6 +56,7 @@
 #include "ClientCommandFacade.h"
 #include "MessagePanel.h"
 #include "ScorePanel.h"
+#include "IndicatorPlotFactory.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -302,7 +303,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     FolkToolbar* folkToolbar = new FolkToolbar( this, controllers, model.folk_ );
-    AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, publisher, *paramLayer, staticModel_ );
+    IndicatorPlotFactory* plotFactory = new IndicatorPlotFactory( this, controllers_, publisher );
+    AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, *paramLayer, staticModel_, *plotFactory );
 
     // Actions panel
     {
@@ -319,7 +321,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // Score panel
     {
-        ScorePanel* scorePanel = new ScorePanel( this, controllers_, *factory );
+        ScorePanel* scorePanel = new ScorePanel( this, controllers_, *factory, *plotFactory, model_.scores_ );
         moveDockWindow( scorePanel, Qt::DockRight );
         setDockEnabled( scorePanel, Qt::DockTop, false );
         scorePanel->hide();

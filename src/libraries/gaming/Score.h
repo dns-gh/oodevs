@@ -10,6 +10,7 @@
 #ifndef __Score_h_
 #define __Score_h_
 
+#include "IndicatorDefinition_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "game_asn/Aar.h"
 
@@ -26,7 +27,9 @@ class Publisher_ABC;
 */
 // Created: SBO 2009-03-12
 // =============================================================================
-class Score : public kernel::Displayable_ABC
+class Score : public IndicatorDefinition_ABC
+            , public kernel::Displayable_ABC
+            
 {
 
 public:
@@ -38,7 +41,8 @@ public:
 
     //! @name Accessors
     //@{
-    QString GetName() const;
+    virtual QString GetName() const;
+    virtual std::string Commit( const T_Parameters& parameters ) const;
     //@}
 
     //! @name Operations
@@ -54,17 +58,15 @@ private:
     Score& operator=( const Score& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
     Publisher_ABC& publisher_;
-    QString name_;
+    const QString name_;
     double value_;
+    double tendency_;
+    double normalized_;
     //@}
 };
 

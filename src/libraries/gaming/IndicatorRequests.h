@@ -7,33 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __AfterActionRequests_h_
-#define __AfterActionRequests_h_
+#ifndef __IndicatorRequests_h_
+#define __IndicatorRequests_h_
 
 #include "clients_kernel/Iterator.h"
 #include "game_asn/Aar.h"
+
 namespace kernel
 {
     class Controller;
 }
+
+class IndicatorDefinition_ABC;
+class IndicatorRequest;
 class Publisher_ABC;
-class AfterActionFunction;
-class AfterActionRequest;
+class Score;
 
 // =============================================================================
-/** @class  AfterActionRequests
-    @brief  AfterActionRequests
+/** @class  IndicatorRequests
+    @brief  IndicatorRequests
 */
 // Created: AGE 2007-09-25
 // =============================================================================
-class AfterActionRequests
+class IndicatorRequests
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionRequests( kernel::Controller& controller, Publisher_ABC& publisher );
-    virtual ~AfterActionRequests();
+             IndicatorRequests( kernel::Controller& controller, Publisher_ABC& publisher );
+    virtual ~IndicatorRequests();
     //@}
 
     //! @name Operations
@@ -41,20 +44,20 @@ public:
     void Purge();
     void Update( const ASN1T_MsgPlotResult& asnMsg );
 
-    AfterActionRequest& CreateRequest( const AfterActionFunction& function );
-    kernel::Iterator< const AfterActionRequest& > CreateIterator();
+    IndicatorRequest& CreateRequest( const IndicatorDefinition_ABC& definition );
+    kernel::Iterator< const IndicatorRequest& > CreateIterator();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AfterActionRequests( const AfterActionRequests& );            //!< Copy constructor
-    AfterActionRequests& operator=( const AfterActionRequests& ); //!< Assignment operator
+    IndicatorRequests( const IndicatorRequests& );            //!< Copy constructor
+    IndicatorRequests& operator=( const IndicatorRequests& ); //!< Assignment operator
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< AfterActionRequest* > T_Requests;
+    typedef std::vector< IndicatorRequest* > T_Requests;
     //@}
 
 private:
@@ -66,4 +69,4 @@ private:
     //@}
 };
 
-#endif // __AfterActionRequests_h_
+#endif // __IndicatorRequests_h_
