@@ -10,6 +10,7 @@
 #include "indicators_pch.h"
 #include "Variables.h"
 #include "Variable.h"
+#include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.h>
 
@@ -72,7 +73,7 @@ boost::shared_ptr< Element_ABC > Variables::Find( const std::string& name ) cons
 void Variables::ReadVariable( xml::xistream& xis )
 {
     boost::shared_ptr< Element_ABC > element( new Variable( xis ) );
-    Register( element->GetInput(), element );
+    Register( boost::erase_first_copy( element->GetInput(), "$" ), element );
 }
 
 // -----------------------------------------------------------------------------

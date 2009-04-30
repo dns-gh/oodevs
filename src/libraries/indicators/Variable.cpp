@@ -31,8 +31,8 @@ Variable::Variable( const std::string& name, const std::string& type, const std:
 // -----------------------------------------------------------------------------
 Variable::Variable( xml::xistream& xis )
     : Constant< std::string >( xml::attribute< std::string >( xis, "id" )
-                                      , xml::attribute< std::string >( xis, "type" )
-                                      , xml::attribute< std::string >( xis, "value" ) )
+                             , xml::attribute< std::string >( xis, "type" )
+                             , xml::attribute< std::string >( xis, "value" ) )
 {
     // NOTHING
 }
