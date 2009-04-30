@@ -909,8 +909,6 @@ void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
     pAutomate_ = &newAutomate;
     pAutomate_->RegisterPion  ( *this );
 
-    GetRole< DEC_RolePion_Decision >().NotifyAutomateChanged(); //$$$ à gicler quand myself.automate_ sera remplacé par une fonction DEC
-
     NET_ASN_MsgUnitChangeSuperior asnMsg;
     asnMsg().oid          = GetID();
     asnMsg().oid_automate = newAutomate.GetID();

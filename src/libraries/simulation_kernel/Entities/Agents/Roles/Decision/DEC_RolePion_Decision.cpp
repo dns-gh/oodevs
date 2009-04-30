@@ -248,15 +248,6 @@ void DEC_RolePion_Decision::StopMissionBehavior( MIL_Mission_ABC& mission )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::NotifyAutomateChanged
-// Created: NLD 2005-04-13
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::NotifyAutomateChanged()
-{
-    assert( pEntity_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::NotifyRoePopulationChanged
 // Created: NLD 2005-11-15
 // -----------------------------------------------------------------------------

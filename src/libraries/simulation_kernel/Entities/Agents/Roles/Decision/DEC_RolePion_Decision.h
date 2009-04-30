@@ -60,8 +60,6 @@ public:
     void StartMissionBehavior( MIL_Mission_ABC& mission );
     void StopMissionBehavior ( MIL_Mission_ABC& mission );
 
-    void NotifyAutomateChanged();
-
     void RemoveAllReferencesOf( const DIA_TypedObject& referenced, DIA_ExecutionContext& context );
     //@}
 
