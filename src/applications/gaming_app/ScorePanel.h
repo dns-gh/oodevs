@@ -28,6 +28,7 @@ namespace kernel
 class IndicatorRequest;
 class IndicatorPlotFactory;
 class Score;
+class ScoreExportDialog;
 class ScoreModel;
 
 // =============================================================================
@@ -56,6 +57,7 @@ private slots:
     //@{
     void OnContextMenu( QListViewItem* item, const QPoint& point, int column );
     void OnShowGraph();
+    void OnExportData();
     //@}
 
 private:
@@ -75,16 +77,22 @@ private:
     void Display( const Score& score, gui::ValuedListItem* item );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::vector< const IndicatorRequest* > T_PendingRequests;
+    //@}
+
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     gui::ItemFactory_ABC& factory_;
     IndicatorPlotFactory& plotFactory_;
-    QMainWindow* mainWindow_;
     ScoreModel& model_;
     gui::ListDisplayer< ScorePanel >* scores_;
-    const IndicatorRequest* pendingGraphRequest_;
+    ScoreExportDialog* exportDialog_;
+    T_PendingRequests graphRequests_;
+    T_PendingRequests exportRequests_;
     //@}
 };
 

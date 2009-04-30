@@ -6,7 +6,6 @@ ActionsPanel.cpp \
 ActionsToolbar.cpp \
 AfterAction.cpp \
 AfterActionFunctionList.cpp \
-AfterActionPlot.cpp \
 AfterActionRequestList.cpp \
 AgentKnowledgePanel.cpp \
 AlarmsWidget.cpp \
@@ -29,6 +28,8 @@ EventToolbar.cpp \
 FireResultListView.cpp \
 FolkToolbar.cpp \
 HumansListView.cpp \
+IndicatorPlot.cpp \
+IndicatorPlotFactory.cpp \
 InfoCompositionDialog.cpp \
 InfoDock.cpp \
 InfoDotationsDialog.cpp \
@@ -88,6 +89,7 @@ ReplayerToolbar.cpp \
 ReportFilterOptions.cpp \
 ReportListView.cpp \
 SIMControlToolbar.cpp \
+ScoreExportDialog.cpp \
 ScorePanel.cpp \
 StatisticsWidget.cpp \
 StatusBar.cpp \

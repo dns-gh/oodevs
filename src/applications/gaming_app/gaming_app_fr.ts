@@ -707,6 +707,28 @@
     </message>
 </context>
 <context>
+    <name>IndicatorPlot</name>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">Valeur</translation>
+    </message>
+    <message>
+        <source>Time (Tick)</source>
+        <translation type="unfinished">Temps (ticks)</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Indicators</name>
+    <message>
+        <source>Plot</source>
+        <translation type="unfinished">Courbe</translation>
+    </message>
+</context>
+<context>
     <name>InfoCompositionDialog</name>
     <message>
         <source>Composition</source>
@@ -2605,6 +2627,10 @@
         <source>Gauge</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export data...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScorePanel</name>
@@ -2615,6 +2641,49 @@
     <message>
         <source>Plot</source>
         <translation type="obsolete">Courbe</translation>
+    </message>
+</context>
+<context>
+    <name>Scores</name>
+    <message>
+        <source>Export data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Separator: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Headers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>CSV (*.csv)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time;%1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

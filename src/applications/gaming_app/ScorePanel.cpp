@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ScorePanel.h"
 #include "moc_ScorePanel.cpp"
+#include "ScoreExportDialog.h"
 #include "IndicatorPlot.h"
 #include "IndicatorPlotFactory.h"
 #include "clients_kernel/Controllers.h"
@@ -28,7 +29,7 @@ ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controller
     , factory_( factory )
     , plotFactory_( plotFactory )
     , model_( model )
-    , pendingGraphRequest_( 0 )
+    , exportDialog_( new ScoreExportDialog( mainWindow ) )
 {
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
@@ -101,11 +102,26 @@ void ScorePanel::NotifyUpdated( const kernel::ModelUnLoaded& )
 // -----------------------------------------------------------------------------
 void ScorePanel::NotifyUpdated( const IndicatorRequest& request )
 {
-    if( pendingGraphRequest_ == &request && request.IsDone() )
+    if( request.IsDone() )
     {
-        IndicatorPlot* plot = plotFactory_.CreatePlot( request );
-        plot->show();
-        pendingGraphRequest_ = 0;
+        T_PendingRequests::iterator it = std::find( graphRequests_.begin(), graphRequests_.end(), &request );
+        if( it != graphRequests_.end() )
+        {
+            IndicatorPlot* plot = plotFactory_.CreatePlot( request );
+            plot->show();
+            std::swap( *it, graphRequests_.back() );
+            graphRequests_.pop_back();
+        }
+        else
+        {
+            T_PendingRequests::iterator it = std::find( exportRequests_.begin(), exportRequests_.end(), &request );
+            if( it != exportRequests_.end() )
+            {
+                exportDialog_->Export( request );
+                std::swap( *it, exportRequests_.back() );
+                exportRequests_.pop_back();
+            }
+        }
     }
 }
 
@@ -127,6 +143,7 @@ void ScorePanel::OnContextMenu( QListViewItem* item, const QPoint& point, int co
 {
     QPopupMenu* menu = new QPopupMenu( scores_ );
     menu->insertItem( tools::translate( "Score", "View graph" ), this, SLOT( OnShowGraph() ) );
+    menu->insertItem( tools::translate( "Score", "Export data..." ), this, SLOT( OnExportData() ) );
     menu->popup( point );
 }
 
@@ -138,5 +155,16 @@ void ScorePanel::OnShowGraph()
 {
     if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( scores_->selectedItem() ) )
         if( Score* score = item->GetValue< Score >() )
-            pendingGraphRequest_ = &model_.CreateRequest( *score );
+            graphRequests_.push_back( &model_.CreateRequest( *score ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScorePanel::OnExportData
+// Created: SBO 2009-04-30
+// -----------------------------------------------------------------------------
+void ScorePanel::OnExportData()
+{
+    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( scores_->selectedItem() ) )
+        if( Score* score = item->GetValue< Score >() )
+            exportRequests_.push_back( &model_.CreateRequest( *score ) );
 }
