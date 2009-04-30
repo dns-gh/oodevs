@@ -61,6 +61,12 @@ public:
             (*it)->Receive( message );
     }
 
+    virtual void Receive( const ASN1T_MsgsAarToClient& message )
+    {
+        for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
+            (*it)->Receive( message );
+    }
+
     virtual void Register( dispatcher::Services& services )
     {
         for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )

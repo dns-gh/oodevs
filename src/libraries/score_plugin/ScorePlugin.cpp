@@ -9,11 +9,17 @@
 
 #include "score_plugin_pch.h"
 #include "ScorePlugin.h"
-#include "tools/ExerciseConfig.h"
+#include "Score.h"
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
+#include "dispatcher/LinkResolver_ABC.h"
+#include "dispatcher/Services.h"
+#include "game_asn/AarSenders.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/MessageDispatcher_ABC.h"
+#include <boost/algorithm/string.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 #include <xeumeuleu/xml.h>
 
 namespace bfs = boost::filesystem;
@@ -23,10 +29,12 @@ using namespace plugins::score;
 // Name: ScorePlugin constructor
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-ScorePlugin::ScorePlugin( dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config )
-    : clients_( clients )
+ScorePlugin::ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config )
+    : resolver_( resolver )
+    , clients_( clients )
 {
     LoadScores( config.GetScoresFile() );
+    dispatcher.RegisterMessage( *this, &ScorePlugin::OnReceive );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +43,17 @@ ScorePlugin::ScorePlugin( dispatcher::ClientPublisher_ABC& clients, const tools:
 // -----------------------------------------------------------------------------
 ScorePlugin::~ScorePlugin()
 {
-    // NOTHING
+    for( T_Scores::const_iterator it = scores_.begin(); it != scores_.end(); ++it )
+        delete it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScorePlugin::Register
+// Created: SBO 2009-04-29
+// -----------------------------------------------------------------------------
+void ScorePlugin::Register( dispatcher::Services& services )
+{
+    services.Declare< aar::Service >(); // $$$$ SBO 2009-04-30: new service if needed (see 3a)
 }
 
 // -----------------------------------------------------------------------------
@@ -44,19 +62,51 @@ ScorePlugin::~ScorePlugin()
 // -----------------------------------------------------------------------------
 void ScorePlugin::Receive( const ASN1T_MsgsSimToClient& message )
 {
-    std::for_each( tasks_.begin(), tasks_.end(), 
-        boost::bind( &Task::Receive, _1, boost::ref( message ) ) );
+    BOOST_FOREACH( const std::vector< boost::shared_ptr< Task > >::value_type& task, tasks_ )
+        task->Receive( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScorePlugin::Receive
+// Created: SBO 2009-04-29
+// -----------------------------------------------------------------------------
+void ScorePlugin::Receive( const ASN1T_MsgsAarToClient& message )
+{
+    if( message.msg.t == T_MsgsAarToClient_msg_msg_indicator )
+    {
+        T_Scores::const_iterator it = scores_.find( message.msg.u.msg_indicator->name );
+        if( it != scores_.end() )
+            it->second->Update( *message.msg.u.msg_indicator );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScorePlugin::OnReceive
+// Created: SBO 2009-04-29
+// -----------------------------------------------------------------------------
+void ScorePlugin::OnReceive( const std::string& client, const ASN1T_MsgsClientToAar& message )
+{
+    if( message.msg.t == T_MsgsClientToAar_msg_msg_plot_request )
+    {
+        const ASN1T_MsgPlotRequest& request = *message.msg.u.msg_plot_request;
+        if( boost::starts_with( request.request, "indicator://" ) )
+        {
+            T_Scores::const_iterator it = scores_.find( boost::erase_head_copy< std::string >( request.request, 12 ) );
+            if( it != scores_.end() )
+                it->second->Send( resolver_.GetPublisher( client ), request.identifier );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScorePlugin::LoadScores
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-void ScorePlugin::LoadScores( const std::string& functions )
+void ScorePlugin::LoadScores( const std::string& scores )
 {
-    if( bfs::exists( bfs::path( functions, bfs::native ) ) )
+    if( bfs::exists( bfs::path( scores, bfs::native ) ) )
     {
-        xml::xifstream xis( functions );
+        xml::xifstream xis( scores );
         xis >> xml::start( "scores" )
                 >> xml::list( "score", *this, &ScorePlugin::LoadIndicators )
             >> xml::end();
@@ -69,6 +119,7 @@ void ScorePlugin::LoadScores( const std::string& functions )
 // -----------------------------------------------------------------------------
 void ScorePlugin::LoadIndicators( xml::xistream& xis )
 {
+    scores_[ xml::attribute< std::string >( xis, "name" ) ] = new Score();
     xis >> xml::start( "indicators" )
             >> xml::list( "indicator", *this, &ScorePlugin::LoadIndicator )
         >> xml::end();

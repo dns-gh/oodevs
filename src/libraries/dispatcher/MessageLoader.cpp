@@ -33,8 +33,8 @@ MessageLoader::MessageLoader( const Config& config, bool threaded )
     }
     const bfs::path dir( config.GetRecordDirectory(), bfs::native );
 
-    index_    .open( ( dir / "index" ).string().c_str(),    std::ios_base::binary | std::ios_base::in  );
-    keyIndex_ .open( ( dir / "keyindex" ).string().c_str(), std::ios_base::binary | std::ios_base::in  );
+    index_    .open( ( dir / "index" ).string().c_str(),    std::ios_base::binary | std::ios_base::in );
+    keyIndex_ .open( ( dir / "keyindex" ).string().c_str(), std::ios_base::binary | std::ios_base::in );
     updates_  .open( ( dir / "update" ).string().c_str(),   std::ios_base::binary | std::ios_base::in );
     keys_     .open( ( dir / "key"    ).string().c_str(),   std::ios_base::binary | std::ios_base::in );
     LoadIndices();

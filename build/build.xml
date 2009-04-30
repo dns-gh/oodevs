@@ -151,7 +151,7 @@
         </build-lib>
     </target>
 
-    <target name="library.gaming" description="build gaming static library" depends="library.game_asn,library.clients_gui,library.actions">
+    <target name="library.gaming" description="build gaming static library" depends="library.game_asn,library.clients_gui,library.actions,library.indicators">
         <build-lib name="gaming" depends="qt" pattern="lib${ant.project.name}_gaming-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
@@ -333,7 +333,7 @@
         </build-app>
     </target>
 
-    <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher,library.3a">
+    <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher,library.3a,library.score_plugin">
         <build-app name="replayer_app" depends="mt,din,dia3,terrain,boost,xeumeuleu,flexlm,qt"
                    libs="HLA,libFedTime,tools,masasn,directia-${platform}-mt-4_5
                          dispatcher-${platform}-mt@{suffix}
@@ -342,7 +342,8 @@
                          lib${ant.project.name}_game_asn-${platform}-mt
                          lib${ant.project.name}_3a-${platform}-mt
                          lib${ant.project.name}_dispatcher-${platform}-mt
-                         lib${ant.project.name}_clients_kernel-${platform}-mt">
+                         lib${ant.project.name}_clients_kernel-${platform}-mt
+                         lib${ant.project.name}_score_plugin-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32"/>
             <includepath path="${include.dir}/masasn"/>
         </build-app>
@@ -366,7 +367,8 @@
                          lib${ant.project.name}_gaming-${platform}-mt
                          lib${ant.project.name}_actions-${platform}-mt
                          lib${ant.project.name}_clients_gui-${platform}-mt
-                         lib${ant.project.name}_clients_kernel-${platform}-mt">
+                         lib${ant.project.name}_clients_kernel-${platform}-mt
+                         lib${ant.project.name}_indicators-${platform}-mt">
             <includepath path="${include.dir}/masasn"/>
             <syslibset libs="gdi32,psapi,dbghelp,htmlhelp"/>
         </build-app>

@@ -169,6 +169,7 @@ void ClientsNetworker::Send( const ASN1T_MsgsAarToClient& asnMsg )
     {
         for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( asnMsg );
+        plugin_.Receive( asnMsg );
     }
     catch( std::exception& exception )
     {

@@ -70,7 +70,7 @@ void PluginFactory::Instanciate()
     // $$$$ AGE 2008-08-04: retirer la dépendance...
     handler_.Add( new messenger::MessengerPlugin( clients_, clients_, clients_, config_, registrables_ ) );
     handler_.Add( new script::ScriptPlugin( model_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
-    handler_.Add( new score::ScorePlugin( clients_, config_ ) );
+    handler_.Add( new score::ScorePlugin( clients_, clients_, clients_, config_ ) );
 
     xml::xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" ) >> xml::start( "config" ) >> xml::start( "dispatcher" ) >> xml::start( "plugins" )

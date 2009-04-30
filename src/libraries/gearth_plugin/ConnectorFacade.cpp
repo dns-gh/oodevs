@@ -91,7 +91,6 @@ bool ConnectorFacade::IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) const
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ConnectorFacade::Update
 // Created: JCR 2007-04-30
@@ -124,10 +123,6 @@ void ConnectorFacade::OnReceiveMessengerToClient(const std::string&, const ASN1T
 {
     bNeedUpdate_  = IsRelevant( asnMsg );
 }
-
-
-
-
 
 // -----------------------------------------------------------------------------
 // Name: ConnectorFacade::SendCurrentState

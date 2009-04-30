@@ -17,6 +17,7 @@
 #include "game_asn/AarSenders.h"
 #include "ClientPublisher_ABC.h"
 #include "Services.h"
+#include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
@@ -103,6 +104,8 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const ASN1
     messages_->ReloadIndices();
     try
     {
+        if( boost::starts_with( request.request, "indicator://" ) )
+            return;
         xml::xistringstream xis( request.request );
         AarFacade factory( resolver_.GetPublisher( client ), request.identifier );
         xis >> xml::start( "indicator" );

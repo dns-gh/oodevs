@@ -132,7 +132,6 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) con
     return true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher::Receive
 // Created: SBO 2007-09-27
@@ -158,7 +157,6 @@ void DatabasePublisher::Receive( const ASN1T_MsgsMessengerToClient& asn )
 
     UpdateDatabase( asn );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher::UpdateOnTick

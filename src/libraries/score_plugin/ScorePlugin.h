@@ -11,7 +11,9 @@
 #define __ScorePlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
+#include "game_asn/Aar.h"
 #include <vector>
+#include <map>
 #include <boost/shared_ptr.hpp>
 
 namespace xml
@@ -22,6 +24,12 @@ namespace xml
 namespace tools
 {
     class ExerciseConfig;
+    class MessageDispatcher_ABC;
+}
+
+namespace dispatcher
+{
+    class LinkResolver_ABC;
 }
 
 class Task;
@@ -30,6 +38,7 @@ namespace plugins
 {
 namespace score
 {
+    class Score;
 
 // =============================================================================
 /** @class  ScorePlugin
@@ -43,15 +52,17 @@ class ScorePlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePlugin( dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config );
+             ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config );
     virtual ~ScorePlugin();
     //@}
 
     //! @name Operations
     //@{
     virtual void Receive                  ( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive                  ( const ASN1T_MsgsAarToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
+    virtual void Register                 ( dispatcher::Services& );
     //@}
 
 private:
@@ -63,15 +74,23 @@ private:
 
     //! @name Helpers
     //@{
-    void LoadScores( const std::string& functions );
+    void LoadScores( const std::string& scores );
     void LoadIndicators( xml::xistream& xis );
     void LoadIndicator ( xml::xistream& xis );
+    void OnReceive( const std::string&, const ASN1T_MsgsClientToAar& message );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< std::string, Score* > T_Scores;
     //@}
 
 private:
     //! @name Member data
     //@{
+    dispatcher::LinkResolver_ABC& resolver_;
     dispatcher::ClientPublisher_ABC& clients_;
+    T_Scores scores_;
     std::vector< boost::shared_ptr< Task > > tasks_;
     //@}
 };

@@ -183,11 +183,11 @@ void Task::Commit()
 // Name: Task::Process
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void Task::Process( dispatcher::MessageLoader_ABC& loader  )
+void Task::Process( dispatcher::MessageLoader_ABC& loader )
 {
     const unsigned ticks = loader.GetTickNumber();
     loader.LoadKeyFrame( 0, *this );
-    for( unsigned i = 0; i < ticks-1; ++i )
+    for( unsigned i = 0; i < ticks - 1; ++i )
         loader.LoadFrame( i, *this );
-    loader.LoadFrame( ticks-1, *this, boost::bind( &Task::Commit, shared_from_this() ) );
+    loader.LoadFrame( ticks - 1, *this, boost::bind( &Task::Commit, shared_from_this() ) );
 }

@@ -11,6 +11,7 @@
 #define __MessageHandler_ABC_h_
 
 #include "game_asn/Simulation.h"
+#include "game_asn/Aar.h"
 
 namespace dispatcher
 {
@@ -18,6 +19,7 @@ namespace dispatcher
 // =============================================================================
 /** @class  MessageHandler_ABC
     @brief  Simulation message handler definition
+    // $$$$ SBO 2009-04-29: messages which can be handled by dispatcher plugins
 */
 // Created: AGE 2007-07-05
 // =============================================================================
@@ -34,6 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual void Receive( const ASN1T_MsgsSimToClient& message ) = 0;
+    virtual void Receive( const ASN1T_MsgsAarToClient& /*message*/ ) {}
     //@}
 };
 

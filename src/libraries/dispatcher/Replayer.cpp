@@ -21,6 +21,7 @@
 #include "NoopPublisher.h"
 #include "AarPlugin.h"
 #include "Services.h"
+#include "score_plugin/ScorePlugin.h"
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
@@ -61,6 +62,7 @@ Replayer::Replayer( const Config& config )
     handler_.Add( rights  );
     handler_.Add( plugin_ );
     handler_.Add( new AarPlugin( *clientsNetworker_, *rights, config ) );
+    handler_.Add( new plugins::score::ScorePlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config ) );
     handler_.Register( *services_ );
     loader_->Start();
 }
