@@ -597,15 +597,23 @@
         <source>Time (Tick)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Indicators</name>
     <message>
         <source>Plot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export data...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2387,10 +2395,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>View graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tendency</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2398,15 +2402,15 @@
         <source>Gauge</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Export data...</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ScorePanel</name>
     <message>
         <source>Scores</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View graph</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2446,10 +2450,6 @@
     </message>
     <message>
         <source>CSV (*.csv)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time;%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

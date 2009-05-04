@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ScorePanel.h"
 #include "moc_ScorePanel.cpp"
-#include "ScoreExportDialog.h"
+#include "IndicatorExportDialog.h"
 #include "IndicatorPlot.h"
 #include "IndicatorPlotFactory.h"
 #include "clients_kernel/Controllers.h"
@@ -23,13 +23,13 @@
 // Name: ScorePanel constructor
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory, ScoreModel& model )
+ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model )
     : QDockWindow( mainWindow, "score" )
     , controllers_( controllers )
     , factory_( factory )
     , plotFactory_( plotFactory )
     , model_( model )
-    , exportDialog_( new ScoreExportDialog( mainWindow ) )
+    , exportDialog_( exportDialog )
 {
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
@@ -117,7 +117,8 @@ void ScorePanel::NotifyUpdated( const IndicatorRequest& request )
             T_PendingRequests::iterator it = std::find( exportRequests_.begin(), exportRequests_.end(), &request );
             if( it != exportRequests_.end() )
             {
-                exportDialog_->Export( request );
+                exportDialog_.Add( request );
+                exportDialog_.Export();
                 std::swap( *it, exportRequests_.back() );
                 exportRequests_.pop_back();
             }
@@ -142,8 +143,8 @@ void ScorePanel::Display( const Score& score, gui::ValuedListItem* item )
 void ScorePanel::OnContextMenu( QListViewItem* item, const QPoint& point, int column )
 {
     QPopupMenu* menu = new QPopupMenu( scores_ );
-    menu->insertItem( tools::translate( "Score", "View graph" ), this, SLOT( OnShowGraph() ) );
-    menu->insertItem( tools::translate( "Score", "Export data..." ), this, SLOT( OnExportData() ) );
+    menu->insertItem( tools::translate( "ScorePanel", "View graph" ), this, SLOT( OnShowGraph() ) );
+    menu->insertItem( tools::translate( "Indicators", "Export data..." ), this, SLOT( OnExportData() ) );
     menu->popup( point );
 }
 

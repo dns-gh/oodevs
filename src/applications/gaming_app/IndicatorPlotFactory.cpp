@@ -19,10 +19,11 @@
 // Name: IndicatorPlotFactory constructor
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-IndicatorPlotFactory::IndicatorPlotFactory( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher )
+IndicatorPlotFactory::IndicatorPlotFactory( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, IndicatorExportDialog& exportDialog )
     : mainWindow_( mainWindow )
     , controllers_( controllers )
     , publisher_( publisher )
+    , exportDialog_( exportDialog )
     , hasReplay_( false )
 {
     controllers_.Register( *this );
@@ -45,7 +46,7 @@ IndicatorPlot* IndicatorPlotFactory::CreatePlot( const IndicatorRequest& request
 {
     QDockWindow* dock = new QDockWindow( mainWindow_, "indicatorplot", Qt::WDestructiveClose );
     QVBox* box = new QVBox( dock );
-    IndicatorPlot* plot = new IndicatorPlot( box, controllers_, publisher_, dock, hasReplay_ );
+    IndicatorPlot* plot = new IndicatorPlot( box, controllers_, publisher_, dock, exportDialog_, hasReplay_ );
     dock->setWidget( box );
     dock->setResizeEnabled( true );
     dock->setCloseMode( QDockWindow::Always );

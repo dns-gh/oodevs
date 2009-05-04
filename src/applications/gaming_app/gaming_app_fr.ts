@@ -716,16 +716,24 @@
         <source>Time (Tick)</source>
         <translation type="unfinished">Temps (ticks)</translation>
     </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Indicators</name>
     <message>
         <source>Plot</source>
         <translation type="unfinished">Courbe</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished">Temps</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export data...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2616,19 +2624,11 @@
         <translation type="unfinished">Valeur</translation>
     </message>
     <message>
-        <source>View graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tendency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Gauge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export data...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2642,9 +2642,21 @@
         <source>Plot</source>
         <translation type="obsolete">Courbe</translation>
     </message>
+    <message>
+        <source>View graph</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Scores</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
     <message>
         <source>Export data</source>
         <translation type="unfinished"></translation>
@@ -2670,20 +2682,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
-    </message>
-    <message>
         <source>CSV (*.csv)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Time;%1</source>
-        <translation type="unfinished"></translation>
+        <source>Time</source>
+        <translation type="obsolete">Temps</translation>
     </message>
 </context>
 <context>

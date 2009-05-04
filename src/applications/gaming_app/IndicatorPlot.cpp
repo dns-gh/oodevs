@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "IndicatorPlot.h"
 #include "moc_IndicatorPlot.cpp"
+#include "IndicatorExportDialog.h"
 #include "game_asn/ReplaySenders.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Simulation.h"
@@ -24,12 +25,13 @@ using namespace kernel;
 // Name: IndicatorPlot constructor
 // Created: AGE 2007-09-26
 // -----------------------------------------------------------------------------
-IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock, bool interactive )
+IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock, IndicatorExportDialog& exportDialog, bool interactive )
     : GQ_Plot( parent, "IndicatorPlot" )
     , controllers_( controllers )
     , publisher_( publisher )
     , interactive_( interactive )
     , dock_( dock )
+    , exportDialog_( exportDialog )
     , tickData_( 0 )
     , min_( 0 )
     , max_( -std::numeric_limits< double >::infinity() )
@@ -172,12 +174,11 @@ void IndicatorPlot::mouseReleaseEvent( QMouseEvent* e )
 // -----------------------------------------------------------------------------
 void IndicatorPlot::contextMenuEvent( QContextMenuEvent* e )
 {
+    QPopupMenu* menu = new QPopupMenu( this );
     if( !interactive_ )
-    {
-        QPopupMenu* menu = new QPopupMenu( this );
-        menu->insertItem( tr( "Refresh" ), this, SLOT( OnRefresh() ), Qt::Key_F5 );
-        menu->exec( e->globalPos() );   
-    }
+        menu->insertItem( tools::translate( "Indicators", "Refresh" ), this, SLOT( OnRefresh() ), Qt::Key_F5 );
+    menu->insertItem( tools::translate( "Indicators", "Export data..." ), this, SLOT( OnExportData() ) );
+    menu->exec( e->globalPos() );   
 }
 
 // -----------------------------------------------------------------------------
@@ -189,6 +190,17 @@ void IndicatorPlot::keyPressEvent( QKeyEvent* e )
     if( !interactive_ && e->key() == Qt::Key_F5 )
         OnRefresh();
     GQ_Plot::keyPressEvent( e );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorPlot::OnExportData
+// Created: SBO 2009-05-04
+// -----------------------------------------------------------------------------
+void IndicatorPlot::OnExportData()
+{
+    BOOST_FOREACH( const T_PlottedRequests::value_type& plot, plots_ )
+        exportDialog_.Add( *plot.first );
+    exportDialog_.Export();
 }
 
 // -----------------------------------------------------------------------------

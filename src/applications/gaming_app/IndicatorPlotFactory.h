@@ -17,6 +17,7 @@ namespace kernel
     class Controllers;
 }
 
+class IndicatorExportDialog;
 class IndicatorRequest;
 class IndicatorPlot;
 class Publisher_ABC;
@@ -35,7 +36,7 @@ class IndicatorPlotFactory : public kernel::Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorPlotFactory( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher );
+             IndicatorPlotFactory( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, IndicatorExportDialog& exportDialog );
     virtual ~IndicatorPlotFactory();
     //@}
 
@@ -62,6 +63,7 @@ private:
     QMainWindow* mainWindow_;
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    IndicatorExportDialog& exportDialog_;
     bool hasReplay_;
     //@}
 };

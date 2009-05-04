@@ -8,20 +8,20 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "ScoreExportDialog.h"
-#include "moc_ScoreExportDialog.cpp"
+#include "IndicatorExportDialog.h"
+#include "moc_IndicatorExportDialog.cpp"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Tools.h"
+#include <boost/foreach.hpp>
 #include <fstream>
 #include <string>
 
 // -----------------------------------------------------------------------------
-// Name: ScoreExportDialog constructor
+// Name: IndicatorExportDialog constructor
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-ScoreExportDialog::ScoreExportDialog( QWidget* parent )
-    : QDialog( parent, "ScoreExportDialog" )
-    , current_( 0 )
+IndicatorExportDialog::IndicatorExportDialog( QWidget* parent )
+    : QDialog( parent, "IndicatorExportDialog" )
 {
     setCaption( tools::translate( "Scores", "Export data" ) );
     QGridLayout* grid = new QGridLayout( this, 2, 2, 0, 5 );
@@ -52,29 +52,38 @@ ScoreExportDialog::ScoreExportDialog( QWidget* parent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreExportDialog destructor
+// Name: IndicatorExportDialog destructor
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-ScoreExportDialog::~ScoreExportDialog()
+IndicatorExportDialog::~IndicatorExportDialog()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreExportDialog::Export
+// Name: IndicatorExportDialog::Add
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-void ScoreExportDialog::Export( const IndicatorRequest& request )
+void IndicatorExportDialog::Add( const IndicatorRequest& request )
 {
-    current_ = &request;
-    show();
+    requests_.push_back( &request );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreExportDialog::OnBrowse
+// Name: IndicatorExportDialog::Export
+// Created: SBO 2009-05-04
+// -----------------------------------------------------------------------------
+void IndicatorExportDialog::Export()
+{
+    if( ! requests_.empty() )
+        show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorExportDialog::OnBrowse
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-void ScoreExportDialog::OnBrowse()
+void IndicatorExportDialog::OnBrowse()
 {
     QString filename = QFileDialog::getSaveFileName( 0, tools::translate( "Scores", "CSV (*.csv)" ), topLevelWidget(), 0, tools::translate( "Scores", "Export data" ) );
     if( filename == QString::null )
@@ -85,26 +94,47 @@ void ScoreExportDialog::OnBrowse()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreExportDialog::OnFileChanged
+// Name: IndicatorExportDialog::OnFileChanged
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-void ScoreExportDialog::OnFileChanged( const QString& text )
+void IndicatorExportDialog::OnFileChanged( const QString& text )
 {
     ok_->setEnabled( !text.isEmpty() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreExportDialog::OnAccept
+// Name: IndicatorExportDialog::OnAccept
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-void ScoreExportDialog::OnAccept()
+void IndicatorExportDialog::OnAccept()
 {
     std::ofstream file( file_->text().ascii() );
     const std::string sep = separator_->text().ascii();
     if( header_->isChecked() )
-        file << tools::translate( "Scores", "Time;%1" ).arg( current_->GetName() ) << std::endl;
-    for( unsigned int i = 0; i < current_->Result().size(); ++i )
-        file << i << sep << current_->Result()[i] << std::endl;
+    {
+        file << tools::translate( "Indicators", "Time" );
+        BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
+            file << sep << request->GetName();
+        file << std::endl;
+    }
+    unsigned int hasData = requests_.size();
+    unsigned int index = 0;
+    while( hasData )
+    {
+        file << index;
+        BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
+        {
+            const unsigned int size = request->Result().size();
+            file << sep;
+            if( index < size )
+                file << request->Result()[index];
+            else if( index == size )
+                --hasData;
+        }
+        file << std::endl;
+        ++index;
+    }
     file.close();
+    requests_.clear();
     accept();
 }

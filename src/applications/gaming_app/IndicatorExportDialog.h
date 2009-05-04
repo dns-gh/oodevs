@@ -7,31 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __ScoreExportDialog_h_
-#define __ScoreExportDialog_h_
+#ifndef __IndicatorExportDialog_h_
+#define __IndicatorExportDialog_h_
 
 class IndicatorRequest;
 
 // =============================================================================
-/** @class  ScoreExportDialog
-    @brief  ScoreExportDialog
+/** @class  IndicatorExportDialog
+    @brief  IndicatorExportDialog
 */
 // Created: SBO 2009-04-30
 // =============================================================================
-class ScoreExportDialog : public QDialog
+class IndicatorExportDialog : public QDialog
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ScoreExportDialog( QWidget* parent );
-    virtual ~ScoreExportDialog();
+    explicit IndicatorExportDialog( QWidget* parent );
+    virtual ~IndicatorExportDialog();
     //@}
 
     //! @name Operations
     //@{
-    void Export( const IndicatorRequest& request );
+    void Add( const IndicatorRequest& request );
+    void Export();
     //@}
 
 private slots:
@@ -45,18 +46,19 @@ private slots:
 private:
     //! @name Copy/Assignment
     //@{
-    ScoreExportDialog( const ScoreExportDialog& );            //!< Copy constructor
-    ScoreExportDialog& operator=( const ScoreExportDialog& ); //!< Assignment operator
+    IndicatorExportDialog( const IndicatorExportDialog& );            //!< Copy constructor
+    IndicatorExportDialog& operator=( const IndicatorExportDialog& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
+    typedef std::vector< const IndicatorRequest* > T_Requests;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const IndicatorRequest* current_;
+    T_Requests requests_;
     QLineEdit* file_;
     QLineEdit* separator_;
     QCheckBox* header_;
@@ -64,4 +66,4 @@ private:
     //@}
 };
 
-#endif // __ScoreExportDialog_h_
+#endif // __IndicatorExportDialog_h_

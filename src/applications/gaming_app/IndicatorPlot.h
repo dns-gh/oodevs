@@ -18,6 +18,7 @@ namespace kernel
     class Controllers;
 }
 
+class IndicatorExportDialog;
 class IndicatorRequest;
 class Publisher_ABC;
 class Simulation;
@@ -38,7 +39,7 @@ class IndicatorPlot : public GQ_Plot
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock, bool interactive );
+             IndicatorPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock, IndicatorExportDialog& exportDialog, bool interactive );
     virtual ~IndicatorPlot();
     //@}
 
@@ -50,6 +51,7 @@ public:
 private slots:
     //! @name Slots
     //@{
+    void OnExportData();
     void OnRefresh();
     //@}
 
@@ -86,6 +88,7 @@ private:
     Publisher_ABC& publisher_;
     const bool interactive_;
     QDockWindow* dock_;
+    IndicatorExportDialog& exportDialog_;
     T_Datas datas_;
     GQ_PlotData* tickData_;
     T_PlottedRequests plots_;

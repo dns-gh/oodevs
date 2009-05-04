@@ -28,7 +28,7 @@ namespace kernel
 class IndicatorRequest;
 class IndicatorPlotFactory;
 class Score;
-class ScoreExportDialog;
+class IndicatorExportDialog;
 class ScoreModel;
 
 // =============================================================================
@@ -48,7 +48,7 @@ class ScorePanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory, ScoreModel& model );
+             ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model );
     virtual ~ScorePanel();
     //@}
 
@@ -89,8 +89,8 @@ private:
     gui::ItemFactory_ABC& factory_;
     IndicatorPlotFactory& plotFactory_;
     ScoreModel& model_;
+    IndicatorExportDialog& exportDialog_;
     gui::ListDisplayer< ScorePanel >* scores_;
-    ScoreExportDialog* exportDialog_;
     T_PendingRequests graphRequests_;
     T_PendingRequests exportRequests_;
     //@}
