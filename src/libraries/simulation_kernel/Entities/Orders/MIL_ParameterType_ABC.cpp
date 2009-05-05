@@ -42,7 +42,6 @@
 #include "MIL_ParameterType_MedicalPriorities.h"
 #include "MIL_ParameterType_IndirectFire.h"
 #include "MIL_ParameterType_String.h"
-#include "MIL_ParameterType_Objective.h"
 #include "MIL_ParameterType_ObjectiveList.h"
 #include "MIL_OrderType_ABC.h"
 #include "Decision/DEC_Tools.h"
@@ -104,7 +103,6 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_MedicalPriorities     >();
     RegisterParameterType< MIL_ParameterType_IndirectFire          >();
     RegisterParameterType< MIL_ParameterType_String                >();
-    RegisterParameterType< MIL_ParameterType_Objective             >();
     RegisterParameterType< MIL_ParameterType_ObjectiveList         >();
 }
 

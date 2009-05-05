@@ -955,7 +955,7 @@
       <parameter dia-name="sansRearticulation_" name="Pas de rearticulation" optional="true" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_GTIA_EffectuerRaid" dia-type="T_Mission_Automate_ABC_GTIA_EffectuerRaid" id="211" mrt-dia-behavior="MIS_Automate_MRT_ABC_GTIA_EffectuerRaid" name="ABC GTIA EffectuerRaid">
-      <parameter dia-name="objectifs_" name="Objectifs" optional="true" type="Objective"/>
+      <parameter dia-name="objectifs_" name="Objectifs" optional="true" type="ObjectiveList"/>
       <parameter dia-name="delaisCourts_" name="Delais courts" optional="true" type="Bool"/>
       <parameter dia-name="sansRearticulation_" name="Pas de rearticulation" optional="true" type="Bool"/>
     </mission>
