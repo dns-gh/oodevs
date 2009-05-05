@@ -10,6 +10,7 @@
 #ifndef __ScoreModel_h_
 #define __ScoreModel_h_
 
+#include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/Resolver.h"
 #include "game_asn/Aar.h"
 

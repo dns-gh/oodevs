@@ -95,7 +95,6 @@ private:
     ProfileFactory_ABC& profileFactory_;
     ScoreFactory_ABC& scoreFactory_;
     gui::DrawingFactory_ABC& drawingFactory_;
-    std::string orbatFile_;
     QString name_;
     //@}
 

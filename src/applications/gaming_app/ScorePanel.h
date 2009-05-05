@@ -17,12 +17,18 @@
 namespace gui
 {
     class ItemFactory_ABC;
+    class LinkInterpreter_ABC;
 }
 
 namespace kernel
 {
     class Controllers;
     class ModelUnLoaded;
+}
+
+namespace tools
+{
+    class ExerciseConfig;
 }
 
 class IndicatorRequest;
@@ -48,7 +54,7 @@ class ScorePanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model );
+             ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::LinkInterpreter_ABC& interpreter, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model, const tools::ExerciseConfig& config );
     virtual ~ScorePanel();
     //@}
 
@@ -90,6 +96,7 @@ private:
     IndicatorPlotFactory& plotFactory_;
     ScoreModel& model_;
     IndicatorExportDialog& exportDialog_;
+    QDialog* reportDialog_;
     gui::ListDisplayer< ScorePanel >* scores_;
     T_PendingRequests graphRequests_;
     T_PendingRequests exportRequests_;

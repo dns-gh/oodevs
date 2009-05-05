@@ -58,7 +58,6 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
     , scoreFactory_( *new ScoreFactory( controllers_.controller_, staticModel.indicators_ ) )
     , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) ) 
-    , orbatFile_( "" )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , formations_( *new FormationModel( controllers, formationFactory_ ) )
@@ -204,7 +203,6 @@ QString Model::GetName() const
 // -----------------------------------------------------------------------------
 void Model::UpdateName( const std::string& orbat )
 {
-    orbatFile_ = orbat;
     if( orbat.empty() )
         name_ = "";
     else

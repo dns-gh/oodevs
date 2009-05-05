@@ -616,6 +616,14 @@
         <source>Export data...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export score data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create report...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InfoCompositionDialog</name>

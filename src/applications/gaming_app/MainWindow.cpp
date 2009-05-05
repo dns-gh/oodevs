@@ -323,7 +323,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // Score panel
     {
-        ScorePanel* scorePanel = new ScorePanel( this, controllers_, *factory, *plotFactory, *indicatorExportDialog, model_.scores_ );
+        ScorePanel* scorePanel = new ScorePanel( this, controllers_, *factory, *interpreter, *plotFactory, *indicatorExportDialog, model_.scores_, config );
         moveDockWindow( scorePanel, Qt::DockRight );
         setDockEnabled( scorePanel, Qt::DockTop, false );
         scorePanel->hide();
