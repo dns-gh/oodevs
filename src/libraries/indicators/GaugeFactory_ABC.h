@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __GaugeFactory_h_
-#define __GaugeFactory_h_
+#ifndef __GaugeFactory_ABC_h_
+#define __GaugeFactory_ABC_h_
 
 namespace xml
 {
@@ -21,44 +21,28 @@ namespace indicators
     class GaugeTypes;
 
 // =============================================================================
-/** @class  GaugeFactory
-    @brief  GaugeFactory
+/** @class  GaugeFactory_ABC
+    @brief  GaugeFactory_ABC
 */
 // Created: SBO 2009-05-06
 // =============================================================================
-class GaugeFactory
+class GaugeFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GaugeFactory();
-    virtual ~GaugeFactory();
+             GaugeFactory_ABC() {}
+    virtual ~GaugeFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    Gauge* Create( xml::xistream& xis ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    GaugeFactory( const GaugeFactory& );            //!< Copy constructor
-    GaugeFactory& operator=( const GaugeFactory& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::auto_ptr< GaugeTypes > types_;
+    virtual Gauge* Create() const = 0;
+    virtual Gauge* Create( xml::xistream& xis ) const = 0;
     //@}
 };
 
 }
 
-#endif // __GaugeFactory_h_
+#endif // __GaugeFactory_ABC_h_

@@ -10,6 +10,7 @@
 #ifndef __GaugeTypes_h_
 #define __GaugeTypes_h_
 
+#include "GaugeFactory_ABC.h"
 #include "clients_kernel/Resolver.h"
 
 namespace xml
@@ -29,6 +30,7 @@ namespace indicators
 // Created: SBO 2009-05-05
 // =============================================================================
 class GaugeTypes : public kernel::Resolver< GaugeType, QString >
+                 , public GaugeFactory_ABC
 {
 
 public:
@@ -42,6 +44,8 @@ public:
     //@{
     void Load( const std::string& filename );
     void Purge();
+    virtual Gauge* Create() const;
+    virtual Gauge* Create( xml::xistream& xis ) const;
     //@}
 
 private:

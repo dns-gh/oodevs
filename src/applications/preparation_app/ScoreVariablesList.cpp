@@ -95,11 +95,12 @@ void ScoreVariablesList::AddVariable( const indicators::Element_ABC& variable )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreVariablesList::CommitTo
-// Created: SBO 2009-04-24
+// Name: ScoreVariablesList::GetValue
+// Created: SBO 2009-05-07
 // -----------------------------------------------------------------------------
-void ScoreVariablesList::CommitTo( indicators::Variables& variables )
+indicators::Variables ScoreVariablesList::GetValue() const
 {
+    indicators::Variables result;
     for( QListViewItemIterator it( list_ ); it.current(); ++it )
         if( const gui::ValuedListItem* item = static_cast< const gui::ValuedListItem* >( *it ) )
         {
@@ -107,8 +108,9 @@ void ScoreVariablesList::CommitTo( indicators::Variables& variables )
             const QString type  = item->text( 1 );
             const QString value = item->text( 2 );
             boost::shared_ptr< indicators::Element_ABC > variable( new indicators::Variable( name.ascii(), type.ascii(), value.ascii() ) );
-            variables.Register( name.ascii(), variable );
+            result.Register( name.ascii(), variable );
         }
+    return result;
 }
 
 // -----------------------------------------------------------------------------

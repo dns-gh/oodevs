@@ -28,6 +28,7 @@ namespace gui
 
 namespace indicators
 {
+    class GaugeTypes;
     class Primitives;
 }
 
@@ -78,6 +79,7 @@ public:
     ReportFactory&                   reportFactory_;
     gui::DrawingTypes&               drawings_;
     indicators::Primitives&          indicators_;
+    indicators::GaugeTypes&          gaugeTypes_;
     ScoreDefinitions&                scores_;
     //@}
 

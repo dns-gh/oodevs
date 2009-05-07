@@ -70,6 +70,11 @@ private:
     ScoreEditor& operator=( const ScoreEditor& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void CommitTo( Score_ABC& score );
+    //@}
+
 private:
     //! @name Member data
     //@{

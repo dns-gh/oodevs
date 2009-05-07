@@ -17,6 +17,7 @@
 
 namespace indicators
 {
+    class Gauge;
     class GaugeType;
     class GaugeTypes;
 }
@@ -48,6 +49,12 @@ public:
     virtual ~ScoreGaugeConfiguration();
     //@}
 
+    //! @name Operations
+    //@{
+    void StartEdit( const indicators::Gauge& gauge );
+    indicators::Gauge GetValue() const;
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -66,7 +73,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddInterval();
+    void AddInterval( double min = 0, double max = 0, double key = 0 );
     void RemoveInterval();
     void UpdateSymbol( int row, double value );
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
@@ -80,6 +87,7 @@ private:
     const indicators::GaugeTypes& gaugeTypes_;
     gui::ValuedComboBox< const indicators::GaugeType* >* type_;
     QGroupBox* normalizationBox_;
+    QSpinBox* steps_;
     QLineEdit* min_;
     QLineEdit* max_;
     QTable* intervals_;

@@ -15,7 +15,7 @@
 namespace indicators
 {
     class Primitives;
-    class GaugeFactory;
+    class GaugeFactory_ABC;
 }
 
 namespace xml
@@ -37,7 +37,7 @@ class ScoreDefinitions : public kernel::Resolver< ScoreDefinition, QString >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ScoreDefinitions( const indicators::Primitives& indicators );
+             ScoreDefinitions( const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& factory );
     virtual ~ScoreDefinitions();
     //@}
 
@@ -63,7 +63,7 @@ private:
     //! @name Member data
     //@{
     const indicators::Primitives& primitives_;
-    std::auto_ptr< indicators::GaugeFactory > gaugeFactory_;
+    const indicators::GaugeFactory_ABC& gaugeFactory_;
     //@}
 };
 

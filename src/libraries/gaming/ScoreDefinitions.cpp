@@ -10,16 +10,16 @@
 #include "gaming_pch.h"
 #include "ScoreDefinitions.h"
 #include "ScoreDefinition.h"
-#include "indicators/GaugeFactory.h"
+#include "indicators/GaugeFactory_ABC.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
 // Name: ScoreDefinitions constructor
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-ScoreDefinitions::ScoreDefinitions( const indicators::Primitives& primitives )
+ScoreDefinitions::ScoreDefinitions( const indicators::Primitives& primitives, const indicators::GaugeFactory_ABC& factory )
     : primitives_( primitives )
-    , gaugeFactory_( new indicators::GaugeFactory() )
+    , gaugeFactory_( factory )
 {
     // NOTHING
 }
@@ -63,7 +63,7 @@ void ScoreDefinitions::ReadDefinition( xml::xistream& xis )
 {
     try
     {
-        std::auto_ptr< ScoreDefinition > def( new ScoreDefinition( xis, primitives_, *gaugeFactory_ ) );
+        std::auto_ptr< ScoreDefinition > def( new ScoreDefinition( xis, primitives_, gaugeFactory_ ) );
         Register( def->GetName(), *def.release() );
     }
     catch( ... )

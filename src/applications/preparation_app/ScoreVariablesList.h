@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     void StartEdit( const Score_ABC& score );
-    void CommitTo( indicators::Variables& variables );
+    indicators::Variables GetValue() const;
     //@}
 
 signals:

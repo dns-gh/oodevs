@@ -13,6 +13,7 @@
 #include "ScoreGaugeConfiguration.h"
 #include "ScorePrimitivesLibrary.h"
 #include "ScoreVariablesList.h"
+#include "indicators/Gauge.h"
 #include "indicators/Primitive.h"
 #include "indicators/Primitives.h"
 #include "indicators/Variables.h"
@@ -126,6 +127,7 @@ void ScoreEditor::StartEdit( Score_ABC& score )
     setCaption( tr( "Score edition - %1 " ).arg( score.GetName() ) );
     name_->setText( score.GetName() );
     variables_->StartEdit( score );
+    gauge_->StartEdit( score.GetGauge() );
     formula_->setText( score.GetFormula() );
     show();
 }
@@ -136,13 +138,21 @@ void ScoreEditor::StartEdit( Score_ABC& score )
 // -----------------------------------------------------------------------------
 void ScoreEditor::Commit()
 {
-    {
-        indicators::Variables variables;
-        variables_->CommitTo( variables );
-        Score copy( name_->text(), formula_->text(), variables, indicators_ );
-        *static_cast< Score* >( current_ ) = copy; // $$$$ SBO 2009-04-24: sucks
-    }
+    CommitTo( *current_ );
     accept();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreEditor::CommitTo
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+void ScoreEditor::CommitTo( Score_ABC& score )
+{
+    Score& concrete = static_cast< Score& >( score ); // $$$$ SBO 2009-05-07: use a command pattern or something to apply modifications
+    concrete.SetName( name_->text() );
+    concrete.SetFormula( formula_->text() );
+    concrete.SetVariables( variables_->GetValue() );
+    concrete.SetGauge( gauge_->GetValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,9 +195,8 @@ void ScoreEditor::CheckFormula()
     {
         if( formula_->text().isEmpty() )
             throw std::exception( tr( "Formula is empty." ) );
-        indicators::Variables variables;
-        variables_->CommitTo( variables );
-        Score score( name_->text(), formula_->text(), variables, indicators_ );
+        Score score( static_cast< Score& >( *current_ ) ); // $$$$ SBO 2009-05-07: 
+        CommitTo( score );
         score.CheckValidity();
         checkResult_->setText( "" );
         ok_->setEnabled( true );

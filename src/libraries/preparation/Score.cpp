@@ -10,10 +10,12 @@
 #include "preparation_pch.h"
 #include "Score.h"
 #include "clients_kernel/Controller.h"
-#include "indicators/Variables.h"
 #include "indicators/ElementFactory.h"
 #include "indicators/FormulaParser.h"
+#include "indicators/Gauge.h"
+#include "indicators/GaugeFactory_ABC.h"
 #include "indicators/Serializer.h"
+#include "indicators/Variables.h"
 #include <xeumeuleu/xml.h>
 
 namespace
@@ -24,16 +26,26 @@ namespace
         xis >> xml::start( "formula" ) >> formula >> xml::end();
         return formula.c_str();
     }
+
+    indicators::Gauge* ReadGauge( xml::xistream& xis, const indicators::GaugeFactory_ABC& gaugeFactory )
+    {
+        xis >> xml::start( "gauge" );
+        indicators::Gauge* result = gaugeFactory.Create( xis );
+        xis >> xml::end();
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Score constructor
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-Score::Score( xml::xistream& xis, kernel::Controller& controller, const indicators::Primitives& indicators )
+Score::Score( xml::xistream& xis, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory )
     : controller_( &controller )
+    , indicators_( indicators )
     , name_( xml::attribute< std::string >( xis, "name" ).c_str() )
     , formula_( ReadFormula( xis ) )
+    , gauge_( ReadGauge( xis, gaugeFactory ) )
     , variables_( new indicators::Variables( xis ) )
     , elementFactory_( new indicators::ElementFactory( indicators, *variables_ ) )
 {
@@ -44,10 +56,12 @@ Score::Score( xml::xistream& xis, kernel::Controller& controller, const indicato
 // Name: Score constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-Score::Score( const QString& name, kernel::Controller& controller, const indicators::Primitives& indicators )
+Score::Score( const QString& name, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory )
     : controller_( &controller )
+    , indicators_( indicators )
     , name_( name )
     , formula_()
+    , gauge_( gaugeFactory.Create() )
     , variables_( new indicators::Variables() )
     , elementFactory_( new indicators::ElementFactory( indicators, *variables_ ) )
 {
@@ -56,14 +70,16 @@ Score::Score( const QString& name, kernel::Controller& controller, const indicat
 
 // -----------------------------------------------------------------------------
 // Name: Score constructor
-// Created: SBO 2009-04-24
+// Created: SBO 2009-05-07
 // -----------------------------------------------------------------------------
-Score::Score( const QString& name, const QString& formula, const indicators::Variables& variables, const indicators::Primitives& indicators )
+Score::Score( const Score& score )
     : controller_( 0 )
-    , name_( name )
-    , formula_( formula )
-    , variables_( &variables.Clone() )
-    , elementFactory_( new indicators::ElementFactory( indicators, *variables_ ) )
+    , indicators_( score.indicators_ )
+    , name_( score.name_ )
+    , formula_( score.formula_ )
+    , gauge_( new indicators::Gauge( *score.gauge_ ) )
+    , variables_( new indicators::Variables( *score.variables_ ) )
+    , elementFactory_( new indicators::ElementFactory( indicators_, *variables_ ) )
 {
     // NOTHING
 }
@@ -97,6 +113,17 @@ QString Score::GetFormula() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Score::GetGauge
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+const indicators::Gauge& Score::GetGauge() const
+{
+    if( !gauge_.get() )
+        throw std::runtime_error( __FUNCTION__ );
+    return *gauge_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Score::Serialize
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
@@ -105,6 +132,9 @@ void Score::Serialize( xml::xostream& xos ) const
     xos << xml::start( "score")
             << xml::attribute( "name", name_.ascii() )
             << xml::start( "formula" ) << xml::cdata( formula_.ascii() ) << xml::end();
+    xos << xml::start( "gauge" );
+    GetGauge().Serialize( xos );
+    xos << xml::end();
     variables_->Serialize( xos );
     SerializeIndicators( xos );
     xos << xml::end();
@@ -156,15 +186,51 @@ void Score::CheckValidity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Score::operator=
-// Created: SBO 2009-04-24
+// Name: Score::SetName
+// Created: SBO 2009-05-07
 // -----------------------------------------------------------------------------
-Score& Score::operator=( const Score& score )
+void Score::SetName( const QString& name )
 {
-    name_ = score.name_;
-    formula_ = score.formula_;
-    *variables_ = *score.variables_;
+    if( name_ != name )
+    {
+        name_ = name;
+        if( controller_ )
+            controller_->Update( *(Score_ABC*)this );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::SetFormula
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+void Score::SetFormula( const QString& formula )
+{
+    if( formula_ != formula )
+    {
+        formula_ = formula;
+        if( controller_ )
+            controller_->Update( *(Score_ABC*)this );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::SetGauge
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+void Score::SetGauge( const indicators::Gauge& gauge )
+{
+    gauge_.reset( new indicators::Gauge( gauge ) );
     if( controller_ )
         controller_->Update( *(Score_ABC*)this );
-    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::SetVariables
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+void Score::SetVariables( const indicators::Variables& variables )
+{
+    *variables_ = variables;
+    if( controller_ )
+        controller_->Update( *(Score_ABC*)this );
 }

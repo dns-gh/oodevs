@@ -43,6 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Variables();
+             Variables( const Variables& variables );
     explicit Variables( xml::xistream& xis );
     virtual ~Variables();
     //@}
@@ -62,11 +63,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Variables( const Variables& );            //!< Copy constructor
-    //@}
-
     //! @name Helpers
     //@{
     void ReadVariable( xml::xistream& xis );

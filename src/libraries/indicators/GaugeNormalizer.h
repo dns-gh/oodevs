@@ -13,6 +13,7 @@
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 namespace indicators
@@ -26,18 +27,31 @@ namespace indicators
 // =============================================================================
 class GaugeNormalizer
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::map< std::pair< double, double >, double > T_Intervals;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
+             GaugeNormalizer();
     explicit GaugeNormalizer( xml::xistream& xis );
              GaugeNormalizer( const GaugeNormalizer& );
     virtual ~GaugeNormalizer();
     //@}
 
+    //! @name Accessors
+    //@{
+    const T_Intervals& Intervals() const;
+    //@}
+
     //! @name Operations
     //@{
+    void AddInterval( double min, double max, double key );
     double Normalize( double value ) const;
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -49,11 +63,6 @@ private:
     //! @name Helpers
     //@{
     void LoadInterval( xml::xistream& xis );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< std::pair< double, double >, double > T_Intervals;
     //@}
 
 private:

@@ -18,6 +18,7 @@ namespace kernel
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 namespace indicators
@@ -39,13 +40,26 @@ public:
     //! @name Constructors/Destructor
     //@{
              Gauge( xml::xistream& xis, const GaugeTypes& types );
+    explicit Gauge( const GaugeType& type );
              Gauge( const Gauge& );
     virtual ~Gauge();
+    //@}
+
+    //! @name Accessors
+    //@{
+    const GaugeType& GetType() const;
+    const GaugeNormalizer& GetNormalizer() const;
+    //@}
+
+    //! @name Setters
+    //@{
+    void SetNormalizer( const GaugeNormalizer& normalizer );
     //@}
 
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer, double value ) const;
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

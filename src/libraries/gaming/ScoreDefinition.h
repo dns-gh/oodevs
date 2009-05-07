@@ -16,7 +16,7 @@ namespace indicators
 {
     class ElementFactory_ABC;
     class Gauge;
-    class GaugeFactory;
+    class GaugeFactory_ABC;
     class Primitives;
     class Variables;
 }
@@ -38,7 +38,7 @@ class ScoreDefinition : public IndicatorDefinition_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreDefinition( xml::xistream& xis, const indicators::Primitives& primitives, const indicators::GaugeFactory& factory );
+             ScoreDefinition( xml::xistream& xis, const indicators::Primitives& primitives, const indicators::GaugeFactory_ABC& factory );
     virtual ~ScoreDefinition();
     //@}
 

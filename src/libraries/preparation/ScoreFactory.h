@@ -14,6 +14,7 @@
 
 namespace indicators
 {
+    class GaugeFactory_ABC;
     class Primitives;
 }
 
@@ -34,7 +35,7 @@ class ScoreFactory : public ScoreFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreFactory( kernel::Controller& controller, const indicators::Primitives& indicators );
+             ScoreFactory( kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory );
     virtual ~ScoreFactory();
     //@}
 
@@ -56,6 +57,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const indicators::Primitives& indicators_;
+    const indicators::GaugeFactory_ABC& gaugeFactory_;
     //@}
 };
 

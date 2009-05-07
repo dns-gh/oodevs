@@ -29,6 +29,17 @@ Gauge::Gauge( xml::xistream& xis, const GaugeTypes& types )
 
 // -----------------------------------------------------------------------------
 // Name: Gauge constructor
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+Gauge::Gauge( const GaugeType& type )
+    : type_( type )
+    , normalizer_( new GaugeNormalizer() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gauge constructor
 // Created: SBO 2009-05-06
 // -----------------------------------------------------------------------------
 Gauge::Gauge( const Gauge& gauge )
@@ -48,10 +59,49 @@ Gauge::~Gauge()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gauge::GetType
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+const GaugeType& Gauge::GetType() const
+{
+    return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gauge::GetNormalizer
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+const GaugeNormalizer& Gauge::GetNormalizer() const
+{
+    if( !normalizer_.get() )
+        throw std::runtime_error( __FUNCTION__ );
+    return *normalizer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gauge::SetNormalizer
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+void Gauge::SetNormalizer( const GaugeNormalizer& normalizer )
+{
+    normalizer_.reset( new GaugeNormalizer( normalizer ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gauge::Display
 // Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
 void Gauge::Display( kernel::Displayer_ABC& displayer, double value ) const
 {
     type_.Display( displayer, normalizer_->Normalize( value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gauge::Serialize
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+void Gauge::Serialize( xml::xostream& xos ) const
+{
+    xos << xml::attribute( "type", type_.GetName() );
+    GetNormalizer().Serialize( xos );
 }

@@ -12,8 +12,11 @@
 #include "moc_ScoreGaugeConfiguration.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "indicators/Gauge.h"
+#include "indicators/GaugeNormalizer.h"
 #include "indicators/GaugeType.h"
 #include "indicators/GaugeTypes.h"
+#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <qimage.h>
 
@@ -38,9 +41,9 @@ ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Contr
             QHBox* hbox = new QHBox( box );
             {
                 QLabel* label = new QLabel( tr( "Steps: " ), hbox );
-                QSpinBox* steps = new QSpinBox( 1, 100, 1, hbox );
-                label->setBuddy( steps );
-                connect( steps, SIGNAL( valueChanged( int ) ), SLOT( OnChangeStep( int ) ) );
+                steps_ = new QSpinBox( 1, 100, 1, hbox );
+                label->setBuddy( steps_ );
+                connect( steps_, SIGNAL( valueChanged( int ) ), SLOT( OnChangeStep( int ) ) );
             }
             {
                 QLabel* label = new QLabel( tr( "Min: " ), hbox );
@@ -84,6 +87,54 @@ ScoreGaugeConfiguration::~ScoreGaugeConfiguration()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ScoreGaugeConfiguration::StartEdit
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+void ScoreGaugeConfiguration::StartEdit( const indicators::Gauge& gauge )
+{
+    type_->SetCurrentItem( &gauge.GetType() );
+    intervals_->setNumRows( 0 );
+    double min = std::numeric_limits< double >::max();
+    double max = std::numeric_limits< double >::min();
+    const indicators::GaugeNormalizer::T_Intervals& intervals = gauge.GetNormalizer().Intervals();
+    BOOST_FOREACH( const indicators::GaugeNormalizer::T_Intervals::value_type& interval, intervals )
+    {
+        min = std::min( min, interval.first.first );
+        max = std::max( max, interval.first.second );
+        AddInterval( interval.first.first, interval.first.second, interval.second );
+    }
+    {
+        min_->blockSignals( true );
+        min_->setText( QString::number( min, 'f', 2 ) );
+        min_->blockSignals( false );
+    }
+    {
+        max_->blockSignals( true );
+        max_->setText( QString::number( max, 'f', 2 ) );
+        max_->blockSignals( false );
+    }
+    {
+        steps_->blockSignals( true );
+        steps_->setValue( intervals_->numRows() );
+        steps_->blockSignals( false );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreGaugeConfiguration::GetValue
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+indicators::Gauge ScoreGaugeConfiguration::GetValue() const
+{
+    indicators::Gauge result( *type_->GetValue() );
+    indicators::GaugeNormalizer normalizer;
+    for( int i = 0; i < intervals_->numRows(); ++i )
+        normalizer.AddInterval( intervals_->text( i, 0 ).toDouble(), intervals_->text( i, 1 ).toDouble(), intervals_->text( i, 2 ).toDouble() );
+    result.SetNormalizer( normalizer );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ScoreGaugeConfiguration::OnChangeStep
 // Created: SBO 2009-05-06
 // -----------------------------------------------------------------------------
@@ -94,6 +145,7 @@ void ScoreGaugeConfiguration::OnChangeStep( int steps )
         AddInterval();
     for( int i = steps; i < rows; ++i )
         RemoveInterval();
+    OnChangeBoundaries();
 }
 
 // -----------------------------------------------------------------------------
@@ -138,14 +190,14 @@ void ScoreGaugeConfiguration::OnChangeValue( int row, int col )
 // Name: ScoreGaugeConfiguration::AddInterval
 // Created: SBO 2009-05-06
 // -----------------------------------------------------------------------------
-void ScoreGaugeConfiguration::AddInterval()
+void ScoreGaugeConfiguration::AddInterval( double min /*= 0*/, double max /*= 0*/, double key /*= 0*/ )
 {
     const int rows = intervals_->numRows();
     intervals_->setNumRows( rows + 1 );
-    intervals_->setText( rows, 0, "" );
-    intervals_->setText( rows, 1, "" );
-    intervals_->setText( rows, 2, "" );
-    OnChangeBoundaries();
+    intervals_->setText( rows, 0, QString::number( min, 'f', 2 ) );
+    intervals_->setText( rows, 1, QString::number( max, 'f', 2 ) );
+    intervals_->setText( rows, 2, QString::number( key, 'f', 2 ) );
+    UpdateSymbol( rows, key );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +207,6 @@ void ScoreGaugeConfiguration::AddInterval()
 void ScoreGaugeConfiguration::RemoveInterval()
 {
     intervals_->setNumRows( intervals_->numRows() - 1 );
-    OnChangeBoundaries();
 }
 
 namespace
@@ -226,7 +277,6 @@ void ScoreGaugeConfiguration::NotifyUpdated( const kernel::ModelLoaded& /*model*
         const indicators::GaugeType& type = it.NextElement();
         type_->AddItem( type.GetName(), &type );
     }
-    OnChangeBoundaries();
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,7 @@
 #include "indicators/ElementFactory.h"
 #include "indicators/FormulaParser.h"
 #include "indicators/Gauge.h"
-#include "indicators/GaugeFactory.h"
+#include "indicators/GaugeFactory_ABC.h"
 #include "indicators/Serializer.h"
 #include "indicators/Variables.h"
 #include <xeumeuleu/xml.h>
@@ -26,7 +26,7 @@ namespace
         return formula;
     }
 
-    indicators::Gauge* ReadGauge( xml::xistream& xis, const indicators::GaugeFactory& factory )
+    indicators::Gauge* ReadGauge( xml::xistream& xis, const indicators::GaugeFactory_ABC& factory )
     {
         xis >> xml::start( "gauge" );
         indicators::Gauge* gauge = factory.Create( xis );
@@ -39,7 +39,7 @@ namespace
 // Name: ScoreDefinition constructor
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-ScoreDefinition::ScoreDefinition( xml::xistream& xis, const indicators::Primitives& primitives, const indicators::GaugeFactory& factory )
+ScoreDefinition::ScoreDefinition( xml::xistream& xis, const indicators::Primitives& primitives, const indicators::GaugeFactory_ABC& factory )
     : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
     , formula_( ReadFormula( xis ) )
     , gauge_( ReadGauge( xis, factory ) )

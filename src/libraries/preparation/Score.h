@@ -19,9 +19,11 @@ namespace kernel
 
 namespace indicators
 {
-    class Variables;
+    class ElementFactory_ABC;
+    class Gauge;
+    class GaugeFactory_ABC;
     class Primitives;
-    class ElementFactory_ABC;    
+    class Variables;
 }
 
 namespace xml
@@ -41,9 +43,9 @@ class Score : public Score_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Score( xml::xistream& xis, kernel::Controller& controller, const indicators::Primitives& indicators );
-             Score( const QString& name, kernel::Controller& controller, const indicators::Primitives& indicators );
-             Score( const QString& name, const QString& formula, const indicators::Variables& variables, const indicators::Primitives& indicators );
+             Score( const Score& );
+             Score( xml::xistream& xis, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory );
+             Score( const QString& name, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory );
     virtual ~Score();
     //@}
 
@@ -51,20 +53,28 @@ public:
     //@{
     virtual QString GetName() const;
     virtual QString GetFormula() const;
+    virtual const indicators::Gauge& GetGauge() const;
     virtual void Accept( indicators::VariablesVisitor_ABC& visitor ) const;
+    //@}
+
+    //! @name Setters
+    //@{
+    void SetName( const QString& name );
+    void SetFormula( const QString& formula );
+    void SetGauge( const indicators::Gauge& gauge );
+    void SetVariables( const indicators::Variables& variables );
     //@}
 
     //! @name Operations
     //@{
     virtual void CheckValidity() const;
     virtual void Serialize( xml::xostream& xos ) const;
-    Score& operator=( const Score& score );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Score( const Score& );            //!< Copy constructor
+    Score& operator=( const Score& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -77,8 +87,10 @@ private:
     //! @name Member data
     //@{
     kernel::Controller* controller_;
+    const indicators::Primitives& indicators_;
     QString name_;
     QString formula_;
+    std::auto_ptr< indicators::Gauge > gauge_;
     std::auto_ptr< indicators::Variables > variables_;
     std::auto_ptr< indicators::ElementFactory_ABC > elementFactory_;
     //@}

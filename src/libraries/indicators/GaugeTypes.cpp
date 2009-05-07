@@ -9,6 +9,7 @@
 
 #include "indicators_pch.h"
 #include "GaugeTypes.h"
+#include "Gauge.h"
 #include "GaugeType.h"
 #include "GaugeTypeFactory.h"
 #include <xeumeuleu/xml.h>
@@ -63,4 +64,27 @@ void GaugeTypes::ReadTemplate( xml::xistream& xis )
 void GaugeTypes::Purge()
 {
     DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GaugeTypes::Create
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+Gauge* GaugeTypes::Create() const
+{
+    kernel::Iterator< const GaugeType& > it( CreateIterator() );
+    if( !it.HasMoreElements() )
+        throw std::runtime_error( __FUNCTION__ " no indicator gauge template." );
+    Gauge* gauge = new Gauge( it.NextElement() );
+    return gauge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GaugeTypes::Create
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+Gauge* GaugeTypes::Create( xml::xistream& xis ) const
+{
+    Gauge* gauge = new Gauge( xis, *this );
+    return gauge;
 }

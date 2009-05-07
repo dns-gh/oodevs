@@ -23,6 +23,7 @@
 #include "clients_kernel/AtlasNatures.h"
 #include "clients_gui/DrawingTypes.h"
 #include "indicators/Primitives.h"
+#include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
 
 using namespace kernel;
@@ -43,7 +44,8 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , atlasNatures_       ( *new AtlasNatures() )
     , drawings_           ( *new gui::DrawingTypes( controllers_.controller_ ) )
     , indicators_         ( *new indicators::Primitives() )
-    , scores_             ( *new ScoreDefinitions( indicators_ ) )
+    , gaugeTypes_         ( *new indicators::GaugeTypes() )
+    , scores_             ( *new ScoreDefinitions( indicators_, gaugeTypes_ ) )
 {
     // NOTHING
 }
@@ -55,6 +57,7 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
 StaticModel::~StaticModel()
 {
     delete &scores_;
+    delete &gaugeTypes_;
     delete &indicators_;
     delete &drawings_;
     delete &atlasNatures_;
@@ -81,6 +84,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     reportFactory_.Load( config );
     drawings_.Load( tools::GeneralConfig::BuildResourceChildFile( "DrawingTemplates.xml" ) );
     indicators_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
+    gaugeTypes_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
     scores_.Load( config.GetScoresFile() );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
@@ -92,6 +96,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 void StaticModel::Purge()
 {
     scores_.Purge();
+    gaugeTypes_.Purge();
     indicators_.Purge();
     drawings_.Purge();
     reportFactory_.Purge();

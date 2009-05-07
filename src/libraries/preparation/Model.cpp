@@ -30,6 +30,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerModel.h"
+#include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.h>
 
@@ -56,7 +57,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , formationFactory_( *new FormationFactory( controllers, idManager_ ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
     , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
-    , scoreFactory_( *new ScoreFactory( controllers_.controller_, staticModel.indicators_ ) )
+    , scoreFactory_( *new ScoreFactory( controllers_.controller_, staticModel.indicators_, staticModel.gaugeTypes_ ) )
     , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) ) 
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )

@@ -9,7 +9,6 @@
 
 #include "indicators_pch.h"
 #include "GaugeTypeFactory.h"
-//#include "DialGaugeType.h"
 #include "IconsGaugeType.h"
 #include <xeumeuleu/xml.h>
 
@@ -42,8 +41,6 @@ GaugeType* GaugeTypeFactory::Create( xml::xistream& xis )
     const std::string type = xml::attribute< std::string >( xis, "type" );
     if( type == "text" )
         return new GaugeType( xis );
-//    else if( type == "dial" )
-//        return new DialGaugeType( xis );
     else if( type == "icons" )
         return new IconsGaugeType( xis );
     return 0;

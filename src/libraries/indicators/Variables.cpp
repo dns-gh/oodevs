@@ -27,6 +27,16 @@ Variables::Variables()
 
 // -----------------------------------------------------------------------------
 // Name: Variables constructor
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+Variables::Variables( const Variables& variables )
+    : variables_( variables.variables_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Variables constructor
 // Created: SBO 2009-04-17
 // -----------------------------------------------------------------------------
 Variables::Variables( xml::xistream& xis )
