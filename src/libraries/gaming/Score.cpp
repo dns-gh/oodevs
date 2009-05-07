@@ -94,5 +94,5 @@ void Score::Display( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 std::string Score::Commit( const T_Parameters& ) const
 {
-    return "indicator://" + name_;
+    return QString( "indicator://%1" ).arg( name_ ).ascii();
 }
