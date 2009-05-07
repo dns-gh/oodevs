@@ -20,6 +20,27 @@
 #include <boost/lexical_cast.hpp>
 #include <qimage.h>
 
+namespace
+{
+    QString ToString( double value )
+    {
+        if( value == std::numeric_limits< double >::min() )
+            return "-inf";
+        else if( value == std::numeric_limits< double >::max() )
+            return "+inf";
+        return QString::number( value, 'f', 2 );
+    }
+
+    double ToDouble( const QString& text )
+    {
+        if( text == "-inf" )
+            return std::numeric_limits< double >::min();
+        else if( text == "+inf" )
+            return std::numeric_limits< double >::max();
+        return text.toDouble();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ScoreGaugeConfiguration constructor
 // Created: SBO 2009-05-05
@@ -104,13 +125,17 @@ void ScoreGaugeConfiguration::StartEdit( const indicators::Gauge& gauge )
         AddInterval( interval.first.first, interval.first.second, interval.second );
     }
     {
+        if( min == std::numeric_limits< double >::max() )
+            min = std::numeric_limits< double >::min();
         min_->blockSignals( true );
-        min_->setText( QString::number( min, 'f', 2 ) );
+        min_->setText( ToString( min ) );
         min_->blockSignals( false );
     }
     {
+        if( max == std::numeric_limits< double >::min() )
+            max = std::numeric_limits< double >::max();
         max_->blockSignals( true );
-        max_->setText( QString::number( max, 'f', 2 ) );
+        max_->setText( ToString( max ) );
         max_->blockSignals( false );
     }
     {
@@ -129,7 +154,7 @@ indicators::Gauge ScoreGaugeConfiguration::GetValue() const
     indicators::Gauge result( *type_->GetValue() );
     indicators::GaugeNormalizer normalizer;
     for( int i = 0; i < intervals_->numRows(); ++i )
-        normalizer.AddInterval( intervals_->text( i, 0 ).toDouble(), intervals_->text( i, 1 ).toDouble(), intervals_->text( i, 2 ).toDouble() );
+        normalizer.AddInterval( GetValue( i, 0 ), GetValue( i, 1 ), GetValue( i, 2 ) );
     result.SetNormalizer( normalizer );
     return result;
 }
@@ -154,14 +179,14 @@ void ScoreGaugeConfiguration::OnChangeStep( int steps )
 // -----------------------------------------------------------------------------
 void ScoreGaugeConfiguration::OnChangeBoundaries()
 {
-    const double min = min_->text().toDouble();
-    const double max = max_->text().toDouble();
+    const double min = ToDouble( min_->text() );
+    const double max = ToDouble( max_->text() );
     const int rows = intervals_->numRows();
     const double interval = ( max - min ) / rows;
     for( int i = 0; i < rows; ++i )
     {
-        intervals_->setText( i, 0, QString::number( min + i * interval, 'f', 2 ) );
-        intervals_->setText( i, 1, QString::number( min + ( i + 1 ) * interval, 'f', 2 ) );
+        SetValue( i, 0, min + i * interval );
+        SetValue( i, 1, min + ( i + 1 ) * interval );
         UpdateSymbol( i, double( i ) / ( rows > 1 ? rows - 1 : rows ) );
     }
 }
@@ -173,7 +198,7 @@ void ScoreGaugeConfiguration::OnChangeBoundaries()
 void ScoreGaugeConfiguration::OnTypeChanged()
 {
     for( int row = 0; row < intervals_->numRows(); ++row )
-        UpdateSymbol( row, intervals_->text( row, 2 ).toDouble() );
+        UpdateSymbol( row, GetValue( row, 2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +208,7 @@ void ScoreGaugeConfiguration::OnTypeChanged()
 void ScoreGaugeConfiguration::OnChangeValue( int row, int col )
 {
     if( col == 2 )
-        UpdateSymbol( row, intervals_->text( row, 2 ).toDouble() );
+        UpdateSymbol( row, GetValue( row, 2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,9 +219,9 @@ void ScoreGaugeConfiguration::AddInterval( double min /*= 0*/, double max /*= 0*
 {
     const int rows = intervals_->numRows();
     intervals_->setNumRows( rows + 1 );
-    intervals_->setText( rows, 0, QString::number( min, 'f', 2 ) );
-    intervals_->setText( rows, 1, QString::number( max, 'f', 2 ) );
-    intervals_->setText( rows, 2, QString::number( key, 'f', 2 ) );
+    SetValue( rows, 0, min );
+    SetValue( rows, 1, max );
+    SetValue( rows, 2, key );
     UpdateSymbol( rows, key );
 }
 
@@ -259,9 +284,27 @@ void ScoreGaugeConfiguration::UpdateSymbol( int row, double value )
         {
             GaugeItemDisplayer displayer( intervals_->item( row, 2 ) );
             type->Display( displayer, value );
-            intervals_->item( row, 2 )->setText( QString::number( value, 'f', 2 ) );
+            SetValue( row, 2, value );
             intervals_->updateCell( row, 2 );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreGaugeConfiguration::SetValue
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+void ScoreGaugeConfiguration::SetValue( int row, int col, double value )
+{
+    intervals_->setText( row, col, ToString( value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreGaugeConfiguration::GetValue
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+double ScoreGaugeConfiguration::GetValue( int row, int col ) const
+{
+    return ToDouble( intervals_->text( row, col ) );
 }
 
 // -----------------------------------------------------------------------------

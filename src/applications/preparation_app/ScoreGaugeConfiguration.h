@@ -76,6 +76,9 @@ private:
     void AddInterval( double min = 0, double max = 0, double key = 0 );
     void RemoveInterval();
     void UpdateSymbol( int row, double value );
+    void SetValue( int row, int col, double value );
+    double GetValue( int row, int col ) const;
+
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& model );
     //@}
