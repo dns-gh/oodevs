@@ -25,6 +25,7 @@ namespace gui
 // =============================================================================
 class ListItemDisplayer : public BaseDisplayer
                         , public tools::Caller< QColor >
+                        , public tools::Caller< QPixmap >
                         , public tools::Caller< kernel::Styles::Style >
 {
 
@@ -58,6 +59,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Call( const QColor& color );
+    virtual void Call( const QPixmap& pixmap );
     virtual void Call( const kernel::Styles::Style& );
 
     virtual Displayer_ABC& SubItem( const QString& name );
@@ -73,6 +75,7 @@ private:
     RichListItem* item_;
     int column_;
     QString message_;
+    QPixmap pixmap_;
     T_Columns columns_;
     //@}
 };

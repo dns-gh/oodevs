@@ -7,36 +7,44 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
-#include "ReplayScore.h"
-#include "ScoreDefinition.h"
-#include "ScoreDefinitions.h"
+#include "indicators_pch.h"
+#include "GaugeTypeFactory.h"
+//#include "DialGaugeType.h"
+#include "IconsGaugeType.h"
+#include <xeumeuleu/xml.h>
+
+using namespace indicators;
 
 // -----------------------------------------------------------------------------
-// Name: ReplayScore constructor
-// Created: SBO 2009-04-30
+// Name: GaugeTypeFactory constructor
+// Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-ReplayScore::ReplayScore( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
-    : Score( message, definitions, controller, publisher )
-    , definition_( definitions.Get( GetName() ) )
+GaugeTypeFactory::GaugeTypeFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReplayScore destructor
-// Created: SBO 2009-04-30
+// Name: GaugeTypeFactory destructor
+// Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-ReplayScore::~ReplayScore()
+GaugeTypeFactory::~GaugeTypeFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReplayScore::Commit
-// Created: SBO 2009-04-30
+// Name: GaugeTypeFactory::Create
+// Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-std::string ReplayScore::Commit( const T_Parameters& parameters ) const
+GaugeType* GaugeTypeFactory::Create( xml::xistream& xis )
 {
-    return definition_.Commit( parameters );
+    const std::string type = xml::attribute< std::string >( xis, "type" );
+    if( type == "text" )
+        return new GaugeType( xis );
+//    else if( type == "dial" )
+//        return new DialGaugeType( xis );
+    else if( type == "icons" )
+        return new IconsGaugeType( xis );
+    return 0;
 }

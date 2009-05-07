@@ -149,7 +149,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
-    ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, staticModel_.indicators_ );
+    ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, staticModel_.indicators_, staticModel_.gaugeTypes_ );
 
     QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
     QVBox* listsTabBox = new QVBox( pListsTabWidget );

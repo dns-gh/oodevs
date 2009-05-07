@@ -12,6 +12,7 @@
 
 namespace indicators
 {
+    class GaugeTypes;
     class Primitive;
     class Primitives;
 }
@@ -27,6 +28,7 @@ namespace gui
 }
 
 class Score_ABC;
+class ScoreGaugeConfiguration;
 class ScoreVariablesList;
 
 // =============================================================================
@@ -42,7 +44,7 @@ class ScoreEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators );
+             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators, const indicators::GaugeTypes& gauges );
     virtual ~ScoreEditor();
     //@}
 
@@ -79,6 +81,7 @@ private:
     QButton* ok_;
     QLabel* help_;
     ScoreVariablesList* variables_;
+    ScoreGaugeConfiguration* gauge_;
     //@}
 };
 

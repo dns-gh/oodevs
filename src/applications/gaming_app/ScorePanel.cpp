@@ -43,6 +43,10 @@ ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controller
         scores_->AddColumn( tools::translate( "Score", "Value" ) );
         scores_->AddColumn( tools::translate( "Score", "Tendency" ) );
         scores_->AddColumn( tools::translate( "Score", "Gauge" ) );
+        scores_->setColumnWidthMode( 2, QListView::Manual );
+        scores_->setColumnWidthMode( 3, QListView::Manual );
+        scores_->setColumnAlignment( 2, Qt::AlignCenter );
+        scores_->setColumnAlignment( 3, Qt::AlignCenter );
         connect( scores_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnContextMenu( QListViewItem*, const QPoint&, int ) ) );
         connect( scores_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnShowGraph() ) );
     }

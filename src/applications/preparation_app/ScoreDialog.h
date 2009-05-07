@@ -12,6 +12,7 @@
 
 namespace indicators
 {
+    class GaugeTypes;
     class Primitives;
 }
 
@@ -41,7 +42,7 @@ class ScoreDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, const indicators::Primitives& indicators );
+             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, const indicators::Primitives& indicators, const indicators::GaugeTypes& gauges );
     virtual ~ScoreDialog();
     //@}
 

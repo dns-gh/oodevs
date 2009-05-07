@@ -96,12 +96,19 @@ namespace
 // -----------------------------------------------------------------------------
 void IndicatorPlot::Add( const IndicatorRequest& request )
 {
+    T_PlottedRequests::const_iterator it = plots_.find( &request );
+    if( it != plots_.end() )
+        return;
     GQ_PlotData* data = new GQ_PlotData( datas_.size() + 1, *this );
     data->SetLinePen( GetPlotColor( datas_.size() ) );
     UpdatePlot( data, request, 0 );
     RegisterPlotData( *data );
     datas_.push_back( data );
     plots_[ &request ] = data;
+    if( plots_.size() > 1 )
+        dock_->setCaption( QString( "%1 - %2" ).arg( dock_->caption() ).arg( request.GetName() ) );
+    else
+        dock_->setCaption( request.GetName() );
 }
 
 // -----------------------------------------------------------------------------

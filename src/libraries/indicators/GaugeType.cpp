@@ -7,36 +7,46 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
-#include "ReplayScore.h"
-#include "ScoreDefinition.h"
-#include "ScoreDefinitions.h"
+#include "indicators_pch.h"
+#include "GaugeType.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include <xeumeuleu/xml.h>
+
+using namespace indicators;
 
 // -----------------------------------------------------------------------------
-// Name: ReplayScore constructor
-// Created: SBO 2009-04-30
+// Name: GaugeType constructor
+// Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-ReplayScore::ReplayScore( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
-    : Score( message, definitions, controller, publisher )
-    , definition_( definitions.Get( GetName() ) )
+GaugeType::GaugeType( xml::xistream& xis )
+    : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReplayScore destructor
-// Created: SBO 2009-04-30
+// Name: GaugeType destructor
+// Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-ReplayScore::~ReplayScore()
+GaugeType::~GaugeType()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReplayScore::Commit
-// Created: SBO 2009-04-30
+// Name: GaugeType::GetName
+// Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-std::string ReplayScore::Commit( const T_Parameters& parameters ) const
+QString GaugeType::GetName() const
 {
-    return definition_.Commit( parameters );
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GaugeType::Display
+// Created: SBO 2009-05-05
+// -----------------------------------------------------------------------------
+void GaugeType::Display( kernel::Displayer_ABC& displayer, double value ) const
+{
+    displayer.Display( value );
 }

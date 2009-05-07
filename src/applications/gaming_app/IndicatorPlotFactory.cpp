@@ -50,7 +50,6 @@ IndicatorPlot* IndicatorPlotFactory::CreatePlot( const IndicatorRequest& request
     dock->setWidget( box );
     dock->setResizeEnabled( true );
     dock->setCloseMode( QDockWindow::Always );
-    dock->setCaption( tools::translate( "Indicators", "Plot" ) );
     dock->undock();
     mainWindow_->setAppropriate( dock, false );
     box->show();

@@ -641,10 +641,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Variables: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished">Ok</translation>
     </message>
@@ -658,6 +654,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Formula is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Variables</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

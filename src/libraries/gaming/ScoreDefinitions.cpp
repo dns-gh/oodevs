@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ScoreDefinitions.h"
 #include "ScoreDefinition.h"
+#include "indicators/GaugeFactory.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -18,6 +19,7 @@
 // -----------------------------------------------------------------------------
 ScoreDefinitions::ScoreDefinitions( const indicators::Primitives& primitives )
     : primitives_( primitives )
+    , gaugeFactory_( new indicators::GaugeFactory() )
 {
     // NOTHING
 }
@@ -61,7 +63,7 @@ void ScoreDefinitions::ReadDefinition( xml::xistream& xis )
 {
     try
     {
-        std::auto_ptr< ScoreDefinition > def( new ScoreDefinition( xis, primitives_ ) );
+        std::auto_ptr< ScoreDefinition > def( new ScoreDefinition( xis, primitives_, *gaugeFactory_ ) );
         Register( def->GetName(), *def.release() );
     }
     catch( ... )

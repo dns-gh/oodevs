@@ -545,10 +545,6 @@ Do you want to save anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Variables: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -562,6 +558,10 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>Formula is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Variables</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

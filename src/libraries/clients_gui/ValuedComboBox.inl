@@ -217,7 +217,8 @@ template< typename T >
 T ValuedComboBox<T>::GetValue()
 {
     int nIndex = currentItem();
-//    assert( nIndex >= 0 && nIndex < (int)values_.size() );
+    if( nIndex == -1 || nIndex > int( values_.size() ) )
+        throw std::runtime_error( __FUNCTION__ );
     return values_[nIndex];
 }
 
@@ -230,6 +231,16 @@ void ValuedComboBox<T>::Clear()
 {
     values_.clear();
     QComboBox::clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedComboBox::Count
+// Created: SBO 2009-05-07
+// -----------------------------------------------------------------------------
+template< typename T >
+unsigned int ValuedComboBox<T>::Count() const
+{
+    return values_.size();
 }
 
 // -----------------------------------------------------------------------------

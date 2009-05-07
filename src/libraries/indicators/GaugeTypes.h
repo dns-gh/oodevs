@@ -7,64 +7,62 @@
 //
 // *****************************************************************************
 
-#ifndef __ScoreDefinitions_h_
-#define __ScoreDefinitions_h_
+#ifndef __GaugeTypes_h_
+#define __GaugeTypes_h_
 
 #include "clients_kernel/Resolver.h"
-
-namespace indicators
-{
-    class Primitives;
-    class GaugeFactory;
-}
 
 namespace xml
 {
     class xistream;
 }
 
-class ScoreDefinition;
+namespace indicators
+{
+    class GaugeType;
+    class GaugeTypeFactory;
 
 // =============================================================================
-/** @class  ScoreDefinitions
-    @brief  ScoreDefinitions
+/** @class  GaugeTypes
+    @brief  GaugeTypes
 */
-// Created: SBO 2009-04-29
+// Created: SBO 2009-05-05
 // =============================================================================
-class ScoreDefinitions : public kernel::Resolver< ScoreDefinition, QString >
+class GaugeTypes : public kernel::Resolver< GaugeType, QString >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ScoreDefinitions( const indicators::Primitives& indicators );
-    virtual ~ScoreDefinitions();
+             GaugeTypes();
+    virtual ~GaugeTypes();
     //@}
 
     //! @name Operations
     //@{
-    void Load( const std::string& file );
+    void Load( const std::string& filename );
     void Purge();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ScoreDefinitions( const ScoreDefinitions& );            //!< Copy constructor
-    ScoreDefinitions& operator=( const ScoreDefinitions& ); //!< Assignment operator
+    GaugeTypes( const GaugeTypes& );            //!< Copy constructor
+    GaugeTypes& operator=( const GaugeTypes& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void ReadDefinition( xml::xistream& xis );
+    void ReadTemplate( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const indicators::Primitives& primitives_;
-    std::auto_ptr< indicators::GaugeFactory > gaugeFactory_;
+    std::auto_ptr< GaugeTypeFactory > factory_;
     //@}
 };
 
-#endif // __ScoreDefinitions_h_
+}
+
+#endif // __GaugeTypes_h_

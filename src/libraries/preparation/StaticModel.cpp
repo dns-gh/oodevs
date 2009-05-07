@@ -20,6 +20,7 @@
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_gui/DrawingTypes.h"
+#include "indicators/GaugeTypes.h"
 #include "indicators/Primitives.h"
 #include "tools/ExerciseConfig.h"
 
@@ -40,6 +41,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , intelligenceKarmas_ ( *new IntelligenceKarmas() )
     , drawings_           ( *new gui::DrawingTypes( controllers.controller_ ) )
     , indicators_         ( *new indicators::Primitives() )
+    , gaugeTypes_         ( *new indicators::GaugeTypes() )
 {
     // NOTHING
 }
@@ -50,6 +52,7 @@ StaticModel::StaticModel( Controllers& controllers )
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &gaugeTypes_;
     delete &indicators_;
     delete &drawings_;
     delete &intelligenceKarmas_;
@@ -74,6 +77,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     detection_.Load( config );
     drawings_.Load( tools::GeneralConfig::BuildResourceChildFile( "DrawingTemplates.xml" ) );
     indicators_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
+    gaugeTypes_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
 
@@ -83,6 +87,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void StaticModel::Purge()
 {
+    gaugeTypes_.Purge();
     indicators_.Purge();
     drawings_.Purge();
     types_.Purge();

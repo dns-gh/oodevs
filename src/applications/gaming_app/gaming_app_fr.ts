@@ -721,7 +721,7 @@
     <name>Indicators</name>
     <message>
         <source>Plot</source>
-        <translation type="unfinished">Courbe</translation>
+        <translation type="obsolete">Courbe</translation>
     </message>
     <message>
         <source>Time</source>

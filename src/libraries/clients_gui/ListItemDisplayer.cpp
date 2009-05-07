@@ -68,6 +68,17 @@ void ListItemDisplayer::Call( const QColor& color )
 
 // -----------------------------------------------------------------------------
 // Name: ListItemDisplayer::Call
+// Created: SBO 2009-05-05
+// -----------------------------------------------------------------------------
+void ListItemDisplayer::Call( const QPixmap& pixmap )
+{
+    if( !item_ )
+        throw std::runtime_error( __FUNCTION__ );
+    pixmap_ = pixmap;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListItemDisplayer::Call
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
 void ListItemDisplayer::Call( const kernel::Styles::Style& style )
@@ -98,6 +109,7 @@ Displayer_ABC& ListItemDisplayer::SubItem( const QString& name )
 void ListItemDisplayer::StartDisplay()
 {
     message_ = "";
+    pixmap_ = QPixmap();
 }
     
 // -----------------------------------------------------------------------------
@@ -119,7 +131,10 @@ void ListItemDisplayer::EndDisplay()
         throw std::runtime_error( "ListItemDisplayer : Item not set" );
     if( column_ < 0 )
         throw std::runtime_error( "ListItemDisplayer : Colunm not set" );
-    item_->setText( column_, message_ );
+    if( pixmap_.isNull() )
+        item_->setText( column_, message_ );
+    else
+        item_->setPixmap( column_, pixmap_ );
     column_ = ( column_ + 1 ) % columns_.size();
 }
     

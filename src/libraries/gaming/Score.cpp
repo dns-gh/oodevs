@@ -10,10 +10,14 @@
 #include "gaming_pch.h"
 #include "Score.h"
 #include "Services.h"
+#include "ScoreDefinition.h"
+#include "ScoreDefinitions.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_gui/Tools.h"
 #include "game_asn/AarSenders.h"
+#include "indicators/Tendency.h"
+#include "indicators/Gauge.h"
 #include <boost/algorithm/string.hpp>
 
 namespace
@@ -28,13 +32,15 @@ namespace
 // Name: Score constructor
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-Score::Score( const ASN1T_MsgIndicator& message, kernel::Controller& controller, Publisher_ABC& publisher )
+Score::Score( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_( controller )
     , publisher_( publisher )
     , name_( ExtractRoot( message.name ) )
+    , definition_( definitions.Get( name_ ) )
+    , tendency_( new indicators::Tendency() )
+    , gauge_( definition_.CreateGauge() )
     , value_( 0 )
-    , tendency_( 0 )
-    , normalized_( 0 )
+    , tendencyValue_( 0 )
 {
     controller_.Create( *this );
 }
@@ -64,9 +70,7 @@ QString Score::GetName() const
 void Score::Update( const ASN1T_MsgIndicator& message )
 {
     if( boost::ends_with( message.name, "/Tendency" ) )
-        tendency_ = message.value;
-    else if( boost::ends_with( message.name, "/Gauge" ) )
-        normalized_ = message.value;
+        tendencyValue_ = message.value;
     else
         value_ = message.value;
     controller_.Update( *this );
@@ -79,9 +83,9 @@ void Score::Update( const ASN1T_MsgIndicator& message )
 void Score::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Score", "Name" ), name_ )
-             .Display( tools::translate( "Score", "Value" ), value_ )
-             .Display( tools::translate( "Score", "Tendency" ), tendency_ )
-             .Display( tools::translate( "Score", "Gauge" ), normalized_ );
+             .Display( tools::translate( "Score", "Value" ), value_ );
+    tendency_->Display( displayer.Item( tools::translate( "Score", "Tendency" ) ), tendencyValue_ );
+    gauge_->Display( displayer.Item( tools::translate( "Score", "Gauge" ) ), value_ );
 }
 
 // -----------------------------------------------------------------------------

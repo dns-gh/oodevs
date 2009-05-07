@@ -119,8 +119,6 @@ void Score::SerializeIndicators( xml::xostream& xos ) const
     xos << xml::start( "indicators" );
     SerializeIndicator( xos, QString( "indicator( '%1', %2 )" ).arg( name_ ).arg( formula_ ) );
     SerializeIndicator( xos, QString( "indicator( '%1/Tendency', derivate( %2 ) )" ).arg( name_ ).arg( formula_ ) );
-    // $$$$ SBO 2009-04-28: TODO: configure normalization
-    SerializeIndicator( xos, QString( "indicator( '%1/Gauge', threshold( '%2', '%3', %4 ) )" ).arg( name_ ).arg( "0,10,20" ).arg( "0,0.25,0.5,1" ).arg( formula_ ) );
     xos << xml::end();
 }
 

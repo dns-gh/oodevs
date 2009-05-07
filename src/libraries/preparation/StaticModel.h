@@ -32,6 +32,7 @@ namespace gui
 
 namespace indicators
 {
+    class GaugeTypes;
     class Primitives;
 }
 
@@ -74,6 +75,7 @@ public:
     IntelligenceKarmas&              intelligenceKarmas_;
     gui::DrawingTypes&               drawings_;
     indicators::Primitives&          indicators_;
+    indicators::GaugeTypes&          gaugeTypes_;
     //@}
 
 private:

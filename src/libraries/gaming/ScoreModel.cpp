@@ -81,7 +81,7 @@ void ScoreModel::Update( const ASN1T_MsgIndicator& message )
         if( hasReplay_ )
             score = new ReplayScore( message, definitions_, controllers_.controller_, publisher_ );
         else
-            score = new Score( message, controllers_.controller_, publisher_ );
+            score = new Score( message, definitions_, controllers_.controller_, publisher_ );
         Register( score->GetName(), *score );
     }
     score->Update( message );

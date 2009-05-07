@@ -7,36 +7,46 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
-#include "ReplayScore.h"
-#include "ScoreDefinition.h"
-#include "ScoreDefinitions.h"
+#include "indicators_pch.h"
+#include "Tendency.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "tools/GeneralConfig.h"
+#include <qpixmap.h>
+
+using namespace indicators;
 
 // -----------------------------------------------------------------------------
-// Name: ReplayScore constructor
-// Created: SBO 2009-04-30
+// Name: Tendency constructor
+// Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-ReplayScore::ReplayScore( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
-    : Score( message, definitions, controller, publisher )
-    , definition_( definitions.Get( GetName() ) )
+Tendency::Tendency()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReplayScore destructor
-// Created: SBO 2009-04-30
+// Name: Tendency destructor
+// Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-ReplayScore::~ReplayScore()
+Tendency::~Tendency()
 {
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ReplayScore::Commit
-// Created: SBO 2009-04-30
-// -----------------------------------------------------------------------------
-std::string ReplayScore::Commit( const T_Parameters& parameters ) const
+namespace
 {
-    return definition_.Commit( parameters );
+    QPixmap ComputePixmap( double value )
+    {
+        const std::string image( value > 0 ? "raise" : ( value < 0 ? "fall" : "stable" ) );
+        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gauges/tendency/" + image + ".png" ).c_str() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Tendency::Display
+// Created: SBO 2009-05-05
+// -----------------------------------------------------------------------------
+void Tendency::Display( kernel::Displayer_ABC& displayer, double value ) const
+{
+    displayer.Display( ComputePixmap( value ) );
 }

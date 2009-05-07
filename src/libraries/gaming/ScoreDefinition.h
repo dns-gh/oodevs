@@ -14,9 +14,11 @@
 
 namespace indicators
 {
-    class Variables;
+    class ElementFactory_ABC;
+    class Gauge;
+    class GaugeFactory;
     class Primitives;
-    class ElementFactory_ABC;    
+    class Variables;
 }
 
 namespace xml
@@ -36,7 +38,7 @@ class ScoreDefinition : public IndicatorDefinition_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreDefinition( xml::xistream& xis, const indicators::Primitives& primitives );
+             ScoreDefinition( xml::xistream& xis, const indicators::Primitives& primitives, const indicators::GaugeFactory& factory );
     virtual ~ScoreDefinition();
     //@}
 
@@ -44,6 +46,7 @@ public:
     //@{
     virtual QString GetName() const;
     virtual std::string Commit( const T_Parameters& parameters ) const;
+    indicators::Gauge* CreateGauge() const;
     //@}
 
 private:
@@ -58,6 +61,7 @@ private:
     //@{
     const QString name_;
     const std::string formula_;
+    std::auto_ptr< indicators::Gauge > gauge_;
     std::auto_ptr< indicators::Variables > variables_;
     std::auto_ptr< indicators::ElementFactory_ABC > elementFactory_;
     //@}

@@ -601,10 +601,6 @@
 <context>
     <name>Indicators</name>
     <message>
-        <source>Plot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>

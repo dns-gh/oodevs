@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ScoreEditor.h"
 #include "moc_ScoreEditor.cpp"
+#include "ScoreGaugeConfiguration.h"
 #include "ScorePrimitivesLibrary.h"
 #include "ScoreVariablesList.h"
 #include "indicators/Primitive.h"
@@ -48,15 +49,17 @@ namespace
 // Name: ScoreEditor constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators )
+ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators, const indicators::GaugeTypes& gauges )
     : QDialog( parent, "ScoreEditor" )
     , indicators_( indicators )
     , current_( 0 )
 {
     setCaption( tr( "Score editor" ) );
-    QGridLayout* grid = new QGridLayout( this, 5, 3, 0, 5 );
+    QGridLayout* grid = new QGridLayout( this, 6, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 2, 3 );
+    grid->setColStretch( 0, 2 );
+    grid->setColStretch( 1, 3 );
     {
         QGroupBox* box = new QHGroupBox( tr( "Information" ), this );
         new QLabel( tr( "Name:" ), box );
@@ -78,7 +81,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
         connect( library, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
     }
     {
-        QGroupBox* box = new QHGroupBox( tr( "Variables: " ), this );
+        QGroupBox* box = new QHGroupBox( tr( "Variables" ), this );
         variables_ = new ScoreVariablesList( box, factory );
         grid->addWidget( box, 2, 1 );
         connect( variables_, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
@@ -91,10 +94,14 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
         grid->addMultiCellWidget( box, 3, 3, 0, 1 );
     }
     {
+        gauge_ = new ScoreGaugeConfiguration( this, controllers, gauges );
+        grid->addMultiCellWidget( gauge_, 4, 4, 0, 1 );
+    }
+    {
         QHBox* box = new QHBox( this );
         ok_ = new QPushButton( tr( "Ok" ), box );
         QButton* cancel = new QPushButton( tr( "Cancel" ), box );
-        grid->addWidget( box, 4, 1 );
+        grid->addWidget( box, 5, 1 );
         connect( ok_, SIGNAL( clicked() ), SLOT( Commit() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
     }
@@ -118,8 +125,8 @@ void ScoreEditor::StartEdit( Score_ABC& score )
     current_ = &score;
     setCaption( tr( "Score edition - %1 " ).arg( score.GetName() ) );
     name_->setText( score.GetName() );
-    formula_->setText( score.GetFormula() );
     variables_->StartEdit( score );
+    formula_->setText( score.GetFormula() );
     show();
 }
 

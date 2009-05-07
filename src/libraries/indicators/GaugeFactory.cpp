@@ -7,36 +7,39 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
-#include "ReplayScore.h"
-#include "ScoreDefinition.h"
-#include "ScoreDefinitions.h"
+#include "indicators_pch.h"
+#include "GaugeFactory.h"
+#include "Gauge.h"
+#include "GaugeTypes.h"
+#include "tools/GeneralConfig.h"
+
+using namespace indicators;
 
 // -----------------------------------------------------------------------------
-// Name: ReplayScore constructor
-// Created: SBO 2009-04-30
+// Name: GaugeFactory constructor
+// Created: SBO 2009-05-06
 // -----------------------------------------------------------------------------
-ReplayScore::ReplayScore( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
-    : Score( message, definitions, controller, publisher )
-    , definition_( definitions.Get( GetName() ) )
+GaugeFactory::GaugeFactory()
+    : types_( new GaugeTypes() )
+{
+    types_->Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GaugeFactory destructor
+// Created: SBO 2009-05-06
+// -----------------------------------------------------------------------------
+GaugeFactory::~GaugeFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReplayScore destructor
-// Created: SBO 2009-04-30
+// Name: GaugeFactory::Create
+// Created: SBO 2009-05-06
 // -----------------------------------------------------------------------------
-ReplayScore::~ReplayScore()
+Gauge* GaugeFactory::Create( xml::xistream& xis ) const
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReplayScore::Commit
-// Created: SBO 2009-04-30
-// -----------------------------------------------------------------------------
-std::string ReplayScore::Commit( const T_Parameters& parameters ) const
-{
-    return definition_.Commit( parameters );
+    Gauge* gauge = new Gauge( xis, *types_ );
+    return gauge;
 }

@@ -19,7 +19,15 @@ namespace kernel
     class Controller;
 }
 
+namespace indicators
+{
+    class Gauge;
+    class Tendency;
+}
+
 class Publisher_ABC;
+class ScoreDefinition;
+class ScoreDefinitions;
 
 // =============================================================================
 /** @class  Score
@@ -35,7 +43,7 @@ class Score : public IndicatorDefinition_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Score( const ASN1T_MsgIndicator& message, kernel::Controller& controller, Publisher_ABC& publisher );
+             Score( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher );
     virtual ~Score();
     //@}
 
@@ -64,9 +72,11 @@ private:
     kernel::Controller& controller_;
     Publisher_ABC& publisher_;
     const QString name_;
+    const ScoreDefinition& definition_;
+    std::auto_ptr< indicators::Tendency > tendency_;
+    std::auto_ptr< indicators::Gauge > gauge_;
     double value_;
-    double tendency_;
-    double normalized_;
+    double tendencyValue_;
     //@}
 };
 

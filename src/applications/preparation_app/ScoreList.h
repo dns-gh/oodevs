@@ -15,6 +15,7 @@
 
 namespace indicators
 {
+    class GaugeTypes;
     class Primitives;
 }
 
@@ -41,7 +42,7 @@ class ScoreList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators );
+             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators, const indicators::GaugeTypes& gauges );
     virtual ~ScoreList();
     //@}
 
