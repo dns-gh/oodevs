@@ -13,35 +13,59 @@
 #include "ScoreGaugeConfiguration.h"
 #include "ScorePrimitivesLibrary.h"
 #include "ScoreVariablesList.h"
+#include "ScoreSyntaxHighlighter.h"
 #include "indicators/Gauge.h"
 #include "indicators/Primitive.h"
-#include "indicators/Primitives.h"
 #include "indicators/Variables.h"
 #include "preparation/Score.h"
 #include <xeumeuleu/xml.h>
 
 namespace
 {
-    class FormulaLineEdit : public QLineEdit
+    class FormulaLineEdit : public QTextEdit
     {
     public:
-        explicit FormulaLineEdit( QWidget* parent ) : QLineEdit( parent ) {}
+        explicit FormulaLineEdit( QWidget* parent )
+            : QTextEdit( parent )
+        {
+            setMaximumHeight( 50 );
+        }
         virtual ~FormulaLineEdit() {}
 
         virtual void focusOutEvent( QFocusEvent* e )
         {
-            const int start = selectionStart();
-            const unsigned int length = selectedText().length();
-            QLineEdit::focusOutEvent( e );
-            setSelection( start, length );
+            int paraFrom = 0, indexFrom = 0, paraTo = 0, indexTo = 0;
+            getSelection( &paraFrom, &indexFrom, &paraTo, &indexTo );
+            QTextEdit::focusOutEvent( e );
+            setSelection( paraFrom, indexFrom, paraTo, indexTo );
         }
 
-        virtual void mouseDoubleClickEvent( QMouseEvent* e )
+        virtual void contentsMousePressEvent( QMouseEvent* e )
         {
-            QLineEdit::mouseDoubleClickEvent( e );
-            const QString selected = selectedText();
-            if( selected.endsWith( "," ) )
-                setSelection( selectionStart(), selected.length() - 1 );
+            QTextEdit::contentsMousePressEvent( e );
+            contentsMouseDoubleClickEvent( e );
+        }
+
+        bool isBoundary( const QChar c ) const
+        {
+            return c.isSpace() || ( c.isPunct() && c != '-' );
+        }
+
+        virtual void contentsMouseDoubleClickEvent( QMouseEvent* e )
+        {
+            if( e->button() != Qt::LeftButton )
+            {
+	            e->ignore();
+	            return;
+            }
+            int para = 0;
+            int findex = charAt( e->pos(), &para );
+            int bindex = findex;
+            const QString str = text( para );
+            while( bindex > 0 && ! isBoundary( str.at( bindex - 1 ) ) ) --bindex;
+            while( findex < str.length() && ! isBoundary( str.at( findex ) ) ) ++findex;
+            setSelection( para, bindex, para, findex );
+            e->accept();
         }
     };
 }
@@ -52,7 +76,6 @@ namespace
 // -----------------------------------------------------------------------------
 ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators, const indicators::GaugeTypes& gauges )
     : QDialog( parent, "ScoreEditor" )
-    , indicators_( indicators )
     , current_( 0 )
 {
     setCaption( tr( "Score editor" ) );
@@ -70,13 +93,14 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
     {
         QGroupBox* box = new QGroupBox( 2, Qt::Vertical, tr( "Formula" ), this );
         formula_ = new FormulaLineEdit( box );
+        new ScoreSyntaxHighlighter( formula_, controllers, indicators );
         checkResult_ = new QLabel( box );
         checkResult_->setMinimumHeight( 30 );
         grid->addMultiCellWidget( box, 1, 1, 0, 1 );
-        connect( formula_, SIGNAL( textChanged( const QString& ) ), SLOT( OnFormulaChanged( const QString& ) ) );
+        connect( formula_, SIGNAL( textChanged() ), SLOT( CheckFormula() ) );
     }
     {
-        ScorePrimitivesLibrary* library = new ScorePrimitivesLibrary( this, controllers, factory, indicators_ );
+        ScorePrimitivesLibrary* library = new ScorePrimitivesLibrary( this, controllers, factory, indicators );
         grid->addWidget( library, 2, 0 );
         connect( library, SIGNAL( Selected( const indicators::Primitive& ) ), SLOT( OnSelectPrimitive( const indicators::Primitive& ) ) );
         connect( library, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
@@ -174,15 +198,6 @@ void ScoreEditor::OnSelectPrimitive( const indicators::Primitive& indicator )
                             .arg( indicator.GetName() )
                             .arg( indicator.GetPrototype() )
                             .arg( indicator.GetComment() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScoreEditor::OnFormulaChanged
-// Created: SBO 2009-04-20
-// -----------------------------------------------------------------------------
-void ScoreEditor::OnFormulaChanged( const QString& /*text*/ )
-{
-    CheckFormula();
 }
 
 // -----------------------------------------------------------------------------

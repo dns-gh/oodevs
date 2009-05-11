@@ -59,7 +59,6 @@ private slots:
     void Commit();
     void OnInsert( const QString& text );
     void OnSelectPrimitive( const indicators::Primitive& indicator );
-    void OnFormulaChanged( const QString& text );
     void CheckFormula();
     //@}
 
@@ -78,10 +77,9 @@ private:
 private:
     //! @name Member data
     //@{
-    const indicators::Primitives& indicators_;
     Score_ABC* current_;
     QLineEdit* name_;
-    QLineEdit* formula_;
+    QTextEdit* formula_;
     QLabel* checkResult_;
     QButton* ok_;
     QLabel* help_;
