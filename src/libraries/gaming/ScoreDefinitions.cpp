@@ -48,10 +48,14 @@ void ScoreDefinitions::Purge()
 // -----------------------------------------------------------------------------
 void ScoreDefinitions::Load( const std::string& file )
 {
-    xml::xifstream xis( file );
-    xis >> xml::start( "scores" )
-            >> xml::list( "score", *this, &ScoreDefinitions::ReadDefinition )
-        >> xml::end();
+    try
+    {
+        xml::xifstream xis( file );
+        xis >> xml::start( "scores" )
+                >> xml::list( "score", *this, &ScoreDefinitions::ReadDefinition )
+            >> xml::end();
+    }
+    catch( ... ) {}
 }
 
 
@@ -66,8 +70,5 @@ void ScoreDefinitions::ReadDefinition( xml::xistream& xis )
         std::auto_ptr< ScoreDefinition > def( new ScoreDefinition( xis, primitives_, gaugeFactory_ ) );
         Register( def->GetName(), *def.release() );
     }
-    catch( ... )
-    {
-        // $$$$ SBO 2009-04-29: scores file contains errors, try to continue
-    }
+    catch( ... ) {}
 }
